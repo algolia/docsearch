@@ -1,0 +1,48 @@
+/*
+Error: Invalid CSS after "...ial, sans-serif": expected expression (e.g. 1px, bold), was ";"
+        on line 1 of _base.sass
+
+1: $font-family-sans-serif: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+2: $font-size-base: 14px;
+3: 
+4: $headings-font-family: "Raleway";
+5: $headings-font-weight: 300;
+6: 
+
+Backtrace:
+_base.sass:1
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/scss/parser.rb:1161:in `expected'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/script/lexer.rb:221:in `expected!'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/script/parser.rb:600:in `assert_done'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/script/parser.rb:63:in `parse'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/script/parser.rb:183:in `parse'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/script.rb:27:in `parse'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/engine.rb:1130:in `parse_script'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/engine.rb:753:in `parse_variable'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/engine.rb:641:in `parse_line'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/engine.rb:535:in `build_tree'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/engine.rb:554:in `block in append_children'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/engine.rb:553:in `each'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/engine.rb:553:in `append_children'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/engine.rb:406:in `_to_tree'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/engine.rb:378:in `_render_with_sourcemap'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/engine.rb:295:in `render_with_sourcemap'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/plugin/compiler.rb:490:in `update_stylesheet'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/plugin/compiler.rb:209:in `each'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/plugin.rb:82:in `update_stylesheets'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/exec/sass_scss.rb:361:in `watch_or_update'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/exec/sass_scss.rb:51:in `process_result'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/exec/base.rb:52:in `parse'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/lib/sass/exec/base.rb:19:in `parse!'
+/home/tim/.rvm/gems/ruby-2.2.3/gems/sass-3.4.19/bin/sass:13:in `<top (required)>'
+/home/tim/.rvm/gems/ruby-2.2.3/bin/sass:23:in `load'
+/home/tim/.rvm/gems/ruby-2.2.3/bin/sass:23:in `<main>'
+/home/tim/.rvm/gems/ruby-2.2.3/bin/ruby_executable_hooks:15:in `eval'
+/home/tim/.rvm/gems/ruby-2.2.3/bin/ruby_executable_hooks:15:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Invalid CSS after \"...ial, sans-serif\": expected expression (e.g. 1px, bold), was \";\"\A         on line 1 of _base.sass\A \A 1: $font-family-sans-serif: \"Open Sans\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\A 2: $font-size-base: 14px;\A 3: \A 4: $headings-font-family: \"Raleway\";\A 5: $headings-font-weight: 300;\A 6: "; }

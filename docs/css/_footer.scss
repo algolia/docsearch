@@ -1,0 +1,15 @@
+footer.site-footer {
+  padding-top: 2em;
+  margin-top: 0;
+  border-top: 1px solid $gray-lighter;
+  background-color: white;
+  text-align: center;
+  .fa.fa-heart {
+    color: #e61870;
+  }
+  .input-group-addon {
+    background-color: transparent;
+  }
+}
+
+

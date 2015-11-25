@@ -1,0 +1,15 @@
+html, body {
+  position: relative;
+  @include size(100%,100%);
+  background-attachment: fixed; }
+
+h2 {
+  font-size: 1.8em;
+  font-weight: normal;
+  letter-spacing: 1px;
+  margin-bottom: 1em; }
+
+.showcase--image {
+  max-width: 200px;
+}
+
