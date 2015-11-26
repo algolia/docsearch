@@ -1,7 +1,7 @@
 import documentationSearch from '../index.js';
 
 documentationSearch({
-  apiKey: 'aaa',
-  indexName: 'bbb',
-  inputSelector: 'ccc'
+  apiKey: '7cad300559017ed67717c9c6cba2666d',
+  indexName: 'stripe',
+  inputSelector: '#search-input'
 });

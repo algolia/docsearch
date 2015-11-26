@@ -36,6 +36,11 @@
   },
   "peerDependencies": {},
   "dependencies": {
-    "lodash": "^3.10.1"
+    "algoliasearch": "^3.9.2",
+    "autocomplete.js": "^0.13.0",
+    "hogan.js": "^3.0.2",
+    "lodash": "^3.10.1",
+    "npm-zepto": "^1.1.7",
+    "to-factory": "^1.0.0"
   }
 }
