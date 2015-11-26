@@ -1,0 +1,41 @@
+{
+  "name": "documentationsearch.js",
+  "version": "0.0.1",
+  "description": "Add an autocomplete dropdown to your documentation",
+  "main": "dist-es5-module/index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --config webpack.dev.config.babel.js --hot --inline --no-info",
+    "shrinkwrap": "npm-shrinkwrap --dev",
+    "prepublish": "NODE_ENV=production npm run build",
+    "build": "./scripts/build.sh",
+    "release": "./scripts/release.sh",
+    "lint": "eslint .",
+    "test": "npm run lint"
+  },
+  "author": "Algolia <support@algolia.com> (https://github.com/algolia/)",
+  "license": "MIT",
+  "repository": "algolia/documentationsearch.js",
+  "devDependencies": {
+    "babel": "^5.8.29",
+    "babel-core": "^5.8.29",
+    "babel-eslint": "^4.1.3",
+    "babel-loader": "^5.3.2",
+    "conventional-changelog": "^0.5.1",
+    "doctoc": "^0.15.0",
+    "eslint": "^1.6.0",
+    "eslint-config-airbnb": "^0.1.0",
+    "eslint-config-algolia": "^4.2.0",
+    "eslint-plugin-react": "^3.5.1",
+    "json": "^9.0.3",
+    "mversion": "^1.10.1",
+    "npm-shrinkwrap": "^200.4.0",
+    "pretty-bytes": "^2.0.1",
+    "uglifyjs": "^2.4.10",
+    "webpack": "^1.12.2",
+    "webpack-dev-server": "^1.12.1"
+  },
+  "peerDependencies": {},
+  "dependencies": {
+    "lodash": "^3.10.1"
+  }
+}
