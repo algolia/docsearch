@@ -10,7 +10,8 @@
     "build": "./scripts/build.sh",
     "release": "./scripts/release.sh",
     "lint": "eslint .",
-    "test": "npm run lint"
+    "test": "npm run lint",
+    "gh-pages": "./scripts/gh-pages"
   },
   "author": "Algolia <support@algolia.com> (https://github.com/algolia/)",
   "license": "MIT",
@@ -26,6 +27,7 @@
     "eslint-config-airbnb": "^0.1.0",
     "eslint-config-algolia": "^4.2.0",
     "eslint-plugin-react": "^3.5.1",
+    "gh-pages": "^0.5.0",
     "json": "^9.0.3",
     "mversion": "^1.10.1",
     "npm-shrinkwrap": "^200.4.0",

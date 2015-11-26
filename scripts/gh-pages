@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+rm -rf node_modules/gh-pages/.cache
+
+cd ./docs
+bundle install
+bundle exec jekyll build
+gh-pages --dist docs/_site --branch gh-pages
