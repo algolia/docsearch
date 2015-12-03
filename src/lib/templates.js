@@ -1,4 +1,4 @@
-let prefix = 'documentationsearch--suggestion';
+let prefix = 'ads-suggestion';
 
 let templates = {
   suggestion: `
