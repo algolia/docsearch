@@ -1,7 +1,6 @@
 import Hogan from 'hogan.js';
 import algoliasearch from 'algoliasearch';
 import autocomplete from 'autocomplete.js';
-import groupBy from 'lodash/collection/groupBy';
 import templates from './templates.js';
 import utils from './utils.js';
 import $ from 'npm-zepto';
@@ -87,9 +86,67 @@ class DocumentationSearch {
 
   // Given a list of hits returned by the API, will reformat them to be used in
   // a Hogan template
-  formatHits(hits) {
+  formatHits(receivedHits) {
+    // First, we move all the hierarchy object to the root
+    let hits = [];
+    $.each(receivedHits, (index, item) => {
+      let newItem = $.extend({}, item, item.hierarchy);
+      delete newItem.hierarchy;
+      hits.push(newItem);
+    });
+
+    let groupedHits = [];
+    // Add the first element as a main header
+    let firstElement = hits.shift();
+    firstElement.isCategoryHeader = true;
+    firstElement.isSubcategoryHeader = true;
+    // Add all elements that share both lvl0 and lvl1
+    $.each(hits, (index, item) => {
+      if !(item.lvl0 === firstElement.lvl0 && item.lvl1 === firstElement.lvl1) {
+        continue;
+      }
+      groupedHits.push(item);
+      delete hits[index]
+    });
+
+    // Get all remaining hits that share lvl0
+    let hitsThatShareLvl0 = [];
+    $.each(hits, (index, item) => {
+      if !(item.lvl0 === firstElement.lvl0) {
+        continue;
+      }
+      hitsThatShareLvl0.push(item);
+      delete hits[index]
+    });
+
+    // Group the items sharing lvl0 together
+    $.each(hitsThatShareLvl0, (index, item) => {
+    });
+
+    // Flatten the lvl0 and add 
+    // We take the first element of the array
+    // We take all other elements of the array that share lvl0 and lvl1 and put
+    // them after
+    // We then take all elements that share lvl0, order them by lvl1 and put
+    // them after
+    // We start over with the remaining of the array
+
+    return hits;
+    //
+    //
+    // Given n hits, I'll take the first one in a separate list
+    // Then find (A) all the other hits that share both lvl0 and lvl1
+    //  And (B) all the other hits that share only lvl0
+    //  I'll group A and B into C. Set 
+
+
+
+
+
     // Group hits by category / subcategory
-    var groupedHits = groupBy(hits, 'category');
+    console.info(hits);
+    var groupedHits = utils.groupBy(hits, 'category');
+    console.info(groupedHits);
     groupedHits.each((list, category) => {
       var groupedHitsBySubCategory = groupBy(list, 'subcategory');
       var flattenedHits = utils.flattenObject(groupedHitsBySubCategory, 'isSubcategoryHeader');

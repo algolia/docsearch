@@ -10,7 +10,8 @@
     "build": "./scripts/build.sh",
     "release": "./scripts/release.sh",
     "lint": "eslint .",
-    "test": "npm run lint",
+    "test": "BABEL_ENV=test mocha --reporter dot",
+    "test:watch": "BABEL_ENV=test mocha --reporter min --watch",
     "gh-pages": "./scripts/gh-pages"
   },
   "author": "Algolia <support@algolia.com> (https://github.com/algolia/)",
@@ -27,8 +28,12 @@
     "eslint-config-airbnb": "^0.1.0",
     "eslint-config-algolia": "^4.2.0",
     "eslint-plugin-react": "^3.5.1",
+    "expect": "^1.13.0",
     "gh-pages": "^0.5.0",
+    "jsdom": "^7.1.1",
     "json": "^9.0.3",
+    "mocha": "^2.3.4",
+    "mocha-jsdom": "^1.0.0",
     "mversion": "^1.10.1",
     "npm-shrinkwrap": "^200.4.0",
     "pretty-bytes": "^2.0.1",
@@ -39,10 +44,8 @@
   "peerDependencies": {},
   "dependencies": {
     "algoliasearch": "^3.9.2",
-    "autocomplete.js": "^0.13.0",
+    "autocomplete.js": "^0.14.1",
     "hogan.js": "^3.0.2",
-    "lodash": "^3.10.1",
-    "npm-zepto": "^1.1.7",
     "to-factory": "^1.0.0"
   }
 }
