@@ -1,6 +1,6 @@
 import toFactory from 'to-factory';
-import DocumentationSearch from './DocumentationSearch';
+import DocSearch from './DocSearch';
 
-let documentationSearch = toFactory(DocumentationSearch);
+let docSearch = toFactory(DocSearch);
 
-export default documentationSearch;
+export default docSearch;

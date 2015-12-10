@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+npm run build:css
+
+# /bundle.js in memory
+webpack-dev-server \
+  --config webpack.dev.config.babel.js \
+  --hot \
+  --inline \
+  --no-info & \
+# rebuild docsearch.css and docsearch.min.css
+onchange './src/styles/*.scss' -- npm run build:css & \
+
+wait
+
+

@@ -22,7 +22,7 @@ const usage = `Usage:
   inputSelector,
   [ options.{hint,debug} ]
 })`;
-class DocumentationSearch {
+class DocSearch {
   constructor({
     apiKey,
     indexName,
@@ -47,12 +47,6 @@ class DocumentationSearch {
     this.autocomplete.on('autocomplete:selected', this.handleSelected);
   }
 
-  // TEST:
-  // - Usage error if no apiKey or no indexName
-  // - Error if nothing matches
-  // - Error if matches are not input
-  // - apiKey nad indexName are set
-  // - input is set to the Zepto-wrapped inputSelector
   checkArguments(args) {
     if (!args.apiKey || !args.indexName) {
       throw new Error(usage);
@@ -120,7 +114,6 @@ class DocumentationSearch {
 
   getHighlightedValue(object, key) {
     let highlight = object._highlightResult[key];
-    console.info(highlight);
     return highlight ? highlight.value : object[key];
   }
 
@@ -137,6 +130,6 @@ class DocumentationSearch {
   }
 }
 
-export default DocumentationSearch;
+export default DocSearch;
 
 

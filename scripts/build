@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e # exit when error
+
+rm -rf dist
+
+# JavaScript
+npm run build:js
+npm run build:css

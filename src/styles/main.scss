@@ -1,0 +1,131 @@
+// /* Main autocomplete wrapper */
+// .eslint-nav .algolia-autocomplete {
+//   width: 100%;
+// }
+// .eslint-nav .aa-dropdown-menu {
+//   background-color: #FFF;
+//   border: 1px solid #333;
+//   border-radius: 4px;
+//   font-size: 16px;
+//   margin: 6px 0 0;
+//   padding: 4px;
+//   text-align: left;
+//   left: -20px !important;
+//   right: -20px !important;
+// }
+// 
+// /* Category headers */
+// .eslint-nav .suggestion-category {
+//   background-color: #4B54DE;
+//   color: white;
+//   font-weight: 600;
+//   padding: 5px 10px;
+//   text-align: left;
+// }
+// .eslint-nav .suggestion-category mark {
+//   background-color: #4D47D5;
+//   color: white;
+//   padding: 0;
+// }
+// 
+// /* Suggestion */
+// .eslint-nav .suggestion {
+//   color: #333;
+//   cursor: pointer;
+//   overflow: hidden;
+//   border-bottom: 1px solid #3A33D1;
+// }
+// .eslint-nav .aa-suggestion:last-child .suggestion {
+//   border-bottom-color: transparent;
+// }
+// .eslint-nav .suggestion mark {
+//   padding: 0;
+//   color: #3A33D1;
+//   background: none;
+//   font-weight: 600;
+// }
+// .eslint-nav .suggestion-subcategory-secondary {
+//   display: inline-block;
+//   font-weight: bold;
+// }
+// .eslint-nav .suggestion-subcategory-secondary:after {
+//   content: " › ";
+// }
+// .eslint-nav .suggestion-title {
+//   display: inline;
+// }
+// .eslint-nav .suggestion-content {
+//   padding: 3px 5px;
+// }
+// /* Hidden elements for this viewport */
+// .eslint-nav .suggestion-subcategory-main,
+// .eslint-nav .suggestion-text {
+//   display: none;
+// }
+// 
+// /* Selected suggestion */
+// .eslint-nav .aa-cursor .suggestion-content,
+// .eslint-nav .aa-cursor .suggestion-content code,
+// .eslint-nav .aa-cursor .suggestion-content mark {
+//   color: #272296;
+// }
+// .eslint-nav .aa-cursor .suggestion {
+//   background: #EBEBFB;
+// }
+// 
+// /* Screen big enough to display the text snippets */
+// @media (min-width: 568px) {
+//   .eslint-nav .suggestion-text {
+//     display: block;
+//     font-size: .9em;
+//   }
+// }
+// 
+// /* Screen big enough to display results in two columns */
+// @media (min-width: 768px) {
+//    /* Use table display for the two columns */
+//   .eslint-nav .suggestion {
+//     display: table;
+//     width: 100%;
+//     border-bottom: 1px solid #9D99E8;
+//   }
+//   .eslint-nav .suggestion-subcategory-main {
+//     border-right: 1px solid #9D99E8;
+//     background: #F2F2FF;
+//     color: #4E4726;
+//     display: table-cell;
+//     max-width: 135px;
+//     min-width: 135px;
+//     overflow: hidden;
+//     padding: 5px 7px 5px 5px;
+//     text-align: right;
+//     text-overflow: ellipsis;
+//     vertical-align: top;
+//     width: 135px;
+//   }
+//   .eslint-nav .suggestion-content {
+//     display: table-cell;
+//     padding: 5px 10px;
+//   }
+//   .eslint-nav .suggestion-subcategory-secondary {
+//     display: none;
+//   }
+//   .eslint-nav .suggestion-title {
+//     font-weight: 600;
+//   }
+//   .eslint-nav .suggestion-text {
+//     display: block;
+//     font-weight: normal;
+//     padding: 2px;
+//   }
+// }
+// 
+// /* Enough room to display the autocomplete in the header directly */
+// @media (min-width: 996px) {
+//   .eslint-nav .aa-dropdown-menu {
+//     left: -30px !important;
+//     right: -270px !important;
+//   }
+// }
+// 
+// 

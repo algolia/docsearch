@@ -1,9 +1,9 @@
 export default {
   entry: './index.js',
   output: {
-    path: './dist/',
-    filename: 'documentationsearch.js',
-    library: 'documentationSearch',
+    path: './dist/cdn',
+    filename: 'docsearch.js',
+    library: 'docsearch',
     libraryTarget: 'umd'
   },
   module: {
