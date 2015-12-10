@@ -89,4 +89,129 @@ describe('utils', () => {
       }).toThrow(Error);
     });
   });
+
+  describe('groupBy', () => {
+    it('group by specified key', () => {
+      // Given
+      let input = [
+        {name: 'Tim', category: 'devs'},
+        {name: 'Vincent', category: 'devs'},
+        {name: 'Ben', category: 'sales'},
+        {name: 'Jeremy', category: 'sales'},
+        {name: 'AlexS', category: 'devs'},
+        {name: 'AlexK', category: 'sales'}
+      ];
+
+      // When
+      let actual = utils.groupBy(input, 'category');
+
+      // Expect
+      expect(actual).toEqual({
+        devs: [
+          {name: 'Tim', category: 'devs'},
+          {name: 'Vincent', category: 'devs'},
+          {name: 'AlexS', category: 'devs'}
+        ],
+        sales: [
+          {name: 'Ben', category: 'sales'},
+          {name: 'Jeremy', category: 'sales'},
+          {name: 'AlexK', category: 'sales'}
+        ]
+      });
+    });
+    it('throw an error if key does not exist', () => {
+      // Given
+      let input = [
+        {name: 'Tim'},
+        {name: 'Vincent'},
+        {name: 'Ben'},
+        {name: 'Jeremy'},
+        {name: 'AlexS'},
+        {name: 'AlexK'}
+      ];
+
+      // When
+      expect(() => {
+        utils.groupBy(input, 'category');
+      }).toThrow(Error);
+    });
+  });
+
+  describe('values', () => {
+    it('should extract all values', () => {
+      // Given
+      let input = {
+        foo: 42,
+        bar: true,
+        baz: 'yep'
+      };
+
+      // Given
+      let actual = utils.values(input);
+
+      // Then
+      expect(actual.length).toEqual(3);
+      expect(actual).toInclude(42);
+      expect(actual).toInclude(true);
+      expect(actual).toInclude('yep');
+    });
+  });
+
+  describe('flatten', () => {
+    // flatten values
+    it('should flatten array on level deep', () => {
+      // Given
+      let input = [1, 2, [3, 4], [5, 6]];
+
+      // Given
+      let actual = utils.flatten(input);
+
+      // Then
+      expect(actual).toEqual([1, 2, 3, 4, 5, 6]);
+    });
+  });
+
+  describe('flattenAndFlagFirst', () => {
+    it('should flatten all values', () => {
+      // Given
+      let input = {
+       'devs': [
+         {name: 'Tim', category: 'dev'},
+         {name: 'Vincent', category: 'dev'},
+         {name: 'AlexS', category: 'dev'}
+       ],
+       'sales': [
+         {name: 'Ben', category: 'sales'},
+         {name: 'Jeremy', category: 'sales'},
+         {name: 'AlexK', category: 'sales'}
+       ]
+      };
+
+      // When
+      let actual = utils.flattenAndFlagFirst(input, 'isTop');
+
+      // Then
+      expect(actual).toEqual([
+        {name: 'Tim', category: 'dev', isTop: true},
+        {name: 'Vincent', category: 'dev'},
+        {name: 'AlexS', category: 'dev'},
+        {name: 'Ben', category: 'sales', isTop: true},
+        {name: 'Jeremy', category: 'sales'},
+        {name: 'AlexK', category: 'sales'}
+      ]);
+    });
+  });
+
+  describe('compact', () => {
+    it('should clear all falsy elements from the array', () => {
+      // Given
+      let input = [42, false, null, undefined, '', [], 'foo'];
+
+      // When
+      let actual = utils.compact(input);
+
+      // Then
+      expect(actual).toEqual([42, [], 'foo']);
+    });
+  });
 });

@@ -87,85 +87,41 @@ class DocumentationSearch {
   // Given a list of hits returned by the API, will reformat them to be used in
   // a Hogan template
   formatHits(receivedHits) {
-    // First, we move all the hierarchy object to the root
-    let hits = [];
-    $.each(receivedHits, (index, item) => {
-      let newItem = $.extend({}, item, item.hierarchy);
-      delete newItem.hierarchy;
-      hits.push(newItem);
+    let hits = receivedHits.map((hit) => {
+      hit._highlightResult = utils.mergeKeyWithParent(hit._highlightResult, 'hierarchy');
+      return utils.mergeKeyWithParent(hit, 'hierarchy');
     });
-
-    let groupedHits = [];
-    // Add the first element as a main header
-    let firstElement = hits.shift();
-    firstElement.isCategoryHeader = true;
-    firstElement.isSubcategoryHeader = true;
-    // Add all elements that share both lvl0 and lvl1
-    $.each(hits, (index, item) => {
-      if !(item.lvl0 === firstElement.lvl0 && item.lvl1 === firstElement.lvl1) {
-        continue;
-      }
-      groupedHits.push(item);
-      delete hits[index]
-    });
-
-    // Get all remaining hits that share lvl0
-    let hitsThatShareLvl0 = [];
-    $.each(hits, (index, item) => {
-      if !(item.lvl0 === firstElement.lvl0) {
-        continue;
-      }
-      hitsThatShareLvl0.push(item);
-      delete hits[index]
-    });
-
-    // Group the items sharing lvl0 together
-    $.each(hitsThatShareLvl0, (index, item) => {
-    });
-
-    // Flatten the lvl0 and add 
-    // We take the first element of the array
-    // We take all other elements of the array that share lvl0 and lvl1 and put
-    // them after
-    // We then take all elements that share lvl0, order them by lvl1 and put
-    // them after
-    // We start over with the remaining of the array
-
-    return hits;
-    //
-    //
-    // Given n hits, I'll take the first one in a separate list
-    // Then find (A) all the other hits that share both lvl0 and lvl1
-    //  And (B) all the other hits that share only lvl0
-    //  I'll group A and B into C. Set 
-
-
-
-
 
     // Group hits by category / subcategory
-    console.info(hits);
-    var groupedHits = utils.groupBy(hits, 'category');
-    console.info(groupedHits);
-    groupedHits.each((list, category) => {
-      var groupedHitsBySubCategory = groupBy(list, 'subcategory');
-      var flattenedHits = utils.flattenObject(groupedHitsBySubCategory, 'isSubcategoryHeader');
-      groupedHits[category] = flattenedHits;
+    var groupedHits = utils.groupBy(hits, 'lvl0');
+    $.each(groupedHits, (level, collection) => {
+      let groupedHitsByLvl1 = utils.groupBy(collection, 'lvl1');
+      let flattenedHits = utils.flattenAndFlagFirst(groupedHitsByLvl1, 'isSubCategoryHeader');
+      groupedHits[level] = flattenedHits;
     });
-    groupedHits = utils.flattenObject(groupedHits, 'isCategoryHeader');
+    groupedHits = utils.flattenAndFlagFirst(groupedHits, 'isCategoryHeader');
 
     // Translate hits into smaller objects to be send to the template
     return groupedHits.map((hit) => {
+      let url = hit.anchor ? `${hit.url}#${hit.anchor}` : hit.url;
+      let displayTitle = utils.compact([hit.lvl2, hit.lvl3, hit.lvl4, hit.lvl5, hit.lvl6]).join(' › ');
+
       return {
         isCategoryHeader: hit.isCategoryHeader,
         isSubcategoryHeader: hit.isSubcategoryHeader,
-        category: hit._highlightResult.category ? hit._highlightResult.category.value : hit.category,
-        subcategory: hit._highlightResult.subcategory ? hit._highlightResult.subcategory.value : hit.category,
-        title: hit._highlightResult.display_title ? hit._highlightResult.display_title.value : hit.display_title,
-        text: hit._snippetResult ? hit._snippetResult.text.value : hit.text,
-        url: hit.url
+        category: this.getHighlightedValue(hit, 'lvl0'),
+        subcategory: this.getHighlightedValue(hit, 'lvl1'),
+        title: displayTitle,
+        text: hit.content,
+        url: url
       };
     });
+  }
+
+  getHighlightedValue(object, key) {
+    let highlight = object._highlightResult[key];
+    console.info(highlight);
+    return highlight ? highlight.value : object[key];
   }
 
   getSuggestionTemplate() {
