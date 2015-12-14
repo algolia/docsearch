@@ -1,26 +1,21 @@
 @import "variables";
 $color-border: #3A33D1;
-$color-border-light: #9D99E8;
+$color-border-light: lighten($color-border, 15%);
 $color-category-header: #4B54DE;
 $color-highlight-header: #4D47D5;
-$color-highlight: #3A33D1;
-$color-selected-text: #272296;
+$color-highlight: $color-border;
 $color-selected-background: #EBEBFB;
 $color-left-column-bg: #F2F2FF;
 $color-left-column: #4E4726;
+
 $breakpoint-medium: 568px;
 $breakpoint-large: 768px;;
 
 
-// Need to add to the readme something along the lines of:
-//
-// The dropdown adapts to screen size. It more or less follows the breakpoints
-// of Bootstrap (need to list them). The code is written mobile-first. The
-// larger the screen size, the more rules we add to overwrite the previous one,
-// moving from one to two column.
-//
-// It is expected that the page layout also follow those breakpoints. The
-// breakpoints are defined as variables in the SCSS, so one can update them.
+// The dropdown adapts to screen size, to provide three different displays.
+// - A simple list of matching results
+// - Same list, but with text snippetting added if size is large enough
+// - Adding a second colum to let the content breath if enough room available
 
 // Main autocomplete wrapper
 .aa-dropdown-menu {
