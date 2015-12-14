@@ -3,8 +3,8 @@
 set -e # exit when error
 
 VERSION=$(json version < package.json)
-NAME='docsearch'
-LICENSE="/*! ${NAME} ${VERSION:-UNRELEASED} | © Algolia | github.com/algolia/docsearch */"
+NAME='docsearch.js'
+LICENSE="/*! ${NAME} ${VERSION:-UNRELEASED} | © Algolia | github.com/algolia/docsearch.js */"
 DIST_DIR="dist/cdn"
 DIST_FILE="$DIST_DIR/${NAME}.css"
 DIST_FILE_MIN="$DIST_DIR/${NAME}.min.css"

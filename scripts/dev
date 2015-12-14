@@ -12,5 +12,3 @@ webpack-dev-server \
 onchange './src/styles/*.scss' -- npm run build:css & \
 
 wait
-
-

@@ -1,15 +1,18 @@
-# Documentation Search
+# docsearch.js
 
-Add a search autocomplete to your documentation.
+Add a search autocomplete to any documentation.
+
+Currently on-demand, send an email to [docsearch@algolia.com](mailto:docsearch@algolia.com)
+if you want documentation search on your website.
 
 # Usage
 
 ```html
-<link rel="stylesheet" href="//cdn.jsdelivr.net/documentationsearch.js/0/documentationsearch.min.css" />
-<script src="//cdn.jsdelivr.net/documentationsearch.js/0/documentationsearch.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/docsearch.js/0/docsearch.min.css" />
+<script src="//cdn.jsdelivr.net/docsearch.js/0/docsearch.min.js"></script>
 ```
 
-```javascript
+```js
 documentationSearch({
   apiKey: apiKey, // Mandatory
   indexName: indexName, // Mandatory
@@ -24,10 +27,10 @@ documentationSearch({
 - https://reactjs.algolia.com/
 - https://babeljs.algolia.com/
 
-# How do I get my `apiKey` and `indexName`?
+# How do I get an `apiKey` and `indexName`?
 
-Just send us [an email](mailto:documentationsearch@algolia.com) with the url of
-the documentation you would like to search, and we'll this info back to you.
+Send us [an email](mailto:docsearch@algolia.com) with the url of
+the documentation website you would like to add search to.
 
 # How does it work?
 
@@ -35,16 +38,36 @@ The JavaScript library is a wrapper on top of our
 [autocomplete.js](https://github.com/algolia/autocomplete.js) library, along
 with default CSS styling of the dropdown.
 
-The indexing of the data itself is currently done by an internal tool (we will
-release it later), that runs every hour.
+The indexing of the website data itself is currently done by an internal tool (to be released).
 
-# Development
+Indexing of docsearch.js linked websites takes places every day.
 
-You need [ruby](https://www.ruby-lang.org/en/), [bundler](http://bundler.io/).
+# Development workflow
+
+## Local example
+
+We use a simple documentation example website as a way to develop the docsearch.js library.
+
+Requirements:
+- [Node.js](https://nodejs.org/en/)
+- npm@2
+ 
+```sh
+npm run dev
+# open http://localhost:8080
+```
+
+## Documentation website
+
+This is the [Jekyll](https://jekyllrb.com/) instance running at https://community.algolia.com/docsearch.js.
+
+Requirements:
+- [Ruby](https://www.ruby-lang.org/en/)
+- [Bundler](http://bundler.io/)
 
 ```sh
-bundle install
-bundle exec guard
+npm run dev:docs
+# open http://localhost:4000/docsearch.js/
 ```
 
 ## MacOS
