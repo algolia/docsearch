@@ -98,15 +98,24 @@ class DocSearch {
     // Translate hits into smaller objects to be send to the template
     return groupedHits.map((hit) => {
       let url = hit.anchor ? `${hit.url}#${hit.anchor}` : hit.url;
-      let displayTitle = utils.compact([hit.lvl2, hit.lvl3, hit.lvl4, hit.lvl5, hit.lvl6]).join(' › ');
+      let category = this.getHighlightedValue(hit, 'lvl0');
+      let subcategory = this.getHighlightedValue(hit, 'lvl1') || category;
+      let displayTitle = utils.compact([
+        this.getHighlightedValue(hit, 'lvl2') || subcategory,
+        this.getHighlightedValue(hit, 'lvl3'),
+        this.getHighlightedValue(hit, 'lvl4'),
+        this.getHighlightedValue(hit, 'lvl5'),
+        this.getHighlightedValue(hit, 'lvl6')
+      ]).join(' › ');
+      let text = this.getSnippettedValue(hit, 'content');
 
       return {
         isCategoryHeader: hit.isCategoryHeader,
         isSubcategoryHeader: hit.isSubcategoryHeader,
-        category: this.getHighlightedValue(hit, 'lvl0'),
-        subcategory: this.getHighlightedValue(hit, 'lvl1'),
+        category: category,
+        subcategory: subcategory,
         title: displayTitle,
-        text: hit.content,
+        text: text,
         url: url
       };
     });
@@ -115,6 +124,20 @@ class DocSearch {
   getHighlightedValue(object, key) {
     let highlight = object._highlightResult[key];
     return highlight ? highlight.value : object[key];
+  }
+
+  getSnippettedValue(object, key) {
+    if (!object._snippetResult || !object._snippetResult[key].value) {
+      return object[key];
+    }
+    let snippet = object._snippetResult[key].value;
+    if (snippet[0] !== snippet[0].toUpperCase()) {
+      snippet = `…${snippet}`;
+    }
+    if (['.', '!', '?'].indexOf(snippet[snippet.length - 1]) === -1) {
+      snippet = `${snippet}…`;
+    }
+    return snippet;
   }
 
   getSuggestionTemplate() {
