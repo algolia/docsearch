@@ -1,11 +1,15 @@
 @import "variables";
 $color-border: #3A33D1;
+$color-border-light: #9D99E8;
 $color-category-header: #4B54DE;
 $color-highlight-header: #4D47D5;
 $color-highlight: #3A33D1;
 $color-selected-text: #272296;
 $color-selected-background: #EBEBFB;
-$breakpoint-small: 568px;
+$color-left-column-bg: #F2F2FF;
+$color-left-column: #4E4726;
+$breakpoint-medium: 568px;
+$breakpoint-large: 768px;;
 
 
 // Need to add to the readme something along the lines of:
@@ -100,7 +104,7 @@ $breakpoint-small: 568px;
 
 // BREAKPOINT 1:
 // Screen is big enough to display the text snippets
-@media (min-width: $breakpoint-small) {
+@media (min-width: $breakpoint-medium) {
   .ads-suggestion--text {
     display: block;
     font-size: .9em;
@@ -108,55 +112,42 @@ $breakpoint-small: 568px;
   }
 }
 
+// BREAKPOINT 2:
+// Screen is big enough to display results in two columns
+@media (min-width: $breakpoint-large) {
+  .ads-suggestion {
+    display: table;
+    width: 100%;
+    border-bottom: 1px solid $color-border-light;
+  }
+  .ads-suggestion--subcategory-column {
+    border-right: 1px solid $color-border-light;
+    background: $color-left-column-bg;
+    color: $color-left-column;
+    display: table-cell;
+    overflow: hidden;
+    padding: 5px 7px 5px 5px;
+    text-align: right;
+    text-overflow: ellipsis;
+    vertical-align: top;
 
-
-// 
-// 
-// /* Screen big enough to display results in two columns */
-// @media (min-width: 768px) {
-//    /* Use table display for the two columns */
-//   .suggestion {
-//     display: table;
-//     width: 100%;
-//     border-bottom: 1px solid #9D99E8;
-//   }
-//   .suggestion-subcategory-main {
-//     border-right: 1px solid #9D99E8;
-//     background: #F2F2FF;
-//     color: #4E4726;
-//     display: table-cell;
-//     max-width: 135px;
-//     min-width: 135px;
-//     overflow: hidden;
-//     padding: 5px 7px 5px 5px;
-//     text-align: right;
-//     text-overflow: ellipsis;
-//     vertical-align: top;
-//     width: 135px;
-//   }
-//   .suggestion-content {
-//     display: table-cell;
-//     padding: 5px 10px;
-//   }
-//   .suggestion-subcategory-secondary {
-//     display: none;
-//   }
-//   .suggestion-title {
-//     font-weight: 600;
-//   }
-//   .suggestion-text {
-//     display: block;
-//     font-weight: normal;
-//     padding: 2px;
-//   }
-// }
-// 
-// /* Enough room to display the autocomplete in the header directly */
-// @media (min-width: 996px) {
-//   .aa-dropdown-menu {
-//     left: -30px !important;
-//     right: -270px !important;
-//   }
-// }
-// 
-// 
+    width: 135px; // Hardcoded
+    max-width: 135px; // Hardcoded
+    min-width: 135px; // Hardcoded
+  }
+  .ads-suggestion--content {
+    display: table-cell;
+    padding: 5px 10px;
+  }
+  .ads-suggestion--subcategory-inline {
+    display: none;
+  }
+  .ads-suggestion--title {
+    font-weight: 600;
+  }
+  .ads-suggestion--text {
+    display: block;
+    font-weight: normal;
+    padding: 2px;
+  }
+}
