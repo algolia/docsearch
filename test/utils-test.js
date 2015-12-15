@@ -266,4 +266,71 @@ describe('utils', () => {
       expect(actual).toEqual('foo');
     });
   });
+
+  describe('getSnippetedValue', () => {
+    it('should return the key value if no snippet returned', () => {
+      // Given
+      let input = {
+        text: 'Foo'
+      };
+
+      // When
+      let actual = utils.getSnippetedValue(input, 'text');
+
+      // Then
+      expect(actual).toEqual('Foo');
+    });
+    it('should return the key value if no snippet for this key', () => {
+      // Given
+      let input = {
+        _snippetResult: {
+          content: {
+            value: '<mark>Bar</mark>'
+          }
+        },
+        text: 'Foo',
+        content: 'Bar'
+      };
+
+      // When
+      let actual = utils.getSnippetedValue(input, 'text');
+
+      // Then
+      expect(actual).toEqual('Foo');
+    });
+    it('should add ellipsis at the start if snippet does not start with a capital letter', () => {
+      // Given
+      let input = {
+        _snippetResult: {
+          text: {
+            value: 'this is the <mark>end</mark> of a sentence.'
+          }
+        },
+        text: 'this is the end of a sentence.'
+      };
+
+      // When
+      let actual = utils.getSnippetedValue(input, 'text');
+
+      // Then
+      expect(actual).toEqual('…this is the <mark>end</mark> of a sentence.');
+    });
+    it('should add ellipsis at the end if snippet does not end with a terminal point', () => {
+      // Given
+      let input = {
+        _snippetResult: {
+          text: {
+            value: 'This is an <mark>finished</mark> sentence'
+          }
+        },
+        text: 'This is an <mark>finished</mark> sentence'
+      };
+
+      // When
+      let actual = utils.getSnippetedValue(input, 'text');
+
+      // Then
+      expect(actual).toEqual('This is an <mark>finished</mark> sentence…');
+    });
+  });
 });
