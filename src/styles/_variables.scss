@@ -1,3 +1,13 @@
-$color1: #4B54DE;
-$color2: #4D47D5;
-$color3: #3A33D1;
+$color-border: #3A3A3A;
+$color-border-light: lighten($color-border, 15%);
+$color-category-header: #333333;
+$color-highlight-header: #3A3A3A;
+$color-highlight: #448CDE;
+$color-selected-background: #CECECE;
+$color-selected-text: #0000FF;
+$color-left-column-bg: #CECECE;
+$color-left-column: #4E4726;
+
+$breakpoint-medium: 568px;
+$breakpoint-large: 768px;;
+

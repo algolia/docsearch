@@ -1,0 +1,38 @@
+/* Bottom border of each suggestion */
+.ads-suggestion {
+  border-bottom-color: #3A3DD1;
+}
+/* Main category headers */
+.ads-suggestion--category-header {
+  background-color: #4B54DE;
+}
+/* Highlighted search terms */
+.ads-suggestion--highlight {
+  color: #3A33D1;
+}
+/* Highligted search terms in the main category headers */
+.ads-suggestion--category-header .ads-suggestion--highlight  {
+  background-color: #4D47D5;
+}
+/* Currently selected suggestion */
+.aa-cursor .ads-suggestion--content {
+  color: #272296;
+}
+.aa-cursor .ads-suggestion {
+  background: #EBEBFB;
+}
+
+/* For bigger screens, when displaying results in two columns */
+@media (min-width: 768px) {
+  /* Bottom border of each suggestion */
+  .ads-suggestion {
+    border-bottom-color: #7671df;
+  }
+  /* Left column, with secondary category header */
+  .ads-suggestion--subcategory-column {
+    border-right-color: #7671df;
+    background-color: #F2F2FF;
+    color: #4E4726;
+  }
+}
+

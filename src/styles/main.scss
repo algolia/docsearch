@@ -1,16 +1,4 @@
 @import "variables";
-$color-border: #3A33D1;
-$color-border-light: lighten($color-border, 15%);
-$color-category-header: #4B54DE;
-$color-highlight-header: #4D47D5;
-$color-highlight: $color-border;
-$color-selected-background: #EBEBFB;
-$color-left-column-bg: #F2F2FF;
-$color-left-column: #4E4726;
-
-$breakpoint-medium: 568px;
-$breakpoint-large: 768px;;
-
 
 // The dropdown adapts to screen size, to provide three different displays.
 // - A simple list of matching results
