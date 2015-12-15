@@ -1,7 +1,7 @@
 # Site settings
 title: Documentation Search
 description: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum quod hic qui, possimus ab ratione illo reiciendis nostrum sit aperiam debitis enim illum sequi reprehenderit porro error, sint earum rem!
-baseurl: "/docsearch.js" # the subpath of your site, e.g. /blog/
+baseurl: "/docsearch" # the subpath of your site, e.g. /blog/
 twitter_username: algolia
 github_username: algolia
 host: 0.0.0.0
