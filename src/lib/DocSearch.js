@@ -98,14 +98,14 @@ class DocSearch {
     // Translate hits into smaller objects to be send to the template
     return groupedHits.map((hit) => {
       let url = hit.anchor ? `${hit.url}#${hit.anchor}` : hit.url;
-      let category = this.getHighlightedValue(hit, 'lvl0');
-      let subcategory = this.getHighlightedValue(hit, 'lvl1') || category;
+      let category = utils.getHighlightedValue(hit, 'lvl0');
+      let subcategory = utils.getHighlightedValue(hit, 'lvl1') || category;
       let displayTitle = utils.compact([
-        this.getHighlightedValue(hit, 'lvl2') || subcategory,
-        this.getHighlightedValue(hit, 'lvl3'),
-        this.getHighlightedValue(hit, 'lvl4'),
-        this.getHighlightedValue(hit, 'lvl5'),
-        this.getHighlightedValue(hit, 'lvl6')
+        utils.getHighlightedValue(hit, 'lvl2') || subcategory,
+        utils.getHighlightedValue(hit, 'lvl3'),
+        utils.getHighlightedValue(hit, 'lvl4'),
+        utils.getHighlightedValue(hit, 'lvl5'),
+        utils.getHighlightedValue(hit, 'lvl6')
       ]).join(' › ');
       let text = this.getSnippettedValue(hit, 'content');
 
@@ -119,11 +119,6 @@ class DocSearch {
         url: url
       };
     });
-  }
-
-  getHighlightedValue(object, key) {
-    let highlight = object._highlightResult[key];
-    return highlight ? highlight.value : object[key];
   }
 
   getSnippettedValue(object, key) {

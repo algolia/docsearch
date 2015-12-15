@@ -3,6 +3,11 @@
 import jsdom from 'mocha-jsdom';
 import expect from 'expect';
 
+let ddescribe = describe.only;
+let xdescribe = describe.skip;
+let iit = it.only;
+let xit = it.skip;
+
 describe('utils', () => {
   var utils;
   jsdom();
@@ -212,6 +217,53 @@ describe('utils', () => {
 
       // Then
       expect(actual).toEqual([42, [], 'foo']);
+    });
+  });
+
+  describe('getHighlightedValue', () => {
+    it('should return the highlighted version if exists', () => {
+      // Given
+      let input = {
+        _highlightResult: {
+          text: {
+            value: '<mark>foo</mark>'
+          }
+        },
+        text: 'foo'
+      };
+
+      // When
+      let actual = utils.getHighlightedValue(input, 'text');
+
+      // Then
+      expect(actual).toEqual('<mark>foo</mark>');
+    });
+    it('should return the default key if no highlighted value', () => {
+      // Given
+      let input = {
+        _highlightResult: {
+          text: { }
+        },
+        text: 'foo'
+      };
+
+      // When
+      let actual = utils.getHighlightedValue(input, 'text');
+
+      // Then
+      expect(actual).toEqual('foo');
+    });
+    it('should return the default key if no highlight results', () => {
+      // Given
+      let input = {
+        text: 'foo'
+      };
+
+      // When
+      let actual = utils.getHighlightedValue(input, 'text');
+
+      // Then
+      expect(actual).toEqual('foo');
     });
   });
 });
