@@ -169,6 +169,33 @@ let utils = {
     });
     return results;
   },
+  /*
+   * Returns the highlighted value of the specified key in the specified object.
+   * If no highlighted value is available, will return the key value directly
+   * eg.
+   * getHighlightedValue({
+   *    _highlightResult: {
+   *      text: {
+   *        value: '<mark>foo</mark>'
+   *      }
+   *    },
+   *    text: 'foo'
+   * }, 'foo');
+   * =>
+   * '<mark>foo</mark>'
+   * @param {object} object Hit object returned by the Algolia API
+   * @param {string} property Object key to look for
+   * @return {string}
+   **/
+  getHighlightedValue(object, property) {
+    if (!object._highlightResult
+        || !object._highlightResult[property]
+        || !object._highlightResult[property].value) {
+      return object[property];
+    }
+    return object._highlightResult[property].value;
+  }
+
 
 };
 
