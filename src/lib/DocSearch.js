@@ -107,7 +107,7 @@ class DocSearch {
         utils.getHighlightedValue(hit, 'lvl5'),
         utils.getHighlightedValue(hit, 'lvl6')
       ]).join(' › ');
-      let text = this.getSnippettedValue(hit, 'content');
+      let text = utils.getSnippettedValue(hit, 'content');
 
       return {
         isCategoryHeader: hit.isCategoryHeader,
@@ -119,20 +119,6 @@ class DocSearch {
         url: url
       };
     });
-  }
-
-  getSnippettedValue(object, key) {
-    if (!object._snippetResult || !object._snippetResult[key].value) {
-      return object[key];
-    }
-    let snippet = object._snippetResult[key].value;
-    if (snippet[0] !== snippet[0].toUpperCase()) {
-      snippet = `…${snippet}`;
-    }
-    if (['.', '!', '?'].indexOf(snippet[snippet.length - 1]) === -1) {
-      snippet = `${snippet}…`;
-    }
-    return snippet;
   }
 
   getSuggestionTemplate() {

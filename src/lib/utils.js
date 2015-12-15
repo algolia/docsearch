@@ -180,7 +180,7 @@ let utils = {
    *      }
    *    },
    *    text: 'foo'
-   * }, 'foo');
+   * }, 'text');
    * =>
    * '<mark>foo</mark>'
    * @param {object} object Hit object returned by the Algolia API
@@ -194,6 +194,42 @@ let utils = {
       return object[property];
     }
     return object._highlightResult[property].value;
+  },
+  /*
+   * Returns the snippeted value of the specified key in the specified object.
+   * If no highlighted value is available, will return the key value directly.
+   * Will add starting and ending ellipsis (…) if we detect that a sentence is
+   * incomplete
+   * eg.
+   * getSnippetedValue({
+   *    _snippetResult: {
+   *      text: {
+   *        value: '<mark>This is an unfinished sentence</mark>'
+   *      }
+   *    },
+   *    text: 'This is an unfinished sentence'
+   * }, 'text');
+   * =>
+   * '<mark>This is an unefinished sentenced</mark>…'
+   * @param {object} object Hit object returned by the Algolia API
+   * @param {string} property Object key to look for
+   * @return {string}
+   **/
+  getSnippetedValue(object, property) {
+    if (!object._snippetResult
+        || !object._snippetResult[property]
+        || !object._snippetResult[property].value) {
+      return object[property];
+    }
+    let snippet = object._snippetResult[property].value;
+
+    if (snippet[0] !== snippet[0].toUpperCase()) {
+      snippet = `…${snippet}`;
+    }
+    if (['.', '!', '?'].indexOf(snippet[snippet.length - 1]) === -1) {
+      snippet = `${snippet}…`;
+    }
+    return snippet;
   }
 
 
