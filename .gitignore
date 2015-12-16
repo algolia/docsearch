@@ -1,6 +1,5 @@
 node_modules/
 dist/
-dist-es5-module/
 npm-debug.log*
 docs/_site
 docs/.sass-cache/

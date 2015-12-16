@@ -2,7 +2,7 @@
   "name": "docsearch.js",
   "version": "0.0.1",
   "description": "Add an autocomplete dropdown to your documentation",
-  "main": "dist-es5-module/index.js",
+  "main": "dist/npm/index.js",
   "scripts": {
     "dev": "./scripts/dev",
     "dev:docs": "./scripts/dev-docs",
