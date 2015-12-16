@@ -1,5 +1,6 @@
 export default {
   entry: './index.js',
+  devtool: 'source-map',
   output: {
     path: './dist/cdn',
     filename: 'docsearch.js',
