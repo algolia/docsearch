@@ -1,3 +1,19 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [docsearch](#docsearch)
+- [Usage](#usage)
+- [Examples](#examples)
+- [How do I get an `apiKey` and `indexName`?](#how-do-i-get-an-apikey-and-indexname)
+- [How does it work?](#how-does-it-work)
+- [Development workflow](#development-workflow)
+  - [Local example](#local-example)
+  - [Documentation website](#documentation-website)
+  - [MacOS](#macos)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # docsearch
 
 Add a search autocomplete to any documentation.
