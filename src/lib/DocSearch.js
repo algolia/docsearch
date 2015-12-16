@@ -43,7 +43,8 @@ class DocSearch {
     this.autocomplete = autocomplete(this.input, autocompleteOptions, [{
       source: this.getSource(),
       templates: {
-        suggestion: this.getSuggestionTemplate()
+        suggestion: this.getSuggestionTemplate(),
+        footer: '<div class="ads-footer">Search by <a class="ads-footer--logo" href="https://www.algolia.com/docsearch">Algolia</a></div>'
       }
     }]);
     this.autocomplete.on('autocomplete:selected', this.handleSelected);
