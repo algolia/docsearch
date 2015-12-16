@@ -3,11 +3,6 @@
 import jsdom from 'mocha-jsdom';
 import expect from 'expect';
 
-let ddescribe = describe.only;
-let xdescribe = describe.skip;
-let iit = it.only;
-let xit = it.skip;
-
 describe('utils', () => {
   var utils;
   jsdom();
