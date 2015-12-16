@@ -23,4 +23,4 @@ while true; do
 done
 
 curl --silent -L $CACHE_URL > /dev/null
-./scripts/docs/update-website.sh
+./scripts/docs/update-website
