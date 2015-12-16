@@ -80,6 +80,7 @@ git push origin master
 git push origin --tags
 npm publish
 # also update beta
+npm dist-tag add docsearch.js@latest beta
 npm publish --tag beta
 git checkout develop
 git pull origin develop
