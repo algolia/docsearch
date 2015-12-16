@@ -76,7 +76,7 @@ touch $tmpfile
 
 # git add and tag
 commitMessage="v$newVersion\n\n$changelog"
-git add src/lib/version.js npm-shrinkwrap.json package.json CHANGELOG.md CONTRIBUTING.md README.md docs/_includes/widget-jsdoc
+git add src/lib/version.js npm-shrinkwrap.json package.json CHANGELOG.md CONTRIBUTING.md README.md
 printf "$commitMessage" | git commit --file -
 
 printf "\n\nBeta release: almost done, check everything in another terminal tab.\n"
