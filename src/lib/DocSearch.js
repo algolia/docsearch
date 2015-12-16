@@ -3,6 +3,7 @@ import algoliasearch from 'algoliasearch';
 import autocomplete from 'autocomplete.js';
 import templates from './templates.js';
 import utils from './utils.js';
+import version from './version.js';
 import $ from 'npm-zepto';
 
 /**
@@ -38,6 +39,7 @@ class DocSearch {
     this.checkArguments({apiKey, indexName, inputSelector, algoliaOptions, autocompleteOptions});
 
     this.client = algoliasearch('BH4D9OD16A', this.apiKey);
+    this.client.addAlgoliaAgent('docsearch.js ' + version);
     this.autocomplete = autocomplete(this.input, autocompleteOptions, [{
       source: this.getSource(),
       templates: {

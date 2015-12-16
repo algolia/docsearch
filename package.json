@@ -7,19 +7,19 @@
     "dev": "./scripts/dev",
     "dev:docs": "./scripts/dev-docs",
     "shrinkwrap": "npm-shrinkwrap --dev",
-    "prepublish": "NODE_ENV=production npm run build",
+    "doctoc": "doctoc --maxlevel 3 README.md CONTRIBUTING.md",
     "build": "./scripts/build",
     "build:css": "./scripts/build-css",
     "build:js": "./scripts/build-js",
     "release": "./scripts/release",
+    "release:beta": "./scripts/release-beta",
     "lint": "eslint .",
     "test": "BABEL_ENV=test mocha --reporter dot",
-    "test:watch": "BABEL_ENV=test mocha --reporter min --watch",
-    "gh-pages": "./scripts/gh-pages"
+    "test:watch": "BABEL_ENV=test mocha --reporter min --watch"
   },
   "author": "Algolia <support@algolia.com> (https://github.com/algolia/)",
   "license": "MIT",
-  "repository": "algolia/docsearch.js",
+  "repository": "algolia/docsearch",
   "devDependencies": {
     "autoprefixer": "^6.1.2",
     "babel": "^5.8.29",

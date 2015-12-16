@@ -1,4 +1,4 @@
-# docsearch.js
+# docsearch
 
 Add a search autocomplete to any documentation.
 
@@ -40,7 +40,7 @@ with default CSS styling of the dropdown.
 
 The indexing of the website data itself is currently done by an internal tool (to be released).
 
-Indexing of docsearch.js linked websites takes places every day.
+Indexing of websites using docsearch takes places every day.
 
 # Development workflow
 
@@ -59,7 +59,7 @@ npm run dev
 
 ## Documentation website
 
-This is the [Jekyll](https://jekyllrb.com/) instance running at https://community.algolia.com/docsearch.js.
+This is the [Jekyll](https://jekyllrb.com/) instance running at https://community.algolia.com/docsearch.
 
 Requirements:
 - [Ruby](https://www.ruby-lang.org/en/)
@@ -67,7 +67,7 @@ Requirements:
 
 ```sh
 npm run dev:docs
-# open http://localhost:4000/docsearch.js/
+# open http://localhost:4000/docsearch/
 ```
 
 ## MacOS

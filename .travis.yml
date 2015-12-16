@@ -1,16 +1,23 @@
 language: node_js
 node_js: 4
-before_install: npm prune
+before_install:
+  - 'git config --global user.email "algobot@users.noreply.github.com"'
+  - 'git config --global user.name "algobot"'
+  - npm prune
+  - rvm install 2.2.0
+  - rvm use 2.2.0
 before_cache: npm prune
 install: npm install
-script: npm test
+script: ./scripts/test-ci
 branches:
   only:
     - master
     - develop
-# force container based infra
-# http://docs.travis-ci.com/user/workers/container-based-infrastructure/#Routing-your-build-to-container-based-infrastructure
 sudo: false
 cache:
   directories:
     - node_modules
+env:
+  global:
+    - secure: Y2qFJk1LUqyGD38psPIOBhgokn6E+G9xOO725KvmcPkmB8B9cFHoY5+tgFeAU96QjSdcePJIISeKBGnknPljyCPQ9q49twHPduS4tT9iIN1MjSEv76C4qJ3M1P9HAV8c3RukWjqlgvDXJQNFA9xCh6Cs3aKqJfiQrJhMpSmGjZlJfsLjfss8N9Rp9gRrsRp0m0vgxKA2ASCKz6ArDl5XxfnnSjDyp487lURD83To/Wijbm+6Wrl/AZVKlEnzXNl2V1Qn62ZZbkHvD6xAbGFm5BNP9yjsFHwhr/YEhpRoINOfmDBsUQojOCZf71offXA8IQiGfwIq3Jg8+gar7aQd+EvgDiiwtzoBwvNDZw82AUfB2bHSAIFYn/RgNDmyWqN9BObKw6rM/MhqCGn+jBFHVEcHP5FtFawsM6j+4OareB03ycpkUu+nFmAvmpVenzHtbSZQtP2GnmBYoRBL+zp4O8CAOZv6VTlxYd/pwJor0yZa7ZKu/DDjfOAyTOD/tBfmvVkxGUS8tRXMBcMDdzh9I6eb/QrBPT0tHc3HLVtWmA+yBJ0B4pTZai4uzEcZFHzyIhNRxshZ36uObbxNWOa+52RKrJlsPJ35Drosdqt7O7rVFrOGH4H0aKfA+WjO7pky6rSB5oILHZdz3r2G4PIXFLpAtyV0pMUso3xk1akR2MI=
+    - secure: d9QgN3kXLHwYt3w/ff0nzqVVtm+UhZ2NS7Xl6oWoEzz4518TEmTXkDjfhPGVm0tTlFm9/oNDQhg5ozIVjiPooiC0wpHUubFBI7wrzLjmxYjvFTgaN3YI+HBJJGlUU120mYtXIiP8WVnoViyceSMkXUIe7jjgeche7XLHgEgQwzR1qYfNlwMiAjEU1iCmJmiJ8Xa+QJHNAeG/RLn+6TtRCvTsIeZlWLpq+uaQH/93ehhtLVnqhaOxE7dPYQT6J1PrDb8PrwUaTqLaeEK1UDGvHJWmqSsXxHVSTMulovXBXYKGNmrk8Kk7fAT7jFdxJBsbYYMjDbIiTE9F1zh4Z39Bwl89NHj33107zjiAlv5nFpOJgHIdoL6wW1bmMoYls3Z5jrcYAHbKwWa9WqPHjW4MbW8MxbGI5t0NqWnk/XGZb96uvzhqN9zyWCNPI7G+uxjHbme0YnL7SyJ5cD+uQyGKxCSJP+/4UJJWXJF+P0dwjKj16qhhSM3XNvKjE2S+iU+/yoH6ZuaiqSz9JMbs48+gtLdc+lz8tqGauKXrj6+WJBGmzj1IZKxi85lwpwWH+9cMfqOJdUoKrENKwEkDdkfcElZGRT5QtdWcnAysIyVpk81ndmayJLv1NP/uqyctJkmfH+X1ghyiz9lennrpgP57ezZtx1u2AAVKGmIvzjWzx3o=
