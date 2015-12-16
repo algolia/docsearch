@@ -48,7 +48,7 @@
     "postcss-cli": "^2.3.2",
     "pretty-bytes": "^2.0.1",
     "semver": "^5.1.0",
-    "uglifyjs": "^2.4.10",
+    "uglify-js": "^2.6.1",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.1"
   },
