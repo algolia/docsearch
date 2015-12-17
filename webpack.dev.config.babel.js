@@ -26,5 +26,5 @@ export default {
   // same issue, for loaders like babel
   resolveLoader: {
     fallback: [join(__dirname, '..', 'node_modules')]
-  },
+  }
 };

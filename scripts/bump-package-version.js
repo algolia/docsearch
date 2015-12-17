@@ -1,3 +1,4 @@
+/* eslint no-console:0 max-len:0 */
 import fs from 'fs';
 import path from 'path';
 

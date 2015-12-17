@@ -36,12 +36,18 @@ class DocSearch {
       hint: false
     }
   }) {
-    this.checkArguments({apiKey, indexName, inputSelector, algoliaOptions, autocompleteOptions});
+    DocSearch.checkArguments({apiKey, indexName, inputSelector, algoliaOptions, autocompleteOptions});
+
+    this.apiKey = apiKey;
+    this.indexName = indexName;
+    this.input = DocSearch.getInputFromSelector(inputSelector);
+    this.algoliaOptions = algoliaOptions;
+    this.autocompleteOptions = autocompleteOptions;
 
     this.client = algoliasearch('BH4D9OD16A', this.apiKey);
     this.client.addAlgoliaAgent('docsearch.js ' + version);
     this.autocomplete = autocomplete(this.input, autocompleteOptions, [{
-      source: this.getSource(),
+      source: this.getAutocompleteSource(),
       templates: {
         suggestion: this.getSuggestionTemplate(),
         footer: '<div class="ads-footer">Search by <a class="ads-footer--logo" href="https://www.algolia.com/docsearch">Algolia</a></div>'
@@ -50,26 +56,42 @@ class DocSearch {
     this.autocomplete.on('autocomplete:selected', this.handleSelected);
   }
 
-  checkArguments(args) {
+  /**
+   * Checks that the passed arguments are valid. Will throw errors otherwise
+   * @function checkArguments
+   * @param  {object} args Arguments as an option object
+   * @returns {void}
+   */
+  static checkArguments(args) {
     if (!args.apiKey || !args.indexName) {
       throw new Error(usage);
     }
 
-    const input = $(args.inputSelector).filter('input');
-    if (input.length === 0) {
+    if (!DocSearch.getInputFromSelector(args.inputSelector)) {
       throw new Error(`Error: No input element in the page matches ${args.inputSelector}`);
     }
-
-    this.apiKey = args.apiKey;
-    this.indexName = args.indexName;
-    this.input = input;
-    this.algoliaOptions = args.algoliaOptions;
-    this.autocompleteOptions = args.autocompleteOptions;
   }
 
-  // Returns a `source` method to be used by `autocomplete`. This will query the
-  // Algolia index.
-  getSource() {
+  /**
+   * Returns the matching input from a CSS selector, null if none matches
+   * @function getInputFromSelector
+   * @param  {string} selector CSS selector that matches the search
+   * input of the page
+   * @returns {void}
+   */
+  static getInputFromSelector(selector) {
+    let input = $(selector).filter('input');
+    return input.length ? $(input[0]) : null;
+  }
+
+  /**
+   * Returns the `source` method to be passed to autocomplete.js. It will query
+   * the Algolia index and call the callbacks with the formatted hits.
+   * @function getAutocompleteSource
+   * @returns {function} Method to be passed as the `source` option of
+   * autocomplete
+   */
+  getAutocompleteSource() {
     return (query, callback) => {
       this.client.search([{
         indexName: this.indexName,
