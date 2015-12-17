@@ -29,7 +29,7 @@
 // Main category headers
 .ads-suggestion--category-header {
   display: none;
-  background-color: $color-category-header;
+  background: $color-category-header-background;
   color: white;
   font-weight: 600;
   padding: 5px 10px;
@@ -43,13 +43,13 @@
 // Highlight
 .ads-suggestion--highlight {
   padding: 0;
-  color: $color-highlight;
+  color: $color-highlight-text;
   background: none;
   font-weight: 600;
   // Highlight the background in header
   .ads-suggestion--category-header & {
     color: inherit;
-    background-color: $color-highlight-header;
+    background: $color-highlight-header-background;
   }
 }
 
