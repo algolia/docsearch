@@ -44,6 +44,12 @@ class DocSearch {
     this.algoliaOptions = algoliaOptions;
     this.autocompleteOptions = autocompleteOptions;
 
+    this.apiKey = apiKey;
+    this.indexName = indexName;
+    this.input = this.getInputFromSelector(inputSelector);
+    this.algoliaOptions = algoliaOptions;
+    this.autocompleteOptions = autocompleteOptions;
+
     this.client = algoliasearch('BH4D9OD16A', this.apiKey);
     this.client.addAlgoliaAgent('docsearch.js ' + version);
     this.autocomplete = autocomplete(this.input, autocompleteOptions, [{
@@ -68,8 +74,6 @@ class DocSearch {
     }
 
     if (!DocSearch.getInputFromSelector(args.inputSelector)) {
-      throw new Error(`Error: No input element in the page matches ${args.inputSelector}`);
-    }
   }
 
   /**

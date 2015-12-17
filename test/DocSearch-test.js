@@ -227,6 +227,17 @@ describe('DocSearch', () => {
       // Given
       let selector = '.i-do-not-exist > at #all';
 
+      DocSearch.prototype.checkArguments = checkArguments;
+      DocSearch.prototype.getInputFromSelector = getInputFromSelector;
+
+      DocSearch.__Rewire__('algoliasearch', AlgoliaSearch);
+      DocSearch.__Rewire__('autocomplete', AutoComplete);
+    });
+
+    it('should call checkArguments', () => {
+      // Given
+      let options = defaultOptions;
+
       // When
       let actual = getInputFromSelector(selector);
 
