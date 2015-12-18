@@ -118,7 +118,7 @@ DEPENDENCIES
   guard-jekyll-plus
   guard-livereload
   haml
-  jekyll
+  jekyll (< 3)
   jekyll-contentblocks
   nokogiri
   rouge
