@@ -3,7 +3,6 @@ layout: page
 title: Documentation
 permalink: /documentation/
 ---
-
 # Usage
 
 ```html
@@ -19,12 +18,17 @@ documentationSearch({
 });
 ```
 
+# Examples
+
+- http://eslint.org/
+- https://bootstrap.algolia.com/
+- https://reactjs.algolia.com/
+- https://babeljs.algolia.com/
 
 # How do I get an `apiKey` and `indexName`?
 
 Send us [an email](mailto:docsearch@algolia.com) with the url of
 the documentation website you would like to add search to.
-
 
 # How does it work?
 
