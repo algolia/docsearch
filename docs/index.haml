@@ -16,7 +16,15 @@ layout: default
       .jumbotron-left-column
         %p We’ve created the fastest, easiest way to search within documentation.
         %p And best of all? It’s free!
-      %iframe#join-form{:allowTransparency => "", :frameborder => "0", :height => "356", :scrolling => "no", :src => "//www.formget.com/app/embed/form/H5IR-174988/i?w=328"}
+      #join-form
+        %h3 Want to try it out?
+        %label Website
+        %input{:type=>"text", :placeholder => "http://docs.mywebsite.com/"}
+        %p We’ll crawl the documentation pages of your website and index them on Algolia.
+        %label Email
+        %input{:type=>"text", :placeholder => "my@email.com"}
+        %p We’ll send you the code you need to integrate the search autocomplete into your documentation.
+        %input{:type=>"submit", :name => "join", :value => "Join the beta!", :id => "form-submit"}
   #section_why.page-section
     .container
       .row

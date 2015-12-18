@@ -130,11 +130,41 @@ header.site-header nav.navbar .navbar-nav > li > a.navbar-github-link:hover {
 /* JOIN FORM
 // ------------------------- */
 #join-form {
-  background: white;
+  background: #242E3A;
   display: block;
   width: 400px;
+  padding: 0 10px;
   margin: 0 auto;
-  border: 2px solid #ccc;
+  border-radius: 6px;
+  color: #FFF;
+  h3 {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #3A434E;
+  }
+  label {
+    display: block;
+    font-weight: normal;
+  }
+  input {
+    width: 100%;
+    margin: 0 0 10px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    color: #091724;
+    outline: none;
+    &#form-submit {
+      background: transparent;
+      border: 3px solid #46AEDA;
+      color: #FF2E6C;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+  p {
+    font-size: 13px;
+    color: #C7C4C4;
+    font-style: italic;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -145,7 +175,7 @@ header.site-header nav.navbar .navbar-nav > li > a.navbar-github-link:hover {
     position: absolute;
     top: 240px;
     right: 120px;
-    padding: 10px;
+    padding: 10px 40px 30px;
   }
 }
 
