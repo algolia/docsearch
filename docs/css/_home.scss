@@ -145,6 +145,7 @@ header.site-header nav.navbar .navbar-nav > li > a.navbar-github-link:hover {
   color: #FFF;
   max-width: 90%;
   h3 {
+    text-align: center;
     padding-bottom: 20px;
     border-bottom: 1px solid #3A434E;
   }
@@ -153,6 +154,7 @@ header.site-header nav.navbar .navbar-nav > li > a.navbar-github-link:hover {
     font-weight: normal;
   }
   p {
+    margin-top: 5px;
     font-size: 13px;
     color: #C7C4C4;
     font-style: italic;
@@ -162,7 +164,7 @@ header.site-header nav.navbar .navbar-nav > li > a.navbar-github-link:hover {
 @media (min-width: 1200px) {
   #join-form {
     position: absolute;
-    top: 240px;
+    top: 200px;
     right: 120px;
     padding: 10px 40px 30px;
   }
