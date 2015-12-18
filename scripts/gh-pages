@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+rm -rf node_modules/gh-pages/.cache
+rm -rf docs/_site
+cd docs
+JEKYLL_ENV=production jekyll build
+gh-pages --dist _site --branch gh-pages
