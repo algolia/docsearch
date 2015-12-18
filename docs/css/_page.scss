@@ -1,4 +1,12 @@
 .page-content {
   font-size: 1.1em;
-  line-height: 1.5em; }
+  line-height: 1.5em;
+}
 
+code {
+  color: #FF2E6C;
+}
+
+.CodeRay .code pre * {
+  background: transparent !important;
+}

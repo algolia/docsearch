@@ -7,3 +7,6 @@ rm -rf dist
 # JavaScript
 npm run build:js
 npm run build:css
+
+# Documentation
+npm run build:docs
