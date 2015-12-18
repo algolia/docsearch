@@ -125,6 +125,9 @@ header.site-header nav.navbar .navbar-nav > li > a.navbar-github-link:hover {
   color: #FFF;
   margin-left: 120px;
 }
+.jumbotron .jumbotron-left-column p {
+  font-size: 22px;
+}
 @media (min-width: 1200px) {
   .jumbotron .jumbotron-left-column {
     display: block;
