@@ -1,0 +1,33 @@
+#!/bin/sh
+
+set -o nounset
+set -o errexit
+
+readonly SOURCE=README.md
+readonly OUTPUT=docs/documentation.md
+readonly START_TAG="<!-- START documentation.md -->"
+readonly END_TAG="<!-- END documentation.md -->"
+
+function escape_regex {
+  echo "$@" | sed -e 's/[]\/\!$*.^|[]/\\&/g'
+}
+
+function extract {
+  sed -n "/^\s*$(escape_regex $START_TAG)\s*$/,/^\s*$(escape_regex $END_TAG)\s*$/p" \
+    | sed '$d' \
+    | sed -n '2,$p'
+}
+
+function main {
+  rm -rf $OUTPUT && touch $OUTPUT
+
+  echo "---" >> $OUTPUT
+  echo "layout: page" >> $OUTPUT
+  echo "title: Documentation" >> $OUTPUT
+  echo "permalink: /documentation/" >> $OUTPUT
+  echo "---" >> $OUTPUT
+
+  cat $SOURCE | extract >> $OUTPUT
+}
+
+main

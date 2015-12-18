@@ -3,3 +3,4 @@ dist/
 npm-debug.log*
 docs/_site
 docs/.sass-cache/
+dist-es5-module/

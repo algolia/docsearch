@@ -11,11 +11,13 @@
     "build": "./scripts/build",
     "build:css": "./scripts/build-css",
     "build:js": "./scripts/build-js",
+    "build:docs": "./scripts/build-docs",
     "release": "./scripts/release",
     "release:beta": "./scripts/release-beta",
     "lint": "eslint .",
-    "test": "BABEL_ENV=test mocha --reporter dot",
-    "test:watch": "BABEL_ENV=test mocha --reporter min --watch"
+    "test": "BABEL_ENV=test mocha --reporter dot ./test/helpers.js ./test/*-test.js",
+    "test:watch": "BABEL_ENV=test mocha --reporter min --watch ./test/helpers.js ./test/*-test.js",
+    "gh-pages": "./scripts/gh-pages"
   },
   "author": "Algolia <support@algolia.com> (https://github.com/algolia/)",
   "license": "MIT",
@@ -42,6 +44,7 @@
     "mocha-jsdom": "^1.0.0",
     "mversion": "^1.10.1",
     "nd": "^1.2.0",
+    "node-fixtures": "0.0.1",
     "node-sass": "^3.4.2",
     "npm-shrinkwrap": "^200.4.0",
     "onchange": "^2.0.0",
