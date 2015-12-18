@@ -3,40 +3,39 @@ layout: page
 title: Documentation
 permalink: /documentation/
 ---
-# Usage
+
+## Introduction
+
+We're scratching our own itch here. As developers, we spend a lot of time reading documentation, and it isn’t always easy to find the information we need.
+
+Not blaming anyone here. Building a good search for a documentation is a complex challenge. We happen to have a lot of experience doing that, and we want to share it with the world. For free.
+
+Just submit the form on the [community.algolia.com/docsearch/](https://community.algolia.com/docsearch/) website and we'll get back to you with what you need to integrate your new search into your website.
+
+ 1. We'll crawl your documentation pages,
+ 2. We'll configure your search experience,
+ 3. and you'll need to add the a small JS/CSS code snippet to your website.
+
+## Setup
+
+Once we've crawled your documentation website we'll send you the credentials you need to add the following code snippet to your website:
 
 ```html
 <link rel="stylesheet" href="//cdn.jsdelivr.net/docsearch.js/0/docsearch.min.css" />
-<script src="//cdn.jsdelivr.net/docsearch.js/0/docsearch.min.js"></script>
-```
-
-```js
-documentationSearch({
-  apiKey: apiKey, // Mandatory
-  indexName: indexName, // Mandatory
-  inputSelector: '#search-input' // Mandatory
+<script type="text/javascript" src="//cdn.jsdelivr.net/docsearch.js/0/docsearch.min.js"></script>
+<script type="text/javascript">
+docSearch({
+  apiKey: '<API_KEY>',
+  indexName: '<INDEX_NAME>',
+  inputSelector: '<YOUR_INPUT_DOM_SELECTOR>'
 });
+</script>
 ```
 
-# Examples
+## Customization
 
-- http://eslint.org/
-- https://bootstrap.algolia.com/
-- https://reactjs.algolia.com/
-- https://babeljs.algolia.com/
+To customize the look & feel of the dropdown menu, you can either:
 
-# How do I get an `apiKey` and `indexName`?
-
-Send us [an email](mailto:docsearch@algolia.com) with the url of
-the documentation website you would like to add search to.
-
-# How does it work?
-
-The JavaScript library is a wrapper on top of our
-[autocomplete.js](https://github.com/algolia/autocomplete.js) library, along
-with default CSS styling of the dropdown.
-
-The indexing of the website data itself is currently done by an internal tool (to be released).
-
-Indexing of websites using docsearch takes places every day.
+ * edit the color [variables](https://github.com/algolia/docsearch/blob/master/src/styles/_variables.scss) and rebuild this project CSS,
+ * or override the colors like we did in [dev/docsearch-styling.css](https://github.com/algolia/docsearch/blob/master/dev/docsearch-styling.css).
 
