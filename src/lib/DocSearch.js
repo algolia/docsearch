@@ -44,19 +44,17 @@ class DocSearch {
     this.algoliaOptions = algoliaOptions;
     this.autocompleteOptions = autocompleteOptions;
 
-    this.apiKey = apiKey;
-    this.indexName = indexName;
-    this.input = this.getInputFromSelector(inputSelector);
-    this.algoliaOptions = algoliaOptions;
-    this.autocompleteOptions = autocompleteOptions;
-
     this.client = algoliasearch('BH4D9OD16A', this.apiKey);
     this.client.addAlgoliaAgent('docsearch.js ' + version);
     this.autocomplete = autocomplete(this.input, autocompleteOptions, [{
       source: this.getAutocompleteSource(),
       templates: {
         suggestion: this.getSuggestionTemplate(),
-        footer: '<div class="ads-footer">Search by <a class="ads-footer--logo" href="https://www.algolia.com/docsearch">Algolia</a></div>'
+        footer: `
+          <div class="ads-footer">
+            Search by <a class="ads-footer--logo" href="https://www.algolia.com/docsearch">Algolia</a>
+          </div>
+        `
       }
     }]);
     this.autocomplete.on('autocomplete:selected', this.handleSelected);
@@ -74,6 +72,8 @@ class DocSearch {
     }
 
     if (!DocSearch.getInputFromSelector(args.inputSelector)) {
+      throw new Error(`Error: No input element in the page matches ${args.inputSelector}`);
+    }
   }
 
   /**

@@ -34,10 +34,6 @@ describe('DocSearch', () => {
     let algoliasearch;
     let AutoComplete;
     let autocomplete;
-    let checkArguments;
-    let getInputFromSelector;
-    let checkArgumentsInitial;
-    let getInputFromSelectorInitial;
     let defaultOptions;
 
     beforeEach(() => {
@@ -50,28 +46,24 @@ describe('DocSearch', () => {
         on: sinon.spy()
       };
       AutoComplete = sinon.stub().returns(autocomplete);
-
-      checkArgumentsInitial = DocSearch.checkArguments;
-      checkArguments = sinon.spy();
-      getInputFromSelectorInitial = DocSearch.getInputFromSelector;
-      getInputFromSelector = sinon.stub();
       defaultOptions = {
         indexName: 'indexName',
         apiKey: 'apiKey',
         inputSelector: '#input'
       };
 
-      DocSearch.checkArguments = checkArguments;
-      DocSearch.getInputFromSelector = getInputFromSelector;
+      sinon.spy(DocSearch, 'checkArguments');
+      sinon.stub(DocSearch, 'getInputFromSelector').returns(true);
 
       DocSearch.__Rewire__('algoliasearch', AlgoliaSearch);
       DocSearch.__Rewire__('autocomplete', AutoComplete);
     });
 
     afterEach(() => {
-      // Cleanup the stubs on static methods
-      DocSearch.checkArguments = checkArgumentsInitial;
-      DocSearch.getInputFromSelector = getInputFromSelectorInitial;
+      DocSearch.checkArguments.restore();
+      DocSearch.getInputFromSelector.restore();
+      DocSearch.__ResetDependency__('algoliasearch');
+      DocSearch.__ResetDependency__('autocomplete');
     });
 
     it('should call checkArguments', () => {
@@ -82,7 +74,7 @@ describe('DocSearch', () => {
       new DocSearch(options);
 
       // Then
-      expect(checkArguments.calledOnce).toBe(true);
+      expect(DocSearch.checkArguments.calledOnce).toBe(true);
     });
     it('should pass main options as instance properties', () => {
       // Given
@@ -98,7 +90,7 @@ describe('DocSearch', () => {
     it('should pass the input element as an instance property', () => {
       // Given
       let options = defaultOptions;
-      getInputFromSelector.returns($('<span>foo</span>'));
+      DocSearch.getInputFromSelector.returns($('<span>foo</span>'));
 
       // When
       let actual = new DocSearch(options);
@@ -123,7 +115,7 @@ describe('DocSearch', () => {
       expect(actual.algoliaOptions).toEqual('algoliaOptions');
       expect(actual.autocompleteOptions).toEqual('autocompleteOptions');
     });
-    it('should instanciate algoliasearch with the correct values', () => {
+    it('should instantiate algoliasearch with the correct values', () => {
       // Given
       let options = defaultOptions;
 
@@ -144,14 +136,14 @@ describe('DocSearch', () => {
       // Then
       expect(algoliasearch.addAlgoliaAgent.calledOnce).toBe(true);
     });
-    it('should instanciate autocomplete.js', () => {
+    it('should instantiate autocomplete.js', () => {
       // Given
       let options = {
         ...defaultOptions,
         autocompleteOptions: 'bar'
       };
       let $input = $('<input name="foo" />');
-      getInputFromSelector.returns($input);
+      DocSearch.getInputFromSelector.returns($input);
 
       // When
       new DocSearch(options);
@@ -177,6 +169,12 @@ describe('DocSearch', () => {
     let checkArguments;
     beforeEach(() => {
       checkArguments = DocSearch.checkArguments;
+    });
+
+    afterEach(() => {
+      if (DocSearch.getInputFromSelector.restore) {
+        DocSearch.getInputFromSelector.restore();
+      }
     });
 
     it('should throw an error if no apiKey defined', () => {
@@ -207,8 +205,7 @@ describe('DocSearch', () => {
         apiKey: 'apiKey',
         indexName: 'indexName'
       };
-      let getInputFromSelector = sinon.stub().returns(false);
-      DocSearch.prototype.getInputFromSelector = getInputFromSelector;
+      sinon.stub(DocSearch, 'getInputFromSelector').returns(false);
 
       // When
       expect(() => {
@@ -226,17 +223,6 @@ describe('DocSearch', () => {
     it('should return null if no element matches the selector', () => {
       // Given
       let selector = '.i-do-not-exist > at #all';
-
-      DocSearch.prototype.checkArguments = checkArguments;
-      DocSearch.prototype.getInputFromSelector = getInputFromSelector;
-
-      DocSearch.__Rewire__('algoliasearch', AlgoliaSearch);
-      DocSearch.__Rewire__('autocomplete', AutoComplete);
-    });
-
-    it('should call checkArguments', () => {
-      // Given
-      let options = defaultOptions;
 
       // When
       let actual = getInputFromSelector(selector);
@@ -263,6 +249,64 @@ describe('DocSearch', () => {
 
       // Then
       expect($.zepto.isZ(actual)).toBe(true);
+    });
+  });
+
+  describe('getAutocompleteSource', () => {
+    let client;
+    let AlgoliaSearch;
+    let docsearch;
+    beforeEach(() => {
+      client = {
+        algolia: 'client',
+        addAlgoliaAgent: sinon.spy(),
+        search: sinon.stub().returns({
+          then: sinon.spy()
+        })
+      };
+      AlgoliaSearch = sinon.stub().returns(client);
+      DocSearch.__Rewire__('algoliasearch', AlgoliaSearch);
+
+      docsearch = new DocSearch({
+        indexName: 'indexName',
+        apiKey: 'apiKey',
+        inputSelector: '#input',
+        algoliaOptions: 'algoliaOptions'
+      });
+    });
+
+    afterEach(() => {
+      DocSearch.__ResetDependency__('algoliasearch');
+    });
+
+    it('returns a function', () => {
+      // Given
+      let actual = docsearch.getAutocompleteSource();
+
+      // When
+
+      // Then
+      expect(actual).toBeA('function');
+    });
+
+    describe('the returned function', () => {
+      it('calls the Agolia client with the correct parameters', () => {
+        // Given
+        let actual = docsearch.getAutocompleteSource();
+
+        // When
+        actual('query');
+
+        // Then
+        expect(client.search.calledOnce).toBe(true);
+        // expect(resolvedQuery.calledOnce).toBe(true);
+        let expectedArguments = {
+          indexName: 'indexName',
+          query: 'query',
+          params: 'algoliaOptions'
+        };
+        expect(client.search.calledWith([expectedArguments])).toBe(true);
+      });
     });
   });
 });
