@@ -11,6 +11,7 @@
     "build": "./scripts/build",
     "build:css": "./scripts/build-css",
     "build:js": "./scripts/build-js",
+    "build:docs": "./scripts/build-docs",
     "release": "./scripts/release",
     "release:beta": "./scripts/release-beta",
     "lint": "eslint .",

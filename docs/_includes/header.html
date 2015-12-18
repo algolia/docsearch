@@ -3,11 +3,19 @@
   <nav class="navbar navbar-default  navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a id="logo" href="/docsearch/"><img src='./img/algolia-logo.svg'></a>
+        <a id="logo" href="{{ site.baseurl }}/">
+          <img src="{{site.baseurl}}/img/algolia-logo.svg" alt="Algolia" />
+        </a>
         presents
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
+          {% assign url = page.url %}
+          {% for link in site.navigation %}
+            <li {% if url == link.url %}class="active"{% endif %}>
+              <a href="{{ site.baseurl }}{{ link.url }}" title="{{ link.title }}">{{ link.text }}</a>
+            </li>
+          {% endfor %}
           <li>
             <a class="navbar-github-link" href="//github.com/algolia/docsearch"><i class="fa fa-github"></i></a>
           </li>

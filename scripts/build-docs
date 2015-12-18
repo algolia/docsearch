@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+set -o nounset
+set -o errexit
+
+readonly SOURCE=README.md
+readonly OUTPUT=docs/documentation.md
+readonly SECTIONS=(
+  'Usage'
+  'How do I get an `apiKey` and `indexName`?'
+  'How does it work?'
+)
+
+function escape_regex {
+  echo "$@" | sed -e 's/[]\/$*.^|[]/\\&/g'
+}
+
+function extract {
+  local section=${1}
+
+  echo
+  sed -n "/^#\s*$(escape_regex $section)\s*$/,/^#[^#]/p" \
+    | head -n -1
+}
+
+function main {
+  rm -rf $OUTPUT && touch $OUTPUT
+
+  echo "---" >> $OUTPUT
+  echo "layout: page" >> $OUTPUT
+  echo "title: Documentation" >> $OUTPUT
+  echo "permalink: /documentation/" >> $OUTPUT
+  echo "---" >> $OUTPUT
+
+  for section in "${SECTIONS[@]}"; do
+    cat $SOURCE | extract "$section" >> $OUTPUT
+  done
+}
+
+main

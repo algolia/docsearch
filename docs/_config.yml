@@ -8,11 +8,28 @@ host: 0.0.0.0
 
 # Navigation
 navigation:
- - text: About
-   url: /about/
+  -
+    text: Documentation
+    url: /documentation/
+  -
+    text: About
+    url: /about/
 
 # Build settings
 markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+  auto_ids:       true
+  footnote_nr:    1
+  entity_output:  as_char
+  smart_quotes:   lsquo,rsquo,ldquo,rdquo
+  enable_coderay: true
+
+  coderay_wrap: div
+  coderay_line_numbers: nil
+  coderay_css: style
 
 # Assets
 sass:
