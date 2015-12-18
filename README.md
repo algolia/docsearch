@@ -21,6 +21,7 @@ Add a search autocomplete to any documentation.
 Currently on-demand, send an email to [docsearch@algolia.com](mailto:docsearch@algolia.com)
 if you want documentation search on your website.
 
+<!-- START documentation.md -->
 # Usage
 
 ```html
@@ -57,6 +58,8 @@ with default CSS styling of the dropdown.
 The indexing of the website data itself is currently done by an internal tool (to be released).
 
 Indexing of websites using docsearch takes places every day.
+
+<!-- END documentation.md -->
 
 # Development workflow
 
