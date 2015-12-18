@@ -118,11 +118,17 @@ header.site-header nav.navbar .navbar-nav > li > a.navbar-github-link:hover {
   color: #46AEDA;
 }
 .jumbotron .jumbotron-left-column {
+  display: none;
   padding-top: 100px;
   float: left;
   width: 400px;
   color: #FFF;
   margin-left: 120px;
+}
+@media (min-width: 1200px) {
+  .jumbotron .jumbotron-left-column {
+    display: block;
+  }
 }
 
 
@@ -133,10 +139,11 @@ header.site-header nav.navbar .navbar-nav > li > a.navbar-github-link:hover {
   background: #242E3A;
   display: block;
   width: 400px;
-  padding: 0 10px;
+  padding: 5px 10px;
   margin: 0 auto;
   border-radius: 6px;
   color: #FFF;
+  max-width: 90%;
   h3 {
     padding-bottom: 20px;
     border-bottom: 1px solid #3A434E;
@@ -168,9 +175,6 @@ header.site-header nav.navbar .navbar-nav > li > a.navbar-github-link:hover {
 }
 
 @media (min-width: 1200px) {
-  .jumbotron {
-    height: 400px;
-  }
   #join-form {
     position: absolute;
     top: 240px;
@@ -215,13 +219,21 @@ h2.page-section-title:after {
   width: 60px;
 }
 #section_why {
-  padding-left: 120px;
-  padding-right: 120px;
+  padding-left: 20px;
+  padding-right: 20px;
   font-size: 20px;
+}
+@media (min-width: 600px) {
+  #section_why {
+    padding-left: 120px;
+    padding-right: 120px;
+  }
 }
 #section_examples {
   font-size: 18px;
   text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 #section_examples a {
   color: #C7C4C4;
@@ -233,6 +245,12 @@ h2.page-section-title:after {
 #section_examples .showcase {
   margin-top: 40px;
   text-align: center;
+}
+@media (min-width: 600px) {
+  #section_examples {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
 }
 #section_examples .showcase img.logo {
   display: inline-block;;
@@ -256,10 +274,26 @@ h2.page-section-title:after {
 #section_how p {
   clear: both;
 }
+#section_how {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+@media (min-width: 600px) {
+  #section_how p {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}
 #section_get-started {
-  padding-left: 120px;
-  padding-right: 120px;
+  padding-left: 20px;
+  padding-right: 20px;
   font-size: 20px;
+}
+@media (min-width: 600px) {
+  #section_get-started {
+    padding-left: 120px;
+    padding-right: 120px;
+  }
 }
 
 
