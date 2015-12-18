@@ -10,7 +10,7 @@ describe('utils', () => {
   before(() => {
     // We need to load utils from here as it depends on Zepto, which itself
     // needs jsdom to be called before being loaded.
-    utils = require('../src/lib/utils');
+    utils = require('../src/lib/utils.js');
   });
 
   describe('mergeKeyWithParent', () => {
@@ -175,16 +175,16 @@ describe('utils', () => {
     it('should flatten all values', () => {
       // Given
       let input = {
-       'devs': [
+        devs: [
          {name: 'Tim', category: 'dev'},
          {name: 'Vincent', category: 'dev'},
          {name: 'AlexS', category: 'dev'}
-       ],
-       'sales': [
+        ],
+        sales: [
          {name: 'Ben', category: 'sales'},
          {name: 'Jeremy', category: 'sales'},
          {name: 'AlexK', category: 'sales'}
-       ]
+        ]
       };
 
       // When

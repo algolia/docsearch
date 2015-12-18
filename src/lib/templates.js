@@ -2,7 +2,10 @@ let prefix = 'ads-suggestion';
 
 let templates = {
   suggestion: `
-  <div class="${prefix} {{#isCategoryHeader}}${prefix}__main{{/isCategoryHeader}} {{#isSubcategoryHeader}}${prefix}__secondary{{/isSubcategoryHeader}}">
+  <div class="${prefix}
+    {{#isCategoryHeader}}${prefix}__main{{/isCategoryHeader}}
+    {{#isSubcategoryHeader}}${prefix}__secondary{{/isSubcategoryHeader}}
+  ">
     <div class="${prefix}--category-header">{{{category}}}</div>
     <div class="${prefix}--wrapper">
       <div class="${prefix}--subcategory-column">{{{subcategory}}}</div>

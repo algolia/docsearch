@@ -1,3 +1,4 @@
+/* eslint no-console:0 */
 import ghpages from 'gh-pages';
 import {join} from 'path';
 
