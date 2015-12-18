@@ -17,6 +17,7 @@
       $button.text('Thank you!');
     }).fail(function() {
       $button.attr('disabled', null);
+      alert('An error occurred, please try again later.');
     })
     return false;
   });
