@@ -16,15 +16,27 @@ layout: default
       .jumbotron-left-column
         %p We’ve created the fastest, easiest way to search within documentation.
         %p And best of all? It’s free!
-      #join-form
+      %form#join-form{action: '#', method: 'POST'}
         %h3 Want to try it out?
-        %label Website
-        %input{:type=>"text", :placeholder => "http://docs.mywebsite.com/"}
-        %p We’ll crawl the documentation pages of your website and index them on Algolia.
-        %label Email
-        %input{:type=>"text", :placeholder => "my@email.com"}
-        %p We’ll send you the code you need to integrate the search autocomplete into your documentation.
-        %input{:type=>"submit", :name => "join", :value => "Join the beta!", :id => "form-submit"}
+        .row
+          .col-sm-10.col-sm-offset-1
+            .spacer20
+            .input-group
+              %span.input-group-addon
+                %i.fa.fa-fw.fa-envelope-o
+              %input.form-control{type: 'email', placeholder: 'you@example.org', name: 'email'}
+            .text-sm We'll crawl the documentation pages of your website and index them using Algolia.
+            .spacer20
+            .input-group
+              %span.input-group-addon
+                %i.fa.fa-fw.fa-globe
+              %input.form-control{type: 'text', placeholder: 'https://website.com/doc', name: 'url'}
+            .text-sm We'll send you the code you need to improve the search of your documentation.
+            .spacer20
+            %p.text-center
+              %button.btn.btn-primary{type: 'submit'}
+                Join the DocSearch beta
+                %i.fa.fa-chevron-right
   #section_why.page-section
     .container
       .row
@@ -96,3 +108,7 @@ layout: default
           %h2.page-section-title Get started
           %p Add the url of your documentation site and your email to the form at the top of the page. We’ll get back to you with what you need to integrate your new search into   your website.
           %p Don’t forget, DocSearch is completely free! There’s no need to sign up for Algolia or submit any payment information. Let’s tackle document search together.
+
+{% contentfor site-footer %}
+<script src="{{ "/js/home.js" | prepend: site.baseurl }}"></script>
+{% endcontentfor %}
