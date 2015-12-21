@@ -7,6 +7,20 @@
 
     <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
     <meta name="description" content="{{ site.description }}">
+    <meta content='summary_large_image' name='twitter:card'>
+    <meta content='{{ site.twitter_username }}' name='twitter:site'>
+    <meta content='{{ site.tagline }}' name='twitter:title'>
+    <meta content="{{ site.description }}" name='twitter:description'>
+    <meta content='{{ site.card_image }}' name='twitter:image:src'>
+    <meta content='www.algolia.com' name='twitter:domain'>
+    <!-- /facebook -->
+    <meta content='https://www.algolia.com/' property='og:url'>
+    <meta content='Algolia' property='og:site_name'>
+    <meta content='{{ site.tagline }}' property='og:title'>
+    <meta content="{{ site.description }}" property='og:description'>
+    <meta content='{{ site.card_image }}' property='og:image'>
+    <meta content='{{ site.card_image_width }}' property='og:image:width'>
+    <meta content='{{ site.card_image_height }}' property='og:image:height'>
 
     <link rel="stylesheet" media="screen" href="//fonts.googleapis.com/css?family=Raleway:300,800" />
     <link rel="stylesheet" media="screen" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600" />
