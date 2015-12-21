@@ -45,7 +45,6 @@
     "mocha-jsdom": "^1.0.0",
     "mversion": "^1.10.1",
     "nd": "^1.2.0",
-    "node-fixtures": "0.0.1",
     "node-sass": "^3.4.2",
     "npm-shrinkwrap": "^200.4.0",
     "onchange": "^2.0.0",

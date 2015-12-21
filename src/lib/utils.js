@@ -24,10 +24,10 @@ let utils = {
   */
   mergeKeyWithParent(object, property) {
     if (object[property] === undefined) {
-      throw new Error(`[mergeKeyWithParent]: Object has no key ${property}`);
+      return object;
     }
     if (typeof object[property] !== 'object') {
-      throw new Error(`[mergeKeyWithParent]: Key ${property} is not an object`);
+      return object;
     }
     let newObject = $.extend({}, object, object[property]);
     delete newObject[property];
@@ -144,9 +144,11 @@ let utils = {
   * @return {array}
   */
   flattenAndFlagFirst(object, flag) {
-    let values = this.values(object).map(value => {
-      value[0][flag] = true;
-      return value;
+    let values = this.values(object).map(collection => {
+      return collection.map((item, index) => {
+        item[flag] = (index === 0);
+        return item;
+      });
     });
     return this.flatten(values);
   },
@@ -230,9 +232,16 @@ let utils = {
       snippet = `${snippet}…`;
     }
     return snippet;
+  },
+ /*
+  * Deep clone an object.
+  * Note: This will not clone functions and dates
+  * @param {object} object Object to clone
+  * @return {object}
+  */
+  deepClone(object) {
+    return JSON.parse(JSON.stringify(object));
   }
-
-
 };
 
 export default utils;
