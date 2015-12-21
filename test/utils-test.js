@@ -65,16 +65,17 @@ describe('utils', () => {
       expect(actual.lvl0).toNotEqual(42);
       expect(actual.lvl0).toEqual('bar');
     });
-    it('should throw an error if no such key', () => {
+    it('should do nothing if no such key', () => {
       // Given
       let input = {
         name: 'foo'
       };
 
       // When
-      expect(() => {
-        utils.mergeKeyWithParent(input, 'hierarchy');
-      }).toThrow(Error);
+      let actual = utils.mergeKeyWithParent(input, 'hierarchy');
+
+      // Then
+      expect(actual).toBe(input);
     });
     it('should throw an error if key is no an object', () => {
       // Given
@@ -84,9 +85,10 @@ describe('utils', () => {
       };
 
       // When
-      expect(() => {
-        utils.mergeKeyWithParent(input, 'hierarchy');
-      }).toThrow(Error);
+      let actual = utils.mergeKeyWithParent(input, 'hierarchy');
+
+      // Then
+      expect(actual).toBe(input);
     });
   });
 
@@ -193,11 +195,11 @@ describe('utils', () => {
       // Then
       expect(actual).toEqual([
         {name: 'Tim', category: 'dev', isTop: true},
-        {name: 'Vincent', category: 'dev'},
-        {name: 'AlexS', category: 'dev'},
+        {name: 'Vincent', category: 'dev', isTop: false},
+        {name: 'AlexS', category: 'dev', isTop: false},
         {name: 'Ben', category: 'sales', isTop: true},
-        {name: 'Jeremy', category: 'sales'},
-        {name: 'AlexK', category: 'sales'}
+        {name: 'Jeremy', category: 'sales', isTop: false},
+        {name: 'AlexK', category: 'sales', isTop: false}
       ]);
     });
   });
@@ -326,6 +328,40 @@ describe('utils', () => {
 
       // Then
       expect(actual).toEqual('This is an <mark>finished</mark> sentence…');
+    });
+  });
+
+  describe('deepClone', () => {
+    it('should create an object with the exact same value', () => {
+      // Given
+      let input = {
+        foo: {
+          bar: 'baz'
+        }
+      };
+
+      // When
+      let actual = utils.deepClone(input);
+
+      // Then
+      expect(actual.foo.bar).toEqual('baz');
+    });
+    it('should not change the initial object', () => {
+      // Given
+      let input = {
+        foo: {
+          bar: 'baz'
+        }
+      };
+
+      // When
+      let actual = utils.deepClone(input);
+      input.foo.bar = 42;
+
+      // Then
+      expect(input.foo.bar).toEqual(42);
+      expect(actual.foo.bar).toNotEqual(42);
+      expect(actual.foo.bar).toEqual('baz');
     });
   });
 });

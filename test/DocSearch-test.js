@@ -4,11 +4,11 @@
 import jsdom from 'mocha-jsdom';
 import expect from 'expect';
 import sinon from 'sinon';
-// import fixtures from 'node-fixtures';
 
 describe('DocSearch', () => {
   let DocSearch;
   let $;
+
   jsdom({useEach: true});
 
   beforeEach(() => {
@@ -307,6 +307,364 @@ describe('DocSearch', () => {
         };
         expect(client.search.calledWith([expectedArguments])).toBe(true);
       });
+    });
+  });
+
+  describe('formatHits', () => {
+    it('should not mutate the input', () => {
+      // Given
+      let input = [{
+        hierarchy: {
+          lvl0: 'Ruby',
+          lvl1: 'API',
+          lvl2: null,
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        }
+      }];
+
+      // When
+      let actual = DocSearch.formatHits(input);
+
+      // Then
+      expect(input).toNotBe(actual);
+    });
+    it('should set category headers to the first of each category', () => {
+      // Given
+      let input = [{
+        hierarchy: {
+          lvl0: 'Ruby',
+          lvl1: 'API',
+          lvl2: null,
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        }
+      }, {
+        hierarchy: {
+          lvl0: 'Ruby',
+          lvl1: 'Geo-search',
+          lvl2: null,
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        }
+      }, {
+        hierarchy: {
+          lvl0: 'Python',
+          lvl1: 'API',
+          lvl2: null,
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        }
+      }];
+
+      // When
+      let actual = DocSearch.formatHits(input);
+
+      // Then
+      expect(actual[0].isCategoryHeader).toEqual(true);
+      expect(actual[2].isCategoryHeader).toEqual(true);
+    });
+    it('should group items of same category together', () => {
+      // Given
+      let input = [{
+        hierarchy: {
+          lvl0: 'Ruby',
+          lvl1: 'API',
+          lvl2: null,
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        }
+      }, {
+        hierarchy: {
+          lvl0: 'Python',
+          lvl1: 'API',
+          lvl2: null,
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        }
+      }, {
+        hierarchy: {
+          lvl0: 'Ruby',
+          lvl1: 'Geo-search',
+          lvl2: null,
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        }
+      }];
+
+      // When
+      let actual = DocSearch.formatHits(input);
+
+      // Then
+      expect(actual[0].category).toEqual('Ruby');
+      expect(actual[1].category).toEqual('Ruby');
+      expect(actual[2].category).toEqual('Python');
+    });
+    it('should mark all first elements as subcategories', () => {
+      // Given
+      let input = [{
+        hierarchy: {
+          lvl0: 'Ruby',
+          lvl1: 'API',
+          lvl2: null,
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        }
+      }, {
+        hierarchy: {
+          lvl0: 'Python',
+          lvl1: 'API',
+          lvl2: null,
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        }
+      }, {
+        hierarchy: {
+          lvl0: 'Ruby',
+          lvl1: 'Geo-search',
+          lvl2: null,
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        }
+      }];
+
+      // When
+      let actual = DocSearch.formatHits(input);
+
+      // Then
+      expect(actual[0].isSubCategoryHeader).toEqual(true);
+      expect(actual[2].isSubCategoryHeader).toEqual(true);
+    });
+    it('should mark new subcategories as such', () => {
+      // Given
+      let input = [{
+        hierarchy: {
+          lvl0: 'Ruby',
+          lvl1: 'API',
+          lvl2: 'Foo',
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        }
+      }, {
+        hierarchy: {
+          lvl0: 'Python',
+          lvl1: 'API',
+          lvl2: null,
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        }
+      }, {
+        hierarchy: {
+          lvl0: 'Ruby',
+          lvl1: 'API',
+          lvl2: 'Bar',
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        }
+      }, {
+        hierarchy: {
+          lvl0: 'Ruby',
+          lvl1: 'Geo-search',
+          lvl2: null,
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        }
+      }];
+
+      // When
+      let actual = DocSearch.formatHits(input);
+
+      // Then
+      expect(actual[0].isSubCategoryHeader).toEqual(true);
+      expect(actual[1].isSubCategoryHeader).toEqual(false);
+      expect(actual[2].isSubCategoryHeader).toEqual(true);
+      expect(actual[3].isSubCategoryHeader).toEqual(true);
+    });
+    it('should use highlighted category and subcategory if exists', () => {
+      // Given
+      let input = [{
+        hierarchy: {
+          lvl0: 'Ruby',
+          lvl1: 'API',
+          lvl2: 'Foo',
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        },
+        _highlightResult: {
+          hierarchy: {
+            lvl0: {
+              value: '<mark>Ruby</mark>'
+            },
+            lvl1: {
+              value: '<mark>API</mark>'
+            }
+          }
+        }
+      }];
+
+      // When
+      let actual = DocSearch.formatHits(input);
+
+      // Then
+      expect(actual[0].category).toEqual('<mark>Ruby</mark>');
+      expect(actual[0].subcategory).toEqual('<mark>API</mark>');
+    });
+    it('should use lvl2 as title', () => {
+      // Given
+      let input = [{
+        hierarchy: {
+          lvl0: 'Ruby',
+          lvl1: 'API',
+          lvl2: 'Foo',
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        }
+      }];
+
+      // When
+      let actual = DocSearch.formatHits(input);
+
+      // Then
+      expect(actual[0].title).toEqual('Foo');
+    });
+    it('should use lvl1 as title if no lvl2', () => {
+      // Given
+      let input = [{
+        hierarchy: {
+          lvl0: 'Ruby',
+          lvl1: 'API',
+          lvl2: null,
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        }
+      }];
+
+      // When
+      let actual = DocSearch.formatHits(input);
+
+      // Then
+      expect(actual[0].title).toEqual('API');
+    });
+    it('should use lvl0 as title if no lvl2 nor lvl2', () => {
+      // Given
+      let input = [{
+        hierarchy: {
+          lvl0: 'Ruby',
+          lvl1: null,
+          lvl2: null,
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        }
+      }];
+
+      // When
+      let actual = DocSearch.formatHits(input);
+
+      // Then
+      expect(actual[0].title).toEqual('Ruby');
+    });
+    it('should concatenate lvl2+ for title if more', () => {
+      // Given
+      let input = [{
+        hierarchy: {
+          lvl0: 'Ruby',
+          lvl1: 'API',
+          lvl2: 'Geo-search',
+          lvl3: 'Foo',
+          lvl4: 'Bar',
+          lvl5: 'Baz'
+        }
+      }];
+
+      // When
+      let actual = DocSearch.formatHits(input);
+
+      // Then
+      expect(actual[0].title).toEqual('Geo-search › Foo › Bar › Baz');
+    });
+    it('should concatenate highlighted elements', () => {
+      // Given
+      let input = [{
+        hierarchy: {
+          lvl0: 'Ruby',
+          lvl1: 'API',
+          lvl2: 'Geo-search',
+          lvl3: 'Foo',
+          lvl4: 'Bar',
+          lvl5: 'Baz'
+        },
+        _highlightResult: {
+          hierarchy: {
+            lvl0: {
+              value: '<mark>Ruby</mark>'
+            },
+            lvl1: {
+              value: '<mark>API</mark>'
+            },
+            lvl2: {
+              value: '<mark>Geo-search</mark>'
+            },
+            lvl3: {
+              value: '<mark>Foo</mark>'
+            },
+            lvl4: {
+              value: '<mark>Bar</mark>'
+            },
+            lvl5: {
+              value: '<mark>Baz</mark>'
+            }
+          }
+        }
+      }];
+
+      // When
+      let actual = DocSearch.formatHits(input);
+
+      // Then
+      expect(actual[0].title).toEqual('<mark>Geo-search</mark> › <mark>Foo</mark> › <mark>Bar</mark> › <mark>Baz</mark>');
+    });
+    it('should add ellipsis to content', () => {
+      // Given
+      let input = [{
+        hierarchy: {
+          lvl0: 'Ruby',
+          lvl1: 'API',
+          lvl2: null,
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        },
+        content: 'foo bar',
+        _snippetResult: {
+          content: {
+            value: 'lorem <mark>foo</mark> bar ipsum.'
+          }
+        }
+      }];
+
+      // When
+      let actual = DocSearch.formatHits(input);
+
+      // Then
+      expect(actual[0].text).toEqual('…lorem <mark>foo</mark> bar ipsum.');
     });
   });
 });

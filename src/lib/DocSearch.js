@@ -102,16 +102,19 @@ class DocSearch {
         query: query,
         params: this.algoliaOptions
       }]).then((data) => {
-        callback(this.formatHits(data.results[0].hits));
+        callback(DocSearch.formatHits(data.results[0].hits));
       });
     };
   }
 
   // Given a list of hits returned by the API, will reformat them to be used in
   // a Hogan template
-  formatHits(receivedHits) {
-    let hits = receivedHits.map((hit) => {
-      hit._highlightResult = utils.mergeKeyWithParent(hit._highlightResult, 'hierarchy');
+  static formatHits(receivedHits) {
+    let clonedHits = utils.deepClone(receivedHits);
+    let hits = clonedHits.map((hit) => {
+      if (hit._highlightResult) {
+        hit._highlightResult = utils.mergeKeyWithParent(hit._highlightResult, 'hierarchy');
+      }
       return utils.mergeKeyWithParent(hit, 'hierarchy');
     });
 
@@ -140,7 +143,7 @@ class DocSearch {
 
       return {
         isCategoryHeader: hit.isCategoryHeader,
-        isSubcategoryHeader: hit.isSubcategoryHeader,
+        isSubCategoryHeader: hit.isSubCategoryHeader,
         category: category,
         subcategory: subcategory,
         title: displayTitle,
