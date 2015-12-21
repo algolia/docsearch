@@ -19,6 +19,8 @@ We've created the fastest, easiest way to search within documentation. Check out
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+<!-- START documentation.md -->
+
 ## Introduction
 
 We're scratching our own itch here. As developers, we spend a lot of time reading documentation, and it isn’t always easy to find the information we need.
@@ -54,6 +56,7 @@ To customize the look & feel of the dropdown menu, you can either:
  * edit the color [variables](https://github.com/algolia/docsearch/blob/master/src/styles/_variables.scss) and rebuild this project CSS,
  * or override the colors like we did in [dev/docsearch-styling.css](https://github.com/algolia/docsearch/blob/master/dev/docsearch-styling.css).
 
+<!-- END documentation.md -->
 ## Development workflow
 
 ### Local example

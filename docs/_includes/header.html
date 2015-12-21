@@ -1,13 +1,14 @@
+
 <header class="site-header">
   <nav class="navbar navbar-default  navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#instant-search-nav">
-          Menu&nbsp;&nbsp;<i class="fa fa-bars"></i>
-        </button>
-        <a class="navbar-brand" href="{{ site.baseurl }}/">{{ site.title }}</a>
+        <a id="logo" href="{{ site.baseurl }}/">
+          <img src="{{site.baseurl}}/img/algolia-logo.svg" alt="Algolia" />
+        </a>
+        presents
       </div>
-      <div id="instant-search-nav" class="navbar-collapse collapse">
+      <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
           {% assign url = page.url %}
           {% for link in site.navigation %}
@@ -15,6 +16,9 @@
               <a href="{{ site.baseurl }}{{ link.url }}" title="{{ link.title }}">{{ link.text }}</a>
             </li>
           {% endfor %}
+          <li>
+            <a class="navbar-github-link" href="//github.com/algolia/docsearch"><i class="fa fa-github"></i></a>
+          </li>
         </ul>
       </div>
     </div>

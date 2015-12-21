@@ -5,39 +5,113 @@ layout: default
 .main-content
   .jumbotron
     .container.pos-rel
-      %h1 Documentation Search
+      .jumbotron-header
+        %h1.jumbotron-title
+          %span.blue
+            %span.big> D
+            OC
+          = succeed "EARCH" do
+            %span.big S
+        %p#top The easiest way to add search to your documentation.
+      .jumbotron-left-column
+        %p We’ve created the fastest, easiest way to search within documentation.
+        %p And best of all? It’s free!
+      %form#join-form{action: '#', method: 'POST'}
+        %h3 Want to try it out?
+        .spacer20
+        .input-group
+          %span.input-group-addon
+            %i.fa.fa-fw.fa-envelope-o
+          %input.form-control{type: 'email', placeholder: 'you@example.org', name: 'email'}
+        %p.text-sm We'll crawl the documentation pages of your website and index them using Algolia.
+        .spacer20
+        .input-group
+          %span.input-group-addon
+            %i.fa.fa-fw.fa-globe
+          %input.form-control{type: 'text', placeholder: 'https://website.com/doc', name: 'url'}
+        %p.text-sm We'll send you the code you need to improve the search of your documentation.
+        .spacer20
+        .text-center
+          %button.btn.btn-primary.btn-lg{type: 'submit'}
+            Help me improve my search
+            %i.fa.fa-heart
+  #section_why.page-section
+    .container
+      .row
+        .col-sm-10.col-sm-offset-1
+          %h2.page-section-title Why DocSearch?
+          %p We’re scratching our own itch here. As developers, we spend a lot of time reading documentation, and it isn’t always easy to find the information we need.
+          %p Not blaming anyone here. Building a good search for a documentation is a complex challenge. We happen to have a lot of experience doing that, and we want to share it   with the world. For free.
+  #section_examples.page-section.page-section-dark
+    .container
+      .row
+        .col-sm-10.col-sm-offset-1
+          %h2.page-section-title DocSearch is live
+          %p
+            We’ve integrated DocSearch into several open source projects.
+            %br Take a look.
+      .row
+        .col-sm-4.showcase
+          %a{:href => "//bootstrap.algolia.com", :target => "_blank"}
+            %img.img-responsive.logo{:src => "./img/showcase/logo-bootstrap.png"}
+              %img.img-responsive.example{:src => "./img/showcase/example-bootstrap.gif"}
+                Bootstrap
+        .col-sm-4.showcase
+          %a{:href => "//eslint.org/", :target => "_blank"}
+            %img.img-responsive.logo{:src => "./img/showcase/logo-eslint.png"}
+              %img.img-responsive.example{:src => "./img/showcase/example-eslint.gif"}
+                ESLint
+        .col-sm-4.showcase
+          %a{:href => "//docs.scala-lang.org/", :target => "_blank"}
+            %img.img-responsive.logo{:src => "./img/showcase/logo-scala.png"}
+              %img.img-responsive.example{:src => "./img/showcase/example-scala.gif"}
+                Scala
+        .col-sm-4.showcase
+          %a{:href => "//babeljs.algolia.com/", :target => "_blank"}
+            %img.img-responsive.logo{:src => "./img/showcase/logo-babel.png"}
+              %img.img-responsive.example{:src => "./img/showcase/example-babel.gif"}
+                Babel.js
+        .col-sm-4.showcase
+          %a{:href => "//reactjs.algolia.com/", :target => "_blank"}
+            %img.img-responsive.logo{:src => "./img/showcase/logo-react.png"}
+              %img.img-responsive.example{:src => "./img/showcase/example-react.gif"}
+                React
+  #section_how.page-section
+    .container
+      .row
+        %h2.page-section-title How it works
+      .row
+        .col-sm-4.how-it-works
+          %h3
+            %span.how-it-works-number> 1
+            We crawl your documentation pages
+          %p We built a website crawler designed to index every section of your documentation.
+          %p Just send us the URL of your documentation, and we’ll periodically run the crawler so you’re always up-to-date.
+        .col-sm-4.how-it-works
+          %h3
+            %span.how-it-works-number> 2
+            We configure your search experience
+          %p You don’t need to configure any settings or even have an Algolia account.
+          %p We take of all of this automatically to ensure the best documentation search experience.
+        .col-sm-4.how-it-works
+          %h3
+            %span.how-it-works-number> 3
+            You add the JS/CSS snippets to your website
+          %p We’ll send you a few lines to code to integrate Algolia autocomplete and power your search.
+          %p You will receive the same speed, relevance and best-in-class UX as our paying customers.
+  #section_get-started.page-section.page-section-dark
+    .container
+      .row
+        .col-sm-10.col-sm-offset-1
+          %h2.page-section-title Get started
+          %p Add the url of your documentation site and your email to the form at the top of the page. We’ll get back to you with what you need to integrate your new search into   your website.
+          %p Don’t forget, DocSearch is completely free! There’s no need to sign up for Algolia or submit any payment information. Let’s tackle document search together.
+          .spacer30
+          %p.text-center
+            %a.btn.btn-primary.btn-lg{href: '#top'}
+              Help me improve my search
+              %i.fa.fa-heart
 
-      %p Add relevant, fast and reliable search to your documentation website in minutes.
-
-      %iframe#join-form{height: 356, allowTransparency: true, frameborder: 0, scrolling: 'no', src: '//www.formget.com/app/embed/form/H5IR-174988/i?w=328'}
-
-  .container
-    %h1 Showcase
-    .row.text-center
-      .col-sm-3.showcase
-        %img.img-responsive{src: '/img/showcase/eslint.png'}
-        %p Eslint
-      .col-sm-3
-        %img.img-responsive{src: '/img/showcase/babeljs.png'}
-        %p Babel
-      .col-sm-3
-        %img.img-responsive{src: '/img/showcase/bootstrap.png'}
-        %p Bootstrap
-      .col-sm-3
-        %img.img-responsive{src: '/img/showcase/reactjs.png'}
-        %p React
-
-    %h1 Features
-    .row.text-center
-      .col-sm-4
-        %img{src: 'http://placehold.it/200x200'}
-        %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, sit, veritatis tempora ipsum, provident fugiat quas, eum dicta architecto
-      .col-sm-4
-        %img{src: 'http://placehold.it/200x200'}
-        %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, sit, veritatis tempora ipsum, provident fugiat quas, eum dicta architecto
-      .col-sm-4
-        %img{src: 'http://placehold.it/200x200'}
-        %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, sit, veritatis tempora ipsum, provident fugiat quas, eum dicta architecto
-
-
-    %p Here are some examples of what you could build with docsearch.
+{% contentfor site-footer %}
+<script src="{{ "/js/home.js" | prepend: site.baseurl }}"></script>
+{% endcontentfor %}
