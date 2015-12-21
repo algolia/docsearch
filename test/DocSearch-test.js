@@ -87,6 +87,26 @@ describe('DocSearch', () => {
       expect(actual.indexName).toEqual('indexName');
       expect(actual.apiKey).toEqual('apiKey');
     });
+    it('should set docsearch App Id as default', () => {
+      // Given
+      let options = defaultOptions;
+
+      // When
+      let actual = new DocSearch(options);
+
+      // Then
+      expect(actual.appId).toEqual('BH4D9OD16A');
+    });
+    it('should allow overriding appId', () => {
+      // Given
+      let options = {...defaultOptions, appId: 'foo'};
+
+      // When
+      let actual = new DocSearch(options);
+
+      // Then
+      expect(actual.appId).toEqual('foo');
+    });
     it('should pass the input element as an instance property', () => {
       // Given
       let options = defaultOptions;
