@@ -19,7 +19,7 @@
 }
 
 // Each suggestion
-.ads-suggestion {
+.algolia-docsearch-suggestion {
   color: #333;
   cursor: pointer;
   overflow: hidden;
@@ -27,7 +27,7 @@
 }
 
 // Main category headers
-.ads-suggestion--category-header {
+.algolia-docsearch-suggestion--category-header {
   display: none;
   background: $color-category-header-background;
   color: white;
@@ -35,66 +35,66 @@
   padding: 5px 10px;
   text-align: left;
   // Only show it when flaggued as "__main"
-  .ads-suggestion__main & {
+  .algolia-docsearch-suggestion__main & {
     display: block;
   }
 }
 
 // Highlight
-.ads-suggestion--highlight {
+.algolia-docsearch-suggestion--highlight {
   padding: 0;
   color: $color-highlight-text;
   background: none;
   font-weight: 600;
   // Highlight the background in header
-  .ads-suggestion--category-header & {
+  .algolia-docsearch-suggestion--category-header & {
     color: inherit;
     background: $color-highlight-header-background;
   }
 }
 
 // Selected suggestion
-.aa-cursor .ads-suggestion--content {
+.aa-cursor .algolia-docsearch-suggestion--content {
   color: $color-selected-text;
 }
-.aa-cursor .ads-suggestion {
+.aa-cursor .algolia-docsearch-suggestion {
   background: $color-selected-background;
 }
 
 // The secondary column is hidden on small screens
-.ads-suggestion--subcategory-column {
+.algolia-docsearch-suggestion--subcategory-column {
   display: none;
 }
 // The text snippet is hidden on small screens
-.ads-suggestion--text {
+.algolia-docsearch-suggestion--text {
   display: none;
 }
 
-.ads-suggestion--content {
+.algolia-docsearch-suggestion--content {
   padding: 3px 5px;
 }
 
-.ads-suggestion--subcategory-inline {
+.algolia-docsearch-suggestion--subcategory-inline {
   display: inline-block;
   font-weight: bold;
   &:after {
     content: " › ";
   }
 }
-.ads-suggestion--title {
+.algolia-docsearch-suggestion--title {
   display: inline;
 }
 
 // Footer
 
-.ads-footer {
+.algolia-docsearch-footer {
   border-top: 1px solid $color-border-light;
   text-align: right;
   font-size: 12px;
   padding: 4px 2px 0 0;
   color: #333;
 
-  .ads-footer--logo {
+  .algolia-docsearch-footer--logo {
     display: inline-block !important;
     width: 45px;
     height: 16px;
@@ -111,7 +111,7 @@
 // BREAKPOINT 1:
 // Screen is big enough to display the text snippets
 @media (min-width: $breakpoint-medium) {
-  .ads-suggestion--text {
+  .algolia-docsearch-suggestion--text {
     display: block;
     font-size: .9em;
     padding: 2px 0;
@@ -121,12 +121,12 @@
 // BREAKPOINT 2:
 // Screen is big enough to display results in two columns
 @media (min-width: $breakpoint-large) {
-  .ads-suggestion {
+  .algolia-docsearch-suggestion {
     display: table;
     width: 100%;
     border-bottom: 1px solid $color-border-light;
   }
-  .ads-suggestion--subcategory-column {
+  .algolia-docsearch-suggestion--subcategory-column {
     border-right: 1px solid $color-border-light;
     background: $color-left-column-bg;
     color: $color-left-column;
@@ -141,17 +141,17 @@
     max-width: 135px; // Hardcoded
     min-width: 135px; // Hardcoded
   }
-  .ads-suggestion--content {
+  .algolia-docsearch-suggestion--content {
     display: table-cell;
     padding: 5px 10px;
   }
-  .ads-suggestion--subcategory-inline {
+  .algolia-docsearch-suggestion--subcategory-inline {
     display: none;
   }
-  .ads-suggestion--title {
+  .algolia-docsearch-suggestion--title {
     font-weight: 600;
   }
-  .ads-suggestion--text {
+  .algolia-docsearch-suggestion--text {
     display: block;
     font-weight: normal;
     padding: 2px;
