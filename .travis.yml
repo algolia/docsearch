@@ -9,6 +9,7 @@ before_install:
 before_cache: npm prune
 install: npm install
 script: ./scripts/test-ci
+after_script: ./scripts/travis-after-script
 branches:
   only:
     - master
