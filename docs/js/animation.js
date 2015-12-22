@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function(){
   var box = getIndexDomPosition();
 
   console.log(box);
-  var center = [box[0] + 90, box[1] - 90];
+  var center = [box[0] + 60, box[1] + 35];
 
   var particles = [];
   for(var i=0; i<10; i++) {
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function(){
     e.className = 'doc-page init';
     e.style.top = center[1] + 'px';
     e.style.left = center[0] + 'px';
-    document.body.querySelector('.jumbotron').appendChild(e);
+    document.body.querySelector('.index-container').appendChild(e);
     return {
       pos: [x + center[0], y + center[1]],
       v: [0, 0],
@@ -79,7 +79,9 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 
   function getIndexDomPosition() {
-    var position = jQuery('.index-container').position();
-    return [position.left, position.top];
+    var positionContainer = jQuery('.index-container').position();
+    var position = jQuery('.index').position();
+    return [position.left , position.top ];
+    return [position.left + positionContainer.left, position.top + positionContainer.top];
   }
 });
