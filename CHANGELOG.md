@@ -1,3 +1,14 @@
+<a name="0.0.7"></a>
+## [0.0.7](https://github.com/algolia/docsearch/compare/v0.0.6...v0.0.7) (2015-12-22)
+
+
+### Bug Fixes
+
+* **appId:** Allow passing a custom appId ([e1777d3](https://github.com/algolia/docsearch/commit/e1777d3)), closes [#21](https://github.com/algolia/docsearch/issues/21)
+* **css:** Renaming all `ads-` prefix to `algolia-docsearch-` ([c6fc53f](https://github.com/algolia/docsearch/commit/c6fc53f))
+
+
+
 <a name="0.0.6"></a>
 ## [0.0.6](https://github.com/algolia/docsearch/compare/v0.0.5...v0.0.6) (2015-12-16)
 
