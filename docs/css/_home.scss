@@ -303,3 +303,21 @@ footer.site-footer .input-group-addon {
   background-color: transparent;
 }
 
+.doc-page {
+  position: absolute;
+  transition: opacity 1000ms;
+  opacity:1;
+  z-index: 1;
+}
+
+.doc-page.init {
+  opacity: 0;
+}
+
+.index-container {
+  position: relative;
+  text-align: center;
+  margin:auto;
+  transform:translateZ(0);
+  z-index: 100;
+}

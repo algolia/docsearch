@@ -14,6 +14,8 @@ layout: default
             %span.big S
         %p#top The easiest way to add search to your documentation.
       .jumbotron-left-column
+        %div.index-container
+          %img.index{src: 'img/illus-index.png'}
         %p We’ve created the fastest, easiest way to search within documentation.
         %p And best of all? It’s free!
       %form#join-form{action: '#', method: 'POST'}
@@ -111,6 +113,8 @@ layout: default
             %a.btn.btn-primary.btn-lg{href: '#top'}
               Help me improve my search
               %i.fa.fa-heart
+
+<script src="js/animation.js"></script>
 
 {% contentfor site-footer %}
 <script src="{{ "/js/home.js" | prepend: site.baseurl }}"></script>
