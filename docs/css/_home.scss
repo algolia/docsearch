@@ -16,11 +16,9 @@ html, body {
   font-family: "Raleway", "Open Sans", Helvetica, Arial, sans-serif;
 }
 
-
-
 /* HEADER
 // ------------------------- */
-header.site-header {
+.site-header {
   position: fixed;
   top: 0;
   width: 100%;
@@ -29,13 +27,13 @@ header.site-header {
   transition: background 2s ease;
   border-bottom: 1px solid #232E3A;
 }
-header.site-header nav.navbar {
+.site-header nav.navbar {
   margin-bottom: 0;
   background-color: #0B1724;
   border-radius: 0;
   border: none;
 }
-header.site-header nav.navbar .navbar-collapse.in {
+.site-header nav.navbar .navbar-collapse.in {
   background-color: #0B1724 !important;
   animation: fadeInUp .2s ease-in-out;
   position: fixed;
@@ -46,14 +44,14 @@ header.site-header nav.navbar .navbar-collapse.in {
   padding: 20%;
   font-size: 1.2em;
 }
-header.site-header nav.navbar .navbar-collapse.in li {
+.site-header nav.navbar .navbar-collapse.in li {
   padding-bottom: 1em;
 }
-header.site-header nav.navbar #logo img {
+.site-header nav.navbar #logo img {
   height: 32px;
   margin-right: 12px;
 }
-header.site-header nav.navbar .navbar-header {
+.site-header nav.navbar .navbar-header {
   position: relative;
   z-index: 2;
   height: 50px;
@@ -61,33 +59,31 @@ header.site-header nav.navbar .navbar-header {
   color: #FF2E6C;
   line-height: 50px;
 }
-header.site-header nav.navbar .navbar-toggle {
+.site-header nav.navbar .navbar-toggle {
   background-color: #1d96c7;
   border: solid 1px #1d96c7;
   color: white;
 }
-header.site-header nav.navbar .navbar-toggle.collapsed {
+.site-header nav.navbar .navbar-toggle.collapsed {
   background-color: transparent;
   border: solid 1px rgba(255, 255, 255, 0.4);
   color: white;
 }
-header.site-header nav.navbar .navbar-nav > li > a {
+.site-header nav.navbar .navbar-nav > li > a {
   padding-bottom: 0;
 }
-header.site-header nav.navbar .navbar-nav > .active > a {
+.site-header nav.navbar .navbar-nav > .active > a {
   color: #1D96C7 !important;
   background-color: transparent;
 }
-header.site-header nav.navbar .navbar-nav > li > a.navbar-github-link {
+.site-header nav.navbar .navbar-nav > li > a.navbar-github-link {
   font-size: 32px;
   padding-top: 10px;
 }
-header.site-header nav.navbar .navbar-nav > li > a.navbar-github-link:hover {
+.site-header nav.navbar .navbar-nav > li > a.navbar-github-link:hover {
   color: #46AEDA;
   text-decoration: none;
 }
-
-
 
 
 /* JUMBOTRON
@@ -102,21 +98,18 @@ header.site-header nav.navbar .navbar-nav > li > a.navbar-github-link:hover {
   background-size: cover;
   margin-bottom: 0;
 }
+
 .jumbotron .jumbotron-header {
   text-align: center;
   color: #FFF;
 }
+
 .jumbotron .jumbotron-header h1 {
   font-size: 60px;
   font-weight: 500;
   font-family: "Helvetica Neue", "Raleway", "Open Sans", Helvetica, Arial, sans-serif;
 }
-.jumbotron .jumbotron-header .big {
-  font-size: 90px;
-}
-.jumbotron .jumbotron-header .blue {
-  color: #46AEDA;
-}
+
 .jumbotron .jumbotron-left-column {
   display: none;
   padding-top: 100px;
@@ -173,14 +166,10 @@ header.site-header nav.navbar .navbar-nav > li > a.navbar-github-link:hover {
   }
 }
 
-
-
-
 /* PAGE SECTIONS
 // ------------------------- */
 .page-section {
-  padding-top: 100px;
-  padding-bottom: 60px;
+  padding: 60px 0;
   font-size: 16px;
   line-height: 1.8;
   color: #091724;
@@ -190,24 +179,26 @@ header.site-header nav.navbar .navbar-nav > li > a.navbar-github-link:hover {
   color: #C7C4C4;
 }
 h2.page-section-title {
-  font-size: 28px;
+  font-size: 26px;
   text-transform: uppercase;
   font-weight: 600;
   margin-top: 0;
   margin-bottom: 30px;
   text-align: center;
+  letter-spacing: 1px;
 }
 .page-section-dark h2.page-section-title{
   color: #FFF;
 }
+
 h2.page-section-title:after {
   display: block;
-  content: ' ';
-  height: 10px;
+  content: '';
   border-bottom: 3px solid #FF2E6C;
-  margin: 4px auto;
+  margin: 30px auto 33px;
   width: 60px;
 }
+
 #section_why {
   padding-left: 20px;
   padding-right: 20px;
@@ -252,14 +243,16 @@ h2.page-section-title:after {
 }
 #section_how h3 .how-it-works-number {
   float: left;
-  line-height: 1;
+  line-height: 35px;
   color: #46AEDA;
-  font-size: 70px;
-  font-weight: bold;
+  font-size: 50px;
   font-family: "Helvetica Neue";
-  position: relative;
-  top: -13px;
-  margin-right: 7px;
+  margin-right: 10px;
+}
+#section_how h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 20px 0;
 }
 #section_how p {
   clear: both;
@@ -302,4 +295,3 @@ footer.site-footer .fa.fa-heart {
 footer.site-footer .input-group-addon {
   background-color: transparent;
 }
-
