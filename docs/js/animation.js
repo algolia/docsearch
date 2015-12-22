@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function(){
     window.requestAnimationFrame(loop);
     particles.forEach(function(p){
       updatePosition(p, center);
+
       if(distance(p.pos, center) < distance(p.v, [0, 0])) {
         recycle(p, center); 
       }
@@ -38,6 +39,7 @@ document.addEventListener("DOMContentLoaded", function(){
     document.body.querySelector('.index-container').appendChild(e);
     return {
       pos: [x + center[0], y + center[1]],
+      originPos: [x + center[0], y + center[1]],
       v: [0, 0],
       e: e
     };
@@ -45,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
   function recycle(p, center) {
     var theta = - Math.random() * Math.PI;
-    var r = Math.random() * 500 + 200;
+    var r = Math.random() * 300 + 400;
     var x = r * Math.cos(theta);
     var y = r * Math.sin(theta);
     var e = p.e;
@@ -59,8 +61,13 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 
   function updateDOMPosition(p) {
+    var distanceOriginCenter = distance(p.originPos, [0,0]);
+    var distanceOriginCurrent = distance(p.originPos, p.pos);
+    var toCenter = distanceOriginCurrent / distanceOriginCenter;
+
     var pos = [p.pos[0] - 18, p.pos[1] - 23];
-    p.e.style.transform = 'translate3D(' + pos[0] + 'px, ' + pos[1] + 'px, 0)';
+    p.e.style.transform = 'translate(' + pos[0] + 'px, ' + pos[1] + 'px)';
+    p.e.style.opacity = 1 - Math.pow( 2 * toCenter - 1 , 10);
     p.e.className = 'doc-page';
   }
 

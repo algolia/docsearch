@@ -1,3 +1,6 @@
+* {
+  z-index: 1;
+}
 /* COLORS
 // -------------------------
 #46AEDA Algolia blue
@@ -305,22 +308,17 @@ footer.site-footer .input-group-addon {
 
 .doc-page {
   position: absolute;
-  z-index: 1;
-}
-
-.doc-page.show {
-  transition: opacity 300ms;
-  opacity:1;
-}
-
-.doc-page.hide {
-  opacity: 0;
-  transition: opacity 0;
+  z-index: -1;
 }
 
 .index-container {
   position: relative;
   text-align: center;
-  margin:auto;
-  z-index: 100;
+  margin: auto;
 }
+
+.index{
+  z-index: 20;
+  position: relative;
+}
+
