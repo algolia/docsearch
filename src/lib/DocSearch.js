@@ -12,6 +12,9 @@ import $ from 'npm-zepto';
  * @param  {string} options.apiKey         Read-only API key
  * @param  {string} options.indexName      Name of the index to target
  * @param  {string} options.inputSelector  CSS selector that targets the input
+ * @param  {string} [options.appId]  Lets you override the applicationId used.
+ * If using the default Algolia Crawler, you should not have to change this
+ * value.
  * @param  {Object} [options.algoliaOptions] Options to pass the underlying Algolia client
  * @param  {Object} [options.autocompleteOptions] Options to pass to the underlying autocomplete instance
  * @return {Object}
@@ -28,6 +31,7 @@ class DocSearch {
     apiKey,
     indexName,
     inputSelector,
+    appId = 'BH4D9OD16A',
     algoliaOptions = {
       hitsPerPage: 5
     },
@@ -39,12 +43,13 @@ class DocSearch {
     DocSearch.checkArguments({apiKey, indexName, inputSelector, algoliaOptions, autocompleteOptions});
 
     this.apiKey = apiKey;
+    this.appId = appId;
     this.indexName = indexName;
     this.input = DocSearch.getInputFromSelector(inputSelector);
     this.algoliaOptions = algoliaOptions;
     this.autocompleteOptions = autocompleteOptions;
 
-    this.client = algoliasearch('BH4D9OD16A', this.apiKey);
+    this.client = algoliasearch(this.appId, this.apiKey);
     this.client.addAlgoliaAgent('docsearch.js ' + version);
     this.autocomplete = autocomplete(this.input, autocompleteOptions, [{
       source: this.getAutocompleteSource(),
