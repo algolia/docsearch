@@ -1,21 +1,28 @@
-let prefix = 'ads-suggestion';
+let prefix = 'algolia-docsearch';
+let suggestionPrefix = `${prefix}-suggestion`;
+let footerPrefix = `${prefix}-footer`;
 
 let templates = {
   suggestion: `
-  <div class="${prefix}
-    {{#isCategoryHeader}}${prefix}__main{{/isCategoryHeader}}
-    {{#isSubcategoryHeader}}${prefix}__secondary{{/isSubcategoryHeader}}
+  <div class="${suggestionPrefix}
+    {{#isCategoryHeader}}${suggestionPrefix}__main{{/isCategoryHeader}}
+    {{#isSubcategoryHeader}}${suggestionPrefix}__secondary{{/isSubcategoryHeader}}
   ">
-    <div class="${prefix}--category-header">{{{category}}}</div>
-    <div class="${prefix}--wrapper">
-      <div class="${prefix}--subcategory-column">{{{subcategory}}}</div>
-      <div class="${prefix}--content">
-        <div class="${prefix}--subcategory-inline">{{{subcategory}}}</div>
-        <div class="${prefix}--title">{{{title}}}</div>
-        <div class="${prefix}--text">{{{text}}}</div>
+    <div class="${suggestionPrefix}--category-header">{{{category}}}</div>
+    <div class="${suggestionPrefix}--wrapper">
+      <div class="${suggestionPrefix}--subcategory-column">{{{subcategory}}}</div>
+      <div class="${suggestionPrefix}--content">
+        <div class="${suggestionPrefix}--subcategory-inline">{{{subcategory}}}</div>
+        <div class="${suggestionPrefix}--title">{{{title}}}</div>
+        <div class="${suggestionPrefix}--text">{{{text}}}</div>
       </div>
     </div>
   </div>
+  `,
+  footer: `
+    <div class="${footerPrefix}">
+      Search by <a class="${footerPrefix}--logo" href="https://www.algolia.com/docsearch">Algolia</a>
+    </div>
   `
 };
 
