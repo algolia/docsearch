@@ -66,8 +66,9 @@ Requirements:
 - [Bundler](http://bundler.io/)
 
 ```sh
+npm install
 npm run dev:docs
-# open http://localhost:4000/docsearch/
+open http://localhost:4000/docsearch/
 ```
 
 # Adding/Updating a package

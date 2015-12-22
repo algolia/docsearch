@@ -10,6 +10,8 @@ layout: default
           %img.logo{:src => "./img/logo-docsearch.svg"}
         %p#top The easiest way to add search to your documentation.
       .jumbotron-left-column
+        %div.index-container
+          %img.index{src: 'img/illus-index.png'}
         %p We’ve created the fastest, easiest way to search within documentation.
         %p And best of all? It’s FREE.
       %form#join-form{action: '#', method: 'POST'}
@@ -104,6 +106,8 @@ layout: default
           %p Add the url of your documentation site and your email to the form at the top of the page. We’ll get back to you with what you need to integrate your new search into   your website.
           %p Don’t forget, DocSearch is completely free! There’s no need to sign up for Algolia or submit any payment information. Let’s tackle document search together.
           .spacer30
+
+<script src="js/animation.js"></script>
 
 {% contentfor site-footer %}
 <script src="{{ "/js/home.js" | prepend: site.baseurl }}"></script>
