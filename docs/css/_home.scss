@@ -298,19 +298,22 @@ footer.site-footer .input-group-addon {
 
 .doc-page {
   position: absolute;
-  transition: opacity 1000ms;
-  opacity:1;
   z-index: 1;
 }
 
-.doc-page.init {
+.doc-page.show {
+  transition: opacity 300ms;
+  opacity:1;
+}
+
+.doc-page.hide {
   opacity: 0;
+  transition: opacity 0;
 }
 
 .index-container {
   position: relative;
   text-align: center;
   margin:auto;
-  transform:translateZ(0);
   z-index: 100;
 }
