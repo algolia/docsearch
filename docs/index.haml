@@ -12,8 +12,10 @@ layout: default
       .jumbotron-left-column
         %div.index-container
           %img.index{src: 'img/illus-index.png'}
-        %p We’ve created the fastest, easiest way to search within documentation.
-        %p And best of all? It’s FREE.
+        .spacer40
+        .text-center
+          %p We’ve created the fastest, easiest way to search within documentation.
+          %p And best of all? It’s FREE.
       %form#join-form{action: '#', method: 'POST'}
         %h3 Get Started. It’s FREE!
         .spacer20
@@ -33,12 +35,10 @@ layout: default
           %button.btn.btn-primary.btn-lg{type: 'submit'}
             JOIN THE BETA!
   #section_why.page-section
-    .container
-      .row
-        .col-sm-10.col-sm-offset-1
-          %h2.page-section-title Why DocSearch?
-          %p We’re scratching our own itch here. As developers, we spend a lot of time reading documentation, and it isn’t always easy to find the information we need.
-          %p Not blaming anyone here. Building a good search for a documentation is a complex challenge. We happen to have a lot of experience doing that, and we want to share it with the world. For free.
+    .m800.m-l-r-auto
+      %h2.page-section-title Why DocSearch?
+      %p We’re scratching our own itch here. As developers, we spend a lot of time reading documentation, and it isn’t always easy to find the information we need.
+      %p Not blaming anyone here. Building a good search for a documentation is a complex challenge. We happen to have a lot of experience doing that, and we want to share it with the world. For free.
   #section_examples.page-section.page-section-dark
     .container
       .row

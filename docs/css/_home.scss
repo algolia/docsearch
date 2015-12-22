@@ -10,68 +10,57 @@
 // ------------------------- */
 html, body {
   position: relative;
-  width: 100%;
-  height: 100%;
-  background-attachment: fixed;
-  font-family: "Raleway", "Open Sans", Helvetica, Arial, sans-serif;
+  font-family: "Raleway", Helvetica, Arial, sans-serif;
 }
 
 /* HEADER
 // ------------------------- */
-.site-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 99;
-  background: linear-gradient(to right, rgba(10, 23, 36, 0.8) -50%, rgba(23, 44, 79, 0.5) 100%);
-  transition: background 2s ease;
-  border-bottom: 1px solid #232E3A;
-}
-.site-header nav.navbar {
-  margin-bottom: 0;
-  background-color: #0B1724;
-  border-radius: 0;
-  border: none;
-}
-.site-header nav.navbar .navbar-collapse.in {
-  background-color: #0B1724 !important;
-  animation: fadeInUp .2s ease-in-out;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 20%;
-  font-size: 1.2em;
-}
-.site-header nav.navbar .navbar-collapse.in li {
-  padding-bottom: 1em;
-}
-.site-header nav.navbar #logo img {
+#logo img {
   height: 32px;
   margin-right: 12px;
 }
-.site-header nav.navbar .navbar-header {
-  position: relative;
-  z-index: 2;
-  height: 50px;
-  font-size: 16px;
-  color: #FF2E6C;
-  line-height: 50px;
+
+.site-header {
+  width: 100%;
+  .navbar {
+    border-radius: 0;
+    border: none;
+    .navbar-header {
+      position: relative;
+      height: 50px;
+      font-size: 16px;
+      line-height: 50px;
+    }
+    .navbar-toggle {
+      background-color: #1d96c7;
+      border: solid 1px #1d96c7;
+      color: white;
+      &.collapsed {
+        background-color: transparent;
+        border: solid 1px rgba(255, 255, 255, 0.4);
+        color: white;
+      }
+    }
+    .navbar-nav > li > a {
+      padding-bottom: 0;
+    }
+    .navbar-collapse.in {
+      background-color: #0B1724 !important;
+      animation: fadeInUp .2s ease-in-out;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 20%;
+      font-size: 1.2em;
+      li {
+        padding-bottom: 1em;
+      }
+    }
+  }
 }
-.site-header nav.navbar .navbar-toggle {
-  background-color: #1d96c7;
-  border: solid 1px #1d96c7;
-  color: white;
-}
-.site-header nav.navbar .navbar-toggle.collapsed {
-  background-color: transparent;
-  border: solid 1px rgba(255, 255, 255, 0.4);
-  color: white;
-}
-.site-header nav.navbar .navbar-nav > li > a {
-  padding-bottom: 0;
-}
+
 .site-header nav.navbar .navbar-nav > .active > a {
   color: #1D96C7 !important;
   background-color: transparent;
@@ -90,11 +79,7 @@ html, body {
 // ------------------------- */
 .main-content .jumbotron {
   padding-top: 60px;
-  height: 700px;
   background: #091724 url(../img/header-bg.png) no-repeat center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
   background-size: cover;
   margin-bottom: 0;
 }
@@ -102,12 +87,6 @@ html, body {
 .jumbotron .jumbotron-header {
   text-align: center;
   color: #FFF;
-}
-
-.jumbotron .jumbotron-header h1 {
-  font-size: 60px;
-  font-weight: 500;
-  font-family: "Helvetica Neue", "Raleway", "Open Sans", Helvetica, Arial, sans-serif;
 }
 
 .jumbotron .jumbotron-left-column {
@@ -119,7 +98,8 @@ html, body {
   margin-left: 120px;
 }
 .jumbotron .jumbotron-left-column p {
-  font-size: 22px;
+  font-size: 18px;
+  color: #C7C4C3;
 }
 @media (min-width: 1200px) {
   .jumbotron .jumbotron-left-column {
@@ -288,28 +268,27 @@ footer.site-footer {
   border-top: 1px solid #eeeeee;
   background-color: white;
   text-align: center;
-}
-footer.site-footer .fa.fa-heart {
-  color: #e61870;
-}
-footer.site-footer .input-group-addon {
-  background-color: transparent;
+  .fa.fa-heart {
+    color: #e61870;
+  }
+  .input-group-addon {
+    background-color: transparent;
+  }
 }
 
 .doc-page {
   position: absolute;
   z-index: 1;
+  &.show {
+    transition: opacity 300ms;
+    opacity:1;
+  }
+  &.hide {
+    opacity: 0;
+    transition: opacity 0;
+  }
 }
 
-.doc-page.show {
-  transition: opacity 300ms;
-  opacity:1;
-}
-
-.doc-page.hide {
-  opacity: 0;
-  transition: opacity 0;
-}
 
 .index-container {
   position: relative;
