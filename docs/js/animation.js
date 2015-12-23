@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function(){
     e.style.left = center[0] + 'px';
 
     p.pos = [x + center[0], y + center[1]];
+    p.originPos = [x + center[0], y + center[1]];
     p.v = [0, 0];
     p.r = r;
   }
