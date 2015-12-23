@@ -6,9 +6,7 @@ host: 0.0.0.0
 title: DocSearch
 description: Algolia DocSearch is the easiest way to add search to your documentation. Just send us your URL, and we'll send you the implementation code.
 tagline: DocSearch
-card_image: /path/to/card.jpg
-card_image_width: 1200
-card_image_height: 600
+card_image: img/docsearch-social.jpg
 twitter_username: algolia
 github_username: algolia
 
