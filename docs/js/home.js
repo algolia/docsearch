@@ -1,5 +1,5 @@
 (function($) {
-  $('#join-form').on('submit', function() {
+  $('.join-form').on('submit', function() {
     var $button = $(this).find('button');
     var $email = $(this).find('input[name="email"]');
     var $url = $(this).find('input[name="url"]');
