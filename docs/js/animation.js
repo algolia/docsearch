@@ -1,15 +1,17 @@
 document.addEventListener("DOMContentLoaded", function(){
   var box = getIndexDomPosition();
 
-  var center = [box[0] , box[1] + 30];
+  var center = [box[0], box[1] + 40];
 
   var particles = [];
   for(var i=0; i<10; i++) {
     setTimeout(function(){
       var p = genParticle(center);
       particles.push(p);
-    }, i * 300);
+    }, i * 600);
   }
+  
+  var ripples = [];
 
   window.requestAnimationFrame(function loop(){
     window.requestAnimationFrame(loop);
@@ -71,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
     var pos = [p.pos[0] - 18, p.pos[1] - 23];
     p.e.style.transform = 'translate(' + pos[0] + 'px, ' + pos[1] + 'px) rotate('+ p.r + 'deg)';
-    p.e.style.opacity = 1 - Math.pow( 2 * toCenter - 1 , 10);
+    p.e.style.opacity = 1 - Math.max(0, Math.sqrt(Math.pow(4 * toCenter - 2, 2)) - 1) 
     p.e.className = 'doc-page';
   }
 
@@ -90,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 
   function getIndexDomPosition() {
-    var position = jQuery('#index')[0].getBBox();
+    var position = document.querySelector('#index').getBBox();
     return [position.x , position.y ];
   }
 });

@@ -323,3 +323,47 @@ footer.site-footer .input-group-addon {
   width: 319px;
   height: 180px;
 }
+
+.ripple {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  border: 1px solid #888;
+  -webkit-animation: anim-ripple 1.8s ease-out infinite forwards;
+  animation: anim-ripple 1.8s ease-out infinite forwards;
+  top: 0;
+  left: 50%;
+}
+
+@-webkit-keyframes anim-ripple {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3D(-50%, 10px, 0) scale3d(3, 3, 1);
+    transform: translate3D(-50%, 10px, 0) scale3d(3, 3, 1);
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform:translate3D(-50%, 10px, 0) scale3d(1, 1, 1);
+    transform:translate3D(-50%, 10px, 0) scale3d(1, 1, 1);
+  }
+}
+
+@keyframes anim-ripple {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3D(-50%, 10px, 0) scale3d(3, 3, 1);
+    transform: translate3D(-50%, 10px, 0) scale3d(3, 3, 1);
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translate3D(-50%, 10px, 0) scale3d(1, 1, 1);
+    transform: translate3D(-50%, 10px, 0) scale3d(1, 1, 1);
+  }
+}
