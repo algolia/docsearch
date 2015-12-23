@@ -141,6 +141,14 @@
     max-width: 135px; // Hardcoded
     min-width: 135px; // Hardcoded
   }
+
+  .algolia-docsearch-suggestion--subcategory-column-text {
+    display: none;
+
+    .algolia-docsearch-suggestion__secondary & {
+      display: block;
+    }
+  }
   .algolia-docsearch-suggestion--content {
     display: table-cell;
     padding: 5px 10px;
