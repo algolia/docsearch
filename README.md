@@ -43,7 +43,7 @@ We're scratching our own itch here. As developers, we spend a lot of time readin
 
 Not blaming anyone here. Building a good search for a documentation is a complex challenge. We happen to have a lot of experience doing that, and we want to share it with the world. For free.
 
-Just submit the form on the [website][https://community.algolia.com/docsearch/] and we'll get back to you with what you need to integrate your new search into your website.
+Just submit the form on the [website](https://community.algolia.com/docsearch/) and we'll get back to you with what you need to integrate your new search into your website.
 
  1. We'll crawl your documentation pages,
  2. We'll configure your search experience,
@@ -69,7 +69,7 @@ docsearch({
 
 The default colorscheme is blue and gray:
 
-![Default colorscheme][12]
+![Default colorscheme](https://community.algolia.com/docsearch/img/default-colorscheme.png)
 
 To update the colors to suit your website, you just need to override a few
 colors. Here is an example of a CSS file that you can use as a basis and that
@@ -115,8 +115,7 @@ sets white and purples colors.
 }
 ```
 
-Advanced users can also clone the repository, edit the [_variables.scss][13]
-file and re-build the CSS file using `npm run build:css`.
+Advanced users can also clone the repository, edit the [_variables.scss](https://github.com/algolia/docsearch/blob/master/src/styles/_variables.scss) file and re-build the CSS file using `npm run build:css`.
 
 <!-- END documentation.md -->
 
@@ -127,7 +126,7 @@ file and re-build the CSS file using `npm run build:css`.
 We use a simple documentation example website as a way to develop the docsearch library.
 
 Requirements:
-- [Node.js][15]
+- [Node.js][12]
 - npm@2
 
 ```sh
@@ -148,11 +147,11 @@ npm run dev
 
 ### Documentation website
 
-This is the [Jekyll][16] instance running at [https://community.algolia.com/docsearch](https://community.algolia.com/docsearch).
+This is the [Jekyll][13] instance running at [https://community.algolia.com/docsearch](https://community.algolia.com/docsearch).
 
 Requirements:
-- [Ruby][17]
-- [Bundler][18]
+- [Ruby][14]
+- [Bundler][15]
 
 ```sh
 npm run dev:docs
@@ -181,10 +180,7 @@ bundle config build.eventmachine --with-cppflags=-I$(brew --prefix openssl)/incl
 [9]: #local-example
 [10]: #documentation-website
 [11]: #macos
-[12]: ./docs/img/default-colorscheme.png
-[13]: https://github.com/algolia/docsearch/blob/master/src/styles/_variables.scss
-[14]: https://github.com/algolia/docsearch/blob/master/dev/docsearch-styling.css
-[15]: https://nodejs.org/en/
-[16]: https://jekyllrb.com/
-[17]: https://www.ruby-lang.org/en/
-[18]: http://bundler.io/
+[12]: https://nodejs.org/en/
+[13]: https://jekyllrb.com/
+[14]: https://www.ruby-lang.org/en/
+[15]: http://bundler.io/
