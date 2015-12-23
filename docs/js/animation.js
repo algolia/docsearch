@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", function(){
   var box = getIndexDomPosition();
 
-  console.log(box);
-  var center = [box[0] + 60, box[1] + 35];
+  var center = [box[0] , box[1] + 30];
 
   var particles = [];
   for(var i=0; i<10; i++) {
@@ -17,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function(){
     particles.forEach(function(p){
       updatePosition(p, center);
 
-      if(distance(p.pos, center) < distance(p.v, [0, 0]) * 0.9) {
+      if(distance(p.pos, center) < distance(p.v, [0, 0]) * 0.6) {
         recycle(p, center); 
       }
       else{
@@ -79,8 +78,8 @@ document.addEventListener("DOMContentLoaded", function(){
     var d = distance(p.pos, center);
     p.v[0] += (center[0] - p.pos[0] ) / 500;
     p.v[1] += (center[1] - p.pos[1] ) / 500;
-    p.pos[0] += p.v[0] / 5;
-    p.pos[1] += p.v[1] / 5;
+    p.pos[0] += p.v[0] / 10;
+    p.pos[1] += p.v[1] / 10;
   }
 
   function distance(a, b) {
@@ -90,9 +89,7 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 
   function getIndexDomPosition() {
-    var positionContainer = jQuery('.index-container').position();
-    var position = jQuery('.index').position();
-    return [position.left , position.top ];
-    return [position.left + positionContainer.left, position.top + positionContainer.top];
+    var position = jQuery('#index')[0].getBBox();
+    return [position.x , position.y ];
   }
 });
