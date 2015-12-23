@@ -10,7 +10,7 @@ We're scratching our own itch here. As developers, we spend a lot of time readin
 
 Not blaming anyone here. Building a good search for a documentation is a complex challenge. We happen to have a lot of experience doing that, and we want to share it with the world. For free.
 
-Just submit the form on the [website][12] and we'll get back to you with what you need to integrate your new search into your website.
+Just submit the form on the [website][https://community.algolia.com/docsearch/] and we'll get back to you with what you need to integrate your new search into your website.
 
  1. We'll crawl your documentation pages,
  2. We'll configure your search experience,
@@ -36,7 +36,7 @@ docsearch({
 
 The default colorscheme is blue and gray:
 
-![Default colorscheme][13]
+![Default colorscheme][12]
 
 To update the colors to suit your website, you just need to override a few
 colors. Here is an example of a CSS file that you can use as a basis and that
@@ -82,6 +82,6 @@ sets white and purples colors.
 }
 ```
 
-Advanced users can also clone the repository, edit the [_variables.scss][14]
+Advanced users can also clone the repository, edit the [_variables.scss][13]
 file and re-build the CSS file using `npm run build:css`.
 
