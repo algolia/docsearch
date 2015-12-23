@@ -6,11 +6,11 @@ let templates = {
   suggestion: `
   <div class="${suggestionPrefix}
     {{#isCategoryHeader}}${suggestionPrefix}__main{{/isCategoryHeader}}
-    {{#isSubcategoryHeader}}${suggestionPrefix}__secondary{{/isSubcategoryHeader}}
+    {{#isSubCategoryHeader}}${suggestionPrefix}__secondary{{/isSubCategoryHeader}}
   ">
     <div class="${suggestionPrefix}--category-header">{{{category}}}</div>
     <div class="${suggestionPrefix}--wrapper">
-      <div class="${suggestionPrefix}--subcategory-column">{{{subcategory}}}</div>
+      <div class="${suggestionPrefix}--subcategory-column"><span class="${suggestionPrefix}--subcategory-column-text">{{{subcategory}}}</span></div>
       <div class="${suggestionPrefix}--content">
         <div class="${suggestionPrefix}--subcategory-inline">{{{subcategory}}}</div>
         <div class="${suggestionPrefix}--title">{{{title}}}</div>

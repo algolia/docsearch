@@ -14,8 +14,6 @@
   margin: 6px 0 0;
   padding: 4px;
   text-align: left;
-  left: -20px !important; // Hardcoded
-  right: -320px !important; // Hardcoded
 }
 
 // Each suggestion
@@ -111,6 +109,9 @@
 // BREAKPOINT 1:
 // Screen is big enough to display the text snippets
 @media (min-width: $breakpoint-medium) {
+  .aa-dropdown-menu {
+    min-width: $dropdown-min-width-medium;
+  }
   .algolia-docsearch-suggestion--text {
     display: block;
     font-size: .9em;
@@ -121,6 +122,9 @@
 // BREAKPOINT 2:
 // Screen is big enough to display results in two columns
 @media (min-width: $breakpoint-large) {
+  .aa-dropdown-menu {
+    min-width: $dropdown-min-width-large;
+  }
   .algolia-docsearch-suggestion {
     display: table;
     width: 100%;
@@ -140,6 +144,14 @@
     width: 135px; // Hardcoded
     max-width: 135px; // Hardcoded
     min-width: 135px; // Hardcoded
+  }
+
+  .algolia-docsearch-suggestion--subcategory-column-text {
+    display: none;
+
+    .algolia-docsearch-suggestion__secondary & {
+      display: block;
+    }
   }
   .algolia-docsearch-suggestion--content {
     display: table-cell;
