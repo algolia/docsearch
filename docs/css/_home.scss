@@ -48,36 +48,31 @@ html, body {
 
 /* JUMBOTRON
 // ------------------------- */
-.main-content .jumbotron {
+.jumbotron {
   padding-top: 60px;
   background: #091724 url(../img/header-bg.png) no-repeat center center;
   background-size: cover;
   margin-bottom: 0;
-}
-
-.jumbotron .jumbotron-header {
-  text-align: center;
-  color: #FFF;
-}
-
-.jumbotron .jumbotron-left-column {
-  display: none;
-  padding-top: 100px;
-  float: left;
-  width: 400px;
-  color: #FFF;
-  margin-left: 120px;
-}
-.jumbotron .jumbotron-left-column p {
-  font-size: 18px;
-  color: #C7C4C3;
-}
-@media (min-width: 1200px) {
-  .jumbotron .jumbotron-left-column {
-    display: block;
+  .jumbotron-header {
+    text-align: center;
+    color: #FFF;
+  }
+  .jumbotron-left-column {
+    display: none;
+    padding-top: 100px;
+    float: left;
+    width: 400px;
+    color: #FFF;
+    margin-left: 120px;
+    p {
+      font-size: 18px;
+      color: #C7C4C3;
+    }
+    @media (min-width: 1200px) {
+      display: block;
+    }
   }
 }
-
 
 
 /* JOIN FORM
@@ -170,10 +165,6 @@ h2.page-section-title:after {
   padding-left: 20px;
   padding-right: 20px;
   font-size: 18px;
-  @media (min-width: 600px) {
-    padding-left: 120px;
-    padding-right: 120px;
-  }
 }
 
 #section_examples {
@@ -198,6 +189,20 @@ h2.page-section-title:after {
     }
     img.example {
       width: 100%;
+    }
+  }
+  .screen-wrapper {
+    position: relative;
+    figure.freezeframe-container {
+	    border-radius: 3px;
+    }
+    .screen-mask {
+      position: absolute;
+      top: 0;
+      pointer-events: none;
+    }
+    &:hover .screen-mask{
+      display: none;
     }
   }
 }
