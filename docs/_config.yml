@@ -1,10 +1,16 @@
 # Site settings
-title: Documentation Search
-description: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum quod hic qui, possimus ab ratione illo reiciendis nostrum sit aperiam debitis enim illum sequi reprehenderit porro error, sint earum rem!
 baseurl: "/docsearch" # the subpath of your site, e.g. /blog/
+host: 0.0.0.0
+
+# OpenGraph / Twitter
+title: DocSearch
+description: Algolia DocSearch is the easiest way to add search to your documentation. Just send us your URL, and we'll send you the implementation code.
+tagline: DocSearch
+card_image: /path/to/card.jpg
+card_image_width: 1200
+card_image_height: 600
 twitter_username: algolia
 github_username: algolia
-host: 0.0.0.0
 
 # Navigation
 navigation:
