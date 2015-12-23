@@ -1,3 +1,6 @@
+* {
+  z-index: 1;
+}
 /* COLORS
 // -------------------------
 #46AEDA Algolia blue
@@ -242,7 +245,7 @@ footer.site-footer {
 
 .doc-page {
   position: absolute;
-  z-index: 1;
+  z-index: -1;
   &.show {
     transition: opacity 300ms;
     opacity:1;
@@ -257,6 +260,12 @@ footer.site-footer {
 .index-container {
   position: relative;
   text-align: center;
-  margin:auto;
-  z-index: 100;
+  margin: auto;
+}
+
+.index {
+  z-index: 20;
+  position: relative;
+  width: 319px;
+  height: 180px;
 }

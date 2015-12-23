@@ -11,11 +11,12 @@ layout: default
         %p#top The easiest way to add search to your documentation.
       .jumbotron-left-column
         %div.index-container
-          %img.index{src: 'img/illus-index.png'}
-        .spacer40
+          %svg.index
+            = File.read('img/illus-index.svg')
+        .spacer30
         .text-center
           %p We’ve created the fastest, easiest way to search within documentation.
-          %p And best of all? It’s FREE.
+          %p  And best of all? It’s FREE.
       %form#join-form{action: '#', method: 'POST'}
         %h3 Get Started. It’s FREE!
         .spacer20
