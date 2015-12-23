@@ -33,7 +33,7 @@ html, body {
       position: relative;
       height: 50px;
       font-size: 16px;
-      line-height: 50px
+      line-height: 50px;
     }
     .navbar-nav > li > a {
       padding-bottom: 0;
@@ -41,7 +41,7 @@ html, body {
     .fa-github {
       font-size: 1.6em;
       position: relative;
-      top: -2px
+      top: -2px;
     }
   }
 }
@@ -132,49 +132,36 @@ html, body {
 // ------------------------- */
 .page-section {
   padding: 60px 0;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.6;
   color: #091724;
+  h2 {
+    font-size: 26px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 30px;
+    text-align: center;
+    letter-spacing: 1px;
+    &:after {
+      display: block;
+      content: '';
+      border-bottom: 3px solid #FF2E6C;
+      margin: 30px auto 33px;
+      width: 60px;
+    }
+  }
   &.dark {
     background-color: #091724;
     color: #C7C4C4;
-    h2.page-section-title{
+    h2 {
       color: #FFF;
     }
   }
 }
 
 
-.page-section-title {
-  font-size: 26px;
-  text-transform: uppercase;
-  font-weight: 600;
-  margin-top: 0;
-  margin-bottom: 30px;
-  text-align: center;
-  letter-spacing: 1px;
-  &:after {
-    display: block;
-    content: '';
-    border-bottom: 3px solid #FF2E6C;
-    margin: 30px auto 33px;
-    width: 60px;
-  }
-}
-
-
-
-#section_why {
-  padding-left: 20px;
-  padding-right: 20px;
-  font-size: 18px;
-}
-
 #section_examples {
-  font-size: 18px;
-  text-align: center;
-  padding-left: 20px;
-  padding-right: 20px;
   a {
     color: #C7C4C4;
     &:hover {
@@ -224,29 +211,23 @@ html, body {
   }
 }
 
-#section_how h3 .how-it-works-number {
-  float: left;
-  line-height: 35px;
-  color: #46AEDA;
-  font-size: 50px;
-  font-family: "Helvetica Neue";
-  margin-right: 10px;
-}
-#section_how h3 {
-  font-size: 18px;
-  font-weight: bold;
-  margin: 0 0 20px 0;
-}
-#section_how p {
-  clear: both;
-}
 #section_how {
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-#section_get-started {
-  font-size: 18px;
+  h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 20px;
+    .how-it-works-number {
+      float: left;
+      line-height: 35px;
+      color: #46AEDA;
+      font-size: 50px;
+      font-family: "Helvetica Neue";
+      margin-right: 10px;
+    }
+  }
+  p {
+    font-size: 16px;
+  }
 }
 
 /* FOOTER

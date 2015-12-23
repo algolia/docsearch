@@ -2,147 +2,146 @@
 layout: default
 ---
 
-.main-content
-  .jumbotron
-    .container.pos-rel
-      .jumbotron-header
-        %h1.jumbotron-title
-          %img.logo{:src => "./img/logo-docsearch.svg"}
-        %p#top The easiest way to add search to your documentation.
-      .jumbotron-left-column
-        %div.index-container
-          %svg.index
-            = File.read('img/illus-index.svg')
-        .spacer30
-        .text-center
-          %p We’ve created the fastest, easiest way to search within documentation.
-          %p  And best of all? It’s FREE.
-      %form#join-form{action: '#', method: 'POST'}
-        %h3 Get Started. It’s FREE!
-        .spacer20
-        .input-group
-          %span.input-group-addon
-            %i.fa.fa-fw.fa-envelope-o
-          %input.form-control{type: 'email', placeholder: 'you@example.org', name: 'email'}
-        %p.text-sm We’ll crawl the documentation pages of your website and index them on Algolia.
-        .spacer20
-        .input-group
-          %span.input-group-addon
-            %i.fa.fa-fw.fa-globe
-          %input.form-control{type: 'text', placeholder: 'https://website.com/doc', name: 'url'}
-        %p.text-sm We’ll email you the code you need to integrate the search into your documentation.
-        .spacer20
-        .text-center
-          %button.btn.btn-primary.btn-lg{type: 'submit'}
-            JOIN THE BETA!
-  #section_why.page-section
-    .m800.m-l-r-auto
-      %h2.page-section-title Why DocSearch?
-      %p We're kind of scratching our own itch here. As developers, we spend a lot of time reading documentation, and it isn’t always easy to find the information we need.
-      %p No one's to blame, building a good search for a documentation is a complex challenge.  We just happen to have a lot of experience doing that, and we want to share it with the world.
-  #section_examples.page-section.dark
-    .container
-      .text-center
-        %h2.page-section-title DocSearch is live
-        %p We’ve integrated DocSearch into several open source projects. Take a look.
-      .row
-        .col-sm-4.showcase
-          %a{:href => "https://bootstrap.algolia.com", :target => "_blank"}
-            %img.img-responsive.logo{:src => "./img/showcase/logo-bootstrap.png"}
-            .screen-wrapper
-              %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-bootstrap.gif"}
-              %img.img-responsive.screen-mask{:src => "./img/mask.png"}
-            .spacer5
-            Bootstrap
-        .col-sm-4.showcase
-          %a{:href => "http://eslint.org/", :target => "_blank"}
-            %img.img-responsive.logo{:src => "./img/showcase/logo-eslint.png"}
-            .screen-wrapper
-              %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-eslint.gif"}
-              %img.img-responsive.screen-mask{:src => "./img/mask.png"}
-            .spacer5
-            ESLint
-        .col-sm-4.showcase
-          %a{:href => "http://docs.scala-lang.org/", :target => "_blank"}
-            %img.img-responsive.logo{:src => "./img/showcase/logo-scala.png"}
-            .screen-wrapper
-              %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-scala.gif"}
-              %img.img-responsive.screen-mask{:src => "./img/mask.png"}
-            .spacer5
-            Scala
-        .col-sm-4.showcase
-          %a{:href => "https://babeljs.algolia.com/", :target => "_blank"}
-            %img.img-responsive.logo{:src => "./img/showcase/logo-babel.png"}
-            .screen-wrapper
-              %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-babel.gif"}
-              %img.img-responsive.screen-mask{:src => "./img/mask.png"}
-            .spacer5
-            Babel.js
-        .col-sm-4.showcase
-          %a{:href => "https://reactjs.algolia.com/", :target => "_blank"}
-            %img.img-responsive.logo{:src => "./img/showcase/logo-react.png"}
-            .screen-wrapper
-              %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-react.gif"}
-              %img.img-responsive.screen-mask{:src => "./img/mask.png"}
-            .spacer5
-            React
-        .col-sm-4.showcase
-          .placeholder-logo
-          .placeholder-screen
-          .spacer5
-          You?
-  #section_how.page-section
-    .container
-      .row
-        %h2.page-section-title How it works
-      .row
-        .col-sm-12
-          %img.img-responsive{:src => "./img/illus-howitworks.jpg"}
-      .spacer60
-      .row
-        .col-sm-10.col-sm-offset-1
-          .row
-            .col-sm-4.how-it-works
-              %h3
-                %span.how-it-works-number> 1
-                We crawl your documentation pages
-              %p We built a website crawler designed to index every section of your documentation.
-              %p Just send us the URL of your documentation, and we’ll periodically run the crawler so you’re always up-to-date.
-            .col-sm-4.how-it-works
-              %h3
-                %span.how-it-works-number> 2
-                We configure your search experience
-              %p You don’t need to configure any settings or even have an Algolia account.
-              %p We take of all of this automatically to ensure the best documentation search experience.
-            .col-sm-4.how-it-works
-              %h3
-                %span.how-it-works-number> 3
-                You add the search autocomplete to your UI
-              %p We’ll send you a few lines to code to integrate Algolia autocomplete and power your search.
-              %p You will receive the same speed, relevance and best-in-class UX as our paying customers.
-  #section_get-started.page-section.dark
-    .container
-      %h2.page-section-title Get started
-      .text-center
-        %p We’ll get back to you within a few hours with everything you need to integrate your new search into your website.
-        %p Oh, and did we mention it's FREE? No commitment. No subscription. Everything is on us!
+.jumbotron
+  .container.pos-rel
+    .jumbotron-header
+      %h1.jumbotron-title
+        %img.logo{:src => "./img/logo-docsearch.svg"}
+      %p#top The easiest way to add search to your documentation.
+    .jumbotron-left-column
+      %div.index-container
+        %svg.index
+          = File.read('img/illus-index.svg')
       .spacer30
-      %form#join-form-2{action: '#', method: 'POST'}
-        .input-group
-          %span.input-group-addon
-            %i.fa.fa-fw.fa-envelope-o
-          %input.form-control{type: 'email', placeholder: 'you@example.org', name: 'email'}
-        %p.text-sm We’ll crawl the documentation pages of your website and index them on Algolia.
-        .spacer20
-        .input-group
-          %span.input-group-addon
-            %i.fa.fa-fw.fa-globe
-          %input.form-control{type: 'text', placeholder: 'https://website.com/doc', name: 'url'}
-        %p.text-sm We’ll email you the code you need to integrate the search into your documentation.
-        .spacer20
-        .text-center
-          %button.btn.btn-primary.btn-lg{type: 'submit'}
-            JOIN THE BETA!
+      .text-center
+        %p We’ve created the fastest, easiest way to search within documentation.
+        %p  And best of all? It’s FREE.
+    %form#join-form{action: '#', method: 'POST'}
+      %h3 Get Started. It’s FREE!
+      .spacer20
+      .input-group
+        %span.input-group-addon
+          %i.fa.fa-fw.fa-envelope-o
+        %input.form-control{type: 'email', placeholder: 'you@example.org', name: 'email'}
+      %p.text-sm We’ll crawl the documentation pages of your website and index them on Algolia.
+      .spacer20
+      .input-group
+        %span.input-group-addon
+          %i.fa.fa-fw.fa-globe
+        %input.form-control{type: 'text', placeholder: 'https://website.com/doc', name: 'url'}
+      %p.text-sm We’ll email you the code you need to integrate the search into your documentation.
+      .spacer20
+      .text-center
+        %button.btn.btn-primary.btn-lg{type: 'submit'}
+          JOIN THE BETA!
+#section_why.page-section
+  .m800.m-l-r-auto
+    %h2.page-section-title Why DocSearch?
+    %p We're kind of scratching our own itch here. As developers, we spend a lot of time reading documentation, and it isn’t always easy to find the information we need.
+    %p No one's to blame, building a good search for a documentation is a complex challenge.  We just happen to have a lot of experience doing that, and we want to share it with the world.
+#section_examples.page-section.dark
+  .container
+    .text-center
+      %h2.page-section-title DocSearch is live
+      %p We’ve integrated DocSearch into several open source projects. Take a look.
+    .row
+      .col-sm-4.showcase
+        %a{:href => "https://bootstrap.algolia.com", :target => "_blank"}
+          %img.img-responsive.logo{:src => "./img/showcase/logo-bootstrap.png"}
+          .screen-wrapper
+            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-bootstrap.gif"}
+            %img.img-responsive.screen-mask{:src => "./img/mask.png"}
+          .spacer5
+          Bootstrap
+      .col-sm-4.showcase
+        %a{:href => "http://eslint.org/", :target => "_blank"}
+          %img.img-responsive.logo{:src => "./img/showcase/logo-eslint.png"}
+          .screen-wrapper
+            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-eslint.gif"}
+            %img.img-responsive.screen-mask{:src => "./img/mask.png"}
+          .spacer5
+          ESLint
+      .col-sm-4.showcase
+        %a{:href => "http://docs.scala-lang.org/", :target => "_blank"}
+          %img.img-responsive.logo{:src => "./img/showcase/logo-scala.png"}
+          .screen-wrapper
+            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-scala.gif"}
+            %img.img-responsive.screen-mask{:src => "./img/mask.png"}
+          .spacer5
+          Scala
+      .col-sm-4.showcase
+        %a{:href => "https://babeljs.algolia.com/", :target => "_blank"}
+          %img.img-responsive.logo{:src => "./img/showcase/logo-babel.png"}
+          .screen-wrapper
+            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-babel.gif"}
+            %img.img-responsive.screen-mask{:src => "./img/mask.png"}
+          .spacer5
+          Babel.js
+      .col-sm-4.showcase
+        %a{:href => "https://reactjs.algolia.com/", :target => "_blank"}
+          %img.img-responsive.logo{:src => "./img/showcase/logo-react.png"}
+          .screen-wrapper
+            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-react.gif"}
+            %img.img-responsive.screen-mask{:src => "./img/mask.png"}
+          .spacer5
+          React
+      .col-sm-4.showcase
+        .placeholder-logo
+        .placeholder-screen
+        .spacer5
+        You?
+#section_how.page-section
+  .container
+    .row
+      %h2.page-section-title How it works
+    .row
+      .col-sm-12
+        %img.img-responsive{:src => "./img/illus-howitworks.jpg"}
+    .spacer60
+    .row
+      .col-sm-10.col-sm-offset-1
+        .row
+          .col-sm-4.how-it-works
+            %h3
+              %span.how-it-works-number> 1
+              We crawl your documentation pages
+            %p We built a website crawler designed to index every section of your documentation.
+            %p Just send us the URL of your documentation, and we’ll periodically run the crawler so you’re always up-to-date.
+          .col-sm-4.how-it-works
+            %h3
+              %span.how-it-works-number> 2
+              We configure your search experience
+            %p You don’t need to configure any settings or even have an Algolia account.
+            %p We take of all of this automatically to ensure the best documentation search experience.
+          .col-sm-4.how-it-works
+            %h3
+              %span.how-it-works-number> 3
+              You add the search autocomplete to your UI
+            %p We’ll send you a few lines to code to integrate Algolia autocomplete and power your search.
+            %p You will receive the same speed, relevance and best-in-class UX as our paying customers.
+#section_get-started.page-section.dark
+  .container
+    %h2.page-section-title Get started
+    .text-center
+      %p We’ll get back to you within a few hours with everything you need to integrate your new search into your website.
+      %p Oh, and did we mention it's FREE? No commitment. No subscription. Everything is on us!
+    .spacer30
+    %form#join-form-2{action: '#', method: 'POST'}
+      .input-group
+        %span.input-group-addon
+          %i.fa.fa-fw.fa-envelope-o
+        %input.form-control{type: 'email', placeholder: 'you@example.org', name: 'email'}
+      %p.text-sm We’ll crawl the documentation pages of your website and index them on Algolia.
+      .spacer20
+      .input-group
+        %span.input-group-addon
+          %i.fa.fa-fw.fa-globe
+        %input.form-control{type: 'text', placeholder: 'https://website.com/doc', name: 'url'}
+      %p.text-sm We’ll email you the code you need to integrate the search into your documentation.
+      .spacer20
+      .text-center
+        %button.btn.btn-primary.btn-lg{type: 'submit'}
+          JOIN THE BETA!
 
 {% contentfor site-footer %}
 <script src="{{ "/js/home.js" | prepend: site.baseurl }}"></script>
