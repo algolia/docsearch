@@ -34,9 +34,20 @@ html, body {
       height: 50px;
       font-size: 16px;
       line-height: 50px;
+      color: white;
+      a:hover {
+        text-decoration: none;
+      }
+    }
+    .navbar-nav > li {
+      padding: 14px 15px;
     }
     .navbar-nav > li > a {
-      padding-bottom: 0;
+      padding: 0 0 4px 0;
+    }
+    .navbar-nav > li.active > a {
+      background-color: transparent;
+      border-bottom: 2px solid #FF2E6C;
     }
     .fa-github {
       font-size: 1.6em;
