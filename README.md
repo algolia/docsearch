@@ -2,10 +2,22 @@
 
 The easiest way to add search to your documentation. For free.
 
-[![build status][1]](http://travis-ci.org/algolia/docsearch)
-[![NPM version][2]](http://badge.fury.io/js/docsearch.js)
-
 Check out our [website][3] to add an outstanding search to your documentation.
+
+[![Version][version-svg]][package-url] [![Build Status][travis-svg]][travis-url] [![Coverage Status][coveralls-svg]][coveralls-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url]
+
+[version-svg]: https://img.shields.io/npm/v/docsearch.js.svg?style=flat-square
+[package-url]: https://npmjs.org/package/docsearch.js
+[travis-svg]: https://img.shields.io/travis/algolia/docsearch/master.svg?style=flat-square
+[travis-url]: https://travis-ci.org/algolia/docsearch
+[coveralls-svg]: https://img.shields.io/coveralls/algolia/docsearch/master.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/github/algolia/docsearch?branch=docs%2Fbadges
+[license-image]: http://img.shields.io/badge/license-MIT-green.svg?style=flat-square
+[license-url]: LICENSE
+[downloads-image]: https://img.shields.io/npm/dm/docsearch.js.svg?style=flat-square
+[downloads-url]: http://npm-stat.com/charts.html?package=docsearch.js
+[docsearch-website]: https://community.algolia.com/docsearch/?utm_medium=social-owned&utm_source=GitHub&utm_campaign=docsearch%20repository
+[docsearch-website-docs]: https://community.algolia.com/docsearch/documentation/?utm_medium=social-owned&utm_source=GitHub&utm_campaign=docsearch%20repository
 
 ![Eslint][4]
 
