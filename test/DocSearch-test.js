@@ -686,5 +686,80 @@ describe('DocSearch', () => {
       // Then
       expect(actual[0].text).toEqual('…lorem <mark>foo</mark> bar ipsum.');
     });
+    it('should add the anchor to the url if one is set', () => {
+      // Given
+      let input = [{
+        hierarchy: {
+          lvl0: 'Ruby',
+          lvl1: 'API',
+          lvl2: null,
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        },
+        content: 'foo bar',
+        url: 'http://foo.bar/',
+        anchor: 'anchor'
+      }];
+
+      // When
+      let actual = DocSearch.formatHits(input);
+
+      // Then
+      expect(actual[0].url).toEqual('http://foo.bar/#anchor');
+    });
+  });
+
+  describe('getSuggestionTemplate', () => {
+    beforeEach(() => {
+      let templates = {
+        suggestion: '<div></div>'
+      };
+      DocSearch.__Rewire__('templates', templates);
+    });
+    afterEach(() => {
+      DocSearch.__ResetDependency__('templates');
+    });
+    it('should return a function', () => {
+      // Given
+
+      // When
+      let actual = DocSearch.getSuggestionTemplate();
+
+      // Then
+      expect(actual).toBeA('function');
+    });
+    describe('returned function', () => {
+      let Hogan;
+      let render;
+      beforeEach(() => {
+        render = sinon.spy();
+        Hogan = {
+          compile: sinon.stub().returns({render})
+        };
+        DocSearch.__Rewire__('Hogan', Hogan);
+      });
+      it('should compile the suggestion template', () => {
+        // Given
+
+        // When
+        DocSearch.getSuggestionTemplate();
+
+        // Then
+        expect(Hogan.compile.calledOnce).toBe(true);
+        expect(Hogan.compile.calledWith('<div></div>')).toBe(true);
+      });
+      it('should call render on a Hogan template', () => {
+        // Given
+        let actual = DocSearch.getSuggestionTemplate();
+
+        // When
+        actual('foo');
+
+        // Then
+        expect(render.calledOnce).toBe(true);
+        expect(render.calledWith('foo')).toBe(true);
+      });
+    });
   });
 });
