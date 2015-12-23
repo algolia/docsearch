@@ -57,7 +57,7 @@ Once we've crawled your documentation website we'll send you the credentials you
 <link rel="stylesheet" href="//cdn.jsdelivr.net/docsearch.js/0/docsearch.min.css" />
 <script type="text/javascript" src="//cdn.jsdelivr.net/docsearch.js/0/docsearch.min.js"></script>
 <script type="text/javascript">
-docSearch({
+docsearch({
   apiKey: '<API_KEY>',
   indexName: '<INDEX_NAME>',
   inputSelector: '<YOUR_INPUT_DOM_SELECTOR>'
