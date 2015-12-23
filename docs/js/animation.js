@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function(){
   var box = getIndexDomPosition();
 
-  var center = [box[0], box[1] + 40];
+  var center = [box[0] + 60, box[1] + 20];
 
   var particles = [];
   for(var i=0; i<10; i++) {
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 
   function getIndexDomPosition() {
-    var position = document.querySelector('#index').getBBox();
-    return [position.x , position.y ];
+    var position = jQuery('.index').position();
+    return [position.left, position.top];
   }
 });
