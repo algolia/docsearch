@@ -40,7 +40,7 @@ layout: default
       %h2.page-section-title Why DocSearch?
       %p We're kind of scratching our own itch here. As developers, we spend a lot of time reading documentation, and it isn’t always easy to find the information we need.
       %p No one's to blame, building a good search for a documentation is a complex challenge.  We just happen to have a lot of experience doing that, and we want to share it with the world.
-  #section_examples.page-section.page-section-dark
+  #section_examples.page-section.dark
     .container
       .text-center
         %h2.page-section-title DocSearch is live
@@ -52,7 +52,7 @@ layout: default
             .screen-wrapper
               %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-bootstrap.gif"}
               %img.img-responsive.screen-mask{:src => "./img/mask.png"}
-            .spacer10
+            .spacer5
             Bootstrap
         .col-sm-4.showcase
           %a{:href => "http://eslint.org/", :target => "_blank"}
@@ -60,7 +60,7 @@ layout: default
             .screen-wrapper
               %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-eslint.gif"}
               %img.img-responsive.screen-mask{:src => "./img/mask.png"}
-            .spacer10
+            .spacer5
             ESLint
         .col-sm-4.showcase
           %a{:href => "http://docs.scala-lang.org/", :target => "_blank"}
@@ -68,7 +68,7 @@ layout: default
             .screen-wrapper
               %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-scala.gif"}
               %img.img-responsive.screen-mask{:src => "./img/mask.png"}
-            .spacer10
+            .spacer5
             Scala
         .col-sm-4.showcase
           %a{:href => "https://babeljs.algolia.com/", :target => "_blank"}
@@ -76,7 +76,7 @@ layout: default
             .screen-wrapper
               %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-babel.gif"}
               %img.img-responsive.screen-mask{:src => "./img/mask.png"}
-            .spacer10
+            .spacer5
             Babel.js
         .col-sm-4.showcase
           %a{:href => "https://reactjs.algolia.com/", :target => "_blank"}
@@ -84,8 +84,13 @@ layout: default
             .screen-wrapper
               %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-react.gif"}
               %img.img-responsive.screen-mask{:src => "./img/mask.png"}
-            .spacer10
+            .spacer5
             React
+        .col-sm-4.showcase
+          .placeholder-logo
+          .placeholder-screen
+          .spacer5
+          You?
   #section_how.page-section
     .container
       .row
@@ -115,11 +120,12 @@ layout: default
                 You add the search autocomplete to your UI
               %p We’ll send you a few lines to code to integrate Algolia autocomplete and power your search.
               %p You will receive the same speed, relevance and best-in-class UX as our paying customers.
-  #section_get-started.page-section.page-section-dark
-    .m600.m-l-r-auto
+  #section_get-started.page-section.dark
+    .container
       %h2.page-section-title Get started
-      %p We’ll get back to you within a few hours with everything you need to integrate your new search into your website.
-      %p Oh, and did we mention it's FREE? No commitment. No subscription. Everything is on us!
+      .text-center
+        %p We’ll get back to you within a few hours with everything you need to integrate your new search into your website.
+        %p Oh, and did we mention it's FREE? No commitment. No subscription. Everything is on us!
       .spacer30
       %form#join-form-2{action: '#', method: 'POST'}
         .input-group
