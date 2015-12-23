@@ -54,7 +54,7 @@ class DocSearch {
     this.autocomplete = autocomplete(this.input, autocompleteOptions, [{
       source: this.getAutocompleteSource(),
       templates: {
-        suggestion: this.getSuggestionTemplate(),
+        suggestion: DocSearch.getSuggestionTemplate(),
         footer: templates.footer
       }
     }]);
@@ -154,7 +154,7 @@ class DocSearch {
     });
   }
 
-  getSuggestionTemplate() {
+  static getSuggestionTemplate() {
     const template = Hogan.compile(templates.suggestion);
     return (suggestion) => {
       return template.render(suggestion);
