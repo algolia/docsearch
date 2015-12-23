@@ -38,7 +38,7 @@ layout: default
     .m800.m-l-r-auto
       %h2.page-section-title Why DocSearch?
       %p We’re scratching our own itch here. As developers, we spend a lot of time reading documentation, and it isn’t always easy to find the information we need.
-      %p Not blaming anyone here. Building a good search for a documentation is a complex challenge. We happen to have a lot of experience doing that, and we want to share it with the world. For free.
+      %p Not blaming anyone here. Building a good search for a documentation is a complex challenge. We happen to have a lot of experience doing that, and we want to share it with the world.
   #section_examples.page-section.page-section-dark
     .container
       .text-center
@@ -98,10 +98,27 @@ layout: default
           %p We’ll send you a few lines to code to integrate Algolia autocomplete and power your search.
           %p You will receive the same speed, relevance and best-in-class UX as our paying customers.
   #section_get-started.page-section.page-section-dark
-    .m800
+    .m900.m-l-r-auto
       %h2.page-section-title Get started
       %p Add the url of your documentation site and your email to the form at the top of the page. We’ll get back to you with what you need to integrate your new search into   your website.
       %p Don’t forget, DocSearch is completely free! There’s no need to sign up for Algolia or submit any payment information. Let’s tackle document search together.
+      .spacer30
+      %form#join-form-2{action: '#', method: 'POST'}
+        .input-group
+          %span.input-group-addon
+            %i.fa.fa-fw.fa-envelope-o
+          %input.form-control{type: 'email', placeholder: 'you@example.org', name: 'email'}
+        %p.text-sm We’ll crawl the documentation pages of your website and index them on Algolia.
+        .spacer20
+        .input-group
+          %span.input-group-addon
+            %i.fa.fa-fw.fa-globe
+          %input.form-control{type: 'text', placeholder: 'https://website.com/doc', name: 'url'}
+        %p.text-sm We’ll email you the code you need to integrate the search into your documentation.
+        .spacer20
+        .text-center
+          %button.btn.btn-primary.btn-lg{type: 'submit'}
+            JOIN THE BETA!
 
 <script src="js/animation.js"></script>
 

@@ -35,6 +35,11 @@ html, body {
     .navbar-nav > li > a {
       padding-bottom: 0;
     }
+    .fa-github {
+      font-size: 1.6em;
+      position: relative;
+      top: -2px
+    }
   }
 }
 
@@ -74,16 +79,17 @@ html, body {
 
 /* JOIN FORM
 // ------------------------- */
-#join-form {
+#join-form, #join-form-2 {
   background: #242E3A;
   display: block;
   width: 400px;
-  padding: 5px 10px;
+  padding: 20px;
   margin: 0 auto;
   border-radius: 6px;
   color: #FFF;
   max-width: 90%;
   h3 {
+    font-size: 22px;
     text-align: center;
     padding-bottom: 20px;
     border-bottom: 1px solid #3A434E;
@@ -93,10 +99,25 @@ html, body {
     font-weight: normal;
   }
   p {
-    margin-top: 5px;
-    font-size: 13px;
+    margin-top: 8px;
+    font-size: 14px;
+    letter-spacing: .5px;
     color: #C7C4C4;
-    font-style: italic;
+  }
+  .form-control {
+    border: none;
+  }
+  .input-group-addon {
+    background: white;
+    border: none;
+    border-right: solid 1px #ccc;
+  }
+  .btn {
+    background-color: #FF2E6C;
+    border: none;
+    font-size: 14px;
+    letter-spacing: 2px;
+    font-weight: bold;
   }
 }
 
@@ -145,45 +166,39 @@ h2.page-section-title:after {
 #section_why {
   padding-left: 20px;
   padding-right: 20px;
-  font-size: 20px;
-}
-@media (min-width: 600px) {
-  #section_why {
+  font-size: 18px;
+  @media (min-width: 600px) {
     padding-left: 120px;
     padding-right: 120px;
   }
 }
+
 #section_examples {
   font-size: 18px;
   text-align: center;
   padding-left: 20px;
   padding-right: 20px;
-}
-#section_examples a {
-  color: #C7C4C4;
-}
-#section_examples a:hover {
-  color: #46AEDA;
-  text-decoration: none;
-}
-#section_examples .showcase {
-  margin-top: 40px;
-  text-align: center;
-}
-@media (min-width: 600px) {
-  #section_examples {
-    padding-left: 0px;
-    padding-right: 0px;
+  a {
+    color: #C7C4C4;
+    &:hover {
+      color: #46AEDA;
+      text-decoration: none;
+    }
+  }
+  .showcase {
+    margin-top: 40px;
+    text-align: center;
+    img.logo {
+      display: inline-block;;
+      height: 60px;
+      margin-bottom: 20px;
+    }
+    img.example {
+      width: 100%;
+    }
   }
 }
-#section_examples .showcase img.logo {
-  display: inline-block;;
-  height: 60px;
-  margin-bottom: 20px;
-}
-#section_examples .showcase img.example {
-  width: 100%;
-}
+
 #section_how h3 .how-it-works-number {
   float: left;
   line-height: 35px;
@@ -204,24 +219,10 @@ h2.page-section-title:after {
     padding-left: 20px;
     padding-right: 20px;
 }
-@media (min-width: 600px) {
-  #section_how p {
-    padding-left: 0px;
-    padding-right: 0px;
-  }
-}
-#section_get-started {
-  padding-left: 20px;
-  padding-right: 20px;
-  font-size: 20px;
-}
-@media (min-width: 600px) {
-  #section_get-started {
-    padding-left: 120px;
-    padding-right: 120px;
-  }
-}
 
+#section_get-started {
+  font-size: 18px;
+}
 
 /* FOOTER
 // ------------------------- */
