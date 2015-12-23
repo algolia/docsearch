@@ -29,12 +29,13 @@ html, body {
     border-radius: 0;
     border: none;
     background-color: #0B1724;
+    height: 50px;
     .navbar-header {
       position: relative;
       height: 50px;
-      font-size: 16px;
+      font-size: 14px;
       line-height: 50px;
-      color: white;
+      color: #C7C4C3;
       a:hover {
         text-decoration: none;
       }
