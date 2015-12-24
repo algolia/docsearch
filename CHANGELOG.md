@@ -1,3 +1,13 @@
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/algolia/docsearch/compare/v1.0.0...v1.0.1) (2015-12-24)
+
+
+### Bug Fixes
+
+* **handleSelected:** ensure we're calling setVal on the right object ([31abbd7](https://github.com/algolia/docsearch/commit/31abbd7)), closes [#51](https://github.com/algolia/docsearch/issues/51)
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/algolia/docsearch/compare/v0.0.7...v1.0.0) (2015-12-24)
 

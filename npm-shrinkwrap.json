@@ -1,6 +1,6 @@
 {
   "name": "docsearch.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "npm-shrinkwrap-version": "200.4.0",
   "node-version": "v4.2.2",
   "dependencies": {
