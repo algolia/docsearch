@@ -25,13 +25,14 @@ Check out our [website][3] to add an outstanding search to your documentation.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of Contents
 
-- [Introduction][5]
-- [Setup][6]
-- [Customization][7]
-- [Development workflow][8]
-  - [Local example][9]
-  - [Documentation website][10]
-  - [MacOS][11]
+- [Introduction](#introduction)
+- [Setup](#setup)
+- [Customization](#customization)
+- [Development workflow](#development-workflow)
+  - [Local example](#local-example)
+  - [Local build](#local-build)
+  - [Documentation website](#documentation-website)
+  - [MacOS](#macos)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

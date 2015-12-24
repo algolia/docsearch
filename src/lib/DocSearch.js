@@ -58,7 +58,7 @@ class DocSearch {
         footer: templates.footer
       }
     }]);
-    this.autocomplete.on('autocomplete:selected', this.handleSelected);
+    this.autocomplete.on('autocomplete:selected', this.handleSelected.bind(null, this.autocomplete.autocomplete));
   }
 
   /**
@@ -161,8 +161,8 @@ class DocSearch {
     };
   }
 
-  handleSelected(event, suggestion) {
-    this.autocomplete.autocomplete.setVal('');
+  handleSelected(input, event, suggestion) {
+    input.setVal('');
     window.location.href = suggestion.url;
   }
 }

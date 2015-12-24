@@ -1,3 +1,23 @@
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/algolia/docsearch/compare/v1.0.0...v1.0.1) (2015-12-24)
+
+
+### Bug Fixes
+
+* **handleSelected:** ensure we're calling setVal on the right object ([31abbd7](https://github.com/algolia/docsearch/commit/31abbd7)), closes [#51](https://github.com/algolia/docsearch/issues/51)
+
+
+
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/algolia/docsearch/compare/v0.0.7...v1.0.0) (2015-12-24)
+
+
+### Bug Fixes
+
+* **isSubCategoryHeader:** ensure we hide the content of the left column if this flag is not set ([0e04ce4](https://github.com/algolia/docsearch/commit/0e04ce4)), closes [#47](https://github.com/algolia/docsearch/issues/47)
+
+
+
 <a name="0.0.7"></a>
 ## [0.0.7](https://github.com/algolia/docsearch/compare/v0.0.6...v0.0.7) (2015-12-22)
 
