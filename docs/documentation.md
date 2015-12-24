@@ -21,8 +21,8 @@ Just submit the form on the [website](https://community.algolia.com/docsearch/) 
 Once we've crawled your documentation website we'll send you the credentials you need to add the following code snippet to your website:
 
 ```html
-<link rel="stylesheet" href="//cdn.jsdelivr.net/docsearch.js/0/docsearch.min.css" />
-<script type="text/javascript" src="//cdn.jsdelivr.net/docsearch.js/0/docsearch.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css" />
+<script type="text/javascript" src="//cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
 <script type="text/javascript">
 docsearch({
   apiKey: '<API_KEY>',
