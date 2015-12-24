@@ -4,6 +4,7 @@
 import jsdom from 'mocha-jsdom';
 import expect from 'expect';
 import sinon from 'sinon';
+import {waitForAndRun} from './helpers';
 
 describe('DocSearch', () => {
   let DocSearch;
@@ -327,6 +328,31 @@ describe('DocSearch', () => {
         };
         expect(client.search.calledWith([expectedArguments])).toBe(true);
       });
+    });
+  });
+
+  describe('handleSelected', () => {
+    it('should change the location', (done) => {
+      // Given
+      const options = {
+        apiKey: 'key',
+        indexName: 'foo',
+        inputSelector: '#input'
+      };
+
+      // When
+      let ds = new DocSearch(options);
+      ds.autocomplete.trigger('autocomplete:selected', {url: 'https://website.com/doc/page'});
+
+      // Then asynchronously
+      waitForAndRun(() => {
+        // escape as soon as the URL has changed
+        return window.location.href !== 'about:blank';
+      }, () => {
+        // then
+        expect(window.location.href).toEqual('https://website.com/doc/page');
+        done();
+      }, 100);
     });
   });
 
