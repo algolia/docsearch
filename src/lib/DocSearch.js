@@ -36,7 +36,7 @@ class DocSearch {
       hitsPerPage: 5
     },
     autocompleteOptions = {
-      debug: true,
+      debug: false,
       hint: false
     }
   }) {
