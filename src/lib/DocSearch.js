@@ -24,7 +24,9 @@ const usage = `Usage:
   apiKey,
   indexName,
   inputSelector,
-  [ options.{hint,debug} ]
+  [ appId ],
+  [ algoliaOptions.{hitsPerPage} ]
+  [ autocompleteOptions.{hint,debug} ]
 })`;
 class DocSearch {
   constructor({
