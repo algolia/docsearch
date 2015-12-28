@@ -129,12 +129,19 @@ html, body {
     letter-spacing: 2px;
     font-weight: bold;
   }
+  .input-group, .checkbox input {
+    &.has-errors {
+      -webkit-box-shadow: 0px 0px 20px 0px #FF2E6C;
+      -moz-box-shadow: 0px 0px 20px 0px #FF2E6C;
+      box-shadow: 0px 0px 20px 0px #FF2E6C;
+    }
+  }
 }
 
 @media (min-width: 1200px) {
   .jumbotron .join-form {
     position: absolute;
-    top: 200px;
+    top: 170px;
     right: 120px;
     padding: 10px 40px 30px;
   }

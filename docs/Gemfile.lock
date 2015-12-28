@@ -67,6 +67,9 @@ GEM
       jekyll
     jekyll-gist (1.4.0)
       octokit (~> 4.2)
+    jekyll-haml (0.1.3)
+      haml (>= 3.0.0)
+      jekyll (>= 0.10.0)
     jekyll-paginate (1.1.0)
     jekyll-sass-converter (1.3.0)
       sass (~> 3.2)
@@ -127,9 +130,9 @@ DEPENDENCIES
   guard-bundler
   guard-jekyll-plus
   guard-livereload
-  haml
   jekyll (< 3)
   jekyll-contentblocks
+  jekyll-haml
   nokogiri
   rouge
   sass
