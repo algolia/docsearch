@@ -132,7 +132,7 @@ class DocSearch {
 
     // Translate hits into smaller objects to be send to the template
     return groupedHits.map((hit) => {
-      let url = hit.anchor ? `${hit.url}#${hit.anchor}` : hit.url;
+      let url = DocSearch.formatURL(hit);
       let category = utils.getHighlightedValue(hit, 'lvl0');
       let subcategory = utils.getHighlightedValue(hit, 'lvl1') || category;
       let displayTitle = utils.compact([
@@ -154,6 +154,21 @@ class DocSearch {
         url: url
       };
     });
+  }
+
+  static formatURL(hit) {
+    const {url, anchor} = hit;
+    if (url) {
+      const containsAnchor = url.indexOf('#') !== -1;
+      if (containsAnchor) return url;
+      else if (anchor) return `${hit.url}#${hit.anchor}`;
+      return url;
+    }
+    else if (anchor) return `#${hit.anchor}`;
+    /* eslint-disable */
+    console.warn('no anchor nor url for : ', JSON.stringify(hit));
+    /* eslint-enable */
+    return null;
   }
 
   static getSuggestionTemplate() {
