@@ -1,3 +1,15 @@
+<a name="1.0.2"></a>
+## [1.0.2](https://github.com/algolia/docsearch/compare/v1.0.1...v1.0.2) (2015-12-28)
+
+
+### Bug Fixes
+
+* **debut:** do not enable debug by default ([188f49e](https://github.com/algolia/docsearch/commit/188f49e))
+* **url:** Removes concatenation of URL with hash if it contains a hash ([348df1c](https://github.com/algolia/docsearch/commit/348df1c)), closes [#53](https://github.com/algolia/docsearch/issues/53)
+* **usage:** fixed usage to match the latest prototype version ([f6edc9e](https://github.com/algolia/docsearch/commit/f6edc9e))
+
+
+
 <a name="1.0.1"></a>
 ## [1.0.1](https://github.com/algolia/docsearch/compare/v1.0.0...v1.0.1) (2015-12-24)
 
