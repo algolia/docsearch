@@ -708,6 +708,28 @@ describe('DocSearch', () => {
       // Then
       expect(actual[0].url).toEqual('http://foo.bar/#anchor');
     });
+    it('should not add the anchor to the url if one is set but it is already in the URL', () => {
+      // Given
+      let input = [{
+        hierarchy: {
+          lvl0: 'Ruby',
+          lvl1: 'API',
+          lvl2: null,
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        },
+        content: 'foo bar',
+        url: 'http://foo.bar/#anchor',
+        anchor: 'anchor'
+      }];
+
+      // When
+      let actual = DocSearch.formatHits(input);
+
+      // Then
+      expect(actual[0].url).toEqual('http://foo.bar/#anchor');
+    });
   });
 
   describe('getSuggestionTemplate', () => {
