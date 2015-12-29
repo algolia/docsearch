@@ -1,0 +1,22 @@
+%form.join-form{action: '#', method: 'POST'}
+  %h3 Get Started. It’s FREE!
+  .spacer20
+  .input-group
+    %span.input-group-addon
+      %i.fa.fa-fw.fa-globe
+    %input.form-control{type: 'text', placeholder: 'https://website.com/doc', name: 'url'}
+  %p.text-sm We’ll crawl the <u>documentation pages</u> of your website and index them on Algolia.
+  .spacer10
+  .input-group
+    %span.input-group-addon
+      %i.fa.fa-fw.fa-envelope-o
+    %input.form-control{type: 'email', placeholder: 'you@example.org', name: 'email'}
+  %p.text-sm We’ll email you the code you need to integrate the search into your documentation.
+  %p.checkbox.text-center
+    %label
+      %input{type: 'checkbox', name: 'owner'}
+      %span I'm the <u>owner</u> of that website
+  .spacer20
+  .text-center
+    %button.btn.btn-primary.btn-lg{type: 'submit'}
+      JOIN THE BETA!

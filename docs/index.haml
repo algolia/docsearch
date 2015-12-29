@@ -16,24 +16,8 @@ layout: default
       .text-center
         %p We’ve created the fastest, easiest way to search within documentation.
         %p  And best of all? It’s FREE.
-    %form.join-form{action: '#', method: 'POST'}
-      %h3 Get Started. It’s FREE!
-      .spacer20
-      .input-group
-        %span.input-group-addon
-          %i.fa.fa-fw.fa-envelope-o
-        %input.form-control{type: 'email', placeholder: 'you@example.org', name: 'email'}
-      %p.text-sm We’ll email you the code you need to integrate the search into your documentation.
-      .spacer20
-      .input-group
-        %span.input-group-addon
-          %i.fa.fa-fw.fa-globe
-        %input.form-control{type: 'text', placeholder: 'https://website.com/doc', name: 'url'}
-      %p.text-sm We’ll crawl the documentation pages of your website and index them on Algolia.
-      .spacer20
-      .text-center
-        %button.btn.btn-primary.btn-lg{type: 'submit'}
-          JOIN THE BETA!
+
+    {% haml join-form.haml %}
 #section_why.page-section
   .m800.m-l-r-auto
     %h2.page-section-title Why DocSearch?
@@ -128,22 +112,8 @@ layout: default
       %p We’ll get back to you within a few hours with everything you need to integrate your new search into your website.
       %p Oh, and did we mention it's FREE? No commitment. No subscription. Everything is on us!
     .spacer30
-    %form.join-form{action: '#', method: 'POST'}
-      .input-group
-        %span.input-group-addon
-          %i.fa.fa-fw.fa-envelope-o
-        %input.form-control{type: 'email', placeholder: 'you@example.org', name: 'email'}
-      %p.text-sm We’ll email you the code you need to integrate the search into your documentation.
-      .spacer20
-      .input-group
-        %span.input-group-addon
-          %i.fa.fa-fw.fa-globe
-        %input.form-control{type: 'text', placeholder: 'https://website.com/doc', name: 'url'}
-      %p.text-sm We’ll crawl the documentation pages of your website and index them on Algolia.
-      .spacer20
-      .text-center
-        %button.btn.btn-primary.btn-lg{type: 'submit'}
-          JOIN THE BETA!
+
+  {% haml join-form.haml %}
 
 {% contentfor site-footer %}
 <script src="{{ "/js/home.js" | prepend: site.baseurl }}"></script>
