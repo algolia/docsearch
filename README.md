@@ -25,14 +25,18 @@ Check out our [website][1] to add an outstanding search to your documentation.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of Contents
 
-- [Introduction][8]
-- [Setup][9]
-- [Customization][10]
-- [Development workflow][11]
-  - [Local example][12]
-  - [Local build][13]
-  - [Documentation website][14]
-  - [MacOS][15]
+- [Introduction](#introduction)
+- [Setup](#setup)
+- [Customization](#customization)
+  - [Advanced styling](#advanced-styling)
+- [Custom options](#custom-options)
+  - [Autocomplete options](#autocomplete-options)
+  - [Algolia options](#algolia-options)
+- [Development workflow](#development-workflow)
+  - [Local example](#local-example)
+  - [Local build](#local-build)
+  - [Documentation website](#documentation-website)
+  - [MacOS](#macos)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
