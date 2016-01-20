@@ -685,7 +685,11 @@ describe('DocSearch', () => {
       let actual = DocSearch.formatHits(input);
 
       // Then
-      expect(actual[0].title).toEqual('<mark>Geo-search</mark> › <mark>Foo</mark> › <mark>Bar</mark> › <mark>Baz</mark>');
+      let expected = '<mark>Geo-search</mark>' +
+        ' › <mark>Foo</mark>' +
+        ' › <mark>Bar</mark>' +
+        ' › <mark>Baz</mark>';
+      expect(actual[0].title).toEqual(expected);
     });
     it('should add ellipsis to content', () => {
       // Given
