@@ -28,6 +28,9 @@ describe('DocSearch', () => {
       <span class="i-am-a-span">span span</span>
     </div>
     `;
+
+    // We prevent the logging of expected errors
+    window.console.warn = sinon.spy();
   });
 
   describe('constructor', () => {
@@ -801,6 +804,86 @@ describe('DocSearch', () => {
 
       // Then
       expect(actual[0].url).toEqual('#' + input[0].anchor);
+    });
+  });
+
+  describe('formatUrl', () => {
+    it('concatenates url and anchor', () => {
+      // Given
+      let input = {
+        url: 'url',
+        anchor: 'anchor'
+      };
+
+      // When
+      let actual = DocSearch.formatURL(input);
+
+      // Then
+      expect(actual).toEqual('url#anchor');
+    });
+
+    it('returns only the url if no anchor', () => {
+      // Given
+      let input = {
+        url: 'url'
+      };
+
+      // When
+      let actual = DocSearch.formatURL(input);
+
+      // Then
+      expect(actual).toEqual('url');
+    });
+
+    it('returns the anchor if no url', () => {
+      // Given
+      let input = {
+        anchor: 'anchor'
+      };
+
+      // When
+      let actual = DocSearch.formatURL(input);
+
+      // Then
+      expect(actual).toEqual('#anchor');
+    });
+
+    it('does not concatenate if already an anchor', () => {
+      // Given
+      let input = {
+        url: 'url#anchor',
+        anchor: 'anotheranchor'
+      };
+
+      // When
+      let actual = DocSearch.formatURL(input);
+
+      // Then
+      expect(actual).toEqual('url#anchor');
+    });
+
+    it('returns null if no anchor nor url', () => {
+      // Given
+      let input = {
+      };
+
+      // When
+      let actual = DocSearch.formatURL(input);
+
+      // Then
+      expect(actual).toEqual(null);
+    });
+
+    it('emits a warning if no anchor nor url', () => {
+      // Given
+      let input = {
+      };
+
+      // When
+      DocSearch.formatURL(input);
+
+      // Then
+      expect(window.console.warn.calledOnce).toBe(true);
     });
   });
 
