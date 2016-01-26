@@ -60,7 +60,10 @@ class DocSearch {
         footer: templates.footer
       }
     }]);
-    this.autocomplete.on('autocomplete:selected', this.handleSelected.bind(null, this.autocomplete.autocomplete));
+    this.autocomplete.on(
+      'autocomplete:selected',
+      this.handleSelected.bind(null, this.autocomplete.autocomplete)
+    );
   }
 
   /**

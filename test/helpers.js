@@ -5,7 +5,15 @@ global.iit = it.only;
 global.xit = it.skip;
 
 /**
- * Wait for max `escapeTime` ms and run `runFunction` except if `escapeFunction` returned true
+ * Runs `runFunction` only when `escapeFunction` returns true. Timeout after
+ * `escapeTime`ms.
+ * @function waitForAndRun
+ * @param {function} escapeFunction Function to wait for. Once it returns
+ * `true`, we execute `runFunction`
+ * @param {function} runFunction Function to run once `escapeFunction` returns
+ * `true.
+ * @param  {number} escapeTime Time (in ms) after which we timeout.
+ * @returns {void}
  */
 function waitForAndRun(escapeFunction, runFunction, escapeTime) {
   // check the escapeFunction every millisecond so as soon as it is met we can escape the function

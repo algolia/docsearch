@@ -10,7 +10,9 @@ let templates = {
   ">
     <div class="${suggestionPrefix}--category-header">{{{category}}}</div>
     <div class="${suggestionPrefix}--wrapper">
-      <div class="${suggestionPrefix}--subcategory-column"><span class="${suggestionPrefix}--subcategory-column-text">{{{subcategory}}}</span></div>
+      <div class="${suggestionPrefix}--subcategory-column">
+        <span class="${suggestionPrefix}--subcategory-column-text">{{{subcategory}}}</span>
+      </div>
       <div class="${suggestionPrefix}--content">
         <div class="${suggestionPrefix}--subcategory-inline">{{{subcategory}}}</div>
         <div class="${suggestionPrefix}--title">{{{title}}}</div>
