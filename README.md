@@ -40,7 +40,7 @@ Check out our [website][1] to add an outstanding search to your documentation.
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-<!-- START documentation.md -->
+<!-- START documentation -->
 
 ## Introduction
 
@@ -194,7 +194,7 @@ docsearch({
 
 You will find all Algolia API options in its [own documentation][23]
 
-<!-- END documentation.md -->
+<!-- END documentation -->
 
 ## Development workflow
 
@@ -248,6 +248,7 @@ configure the build path of eventmachine with
 bundle config build.eventmachine --with-cppflags=-I$(brew --prefix openssl)/include
 ```
 
+<!-- START links -->
 
 [1]: https://community.algolia.com/docsearch/
 [2]: https://img.shields.io/npm/v/docsearch.js.svg?style=flat-square
@@ -276,3 +277,5 @@ bundle config build.eventmachine --with-cppflags=-I$(brew --prefix openssl)/incl
 [25]: https://jekyllrb.com/
 [26]: https://www.ruby-lang.org/en/
 [27]: http://bundler.io/
+
+<!-- END links -->
