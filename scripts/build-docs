@@ -5,15 +5,19 @@ set -o errexit
 
 readonly SOURCE=README.md
 readonly OUTPUT=docs/documentation.md
-readonly START_TAG="<!-- START documentation.md -->"
-readonly END_TAG="<!-- END documentation.md -->"
+
+readonly START_DOC_TAG="<!-- START documentation -->"
+readonly END_DOC_TAG="<!-- END documentation -->"
+
+readonly START_LINKS_TAG="<!-- START links -->"
+readonly END_LINKS_TAG="<!-- END links -->"
 
 function escape_regex {
-  echo "$@" | sed -e 's/[]\/\!$*.^|[]/\\&/g'
+  echo "$1" | sed -e 's/[]\/\!$*.^|[]/\\&/g'
 }
 
 function extract {
-  sed -n "/^\s*$(escape_regex $START_TAG)\s*$/,/^\s*$(escape_regex $END_TAG)\s*$/p" \
+  sed -n "/^\s*$(escape_regex "$1")\s*$/,/^\s*$(escape_regex "$2")\s*$/p" \
     | sed '$d' \
     | sed -n '2,$p'
 }
@@ -27,7 +31,8 @@ function main {
   echo "permalink: /documentation/" >> $OUTPUT
   echo "---" >> $OUTPUT
 
-  cat $SOURCE | extract >> $OUTPUT
+  cat $SOURCE | extract "$START_DOC_TAG" "$END_DOC_TAG" >> $OUTPUT
+  cat $SOURCE | extract "$START_LINKS_TAG" "$END_LINKS_TAG" >> $OUTPUT
 }
 
 main
