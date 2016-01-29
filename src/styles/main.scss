@@ -66,6 +66,7 @@
 // The secondary column is hidden on small screens
 .algolia-docsearch-suggestion--subcategory-column {
   display: none;
+  cursor: default;
 }
 // The text snippet is hidden on small screens
 .algolia-docsearch-suggestion--text {
