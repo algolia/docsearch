@@ -1,3 +1,17 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/algolia/docsearch/compare/v1.0.2...v1.1.0) (2016-02-01)
+
+
+### Bug Fixes
+
+* **dropdown:** Visually group suggestions together ([592c8f2](https://github.com/algolia/docsearch/commit/592c8f2))
+
+### Features
+
+* **website:** ensure the inputs are mandatory ([e59d132](https://github.com/algolia/docsearch/commit/e59d132))
+
+
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/algolia/docsearch/compare/v1.0.1...v1.0.2) (2015-12-28)
 
