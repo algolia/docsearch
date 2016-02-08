@@ -130,9 +130,9 @@ sets white and purples colors.
 If you want to do heavily change the way results are displayed, you might find
 it easier to directly edit the `scss` files in this repository.
 
-`[_variables.scss][18]`
+[`_variables.scss`][18]
 contains all the color, breakpoints and size definitions while 
-`[_main.scss][19]`
+[`_main.scss`][19]
 holds the structure of the display.
 
 You can regenerate the whole final `css` file from those `scss` files by running
