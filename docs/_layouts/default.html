@@ -40,6 +40,7 @@
 
     <link rel="stylesheet" media="screen" href="{{ "/css/main.css" | prepend: site.baseurl }}" />
     <link rel="stylesheet" media="screen" href="//cdn.jsdelivr.net/fontawesome/4.4.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css" />
   </head>
 
   <body>
@@ -59,6 +60,15 @@
       document.write('\x3Cscript src="//' + window.location.hostname +':35731/livereload.js">\x3C/script>');
     </script>
 {% endif %}
+
+    <script type="text/javascript" src="//cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
+    <script type="text/javascript">
+      docsearch({
+        apiKey: 'd8dd0c4677c82b0164e6ac02d4807ba5',
+        indexName: 'docsearch',
+        inputSelector: '.sbx-custom__input'
+      });
+    </script>
 
   {% include marketing.html %}
 
