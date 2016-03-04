@@ -190,8 +190,13 @@ $custom:(
   top: 31px !important;
 }
 
+.aa-dropdown-menu {
+  margin-left: -300px !important;
+}
+
 @media (min-width: 768px) {
   .aa-dropdown-menu {
     min-width: 530px !important;
   }
 }
+
