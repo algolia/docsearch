@@ -7,8 +7,8 @@ import version from './version.js';
 import $ from 'npm-zepto';
 
 /**
- * Adds an autocomplete dropdown to an input fields
- * @function documentationSearch
+ * Adds an autocomplete dropdown to an input field
+ * @function DocSearch
  * @param  {string} options.apiKey         Read-only API key
  * @param  {string} options.indexName      Name of the index to target
  * @param  {string} options.inputSelector  CSS selector that targets the input
