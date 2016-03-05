@@ -9,14 +9,14 @@
 </svg>
 
 <form role="search" novalidate="novalidate" class="searchbox sbx-custom">
-    <input type="search" name="search" placeholder="Search in the documentation" autocomplete="off" required="required" class="sbx-custom__input">
+    <input onkeyup="updateReset()" type="search" name="search" placeholder="Search in the documentation" autocomplete="off" required="required" class="sbx-custom__input">
     <button type="submit" class="sbx-custom__submit">
         <svg role="img" aria-label="Search">
             <title>Icon Search</title>
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#sbx-icon-search-13"></use>
         </svg>
     </button>
-    <button type="reset" class="sbx-custom__reset">
+    <button type="reset" class="sbx-custom__reset hide">
         <svg role="img" aria-label="Reset">
             <title>Icon Reset</title>
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#sbx-icon-clear-2"></use>
@@ -27,8 +27,20 @@
 <script type="text/javascript">
     //<![CDATA[
     document.querySelector('.searchbox [type="reset"]').addEventListener('click', function() {
-        this.parentNode.querySelector('input').focus();
+        document.querySelector('.aa-input').focus();
+        this.className += " hide";
     });
+
+    function updateReset() {
+      var searchbox = document.querySelector('.aa-input');
+      var reset = document.querySelector('.searchbox [type="reset"]');
+      reset.className = "";
+      reset.className = "sbx-custom__reset";
+      if (searchbox.value.length === 0){
+        reset.className += " hide";
+      }
+    }
+
 
     //]]>
 </script>
