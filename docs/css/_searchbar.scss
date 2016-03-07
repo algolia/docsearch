@@ -1,22 +1,20 @@
 $custom:(
-        input-width: 240px,
-        input-height: 36px,
-        border-width: 2px,
-        border-radius: 18px,
-        input-border-color: #1D96C7,
-        input-focus-border-color: #1D96C7,
-        input-background: #091724,
-        input-focus-background: #091724,
-        font-size: 13px,
-        placeholder-color: #AAAAAA,
-        icon: sbx-icon-search-13,
-        icon-size: 16px,
-        icon-position: left,
-        icon-color: #1D96C7,
-        icon-background: #FFFFFF,
-        icon-background-opacity: 0,
-        icon-clear: sbx-icon-clear-2,
-        icon-clear-size: 12px
+  input-width: 240px,
+  input-height: 36px,
+  border-width: 2px,
+  border-radius: 18px,
+  input-border-color: darken(#1D96C7,10%),
+  input-focus-border-color: #1D96C7,
+  input-background: #091724,
+  input-focus-background: #091724,
+  font-size: 13px,
+  placeholder-color: #AAAAAA,
+  icon-size: 16px,
+  icon-position: left,
+  icon-color: #1D96C7,
+  icon-background: #FFFFFF,
+  icon-background-opacity: 0,
+  icon-clear-size: 12px
 );
 
 @mixin searchbox(
@@ -130,7 +128,6 @@ $custom:(
   }
 
   &__reset {
-    display: none;
     position: absolute;
     top: ($input-height - $icon-clear-size) / 2 - 4px;
     right: if($icon-position == 'right', 8px + $input-height, ($input-height - $icon-clear-size) / 2) - 4px;
@@ -140,7 +137,10 @@ $custom:(
     cursor: pointer;
     padding: 0;
     user-select: none;
-    fill: rgba(#000, .5);
+
+    &.hide{
+      display: none;
+    }
 
     &:focus {
       outline: 0;
@@ -151,6 +151,7 @@ $custom:(
       margin: 4px;
       width: $icon-clear-size;
       height: $icon-clear-size;
+      fill: $icon-color;
     }
   }
 
@@ -184,14 +185,4 @@ $custom:(
 
 .algolia-autocomplete {
   display: inline !important;
-}
-
-.aa-dropdown-menu.aa-with-0 {
-  top: 31px !important;
-}
-
-@media (min-width: 768px) {
-  .aa-dropdown-menu {
-    min-width: 530px !important;
-  }
 }

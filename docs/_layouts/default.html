@@ -35,12 +35,11 @@
     <link rel="icon" href="{{ "/img/favicon.png" | prepend: site.baseurl }}">
 
     <!-- Fonts -->
-    <link rel="stylesheet" media="screen" href="//fonts.googleapis.com/css?family=Raleway:300,800" />
+    <link rel="stylesheet" media="screen" href="//fonts.googleapis.com/css?family=Raleway:300,600" />
     <link rel="stylesheet" media="screen" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600" />
 
     <link rel="stylesheet" media="screen" href="{{ "/css/main.css" | prepend: site.baseurl }}" />
     <link rel="stylesheet" media="screen" href="//cdn.jsdelivr.net/fontawesome/4.4.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css" />
   </head>
 
   <body>
@@ -64,9 +63,12 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
     <script type="text/javascript">
       docsearch({
-        apiKey: 'd8dd0c4677c82b0164e6ac02d4807ba5',
+        apiKey: '25626fae796133dc1e734c6bcaaeac3c',
         indexName: 'docsearch',
-        inputSelector: '.sbx-custom__input'
+        inputSelector: '.sbx-custom__input',
+        autocompleteOptions: {
+          debug: false
+        }
       });
     </script>
 
