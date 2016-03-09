@@ -18,20 +18,45 @@ html, body {
 
 /* HEADER
 // ------------------------- */
-#logo-algolia img {
-  height: 24px;
-  top: -2px;
-  position: relative;
-  margin-right: 12px;
+.logo-algolia {
+  position: absolute;
+  left: 72px;
+  top: 5px;
+  display: block;
+  line-height: 1;
+  img {
+    height: 18px;
+    position: relative;
+    margin-right: 12px;
+  }
 }
 
-#logo-community {
-  font-size: 1.6em;
+.logo-community {
   color: white;
+  font-size: 1.8em;
+  font-weight: 100 !important;
   margin-right: 8px;
+  position: relative;
+  top: 6px;
   img {
+    position: relative;
+    top: -8px;
     height: 46px;
     width: 46px;
+  }
+  &:hover, &:active, &:focus {
+    color: white;
+  }
+}
+
+.project-title {
+  color: white;
+  font-size: 1.2em;
+  font-weight: bold;
+  position: relative;
+  top: -4px;
+  &:hover, &:active, &:focus {
+    color: white;
   }
 }
 
@@ -53,7 +78,7 @@ html, body {
       }
     }
     .navbar-nav > li {
-      padding: 14px 15px;
+      padding: 14px 8px;
     }
     .navbar-nav > li > a {
       padding: 0 0 4px 0;
@@ -74,9 +99,13 @@ html, body {
 // ------------------------- */
 .jumbotron {
   padding-top: 60px;
+  padding-bottom: 32px;
   background: #091724 url(../img/header-bg.jpg) no-repeat center center;
   background-size: cover;
   margin-bottom: 0;
+  .join-form {
+    border-radius: 5px 5px 0 0;
+  }
   .jumbotron-header {
     text-align: center;
     color: #FFF;

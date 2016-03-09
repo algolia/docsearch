@@ -1,5 +1,5 @@
 $custom:(
-  input-width: 240px,
+  input-width: 190px,
   input-height: 36px,
   border-width: 2px,
   border-radius: 18px,
@@ -179,8 +179,8 @@ $custom:(
 }
 
 .site-header .navbar .navbar-nav > li.searchbar-wrapper {
-  padding-top: 0;
-  padding-bottom: 0;
+  margin: 0;
+  padding: 0
 }
 
 .algolia-autocomplete {
