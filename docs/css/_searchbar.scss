@@ -1,0 +1,188 @@
+$custom:(
+  input-width: 240px,
+  input-height: 36px,
+  border-width: 2px,
+  border-radius: 18px,
+  input-border-color: darken(#1D96C7,10%),
+  input-focus-border-color: #1D96C7,
+  input-background: #091724,
+  input-focus-background: #091724,
+  font-size: 13px,
+  placeholder-color: #AAAAAA,
+  icon-size: 16px,
+  icon-position: left,
+  icon-color: #1D96C7,
+  icon-background: #FFFFFF,
+  icon-background-opacity: 0,
+  icon-clear-size: 12px
+);
+
+@mixin searchbox(
+  $input-width: 500px,
+  $input-height: 40px,
+  $border-width: 1px,
+  $border-radius: 3px,
+  $input-border-color: #ccc,
+  $input-focus-border-color: darken($input-border-color, 15%),
+  $input-background: #fff,
+  $input-focus-background: $input-background,
+  $font-size: 14px,
+  $placeholder-color: #aaa,
+  $icon: 'sbx-icon-search-1',
+  $icon-size: 18px,
+  $icon-position: right,
+  $icon-color: #fff,
+  $icon-background: #3e82f7,
+  $icon-background-opacity: 1,
+  $icon-clear: 'sbx-icon-clear-1',
+  $icon-clear-size: 12px
+) {
+  display: inline-block;
+  position: relative;
+  width: $input-width;
+  height: $input-height;
+  white-space: nowrap;
+  box-sizing: border-box;
+
+  &__input {
+    display: inline-block;
+    transition: box-shadow .4s ease, background .4s ease, padding .4s ease;
+    border: 0;
+    border-radius: $border-radius;
+    box-shadow: inset 0 0 0 $border-width $input-border-color;
+    background: $input-background;
+    padding: 0;
+    padding-right: if($icon-position == 'right', $input-height, 0) + $icon-clear-size * 2 + 8px;
+    padding-left: if($icon-position == 'right', $font-size, $input-height + if($icon-background-opacity == 0, 0, 8px));
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    white-space: normal;
+    font-size: $font-size;
+    appearance: none;
+    color: white;
+
+    &::-webkit-search-decoration,
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-results-button,
+    &::-webkit-search-results-decoration {
+      display: none;
+    }
+
+    &:hover {
+      box-shadow: inset 0 0 0 $border-width darken($input-border-color, 10%);
+    }
+
+    &:focus,
+    &:active {
+      outline: 0;
+      box-shadow: inset 0 0 0 $border-width $input-focus-border-color;
+      background: $input-focus-background;
+    }
+
+    &::placeholder {
+      color: $placeholder-color;
+    }
+
+  }
+
+  &__submit {
+    position: absolute;
+    top: 0;
+    #{$icon-position}: 0;
+    margin: 0;
+    border: 0;
+    border-radius: if($icon-position == 'right', 0 $border-radius $border-radius 0, $border-radius 0 0 $border-radius);
+    background-color: rgba($icon-background, $icon-background-opacity);
+    padding: 0;
+    width: $input-height;
+    height: 100%;
+    vertical-align: middle;
+    text-align: center;
+    user-select: none;
+
+    // Helper for vertical alignement of the icon
+    &::before {
+      display: inline-block;
+      margin-right: -4px;
+      height: 100%;
+      vertical-align: middle;
+      content: '';
+    }
+
+    &:hover,
+    &:active {
+      cursor: pointer;
+    }
+
+    &:focus {
+      outline: 0;
+    }
+
+    svg {
+      width: $icon-size;
+      height: $icon-size;
+      vertical-align: middle;
+      fill: $icon-color;
+    }
+  }
+
+  &__reset {
+    position: absolute;
+    top: ($input-height - $icon-clear-size) / 2 - 4px;
+    right: if($icon-position == 'right', 8px + $input-height, ($input-height - $icon-clear-size) / 2) - 4px;
+    margin: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    user-select: none;
+
+    &.hide{
+      display: none;
+    }
+
+    &:focus {
+      outline: 0;
+    }
+
+    svg {
+      display: block;
+      margin: 4px;
+      width: $icon-clear-size;
+      height: $icon-clear-size;
+      fill: $icon-color;
+    }
+  }
+
+  &__input:valid ~ &__reset {
+    display: block;
+    animation-name: sbx-reset-in;
+    animation-duration: .15s;
+  }
+
+  @keyframes sbx-reset-in {
+    from {
+      transform: translate3d(-20%, 0, 0);
+      opacity: 0;
+    }
+
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+}
+
+.sbx-custom{
+  @include searchbox($custom...);
+}
+
+.site-header .navbar .navbar-nav > li.searchbar-wrapper {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.algolia-autocomplete {
+  display: inline !important;
+}

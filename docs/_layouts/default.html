@@ -35,7 +35,7 @@
     <link rel="icon" href="{{ "/img/favicon.png" | prepend: site.baseurl }}">
 
     <!-- Fonts -->
-    <link rel="stylesheet" media="screen" href="//fonts.googleapis.com/css?family=Raleway:300,800" />
+    <link rel="stylesheet" media="screen" href="//fonts.googleapis.com/css?family=Raleway:300,600" />
     <link rel="stylesheet" media="screen" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600" />
 
     <link rel="stylesheet" media="screen" href="{{ "/css/main.css" | prepend: site.baseurl }}" />
@@ -59,6 +59,18 @@
       document.write('\x3Cscript src="//' + window.location.hostname +':35731/livereload.js">\x3C/script>');
     </script>
 {% endif %}
+
+    <script type="text/javascript" src="//cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
+    <script type="text/javascript">
+      docsearch({
+        apiKey: '25626fae796133dc1e734c6bcaaeac3c',
+        indexName: 'docsearch',
+        inputSelector: '.sbx-custom__input',
+        autocompleteOptions: {
+          debug: false
+        }
+      });
+    </script>
 
   {% include marketing.html %}
 

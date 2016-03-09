@@ -13,6 +13,13 @@
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
+          <li class="searchbar-wrapper">
+            <div class="navbar-form">
+              <div class="form-group">
+                {% include searchbar.html %}
+              </div>
+            </div>
+          </li>
           {% assign url = page.url %}
           {% for link in site.navigation %}
             <li {% if url == link.url %}class="active"{% endif %}>

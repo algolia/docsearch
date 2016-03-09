@@ -32,7 +32,10 @@ need to add the following code snippet to your website:
 docsearch({
   apiKey: '<API_KEY>',
   indexName: '<INDEX_NAME>',
-  inputSelector: '<YOUR_INPUT_DOM_SELECTOR>'
+  inputSelector: '<YOUR_INPUT_DOM_SELECTOR>',
+  autocompleteOptions: {
+    debug: false
+  }
 });
 </script>
 ```
@@ -93,7 +96,8 @@ If you want to do heavily change the way results are displayed, you might find
 it easier to directly edit the `scss` files in this repository.
 
 [`_variables.scss`][18]
-contains all the color, breakpoints and size definitions while 
+contains all the color, breakpoints and size definitions while
+
 [`_main.scss`][19]
 holds the structure of the display.
 
@@ -113,7 +117,7 @@ results from the Algolia API. As such, you can use any options provided by
 
 You can pass any options to the underlying `autocomplete` instance through
 the`autocompleteOptions` parameter. You will find all `autocomplete` options in
-its [own documentation][22]. 
+its [own documentation][22].
 
 You can also listen to `autocomplete` events through the `.autocomplete`
 property of the `docsearch` instance.
@@ -184,4 +188,3 @@ You will find all Algolia API options in its [own documentation][23]
 [25]: https://jekyllrb.com/
 [26]: https://www.ruby-lang.org/en/
 [27]: http://bundler.io/
-
