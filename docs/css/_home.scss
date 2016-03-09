@@ -18,9 +18,21 @@ html, body {
 
 /* HEADER
 // ------------------------- */
-#logo img {
-  height: 32px;
+#logo-algolia img {
+  height: 24px;
+  top: -2px;
+  position: relative;
   margin-right: 12px;
+}
+
+#logo-community {
+  font-size: 1.6em;
+  color: white;
+  margin-right: 8px;
+  img {
+    height: 46px;
+    width: 46px;
+  }
 }
 
 .site-header {
