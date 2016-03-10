@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "./scripts/dev",
     "dev:docs": "./scripts/dev-docs",
+    "serve": "./scripts/serve",
     "shrinkwrap": "npm-shrinkwrap --dev",
     "doctoc": "doctoc --maxlevel 3 README.md CONTRIBUTING.md",
     "build": "./scripts/build",
