@@ -56,14 +56,13 @@ $dropdown-min-width-large: 600px;
 
 // Highlight
 .algolia-docsearch-suggestion--highlight {
-  padding: 0;
   color: #40ADDC;
-  padding: 0 2px;
   background: rgba(#40ADDC,.1);
+
   // Highlight the background in header
   .algolia-docsearch-suggestion--category-header & {
     color: inherit;
-    background: $color-highlight-header-background;
+    background: rgba(#40ADDC,.2);
   }
 }
 
