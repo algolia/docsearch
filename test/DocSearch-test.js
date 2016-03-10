@@ -26,6 +26,7 @@ describe('DocSearch', () => {
     <div>
       <input id="input" name="search" />
       <span class="i-am-a-span">span span</span>
+      <input id="another-input" name="another-search" />
     </div>
     `;
 
@@ -223,19 +224,6 @@ describe('DocSearch', () => {
         checkArguments(options);
       }).toThrow(/^Usage:/);
     });
-    it('should throw an error if no selector matches', () => {
-      // Given
-      let options = {
-        apiKey: 'apiKey',
-        indexName: 'indexName'
-      };
-      sinon.stub(DocSearch, 'getInputFromSelector').returns(false);
-
-      // When
-      expect(() => {
-        checkArguments(options);
-      }).toThrow(/^Error:/);
-    });
   });
 
   describe('getInputFromSelector', () => {
@@ -244,25 +232,23 @@ describe('DocSearch', () => {
       getInputFromSelector = DocSearch.getInputFromSelector;
     });
 
-    it('should return null if no element matches the selector', () => {
+    it('should throw an error if no element matches the selector', () => {
       // Given
       let selector = '.i-do-not-exist > at #all';
 
       // When
-      let actual = getInputFromSelector(selector);
-
-      // Then
-      expect(actual).toEqual(null);
+      expect(() => {
+        getInputFromSelector(selector);
+      }).toThrow();
     });
-    it('should return null if the matched element is not an input', () => {
+    it('should throw an error if the matched element is not an input', () => {
       // Given
       let selector = '.i-am-a-span';
 
       // When
-      let actual = getInputFromSelector(selector);
-
-      // Then
-      expect(actual).toEqual(null);
+      expect(() => {
+        getInputFromSelector(selector);
+      }).toThrow();
     });
     it('should return a Zepto wrapped element if it matches', () => {
       // Given
@@ -273,6 +259,15 @@ describe('DocSearch', () => {
 
       // Then
       expect($.zepto.isZ(actual)).toBe(true);
+    });
+    it('should throw an error if more than one element matches', () => {
+      // Given
+      let selector = 'input';
+
+      // When
+      expect(() => {
+        getInputFromSelector(selector);
+      }).toThrow();
     });
   });
 
