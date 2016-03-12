@@ -99,10 +99,13 @@ html, body {
 // ------------------------- */
 .jumbotron {
   padding-top: 60px;
-  padding-bottom: 32px;
+  padding-bottom: 12px;
   background: #091724 url(../img/header-bg.jpg) no-repeat center center;
   background-size: cover;
   margin-bottom: 0;
+  .logo {
+    max-width: 100%;
+  }
   .join-form {
     border-radius: 5px 5px 0 0;
   }
