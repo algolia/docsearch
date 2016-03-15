@@ -39,7 +39,8 @@ class DocSearch {
     },
     autocompleteOptions = {
       debug: false,
-      hint: false
+      hint: false,
+      autoselect: true
     }
   }) {
     DocSearch.checkArguments({apiKey, indexName, inputSelector, algoliaOptions, autocompleteOptions});
