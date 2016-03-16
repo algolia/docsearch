@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Will expose the build version on:
+# - http://0.0.0.0:8080/docsearch.css
+# - http://0.0.0.0:8080/docsearch.js
+
+npm run build:css
+
+# /bundle.js in memory
+webpack-dev-server \
+  --config webpack.serve.config.babel.js \
+  --hot \
+  --inline \
+  --no-info & \
+# rebuild docsearch.css and docsearch.min.css
+onchange './src/styles/*.scss' -- npm run build:css & \
+
+wait

@@ -111,6 +111,36 @@ describe('DocSearch', () => {
       // Then
       expect(actual.appId).toEqual('foo');
     });
+    it('should allow customize algoliaOptions without loosing default options', () => {
+      // Given
+      let options = {
+        algoliaOptions: {
+          facetFilters: ['version:1.0']
+        },
+        ...defaultOptions
+      };
+
+      // When
+      let actual = new DocSearch(options);
+
+      // Then
+      expect(actual.algoliaOptions).toEqual({hitsPerPage: 5, facetFilters: ['version:1.0']});
+    });
+    it('should allow customize hitsPerPage', () => {
+      // Given
+      let options = {
+        algoliaOptions: {
+          hitsPerPage: 10
+        },
+        ...defaultOptions
+      };
+
+      // When
+      let actual = new DocSearch(options);
+
+      // Then
+      expect(actual.algoliaOptions).toEqual({hitsPerPage: 10});
+    });
     it('should pass the input element as an instance property', () => {
       // Given
       let options = defaultOptions;
@@ -128,7 +158,7 @@ describe('DocSearch', () => {
       // Given
       let options = {
         ...defaultOptions,
-        algoliaOptions: 'algoliaOptions',
+        algoliaOptions: {anOption: 42},
         autocompleteOptions: 'autocompleteOptions'
       };
 
@@ -136,7 +166,8 @@ describe('DocSearch', () => {
       let actual = new DocSearch(options);
 
       // Then
-      expect(actual.algoliaOptions).toEqual('algoliaOptions');
+      expect(typeof actual.algoliaOptions).toEqual('object');
+      expect(actual.algoliaOptions.anOption).toEqual(42);
       expect(actual.autocompleteOptions).toEqual('autocompleteOptions');
     });
     it('should instantiate algoliasearch with the correct values', () => {
@@ -294,8 +325,7 @@ describe('DocSearch', () => {
       docsearch = new DocSearch({
         indexName: 'indexName',
         apiKey: 'apiKey',
-        inputSelector: '#input',
-        algoliaOptions: 'algoliaOptions'
+        inputSelector: '#input'
       });
     });
 
@@ -327,7 +357,7 @@ describe('DocSearch', () => {
         let expectedArguments = {
           indexName: 'indexName',
           query: 'query',
-          params: 'algoliaOptions'
+          params: {hitsPerPage: 5}
         };
         expect(client.search.calledWith([expectedArguments])).toBe(true);
       });

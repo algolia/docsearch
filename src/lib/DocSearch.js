@@ -34,12 +34,11 @@ class DocSearch {
     indexName,
     inputSelector,
     appId = 'BH4D9OD16A',
-    algoliaOptions = {
-      hitsPerPage: 5
-    },
+    algoliaOptions = {},
     autocompleteOptions = {
       debug: false,
-      hint: false
+      hint: false,
+      autoselect: true
     }
   }) {
     DocSearch.checkArguments({apiKey, indexName, inputSelector, algoliaOptions, autocompleteOptions});
@@ -48,7 +47,7 @@ class DocSearch {
     this.appId = appId;
     this.indexName = indexName;
     this.input = DocSearch.getInputFromSelector(inputSelector);
-    this.algoliaOptions = algoliaOptions;
+    this.algoliaOptions = {hitsPerPage: 5, ...algoliaOptions};
     this.autocompleteOptions = autocompleteOptions;
 
     this.client = algoliasearch(this.appId, this.apiKey);
