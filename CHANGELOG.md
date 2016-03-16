@@ -1,3 +1,25 @@
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/algolia/docsearch/compare/v1.1.0...v1.1.1) (2016-03-16)
+
+
+### Bug Fixes
+
+* **algoliaOptions:** ensure we keep default options ([b284dda](https://github.com/algolia/docsearch/commit/b284dda)), closes [#78](https://github.com/algolia/docsearch/issues/78)
+* **autocomplete:** auto select top result ([473824a](https://github.com/algolia/docsearch/commit/473824a)), closes [#81](https://github.com/algolia/docsearch/issues/81)
+* **dev:** Fixed the dev example, targeting an existing index ([df13e34](https://github.com/algolia/docsearch/commit/df13e34))
+* **website:** responsive logo ([b856d67](https://github.com/algolia/docsearch/commit/b856d67))
+
+### Features
+
+* **serve:** Add `npm run serve` to expose js and css locally ([31e5d13](https://github.com/algolia/docsearch/commit/31e5d13))
+* **website:** community header ([366cc0d](https://github.com/algolia/docsearch/commit/366cc0d))
+* **website:** Logo Update - Og screen + favicon ([c7eb54a](https://github.com/algolia/docsearch/commit/c7eb54a))
+* **website:** removed demos ([6d8eb34](https://github.com/algolia/docsearch/commit/6d8eb34))
+* **website:** update ([9498e3b](https://github.com/algolia/docsearch/commit/9498e3b))
+* **website:** updated logo ([fa413d9](https://github.com/algolia/docsearch/commit/fa413d9))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/algolia/docsearch/compare/v1.0.2...v1.1.0) (2016-02-01)
 
