@@ -1,4 +1,4 @@
-# DocSearch
+![DocSearch](docs/img/docsearch-logo.png)
 
 The easiest way to add search to your documentation. For free.
 
