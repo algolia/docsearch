@@ -31,12 +31,28 @@ layout: default
       %p We’ve integrated DocSearch into several open source projects. Take a look.
     .row
       .col-sm-4.showcase
+        %a{:href => "https://facebook.github.io/react/", :target => "_blank"}
+          %img.img-responsive.logo{:src => "./img/showcase/logo-react.png"}
+          .screen-wrapper
+            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-react.gif"}
+            %img.img-responsive.screen-mask{:src => "./img/mask.png"}
+          .spacer10
+          React
+      .col-sm-4.showcase
+        %a{:href => "http://facebook.github.io/react-native/docs/getting-started.html", :target => "_blank"}
+          %img.img-responsive.logo{:src => "./img/showcase/logo-react.png"}
+          .screen-wrapper
+            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-reactnative.gif"}
+            %img.img-responsive.screen-mask{:src => "./img/mask.png"}
+          .spacer10
+          React Native
+      .col-sm-4.showcase
         %a{:href => "http://eslint.org/", :target => "_blank"}
           %img.img-responsive.logo{:src => "./img/showcase/logo-eslint.png"}
           .screen-wrapper
             %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-eslint.gif"}
             %img.img-responsive.screen-mask{:src => "./img/mask.png"}
-          .spacer5
+          .spacer10
           ESLint
       .col-sm-4.showcase
         %a{:href => "http://docs.scala-lang.org/", :target => "_blank"}
@@ -44,7 +60,7 @@ layout: default
           .screen-wrapper
             %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-scala.gif"}
             %img.img-responsive.screen-mask{:src => "./img/mask.png"}
-          .spacer5
+          .spacer10
           Scala
       .col-sm-4.showcase
         %a{:href => "https://babeljs.algolia.com/", :target => "_blank"}
@@ -52,7 +68,7 @@ layout: default
           .screen-wrapper
             %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-babel.gif"}
             %img.img-responsive.screen-mask{:src => "./img/mask.png"}
-          .spacer5
+          .spacer10
           Babel.js
       .col-sm-4.showcase
         %a{:href => "http://vuejs.org/guide/", :target => "_blank"}
@@ -60,23 +76,15 @@ layout: default
           .screen-wrapper
             %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-vuejs.gif"}
             %img.img-responsive.screen-mask{:src => "./img/mask.png"}
-          .spacer5
+          .spacer10
           Vue.js
-      .col-sm-4.showcase
-        %a{:href => "http://facebook.github.io/react-native/docs/getting-started.html", :target => "_blank"}
-          %img.img-responsive.logo{:src => "./img/showcase/logo-react.png"}
-          .screen-wrapper
-            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-reactnative.gif"}
-            %img.img-responsive.screen-mask{:src => "./img/mask.png"}
-          .spacer5
-          React Native
       .col-sm-4.showcase
         %a{:href => "https://docs.influxdata.com/", :target => "_blank"}
           %img.img-responsive.logo{:src => "./img/showcase/logo-influxdata.png"}
           .screen-wrapper
             %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-influxdata.gif"}
             %img.img-responsive.screen-mask{:src => "./img/mask.png"}
-          .spacer5
+          .spacer10
           Influxdata
       .col-sm-4.showcase
         %a{:href => "http://help.apiary.io/", :target => "_blank"}
@@ -84,7 +92,7 @@ layout: default
           .screen-wrapper
             %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-apiary.gif"}
             %img.img-responsive.screen-mask{:src => "./img/mask.png"}
-          .spacer5
+          .spacer10
           Apiary
       .col-sm-4.showcase
         %a{:href => "http://marionettejs.com/", :target => "_blank"}
@@ -92,12 +100,12 @@ layout: default
           .screen-wrapper
             %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-marionettejs.gif"}
             %img.img-responsive.screen-mask{:src => "./img/mask.png"}
-          .spacer5
+          .spacer10
           Marionette.js
       .col-sm-4.showcase
         .placeholder-logo
         .placeholder-screen
-        .spacer5
+        .spacer10
         You?
 #section_how.page-section
   .container

@@ -246,8 +246,11 @@ html, body {
   }
   .screen-wrapper {
     position: relative;
+    height: 201px;
+    overflow: hidden;
     .freezeframe-container {
 	    border-radius: 3px;
+      max-height: 100%;
     }
     .screen-mask {
       position: absolute;
