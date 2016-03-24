@@ -1,3 +1,13 @@
+<a name="1.1.2"></a>
+## [1.1.2](https://github.com/algolia/docsearch/compare/v1.1.1...v1.1.2) (2016-03-24)
+
+
+### Features
+
+* **website:** React :raised_hands:, popped out on the top with React ([db9c100](https://github.com/algolia/docsearch/commit/db9c100))
+
+
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://github.com/algolia/docsearch/compare/v1.1.0...v1.1.1) (2016-03-16)
 
