@@ -32,10 +32,7 @@ need to add the following code snippet to your website:
 docsearch({
   apiKey: '<API_KEY>',
   indexName: '<INDEX_NAME>',
-  inputSelector: '<YOUR_INPUT_DOM_SELECTOR>',
-  autocompleteOptions: {
-    debug: false
-  }
+  inputSelector: '<YOUR_INPUT_DOM_SELECTOR>'
 });
 </script>
 ```
@@ -96,9 +93,8 @@ If you want to do heavily change the way results are displayed, you might find
 it easier to directly edit the `scss` files in this repository.
 
 [`_variables.scss`][18]
-contains all the color, breakpoints and size definitions while
-
-[`_main.scss`][19]
+contains all the color, breakpoints and size definitions while 
+[`main.scss`][19]
 holds the structure of the display.
 
 You can regenerate the whole final `css` file from those `scss` files by running
@@ -117,7 +113,7 @@ results from the Algolia API. As such, you can use any options provided by
 
 You can pass any options to the underlying `autocomplete` instance through
 the`autocompleteOptions` parameter. You will find all `autocomplete` options in
-its [own documentation][22].
+its [own documentation][22]. 
 
 You can also listen to `autocomplete` events through the `.autocomplete`
 property of the `docsearch` instance.
@@ -179,7 +175,7 @@ You will find all Algolia API options in its [own documentation][23]
 [16]: https://community.algolia.com/docsearch/
 [17]: https://community.algolia.com/docsearch/img/default-colorscheme.png
 [18]: https://github.com/algolia/docsearch/blob/master/src/styles/_variables.scss
-[19]: https://github.com/algolia/docsearch/blob/master/src/styles/_main.scss
+[19]: https://github.com/algolia/docsearch/blob/master/src/styles/main.scss
 [20]: https://github.com/algolia/autocomplete.js
 [21]: https://github.com/algolia/autocomplete.js
 [22]: https://github.com/algolia/autocomplete.js#options
@@ -188,3 +184,4 @@ You will find all Algolia API options in its [own documentation][23]
 [25]: https://jekyllrb.com/
 [26]: https://www.ruby-lang.org/en/
 [27]: http://bundler.io/
+
