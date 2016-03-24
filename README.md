@@ -132,7 +132,7 @@ it easier to directly edit the `scss` files in this repository.
 
 [`_variables.scss`][18]
 contains all the color, breakpoints and size definitions while 
-[`_main.scss`][19]
+[`main.scss`][19]
 holds the structure of the display.
 
 You can regenerate the whole final `css` file from those `scss` files by running
@@ -268,7 +268,7 @@ bundle config build.eventmachine --with-cppflags=-I$(brew --prefix openssl)/incl
 [16]: https://community.algolia.com/docsearch/
 [17]: https://community.algolia.com/docsearch/img/default-colorscheme.png
 [18]: https://github.com/algolia/docsearch/blob/master/src/styles/_variables.scss
-[19]: https://github.com/algolia/docsearch/blob/master/src/styles/_main.scss
+[19]: https://github.com/algolia/docsearch/blob/master/src/styles/main.scss
 [20]: https://github.com/algolia/autocomplete.js
 [21]: https://github.com/algolia/autocomplete.js
 [22]: https://github.com/algolia/autocomplete.js#options
