@@ -35,6 +35,8 @@ let utils = {
   },
   /*
   * Group all objects of a collection by the value of the specified attribute
+  * If the attribute is a string, use the lowercase form.
+  *
   * eg.
   * groupBy([
   *   {name: 'Tim', category: 'dev'},
@@ -69,6 +71,9 @@ let utils = {
         throw new Error(`[groupBy]: Object has no key ${property}`);
       }
       let key = item[property];
+      if (typeof key === 'string') {
+        key = key.toLowerCase();
+      }
       if (!newCollection[key]) {
         newCollection[key] = [];
       }

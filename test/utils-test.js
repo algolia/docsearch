@@ -121,6 +121,24 @@ describe('utils', () => {
         ]
       });
     });
+    it('group by key considering lowercase forms', () => {
+      // Given
+      let input = [
+        {name: 'Tim', category: 'devs'},
+        {name: 'Vincent', category: 'DeVs'}
+      ];
+
+      // When
+      let actual = utils.groupBy(input, 'category');
+
+      // Expect
+      expect(actual).toEqual({
+        devs: [
+          {name: 'Tim', category: 'devs'},
+          {name: 'Vincent', category: 'DeVs'}
+        ]
+      });
+    });
     it('throw an error if key does not exist', () => {
       // Given
       let input = [
