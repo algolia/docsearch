@@ -64,7 +64,7 @@
   "peerDependencies": {},
   "dependencies": {
     "algoliasearch": "^3.9.2",
-    "autocomplete.js": "^0.17.2",
+    "autocomplete.js": "^0.17.3",
     "hogan.js": "^3.0.2",
     "npm-zepto": "^1.1.7",
     "to-factory": "^1.0.0"
