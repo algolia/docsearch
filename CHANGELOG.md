@@ -1,3 +1,13 @@
+<a name="1.1.3"></a>
+## [1.1.3](https://github.com/algolia/docsearch/compare/v1.1.2...v1.1.3) (2016-04-04)
+
+
+### Bug Fixes
+
+* **autocomplete.js:** upgrade the underlying autocomplete.js to ensur… ([4d7022e](https://github.com/algolia/docsearch/commit/4d7022e))
+
+
+
 <a name="1.1.2"></a>
 ## [1.1.2](https://github.com/algolia/docsearch/compare/v1.1.1...v1.1.2) (2016-03-24)
 
