@@ -105,8 +105,8 @@
       "resolved": "https://registry.npmjs.org/angular/-/angular-1.4.10.tgz"
     },
     "autocomplete.js": {
-      "version": "0.17.2",
-      "resolved": "https://registry.npmjs.org/autocomplete.js/-/autocomplete.js-0.17.2.tgz"
+      "version": "0.17.3",
+      "resolved": "https://registry.npmjs.org/autocomplete.js/-/autocomplete.js-0.17.3.tgz"
     },
     "autoprefixer": {
       "version": "6.3.4",
