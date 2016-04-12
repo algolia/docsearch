@@ -25,22 +25,31 @@
 </form>
 <!--Js: focus search input after reset-->
 <script type="text/javascript">
-    //<![CDATA[
-    document.querySelector('.searchbox [type="reset"]').addEventListener('click', function() {
-        document.querySelector('.aa-input').focus();
-        this.className += " hide";
-    });
 
+    $(function(){
+      $('.searchbox .aa-input').on('change', function() {
+          $('.aa-input').addClass('filled');
+      });
+
+      $('.searchbox .aa-input').on('blur', function() {
+        if ($(this).val().length === 0){
+          $(this).removeClass('filled');
+        }
+      });
+
+      $('.searchbox [type="reset"]').on('click', function() {
+          myDocSearch.autocomplete.autocomplete.setVal('');
+          $('.aa-input').focus();
+          $(this).addClass("hide");
+      });
+    });
     function updateReset() {
-      var searchbox = document.querySelector('.aa-input');
-      var reset = document.querySelector('.searchbox [type="reset"]');
-      reset.className = "";
-      reset.className = "sbx-custom__reset";
-      if (searchbox.value.length === 0){
-        reset.className += " hide";
+      var searchbox = $('.aa-input');
+      var reset = $('.searchbox [type="reset"]');
+      reset.removeClass("hide");
+      if (searchbox.val().length === 0){
+        reset.addClass("hide");
       }
     }
 
-
-    //]]>
 </script>

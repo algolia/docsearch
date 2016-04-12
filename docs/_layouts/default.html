@@ -40,6 +40,8 @@
 
     <link rel="stylesheet" media="screen" href="{{ "/css/main.css" | prepend: site.baseurl }}" />
     <link rel="stylesheet" media="screen" href="//cdn.jsdelivr.net/fontawesome/4.4.0/css/font-awesome.min.css" />
+
+    <script src="//cdn.jsdelivr.net/jquery/2.1/jquery.min.js"></script>
   </head>
 
   <body>
@@ -51,7 +53,6 @@
     {% include footer.html %}
 {% endif %}
 
-    <script src="//cdn.jsdelivr.net/jquery/2.1/jquery.min.js"></script>
     <script src="{{ "/js/bootstrap.min.js" | prepend: site.baseurl }}"></script>
 
 {% if site.env == 'development' %}
@@ -62,7 +63,7 @@
 
     <script type="text/javascript" src="//cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
     <script type="text/javascript">
-      docsearch({
+      var myDocSearch = docsearch({
         apiKey: '25626fae796133dc1e734c6bcaaeac3c',
         indexName: 'docsearch',
         inputSelector: '.sbx-custom__input',
