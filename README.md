@@ -222,6 +222,10 @@ npm run dev
 - `npm run build:docs` will create the `./docs/documentation.md` file from the
   `README.md` file, to be displayed on the website.
 - `npm run build` will run all three previous commands
+- `npm run serve` will serve and watch the JavaScript and CSS files on
+  [http://localhost:8080/](http://localhost:8080/). If port `8080` is already
+  taken, it will choose an available port. Source files will also be available
+  and watched in `./dist/`.
 
 ### Documentation website
 
