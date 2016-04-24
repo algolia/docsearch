@@ -16,39 +16,6 @@ html, body {
   font-family: "Raleway", Helvetica, Arial, sans-serif;
 }
 
-/* HEADER
-// ------------------------- */
-
-.logo-community {
-  color: white;
-  font-size: 26px;
-  font-weight: 100 !important;
-  margin-right: 12px;
-  border-right: #FF2E6C 2px solid;
-  padding-left: 8px;
-
-  img {
-    position: relative;
-    top: -3px;
-    width: 200px;
-    margin-right: 6px;
-  }
-  &:hover, &:active, &:focus {
-    color: white;
-  }
-}
-
-.project-title {
-  color: white;
-  font-size: 1.2em;
-  font-weight: bold;
-  position: relative;
-  top: -4px;
-  &:hover, &:active, &:focus {
-    color: white;
-  }
-}
-
 /* JUMBOTRON
 // ------------------------- */
 .jumbotron {

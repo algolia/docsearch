@@ -1,39 +1,82 @@
+/* HEADER
+// ------------------------- */
+
 .site-header {
   width: 100%;
+
   .navbar {
     border-radius: 0;
     border: none;
     background-color: #0B1724;
     height: 50px;
+
     .navbar-header {
       position: relative;
       height: 50px;
       font-size: 14px;
       line-height: 50px;
       color: #C7C4C3;
+
       a:hover {
         text-decoration: none;
       }
     }
+
     .navbar-nav > li {
       padding: 14px;
       font-size: 14px;
       font-family: Open Sans;
+
       &:last-child {
         padding-right: 40px;
       }
     }
+
     .navbar-nav > li > a {
       padding: 0 0 4px 0;
     }
+
     .navbar-nav > li.active > a {
       background-color: transparent;
       border-bottom: 2px solid #FF2E6C;
     }
+
     .fa-github {
       font-size: 1.6em;
       position: relative;
       top: -2px;
+    }
+  }
+
+  .logo-community {
+    color: white;
+    font-size: 26px;
+    font-weight: 100 !important;
+    margin-right: 12px;
+    border-right: #FF2E6C 2px solid;
+    padding-left: 8px;
+
+    img {
+      position: relative;
+      top: -3px;
+      width: 200px;
+      margin-right: 6px;
+    }
+
+    &:hover, &:active, &:focus {
+      color: white;
+    }
+  }
+
+  .project-title {
+    color: white;
+    font-size: 1.2em;
+    font-weight: bold;
+    position: relative;
+    top: -4px;
+
+    &:hover, &:active, &:focus {
+      color: white;
     }
   }
 }
