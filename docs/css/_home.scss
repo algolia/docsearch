@@ -49,44 +49,6 @@ html, body {
   }
 }
 
-.site-header {
-  width: 100%;
-  .navbar {
-    border-radius: 0;
-    border: none;
-    background-color: #0B1724;
-    height: 50px;
-    .navbar-header {
-      position: relative;
-      height: 50px;
-      font-size: 14px;
-      line-height: 50px;
-      color: #C7C4C3;
-      a:hover {
-        text-decoration: none;
-      }
-    }
-    .navbar-nav > li {
-      padding: 14px;
-      &:last-child {
-        padding-right: 20px;
-      }
-    }
-    .navbar-nav > li > a {
-      padding: 0 0 4px 0;
-    }
-    .navbar-nav > li.active > a {
-      background-color: transparent;
-      border-bottom: 2px solid #FF2E6C;
-    }
-    .fa-github {
-      font-size: 1.6em;
-      position: relative;
-      top: -2px;
-    }
-  }
-}
-
 /* JUMBOTRON
 // ------------------------- */
 .jumbotron {
@@ -103,7 +65,10 @@ html, body {
   }
   .jumbotron-header {
     text-align: center;
-    color: #FFF;
+    color: white;
+    .jumbotron-title{
+      font-size: 0px;
+    }
   }
   .jumbotron-left-column {
     display: none;
@@ -177,7 +142,7 @@ html, body {
 @media (min-width: 1200px) {
   .jumbotron .join-form {
     position: absolute;
-    top: 170px;
+    top: 140px;
     right: 120px;
     padding: 10px 40px 30px;
   }
