@@ -103,6 +103,20 @@ You can regenerate the whole final `css` file from those `scss` files by running
 All you have to do now is change the `link` tag that was loading the default
 styling from our CDN, to one that is loading your newly compiled file.
 
+## Keyboard shortcuts
+
+By default you can type 's' or '/' to focus the search input.
+You can disable this behavior like this:
+
+```js
+docsearch({
+  apiKey: '<API_KEY>',
+  indexName: '<INDEX_NAME>',
+  inputSelector: '<YOUR_INPUT_DOM_SELECTOR>',
+  bindKeyboardShortcuts: false
+});
+```
+
 ## Custom options
 
 DocSearch is a wrapper around the [autocomplete.js][20] library that gets its
