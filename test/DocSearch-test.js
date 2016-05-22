@@ -141,6 +141,19 @@ describe('DocSearch', () => {
       // Then
       expect(actual.algoliaOptions).toEqual({hitsPerPage: 10});
     });
+    it('should allow customize bindKeyboardShortcuts without loosing default options', () => {
+      // Given
+      let options = {
+        bindKeyboardShortcuts: false,
+        ...defaultOptions
+      };
+
+      // When
+      let actual = new DocSearch(options);
+
+      // Then
+      expect(actual.algoliaOptions).toEqual({hitsPerPage: 5});
+    });
     it('should pass the input element as an instance property', () => {
       // Given
       let options = defaultOptions;

@@ -39,9 +39,10 @@ class DocSearch {
       debug: false,
       hint: false,
       autoselect: true
-    }
+    },
+    bindKeyboardShortcuts = true
   }) {
-    DocSearch.checkArguments({apiKey, indexName, inputSelector, algoliaOptions, autocompleteOptions});
+    DocSearch.checkArguments({apiKey, indexName, inputSelector, algoliaOptions, autocompleteOptions, bindKeyboardShortcuts});
 
     this.apiKey = apiKey;
     this.appId = appId;
@@ -49,6 +50,7 @@ class DocSearch {
     this.input = DocSearch.getInputFromSelector(inputSelector);
     this.algoliaOptions = {hitsPerPage: 5, ...algoliaOptions};
     this.autocompleteOptions = autocompleteOptions;
+    this.bindKeyboardShortcuts = bindKeyboardShortcuts;
 
     this.client = algoliasearch(this.appId, this.apiKey);
     this.client.addAlgoliaAgent('docsearch.js ' + version);
@@ -63,6 +65,10 @@ class DocSearch {
       'autocomplete:selected',
       this.handleSelected.bind(null, this.autocomplete.autocomplete)
     );
+
+    if (this.bindKeyboardShortcuts) {
+      this.handleKeyboardShortcuts(this.input);
+    }
   }
 
   /**
@@ -183,6 +189,17 @@ class DocSearch {
   handleSelected(input, event, suggestion) {
     input.setVal('');
     window.location.href = suggestion.url;
+  }
+
+  handleKeyboardShortcuts(input) {
+    $(document).keydown(function(e) {
+      if (false === input.is(':focus') && (e.which == 191 || e.which == 83)) {
+        input.focus();
+        e.stopPropagation();
+        e.preventDefault();
+        return false;
+      }
+    });
   }
 }
 
