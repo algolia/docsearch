@@ -14,9 +14,6 @@ Hi (future) collaborator!
 - [Development workflow](#development-workflow)
   - [Local example](#local-example)
   - [Documentation website](#documentation-website)
-- [Adding/Updating a package](#addingupdating-a-package)
-- [Removing a package](#removing-a-package)
-- [In case of shrinkwrap madness](#in-case-of-shrinkwrap-madness)
 - [Commit message guidelines](#commit-message-guidelines)
   - [Revert](#revert)
   - [Type](#type)
@@ -51,7 +48,7 @@ We use a simple documentation example website as a way to develop the docsearch.
 Requirements:
 - [Node.js](https://nodejs.org/en/)
 - npm@2
- 
+
 ```sh
 npm run dev
 # open http://localhost:8080
@@ -70,41 +67,6 @@ npm install
 npm run dev:docs
 open http://localhost:4000/docsearch/
 ```
-
-# Adding/Updating a package
-
-We use a [specific shrinkwrapping tool](https://github.com/uber/npm-shrinkwrap) and npm@2.
-
-```sh
-npm install
-npm install package --save[-dev]
-npm run shrinkwrap
-```
-
-# Removing a package
-
-```sh
-npm install
-npm remove package --save[-dev]
-npm run shrinkwrap
-```
-
-Removing packages can be really tricky to handle if the package was used by
-both the host project and sub dependencies.
-
-# In case of shrinkwrap madness
-
-```sh
-rm -rf node_modules
-rm npm-shrinkwrap.json
-npm cache clean
-npm install
-# check everything is working
-npm run shrinkwrap
-```
-
-Don't do this too often because it breaks the whole shrinkwrap idea. Since
-you are completely rebuilding the dependency tree and possibly updating things.
 
 # Commit message guidelines
 
