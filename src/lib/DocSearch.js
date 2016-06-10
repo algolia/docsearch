@@ -52,6 +52,7 @@ class DocSearch {
 
     this.client = algoliasearch(this.appId, this.apiKey);
     this.client.addAlgoliaAgent('docsearch.js ' + version);
+
     this.autocomplete = autocomplete(this.input, autocompleteOptions, [{
       source: this.getAutocompleteSource(),
       templates: {
@@ -62,7 +63,11 @@ class DocSearch {
     this.autocomplete.on(
       'autocomplete:selected',
       this.handleSelected.bind(null, this.autocomplete.autocomplete)
-    );
+    )
+    this.autocomplete.on(
+      'autocomplete:shown',
+       this.handleShown.bind(null, this.input)
+    )
   }
 
   /**
@@ -183,6 +188,27 @@ class DocSearch {
   handleSelected(input, event, suggestion) {
     input.setVal('');
     window.location.href = suggestion.url;
+  }
+
+  handleShown(input, event) {
+    var middleOfInput = input.offset().left + input.width() / 2;
+    var middleOfWindow = $(document).width() / 2;
+
+    if (isNaN(middleOfWindow)) {
+      middleOfWindow = 900;
+    }
+
+    var alignClass = middleOfInput - middleOfWindow >= 0 ? 'algolia-autocomplete-right' : 'algolia-autocomplete-left';
+    var otherAlignClass = middleOfInput - middleOfWindow < 0 ? 'algolia-autocomplete-right' : 'algolia-autocomplete-left';
+
+    var autocompleteWrapper = $('.algolia-autocomplete');
+    if (! autocompleteWrapper.hasClass(alignClass)) {
+      autocompleteWrapper.addClass(alignClass)
+    }
+
+    if (autocompleteWrapper.hasClass(otherAlignClass)) {
+      autocompleteWrapper.removeClass(otherAlignClass);
+    }
   }
 }
 

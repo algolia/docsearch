@@ -207,7 +207,7 @@ describe('DocSearch', () => {
       expect(AutoComplete.calledOnce).toBe(true);
       expect(AutoComplete.calledWith($input, 'bar')).toBe(true);
     });
-    it('should listen to the selected event of autocomplete', () => {
+    it('should listen to the selected and shown event of autocomplete', () => {
       // Given
       let options = defaultOptions;
 
@@ -215,7 +215,7 @@ describe('DocSearch', () => {
       new DocSearch(options);
 
       // Then
-      expect(autocomplete.on.calledOnce).toBe(true);
+      expect(autocomplete.on.calledTwice).toBe(true);
       expect(autocomplete.on.calledWith('autocomplete:selected')).toBe(true);
     });
   });
@@ -386,6 +386,25 @@ describe('DocSearch', () => {
         expect(window.location.href).toEqual('https://website.com/doc/page');
         done();
       }, 100);
+    });
+  });
+
+  describe('handleShown', () => {
+    it('should add an alignment class', () => {
+      // Given
+      const options = {
+        apiKey: 'key',
+        indexName: 'foo',
+        inputSelector: '#input'
+      };
+
+      // When
+      let ds = new DocSearch(options);
+
+      ds.autocomplete.trigger('autocomplete:shown');
+
+      expect($('.algolia-autocomplete').attr('class')).toEqual('algolia-autocomplete algolia-autocomplete-left');
+
     });
   });
 

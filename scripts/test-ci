@@ -5,7 +5,6 @@ set -ev # exit when error
 ./scripts/validate-pr-done-on-develop
 npm run test:coverage
 npm prune
-npm run shrinkwrap --dev
 NODE_ENV=production npm run build
 ./scripts/validate-commit-msgs
 
