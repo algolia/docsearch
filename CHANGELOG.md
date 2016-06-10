@@ -1,3 +1,15 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/algolia/docsearch/compare/v1.1.3...v1.2.0) (2016-06-10)
+
+
+### Features
+
+* **DOM:** add an align class (#108) ([9421897](https://github.com/algolia/docsearch/commit/9421897))
+* **serve:** Watch and serve all needed files (#91) ([ef83775](https://github.com/algolia/docsearch/commit/ef83775))
+* **website:** add echo (#94) ([8a34ecb](https://github.com/algolia/docsearch/commit/8a34ecb))
+
+
+
 <a name="1.1.3"></a>
 ## [1.1.3](https://github.com/algolia/docsearch/compare/v1.1.2...v1.1.3) (2016-04-04)
 
