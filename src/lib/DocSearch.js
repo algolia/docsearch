@@ -155,12 +155,14 @@ class DocSearch {
       ]).join('<span class="aa-suggestion-title-separator"> › </span>');
       let isDisplayTitleDuplicate = displayTitle == subcategory;
       let text = utils.getSnippetedValue(hit, 'content');
+      let isTextOrSubcatoryNonEmpty = (subcategory && subcategory != "") || (displayTitle && displayTitle != "");
 
       return {
         isCategoryHeader: hit.isCategoryHeader,
         isSubCategoryHeader: hit.isSubCategoryHeader,
         isSubcategoryDuplicate: isSubcategoryDuplicate,
         isDisplayTitleDuplicate: isDisplayTitleDuplicate,
+        isTextOrSubcatoryNonEmpty: isTextOrSubcatoryNonEmpty,
         category: category,
         subcategory: subcategory,
         title: displayTitle,
