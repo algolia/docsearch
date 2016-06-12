@@ -1,3 +1,9 @@
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/algolia/docsearch/compare/1.2.0...v1.3.0) (2016-06-12)
+
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/algolia/docsearch/compare/v1.1.3...v1.2.0) (2016-06-10)
 
