@@ -34,6 +34,7 @@ class DocSearch {
     indexName,
     inputSelector,
     appId = 'BH4D9OD16A',
+    debug = false,
     algoliaOptions = {},
     autocompleteOptions = {
       debug: false,
@@ -41,13 +42,15 @@ class DocSearch {
       autoselect: true
     }
   }) {
-    DocSearch.checkArguments({apiKey, indexName, inputSelector, algoliaOptions, autocompleteOptions});
+    DocSearch.checkArguments({apiKey, indexName, inputSelector, debug, algoliaOptions, autocompleteOptions});
 
     this.apiKey = apiKey;
     this.appId = appId;
     this.indexName = indexName;
     this.input = DocSearch.getInputFromSelector(inputSelector);
     this.algoliaOptions = {hitsPerPage: 5, ...algoliaOptions};
+    let autocompleteOptionsDebug = autocompleteOptions && autocompleteOptions.debug ? autocompleteOptions.debug: false;
+    autocompleteOptions.debug = debug || autocompleteOptionsDebug;
     this.autocompleteOptions = autocompleteOptions;
 
     this.client = algoliasearch(this.appId, this.apiKey);
@@ -142,6 +145,7 @@ class DocSearch {
       let url = DocSearch.formatURL(hit);
       let category = utils.getHighlightedValue(hit, 'lvl0');
       let subcategory = utils.getHighlightedValue(hit, 'lvl1') || category;
+      let isSubcategoryDuplicate = subcategory == category;
       let displayTitle = utils.compact([
         utils.getHighlightedValue(hit, 'lvl2') || subcategory,
         utils.getHighlightedValue(hit, 'lvl3'),
@@ -149,11 +153,14 @@ class DocSearch {
         utils.getHighlightedValue(hit, 'lvl5'),
         utils.getHighlightedValue(hit, 'lvl6')
       ]).join('<span class="aa-suggestion-title-separator"> › </span>');
+      let isDisplayTitleDuplicate = displayTitle == subcategory;
       let text = utils.getSnippetedValue(hit, 'content');
 
       return {
         isCategoryHeader: hit.isCategoryHeader,
         isSubCategoryHeader: hit.isSubCategoryHeader,
+        isSubcategoryDuplicate: isSubcategoryDuplicate,
+        isDisplayTitleDuplicate: isDisplayTitleDuplicate,
         category: category,
         subcategory: subcategory,
         title: displayTitle,

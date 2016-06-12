@@ -123,10 +123,10 @@ var search = docsearch({
   apiKey: '<API_KEY>',
   indexName: '<INDEX_NAME>',
   inputSelector: '<YOUR_INPUT_DOM_SELECTOR>',
+  debug: true,
   autocompleteOptions: {
     // See https://github.com/algolia/autocomplete.js#options
     // For full list of options
-    debug: true
   }
 });
 

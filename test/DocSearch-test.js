@@ -159,7 +159,7 @@ describe('DocSearch', () => {
       let options = {
         ...defaultOptions,
         algoliaOptions: {anOption: 42},
-        autocompleteOptions: 'autocompleteOptions'
+        autocompleteOptions: {anOption: 44}
       };
 
       // When
@@ -168,7 +168,7 @@ describe('DocSearch', () => {
       // Then
       expect(typeof actual.algoliaOptions).toEqual('object');
       expect(actual.algoliaOptions.anOption).toEqual(42);
-      expect(actual.autocompleteOptions).toEqual('autocompleteOptions');
+      expect(actual.autocompleteOptions).toEqual({debug: false,   anOption: 44});
     });
     it('should instantiate algoliasearch with the correct values', () => {
       // Given
@@ -195,7 +195,7 @@ describe('DocSearch', () => {
       // Given
       let options = {
         ...defaultOptions,
-        autocompleteOptions: 'bar'
+        autocompleteOptions: {anOption: '44'}
       };
       let $input = $('<input name="foo" />');
       DocSearch.getInputFromSelector.returns($input);
@@ -205,7 +205,7 @@ describe('DocSearch', () => {
 
       // Then
       expect(AutoComplete.calledOnce).toBe(true);
-      expect(AutoComplete.calledWith($input, 'bar')).toBe(true);
+      expect(AutoComplete.calledWith($input, {anOption: '44', debug: false})).toBe(true);
     });
     it('should listen to the selected and shown event of autocomplete', () => {
       // Given
@@ -695,8 +695,9 @@ describe('DocSearch', () => {
       // When
       let actual = DocSearch.formatHits(input);
 
+      let separator = '<span class="aa-suggestion-title-separator"> › </span>';
       // Then
-      expect(actual[0].title).toEqual('Geo-search › Foo › Bar › Baz');
+      expect(actual[0].title).toEqual('Geo-search' + separator + 'Foo' + separator + 'Bar' + separator + 'Baz');
     });
     it('should concatenate highlighted elements', () => {
       // Given
@@ -736,11 +737,10 @@ describe('DocSearch', () => {
       // When
       let actual = DocSearch.formatHits(input);
 
+      let separator = '<span class="aa-suggestion-title-separator"> › </span>';
       // Then
-      let expected = '<mark>Geo-search</mark>' +
-        ' › <mark>Foo</mark>' +
-        ' › <mark>Bar</mark>' +
-        ' › <mark>Baz</mark>';
+      let expected = '<mark>Geo-search</mark>' + separator + '<mark>Foo</mark>' + separator +
+          '<mark>Bar</mark>' + separator + '<mark>Baz</mark>';
       expect(actual[0].title).toEqual(expected);
     });
     it('should add ellipsis to content', () => {
