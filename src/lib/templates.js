@@ -10,14 +10,16 @@ let templates = {
   ">
     <div class="${suggestionPrefix}--category-header">{{{category}}}</div>
     <div class="${suggestionPrefix}--wrapper">
-      <div class="${suggestionPrefix}--subcategory-column">
+      <div class="${suggestionPrefix}--subcategory-column {{#isSubcategoryDuplicate}}${suggestionPrefix}--duplicate-content{{/isSubcategoryDuplicate}}">
         <span class="${suggestionPrefix}--subcategory-column-text">{{{subcategory}}}</span>
       </div>
+      {{#isTextOrSubcatoryNonEmpty}}
       <div class="${suggestionPrefix}--content">
-        <div class="${suggestionPrefix}--subcategory-inline">{{{subcategory}}}</div>
-        <div class="${suggestionPrefix}--title">{{{title}}}</div>
-        <div class="${suggestionPrefix}--text">{{{text}}}</div>
+        <div class="${suggestionPrefix}--subcategory-inline {{#isSubcategoryDuplicate}}${suggestionPrefix}--duplicate-content{{/isSubcategoryDuplicate}}">{{{subcategory}}}</div>
+        <div class="${suggestionPrefix}--title {{#isDisplayTitleDuplicate}}${suggestionPrefix}--duplicate-content{{/isDisplayTitleDuplicate}}">{{{title}}}</div>
+        {{#text}}<div class="${suggestionPrefix}--text">{{{text}}}</div>{{/text}}
       </div>
+      {{/isTextOrSubcatoryNonEmpty}}
     </div>
   </div>
   `,
