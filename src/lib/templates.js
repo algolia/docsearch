@@ -27,6 +27,19 @@ let templates = {
     <div class="${footerPrefix}">
       Search by <a class="${footerPrefix}--logo" href="https://www.algolia.com/docsearch">Algolia</a>
     </div>
+  `,
+  empty: `
+  <div class="${suggestionPrefix}">
+    <div class="${suggestionPrefix}--wrapper">
+        <div class="${suggestionPrefix}--content ${suggestionPrefix}--no-result">
+            <div class="${suggestionPrefix}--title">
+                <div class="${suggestionPrefix}--text">
+                    No results found for query <b>{{{query}}}</b>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
   `
 };
 
