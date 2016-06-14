@@ -1,3 +1,13 @@
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/algolia/docsearch/compare/v1.3.0...v2.0.0) (2016-06-14)
+
+
+### Features
+
+* **v2:** modification for v2 (#112) ([f0a7e6b](https://github.com/algolia/docsearch/commit/f0a7e6b))
+
+
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/algolia/docsearch/compare/1.2.0...v1.3.0) (2016-06-12)
 
