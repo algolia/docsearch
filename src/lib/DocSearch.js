@@ -60,7 +60,8 @@ class DocSearch {
       source: this.getAutocompleteSource(),
       templates: {
         suggestion: DocSearch.getSuggestionTemplate(),
-        footer: templates.footer
+        footer: templates.footer,
+        empty: DocSearch.getEmptyTemplate()
       }
     }]);
     this.autocomplete.on(
@@ -185,6 +186,12 @@ class DocSearch {
     console.warn('no anchor nor url for : ', JSON.stringify(hit));
     /* eslint-enable */
     return null;
+  }
+
+  static getEmptyTemplate() {
+    return (args) => {
+      return Hogan.compile(templates.empty).render(args);
+    };
   }
 
   static getSuggestionTemplate() {

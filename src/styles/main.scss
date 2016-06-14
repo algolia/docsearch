@@ -79,10 +79,10 @@
   border-top: 1px solid lighten($color-border, 60%);
 }
   
-  .algolia-docsearch-suggestion__main .algolia-docsearch-suggestion--content,
-  .algolia-docsearch-suggestion__secondary .algolia-docsearch-suggestion--content {
-    border-top: 0;
-  }
+.algolia-docsearch-suggestion__main .algolia-docsearch-suggestion--content,
+.algolia-docsearch-suggestion__secondary .algolia-docsearch-suggestion--content {
+  border-top: 0;
+}
 
 .algolia-docsearch-suggestion--subcategory-inline {
   display: inline-block;
