@@ -1,3 +1,13 @@
+<a name="2.0.2"></a>
+## [2.0.2](https://github.com/algolia/docsearch/compare/v2.0.1...v2.0.2) (2016-06-14)
+
+
+### Features
+
+* **dom:** better handling of simple design ([6bba640](https://github.com/algolia/docsearch/commit/6bba640))
+
+
+
 <a name="2.0.1"></a>
 ## [2.0.1](https://github.com/algolia/docsearch/compare/v2.0.0...v2.0.1) (2016-06-14)
 
