@@ -62,6 +62,9 @@ class DocSearch {
         suggestion: DocSearch.getSuggestionTemplate(),
         footer: templates.footer,
         empty: DocSearch.getEmptyTemplate()
+      },
+      cssClasses: {
+        prefix: 'dc'
       }
     }]);
     this.autocomplete.on(
