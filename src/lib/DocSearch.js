@@ -40,9 +40,12 @@ class DocSearch {
       debug: false,
       hint: false,
       autoselect: true
-    }
+    },
+    transformData = false,
+    enhancedSearchInput = false,
+    layout = 'collumns'
   }) {
-    DocSearch.checkArguments({apiKey, indexName, inputSelector, debug, algoliaOptions, autocompleteOptions});
+    DocSearch.checkArguments({apiKey, indexName, inputSelector, debug, algoliaOptions, autocompleteOptions, transformData, enhancedSearchInput, layout});
 
     this.apiKey = apiKey;
     this.appId = appId;
@@ -52,15 +55,25 @@ class DocSearch {
     let autocompleteOptionsDebug = autocompleteOptions && autocompleteOptions.debug ? autocompleteOptions.debug: false;
     autocompleteOptions.debug = debug || autocompleteOptionsDebug;
     this.autocompleteOptions = autocompleteOptions;
+    this.autocompleteOptions.cssClasses = {
+      prefix: 'ds'
+    };
+
+    this.isSimpleLayout = (layout === 'simple');
 
     this.client = algoliasearch(this.appId, this.apiKey);
     this.client.addAlgoliaAgent('docsearch.js ' + version);
 
+    if (enhancedSearchInput) {
+      DocSearch.injectSearchBox(this.input);
+    }
+
     this.autocomplete = autocomplete(this.input, autocompleteOptions, [{
-      source: this.getAutocompleteSource(),
+      source: this.getAutocompleteSource(transformData),
       templates: {
-        suggestion: DocSearch.getSuggestionTemplate(),
-        footer: templates.footer
+        suggestion: DocSearch.getSuggestionTemplate(this.isSimpleLayout),
+        footer: templates.footer,
+        empty: DocSearch.getEmptyTemplate()
       }
     }]);
     this.autocomplete.on(
@@ -89,6 +102,11 @@ class DocSearch {
     }
   }
 
+  static injectSearchBox(input) {
+    input.before(templates.searchBox);
+    input.remove();
+  }
+
   /**
    * Returns the matching input from a CSS selector, null if none matches
    * @function getInputFromSelector
@@ -108,14 +126,18 @@ class DocSearch {
    * @returns {function} Method to be passed as the `source` option of
    * autocomplete
    */
-  getAutocompleteSource() {
+  getAutocompleteSource(transformData) {
     return (query, callback) => {
       this.client.search([{
         indexName: this.indexName,
         query: query,
         params: this.algoliaOptions
       }]).then((data) => {
-        callback(DocSearch.formatHits(data.results[0].hits));
+        let hits = data.results[0].hits;
+        if (transformData) {
+          hits = transformData(hits) || hits;
+        }
+        callback(DocSearch.formatHits(hits));
       });
     };
   }
@@ -187,10 +209,17 @@ class DocSearch {
     return null;
   }
 
-  static getSuggestionTemplate() {
+  static getEmptyTemplate() {
+    return (args) => {
+      return Hogan.compile(templates.empty).render(args);
+    };
+  }
+
+  static getSuggestionTemplate(isSimpleLayout) {
     const template = Hogan.compile(templates.suggestion);
     return (suggestion) => {
-      return template.render(suggestion);
+      isSimpleLayout = isSimpleLayout || false;
+      return template.render({isSimpleLayout, ...suggestion});
     };
   }
 

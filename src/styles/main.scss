@@ -6,7 +6,7 @@
 // - Adding a second colum to let the content breath if enough room available
 
 // Main autocomplete wrapper
-.aa-dropdown-menu {
+.ds-dropdown-menu {
   background-color: #FFF;
   border: 1px solid #333;
   border-radius: 4px;
@@ -56,10 +56,10 @@
 }
 
 // Selected suggestion
-.aa-cursor .algolia-docsearch-suggestion--content {
+.ds-cursor .algolia-docsearch-suggestion--content {
   color: $color-selected-text;
 }
-.aa-cursor .algolia-docsearch-suggestion {
+.ds-cursor .algolia-docsearch-suggestion {
   background: $color-selected-background;
 }
 
@@ -79,10 +79,10 @@
   border-top: 1px solid lighten($color-border, 60%);
 }
   
-  .algolia-docsearch-suggestion__main .algolia-docsearch-suggestion--content,
-  .algolia-docsearch-suggestion__secondary .algolia-docsearch-suggestion--content {
-    border-top: 0;
-  }
+.algolia-docsearch-suggestion__main .algolia-docsearch-suggestion--content,
+.algolia-docsearch-suggestion__secondary .algolia-docsearch-suggestion--content {
+  border-top: 0;
+}
 
 .algolia-docsearch-suggestion--subcategory-inline {
   display: inline-block;
@@ -121,7 +121,7 @@
 // BREAKPOINT 1:
 // Screen is big enough to display the text snippets
 @media (min-width: $breakpoint-medium) {
-  .aa-dropdown-menu {
+  .ds-dropdown-menu {
     min-width: $dropdown-min-width-medium;
   }
   .algolia-docsearch-suggestion--text {
@@ -134,7 +134,7 @@
 // BREAKPOINT 2:
 // Screen is big enough to display results in two columns
 @media (min-width: $breakpoint-large) {
-  .aa-dropdown-menu {
+  .ds-dropdown-menu {
     min-width: $dropdown-min-width-large;
   }
   .algolia-docsearch-suggestion {

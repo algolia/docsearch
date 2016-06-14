@@ -168,7 +168,7 @@ describe('DocSearch', () => {
       // Then
       expect(typeof actual.algoliaOptions).toEqual('object');
       expect(actual.algoliaOptions.anOption).toEqual(42);
-      expect(actual.autocompleteOptions).toEqual({debug: false,   anOption: 44});
+      expect(actual.autocompleteOptions).toEqual({debug: false, "cssClasses": { "prefix": "ds" }, anOption: 44});
     });
     it('should instantiate algoliasearch with the correct values', () => {
       // Given
@@ -205,7 +205,7 @@ describe('DocSearch', () => {
 
       // Then
       expect(AutoComplete.calledOnce).toBe(true);
-      expect(AutoComplete.calledWith($input, {anOption: '44', debug: false})).toBe(true);
+      expect(AutoComplete.calledWith($input, {anOption: '44', "cssClasses": { "prefix": "ds" }, debug: false})).toBe(true);
     });
     it('should listen to the selected and shown event of autocomplete', () => {
       // Given
@@ -980,11 +980,11 @@ describe('DocSearch', () => {
         let actual = DocSearch.getSuggestionTemplate();
 
         // When
-        actual('foo');
+        actual({'foo': 'bar'});
 
         // Then
         expect(render.calledOnce).toBe(true);
-        expect(render.calledWith('foo')).toBe(true);
+        expect(render.args[0][0]).toEqual({'isSimpleLayout': false, 'foo': 'bar'});
       });
     });
   });
