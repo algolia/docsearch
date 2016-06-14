@@ -65,7 +65,8 @@ class DocSearch {
     this.client.addAlgoliaAgent('docsearch.js ' + version);
 
     if (enhancedSearchInput) {
-      DocSearch.injectSearchBox(this.input);
+      DocSearch.injectSearchBox(this.input, this);
+      DocSearch.getInputFromSelector('#docsearch');
     }
 
     this.autocomplete = autocomplete(this.input, autocompleteOptions, [{
@@ -84,6 +85,10 @@ class DocSearch {
       'autocomplete:shown',
        this.handleShown.bind(null, this.input)
     )
+
+    if (enhancedSearchInput) {
+      DocSearch.bindSearchBoxEvent(this.autocomplete);
+    }
   }
 
   /**
@@ -102,9 +107,26 @@ class DocSearch {
     }
   }
 
-  static injectSearchBox(input) {
+  static injectSearchBox(input, docsearch) {
     input.before(templates.searchBox);
     input.remove();
+  }
+
+  static bindSearchBoxEvent(autocomplete) {
+    $(".searchbox [type='reset']").on("click", function() {
+      $("input#docsearch").focus();
+      $(this).addClass("hide");
+      autocomplete.autocomplete.setVal("");
+    });
+
+    $("input#docsearch").on("keyup", function() {
+      var searchbox = document.querySelector("input#docsearch");
+      var reset = document.querySelector(".searchbox [type='reset']");
+      reset.className = "searchbox__reset";
+      if (searchbox.value.length === 0){
+        reset.className += " hide";
+      }
+    });
   }
 
   /**

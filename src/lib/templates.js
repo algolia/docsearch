@@ -43,40 +43,28 @@ let templates = {
   </div>
   `,
   searchBox: `
-  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
-    <symbol xmlns="http://www.w3.org/2000/svg" id="sbx-icon-search-18" viewBox="0 0 40 40">
-      <path d="M30.776 27.146l-1.32-1.32-3.63 3.632 1.32 1.32 3.63-3.632zm1.368 1.368l6.035 6.035c.39.39.4 1.017.008 1.408l-2.23 2.23c-.387.387-1.015.387-1.41-.008l-6.035-6.035 3.63-3.63zm-8.11 1.392c-2.356 1.363-5.092 2.143-8.01 2.143C7.174 32.05 0 24.873 0 16.023S7.174 0 16.024 0c8.85 0 16.025 7.174 16.025 16.024 0 2.918-.78 5.654-2.144 8.01l8.96 8.962c1.175 1.174 1.184 3.07.008 4.246l-1.632 1.632c-1.17 1.17-3.067 1.173-4.247-.007l-8.96-8.96zm-8.01.54c7.965 0 14.422-6.457 14.422-14.422 0-7.965-6.457-14.422-14.422-14.422-7.965 0-14.422 6.457-14.422 14.422 0 7.965 6.457 14.422 14.422 14.422zm0-2.403c6.638 0 12.018-5.38 12.018-12.02 0-6.636-5.38-12.017-12.018-12.017-6.637 0-12.018 5.38-12.018 12.018 0 6.638 5.38 12.02 12.018 12.02zm0-1.402c5.863 0 10.616-4.752 10.616-10.616 0-5.863-4.753-10.616-10.616-10.616-5.863 0-10.616 4.753-10.616 10.616 0 5.864 4.753 10.617 10.616 10.617z"
-      fill-rule="evenodd" />
-    </symbol>
-    <symbol xmlns="http://www.w3.org/2000/svg" id="sbx-icon-clear-5" viewBox="0 0 20 20">
-      <path d="M10 20c5.523 0 10-4.477 10-10S15.523 0 10 0 0 4.477 0 10s4.477 10 10 10zm1.35-10.123l3.567 3.568-1.225 1.226-3.57-3.568-3.567 3.57-1.226-1.227 3.568-3.568-3.57-3.57 1.227-1.224 3.568 3.568 3.57-3.567 1.224 1.225-3.568 3.57zM10 18.272c4.568 0 8.272-3.704 8.272-8.272S14.568 1.728 10 1.728 1.728 5.432 1.728 10 5.432 18.272 10 18.272z"
-      fill-rule="evenodd" />
-    </symbol>
-  </svg>
+  <form novalidate="novalidate" onsubmit="return false;" class="searchbox">
+	<div role="search" class="searchbox__wrapper">
+		<input id="docsearch" type="search" name="search" placeholder="Search in the doc" autocomplete="off" required="required" class="searchbox__input">
+		<button type="submit" title="Submit your search query." class="searchbox__submit" >
+		<svg width=12 height=12 role="img" aria-label="Search">
+			<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#sbx-icon-search-13"></use>
+				</svg>
+			</button>
+		<button type="reset" title="Clear the search query." class="searchbox__reset hide">
+		<svg width=12 height=12 role="img" aria-label="Reset">
+			<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#sbx-icon-clear-3"></use>
+			</svg>
+		</button>
+	</div>
+</form>
 
-  <form action="void(0);" novalidate="novalidate" class="searchbox sbx-custom">
-    <div role="search" class="sbx-custom__wrapper">
-      <input type="search" name="search" placeholder="Search your website" autocomplete="off" required="required" class="sbx-custom__input">
-      <button type="submit" title="Submit your search query." class="sbx-custom__submit">
-        <svg role="img" aria-label="Search">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#sbx-icon-search-18"></use>
-        </svg>
-      </button>
-      <button type="reset" title="Clear the search query." class="sbx-custom__reset">
-        <svg role="img" aria-label="Reset">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#sbx-icon-clear-5"></use>
-        </svg>
-      </button>
-    </div>
-  </form>
-  <!--Js: focus search input after reset-->
-  <script type="text/javascript">
-    //<![CDATA[
-             document.querySelector('.searchbox [type="reset"]').addEventListener('click', function() {
-               this.parentNode.querySelector('input').focus();
-             });
-    //]]>
-  </script>
+<div class="svg-icons" style="height: 0; width: 0; position: absolute; visibility: hidden">
+	<svg xmlns="http://www.w3.org/2000/svg">
+		<symbol id="sbx-icon-clear-3" viewBox="0 0 40 40"><path d="M16.228 20L1.886 5.657 0 3.772 3.772 0l1.885 1.886L20 16.228 34.343 1.886 36.228 0 40 3.772l-1.886 1.885L23.772 20l14.342 14.343L40 36.228 36.228 40l-1.885-1.886L20 23.772 5.657 38.114 3.772 40 0 36.228l1.886-1.885L16.228 20z" fill-rule="evenodd"/></symbol>
+		<symbol id="sbx-icon-search-13" viewBox="0 0 40 40"><path d="M26.806 29.012a16.312 16.312 0 0 1-10.427 3.746C7.332 32.758 0 25.425 0 16.378 0 7.334 7.333 0 16.38 0c9.045 0 16.378 7.333 16.378 16.38 0 3.96-1.406 7.593-3.746 10.426L39.547 37.34c.607.608.61 1.59-.004 2.203a1.56 1.56 0 0 1-2.202.004L26.807 29.012zm-10.427.627c7.322 0 13.26-5.938 13.26-13.26 0-7.324-5.938-13.26-13.26-13.26-7.324 0-13.26 5.936-13.26 13.26 0 7.322 5.936 13.26 13.26 13.26z" fill-rule="evenodd"/></symbol>
+	</svg>
+</div>
   `
 };
 
