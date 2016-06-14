@@ -9,7 +9,13 @@ let templates = {
     {{#isSubCategoryHeader}}${suggestionPrefix}__secondary{{/isSubCategoryHeader}}
     {{#isSimpleLayout}}suggestion-layout-simple{{/isSimpleLayout}}
   ">
-    <div class="${suggestionPrefix}--category-header">{{{category}}}</div>
+    
+    <div class="${suggestionPrefix}--category-header">
+        <span class="${suggestionPrefix}--category-header-lvl0">{{{category}}}</span>
+        {{#isSimpleLayout}}
+            <span class="${suggestionPrefix}--category-header-lvl1">{{{subcategory}}}</span>
+        {{/isSimpleLayout}}
+    </div>
     <div class="${suggestionPrefix}--wrapper">
       <div class="${suggestionPrefix}--subcategory-column {{#isSubcategoryDuplicate}}${suggestionPrefix}--duplicate-content{{/isSubcategoryDuplicate}}">
         <span class="${suggestionPrefix}--subcategory-column-text">{{{subcategory}}}</span>
