@@ -1,8 +1,8 @@
 language: node_js
 node_js: 4
 before_install:
-  - 'git config --global user.email "algobot@users.noreply.github.com"'
-  - 'git config --global user.name "algobot"'
+  - git config --global user.email "algobot@users.noreply.github.com"
+  - git config --global user.name "algobot"
   - npm prune
   - rvm install 2.2.0
   - rvm use 2.2.0
@@ -20,5 +20,9 @@ cache:
     - node_modules
 env:
   global:
-    - secure: Y2qFJk1LUqyGD38psPIOBhgokn6E+G9xOO725KvmcPkmB8B9cFHoY5+tgFeAU96QjSdcePJIISeKBGnknPljyCPQ9q49twHPduS4tT9iIN1MjSEv76C4qJ3M1P9HAV8c3RukWjqlgvDXJQNFA9xCh6Cs3aKqJfiQrJhMpSmGjZlJfsLjfss8N9Rp9gRrsRp0m0vgxKA2ASCKz6ArDl5XxfnnSjDyp487lURD83To/Wijbm+6Wrl/AZVKlEnzXNl2V1Qn62ZZbkHvD6xAbGFm5BNP9yjsFHwhr/YEhpRoINOfmDBsUQojOCZf71offXA8IQiGfwIq3Jg8+gar7aQd+EvgDiiwtzoBwvNDZw82AUfB2bHSAIFYn/RgNDmyWqN9BObKw6rM/MhqCGn+jBFHVEcHP5FtFawsM6j+4OareB03ycpkUu+nFmAvmpVenzHtbSZQtP2GnmBYoRBL+zp4O8CAOZv6VTlxYd/pwJor0yZa7ZKu/DDjfOAyTOD/tBfmvVkxGUS8tRXMBcMDdzh9I6eb/QrBPT0tHc3HLVtWmA+yBJ0B4pTZai4uzEcZFHzyIhNRxshZ36uObbxNWOa+52RKrJlsPJ35Drosdqt7O7rVFrOGH4H0aKfA+WjO7pky6rSB5oILHZdz3r2G4PIXFLpAtyV0pMUso3xk1akR2MI=
-    - secure: d9QgN3kXLHwYt3w/ff0nzqVVtm+UhZ2NS7Xl6oWoEzz4518TEmTXkDjfhPGVm0tTlFm9/oNDQhg5ozIVjiPooiC0wpHUubFBI7wrzLjmxYjvFTgaN3YI+HBJJGlUU120mYtXIiP8WVnoViyceSMkXUIe7jjgeche7XLHgEgQwzR1qYfNlwMiAjEU1iCmJmiJ8Xa+QJHNAeG/RLn+6TtRCvTsIeZlWLpq+uaQH/93ehhtLVnqhaOxE7dPYQT6J1PrDb8PrwUaTqLaeEK1UDGvHJWmqSsXxHVSTMulovXBXYKGNmrk8Kk7fAT7jFdxJBsbYYMjDbIiTE9F1zh4Z39Bwl89NHj33107zjiAlv5nFpOJgHIdoL6wW1bmMoYls3Z5jrcYAHbKwWa9WqPHjW4MbW8MxbGI5t0NqWnk/XGZb96uvzhqN9zyWCNPI7G+uxjHbme0YnL7SyJ5cD+uQyGKxCSJP+/4UJJWXJF+P0dwjKj16qhhSM3XNvKjE2S+iU+/yoH6ZuaiqSz9JMbs48+gtLdc+lz8tqGauKXrj6+WJBGmzj1IZKxi85lwpwWH+9cMfqOJdUoKrENKwEkDdkfcElZGRT5QtdWcnAysIyVpk81ndmayJLv1NP/uqyctJkmfH+X1ghyiz9lennrpgP57ezZtx1u2AAVKGmIvzjWzx3o=
+    # GH_TOKEN
+    - secure: >-
+        KKHKU7YJjKlaR66r+tL4kI+eF6HGX0gbQLuAV9isZDieCNNUK1KocUwMn4ndz2pgwTzmGCC4YH5tLjtusRock8J3SprmX7UBnEqqZVt7wGAYAdNQ0zmCEjt+MxEiZiciQq0xXw2SXdv966LOpT0akkDCq1fYy20vp/CKnFWcXwzrMs/BmvoT4l6ZySoP2o2OpudViAPcHBCqYuST0hg/7A4Wf8g/0k1Xtm1vE/R2fYKQZEiZK0hSvPVtqVToKqeuCpX/e3fpWiukog30z/INToYbjh3Hy3FnmuePLty6+KbVlSy2JkDCVWBPI5mX+AL8DY1UzcdT0A9ULJ+YhGbBpUO8aar6cS0CV0bLTz7dBNCkoAp1CBas+fWyDwgmZoOqvQkO8mKmVoYOR+FH+2oHKk5jN5YrAsdgfhhV7c8l+Z28p5oQG5Dy/XqiTLfSXhHX4v48zbohkmQnQ0Rdhfe/hGYPuHl3U9ppIrRMDQu5RSr02G3q4hPFCS5B0WDcKADvhn7aumGYfW4z4SOCH5Ec/V+jsjsR51QrcoQxTS91pakAMg+hZHRPXKn3zuT0xV1rSu47Wg4WkrNXYri+M4oRkqXBSwucKE5NDLaUr3mX0T3Os422jxKEhGi/5qPb1yX/nSSteLgbVOLe1CN6POZjJs9+UChL9oUL5tC0FzfI1uY=
+    # CACHE_URL
+    - secure: >-
+        QD3Opl09e/u1rFIYn+NILdz/KuYOQ2C3yMiHQUKrk20Hb14WKxAGFumSh1hNxlg7vwi5a1cTkOgkVqCv3KfSY74zZJgIuiGr6NI4ph7Wcj5GJmKiBSL02NBve1xpnFI1UYH5ouSCuF8/16FHw3BTuG3eod/x1FoOt35Nov5DRu0Bdso4lNA8Z6JyjCh9sdzsl2oxjqdmhVK374rckBis+NNzt5GpH2bi/OYIIfbLNu5uTU/HUo/R6wqQeridTMQmTmyMw+N4/QMY7a7EXOxriCIVu/4VTkipDczIj/5mb/47sgX6FR9k2Q2Uy0AUMw9ko5XUZkWrbbyh3rKVHpvjSF7r8VX1CSB9tU0ElsCLyhYwgWEXKXFqA+TpJb5Y2dmcKgzMb5LjHPtgXKEeNif/aAhxF+0Y+UYKZj53Dh0cCMNzRtPz4v7Fw/pXfV9gzwzd++gQzDYfXgbp7QKekK1tlP1J4sbs2bMhGmS/hxsFFuz7XtGpR8fmLvX3hFGoz0ErhbtFqUQppZnzkH7kWsAKn7T+BoigdGkh4A06MzUSWtwI65RBL2cXCPULgVccMdJZ35IoIJsCvc4a/245E7ilUINI8SmGtDEW5lN8qsMbJGYUxLCHGGJfsP05XivBXzhc4+ln2IN026GeqspV2tdjg+muW/FIJm6/IqG63dN9HhE=
