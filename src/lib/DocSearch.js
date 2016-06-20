@@ -66,7 +66,7 @@ class DocSearch {
 
     if (enhancedSearchInput) {
       DocSearch.injectSearchBox(this.input, this);
-      DocSearch.getInputFromSelector('#docsearch');
+      this.input = DocSearch.getInputFromSelector('#docsearch');
     }
 
     this.autocomplete = autocomplete(this.input, autocompleteOptions, [{
