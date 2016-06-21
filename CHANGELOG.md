@@ -1,3 +1,13 @@
+<a name="2.0.5"></a>
+## [2.0.5](https://github.com/algolia/docsearch/compare/v2.0.4...v2.0.5) (2016-06-21)
+
+
+### Bug Fixes
+
+* **DOM:** potential issue with simple layout if there is lvl0, lvl2 but no lvl1 ([57c0101](https://github.com/algolia/docsearch/commit/57c0101))
+
+
+
 <a name="2.0.4"></a>
 ## [2.0.4](https://github.com/algolia/docsearch/compare/v2.0.3...v2.0.4) (2016-06-21)
 
