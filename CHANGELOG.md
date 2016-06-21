@@ -1,3 +1,13 @@
+<a name="2.0.4"></a>
+## [2.0.4](https://github.com/algolia/docsearch/compare/v2.0.3...v2.0.4) (2016-06-21)
+
+
+### Features
+
+* **DOM:** split simple and collumns template ([2a3b7eb](https://github.com/algolia/docsearch/commit/2a3b7eb))
+
+
+
 <a name="2.0.3"></a>
 ## [2.0.3](https://github.com/algolia/docsearch/compare/v2.0.2...v2.0.3) (2016-06-20)
 
