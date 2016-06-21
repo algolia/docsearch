@@ -984,7 +984,7 @@ describe('DocSearch', () => {
 
         // Then
         expect(render.calledOnce).toBe(true);
-        expect(render.args[0][0]).toEqual({'isSimpleLayout': false, 'foo': 'bar'});
+        expect(render.args[0][0]).toEqual({'foo': 'bar'});
       });
     });
   });

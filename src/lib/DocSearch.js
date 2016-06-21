@@ -189,7 +189,6 @@ class DocSearch {
       let url = DocSearch.formatURL(hit);
       let category = utils.getHighlightedValue(hit, 'lvl0');
       let subcategory = utils.getHighlightedValue(hit, 'lvl1') || category;
-      let isSubcategoryDuplicate = subcategory == category;
       let displayTitle = utils.compact([
         utils.getHighlightedValue(hit, 'lvl2') || subcategory,
         utils.getHighlightedValue(hit, 'lvl3'),
@@ -197,15 +196,18 @@ class DocSearch {
         utils.getHighlightedValue(hit, 'lvl5'),
         utils.getHighlightedValue(hit, 'lvl6')
       ]).join('<span class="aa-suggestion-title-separator"> › </span>');
-      let isDisplayTitleDuplicate = displayTitle == subcategory;
       let text = utils.getSnippetedValue(hit, 'content');
       let isTextOrSubcatoryNonEmpty = (subcategory && subcategory != "") || (displayTitle && displayTitle != "");
+      let isLvl2 = displayTitle && displayTitle != '' && displayTitle != subcategory;
+      let isLvl1 = !isLvl2 && (subcategory && subcategory != '' && subcategory != category);
+      let isLvl0 = !isLvl1 && !isLvl2;
 
       return {
+        isLvl0: isLvl0,
+        isLvl1: isLvl1,
+        isLvl2: isLvl2,
         isCategoryHeader: hit.isCategoryHeader,
         isSubCategoryHeader: hit.isSubCategoryHeader,
-        isSubcategoryDuplicate: isSubcategoryDuplicate,
-        isDisplayTitleDuplicate: isDisplayTitleDuplicate,
         isTextOrSubcatoryNonEmpty: isTextOrSubcatoryNonEmpty,
         category: category,
         subcategory: subcategory,
@@ -238,10 +240,10 @@ class DocSearch {
   }
 
   static getSuggestionTemplate(isSimpleLayout) {
-    const template = Hogan.compile(templates.suggestion);
+    var stringTemplate = isSimpleLayout ? templates.suggestionSimple : templates.suggestion
+    const template = Hogan.compile(stringTemplate);
     return (suggestion) => {
-      isSimpleLayout = isSimpleLayout || false;
-      return template.render({isSimpleLayout, ...suggestion});
+      return template.render(suggestion);
     };
   }
 
