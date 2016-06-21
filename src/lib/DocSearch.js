@@ -198,6 +198,7 @@ class DocSearch {
       ]).join('<span class="aa-suggestion-title-separator"> › </span>');
       let text = utils.getSnippetedValue(hit, 'content');
       let isTextOrSubcatoryNonEmpty = (subcategory && subcategory != "") || (displayTitle && displayTitle != "");
+      let isLvl1EmptyOrDuplicate = ! subcategory || subcategory == '' || subcategory == category;
       let isLvl2 = displayTitle && displayTitle != '' && displayTitle != subcategory;
       let isLvl1 = !isLvl2 && (subcategory && subcategory != '' && subcategory != category);
       let isLvl0 = !isLvl1 && !isLvl2;
@@ -206,6 +207,7 @@ class DocSearch {
         isLvl0: isLvl0,
         isLvl1: isLvl1,
         isLvl2: isLvl2,
+        isLvl1EmptyOrDuplicate: isLvl1EmptyOrDuplicate,
         isCategoryHeader: hit.isCategoryHeader,
         isSubCategoryHeader: hit.isSubCategoryHeader,
         isTextOrSubcatoryNonEmpty: isTextOrSubcatoryNonEmpty,

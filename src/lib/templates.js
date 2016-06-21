@@ -36,12 +36,14 @@ let templates = {
     <div class="${suggestionPrefix}--category-header">
         {{^isLvl0}}
         <span class="${suggestionPrefix}--category-header-lvl0 ${suggestionPrefix}--category-header-item">{{{category}}}</span>
+          {{^isLvl1}}
+          {{^isLvl1EmptyOrDuplicate}}
+          <span class="${suggestionPrefix}--category-header-lvl1 ${suggestionPrefix}--category-header-item">
+              {{{subcategory}}}
+          </span>
+          {{/isLvl1EmptyOrDuplicate}}
+          {{/isLvl1}}
         {{/isLvl0}}
-        {{^isLvl1}}
-        <span class="${suggestionPrefix}--category-header-lvl1 ${suggestionPrefix}--category-header-item">
-            {{{subcategory}}}
-        </span>
-        {{/isLvl1}}
         
         <div class="${suggestionPrefix}--title ${suggestionPrefix}--category-header-item">
             {{#isLvl2}}
