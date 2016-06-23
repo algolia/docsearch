@@ -1,34 +1,82 @@
-<header class="site-header">
-  <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="logo-community" href="https://community.algolia.com/">
-          <img src="https://res.cloudinary.com/hilnmyskv/image/upload/logo-community-inline-dark.svg" width="150" alt="Algolia Community" />
-        </a>
-        <a class="project-title" href="{{ site.baseurl }}/">
-          DocSearch
-        </a>
-      </div>
-      <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav navbar-right">
-          <li class="searchbar-wrapper">
-            <div class="navbar-form">
-              <div class="form-group">
-                {% include searchbar.html %}
-              </div>
-            </div>
-          </li>
-          {% assign url = page.url %}
-          {% for link in site.navigation %}
-            <li {% if url == link.url %}class="active"{% endif %}>
-              <a href="{{ site.baseurl }}{{ link.url }}" title="{{ link.title }}">{{ link.text }}</a>
-            </li>
-          {% endfor %}
-          <li>
-            <a class="navbar-github-link" href="//github.com/algolia/docsearch"><i class="fa fa-github"></i></a>
-          </li>
-        </ul>
+<div class='ac-nav'>
+  <div class='ac-nav-container'>
+    <div class='ac-nav-brand'>
+      <a class='ac-logo' href='https://community.algolia.com/' title='Algolia Community'>
+        <img alt='Algolia Community' class='ac-logo__lg' src='https://res.cloudinary.com/hilnmyskv/image/upload/logo-community-inline-dark.svg' width='150'>
+        <img alt='Algolia Community' class='ac-logo__sm' src='https://res.cloudinary.com/hilnmyskv/image/upload/v1461180081/logo-community-sm.svg'>
+      </a>
+      <span class='ac-nav-brand-breadcrumb'></span>
+      <a class='ac-nav-brand-title' href='./' title='Home'>DocSearch</a>
+    </div>
+    <div class='ac-nav-menu'>
+      <div class='ac-nav-searchbox'>
+        <form class='searchbox' id='docsearch-form' novalidate='novalidate' onsubmit='return false;' style='visibility:hidden;height:0'>
+          <div class='searchbox__wrapper' role='search'>
+            <input autocomplete='off' class='searchbox__input' id='docsearch' name='search' placeholder='Search in the doc' required='required' type='search'>
+            <button class='searchbox__submit' title='Submit your search query.' type='submit'>
+              <svg aria-label='Search' role='img'>
+                <use xlink:href='#sbx-icon-search-13' xmlns:xlink='http://www.w3.org/1999/xlink'></use>
+              </svg>
+            </button>
+            <button class='searchbox__reset hide' title='Clear the search query.' type='reset'>
+              <svg aria-label='Reset' role='img'>
+                <use xlink:href='#sbx-icon-clear-3' xmlns:xlink='http://www.w3.org/1999/xlink'></use>
+              </svg>
+            </button>
+          </input>
+        </div>
+      </form>
+      <div class='svg-icons' style='height: 0; width: 0; position: absolute; visibility: hidden'>
+        <svg xmlns='http://www.w3.org/2000/svg'>
+          <symbol id="sbx-icon-clear-3" viewBox="0 0 40 40"><path d="M16.228 20L1.886 5.657 0 3.772 3.772 0l1.885 1.886L20 16.228 34.343 1.886 36.228 0 40 3.772l-1.886 1.885L23.772 20l14.342 14.343L40 36.228 36.228 40l-1.885-1.886L20 23.772 5.657 38.114 3.772 40 0 36.228l1.886-1.885L16.228 20z" fill-rule="evenodd"/></symbol>
+          <symbol id="sbx-icon-search-13" viewBox="0 0 12 12"><path d="M12 11.077c0-.245-.1-.483-.267-.65L9.26 7.955c.584-.843.894-1.853.894-2.877C10.154 2.272 7.882 0 5.077 0S0 2.272 0 5.077s2.272 5.077 5.077 5.077c1.024 0 2.034-.31 2.877-.894l2.474 2.466c.166.173.404.274.65.274.504 0 .922-.418.922-.923zm-3.692-6c0 1.78-1.45 3.23-3.23 3.23-1.782 0-3.232-1.45-3.232-3.23s1.45-3.23 3.23-3.23c1.782 0 3.232 1.45 3.232 3.23z" fill="#FFF" fill-rule="evenodd" opacity="0.85"/></symbol>
+        </svg>
       </div>
     </div>
-  </nav>
-</header>
+    <ul class='ac-nav-menu-list'>
+      {% assign url = page.url %}
+      {% for link in site.navigation %}
+      <li class='ac-nav-menu-list-item {% if url == link.url %}active{% endif %} '>
+        <a data-path="{{ site.baseurl }}{{ link.url }}"  href="{{ site.baseurl }}{{ link.url }}" data-current="{% if url == link.url %}true{% endif %}" title="{{ link.text }}">{{ link.text }}</a>
+      </li>
+      {% endfor %}
+      <li class='ac-nav-menu-list-icon'>
+        <a class='ac-icon' href='https://github.com/algolia/docsearch' title='GitHub repository'>
+          <span class='ac-icon ac-icon-github'></span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+</div>
+
+<script type="text/javascript">
+
+    $(function(){
+      $('.searchbox .aa-input').on('change', function() {
+          $('.aa-input').addClass('filled');
+      });
+
+      $('.searchbox .aa-input').on('blur', function() {
+        if ($(this).val().length === 0){
+          $(this).removeClass('filled');
+        }
+      });
+
+      $('.searchbox [type="reset"]').on('click', function() {
+          myDocSearch.autocomplete.autocomplete.setVal('');
+          $('.aa-input').focus();
+          $(this).addClass("hide");
+      });
+    });
+    function updateReset() {
+      var searchbox = $('.aa-input');
+      var reset = $('.searchbox [type="reset"]');
+      reset.removeClass("hide");
+      if (searchbox.val().length === 0){
+        reset.addClass("hide");
+      }
+    }
+
+</script>
