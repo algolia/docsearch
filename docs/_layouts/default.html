@@ -54,6 +54,7 @@
 {% endif %}
 
     <script src="{{ "/js/bootstrap.min.js" | prepend: site.baseurl }}"></script>
+    <script src="{{ "/js/responsiveNavigation.js" | prepend: site.baseurl }}"></script>
 
 {% if site.env == 'development' %}
     <script>
@@ -66,12 +67,13 @@
       var myDocSearch = docsearch({
         apiKey: '25626fae796133dc1e734c6bcaaeac3c',
         indexName: 'docsearch',
-        inputSelector: '.sbx-custom__input',
+        inputSelector: '.searchbox__input',
         autocompleteOptions: {
           debug: false
         }
       });
     </script>
+
 
   {% include marketing.html %}
 
