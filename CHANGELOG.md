@@ -1,3 +1,17 @@
+<a name="2.0.6"></a>
+## [2.0.6](https://github.com/algolia/docsearch/compare/v2.0.5...v2.0.6) (2016-06-28)
+
+
+### Bug Fixes
+
+* **typos:** no result page ([0f40e1d](https://github.com/algolia/docsearch/commit/0f40e1d))
+
+### Features
+
+* **docs:** new community header / footer (#114) ([af76d31](https://github.com/algolia/docsearch/commit/af76d31))
+
+
+
 <a name="2.0.5"></a>
 ## [2.0.5](https://github.com/algolia/docsearch/compare/v2.0.4...v2.0.5) (2016-06-21)
 
