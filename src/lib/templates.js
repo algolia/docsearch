@@ -74,10 +74,10 @@ let templates = {
   empty: `
   <div class="${suggestionPrefix}">
     <div class="${suggestionPrefix}--wrapper">
-        <div class="${suggestionPrefix}--content ${suggestionPrefix}--no-result">
+        <div class="${suggestionPrefix}--content ${suggestionPrefix}--no-results">
             <div class="${suggestionPrefix}--title">
                 <div class="${suggestionPrefix}--text">
-                    No results found for query <b>{{{query}}}</b>
+                    No results found for query <b>"{{{query}}}"</b>
                 </div>
             </div>
         </div>
