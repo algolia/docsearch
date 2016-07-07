@@ -1,3 +1,13 @@
+<a name="2.1.0"></a>
+# [2.1.0](https://github.com/algolia/docsearch/compare/v2.0.7...v2.1.0) (2016-07-07)
+
+
+### Bug Fixes
+
+* **doc:** docsearch header link (#117) ([66e68a9](https://github.com/algolia/docsearch/commit/66e68a9))
+
+
+
 <a name="2.0.7"></a>
 ## [2.0.7](https://github.com/algolia/docsearch/compare/v2.0.6...v2.0.7) (2016-06-28)
 
