@@ -170,7 +170,7 @@ npm run release:beta
 
 This task will release a beta version of what is currently in develop branch.
 
-It will not update the `latest` tag of the npm release nor update jsDelivr /1/.
+It will not update the `latest` tag of the npm release nor update jsDelivr /2/.
 
 # Hotfixes
 
