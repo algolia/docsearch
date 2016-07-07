@@ -42,10 +42,11 @@ class DocSearch {
       autoselect: true
     },
     transformData = false,
+    handleSelected = false,
     enhancedSearchInput = false,
     layout = 'collumns'
   }) {
-    DocSearch.checkArguments({apiKey, indexName, inputSelector, debug, algoliaOptions, autocompleteOptions, transformData, enhancedSearchInput, layout});
+    DocSearch.checkArguments({apiKey, indexName, inputSelector, debug, algoliaOptions, autocompleteOptions, transformData, handleSelected, enhancedSearchInput, layout});
 
     this.apiKey = apiKey;
     this.appId = appId;
@@ -58,6 +59,8 @@ class DocSearch {
     this.autocompleteOptions.cssClasses = {
       prefix: 'ds'
     };
+
+    handleSelected = handleSelected || this.handleSelected;
 
     this.isSimpleLayout = (layout === 'simple');
 
@@ -73,13 +76,12 @@ class DocSearch {
       source: this.getAutocompleteSource(transformData),
       templates: {
         suggestion: DocSearch.getSuggestionTemplate(this.isSimpleLayout),
-        footer: templates.footer,
-        empty: DocSearch.getEmptyTemplate()
+        footer: templates.footer
       }
     }]);
     this.autocomplete.on(
       'autocomplete:selected',
-      this.handleSelected.bind(null, this.autocomplete.autocomplete)
+      handleSelected.bind(null, this.autocomplete.autocomplete)
     )
     this.autocomplete.on(
       'autocomplete:shown',
