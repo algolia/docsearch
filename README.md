@@ -175,6 +175,19 @@ search.autocomplete.on('autocomplete:opened', function(e) {
 });
 ```
 
+We already bind the autocomplete:selected event inside the docsearch.
+If you want to replace the default behavior you can pass the handleSelected option
+
+```javascript
+var search = docsearch({
+  apiKey: '<API_KEY>',
+  indexName: '<INDEX_NAME>',
+  inputSelector: '<YOUR_INPUT_DOM_SELECTOR>',
+  handleSelected: function (input, event, suggestion) {
+  }
+});
+```
+
 ### Algolia options
 
 You can also pass any specific option to the Algolia API to change the way
