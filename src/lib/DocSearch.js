@@ -76,7 +76,8 @@ class DocSearch {
       source: this.getAutocompleteSource(transformData),
       templates: {
         suggestion: DocSearch.getSuggestionTemplate(this.isSimpleLayout),
-        footer: templates.footer
+        footer: templates.footer,
+        empty: DocSearch.getEmptyTemplate()
       }
     }]);
     this.autocomplete.on(
