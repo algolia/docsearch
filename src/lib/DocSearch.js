@@ -4,7 +4,7 @@ import autocomplete from 'autocomplete.js';
 import templates from './templates.js';
 import utils from './utils.js';
 import version from './version.js';
-import $ from 'autocomplete.js/zepto.js';
+import $ from './zepto.js';
 
 /**
  * Adds an autocomplete dropdown to an input field
@@ -46,14 +46,16 @@ class DocSearch {
     enhancedSearchInput = false,
     layout = 'collumns'
   }) {
-    DocSearch.checkArguments({apiKey, indexName, inputSelector, debug, algoliaOptions, autocompleteOptions, transformData, handleSelected, enhancedSearchInput, layout});
+    DocSearch.checkArguments({apiKey, indexName, inputSelector, debug, algoliaOptions,
+      autocompleteOptions, transformData, handleSelected, enhancedSearchInput, layout});
 
     this.apiKey = apiKey;
     this.appId = appId;
     this.indexName = indexName;
     this.input = DocSearch.getInputFromSelector(inputSelector);
     this.algoliaOptions = {hitsPerPage: 5, ...algoliaOptions};
-    let autocompleteOptionsDebug = autocompleteOptions && autocompleteOptions.debug ? autocompleteOptions.debug: false;
+    const autocompleteOptionsDebug = autocompleteOptions && autocompleteOptions.debug ?
+      autocompleteOptions.debug : false;
     autocompleteOptions.debug = debug || autocompleteOptionsDebug;
     this.autocompleteOptions = autocompleteOptions;
     this.autocompleteOptions.cssClasses = {
@@ -68,7 +70,7 @@ class DocSearch {
     this.client.addAlgoliaAgent('docsearch.js ' + version);
 
     if (enhancedSearchInput) {
-      DocSearch.injectSearchBox(this.input, this);
+      DocSearch.injectSearchBox(this.input);
       this.input = DocSearch.getInputFromSelector('#docsearch');
     }
 
@@ -83,14 +85,14 @@ class DocSearch {
     this.autocomplete.on(
       'autocomplete:selected',
       handleSelected.bind(null, this.autocomplete.autocomplete)
-    )
+    );
     this.autocomplete.on(
       'autocomplete:shown',
        this.handleShown.bind(null, this.input)
-    )
+    );
 
     if (enhancedSearchInput) {
-      DocSearch.bindSearchBoxEvent(this.autocomplete);
+      DocSearch.bindSearchBoxEvent();
     }
   }
 
@@ -110,24 +112,24 @@ class DocSearch {
     }
   }
 
-  static injectSearchBox(input, docsearch) {
+  static injectSearchBox(input) {
     input.before(templates.searchBox);
     input.remove();
   }
 
-  static bindSearchBoxEvent(autocomplete) {
-    $(".searchbox [type='reset']").on("click", function() {
-      $("input#docsearch").focus();
-      $(this).addClass("hide");
-      autocomplete.autocomplete.setVal("");
+  static bindSearchBoxEvent() {
+    $('.searchbox [type="reset"]').on('click', function() {
+      $('input#docsearch').focus();
+      $(this).addClass('hide');
+      autocomplete.autocomplete.setVal('');
     });
 
-    $("input#docsearch").on("keyup", function() {
-      var searchbox = document.querySelector("input#docsearch");
-      var reset = document.querySelector(".searchbox [type='reset']");
-      reset.className = "searchbox__reset";
-      if (searchbox.value.length === 0){
-        reset.className += " hide";
+    $('input#docsearch').on('keyup', function() {
+      var searchbox = document.querySelector('input#docsearch');
+      var reset = document.querySelector('.searchbox [type="reset"]');
+      reset.className = 'searchbox__reset';
+      if (searchbox.value.length === 0) {
+        reset.className += ' hide';
       }
     });
   }
@@ -148,6 +150,7 @@ class DocSearch {
    * Returns the `source` method to be passed to autocomplete.js. It will query
    * the Algolia index and call the callbacks with the formatted hits.
    * @function getAutocompleteSource
+   * @param  {function} transformData An optional function to transform the hits
    * @returns {function} Method to be passed as the `source` option of
    * autocomplete
    */
@@ -181,30 +184,31 @@ class DocSearch {
     // Group hits by category / subcategory
     var groupedHits = utils.groupBy(hits, 'lvl0');
     $.each(groupedHits, (level, collection) => {
-      let groupedHitsByLvl1 = utils.groupBy(collection, 'lvl1');
-      let flattenedHits = utils.flattenAndFlagFirst(groupedHitsByLvl1, 'isSubCategoryHeader');
+      const groupedHitsByLvl1 = utils.groupBy(collection, 'lvl1');
+      const flattenedHits = utils.flattenAndFlagFirst(groupedHitsByLvl1, 'isSubCategoryHeader');
       groupedHits[level] = flattenedHits;
     });
     groupedHits = utils.flattenAndFlagFirst(groupedHits, 'isCategoryHeader');
 
     // Translate hits into smaller objects to be send to the template
     return groupedHits.map((hit) => {
-      let url = DocSearch.formatURL(hit);
-      let category = utils.getHighlightedValue(hit, 'lvl0');
-      let subcategory = utils.getHighlightedValue(hit, 'lvl1') || category;
-      let displayTitle = utils.compact([
+      const url = DocSearch.formatURL(hit);
+      const category = utils.getHighlightedValue(hit, 'lvl0');
+      const subcategory = utils.getHighlightedValue(hit, 'lvl1') || category;
+      const displayTitle = utils.compact([
         utils.getHighlightedValue(hit, 'lvl2') || subcategory,
         utils.getHighlightedValue(hit, 'lvl3'),
         utils.getHighlightedValue(hit, 'lvl4'),
         utils.getHighlightedValue(hit, 'lvl5'),
         utils.getHighlightedValue(hit, 'lvl6')
       ]).join('<span class="aa-suggestion-title-separator"> › </span>');
-      let text = utils.getSnippetedValue(hit, 'content');
-      let isTextOrSubcatoryNonEmpty = (subcategory && subcategory != "") || (displayTitle && displayTitle != "");
-      let isLvl1EmptyOrDuplicate = ! subcategory || subcategory == '' || subcategory == category;
-      let isLvl2 = displayTitle && displayTitle != '' && displayTitle != subcategory;
-      let isLvl1 = !isLvl2 && (subcategory && subcategory != '' && subcategory != category);
-      let isLvl0 = !isLvl1 && !isLvl2;
+      const text = utils.getSnippetedValue(hit, 'content');
+      const isTextOrSubcatoryNonEmpty = (subcategory && subcategory !== '') ||
+        (displayTitle && displayTitle !== '');
+      const isLvl1EmptyOrDuplicate = !subcategory || subcategory === '' || subcategory === category;
+      const isLvl2 = displayTitle && displayTitle !== '' && displayTitle !== subcategory;
+      const isLvl1 = !isLvl2 && (subcategory && subcategory !== '' && subcategory !== category);
+      const isLvl0 = !isLvl1 && !isLvl2;
 
       return {
         isLvl0: isLvl0,
@@ -245,7 +249,7 @@ class DocSearch {
   }
 
   static getSuggestionTemplate(isSimpleLayout) {
-    var stringTemplate = isSimpleLayout ? templates.suggestionSimple : templates.suggestion
+    const stringTemplate = isSimpleLayout ? templates.suggestionSimple : templates.suggestion;
     const template = Hogan.compile(stringTemplate);
     return (suggestion) => {
       return template.render(suggestion);
@@ -257,20 +261,22 @@ class DocSearch {
     window.location.href = suggestion.url;
   }
 
-  handleShown(input, event) {
-    var middleOfInput = input.offset().left + input.width() / 2;
-    var middleOfWindow = $(document).width() / 2;
+  handleShown(input) {
+    const middleOfInput = input.offset().left + input.width() / 2;
+    let middleOfWindow = $(document).width() / 2;
 
     if (isNaN(middleOfWindow)) {
       middleOfWindow = 900;
     }
 
-    var alignClass = middleOfInput - middleOfWindow >= 0 ? 'algolia-autocomplete-right' : 'algolia-autocomplete-left';
-    var otherAlignClass = middleOfInput - middleOfWindow < 0 ? 'algolia-autocomplete-right' : 'algolia-autocomplete-left';
+    const alignClass = middleOfInput - middleOfWindow >= 0 ?
+      'algolia-autocomplete-right' : 'algolia-autocomplete-left';
+    const otherAlignClass = middleOfInput - middleOfWindow < 0 ?
+      'algolia-autocomplete-right' : 'algolia-autocomplete-left';
 
-    var autocompleteWrapper = $('.algolia-autocomplete');
-    if (! autocompleteWrapper.hasClass(alignClass)) {
-      autocompleteWrapper.addClass(alignClass)
+    const autocompleteWrapper = $('.algolia-autocomplete');
+    if (!autocompleteWrapper.hasClass(alignClass)) {
+      autocompleteWrapper.addClass(alignClass);
     }
 
     if (autocompleteWrapper.hasClass(otherAlignClass)) {

@@ -1,4 +1,4 @@
-import $ from 'autocomplete.js/zepto.js';
+import $ from './zepto.js';
 
 let utils = {
   /*

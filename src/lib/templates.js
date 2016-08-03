@@ -1,14 +1,15 @@
-let prefix = 'algolia-docsearch';
-let suggestionPrefix = `${prefix}-suggestion`;
-let footerPrefix = `${prefix}-footer`;
+const prefix = 'algolia-docsearch';
+const suggestionPrefix = `${prefix}-suggestion`;
+const footerPrefix = `${prefix}-footer`;
 
-let templates = {
+/* eslint-disable max-len */
+
+const templates = {
   suggestion: `
   <div class="${suggestionPrefix}
     {{#isCategoryHeader}}${suggestionPrefix}__main{{/isCategoryHeader}}
     {{#isSubCategoryHeader}}${suggestionPrefix}__secondary{{/isSubCategoryHeader}}
   ">
-    
     <div class="${suggestionPrefix}--category-header">
         <span class="${suggestionPrefix}--category-header-lvl0">{{{category}}}</span>
     </div>
@@ -32,7 +33,6 @@ let templates = {
     {{#isSubCategoryHeader}}${suggestionPrefix}__secondary{{/isSubCategoryHeader}}
     suggestion-layout-simple
   ">
-    
     <div class="${suggestionPrefix}--category-header">
         {{^isLvl0}}
         <span class="${suggestionPrefix}--category-header-lvl0 ${suggestionPrefix}--category-header-item">{{{category}}}</span>
@@ -44,7 +44,6 @@ let templates = {
           {{/isLvl1EmptyOrDuplicate}}
           {{/isLvl1}}
         {{/isLvl0}}
-        
         <div class="${suggestionPrefix}--title ${suggestionPrefix}--category-header-item">
             {{#isLvl2}}
                 {{{title}}}

@@ -20,6 +20,8 @@ you need to integrate your new search into your website.
  2. We'll configure your search experience,
  3. You'll need to add a bit of JavaScript and CSS code to your website.
 
+If you prefer to DIY, you can run the [scraper][28] in your own infra. 
+
 ## Setup
 
 Once we've crawled your documentation website we'll send you the credentials you
@@ -39,7 +41,7 @@ docsearch({
 
 ## Customization
 
-The default colorscheme is blue and gray:
+The default colorscheme is white and gray:
 
 ![Default colorscheme][17]
 
@@ -103,6 +105,7 @@ You can regenerate the whole final `css` file from those `scss` files by running
 All you have to do now is change the `link` tag that was loading the default
 styling from our CDN, to one that is loading your newly compiled file.
 
+
 ## Custom options
 
 DocSearch is a wrapper around the [autocomplete.js][20] library that gets its
@@ -137,6 +140,19 @@ search.autocomplete.on('autocomplete:opened', function(e) {
 });
 ```
 
+We already bind the autocomplete:selected event inside the docsearch.
+If you want to replace the default behavior you can pass the handleSelected option
+
+```javascript
+var search = docsearch({
+  apiKey: '<API_KEY>',
+  indexName: '<INDEX_NAME>',
+  inputSelector: '<YOUR_INPUT_DOM_SELECTOR>',
+  handleSelected: function (input, event, suggestion) {
+  }
+});
+```
+
 ### Algolia options
 
 You can also pass any specific option to the Algolia API to change the way
@@ -163,7 +179,7 @@ You will find all Algolia API options in its [own documentation][23]
 [4]: https://img.shields.io/coveralls/algolia/docsearch/master.svg?style=flat-square
 [5]: http://img.shields.io/badge/license-MIT-green.svg?style=flat-square
 [6]: https://img.shields.io/npm/dm/docsearch.js.svg?style=flat-square
-[7]: ./docs/img/showcase/example-eslint.gif
+[7]: ./docs/img/showcase/example-apiary.gif
 [8]: #introduction
 [9]: #setup
 [10]: #customization
@@ -173,7 +189,7 @@ You will find all Algolia API options in its [own documentation][23]
 [14]: #documentation-website
 [15]: #macos
 [16]: https://community.algolia.com/docsearch/
-[17]: https://community.algolia.com/docsearch/img/default-colorscheme.png
+[17]: ./docs/img/default-colorscheme.png
 [18]: https://github.com/algolia/docsearch/blob/master/src/styles/_variables.scss
 [19]: https://github.com/algolia/docsearch/blob/master/src/styles/main.scss
 [20]: https://github.com/algolia/autocomplete.js
@@ -184,4 +200,5 @@ You will find all Algolia API options in its [own documentation][23]
 [25]: https://jekyllrb.com/
 [26]: https://www.ruby-lang.org/en/
 [27]: http://bundler.io/
+[28]: https://github.com/algolia/docsearch-scraper
 
