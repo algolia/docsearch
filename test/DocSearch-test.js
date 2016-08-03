@@ -1,5 +1,6 @@
 /* eslint-env mocha */
 /* eslint no-new:0 */
+/* eslint-disable max-len */
 
 import jsdom from 'mocha-jsdom';
 import expect from 'expect';
@@ -17,7 +18,7 @@ describe('DocSearch', () => {
     // We need to load DocSearch from here as it depends on Zepto, which itself
     // needs jsdom to be called before being loaded.
     DocSearch = require('../src/lib/DocSearch.js');
-    $ = require('npm-zepto');
+    $ = require('../src/lib/zepto.js');
 
     // Note: If you edit this HTML while doing TDD with `npm run test:watch`,
     // you will have to restart `npm run test:watch` for the new HTML to be
@@ -168,7 +169,7 @@ describe('DocSearch', () => {
       // Then
       expect(typeof actual.algoliaOptions).toEqual('object');
       expect(actual.algoliaOptions.anOption).toEqual(42);
-      expect(actual.autocompleteOptions).toEqual({debug: false, "cssClasses": { "prefix": "ds" }, anOption: 44});
+      expect(actual.autocompleteOptions).toEqual({debug: false, cssClasses: {prefix: 'ds'}, anOption: 44});
     });
     it('should instantiate algoliasearch with the correct values', () => {
       // Given
@@ -205,7 +206,7 @@ describe('DocSearch', () => {
 
       // Then
       expect(AutoComplete.calledOnce).toBe(true);
-      expect(AutoComplete.calledWith($input, {anOption: '44', "cssClasses": { "prefix": "ds" }, debug: false})).toBe(true);
+      expect(AutoComplete.calledWith($input, {anOption: '44', cssClasses: {prefix: 'ds'}, debug: false})).toBe(true);
     });
     it('should listen to the selected and shown event of autocomplete', () => {
       // Given
@@ -404,7 +405,6 @@ describe('DocSearch', () => {
       ds.autocomplete.trigger('autocomplete:shown');
 
       expect($('.algolia-autocomplete').attr('class')).toEqual('algolia-autocomplete algolia-autocomplete-left');
-
     });
   });
 
@@ -980,11 +980,11 @@ describe('DocSearch', () => {
         let actual = DocSearch.getSuggestionTemplate();
 
         // When
-        actual({'foo': 'bar'});
+        actual({foo: 'bar'});
 
         // Then
         expect(render.calledOnce).toBe(true);
-        expect(render.args[0][0]).toEqual({'foo': 'bar'});
+        expect(render.args[0][0]).toEqual({foo: 'bar'});
       });
     });
   });
