@@ -1,10 +1,10 @@
 import Hogan from 'hogan.js';
-import algoliasearch from 'algoliasearch';
+import algoliasearch from 'algoliasearch/lite';
 import autocomplete from 'autocomplete.js';
 import templates from './templates.js';
 import utils from './utils.js';
 import version from './version.js';
-import $ from 'npm-zepto';
+import $ from 'autocomplete.js/zepto.js';
 
 /**
  * Adds an autocomplete dropdown to an input field
