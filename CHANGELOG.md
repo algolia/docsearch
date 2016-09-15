@@ -1,3 +1,13 @@
+<a name="2.1.5"></a>
+## [2.1.5](https://github.com/algolia/docsearch/compare/v2.1.4...v2.1.5) (2016-09-15)
+
+
+### Bug Fixes
+
+* **empty:** query should be escaped (self-XSS) (#147) ([3aed41b](https://github.com/algolia/docsearch/commit/3aed41b))
+
+
+
 <a name="2.1.4"></a>
 ## [2.1.4](https://github.com/algolia/docsearch/compare/v2.1.3...v2.1.4) (2016-08-03)
 
