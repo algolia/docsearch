@@ -1,3 +1,9 @@
+<a name="2.1.6"></a>
+## [2.1.6](https://github.com/algolia/docsearch/compare/v2.1.5...v2.1.6) (2016-10-02)
+
+
+
+
 <a name="2.1.5"></a>
 ## [2.1.5](https://github.com/algolia/docsearch/compare/v2.1.4...v2.1.5) (2016-09-15)
 
