@@ -13,7 +13,7 @@ babel_istanbul_bin="${npm_bin}/babel-istanbul"
 mocha_bin="${npm_bin}/_mocha"
 
 BABEL_ENV=test \
-  babel-node "$babel_istanbul_bin" cover "$mocha_bin" \
+  node "$babel_istanbul_bin" cover "$mocha_bin" \
   --report lcov -- \
   -R spec --reporter dot \
   ./test/helpers.js ./test/*-test.js
