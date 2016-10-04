@@ -70,8 +70,7 @@ class DocSearch {
     this.client.addAlgoliaAgent('docsearch.js ' + version);
 
     if (enhancedSearchInput) {
-      DocSearch.injectSearchBox(this.input);
-      this.input = DocSearch.getInputFromSelector('#docsearch');
+      this.input = DocSearch.injectSearchBox(this.input);
     }
 
     this.autocomplete = autocomplete(this.input, autocompleteOptions, [{
@@ -114,7 +113,10 @@ class DocSearch {
 
   static injectSearchBox(input) {
     input.before(templates.searchBox);
+    var new_input = input.prev().prev().find('input');
     input.remove();
+
+    return new_input;
   }
 
   static bindSearchBoxEvent() {
