@@ -1,4 +1,12 @@
 (function($) {
+  function pardotAppendIframe(url) {
+    var iframe = document.createElement('iframe');
+    iframe.src = url;
+    iframe.width = 1;
+    iframe.height = 1;
+    document.body.appendChild(iframe);
+  }
+
   $('.join-form').on('submit', function() {
     var $button = $(this).find('button');
     var $email = $(this).find('input[name="email"]');
@@ -30,13 +38,15 @@
         url: $url.val()
       }
     }).done(function() {
+      pardotAppendIframe('https://goto.algolia.com/l/139121/2016-08-05/ldp67?email=' + encodeURIComponent($email.val()) + '&website=' + encodeURIComponent($url.val()));
       $email.val('');
       $url.val('');
       $button.text('Thank you!');
     }).fail(function() {
       $button.attr('disabled', null);
       alert('An error occurred, please try again later.');
-    })
+    });
+
     return false;
   });
 })(jQuery);
