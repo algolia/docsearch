@@ -276,7 +276,7 @@ bundle config build.eventmachine --with-cppflags=-I$(brew --prefix openssl)/incl
 [4]: https://img.shields.io/coveralls/algolia/docsearch/master.svg?style=flat-square
 [5]: http://img.shields.io/badge/license-MIT-green.svg?style=flat-square
 [6]: https://img.shields.io/npm/dm/docsearch.js.svg?style=flat-square
-[7]: ./docs/img/showcase/example-apiary.gif
+[7]: https://community.algolia.com/docsearch/img/showcase/example-apiary.gif
 [8]: #introduction
 [9]: #setup
 [10]: #customization
@@ -286,7 +286,7 @@ bundle config build.eventmachine --with-cppflags=-I$(brew --prefix openssl)/incl
 [14]: #documentation-website
 [15]: #macos
 [16]: https://community.algolia.com/docsearch/
-[17]: ./docs/img/default-colorscheme.png
+[17]: https://community.algolia.com/docsearch/img/default-colorscheme.png
 [18]: https://github.com/algolia/docsearch/blob/master/src/styles/_variables.scss
 [19]: https://github.com/algolia/docsearch/blob/master/src/styles/main.scss
 [20]: https://github.com/algolia/autocomplete.js
