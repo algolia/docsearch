@@ -10,8 +10,8 @@ if [[ -n $(npm owner add `npm whoami`) ]]; then
 fi
 
 currentBranch=`git rev-parse --abbrev-ref HEAD`
-if [ $currentBranch != 'master' ]; then
-  printf "Release: You must be on master"
+if [ $currentBranch != 'v1' ]; then
+  printf "Release: You must be on v1"
   exit 1
 fi
 
@@ -21,14 +21,8 @@ if [[ -n $(git status --porcelain) ]]; then
 fi
 
 printf "\n\nRelease: update working tree"
-git pull origin master
+git pull origin v1
 git fetch origin --tags
-
-if [ $HOTFIX == '0' ]; then
-  printf "\n\nRelease: merge develop branch"
-  git fetch origin develop
-  git merge origin/develop
-fi
 
 printf "Release: npm install"
 npm install
@@ -76,16 +70,9 @@ printf "\n\nRelease: almost done, check everything in another terminal tab.\n"
 read -p "=> Release: when ready, press [ENTER] to push to github and publish the package"
 
 printf "\n\nRelease: push to github, publish on npm"
-git push origin master
+git push origin v1
 git push origin --tags
 npm publish
-# also update beta
-npm dist-tag add docsearch.js@$newVersion beta
-git checkout develop
-git pull origin develop
-git merge master
-git push origin develop
-git checkout master
 
 printf "Release:
 Package was published to npm.
