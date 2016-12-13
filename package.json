@@ -15,7 +15,7 @@
     "release": "./scripts/release",
     "release:beta": "./scripts/release-beta",
     "lint": "eslint .",
-    "test": "BABEL_ENV=test mocha --reporter dot ./test/helpers.js ./test/*-test.js",
+    "test": "BABEL_ENV=test mocha --timeout 6000 --reporter dot ./test/helpers.js ./test/*-test.js",
     "test:watch": "BABEL_ENV=test mocha --reporter min --watch ./test/helpers.js ./test/*-test.js",
     "test:coverage": "./scripts/test-coverage",
     "gh-pages": "./scripts/gh-pages"
