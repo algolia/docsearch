@@ -2,12 +2,10 @@
 
 set -ev # exit when error
 
-./scripts/validate-pr-done-on-develop
 npm run test:coverage
 npm prune
 NODE_ENV=production npm run build
-./scripts/validate-commit-msgs
 
-if [ "$TRAVIS_PULL_REQUEST" == 'false' ] && [ "$TRAVIS_BRANCH" == 'master' ]; then
+if [ "$TRAVIS_PULL_REQUEST" == 'false' ] && [ "$TRAVIS_BRANCH" == 'v1' ]; then
   ./scripts/finish-release
 fi

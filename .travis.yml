@@ -4,16 +4,14 @@ before_install:
   - 'git config --global user.email "algobot@users.noreply.github.com"'
   - 'git config --global user.name "algobot"'
   - npm prune
-  - rvm install 2.2.0
-  - rvm use 2.2.0
 before_cache: npm prune
 install: npm install
 script: ./scripts/test-ci
-after_script: ./scripts/travis-after-script
 branches:
   only:
     - master
     - develop
+    - v1
 sudo: false
 cache:
   directories:
