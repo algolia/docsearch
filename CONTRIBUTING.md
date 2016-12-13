@@ -24,6 +24,7 @@ Hi (future) collaborator!
 - [Stash your commits](#stash-your-commits)
 - [When are issues closed?](#when-are-issues-closed)
 - [Releasing](#releasing)
+  - [Releasing v1](#releasing-v1)
   - [Beta releases](#beta-releases)
 - [Hotfixes](#hotfixes)
   - [Releasing hotfixes](#releasing-hotfixes)
