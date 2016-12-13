@@ -144,7 +144,7 @@ Once the a fix is done, having the fix in the `develop` branch is not sufficient
 
 So that you never ask yourself "Is this released?".
 
-Instead of closing the issue, we will add a ` ✔ to be released` label.
+Instead of closing the issue, we will add a `  to be released` label.
 
 # Releasing
 
@@ -159,6 +159,17 @@ npm run release
 ```
 
 This task will merge develop into master.
+
+## Releasing v1
+
+```sh
+git checkout v1
+git pull
+npm run release
+```
+
+We use the `v1` branch as a way to push fixes to the first version of DocSearch. Never merge `master` or `develop` into `v1` and
+vice versa.
 
 ## Beta releases
 
