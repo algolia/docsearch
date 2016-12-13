@@ -195,12 +195,21 @@ let utils = {
    * @return {string}
    **/
   getHighlightedValue(object, property) {
-    if (!object._highlightResult
-        || !object._highlightResult[property]
-        || !object._highlightResult[property].value) {
-      return object[property];
+    if (object._highlightResult
+        && object._highlightResult.hierarchy_camel
+        && object._highlightResult.hierarchy_camel[property]
+        && object._highlightResult.hierarchy_camel[property].matchLevel
+        && object._highlightResult.hierarchy_camel[property].matchLevel !== 'none'
+        && object._highlightResult.hierarchy_camel[property].value) {
+      return object._highlightResult.hierarchy_camel[property].value;
     }
-    return object._highlightResult[property].value;
+    if (object._highlightResult
+        && object._highlightResult
+        && object._highlightResult[property]
+        && object._highlightResult[property].value) {
+      return object._highlightResult[property].value;
+    }
+    return object[property];
   },
   /*
    * Returns the snippeted value of the specified key in the specified object.
