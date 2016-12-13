@@ -38,7 +38,7 @@
         url: $url.val()
       }
     }).done(function() {
-      pardotAppendIframe('https://goto.algolia.com/l/139121/2016-08-05/ldp67?email=' + encodeURIComponent($email.val()) + '&website=' + encodeURIComponent($url.val()));
+      pardotAppendIframe('https://go.pardot.com/l/139121/2016-08-05/ldp67?email=' + encodeURIComponent($email.val()) + '&website=' + encodeURIComponent($url.val()));
       $email.val('');
       $url.val('');
       $button.text('Thank you!');
