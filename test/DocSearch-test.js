@@ -622,6 +622,47 @@ describe('DocSearch', () => {
       expect(actual[0].category).toEqual('<mark>Ruby</mark>');
       expect(actual[0].subcategory).toEqual('<mark>API</mark>');
     });
+
+    it('should use highlighted camel if exists and matchLevel not none', () => {
+      // Given
+      let input = [{
+        hierarchy: {
+          lvl0: 'Ruby',
+          lvl1: 'API',
+          lvl2: 'Foo',
+          lvl3: null,
+          lvl4: null,
+          lvl5: null
+        },
+        _highlightResult: {
+          hierarchy_camel: {
+            lvl0: {
+              value: '<mark>Python</mark>',
+              matchLevel: 'full'
+            },
+            lvl1: {
+              value: '<mark>API2</mark>',
+              matchLevel: 'full'
+            }
+          },
+          hierarchy: {
+            lvl0: {
+              value: '<mark>Ruby</mark>'
+            },
+            lvl1: {
+              value: '<mark>API</mark>'
+            }
+          }
+        }
+      }];
+
+      // When
+      let actual = DocSearch.formatHits(input);
+
+      // Then
+      expect(actual[0].category).toEqual('<mark>Python</mark>');
+      expect(actual[0].subcategory).toEqual('<mark>API2</mark>');
+    });
     it('should use lvl2 as title', () => {
       // Given
       let input = [{
