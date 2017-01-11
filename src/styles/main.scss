@@ -100,7 +100,7 @@
 .algolia-docsearch-footer {
     border-top: 1px solid $color-border-light;
     width: 100%;
-    height: 20px;
+    height: 100%;
     z-index: 2000;
     padding-top: 4px;
     float: right;
@@ -122,7 +122,7 @@
     text-indent: -9000px;
     padding: 0!important;
     width: 78px;
-    height: 20px;
+    height: 20px !important;
     float: right;
     display: inline !important;
     margin-right: 8px;
