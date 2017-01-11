@@ -1,6 +1,6 @@
 {
   "name": "docsearch.js",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "Add an autocomplete dropdown to your documentation",
   "main": "dist/npm/index.js",
   "scripts": {
