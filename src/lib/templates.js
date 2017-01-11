@@ -67,8 +67,7 @@ const templates = {
   `,
   footer: `
     <div class="${footerPrefix}">
-      <a class="${footerPrefix}--logo" href="https://www.algolia.com/docsearch">Algolia</a>
-      <span class="${footerPrefix}--logo-text">Search by</span>
+      Search by <a class="${footerPrefix}--logo" href="https://www.algolia.com/docsearch">Algolia</a>
     </div>
   `,
   empty: `
