@@ -292,7 +292,7 @@ bundle config build.eventmachine --with-cppflags=-I$(brew --prefix openssl)/incl
 [20]: https://github.com/algolia/autocomplete.js
 [21]: https://github.com/algolia/autocomplete.js
 [22]: https://github.com/algolia/autocomplete.js#options
-[23]: https://www.algolia.com/doc/ruby#full-text-search-parameters
+[23]: https://www.algolia.com/doc/api-client/javascript/parameters/#overview
 [24]: https://nodejs.org/en/
 [25]: https://jekyllrb.com/
 [26]: https://www.ruby-lang.org/en/
