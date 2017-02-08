@@ -203,7 +203,7 @@ class DocSearch {
         utils.getHighlightedValue(hit, 'lvl4'),
         utils.getHighlightedValue(hit, 'lvl5'),
         utils.getHighlightedValue(hit, 'lvl6')
-      ]).join('<span class="aa-suggestion-title-separator"> › </span>');
+      ]).join('<span class="aa-suggestion-title-separator" aria-hidden="true"> › </span>');
       const text = utils.getSnippetedValue(hit, 'content');
       const isTextOrSubcatoryNonEmpty = (subcategory && subcategory !== '') ||
         (displayTitle && displayTitle !== '');
