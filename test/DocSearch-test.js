@@ -736,7 +736,7 @@ expect(actual[0].subcategory).toEqual('<mark>API2</mark>');
       // When
       let actual = DocSearch.formatHits(input);
 
-      let separator = '<span class="aa-suggestion-title-separator"> › </span>';
+      let separator = '<span class="aa-suggestion-title-separator" aria-hidden="true"> › </span>';
       // Then
       expect(actual[0].title).toEqual('Geo-search' + separator + 'Foo' + separator + 'Bar' + separator + 'Baz');
     });
@@ -778,7 +778,7 @@ expect(actual[0].subcategory).toEqual('<mark>API2</mark>');
       // When
       let actual = DocSearch.formatHits(input);
 
-      let separator = '<span class="aa-suggestion-title-separator"> › </span>';
+      let separator = '<span class="aa-suggestion-title-separator" aria-hidden="true"> › </span>';
       // Then
       let expected = '<mark>Geo-search</mark>' + separator + '<mark>Foo</mark>' + separator +
           '<mark>Bar</mark>' + separator + '<mark>Baz</mark>';
