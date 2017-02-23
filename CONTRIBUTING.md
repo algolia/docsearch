@@ -64,7 +64,7 @@ Requirements:
 - [Bundler](http://bundler.io/)
 
 ```sh
-npm install
+yarn
 npm run dev:docs
 open http://localhost:4000/docsearch/
 ```

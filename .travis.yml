@@ -6,7 +6,6 @@ before_install:
   - rvm install 2.2.0
   - rvm use 2.2.0
 before_cache: npm prune
-install: npm install
 script: ./scripts/test-ci
 after_script: ./scripts/travis-after-script
 branches:

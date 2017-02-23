@@ -22,8 +22,8 @@ printf "\n\nBeta release: update working tree"
 git pull origin develop
 git fetch origin --tags
 
-printf "Beta release: npm install"
-npm install
+printf "Beta release: yarn"
+yarn
 
 currentVersion=`cat package.json | json version`
 
