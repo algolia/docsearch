@@ -14,4 +14,5 @@ group :development, :test do
   gem 'guard-jekyll-plus'
   gem 'guard-livereload'
   gem 'guard-bundler', require: false
+  gem 'eventmachine', '1.2.3'
 end

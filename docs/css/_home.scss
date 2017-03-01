@@ -30,6 +30,10 @@ html, body {
   .join-form {
     border-radius: 5px 5px 0 0;
   }
+  .join-form.join-form-validated {
+    display: none;
+    border-radius: 5px;
+  }
   .jumbotron-header {
     text-align: center;
     color: white;

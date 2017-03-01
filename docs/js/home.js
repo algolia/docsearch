@@ -7,7 +7,7 @@
     document.body.appendChild(iframe);
   }
 
-  $('.join-form').on('submit', function() {
+  $('.join-form').on('submit', function(e) {
     var $button = $(this).find('button');
     var $email = $(this).find('input[name="email"]');
     var $url = $(this).find('input[name="url"]');
@@ -39,9 +39,8 @@
       }
     }).done(function() {
       pardotAppendIframe('https://go.pardot.com/l/139121/2016-08-05/ldp67?email=' + encodeURIComponent($email.val()) + '&website=' + encodeURIComponent($url.val()));
-      $email.val('');
-      $url.val('');
-      $button.text('Thank you!');
+      $('.join-form').hide();
+      $('.join-form-validated').show();
     }).fail(function() {
       $button.attr('disabled', null);
       alert('An error occurred, please try again later.');
