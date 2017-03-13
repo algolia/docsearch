@@ -113,10 +113,10 @@ class DocSearch {
 
   static injectSearchBox(input) {
     input.before(templates.searchBox);
-    var new_input = input.prev().prev().find('input');
+    var newInput = input.prev().prev().find('input');
     input.remove();
 
-    return new_input;
+    return newInput;
   }
 
   static bindSearchBoxEvent() {
