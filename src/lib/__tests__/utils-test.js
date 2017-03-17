@@ -91,6 +91,7 @@ describe('utils', () => {
         { name: 'Jeremy', category: 'sales' },
         { name: 'AlexS', category: 'devs' },
         { name: 'AlexK', category: 'sales' },
+        { name: 'AlexK', category: 'constructor' },
       ];
 
       // When
@@ -98,6 +99,7 @@ describe('utils', () => {
 
       // Expect
       expect(actual).toEqual({
+        constructor: [{ category: 'constructor', name: 'AlexK' }],
         devs: [
           { name: 'Tim', category: 'devs' },
           { name: 'Vincent', category: 'devs' },
