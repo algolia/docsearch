@@ -1,25 +1,17 @@
-/* eslint-env mocha */
 /* eslint no-new:0 */
 /* eslint-disable max-len */
-
-import jsdom from 'mocha-jsdom';
 import expect from 'expect';
 import sinon from 'sinon';
-import {waitForAndRun} from './helpers';
+import $ from '../zepto.js';
+import DocSearch from '../DocSearch.js';
+Object.defineProperty(window.location, 'href', {
+  value: 'your url',
+  configurable: true,
+  writable: true,
+});
 
 describe('DocSearch', () => {
-  let DocSearch;
-  let $;
-
-  jsdom({useEach: true});
-
   beforeEach(() => {
-    // We need a DOM to be ready before importing Zepto
-    // We need to load DocSearch from here as it depends on Zepto, which itself
-    // needs jsdom to be called before being loaded.
-    DocSearch = require('../src/lib/DocSearch.js');
-    $ = require('../src/lib/zepto.js');
-
     // Note: If you edit this HTML while doing TDD with `npm run test:watch`,
     // you will have to restart `npm run test:watch` for the new HTML to be
     // updated
@@ -44,17 +36,17 @@ describe('DocSearch', () => {
     beforeEach(() => {
       algoliasearch = {
         algolia: 'client',
-        addAlgoliaAgent: sinon.spy()
+        addAlgoliaAgent: sinon.spy(),
       };
       AlgoliaSearch = sinon.stub().returns(algoliasearch);
       autocomplete = {
-        on: sinon.spy()
+        on: sinon.spy(),
       };
       AutoComplete = sinon.stub().returns(autocomplete);
       defaultOptions = {
         indexName: 'indexName',
         apiKey: 'apiKey',
-        inputSelector: '#input'
+        inputSelector: '#input',
       };
 
       sinon.spy(DocSearch, 'checkArguments');
@@ -73,7 +65,7 @@ describe('DocSearch', () => {
 
     it('should call checkArguments', () => {
       // Given
-      let options = defaultOptions;
+      const options = defaultOptions;
 
       // When
       new DocSearch(options);
@@ -83,10 +75,10 @@ describe('DocSearch', () => {
     });
     it('should pass main options as instance properties', () => {
       // Given
-      let options = defaultOptions;
+      const options = defaultOptions;
 
       // When
-      let actual = new DocSearch(options);
+      const actual = new DocSearch(options);
 
       // Then
       expect(actual.indexName).toEqual('indexName');
@@ -94,86 +86,93 @@ describe('DocSearch', () => {
     });
     it('should set docsearch App Id as default', () => {
       // Given
-      let options = defaultOptions;
+      const options = defaultOptions;
 
       // When
-      let actual = new DocSearch(options);
+      const actual = new DocSearch(options);
 
       // Then
       expect(actual.appId).toEqual('BH4D9OD16A');
     });
     it('should allow overriding appId', () => {
       // Given
-      let options = {...defaultOptions, appId: 'foo'};
+      const options = { ...defaultOptions, appId: 'foo' };
 
       // When
-      let actual = new DocSearch(options);
+      const actual = new DocSearch(options);
 
       // Then
       expect(actual.appId).toEqual('foo');
     });
     it('should allow customize algoliaOptions without loosing default options', () => {
       // Given
-      let options = {
+      const options = {
         algoliaOptions: {
-          facetFilters: ['version:1.0']
+          facetFilters: ['version:1.0'],
         },
-        ...defaultOptions
+        ...defaultOptions,
       };
 
       // When
-      let actual = new DocSearch(options);
+      const actual = new DocSearch(options);
 
       // Then
-      expect(actual.algoliaOptions).toEqual({hitsPerPage: 5, facetFilters: ['version:1.0']});
+      expect(actual.algoliaOptions).toEqual({
+        hitsPerPage: 5,
+        facetFilters: ['version:1.0'],
+      });
     });
     it('should allow customize hitsPerPage', () => {
       // Given
-      let options = {
+      const options = {
         algoliaOptions: {
-          hitsPerPage: 10
+          hitsPerPage: 10,
         },
-        ...defaultOptions
+        ...defaultOptions,
       };
 
       // When
-      let actual = new DocSearch(options);
+      const actual = new DocSearch(options);
 
       // Then
-      expect(actual.algoliaOptions).toEqual({hitsPerPage: 10});
+      expect(actual.algoliaOptions).toEqual({ hitsPerPage: 10 });
     });
     it('should pass the input element as an instance property', () => {
       // Given
-      let options = defaultOptions;
+      const options = defaultOptions;
       DocSearch.getInputFromSelector.returns($('<span>foo</span>'));
 
       // When
-      let actual = new DocSearch(options);
+      const actual = new DocSearch(options);
 
       // Then
-      let $input = actual.input;
+      const $input = actual.input;
       expect($input.text()).toEqual('foo');
       expect($input[0].tagName).toEqual('SPAN');
     });
     it('should pass secondary options as instance properties', () => {
       // Given
-      let options = {
+      const options = {
         ...defaultOptions,
-        algoliaOptions: {anOption: 42},
-        autocompleteOptions: {anOption: 44}
+        algoliaOptions: { anOption: 42 },
+        autocompleteOptions: { anOption: 44 },
       };
 
       // When
-      let actual = new DocSearch(options);
+      const actual = new DocSearch(options);
 
       // Then
       expect(typeof actual.algoliaOptions).toEqual('object');
       expect(actual.algoliaOptions.anOption).toEqual(42);
-      expect(actual.autocompleteOptions).toEqual({debug: false, cssClasses: {prefix: 'ds'}, anOption: 44});
+      expect(actual.autocompleteOptions).toEqual({
+        debug: false,
+        cssClasses: { prefix: 'ds' },
+        anOption: 44,
+      });
     });
     it('should instantiate algoliasearch with the correct values', () => {
       // Given
-      let options = defaultOptions;
+      const options = defaultOptions;
 
       // When
       new DocSearch(options);
@@ -184,7 +183,7 @@ describe('DocSearch', () => {
     });
     it('should set a custom User-Agent to algoliasearch', () => {
       // Given
-      let options = defaultOptions;
+      const options = defaultOptions;
 
       // When
       new DocSearch(options);
@@ -194,11 +193,11 @@ describe('DocSearch', () => {
     });
     it('should instantiate autocomplete.js', () => {
       // Given
-      let options = {
+      const options = {
         ...defaultOptions,
-        autocompleteOptions: {anOption: '44'}
+        autocompleteOptions: { anOption: '44' },
       };
-      let $input = $('<input name="foo" />');
+      const $input = $('<input name="foo" />');
       DocSearch.getInputFromSelector.returns($input);
 
       // When
@@ -206,11 +205,17 @@ describe('DocSearch', () => {
 
       // Then
       expect(AutoComplete.calledOnce).toBe(true);
-      expect(AutoComplete.calledWith($input, {anOption: '44', cssClasses: {prefix: 'ds'}, debug: false})).toBe(true);
+      expect(
+        AutoComplete.calledWith($input, {
+          anOption: '44',
+          cssClasses: { prefix: 'ds' },
+          debug: false,
+        })
+      ).toBe(true);
     });
     it('should listen to the selected and shown event of autocomplete', () => {
       // Given
-      let options = defaultOptions;
+      const options = defaultOptions;
 
       // When
       new DocSearch(options);
@@ -235,8 +240,8 @@ describe('DocSearch', () => {
 
     it('should throw an error if no apiKey defined', () => {
       // Given
-      let options = {
-        indexName: 'indexName'
+      const options = {
+        indexName: 'indexName',
       };
 
       // When
@@ -246,8 +251,8 @@ describe('DocSearch', () => {
     });
     it('should throw an error if no indexName defined', () => {
       // Given
-      let options = {
-        apiKey: 'apiKey'
+      const options = {
+        apiKey: 'apiKey',
       };
 
       // When
@@ -257,9 +262,9 @@ describe('DocSearch', () => {
     });
     it('should throw an error if no selector matches', () => {
       // Given
-      let options = {
+      const options = {
         apiKey: 'apiKey',
-        indexName: 'indexName'
+        indexName: 'indexName',
       };
       sinon.stub(DocSearch, 'getInputFromSelector').returns(false);
 
@@ -278,30 +283,30 @@ describe('DocSearch', () => {
 
     it('should return null if no element matches the selector', () => {
       // Given
-      let selector = '.i-do-not-exist > at #all';
+      const selector = '.i-do-not-exist > at #all';
 
       // When
-      let actual = getInputFromSelector(selector);
+      const actual = getInputFromSelector(selector);
 
       // Then
       expect(actual).toEqual(null);
     });
     it('should return null if the matched element is not an input', () => {
       // Given
-      let selector = '.i-am-a-span';
+      const selector = '.i-am-a-span';
 
       // When
-      let actual = getInputFromSelector(selector);
+      const actual = getInputFromSelector(selector);
 
       // Then
       expect(actual).toEqual(null);
     });
     it('should return a Zepto wrapped element if it matches', () => {
       // Given
-      let selector = '#input';
+      const selector = '#input';
 
       // When
-      let actual = getInputFromSelector(selector);
+      const actual = getInputFromSelector(selector);
 
       // Then
       expect($.zepto.isZ(actual)).toBe(true);
@@ -317,8 +322,8 @@ describe('DocSearch', () => {
         algolia: 'client',
         addAlgoliaAgent: sinon.spy(),
         search: sinon.stub().returns({
-          then: sinon.spy()
-        })
+          then: sinon.spy(),
+        }),
       };
       AlgoliaSearch = sinon.stub().returns(client);
       DocSearch.__Rewire__('algoliasearch', AlgoliaSearch);
@@ -326,7 +331,7 @@ describe('DocSearch', () => {
       docsearch = new DocSearch({
         indexName: 'indexName',
         apiKey: 'apiKey',
-        inputSelector: '#input'
+        inputSelector: '#input',
       });
     });
 
@@ -336,7 +341,7 @@ describe('DocSearch', () => {
 
     it('returns a function', () => {
       // Given
-      let actual = docsearch.getAutocompleteSource();
+      const actual = docsearch.getAutocompleteSource();
 
       // When
 
@@ -347,7 +352,7 @@ describe('DocSearch', () => {
     describe('the returned function', () => {
       it('calls the Agolia client with the correct parameters', () => {
         // Given
-        let actual = docsearch.getAutocompleteSource();
+        const actual = docsearch.getAutocompleteSource();
 
         // When
         actual('query');
@@ -355,10 +360,10 @@ describe('DocSearch', () => {
         // Then
         expect(client.search.calledOnce).toBe(true);
         // expect(resolvedQuery.calledOnce).toBe(true);
-        let expectedArguments = {
+        const expectedArguments = {
           indexName: 'indexName',
           query: 'query',
-          params: {hitsPerPage: 5}
+          params: { hitsPerPage: 5 },
         };
         expect(client.search.calledWith([expectedArguments])).toBe(true);
       });
@@ -366,27 +371,23 @@ describe('DocSearch', () => {
   });
 
   describe('handleSelected', () => {
-    it('should change the location', (done) => {
+    it.only('should change the location', () => {
       // Given
       const options = {
         apiKey: 'key',
         indexName: 'foo',
-        inputSelector: '#input'
+        inputSelector: '#input',
       };
 
       // When
-      let ds = new DocSearch(options);
-      ds.autocomplete.trigger('autocomplete:selected', {url: 'https://website.com/doc/page'});
-
-      // Then asynchronously
-      waitForAndRun(() => {
-        // escape as soon as the URL has changed
-        return window.location.href !== 'about:blank';
-      }, () => {
-        // then
+      const ds = new DocSearch(options);
+      ds.autocomplete.trigger('autocomplete:selected', {
+        url: 'https://website.com/doc/page',
+      });
+      return new Promise(resolve => {
         expect(window.location.href).toEqual('https://website.com/doc/page');
-        done();
-      }, 100);
+        resolve();
+      });
     });
   });
 
@@ -396,71 +397,79 @@ describe('DocSearch', () => {
       const options = {
         apiKey: 'key',
         indexName: 'foo',
-        inputSelector: '#input'
+        inputSelector: '#input',
       };
 
       // When
-      let ds = new DocSearch(options);
+      const ds = new DocSearch(options);
 
       ds.autocomplete.trigger('autocomplete:shown');
 
-      expect($('.algolia-autocomplete').attr('class')).toEqual('algolia-autocomplete algolia-autocomplete-left');
+      expect($('.algolia-autocomplete').attr('class')).toEqual(
+        'algolia-autocomplete algolia-autocomplete-left'
+      );
     });
   });
 
   describe('formatHits', () => {
     it('should not mutate the input', () => {
       // Given
-      let input = [{
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: 'API',
-          lvl2: null,
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
-        }
-      }];
+      const input = [
+        {
+          hierarchy: {
+            lvl0: 'Ruby',
+            lvl1: 'API',
+            lvl2: null,
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+        },
+      ];
 
       // When
-      let actual = DocSearch.formatHits(input);
+      const actual = DocSearch.formatHits(input);
 
       // Then
-      expect(input).toNotBe(actual);
+      expect(input).not.toBe(actual);
     });
     it('should set category headers to the first of each category', () => {
       // Given
-      let input = [{
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: 'API',
-          lvl2: null,
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
-        }
-      }, {
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: 'Geo-search',
-          lvl2: null,
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
-        }
-      }, {
-        hierarchy: {
-          lvl0: 'Python',
-          lvl1: 'API',
-          lvl2: null,
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
-        }
-      }];
+      const input = [
+        {
+          hierarchy: {
+            lvl0: 'Ruby',
+            lvl1: 'API',
+            lvl2: null,
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+        },
+        {
+          hierarchy: {
+            lvl0: 'Ruby',
+            lvl1: 'Geo-search',
+            lvl2: null,
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+        },
+        {
+          hierarchy: {
+            lvl0: 'Python',
+            lvl1: 'API',
+            lvl2: null,
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+        },
+      ];
 
       // When
-      let actual = DocSearch.formatHits(input);
+      const actual = DocSearch.formatHits(input);
 
       // Then
       expect(actual[0].isCategoryHeader).toEqual(true);
@@ -468,37 +477,41 @@ describe('DocSearch', () => {
     });
     it('should group items of same category together', () => {
       // Given
-      let input = [{
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: 'API',
-          lvl2: null,
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
-        }
-      }, {
-        hierarchy: {
-          lvl0: 'Python',
-          lvl1: 'API',
-          lvl2: null,
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
-        }
-      }, {
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: 'Geo-search',
-          lvl2: null,
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
-        }
-      }];
+      const input = [
+        {
+          hierarchy: {
+            lvl0: 'Ruby',
+            lvl1: 'API',
+            lvl2: null,
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+        },
+        {
+          hierarchy: {
+            lvl0: 'Python',
+            lvl1: 'API',
+            lvl2: null,
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+        },
+        {
+          hierarchy: {
+            lvl0: 'Ruby',
+            lvl1: 'Geo-search',
+            lvl2: null,
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+        },
+      ];
 
       // When
-      let actual = DocSearch.formatHits(input);
+      const actual = DocSearch.formatHits(input);
 
       // Then
       expect(actual[0].category).toEqual('Ruby');
@@ -507,37 +520,41 @@ describe('DocSearch', () => {
     });
     it('should mark all first elements as subcategories', () => {
       // Given
-      let input = [{
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: 'API',
-          lvl2: null,
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
-        }
-      }, {
-        hierarchy: {
-          lvl0: 'Python',
-          lvl1: 'API',
-          lvl2: null,
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
-        }
-      }, {
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: 'Geo-search',
-          lvl2: null,
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
-        }
-      }];
+      const input = [
+        {
+          hierarchy: {
+            lvl0: 'Ruby',
+            lvl1: 'API',
+            lvl2: null,
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+        },
+        {
+          hierarchy: {
+            lvl0: 'Python',
+            lvl1: 'API',
+            lvl2: null,
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+        },
+        {
+          hierarchy: {
+            lvl0: 'Ruby',
+            lvl1: 'Geo-search',
+            lvl2: null,
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+        },
+      ];
 
       // When
-      let actual = DocSearch.formatHits(input);
+      const actual = DocSearch.formatHits(input);
 
       // Then
       expect(actual[0].isSubCategoryHeader).toEqual(true);
@@ -545,46 +562,51 @@ describe('DocSearch', () => {
     });
     it('should mark new subcategories as such', () => {
       // Given
-      let input = [{
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: 'API',
-          lvl2: 'Foo',
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
-        }
-      }, {
-        hierarchy: {
-          lvl0: 'Python',
-          lvl1: 'API',
-          lvl2: null,
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
-        }
-      }, {
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: 'API',
-          lvl2: 'Bar',
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
-        }
-      }, {
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: 'Geo-search',
-          lvl2: null,
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
-        }
-      }];
+      const input = [
+        {
+          hierarchy: {
+            lvl0: 'Ruby',
+            lvl1: 'API',
+            lvl2: 'Foo',
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+        },
+        {
+          hierarchy: {
+            lvl0: 'Python',
+            lvl1: 'API',
+            lvl2: null,
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+        },
+        {
+          hierarchy: {
+            lvl0: 'Ruby',
+            lvl1: 'API',
+            lvl2: 'Bar',
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+        },
+        {
+          hierarchy: {
+            lvl0: 'Ruby',
+            lvl1: 'Geo-search',
+            lvl2: null,
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+        },
+      ];
 
       // When
-      let actual = DocSearch.formatHits(input);
+      const actual = DocSearch.formatHits(input);
 
       // Then
       expect(actual[0].isSubCategoryHeader).toEqual(true);
@@ -594,29 +616,31 @@ describe('DocSearch', () => {
     });
     it('should use highlighted category and subcategory if exists', () => {
       // Given
-      let input = [{
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: 'API',
-          lvl2: 'Foo',
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
-        },
-        _highlightResult: {
+      const input = [
+        {
           hierarchy: {
-            lvl0: {
-              value: '<mark>Ruby</mark>'
+            lvl0: 'Ruby',
+            lvl1: 'API',
+            lvl2: 'Foo',
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+          _highlightResult: {
+            hierarchy: {
+              lvl0: {
+                value: '<mark>Ruby</mark>',
+              },
+              lvl1: {
+                value: '<mark>API</mark>',
+              },
             },
-            lvl1: {
-              value: '<mark>API</mark>'
-            }
-          }
-        }
-      }];
+          },
+        },
+      ];
 
       // When
-      let actual = DocSearch.formatHits(input);
+      const actual = DocSearch.formatHits(input);
 
       // Then
       expect(actual[0].category).toEqual('<mark>Ruby</mark>');
@@ -625,39 +649,42 @@ describe('DocSearch', () => {
 
     it('should use highlighted camel if exists and matchLevel not none', () => {
       // Given
-      let input = [{
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: 'API',
-          lvl2: 'Foo',
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
-        },
-        _highlightResult: {
-          hierarchy_camel: {
-            lvl0: {
-              value: '<mark>Python</mark>',
-              matchLevel: 'full'
-            },
-            lvl1: {
-              value: '<mark>API2</mark>',
-              matchLevel: 'full'
-            }
-          },
+      const input = [
+        {
           hierarchy: {
-            lvl0: {
-              value: '<mark>Ruby</mark>'
+            lvl0: 'Ruby',
+            lvl1: 'API',
+            lvl2: 'Foo',
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+          _highlightResult: {
+            hierarchy_camel: {
+              // eslint-disable-line camelcase
+              lvl0: {
+                value: '<mark>Python</mark>',
+                matchLevel: 'full',
+              },
+              lvl1: {
+                value: '<mark>API2</mark>',
+                matchLevel: 'full',
+              },
             },
-            lvl1: {
-              value: '<mark>API</mark>'
-            }
-          }
-        }
-      }];
+            hierarchy: {
+              lvl0: {
+                value: '<mark>Ruby</mark>',
+              },
+              lvl1: {
+                value: '<mark>API</mark>',
+              },
+            },
+          },
+        },
+      ];
 
       // When
-      let actual = DocSearch.formatHits(input);
+      const actual = DocSearch.formatHits(input);
 
       // Then
       expect(actual[0].category).toEqual('<mark>Python</mark>');
@@ -665,248 +692,269 @@ describe('DocSearch', () => {
     });
     it('should use lvl2 as title', () => {
       // Given
-      let input = [{
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: 'API',
-          lvl2: 'Foo',
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
-        }
-      }];
+      const input = [
+        {
+          hierarchy: {
+            lvl0: 'Ruby',
+            lvl1: 'API',
+            lvl2: 'Foo',
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+        },
+      ];
 
       // When
-      let actual = DocSearch.formatHits(input);
+      const actual = DocSearch.formatHits(input);
 
       // Then
       expect(actual[0].title).toEqual('Foo');
     });
     it('should use lvl1 as title if no lvl2', () => {
       // Given
-      let input = [{
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: 'API',
-          lvl2: null,
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
-        }
-      }];
+      const input = [
+        {
+          hierarchy: {
+            lvl0: 'Ruby',
+            lvl1: 'API',
+            lvl2: null,
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+        },
+      ];
 
       // When
-      let actual = DocSearch.formatHits(input);
+      const actual = DocSearch.formatHits(input);
 
       // Then
       expect(actual[0].title).toEqual('API');
     });
     it('should use lvl0 as title if no lvl2 nor lvl2', () => {
       // Given
-      let input = [{
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: null,
-          lvl2: null,
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
-        }
-      }];
+      const input = [
+        {
+          hierarchy: {
+            lvl0: 'Ruby',
+            lvl1: null,
+            lvl2: null,
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+        },
+      ];
 
       // When
-      let actual = DocSearch.formatHits(input);
+      const actual = DocSearch.formatHits(input);
 
       // Then
       expect(actual[0].title).toEqual('Ruby');
     });
     it('should concatenate lvl2+ for title if more', () => {
       // Given
-      let input = [{
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: 'API',
-          lvl2: 'Geo-search',
-          lvl3: 'Foo',
-          lvl4: 'Bar',
-          lvl5: 'Baz'
-        }
-      }];
+      const input = [
+        {
+          hierarchy: {
+            lvl0: 'Ruby',
+            lvl1: 'API',
+            lvl2: 'Geo-search',
+            lvl3: 'Foo',
+            lvl4: 'Bar',
+            lvl5: 'Baz',
+          },
+        },
+      ];
 
       // When
-      let actual = DocSearch.formatHits(input);
+      const actual = DocSearch.formatHits(input);
 
-      let separator = '<span class="aa-suggestion-title-separator" aria-hidden="true"> › </span>';
+      const separator = '<span class="aa-suggestion-title-separator" aria-hidden="true"> › </span>';
       // Then
-      expect(actual[0].title).toEqual('Geo-search' + separator + 'Foo' + separator + 'Bar' + separator + 'Baz');
+      expect(actual[0].title).toEqual(
+        `Geo-search${separator}Foo${separator}Bar${separator}Baz`
+      );
     });
     it('should concatenate highlighted elements', () => {
       // Given
-      let input = [{
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: 'API',
-          lvl2: 'Geo-search',
-          lvl3: 'Foo',
-          lvl4: 'Bar',
-          lvl5: 'Baz'
-        },
-        _highlightResult: {
+      const input = [
+        {
           hierarchy: {
-            lvl0: {
-              value: '<mark>Ruby</mark>'
+            lvl0: 'Ruby',
+            lvl1: 'API',
+            lvl2: 'Geo-search',
+            lvl3: 'Foo',
+            lvl4: 'Bar',
+            lvl5: 'Baz',
+          },
+          _highlightResult: {
+            hierarchy: {
+              lvl0: {
+                value: '<mark>Ruby</mark>',
+              },
+              lvl1: {
+                value: '<mark>API</mark>',
+              },
+              lvl2: {
+                value: '<mark>Geo-search</mark>',
+              },
+              lvl3: {
+                value: '<mark>Foo</mark>',
+              },
+              lvl4: {
+                value: '<mark>Bar</mark>',
+              },
+              lvl5: {
+                value: '<mark>Baz</mark>',
+              },
             },
-            lvl1: {
-              value: '<mark>API</mark>'
-            },
-            lvl2: {
-              value: '<mark>Geo-search</mark>'
-            },
-            lvl3: {
-              value: '<mark>Foo</mark>'
-            },
-            lvl4: {
-              value: '<mark>Bar</mark>'
-            },
-            lvl5: {
-              value: '<mark>Baz</mark>'
-            }
-          }
-        }
-      }];
+          },
+        },
+      ];
 
       // When
-      let actual = DocSearch.formatHits(input);
+      const actual = DocSearch.formatHits(input);
 
-      let separator = '<span class="aa-suggestion-title-separator" aria-hidden="true"> › </span>';
+      const separator = '<span class="aa-suggestion-title-separator" aria-hidden="true"> › </span>';
       // Then
-      let expected = '<mark>Geo-search</mark>' + separator + '<mark>Foo</mark>' + separator +
-          '<mark>Bar</mark>' + separator + '<mark>Baz</mark>';
+      const expected = `<mark>Geo-search</mark>${separator}<mark>Foo</mark>${separator}<mark>Bar</mark>${separator}<mark>Baz</mark>`;
       expect(actual[0].title).toEqual(expected);
     });
     it('should add ellipsis to content', () => {
       // Given
-      let input = [{
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: 'API',
-          lvl2: null,
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
+      const input = [
+        {
+          hierarchy: {
+            lvl0: 'Ruby',
+            lvl1: 'API',
+            lvl2: null,
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+          content: 'foo bar',
+          _snippetResult: {
+            content: {
+              value: 'lorem <mark>foo</mark> bar ipsum.',
+            },
+          },
         },
-        content: 'foo bar',
-        _snippetResult: {
-          content: {
-            value: 'lorem <mark>foo</mark> bar ipsum.'
-          }
-        }
-      }];
+      ];
 
       // When
-      let actual = DocSearch.formatHits(input);
+      const actual = DocSearch.formatHits(input);
 
       // Then
       expect(actual[0].text).toEqual('…lorem <mark>foo</mark> bar ipsum.');
     });
     it('should add the anchor to the url if one is set', () => {
       // Given
-      let input = [{
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: 'API',
-          lvl2: null,
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
+      const input = [
+        {
+          hierarchy: {
+            lvl0: 'Ruby',
+            lvl1: 'API',
+            lvl2: null,
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+          content: 'foo bar',
+          url: 'http://foo.bar/',
+          anchor: 'anchor',
         },
-        content: 'foo bar',
-        url: 'http://foo.bar/',
-        anchor: 'anchor'
-      }];
+      ];
 
       // When
-      let actual = DocSearch.formatHits(input);
+      const actual = DocSearch.formatHits(input);
 
       // Then
       expect(actual[0].url).toEqual('http://foo.bar/#anchor');
     });
     it('should not add the anchor to the url if one is set but it is already in the URL', () => {
       // Given
-      let input = [{
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: 'API',
-          lvl2: null,
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
+      const input = [
+        {
+          hierarchy: {
+            lvl0: 'Ruby',
+            lvl1: 'API',
+            lvl2: null,
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+          content: 'foo bar',
+          url: 'http://foo.bar/#anchor',
+          anchor: 'anchor',
         },
-        content: 'foo bar',
-        url: 'http://foo.bar/#anchor',
-        anchor: 'anchor'
-      }];
+      ];
 
       // When
-      let actual = DocSearch.formatHits(input);
+      const actual = DocSearch.formatHits(input);
 
       // Then
       expect(actual[0].url).toEqual('http://foo.bar/#anchor');
     });
     it('should just use the URL if no anchor is provided', () => {
       // Given
-      let input = [{
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: 'API',
-          lvl2: null,
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
+      const input = [
+        {
+          hierarchy: {
+            lvl0: 'Ruby',
+            lvl1: 'API',
+            lvl2: null,
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+          content: 'foo bar',
+          url: 'http://foo.bar/',
         },
-        content: 'foo bar',
-        url: 'http://foo.bar/'
-      }];
+      ];
 
       // When
-      let actual = DocSearch.formatHits(input);
+      const actual = DocSearch.formatHits(input);
 
       // Then
       expect(actual[0].url).toEqual(input[0].url);
     });
     it('should return the anchor if there is no URL', () => {
       // Given
-      let input = [{
-        hierarchy: {
-          lvl0: 'Ruby',
-          lvl1: 'API',
-          lvl2: null,
-          lvl3: null,
-          lvl4: null,
-          lvl5: null
+      const input = [
+        {
+          hierarchy: {
+            lvl0: 'Ruby',
+            lvl1: 'API',
+            lvl2: null,
+            lvl3: null,
+            lvl4: null,
+            lvl5: null,
+          },
+          content: 'foo bar',
+          anchor: 'anchor',
         },
-        content: 'foo bar',
-        anchor: 'anchor'
-      }];
+      ];
 
       // When
-      let actual = DocSearch.formatHits(input);
+      const actual = DocSearch.formatHits(input);
 
       // Then
-      expect(actual[0].url).toEqual('#' + input[0].anchor);
+      expect(actual[0].url).toEqual(`#${input[0].anchor}`);
     });
   });
 
   describe('formatUrl', () => {
     it('concatenates url and anchor', () => {
       // Given
-      let input = {
+      const input = {
         url: 'url',
-        anchor: 'anchor'
+        anchor: 'anchor',
       };
 
       // When
-      let actual = DocSearch.formatURL(input);
+      const actual = DocSearch.formatURL(input);
 
       // Then
       expect(actual).toEqual('url#anchor');
@@ -914,12 +962,12 @@ describe('DocSearch', () => {
 
     it('returns only the url if no anchor', () => {
       // Given
-      let input = {
-        url: 'url'
+      const input = {
+        url: 'url',
       };
 
       // When
-      let actual = DocSearch.formatURL(input);
+      const actual = DocSearch.formatURL(input);
 
       // Then
       expect(actual).toEqual('url');
@@ -927,12 +975,12 @@ describe('DocSearch', () => {
 
     it('returns the anchor if no url', () => {
       // Given
-      let input = {
-        anchor: 'anchor'
+      const input = {
+        anchor: 'anchor',
       };
 
       // When
-      let actual = DocSearch.formatURL(input);
+      const actual = DocSearch.formatURL(input);
 
       // Then
       expect(actual).toEqual('#anchor');
@@ -940,13 +988,13 @@ describe('DocSearch', () => {
 
     it('does not concatenate if already an anchor', () => {
       // Given
-      let input = {
+      const input = {
         url: 'url#anchor',
-        anchor: 'anotheranchor'
+        anchor: 'anotheranchor',
       };
 
       // When
-      let actual = DocSearch.formatURL(input);
+      const actual = DocSearch.formatURL(input);
 
       // Then
       expect(actual).toEqual('url#anchor');
@@ -954,11 +1002,10 @@ describe('DocSearch', () => {
 
     it('returns null if no anchor nor url', () => {
       // Given
-      let input = {
-      };
+      const input = {};
 
       // When
-      let actual = DocSearch.formatURL(input);
+      const actual = DocSearch.formatURL(input);
 
       // Then
       expect(actual).toEqual(null);
@@ -966,8 +1013,7 @@ describe('DocSearch', () => {
 
     it('emits a warning if no anchor nor url', () => {
       // Given
-      let input = {
-      };
+      const input = {};
 
       // When
       DocSearch.formatURL(input);
@@ -979,8 +1025,8 @@ describe('DocSearch', () => {
 
   describe('getSuggestionTemplate', () => {
     beforeEach(() => {
-      let templates = {
-        suggestion: '<div></div>'
+      const templates = {
+        suggestion: '<div></div>',
       };
       DocSearch.__Rewire__('templates', templates);
     });
@@ -991,7 +1037,7 @@ describe('DocSearch', () => {
       // Given
 
       // When
-      let actual = DocSearch.getSuggestionTemplate();
+      const actual = DocSearch.getSuggestionTemplate();
 
       // Then
       expect(actual).toBeA('function');
@@ -1002,7 +1048,7 @@ describe('DocSearch', () => {
       beforeEach(() => {
         render = sinon.spy();
         Hogan = {
-          compile: sinon.stub().returns({render})
+          compile: sinon.stub().returns({ render }),
         };
         DocSearch.__Rewire__('Hogan', Hogan);
       });
@@ -1018,14 +1064,14 @@ describe('DocSearch', () => {
       });
       it('should call render on a Hogan template', () => {
         // Given
-        let actual = DocSearch.getSuggestionTemplate();
+        const actual = DocSearch.getSuggestionTemplate();
 
         // When
-        actual({foo: 'bar'});
+        actual({ foo: 'bar' });
 
         // Then
         expect(render.calledOnce).toBe(true);
-        expect(render.args[0][0]).toEqual({foo: 'bar'});
+        expect(render.args[0][0]).toEqual({ foo: 'bar' });
       });
     });
   });

@@ -1,32 +1,29 @@
 import webpack from 'webpack';
-import {join} from 'path';
+import { join } from 'path';
 
 export default {
   entry: './index.js',
   devtool: 'source-map',
   output: {
-    path: './dist/cdn',
+    path: join(__dirname, 'dist/cdn'),
     filename: 'docsearch.js',
     library: 'docsearch',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
   },
   module: {
-    loaders: [{
-      test: /\.js$/, exclude: /node_modules/, loader: 'babel'
-    }]
-  },
-  resolve: {
-    fallback: [join(__dirname, '..', 'node_modules')]
-  },
-  // same issue, for loaders like babel
-  resolveLoader: {
-    fallback: [join(__dirname, '..', 'node_modules')]
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+      },
+    ],
   },
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-      }
-    })
-  ]
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      },
+    }),
+  ],
 };

@@ -29,65 +29,81 @@ const usage = `Usage:
   [ autocompleteOptions.{hint,debug} ]
 })`;
 class DocSearch {
-  constructor({
-    apiKey,
-    indexName,
-    inputSelector,
-    appId = 'BH4D9OD16A',
-    debug = false,
-    algoliaOptions = {},
-    autocompleteOptions = {
-      debug: false,
-      hint: false,
-      autoselect: true
-    },
-    transformData = false,
-    handleSelected = false,
-    enhancedSearchInput = false,
-    layout = 'collumns'
-  }) {
-    DocSearch.checkArguments({apiKey, indexName, inputSelector, debug, algoliaOptions,
-      autocompleteOptions, transformData, handleSelected, enhancedSearchInput, layout});
+  constructor(
+    {
+      apiKey,
+      indexName,
+      inputSelector,
+      appId = 'BH4D9OD16A',
+      debug = false,
+      algoliaOptions = {},
+      autocompleteOptions = {
+        debug: false,
+        hint: false,
+        autoselect: true,
+      },
+      transformData = false,
+      handleSelected = false,
+      enhancedSearchInput = false,
+      layout = 'collumns',
+    }
+  ) {
+    DocSearch.checkArguments({
+      apiKey,
+      indexName,
+      inputSelector,
+      debug,
+      algoliaOptions,
+      autocompleteOptions,
+      transformData,
+      handleSelected,
+      enhancedSearchInput,
+      layout,
+    });
 
     this.apiKey = apiKey;
     this.appId = appId;
     this.indexName = indexName;
     this.input = DocSearch.getInputFromSelector(inputSelector);
-    this.algoliaOptions = {hitsPerPage: 5, ...algoliaOptions};
-    const autocompleteOptionsDebug = autocompleteOptions && autocompleteOptions.debug ?
-      autocompleteOptions.debug : false;
+    this.algoliaOptions = { hitsPerPage: 5, ...algoliaOptions };
+    const autocompleteOptionsDebug = autocompleteOptions &&
+      autocompleteOptions.debug
+      ? autocompleteOptions.debug
+      : false;
     autocompleteOptions.debug = debug || autocompleteOptionsDebug;
     this.autocompleteOptions = autocompleteOptions;
     this.autocompleteOptions.cssClasses = {
-      prefix: 'ds'
+      prefix: 'ds',
     };
 
     handleSelected = handleSelected || this.handleSelected;
 
-    this.isSimpleLayout = (layout === 'simple');
+    this.isSimpleLayout = layout === 'simple';
 
     this.client = algoliasearch(this.appId, this.apiKey);
-    this.client.addAlgoliaAgent('docsearch.js ' + version);
+    this.client.addAlgoliaAgent(`docsearch.js ${version}`);
 
     if (enhancedSearchInput) {
       this.input = DocSearch.injectSearchBox(this.input);
     }
 
-    this.autocomplete = autocomplete(this.input, autocompleteOptions, [{
-      source: this.getAutocompleteSource(transformData),
-      templates: {
-        suggestion: DocSearch.getSuggestionTemplate(this.isSimpleLayout),
-        footer: templates.footer,
-        empty: DocSearch.getEmptyTemplate()
-      }
-    }]);
+    this.autocomplete = autocomplete(this.input, autocompleteOptions, [
+      {
+        source: this.getAutocompleteSource(transformData),
+        templates: {
+          suggestion: DocSearch.getSuggestionTemplate(this.isSimpleLayout),
+          footer: templates.footer,
+          empty: DocSearch.getEmptyTemplate(),
+        },
+      },
+    ]);
     this.autocomplete.on(
       'autocomplete:selected',
       handleSelected.bind(null, this.autocomplete.autocomplete)
     );
     this.autocomplete.on(
       'autocomplete:shown',
-       this.handleShown.bind(null, this.input)
+      this.handleShown.bind(null, this.input)
     );
 
     if (enhancedSearchInput) {
@@ -107,16 +123,17 @@ class DocSearch {
     }
 
     if (!DocSearch.getInputFromSelector(args.inputSelector)) {
-      throw new Error(`Error: No input element in the page matches ${args.inputSelector}`);
+      throw new Error(
+        `Error: No input element in the page matches ${args.inputSelector}`
+      );
     }
   }
 
   static injectSearchBox(input) {
     input.before(templates.searchBox);
-    var new_input = input.prev().prev().find('input');
+    const newInput = input.prev().prev().find('input');
     input.remove();
-
-    return new_input;
+    return newInput;
   }
 
   static bindSearchBoxEvent() {
@@ -126,9 +143,9 @@ class DocSearch {
       autocomplete.autocomplete.setVal('');
     });
 
-    $('input#docsearch').on('keyup', function() {
-      var searchbox = document.querySelector('input#docsearch');
-      var reset = document.querySelector('.searchbox [type="reset"]');
+    $('input#docsearch').on('keyup', () => {
+      const searchbox = document.querySelector('input#docsearch');
+      const reset = document.querySelector('.searchbox [type="reset"]');
       reset.className = 'searchbox__reset';
       if (searchbox.value.length === 0) {
         reset.className += ' hide';
@@ -144,7 +161,7 @@ class DocSearch {
    * @returns {void}
    */
   static getInputFromSelector(selector) {
-    let input = $(selector).filter('input');
+    const input = $(selector).filter('input');
     return input.length ? $(input[0]) : null;
   }
 
@@ -158,86 +175,104 @@ class DocSearch {
    */
   getAutocompleteSource(transformData) {
     return (query, callback) => {
-      this.client.search([{
-        indexName: this.indexName,
-        query: query,
-        params: this.algoliaOptions
-      }]).then((data) => {
-        let hits = data.results[0].hits;
-        if (transformData) {
-          hits = transformData(hits) || hits;
-        }
-        callback(DocSearch.formatHits(hits));
-      });
+      this.client
+        .search([
+          {
+            indexName: this.indexName,
+            query,
+            params: this.algoliaOptions,
+          },
+        ])
+        .then(data => {
+          let hits = data.results[0].hits;
+          if (transformData) {
+            hits = transformData(hits) || hits;
+          }
+          callback(DocSearch.formatHits(hits));
+        });
     };
   }
 
   // Given a list of hits returned by the API, will reformat them to be used in
   // a Hogan template
   static formatHits(receivedHits) {
-    let clonedHits = utils.deepClone(receivedHits);
-    let hits = clonedHits.map((hit) => {
+    const clonedHits = utils.deepClone(receivedHits);
+    const hits = clonedHits.map(hit => {
       if (hit._highlightResult) {
-        hit._highlightResult = utils.mergeKeyWithParent(hit._highlightResult, 'hierarchy');
+        hit._highlightResult = utils.mergeKeyWithParent(
+          hit._highlightResult,
+          'hierarchy'
+        );
       }
       return utils.mergeKeyWithParent(hit, 'hierarchy');
     });
 
     // Group hits by category / subcategory
-    var groupedHits = utils.groupBy(hits, 'lvl0');
+    let groupedHits = utils.groupBy(hits, 'lvl0');
     $.each(groupedHits, (level, collection) => {
       const groupedHitsByLvl1 = utils.groupBy(collection, 'lvl1');
-      const flattenedHits = utils.flattenAndFlagFirst(groupedHitsByLvl1, 'isSubCategoryHeader');
+      const flattenedHits = utils.flattenAndFlagFirst(
+        groupedHitsByLvl1,
+        'isSubCategoryHeader'
+      );
       groupedHits[level] = flattenedHits;
     });
     groupedHits = utils.flattenAndFlagFirst(groupedHits, 'isCategoryHeader');
 
     // Translate hits into smaller objects to be send to the template
-    return groupedHits.map((hit) => {
+    return groupedHits.map(hit => {
       const url = DocSearch.formatURL(hit);
       const category = utils.getHighlightedValue(hit, 'lvl0');
       const subcategory = utils.getHighlightedValue(hit, 'lvl1') || category;
-      const displayTitle = utils.compact([
-        utils.getHighlightedValue(hit, 'lvl2') || subcategory,
-        utils.getHighlightedValue(hit, 'lvl3'),
-        utils.getHighlightedValue(hit, 'lvl4'),
-        utils.getHighlightedValue(hit, 'lvl5'),
-        utils.getHighlightedValue(hit, 'lvl6')
-      ]).join('<span class="aa-suggestion-title-separator" aria-hidden="true"> › </span>');
+      const displayTitle = utils
+        .compact([
+          utils.getHighlightedValue(hit, 'lvl2') || subcategory,
+          utils.getHighlightedValue(hit, 'lvl3'),
+          utils.getHighlightedValue(hit, 'lvl4'),
+          utils.getHighlightedValue(hit, 'lvl5'),
+          utils.getHighlightedValue(hit, 'lvl6'),
+        ])
+        .join(
+          '<span class="aa-suggestion-title-separator" aria-hidden="true"> › </span>'
+        );
       const text = utils.getSnippetedValue(hit, 'content');
       const isTextOrSubcatoryNonEmpty = (subcategory && subcategory !== '') ||
         (displayTitle && displayTitle !== '');
-      const isLvl1EmptyOrDuplicate = !subcategory || subcategory === '' || subcategory === category;
-      const isLvl2 = displayTitle && displayTitle !== '' && displayTitle !== subcategory;
-      const isLvl1 = !isLvl2 && (subcategory && subcategory !== '' && subcategory !== category);
+      const isLvl1EmptyOrDuplicate = !subcategory ||
+        subcategory === '' ||
+        subcategory === category;
+      const isLvl2 = displayTitle &&
+        displayTitle !== '' &&
+        displayTitle !== subcategory;
+      const isLvl1 = !isLvl2 &&
+        (subcategory && subcategory !== '' && subcategory !== category);
       const isLvl0 = !isLvl1 && !isLvl2;
 
       return {
-        isLvl0: isLvl0,
-        isLvl1: isLvl1,
-        isLvl2: isLvl2,
-        isLvl1EmptyOrDuplicate: isLvl1EmptyOrDuplicate,
+        isLvl0,
+        isLvl1,
+        isLvl2,
+        isLvl1EmptyOrDuplicate,
         isCategoryHeader: hit.isCategoryHeader,
         isSubCategoryHeader: hit.isSubCategoryHeader,
-        isTextOrSubcatoryNonEmpty: isTextOrSubcatoryNonEmpty,
-        category: category,
-        subcategory: subcategory,
+        isTextOrSubcatoryNonEmpty,
+        category,
+        subcategory,
         title: displayTitle,
-        text: text,
-        url: url
+        text,
+        url,
       };
     });
   }
 
   static formatURL(hit) {
-    const {url, anchor} = hit;
+    const { url, anchor } = hit;
     if (url) {
       const containsAnchor = url.indexOf('#') !== -1;
       if (containsAnchor) return url;
       else if (anchor) return `${hit.url}#${hit.anchor}`;
       return url;
-    }
-    else if (anchor) return `#${hit.anchor}`;
+    } else if (anchor) return `#${hit.anchor}`;
     /* eslint-disable */
     console.warn('no anchor nor url for : ', JSON.stringify(hit));
     /* eslint-enable */
@@ -245,17 +280,15 @@ class DocSearch {
   }
 
   static getEmptyTemplate() {
-    return (args) => {
-      return Hogan.compile(templates.empty).render(args);
-    };
+    return args => Hogan.compile(templates.empty).render(args);
   }
 
   static getSuggestionTemplate(isSimpleLayout) {
-    const stringTemplate = isSimpleLayout ? templates.suggestionSimple : templates.suggestion;
+    const stringTemplate = isSimpleLayout
+      ? templates.suggestionSimple
+      : templates.suggestion;
     const template = Hogan.compile(stringTemplate);
-    return (suggestion) => {
-      return template.render(suggestion);
-    };
+    return suggestion => template.render(suggestion);
   }
 
   handleSelected(input, event, suggestion) {
@@ -271,10 +304,12 @@ class DocSearch {
       middleOfWindow = 900;
     }
 
-    const alignClass = middleOfInput - middleOfWindow >= 0 ?
-      'algolia-autocomplete-right' : 'algolia-autocomplete-left';
-    const otherAlignClass = middleOfInput - middleOfWindow < 0 ?
-      'algolia-autocomplete-right' : 'algolia-autocomplete-left';
+    const alignClass = middleOfInput - middleOfWindow >= 0
+      ? 'algolia-autocomplete-right'
+      : 'algolia-autocomplete-left';
+    const otherAlignClass = middleOfInput - middleOfWindow < 0
+      ? 'algolia-autocomplete-right'
+      : 'algolia-autocomplete-left';
 
     const autocompleteWrapper = $('.algolia-autocomplete');
     if (!autocompleteWrapper.hasClass(alignClass)) {
@@ -288,5 +323,3 @@ class DocSearch {
 }
 
 export default DocSearch;
-
-

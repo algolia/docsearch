@@ -1,6 +1,6 @@
 import $ from './zepto.js';
 
-let utils = {
+const utils = {
   /*
   * Move the content of an object key one level higher.
   * eg.
@@ -29,7 +29,7 @@ let utils = {
     if (typeof object[property] !== 'object') {
       return object;
     }
-    let newObject = $.extend({}, object, object[property]);
+    const newObject = $.extend({}, object, object[property]);
     delete newObject[property];
     return newObject;
   },
@@ -65,7 +65,7 @@ let utils = {
   * @throws Error when one of the element does not have the specified property
   */
   groupBy(collection, property) {
-    let newCollection = {};
+    const newCollection = {};
     $.each(collection, (index, item) => {
       if (item[property] === undefined) {
         throw new Error(`[groupBy]: Object has no key ${property}`);
@@ -81,7 +81,7 @@ let utils = {
     });
     return newCollection;
   },
- /*
+  /*
   * Return an array of all the values of the specified object
   * eg.
   * values({
@@ -97,7 +97,7 @@ let utils = {
   values(object) {
     return Object.keys(object).map(key => object[key]);
   },
- /*
+  /*
   * Flattens an array
   * eg.
   * flatten([1, 2, [3, 4], [5, 6]])
@@ -107,19 +107,19 @@ let utils = {
   * @return {array}
   */
   flatten(array) {
-    let results = [];
-    array.forEach((value) => {
+    const results = [];
+    array.forEach(value => {
       if (!Array.isArray(value)) {
         results.push(value);
         return;
       }
-      value.forEach((subvalue) => {
+      value.forEach(subvalue => {
         results.push(subvalue);
       });
     });
     return results;
   },
- /*
+  /*
   * Flatten all values of an object into an array, marking each first element of
   * each group with a specific flag
   * eg.
@@ -149,15 +149,14 @@ let utils = {
   * @return {array}
   */
   flattenAndFlagFirst(object, flag) {
-    let values = this.values(object).map(collection => {
-      return collection.map((item, index) => {
-        item[flag] = (index === 0);
+    const values = this.values(object).map(collection =>
+      collection.map((item, index) => {
+        item[flag] = index === 0;
         return item;
-      });
-    });
+      }));
     return this.flatten(values);
   },
- /*
+  /*
   * Removes all empty strings, null, false and undefined elements array
   * eg.
   * compact([42, false, null, undefined, '', [], 'foo']);
@@ -167,7 +166,7 @@ let utils = {
   * @return {array}
   */
   compact(array) {
-    let results = [];
+    const results = [];
     array.forEach(value => {
       if (!value) {
         return;
@@ -195,18 +194,22 @@ let utils = {
    * @return {string}
    **/
   getHighlightedValue(object, property) {
-    if (object._highlightResult
-        && object._highlightResult.hierarchy_camel
-        && object._highlightResult.hierarchy_camel[property]
-        && object._highlightResult.hierarchy_camel[property].matchLevel
-        && object._highlightResult.hierarchy_camel[property].matchLevel !== 'none'
-        && object._highlightResult.hierarchy_camel[property].value) {
+    if (
+      object._highlightResult &&
+      object._highlightResult.hierarchy_camel &&
+      object._highlightResult.hierarchy_camel[property] &&
+      object._highlightResult.hierarchy_camel[property].matchLevel &&
+      object._highlightResult.hierarchy_camel[property].matchLevel !== 'none' &&
+      object._highlightResult.hierarchy_camel[property].value
+    ) {
       return object._highlightResult.hierarchy_camel[property].value;
     }
-    if (object._highlightResult
-        && object._highlightResult
-        && object._highlightResult[property]
-        && object._highlightResult[property].value) {
+    if (
+      object._highlightResult &&
+      object._highlightResult &&
+      object._highlightResult[property] &&
+      object._highlightResult[property].value
+    ) {
       return object._highlightResult[property].value;
     }
     return object[property];
@@ -232,9 +235,11 @@ let utils = {
    * @return {string}
    **/
   getSnippetedValue(object, property) {
-    if (!object._snippetResult
-        || !object._snippetResult[property]
-        || !object._snippetResult[property].value) {
+    if (
+      !object._snippetResult ||
+      !object._snippetResult[property] ||
+      !object._snippetResult[property].value
+    ) {
       return object[property];
     }
     let snippet = object._snippetResult[property].value;
@@ -247,7 +252,7 @@ let utils = {
     }
     return snippet;
   },
- /*
+  /*
   * Deep clone an object.
   * Note: This will not clone functions and dates
   * @param {object} object Object to clone
@@ -255,7 +260,7 @@ let utils = {
   */
   deepClone(object) {
     return JSON.parse(JSON.stringify(object));
-  }
+  },
 };
 
 export default utils;
