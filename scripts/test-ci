@@ -2,8 +2,7 @@
 
 set -ev # exit when error
 
-./scripts/validate-pr-done-on-develop
-npm run test:coverage
+npm run test
 npm prune
 NODE_ENV=production npm run build
 ./scripts/validate-commit-msgs

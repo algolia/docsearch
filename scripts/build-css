@@ -7,18 +7,17 @@ LICENSE="/*! ${NAME} ${VERSION:-UNRELEASED} | © Algolia | github.com/algolia/do
 DIST_DIR="dist/cdn"
 DIST_FILE="$DIST_DIR/${NAME}.css"
 DIST_FILE_MIN="$DIST_DIR/${NAME}.min.css"
+DIST_FILE_MAP="$DIST_DIR/${NAME}.min.css.map"
 
 mkdir -p "$DIST_DIR"
 
 # ./dist/cdn/docsearch.css
 echo "$LICENSE" > "$DIST_FILE";
 node-sass --output-style expanded ./src/styles/main.scss \
-  | postcss --use autoprefixer \
-  >> "$DIST_FILE"
+  | postcss --use autoprefixer -o "$DIST_FILE"
 
 # ./dist/cdn/docsearch.min.css
-postcss --use cssnano "$DIST_FILE" \
-  >> "$DIST_FILE_MIN"
+postcss "$DIST_FILE" --use cssnano --map "$DIST_FILE_MAP" -o "$DIST_FILE_MIN"
 
 gzip_size=$(gzip -9 < $DIST_FILE_MIN | wc -c | pretty-bytes)
 echo "=> $DIST_FILE_MIN gzipped will weight $gzip_size-bytes"

@@ -5,13 +5,10 @@ before_install:
 - git config --global user.name "algobot"
 - rvm install 2.2.0
 - rvm use 2.2.0
-before_cache: npm prune
 script: "./scripts/test-ci"
-after_script: "./scripts/travis-after-script"
 branches:
   only:
   - master
-  - develop
 sudo: false
 cache:
   yarn: true
