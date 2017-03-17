@@ -1,7 +1,7 @@
 Hi (future) collaborator!
 
 **tl;dr;**
-- submit pull requests to develop branch
+- submit pull requests to master branch
 - use [conventional changelog](https://github.com/ajoslin/conventional-changelog/blob/master/conventions/angular.md) commit style messages
 - squash your commits
 - have fun
@@ -26,19 +26,12 @@ Hi (future) collaborator!
 - [Releasing](#releasing)
   - [Releasing v1](#releasing-v1)
   - [Beta releases](#beta-releases)
-- [Hotfixes](#hotfixes)
-  - [Releasing hotfixes](#releasing-hotfixes)
-  - [Documentation updates](#documentation-updates)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Where to start?
 
 Have a fix or a new feature? [Search for corresponding issues](https://github.com/algolia/docsearch/issues) first then create a new one.
-
-Always check the status of the [develop branch](https://github.com/algolia/docsearch/tree/develop) for the freshest code.
-
-Always submit pull requests to the develop branch.
 
 # Development workflow
 
@@ -141,7 +134,7 @@ Example:
 
 # When are issues closed?
 
-Once the a fix is done, having the fix in the `develop` branch is not sufficient, it needs to be part of a release for us to close the issue.
+Once the a fix is done, having the fix in the `master` branch is not sufficient, it needs to be part of a release for us to close the issue.
 
 So that you never ask yourself "Is this released?".
 
@@ -159,8 +152,6 @@ You must be on the master branch.
 npm run release
 ```
 
-This task will merge develop into master.
-
 ## Releasing v1
 
 ```sh
@@ -169,39 +160,20 @@ git pull
 npm run release
 ```
 
-We use the `v1` branch as a way to push fixes to the first version of DocSearch. Never merge `master` or `develop` into `v1` and
+We use the `v1` branch as a way to push fixes to the first version of DocSearch. Do not merge `master` into `v1` and
 vice versa.
 
 ## Beta releases
 
-You must be on the develop branch.
+You must be on the master branch.
 
 ```sh
 npm run release:beta
 ```
 
-This task will release a beta version of what is currently in develop branch.
+This task will release a beta version of what is currently in master branch.
 
 It will not update the `latest` tag of the npm release nor update jsDelivr /2/.
-
-# Hotfixes
-
-All our work is done on the develop branch but it could be necessary to push a hotfix to the master
-branch and do a patch release. To fix a very important bug.
-
-For this, you should:
-- add `hotfix` to the commit message **body**
-- submit your pull request to the master branch
-
-## Releasing hotfixes
-
-You must be on the master branch.
-
-This task will not merge develop in master, only release current master.
-
-```sh
-HOTFIX=1 npm run release
-```
 
 ## Documentation updates
 

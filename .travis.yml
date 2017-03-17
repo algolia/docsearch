@@ -9,7 +9,6 @@ script: "./scripts/test-ci"
 branches:
   only:
   - master
-  - develop
 sudo: false
 cache:
   yarn: true

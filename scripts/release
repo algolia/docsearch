@@ -24,12 +24,6 @@ printf "\n\nRelease: update working tree"
 git pull origin master
 git fetch origin --tags
 
-if [ $HOTFIX == '0' ]; then
-  printf "\n\nRelease: merge develop branch"
-  git fetch origin develop
-  git merge origin/develop
-fi
-
 printf "Release: yarn"
 yarn
 
@@ -79,13 +73,6 @@ printf "\n\nRelease: push to github, publish on npm"
 git push origin master
 git push origin --tags
 npm publish
-# also update beta
-npm dist-tag add docsearch.js@$newVersion beta
-git checkout develop
-git pull origin develop
-git merge master
-git push origin develop
-git checkout master
 
 printf "Release:
 Package was published to npm.
