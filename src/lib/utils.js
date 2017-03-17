@@ -74,7 +74,9 @@ let utils = {
       if (typeof key === 'string') {
         key = key.toLowerCase();
       }
-      if (!newCollection[key]) {
+      // fix #171 the given data type of docsearch hits might be conflict with the properties of the native Object,
+      // such as the constructor, so we need to do this check.
+      if (!Object.prototype.hasOwnProperty.call(newCollection, key)) {
         newCollection[key] = [];
       }
       newCollection[key].push(item);
