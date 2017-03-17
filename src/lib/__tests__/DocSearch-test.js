@@ -1,6 +1,5 @@
 /* eslint no-new:0 */
 /* eslint-disable max-len */
-import expect from 'expect';
 import sinon from 'sinon';
 import $ from '../zepto.js';
 import DocSearch from '../DocSearch.js';
@@ -346,7 +345,7 @@ describe('DocSearch', () => {
       // When
 
       // Then
-      expect(actual).toBeA('function');
+      expect(actual).toBeInstanceOf(Function);
     });
 
     describe('the returned function', () => {
@@ -371,7 +370,7 @@ describe('DocSearch', () => {
   });
 
   describe('handleSelected', () => {
-    it.only('should change the location', () => {
+    it('should change the location', () => {
       // Given
       const options = {
         apiKey: 'key',
@@ -406,7 +405,7 @@ describe('DocSearch', () => {
       ds.autocomplete.trigger('autocomplete:shown');
 
       expect($('.algolia-autocomplete').attr('class')).toEqual(
-        'algolia-autocomplete algolia-autocomplete-left'
+        'algolia-autocomplete algolia-autocomplete-right'
       );
     });
   });
@@ -1040,7 +1039,7 @@ describe('DocSearch', () => {
       const actual = DocSearch.getSuggestionTemplate();
 
       // Then
-      expect(actual).toBeA('function');
+      expect(actual).toBeInstanceOf(Function);
     });
     describe('returned function', () => {
       let Hogan;
