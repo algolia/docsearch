@@ -26,6 +26,7 @@ Hi (future) collaborator!
 - [Releasing](#releasing)
   - [Releasing v1](#releasing-v1)
   - [Beta releases](#beta-releases)
+  - [Documentation updates](#documentation-updates)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
