@@ -11,6 +11,7 @@ branches:
   - master
 sudo: false
 cache:
+  bundler: true
   yarn: true
   directories:
     - node_modules
