@@ -39,6 +39,12 @@ docsearch({
 </script>
 ```
 
+You can also install docsearch via `npm`:
+
+```sh
+npm install --save docsearch.js
+```
+
 ## Customization
 
 The default colorscheme is white and gray:
