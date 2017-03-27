@@ -59,7 +59,6 @@
     "json": "^9.0.6",
     "lint-staged": "^3.4.0",
     "mversion": "^1.10.1",
-    "nd": "^1.2.0",
     "node-sass": "^4.5.1",
     "onchange": "^3.2.1",
     "postcss-cli": "^3.0.0",

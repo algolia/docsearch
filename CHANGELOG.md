@@ -1,6 +1,20 @@
+<a name="2.3.3"></a>
+## [2.3.3](https://github.com/algolia/docsearch/compare/v2.3.2...v2.3.3) (2017-03-27)
+
+
+### Bug Fixes
+
+* **build:** fix badly handled webpack upgrade ([3cbfbb1](https://github.com/algolia/docsearch/commit/3cbfbb1))
+
+
+
+<a name="2.3.2"></a>
+## [2.3.2](https://github.com/algolia/docsearch/compare/v2.3.1...v2.3.2) (2017-03-27)
+
+
+
 <a name="2.3.1"></a>
 ## [2.3.1](https://github.com/algolia/docsearch/compare/v2.3.0...v2.3.1) (2017-02-23)
-
 
 
 
@@ -9,10 +23,8 @@
 
 
 
-
 <a name="2.2.1"></a>
 ## [2.2.1](https://github.com/algolia/docsearch/compare/v2.2.0...v2.2.1) (2017-01-11)
-
 
 
 
@@ -21,10 +33,8 @@
 
 
 
-
 <a name="2.1.8"></a>
 ## [2.1.8](https://github.com/algolia/docsearch/compare/v2.1.7...v2.1.8) (2016-10-04)
-
 
 
 
@@ -43,7 +53,6 @@
 
 
 
-
 <a name="2.1.5"></a>
 ## [2.1.5](https://github.com/algolia/docsearch/compare/v2.1.4...v2.1.5) (2016-09-15)
 
@@ -59,10 +68,8 @@
 
 
 
-
 <a name="2.1.3"></a>
 ## [2.1.3](https://github.com/algolia/docsearch/compare/v2.1.2...v2.1.3) (2016-08-03)
-
 
 
 
@@ -71,10 +78,8 @@
 
 
 
-
 <a name="2.1.1"></a>
 ## [2.1.1](https://github.com/algolia/docsearch/compare/v2.1.0...v2.1.1) (2016-07-22)
-
 
 
 
@@ -93,7 +98,6 @@
 
 
 
-
 <a name="2.0.6"></a>
 ## [2.0.6](https://github.com/algolia/docsearch/compare/v2.0.5...v2.0.6) (2016-06-28)
 
@@ -101,6 +105,7 @@
 ### Bug Fixes
 
 * **typos:** no result page ([0f40e1d](https://github.com/algolia/docsearch/commit/0f40e1d))
+
 
 ### Features
 
@@ -133,7 +138,6 @@
 
 
 
-
 <a name="2.0.2"></a>
 ## [2.0.2](https://github.com/algolia/docsearch/compare/v2.0.1...v2.0.2) (2016-06-14)
 
@@ -149,14 +153,13 @@
 
 
 
-
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/algolia/docsearch/compare/v1.3.0...v2.0.0) (2016-06-14)
 
 
 ### Features
 
-* **v2:** modification for v2 (#112) ([f0a7e6b](https://github.com/algolia/docsearch/commit/f0a7e6b))
+* **v2:** modification for v2 (#112) ([f0a7e6b](https://github.com/algolia/docsearch/commit/f0a7e6b)), closes [#92](https://github.com/algolia/docsearch/issues/92) [#102](https://github.com/algolia/docsearch/issues/102)
 
 
 
@@ -165,9 +168,8 @@
 
 
 
-
 <a name="1.2.0"></a>
-# [1.2.0](https://github.com/algolia/docsearch/compare/v1.1.3...v1.2.0) (2016-06-10)
+# [1.2.0](https://github.com/algolia/docsearch/compare/v1.1.3...1.2.0) (2016-06-10)
 
 
 ### Features
@@ -184,7 +186,7 @@
 
 ### Bug Fixes
 
-* **autocomplete.js:** upgrade the underlying autocomplete.js to ensur… ([4d7022e](https://github.com/algolia/docsearch/commit/4d7022e))
+* **autocomplete.js:** upgrade the underlying autocomplete.js to ensur… ([4d7022e](https://github.com/algolia/docsearch/commit/4d7022e)), closes [#89](https://github.com/algolia/docsearch/issues/89)
 
 
 
@@ -209,6 +211,7 @@
 * **dev:** Fixed the dev example, targeting an existing index ([df13e34](https://github.com/algolia/docsearch/commit/df13e34))
 * **website:** responsive logo ([b856d67](https://github.com/algolia/docsearch/commit/b856d67))
 
+
 ### Features
 
 * **serve:** Add `npm run serve` to expose js and css locally ([31e5d13](https://github.com/algolia/docsearch/commit/31e5d13))
@@ -227,6 +230,7 @@
 ### Bug Fixes
 
 * **dropdown:** Visually group suggestions together ([592c8f2](https://github.com/algolia/docsearch/commit/592c8f2))
+
 
 ### Features
 
@@ -282,10 +286,8 @@
 
 
 
-
 <a name="0.0.5"></a>
 ## [0.0.5](https://github.com/algolia/docsearch/compare/v0.0.4...v0.0.5) (2015-12-16)
-
 
 
 
@@ -294,15 +296,13 @@
 
 
 
-
 <a name="0.0.3"></a>
 ## [0.0.3](https://github.com/algolia/docsearch/compare/v0.0.2...v0.0.3) (2015-12-16)
 
 
 
-
 <a name="0.0.2"></a>
-## 0.0.2 (2015-12-16)
+## [0.0.2](https://github.com/algolia/docsearch/compare/bdac9dd...v0.0.2) (2015-12-16)
 
 
 ### Bug Fixes
@@ -310,22 +310,6 @@
 * **colors:** Reduce number of colors ([125d1c7](https://github.com/algolia/docsearch/commit/125d1c7))
 * **snippet:** Fix typo in method name ([751dfdb](https://github.com/algolia/docsearch/commit/751dfdb))
 
-### Features
-
-* **gh-pages:** Add gh-pages deploy script ([ab1a299](https://github.com/algolia/docsearch/commit/ab1a299))
-* **main:** Add main wrapper ([bdac9dd](https://github.com/algolia/docsearch/commit/bdac9dd))
-* **styling:** Set grayscale as default, add styling as external file ([5d8cca8](https://github.com/algolia/docsearch/commit/5d8cca8))
-
-
-
-<a name="0.0.1"></a>
-## 0.0.1 (2015-12-16)
-
-
-### Bug Fixes
-
-* **colors:** Reduce number of colors ([125d1c7](https://github.com/algolia/docsearch/commit/125d1c7))
-* **snippet:** Fix typo in method name ([751dfdb](https://github.com/algolia/docsearch/commit/751dfdb))
 
 ### Features
 
