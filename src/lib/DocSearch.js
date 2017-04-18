@@ -105,10 +105,6 @@ class DocSearch {
     if (!args.apiKey || !args.indexName) {
       throw new Error(usage);
     }
-
-    if (!DocSearch.getInputFromSelector(args.inputSelector)) {
-      throw new Error(`Error: No input element in the page matches ${args.inputSelector}`);
-    }
   }
 
   static injectSearchBox(input) {
@@ -137,7 +133,8 @@ class DocSearch {
   }
 
   /**
-   * Returns the matching input from a CSS selector, null if none matches
+   * Returns the matching input from a CSS selector, throw an error if not
+   * exactly one match
    * @function getInputFromSelector
    * @param  {string} selector CSS selector that matches the search
    * input of the page
@@ -145,7 +142,16 @@ class DocSearch {
    */
   static getInputFromSelector(selector) {
     let input = $(selector).filter('input');
-    return input.length ? $(input[0]) : null;
+
+    if (input.length === 0) {
+      throw new Error(`Error: No input element in the page matches ${selector}`);
+    }
+
+    if (input.length > 1) {
+      throw new Error(`Error: More than one input element in the page matches ${selector}`);
+    }
+
+    return $(input[0]);
   }
 
   /**
