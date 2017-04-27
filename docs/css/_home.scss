@@ -30,10 +30,6 @@ html, body {
   .join-form {
     border-radius: 5px 5px 0 0;
   }
-  .join-form.join-form-validated {
-    display: none;
-    border-radius: 5px;
-  }
   .jumbotron-header {
     text-align: center;
     color: white;
@@ -70,6 +66,10 @@ html, body {
   border-radius: 6px;
   color: #FFF;
   max-width: 90%;
+  &.join-form-validated {
+    display: none;
+    border-radius: 5px;
+  }
   h3 {
     font-size: 22px;
     text-align: center;
