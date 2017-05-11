@@ -205,6 +205,7 @@ the `algoliaOptions` parameter.
 
 ```javascript
 docsearch({
+  appId: '<APP_ID>', // if you are running the crawler yourself
   apiKey: '<API_KEY>',
   indexName: '<INDEX_NAME>',
   inputSelector: '<YOUR_INPUT_DOM_SELECTOR>',
