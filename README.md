@@ -90,8 +90,8 @@ The default colorscheme is white and gray:
 ![Default colorscheme][17]
 
 To update the colors to suit your website, you just need to override a few
-colors. Here is an example of a CSS file that you can use as a basis and that
-sets white and purples colors.
+colors. Here is an example of a CSS file that you can use as a basis to
+set white and purple colors.
 
 ```css
 /* Bottom border of each suggestion */
@@ -135,7 +135,7 @@ sets white and purples colors.
 
 ### Advanced styling
 
-If you want to do heavily change the way results are displayed, you might find
+If you want to do heavy changes to the way results are displayed, you might find
 it easier to directly edit the `scss` files in this repository.
 
 [`_variables.scss`][18]
@@ -185,7 +185,7 @@ search.autocomplete.on('autocomplete:opened', function(e) {
 ```
 
 We already bind the autocomplete:selected event inside the docsearch.
-If you want to replace the default behavior you can pass the handleSelected option
+If you want to replace the default behavior you can pass the `handleSelected` option.
 
 ```javascript
 var search = docsearch({
@@ -215,7 +215,7 @@ docsearch({
 });
 ```
 
-You will find all Algolia API options in its [own documentation][23]
+You will find all Algolia API options in its [own documentation][23].
 
 <!-- END documentation -->
 
