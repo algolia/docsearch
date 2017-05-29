@@ -207,6 +207,7 @@ var search = docsearch({
 If you want to modify the hits before displaying them you can make use of the
 `transformData` option
 
+```
 var search = docsearch({
   apiKey: '<API_KEY>',
   indexName: '<INDEX_NAME>',
@@ -216,6 +217,7 @@ var search = docsearch({
     return hits;
   }
 });
+```
 
 ### Algolia options
 
