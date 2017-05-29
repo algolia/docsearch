@@ -184,6 +184,11 @@ search.autocomplete.on('autocomplete:opened', function(e) {
 });
 ```
 
+### Docsearch Options
+
+
+#### handleSelected
+
 We already bind the autocomplete:selected event inside the docsearch.
 If you want to replace the default behavior you can pass the `handleSelected` option.
 
@@ -196,6 +201,21 @@ var search = docsearch({
   }
 });
 ```
+
+#### transformData
+
+If you want to modify the hits before displaying them you can make use of the
+`transformData` option
+
+var search = docsearch({
+  apiKey: '<API_KEY>',
+  indexName: '<INDEX_NAME>',
+  inputSelector: '<YOUR_INPUT_DOM_SELECTOR>',
+  transformData: function (hits) {
+    // modify hits
+    return hits;
+  }
+});
 
 ### Algolia options
 
