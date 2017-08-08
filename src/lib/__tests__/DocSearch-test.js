@@ -367,6 +367,28 @@ describe('DocSearch', () => {
         expect(client.search.calledWith([expectedArguments])).toBe(true);
       });
     });
+
+    describe('when queryHook is used', () => {
+      it('calls the Agolia client with the correct parameters', () => {
+        // Given
+        const actual = docsearch.getAutocompleteSource(false, function(query) {
+          return query + ' modified';
+        });
+
+        // When
+        actual('query');
+
+        // Then
+        expect(client.search.calledOnce).toBe(true);
+        // expect(resolvedQuery.calledOnce).toBe(true);
+        const expectedArguments = {
+          indexName: 'indexName',
+          query: 'query modified',
+          params: { hitsPerPage: 5 },
+        };
+        expect(client.search.calledWith([expectedArguments])).toBe(true);
+      });
+    });
   });
 
   describe('handleSelected', () => {

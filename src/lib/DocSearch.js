@@ -43,6 +43,7 @@ class DocSearch {
         autoselect: true,
       },
       transformData = false,
+      queryHook = false,
       handleSelected = false,
       enhancedSearchInput = false,
       layout = 'collumns',
@@ -56,6 +57,7 @@ class DocSearch {
       algoliaOptions,
       autocompleteOptions,
       transformData,
+      queryHook,
       handleSelected,
       enhancedSearchInput,
       layout,
@@ -89,7 +91,7 @@ class DocSearch {
 
     this.autocomplete = autocomplete(this.input, autocompleteOptions, [
       {
-        source: this.getAutocompleteSource(transformData),
+        source: this.getAutocompleteSource(transformData, queryHook),
         templates: {
           suggestion: DocSearch.getSuggestionTemplate(this.isSimpleLayout),
           footer: templates.footer,
@@ -170,11 +172,16 @@ class DocSearch {
    * the Algolia index and call the callbacks with the formatted hits.
    * @function getAutocompleteSource
    * @param  {function} transformData An optional function to transform the hits
+   * @param {function} queryHook An optional function to transform the query
    * @returns {function} Method to be passed as the `source` option of
    * autocomplete
    */
-  getAutocompleteSource(transformData) {
+  getAutocompleteSource(transformData, queryHook) {
     return (query, callback) => {
+      if (queryHook) {
+        query = queryHook(query) || query;
+      }
+
       this.client
         .search([
           {
