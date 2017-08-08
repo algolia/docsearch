@@ -31,6 +31,7 @@ Check out our [website][1] to add an outstanding search to your documentation.
   - [Advanced styling](#advanced-styling)
 - [Custom options](#custom-options)
   - [Autocomplete options](#autocomplete-options)
+  - [Docsearch Options](#docsearch-options)
   - [Algolia options](#algolia-options)
 - [Development workflow](#development-workflow)
   - [Local example](#local-example)
