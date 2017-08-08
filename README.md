@@ -202,6 +202,21 @@ var search = docsearch({
 });
 ```
 
+#### queryHook
+
+If you want modify the query before it is send to Algolia you can pass the `queryHook` option.
+
+```javascript
+var search = docsearch({
+  apiKey: '<API_KEY>',
+  indexName: '<INDEX_NAME>',
+  inputSelector: '<YOUR_INPUT_DOM_SELECTOR>',
+  queryHook: function (query) {
+      return query + "_modified";
+  }
+});
+```
+
 #### transformData
 
 If you want to modify the hits before displaying them you can make use of the
