@@ -3,7 +3,6 @@
 set -ev # exit when error
 
 npm run test
-npm prune
 NODE_ENV=production npm run build
 ./scripts/validate-commit-msgs
 
