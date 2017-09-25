@@ -34,14 +34,7 @@
     <!--[if IE]><link rel="shortcut icon" href="{{ "/img/favicon.png" | prepend: site.baseurl }}"><![endif]-->
     <link rel="icon" href="{{ "/img/favicon.png" | prepend: site.baseurl }}">
 
-    <!-- Fonts -->
-    <link rel="stylesheet" media="screen" href="//fonts.googleapis.com/css?family=Raleway:100,300,600" />
-    <link rel="stylesheet" media="screen" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600" />
-
     <link rel="stylesheet" media="screen" href="{{ "/css/main.css" | prepend: site.baseurl }}" />
-    <link rel="stylesheet" media="screen" href="//cdn.jsdelivr.net/fontawesome/4.4.0/css/font-awesome.min.css" />
-
-    <script src="//cdn.jsdelivr.net/jquery/2.1/jquery.min.js"></script>
   </head>
 
   <body>
@@ -52,9 +45,6 @@
 {%if page.noFooter == null %}
     {% include footer.html %}
 {% endif %}
-
-    <script src="{{ "/js/bootstrap.min.js" | prepend: site.baseurl }}"></script>
-    <script src="{{ "/js/responsiveNavigation.js" | prepend: site.baseurl }}"></script>
 
 {% if site.env == 'development' %}
     <script>

@@ -1,17 +1,7 @@
-.main-content {
-  margin-top: 50px;
-  line-height: 1.5em;
+// Join form
+.join-form {
+  max-width: 440px;
 }
-
-.page-content {
-  font-size: .9em;
-  font-family: "Open Sans", helvetica, arial, sans-serif;
-}
-
-pre {
-  font-size: .8em;
-}
-
-.CodeRay .code pre * {
-  background: transparent !important;
+.join-form .input-group-addon {
+  vertical-align: middle;
 }

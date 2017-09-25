@@ -2,17 +2,38 @@
 # this ensures Jekyll reads the file to be transformed into CSS later
 # only Main files contain this front matter, not partials.
 ---
+@import '../../node_modules/algolia-aerial/src/stylesheet/aerial';
 
 @import "base";
-@import "bootstrap";
 @import "mixin";
+@import "fonts";
 @import "syntax-highlighting";
-@import "helper";
 
-@import "header";
 @import "footer";
 
 @import "home";
 @import "page";
 @import "searchbar";
 @import "docsearch";
+
+@mixin outlineZones() {
+  > * {
+    outline: 2px solid rgba(red, 0.6);
+  }
+
+  @content
+}
+
+@include outlineZones() {
+  * {
+    outline: 2px solid rgba(red, 0.6);
+
+    * {
+      outline: 2px solid rgba(blue, 0.6);
+
+      * {
+        outline: 2px solid rgba(red, 0.6);
+      }
+    }
+  }
+}

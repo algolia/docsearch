@@ -2,200 +2,41 @@
 layout: default
 ---
 
-.jumbotron
+.jumbotron.gradient-secondary.h800
   .container.pos-rel
-    .jumbotron-header
-      %h1.jumbotron-title
-        Algolia doc search
-        %img.logo{:src => "./img/docsearch-logo.svg", :alt => "Algolia doc search", :height => "48"}
-      %p#top The easiest way to add search to your documentation.
-      .spacer20
-    .jumbotron-left-column
-      %div.index-container
-        %img.index{:src => "./img/illus-index.svg", :alt => "docsearch doc crawling"}
-        %div.ripple
-      .spacer30
-      .text-center
-        %p We’ve created the fastest, easiest way to search within documentation.
-        %p  And best of all? It’s FREE.
+    .spacer120
+    .col-md-12
+      %header.text-center.color-white
+        %h1 <span class="hidden">DocSearch</span> <img src="./img/docsearch-logo-horizontal_light.svg" height="48"/>
+        %h3 The easiest way to add search to your documentation
+    .inline.spacer40
+    .col-md-7
+      #demo-screens
+        %img{:src => "./img/screens/screen_react.png", :alt => "", :id => "placeholder", :class => "w100p"}/
+    .col-md-5
+      {% haml join-form.haml %}
 
-    {% haml join-form.haml %}
 #section_why.page-section
   .m800.m-l-r-auto
     %h2.page-section-title Why DocSearch?
     %p We're kind of scratching our own itch here. As developers, we spend a lot of time reading documentation, and it isn’t always easy to find the information we need.
     %p No one's to blame, building a good search for a documentation is a complex challenge.  We just happen to have a lot of experience doing that, and we want to share it with the world.
+
 #section_examples.page-section.dark
   .container
     .text-center
       %h2.page-section-title DocSearch is live
       %p We’ve integrated DocSearch into several open source projects. Take a look.
-    .row
-      .col-sm-4.showcase
-        %a{:href => "https://stripe.com/docs", :target => "_blank"}
-          .img-container
-            %img.img-responsive.logo{:src => "./img/showcase/logo-stripe.png", :alt => "stripe", :height => "10px"}
-          .screen-wrapper
-            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-stripe.gif", :alt => "stripe docsearch demo"}
-            %img.img-responsive.screen-mask{:src => "./img/mask.png", :alt => "mask"}
-          .spacer10
-          Stripe
-      .col-sm-4.showcase
-        %a{:href => "https://facebook.github.io/react/", :target => "_blank"}
-          .img-container
-            %img.img-responsive.logo{:src => "./img/showcase/logo-react.png", :alt => "reactjs"}
-          .screen-wrapper
-            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-react.gif", :alt => "react docsearch demo"}
-            %img.img-responsive.screen-mask{:src => "./img/mask.png", :alt => "mask"}
-          .spacer10
-          React
-      .col-sm-4.showcase
-        %a{:href => "https://getbootstrap.com/docs/4.0", :target => "_blank"}
-          .img-container
-            %img.img-responsive.logo{:src => "./img/showcase/logo-bootstrap.png", :alt => "bootstrap"}
-          .screen-wrapper
-            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-bootstrap.gif", :alt => "bootstrap docsearch demo"}
-            %img.img-responsive.screen-mask{:src => "./img/mask.png", :alt => "mask"}
-          .spacer10
-          Bootstrap
-      .col-sm-4.showcase
-        %a{:href => "http://facebook.github.io/react-native/docs/getting-started.html", :target => "_blank"}
-          .img-container
-            %img.img-responsive.logo{:src => "./img/showcase/logo-react.png", :alt => "react native"}
-          .screen-wrapper
-            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-reactnative.gif", :alt => "react native docsearch demo"}
-            %img.img-responsive.screen-mask{:src => "./img/mask.png", :alt => "mask"}
-          .spacer10
-          React Native
-      .col-sm-4.showcase
-        %a{:href => "http://eslint.org/", :target => "_blank"}
-          .img-container
-            %img.img-responsive.logo{:src => "./img/showcase/logo-eslint.png", :alt => "eslint"}
-          .screen-wrapper
-            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-eslint.gif", :alt => "eslint docsearch demo"}
-            %img.img-responsive.screen-mask{:src => "./img/mask.png", :alt => "mask"}
-          .spacer10
-          ESLint
-      .col-sm-4.showcase
-        %a{:href => "http://docs.scala-lang.org/", :target => "_blank"}
-          .img-container
-            %img.img-responsive.logo{:src => "./img/showcase/logo-scala.png", :alt => "scala"}
-          .screen-wrapper
-            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-scala.gif", :alt => "scala docsearch demo"}
-            %img.img-responsive.screen-mask{:src => "./img/mask.png", :alt => "mask"}
-          .spacer10
-          Scala
-      .col-sm-4.showcase
-        %a{:href => "https://babeljs.algolia.com/", :target => "_blank"}
-          .img-container
-            %img.img-responsive.logo{:src => "./img/showcase/logo-babel.png", :alt => "babel"}
-          .screen-wrapper
-            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-babel.gif", :alt => "babel docsearch demo"}
-            %img.img-responsive.screen-mask{:src => "./img/mask.png", :alt => "mask"}
-          .spacer10
-          Babel.js
-      .col-sm-4.showcase
-        %a{:href => "http://vuejs.org/guide/", :target => "_blank"}
-          .img-container
-            %img.img-responsive.logo{:src => "./img/showcase/logo-vuejs.png", :alt => "vuejs"}
-          .screen-wrapper
-            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-vuejs.gif", :alt => "vuejs docsearch demo"}
-            %img.img-responsive.screen-mask{:src => "./img/mask.png", :alt => "mask"}
-          .spacer10
-          Vue.js
-      .col-sm-4.showcase
-        %a{:href => "https://docs.influxdata.com/", :target => "_blank"}
-          .img-container
-            %img.img-responsive.logo{:src => "./img/showcase/logo-influxdata.png", :alt => "influxdata"}
-          .screen-wrapper
-            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-influxdata.gif", :alt => "influxdata docsearch demo"}
-            %img.img-responsive.screen-mask{:src => "./img/mask.png", :alt => "mask"}
-          .spacer10
-          Influxdata
-      .col-sm-4.showcase
-        %a{:href => "http://help.apiary.io/", :target => "_blank"}
-          .img-container
-            %img.img-responsive.logo{:src => "./img/showcase/logo-apiary.png", :alt => "apiary"}
-          .screen-wrapper
-            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-apiary.gif", :alt => "apiary docsearch demo"}
-            %img.img-responsive.screen-mask{:src => "./img/mask.png", :alt => "mask"}
-          .spacer10
-          Apiary
-      .col-sm-4.showcase
-        %a{:href => "http://marionettejs.com/", :target => "_blank"}
-          .img-container
-            %img.img-responsive.logo{:src => "./img/showcase/logo-marionettejs.png", :alt => "marionnette"}
-          .screen-wrapper
-            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-marionettejs.gif", :alt => "marionette docsearch demo"}
-            %img.img-responsive.screen-mask{:src => "./img/mask.png", :alt => "mask"}
-          .spacer10
-          Marionette.js
-      .col-sm-4.showcase
-        %a{:href => "https://echo.labstack.com", :target => "_blank"}
-          .img-container
-            %img.img-responsive.logo{:src => "./img/showcase/logo-echo.png", :alt => "echo"}
-          .screen-wrapper
-            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-echo.gif", :alt => "echo docsearch demo"}
-            %img.img-responsive.screen-mask{:src => "./img/mask.png", :alt => "mask"}
-          .spacer10
-          Echo
-      .col-sm-4.showcase
-        %a{:href => "https://serge.io/", :target => "_blank"}
-          .img-container
-            %img.img-responsive.logo{:src => "./img/showcase/logo-serge.svg", :alt => "serge"}
-          .screen-wrapper
-            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-serge.gif", :alt => "serge docsearch demo"}
-            %img.img-responsive.screen-mask{:src => "./img/mask.png", :alt => "mask"}
-          .spacer10
-          Serge
-      .col-sm-4.showcase
-        %a{:href => "https://batch.com/", :target => "_blank"}
-          .img-container
-            %img.img-responsive.logo{:src => "./img/showcase/logo-batch.svg", :alt => "batch"}
-          .screen-wrapper
-            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-batch.gif", :alt => "batch docsearch demo"}
-            %img.img-responsive.screen-mask{:src => "./img/mask.png", :alt => "mask"}
-          .spacer10
-          Batch
-      .col-sm-4.showcase
-        %a{:href => "https://dev.mailjet.com/guides/", :target => "_blank"}
-          .img-container
-            %img.img-responsive.logo{:src => "./img/showcase/logo-mailjet.png", :alt => "mailjet"}
-          .screen-wrapper
-            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-mailjet.gif", :alt => "mailjet docsearch demo"}
-            %img.img-responsive.screen-mask{:src => "./img/mask.png", :alt => "mask"}
-          .spacer10
-          Mailjet
-      .col-sm-4.showcase
-        %a{:href => "https://api-platform.com/docs/distribution/", :target => "_blank"}
-          .img-container
-            %img.img-responsive.logo{:src => "./img/showcase/logo-apiplatform.svg", :alt => "API Platform"}
-          .screen-wrapper
-            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-apiplatform.gif", :alt => "API Platform docsearch demo"}
-            %img.img-responsive.screen-mask{:src => "./img/mask.png", :alt => "mask"}
-          .spacer10
-          API Platform
-      .col-sm-4.showcase
-        %a{:href => "https://quilljs.com/docs/quickstart/", :target => "_blank"}
-          .img-container
-            %img.img-responsive.logo{:src => "./img/showcase/logo-quill.png", :alt => "Quill"}
-          .screen-wrapper
-            %img.img-responsive.example.freezeframe{:src => "./img/showcase/example-quill.gif", :alt => "Quill docsearch demo"}
-            %img.img-responsive.screen-mask{:src => "./img/mask.png", :alt => "mask"}
-          .spacer10
-          Quill
-      .col-sm-4.showcase
-        .placeholder-logo
-        .placeholder-screen
-        .spacer10
-        You?
+    {% haml showcase.haml %}
+
+
 #section_how.page-section
   .container
     .row
       %h2.page-section-title How it works
     .row
       .col-sm-12
-        %img.img-responsive{:src => "./img/illus-howitworks.jpg", :alt => "how it works"}
+        %img.img-responsive.m100p{:src => "./img/illus-howitworks.jpg", :alt => "how it works"}
     .spacer60
     .row
       .col-sm-10.col-sm-offset-1
@@ -220,23 +61,24 @@ layout: default
               You add the search autocomplete to your UI
             %p We’ll send you a few lines of code to integrate Algolia autocomplete and power your search.
             %p You will receive the same speed, relevance and best-in-class UX as our paying customers.
-#section_get-started.page-section.dark
-  .container
-    %h2.page-section-title Get started
-    .text-center
+
+
+#section_get-started.page-section.fill-royal-blue
+  .container.col-md-12.fill-royal-blue
+    %header.text-center
+      %h2.page-section-title.color-white Get started
+    .text-center.color-white
       %p We’ll get back to you within a few hours with everything you need to integrate your new search into your website.
       %p Oh, and did we mention it's FREE? No commitment. No subscription. Everything is on us! And it won't change.
     .spacer30
-
-  {% haml join-form.haml %}
+  .col-md-12.fill-royal-blue
+    {% haml join-form.haml %}
 
 {% contentfor site-footer %}
 <script src="{{ "/js/home.js" | prepend: site.baseurl }}"></script>
-<script src="js/animation.js"></script>
 <script type="text/javascript">
 freezeframe_options = {
 animation_icon_image: false
 }
 </script>
-<script src="js/freezeframe.min.js"></script>
 {% endcontentfor %}
