@@ -52,18 +52,18 @@
     </script>
 {% endif %}
 
-    <script type="text/javascript" src="//cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
-    <script type="text/javascript">
-      var myDocSearch = docsearch({
+    <!-- <script type="text/javascript" src="//cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script> -->
+    <script src="{{ "/js/communityHeader.js" | prepend: site.baseurl }}"></script>
+    <script>
+      var a = new communityHeader({
         apiKey: '25626fae796133dc1e734c6bcaaeac3c',
         indexName: 'docsearch',
-        inputSelector: '.searchbox__input',
+        inputSelector: '#searchbox',
         autocompleteOptions: {
           debug: false
         }
-      });
+      },"lazy");
     </script>
-
 
   {% include marketing.html %}
 
