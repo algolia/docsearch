@@ -1,0 +1,16 @@
+.algc-navigation {
+  a {
+    -webkit-font-smoothing: unset;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.algc-dropdownroot__widelist li h4 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 70%;
+  display: block;
+}

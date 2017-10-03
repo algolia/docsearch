@@ -1,0 +1,11 @@
+.input-group-addon,
+.form-control {
+  border-color: rgba(157, 157, 189, 0.37) !important
+}
+
+
+input.form-control {
+  @include placeholder {
+    color: $logan !important;
+  }
+}

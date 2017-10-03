@@ -10,31 +10,31 @@
 @import "fonts";
 @import "syntax-highlighting";
 
-@import "footer";
-
-@import "home";
 @import "page";
 @import "searchbar";
 @import "docsearch";
+@import "navigation";
+@import "forms";
+@import "documentation";
 
-// @mixin outlineZones() {
-//   > * {
-//     outline: 2px solid rgba(red, 0.6);
-//   }
+@import "footer.sass";
 
-//   @content
-// }
 
-// @include outlineZones() {
+// *,*:before,*:after {
+//   outline: 1px solid rgba(red, 0.35)}
+
+
+// @media (max-width: $screen-md) {
 //   * {
-//     outline: 2px solid rgba(red, 0.6);
-
-//     * {
-//       outline: 2px solid rgba(blue, 0.6);
-
-//       * {
-//         outline: 2px solid rgba(red, 0.6);
-//       }
-//     }
+//     // background: blue  !important
 //   }
 // }
+
+
+// @media (max-width: $screen-sm) {
+//   * {
+//     background: red  !important
+//   }
+// }
+
+

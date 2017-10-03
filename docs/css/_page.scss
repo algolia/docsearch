@@ -1,7 +1,244 @@
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Hero
+.jumbotron .col-md-7 {
+  .demo-screen {
+    position: absolute;
+    right: 1em;
+  }
+  #demo-screens {
+    opacity: 0;
+    transform: translateY(100px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    will-change: opacity, transform;
+  }
+}
+
+body.ready .col-md-7 #demo-screens {
+  opacity: 1;
+  transform: translateY(0)
+}
+
+
+@media (max-width: $screen-md) {
+  .col-md-7 {
+    height: 500px;
+  }
+
+  .jumbotron .col-md-7 {
+    .demo-screen {
+      position: relative;
+      right: 0;
+    }
+  }
+
+  .col-md-5 {
+    margin-bottom: 120px;
+  }
+
+  .col-md-12 header {
+    img {
+      max-width: 100%;
+    }
+  }
+}
+
+@media (max-width: $screen-md) {
+  .jumbotron.h800 {
+    height: auto;
+  }
+  .col-md-7 {
+    height: auto;
+  }
+}
+
 // Join form
 .join-form {
   max-width: 440px;
+  @media (max-width: $screen-md) {
+    max-width: 100%;
+  }
+  @media (max-width: $screen-sm) {
+    top: 120px;
+  }
 }
 .join-form .input-group-addon {
   vertical-align: middle;
+}
+.input-group .form-control {
+  border-radius: 3px
+}
+
+// Section Why
+#section_why {
+  &:before,
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 300px;
+    background: #fff;
+    transform: skewY(-3deg);
+    z-index: 0;
+    top: -100px;
+  }
+
+  &:after {
+    top: inherit;
+    bottom: -100px;
+  }
+
+
+  @media (max-width: $screen-md) {
+    text-align: center;
+
+  }
+}
+
+
+// Showcase
+
+#section_examples h3 {
+  opacity: 0.75;
+}
+
+.showcase .logo {
+  max-height: 40px
+}
+
+.showcase .screen-wrapper {
+  height: 180px;
+}
+
+.showcase img {
+  height: auto;
+}
+
+.showcase .screen-wrapper:hover .screen-mask  {
+  display: none;
+}
+
+.showcase .screen-mask {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.showcase .col-md-4,
+.showcase .col-md-8 {
+  height: 60px;
+  line-height: 40px;
+}
+
+.showcase p {
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 100%;
+  text-overflow: ellipsis;
+}
+
+.showcase.you {
+
+  .placeholder-screen {
+    width: 100%;
+    height: 100%;
+    border: dotted 2px #a0b4d1
+  }
+}
+
+@media ( max-width: $screen-sm ) {
+  .showcase .h300 {
+    height: auto;
+  }
+  .showcase .col-md-8 {
+    height: auto;
+  }
+  .showcase .col-sm-12 {
+    display: block !important;
+    text-align: center;
+
+    .logo {
+      margin-top: 1em;
+    }
+  }
+}
+
+
+
+// Section How
+#section_how {
+  &:before,
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 300px;
+    background: #fff;
+    transform: skewY(-3deg);
+    z-index: 1;
+    top: -100px;
+  }
+
+  &:after {
+    top: inherit;
+    bottom: -100px;
+  }
+}
+
+.how-it-works-number {
+  display: block;
+  height: 32px;
+  width: 30px;
+  float: left;
+  font-size: 50px;
+  line-height: 0.8;
+  font-weight: 400;
+}
+
+
+
+// Section Get started
+#section_get-started {
+
+  header p {
+    opacity: 0.75;
+  }
+
+  .join-form {
+    color: #fff !important;
+    background-image: linear-gradient(283deg, #050f2c, #3e396b);
+
+  }
+
+  .join-form {
+    h3, label {
+      color: #fff !important
+    }
+
+    p {
+      color: rgba(white, 0.75) !important
+    }
+
+    .btn {
+      background-image: linear-gradient(256deg, #ff6c5f, #ff4f81) !important;
+
+    }
+  }
+}
+
+
+
+// Responsive
+@media (max-width: $screen-md) {
+  p {
+    padding: 0 1em;
+  }
 }

@@ -2,83 +2,121 @@
 layout: default
 ---
 
-.jumbotron.gradient-secondary.h800
-  .container.pos-rel
+.jumbotron.gradient-dark.h800
+  .container.pos-rel.z-10
     .spacer120
     .col-md-12
       %header.text-center.color-white
-        %h1 <span class="hidden">DocSearch</span> <img src="./img/docsearch-logo-horizontal_light.svg" height="48"/>
+        %h1 <span class="hidden">DocSearch</span> <img src="./img/docsearch-logo-horizontal_light.svg" class="logo" height="48"/>
         %h3 The easiest way to add search to your documentation
     .inline.spacer40
-    .col-md-7
-      #demo-screens
-        %img{:src => "./img/screens/screen_react.png", :alt => "", :id => "placeholder", :class => "w100p"}/
-    .col-md-5
-      {% haml join-form.haml %}
-
-#section_why.page-section
-  .m800.m-l-r-auto
-    %h2.page-section-title Why DocSearch?
-    %p We're kind of scratching our own itch here. As developers, we spend a lot of time reading documentation, and it isn’t always easy to find the information we need.
-    %p No one's to blame, building a good search for a documentation is a complex challenge.  We just happen to have a lot of experience doing that, and we want to share it with the world.
-
-#section_examples.page-section.dark
-  .container
-    .text-center
-      %h2.page-section-title DocSearch is live
-      %p We’ve integrated DocSearch into several open source projects. Take a look.
-    {% haml showcase.haml %}
+    .row.pull-left.m100p.w100p.no-margin
+      .col-md-7
+        #demo-screens
+          %img{:src => "./img/screens/screen_react.png", :alt => "", :id => "placeholder", :class => "w100p"}/
+      .col-md-5
+        {% haml join-form.haml %}
+  .spacer64
 
 
-#section_how.page-section
-  .container
-    .row
-      %h2.page-section-title How it works
+#section_why.page-section.pos-rel
+  .spacer40
+  .m800.m-l-r-auto.pos-rel.z-10
+    %h2.page-section-title.upper-case.text-demi Why DocSearch?
+    .spacer32
+    %p.color-east-bay.text-regular We're kind of scratching our own itch here. As developers, we spend a lot of time reading documentation, and it isn’t always easy to find the information we need.
+    %p.color-east-bay.text-regular No one's to blame, building a good search for a documentation is a complex challenge.  We just happen to have a lot of experience doing that, and we want to share it with the world.
+  .spacer40
+
+#section_examples.page-section.fill-royal-blue
+  .spacer120
+  .spacer40
+  .container.pos-rel.z-10
+    %header
+      .text-center.color-white
+        %h2.page-section-title.upper-case.text-demi DocSearch is live
+        .spacer16
+        %h3.text-lg We’ve integrated DocSearch into several open source projects. Take a look.
+        .spacer80
+      .row
+      {% for entry in site.data.showcase %}
+        .col-md-4.col-sm-12.showcase.p-large
+          %a.elevation1.fill-white.block.h300.p-large.radius6{:href => "{{ entry.url }}", :target => "_blank"}
+            .screen-wrapper.pos-rel.h200.unscroll
+              %img.img-responsive.example.m100p{:src => "{{ entry.gif }}", :alt => "{{ entry.name }} docsearch demo", 'data-type-gif' => "true"}
+              %img.img-responsive.screen-mask.m100p.pos-abt{:src => "./img/mask.png", :alt => "mask"}
+            .spacer32.hidden-sm
+            .col-md-4.col-sm-12.no-padding.img-container.text-center.vertical-align-middle
+              %img.img-responsive.logo{:src => "{{ entry.logo }}", :alt => "{{ entry.name }}"}
+            .col-md-8.col-sm-12.vertical-align-middle
+              %p.text-lg.color-bunting.text-demi.no-margin {{ entry.name }}
+      {% endfor %}
+        .col-md-4.col-sm-12.showcase.p-large.you
+          %div.elevation1.fill-white.block.h300.p-large.radius6
+            .placeholder-screen.text-center.radius6
+              .spacer64
+              .spacer32.hidden-sm
+              %p.text-lg.color-bunting.text-demi.no-margin +350 Live <span class="visible-sm cf"></span> implementations
+              .spacer64.visible-sm
+
+
+
+
+  .spacer64
+
+
+#section_how.page-section.pos-rel
+  .container.pos-rel.z-10
+    .row.text-center
+      %h2.page-section-title.upper-case.text-demi How it works
+      .spacer32
     .row
       .col-sm-12
-        %img.img-responsive.m100p{:src => "./img/illus-howitworks.jpg", :alt => "how it works"}
-    .spacer60
+        %img.img-responsive.m100p{:src => "./img/illus-howitworks.svg", :alt => "how it works"}
+    .spacer32
     .row
       .col-sm-10.col-sm-offset-1
         .row
-          .col-sm-4.how-it-works
+          .col-sm-4.how-it-works.p-small
             %h3
-              %span.how-it-works-number> 1
-              We crawl your documentation pages
-            %p We built a website crawler designed to index every section of your documentation.
-            %p Just send us the URL of your documentation, and we’ll periodically run the crawler so you’re always up-to-date.
+              %span.how-it-works-number.text-lg.color-royal-blue.text-lg.m-r-small 1
+              %span.text-demi  We crawl your documentation pages
+            .spacer16
+            %p.color-east-bay.text-regular We built a website crawler designed to index every section of your documentation.
+            %p.color-east-bay.text-regular Just send us the URL of your documentation, and we’ll periodically run the crawler so you’re always up-to-date.
             .spacer30
-          .col-sm-4.how-it-works
+          .col-sm-4.how-it-works.p-small
             %h3
-              %span.how-it-works-number> 2
-              We configure your search experience
-            %p You don’t need to configure any settings or even have an Algolia account.
-            %p We take care of all of this automatically to ensure the best documentation search experience.
+              %span.how-it-works-number.text-lg.color-royal-blue.text-lg.m-r-small 2
+              %span.text-demi We configure your search experience
+            .spacer16
+            %p.color-east-bay.text-regular You don’t need to configure any settings or even have an Algolia account.
+            %p.color-east-bay.text-regular We take care of all of this automatically to ensure the best documentation search experience.
             .spacer30
-          .col-sm-4.how-it-works
+          .col-sm-4.how-it-works.p-small
             %h3
-              %span.how-it-works-number> 3
-              You add the search autocomplete to your UI
-            %p We’ll send you a few lines of code to integrate Algolia autocomplete and power your search.
-            %p You will receive the same speed, relevance and best-in-class UX as our paying customers.
+              %span.how-it-works-number.text-lg.color-royal-blue.text-lg.m-r-small 3
+              %span.text-demi You add the search autocomplete to your UI
+            .spacer16
+            %p.color-east-bay.text-regular We’ll send you a few lines of code to integrate Algolia autocomplete and power your search.
+            %p.color-east-bay.text-regular You will receive the same speed, relevance and best-in-class UX as our paying customers.
 
 
 #section_get-started.page-section.fill-royal-blue
-  .container.col-md-12.fill-royal-blue
+  .spacer120
+  .spacer56
+  .container.col-md-12.fill-royal-blue.z-10
     %header.text-center
-      %h2.page-section-title.color-white Get started
-    .text-center.color-white
-      %p We’ll get back to you within a few hours with everything you need to integrate your new search into your website.
-      %p Oh, and did we mention it's FREE? No commitment. No subscription. Everything is on us! And it won't change.
-    .spacer30
+      %h2.page-section-title.color-white.upper-case.text-demi Get started
+      .spacer32
+      .text-center.color-white
+        %p We’ll get back to you within a few hours with everything you need to integrate your new search into your website.<br/>Oh, and did we mention it's FREE? No commitment. No subscription. Everything is on us! And it won't change.
+    .spacer64
   .col-md-12.fill-royal-blue
     {% haml join-form.haml %}
+  .inline.spacer120
+  .inline.spacer64
 
 {% contentfor site-footer %}
 <script src="{{ "/js/home.js" | prepend: site.baseurl }}"></script>
-<script type="text/javascript">
-freezeframe_options = {
-animation_icon_image: false
-}
-</script>
 {% endcontentfor %}

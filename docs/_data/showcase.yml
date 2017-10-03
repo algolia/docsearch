@@ -1,0 +1,39 @@
+- name: Stripe
+  url: "https://stripe.com/docs"
+  gif: "./img/showcase/example-stripe.gif"
+  logo: "./img/showcase/logo-stripe.png"
+
+- name: Bootstrap
+  url: "https://getbootstrap.com/docs/4.0"
+  gif: "./img/showcase/example-bootstrap.gif"
+  logo: "./img/showcase/logo-bootstrap.png"
+
+- name: Vue
+  url: "http://vuejs.org/guide/"
+  gif: "./img/showcase/example-vuejs.gif"
+  logo: "./img/showcase/logo-vuejs.png"
+
+- name: React
+  url: "https://facebook.github.io/react/"
+  gif: "./img/showcase/example-react.gif"
+  logo: "./img/showcase/logo-react.png"
+
+- name: React Native
+  url: "https://facebook.github.io/react/"
+  gif: "./img/showcase/example-reactnative.gif"
+  logo: "./img/showcase/logo-react.png"
+
+- name: Babel.js
+  url: "https://babeljs.algolia.com/"
+  gif: "./img/showcase/example-babel.gif"
+  logo: "./img/showcase/logo-babel.png"
+
+- name: Apiary
+  url: "http://help.apiary.io/"
+  gif: "./img/showcase/example-apiary.gif"
+  logo: "./img/showcase/logo-apiary.png"
+
+- name: Scala
+  url: "http://docs.scala-lang.org/"
+  gif: "./img/showcase/example-scala.gif"
+  logo: "./img/showcase/logo-scala.png"
