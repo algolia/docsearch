@@ -35,6 +35,7 @@
     <link rel="icon" href="{{ "/img/favicon.png" | prepend: site.baseurl }}">
 
     <link rel="stylesheet" media="screen" href="{{ "/css/main.css" | prepend: site.baseurl }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css">
   </head>
     <body class="{{page.className || page.title}}">
 
@@ -53,7 +54,6 @@
 {% endif %}
 
     <script src="//cdn.jsdelivr.net/jquery/2.1/jquery.min.js"></script>
-    <script src="{{ "/js/freezeGifs.js" | prepend: site.baseurl }}"></script>
     <script src="{{ "/js/communityHeader.js" | prepend: site.baseurl }}"></script>
     <script>
       var a = new communityHeader({

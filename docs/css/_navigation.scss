@@ -5,6 +5,11 @@
       text-decoration: none;
     }
   }
+
+  input:not(#searchbox) {
+    display: none;
+
+  }
 }
 
 .algc-dropdownroot__widelist li h4 {
@@ -14,3 +19,8 @@
   width: 70%;
   display: block;
 }
+
+.algc-menu__search--holder.open input[type="search"] {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
