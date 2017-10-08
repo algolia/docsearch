@@ -4,7 +4,7 @@ The easiest way to add search to your documentation. For free.
 
 Check out our [website][1] to add an outstanding search to your documentation.
 
-[![Version][version-svg]][package-url] [![Build Status][travis-svg]][travis-url] [![Coverage Status][coveralls-svg]][coveralls-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url]
+[![Version][version-svg]][package-url] [![Build Status][travis-svg]][travis-url] [![Coverage Status][coveralls-svg]][coveralls-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url] [![jsDelivr Hits][jsdelivr-badge]][jsdelivr-url]
 
 [version-svg]: https://img.shields.io/npm/v/docsearch.js.svg?style=flat-square
 [package-url]: https://npmjs.org/package/docsearch.js
@@ -18,6 +18,8 @@ Check out our [website][1] to add an outstanding search to your documentation.
 [downloads-url]: http://npm-stat.com/charts.html?package=docsearch.js
 [docsearch-website]: https://community.algolia.com/docsearch/?utm_medium=social-owned&utm_source=GitHub&utm_campaign=docsearch%20repository
 [docsearch-website-docs]: https://community.algolia.com/docsearch/documentation/?utm_medium=social-owned&utm_source=GitHub&utm_campaign=docsearch%20repository
+[jsdelivr-badge]: https://data.jsdelivr.com/v1/package/npm/docsearch.js/badge
+[jsdelivr-url]: https://www.jsdelivr.com/package/npm/docsearch.js
 
 ![Eslint][7]
 
