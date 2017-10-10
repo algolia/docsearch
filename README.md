@@ -86,6 +86,17 @@ npm install --save docsearch.js
 
 ## Customization
 
+### Attribution
+
+We're happy to provide DocSearch free of charge for your site, and you're
+welcome to customise that experience in a way that works for you; all we ask is
+that Algolia be attributed within the search context. For example, in the
+default implementation, we place a small "powered by Algolia" logo in the
+corner. If you prefer to roll your own UX, you'll need to make sure that this
+logo is included in your implementation as well.
+
+### Default styling
+
 The default colorscheme is white and gray:
 
 ![Default colorscheme][17]
