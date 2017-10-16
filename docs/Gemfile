@@ -4,7 +4,7 @@
 source 'https://rubygems.org'
 
 group :development, :test do
-  gem 'jekyll', '< 3'
+  gem 'jekyll'
   gem 'jekyll-haml'
   gem 'rouge'
   gem 'sass'
