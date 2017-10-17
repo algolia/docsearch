@@ -5,8 +5,8 @@ before_install:
 - export PATH=$HOME/.yarn/bin:$PATH
 - git config --global user.email "algobot@users.noreply.github.com"
 - git config --global user.name "algobot"
-- rvm install 2.4.0
-- rvm use 2.4.0
+- rvm install 2.4.2
+- rvm use 2.4.2
 script: "./scripts/test-ci"
 sudo: false
 branches:
