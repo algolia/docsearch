@@ -71,8 +71,6 @@
   },
   "peerDependencies": {},
   "dependencies": {
-    "algolia-aerial": "^1.1.5",
-    "algolia-frontend-components": "^0.0.33",
     "algoliasearch": "^3.22.1",
     "autocomplete.js": "^0.28.0",
     "hogan.js": "^3.0.2",
