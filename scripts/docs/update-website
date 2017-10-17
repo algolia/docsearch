@@ -23,11 +23,5 @@ cd docs
 bundle install
 rm -rf _site
 JEKYLL_ENV=production VERSION=${VERSION} bundle exec jekyll build
-for example in _site/examples/*; do
-  if [ -d "$example" ]; then
-    name=`basename "$example"`
-    (cd "$example" && zip -r ../$name.zip *)
-  fi
-done
 cd ..
 babel-node scripts/docs/gh-pages.js

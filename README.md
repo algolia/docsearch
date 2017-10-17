@@ -30,16 +30,14 @@ Check out our [website][1] to add an outstanding search to your documentation.
 - [Introduction](#introduction)
 - [Setup](#setup)
 - [Customization](#customization)
+  - [Attribution](#attribution)
+  - [Default styling](#default-styling)
   - [Advanced styling](#advanced-styling)
 - [Custom options](#custom-options)
   - [Autocomplete options](#autocomplete-options)
   - [Docsearch Options](#docsearch-options)
   - [Algolia options](#algolia-options)
-- [Development workflow](#development-workflow)
-  - [Local example](#local-example)
-  - [Local build](#local-build)
-  - [Documentation website](#documentation-website)
-  - [MacOS](#macos)
+- [Contributions and development workflow](#contributions-and-development-workflow)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -270,61 +268,9 @@ You will find all Algolia API options in its [own documentation][23].
 
 <!-- END documentation -->
 
-## Development workflow
+## Contributions and development workflow
 
-### Local example
-
-We use a simple documentation example website as a way to develop the docsearch
-library.
-
-Requirements:
-- [Node.js][24]
-- npm@2
-
-```sh
-npm run dev
-# open http://localhost:8080
-```
-
-### Local build
-
-- `npm run build:js:` will transpile all the JavaScript files inside `./dist`.
-  We build a bundled (and bundled + minified) version for CDNs and another one
-  for npm
-- `npm run build:css` will convert the SCSS to CSS, along with sourcemaps and
-  minified versions
-- `npm run build:docs` will create the `./docs/documentation.md` file from the
-  `README.md` file, to be displayed on the website.
-- `npm run build` will run all three previous commands
-- `npm run serve` will serve and watch the JavaScript and CSS files on
-  [http://localhost:8080/](http://localhost:8080/). If port `8080` is already
-  taken, it will choose an available port. Source files will also be available
-  and watched in `./dist/`.
-
-### Documentation website
-
-This is the [Jekyll][25] instance running at
-[https://community.algolia.com/docsearch](https://community.algolia.com/docsearch).
-
-Requirements:
-- [Ruby][26]
-- [Bundler][27]
-
-```sh
-npm run dev:docs
-# open http://localhost:4000/docsearch/
-# Note that it also implicitly starts another server on localhost:8080, to load
-# the bundled JavaScript from
-```
-
-### MacOS
-
-If you are using `brew` and you had `brew install openssl`, you may need to
-configure the build path of eventmachine with
-
-```sh
-bundle config build.eventmachine --with-cppflags=-I$(brew --prefix openssl)/include
-```
+See [CONTRIBUTING](./CONTRIBUTING.md)
 
 <!-- START links -->
 
