@@ -22,5 +22,4 @@ while true; do
   sleep 30
 done
 
-curl --silent -L $CACHE_URL > /dev/null
 ./scripts/docs/update-website

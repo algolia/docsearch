@@ -1,21 +1,22 @@
 language: node_js
 node_js: stable
 before_install:
+- curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.2.1
+- export PATH=$HOME/.yarn/bin:$PATH
 - git config --global user.email "algobot@users.noreply.github.com"
 - git config --global user.name "algobot"
-- rvm install 2.2.0
-- rvm use 2.2.0
+- rvm install 2.4.0
+- rvm use 2.4.0
 script: "./scripts/test-ci"
+sudo: false
 branches:
   only:
   - master
-sudo: false
 cache:
   bundler: true
   yarn: true
-  directories:
-    - node_modules
+before_cache:
+- rm -f ./node_modules/.bin/which
 env:
   global:
-  - secure: WyC8pO+X2CYnHaL9w7bq+94w5JHhn2B1lIIcXdsB7h21uhV4flqepjuOURNEfppJWi83Tq02tvmOKs6xgaZ49hjStat6hB+CDX6V2++C+On4mneMVIQ7AOER2aA5H6xmVK73ifhUxGLYRty5qSY3SwJ6em3Nb9iBIyJ0x4QrOpiY9BqzJ7neQ8olG1EWfLCtUZi5bUvhKXX4Dwko+wVwPhez203poclX0E5njVAYsF6V8/ybvaAc0MC5snivBLwgWgCPQ6j1Owz9Xs689xovlMOtHOzjmFyQ7pk46kd3B34ghapBM/M2mtxY+GoBFrMC2qhmhqbuS9zzknk8otby/4M6Ae1631Hw86EeIP2uHvze3V3Ipq2bJuglceZB35BwnCvIOHDw8GJ0b8KG01vS6LfuOAthAUbKp/dJ89kseNZziNGPfh3eyu7yJ4B7A2D3YJXI8/3iEHPZYMBXRgb6iHYHv+75Cquipb0e0KGQOEhnCGCLqzrzOA2FtuOhjRse+oga7uOzjFXZTPornYJoHy2BkUudELbjtIrHDM4A36rYMv20Si7IoQdQxeRWA58JG3icAgpRHhnOcwImVj7YzPwCUeUNBPwMO/L+99khVYrD5CjfGqxYx99W5mHruSneXdx8o2idijsSx0nUQ3vhNyjJRx1KjNiyxcEZ48FS33c=
-  - secure: fPkWaIIAJCzARj0TYEwslyZ8Nrr8WbgH/951Uk4LLwnXVBVUgEQNfVCFIyKOu8vYezgVzdfoZq59YWzBbhUC4+2Cx66SlucE7I420SMKon2Ajsfmj4llAlmWnkaPUIhafT5JZICragH8rUPCq8NURiuWiCnhLBHzFU8suxf7CoSb2dmmSdeNwgGPtJQLKdihxaAWvu4+jOhRV8+OjeGhEEvnAo60HuCyFgShVZFP487LfDlHPxc6XPeX27yq34A2Txr9KoM8ab/6md1EcUegr7V0+NGcZ/tDeRXqJJS2gGillKjvn4gihwCn7EgGhnDhKm4lng+fifg6FBwsy6rFUIfyqWTkyWNc3NVhGUh9t6e6h7+qfWxlejJbFRKCorVfG7+P73dGQ/kNnHS6clkLsS7JnE9cB0KdcFBzgDk6j69rKsEe7WH7edn9wKotgV6GDzaLpoTQnfuWmG+iO6tWAewxC8gPa/ifRXwbL2GVqKV1HWeKIHLTUiteTOe8qhcjD+WgubU6emEiY44JDzd2Yjo5szMsOBSAogDTdblGkBiY2aqIii8sBS5WDWLykq1QTebWjHgolwVcLbw0vn18NdGq+1Wtfqr6OukIYi0SXbjf/6FAa6VQeElpt9ZADlw54Z4uR7izCjVNoJX0pRvDhQHuTWNcQx2GiFEow8mZLH0=
+    secure: TDLpvycpMbbXpwSKLLeDBZdpi05rbZEbPcII9LSglUG9teF/zrqxRMl+Eivvho8IkeJRDQVwdc8EbYCzZ9cAwRHOyqzDNwRFhlpKVwz+fl5uHfxDo5DANsut6F+l/RrBf4n2MWKkJlbo4kq8mUqL89vcPqfRTLpx62FawywDgiJc2s+ixR1lkm5GNlF74ovoUkeOXiLi605LE0sN7H/1TRdD6WOJTBT2yoiuDU3U/RUKJxka6Sz4u9kqUQpn+kJUIPiBiasbz65qglnrxpBL/mYgAEZfRcbVyC5zd+CeFSIlIiGdhMFoVInNMqshq7gl/UWcJyxdnGIIfhO3l/Y/lyEXQQknEZS4M2h7UKeCuu0E1hh7eT7kVVyXDW+nCUNVYPTuupvLwcpnXw02Flef72OpDy6bl19NEdH79lNK4l440GJb+Lhda2M2mMZJmRkg31j9HFjl0wCYqRopzNTKNBFJAPTB4rG6H/y7NgPFjrATphEDLZgq73eNDxtRNBQHtLqGl8IsaFHU4+8vAQ2iEbi5+R/D5Rua2BXSbYAdQjxnvmPojQ7voZgj+w5GHx2573plCvqO4pZvV/u5/Z18tEYIV+4LFC7KR+30Snbk0JAbRogQr6P4mkVrKG/7pAcGS5tpxhMY3OUNaJWdDP8NE1c3/0Q2pKqdB0RauGoUO2w=

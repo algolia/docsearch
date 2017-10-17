@@ -371,9 +371,10 @@ describe('DocSearch', () => {
     describe('when queryHook is used', () => {
       it('calls the Agolia client with the correct parameters', () => {
         // Given
-        const actual = docsearch.getAutocompleteSource(false, function(query) {
-          return query + ' modified';
-        });
+        const actual = docsearch.getAutocompleteSource(
+          false,
+          query => `${query} modified`
+        );
 
         // When
         actual('query');
@@ -681,8 +682,8 @@ describe('DocSearch', () => {
             lvl5: null,
           },
           _highlightResult: {
+            // eslint-disable-next-line camelcase
             hierarchy_camel: {
-              // eslint-disable-line camelcase
               lvl0: {
                 value: '<mark>Python</mark>',
                 matchLevel: 'full',
@@ -792,7 +793,8 @@ describe('DocSearch', () => {
       // When
       const actual = DocSearch.formatHits(input);
 
-      const separator = '<span class="aa-suggestion-title-separator" aria-hidden="true"> › </span>';
+      const separator =
+        '<span class="aa-suggestion-title-separator" aria-hidden="true"> › </span>';
       // Then
       expect(actual[0].title).toEqual(
         `Geo-search${separator}Foo${separator}Bar${separator}Baz`
@@ -838,7 +840,8 @@ describe('DocSearch', () => {
       // When
       const actual = DocSearch.formatHits(input);
 
-      const separator = '<span class="aa-suggestion-title-separator" aria-hidden="true"> › </span>';
+      const separator =
+        '<span class="aa-suggestion-title-separator" aria-hidden="true"> › </span>';
       // Then
       const expected = `<mark>Geo-search</mark>${separator}<mark>Foo</mark>${separator}<mark>Bar</mark>${separator}<mark>Baz</mark>`;
       expect(actual[0].title).toEqual(expected);

@@ -4,6 +4,8 @@ node_modules/
 dist/
 .idea/
 npm-debug.log*
+yarn-error.log
 docs/_site
 docs/.sass-cache/
 dist-es5-module/
+yarn.lock
