@@ -1,4 +1,4 @@
-![DocSearch](docs/img/docsearch-logo-horizontal_dark.svg)
+![DocSearch](https://cdn.rawgit.com/algolia/docsearch/master/docs/img/docsearch-logo-horizontal_dark.svg)
 
 The easiest way to add search to your documentation. For free.
 
