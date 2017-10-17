@@ -1,19 +1,14 @@
 Hi (future) collaborator!
 
-**tl;dr;**
-- submit pull requests to master branch
-- use [conventional changelog](https://github.com/ajoslin/conventional-changelog/blob/master/conventions/angular.md) commit style messages
-- squash your commits
-- have fun
-
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
 - [Where to start?](#where-to-start)
 - [Development workflow](#development-workflow)
-  - [Local example](#local-example)
-  - [Documentation website](#documentation-website)
+  - [Requirements](#requirements)
+  - [Launch](#launch)
+  - [Local build](#local-build)
 - [Commit message guidelines](#commit-message-guidelines)
   - [Revert](#revert)
   - [Type](#type)
@@ -21,12 +16,7 @@ Hi (future) collaborator!
   - [Subject](#subject)
   - [Body](#body)
   - [Footer](#footer)
-- [Stash your commits](#stash-your-commits)
-- [When are issues closed?](#when-are-issues-closed)
 - [Releasing](#releasing)
-  - [Releasing v1](#releasing-v1)
-  - [Beta releases](#beta-releases)
-  - [Documentation updates](#documentation-updates)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -36,32 +26,37 @@ Have a fix or a new feature? [Search for corresponding issues](https://github.co
 
 # Development workflow
 
-## Local example
+## Requirements
 
-We use a simple documentation example website as a way to develop the docsearch.js library.
+To run this project, you will need:
 
-Requirements:
-- [Node.js](https://nodejs.org/en/)
-- npm@2
-
-```sh
-npm run dev
-# open http://localhost:8080
-```
-
-## Documentation website
-
-This is the [Jekyll](https://jekyllrb.com/) instance running at https://community.algolia.com/docsearch.
-
-Requirements:
+- Node.js >= v8.7.0, use nvm - [install instructions](https://github.com/creationix/nvm#install-script)
+- Yarn >= v1.2.0 - [install instructions](https://yarnpkg.com/en/docs/install#alternatives-tab)
 - [Ruby](https://www.ruby-lang.org/en/)
 - [Bundler](http://bundler.io/)
 
+## Launch
+
 ```sh
 yarn
-npm run dev:docs
-open http://localhost:4000/docsearch/
+yarn run dev:docs
 ```
+
+Then go to:
+- http://localhost:4000/docsearch/ documentation website with autoreload
+- http://localhost:8080 local DocSearch example for easy hacking/additions/fixes
+
+## Local build
+
+You might want to expose a local build to the outside to test things on real
+websites. To do so:
+
+```sh
+npm run serve
+```
+
+Then files will be available at http://localhost:8080. Use [ngrok](https://ngrok.com/download) to
+then expose your build to the web.
 
 # Commit message guidelines
 
@@ -123,24 +118,6 @@ reference GitHub issues that this commit **Closes**.
 
 **Breaking Changes** should start with the word `BREAKING CHANGE:` with a space or two newlines. The rest of the commit message is then used for this.
 
-# Stash your commits
-
-Once you are done with a fix or feature and the review was done, [squash](http://gitready.com/advanced/2009/02/10/squashing-commits-with-rebase.html) your commits to avoid things like "fix dangling comma in bro.js", "fix after review"
-
-Example:
-    - `feat(widget): new feature blabla..`
-    - `refactor new feature blablabla...`
-    - `fix after review ...`
-  - **both commits should be squashed* in a single commit: `feat(widget) ..`
-
-# When are issues closed?
-
-Once the a fix is done, having the fix in the `master` branch is not sufficient, it needs to be part of a release for us to close the issue.
-
-So that you never ask yourself "Is this released?".
-
-Instead of closing the issue, we will add a `  to be released` label.
-
 # Releasing
 
 If you are a maintainer, you can release.
@@ -152,33 +129,3 @@ You must be on the master branch.
 ```sh
 npm run release
 ```
-
-## Releasing v1
-
-```sh
-git checkout v1
-git pull
-npm run release
-```
-
-We use the `v1` branch as a way to push fixes to the first version of DocSearch. Do not merge `master` into `v1` and
-vice versa.
-
-## Beta releases
-
-You must be on the master branch.
-
-```sh
-npm run release:beta
-```
-
-This task will release a beta version of what is currently in master branch.
-
-It will not update the `latest` tag of the npm release nor update jsDelivr /2/.
-
-## Documentation updates
-
-If you have important documentation update to release without wanting to release
-a new version of docsearch, you can do a documentation hotfix.
-
-Then once the hotfix is merged into master, the documentation will be updated automatically.

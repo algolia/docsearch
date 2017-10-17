@@ -4,7 +4,7 @@ The easiest way to add search to your documentation. For free.
 
 Check out our [website][1] to add an outstanding search to your documentation.
 
-[![Version][version-svg]][package-url] [![Build Status][travis-svg]][travis-url] [![Coverage Status][coveralls-svg]][coveralls-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url]
+[![Version][version-svg]][package-url] [![Build Status][travis-svg]][travis-url] [![Coverage Status][coveralls-svg]][coveralls-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url] [![jsDelivr Hits][jsdelivr-badge]][jsdelivr-url]
 
 [version-svg]: https://img.shields.io/npm/v/docsearch.js.svg?style=flat-square
 [package-url]: https://npmjs.org/package/docsearch.js
@@ -18,6 +18,8 @@ Check out our [website][1] to add an outstanding search to your documentation.
 [downloads-url]: http://npm-stat.com/charts.html?package=docsearch.js
 [docsearch-website]: https://community.algolia.com/docsearch/?utm_medium=social-owned&utm_source=GitHub&utm_campaign=docsearch%20repository
 [docsearch-website-docs]: https://community.algolia.com/docsearch/documentation/?utm_medium=social-owned&utm_source=GitHub&utm_campaign=docsearch%20repository
+[jsdelivr-badge]: https://data.jsdelivr.com/v1/package/npm/docsearch.js/badge
+[jsdelivr-url]: https://www.jsdelivr.com/package/npm/docsearch.js
 
 ![Eslint][7]
 
@@ -28,16 +30,14 @@ Check out our [website][1] to add an outstanding search to your documentation.
 - [Introduction](#introduction)
 - [Setup](#setup)
 - [Customization](#customization)
+  - [Attribution](#attribution)
+  - [Default styling](#default-styling)
   - [Advanced styling](#advanced-styling)
 - [Custom options](#custom-options)
   - [Autocomplete options](#autocomplete-options)
   - [Docsearch Options](#docsearch-options)
   - [Algolia options](#algolia-options)
-- [Development workflow](#development-workflow)
-  - [Local example](#local-example)
-  - [Local build](#local-build)
-  - [Documentation website](#documentation-website)
-  - [MacOS](#macos)
+- [Contributions and development workflow](#contributions-and-development-workflow)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -85,6 +85,17 @@ npm install --save docsearch.js
 ```
 
 ## Customization
+
+### Attribution
+
+We're happy to provide DocSearch free of charge for your site, and you're
+welcome to customise that experience in a way that works for you; all we ask is
+that Algolia be attributed within the search context. For example, in the
+default implementation, we place a small "Search by Algolia" logo in the
+corner. If you prefer to roll your own UX, you'll need to make sure that this
+logo is included in your implementation as well.
+
+### Default styling
 
 The default colorscheme is white and gray:
 
@@ -257,61 +268,9 @@ You will find all Algolia API options in its [own documentation][23].
 
 <!-- END documentation -->
 
-## Development workflow
+## Contributions and development workflow
 
-### Local example
-
-We use a simple documentation example website as a way to develop the docsearch
-library.
-
-Requirements:
-- [Node.js][24]
-- npm@2
-
-```sh
-npm run dev
-# open http://localhost:8080
-```
-
-### Local build
-
-- `npm run build:js:` will transpile all the JavaScript files inside `./dist`.
-  We build a bundled (and bundled + minified) version for CDNs and another one
-  for npm
-- `npm run build:css` will convert the SCSS to CSS, along with sourcemaps and
-  minified versions
-- `npm run build:docs` will create the `./docs/documentation.md` file from the
-  `README.md` file, to be displayed on the website.
-- `npm run build` will run all three previous commands
-- `npm run serve` will serve and watch the JavaScript and CSS files on
-  [http://localhost:8080/](http://localhost:8080/). If port `8080` is already
-  taken, it will choose an available port. Source files will also be available
-  and watched in `./dist/`.
-
-### Documentation website
-
-This is the [Jekyll][25] instance running at
-[https://community.algolia.com/docsearch](https://community.algolia.com/docsearch).
-
-Requirements:
-- [Ruby][26]
-- [Bundler][27]
-
-```sh
-npm run dev:docs
-# open http://localhost:4000/docsearch/
-# Note that it also implicitly starts another server on localhost:8080, to load
-# the bundled JavaScript from
-```
-
-### MacOS
-
-If you are using `brew` and you had `brew install openssl`, you may need to
-configure the build path of eventmachine with
-
-```sh
-bundle config build.eventmachine --with-cppflags=-I$(brew --prefix openssl)/include
-```
+See [CONTRIBUTING](./CONTRIBUTING.md)
 
 <!-- START links -->
 
