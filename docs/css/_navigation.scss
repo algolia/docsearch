@@ -1,0 +1,26 @@
+.algc-navigation {
+  a {
+    -webkit-font-smoothing: unset;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  input:not(#searchbox) {
+    display: none;
+
+  }
+}
+
+.algc-dropdownroot__widelist li h4 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 70%;
+  display: block;
+}
+
+.algc-menu__search--holder.open input[type="search"] {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+

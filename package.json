@@ -17,7 +17,6 @@
     "lint": "eslint .",
     "test": "jest --coverage && npm run lint",
     "test:watch": "jest --watch",
-    "gh-pages": "./scripts/gh-pages",
     "precommit": "lint-staged"
   },
   "lint-staged": {

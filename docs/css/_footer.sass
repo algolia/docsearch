@@ -1,0 +1,117 @@
+$footer-shade-1: #2E2A51
+$footer-shade-2: #1F1C3F
+$footer-shade-3: #12102E
+
+
+#footer
+  position: relative
+
+
+  @include diagonal(-4deg, $footer-shade-2, 130px, after)
+    bottom: 120px
+    left: 0
+
+  .credits
+    text-align: center
+    position: relative
+    background-color: $footer-shade-3
+    color: $portage
+    z-index: 99
+    line-height: 40px
+    @include diagonal(-2deg, $footer-shade-3, 80px, before)
+      top: -40px
+      left: 0
+
+    @media (max-width: $screen-md)
+      margin-top: 40px
+
+  h4
+    line-height: 40px
+    border-bottom: solid 1px rgba($portage,.5)
+
+  .footer-nav
+    li
+      line-height: 1.7em
+      a
+        color: $portage
+        font-size: .9em
+        &:hover
+          color: $algolia-blue
+          text-decoration: none
+
+  .network-links
+    margin: 0
+    padding: 0
+    li
+      display: inline-block
+      padding: 0
+      margin: 0
+      text-align: center
+      margin: .5em .2em .5em 0
+      .btn
+        color: $portage
+        width: 38px
+        line-height: 40px
+        max-height: 38px
+        font-size: 24px
+        padding: 0
+        border: solid 1px rgba($portage,.4)
+        &:hover
+          color: white
+
+  .newsletter-signup
+    position: relative
+
+    .mc-signupmessage
+      width: 100%
+      height: 100%
+      background-color: $white
+      position: absolute
+      z-index: 1
+      display: none
+      pointer-events: none
+      opacity: 0
+      transition: 400ms ease-in-out
+
+      svg
+        width: 15px
+        margin-left: 4px
+        vertical-align: middle
+
+    .form-control
+      border-radius: 20px
+      line-height: 40px
+      padding: 0 16px
+      height: 40px
+      border: none
+      width: 230px
+
+      @media (max-width: $screen-md)
+        width: 180px !important
+
+    &--success
+      .mc-signupmessage
+        animation: fadeIn 200ms ease-in-out forwards
+        display: block
+
+@keyframes fadeIn
+  from
+    opacity: 0
+  to
+    opacity: 1
+
+.search-icon,
+.arrow-icon
+  margin-left: 1em
+  width: 22px
+  height: 42px
+  vertical-align: middle
+
+  @media (max-width: $screen-sm)
+    display: none
+
+
+.arrow-icon
+  width: 16px
+  use
+    fill: $bunting

@@ -1,27 +1,31 @@
-%form.join-form{action: '#', method: 'POST'}
-  %h3 Get Started. It’s Forever FREE!
-  .spacer20
+%form.join-form.gradient-white.pos-rel.z-10.p-xlarge.p-l-xxlarge.p-r-xxlarge.radius6.elevation1.m-l-r-auto{action: '#', method: 'POST'}
+  %header.text-center
+    %h3.color-bunting.text-demi.no-margin.text-lg  Get Started. It’s FREE!
+  .spacer32
+  %label.color-bunting.text-normal{:for => "url"} Website
   .input-group
     %span.input-group-addon
-      %i.fa.fa-fw.fa-globe
+      %i.icon.icon-link.color-bunting
     %input.form-control{type: 'text', placeholder: 'https://website.com/doc', name: 'url'}
-  %p.text-sm We’ll crawl the <u>documentation pages</u> of your website and index them on Algolia.
-  .spacer10
+  %p.text-sm.color-east-bay.m-t-small We’ll crawl the <u>documentation pages</u> of your website and index them on Algolia.
+  .spacer32
+  %label.color-bunting.text-normal{:for => "email"} Email
   .input-group
     %span.input-group-addon
-      %i.fa.fa-fw.fa-envelope-o
+      %i.icon.icon-email.color-bunting
     %input.form-control{type: 'email', placeholder: 'you@example.org', name: 'email'}
-  %p.text-sm We’ll email you the code you need to integrate the search into your documentation.
+  %p.text-sm.color-east-bay.m-t-small We’ll email you the code you need to integrate the search into your documentation.
+  .spacer32
   %p.checkbox.text-center
     %label
       %input{type: 'checkbox', name: 'owner'}
       %span I'm the <u>owner</u> of that website
-  .spacer20
+  .spacer32
   .text-center
-    %button.btn.btn-primary.btn-lg{type: 'submit'}
-      JOIN THE PROGRAM!
+    %button.btn.btn-static-primary.w100p{type: 'submit'}
+      Join the program
 
-%form.join-form.join-form-validated
+%form.join-form.join-form-validated.hidden
   %h3 Thank you !
   .spacer20
   %p.text-sm

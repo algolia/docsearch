@@ -34,17 +34,11 @@
     <!--[if IE]><link rel="shortcut icon" href="{{ "/img/favicon.png" | prepend: site.baseurl }}"><![endif]-->
     <link rel="icon" href="{{ "/img/favicon.png" | prepend: site.baseurl }}">
 
-    <!-- Fonts -->
-    <link rel="stylesheet" media="screen" href="//fonts.googleapis.com/css?family=Raleway:100,300,600" />
-    <link rel="stylesheet" media="screen" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600" />
-
     <link rel="stylesheet" media="screen" href="{{ "/css/main.css" | prepend: site.baseurl }}" />
-    <link rel="stylesheet" media="screen" href="//cdn.jsdelivr.net/fontawesome/4.4.0/css/font-awesome.min.css" />
-
-    <script src="//cdn.jsdelivr.net/jquery/2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css">
   </head>
+    <body class="{{page.className || page.title}}">
 
-  <body>
     {% include header.html %}
 
     {{ content }}
@@ -53,27 +47,24 @@
     {% include footer.html %}
 {% endif %}
 
-    <script src="{{ "/js/bootstrap.min.js" | prepend: site.baseurl }}"></script>
-    <script src="{{ "/js/responsiveNavigation.js" | prepend: site.baseurl }}"></script>
-
 {% if site.env == 'development' %}
     <script>
       document.write('\x3Cscript src="//' + window.location.hostname +':35731/livereload.js">\x3C/script>');
     </script>
 {% endif %}
 
-    <script type="text/javascript" src="//cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
-    <script type="text/javascript">
-      var myDocSearch = docsearch({
+    <script src="//cdn.jsdelivr.net/jquery/2.1/jquery.min.js"></script>
+    <script src="{{ "/js/communityHeader.js" | prepend: site.baseurl }}"></script>
+    <script>
+      var a = new communityHeader({
         apiKey: '25626fae796133dc1e734c6bcaaeac3c',
         indexName: 'docsearch',
-        inputSelector: '.searchbox__input',
+        inputSelector: '#searchbox',
         autocompleteOptions: {
           debug: false
         }
-      });
+      },"lazy");
     </script>
-
 
   {% include marketing.html %}
 

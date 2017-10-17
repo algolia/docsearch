@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "algolia-aerial": "^1.1.5",
+    "algolia-frontend-components": "^0.0.34"
+  }
+}
