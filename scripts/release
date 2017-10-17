@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-[ -z $HOTFIX ] && HOTFIX='0'
-
 set -e # exit when error
 
 if [[ -n $(npm owner add `npm whoami`) ]]; then
