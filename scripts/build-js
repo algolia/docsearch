@@ -18,12 +18,9 @@ webpack --config webpack.config.jsdelivr.babel.js
 echo "$LICENSE" | cat - "${DIST_FILE}" > /tmp/out && mv /tmp/out "${DIST_FILE}"
 
 uglifyjs "${DIST_FILE}" \
-  --in-source-map "${DIST_FILE_SOURCEMAP}" \
-  --source-map "${DIST_FILE_SOURCEMAP_MIN}" \
-  --preamble "$LICENSE" \
-  -c warnings=false \
-  -m \
-  -o "${DIST_FILE_MIN}"
+  --source-map "content='${DIST_FILE_SOURCEMAP}',filename='${DIST_FILE_SOURCEMAP_MIN}'" \
+  --beautify "preamble='$LICENSE'" \
+  --output "${DIST_FILE_MIN}"
 
 # docsearch as several ES5 files, to be `require`d
 babel -q index.js -o "$DIST_DIR_NPM/index.js"

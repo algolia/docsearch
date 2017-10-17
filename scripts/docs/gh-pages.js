@@ -8,11 +8,10 @@ ghpages.clean();
 
 if (process.env.CI === 'true') {
   ghpages.publish(basePath, {
-    repo: 'https://' + process.env.GH_TOKEN + '@github.com/algolia/docsearch.git',
-    logger: log
+    repo: 'https://' + process.env.GH_TOKEN + '@github.com/algolia/docsearch.git'
   }, end);
 } else {
-  ghpages.publish(basePath, {logger: log}, end);
+  ghpages.publish(basePath, end);
 }
 
 function end(err) {
@@ -21,8 +20,4 @@ function end(err) {
   } else {
     console.log('published gh-pages');
   }
-}
-
-function log(msg) {
-  console.log(msg);
 }

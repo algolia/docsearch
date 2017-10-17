@@ -38,3 +38,5 @@ kramdown:
 # Assets
 sass:
   sass_dir: css
+
+exclude: [node_modules]

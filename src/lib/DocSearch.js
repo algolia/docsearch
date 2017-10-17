@@ -29,26 +29,24 @@ const usage = `Usage:
   [ autocompleteOptions.{hint,debug} ]
 })`;
 class DocSearch {
-  constructor(
-    {
-      apiKey,
-      indexName,
-      inputSelector,
-      appId = 'BH4D9OD16A',
-      debug = false,
-      algoliaOptions = {},
-      autocompleteOptions = {
-        debug: false,
-        hint: false,
-        autoselect: true,
-      },
-      transformData = false,
-      queryHook = false,
-      handleSelected = false,
-      enhancedSearchInput = false,
-      layout = 'collumns',
-    }
-  ) {
+  constructor({
+    apiKey,
+    indexName,
+    inputSelector,
+    appId = 'BH4D9OD16A',
+    debug = false,
+    algoliaOptions = {},
+    autocompleteOptions = {
+      debug: false,
+      hint: false,
+      autoselect: true,
+    },
+    transformData = false,
+    queryHook = false,
+    handleSelected = false,
+    enhancedSearchInput = false,
+    layout = 'collumns',
+  }) {
     DocSearch.checkArguments({
       apiKey,
       indexName,
@@ -68,16 +66,18 @@ class DocSearch {
     this.indexName = indexName;
     this.input = DocSearch.getInputFromSelector(inputSelector);
     this.algoliaOptions = { hitsPerPage: 5, ...algoliaOptions };
-    const autocompleteOptionsDebug = autocompleteOptions &&
-      autocompleteOptions.debug
-      ? autocompleteOptions.debug
-      : false;
+    const autocompleteOptionsDebug =
+      autocompleteOptions && autocompleteOptions.debug
+        ? autocompleteOptions.debug
+        : false;
+    // eslint-disable-next-line no-param-reassign
     autocompleteOptions.debug = debug || autocompleteOptionsDebug;
     this.autocompleteOptions = autocompleteOptions;
     this.autocompleteOptions.cssClasses = {
       prefix: 'ds',
     };
 
+    // eslint-disable-next-line no-param-reassign
     handleSelected = handleSelected || this.handleSelected;
 
     this.isSimpleLayout = layout === 'simple';
@@ -133,7 +133,10 @@ class DocSearch {
 
   static injectSearchBox(input) {
     input.before(templates.searchBox);
-    const newInput = input.prev().prev().find('input');
+    const newInput = input
+      .prev()
+      .prev()
+      .find('input');
     input.remove();
     return newInput;
   }
@@ -179,6 +182,7 @@ class DocSearch {
   getAutocompleteSource(transformData, queryHook) {
     return (query, callback) => {
       if (queryHook) {
+        // eslint-disable-next-line no-param-reassign
         query = queryHook(query) || query;
       }
 
@@ -206,6 +210,7 @@ class DocSearch {
     const clonedHits = utils.deepClone(receivedHits);
     const hits = clonedHits.map(hit => {
       if (hit._highlightResult) {
+        // eslint-disable-next-line no-param-reassign
         hit._highlightResult = utils.mergeKeyWithParent(
           hit._highlightResult,
           'hierarchy'
@@ -243,15 +248,15 @@ class DocSearch {
           '<span class="aa-suggestion-title-separator" aria-hidden="true"> › </span>'
         );
       const text = utils.getSnippetedValue(hit, 'content');
-      const isTextOrSubcatoryNonEmpty = (subcategory && subcategory !== '') ||
+      const isTextOrSubcatoryNonEmpty =
+        (subcategory && subcategory !== '') ||
         (displayTitle && displayTitle !== '');
-      const isLvl1EmptyOrDuplicate = !subcategory ||
-        subcategory === '' ||
-        subcategory === category;
-      const isLvl2 = displayTitle &&
-        displayTitle !== '' &&
-        displayTitle !== subcategory;
-      const isLvl1 = !isLvl2 &&
+      const isLvl1EmptyOrDuplicate =
+        !subcategory || subcategory === '' || subcategory === category;
+      const isLvl2 =
+        displayTitle && displayTitle !== '' && displayTitle !== subcategory;
+      const isLvl1 =
+        !isLvl2 &&
         (subcategory && subcategory !== '' && subcategory !== category);
       const isLvl0 = !isLvl1 && !isLvl2;
 
@@ -311,12 +316,14 @@ class DocSearch {
       middleOfWindow = 900;
     }
 
-    const alignClass = middleOfInput - middleOfWindow >= 0
-      ? 'algolia-autocomplete-right'
-      : 'algolia-autocomplete-left';
-    const otherAlignClass = middleOfInput - middleOfWindow < 0
-      ? 'algolia-autocomplete-right'
-      : 'algolia-autocomplete-left';
+    const alignClass =
+      middleOfInput - middleOfWindow >= 0
+        ? 'algolia-autocomplete-right'
+        : 'algolia-autocomplete-left';
+    const otherAlignClass =
+      middleOfInput - middleOfWindow < 0
+        ? 'algolia-autocomplete-right'
+        : 'algolia-autocomplete-left';
 
     const autocompleteWrapper = $('.algolia-autocomplete');
     if (!autocompleteWrapper.hasClass(alignClass)) {
