@@ -1,4 +1,4 @@
-![DocSearch](docs/img/docsearch-logo.png)
+![DocSearch](docs/img/docsearch-logo-horizontal_dark.svg)
 
 The easiest way to add search to your documentation. For free.
 
@@ -21,7 +21,7 @@ Check out our [website][1] to add an outstanding search to your documentation.
 [jsdelivr-badge]: https://data.jsdelivr.com/v1/package/npm/docsearch.js/badge
 [jsdelivr-url]: https://www.jsdelivr.com/package/npm/docsearch.js
 
-![Eslint][7]
+![Bootstrap][7]
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -280,7 +280,7 @@ See [CONTRIBUTING](./CONTRIBUTING.md)
 [4]: https://img.shields.io/coveralls/algolia/docsearch/master.svg?style=flat-square
 [5]: http://img.shields.io/badge/license-MIT-green.svg?style=flat-square
 [6]: https://img.shields.io/npm/dm/docsearch.js.svg?style=flat-square
-[7]: https://community.algolia.com/docsearch/img/showcase/example-apiary.gif
+[7]: ./docs/bootstrap-docsearch.gif
 [8]: #introduction
 [9]: #setup
 [10]: #customization
