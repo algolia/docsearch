@@ -14,12 +14,12 @@
   logo: "./img/showcase/logo-vuejs.png"
 
 - name: React
-  url: "https://facebook.github.io/react/"
+  url: "https://reactjs.org"
   gif: "./img/showcase/example-react.gif"
   logo: "./img/showcase/logo-react.png"
 
 - name: React Native
-  url: "https://facebook.github.io/react/"
+  url: "https://facebook.github.io/react-native/"
   gif: "./img/showcase/example-reactnative.gif"
   logo: "./img/showcase/logo-react.png"
 
