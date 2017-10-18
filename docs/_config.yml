@@ -20,7 +20,6 @@ navigation:
     url: /about/
 
 # Build settings
-markdown: kramdown
 kramdown:
   input: GFM
   hard_wrap: false
@@ -29,7 +28,7 @@ kramdown:
   footnote_nr:    1
   entity_output:  as_char
   smart_quotes:   lsquo,rsquo,ldquo,rdquo
-  enable_coderay: true
+  syntax_highlighter: coderay
 
   coderay_wrap: div
   coderay_line_numbers: nil
