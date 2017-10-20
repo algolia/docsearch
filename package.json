@@ -59,7 +59,7 @@
     "sinon": "4.0.1",
     "uglify-js": "3.1.4",
     "webpack": "3.8.1",
-    "webpack-dev-server": "2.9.2"
+    "webpack-dev-server": "2.9.3"
   },
   "peerDependencies": {},
   "dependencies": {
