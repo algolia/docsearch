@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "algolia-aerial": "1.2.3",
+    "algolia-aerial": "1.2.4",
     "algolia-frontend-components": "0.0.34"
   }
 }
