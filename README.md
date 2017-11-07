@@ -59,7 +59,7 @@ you need to integrate your new search into your website.
  2. We'll configure your search experience,
  3. You'll need to add a bit of JavaScript and CSS code to your website.
 
-If you prefer to DIY, you can run the [scraper][28] in your own infra. 
+If you prefer to DIY, you can run the [scraper][28] in your own infra.
 
 ## Setup
 
@@ -67,8 +67,8 @@ Once we've crawled your documentation website we'll send you the credentials you
 need to add the following code snippet to your website:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
-<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript">
 docsearch({
   apiKey: '<API_KEY>',
@@ -151,7 +151,7 @@ If you want to do heavy changes to the way results are displayed, you might find
 it easier to directly edit the `scss` files in this repository.
 
 [`_variables.scss`][18]
-contains all the color, breakpoints and size definitions while 
+contains all the color, breakpoints and size definitions while
 [`main.scss`][19]
 holds the structure of the display.
 
@@ -172,7 +172,7 @@ results from the Algolia API. As such, you can use any options provided by
 
 You can pass any options to the underlying `autocomplete` instance through
 the`autocompleteOptions` parameter. You will find all `autocomplete` options in
-its [own documentation][22]. 
+its [own documentation][22].
 
 You can also listen to `autocomplete` events through the `.autocomplete`
 property of the `docsearch` instance.
