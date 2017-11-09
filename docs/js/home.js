@@ -8,7 +8,8 @@
   }
 
   $('.join-form').on('submit', function(e) {
-    var $button = $(this).find('button');
+    e.preventDefault();
+
     var $email = $(this).find('input[name="email"]');
     var $url = $(this).find('input[name="url"]');
     var $owner = $(this).find('input[name="owner"]');
@@ -29,27 +30,26 @@
     if (error) {
       return false;
     }
-    $button.attr('disabled', true);
+
     $.ajax({
       url: 'https://www.algolia.com/docsearch/join',
       type: 'POST',
       data: {
         email: $email.val(),
-        url: $url.val(),
-      },
-    })
-      .done(function() {
+        url: $url.val()
+      }
+    }).done(function() {
         pardotAppendIframe(
           'https://go.pardot.com/l/139121/2016-08-05/ldp67?email=' +
             encodeURIComponent($email.val()) +
             '&website=' +
             encodeURIComponent($url.val())
         );
-        $('.join-form').hide();
-        $('.join-form-validated').show();
+
+        $('.join-form-fill').hide();
+        $('.join-form-validated').removeClass('hidden');
       })
       .fail(function() {
-        $button.attr('disabled', null);
         alert('An error occurred, please try again later.');
       });
 
