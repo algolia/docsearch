@@ -1,0 +1,698 @@
+/**
+ *spacer
+ */
+@mixin spacer
+  width: 100%
+  font-size: 0
+  margin: 0
+  padding: 0
+  border: 0
+  display: block
+
+
+.spacer8
+  +spacer
+  height: 8px
+.spacer16
+  +spacer
+  height: 16px
+.spacer24
+  +spacer
+  height: 24px
+.spacer32
+  +spacer
+  height: 32px
+.spacer40
+  +spacer
+  height: 40px
+.spacer48
+  +spacer
+  height: 48px
+.spacer56
+  +spacer
+  height: 56px
+.spacer64
+  +spacer
+  height: 64px
+.spacer80
+  +spacer
+  height: 80px
+.spacer120
+  +spacer
+  height: 120px
+
+
+/**
+ *width
+ */
+.w100
+  width: 100px
+.w150
+  width: 150px
+.w200
+  width: 200px
+.w100p
+  width: 100%
+.m100
+  max-width: 100px
+.m200
+  max-width: 200px
+.m300
+  max-width: 300px
+.m400
+  max-width: 400px
+.m500
+  max-width: 500px
+.m600
+  max-width: 600px
+.m700
+  max-width: 700px
+.m800
+  max-width: 800px
+.m900
+  max-width: 900px
+.m1000
+  max-width: 1000px
+.m1200
+  max-width: 1200px
+.m100p
+  max-width: 100%
+
+/**
+ *height
+ */
+.h80
+  height: 80px
+.h100
+  height: 100px
+.h200
+  height: 200px
+.h300
+  height: 300px
+.h400
+  height: 400px
+.h500
+  height: 500px
+.h600
+  height: 600px
+.h700
+  height: 700px
+.h800
+  height: 800px
+.hfull
+  height: 100%
+
+/**
+ * positions
+ */
+.pos-rel
+  position: relative
+.pos-stc
+  position: static
+.pos-abt
+  position: absolute
+.pos-fix
+  position: fixed
+
+/**
+ * Indexing
+ */
+.z-1
+  z-index: 1
+.z-2
+  z-index: 2
+.z-3
+  z-index: 3
+.z-4
+  z-index: 4
+.z-5
+  z-index: 5
+.z-10
+  z-index: 10
+.z-20
+  z-index: 20
+.z-100
+  z-index: 100
+
+
+/**
+ *font size
+ */
+.text-heading
+  font-size: 56px
+
+.text-xxl
+  font-size: 40px
+
+.text-xl
+  font-size: 32px
+
+.text-lg
+  font-size: 24px
+
+.text-bg
+  font-size: 20px
+
+.text-regular
+  font-size: 15px
+
+.text-sm
+  font-size: 12px
+
+.text-xsm
+  font-size: 10px
+
+.text-xs
+  font-size: 8px
+
+
+/**
+ *font weight
+ */
+.text-thin
+  font-weight: 300
+.text-normal
+  font-weight: 400
+.text-demi
+  font-weight: 500
+p.text-demi
+  font-weight: 600
+.text-bold
+  font-weight: 700
+.text-bolder
+  font-weight: 900
+p.text-bolder
+  font-weight: 800
+
+/**
+ *borders
+ */
+.b-t
+  border-top: 1px solid $secondary-color
+.b-r
+  border-right: 1px solid $secondary-color
+.b-b
+  border-bottom: 1px solid $secondary-color
+.b-l
+  border-left: 1px solid $secondary-color
+
+.b-n
+  border: none !important
+
+
+/**
+ * Radius
+ */
+.radius6
+  border-radius: 6px
+.radius100p
+  border-radius: 100%
+
+
+/**
+ *padding
+ */
+.padder
+  padding: 0 15px
+.p-mini
+  padding: 5px
+.p-small
+  padding: 10px
+.p-large
+  padding: 20px
+.p-xlarge
+  padding: 30px
+
+.p-t-mini
+  padding-top: 5px
+.p-t-small
+  padding-top: 10px
+.p-t-large
+  padding-top: 20px
+.p-t-xlarge
+  padding-top: 30px
+
+.p-b-mini
+  padding-bottom: 5px
+.p-b-small
+  padding-bottom: 10px
+.p-b-large
+  padding-bottom: 20px
+.p-b-xlarge
+  padding-bottom: 30px
+
+.p-l-small
+  padding-left: 10px
+.p-l-large
+  padding-left: 20px
+.p-l-xlarge
+  padding-left: 30px
+.p-r-small
+  padding-right: 10px
+.p-r-large
+  padding-right: 20px
+.p-r-xlarge
+  padding-right: 30px
+.p-l-xxlarge
+  padding-left: 60px
+.p-r-xxlarge
+  padding-right: 60px
+
+.no-padding
+  padding: 0 !important
+.no-p-l
+  padding-left: 0
+.no-p-r
+  padding-right: 0
+.no-p-t
+  padding-top: 0 !important
+.no-p-b
+  padding-bottom: 0
+
+/**
+ *margin
+ */
+.m-l-r-auto
+  margin-left: auto
+  margin-right: auto
+.m-l
+  margin-left: 15px
+.m-l-none
+  margin-left: 0
+.m-l-mini
+  margin-left: 5px
+.m-l-small
+  margin-left: 10px
+.m-l-large
+  margin-left: 20px
+.m-l-n
+  margin-left: -15px
+.m-l-n-mini
+  margin-left: -5px
+.m-l-n-small
+  margin-left: -10px
+.m-l-n-large
+  margin-left: -20px
+.m-t
+  margin-top: 15px
+.m-t-none
+  margin-top: 0
+.m-t-mini
+  margin-top: 5px
+.m-t-small
+  margin-top: 10px
+.m-t-large
+  margin-top: 20px
+.m-t-n
+  margin-top: -15px
+.m-t-n-xmini
+  margin-top: -1px
+.m-t-n-mini
+  margin-top: -5px
+.m-t-n-small
+  margin-top: -10px
+.m-t-n-large
+  margin-top: -20px
+.m-r
+  margin-right: 15px
+.m-r-none
+  margin-right: 0
+.m-r-mini
+  margin-right: 5px
+.m-r-small
+  margin-right: 10px
+.m-r-large
+  margin-right: 20px
+.m-r-n
+  margin-right: -15px
+.m-r-n-mini
+  margin-right: -5px
+.m-r-n-small
+  margin-right: -10px
+.m-r-n-large
+  margin-right: -20px
+.m-b
+  margin-bottom: 15px
+.m-b-none
+  margin-bottom: 0
+.m-b-mini
+  margin-bottom: 5px
+.m-b-small
+  margin-bottom: 10px
+.m-b-large
+  margin-bottom: 20px
+.m-b-xlarge
+  margin-bottom: 30px
+.m-b-n
+  margin-bottom: -15px
+.m-b-n-mini
+  margin-bottom: -5px
+.m-b-n-small
+  margin-bottom: -10px
+.m-b-n-large
+  margin-bottom: -20px
+
+.no-margin
+  margin: 0 !important
+
+/**
+ * text
+ */
+// Alignment
+.text-left
+  text-align: left
+
+.text-right
+  text-align: right
+
+.text-center
+  text-align: center
+
+.text-justify
+  text-align: justify
+
+// Contextual colors
+.text-muted
+  color: $text-muted
+.vertical-align-middle
+  display: inline-block !important
+  vertical-align: middle !important
+.vertical-align-bottom
+  display: inline-block !important
+  vertical-align: bottom !important
+.text-ellipsis
+  white-space: nowrap
+  overflow: hidden
+  max-width: 100%
+  text-overflow: ellipsis
+.text-break-word
+  word-wrap: break-word
+.nowrap
+  word-wrap: nowrap
+  white-space: nowrap
+.lower-case
+  text-transform: lowercase
+.upper-case
+  text-transform: uppercase
+.capital-case
+  text-transform: capitalize
+.hidden-text
+  text-indent: -9999px
+  color: transparent
+
+/**
+ * Line height
+ */
+.line-h-regular
+  line-height: 1.5
+
+.line-h-small
+  line-height: 1.2
+
+/**
+ *line
+ */
+.line
+  width: 100%
+  height: 1px
+  margin: 10px 0
+  font-size: 0
+  overflow: hidden
+  border-width: 0
+  background-color: $secondary-color
+.line-dashed
+  border-style: dashed
+  background: transparent
+.headline
+  border-bottom: 5px solid $black
+  margin-top: 0
+  line-height: 45px
+
+.no-line
+  border-width: 0
+.no-border
+  border-color: transparent !important
+.no-radius
+  border-radius: 0
+.block
+  display: block
+.inline
+  display: inline-block
+.pull-left
+  float: left
+.pull-right
+  float: right
+.pull-none
+  float: none
+.pull-in
+  margin-right: -15px
+  margin-left: -15px
+.line-v
+  border-left: 1px solid #dddddd
+  padding-left: 20px
+.line-v-right
+  border-right: 1px solid #dddddd
+  padding-right: 20px
+
+
+/**
+ * Flexbox
+ */
+.flex-container
+  display: flex
+
+.flex-dir-col
+  flex-flow: column wrap
+  &-reverse
+    flex-flow: column-reverse wrap
+
+.flex-dir-row
+  flex-flow: row wrap
+  &-reverse
+    flex-flow: row-reverse wrap
+
+/**
+ * Flex space setting
+ */
+.flex-space-around
+  justify-content: space-around
+
+.flex-space-between
+  justify-content: space-between
+
+.flex-align-center
+  align-items: center
+
+/**
+ * Flex item size
+ */
+.flex-it-4
+  flex: 0 1 25%
+
+_:-ms-input-placeholder, :root .flex-it-4
+  -ms-flex-preferred-size: 21% !important
+
+.flex-it-3
+  flex: 0 1 33.33%
+
+_:-ms-input-placeholder, :root .flex-it-3
+  -ms-flex-preferred-size: 29% !important
+
+.flex-it-2
+  flex: 0 1 50%
+
+_:-ms-input-placeholder, :root .flex-it-2
+  -ms-flex-preferred-size: 48% !important
+  @supports ( not ( mix-blend-mode: luminosity))
+    flex: 0 1 49.95%
+
+
+.flex-it-1
+  flex: 0 1 100%
+
+// Responsive flex classes
+@media (min-width: 1200px)
+  .flex-it-1-lg
+    flex: 0 1 100%
+
+  .flex-it-2-lg
+    flex: 0 1 50%
+  _:-ms-input-placeholder, :root .flex-it-2-lg
+    -ms-flex-preferred-size: 48% !important
+    @supports ( not ( mix-blend-mode: luminosity))
+      flex: 0 1 49.95%
+
+  .flex-it-3-lg
+    flex: 0 1 33.33%
+  _:-ms-input-placeholder, :root .flex-it-3-lg
+    -ms-flex-preferred-size: 29% !important
+
+  .flex-it-4-lg
+    flex: 0 1 25%
+  _:-ms-input-placeholder, :root .flex-it-4-lg
+      -ms-flex-preferred-size: 21% !important
+
+@media (max-width: 768px)
+  .flex-it-1-sm
+    flex: 0 1 100%
+
+  .flex-it-2-sm
+    flex: 0 1 50%
+  _:-ms-input-placeholder, :root .flex-it-2-sm
+    -ms-flex-preferred-size: 48% !important
+    @supports ( not ( mix-blend-mode: luminosity))
+      flex: 0 1 49.95%
+
+  .flex-it-3-sm
+    flex: 0 1 33.33%
+  _:-ms-input-placeholder, :root .flex-it-3-sm
+    -ms-flex-preferred-size: 29% !important
+
+  .flex-it-4-sm
+    flex: 0 1 25%
+  _:-ms-input-placeholder, :root .flex-it-4-sm
+    -ms-flex-preferred-size: 21% !important
+
+/**
+ * others
+ */
+.unscroll
+  overflow: hidden !important
+
+.clickable
+  cursor: pointer
+
+.rotate-45
+  transform: rotate(45deg)
+
+.content-box
+  box-sizing: content-box
+
+.faded
+  opacity: .3
+
+.op0
+  opacity: 0
+
+.line-through
+  text-decoration: line-through
+
+.no-decoration
+  text-decoration: none
+
+
+/**
+ * Centering
+ */
+.v-center
+  position: absolute
+  top: 50%
+  transform: translateY(-50%)
+
+.h-center
+  position: absolute
+  left: 50%
+  transform: translateX(-50%)
+
+.vh-center
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%,-50%)
+
+
+/**
+ * Hidden utilities
+ */
+.hidden-sm
+  @media (max-width: $screen-sm)
+    display: none !important
+
+.visible-sm
+  @media (max-width: $screen-sm)
+    display: block !important
+
+.hidden
+  display: none !important
+  visibility: hidden !important
+
+/**
+ * CSS for <sub> and <sup>
+ */
+sub, sup
+  font-size: 50%
+  line-height: 0
+  position: relative
+  vertical-align: baseline
+
+sup
+  top: -0.7em
+
+sub
+  bottom: -0.25em
+
+[ng\:cloak], [ng-cloak], .ng-cloak
+  display: none !important
+
+
+
+/**
+ * Lists
+ */
+.list-none
+  list-style: none
+
+/**
+ * Clearfix
+ */
+.cf:before,
+.cf:after
+  content: " "
+  display: table
+
+
+.cf:after
+  clear: both
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf
+  *zoom: 1
+
+
+/**
+ * Shadows
+ */
+
+.elevation0
+  box-shadow: 0 5px 15px 0 rgba(112, 128, 175, 0.2)
+
+.elevation1
+  box-shadow: 0 10px 40px 0 rgba($bunting,0.07), 0 2px 9px 0 rgba($bunting,0.06)
+
+.elevation2
+  box-shadow: 0 16px 32px 0 rgba($bunting, 0.2)
+
+// Placeholders
+%elevation1
+  box-shadow: 0 10px 40px 0 rgba($bunting,0.07), 0 2px 9px 0 rgba($bunting,0.06)
+
+/**
+ * For inputs
+ */
+.apn
+  -webkit-appearance: none
+  -moz-appearance: none
+  appearance: none
+
+.otn
+  outline: none
+
+/**
+ * To use with gradient for text
+ */
+.gradient-text
+  -webkit-background-clip: text
+  -webkit-text-fill-color: transparent

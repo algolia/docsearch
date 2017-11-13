@@ -1,0 +1,3 @@
+<% redirects.each do |r| %>
+<%= r[:from].gsub(/(.+)\/index\.html/, '\1').gsub('index.html', '') %> <%= "#{r[:to].gsub('/index.html', '').gsub(/\/$/, '')}/" %>
+<% end %>

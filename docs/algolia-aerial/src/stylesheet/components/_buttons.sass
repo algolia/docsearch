@@ -1,0 +1,219 @@
+.btn
+  display: inline-block
+  // For input.btn
+  font-weight: $btn-font-weight
+  text-align: center
+  vertical-align: middle
+  touch-action: manipulation
+  cursor: pointer
+  background-image: none
+  // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+  border: 1px solid transparent
+  white-space: nowrap
+  +user-select(none)
+  padding: 0 20px
+  display: inline-block
+  border-radius: 50px
+  font-size: 16px
+  font-weight: 400
+  height: 40px
+  line-height: 40px
+  border: none
+  box-sizing: border-box
+  position: relative
+  transition: background .2s, box-shadow .2s
+
+  &:active,
+  &.active
+    outline: 0
+    background-image: none
+    +box-shadow(inset 0 3px 5px rgba(0, 0, 0, 0.125))
+
+    &:focus,
+    &.focus
+      +tab-focus
+  &:hover,
+  &:focus,
+  &.focus
+    color: $btn-default-color
+
+  &:hover, &:focus, &:active, &.active
+    outline: 0 !important
+    box-shadow: none
+    text-decoration: none
+
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] &
+    cursor: $cursor-disabled
+    pointer-events: none
+    // Future-proof disabling of clicks
+    +opacity(0.65)
+    +box-shadow(none)
+
+  @media (max-width: $screen-sm)
+    font-size: 14px
+
+  .icon:before
+    position: relative
+    top: 2px
+
+
+.btn-static-default
+  border: 2px solid $tertiary-color
+  color: $text-color
+  background-color: transparent
+  line-height: 36px
+  &:hover, &:focus
+    color: $text-color
+    background-color: rgba($tertiary-color,.3)
+
+
+.btn-static-primary
+  border: none
+  color: #fff
+  background-image: linear-gradient(284deg, $java, $shamrock)
+  &:hover, &:focus
+    color: white
+    background-image: linear-gradient(284deg, $java, $shamrock)
+  &:active, &.active
+    background-image: linear-gradient(284deg, darken($java, 4%), darken($shamrock, 4%))
+
+  &.btn-shadow
+    box-shadow: 0 2px 6px 0 rgba($shamrock, 0.4)
+    &:hover, &:focus
+      box-shadow: 0 4px 12px rgba($shamrock, 0.4)
+
+
+.btn-static-secondary
+  border: none
+  color: #fff
+  background-image: linear-gradient(80deg, $algolia-blue, $royal-blue)
+  &:hover, &:focus
+    color: white
+    background-image: linear-gradient(80deg, $algolia-blue, $royal-blue)
+  &:active, &.active
+    background-image: linear-gradient(80deg, darken($algolia-blue, 4%), darken($royal-blue, 4%))
+  &.btn-shadow
+    box-shadow: 0 2px 6px 0 rgba($royal-blue, 0.4)
+    &:hover, &:focus
+      box-shadow: 0 4px 12px rgba($royal-blue, 0.4)
+
+
+
+.btn-static-tertiary
+  border: none
+  color: #fff
+  background-image: linear-gradient(112deg, $radical-red, $bittersweet)
+  &:hover, &:focus
+    color: white
+    background-image: linear-gradient(112deg, $radical-red, $bittersweet)
+  &:active, &.active
+    background-image: linear-gradient(112deg, darken($radical-red, 4%), darken($bittersweet, 4%))
+  &.btn-shadow
+    box-shadow: 0 2px 6px 0 rgba($bittersweet, 0.4)
+    &:hover, &:focus
+      box-shadow: 0 4px 12px rgba($bittersweet, 0.4)
+
+/*! This button is generated on build and colored with $theme-color.
+  Think about changing the color of it to fit to your needs.*/
+.btn-static-theme
+  border: none
+  color: $bunting
+  background-color: $theme-color
+  &:hover, &:focus
+    color: $deep-cove
+    background-color: darken($theme-color, 10%)
+  &:active, &.active
+    background-image: darken($theme-color, 10%)
+  &.btn-shadow
+    box-shadow: 0 2px 6px 0 rgba($koromiko, 0.4)
+    &:hover, &:focus
+      box-shadow: 0 4px 12px rgba($koromiko, 0.4)
+
+  svg
+    width: 16px
+    height: 16px
+    vertical-align: middle
+    margin-left: 0.5em
+
+    use
+      fill: $bunting
+
+
+.btn-static-inverse
+  color: white
+  &:hover, &:focus, &:active, &.active
+    color: white
+
+
+
+.btn-static-dark
+  color: $white
+  background-color: $deep-cove
+  background-image: linear-gradient(283deg, $deep-cove, $bunting)
+  border-color: $deep-cove
+  &:hover, &:focus
+    color: $white
+    background-color: $bunting
+    border-color: $bunting
+  &.btn-shadow
+    box-shadow: 0 2px 6px 0 rgba($bunting, 0.4)
+    &:hover, &:focus
+      box-shadow: 0 4px 12px rgba($bunting, 0.4)
+
+  &:active, &.active
+    background-image:  linear-gradient(283deg, darken($deep-cove, 10%), darken($bunting, 10%))
+
+.btn-static-white
+  color: $bunting
+  background-color: $white
+  border-color: $white
+  &:hover, &:focus
+    color: $bunting
+
+
+.btn-static-enterprise
+  color: $white
+  background-color: $deep-cove
+  border: solid 2px $shamrock
+  line-height: 36px
+
+  &:hover, &:focus
+    color: white
+    background-color: $shamrock
+    border-color: $shamrock
+
+
+// Circles
+.btn-circle
+  width: 42px
+  height: 42px
+  padding: 0
+  line-height: 42px
+
+
+
+// Shadows
+.btn-static-shadow-dark
+  box-shadow: 0 2px 6px 0 rgba($deep-cove, 0.5)
+  &:hover, &:focus
+    box-shadow: 0 4px 12px rgba($deep-cove, 0.5)
+
+
+.btn-static-default,
+.btn-static-primary,
+.btn-static-secondary,
+.btn-static-tertiary,
+.btn-static-inverse,
+.btn-static-dark,
+.btn-static-enterprise
+  &:active, &.active,
+  &.btn-shadow:active, .btn-shadow.active,
+  &.btn-static-shadow-dark:active, .btn-static-shadow-dark.active
+    box-shadow: inset 0 0 4px 2px rgba(#050f2c, 0.3)
+
+
+// Sizes
+.btn-lg
+  min-width: 210px

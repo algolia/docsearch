@@ -1,0 +1,31 @@
+%section.feedback-form.search-ignore#end-page-feedback.radius6.text-center
+  %h1.feedback-title
+    Did you find this page helpful?
+  %p
+    We're always looking for advice to help improve our documentation!
+    %br
+    Please let us know what's working (or what's not!).
+    %br
+    We're constantly iterating thanks to the feedback we receive.
+
+  %form.report
+    .group.flex-container.m-t
+      .select-wrapper.pos-rel
+        %i.icon.icon-carret-down.pos-abt
+        %select#report-type.radius6.text-regular
+          %option{value: 'feedback'}
+            Feedback
+          %option{value: 'issue'}
+            Issue
+          %option{value: 'typo'}
+            Typo
+          %option{value: 'praise'}
+            Praise
+          %option{value: 'other'}
+            Other
+      %input#report-email.radius6.text-regular{type: 'email', placeholder: 'Email address',  autocomplete: 'off', autocorrect: 'off', autocapitalize: 'none', spellcheck: 'false'}
+    .group
+      %textarea#report-description.radius6.text-regular{required: 'required', placeholder: 'Description here'}
+    .group.text-center
+      %button.btn.btn-lg.btn-static-secondary.report-submit.elevation1
+        Submit

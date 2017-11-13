@@ -1,0 +1,34 @@
+{
+  "scripts": {
+    "start": "webpack --config webpack.config.js && yarn optimize",
+    "optimize": "cleancss dist/aerial-source.css -o dist/aerial.css && yarn done",
+    "done": "echo '✨ Bundle done ✅' && du -h dist/aerial-source.css && du -h dist/aerial.css && yarn pj-version",
+    "pj-version": "npm --loglevel silent run vars",
+    "vars": "env | grep npm_package_version"
+  },
+  "devDependencies": {
+    "extract-text-webpack-plugin": "^3.0.0",
+    "node-sass": "^4.5.3",
+    "sass-loader": "^6.0.6",
+    "webpack": "^3.5.4",
+    "webpack-auto-inject-version": "^1.0.0",
+    "webpack-livereload-plugin": "^0.11.0"
+  },
+  "name": "algolia-aerial",
+  "version": "1.2.6",
+  "description": "algolia-aerial package",
+  "main": "webpack.config.js",
+  "author": "Lucas Bonomi <@LukyVj> (http://lucasbonomi.com)",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://github.com/algolia/algolia-aerial.git"
+  },
+  "dependencies": {
+    "clean-css-cli": "^4.1.6",
+    "css-loader": "^0.28.4",
+    "file-loader": "^0.11.2",
+    "style-loader": "^0.18.2",
+    "url-loader": "^0.5.9"
+  }
+}

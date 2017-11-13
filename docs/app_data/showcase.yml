@@ -1,0 +1,94 @@
+- name: Stripe
+  url: "https://stripe.com/docs"
+  gif: "/docsearch/assets/images/showcase/example-stripe.gif"
+  logo: "/docsearch/assets/images/showcase/logo-stripe.png"
+
+- name: Bootstrap
+  url: "https://getbootstrap.com/docs/4.0"
+  gif: "/docsearch/assets/images/showcase/example-bootstrap.gif"
+  logo: "/docsearch/assets/images/showcase/logo-bootstrap.png"
+
+- name: Vue
+  url: "http://vuejs.org/guide/"
+  gif: "/docsearch/assets/images/showcase/example-vuejs.gif"
+  logo: "/docsearch/assets/images/showcase/logo-vuejs.png"
+
+- name: React
+  url: "https://reactjs.org"
+  gif: "/docsearch/assets/images/showcase/example-react.gif"
+  logo: "/docsearch/assets/images/showcase/logo-react.png"
+
+- name: React Native
+  url: "https://facebook.github.io/react-native/"
+  gif: "/docsearch/assets/images/showcase/example-reactnative.gif"
+  logo: "/docsearch/assets/images/showcase/logo-react.png"
+
+- name: Docusaurus
+  url: "https://docusaurus.io/"
+  gif: "/docsearch/assets/images/showcase/example-docusaurus.gif"
+  logo: "/docsearch/assets/images/showcase/logo-docusaurus.png"
+
+- name: Cordova
+  url: "http://cordova.apache.org/"
+  gif: "/docsearch/assets/images/showcase/example-cordova.gif"
+  logo: "/docsearch/assets/images/showcase/logo-cordova.png"
+
+- name: Babel.js
+  url: "https://babeljs.io/"
+  gif: "/docsearch/assets/images/showcase/example-babel.gif"
+  logo: "/docsearch/assets/images/showcase/logo-babel.png"
+
+- name: Apiary
+  url: "http://help.apiary.io/"
+  gif: "/docsearch/assets/images/showcase/example-apiary.gif"
+  logo: "/docsearch/assets/images/showcase/logo-apiary.png"
+
+- name: Flow
+  url: "https://flow.org/en/docs/"
+  gif: "/docsearch/assets/images/showcase/example-flow.gif"
+  logo: "/docsearch/assets/images/showcase/logo-flow.png"
+
+- name: Moment.js
+  url: "https://momentjs.com/docs/"
+  gif: "/docsearch/assets/images/showcase/example-momentjs.gif"
+  logo: "/docsearch/assets/images/showcase/logo-momentjs.png"
+
+- name: Ant Design
+  url: "https://ant.design/docs/react/introduce"
+  gif: "/docsearch/assets/images/showcase/example-ant-design.gif"
+  logo: "/docsearch/assets/images/showcase/logo-ant-design.png"
+
+- name: Gitlab
+  url: "https://docs.gitlab.com/"
+  gif: "/docsearch/assets/images/showcase/example-gitlab.gif"
+  logo: "/docsearch/assets/images/showcase/logo-gitlab.png"
+
+- name: Symfony
+  url: "https://symfony.com/doc/current/"
+  gif: "/docsearch/assets/images/showcase/example-symfony.gif"
+  logo: "/docsearch/assets/images/showcase/logo-symfony.png"
+
+- name: PM2
+  url: "http://pm2.keymetrics.io/docs/usage/cluster-mode/"
+  gif: "/docsearch/assets/images/showcase/example-pm2.gif"
+  logo: "/docsearch/assets/images/showcase/logo-pm2.png"
+
+- name: Hugo
+  url: "http://gohugo.io/documentation/"
+  gif: "/docsearch/assets/images/showcase/example-hugo.gif"
+  logo: "/docsearch/assets/images/showcase/logo-hugo.png"
+
+- name: Fasltane
+  url: "https://docs.fastlane.tools/"
+  gif: "/docsearch/assets/images/showcase/example-fastlane.gif"
+  logo: "/docsearch/assets/images/showcase/logo-fastlane.png"
+
+- name: Jekyll
+  url: "https://jekyllrb.com/"
+  gif: "/docsearch/assets/images/showcase/example-jekyll.gif"
+  logo: "/docsearch/assets/images/showcase/logo-jekyll.png"
+
+- name: Gatsby
+  url: "https://www.gatsbyjs.org/"
+  gif: "/docsearch/assets/images/showcase/example-gatsby.gif"
+  logo: "/docsearch/assets/images/showcase/logo-gatsby.png"
