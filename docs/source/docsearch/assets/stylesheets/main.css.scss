@@ -1,0 +1,40 @@
+@import '../../../../algolia-frontend-components/components/communityHeader/communityHeader.scss';
+@import '../../../../algolia-aerial/src/stylesheet/aerial';
+
+@import "base";
+@import "mixin";
+@import "fonts";
+@import "syntax-highlighting";
+
+@import "page";
+@import "searchbar";
+@import "docsearch";
+@import "navigation";
+@import "forms";
+@import "documentation";
+@import "components/snippet";
+@import "components/copy-link";
+@import "components/edit-link";
+@import "sidebar";
+
+@import "footer.sass";
+
+
+// *,*:before,*:after {
+//   outline: 1px solid rgba(red, 0.35)}
+
+
+// @media (max-width: $screen-md) {
+//   * {
+//     // background: blue  !important
+//   }
+// }
+
+
+// @media (max-width: $screen-sm) {
+//   * {
+//     background: red  !important
+//   }
+// }
+
+

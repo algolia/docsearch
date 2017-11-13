@@ -1,0 +1,230 @@
+
+//illus retina
+@mixin at2x($path, $ext: "png", $w: auto, $h: auto)
+  background-image: url(image_path($path + "." + $ext))
+  background-repeat: no-repeat
+  $at2x_path: $path + "@2x" + "." + $ext
+  @media all and (-webkit-min-device-pixel-ratio: 1.5), all and (-o-min-device-pixel-ratio: 3 / 2), all and (min--moz-device-pixel-ratio: 1.5), all and (min-device-pixel-ratio: 1.5)
+    background-image: url(image_path($at2x_path))
+    background-size: $w $h
+
+@mixin text-truncate
+  overflow: hidden
+  text-overflow: ellipsis
+  white-space: nowrap
+
+//vertical alignment
+@mixin vertical-align($position: relative)
+  transform: translateY(-50%)
+  position: $position
+  top: 50%
+
+@mixin horizontal-align($position)
+  position: $position
+  left: 50%
+  transform: translateX(-50%)
+
+@mixin center($position)
+  position: $position
+  left: 50%
+  top: 50%
+  transform: translate(-50%, -50%)
+
+// Responsive
+// Responsive Breakpoints
+@mixin big-min-mq
+  @media (min-width: $screen-lg)
+    @content
+
+@mixin big-mq
+  @media (max-width: $screen-lg)
+    @content
+
+@mixin medium-mq
+  @media (max-width: $screen-md)
+    @content
+
+@mixin small-mq
+  @media (max-width: $screen-sm)
+    @content
+
+@mixin mobile-mq
+  @media (max-width: $screen-xs)
+    @content
+
+// Placeholder
+@mixin placeholder
+  &::-webkit-input-placeholder
+    @content
+  &:-moz-placeholder
+    @content
+  &::-moz-placeholder
+    @content
+  &:-ms-input-placeholder
+    @content
+
+//BEM helpers
+@mixin block($block)
+  #{$block}
+    @content
+
+@mixin element($element)
+  &__#{$element}
+    @content
+
+@mixin modifier($modifier)
+  &--#{$modifier}
+    @content
+
+
+@mixin diagonal($rotation, $background, $height, $pos: after)
+  &:#{$pos}
+    content: ''
+    display: block
+    position: absolute
+    width: 100%
+    height: $height
+    background: #{$background}
+    transform: skewY($rotation)
+    z-index: 0
+
+    @media (min-width: $screen-lg)
+      transform: skewY($rotation/2)
+
+    @content
+
+@mixin clearfix()
+  &:before,
+  &:after
+    content: " "
+    display: table
+
+  &:after
+    clear: both
+
+
+@function even-px($value)
+  @if type-of($value) == "number"
+    @if unitless($value)
+      $value: $value * 1px
+    @else if unit($value) == "em"
+      $value: $value / 1em * 16px
+    @else if unit($value) == "pts"
+      $value: $value * 1.3333 * 1px
+    @else if unit($value) == "%"
+      $value: $value * 16 / 100% * 1px
+    $value: round($value)
+    @if $value % 2 != 0
+      $value: $value + 1
+    @return $value
+
+=searchbox($font-size: 90%, $input-width: 350px, $input-height: $font-size * 2.4, $border-width: 1px, $border-radius: $input-height / 2, $input-border-color: #cccccc, $input-focus-border-color: #1ec9ea, $input-background: #f8f8f8, $input-focus-background: white, $placeholder-color: #aaaaaa, $icon: "sbx-icon-search-1", $icon-size: $input-height / 1.6, $icon-position: left, $icon-color: #888888, $icon-background: $input-focus-border-color, $icon-background-opacity: 0.1, $icon-clear: "sbx-icon-clear-1", $icon-clear-size: $font-size / 1.1)
+  display: inline-block
+  position: relative
+  width: $input-width
+  height: even-px($input-height)
+  white-space: nowrap
+  box-sizing: border-box
+  font-size: $font-size
+  &__wrapper
+    width: 100%
+    height: 100%
+  &__input
+    display: inline-block
+    transition: box-shadow .4s ease, background .4s ease
+    border: 0
+    border-radius: even-px($border-radius)
+    box-shadow: inset 0 0 0 $border-width $input-border-color
+    background: $input-background
+    padding: 0
+    padding-right: if($icon-position == "right", even-px($input-height) + even-px($icon-clear-size) + 8px, even-px($input-height * 0.8)) + if($icon-background-opacity == 0, 0, even-px($font-size))
+    padding-left: if($icon-position == "right", even-px($font-size / 2) + even-px($border-radius / 2), even-px($input-height) + if($icon-background-opacity == 0, 0, even-px($font-size * 1.2)))
+    width: 100%
+    height: 100%
+    vertical-align: middle
+    white-space: normal
+    font-size: inherit
+    appearance: none
+    &::-webkit-search-decoration,
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-results-button,
+    &::-webkit-search-results-decoration
+      display: none
+    &:hover
+      box-shadow: inset 0 0 0 $border-width darken($input-border-color, 10%)
+    &:focus,
+    &:active
+      outline: 0
+      box-shadow: inset 0 0 0 $border-width $input-focus-border-color
+      background: $input-focus-background
+    &::placeholder
+      color: $placeholder-color
+  &__submit
+    position: absolute
+    top: 0
+    @if $icon-position == "right"
+      right: 0
+      left: inherit
+    @else
+      right: inherit
+      left: 0
+    margin: 0
+    border: 0
+    border-radius: if($icon-position == "right", 0 $border-radius $border-radius 0, $border-radius 0 0 $border-radius)
+    background-color: rgba($icon-background, $icon-background-opacity)
+    padding: 0
+    width: even-px($input-height) + if($icon-background-opacity == 0, 0, even-px($font-size / 2))
+    height: 100%
+    vertical-align: middle
+    text-align: center
+    font-size: inherit
+    user-select: none
+    // Helper for vertical alignement of the icon
+    &::before
+      display: inline-block
+      margin-right: -4px
+      height: 100%
+      vertical-align: middle
+      content: ''
+    &:hover,
+    &:active
+      cursor: pointer
+    &:focus
+      outline: 0
+    svg
+      width: even-px($icon-size)
+      height: even-px($icon-size)
+      vertical-align: middle
+      fill: $icon-color
+  &__reset
+    display: none
+    position: absolute
+    top: (even-px($input-height) - even-px($icon-clear-size)) / 2 - 4px
+    right: if($icon-position == "right", even-px($input-height) + if($icon-background-opacity == 0, 0, even-px($font-size)), (even-px($input-height) - even-px($icon-clear-size)) / 2 - 4px)
+    margin: 0
+    border: 0
+    background: none
+    cursor: pointer
+    padding: 0
+    font-size: inherit
+    user-select: none
+    fill: rgba(black, 0.5)
+    &:focus
+      outline: 0
+    svg
+      display: block
+      margin: 4px
+      width: even-px($icon-clear-size)
+      height: even-px($icon-clear-size)
+  &__input:valid ~ &__reset
+    display: block
+    animation-name: sbx-reset-in
+    animation-duration: .15s
+  @at-root
+    @keyframes sbx-reset-in
+      0%
+        transform: translate3d(-20%, 0, 0)
+        opacity: 0
+      100%
+        transform: none
+        opacity: 1

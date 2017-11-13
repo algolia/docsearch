@@ -1,0 +1,184 @@
+
+.al-card
+  background-color: $white
+  box-shadow: 0 2px 6px 0 rgba($deep-cove, 0.4)
+  padding: 40px 24px
+  position: relative
+  border-radius: 4px
+
+  &.small-card
+    .card-title,
+    .card-icon,
+    .card-text
+      vertical-align: middle
+
+    .card-title
+      color: $bunting
+      font-size: 16px
+      font-weight: 800
+      padding: 0
+      margin: 0
+      opacity: 0.8
+      margin-bottom: 8px
+      text-transform: none
+
+    .card-icon svg
+      width: 72px
+
+    .card-text
+      font-size: 16px
+      line-height: 24px
+      color: $bunting
+      opacity: 0.7
+
+  &.cover-card
+    height: 240px
+    margin: 0 auto 24px
+    width: 240px
+    border-radius: 5px
+    overflow: hidden
+
+    .card-background
+      width: 100%
+      height: 100%
+      position: absolute
+      transition: transform 0.3s ease
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+
+      &:after
+        position: absolute
+        display: block
+        content: ''
+        width: 100%
+        height: 100%
+        top: 0
+        left: 0
+        background: rgba($deep-cove, 0.5)
+        transition: opacity 0.3s ease
+
+    .card-icon
+      position: absolute
+      z-index: 12
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      transition: transform 0.3s ease
+
+// Card border
+.card-border,
+.card-border-quote
+  position: relative
+
+  .card-border-line
+    position: absolute
+    top: 0
+    left: 0
+    height: 5px
+    width: 100%
+    border-top-left-radius: 6px
+    border-top-right-radius: 6px
+
+.card-border
+  height: 100%
+
+
+// Card border with media ( img, videos )
+.card-border-media
+  overflow: hidden
+  min-height: 200px
+
+  .card-header
+    width: 100%
+    height: 100%
+    height: 228px
+    overflow: hidden
+    position: relative
+
+    img
+      width: 100%
+      height: 100%
+      opacity: 0.8
+      will-change: opacity, mix-blend-mode
+      border-top-left-radius: 6px
+      border-top-right-radius: 6px
+
+      @supports (mix-blend-mode: soft-light)
+        mix-blend-mode: soft-light
+        transition: opacity 0.2s ease, mix-blend-mode 0.2s ease
+
+      @supports (not (mix-blend-mode: soft-light))
+        opacity: 0.6
+
+      @supports (not (object-fit: cover))
+        height: auto
+        position: absolute
+        top: 50%
+        transform: translateY(-50%)
+
+      @supports (object-fit: cover)
+        object-fit: cover
+        object-position: center center
+
+  .card-separator
+    height: 5px
+    width: 100%
+
+
+
+  &.card-border-media-effect
+    .card-header img
+      filter: grayscale(100%)
+    &:hover .card-header img
+      filter: grayscale(0)
+      @supports (mix-blend-mode: soft-light)
+        mix-blend-mode: unset
+        opacity: 1
+
+
+// Card border quotes
+.card-border-quote
+
+  .card-container
+    &:before
+      content: ''
+      display: block
+      width: 14px
+      height: 14px
+      background: transparent
+      position: absolute
+      left: 0
+      right: 0
+      margin: auto
+      bottom: -10px
+      border-radius: 100px
+      box-shadow: 0 4px 20px rgba($bunting,0.08), 0 2px 9px 0 rgba($bunting,0.07), 0 4px 18px rgba($bunting,0.07)
+      z-index: -1
+    &:after
+      content: ''
+      display: block
+      width: 18px
+      height: 18px
+      background: #fff
+      position: absolute
+      left: 0
+      right: 0
+      margin: auto
+      bottom: -9px
+      transform: rotate(-45deg)
+
+
+  .quote-author
+
+  .avatar
+    position: relative
+    width: 42px
+    height: 42px
+    border-radius: 100px
+    float: left
+    margin-right: 8px
+  .author-infos
+    width: calc(100% - 42px - 8px)
+    float: left
+    > span

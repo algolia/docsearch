@@ -1,0 +1,11 @@
+.documentation {
+  aside {
+    top: 56px;
+    padding-top: 38px;
+    border-right-color: $ghost;
+
+    @media (max-width: 768px) {
+      display: none
+    }
+  }
+}

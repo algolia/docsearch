@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<% sitemap_tree.from_url('docsearch').flatten.each do |page| %>
+  <% if page.get_val.destination_path.include?('.html') %>
+  <url>
+    <loc><%= "#{app_data.config.host}/#{page.get_val.destination_path.gsub(/index\.html$/, '')}" %></loc>
+  </url>
+  <% end %>
+<% end %>
+</urlset>

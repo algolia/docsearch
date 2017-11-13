@@ -6,6 +6,7 @@ dist/
 npm-debug.log*
 yarn-error.log
 docs/_site
+docs/build
 docs/.sass-cache/
 dist-es5-module/
 yarn.lock

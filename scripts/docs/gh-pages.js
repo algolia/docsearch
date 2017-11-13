@@ -2,7 +2,7 @@
 import ghpages from 'gh-pages';
 import {join} from 'path';
 
-let basePath = join(__dirname, '../../docs/_site');
+let basePath = join(__dirname, '../../docs/build');
 
 ghpages.clean();
 

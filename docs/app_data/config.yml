@@ -1,0 +1,9 @@
+# OpenGraph / Twitter
+title: DocSearch
+description: "Algolia DocSearch is the easiest way to add search to your documentation. Just send us your URL, and we'll send you the implementation code."
+tagline: DocSearch
+card_image: https://community.algolia.com/docsearch/assets/images/docsearch-social.png
+twitter_username: algolia
+github_username: algolia
+baseurl: /docsearch
+host: https://community.algolia.com

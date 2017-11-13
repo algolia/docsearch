@@ -1,0 +1,46 @@
+table
+  background-color: $table-bg
+
+caption
+  padding-top: $table-cell-padding
+  padding-bottom: $table-cell-padding
+  color: $text-muted
+  text-align: left
+
+th
+  text-align: left
+
+
+.table
+  width: 100%
+  max-width: 100%
+  margin-bottom: $line-height-computed
+
+  > thead,
+  > tbody,
+  > tfoot
+    > tr
+      > th,
+      > td
+        padding: $table-cell-padding
+        line-height: $line-height-base
+        vertical-align: top
+        border-top: 1px solid $table-border-color
+
+  > thead > tr > th
+    vertical-align: bottom
+    border-bottom: 2px solid $table-border-color
+
+  > caption + thead,
+  > colgroup + thead,
+  > thead:first-child
+    > tr:first-child
+      > th,
+      > td
+        border-top: 0
+
+  > tbody + tbody
+    border-top: 2px solid $table-border-color
+
+  .table
+    background-color: $body-bg

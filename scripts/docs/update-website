@@ -11,6 +11,8 @@ fi
 if [ $currentBranch != 'master' ]; then
   printf "update-website: You must be on master"
   exit 1
+else
+  export STAGE=production
 fi
 
 VERSION=`cat package.json | json version`
@@ -20,9 +22,8 @@ set -e # exit when error
 printf "\nPublish website to gh-pages\n"
 
 cd docs
-npm install
 bundle install
-rm -rf _site
-JEKYLL_ENV=production VERSION=${VERSION} bundle exec jekyll build
+rm -rf build
+bundle exec middleman build --no-parallel
 cd ..
 babel-node scripts/docs/gh-pages.js

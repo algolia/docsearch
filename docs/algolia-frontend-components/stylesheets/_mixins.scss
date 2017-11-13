@@ -1,0 +1,29 @@
+
+@mixin arrowSeparatorLeft($color, $stroke: false) {
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: 10;
+    height: 110%;
+    width: 40px;
+    top: -5%;
+    left: -6px;
+
+    @if $stroke != false {
+      background: url("data:image/svg+xml;utf8,<svg  viewBox=\'0 0 31 62\' xmlns=\'http://www.w3.org/2000/svg\' xmlns:xlink=\'http://www.w3.org/1999/xlink\'><title>Rectangle</title><defs><path id=\'b\' d=\'M6 1l23 30L6 61H0V1z\'/><filter x=\'-50%\' y=\'-50%\' width=\'200%\' height=\'200%\' filterUnits=\'objectBoundingBox\' id=\'a\'><feOffset dx=\'1\' in=\'SourceAlpha\' result=\'shadowOffsetOuter1\'/><feGaussianBlur stdDeviation=\'.5\' in=\'shadowOffsetOuter1\' result=\'shadowBlurOuter1\'/><feColorMatrix values=\'0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0\' in=\'shadowBlurOuter1\'/></filter></defs><g fill=\'#{str-replace(#{$color}, '#','%23')}\' stroke=\'#{str-replace(#{$stroke}, '#','%23')}\' stroke-width=\'2\' fill-rule=\'evenodd\'><use filter=\'url(%23a)\' xlink:href=\'%23b\'/><use xlink:href=\'%23b\'/></g></svg>")no-repeat;
+      } @else {
+      background: url("data:image/svg+xml;utf8,<svg  viewBox=\'0 0 31 62\' xmlns=\'http://www.w3.org/2000/svg\' xmlns:xlink=\'http://www.w3.org/1999/xlink\'><title>Rectangle</title><defs><path id=\'b\' d=\'M6 1l23 30L6 61H0V1z\'/><filter x=\'-50%\' y=\'-50%\' width=\'200%\' height=\'200%\' filterUnits=\'objectBoundingBox\' id=\'a\'><feOffset dx=\'1\' in=\'SourceAlpha\' result=\'shadowOffsetOuter1\'/><feGaussianBlur stdDeviation=\'.5\' in=\'shadowOffsetOuter1\' result=\'shadowBlurOuter1\'/><feColorMatrix values=\'0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0\' in=\'shadowBlurOuter1\'/></filter></defs><g fill=\'#{str-replace(#{$color}, '#','%23')}\' fill-rule=\'evenodd\'><use filter=\'url(%23a)\' xlink:href=\'%23b\'/><use xlink:href=\'%23b\'/></g></svg>")no-repeat;
+      }
+  }
+}
+
+@mixin placeholder {
+  $placeholders: ":-webkit-input" ":-moz" "-moz" "-ms-input";
+  @each $placeholder in $placeholders {
+    &:#{$placeholder}-placeholder {
+      @content;
+    }
+  }
+}
+

@@ -1,0 +1,4 @@
+- from: /index.html
+  to: /docsearch/documentation/docsearch/introduction
+- from: /docsearch/documentation/index.html
+  to: /docsearch/documentation/docsearch/introduction

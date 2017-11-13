@@ -1,0 +1,50 @@
+require 'dotenv'
+require 'yaml'
+require_relative './lib/google_analytics_downloader.rb'
+
+Dotenv.load('.env')
+
+task :build do
+  sh "STAGE=#{ENV['STAGE'] || 'beta'} bundle exec middleman build"
+end
+
+task :s3_sync do
+  sh "STAGE=#{ENV['STAGE'] || 'beta'} bundle exec middleman s3_sync"
+end
+
+task :purge_cache do
+  stage = ENV['STAGE'] || 'beta'
+  # if stage == 'production'
+    sh <<-SHELL
+      curl -X DELETE "https://api.cloudflare.com/client/v4/zones/#{ENV['CLOUDFLARE_ZONE']}/purge_cache" \
+        -H "X-Auth-Email: #{ENV['CLOUDFLARE_AUTH_EMAIL']}" \
+        -H "X-Auth-Key: #{ENV['CLOUDFLARE_AUTH_KEY']}" \
+        -H "Content-Type: application/json" \
+        --data '{"tags":["algoliaweb-doc--#{stage}"]}'
+    SHELL
+  # else
+  #   puts "Not in production, not purging cache"
+  # end
+end
+
+task :deploy do
+  Rake::Task[:build].invoke
+  Rake::Task[:s3_sync].invoke
+  Rake::Task[:purge_cache].invoke
+end
+
+task :production do
+  ENV['STAGE'] = 'production'
+end
+
+task :beta do
+  ENV['STAGE'] = 'beta'
+end
+
+task :download_google_analytics_data do
+  file = File.expand_path(File.join(__FILE__, '..', 'app_data', 'google_analytics.yml'))
+  File.open(file, 'w') do |f|
+    f << GoogleAnalyticsDownloader.fetch.to_yaml
+  end
+end
+

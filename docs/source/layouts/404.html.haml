@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+%html
+  %head
+
+    %title
+      - if content_for?(:title)
+        = yield_content :title
+      - else
+        = current_page.data.title || 'Algolia'
+
+    :javascript
+      GOOGLE_TAG_MANAGER_ID = '#{config[:google_tag_mangager_id]}';
+
+    = stylesheet_link_tag '//fonts.googleapis.com/css?family=Open+Sans:300,400,600'
+    = stylesheet_link_tag 'main'
+
+    %meta{name: 'viewport', content: 'width=device-width, initial-scale=1.0'}
+
+  %body.errors.flex.flex-justify-center.flex-align-center
+    .container
+      .spacer120
+      .clear-page
+        .text-center.dark
+          .spacer20
+        .container
+          %section.panel.m800.m-l-r-auto
+            .panel-body
+              = yield
+              .row.text-center
+                %a.btn.btn-static-dark{:href => "/doc"}
+                  Go back to homepage
+                  %i.icon-arrow-right
+                .spacer32
+      .clearfix
+
+      #doc-footer.text-center.text-muted
+        © Algolia - #{ link_to 'Privacy Policy', '/policies/privacy'}
