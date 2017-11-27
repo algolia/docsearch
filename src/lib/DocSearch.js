@@ -73,9 +73,10 @@ class DocSearch {
     // eslint-disable-next-line no-param-reassign
     autocompleteOptions.debug = debug || autocompleteOptionsDebug;
     this.autocompleteOptions = autocompleteOptions;
-    this.autocompleteOptions.cssClasses = {
-      prefix: 'ds',
-    };
+    this.autocompleteOptions.cssClasses =
+      this.autocompleteOptions.cssClasses || {};
+    this.autocompleteOptions.cssClasses.prefix =
+      this.autocompleteOptions.cssClasses.prefix || 'ds';
 
     // eslint-disable-next-line no-param-reassign
     handleSelected = handleSelected || this.handleSelected;
