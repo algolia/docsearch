@@ -1,3 +1,18 @@
+<a name="2.5.0"></a>
+# [2.5.0](https://github.com/algolia/docsearch/compare/v2.4.1...v2.5.0) (2017-11-28)
+
+
+### Bug Fixes
+
+* **autocompleteOptions:** allow cssClasses options ([#246](https://github.com/algolia/docsearch/issues/246)) ([6de70c3](https://github.com/algolia/docsearch/commit/6de70c3))
+
+
+### Features
+
+* **global:** Add responsive feature to the dropdown ([777d2d4](https://github.com/algolia/docsearch/commit/777d2d4))
+
+
+
 <a name="2.4.1"></a>
 ## [2.4.1](https://github.com/algolia/docsearch/compare/v2.4.0...v2.4.1) (2017-08-08)
 
@@ -54,7 +69,7 @@
 
 ### Bug Fixes
 
-* **zepto:** upgrade autocomplete.js (#150) ([e024917](https://github.com/algolia/docsearch/commit/e024917))
+* **zepto:** upgrade autocomplete.js ([#150](https://github.com/algolia/docsearch/issues/150)) ([e024917](https://github.com/algolia/docsearch/commit/e024917))
 
 
 
@@ -69,7 +84,7 @@
 
 ### Bug Fixes
 
-* **empty:** query should be escaped (self-XSS) (#147) ([3aed41b](https://github.com/algolia/docsearch/commit/3aed41b))
+* **empty:** query should be escaped (self-XSS) ([#147](https://github.com/algolia/docsearch/issues/147)) ([3aed41b](https://github.com/algolia/docsearch/commit/3aed41b))
 
 
 
@@ -99,7 +114,7 @@
 
 ### Bug Fixes
 
-* **doc:** docsearch header link (#117) ([66e68a9](https://github.com/algolia/docsearch/commit/66e68a9))
+* **doc:** docsearch header link ([#117](https://github.com/algolia/docsearch/issues/117)) ([66e68a9](https://github.com/algolia/docsearch/commit/66e68a9))
 
 
 
@@ -119,7 +134,7 @@
 
 ### Features
 
-* **docs:** new community header / footer (#114) ([af76d31](https://github.com/algolia/docsearch/commit/af76d31))
+* **docs:** new community header / footer ([#114](https://github.com/algolia/docsearch/issues/114)) ([af76d31](https://github.com/algolia/docsearch/commit/af76d31))
 
 
 
@@ -169,7 +184,7 @@
 
 ### Features
 
-* **v2:** modification for v2 (#112) ([f0a7e6b](https://github.com/algolia/docsearch/commit/f0a7e6b)), closes [#92](https://github.com/algolia/docsearch/issues/92) [#102](https://github.com/algolia/docsearch/issues/102)
+* **v2:** modification for v2 ([#112](https://github.com/algolia/docsearch/issues/112)) ([f0a7e6b](https://github.com/algolia/docsearch/commit/f0a7e6b)), closes [#92](https://github.com/algolia/docsearch/issues/92) [#102](https://github.com/algolia/docsearch/issues/102)
 
 
 
@@ -184,9 +199,9 @@
 
 ### Features
 
-* **DOM:** add an align class (#108) ([9421897](https://github.com/algolia/docsearch/commit/9421897))
-* **serve:** Watch and serve all needed files (#91) ([ef83775](https://github.com/algolia/docsearch/commit/ef83775))
-* **website:** add echo (#94) ([8a34ecb](https://github.com/algolia/docsearch/commit/8a34ecb))
+* **DOM:** add an align class ([#108](https://github.com/algolia/docsearch/issues/108)) ([9421897](https://github.com/algolia/docsearch/commit/9421897))
+* **serve:** Watch and serve all needed files ([#91](https://github.com/algolia/docsearch/issues/91)) ([ef83775](https://github.com/algolia/docsearch/commit/ef83775))
+* **website:** add echo ([#94](https://github.com/algolia/docsearch/issues/94)) ([8a34ecb](https://github.com/algolia/docsearch/commit/8a34ecb))
 
 
 
