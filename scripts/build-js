@@ -17,10 +17,13 @@ mkdir -p "$DIST_DIR_CDN" "$DIST_DIR_NPM"
 webpack --config webpack.config.jsdelivr.babel.js
 echo "$LICENSE" | cat - "${DIST_FILE}" > /tmp/out && mv /tmp/out "${DIST_FILE}"
 
+uglifyjs --version
+
 uglifyjs "${DIST_FILE}" \
   --source-map "content='${DIST_FILE_SOURCEMAP}',filename='${DIST_FILE_SOURCEMAP_MIN}'" \
-  --beautify "preamble='$LICENSE'" \
-  --output "${DIST_FILE_MIN}"
+  --beautify "beautify=false,preamble='$LICENSE'" \
+  --output "${DIST_FILE_MIN}" \
+  --verbose
 
 # docsearch as several ES5 files, to be `require`d
 babel -q index.js -o "$DIST_DIR_NPM/index.js"
