@@ -1,3 +1,8 @@
+<a name="2.5.1"></a>
+## [2.5.1](https://github.com/algolia/docsearch/compare/v2.5.0...v2.5.1) (2017-11-28)
+
+
+
 <a name="2.5.0"></a>
 # [2.5.0](https://github.com/algolia/docsearch/compare/v2.4.1...v2.5.0) (2017-11-28)
 
@@ -240,8 +245,8 @@
 ### Features
 
 * **serve:** Add `npm run serve` to expose js and css locally ([31e5d13](https://github.com/algolia/docsearch/commit/31e5d13))
-* **website:** Logo Update - Og screen + favicon ([c7eb54a](https://github.com/algolia/docsearch/commit/c7eb54a))
 * **website:** community header ([366cc0d](https://github.com/algolia/docsearch/commit/366cc0d))
+* **website:** Logo Update - Og screen + favicon ([c7eb54a](https://github.com/algolia/docsearch/commit/c7eb54a))
 * **website:** removed demos ([6d8eb34](https://github.com/algolia/docsearch/commit/6d8eb34))
 * **website:** update ([9498e3b](https://github.com/algolia/docsearch/commit/9498e3b))
 * **website:** updated logo ([fa413d9](https://github.com/algolia/docsearch/commit/fa413d9))
