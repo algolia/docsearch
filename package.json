@@ -58,7 +58,7 @@
     "semver": "5.4.1",
     "sinon": "4.0.1",
     "uglify-js": "3.1.5",
-    "webpack": "3.8.1",
+    "webpack": "3.10.0",
     "webpack-dev-server": "2.9.4"
   },
   "peerDependencies": {},
