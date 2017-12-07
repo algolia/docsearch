@@ -2,7 +2,6 @@
 layout: page
 title: Documentation
 permalink: /documentation/
-className: 'documentation'
 ---
 
 ## Introduction
@@ -29,8 +28,8 @@ Once we've crawled your documentation website we'll send you the credentials you
 need to add the following code snippet to your website:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
-<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript">
 docsearch({
   apiKey: '<API_KEY>',
@@ -48,13 +47,24 @@ npm install --save docsearch.js
 
 ## Customization
 
+### Attribution
+
+We're happy to provide DocSearch free of charge for your site, and you're
+welcome to customise that experience in a way that works for you; all we ask is
+that Algolia be attributed within the search context. For example, in the
+default implementation, we place a small "Search by Algolia" logo in the
+corner. If you prefer to roll your own UX, you'll need to make sure that this
+logo is included in your implementation as well.
+
+### Default styling
+
 The default colorscheme is white and gray:
 
 ![Default colorscheme][17]
 
 To update the colors to suit your website, you just need to override a few
-colors. Here is an example of a CSS file that you can use as a basis and that
-sets white and purples colors.
+colors. Here is an example of a CSS file that you can use as a basis to
+set white and purple colors.
 
 ```css
 /* Bottom border of each suggestion */
@@ -98,7 +108,7 @@ sets white and purples colors.
 
 ### Advanced styling
 
-If you want to do heavily change the way results are displayed, you might find
+If you want to do heavy changes to the way results are displayed, you might find
 it easier to directly edit the `scss` files in this repository.
 
 [`_variables.scss`][18]
@@ -147,8 +157,13 @@ search.autocomplete.on('autocomplete:opened', function(e) {
 });
 ```
 
+### Docsearch Options
+
+
+#### handleSelected
+
 We already bind the autocomplete:selected event inside the docsearch.
-If you want to replace the default behavior you can pass the handleSelected option
+If you want to replace the default behavior you can pass the `handleSelected` option.
 
 ```javascript
 var search = docsearch({
@@ -156,6 +171,38 @@ var search = docsearch({
   indexName: '<INDEX_NAME>',
   inputSelector: '<YOUR_INPUT_DOM_SELECTOR>',
   handleSelected: function (input, event, suggestion) {
+  }
+});
+```
+
+#### queryHook
+
+If you want modify the query before it is send to Algolia you can pass the `queryHook` option.
+
+```javascript
+var search = docsearch({
+  apiKey: '<API_KEY>',
+  indexName: '<INDEX_NAME>',
+  inputSelector: '<YOUR_INPUT_DOM_SELECTOR>',
+  queryHook: function (query) {
+      return query + "_modified";
+  }
+});
+```
+
+#### transformData
+
+If you want to modify the hits before displaying them you can make use of the
+`transformData` option
+
+```
+var search = docsearch({
+  apiKey: '<API_KEY>',
+  indexName: '<INDEX_NAME>',
+  inputSelector: '<YOUR_INPUT_DOM_SELECTOR>',
+  transformData: function (hits) {
+    // modify hits
+    return hits;
   }
 });
 ```
@@ -168,6 +215,7 @@ the `algoliaOptions` parameter.
 
 ```javascript
 docsearch({
+  appId: '<APP_ID>', // if you are running the crawler yourself
   apiKey: '<API_KEY>',
   indexName: '<INDEX_NAME>',
   inputSelector: '<YOUR_INPUT_DOM_SELECTOR>',
@@ -177,7 +225,7 @@ docsearch({
 });
 ```
 
-You will find all Algolia API options in its [own documentation][23]
+You will find all Algolia API options in its [own documentation][23].
 
 
 [1]: https://community.algolia.com/docsearch/
@@ -186,7 +234,7 @@ You will find all Algolia API options in its [own documentation][23]
 [4]: https://img.shields.io/coveralls/algolia/docsearch/master.svg?style=flat-square
 [5]: http://img.shields.io/badge/license-MIT-green.svg?style=flat-square
 [6]: https://img.shields.io/npm/dm/docsearch.js.svg?style=flat-square
-[7]: https://community.algolia.com/docsearch/img/showcase/example-apiary.gif
+[7]: ./docs/bootstrap-docsearch.gif
 [8]: #introduction
 [9]: #setup
 [10]: #customization
@@ -202,7 +250,7 @@ You will find all Algolia API options in its [own documentation][23]
 [20]: https://github.com/algolia/autocomplete.js
 [21]: https://github.com/algolia/autocomplete.js
 [22]: https://github.com/algolia/autocomplete.js#options
-[23]: https://www.algolia.com/doc/api-client/javascript/parameters/#overview
+[23]: https://www.algolia.com/doc/api-reference/api-parameters/
 [24]: https://nodejs.org/en/
 [25]: https://jekyllrb.com/
 [26]: https://www.ruby-lang.org/en/
