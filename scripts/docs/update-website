@@ -20,7 +20,7 @@ set -e # exit when error
 printf "\nPublish website to gh-pages\n"
 
 cd docs
-yarn
+npm install
 bundle install
 rm -rf _site
 JEKYLL_ENV=production VERSION=${VERSION} bundle exec jekyll build
