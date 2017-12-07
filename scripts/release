@@ -22,7 +22,7 @@ printf "\n\nRelease: update working tree"
 git pull origin master
 git fetch origin --tags
 
-printf "Release: yarn"
+printf "Release: npm install"
 npm install
 
 currentVersion=`cat package.json | json version`
