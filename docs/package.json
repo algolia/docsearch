@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "algolia-aerial": "1.2.6",
+    "algolia-aerial": "1.2.7",
     "algolia-frontend-components": "0.0.34"
   }
 }
