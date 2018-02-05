@@ -23,6 +23,16 @@
   gif: "./img/showcase/example-reactnative.gif"
   logo: "./img/showcase/logo-react.png"
 
+- name: Docusaurus
+  url: "https://docusaurus.io/"
+  gif: "./img/showcase/example-docusaurus.gif"
+  logo: "./img/showcase/logo-docusaurus.png"
+
+- name: Cordova
+  url: "http://cordova.apache.org/"
+  gif: "./img/showcase/example-cordova.gif"
+  logo: "./img/showcase/logo-cordova.png"
+  
 - name: Babel.js
   url: "https://babeljs.io/"
   gif: "./img/showcase/example-babel.gif"
@@ -73,7 +83,12 @@
   gif: "./img/showcase/example-fastlane.gif"
   logo: "./img/showcase/logo-fastlane.png"
 
-- name: Docusaurus
-  url: "https://docusaurus.io/"
-  gif: "./img/showcase/example-docusaurus.gif"
-  logo: "./img/showcase/logo-docusaurus.png"
+- name: Jekyll
+  url: "https://jekyllrb.com/"
+  gif: "./img/showcase/example-jekyll.gif"
+  logo: "./img/showcase/logo-jekyll.png"
+
+- name: Gatsby
+  url: "https://www.gatsbyjs.org/"
+  gif: "./img/showcase/example-gatsby.gif"
+  logo: "./img/showcase/logo-gatsby.png"
