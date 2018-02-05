@@ -24,7 +24,7 @@
   logo: "./img/showcase/logo-react.png"
 
 - name: Babel.js
-  url: "https://babeljs.algolia.com/"
+  url: "https://babeljs.io/"
   gif: "./img/showcase/example-babel.gif"
   logo: "./img/showcase/logo-babel.png"
 
@@ -33,7 +33,47 @@
   gif: "./img/showcase/example-apiary.gif"
   logo: "./img/showcase/logo-apiary.png"
 
-- name: Scala
-  url: "http://docs.scala-lang.org/"
-  gif: "./img/showcase/example-scala.gif"
-  logo: "./img/showcase/logo-scala.png"
+- name: Flow
+  url: "https://flow.org/en/docs/"
+  gif: "./img/showcase/example-flow.gif"
+  logo: "./img/showcase/logo-flow.png"
+
+- name: Moment.js
+  url: "https://momentjs.com/docs/"
+  gif: "./img/showcase/example-momentjs.gif"
+  logo: "./img/showcase/logo-momentjs.png"
+
+- name: Ant Design
+  url: "https://ant.design/docs/react/introduce"
+  gif: "./img/showcase/example-ant-design.gif"
+  logo: "./img/showcase/logo-ant-design.png"
+
+- name: Gitlab
+  url: "https://docs.gitlab.com/"
+  gif: "./img/showcase/example-gitlab.gif"
+  logo: "./img/showcase/logo-gitlab.png"
+
+- name: Symfony
+  url: "https://symfony.com/doc/current/"
+  gif: "./img/showcase/example-symfony.gif"
+  logo: "./img/showcase/logo-symfony.png"
+
+- name: PM2
+  url: "http://pm2.keymetrics.io/docs/usage/cluster-mode/"
+  gif: "./img/showcase/example-pm2.gif"
+  logo: "./img/showcase/logo-pm2.png"
+
+- name: Hugo
+  url: "http://gohugo.io/documentation/"
+  gif: "./img/showcase/example-hugo.gif"
+  logo: "./img/showcase/logo-hugo.png"
+
+- name: Fasltane
+  url: "https://docs.fastlane.tools/"
+  gif: "./img/showcase/example-fastlane.gif"
+  logo: "./img/showcase/logo-fastlane.png"
+
+- name: Docusaurus
+  url: "https://docusaurus.io/"
+  gif: "./img/showcase/example-docusaurus.gif"
+  logo: "./img/showcase/logo-docusaurus.png"
