@@ -4,9 +4,9 @@ host: 0.0.0.0
 
 # OpenGraph / Twitter
 title: DocSearch
-description: "Algolia DocSearch is the easiest way to add search to your documentation. Just send us your URL, and we'll send you the implementation code."
+description: "Algolia DocSearch is the easiest way to add a nice search experience to your documentation. Just send us your URL, and we'll send you the implementation code."
 tagline: DocSearch
-card_image: https://community.algolia.com/docsearch/img/docsearch-social.jpg
+card_image: https://community.algolia.com/docsearch/img/docsearch-social.png
 twitter_username: algolia
 github_username: algolia
 
