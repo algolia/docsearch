@@ -1,6 +1,6 @@
 = wrap_layout :default do
   %aside.pos-fix.w100p.m300.hfull.fill-white.p-t-large.b-r.fill-athens-gray.p-l-xlarge
-    - sitemap_tree.from_url('docsearch/documentation').get_children.each do |dir|
+    - sitemap_tree.from_url('documentation').get_children.each do |dir|
       %h3
         = unslug(dir.get_url_part)
       %ul.list-none.no-margin.no-padding

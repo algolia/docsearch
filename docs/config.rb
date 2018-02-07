@@ -17,7 +17,7 @@ ignore 'layouts/*'
 ignore 'partials/*'
 ignore '**.yml'
 
-page '/docsearch/documentation/*', layout: 'page'
+page '/documentation/*', layout: 'page'
 
 #app.logger.level = :debug
 redirects = []
