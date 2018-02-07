@@ -53,7 +53,6 @@ configure :server do
   #activate :livereload
   use BetterErrors::Middleware
   BetterErrors.application_root = __dir__
-  redirects.push({from: '/index.html' , to: '/docsearch'})
 end
 
 # Build-specific configuration
@@ -73,13 +72,8 @@ end
 
 
 ready do
-  no_redirect = ENV['NO_REDIRECTS'] && (ENV['NO_REDIRECTS'] == 'true')
-  is_travis_pr_build = ENV['TRAVIS_PULL_REQUEST'] && (ENV['TRAVIS_PULL_REQUEST'] != 'false')
-
-  if not no_redirect and not is_travis_pr_build
-    redirects.each do |r|
-      redirect r[:from][1..-1], to: r[:to]
-    end
+  redirects.each do |r|
+    proxy r[:from][1..-1], 'templates/redirect.html', locals: {url: r[:to]}, ignore: true, layout: nil
   end
 
   proxy '/_redirects', 'templates/redirects', locals: {redirects: redirects}, ignore: true
