@@ -6,7 +6,7 @@
       %ul.list-none.no-margin.no-padding
         - dir.get_children.each do |file|
           %li
-            %a{href: file.get_final_url}
+            %a{href: "#{file.final_url(file.get_url)}/"}
               = file.get_val.metadata[:page][:title]
 
 
