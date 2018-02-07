@@ -10,13 +10,13 @@ layout: default
         %h1
           %span.hidden
             DocSearch
-          %img.logo{src: '/docsearch/assets/images/docsearch-logo-horizontal_light.svg', height: 48}
+          %img.logo{src: 'assets/images/docsearch-logo-horizontal_light.svg', height: 48}
         %h3 The easiest way to add search to your documentation
     .inline.spacer40
     .row.pull-left.m100p.w100p.no-margin
       .col-md-7
         #demo-screens
-          %img#placeholder.w100p{src: '/docsearch/assets/images/screens/screen_react.png', alt: ''}
+          %img#placeholder.w100p{src: 'assets/images/screens/screen_react.png', alt: ''}
       .col-md-5
         = partial 'partials/join-form'
   .spacer64
@@ -49,7 +49,7 @@ layout: default
           %a.elevation1.fill-white.block.h300.p-large.radius6{href: entry.url, target: '_blank'}
             .screen-wrapper.pos-rel.h200.unscroll
               %img.img-responsive.example.m100p{src: entry.gif, alt: "#{entry.name} docsearch demo", 'data-type-gif': 'true'}
-              %img.img-responsive.screen-mask.m100p.pos-abt{src: '/docsearch/assets/images/mask.png', alt: 'mask'}
+              %img.img-responsive.screen-mask.m100p.pos-abt{src: 'assets/images/mask.png', alt: 'mask'}
             .spacer32.hidden-sm
             .col-md-4.col-sm-12.no-padding.img-container.text-center.vertical-align-middle
               %img.img-responsive.logo{src: entry.logo, alt: entry.name}
@@ -82,7 +82,7 @@ layout: default
       .spacer32
     .row
       .col-sm-12
-        %img.img-responsive.m100p{src: '/docsearch/assets/images/illus-howitworks.svg', alt: 'How it works'}
+        %img.img-responsive.m100p{src: 'assets/images/illus-howitworks.svg', alt: 'How it works'}
     .spacer32
     .row
       .col-sm-10.col-sm-offset-1
@@ -139,4 +139,4 @@ layout: default
   .inline.spacer120
   .inline.spacer64
 
-%script{src: '/docsearch/assets/javascripts/main.js'}
+%script{src: 'assets/javascripts/main.js'}

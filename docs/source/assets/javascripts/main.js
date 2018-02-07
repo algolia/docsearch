@@ -11,7 +11,7 @@ function setScreen() {
     'screen_middleman',
   ];
   const rand = Math.floor(Math.random() * (screens.length - 0) + 0);
-  const imgPath = '/docsearch/assets/images/screens/';
+  const imgPath = 'assets/images/screens/';
   const screenImage = document.createElement('img');
   const imageHolder = document.querySelector('#demo-screens');
   const imagePlaceholder = document.querySelector('#placeholder');

@@ -4,6 +4,7 @@
     %meta{charset: 'utf-8'}
     %meta{'http-equiv': 'X-UA-Compatible', content: 'IE=edge'}
     %meta{name: 'viewport', content: 'width=device-width, initial-scale=1'}
+    %base{href:(app.config[:stage] == 'production' ? 'https://community.algolia.com/docsearch/': '/')}
 
     %title
       - if current_page.data.title
@@ -34,8 +35,8 @@
     %link{rel: 'shortcut icon', href: '/img/favicon.png'}
     <![endif]-->
 
-    %link{rel: 'icon', href: '/docsearch/img/favicon.png'}
-    %link{rel: 'stylesheet', media: 'screen', href: '/docsearch/assets/stylesheets/main.css'}
+    %link{rel: 'icon', href: 'img/favicon.png'}
+    %link{rel: 'stylesheet', media: 'screen', href: 'assets/stylesheets/main.css'}
     %link{rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css'}
 
   - classes = current_page.destination_path.include?('documentation') ? 'documentation': ''
@@ -48,8 +49,8 @@
       = partial 'partials/footer'
 
     %script{src: '//cdn.jsdelivr.net/jquery/2.1/jquery.min.js'}
-    %script{src: '/docsearch/assets/javascripts/communityHeader.js'}
-    %script{src: '/docsearch/assets/javascripts/main.js'}
+    %script{src: 'assets/javascripts/communityHeader.js'}
+    %script{src: 'assets/javascripts/main.js'}
     :javascript
       var a = new communityHeader({
         apiKey: '25626fae796133dc1e734c6bcaaeac3c',
