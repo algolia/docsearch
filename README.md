@@ -280,7 +280,7 @@ See [CONTRIBUTING](./CONTRIBUTING.md)
 [4]: https://img.shields.io/coveralls/algolia/docsearch/master.svg?style=flat-square
 [5]: http://img.shields.io/badge/license-MIT-green.svg?style=flat-square
 [6]: https://img.shields.io/npm/dm/docsearch.js.svg?style=flat-square
-[7]: ./docs/source/assests/images/bootstrap-docsearch.gif
+[7]: ./docs/source/assets/images/bootstrap-docsearch.gif
 [8]: #introduction
 [9]: #setup
 [10]: #customization
