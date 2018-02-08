@@ -1,4 +1,4 @@
-![DocSearch](https://cdn.rawgit.com/algolia/docsearch/master/docs/img/docsearch-logo-horizontal_dark.svg)
+![DocSearch](https://cdn.rawgit.com/algolia/docsearch/master/docs/source/assests/images/docsearch-logo-horizontal_dark.svg)
 
 The easiest way to add search to your documentation. For free.
 
@@ -9,7 +9,7 @@ Check out our [website][1] to add an outstanding search to your documentation.
 [version-svg]: https://img.shields.io/npm/v/docsearch.js.svg?style=flat-square
 [package-url]: https://npmjs.org/package/docsearch.js
 [travis-svg]: https://img.shields.io/travis/algolia/docsearch/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/algolia/docsearch
+[travis-url]: https://travis-ci.org/algolia/docsearch.svg?branch=master
 [coveralls-svg]: https://img.shields.io/coveralls/algolia/docsearch/master.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/github/algolia/docsearch?branch=docs%2Fbadges
 [license-image]: http://img.shields.io/badge/license-MIT-green.svg?style=flat-square
@@ -280,7 +280,7 @@ See [CONTRIBUTING](./CONTRIBUTING.md)
 [4]: https://img.shields.io/coveralls/algolia/docsearch/master.svg?style=flat-square
 [5]: http://img.shields.io/badge/license-MIT-green.svg?style=flat-square
 [6]: https://img.shields.io/npm/dm/docsearch.js.svg?style=flat-square
-[7]: ./docs/bootstrap-docsearch.gif
+[7]: ./docs/source/assests/images/bootstrap-docsearch.gif
 [8]: #introduction
 [9]: #setup
 [10]: #customization
@@ -290,7 +290,7 @@ See [CONTRIBUTING](./CONTRIBUTING.md)
 [14]: #documentation-website
 [15]: #macos
 [16]: https://community.algolia.com/docsearch/
-[17]: https://community.algolia.com/docsearch/img/default-colorscheme.png
+[17]: https://community.algolia.com/docsearch/assets/images/default-colorscheme.png
 [18]: https://github.com/algolia/docsearch/blob/master/src/styles/_variables.scss
 [19]: https://github.com/algolia/docsearch/blob/master/src/styles/main.scss
 [20]: https://github.com/algolia/autocomplete.js
