@@ -1,0 +1,54 @@
+---
+title: Recommendations
+---
+
+Here we look at several ingredients that help guarantee best results. You can also have a look at our [blog that discusses the pitfalls and recommendations](https://blog.algolia.com/how-to-build-a-helpful-search-for-technical-documentation-the-laravel-example/) that create the DocSearch adventure!
+
+## Page Structure
+
+
+For DocSearch to work, your **documentation** must be structured in a certain way. Structure reflects **clarity**, **exactness** and **steadiness**. A helpful document will always have an understandable structure at one glance.
+It allows a user to get the ins and outs of the information and to quickly assimilate the **context**. It will help her/him to establish the **potential relevancy** of the document regarding her/his **intent**.
+
+Last but not least the structure introduces a lot of meta information that are game changers at indexing time, such as **document hierarchy** or the use of [facets](#).
+
+## Document hierarchy
+
+
+As previously mentioned, the **meta information** is almost as important as the payload itself. The hierarchical path of a document is one of the most important pieces of metadata information. It brings out the **context** of the document and thus empowers its content with an additional relationship. (Here we are referring to Custom Ranking).
+
+Finding the **right depth** of your tree and how to split-up your content is one of the **most complex tasks**. For large documents, we usually recommend having 4 levels (from lvl0 until lvl3). Three different levels should be the minimum.
+
+The **depth** of a record is also really enlightening. It will be considered within our [ranking formula](#) thanks to the [attributeToIndex](#) settings. Definitely the higher up the content is, the more impact it will have.
+
+In order to deliver the best user experience, it is key to open the page at the exact position of the match. The location of the match is easier to find in a **fragmented** document thanks to anchors (#). This hierarchy must be total and complete in order to be meaningful, this is why you should try to avoid heterogeneity.
+
+## Consistency
+
+
+Consistency is a pillar of a meaningful documentation. In addition to increase the **intelligibility** of a document it also shortens the time required for a user to find the coveted information. The document's **topic** should be easily **identifiable** and its **outline** sharply demarcated.
+
+The hierarchy should always have the same size. Try to **avoid orphan records** such like the implicit introduction/conclusion or asides. The selectors must be efficient for **every documents** and highlight the proper hierarchy. They need to match only the coveted elements depending on their level. Be careful to avoid **edge effect** by matching unexpected **superfluous elements**.
+
+We encourage you to build selectors that are **flexible from a DOM structure** point of view but really **discriminating regarding the documentation's information**. They should be as much as possible GUI agnostic and focus on the **characterisation of the payload**.
+
+Selectors should only match information from **real document webpage** and remain ineffective for others ones (e.g., landing page, table of content, etc.) We urge the maintainer to define **dedicated class** for the **main DOM container** that includes the actual documents content such as `.docSearch-content`
+
+Since documentation should be **interactive**, it is a key point to **verbalise concepts with standardised words**. This **redundancy** empowered with the **search experience** (dropdown) will even enable the user to **learn at searching time**. The **way to find the information** plays a key role in **leading** the user to the **retrieved knowledge itself**. You can also use the **synonym feature**
+
+## Unicity
+
+
+The more time-consuming a documentation is, the more painful and reluctant its use will be. You must avoid hazy points or catch-all. In addition to it being unhelp, the catch-all document may be **confusing** and **counterproductive**.
+
+Last but not least duplicates introduce noise and mislead users. This why you should always focus on the relevant content and avoid the content to be duplicated within your site (e.g. [landing page which gathers the whole information](#scrap_start_urls), sum up, etc.). In cases where the duplicates's existence is expected since it belongs to another dataset (e.g. different version), you should use [facets](https://www.algolia.com/doc/guides/searching/faceting/)
+
+## Conciseness
+
+
+What is clearly thought out is clearly and concisely expressed.
+
+## The Crawler, The Discovery Process, Exhaustivity
+
+
+Since every documentation should be complete, the search experience must **cover the whole of it**. By default our scraper is crawling your website: it **follows hyperlinks referenced** from the scraped pages. If these links point a page which belongs to the [allowed domain](#), this precise page will be scraped, crawled and so forth. This **de facto discovery** is really practical but not exhaustive enough. For any reasons, some webpages could not be referenced from another covered one. Thus the scope of the search will be imperfect. For those reasons we highly recommend that you use a **Sitemap** (#). This list of every page of your web site will be used as the **main source of truth** and it will define the roadmap of our scraping. Beside this exhaustivity, using a sitemap introduces a significant performance improvement for our scraper.

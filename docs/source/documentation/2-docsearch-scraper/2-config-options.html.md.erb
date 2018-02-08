@@ -1,8 +1,9 @@
 ---
-title: Config options
+title: Take the most of your configuration
 ---
 
 ## Introduction
+
 
 The DocSearch scraper will use a configuration file specifying:
  - the Algolia index name that will store the records resulting from the crawling
@@ -15,14 +16,16 @@ The DocSearch scraper will use a configuration file specifying:
 
 ## How it works
 
+
 Once you run the DocSearch scraper on a specific configuration, it will:
- - crawl all the URLs you specified (from the *start_urls* or the *sitemap*)
+ - crawl all the URLs you specified (from the `start_urls` or the `sitemap`)
  - follow all the hyperlinks mentioned in the page, and continue the crawling there
  - stop the crawling as soon as you've reached a URL that is not specified in your configuration or affiliated to a start url
  - extract the content of every single crawled page following the logic you defined using the CSS selectors
  - push the resulting records to the Algolia index you configured
 
 ## Configuration format
+
 
 A configuration file looks like:
 
@@ -53,14 +56,19 @@ A configuration file looks like:
 }
 ```
 
-### `index_name` ***Mandatory***
+It must be **a valid JSON file**
+
+## DocSearch options
+
+
+### `index_name` _Mandatory_
 
 Name of the Algolia index where all the data will be pushed. If the `PREFIX` environment variable is defined, it will be prefixed
 with it.
 
-*This name must be equal to the configuration file name*
+**This name must be equal to the configuration file name**
 
-### `start_urls` ***Mandatory***
+### `start_urls` _Mandatory_
 You can pass either a string or an array of urls. The crawler will go to each
 page in order, following every link it finds on the page. It will only stop if
 the domain is outside of the `allowed_domains` or if the link is blacklisted in
@@ -69,7 +77,7 @@ Strings will be considered as regex.
 
 Note that it currently does not follow 301 redirects.
 
-### `selectors` ***Mandatory***
+### `selectors` _Mandatory_
 
 This object contains all the CSS selectors that will be used to create the
 record hierarchy. It contains 6 levels (`lvl0`, `lvl1`, `lvl2`, `lvl3`, `lvl4`,
@@ -79,7 +87,8 @@ relevance.
 A default config would be to target the page `title` or `h1` as `lvl0`, the `h2`
 as `lvl1` and `h3` as `lvl2`. `text` is usually any `p` of text.
 
-## Sitemap crawling ***Optional***
+### Sitemap crawling _Optional_
+
 
 Our crawler offers you to crawl a site by discovering the URLs using Sitemaps. Thus, you will need to define the direct url(s) to your sitemap XML file, `sitemap_urls` , and then establish regex(s), `sitemap_urls_regexs` , which will match the URLs to crawl. Otherwise it will use the `start_urls` pattern in order to match the URLs available within the site map.
 
@@ -94,7 +103,7 @@ A list of regular expression that will be applied to each URL from the sitemap. 
 ###  `force_sitemap_urls_crawling`
 Specifies if matched URL should not respect the same rules as the hyperlink crawled. If set to true, each URL will be scraped no matter if it suited the `start_urls` or `stop_urls`. Default is `force_sitemap_urls_crawling` disabled
 
-#### Example
+### Example
 ```json
 [...]
 "sitemap_urls": [
@@ -110,6 +119,7 @@ Given this configuration, each webpage whose the URL contains '/doc/' will be sc
 
 
 ### Global selectors
+
 
 It's possible to make a selector global which means that all records for the page will have
 this value. This is useful when you have a title that is in the right sidebar and
@@ -254,7 +264,7 @@ Default is `0`.
 
 ## Possible issues
 
-#### Duplicated content
+### Duplicated content
 
 It could happen that the crawled website returned duplicated data. Most of the time, this is because the crawled pages got the same urls with two different schemes.
 
@@ -274,7 +284,7 @@ In this attribute, you can also list the pages you want to skip:
 ]
 ```
 
-#### Anchors
+### Anchors
 
 The scraper will also consider pages with anchors as different pages. Make sure you remove any hashsign from the urls you put in the stop & start URLs:
 
