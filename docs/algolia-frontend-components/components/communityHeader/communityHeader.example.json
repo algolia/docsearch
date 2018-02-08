@@ -18,17 +18,17 @@
       }, {
         "name": "Autocomplete.js",
         "url": "https://github.com/algolia/autocomplete.js",
-        "logo": "https://community.algolia.com/img/illus-autocomplete.svg",
+        "logo": "https://community.algolia.com/assets/images/illus-autocomplete.svg",
         "backgroundColor": "#00587f"
       }, {
         "name": "instantsearch.js",
         "url": "https://community.algolia.com/instantsearch.js/",
-        "logo": "https://community.algolia.com/img/logo-is.svg",
+        "logo": "https://community.algolia.com/assets/images/logo-is.svg",
         "backgroundColor": "#385D72"
       }, {
         "name": "Helper.js",
         "url": "https://community.algolia.com/algoliasearch-helper-js/",
-        "logo": "https://community.algolia.com/img/logo-helper.svg",
+        "logo": "https://community.algolia.com/assets/images/logo-helper.svg",
         "backgroundColor": "#FDBD57"
       }, {
         "name": "Magento",
