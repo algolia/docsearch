@@ -23,8 +23,6 @@ Check out our [website][1] to add an outstanding search to your documentation.
 
 ![Bootstrap][7]
 
-https://github.com/algolia/docsearch/blob/master/docs/source/assets/images/bootstrap-docsearch.gif?raw=true
-
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of Contents
@@ -282,7 +280,7 @@ See [CONTRIBUTING](./CONTRIBUTING.md)
 [4]: https://img.shields.io/coveralls/algolia/docsearch/master.svg?style=flat-square
 [5]: http://img.shields.io/badge/license-MIT-green.svg?style=flat-square
 [6]: https://img.shields.io/npm/dm/docsearch.js.svg?style=flat-square
-[7]: https://cdn.rawgit.com/algolia/docsearch/master/docs/source/assests/images/bootstrap-docsearch.gif
+[7]: ./docs/source/assests/images/bootstrap-docsearch.gif
 [8]: #introduction
 [9]: #setup
 [10]: #customization
