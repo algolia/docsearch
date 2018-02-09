@@ -132,7 +132,7 @@ Example:
       "concepts"
      ],
      "page_rank": 1,
-     selectors_key": "concepts"
+     "selectors_key": "concepts"
    },
    "selectors": {
       "default": {
@@ -281,13 +281,13 @@ least a `lvl1` field.
 This is especially useful when the documentation is split into several pages,
 but all pages duplicates the main title or introduction (see [this issue][1]).
 
-Default to `0`
+Default is `0`
 
 ### `only_content_level` _Optional_
 
 This attribute allow you to only indexed records which matches the `text` selectos. Every other records will be skipped.
 
-Default to `false`
+Default is `false`
 
 ### `js_render` _Optional_
 
@@ -295,14 +295,16 @@ The HTML code that we crawl is sometimes generated using Javascript. In those
 cases, the `js_render` option must be set to `true`. It will enable our
 internal proxy (Selenium) to render pages before crawling them.
 
-This parameter is optional and is set to `false` by default. We higly recommend to avoid doing client-side rendering. It mainly decreases the performances of your website.
+We higly recommend to avoid doing client-side rendering. It mainly decreases the performances of your website.
+
+Default is `false`
 
 ### `js_wait` _Optional_
 
 The `js_wait` parameter lets you change the default waiting time (in seconds) to render the
 webpage with the Selenium emulator.
 
-This parameter is optional and is set to `0s` by default.
+Default is `0`s
 
 ### `use_anchors` _Optional_
 
