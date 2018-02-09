@@ -73,9 +73,85 @@ You can pass either a string or an array of urls. The crawler will go to each
 page in order, following every link it finds on the page. It will only stop if
 the domain is outside of the `allowed_domains` or if the link is blacklisted in
 `stop_urls`.
-Strings will be considered as regex.
-
 Note that it currently does not follow 301 redirects.
+This parameter also behave as [regular expression](https://en.wikipedia.org/wiki/Regular_expression). If you don't use a sitemap, you must define at least one reachable URL (HTTP 20x). Otherwise the scraper will not crawl your web site.
+
+You can build some more advanced URL. You will need to use object which have `variables` attribute. These variables will be injected into the URLs:
+Example:
+```json
+{
+   "url": "http://example.com/docs/(?P<lang>.*?)/(?P<version>.*?)/",
+   "variables": {
+      "version": [
+         "latest",
+         "3.3",
+         [...]
+      ],
+      "lang": [
+         "en",
+         "fr",
+         [...]
+      ]
+}
+```
+The whole pattern `(?P<version>.*?)` will be replaced by the value assigned in the related attribute `version`.
+  The variable name is not fixed. Please note that those varaible will behave as
+ [`attributesForFaceting`](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/) which [restrains the scope of the search from the snippet](https://www.algolia.com/doc/guides/searching/faceting/).
+
+ Thus you can limit the scope of the search to the records from the pages encompassed by `http://example.com/docs/en/latest/*` thanks to the following snippet:
+ ```js
+ <script type="text/javascript">
+ docsearch({
+    apiKey: ${apiKey},
+    indexName: ${indexName},
+    inputSelector: '#search'
+    algoliaOptions: { 'facetFilters': ["lang:en", "version:latest"] },
+});
+</script>
+ ```
+
+You can also defined some `tags` that will also behaves as [`attributesForFaceting`](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/).
+
+In order to promote some result, you can set the `page_rank` attribute (default: 0, can be a positive or negative integer). It will impact the [ranking formula](https://www.algolia.com/doc/guides/ranking/ranking-formula/#ranking)
+
+Finally if your layout is not consistent, you can define some specific `selectors` and apply them thanks to `selectors_key`:
+
+Example:
+```json
+{
+  "index_name": "example",
+   start_urls:[
+   "http://example.com/docs/latest/",
+   {
+     "url": "http://example.com/docs/concepts/",
+     "tags": [
+      "concepts"
+     ],
+     "page_rank": 1,
+     selectors_key": "concepts"
+   },
+   "selectors": {
+      "default": {
+         "lvl0": ".docSearch-content h1",
+         "lvl1": ".docSearch-content h2",
+         "lvl2": ".docSearch-content h3",
+         "lvl3": ".docSearch-content h4",
+         "lvl4": ".docSearch-content h5",
+         "text": ".docSearch-content p, .docSearch-content li"
+      },
+      "concepts" {
+         "lvl0": ".docSearch-header h2",
+         "lvl1": ".docSearch-content h1",
+         "lvl2": ".docSearch-content h2",
+         "lvl3": ".docSearch-content h3",
+         "lvl4": ".docSearch-content h5",
+         "text": ".docSearch-content p"
+      }
+    }
+    [...]
+}
+```
+
 
 ### `selectors` _Mandatory_
 
