@@ -3,13 +3,12 @@ title: Configuring the search results
 ---
 
 DocSearch is a wrapper around the [autocomplete.js](https://github.com/algolia/autocomplete.js) library that gets its
-results from the Algolia API. As such, you can use any options provided by
-[autocomplete.js](https://github.com/algolia/autocomplete.js) and by the Algolia API.
+results from the Algolia API. As such, you can use any options provided by this project and by [the Algolia API](https://www.algolia.com/doc/api-reference/).
 
 ## Autocomplete options
 
 You can pass any options to the underlying `autocomplete` instance through
-the`autocompleteOptions` parameter. You will find all `autocomplete` options in
+the `autocompleteOptions` parameter. You will find all `autocomplete` options in
 its [own documentation](https://github.com/algolia/autocomplete.js#options).
 
 You can also listen to `autocomplete` events through the `.autocomplete`
@@ -54,7 +53,7 @@ var search = docsearch({
 
 ### queryHook
 
-If you want modify the query before it is send to Algolia you can pass the `queryHook` option.
+If you want modify the query before it is sent to Algolia you can pass the `queryHook` option.
 
 ```javascript
 var search = docsearch({
