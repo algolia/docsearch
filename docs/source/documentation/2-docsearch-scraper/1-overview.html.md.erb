@@ -1,29 +1,32 @@
 ---
-title: Install
+title: DocSearch on your own infrastructure
 ---
 
-This is the repository for the scraper for the [DocSearch project](https://community.algolia.com/docsearch/).
-You can run it on your own, or [ask us](https://community.algolia.com/docsearch/) to crawl your documentation.
+In the regular use of DocSearch, you don't have to bother, we **handle the whole stack**.
 
-DocSearch is composed by 3 different projects:
-* The front-end of DocSearch: https://github.com/algolia/docsearch
-* The scraper which browses & indexes web pages: https://github.com/algolia/docsearch-scraper
-* The configurations for the scraper: https://github.com/algolia/docsearch-configs
+In some specific use cases, you may want to look under the hood and DIY.
+This is welcome with DocSearch since every tool is open source.
+DocSearch is composed of 3 different projects:
+* [The front-end of DocSearch](https://github.com/algolia/docsearch)
+* [The scraper](https://github.com/algolia/docsearch-scraper), which browses & indexes web pages
+* [The configuration repo](https://github.com/algolia/docsearch-configs) for the scraper.
+
+## The DocSearch backend: [our scraper](https://github.com/algolia/docsearch-scraper):
 
 This project is a collection of submodules, each one in its own directory:
 * cli: A command line tool to manage DocSearch. Run `./docsearch` and follow the steps
-* deployer: Tool used by Algolia to deploy the configuration in our mesos infrastructure
+* deployer: Tool used by Algolia to deploy the configuration in our Apache Mesos infrastructure
 * doctor: A monitoring/repair tool to check if the indices built by the scraper are in good shape
 * playground: An HTML page to easily test DocSearch indices
 * scraper: The core of the scraper. It reads the configuration file, fetches the web pages and indexes them in Algolia.
 
-## Install Docsearch
+## Install
 
 The DocSearch scraper is based on [Scrapy](https://scrapy.org), a famous python-based web scraper. Because it might need some JavaScript to render the pages it crawls, the scraper is also depending on [selenium](http://www.seleniumhq.org).
 
 To ease the setup process, a Docker container is provided to help you run the scraper.
 
-### Environment
+### Environment:
 
 - Install `python` & `pip`
   - `brew install python # will install pip`
@@ -33,7 +36,7 @@ To ease the setup process, a Docker container is provided to help you run the sc
 - `cd docsearch-scraper`
 - `pip install --user -r requirements.txt`
 
-### With docker
+### With docker:
 
 - Build the underlying Docker image: `./docsearch docker:build`
 
@@ -61,7 +64,7 @@ Options:
   --help    Display help message
 
 Available commands:
- bootstrap              Boostrap a docsearch config
+ bootstrap              Bootstrap a docsearch config
  run                    Run a config
  playground             Launch the playground
  docker
@@ -74,17 +77,17 @@ Available commands:
 
 ### Create a config
 
-To use DocSearch, the first thing you need is to create a crawler config. For more details about configs, check out [https://github.com/algolia/docsearch-configs](https://github.com/algolia/docsearch-configs), you'll have a list of options you can use and a lot of live and working examples.
+To use DocSearch, the first thing you need is to create a crawler config. For more details about configs, check out [our configuration repo](https://github.com/algolia/docsearch-configs), you'll have a list of options you can use and a lot of live and working examples.
 
 ### Crawl the website
 
-**With docker:**
+#### With docker:
 
 ```sh
 $ ./docsearch docker:run /path/to/your/config
 ```
 
-**Without docker:**
+#### Without docker
 
 ```sh
 $ ./docsearch run /path/to/your/config
@@ -119,7 +122,7 @@ To add the DocSearch dropdown menu to your website, add the following snippet to
 
 And you are good to go!
 
-### Specify appId
+### Specify your own appId
 
 If you are running the scraper on your own, you will need to tell the widget about your Algolia application ID via the `appId` parameter.
 
@@ -134,7 +137,7 @@ If Algolia is handling the crawling of your site, you do not need to specify `ap
 
 ## Admin task
 
-If you are Algolia employee and want to manage a DocSearch account,
+If you are an Algolia employee and want to manage a DocSearch account,
 you'll need to add the following variables in your `.env` file:
 
 ```
@@ -148,22 +151,22 @@ DEPLOY_KEY=
 
 The cli will then have more commands for you to run.
 
-For some actions like deploying you might need to use different credentials than the ones in the .env file.
+For some actions like deploying you might need to use different credentials than the ones in the _.env_ file.
 To do this you need to override them when running the cli tool:
 
-```
-APPLICATION_ID= API_KEY= ./docsearch deploy:configs
+```sh
+APPLICATION_ID=<your APPLICATION_ID> API_KEY=<your API_KEY> ./docsearch deploy:configs
 ```
 
 ## Run the tests
 
-### With docker
+### With docker:
 
 ```sh
 $ ./docsearch test
 ```
 
-### Without docker
+### Without docker:
 
 ```sh
 $ pip install pytest
