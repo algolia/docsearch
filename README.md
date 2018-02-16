@@ -61,6 +61,8 @@ you need to integrate your new search into your website.
 
 If you prefer to DIY, you can run the [scraper][28] in your own infra.
 
+**Update** You can check [the DocSearch dedicated documentation website][29]
+
 ## Setup
 
 Once we've crawled your documentation website we'll send you the credentials you
@@ -302,5 +304,6 @@ See [CONTRIBUTING](./CONTRIBUTING.md)
 [26]: https://www.ruby-lang.org/en/
 [27]: http://bundler.io/
 [28]: https://github.com/algolia/docsearch-scraper
+[29]: https://community.algolia.com/docsearch/documentation/docsearch/introduction/
 
 <!-- END links -->
