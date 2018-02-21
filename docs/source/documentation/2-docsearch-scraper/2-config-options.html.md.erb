@@ -122,34 +122,35 @@ Example:
 {
   "index_name": "example",
    "start_urls": [
-   "http://example.com/docs/latest/",
-   {
+    "http://example.com/docs/latest/",
+    {
      "url": "http://example.com/docs/concepts/",
      "tags": [
       "concepts"
      ],
      "page_rank": 1,
      "selectors_key": "concepts"
-   },
-   "selectors": {
-      "default": {
-         "lvl0": ".docSearch-content h1",
-         "lvl1": ".docSearch-content h2",
-         "lvl2": ".docSearch-content h3",
-         "lvl3": ".docSearch-content h4",
-         "lvl4": ".docSearch-content h5",
-         "text": ".docSearch-content p, .docSearch-content li"
-      },
-      "concepts" {
-         "lvl0": ".docSearch-header h2",
-         "lvl1": ".docSearch-content h1",
-         "lvl2": ".docSearch-content h2",
-         "lvl3": ".docSearch-content h3",
-         "lvl4": ".docSearch-content h5",
-         "text": ".docSearch-content p"
-      }
     }
-    [...]
+   ],
+   "selectors": {
+     "default": {
+       "lvl0": ".docSearch-content h1",
+       "lvl1": ".docSearch-content h2",
+       "lvl2": ".docSearch-content h3",
+       "lvl3": ".docSearch-content h4",
+       "lvl4": ".docSearch-content h5",
+       "text": ".docSearch-content p, .docSearch-content li"
+      },
+     "concepts": {
+       "lvl0": ".docSearch-header h2",
+       "lvl1": ".docSearch-content h1",
+       "lvl2": ".docSearch-content h2",
+       "lvl3": ".docSearch-content h3",
+       "lvl4": ".docSearch-content h5",
+       "text": ".docSearch-content p"
+     }
+   }
+  [...]
 }
 ```
 
