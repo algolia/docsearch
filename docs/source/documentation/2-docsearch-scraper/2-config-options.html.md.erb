@@ -109,7 +109,7 @@ Thus you can limit the scope of the search to the records from the pages encompa
     algoliaOptions: { 'facetFilters': ["lang:en", "version:latest"] },
 });
 </script>
- ```
+```
 
 You can also define some `tags` that will also behave as [`attributesForFaceting`](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/).
 
@@ -122,7 +122,7 @@ Example:
 {
   "index_name": "example",
    "start_urls": [
-    "http://example.com/docs/latest/",
+     "http://example.com/docs/latest/",
     {
      "url": "http://example.com/docs/concepts/",
      "tags": [
@@ -327,7 +327,7 @@ You can also override the default `strip_chars` per level
 }
 ```
 
-Default is `" .,;:§¶"`
+### `strip_chars` _Optional_
 
 ### `nb_hits` _Mandatory_
 
