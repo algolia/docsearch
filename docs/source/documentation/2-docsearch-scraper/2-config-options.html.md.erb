@@ -109,7 +109,7 @@ Thus you can limit the scope of the search to the records from the pages encompa
     algoliaOptions: { 'facetFilters': ["lang:en", "version:latest"] },
 });
 </script>
- ```
+```
 
 You can also define some `tags` that will also behave as [`attributesForFaceting`](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/).
 
@@ -122,34 +122,35 @@ Example:
 {
   "index_name": "example",
    "start_urls": [
-   "http://example.com/docs/latest/",
-   {
+     "http://example.com/docs/latest/",
+    {
      "url": "http://example.com/docs/concepts/",
      "tags": [
       "concepts"
      ],
      "page_rank": 1,
      "selectors_key": "concepts"
-   },
-   "selectors": {
-      "default": {
-         "lvl0": ".docSearch-content h1",
-         "lvl1": ".docSearch-content h2",
-         "lvl2": ".docSearch-content h3",
-         "lvl3": ".docSearch-content h4",
-         "lvl4": ".docSearch-content h5",
-         "text": ".docSearch-content p, .docSearch-content li"
-      },
-      "concepts" {
-         "lvl0": ".docSearch-header h2",
-         "lvl1": ".docSearch-content h1",
-         "lvl2": ".docSearch-content h2",
-         "lvl3": ".docSearch-content h3",
-         "lvl4": ".docSearch-content h5",
-         "text": ".docSearch-content p"
-      }
     }
-    [...]
+   ],
+   "selectors": {
+     "default": {
+       "lvl0": ".docSearch-content h1",
+       "lvl1": ".docSearch-content h2",
+       "lvl2": ".docSearch-content h3",
+       "lvl3": ".docSearch-content h4",
+       "lvl4": ".docSearch-content h5",
+       "text": ".docSearch-content p, .docSearch-content li"
+      },
+     "concepts": {
+       "lvl0": ".docSearch-header h2",
+       "lvl1": ".docSearch-content h1",
+       "lvl2": ".docSearch-content h2",
+       "lvl3": ".docSearch-content h3",
+       "lvl4": ".docSearch-content h5",
+       "text": ".docSearch-content p"
+     }
+   }
+  [...]
 }
 ```
 
@@ -326,7 +327,7 @@ You can also override the default `strip_chars` per level
 }
 ```
 
-Default is `" .,;:§¶"`
+### `strip_chars` _Optional_
 
 ### `nb_hits` _Mandatory_
 
@@ -339,6 +340,14 @@ Default is `0`.
 
 This object is [any custom Algolia settings](https://www.algolia.com/doc/api-client/settings/#the-scope-of-settings-and-parameters) you would like to pass to the index
 settings. You will [look under the hood of algolia](https://www.algolia.com/doc/).
+
+### `nb_hits_max` _Optional_
+
+The number of maximum records allowed for the whole indexing. If the scrapping is bigger, it will fail.
+
+This value is not meant to be set from anyone except DocSearch maintaner.
+
+Default is `600 000` (arbitrary, might change)
 
 ## Possible issues
 
