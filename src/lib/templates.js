@@ -17,13 +17,13 @@ const templates = {
       <div class="${suggestionPrefix}--subcategory-column">
         <span class="${suggestionPrefix}--subcategory-column-text">{{{subcategory}}}</span>
       </div>
-      {{#isTextOrSubcatoryNonEmpty}}
+      {{#isTextOrSubcategoryNonEmpty}}
       <div class="${suggestionPrefix}--content">
         <div class="${suggestionPrefix}--subcategory-inline">{{{subcategory}}}</div>
         <div class="${suggestionPrefix}--title">{{{title}}}</div>
         {{#text}}<div class="${suggestionPrefix}--text">{{{text}}}</div>{{/text}}
       </div>
-      {{/isTextOrSubcatoryNonEmpty}}
+      {{/isTextOrSubcategoryNonEmpty}}
     </div>
   </div>
   `,

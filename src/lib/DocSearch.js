@@ -249,7 +249,7 @@ class DocSearch {
           '<span class="aa-suggestion-title-separator" aria-hidden="true"> › </span>'
         );
       const text = utils.getSnippetedValue(hit, 'content');
-      const isTextOrSubcatoryNonEmpty =
+      const isTextOrSubcategoryNonEmpty =
         (subcategory && subcategory !== '') ||
         (displayTitle && displayTitle !== '');
       const isLvl1EmptyOrDuplicate =
@@ -268,7 +268,7 @@ class DocSearch {
         isLvl1EmptyOrDuplicate,
         isCategoryHeader: hit.isCategoryHeader,
         isSubCategoryHeader: hit.isSubCategoryHeader,
-        isTextOrSubcatoryNonEmpty,
+        isTextOrSubcategoryNonEmpty,
         category,
         subcategory,
         title: displayTitle,
