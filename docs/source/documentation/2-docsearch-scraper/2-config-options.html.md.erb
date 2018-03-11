@@ -63,7 +63,7 @@ Name of the Algolia index where all the data will be pushed.
 
 **On our own infrastructure, this name must be equal to the configuration file name**
 
-We mostly attribute it on our own regarding plenty of underlying factors. The `apiKey` that we provide is generated with a restriction on the `index_name`. Changing the `index_name` would require to ask for a new key. Thus if you want to **change the name**, please **submit a new configuration**, we will generate a new key accordingly.
+We mostly attribute it on our own regarding plenty of underlying factors. The `apiKey` that we provide is generated with a restriction on the `index_name`. Changing the `index_name` would require to ask for a new key. Thus if you want to **change the name**, please **submit a new configration**, we will generate a new key accordingly.
 
 ### `start_urls` _Mandatory_
 You can pass either a string or an array of urls. The crawler will go to each
@@ -115,7 +115,7 @@ You can also define some `tags` that will also behave as [`attributesForFaceting
 
 In order to promote some pages, you can set the `page_rank` attribute (default: `0`, can be a positive or negative integer).
 
-Finally, If your website contains different parts and layouts, you can define specific `selectors` for each part and apply them using `selectors_key`:
+Finally, If your website contains differents parts and layouts, you can define specific `selectors` for each part and apply them using `selectors_key`:
 
 Example:
 ```json
@@ -343,7 +343,7 @@ settings. You will [look under the hood of algolia](https://www.algolia.com/doc/
 
 The number of maximum records allowed for the whole indexing. If the scrapping is bigger, it will fail.
 
-This value is not meant to be set from anyone except DocSearch maintainer.
+This value is not meant to be set from anyone except DocSearch maintaner.
 
 Default is `600 000` (arbitrary, might change)
 

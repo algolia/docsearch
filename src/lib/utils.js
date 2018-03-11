@@ -233,7 +233,7 @@ const utils = {
    *    text: 'This is an unfinished sentence'
    * }, 'text');
    * =>
-   * '<mark>This is an unfinished sentence</mark>…'
+   * '<mark>This is an unefinished sentenced</mark>…'
    * @param {object} object Hit object returned by the Algolia API
    * @param {string} property Object key to look for
    * @return {string}

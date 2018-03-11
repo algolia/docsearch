@@ -349,7 +349,7 @@ describe('DocSearch', () => {
     });
 
     describe('the returned function', () => {
-      it('calls the Algolia client with the correct parameters', () => {
+      it('calls the Agolia client with the correct parameters', () => {
         // Given
         const actual = docsearch.getAutocompleteSource();
 
@@ -369,7 +369,7 @@ describe('DocSearch', () => {
     });
 
     describe('when queryHook is used', () => {
-      it('calls the Algolia client with the correct parameters', () => {
+      it('calls the Agolia client with the correct parameters', () => {
         // Given
         const actual = docsearch.getAutocompleteSource(
           false,
