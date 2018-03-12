@@ -120,7 +120,7 @@ set white and purple colors.
 .algolia-docsearch-suggestion--highlight {
   color: #3A33D1;
 }
-/* Highligted search terms in the main category headers */
+/* Highlighted search terms in the main category headers */
 .algolia-docsearch-suggestion--category-header .algolia-docsearch-suggestion--highlight  {
   background-color: #4D47D5;
 }
