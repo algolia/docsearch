@@ -50,7 +50,7 @@
   }
 }
 
-// Alignement type
+// Alignment type
 @mixin alignment-type($type) {
   @if $type == 'left' {
     left: 0 !important;
