@@ -71,13 +71,13 @@ page in order, following every link it finds on the page. It will only stop if
 the domain is outside of the `allowed_domains` or if the link is blacklisted in
 `stop_urls`.
 
-Note that it currently does not follow 301 redirects.
+Note that it currently does not follow *301* redirects.
 
 This parameter also behaves as a [regular expression](https://en.wikipedia.org/wiki/Regular_expression). If you don't use a sitemap, you must define at least one reachable URL (HTTP 20x). Otherwise the scraping will fail.
 
 You can build a more advanced URL. You will need to use a JSON object with a `variables` attribute. This attribute is an array of variables that will be injected into the URLs:
 
-Example:
+**Example:**
 ```json
 {
    "url": "http://example.com/docs/(?P<lang>.*?)/(?P<version>.*?)/",
@@ -111,13 +111,11 @@ Thus you can limit the scope of the search to the records from the pages encompa
 </script>
 ```
 
-You can also define some `tags` that will also behave as [`attributesForFaceting`](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/).
-
 In order to promote some pages, you can set the `page_rank` attribute (default: `0`, can be a positive or negative integer).
 
 Finally, If your website contains different parts and layouts, you can define specific `selectors` for each part and apply them using `selectors_key`:
 
-Example:
+**Example:**
 ```json
 {
   "index_name": "example",
@@ -125,9 +123,6 @@ Example:
      "http://example.com/docs/latest/",
     {
      "url": "http://example.com/docs/concepts/",
-     "tags": [
-      "concepts"
-     ],
      "page_rank": 1,
      "selectors_key": "concepts"
     }
@@ -154,6 +149,34 @@ Example:
 }
 ```
 
+#### `start_urls.tags`
+
+Tags will be apllied to every record from the matchin matched pages, i.e., its URL is matchin the `url`. These `tags` will [be processed as `attributesForFaceting`](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/) . If you want further detail, [check the original documentation](https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/).
+We do recommend to use `tags` if you want [to refine the scope of your search](https://www.algolia.com/doc/guides/searching/faceting/#faceting-overview).
+
+From your search UI, you will need to use the following input:
+```js
+algoliaOptions: { 'facetFilters': ["tags:$VALUE"] },
+```
+
+Default not used. Must be an array.
+
+
+**Example:**
+
+ From the config:
+```json
+"start_urls": [
+ {
+  "url": "http://example.com/docs/concepts/",
+  "selectors_key": "concepts"
+ }
+ ```
+
+ From the search UI:
+ ```js
+ algoliaOptions: { 'facetFilters': ["tags:concepts"] },
+ ```
 ### `scrape_start_urls`
 
 This boolean let you decide if you want to extract the content of the starting pages.
@@ -245,7 +268,7 @@ A list of regular expressions that will be applied to each URL from the sitemap.
 ###  `force_sitemap_urls_crawling` _Optional_
 Specifies if the matched URLs should not respect the same rules as the crawled hyperlink. If set to true, each URL will be scraped even if it does comply with the `start_urls` or `stop_urls`. Default is `force_sitemap_urls_crawling` set to `false`
 
-### Example
+**Example:**
 ```json
 {
     [...]
@@ -276,14 +299,14 @@ example, with a `min_indexed_level: 1`, you will only index records that have at
 least a `lvl0` and a `lvl1` field.
 
 This is especially useful when the documentation is split into several pages and
-all pages duplicate the main title or introduction (see [this issue][1]).
+all pages duplicate the main title or introduction (see [this issue][https://github.com/algolia/docsearch-configs/issues/83]).
 With `min_indexed_level`, you can ignore the duplicated title.
 
 Default is `0`
 
 ### `only_content_level` _Optional_
 
-This attribute allows you to only index records which match the `text` selectors. Every other record will be skipped.
+When `only_content_level` is set to `true`, we only index builded records which match the `text` selectors. Every other record will be skipped. This parameter is more flexible than `min_indexed_level`. Once `only_content_level` is used, `min_indexed_level` becomes pointless.
 
 Default is `false`
 
