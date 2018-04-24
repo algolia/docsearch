@@ -5,7 +5,7 @@ install:
 	bundle install
 
 build:
-	npm install
+	yarn
 	rm -rf build
 	bundle exec middleman build
 

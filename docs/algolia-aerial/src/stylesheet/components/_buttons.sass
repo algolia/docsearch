@@ -1,3 +1,6 @@
+
+$generalDarkenFactor: 6%
+
 .btn
   display: inline-block
   // For input.btn
@@ -21,13 +24,25 @@
   border: none
   box-sizing: border-box
   position: relative
-  transition: background .2s, box-shadow .2s
+  transition: box-shadow .2s ease, background 0.2s ease,  transform 0.1s ease !important
+  will-change: background, transform, box-shadow
+  backface-visibility: hidden
+
+  &:hover
+    transform: perspective(1px) scale(1.05) translateZ(0)
+    will-change: background, transform
+    backface-visibility: hidden
+
+  &:active,
+  &:focus
+    transform: perspective(1px) scale(1) translateZ(0)
+    will-change: background, transform
+    backface-visibility: hidden
 
   &:active,
   &.active
     outline: 0
     background-image: none
-    +box-shadow(inset 0 3px 5px rgba(0, 0, 0, 0.125))
 
     &:focus,
     &.focus
@@ -49,7 +64,7 @@
     pointer-events: none
     // Future-proof disabling of clicks
     +opacity(0.65)
-    +box-shadow(none)
+
 
   @media (max-width: $screen-sm)
     font-size: 14px
@@ -66,8 +81,7 @@
   line-height: 36px
   &:hover, &:focus
     color: $text-color
-    background-color: rgba($tertiary-color,.3)
-
+    background-color: rgba(darken($tertiary-color, 10%),.3)
 
 .btn-static-primary
   border: none
@@ -75,9 +89,9 @@
   background-image: linear-gradient(284deg, $java, $shamrock)
   &:hover, &:focus
     color: white
-    background-image: linear-gradient(284deg, $java, $shamrock)
+    background-image: linear-gradient(284deg,  darken($java, $generalDarkenFactor), darken($shamrock, $generalDarkenFactor)) !important
   &:active, &.active
-    background-image: linear-gradient(284deg, darken($java, 4%), darken($shamrock, 4%))
+    background-image: linear-gradient(284deg,  darken($java, $generalDarkenFactor), darken($shamrock, $generalDarkenFactor)) !important
 
   &.btn-shadow
     box-shadow: 0 2px 6px 0 rgba($shamrock, 0.4)
@@ -91,9 +105,9 @@
   background-image: linear-gradient(80deg, $algolia-blue, $royal-blue)
   &:hover, &:focus
     color: white
-    background-image: linear-gradient(80deg, $algolia-blue, $royal-blue)
+    background-image: linear-gradient(80deg, darken($algolia-blue, $generalDarkenFactor), darken($royal-blue, $generalDarkenFactor)) !important
   &:active, &.active
-    background-image: linear-gradient(80deg, darken($algolia-blue, 4%), darken($royal-blue, 4%))
+    background-image: linear-gradient(80deg, darken($algolia-blue, $generalDarkenFactor), darken($royal-blue, $generalDarkenFactor)) !important
   &.btn-shadow
     box-shadow: 0 2px 6px 0 rgba($royal-blue, 0.4)
     &:hover, &:focus
@@ -107,9 +121,9 @@
   background-image: linear-gradient(112deg, $radical-red, $bittersweet)
   &:hover, &:focus
     color: white
-    background-image: linear-gradient(112deg, $radical-red, $bittersweet)
+    background-image: linear-gradient(112deg, darken($radical-red, $generalDarkenFactor), darken($bittersweet, $generalDarkenFactor)) !important
   &:active, &.active
-    background-image: linear-gradient(112deg, darken($radical-red, 4%), darken($bittersweet, 4%))
+    background-image: linear-gradient(112deg, darken($radical-red, $generalDarkenFactor), darken($bittersweet, $generalDarkenFactor)) !important
   &.btn-shadow
     box-shadow: 0 2px 6px 0 rgba($bittersweet, 0.4)
     &:hover, &:focus
@@ -161,9 +175,10 @@
     box-shadow: 0 2px 6px 0 rgba($bunting, 0.4)
     &:hover, &:focus
       box-shadow: 0 4px 12px rgba($bunting, 0.4)
+      background-image:  linear-gradient(283deg, darken($deep-cove, 10%), darken($bunting, 10%)) !important
 
   &:active, &.active
-    background-image:  linear-gradient(283deg, darken($deep-cove, 10%), darken($bunting, 10%))
+    background-image:  linear-gradient(283deg, darken($deep-cove, 10%), darken($bunting, 10%)) !important
 
 .btn-static-white
   color: $bunting
@@ -211,7 +226,7 @@
   &:active, &.active,
   &.btn-shadow:active, .btn-shadow.active,
   &.btn-static-shadow-dark:active, .btn-static-shadow-dark.active
-    box-shadow: inset 0 0 4px 2px rgba(#050f2c, 0.3)
+    box-shadow: inset 0 2px 4px 2px rgba(#050f2c, 0.3)
 
 
 // Sizes
