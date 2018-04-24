@@ -43,8 +43,8 @@ npm run dev:docs
 ```
 
 Then go to:
-- http://localhost:4000/docsearch/ documentation website with autoreload
-- http://localhost:8080 local DocSearch example for easy hacking/additions/fixes
+- http://localhost:4569 documentation website with autoreload
+- http://localhost:3000 local DocSearch example for easy hacking/additions/fixes
 
 ## Local build
 
