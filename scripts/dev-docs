@@ -4,8 +4,8 @@ set -ev # exit when error
 
 cd docs && \
 bundle install && \
-npm install && \
 node communityHeader.js && \
 bundle exec guard -i & \
+yarn && \
 npm run dev & \
 wait

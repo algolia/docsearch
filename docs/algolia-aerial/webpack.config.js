@@ -29,30 +29,26 @@ module.exports = {
   plugins: [
     new ExtractTextPlugin('aerial-source.css'), // css file will override generated js file
     new WebpackAutoInject({
-        NAME: 'AIV custom name',
-        SHORT: 'CUSTOM',
+        NAME: 'Aerial.css',
+        SHORT: 'Aerial.css',
         SILENT: false,
         PACKAGE_JSON_PATH: './package.json',
         components: {
           AutoIncreaseVersion: false,
           InjectAsComment: true,
-          InjectByTag: true
+          InjectByTag: false
         },
         componentsOptions: {
           AutoIncreaseVersion: {
             runInWatchMode: false // it will increase version with every single build!
           },
           InjectAsComment: {
-            tag: 'Version: {version} - {date}',
-            dateFormat: 'h:MM:ss TT'
-          },
-          InjectByTag: {
-            fileRegex: /\.+/,
-            dateFormat: 'h:MM:ss TT'
+            tag:'version: {version} - {date}', // default
+            dateFormat: 'dddd, mmmm dS, yyyy, h:MM:ss TT' // default
           }
         },
         LOGS_TEXT: {
-          AIS_START: 'DEMO AIV started'
+          AIS_START: '\033[32mCompiler Started\033[0m'
         }
       })
     ]

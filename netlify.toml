@@ -1,2 +1,9 @@
 [build]
     base = "docs"
+    command = "bundle exec middleman build"
+    publish = "docs/build/"
+  [build.environment]
+    YARN_VERSION = "1.6.0"
+    NODE_ENV = "development"
+    JEKYLL_ENV = "production"
+

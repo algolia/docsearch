@@ -30,14 +30,15 @@ Have a fix or a new feature? [Search for corresponding issues](https://github.co
 
 To run this project, you will need:
 
-- Node.js >= v8.7.0, use nvm - [install instructions](https://github.com/creationix/nvm#install-script)
+- Node.js >= v9.2.0, use nvm - [install instructions](https://github.com/creationix/nvm#install-script)
+- Yarn >= v1.6.0 - [install instructions](https://yarnpkg.com/en/docs/install#alternatives-stable)
 - [Ruby](https://www.ruby-lang.org/en/)
 - [Bundler](http://bundler.io/)
 
 ## Launch
 
 ```sh
-npm install
+yarn
 npm run dev:docs
 ```
 
