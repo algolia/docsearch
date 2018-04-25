@@ -396,7 +396,7 @@ describe('DocSearch', () => {
         apiKey: 'key',
         indexName: 'foo',
         inputSelector: '#input',
-        __window: fakeWindow,
+        __mockWindow: fakeWindow,
       };
 
       // When
