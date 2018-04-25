@@ -46,7 +46,9 @@ class DocSearch {
     handleSelected = false,
     enhancedSearchInput = false,
     layout = 'collumns',
-    __window = window,
+    // there's no way to well test location.href with jsdom so we rely on passing
+    // a mock which default value is the actual window object for implementation
+    __mockWindow = window,
   }) {
     DocSearch.checkArguments({
       apiKey,
@@ -114,8 +116,7 @@ class DocSearch {
       DocSearch.bindSearchBoxEvent();
     }
 
-    // we save a reference to window in our object to allow for easy testing
-    this.window = __window;
+    this.window = __mockWindow;
   }
 
   /**
