@@ -43,7 +43,7 @@
     "babel-eslint": "8.2.3",
     "babel-istanbul": "0.12.2",
     "babel-jest": "21.2.0",
-    "babel-loader": "7.1.2",
+    "babel-loader": "7.1.4",
     "babel-plugin-rewire": "1.1.0",
     "babel-preset-env": "1.6.1",
     "babel-preset-stage-3": "6.24.1",

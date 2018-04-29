@@ -28,7 +28,7 @@
     "webpack-dev-server": "^2.4.1"
   },
   "devDependencies": {
-    "babel-loader": "6.4.1",
+    "babel-loader": "7.1.4",
     "css-loader": "0.26.4",
     "extract-loader": "0.1.0",
     "file-loader": "0.10.1",
