@@ -61,7 +61,7 @@
     "jsdom": "11.9.0",
     "json": "9.0.6",
     "mversion": "1.10.1",
-    "node-sass": "4.7.2",
+    "node-sass": "4.9.0",
     "onchange": "3.3.0",
     "postcss-cli": "4.1.1",
     "prettier": "1.12.1",
