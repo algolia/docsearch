@@ -20,7 +20,19 @@
     %label
       %input{type: 'checkbox', name: 'owner'}
       %span I'm the <u>owner</u> of that website
-  .spacer32
+  .row
+    .form-group.pos-rel.p-small
+      %div
+        %input.fill-titan.pos-rel.p-r-small#accept_email{name: "gdpr_email", type: "radio"}
+        %label.text-sm{for: "accept_email", style: "display:inline;margin-left: 8px;letter-spacing: unset;font-weight: 500;text-transform: initial"} Yes please, I'd like to hear from Algolia via email.
+      %div
+        %input.fill-titan.pos-rel.p-r-small#decine_email{name: "gdpr_email", type: "radio"}
+        %label.text-sm{for: "decine_email", style: "display:inline;margin-left: 8px;letter-spacing: unset;font-weight: 500;text-transform: initial"} No thanks, I don't want to hear about Algolia services via email.
+      %div
+        %input.fill-titan.pos-rel.p-r-small#accept_tos{name: "accept_tos", type: "checkbox"}
+        %label.text-sm{for: "accept_tos", style: "display:inline;margin-left: 8px;letter-spacing: unset;font-weight: 500;text-transform: initial"}
+          I agree to the
+          %a{href: "https://www.algolia.com/policies/terms", class:"clickable"} terms of service.
   .text-center
     %button.btn.btn-static-primary.w100p{type: 'submit'}
       Join the program
