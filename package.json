@@ -75,7 +75,7 @@
   "peerDependencies": {},
   "dependencies": {
     "algoliasearch": "^3.24.5",
-    "autocomplete.js": "^0.29.0",
+    "autocomplete.js": "^0.30.0",
     "hogan.js": "^3.0.2",
     "to-factory": "^1.0.0"
   }
