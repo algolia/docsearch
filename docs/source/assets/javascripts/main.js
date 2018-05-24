@@ -30,13 +30,6 @@ window.addEventListener('load', function() {
   document.body.classList.add('ready');
 
   (function($) {
-    function pardotAppendIframe(url) {
-      var iframe = document.createElement('iframe');
-      iframe.src = url;
-      iframe.width = 1;
-      iframe.height = 1;
-      document.body.appendChild(iframe);
-    }
 
     $('.join-form').on('submit', function(e) {
       e.preventDefault();
@@ -44,6 +37,7 @@ window.addEventListener('load', function() {
       var $email = $(this).find('input[name="email"]');
       var $url = $(this).find('input[name="url"]');
       var $owner = $(this).find('input[name="owner"]');
+      var $marketingOptin = $(this).find('input[name="marketing_optin"]');
       var error = false;
       $(this).find('.has-errors').removeClass('has-errors');
       if (!$email.val()) {
@@ -70,12 +64,6 @@ window.addEventListener('load', function() {
           url: $url.val()
         }
       }).done(function() {
-        pardotAppendIframe(
-          'https://go.pardot.com/l/139121/2016-08-05/ldp67?email=' +
-          encodeURIComponent($email.val()) +
-          '&website=' +
-          encodeURIComponent($url.val())
-        );
 
         $('.join-form-fill').hide();
         $('.join-form-validated').removeClass('hidden');

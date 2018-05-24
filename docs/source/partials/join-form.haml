@@ -20,7 +20,13 @@
     %label
       %input{type: 'checkbox', name: 'owner'}
       %span I'm the <u>owner</u> of that website
-  .spacer32
+  .row
+    .form-group.pos-rel.p-small
+    %div
+      %p
+        Refer to
+        %a{href: "https://www.algolia.com/policies/terms", class:"clickable"} Algolia's Privacy Policy
+        for more information on how we use and protect your data
   .text-center
     %button.btn.btn-static-primary.w100p{type: 'submit'}
       Join the program
