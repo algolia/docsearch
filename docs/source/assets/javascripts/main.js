@@ -37,6 +37,7 @@ window.addEventListener('load', function() {
       var $email = $(this).find('input[name="email"]');
       var $url = $(this).find('input[name="url"]');
       var $owner = $(this).find('input[name="owner"]');
+      var $marketingOptin = $(this).find('input[name="marketing_optin"]');
       var error = false;
       $(this).find('.has-errors').removeClass('has-errors');
       if (!$email.val()) {
