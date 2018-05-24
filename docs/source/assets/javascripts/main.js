@@ -30,13 +30,6 @@ window.addEventListener('load', function() {
   document.body.classList.add('ready');
 
   (function($) {
-    function pardotAppendIframe(url) {
-      var iframe = document.createElement('iframe');
-      iframe.src = url;
-      iframe.width = 1;
-      iframe.height = 1;
-      document.body.appendChild(iframe);
-    }
 
     $('.join-form').on('submit', function(e) {
       e.preventDefault();
