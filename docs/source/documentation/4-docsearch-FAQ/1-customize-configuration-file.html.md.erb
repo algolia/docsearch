@@ -2,38 +2,46 @@
 title: Customize my configuration file
 ---
 
-## What are the recommendations regarding the content to index?
+## What content do we recommend indexing?
 
 ### Code blocks
 
-Since code blocks are most likely very similar and redundant from one page to
-another, we **do not recommend** to index **code tags** by adding their matching
-selectors to `selectors_exclude`.
+We **do not recommend** indexing **code tags** since code blocks are most likely
+very similar and redundant from one page to another.
+You can exclude code blocks by adding their matching selectors to `selectors_exclude`.
 
 A good practice would be to emphasize the meaningful underlying part of it
-thanks to a dedicated class. This class will be added to the `text` selector
-from your configuration file.
+thanks to a dedicated class, which you will want to add to the `text` selector
+in your configuration file.
+
+For example, in this code snippet, you can exclude the code except the parameter of the function:
+```
+<code>
+function(<toIndex>something useful to search for</toIndex>)
+...
+</code>
+```
 
 ### Table of contents
 
-Table of contents elements only target element without providing the relevant
-content. It is a superfluous step on the way to reach the relevant data and is
-mainly at a different place from the pay load. This is why we consider these
-elements as obstacles on the way to find the coveted information.
+The elements of the table of contents only *target* but do not provide actual content.
+They are merely a step on the way to reaching relevant content. As a result, they are
+almost always in a different place from the payload. This is why we consider the
+table of contents an obstacle for DocSearch to find the coveted information.
 
-We **do not recommend** to index these elements by adding their matching
-selectors to `selectors_exclude`.
+We therefore **do not recommend** indexing the elements of the table of contents; their matching
+selectors should be added to `selectors_exclude`.
 
 ## How are my DocSearch records ranked?
 
-DocSearch empowers the algolia's ranking strategy. The formula is completely
+DocSearch empowers the Algolia ranking strategy. The formula is completely
 based on [the tie-breaking approach](https://www.algolia.com/doc/guides/ranking/ranking-formula/#tie-breaking-approach).
 
 The special feature of DocSearch's ranking resides in [the custom ranking](https://www.algolia.com/doc/guides/ranking/custom-ranking/):
 
-We have defined 3 main weight indicators for every records. These values are
-ordered by importance following the tie breaking approach:
-1. `page_rank`: this value, equals to `0` by default, can be set from the
+We have defined 3 main weight indicators for every record. These values are
+ordered by importance following the tie-breaking approach:
+1. `page_rank`: this value, equal to `0` by default, can be set from the
 `start_urls` object. It can be customized in order to boost or restrain some
 records depending on **their webpage's URL**. It will need to match a **specific
 regular expression pattern**.
@@ -51,12 +59,12 @@ regular expression pattern**.
 }
 ```
 2. `level`: this value depends on the `level` of the record. A record's level is
- its **deepest level attribute not null**. `text` records have a weight of 0.
+its **deepest level attribute not null**. `text` records have a weight of 0.
 3. `position`: This value is the position of the matching element within every
-picked up elements along the original HTML flow. The **sooner** the record appears,
- the **higher** it will be ranked
+picked up element along the original HTML flow. The **sooner** the record appears,
+the **higher** it will be ranked.
 
- You can override the way these elements are impacting the search thanks to `custom_settings`.
+You can override the way these elements are impacting the search thanks to `custom_settings`.
 
  **Example:**
 
