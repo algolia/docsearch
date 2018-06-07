@@ -78,7 +78,7 @@
   gif: "assets/images/showcase/example-hugo.gif"
   logo: "assets/images/showcase/logo-hugo.png"
 
-- name: Fastlane
+- name: fastlane
   url: "https://docs.fastlane.tools/"
   gif: "assets/images/showcase/example-fastlane.gif"
   logo: "assets/images/showcase/logo-fastlane.png"
