@@ -37,11 +37,15 @@ window.addEventListener('load', function() {
       var $email = $(this).find('input[name="email"]');
       var $url = $(this).find('input[name="url"]');
       var $owner = $(this).find('input[name="owner"]');
-      var $marketingOptin = $(this).find('input[name="marketing_optin"]');
+      var $open_source_policy = $(this).find('input[name="open_source_policy"]');
       var error = false;
       $(this).find('.has-errors').removeClass('has-errors');
       if (!$email.val()) {
         $email.closest('.input-group').addClass('has-errors');
+        error = true;
+      }
+      if (!$open_source_policy.val()) {
+        $open_source_policy.closest('.input-group').addClass('has-errors');
         error = true;
       }
       if (!$url.val()) {
@@ -61,7 +65,8 @@ window.addEventListener('load', function() {
         type: 'POST',
         data: {
           email: $email.val(),
-          url: $url.val()
+          url: $url.val(),
+          open_source_policy: $open_source_policy.val(),
         }
       }).done(function() {
 
