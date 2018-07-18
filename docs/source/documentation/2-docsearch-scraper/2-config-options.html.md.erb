@@ -109,108 +109,6 @@ Thus you can limit the scope of the search to the records from the pages encompa
     algoliaOptions: { 'facetFilters': ["lang:en", "version:latest"] },
 });
 </script>
- ```
-
-In order to promote some pages, you can set the `page_rank` attribute (default: `0`, can be a positive or negative integer).
-
-Finally, If your website contains differents parts and layouts, you can define specific `selectors` for each part and apply them using `selectors_key`:
-
-**Example:**
-```json
-{
-  "index_name": "example",
-   "start_urls": [
-    "http://example.com/docs/latest/",
-    {
-     "url": "http://example.com/docs/concepts/",
-     "page_rank": 1,
-     "selectors_key": "concepts"
-    }
-   ],
-   "selectors": {
-     "default": {
-       "lvl0": ".docSearch-content h1",
-       "lvl1": ".docSearch-content h2",
-       "lvl2": ".docSearch-content h3",
-       "lvl3": ".docSearch-content h4",
-       "lvl4": ".docSearch-content h5",
-       "text": ".docSearch-content p, .docSearch-content li"
-      },
-     "concepts": {
-       "lvl0": ".docSearch-header h2",
-       "lvl1": ".docSearch-content h1",
-       "lvl2": ".docSearch-content h2",
-       "lvl3": ".docSearch-content h3",
-       "lvl4": ".docSearch-content h5",
-       "text": ".docSearch-content p"
-     }
-   }
-  [...]
-}
-```
-
-#### `start_urls.tags`
-
-Tags will be apllied to every record from the matchin matched pages, i.e., its URL is matchin the `url`. These `tags` will [be processed as `attributesForFaceting`](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/) . If you want further detail, [check the original documentation](https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/).
-We do recommend to use `tags` if you want [to refine the scope of your search](https://www.algolia.com/doc/guides/searching/faceting/#faceting-overview).
-
-From your search UI, you will need to use the following input:
-```js
-algoliaOptions: { 'facetFilters': ["tags:$VALUE"] },
-```
-
-Default not used. Must be an array.
-
-
-**Example:**
-
- From the config:
-```json
-"start_urls": [
- {
-  "url": "http://example.com/docs/concepts/",
-  "selectors_key": "concepts"
- }
- ```
-
- From the search UI:
- ```js
- algoliaOptions: { 'facetFilters': ["tags:concepts"] },
- ```
-### `scrape_start_urls`
-
-**Example:**
-```json
-{
-   "url": "http://example.com/docs/(?P<lang>.*?)/(?P<version>.*?)/",
-   "variables": {
-      "version": [
-         "latest",
-         "3.3",
-         [...]
-      ],
-      "lang": [
-         "en",
-         "fr",
-         [...]
-      ]
-}
-```
-The whole pattern `(?P<version>.*?)` will be replaced by the value assigned in the related key `version`.
-
-The variable name is not fixed. Please note that those variables will behave as
-[`attributesForFaceting`](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/) which may help you [restrain the scope of the search from the snippet](https://www.algolia.com/doc/guides/searching/faceting/).
-
-Thus you can limit the scope of the search to the records from the pages encompassed by `http://example.com/docs/en/latest/*` thanks to the following snippet:
-```js
-<script type="text/javascript">
- docsearch({
-    apiKey: ${apiKey},
-    indexName: ${indexName},
-    inputSelector: '#search'
-    algoliaOptions: { 'facetFilters': ["lang:en", "version:latest"] },
-});
-</script>
 ```
 
 In order to promote some pages, you can set the `page_rank` attribute (default: `0`, can be a positive or negative integer).
@@ -386,7 +284,28 @@ Specifies if the matched URLs should not respect the same rules as the crawled h
 ```
 Given this configuration, every webpage of the sitemap whose URL contains '/doc/' will be scraped even if they don't comply with `start_urls` or `stop_urls`.
 
+### `sitemap_alternate_links` _Optional_
+
+This parameter is only useful when you are using a sitemap to crawl your website.
+
+It specifies if alternate links should be followed. Your sitemap should inlcude localized versions of your page in such format:
+
+```
+<url>
+    <loc>http://example.com/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="http://example.com/de"/>
+</url>
+```
+
+If `sitemap_alternate_links` is not set, the link "http://example.com/de" will not be parsed from the sitemap.
+
+Default is `false`
+
 ### `allowed_domains` _Optional_
+
+You can pass an array of strings. This is the whitelist of
+domains the crawler will browse. If a link targets a page that is not in the
+whitelist, the crawler will not follow it.
 
 ### Sitemap crawling _Optional_
 
