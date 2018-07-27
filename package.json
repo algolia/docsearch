@@ -58,7 +58,7 @@
     "eslint-plugin-prettier": "2.6.2",
     "gh-pages": "1.2.0",
     "jest": "21.2.1",
-    "jsdom": "11.11.0",
+    "jsdom": "11.12.0",
     "json": "9.0.6",
     "mversion": "1.12.0",
     "node-sass": "4.9.2",
