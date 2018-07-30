@@ -1,0 +1,119 @@
+---
+title: Customize my DocSearch
+---
+
+## What content do we recommend to index?
+
+### Code blocks
+
+We **do not recommend** indexing **code tags** since code blocks are most likely
+very similar and redundant from one page to another.
+You can exclude code blocks by adding their matching selectors to `selectors_exclude`.
+
+A good practice would be to emphasize the meaningful underlying part of it
+thanks to a dedicated class, which you will want to add to the `text` selector
+in your configuration file.
+
+For example, in this code snippet, you can exclude the code but the parameters of the function:
+```
+<code>
+function(<toIndex>something useful to search for</toIndex>)
+...
+</code>
+```
+
+### Table of contents
+
+The elements of the table of contents only *target* but do not provide content.
+They are merely a step on the way to reaching relevant content. As a result, they are
+almost always in a different place from the payload. This is why we consider the
+table of contents an obstacle for DocSearch to find the coveted information.
+
+We therefore **do not recommend** indexing the elements of the table of contents; their matching
+selectors should be added to `selectors_exclude`.
+
+## How are my DocSearch records ranked?
+
+DocSearch empowers the Algolia ranking strategy. The formula is completely
+based on [the tie-breaking approach](https://www.algolia.com/doc/guides/ranking/ranking-formula/#tie-breaking-approach).
+
+The special feature of DocSearch's ranking resides in [the custom ranking](https://www.algolia.com/doc/guides/ranking/custom-ranking/):
+
+We have defined 3 main weight indicators for every record. These values are
+ordered by importance following the tie-breaking approach:
+1. `page_rank`: this value, equal to `0` by default, can be set from the
+`start_urls` object. It can be customized in order to boost or restrain some
+records depending on **their webpage's URL**. It will need to match a **specific
+regular expression pattern**.
+
+**Example:**
+ ```json
+{
+   "index_name": "example",
+    "start_urls": [
+     {
+      "url": "http://example.com/docs/api/v1\\.[0-9]",
+      "page_rank": 1
+     }
+    ]
+}
+```
+2. `level`: this value depends on the `level` of the record. A record's level is
+its **deepest level attribute not null**. `text` records have a weight of 0.
+3. `position`: This value is the position of the matching element within every
+picked up element along the original HTML flow. The **sooner** the record appears,
+the **higher** it will be ranked.
+
+You can override the way these elements are impacting the search thanks to `custom_settings`.
+
+ **Example:**
+
+ ```json
+"custom_settings": {
+  "customRanking": [
+  "asc(weight.position)",
+    "desc(weight.page_rank)",
+    "desc(weight.level)"
+  ]
+}
+ ```
+
+## What is the general behaviour?
+
+### How often do you scrap my website?
+
+We scrap your website, at least, every 24 hours since documentation is not meant to change frequently.
+Furthermore we update it after every pull request on your configuration. This is the best way to request us to trigger a new crawl. Please leverage your configuration file to do so.
+
+###  I want to add search to my whole website?
+DocSearch is suited for documentation content. If you want to widen the scope of your search to not documentation content. You have two solutions:
+- [Run it on your own](https://community.algolia.com/docsearch/documentation/docsearch-scraper/overview/)
+- Build your own search-UI [thanks to InstanteSearch](https://community.algolia.com/instantsearch.js/) ([example here](https://jsfiddle.net/s_pace/965a4w3o/))
+
+### Does the crawl encompass several domains/sub-domains?
+
+The `start_urls` define the allowed domain for our crawler. Basically, we take the main domain of every URLs. We will not go outside this whitelisted domain list. If you want to encompass a wider domain, please include it as a new start_url.
+
+### Where is hosted the data?
+
+As every Algolia index, everything is stored on our servers with the security and privacy required. You can [find more details in the global documentation pages.](https://www.algolia.com/doc/guides/infrastructure/servers/)
+
+## Feature
+
+### Will it become paid?
+
+Open source is great and we want to support as much as we can. Since these projects mostly have limited resources, every granted project will ever remain free.
+If you want to upgrade your search experience, you can do it with your own Algolia implementation and [apply for a free community plan](https://www.algolia.com/pricing). DocSearch will not be used anymore but still happy to help.
+
+### What data are you collecting, who can get access to it?
+
+We only scrap publicly available data according to your custom selectors (see the how it works part). DocSearch introduces [the algolia analytics](https://www.algolia.com/doc/guides/insights-and-analytics/analytics-overview/) for your DocSearch indices.
+You can ask access to these data by using the private email thread and send us the email addresses of the people to grant access.
+
+### Where can I see the analytics?
+
+Once you are granted (see above), analytics will be available in the Algolia dashboard like any regular application. You will need to select the analytics tabs.
+
+## I am not the owner, what can i do?
+
+You can definitely help improving the search experience of your favourite documentation website by opening issues on the repo. You can also reference the GitHub handle @s-pace if you want us to chime in / provide you a quick demo. You can advocate the owner of the repo by letting them request DocSearch. We would be happy to support you in such regards. Feel free to ping.
