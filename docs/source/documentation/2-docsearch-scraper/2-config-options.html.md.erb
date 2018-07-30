@@ -205,11 +205,17 @@ as `lvl1` and `h3` as `lvl2`. `text` is usually any `p` of text.
 
 We recommend making use of at least the three first levels for better relevancy.
 
-### Global selectors _Optional_
+### `global` selectors _Optional_
 
 It's possible to make a selector global which means that all records from the page will have
 this value. This is useful when you have a title that is in the right sidebar and
 the sidebar is placed after the content in the DOM.
+
+`global` attributes should be seen as a way to extract the matching elements from the HTML flow. These global elements will not be considered as breaking ones when we encounter them along the flow. If this token is enabled :
+- we will not create a new record from the current builded stack.
+- we will apply its contextual value (or `default_value` if not matched) to every records
+
+We mostly use this parameter for page that miss context. It enables us to pick up the context from another common part without having duplicates.
 
 ```json
 "selectors": {

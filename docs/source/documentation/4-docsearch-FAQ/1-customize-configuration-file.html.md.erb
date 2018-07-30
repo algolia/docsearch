@@ -1,8 +1,8 @@
 ---
-title: Customize my configuration file
+title: Customize my DocSearch
 ---
 
-## What content do we recommend indexing?
+## What content do we recommend to index?
 
 ### Code blocks
 
@@ -14,7 +14,7 @@ A good practice would be to emphasize the meaningful underlying part of it
 thanks to a dedicated class, which you will want to add to the `text` selector
 in your configuration file.
 
-For example, in this code snippet, you can exclude the code except the parameter of the function:
+For example, in this code snippet, you can exclude the code but the parameters of the function:
 ```
 <code>
 function(<toIndex>something useful to search for</toIndex>)
@@ -24,7 +24,7 @@ function(<toIndex>something useful to search for</toIndex>)
 
 ### Table of contents
 
-The elements of the table of contents only *target* but do not provide actual content.
+The elements of the table of contents only *target* but do not provide content.
 They are merely a step on the way to reaching relevant content. As a result, they are
 almost always in a different place from the payload. This is why we consider the
 table of contents an obstacle for DocSearch to find the coveted information.

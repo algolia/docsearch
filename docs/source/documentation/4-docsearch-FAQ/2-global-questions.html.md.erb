@@ -1,0 +1,43 @@
+---
+title: Global wonderings
+---
+
+## What is the general behaviour?
+
+### How often do you scrap my website?
+
+We scrap your website, at least, every 24 hours since documentation is not meant to change frequently.
+Furthermore we update it after every pull request on your configuration. This is the best way to request us to trigger a new crawl. Please leverage your configuration file to do so.
+
+###  I want to add search to my whole website?
+DocSearch is suited for documentation content. If you want to widen the scope of your search to not documentation content. You have two solutions:
+- [Run it on your own](https://community.algolia.com/docsearch/documentation/docsearch-scraper/overview/)
+- Build your own search-UI [thanks to InstanteSearch](https://community.algolia.com/instantsearch.js/) ([example here](https://jsfiddle.net/s_pace/965a4w3o/))
+
+### Does the crawl encompass several domains/sub-domains?
+
+The `start_urls` define the allowed domain for our crawler. Basically, we take the main domain of every URLs. We will not go outside this whitelisted domain list. If you want to encompass a wider domain, please include it as a new start_url.
+
+### Where is hosted the data?
+
+As every Algolia index, everything is stored on our servers with the security and privacy required. You can [find more details in the global documentation pages.](https://www.algolia.com/doc/guides/infrastructure/servers/)
+
+## Feature
+
+### Will it become paid?
+
+Open source is great and we want to support as much as we can. Since these projects mostly have limited resources, every granted project will ever remain free.
+If you want to upgrade your search experience, you can do it with your own Algolia implementation and [apply for a free community plan](https://www.algolia.com/pricing). DocSearch will not be used anymore but still happy to help.
+
+### What data are you collecting, who can get access to it?
+
+We only scrap publicly available data according to your custom selectors (see the how it works part). DocSearch introduces [the algolia analytics](https://www.algolia.com/doc/guides/insights-and-analytics/analytics-overview/) for your DocSearch indices.
+You can ask access to these data by using the private email thread and send us the email addresses of the people to grant access.
+
+### Where can I see the analytics?
+
+Once you are granted (see above), analytics will be available in the Algolia dashboard like any regular application. You will need to select the analytics tabs.
+
+## I am not the owner, what can i do?
+
+You can definitely help improving the search experience of your favourite documentation website by opening issues on the repo. You can also reference the GitHub handle @s-pace if you want us to chime in / provide you a quick demo. You can advocate the owner of the repo by letting them request DocSearch. We would be happy to support you in such regards. Feel free to ping.
