@@ -113,6 +113,9 @@
   position: absolute
 .pos-fix
   position: fixed
+.pos-sti
+  position: sticky
+
 
 /**
  * Indexing
@@ -175,14 +178,10 @@
   font-weight: 400
 .text-demi
   font-weight: 500
-p.text-demi
-  font-weight: 600
 .text-bold
   font-weight: 700
 .text-bolder
   font-weight: 900
-p.text-bolder
-  font-weight: 800
 
 /**
  *borders
@@ -484,25 +483,35 @@ p.text-bolder
   align-items: center
 
 /**
+ * Flex grow
+ */
+.flex-grow-1
+  flex-grow: 1
+
+
+/**
  * Flex item size
+ *
+ * TODO remove the ms-input[...] as it's not useful anymore
+ *
  */
 .flex-it-4
   flex: 0 1 25%
 
 _:-ms-input-placeholder, :root .flex-it-4
-  -ms-flex-preferred-size: 21% !important
+  -ms-flex-preferred-size: 25% !important
 
 .flex-it-3
   flex: 0 1 33.33%
 
 _:-ms-input-placeholder, :root .flex-it-3
-  -ms-flex-preferred-size: 29% !important
+  -ms-flex-preferred-size: 33.33% !important
 
 .flex-it-2
   flex: 0 1 50%
 
 _:-ms-input-placeholder, :root .flex-it-2
-  -ms-flex-preferred-size: 48% !important
+  -ms-flex-preferred-size: 50% !important
   @supports ( not ( mix-blend-mode: luminosity))
     flex: 0 1 49.95%
 
@@ -518,19 +527,19 @@ _:-ms-input-placeholder, :root .flex-it-2
   .flex-it-2-lg
     flex: 0 1 50%
   _:-ms-input-placeholder, :root .flex-it-2-lg
-    -ms-flex-preferred-size: 48% !important
+    -ms-flex-preferred-size: 50% !important
     @supports ( not ( mix-blend-mode: luminosity))
       flex: 0 1 49.95%
 
   .flex-it-3-lg
     flex: 0 1 33.33%
   _:-ms-input-placeholder, :root .flex-it-3-lg
-    -ms-flex-preferred-size: 29% !important
+    -ms-flex-preferred-size: 33.33% !important
 
   .flex-it-4-lg
     flex: 0 1 25%
   _:-ms-input-placeholder, :root .flex-it-4-lg
-      -ms-flex-preferred-size: 21% !important
+    -ms-flex-preferred-size: 25% !important
 
 @media (max-width: 768px)
   .flex-it-1-sm
@@ -539,19 +548,19 @@ _:-ms-input-placeholder, :root .flex-it-2
   .flex-it-2-sm
     flex: 0 1 50%
   _:-ms-input-placeholder, :root .flex-it-2-sm
-    -ms-flex-preferred-size: 48% !important
+    -ms-flex-preferred-size: 50% !important
     @supports ( not ( mix-blend-mode: luminosity))
       flex: 0 1 49.95%
 
   .flex-it-3-sm
     flex: 0 1 33.33%
   _:-ms-input-placeholder, :root .flex-it-3-sm
-    -ms-flex-preferred-size: 29% !important
+    -ms-flex-preferred-size: 33.33% !important
 
   .flex-it-4-sm
     flex: 0 1 25%
   _:-ms-input-placeholder, :root .flex-it-4-sm
-    -ms-flex-preferred-size: 21% !important
+    -ms-flex-preferred-size: 25% !important
 
 /**
  * others
@@ -696,3 +705,11 @@ sub
 .gradient-text
   -webkit-background-clip: text
   -webkit-text-fill-color: transparent
+
+// Don't gradient text on IE11
+_:-ms-fullscreen, :root .gradient-text
+  background: transparent
+
+
+
+

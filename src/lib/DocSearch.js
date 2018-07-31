@@ -46,6 +46,9 @@ class DocSearch {
     handleSelected = false,
     enhancedSearchInput = false,
     layout = 'collumns',
+    // there's no way to well test location.href with jsdom so we rely on passing
+    // a mock which default value is the actual window object for implementation
+    __mockWindow = window,
   }) {
     DocSearch.checkArguments({
       apiKey,
@@ -102,16 +105,18 @@ class DocSearch {
     ]);
     this.autocomplete.on(
       'autocomplete:selected',
-      handleSelected.bind(null, this.autocomplete.autocomplete)
+      handleSelected.bind(this, this.autocomplete.autocomplete)
     );
     this.autocomplete.on(
       'autocomplete:shown',
-      this.handleShown.bind(null, this.input)
+      this.handleShown.bind(this, this.input)
     );
 
     if (enhancedSearchInput) {
       DocSearch.bindSearchBoxEvent();
     }
+
+    this.window = __mockWindow;
   }
 
   /**
@@ -306,7 +311,7 @@ class DocSearch {
 
   handleSelected(input, event, suggestion) {
     input.setVal('');
-    window.location.href = suggestion.url;
+    this.window.location.href = suggestion.url;
   }
 
   handleShown(input) {

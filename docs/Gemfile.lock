@@ -192,7 +192,7 @@ GEM
     minitest (5.10.3)
     multi_json (1.12.2)
     multipart-post (2.0.0)
-    nokogiri (1.8.1)
+    nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     octokit (4.7.0)
       sawyer (~> 0.8.0, >= 0.5.3)
@@ -277,7 +277,7 @@ DEPENDENCIES
   middleman-syntax
   middleman-vcs-time
   mime-types
-  nokogiri
+  nokogiri (>= 1.8.2)
   octokit
   pry-byebug
   rake
@@ -290,4 +290,4 @@ DEPENDENCIES
   wdm (~> 0.1.0)
 
 BUNDLED WITH
-   1.15.1
+   1.16.1

@@ -10,6 +10,11 @@ Go to https://aerialcss.algolia.com to read the full documentation
 
 ## Usage
 
+### Compile algolia-aerial
+Change the source in `src/xxx` and run `yarn start`
+
+### Use aerial
+
 To start using aerial.css, simply do `npm install algolia-aerial` or `yarn add algolia-aerial`
 
 then go to your main css / sass file, and add :

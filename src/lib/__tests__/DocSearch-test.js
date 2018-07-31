@@ -3,11 +3,6 @@
 import sinon from 'sinon';
 import $ from '../zepto.js';
 import DocSearch from '../DocSearch.js';
-Object.defineProperty(window.location, 'href', {
-  value: 'your url',
-  configurable: true,
-  writable: true,
-});
 
 describe('DocSearch', () => {
   beforeEach(() => {
@@ -394,11 +389,14 @@ describe('DocSearch', () => {
 
   describe('handleSelected', () => {
     it('should change the location', () => {
+      const fakeWindow = { location: { href: null } };
+
       // Given
       const options = {
         apiKey: 'key',
         indexName: 'foo',
         inputSelector: '#input',
+        __mockWindow: fakeWindow,
       };
 
       // When
@@ -407,7 +405,9 @@ describe('DocSearch', () => {
         url: 'https://website.com/doc/page',
       });
       return new Promise(resolve => {
-        expect(window.location.href).toEqual('https://website.com/doc/page');
+        expect(fakeWindow.location.href).toEqual(
+          'https://website.com/doc/page'
+        );
         resolve();
       });
     });
