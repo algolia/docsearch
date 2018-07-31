@@ -1,31 +1,23 @@
 %form.join-form.join-form-fill.gradient-white.pos-rel.z-10.p-xlarge.p-l-xxlarge.p-r-xxlarge.radius6.elevation1.m-l-r-auto
   %header.text-center
     %h3.color-bunting.text-demi.no-margin.text-lg  Get Started. It’s FREE!
-  .spacer16
+  .spacer32
   %label.color-bunting.text-normal{:for => "url"} Website
   .input-group
     %span.input-group-addon
       %i.icon.icon-link.color-bunting
     %input.form-control{type: 'text', placeholder: 'https://website.com/doc', name: 'url'}
   %p.text-sm.color-east-bay.m-t-small We’ll crawl the <u>documentation pages</u> of your website and index them on Algolia.
-  .spacer16
+  Refer to 
+  %a{href: "https://community.algolia.com/docsearch/documentation/docsearch-FAQ/customize-configuration-file/", class:"clickable"} the projects we support
+  .spacer32
   %label.color-bunting.text-normal{:for => "email"} Email
   .input-group
     %span.input-group-addon
       %i.icon.icon-email.color-bunting
     %input.form-control{type: 'email', placeholder: 'you@example.org', name: 'email'}
   %p.text-sm.color-east-bay.m-t-small We’ll email you the code you need to integrate the search into your documentation.
-  .spacer16
-  %label.color-bunting.text-normal{:for => "open_source_policy"} URL to your open source policy:
-  .input-group
-    %span.input-group-addon
-      %i.icon.icon-link.color-bunting
-    %input.form-control{type: 'text', placeholder: 'https://MyOpenSourceTerms.com/', name: 'open_source_policy'}
-  %p.text-sm.color-east-bay.m-t-small
-    DocSearch is entirely handled for open-source projects.
-    Refer to 
-    %a{href: "https://community.algolia.com/docsearch/documentation/docsearch-FAQ/customize-configuration-file/", class:"clickable"} the projects we support
-  .spacer16
+  .spacer32
   %p.checkbox.text-center
     %label
       %input{type: 'checkbox', name: 'owner'}
