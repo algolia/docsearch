@@ -3,6 +3,11 @@
 import sinon from 'sinon';
 import $ from '../zepto.js';
 import DocSearch from '../DocSearch.js';
+Object.defineProperty(window.location, 'href', {
+  writable: true,
+  value: 'some url',
+});
+
 describe('DocSearch', () => {
   beforeEach(() => {
     // Note: If you edit this HTML while doing TDD with `npm run test:watch`,
