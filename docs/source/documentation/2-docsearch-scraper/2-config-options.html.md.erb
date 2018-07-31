@@ -64,11 +64,11 @@ Name of the Algolia index where all the data will be pushed.
 **On our own infrastructure, this name must be equal to the configuration file name**
 
 We mostly attribute it on our own regarding plenty of underlying factors. The `apiKey` that we provide is generated with a restriction on the `index_name`. Changing the `index_name` would require to ask for a new key. Thus if you want to **change the name**, please **submit a new configuration**, we will generate a new key accordingly.
-
 ### `start_urls` _Mandatory_
 You can pass either a string or an array of urls. The crawler will go to each
 page in order, following every link it finds on the page. It will only stop if
 the domain is outside of the `allowed_domains` or if the link is blacklisted in
+
 `stop_urls`.
 
 Note that it currently does not follow *301* redirects.
@@ -290,11 +290,30 @@ Specifies if the matched URLs should not respect the same rules as the crawled h
 ```
 Given this configuration, every webpage of the sitemap whose URL contains '/doc/' will be scraped even if they don't comply with `start_urls` or `stop_urls`.
 
+### `sitemap_alternate_links` _Optional_
+
+This parameter is only useful when you are using a sitemap to crawl your website.
+
+It specifies if alternate links should be followed. Your sitemap should inlcude localized versions of your page in such format:
+
+```
+<url>
+    <loc>http://example.com/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="http://example.com/de"/>
+</url>
+```
+
+If `sitemap_alternate_links` is not set, the link "http://example.com/de" will not be parsed from the sitemap.
+
+Default is `false`
+
 ### `allowed_domains` _Optional_
 
 You can pass an array of strings. This is the whitelist of
 domains the crawler will browse. If a link targets a page that is not in the
 whitelist, the crawler will not follow it.
+
+### Sitemap crawling _Optional_
 
 Default is the domain of the first elements in the `start_urls`.
 
