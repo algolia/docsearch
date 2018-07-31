@@ -4,9 +4,8 @@ import sinon from 'sinon';
 import $ from '../zepto.js';
 import DocSearch from '../DocSearch.js';
 Object.defineProperty(window.location, 'href', {
-  value: 'your url',
-  configurable: true,
   writable: true,
+  value: 'some url',
 });
 
 describe('DocSearch', () => {
