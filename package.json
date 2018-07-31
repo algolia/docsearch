@@ -37,7 +37,7 @@
     ]
   },
   "devDependencies": {
-    "autoprefixer": "8.6.5",
+    "autoprefixer": "9.0.2",
     "babel-cli": "6.26.0",
     "babel-core": "6.26.3",
     "babel-eslint": "8.2.6",
@@ -63,7 +63,7 @@
     "mversion": "1.12.0",
     "node-sass": "4.9.2",
     "onchange": "4.1.0",
-    "postcss-cli": "5.0.1",
+    "postcss-cli": "6.0.0",
     "prettier": "1.14.0",
     "pretty-bytes-cli": "2.0.0",
     "semver": "5.5.0",
