@@ -7,15 +7,18 @@
     %span.input-group-addon
       %i.icon.icon-link.color-bunting
     %input.form-control{type: 'text', placeholder: 'https://website.com/doc', name: 'url'}
-  %p.text-sm.color-east-bay.m-t-small We’ll crawl the <u>documentation pages</u> of your website and index them on Algolia.
-  .spacer32
+  %p.text-sm.color-east-bay.m-t-small 
+    We’ll crawl the <u>documentation pages</u> of your website and index them on Algolia.
+    Refer to 
+    %a{href: "https://community.algolia.com/docsearch/documentation/docsearch-FAQ/customize-configuration-file/", class:"clickable"} the projects we support
+  .spacer16
   %label.color-bunting.text-normal{:for => "email"} Email
   .input-group
     %span.input-group-addon
       %i.icon.icon-email.color-bunting
     %input.form-control{type: 'email', placeholder: 'you@example.org', name: 'email'}
   %p.text-sm.color-east-bay.m-t-small We’ll email you the code you need to integrate the search into your documentation.
-  .spacer32
+  .spacer16
   %p.checkbox.text-center
     %label
       %input{type: 'checkbox', name: 'owner'}
