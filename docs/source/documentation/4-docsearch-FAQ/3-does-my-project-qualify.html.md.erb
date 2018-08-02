@@ -1,0 +1,33 @@
+---
+title: Does my project qualify?
+---
+
+## Our policy
+
+We really want to improve documentation with search. Finding the information you are looking for is the very first step when reading docs. Search is key.
+
+We are always really sorry to have to turn down request, but we are receiving so many applications everyday that we want to give some priority to public technical documentation websites.
+
+Please note that you can [always run DocSearch on your own infra](https://community.algolia.com/docsearch/documentation/docsearch-scraper/overview/) and [use our free community plan](https://www.algolia.com/pricing). We would be happy to [enhance DocSearch with your feedback](https://github.com/algolia/docsearch).
+
+## What is required?
+
+If you want us to host everything for you, there are some few requirements you still need to comply with:
+- Be **an owner** of the snippet. You will need to inject some JS snippets.
+- Your website must be **publicly available**. If your website is not, you will need to run our scrapper on a whitelisted server or implemnet your own authentification strategy (not supported so far).
+- Your website is a **documentation**. We will reduce the scope of our scrap to helpful pages only. 
+- Your website is **production ready**. We will not accept lorem ipsum website.
+
+## What is considered as a bonus/accelerator
+
+Since we need to prioritize requests, the following points are big advantages for your project:
+- You are **Open-Source** or you provide a free plan. We care about the developer community.
+- You are using a **supported documentation generator**. You can find example below.
+- Your site is **server-side rendered** (ie no extra JS rendering needed)
+- You are already **implementing [the generic configuration](#)**
+
+We are always happy to help product we love. How could you know if you qualify? [Apply!](https://community.algolia.com/docsearch/)
+
+## My project is already featured
+
+If your project is already featured or or uses a **supported** documentation-generator tool (e.g. [pkgdown](http://pkgdown.r-lib.org/index.html), [docusaurus](https://docusaurus.io/), [gitbook](https://www.gitbook.com/), [vuepress](https://vuepress.vuejs.org/) .... DocSearch is totally hosted on our side and stays free and will continue this way. We do recommend you to use [the featured Search-UI](https://github.com/algolia/docsearch) or fork it on your own.
