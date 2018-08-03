@@ -1,11 +1,38 @@
 <a name="2.5.2"></a>
 ## [2.5.2](https://github.com/algolia/docsearch/compare/v2.5.1...v2.5.2) (2017-12-07)
 
+### Features
+
+* **doc:** Precise attribution policy regarding `powered by algolia`
+* **doc:** Enhance doc
+* **build:** Provide styles in npm packages
+
+### Dependency updates
+- Renovate
+- autoprefixer 7.2.1
+- babel-eslint 8.0.3
+- eslint 4.12.1
+- gh-pages 1.1.0
+- jsdom 11.5.1
+- node-sass 4.7.2
+- onchange 3.3.0
+- prettier 1.9.1
+- sinon 4.1.2
+- uglify-js 3.2.1
+- webpack 3.10.0
+- webpack-dev-server 2.9.7
+- babel-eslint 8.0.3
+
+
+
 
 
 <a name="2.5.1"></a>
 ## [2.5.1](https://github.com/algolia/docsearch/compare/v2.5.0...v2.5.1) (2017-11-28)
 
+### Bug Fixes
+
+* **build:** fix minification since uglifyjs 3 ([68d3e0b](https://github.com/algolia/docsearch/commit/68d3e0b827603c7dc589f60b907fab25a60d0ff9))
 
 
 <a name="2.5.0"></a>
@@ -26,11 +53,15 @@
 <a name="2.4.1"></a>
 ## [2.4.1](https://github.com/algolia/docsearch/compare/v2.4.0...v2.4.1) (2017-08-08)
 
+### Features
+* **doc:** Enhance doc
 
 
 <a name="2.4.0"></a>
 # [2.4.0](https://github.com/algolia/docsearch/compare/v2.3.3...v2.4.0) (2017-08-08)
 
+### Features
+* **doc:** Enhance doc
 
 
 <a name="2.3.3"></a>
