@@ -67,11 +67,9 @@ We mostly attribute it on our own regarding plenty of underlying factors. The `a
 ### `start_urls` _Mandatory_
 You can pass either a string or an array of urls. The crawler will go to each
 page in order, following every link it finds on the page. It will only stop if
-the domain is outside of the `allowed_domains` or if the link is blacklisted in
+the domain is outside of the `allowed_domains` or if the link is blacklisted from the `stop_urls`.
 
-`stop_urls`.
-
-Note that it currently does not follow *301* redirects.
+Note that we currently do not follow *301* redirects.
 
 This parameter also behaves as a [regular expression](https://en.wikipedia.org/wiki/Regular_expression). If you don't use a sitemap, you must define at least one reachable URL (HTTP 20x). Otherwise the scraping will fail.
 
@@ -149,7 +147,7 @@ Finally, If your website contains different parts and layouts, you can define sp
 }
 ```
 
-#### `start_urls.tags`
+### `start_urls.tags`
 
 Tags will be apllied to every record from the matchin matched pages, i.e., its URL is matchin the `url`. These `tags` will [be processed as `attributesForFaceting`](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/) . If you want further detail, [check the original documentation](https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/).
 We do recommend to use `tags` if you want [to refine the scope of your search](https://www.algolia.com/doc/guides/searching/faceting/#faceting-overview).
