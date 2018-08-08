@@ -5,19 +5,18 @@
   "main": "dist/npm/index.js",
   "scripts": {
     "dev": "./scripts/dev",
-    "dev:docs": "./scripts/dev-docs",
     "serve": "./scripts/serve",
     "doctoc": "doctoc --maxlevel 3 README.md CONTRIBUTING.md",
     "build": "./scripts/build",
     "build:css": "./scripts/build-css",
     "build:js": "./scripts/build-js",
-    "build:docs": "./scripts/build-docs",
     "release": "./scripts/release",
     "release:beta": "./scripts/release-beta",
-    "lint": "eslint .",
+    "lint": "./scripts/lint",
     "lint:fix": "npm run lint -- --fix",
-    "test": "jest --coverage && npm run lint",
-    "test:watch": "jest --watch"
+    "test": "./scripts/test",
+    "test:watch": "jest --watch",
+    "docs:build": "NODE_ENV=production babel-node ./scripts/docs/build.js"
   },
   "files": [
     "dist/"

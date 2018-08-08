@@ -1,0 +1,52 @@
+extends main.pug
+
+block content
+  .bgtb-white-pure-moon.pt-3.pb-3.poppins
+    .max-w-lg.m-auto.text-center.px-1
+      img.h-3.md_h-4(src="assets/talksearch-logo.png", alt="TalkSearch logo")
+
+  .bg-moon
+    .flex.flrnw.max-w-xl.m-auto
+      .flex.flrw.my-2
+        .fln.w-100.md_w-50.my-2.flex.flrnw.flc
+          a.fake-browser.fln.w-80.text-0.shadow-1(href="demos/dotconferences/")
+            img.rounded-b-auto(src="assets/still-dotconferences.png", alt="Example of TalkSearch on dotConferences")
+        .fln.w-100.md_w-50.flex.flrnw.flc
+          .c-card.w-80.p-1
+            .text-3
+              .p-1 TalkSearch is currently in private beta.
+              .p-1 If you'd like to join, send us an email at 
+                a(href="mailto:talksearch@algolia.com") talksearch@algolia.com
+
+
+  
+  .bgtb-moon-white-pure
+    .max-w-xl.m-auto.pt-1
+      .max-w-md.m-auto.px-1
+        .text-solstice.text-5.normal.pb-2 Why TalkSearch?
+        .pb-2.text-3.leading-2  As conference organizers, we spend a lot of time and effort making sure our event will bring value to the audience. We hand-pick speakers with great content and we love when people share their knowledge to make everyone a better developer.
+        .pb-2.text-3.leading-2 That's why we record the talks, so we can then share them with people that could not attend in the first place. But that's hours and hours of content. Surely there is a better way to make this content discoverable?
+        .pb-2.text-3.leading-2 That's why we built TalkSearch. TalkSearch will allow your visitors to browse all your talks and search for any topic they're interested in. It will even search into what the speakers are actually saying and jump right to the matching moment in the video.
+        .p-2.flex.flrnw.flc
+          a.c-button.c-button-primary(href="what-is-talksearch.html") Check the documentation
+
+
+        .text-solstice.text-5.normal.pb-2 Demos
+
+      include ../_mixins/demo.pug
+      .max-w-lg.m-auto.pb-4
+        .flex.flrw
+          +demo('dotconferences', 'dotConferences')
+          +demo('saastr', 'Saastr')
+          +demo('googleio', 'Google I/O')
+          +demo('usi', 'USI')
+          +demo('chatbot-summit', 'Chatbot Summit', 'demos/chatbot-summit/logo-alternate.png')
+          +demo('takeoffconference', 'TakeOff Conf')
+          .fln.w-100.sm_w-50.md_w-33.p-1.h-5.flex.flrnw
+            a.c-card.fla.flex.flcnw.p-05.text-telluric(href="mailto:talksearch@algolia.com")
+              .fla.text-solstice.text-5.normal.flex.flrnw.flc.bold You?
+              .p-1 Send us an email at 
+                .text-nebula talksearch@algolia.com
+                |if you'd like to be on that list
+
+

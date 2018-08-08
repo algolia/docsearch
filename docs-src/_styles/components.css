@@ -1,0 +1,55 @@
+/* Buttons */
+.c-button {
+  @apply inline-flex px-1x flc;
+  @apply cursor-pointer select-none;
+  @apply rounded-100;
+  @apply font-semibold uppercase no-underline tracking-poppins text-telluric;
+
+  background: linear-gradient(#fff, #e4e4e9);
+  @apply shadow-button;
+
+  /* Those dimensions are not in the Tailwind config scale */
+  height: 2.625rem;
+  font-size: 0.6875rem;
+
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  will-change: box-shadow, transform;
+}
+.c-button:hover,
+.c-button:focus {
+  @apply shadow-button-up;
+  transform: translateY(-2px);
+  @apply no-underline;
+}
+.c-button:active {
+  @apply shadow-button-down;
+  @apply text-telluric;
+  transform: translateY(2px);
+}
+
+.c-button-primary {
+  text-shadow: 0 1px 0 #4b5ef0;
+  background: linear-gradient(#aeb7ff, #5468ff);
+  @apply shadow-button-primary;
+  @apply text-white;
+}
+.c-button-primary:hover,
+.c-button-primary:focus {
+  @apply shadow-button-primary-up;
+}
+.c-button-primary:active {
+  background-blend-mode: multiply, normal;
+  background-image: linear-gradient(#5468ff, #5468ff),
+    linear-gradient(to top, #fff, #e4e4e9);
+  @apply shadow-button-primary-down;
+  @apply text-white;
+}
+
+/* Cards */
+.c-card {
+  background-image: linear-gradient(#fff, #f5f5fa);
+  @apply rounded-1 shadow-1;
+}
+.c-card:hover {
+  @apply no-underline;
+}

@@ -1,0 +1,38 @@
+doctype html
+html(lang='en')
+  head
+    - const siteTitle = current.title || site.title
+    - const siteDescription = site.description;
+    - const siteUrl = site.url;
+    - const ogImage = siteUrl + 'img/og_image.png';
+    meta(charset='utf-8')
+    meta('http-equiv'='x-ua-compatible',content='ie-edge')
+    title= siteTitle
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content=siteDescription)
+    meta(name='twitter:card', content='summary_large_image')
+    meta(name='twitter:site', content='@Algolia')
+    meta(name='twitter:creator', content='@Algolia')
+    meta(property='og:url', content=siteUrl)
+    meta(property='og:title', content=siteTitle)
+    meta(property='og:description', content=siteDescription)
+    meta(property='og:image', content=ogImage)
+    link(rel="shortcut icon", href="./favicon.ico")
+    link(href="https://fonts.googleapis.com/css?family=Hind:400,600|Poppins:700", rel="stylesheet")
+    link(type="text/css", rel="stylesheet", href="./style.css")
+    link(type="text/css", rel="stylesheet", href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css")
+    body.hind.text-telluric
+      include ../_includes/tag-manager-noscript.pug
+      include ../_includes/header.pug
+      .block.mt-3
+        block content
+
+      script(src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js")
+      script
+        |docsearch({
+        |  apiKey: 'e3082526e1d5f37055241c335ab10f72',
+        |  indexName: 'talksearch',
+        |  inputSelector: '.custom-search-input',
+        |  debug: false 
+        |});
+    include ../_includes/tag-manager.pug
