@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 set -e
 
-jest --no-cache ./src
+jest --no-cache ./src/lib/__tests__/utils-test.js

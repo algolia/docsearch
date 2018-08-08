@@ -10,3 +10,4 @@ docs/build
 docs/.sass-cache/
 dist-es5-module/
 yarn.lock
+tmp

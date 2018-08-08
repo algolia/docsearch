@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 set -e
 
-eslint ./scripts/docs ./src/
+eslint ./src ./*.js

@@ -16,7 +16,9 @@
     "lint:fix": "npm run lint -- --fix",
     "test": "./scripts/test",
     "test:watch": "jest --watch",
-    "docs:build": "NODE_ENV=production babel-node ./scripts/docs/build.js"
+    "docs:build": "cd ./docs && yarn build",
+    "docs:serve": "cd ./docs && yarn serve",
+    "docs:lint": "cd ./docs && yarn lint"
   },
   "files": [
     "dist/"

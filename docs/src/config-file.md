@@ -1,0 +1,445 @@
+---
+layout: two-columns
+title: Make the most of your configuration
+---
+
+## Introduction
+
+The DocSearch scraper will use a configuration file specifying:
+ - the Algolia index name that will store the records resulting from the crawling
+ - the URLs it needs to crawl
+ - the URLs it shouldn't crawl
+ - the (hierarchical) CSS selectors to use to extract the relevant content from your webpages
+ - the CSS selectors to skip
+ - An optional sitemap URL that will be crawled and then scraped
+ - additional options you might provide to fine-tune the scraping
+
+## How it works
+
+Once you run the DocSearch scraper on a specific configuration, it will:
+ - crawl all the URLs you specified (from the `start_urls` or the `sitemap`)
+ - follow all the hyperlinks mentioned in the page, and continue the crawling there
+ - stop the crawling as soon as you've reached a URL that is not specified in your configuration or affiliated to a start url
+ - extract the content of every single crawled page following the logic you defined using the CSS selectors
+ - push the resulting records to the Algolia index you configured
+
+## Configuration format
+
+A configuration file looks like:
+
+```json
+{
+    "index_name": "stripe",
+    "start_urls": [
+        "https://stripe.com/docs"
+    ],
+    "stop_urls": [
+        "https://stripe.com/docs/api"
+    ],
+    "selectors": {
+      "lvl0": "#content header h1",
+      "lvl1": "#content article h1",
+      "lvl2": "#content section h3",
+      "lvl3": "#content section h4",
+      "lvl4": "#content section h5",
+      "lvl5": "#content section h6",
+      "text": "#content header p,#content section p,#content section ol"
+    },
+    "selectors_exclude": [
+        ".method-list",
+        "aside.note"
+    ],
+    // additional options
+    [...]
+}
+```
+
+It must be **a valid JSON file**
+
+## DocSearch options
+
+### `index_name` _Mandatory_
+
+Name of the Algolia index where all the data will be pushed.
+
+**On our own infrastructure, this name must be equal to the configuration file name**
+
+We mostly attribute it on our own regarding plenty of underlying factors. The `apiKey` that we provide is generated with a restriction on the `index_name`. Changing the `index_name` would require to ask for a new key. Thus if you want to **change the name**, please **submit a new configuration**, we will generate a new key accordingly.
+### `start_urls` _Mandatory_
+You can pass either a string or an array of urls. The crawler will go to each
+page in order, following every link it finds on the page. It will only stop if
+the domain is outside of the `allowed_domains` or if the link is blacklisted from the `stop_urls`.
+
+Note that we currently do not follow *301* redirects.
+
+This parameter also behaves as a [regular expression](https://en.wikipedia.org/wiki/Regular_expression). If you don't use a sitemap, you must define at least one reachable URL (HTTP 20x). Otherwise the scraping will fail.
+
+You can build a more advanced URL. You will need to use a JSON object with a `variables` attribute. This attribute is an array of variables that will be injected into the URLs:
+
+**Example:**
+```json
+{
+   "url": "http://example.com/docs/(?P<lang>.*?)/(?P<version>.*?)/",
+   "variables": {
+      "version": [
+         "latest",
+         "3.3",
+         [...]
+      ],
+      "lang": [
+         "en",
+         "fr",
+         [...]
+      ]
+}
+```
+The whole pattern `(?P<version>.*?)` will be replaced by the value assigned in the related key `version`.
+
+The variable name is not fixed. Please note that those variables will behave as
+[`attributesForFaceting`](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/) which may help you [restrain the scope of the search from the snippet](https://www.algolia.com/doc/guides/searching/faceting/).
+
+Thus you can limit the scope of the search to the records from the pages encompassed by `http://example.com/docs/en/latest/*` thanks to the following snippet:
+```js
+<script type="text/javascript">
+ docsearch({
+    apiKey: ${apiKey},
+    indexName: ${indexName},
+    inputSelector: '#search'
+    algoliaOptions: { 'facetFilters': ["lang:en", "version:latest"] },
+});
+</script>
+```
+
+In order to promote some pages, you can set the `page_rank` attribute (default: `0`, can be a positive or negative integer).
+
+Finally, If your website contains different parts and layouts, you can define specific `selectors` for each part and apply them using `selectors_key`:
+
+**Example:**
+```json
+{
+  "index_name": "example",
+   "start_urls": [
+     "http://example.com/docs/latest/",
+    {
+     "url": "http://example.com/docs/concepts/",
+     "page_rank": 1,
+     "selectors_key": "concepts"
+    }
+   ],
+   "selectors": {
+     "default": {
+       "lvl0": ".docSearch-content h1",
+       "lvl1": ".docSearch-content h2",
+       "lvl2": ".docSearch-content h3",
+       "lvl3": ".docSearch-content h4",
+       "lvl4": ".docSearch-content h5",
+       "text": ".docSearch-content p, .docSearch-content li"
+      },
+     "concepts": {
+       "lvl0": ".docSearch-header h2",
+       "lvl1": ".docSearch-content h1",
+       "lvl2": ".docSearch-content h2",
+       "lvl3": ".docSearch-content h3",
+       "lvl4": ".docSearch-content h5",
+       "text": ".docSearch-content p"
+     }
+   }
+  [...]
+}
+```
+
+### `start_urls.tags`
+
+Tags will be apllied to every record from the matchin matched pages, i.e., its URL is matchin the `url`. These `tags` will [be processed as `attributesForFaceting`](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/) . If you want further detail, [check the original documentation](https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/).
+We do recommend to use `tags` if you want [to refine the scope of your search](https://www.algolia.com/doc/guides/searching/faceting/#faceting-overview).
+
+From your search UI, you will need to use the following input:
+```js
+algoliaOptions: { 'facetFilters': ["tags:$VALUE"] },
+```
+
+Default not used. Must be an array.
+
+
+**Example:**
+
+ From the config:
+```json
+"start_urls": [
+ {
+  "url": "http://example.com/docs/concepts/",
+  "selectors_key": "concepts"
+ }
+ ```
+
+ From the search UI:
+ ```js
+ algoliaOptions: { 'facetFilters': ["tags:concepts"] },
+ ```
+### `scrape_start_urls`
+
+This boolean let you decide if you want to extract the content of the starting pages.
+
+Default is `false`
+
+### `stop_urls` _Optional_
+
+This array can be used to blacklist URLs. The crawler will stop on these and
+will not consider their content. Likewise, if a link within a crawled webpage
+targets such pages, the crawler will not follow the link.
+You can use a regular expression as well as plain urls.
+
+Note: It is sometimes needed to add `http://www.example.com/index.html` pages to
+the `stop_urls` list if you set `http://www.example.com` as a `start_urls`, to
+avoid duplicated content.
+
+### `selectors` _Mandatory_
+
+This object contains all the CSS selectors that will be used to create the
+record hierarchy. It can contains up to 6 levels (`lvl0`, `lvl1`, `lvl2`, `lvl3`, `lvl4`,
+`lvl5`) and `text`.
+
+A default config would be to target the page `title` or `h1` as `lvl0`, the `h2`
+as `lvl1` and `h3` as `lvl2`. `text` is usually any `p` of text.
+
+We recommend making use of at least the three first levels for better relevancy.
+
+### `global` selectors _Optional_
+
+It's possible to make a selector global which means that all records from the page will have
+this value. This is useful when you have a title that is in the right sidebar and
+the sidebar is placed after the content in the DOM.
+
+`global` attributes should be seen as a way to extract the matching elements from the HTML flow. These global elements will not be considered as breaking ones when we encounter them along the flow. If this token is enabled :
+- we will not create a new record from the current builded stack.
+- we will apply its contextual value (or `default_value` if not matched) to every records
+
+We mostly use this parameter for page that miss context. It enables us to pick up the context from another common part without having duplicates.
+
+```json
+"selectors": {
+  "lvl0": {
+    "selector": "#content header h1",
+    "global": true
+  }
+}
+```
+
+### Xpath selector _Optional_
+
+By default, `selectors` are considered to be [css selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) but you can specify that a selector is an [XPath one](https://developer.mozilla.org/en-US/docs/Web/XPath).
+This is useful when you want to do more complex selection like selecting the parent of a target.
+
+```json
+"selectors": {
+  "lvl0": {
+    "selector": "//li[@class=\"chapter active done\"]/../../a",
+    "type": "xpath"
+  }
+}
+```
+
+### Default value _Optional_
+
+You have the possibility to add a default value which will be used if the selector doesn't match anything.
+
+```json
+"selectors": {
+  "lvl0": {
+    "selector": "#content article h1",
+    "default_value": "Documentation"
+  }
+}
+```
+
+### `selectors_exclude` _Optional_
+
+By default, the `selectors` search is applied page-wide. If there are some parts
+of the page that you do not want to include (e.g. a table of content, a sidebar or a footer),
+you can add them to the `selectors_exclude` key.
+
+### Sitemap crawling _Optional_
+
+Our crawler offers you to crawl a site by discovering the URLs using Sitemaps. Thus, you can define the direct URL(s) to your sitemap XML file, `sitemap_urls`. In order to parse it, you should establish regex(s), `sitemap_urls_regex`, which will match the URLs to crawl. Otherwise it will use the `start_urls` pattern in order to match the expected URLs.
+
+For sites that use Sitemap index files that point to other sitemap files, all those sitemaps will be followed.
+
+###  `sitemap_urls` _Optional_
+A list of urls pointing to the sitemaps (or sitemap index) you want to crawl. Must be provided if you want docsearch to discover your via sitemaps.
+
+###  `sitemap_urls_regexs` _Optional_
+A list of regular expressions that will be applied to each URL from the sitemap. If one of the patterns match a URL, this link will be scraped. If no regular expression is defined, the start_urls will be taken as a pattern.
+
+###  `force_sitemap_urls_crawling` _Optional_
+Specifies if the matched URLs should not respect the same rules as the crawled hyperlink. If set to true, each URL will be scraped even if it does comply with the `start_urls` or `stop_urls`. Default is `force_sitemap_urls_crawling` set to `false`
+
+**Example:**
+```json
+{
+    [...]
+    "sitemap_urls": [
+      "https://www.mySite.com/sitemap.xml"
+    ],
+    "sitemap_urls_regexs": [
+      "/doc/"
+    ],
+    "force_sitemap_urls_crawling": true,
+    [...]
+}
+```
+Given this configuration, every webpage of the sitemap whose URL contains '/doc/' will be scraped even if they don't comply with `start_urls` or `stop_urls`.
+
+### `sitemap_alternate_links` _Optional_
+
+This parameter is only useful when you are using a sitemap to crawl your website.
+
+It specifies if alternate links should be followed. Your sitemap should inlcude localized versions of your page in such format:
+
+```
+<url>
+    <loc>http://example.com/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="http://example.com/de"/>
+</url>
+```
+
+If `sitemap_alternate_links` is not set, the link "http://example.com/de" will not be parsed from the sitemap.
+
+Default is `false`
+
+### `allowed_domains` _Optional_
+
+You can pass an array of strings. This is the whitelist of
+domains the crawler will browse. If a link targets a page that is not in the
+whitelist, the crawler will not follow it.
+
+### Sitemap crawling _Optional_
+
+Default is the domain of the first elements in the `start_urls`.
+
+### `min_indexed_level` _Optional_
+
+Lets you define the minimum level at which you want a record to be indexed. For
+example, with a `min_indexed_level: 1`, you will only index records that have at
+least a `lvl0` and a `lvl1` field.
+
+This is especially useful when the documentation is split into several pages and
+all pages duplicate the main title or introduction (see [this issue][https://github.com/algolia/docsearch-configs/issues/83]).
+With `min_indexed_level`, you can ignore the duplicated title.
+
+Default is `0`
+
+### `only_content_level` _Optional_
+
+When `only_content_level` is set to `true`, we only index builded records which match the `text` selectors. Every other record will be skipped. This parameter is more flexible than `min_indexed_level`. Once `only_content_level` is used, `min_indexed_level` becomes pointless.
+
+Default is `false`
+
+### `js_render` _Optional_
+
+The HTML code that we crawl is sometimes generated using Javascript. In those
+cases, the `js_render` option must be set to `true`. It will enable our
+internal proxy (Selenium) to render pages before crawling them.
+
+We highly recommend avoiding client-side rendering. It mainly decreases [the performance of your website](https://medium.com/walmartlabs/the-benefits-of-server-side-rendering-over-client-side-rendering-5d07ff2cefe8).
+
+Default is `false`
+
+### `js_wait` _Optional_
+
+When `js_render` is set to `true`, the `js_wait` parameter lets you change the default waiting time (in seconds) to render the
+webpage with the Selenium emulator.
+
+Default is `0`s
+
+### `use_anchors` _Optional_
+
+The `use_anchors` needs to be set to True for a javascript doc when the hash is
+used to route the query. Internally, this will disable the canonicalize feature that
+is removing the hash from the url.
+
+This parameter is optional and is set to `false` by default.
+
+### `strip_chars` _Optional_
+
+A list of characters to remove from the indexed text.
+
+You can also override the default `strip_chars` per level
+
+```json
+"selectors": {
+  "lvl0": {
+    "selector": "#content article h1",
+    "strip_chars": " .,;:"
+  }
+}
+```
+
+### `nb_hits` _Mandatory_
+
+Each time the configuration is locally run, this attribute is set to the number of records indexed.
+
+This attribute is used for purposed monitoring. We keep a track of its evolution in order to detect main changes.
+Default is `0`.
+
+### `custom_settings` _Optional_
+
+This object is [any custom Algolia settings](https://www.algolia.com/doc/api-client/settings/#the-scope-of-settings-and-parameters) you would like to pass to the index
+settings. Please use the python syntax. You will [look under the hood of algolia](https://www.algolia.com/doc/).
+
+### `nb_hits_max` _Optional_
+
+The number of maximum records allowed for the whole indexing. If the scrapping is bigger, it will fail.
+
+This value is not meant to be set from anyone except DocSearch maintainer.
+
+Default is `600 000` (arbitrary, might change)
+
+## Possible issues
+
+### Duplicated content
+
+It could happen that the crawled website returned duplicated data. Most of the time, this is because the crawled pages got the same urls with two different schemes.
+
+If we have URLs like `http://website.com/page` and `http://website.com/page/` (notice the second one ends with `/`), the scraper will consider them as different. This can be fixed by adding a regex to the `stop_urls` in the `config.json`:
+
+```json
+"stop_urls": [
+  "/$"
+]
+```
+
+In this attribute, you can also list the pages you want to skip:
+
+```json
+"stop_urls": [
+  "http://website.com/page/"
+]
+```
+
+### Anchors
+
+The scraper will also consider pages with anchors as different pages. Make sure you remove any hash sign from the urls that you put in the stop & start URLs:
+
+*Bad:*
+
+```json
+"stop_urls": [
+  "http://website.com/page/#foo"
+]
+```
+
+*Good:*
+
+```json
+"stop_urls": [
+  "/$"
+]
+```
+
+Or :
+
+```json
+"stop_urls": [
+  "http://website.com/page/"
+]
+```
