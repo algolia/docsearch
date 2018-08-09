@@ -77,3 +77,10 @@ You can override the way these elements are impacting the search thanks to `cust
   ]
 }
  ```
+
+## Editing settings
+
+### Why the settings made from the algolia dashboard are not persistent?
+
+This situation only happens when you are running our DocSearch scraper on your own. 
+Every time you are running the crawler, every algolia settings are overridden. If you wan to use custome algolia settings, [please use `custom_settings`](https://community.algolia.com/docsearch/documentation/docsearch-scraper/config-options/#custom_settings-optional) instead.
