@@ -5,6 +5,20 @@
 @import "./_styles/highlight.css";
 @import "./_styles/docsearch.css";
 
+/* Antialiasing */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hero */
+.bg-docsearch-hero {
+  background-image: url('assets/bg-docsearch.svg'), linear-gradient(#fff, #f5f5fa);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+}
+
 /* Gradients */
 .bgtb-white-pure-moon {
   background-image: linear-gradient(#fff, #f5f5fa);
@@ -113,4 +127,3 @@ code {
       50px 0 0 rgba(236, 139, 99, 0.5);
   }
 }
-

@@ -1,37 +1,138 @@
 extends main.pug
 
 block content
-  .bgtb-white-pure-moon.pt-3.pb-3.poppins
-    .max-w-lg.m-auto.text-center.px-1
-      img.h-3.md_h-4(src="assets/talksearch-logo.png", alt="TalkSearch logo")
+  .bg-docsearch-hero
+    .max-w-lg.m-auto.text-center
+      img.h-3.mt-3(src="assets/docsearch-logo.svg", alt="DocSearch logo")
+      .text-2.text-nova.mb-3 The best search experience for docs, integrates in minutes, for free.
+      .text-4.text-telluric.mb-2 Already 847 docs are providing search through DocSearch
+      a.c-button.c-button-primary(href="what-is-talksearch.html") Join the Program
 
-  .bg-moon
-    .flex.flrnw.max-w-xl.m-auto
-      .flex.flrw.my-2
-        .fln.w-100.md_w-50.my-2.flex.flrnw.flc
-          a.fake-browser.fln.w-80.text-0.shadow-1(href="demos/dotconferences/")
-            img.rounded-b-auto(src="assets/still-dotconferences.png", alt="Example of TalkSearch on dotConferences")
-        .fln.w-100.md_w-50.flex.flrnw.flc
-          .c-card.w-80.p-1
-            .text-3
-              .p-1 TalkSearch is currently in private beta.
-              .p-1 If you'd like to join, send us an email at 
-                a(href="mailto:talksearch@algolia.com") talksearch@algolia.com
-
-
-  
+  img(src="assets/logos/babel.png", alt="DocSearch + ", width=80)
+  img(src="assets/logos/bootstrap.png", alt="DocSearch + ", width=80)
+  img(src="assets/logos/circleio.jpg", alt="DocSearch + ", width=80)
+  img(src="assets/logos/cordova.png", alt="DocSearch + ", width=80)
+  img(src="assets/logos/electron.png", alt="DocSearch + ", width=80)
+  img(src="assets/logos/ember.png", alt="DocSearch + ", width=80)
+  img(src="assets/logos/eslint.jpg", alt="DocSearch + ", width=80)
+  img(src="assets/logos/gitlab.png", alt="DocSearch + ", width=80)
+  img(src="assets/logos/go.png", alt="DocSearch + ", width=80)
+  img(src="assets/logos/grafana.png", alt="DocSearch + ", width=80)
+  img(src="assets/logos/graphql.png", alt="DocSearch + ", width=80)
+  img(src="assets/logos/jekyll.jpg", alt="DocSearch + ", width=80)
+  img(src="assets/logos/netlify.png", alt="DocSearch + ", width=80)
+  img(src="assets/logos/paypal.jpg", alt="DocSearch + " , width=80)
+  img(src="assets/logos/postman.png", alt="DocSearch + ", width=80)
+  img(src="assets/logos/react.png", alt="DocSearch + ", width=80)
+  img(src="assets/logos/scala.png", alt="DocSearch + ", width=80)
+  img(src="assets/logos/serverless.png", alt="DocSearch + ", width=80)
+  img(src="assets/logos/socketio.png", alt="DocSearch + " , width=80)
+  img(src="assets/logos/stripe.png", alt="DocSearch + ", width=80)
+  img(src="assets/logos/symfony.png", alt="DocSearch + ", width=80)
+  img(src="assets/logos/trello.png", alt="DocSearch + ", width=80)
+  img(src="assets/logos/vue.png", alt="DocSearch + ", width=80)
+  img(src="assets/logos/webpack.png", alt="DocSearch + ", width=80)
+  img(src="assets/logos/yarn.jpg", alt="DocSearch + ", width=80)
+        
   .bgtb-moon-white-pure
+    .max-w-md.m-auto.text-center
+      h2.text-solstice.text-5.normal.pb-2 Offer your docs a Learn-as-you-type experience
+      p.text-3.pb-2.text-telluric We're kind of scratching our own itch here. As developers, we spend a lot of time reading documentation, and it isn’t always easy to find the information we need.
+      p.text-3.text-telluric No one's to blame, building a good search for a documentation is a complex challenge. We just happen to have a lot of experience doing that, and we want to share it with the world.
+    .max-w-xl.m-auto
+      img(src="assets/bg-docsearch-live-demo-bootstrap.png", alt="DocSearch logo")
+      
+      
+    .max-w-xl.m-auto.text-center
+      .max-w-md.m-auto
+        .text-solstice.text-5.normal.pb-2 Search Designed for Documentation
+        .pb-2.text-3.leading-2 Documentation speaks to your users. Ideally, this conversation will be pleasant and efficient. Everyone visiting your documentation page has a different need: Some are exploring your product, some are trying to get started, and some are stuck and need help.
+        .pb-2.text-3.leading-2 DocSearch is designed to provide relevant search results at every level. Its strutured layout give the users more context to understand the product. We call it the “Learn as you type” effect.
+      .max-w-xl.m-auto
+        img(src="assets/docsearch-UI-anatomy.png", alt="Anatomy of DocSearch UI")
+          
+          
+    .max-w-lg.m-auto.text-center
+      h2.text-solstice.text-5.normal.pb-2 How it works
+      img(src="assets/docsearch-how-it-works.png", alt="how DocSearch works")
+      .flex.flrw
+        .fln.w-100.sm_w-50.md_w-33.p-1
+          h3.pb-2.text-3.leading-2 We crawl your documentation pages
+          p.text-3 We built a website crawler designed to index every section of your documentation.
+          p.text-3 Just send us the URL of your documentation, and we’ll run the crawler every 24h so you’re always up-to-date.
+        .fln.w-100.sm_w-50.md_w-33.p-1
+          h3.pb-2.text-3.leading-2 We configure your search experience
+          p.text-3 You don’t need to configure any settings or even have an Algolia account.
+          p.text-3 We take care of all of this automatically to ensure the best documentation search experience.
+        .fln.w-100.sm_w-50.md_w-33.p-1
+          h3.pb-2.text-3.leading-2 You add the search autocomplete to your UI
+          p.text-3 We’ll send you the script so you can integrate Algolia autocomplete to power your search.
+          p.text-3 You will receive the same speed, relevance and best-in-class UX as our paying customers.
+      
+          
+          
     .max-w-xl.m-auto.pt-1
-      .max-w-md.m-auto.px-1
-        .text-solstice.text-5.normal.pb-2 Why TalkSearch?
-        .pb-2.text-3.leading-2  As conference organizers, we spend a lot of time and effort making sure our event will bring value to the audience. We hand-pick speakers with great content and we love when people share their knowledge to make everyone a better developer.
-        .pb-2.text-3.leading-2 That's why we record the talks, so we can then share them with people that could not attend in the first place. But that's hours and hours of content. Surely there is a better way to make this content discoverable?
-        .pb-2.text-3.leading-2 That's why we built TalkSearch. TalkSearch will allow your visitors to browse all your talks and search for any topic they're interested in. It will even search into what the speakers are actually saying and jump right to the matching moment in the video.
-        .p-2.flex.flrnw.flc
-          a.c-button.c-button-primary(href="what-is-talksearch.html") Check the documentation
+      .max-w-md.m-auto.px-1.text-center
+        .text-solstice.text-5.normal.pb-2 Powerful Analytics with Algolia
+        .pb-2.text-3.leading-2 Search usage of your documentation givese you unvaluable insights about what your users need to ramp up their knowledge of your product. Follow metrics of popular queries, no results or click position to better optimize your content.
+  
+
+    .max-w-xl.m-auto.pt-1
+      .max-w-md.m-auto.px-1.text-center
+        .text-solstice.text-5.normal.pb-2 Try it live
+        .pb-2.text-3.leading-2 We’ve helped to integrate DocSearch into several open source projects. Take a look.
+        .flex.flrw
+          .fln.w-100.sm_w-50.md_w-33.p-1.flex.flrnw
+            a.c-card.custom-demo.fla.flex.flcnw.p-05(href='demos/dotconferences/')
+              .fln.flc.relative.text-0.max-w-5.m-auto
+                img(src='demos/dotconferences/animated.gif', alt='Example of TalkSearch on dotConferences')
+              .fln.pt-1.flex.flrnw.flc.pl-1
+                .fln.text-0
+                  img.h-2(src='demos/dotconferences/logo-small.png', alt='Logo of dotConferences')
+                .fla.pl-1.text-solstice.uppercase.bold dotConferences
+          .fln.w-100.sm_w-50.md_w-33.p-1.flex.flrnw
+            a.c-card.custom-demo.fla.flex.flcnw.p-05(href='demos/saastr/')
+              .fln.flc.relative.text-0.max-w-5.m-auto
+                img(src='demos/saastr/animated.gif', alt='Example of TalkSearch on Saastr')
+              .fln.pt-1.flex.flrnw.flc.pl-1
+                .fln.text-0
+                  img.h-2(src='demos/saastr/logo-small.png', alt='Logo of Saastr')
+                .fla.pl-1.text-solstice.uppercase.bold Saastr
+          .fln.w-100.sm_w-50.md_w-33.p-1.flex.flrnw
+            a.c-card.custom-demo.fla.flex.flcnw.p-05(href='demos/googleio/')
+              .fln.flc.relative.text-0.max-w-5.m-auto
+                img(src='demos/googleio/animated.gif', alt='Example of TalkSearch on Google I/O')
+              .fln.pt-1.flex.flrnw.flc.pl-1
+                .fln.text-0
+                  img.h-2(src='demos/googleio/logo-small.png', alt='Logo of Google I/O')
+                .fla.pl-1.text-solstice.uppercase.bold Google I/O
+          .fln.w-100.sm_w-50.md_w-33.p-1.flex.flrnw
+            a.c-card.custom-demo.fla.flex.flcnw.p-05(href='demos/usi/')
+              .fln.flc.relative.text-0.max-w-5.m-auto
+                img(src='demos/usi/animated.gif', alt='Example of TalkSearch on USI')
+              .fln.pt-1.flex.flrnw.flc.pl-1
+                .fln.text-0
+                  img.h-2(src='demos/usi/logo-small.png', alt='Logo of USI')
+                .fla.pl-1.text-solstice.uppercase.bold USI
+          .fln.w-100.sm_w-50.md_w-33.p-1.flex.flrnw
+            a.c-card.custom-demo.fla.flex.flcnw.p-05(href='demos/chatbot-summit/')
+              .fln.flc.relative.text-0.max-w-5.m-auto
+                img(src='demos/chatbot-summit/animated.gif', alt='Example of TalkSearch on Chatbot Summit')
+              .fln.pt-1.flex.flrnw.flc.pl-1
+                .fln.text-0
+                  img.h-2(src='demos/chatbot-summit/logo-alternate.png', alt='Logo of Chatbot Summit')
+                .fla.pl-1.text-solstice.uppercase.bold Chatbot Summit
+          .fln.w-100.sm_w-50.md_w-33.p-1.flex.flrnw
+            a.c-card.custom-demo.fla.flex.flcnw.p-05(href='demos/takeoffconference/')
+              .fln.flc.relative.text-0.max-w-5.m-auto
+                img(src='demos/takeoffconference/animated.gif', alt='Example of TalkSearch on TakeOff Conf')
+              .fln.pt-1.flex.flrnw.flc.pl-1
+                .fln.text-0
+                  img.h-2(src='demos/takeoffconference/logo-small.png', alt='Logo of TakeOff Conf')
+                .fla.pl-1.text-solstice.uppercase.bold TakeOff Conf
 
 
-        .text-solstice.text-5.normal.pb-2 Demos
-
-
-
+    .max-w-xl.m-auto.pt-1
+      .max-w-md.m-auto.px-1.text-center
+        .text-solstice.text-5.normal.pb-2 Get started
+        .pb-2.text-3.leading-2 We’ll get back to you within a few hours with everything you need to integrate your new search into your website. Oh, and did we mention it's FREE? No commitment. No subscription. Everything is on us!
