@@ -84,10 +84,11 @@ a:focus {
   @apply .underline;
 }
 code {
-  @apply .code .text--1 .text-mars-2;
+  @apply .code .text-mars-2;
   @apply .p-0x;
   @apply .bg-moon;
   @apply .rounded-1;
+  font-size: .9em;
 }
 
 /* Content converted form markdown */
@@ -102,12 +103,14 @@ code {
   /* Titles */
   h2 {
     @apply .text-solstice .text-5 .normal;
-    @apply .mb-1;
+    @apply .mb-1 .mt-2;
     /* Trick to have heading scroll into view and not being hidden by header */
     &:before {
       content: "";
-      display: block;
-      @apply .h-3;
+      @apply hidden .h-3;
+    }
+    &:target:before {
+      @apply block;
     }
     .anchor {
       @apply .hidden;

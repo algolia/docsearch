@@ -1,25 +1,27 @@
 ---
 layout: two-columns
-title: Overview
+title: What is DocSearch?
 ---
 
-We're scratching our own itch here. As developers, we spend a lot of time
-reading documentation, and it isn't always easy to find the information we need.
+DocSearch is born out of the need to scratch our own itch. As developers, we
+spent a lot of time reading documentation, and we often found it hard to find
+relevant information we need quickly. We're not blaming anyone here; building
+a good search is a challenge. 
 
-Not blaming anyone here. Building a good search for a documentation is a complex
-challenge. We happen to have a lot of experience doing that, and we want to
-share it with the world.
+It just happens that we are a search company and we actually have a lot of
+experience building search interfaces. We wanted to put those skills to good
+use. That's why we created a way to automatically extract content from tech
+documentation and make it available to everyone with only a few keystrokes.
 
+DocSearch itself is made of a crawler and a front-end library. We run the
+crawler on our end every 24h to extract content from your website and push it to
+an Algolia index. You'll then have to add the front-end library to your website
+to redirect all the search requests to this index.
 
-DocSearch will provide, for free and out of the box, the Algolia search
-experience for your documentation website. You only need to [ask us to configure
-your site](https://community.algolia.com/docsearch/) or
-[submit you own configuration](https://github.com/algolia/docsearch-configs). We'll
-get back to you with what you need to integrate your new search into your website.
+DocSearch is entirely free and mostly automated. The only thing we'll need from
+you is to check that you're eligible (most tech projects are), and apply! After
+that, we'll share with you the JavaScript snippet needed to add DocSearch to
+your website. We just ask that you keep the "powered by Algolia" link displayed.
 
- 1. We'll **configure** your search experience,
- 2. We'll **crawl** and **scrap** your documentation pages every 24h accordingly,
- 3. You'll only need to **add few lines to your website**: a Javascript snippet along with 2 libraries (JS & CSS).
-
- **NB:** If you prefer to DIY, you can [run the scraper](https://github.com/algolia/docsearch-scraper)
- in your own infra. Feel free to fork!
+DocSearch is [one of our ways](https://opencollective.com/algolia) to give back
+to the Open-Source community for everything it did for us already.

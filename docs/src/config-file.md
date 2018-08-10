@@ -3,6 +3,8 @@ layout: two-columns
 title: Make the most of your configuration
 ---
 
+// TODO
+
 ## Introduction
 
 The DocSearch scraper will use a configuration file specifying:

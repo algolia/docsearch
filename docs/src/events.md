@@ -3,6 +3,8 @@ layout: two-columns
 title: Configuring the search results
 ---
 
+// TODO
+
 DocSearch is a wrapper around the [autocomplete.js](https://github.com/algolia/autocomplete.js) library that gets its
 results from the Algolia API. As such, you can use any options provided by this project and by [the Algolia API](https://www.algolia.com/doc/api-reference/).
 

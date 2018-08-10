@@ -3,6 +3,8 @@ layout: two-columns
 title: Customize autocomplete styles
 ---
 
+// TODO
+
 ## Attribution
 
 We're happy to provide DocSearch free of charge for your site, and you're

@@ -1,95 +1,79 @@
 ---
 layout: two-columns
-title: Recommendations
+title: Tips for a good search
 ---
 
-Here we look at several ingredients that help guarantee best results.
-You can also have a look at our [blog that discusses the pitfalls and recommendations](https://blog.algolia.com/how-to-build-a-helpful-search-for-technical-documentation-the-laravel-example/) that create the DocSearch adventure!
+DocSearch can work with almost any website, but we found that some site
+structure yield more relevant result and/or faster indexing time. In this page
+we'll share some tips on how you can make the most out of DocSearch.
 
-## Page Structure
+## Use a `sitemap.xml`
 
-For DocSearch to work, your **documentation** must be structured in a certain way. Structure reflects **clarity**, **exactness**, and **steadiness**. A helpful document will always have an understandable structure in one glance.
-It allows a user to get the ins and outs of the information and to quickly assimilate the **context**. It will help her/him to establish the **potential relevancy** of the document regarding her/his **intent**.
+If your website has a sitemap, DocSearch will use it to get the list of pages to
+index. If it can't find one, it will follow every link of every page instead.
 
-Last but not least the structure introduces a lot of meta information that are game changers at indexing time, such as **document hierarchy** or the use of [facets](https://www.algolia.com/doc/guides/searching/faceting/#faceting-overview).
+We highly recommend you add a `sitemap.xml` to your website if you don't have
+one already. This will make the indexing faster, but will also give you more
+control over which page you'd like to include or not in the indexing.
 
-## Document hierarchy
+Sitemaps are also considered good practice for other aspects, including SEO
+([more information on sitemaps][1]).
 
-As previously mentioned, the **meta information** is almost as important as the payload itself.
-The hierarchical path of a document is one of the most important pieces of metadata information.
-It brings out the **context** of the document and thus empowers its content with an additional relationship.
-(Here we are referring to Custom Ranking).
+## Structure the hierarchy of information
 
-Finding the **right depth** of your tree and how to split-up your content is one of the **most complex tasks**.
-For large documents, we usually recommend having 4 levels (from lvl0 until lvl3).
-Three different levels should be the minimum.
+DocSearch works better on structured documentation. Relevance of results is
+based on the structural hierarchy of content. In simpler terms it means that we
+read the `<h1>`, ..., `<h6>` headings of your page to guess the hierarchy of
+information.
 
-The **depth** of a record is also really enlightening.
-It will be considered within our [ranking formula](https://www.algolia.com/doc/guides/ranking/ranking-formula/) thanks to the [attributeToIndex](https://www.algolia.com/doc/api-reference/api-parameters/searchableAttributes/) settings.
-Definitely the higher up the content is, the more impact it will have.
+Documentation starts by explains generic concepts first and then goes deeper
+into specifics. This is represented in your HTML markup by the hierarchy of
+headings you're using. For example, concepts discussed under a `<h4>` are more
+specific than concepts discussed under a `<h2>` in the same page.
 
-In order to deliver the best user experience, it is key to open the page at the exact position of the match.
-The location of the match is easier to find in a **fragmented** document thanks to anchors.
-This hierarchy must be total and complete in order to be meaningful,
-this is why you should try to avoid heterogeneity.
+DocSearch uses this structure to fine-tune the relevance of results as well as
+to provide potential filtering. Documentation that follow this pattern often
+have better relevance of search results.
 
-## Consistency
+_Note that you don't have to use `<hX>` tags and can use `<span
+class="title-X">` for example instead. Your crawling configuration file will
+ need to mirror those changes, though._
 
-Consistency is a pillar of a meaningful documentation. In addition to increasing
-the **intelligibility** of a document it also shortens the time required for a user
-to find the coveted information. The document's **topic** should be easily **identifiable**
-and its **outline** sharply demarcated.
+## Set a unique class to the element holding the content
 
-The hierarchy should always have the same size. Try to **avoid orphan records**
-such like the implicit introduction/conclusion or asides. The selectors must be
-efficient for **every document** and highlight the proper hierarchy.
-They need to match only the coveted elements depending on their level.
-Be careful to avoid the **edge effect** by matching unexpected **superfluous elements**.
+As DocSearch is extracting content based on the HTML structure, it is important
+to narrow its results to only the relevant content. In that regard, we
+recommend that you add a custom `id` to the HTML element that will be the parent
+of all your textual content.
 
-We encourage you to build selectors that are **flexible from a DOM structure** point of view
-but really **discriminating regarding the documentation's information**.
-They should be as much as possible GUI-agnostic and focus on the **characterization of the payload**.
+Having such a unique identifier will make your configuration more robust as it
+will make sure all content that is indexed is relevant content. We found that
+this is the most reliable way to exclude headers, sidebars and footers content
+that are not relevant to the search.
 
-Selectors should only match information from **real document webpage**
-and remain ineffective for others ones (e.g., landing page, table of content, etc.).
-We urge the maintainer to define a **dedicated class** for the **main DOM container**
-that includes the actual document content such as `.docSearch-content`
+## Add anchors to headings
 
-Since documentation should be **interactive**, it is a key point to
-**verbalize concepts with standardized words**.
-This **redundancy**, empowered with the **search experience** (dropdown),
-will even enable the user to **learn at searching time**.
-The **way to find the information** plays a key role in **leading** the user to the
-**retrieved knowledge itself**. You can also use the **synonym feature**.
+When using headings (as mentioned above), you should also try to add a custom
+anchor to each of them. Anchors are HTML attributes (`name` or `id`)
+added to headers that will allow the browser to directly scroll to the right
+position in the page when clicking a link with a `#` in it.
 
-## Unicity
+DocSearch will honor such anchors and automatically bring your users to the
+anchor closest to the search result they selected.
 
-The more time-consuming reading documentation is, the more painful and reluctant its use will be.
-You must avoid hazy points or catch-all. In addition to it being unhelpful,
-the catch-all document may be **confusing** and **counterproductive**.
+## Marking the active page(s) in the navigation
 
-Last but not least duplicates introduce noise and mislead users. This is why
-you should always focus on the relevant content and avoid duplicating content
-within your site (e.g. landing page which contains all of the information, summing up, etc.).
-In cases where the duplicates's existence is expected since it belongs to another
-dataset (e.g. a different version), you should use [facets](https://www.algolia.com/doc/guides/searching/faceting/).
+If you're using a multi-level navigation, we recommend that you mark
+each active level with a custom CSS class. This will make it easier for
+DocSearch to know _where_ the current page fits in the website
+hierarchy.
 
-## Conciseness
+For example, if your `troubleshooting.html` page is located under the
+`Installation` menu in your sidebar, we recommend that you add a custom CSS
+class to the `Installation` and `Troubleshooting` links in your sidebar.
 
-What is clearly thought out is clearly and concisely expressed.
+The name of the CSS class does not matter, as long as it's something that can be
+used as part of a CSS selector.
 
-## The Crawler, The Discovery Process, Exhaustivity
 
-Since every documentation should be complete, the search experience must **cover the whole of it**.
-By default our scraper is crawling your website: it **follows hyperlinks referenced** from the scraped pages.
-If these links point to a page which belongs to the allowed domain,
-this precise page will be scraped, crawled and so forth.
-This **de facto discovery** is really practical but not exhaustive enough.
-If for any reason, a webpage could not be referenced from another covered one,
-the scope of the search will be imperfect.
-
-For those reasons we highly recommend that you use a [**Sitemap**](https://www.sitemaps.org/).
-
-This lists every page of your web site and will be used as the **main source of truth**
-and it will define the roadmap of our scraping.
-Beside this exhaustivity, using a sitemap introduces a significant performance improvement for our scraper.
+[1]: https://www.sitemaps.org/index.html

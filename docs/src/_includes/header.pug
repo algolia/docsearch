@@ -16,8 +16,8 @@
         .flex.flrw.pt-0x
           a.fln.w-50.flex.flrnw.p-05.flc.hover_no-underline(href="https://community.algolia.com/talksearch/")
             .fln.bg-teal.rounded-auto.w-2x.h-2x
-              img.w-100(src="assets/docsearch-icon.svg", alt="talksearch")
-            .fla.pl-1.text-solstice.text-2.bold.hover_text-nebula Talksearch
+              img.w-100(src="assets/talksearch-icon.svg", alt="TalkSearch")
+            .fla.pl-1.text-solstice.text-2.bold.hover_text-nebula TalkSearch
           a.fln.w-50.flex.flrnw.p-05.flc.hover_no-underline(href="https://community.algolia.com/jekyll-algolia/")
             .fln.bg-purple.rounded-auto.w-2x.h-2x
               img.w-100(src="assets/jekyll-icon.svg", alt="Jekyll")
@@ -45,9 +45,9 @@
     .hidden.lg_flex.fln.flrnw.flc
       .w-1.h-1.sm_w-1x.sm_h-1x.text-telluric.fill-current
         include ../assets/arrow-separator.svg
-    //- TalkSearch link
+    //- Project link
     .flex.fln.flrnw.flc.pl-1.sm_pl-0
-      a.cursor-pointer.uppercase.tracking-poppins.poppins.text-solstice.hover_text-nebula.hover_no-underline(href=site.url) TalkSearch
+      a.cursor-pointer.uppercase.tracking-poppins.poppins.text-solstice.hover_text-nebula.hover_no-underline(href=site.url)=site.title
 
     //- Filler
     .flex.fla.md_hidden
@@ -61,7 +61,7 @@
     
     //- Links
     .flex.fln.flrnw.flc.px-2
-      a.cursor-pointer.text-2.text-solstice.hover_text-nebula.hover_no-underline(href="./what-is-talksearch.html") Documentation
+      a.cursor-pointer.text-2.text-solstice.hover_text-nebula.hover_no-underline(href="./what-is-docsearch.html") Documentation
     .flex.fln.flrnw.flc.pr-0x
-      a.w-1x.h-1x.text-solstice.fill-current(href="https://github.com/algolia/talksearch", target="_blank")
+      a.w-1x.h-1x.text-solstice.fill-current(href=site.repo, target="_blank")
         include ../assets/github-logo.svg

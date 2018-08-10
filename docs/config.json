@@ -2,10 +2,10 @@
   "site": {
     "title": "DocSearch",
     "description": "The easiest way to add search to your documentation",
-    "url": "https://community.algolia.com/docsearch"
+    "url": "https://community.algolia.com/docsearch",
+    "repo": "https://github.com/algolia/docsearch"
   },
-  "placeholders": {
-  },
+  "placeholders": {},
   "sidebar": [
     {
       "title": "Essentials",
@@ -15,16 +15,16 @@
           "url": "what-is-docsearch.html"
         },
         {
-          "title": "How it works",
-          "url": "how-it-works.html"
+          "title": "How does it work?",
+          "url": "how-does-it-work.html"
+        },
+        {
+          "title": "Apply now",
+          "url": "apply.html"
         },
         {
           "title": "Tips",
           "url": "tips.html"
-        },
-        {
-          "title": "Who qualifies",
-          "url": "qualification.html"
         },
         {
           "title": "FAQ",
@@ -33,10 +33,6 @@
         {
           "title": "FAQ2",
           "url": "faq2.html"
-        },
-        {
-          "title": "Config help",
-          "url": "configuration-help.html"
         }
       ]
     },
@@ -62,11 +58,15 @@
       "pages": [
         {
           "title": "Overview",
-          "url": "crawler.md"
+          "url": "crawler-overview.html"
+        },
+        {
+          "title": "Inside the engine",
+          "url": "inside-the-engine.html"
         },
         {
           "title": "Config files",
-          "url": "crawler-config.html"
+          "url": "config-file.html"
         },
         {
           "title": "Docker image",

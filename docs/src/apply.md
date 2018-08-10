@@ -1,7 +1,9 @@
 ---
 layout: two-columns
-title: Does my project qualify?
+title: Applying to DocSearch
 ---
+
+// TODO
 
 ## Our policy
 

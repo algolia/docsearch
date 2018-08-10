@@ -8,7 +8,10 @@ import markdownItHighlight from 'markdown-it-highlightjs';
 import cheerio from 'cheerio';
 import pug from 'pug';
 import pMap from 'p-map';
-const markdown = markdownIt()
+const markdown = markdownIt({
+  html: true,
+  linkify: true,
+})
   .use(markdownItAnchor, {
     permalink: true,
     permalinkClass: 'anchor',

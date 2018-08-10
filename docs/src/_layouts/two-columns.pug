@@ -1,26 +1,27 @@
 extends main.pug
 block content
-  .bgtb-white-moon.pt-3x.pb-3.poppins
+  .bgtb-white-pure-moon.pt-3x.pb-3.poppins
     .max-w-lg.m-auto.text-center
       .text-6.lg_text-8.uppercase.tracking-poppins.text-solstice.bold=current.title
-  .flex.flrnw.max-w-xl.m-auto
-    .fln.w-30
-      // Adding subsections from markdown
-      .sticky.pin-t.top-3.h-100vh-3.pl-1.lg_pl-2.overflow-y-auto
-        each category in sidebar
-          .category.text-nebula.poppins.uppercase.mt-1=category.title
-          ul.list-reset.pt-05.pb-1.text-2
-            each page in category.pages
-              - var isCurrent = current.url === page.url
-              - var additionalClasses = isCurrent ? 'text-nebula' : 'text-solstice'
-              li
-                a.block.py-0x(href=page.url, class=additionalClasses)=page.title
-                - var hasSubLinks = (page.headings && page.headings.length)
-                if hasSubLinks
-                  ul.list-reset.pl-1.text-2
-                    each heading in page.headings
-                      li
-                        a.block.py-0x.text-telluric(href=`${page.url}#${heading.anchor}`)=heading.title
+  .bgtb-moon-white-pure
+    .flex.flrnw.max-w-lg.m-auto
+      .fla
+        // Adding subsections from markdown
+        .sticky.pin-t.top-3.h-100vh-3.pl-1.lg_pl-2.overflow-y-auto
+          each category in sidebar
+            .category.text-nebula.poppins.uppercase.mt-1=category.title
+            ul.list-reset.pt-05.pb-1.text-2
+              each page in category.pages
+                - var isCurrent = current.url === page.url
+                - var additionalClasses = isCurrent ? 'text-nebula' : 'text-solstice'
+                li
+                  a.block.py-0x(href=page.url, class=additionalClasses)=page.title
+                  - var hasSubLinks = (page.headings && page.headings.length)
+                  if hasSubLinks
+                    ul.list-reset.pl-1.text-2
+                      each heading in page.headings
+                        li
+                          a.block.py-0x.text-telluric(href=`${page.url}#${heading.anchor}`)=heading.title
 
-    .documentation-content.fla.text-2.pb-2.pr-1.sm_px-2.md_px-3.overflow-hidden
-        !=current.content
+      .documentation-content.fln.w-md.text-2.pb-2.pr-1.sm_px-2.overflow-hidden
+          !=current.content

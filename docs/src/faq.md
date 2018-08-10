@@ -3,6 +3,8 @@ layout: two-columns
 title: Global wonderings
 ---
 
+// TODO
+
 ## What is the general behaviour?
 
 ### How often do you scrap my website?

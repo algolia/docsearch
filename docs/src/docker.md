@@ -3,6 +3,8 @@ layout: two-columns
 title: DocSearch on your own infrastructure
 ---
 
+// TODO
+
 When we entirely host your DocSearch implementation, you don't have to bother, we **handle the whole stack**.
 
 In some specific use cases and situations, you may need to look under the hood and DIY.
