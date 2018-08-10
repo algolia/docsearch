@@ -2,7 +2,7 @@ extends main.pug
 
 block content
   .bg-docsearch-hero
-    .max-w-md.m-auto.text-center.px-1
+    .max-w-md.m-auto.text-center.px-2
       img.mt-3.mb-1(src="assets/docsearch-logo.svg", alt="DocSearch logo" width=480)
       .text-2.text-nova.mb-3 The best search experience for docs, integrates in minutes, for free.
       .text-5.text-telluric.mb-3 Currently providing search for 847 documentations.
@@ -84,22 +84,23 @@ block content
       .max-w-md.m-auto
         .pb-2.text-3.leading-2 DocSearch is designed to provide relevant search results at every level. Its strutured layout give the users more context to understand the product. We call it the “Learn as you type” effect.
               
-    .max-w-lg.m-auto.mt-3
+    .max-w-xl.m-auto.mt-3
       h2.text-solstice.text-5.normal.pb-2.text-center.mb-1 How it works
       img(src="assets/docsearch-how-it-works.png", alt="how DocSearch works")
+    .max-w-lg.m-auto.mt-2
       .flex.flrw
         .fln.w-100.sm_w-50.md_w-33.p-1
           h3.pb-1.text-3.leading-2 We crawl your documentation pages
-          p.text-2.leading-2 We built a website crawler designed to index every section of your documentation.
-          p.text-2.leading-2 Just send us the URL of your documentation, and we’ll run the crawler every 24h so you’re always up-to-date.
+          p.text-2.leading-2.text-justify We built a website crawler designed to index every section of your documentation.
+          p.text-2.leading-2.text-justify Just send us the URL of your documentation, and we’ll run the crawler every 24h so you’re always up-to-date.
         .fln.w-100.sm_w-50.md_w-33.p-1
           h3.pb-1.text-3.leading-2 We configure your search experience
-          p.text-2.leading-2 You don’t need to configure any settings or even have an Algolia account.
-          p.text-2.leading-2 We take care of all of this automatically to ensure the best documentation search experience.
+          p.text-2.leading-2.text-justify You don’t need to configure any settings or even have an Algolia account.
+          p.text-2.leading-2.text-justify We take care of all of this automatically to ensure the best documentation search experience.
         .fln.w-100.sm_w-50.md_w-33.p-1
           h3.pb-1.text-3.leading-2 You add the search autocomplete to your UI
-          p.text-2.leading-2 We’ll send you the script so you can integrate Algolia autocomplete to power your search.
-          p.text-2.leading-2 You will receive the same speed, relevance and best-in-class UX as our paying customers.
+          p.text-2.leading-2.text-justify We’ll send you the script so you can integrate Algolia autocomplete to power your search.
+          p.text-2.leading-2.text-justify You will receive the same speed, relevance and best-in-class UX as our paying customers.
       
     .max-w-xl.m-auto.mt-4
       .max-w-md.m-auto.px-1.text-center
@@ -109,58 +110,42 @@ block content
         img(src="assets/illus-analytics.svg", alt="DocSearch Analytics")
 
     .max-w-xl.m-auto.mt-4
-      .max-w-md.m-auto.px-1.text-center
+      .max-w-xl.m-auto.px-1.text-center
         .text-solstice.text-5.normal.pb-2 Try it live
         .pb-2.text-3.leading-2 We’ve helped to integrate DocSearch into several open source projects. Take a look.
         .flex.flrw
-          .fln.w-100.sm_w-50.md_w-33.p-1.flex.flrnw
+          .fln.w-100.sm_w-50.md_w-25.p-1.flex.flrnw
             a.c-card.custom-demo.fla.flex.flcnw.p-05(href='demos/dotconferences/')
               .fln.flc.relative.text-0.max-w-5.m-auto
-                img(src='demos/dotconferences/animated.gif', alt='Example of TalkSearch on dotConferences')
+                img(src='assets/demos/example-bootstrap.gif', alt='Example of TalkSearch on dotConferences')
               .fln.pt-1.flex.flrnw.flc.pl-1
                 .fln.text-0
-                  img.h-2(src='demos/dotconferences/logo-small.png', alt='Logo of dotConferences')
-                .fla.pl-1.text-solstice.uppercase.bold dotConferences
-          .fln.w-100.sm_w-50.md_w-33.p-1.flex.flrnw
+                  img.h-2(src='assets/logos/bootstrap.png', alt='Bootstrap')
+                .fla.pl-1.text-solstice.uppercase.bold Bootstrap
+          .fln.w-100.sm_w-50.md_w-25.p-1.flex.flrnw
             a.c-card.custom-demo.fla.flex.flcnw.p-05(href='demos/saastr/')
               .fln.flc.relative.text-0.max-w-5.m-auto
-                img(src='demos/saastr/animated.gif', alt='Example of TalkSearch on Saastr')
+                img(src='assets/demos/example-vuejs.gif', alt='Vue')
               .fln.pt-1.flex.flrnw.flc.pl-1
                 .fln.text-0
-                  img.h-2(src='demos/saastr/logo-small.png', alt='Logo of Saastr')
-                .fla.pl-1.text-solstice.uppercase.bold Saastr
-          .fln.w-100.sm_w-50.md_w-33.p-1.flex.flrnw
+                  img.h-2(src='assets/logos/vue.png', alt='Logo of Saastr')
+                .fla.pl-1.text-solstice.uppercase.bold Vue
+          .fln.w-100.sm_w-50.md_w-25.p-1.flex.flrnw
             a.c-card.custom-demo.fla.flex.flcnw.p-05(href='demos/googleio/')
               .fln.flc.relative.text-0.max-w-5.m-auto
-                img(src='demos/googleio/animated.gif', alt='Example of TalkSearch on Google I/O')
+                img(src='assets/demos/example-react.gif', alt='Example of TalkSearch on Google I/O')
               .fln.pt-1.flex.flrnw.flc.pl-1
                 .fln.text-0
-                  img.h-2(src='demos/googleio/logo-small.png', alt='Logo of Google I/O')
-                .fla.pl-1.text-solstice.uppercase.bold Google I/O
-          .fln.w-100.sm_w-50.md_w-33.p-1.flex.flrnw
+                  img.h-2(src='assets/logos/react.png', alt='Logo of Google I/O')
+                .fla.pl-1.text-solstice.uppercase.bold React
+          .fln.w-100.sm_w-50.md_w-25.p-1.flex.flrnw
             a.c-card.custom-demo.fla.flex.flcnw.p-05(href='demos/usi/')
               .fln.flc.relative.text-0.max-w-5.m-auto
-                img(src='demos/usi/animated.gif', alt='Example of TalkSearch on USI')
+                img(src='assets/demos/example-stripe.gif', alt='Stripe')
               .fln.pt-1.flex.flrnw.flc.pl-1
                 .fln.text-0
-                  img.h-2(src='demos/usi/logo-small.png', alt='Logo of USI')
-                .fla.pl-1.text-solstice.uppercase.bold USI
-          .fln.w-100.sm_w-50.md_w-33.p-1.flex.flrnw
-            a.c-card.custom-demo.fla.flex.flcnw.p-05(href='demos/chatbot-summit/')
-              .fln.flc.relative.text-0.max-w-5.m-auto
-                img(src='demos/chatbot-summit/animated.gif', alt='Example of TalkSearch on Chatbot Summit')
-              .fln.pt-1.flex.flrnw.flc.pl-1
-                .fln.text-0
-                  img.h-2(src='demos/chatbot-summit/logo-alternate.png', alt='Logo of Chatbot Summit')
-                .fla.pl-1.text-solstice.uppercase.bold Chatbot Summit
-          .fln.w-100.sm_w-50.md_w-33.p-1.flex.flrnw
-            a.c-card.custom-demo.fla.flex.flcnw.p-05(href='demos/takeoffconference/')
-              .fln.flc.relative.text-0.max-w-5.m-auto
-                img(src='demos/takeoffconference/animated.gif', alt='Example of TalkSearch on TakeOff Conf')
-              .fln.pt-1.flex.flrnw.flc.pl-1
-                .fln.text-0
-                  img.h-2(src='demos/takeoffconference/logo-small.png', alt='Logo of TakeOff Conf')
-                .fla.pl-1.text-solstice.uppercase.bold TakeOff Conf
+                  img.h-2(src='assets/logos/stripe.png', alt='Logo of USI')
+                .fla.pl-1.text-solstice.uppercase.bold Stripe
 
     .max-w-xl.m-auto.mt-4
       .max-w-md.m-auto.px-1.text-center
