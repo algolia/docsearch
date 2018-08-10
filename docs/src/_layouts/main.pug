@@ -22,6 +22,7 @@ html(lang='en')
     link(type="text/css", rel="stylesheet", href="./style.css")
     link(type="text/css", rel="stylesheet", href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css")
     link(type="text/css", rel="stylesheet", href="https://unpkg.com/@glidejs/glide@3.2.3/dist/css/glide.core.min.css")
+    link(type="text/css", rel="stylesheet", href="https://unpkg.com/@glidejs/glide@3.2.3/dist/css/glide.theme.min.css")
     body.hind.text-telluric
       include ../_includes/tag-manager-noscript.pug
       include ../_includes/header.pug
@@ -39,5 +40,6 @@ html(lang='en')
         |  debug: false 
         |});
       script
-        |window.onload = function () {new Glide('.glide').mount({ Autoplay })}
+        |window.onload = function () {new Glide('.glide',{type: 'carousel',startAt: 0, perView: 10, autoplay: true}).mount()}
+        
     include ../_includes/tag-manager.pug
