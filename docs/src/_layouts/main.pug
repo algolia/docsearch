@@ -39,7 +39,15 @@ html(lang='en')
         |  inputSelector: '.custom-search-input',
         |  debug: false 
         |});
+
+        |docsearch({
+        |  apiKey: '5990ad008512000bba2cf951ccf0332f',
+        |  indexName: 'bootstrap',
+        |  inputSelector: '.docsearch-live-demo-input',
+        |  enhancedSearchInput: true,
+        |  debug: false 
+        |});
       script
-        |window.onload = function () {new Glide('.glide',{type: 'carousel',startAt: 0, perView: 10, autoplay: true}).mount()}
+        |window.onload = function () {new Glide('.glide',{type: 'carousel',startAt: 0, perView: 14, autoplay: 1300}).mount()}
         
     include ../_includes/tag-manager.pug

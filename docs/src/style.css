@@ -24,6 +24,40 @@ body {
   background-position: center calc(100% - 18px);
 }
 
+/* Logo slider (gslide) */
+.glide__slide{
+  background-color: white;
+  border-radius: 4px;
+  overflow: hidden;
+  padding: 4px;
+  img {
+    display: block;
+  }
+}
+
+
+/* Live Demo */
+
+.docsearch-live-demo-input-wrapper {
+  margin-top: 5px;
+  margin-right: 8px;
+  float: right;
+}
+
+.demo-header-wrapper{
+  height: 38px;
+  background: url("assets/bg-docsearch-live-demo-bootstrap.png") #563E7C no-repeat;
+  background-size: 1200px;
+  background-position: left top;
+}
+.demo-content-wrapper{
+  height: 400px;
+  background: url("assets/bg-docsearch-live-demo-bootstrap.png") no-repeat;
+  background-size: 1200px;
+  background-position: center -40px;
+}
+
+
 /* Gradients */
 .bgtb-white-pure-moon {
   background-image: linear-gradient(#fff, #f5f5fa);
