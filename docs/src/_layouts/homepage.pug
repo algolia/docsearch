@@ -3,36 +3,65 @@ extends main.pug
 block content
   .bg-docsearch-hero
     .max-w-lg.m-auto.text-center
-      img.h-3.mt-3(src="assets/docsearch-logo.svg", alt="DocSearch logo")
+      img.mt-3(src="assets/docsearch-logo.svg", alt="DocSearch logo" width=520)
       .text-2.text-nova.mb-3 The best search experience for docs, integrates in minutes, for free.
-      .text-4.text-telluric.mb-2 Already 847 docs are providing search through DocSearch
+      .text-5.text-telluric.mb-2 Already 847 docs are providing search through DocSearch
       a.c-button.c-button-primary(href="what-is-talksearch.html") Join the Program
-
-  img(src="assets/logos/babel.png", alt="DocSearch + ", width=80)
-  img(src="assets/logos/bootstrap.png", alt="DocSearch + ", width=80)
-  img(src="assets/logos/circleio.jpg", alt="DocSearch + ", width=80)
-  img(src="assets/logos/cordova.png", alt="DocSearch + ", width=80)
-  img(src="assets/logos/electron.png", alt="DocSearch + ", width=80)
-  img(src="assets/logos/ember.png", alt="DocSearch + ", width=80)
-  img(src="assets/logos/eslint.jpg", alt="DocSearch + ", width=80)
-  img(src="assets/logos/gitlab.png", alt="DocSearch + ", width=80)
-  img(src="assets/logos/go.png", alt="DocSearch + ", width=80)
-  img(src="assets/logos/grafana.png", alt="DocSearch + ", width=80)
-  img(src="assets/logos/graphql.png", alt="DocSearch + ", width=80)
-  img(src="assets/logos/jekyll.jpg", alt="DocSearch + ", width=80)
-  img(src="assets/logos/netlify.png", alt="DocSearch + ", width=80)
-  img(src="assets/logos/paypal.jpg", alt="DocSearch + " , width=80)
-  img(src="assets/logos/postman.png", alt="DocSearch + ", width=80)
-  img(src="assets/logos/react.png", alt="DocSearch + ", width=80)
-  img(src="assets/logos/scala.png", alt="DocSearch + ", width=80)
-  img(src="assets/logos/serverless.png", alt="DocSearch + ", width=80)
-  img(src="assets/logos/socketio.png", alt="DocSearch + " , width=80)
-  img(src="assets/logos/stripe.png", alt="DocSearch + ", width=80)
-  img(src="assets/logos/symfony.png", alt="DocSearch + ", width=80)
-  img(src="assets/logos/trello.png", alt="DocSearch + ", width=80)
-  img(src="assets/logos/vue.png", alt="DocSearch + ", width=80)
-  img(src="assets/logos/webpack.png", alt="DocSearch + ", width=80)
-  img(src="assets/logos/yarn.jpg", alt="DocSearch + ", width=80)
+  .bg-moon
+    .max-w-lg.m-auto.text-center
+      .glide
+        .glide__track(data-glide-el="track")
+          .glide__slides
+            .glide__slide
+              img(src="assets/logos/babel.png", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/bootstrap.png", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/circleio.jpg", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/cordova.png", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/electron.png", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/ember.png", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/eslint.jpg", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/gitlab.png", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/go.png", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/grafana.png", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/graphql.png", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/jekyll.jpg", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/netlify.png", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/paypal.jpg", alt="DocSearch + " , width=80)
+            .glide__slide
+              img(src="assets/logos/postman.png", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/react.png", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/scala.png", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/serverless.png", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/socketio.png", alt="DocSearch + " , width=80)
+            .glide__slide
+              img(src="assets/logos/stripe.png", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/symfony.png", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/trello.png", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/vue.png", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/webpack.png", alt="DocSearch + ", width=80)
+            .glide__slide
+              img(src="assets/logos/yarn.jpg", alt="DocSearch + ", width=80)
         
   .bgtb-moon-white-pure
     .max-w-md.m-auto.text-center
@@ -75,7 +104,7 @@ block content
       .max-w-md.m-auto.px-1.text-center
         .text-solstice.text-5.normal.pb-2 Powerful Analytics with Algolia
         .pb-2.text-3.leading-2 Search usage of your documentation givese you unvaluable insights about what your users need to ramp up their knowledge of your product. Follow metrics of popular queries, no results or click position to better optimize your content.
-  
+        img(src="assets/illus-analytics.svg", alt="DocSearch Analytics")
 
     .max-w-xl.m-auto.pt-1
       .max-w-md.m-auto.px-1.text-center

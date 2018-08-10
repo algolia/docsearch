@@ -21,6 +21,7 @@ html(lang='en')
     link(href="https://fonts.googleapis.com/css?family=Hind:400,600|Poppins:700", rel="stylesheet")
     link(type="text/css", rel="stylesheet", href="./style.css")
     link(type="text/css", rel="stylesheet", href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css")
+    link(type="text/css", rel="stylesheet", href="https://unpkg.com/@glidejs/glide@3.2.3/dist/css/glide.core.min.css")
     body.hind.text-telluric
       include ../_includes/tag-manager-noscript.pug
       include ../_includes/header.pug
@@ -28,6 +29,8 @@ html(lang='en')
         block content
 
       script(src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js")
+      script(src="https://unpkg.com/@glidejs/glide@3.2.3/dist/glide.min.js")
+      
       script
         |docsearch({
         |  apiKey: 'e3082526e1d5f37055241c335ab10f72',
@@ -35,4 +38,6 @@ html(lang='en')
         |  inputSelector: '.custom-search-input',
         |  debug: false 
         |});
+      script
+        |window.onload = function () {new Glide('.glide').mount({ Autoplay })}
     include ../_includes/tag-manager.pug

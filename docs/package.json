@@ -56,5 +56,6 @@
   },
   "peerDependencies": {},
   "dependencies": {
+    "@glidejs/glide": "^3.2.3"
   }
 }

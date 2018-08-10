@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1866" height="680" viewBox="0 0 1866 680" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <rect id="a" width="1866" height="578.605"/>
+    <linearGradient id="b" x1="50%" x2="50%" y1="0%" y2="195.756%">
+      <stop stop-color="#E3E9FF" offset="0%"/>
+      <stop stop-color="#FFFFFF" offset="100%"/>
+    </linearGradient>
+    <linearGradient id="d" x1="38.14%" x2="38.14%" y1="141.461%" y2="-41.098%">
+      <stop stop-color="#77D3FB" stop-opacity="0" offset="0%"/>
+      <stop stop-color="#2DC3F0" stop-opacity=".5" offset="51.427%"/>
+      <stop stop-color="#04AFEF" offset="100%"/>
+    </linearGradient>
+    <linearGradient id="e" x1="38.129%" x2="38.129%" y1="185.451%" y2="-58.236%">
+      <stop stop-color="#90ADFB" stop-opacity="0" offset="0%"/>
+      <stop stop-color="#6E87FD" stop-opacity=".5" offset="53.085%"/>
+      <stop stop-color="#6064CC" offset="100%"/>
+    </linearGradient>
+    <circle id="g" cx="347.163" cy="374.285" r="14.465"/>
+    <filter id="f" width="649.1%" height="649.1%" x="-274.6%" y="-226.2%" filterUnits="objectBoundingBox">
+      <feMorphology radius="14.465" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"/>
+      <feOffset dy="14" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="14.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0.2 0 0 0 0 0.411764706 0 0 0 0 0.905882353 0 0 0 0.2 0" in="shadowBlurOuter1"/>
+    </filter>
+    <circle id="i" cx="1272.93" cy="408.64" r="10.849"/>
+    <filter id="h" width="488.2%" height="488.2%" x="-194.1%" y="-143.4%" filterUnits="objectBoundingBox">
+      <feMorphology radius="3.616" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"/>
+      <feOffset dy="11" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="11" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0.2 0 0 0 0 0.411764706 0 0 0 0 0.905882353 0 0 0 0.2 0" in="shadowBlurOuter1"/>
+    </filter>
+    <circle id="k" cx="1500.756" cy="462.884" r="10.849"/>
+    <filter id="j" width="488.2%" height="488.2%" x="-194.1%" y="-143.4%" filterUnits="objectBoundingBox">
+      <feMorphology radius="3.616" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"/>
+      <feOffset dy="11" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="11" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0.2 0 0 0 0 0.411764706 0 0 0 0 0.905882353 0 0 0 0.2 0" in="shadowBlurOuter1"/>
+    </filter>
+    <circle id="m" cx="810.047" cy="298.343" r="10.849"/>
+    <filter id="l" width="488.2%" height="488.2%" x="-194.1%" y="-143.4%" filterUnits="objectBoundingBox">
+      <feMorphology radius="3.616" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"/>
+      <feOffset dy="11" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="11" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0.2 0 0 0 0 0.411764706 0 0 0 0 0.905882353 0 0 0 0.2 0" in="shadowBlurOuter1"/>
+    </filter>
+    <circle id="o" cx="573.18" cy="370.669" r="10.849"/>
+    <filter id="n" width="488.2%" height="488.2%" x="-194.1%" y="-143.4%" filterUnits="objectBoundingBox">
+      <feMorphology radius="3.616" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"/>
+      <feOffset dy="11" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="11" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0.2 0 0 0 0 0.411764706 0 0 0 0 0.905882353 0 0 0 0.2 0" in="shadowBlurOuter1"/>
+    </filter>
+    <circle id="q" cx="115.721" cy="428.529" r="10.849"/>
+    <filter id="p" width="488.2%" height="488.2%" x="-194.1%" y="-143.4%" filterUnits="objectBoundingBox">
+      <feMorphology radius="3.616" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"/>
+      <feOffset dy="11" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="11" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0.2 0 0 0 0 0.411764706 0 0 0 0 0.905882353 0 0 0 0.2 0" in="shadowBlurOuter1"/>
+    </filter>
+    <circle id="s" cx="1036.064" cy="347.163" r="10.849"/>
+    <filter id="r" width="488.2%" height="488.2%" x="-194.1%" y="-143.4%" filterUnits="objectBoundingBox">
+      <feMorphology radius="3.616" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"/>
+      <feOffset dy="11" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="11" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0.2 0 0 0 0 0.411764706 0 0 0 0 0.905882353 0 0 0 0.2 0" in="shadowBlurOuter1"/>
+    </filter>
+    <rect id="t" width="1866" height="101.256"/>
+    <filter id="u" width="100.1%" height="102%" x="-.1%" y="-1%" filterUnits="objectBoundingBox">
+      <feOffset dy="-2" in="SourceAlpha" result="shadowOffsetInner1"/>
+      <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"/>
+      <feColorMatrix values="0 0 0 0 0.807843137 0 0 0 0 0.831372549 0 0 0 0 0.878431373 0 0 0 0.5 0" in="shadowInnerInner1"/>
+    </filter>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <rect width="1866" height="679.86" fill="#FFFFFF"/>
+    <g transform="translate(0 101.256)">
+      <mask id="c" fill="white">
+        <use xlink:href="#a"/>
+      </mask>
+      <use fill="#FFFFFF" xlink:href="#a"/>
+      <rect width="231.442" height="578.605" x="231.442" y="1.808" fill="url(#b)" opacity=".3" mask="url(#c)"/>
+      <rect width="231.442" height="578.605" x="694.326" y="1.808" fill="url(#b)" opacity=".3" mask="url(#c)"/>
+      <rect width="231.442" height="578.605" x="1157.209" y="1.808" fill="url(#b)" opacity=".3" mask="url(#c)"/>
+      <rect width="231.442" height="578.605" x="1632.75" y="1.808" fill="url(#b)" opacity=".3" mask="url(#c)"/>
+      <path fill="url(#d)" d="M-350.77907,523.448944 C-53.7390012,523.448944 -48.97249,458.301583 97.7621407,458.301583 C244.496771,458.301583 253.877613,356.64267 405.237445,356.64267 C556.597276,356.64267 557.82559,296.570332 701.902497,296.570332 C845.979404,296.570332 848.97486,377.704274 1007.80708,377.704274 C1166.6393,377.704274 1224.15815,245.906977 1479.06042,245.906977 C1648.99526,245.906977 1779.18055,396.585271 1869.61628,697.94186 L-350.77907,661.77907 L-350.77907,523.448944 Z" mask="url(#c)" transform="matrix(-1 0 0 1 1518.837 0)"/>
+      <path fill="url(#e)" d="M-7.23255814,433.041967 C289.80751,433.041967 294.574022,367.894606 441.308652,367.894606 C588.043283,367.894606 597.424125,266.235693 748.783956,266.235693 C900.143788,266.235693 901.372102,206.163355 1045.44901,206.163355 C1189.52592,206.163355 1192.52137,287.297298 1351.35359,287.297298 C1510.18581,287.297298 1567.70466,155.5 1822.60693,155.5 C1992.54177,155.5 2122.72706,306.178295 2213.16279,607.534884 L-7.23255814,607.534884 L-7.23255814,433.041967 Z" mask="url(#c)"/>
+      <text fill="#FFFFFF" mask="url(#c)" font-family="OpenSans-Semibold, Open Sans" font-size="21.698" font-weight="500">
+        <tspan x="311.067" y="514.814">DEC 02</tspan>
+      </text>
+      <text fill="#FFFFFF" mask="url(#c)" font-family="OpenSans-Semibold, Open Sans" font-size="21.698" font-weight="500">
+        <tspan x="537.085" y="514.814">DEC 03</tspan>
+      </text>
+      <text fill="#FFFFFF" mask="url(#c)" font-family="OpenSans-Semibold, Open Sans" font-size="21.698" font-weight="500">
+        <tspan x="773.951" y="514.814">DEC 04</tspan>
+      </text>
+      <text fill="#FFFFFF" mask="url(#c)" font-family="OpenSans-Semibold, Open Sans" font-size="21.698" font-weight="500">
+        <tspan x="999.968" y="514.814">DEC 05</tspan>
+      </text>
+      <text fill="#FFFFFF" mask="url(#c)" font-family="OpenSans-Semibold, Open Sans" font-size="21.698" font-weight="500">
+        <tspan x="1236.835" y="514.814">DEC 06</tspan>
+      </text>
+      <text fill="#FFFFFF" mask="url(#c)" font-family="OpenSans-Semibold, Open Sans" font-size="21.698" font-weight="500">
+        <tspan x="1465.564" y="514.814">DEC 07</tspan>
+      </text>
+      <text fill="#FFFFFF" mask="url(#c)" font-family="OpenSans-Semibold, Open Sans" font-size="21.698" font-weight="500">
+        <tspan x="77.817" y="514.814">DEC 01</tspan>
+      </text>
+      <g mask="url(#c)">
+        <use fill="black" filter="url(#f)" xlink:href="#g"/>
+        <circle cx="347.163" cy="374.285" r="21.698" fill="#FFFFFF" stroke="#FFFFFF" stroke-opacity=".2" stroke-width="14.465"/>
+        <circle cx="347.163" cy="374.285" r="28.93" stroke="#FFFFFF" stroke-opacity=".2" stroke-width="28.93"/>
+      </g>
+      <g mask="url(#c)">
+        <use fill="black" filter="url(#h)" xlink:href="#i"/>
+        <use fill="#FFFFFF" stroke="#FFFFFF" stroke-width="7.233" xlink:href="#i"/>
+      </g>
+      <g mask="url(#c)">
+        <use fill="black" filter="url(#j)" xlink:href="#k"/>
+        <use fill="#FFFFFF" stroke="#FFFFFF" stroke-width="7.233" xlink:href="#k"/>
+      </g>
+      <g mask="url(#c)">
+        <use fill="black" filter="url(#l)" xlink:href="#m"/>
+        <use fill="#FFFFFF" stroke="#FFFFFF" stroke-width="7.233" xlink:href="#m"/>
+      </g>
+      <g mask="url(#c)">
+        <use fill="black" filter="url(#n)" xlink:href="#o"/>
+        <use fill="#FFFFFF" stroke="#FFFFFF" stroke-width="7.233" xlink:href="#o"/>
+      </g>
+      <g mask="url(#c)">
+        <use fill="black" filter="url(#p)" xlink:href="#q"/>
+        <use fill="#FFFFFF" stroke="#FFFFFF" stroke-width="7.233" xlink:href="#q"/>
+      </g>
+      <g mask="url(#c)">
+        <use fill="black" filter="url(#r)" xlink:href="#s"/>
+        <use fill="#FFFFFF" stroke="#FFFFFF" stroke-width="7.233" xlink:href="#s"/>
+      </g>
+    </g>
+    <use fill="#FFFFFF" xlink:href="#t"/>
+    <use fill="black" filter="url(#u)" xlink:href="#t"/>
+    <text fill="#212429" font-family="OpenSans, Open Sans" font-size="28.93">
+      <tspan x="43.395" y="59.93">Daily searches</tspan>
+    </text>
+  </g>
+</svg>
