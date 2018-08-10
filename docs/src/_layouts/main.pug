@@ -48,6 +48,6 @@ html(lang='en')
         |  debug: false 
         |});
       script
-        |window.onload = function () {new Glide('.glide',{type: 'carousel',startAt: 0, perView: 14, autoplay: 1300}).mount()}
+        |window.onload = function () {new Glide('.glide',{type: 'carousel',startAt: 0, perView: 16, autoplay: 1300, breakpoints : {600: { perView: 4 }, 800: { perView: 8 }, 1200: { perView: 10 }} }).mount()}
         
     include ../_includes/tag-manager.pug
