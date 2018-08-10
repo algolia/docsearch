@@ -12,12 +12,16 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+body {
+  background-color: #f5f5fa;
+}
+
 /* Hero */
 .bg-docsearch-hero {
   background-image: url('assets/bg-docsearch.svg'), linear-gradient(#fff, #f5f5fa);
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center bottom;
+  background-position: center calc(100% - 18px);
 }
 
 /* Gradients */
