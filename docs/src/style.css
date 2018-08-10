@@ -42,10 +42,17 @@ body {
   margin-top: 5px;
   margin-right: 8px;
   float: right;
+  width: 50%;
+  max-width: 450px;
+  min-width: 250px;
+  input, form {
+    box-shadow: none !important;
+    width: 100%;
+  }
 }
 
 .demo-header-wrapper{
-  height: 38px;
+  height: 42px;
   background: url("assets/bg-docsearch-live-demo-bootstrap.png") #563E7C no-repeat;
   background-size: 1200px;
   background-position: left top;
@@ -54,7 +61,7 @@ body {
   height: 400px;
   background: url("assets/bg-docsearch-live-demo-bootstrap.png") no-repeat;
   background-size: 1200px;
-  background-position: center -40px;
+  background-position: center -46px;
 }
 
 
