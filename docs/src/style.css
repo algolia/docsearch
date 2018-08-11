@@ -39,7 +39,7 @@ body {
   background-color: #FDFDFE;
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center -150px;
+  background-position: center -450px;
 }
 
 /* Logo slider (gslide) */
@@ -84,6 +84,7 @@ body {
   background-position: center -46px;
 }
 
+/* Forms */
 .control-label {
   display: inline-block;
   margin-bottom: 4px;
@@ -97,6 +98,14 @@ body {
   padding: 8px 16px;
   width: 100%;
   margin-bottom: 8px;
+}
+
+.form-control-primary {
+  background: #FFFFFF;
+  box-shadow: 0 2px 0 0 rgba(255,255,255,0.80), inset 0 2px 9px 0 rgba(93,100,148,0.30);
+  border-radius: 24px;
+  height: 42px;
+  padding: 0 16px;
 }
 
 .elevation {
