@@ -33,7 +33,6 @@ export default {
     const relativePath = path.relative('./src', filepath);
     const destination = `./dist/${relativePath}`;
     let content = await helper.readFile(filepath);
-    content = await this.includeTemplates(content);
     content = await this.interpolatePlaceholders(content);
     content = await this.compileWithBabel(content, destination);
 
@@ -42,7 +41,7 @@ export default {
 
   async run() {
     // Compile JavaScript files
-    const jsFiles = await helper.getFiles('*.js');
+    const jsFiles = await helper.getFiles('js/*.js');
     await pMap(jsFiles, async filepath => {
       await this.compile(filepath);
     });
@@ -50,7 +49,7 @@ export default {
 
   // Listen to changes in js files and rewrite them
   watch() {
-    helper.watch('./src/*.js', filepath => {
+    helper.watch('./src/js/*.js', filepath => {
       this.compile(filepath);
     });
   },

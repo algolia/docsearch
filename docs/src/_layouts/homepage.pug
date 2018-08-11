@@ -5,7 +5,7 @@ block content
     .max-w-md.m-auto.text-center.px-2
       img.mt-3.mb-1(src="assets/docsearch-logo.svg", alt="DocSearch logo" width=480)
       .text-2.text-nova.mb-3 The best search experience for docs, integrates in minutes, for free
-      .text-5.text-telluric.mb-3 Currently providing search for 900+ documentations
+      .text-5.text-telluric.mb-3 Currently providing search for 900+ projects docs
       a.c-button.c-button-primary(href="#join-docsearch-program") Join the Program
   
   .bg-moon.px-2
@@ -65,9 +65,9 @@ block content
               img(src="assets/logos/yarn.jpg", alt="DocSearch + Yarn", width=60)
                     
     .max-w-md.m-auto.text-center
-      h2.text-solstice.text-5.normal.pb-2 State-of-the-art search for documentation
+      h2.text-solstice.text-5.normal.pb-2 State-of-the-art search for technical documentation
       p.text-3.pb-1.text-telluric We're kind of scratching our own itch here. As developers, we spend a lot of time reading documentation, and it isn’t always easy to find the information we need.
-      p.text-3.pb-2.text-telluric No one's to blame, building a good search is a complex challenge. We just happen to have a lot of experience doing that, and we want to share it with the world.
+      p.text-3.pb-2.text-telluric No one's to blame, building a good search is a complex challenge. We just happen to have a lot of experience doing that, and we want to share it with the developer community.
     
     .max-w-xl.m-auto.pt-3.mb-2
       .demo-header-wrapper
@@ -199,3 +199,15 @@ block content
           input#newsletter_email.form-control-primary.w-100(name="newsletter_email", placeholder="you@example.org", type="email")
         .fla.pl-1
           .button.c-button.w-100 Sign Up
+  .hide
+    .my-popper
+      .popper__arrow(x-arrow='right')
+      img(src='https://docsearch-shared.netlify.com/docsearch-logo.png', alt='DocSearch', width=200)
+      p
+        | Try to search for expressions like 
+        a.ds-sample-query(data-sample='ajax', href='#') ajax
+        | , 
+        a.ds-sample-query(data-sample='live', href='#') live
+        |  or 
+        a.ds-sample-query(data-sample='html', href='#') html
+        | .

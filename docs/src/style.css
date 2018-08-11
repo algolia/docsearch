@@ -4,22 +4,8 @@
 @import "./_styles/fonts.css";
 @import "./_styles/highlight.css";
 @import "./_styles/docsearch.css";
-/* @import "node_modules/@glidejs/glide/src/assets/sass/glide.core"; */
-
-
-
-
-/* Antialiasing */
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
 
 /* Backgrounds */
-body {
-  background-color: #f5f5fa;
-}
-
 .bg-docsearch-hero {
   background-image: url('assets/bg-docsearch.svg'), linear-gradient(#fff, #f5f5fa);
   background-size: cover;
@@ -84,6 +70,52 @@ body {
   background-position: center -46px;
 }
 
+/* Tooltips (popper.js) */
+.my-popper {
+  padding: 24px;
+  min-width: 350px;
+  max-width: 48%;
+  margin: 0 auto;
+  box-shadow: 0 0 10px 2px #ccc;
+  background: #FFFFFF;
+  box-shadow: 0 8px 18px 0 rgba(37,44,97,0.15), 0 2px 4px 0 rgba(93,100,148,0.2);
+  z-index: 200;
+  font-size: 14px;
+  color: #8A8AAB;
+  line-height: 28px;
+  text-align: center;
+  background-image: linear-gradient(#fff, #f5f5fa);
+  border-radius: 2px;
+  border-top: solid 3px #5468ff;
+}
+
+.my-popper .popper__arrow{
+    width: 0;
+    height: 0;
+    border-style: solid;
+    position: absolute;
+    margin: 8px;
+}
+
+.my-popper .popper__arrow {
+    border-color: white;
+}
+
+.my-popper[x-placement^="bottom"] {
+    margin-top: 8px;
+}
+
+.my-popper[x-placement^="bottom"] .popper__arrow {
+    border-width: 0 8px 8px 8px;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    top: -8px;
+    left: calc(50% - 8px);
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 /* Forms */
 .control-label {
   display: inline-block;
@@ -114,7 +146,17 @@ body {
   border-radius: 5px;
 }
 
+/* Antialiasing */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 /* Global styles */
+body {
+  background-color: #f5f5fa;
+}
+
 a,
 a:active {
   @apply .cursor-pointer;
@@ -177,19 +219,6 @@ code {
 .custom-community-link:hover .custom-community-projects {
   opacity: 1;
   pointer-events: auto;
-}
-
-/* Demo on the homepage */
-.custom-demo-mask {
-  opacity: 1;
-  transition-property: opacity;
-  transition-duration: 0.25s;
-  will-change: opacity;
-}
-.custom-demo:hover {
-  .custom-demo-mask {
-    opacity: 0;
-  }
 }
 
 /**

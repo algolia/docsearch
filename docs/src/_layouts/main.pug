@@ -4,7 +4,7 @@ html(lang='en')
     - const siteTitle = current.title || site.title
     - const siteDescription = site.description;
     - const siteUrl = site.url;
-    - const ogImage = siteUrl + 'img/og_image.png';
+    - const ogImage = siteUrl + 'asets/og_image.png';
     meta(charset='utf-8')
     meta('http-equiv'='x-ua-compatible',content='ie-edge')
     title= siteTitle
@@ -30,22 +30,7 @@ html(lang='en')
 
       script(src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js")
       script(src="https://unpkg.com/@glidejs/glide@3.2.3/dist/glide.min.js")
-      
-      script
-        |docsearch({
-        |  apiKey: 'e3082526e1d5f37055241c335ab10f72',
-        |  indexName: 'talksearch',
-        |  inputSelector: '.custom-search-input',
-        |  debug: false 
-        |});
-        |docsearch({
-        |  apiKey: '5990ad008512000bba2cf951ccf0332f',
-        |  indexName: 'bootstrap',
-        |  inputSelector: '.docsearch-live-demo-input',
-        |  enhancedSearchInput: true,
-        |  debug: false 
-        |});
-      script
-        |window.onload = function () {new Glide('.glide',{type: 'carousel',startAt: 0, perView: 16, autoplay: 1300, breakpoints : {600: { perView: 4 }, 800: { perView: 8 }, 1200: { perView: 10 }} }).mount()}
-        
+      script(src="https://unpkg.com/popper.js/dist/umd/popper.min.js")
+      script(src="js/main.js")
+
     include ../_includes/tag-manager.pug
