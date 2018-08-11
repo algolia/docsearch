@@ -37,9 +37,9 @@ body {
 .bg-footer {
   background-image: url('assets/bg-footer.svg');
   background-color: #FDFDFE;
-  background-size: cover;
+  background-size: 1600px;
   background-repeat: no-repeat;
-  background-position: center -450px;
+  background-position: center top;
 }
 
 /* Logo slider (gslide) */
