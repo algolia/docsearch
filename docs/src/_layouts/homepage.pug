@@ -4,8 +4,8 @@ block content
   .bg-docsearch-hero
     .max-w-md.m-auto.text-center.px-2
       img.mt-3.mb-1(src="assets/docsearch-logo.svg", alt="DocSearch logo" width=480)
-      .text-2.text-nova.mb-3 The best search experience for docs, integrates in minutes, for free.
-      .text-5.text-telluric.mb-3 Currently providing search for 847 documentations.
+      .text-2.text-nova.mb-3 The best search experience for docs, integrates in minutes, for free
+      .text-5.text-telluric.mb-3 Currently providing search for 900+ documentations
       a.c-button.c-button-primary(href="#join-docsearch-program") Join the Program
   
   .bg-moon.px-2
@@ -67,51 +67,52 @@ block content
         
     .max-w-md.m-auto.text-center
       h2.text-solstice.text-5.normal.pb-2 State-of-the-art search for documentation
-      p.text-3.pb-2.text-telluric We're kind of scratching our own itch here. As developers, we spend a lot of time reading documentation, and it isn’t always easy to find the information we need.
-      p.text-3.text-telluric No one's to blame, building a good search for a documentation is a complex challenge. We just happen to have a lot of experience doing that, and we want to share it with the world.
+      p.text-3.pb-1.text-telluric We're kind of scratching our own itch here. As developers, we spend a lot of time reading documentation, and it isn’t always easy to find the information we need.
+      p.text-3.pb-2.text-telluric No one's to blame, building a good search is a complex challenge. We just happen to have a lot of experience doing that, and we want to share it with the world.
+    
     .max-w-xl.m-auto.pt-3.mb-2
       .demo-header-wrapper
         .docsearch-live-demo-input-wrapper
           input.docsearch-live-demo-input
       .demo-content-wrapper
-      
+
+  .bg-analytics.px-2      
     .max-w-xl.m-auto.text-center
       .max-w-md.m-auto.mb-3
         .text-solstice.text-5.normal.pb-2 Learn-as-you-type experience
-        .pb-2.text-3.leading-2 Documentation speaks to your users. Ideally, this conversation will be pleasant and efficient. Everyone visiting your documentation page has a different need: Some are exploring your product, some are trying to get started, and some are stuck and need help.
-      .max-w-xl.m-auto.mb-2
-        img(src="assets/docsearch-UI-anatomy.png", alt="Anatomy of DocSearch UI")
-      .max-w-md.m-auto
-        .pb-2.text-3.leading-2 DocSearch is designed to provide relevant search results at every level. Its strutured layout give the users more context to understand the product. We call it the “Learn as you type” effect.
+        .pb-1.text-3.leading-2 Documentation speaks to your users. Ideally, this conversation will be pleasant and efficient. Everyone visiting your documentation page has a different need: Some are exploring your product, some are trying to get started, and some are stuck and need help.
+        .text-3.leading-2 DocSearch is designed to provide relevant search results at every level. Its strutured layout give the users more context to understand the product.
+      .max-w-xl.m-auto
+        img.hidden.md_block(src="assets/docsearch-UI-anatomy.png", alt="Anatomy of DocSearch UI")
+        
+    .max-w-lg.m-auto.mb-3
+      .flex.flrw
+        .fln.w-100.md_w-40.text-center
+          img(src="assets/illus-analytics.svg", alt="DocSearch Analytics", width=400)
+        .fln.w-100.md_w-50.px-1.md_pt-3
+          .text-solstice.text-5.normal.pb-2.text-center.md_text-left Powerful Analytics with Algolia
+          .text-3.leading-2.text-center.md_text-left.pb-1 Search usage of your documentation gives you unvaluable insights about what your users need to ramp up their knowledge of your product.
+          .text-3.leading-2.text-center.md_text-left Follow metrics of popular queries, no results or click position to better optimize your content.
               
-    .max-w-xl.m-auto.mt-3
+    .max-w-xl.m-auto
       h2.text-solstice.text-5.normal.pb-2.text-center.mb-1 How it works
       img(src="assets/docsearch-how-it-works.png", alt="how DocSearch works")
-  
-  .bg-analytics.px-2
-    .max-w-lg.m-auto.mt-2
+    .max-w-lg.m-auto
       .flex.flrw
-        .fln.w-100.md_w-33.px-2.pb-2
+        .fln.w-100.md_w-33.px-2.p-2
           h3.pb-1.text-3.leading-2 We crawl your documentation pages
           p.text-2.leading-2.text-justify We built a website crawler designed to index every section of your documentation.
           p.text-2.leading-2.text-justify Just send us the URL of your documentation, and we’ll run the crawler every 24h so you’re always up-to-date.
-        .fln.w-100.md_w-33.px-2.pb-2
+        .fln.w-100.md_w-33.px-2.p-2
           h3.pb-1.text-3.leading-2 We configure your search experience
           p.text-2.leading-2.text-justify You don’t need to configure any settings or even have an Algolia account.
           p.text-2.leading-2.text-justify We take care of all of this automatically to ensure the best documentation search experience.
-        .fln.w-100.md_w-33.px-2.pb-2
+        .fln.w-100.md_w-33.px-2.p-2
           h3.pb-1.text-3.leading-2 You add the search autocomplete to your UI
           p.text-2.leading-2.text-justify We’ll send you the script so you can integrate Algolia autocomplete to power your search.
           p.text-2.leading-2.text-justify You will receive the same speed, relevance and best-in-class UX as our paying customers.
   
-    .max-w-xl.m-auto.mt-4
-      .max-w-md.m-auto.px-1.text-center
-        .text-solstice.text-5.normal.pb-2 Powerful Analytics with Algolia
-        .pb-2.text-3.leading-2 Search usage of your documentation givese you unvaluable insights about what your users need to ramp up their knowledge of your product. Follow metrics of popular queries, no results or click position to better optimize your content.
-      .max-w-lg.m-auto.mt-1
-        img.elevation(src="assets/illus-analytics.svg", alt="DocSearch Analytics")
-
-    .max-w-xl.m-auto.mt-4.px-1.pb-3
+    .max-w-xl.m-auto.mt-3.px-1.pb-3
       .text-solstice.text-5.normal.pb-2.text-center Try it live
       .pb-2.text-3.leading-2.text-center We’ve helped to integrate DocSearch into several open source projects. Take a look.
       .flex.flrw
@@ -152,33 +153,41 @@ block content
     .max-w-sm.m-auto.mt-2
       .max-w-md.m-auto.py-3
         .text-5.normal.pb-2.text-white.text-center Get started
-        .pb-3.text-3.leading-2.text-white.text-center We’ll get back to you within a few hours with everything you need to integrate your new search into your website. Oh, and did we mention it's FREE? No commitment. No subscription. Everything is on us!
+        .pb-1.text-3.leading-2.text-white.text-center We’ll get back to you within a few hours with everything you need to integrate your new search into your website.
+        .pb-3.text-3.leading-2.text-white.text-center Oh, and did we mention it's FREE? No commitment. No subscription. Everything is on us!
         form.m-auto.max-w-sm.elevation.p-3
         
           .mb-2
             label.control-label(for="url") Website
-            input.form-control(name="url", placeholder="https://website.com/doc")  
+            input#url.form-control(name="url", placeholder="https://website.com/doc")  
             p.text-grey-dark.text-xs.italic We’ll crawl the <u>documentation pages</u> of your website and index them on Algolia.
           .mb-2
             label.control-label(for="email") Email
-            input.form-control(name="email", placeholder="you@example.org", type="email")
+            input#email.form-control(name="email", placeholder="you@example.org", type="email")
             p.text-grey-dark.text-xs.italic We’ll email you the code you need to integrate the search into your documentation.
           .mb-2
             label
               input(name="owner", type="checkbox")
-              span I'm the <u>owner</u> of that website
+              span  I'm the <u>owner</u> of that website
           .mb-2
             p Refer to 
               a.clickable(href="https://www.algolia.com/policies/terms") Algolia's Privacy Policy
               |  for more information on how we use and protect your data
 
-          button.c-button.c-button-primary.w-full.block(type="submit") Join the program 
+          button.c-button.c-button-primary(type="submit") Join the program 
 
+  .text-center
+    p Docsearch 2015-2018 - Designed and built with love by Algolia
     ul
-      li Docsearch 2015-2018
-      li Designed and built with love by Algolia
-      li Code licensed under MIT
-      li Github
-      li Issue
-      li Changelog
-      li Discord
+      li 
+        a(href="https://github.com/algolia/docsearch") Code licensed under MIT
+      li
+        a(href="https://github.com/algolia/docsearch") Github
+      li
+        a(href="https://github.com/algolia/docsearch") Issues
+      li
+        a(href="https://github.com/algolia/docsearch") Changelog
+      li
+        a(href="https://github.com/algolia/docsearch") Discord
+      li
+        a(href="https://github.com/algolia/docsearch") Newsletter

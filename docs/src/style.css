@@ -6,17 +6,20 @@
 @import "./_styles/docsearch.css";
 /* @import "node_modules/@glidejs/glide/src/assets/sass/glide.core"; */
 
+
+
+
 /* Antialiasing */
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Backgrounds */
 body {
   background-color: #f5f5fa;
 }
 
-/* Hero */
 .bg-docsearch-hero {
   background-image: url('assets/bg-docsearch.svg'), linear-gradient(#fff, #f5f5fa);
   background-size: cover;
@@ -26,20 +29,21 @@ body {
 
 .bg-analytics {
   background-image: url('assets/bg-analytics.svg');
-  background-size: contain;
+  background-size: 1800px;
   background-repeat: no-repeat;
-  background-position: center 250px;
+  background-position: center 450px;
 }
 
 .bg-footer {
   background-image: url('assets/bg-footer.svg');
+  background-color: #FDFDFE;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center -150px;
 }
 
 /* Logo slider (gslide) */
-.glide__slide{
+.glide__slide {
   border-radius: 8px;
   background: white;
   overflow: hidden;
@@ -51,9 +55,7 @@ body {
   }
 }
 
-
 /* Live Demo */
-
 .docsearch-live-demo-input-wrapper {
   margin-top: 5px;
   margin-right: 8px;
@@ -61,6 +63,7 @@ body {
   width: 50%;
   max-width: 450px;
   min-width: 250px;
+
   input, form {
     box-shadow: none !important;
     width: 100%;
@@ -73,13 +76,13 @@ body {
   background-size: 1200px;
   background-position: left top;
 }
+
 .demo-content-wrapper{
   height: 400px;
   background: url("assets/bg-docsearch-live-demo-bootstrap.png") no-repeat;
   background-size: 1200px;
   background-position: center -46px;
 }
-
 
 .control-label {
   display: inline-block;
@@ -101,7 +104,6 @@ body {
   box-shadow: 0 2px 4px 0 rgba(93,100,148,0.20), 0 5px 15px 0 rgba(37,44,97,0.15);
   border-radius: 5px;
 }
-
 
 /* Global styles */
 a,
