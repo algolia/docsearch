@@ -37,7 +37,7 @@
     "json-loader": "0.5.7",
     "raw-loader": "0.5.1",
     "sass-loader": "7.1.0",
-    "style-loader": "0.21.0",
+    "style-loader": "0.22.1",
     "url-loader": "1.0.1"
   }
 }
