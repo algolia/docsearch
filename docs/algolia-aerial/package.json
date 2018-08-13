@@ -28,7 +28,7 @@
     "clean-css-cli": "^4.1.6",
     "css-loader": "^1.0.0",
     "file-loader": "^1.0.0",
-    "style-loader": "^0.21.0",
+    "style-loader": "^0.22.0",
     "url-loader": "^1.0.0"
   }
 }
