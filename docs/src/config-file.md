@@ -25,6 +25,12 @@ Once you run the DocSearch scraper on a specific configuration, it will:
  - extract the content of every single crawled page following the logic you defined using the CSS selectors
  - push the resulting records to the Algolia index you configured
 
+
+
+### Does the crawl encompass several domains/sub-domains?
+
+The `start_urls` define the allowed domain for our crawler. Basically, we take the main domain of every URLs. We will not go outside this whitelisted domain list. If you want to encompass a wider domain, please include it as a new start_url.
+
 ## Configuration format
 
 A configuration file looks like:

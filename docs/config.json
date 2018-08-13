@@ -19,8 +19,16 @@
           "url": "how-does-it-work.html"
         },
         {
+          "title": "Who can apply?",
+          "url": "who-can-apply.html"
+        },
+        {
           "title": "Apply now",
           "url": "apply.html"
+        },
+        {
+          "title": "Integrations",
+          "url": "integrations.html"
         },
         {
           "title": "Tips",
@@ -29,10 +37,6 @@
         {
           "title": "FAQ",
           "url": "faq.html"
-        },
-        {
-          "title": "FAQ2",
-          "url": "faq2.html"
         }
       ]
     },

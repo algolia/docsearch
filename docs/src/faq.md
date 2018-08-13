@@ -1,46 +1,93 @@
 ---
 layout: two-columns
-title: Global wonderings
+title: FAQ
 ---
 
-// TODO
+If you're not finding the answer to your question in the website, this
+page will help you. If you're still unsure, don't hesitate to send [your
+question to us][1] directly.
 
-## What is the general behaviour?
+## How often will you crawl my website?
 
-### How often do you scrap my website?
+Every day.
 
-We scrap your website, at least, every 24 hours since documentation is not meant to change frequently.
-Furthermore we update it after every pull request on your configuration. This is the best way to request us to trigger a new crawl. Please leverage your configuration file to do so.
+The exact time of day might vary each day, but we'll crawl your
+website at most every 24 hours. We will also trigger a manual crawling every time
+your config is updated.
 
-###  I want to add search to my whole website?
-DocSearch is suited for documentation content. If you want to widen the scope of your search to not documentation content. You have two solutions:
-- [Run it on your own](https://community.algolia.com/docsearch/documentation/docsearch-scraper/overview/)
-- Build your own search-UI [thanks to InstanteSearch](https://community.algolia.com/instantsearch.js/) ([example here](https://jsfiddle.net/s_pace/965a4w3o/))
+## What do I need to install on my side?
 
-### Does the crawl encompass several domains/sub-domains?
+Nothing.
 
-The `start_urls` define the allowed domain for our crawler. Basically, we take the main domain of every URLs. We will not go outside this whitelisted domain list. If you want to encompass a wider domain, please include it as a new start_url.
+The DocSearch crawler is running on our own infra. It will read HTML
+content from your website and populate an Algolia index with it every day. All
+you need to do is keep your website online, and we take care of the rest.
 
-### Where is hosted the data?
+## How much does it cost?
 
-As every Algolia index, everything is stored on our servers with the security and privacy required. You can [find more details in the global documentation pages.](https://www.algolia.com/doc/guides/infrastructure/servers/)
+Nothing.
 
-## Feature
+We know that paying for search infrastructure is a cost not many Open Source
+projects can afford. That's why we decided to keep DocSearch free for everyone.
+All we ask in exchange is that you keep the _powered by
+[Algolia][2]_ logo displayed next to the search results.
 
-### Will it become paid?
+If this is not possible for you, you're totally free to open your own Algolia
+account and run DocSearch on your own without this limitation. In that case
+though, depending on the size of your documentation, you might need a paid
+account (free accounts can hold as much as 10k records).
 
-Open source is great and we want to support as much as we can. Since these projects mostly have limited resources, every granted project will ever remain free.
-If you want to upgrade your search experience, you can do it with your own Algolia implementation and [apply for a free community plan](https://www.algolia.com/pricing). DocSearch will not be used anymore but still happy to help.
+## What data are you collecting?
 
-### What data are you collecting, who can get access to it?
+The data we save in the index is the data we extract from your website
+markup, in a custom JSON format instead of HTML. Exactly which part of the
+page is defined in your custom config.
 
-We only scrap publicly available data according to your custom selectors (see the how it works part). DocSearch introduces [the algolia analytics](https://www.algolia.com/doc/guides/insights-and-analytics/analytics-overview/) for your DocSearch indices.
-You can ask access to these data by using the private email thread and send us the email addresses of the people to grant access.
+As the website owner, we also give you access to the Algolia Analytics
+dashboard, that will let you have more data about the anonymized searches that
+were done on your website. You'll be able to see the most searched terms, or
+those with no results.
 
-### Where can I see the analytics?
+## Where is my data hosted?
 
-Once you are granted (see above), analytics will be available in the Algolia dashboard like any regular application. You will need to select the analytics tabs.
+All DocSearch data is hosted on Algolia's servers, with replication around the
+globe. You can find more details about the actual [server specs here][3], and more
+complete information in our [privacy policy][4].
 
-## I am not the owner, what can i do?
+## Can I use DocSearch on non-doc pages?
 
-You can definitely help improving the search experience of your favourite documentation website by opening issues on the repo. You can also reference the GitHub handle @s-pace if you want us to chime in / provide you a quick demo. You can advocate the owner of the repo by letting them request DocSearch. We would be happy to support you in such regards. Feel free to ping.
+The free DocSearch we provide will only crawl documentation pages. If you want
+to use it on other parts of your website, you'll need to create your own Algolia
+account and either:
+
+- Run the [DocSearch crawler][5] on your own
+- Use one of our other [framework integrations or API clients][6]
+
+## Can you index code samples?
+
+Yes, but we do not recommend it. 
+
+Code samples are a great way for humans to understand how a specific pattern
+/ method should be used. Unfortunately, it often requires boilerplate code,
+repeated into several examples, which will only add noise to the results.
+
+What we recommend instead is to exclude the code blocks from the indexing (by
+using the `selectors_exclude` option in your config), and instead structure your
+content so the method names are actual headers.
+
+## My favorite project documentation does not use DocSearch. What can I do?
+
+We'd love to help!
+
+If one of your favorite tool documentation is missing
+DocSearch, we encourage you to file an issue in their repository explaining how
+DocSearch could help. Feel free to ping `@docsearch` on GitHub in the issue as
+well, and we'll provide all the help we can.
+
+
+[1]: mailto:docsearch@algolia.com
+[2]: https://www.algolia.com/
+[3]: https://www.algolia.com/doc/guides/infrastructure/servers/
+[4]: https://www.algolia.com/policies/privacy
+[5]: ./crawler-overview.html
+[6]: https://www.algolia.com/doc/api-reference/

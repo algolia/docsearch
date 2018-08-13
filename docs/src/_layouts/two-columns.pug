@@ -24,4 +24,8 @@ block content
                           a.block.py-0x.text-telluric(href=`${page.url}#${heading.anchor}`)=heading.title
 
       .documentation-content.fln.w-md.text-2.pb-2.pr-1.sm_px-2.overflow-hidden
-          !=current.content
+        !=current.content
+        // Include the apply form
+        if current.includeForm
+          .mt-2
+            include ../_includes/apply-form.pug

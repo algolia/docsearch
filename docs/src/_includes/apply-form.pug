@@ -1,0 +1,19 @@
+form.m-auto.max-w-sm.elevation.p-2.md_p-3
+  .mb-2
+    label.control-label(for="url") Website
+    input#url.form-control(name="url", placeholder="https://project.org/doc")  
+    p.text-grey-dark.text-xs.italic We’ll crawl the <u>documentation pages</u> of your website and index them on Algolia.
+  .mb-2
+    label.control-label(for="email") Email
+    input#email.form-control(name="email", placeholder="you@project.org", type="email")
+    p.text-grey-dark.text-xs.italic We’ll email you the code you need to integrate the search into your documentation.
+  .mb-2
+    label
+      input(name="owner", type="checkbox")
+      span  I'm the <u>owner</u> of that website
+  .mb-2
+    p.leading-2 Refer to 
+      a.clickable(href="https://www.algolia.com/policies/terms") Algolia's Privacy Policy
+      |  for more information on how we use and protect your data
+  button.c-button.c-button-primary.w-100(type="submit") Join the program 
+

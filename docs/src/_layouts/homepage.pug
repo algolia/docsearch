@@ -154,24 +154,7 @@ block content
         .text-5.normal.pb-2.text-white.text-center Get started
         .pb-1.text-3.leading-2.text-white.text-center We’ll get back to you within a few hours with everything you need to integrate your new search into your website.
         .pb-3.text-3.leading-2.text-white.text-center Oh, and did we mention it's FREE? No commitment. No subscription. Everything is on us!
-        form.m-auto.max-w-sm.elevation.p-2.md_p-3
-          .mb-2
-            label.control-label(for="url") Website
-            input#url.form-control(name="url", placeholder="https://project.org/doc")  
-            p.text-grey-dark.text-xs.italic We’ll crawl the <u>documentation pages</u> of your website and index them on Algolia.
-          .mb-2
-            label.control-label(for="email") Email
-            input#email.form-control(name="email", placeholder="you@project.org", type="email")
-            p.text-grey-dark.text-xs.italic We’ll email you the code you need to integrate the search into your documentation.
-          .mb-2
-            label
-              input(name="owner", type="checkbox")
-              span  I'm the <u>owner</u> of that website
-          .mb-2
-            p.leading-2 Refer to 
-              a.clickable(href="https://www.algolia.com/policies/terms") Algolia's Privacy Policy
-              |  for more information on how we use and protect your data
-          button.c-button.c-button-primary.w-100(type="submit") Join the program 
+        include ../_includes/apply-form.pug
 
     .text-center.p-2.pb-4
       p.text-2.mb-2.leading-2 Docsearch 2015-2018 • Designed and built with love by
