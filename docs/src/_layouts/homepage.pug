@@ -14,7 +14,7 @@ block content
     .max-w-md.m-auto.text-center.px-2
       img.mt-3.mb-1(src="assets/docsearch-logo.svg", alt="DocSearch logo" width=480)
       .text-2.text-nova.mb-3 The best search experience for docs, integrates in minutes, for free
-      .text-5.text-telluric.mb-3 Currently providing search for 900+ projects docs
+      .text-5.text-telluric.mb-3 Providing search for 900+ docs, and counting
       a.c-button.c-button-primary(href="#join-docsearch-program") Join the Program
   
   .bg-moon.px-2
@@ -161,14 +161,18 @@ block content
     .max-w-sm.m-auto.mt-2
       .max-w-md.m-auto.py-3
         .text-5.normal.pb-2.text-white.text-center Get started
-        .pb-1.text-3.leading-2.text-white.text-center We’ll get back to you within a few hours with everything you need to integrate your new search into your website.
-        .pb-3.text-3.leading-2.text-white.text-center Oh, and did we mention it's FREE? No commitment. No subscription. Everything is on us!
+        .pb-1.text-3.leading-2.text-white.text-center We’ll get back to you with everything you need to integrate your new search into your website.
+        .text-3.leading-2.text-white.text-center Oh, and did we mention it's FREE?
+        .pb-3.text-3.leading-2.text-white.text-center No commitment. No subscription. Everything is on us!
         include ../_includes/apply-form.pug
 
-    .text-center.p-2.pb-2
-      p.text-2.mb-2.leading-2 Docsearch 2015-2018 • Designed and built with love by
-        a(href="https://www.algolia.com/")
-          img.align-top.pl-1(src="assets/algolia-logo.svg", alt="search by Algolia", width=110)
+    .text-center.mt-2
+      .text-2.mb-3.leading-2
+        span.block.mb-1.sm_inline.whitespace-no-wrap DocSearch 2015-2018
+        span.block.hidden.sm_inline.mx-1 •
+        span.block.sm_inline.whitespace-no-wrap Designed and built by
+          a(href="https://www.algolia.com/")
+            img.align-top.pl-05(src="assets/algolia-logo.svg", alt="search by Algolia", width=100)
       ul.list-reset.inline-block.text-2.mb-3
         li.p-1.w-100.md_w-auto.inline-block
           a(href="https://github.com/algolia/docsearch/blob/master/LICENSE") Code licensed under MIT

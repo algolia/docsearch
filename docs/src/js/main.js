@@ -1,8 +1,8 @@
 /* global docsearch */
 
 docsearch({
-  apiKey: 'e3082526e1d5f37055241c335ab10f72',
-  indexName: 'talksearch',
+  apiKey: '25626fae796133dc1e734c6bcaaeac3c',
+  indexName: 'docsearch',
   inputSelector: '.custom-search-input',
   debug: false,
 });

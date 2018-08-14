@@ -4,14 +4,13 @@
   @apply cursor-pointer select-none;
   @apply rounded-100;
   @apply font-semibold uppercase no-underline tracking-poppins text-telluric;
-
-  background: linear-gradient(#fff, #e4e4e9);
   @apply shadow-button;
 
   /* Those dimensions are not in the Tailwind config scale */
   height: 2.625rem;
-  font-size: 0.6875rem;
+  font-size: .9rem;
 
+  background: linear-gradient(#fff, #e4e4e9);
   transition: box-shadow 0.15s ease, transform 0.15s ease;
   will-change: box-shadow, transform;
 }
@@ -72,21 +71,21 @@
 .bg-footer {
   background-image: url('assets/bg-footer.svg');
   background-color: #FDFDFE;
-  background-size: 1600px;
+  background-size: 2200px;
   background-repeat: no-repeat;
   background-position: center top;
 }
 
 /* Logo slider (gslide) */
 .glide__slide {
-  border-radius: 8px;
-  background: white;
-  overflow: hidden;
+  text-align: center;
 
   img {
-    padding: 4px;
+    border-radius: 6px;
+    overflow: hidden;
     display: inline-block;
-    vertical-align: middle;
+    max-width: 50px;
+    vertical-align: text-bottom;
   }
 }
 
@@ -194,7 +193,6 @@
   box-shadow: 0 2px 4px 0 rgba(93,100,148,0.20), 0 5px 15px 0 rgba(37,44,97,0.15);
   border-radius: 5px;
 }
-
 
 /* Custom styles */
 .custom-community-projects {

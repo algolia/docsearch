@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="1413px" height="711px" viewBox="0 0 1413 711" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="1981px" height="587px" viewBox="0 0 1981 587" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
     <title>Group</title>
     <desc>Created with Sketch.</desc>
@@ -10,7 +10,7 @@
         </linearGradient>
     </defs>
     <g id="Group" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g transform="translate(-303.000000, 0.000000)">
+        <g transform="translate(-12.000000, -124.000000)">
             <rect id="Rectangle-87-Copy" fill="#5468FF" x="0" y="0" width="2000" height="748"></rect>
             <g id="Waves" transform="translate(0.000000, 127.000000)">
                 <path d="M0,411 C166.666667,411 166.666667,541.716706 333.333333,541.716706 C500,541.716706 500,483.148747 666.666667,483.148747 C833.333333,483.148747 833.333333,543 1000,543 C1166.66667,543 1166.66667,437.534871 1333.33333,437.534871 C1500,437.534871 1500,539.293873 1666.66667,539.293873 C1833.33333,539.293873 1833.44252,502.260057 2000,502.260057 L2000,1005.50025 L0,1005.50025 L0,411 Z" id="Stroke-1" fill="url(#linearGradient-1)"></path>
