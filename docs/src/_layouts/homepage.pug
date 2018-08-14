@@ -156,7 +156,7 @@ block content
         .pb-3.text-3.leading-2.text-white.text-center Oh, and did we mention it's FREE? No commitment. No subscription. Everything is on us!
         include ../_includes/apply-form.pug
 
-    .text-center.p-2.pb-4
+    .text-center.p-2.pb-2
       p.text-2.mb-2.leading-2 Docsearch 2015-2018 • Designed and built with love by
         a(href="https://www.algolia.com/")
           img.align-top.pl-1(src="assets/algolia-logo.svg", alt="search by Algolia", width=110)
@@ -172,17 +172,11 @@ block content
         li.p-1.w-100.md_w-auto.inline-block
           a(href="https://discourse.algolia.com/tags/docsearch") Community Forum
         li.p-1.w-100.md_w-auto.inline-block
-          a(href="https://discord.gg/ax4NkP") Discord
+          a(href="https://discord.gg/qqCWs99") Discord
       
-      
-      .text-5.mb-1 Sign Up to our Newsletter
-      .text-2.mb-2.text-nova Follow project updates and general vector loveliness
-      .max-w-sm.flex.m-auto.mt-1
-        .fla
-          input#newsletter_email.form-control-primary.w-100(name="newsletter_email", placeholder="you@example.org", type="email")
-        .fla.pl-1
-          .button.c-button.w-100 Sign Up
-  .hide
+      //include ../_includes/newsletter.pug
+
+  .hidden
     .my-popper
       .popper__arrow(x-arrow='right')
       img(src='https://docsearch-shared.netlify.com/docsearch-logo.png', alt='DocSearch', width=200)

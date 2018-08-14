@@ -1,4 +1,25 @@
+/* global Glide, docsearch, Popper */
+
 window.onload = function() {
+  let i = 0;
+  let txt;
+  let query = '';
+
+  docsearch({
+    apiKey: 'e3082526e1d5f37055241c335ab10f72',
+    indexName: 'talksearch',
+    inputSelector: '.custom-search-input',
+    debug: false,
+  });
+
+  const demoDocsearch = docsearch({
+    apiKey: '5990ad008512000bba2cf951ccf0332f',
+    indexName: 'bootstrap',
+    inputSelector: '.docsearch-live-demo-input',
+    enhancedSearchInput: true,
+    debug: false,
+  });
+
   const reference = document.querySelector(
     '.docsearch-live-demo-input-wrapper'
   );
@@ -23,10 +44,6 @@ window.onload = function() {
     }
   }
 
-  let i = 0;
-  let txt;
-  let query = '';
-
   document.querySelectorAll('.ds-sample-query').forEach(el => {
     el.onclick = function() {
       txt = el.getAttribute('data-sample');
@@ -44,24 +61,11 @@ window.onload = function() {
     perView: 16,
     autoplay: 1300,
     breakpoints: {
-      600: { perView: 4 },
+      400: { perView: 4 },
+      600: { perView: 6 },
       800: { perView: 8 },
-      1200: { perView: 10 },
+      1000: { perView: 10 },
+      1200: { perView: 12 },
     },
   }).mount();
 };
-
-docsearch({
-  apiKey: 'e3082526e1d5f37055241c335ab10f72',
-  indexName: 'talksearch',
-  inputSelector: '.custom-search-input',
-  debug: false,
-});
-
-var demoDocsearch = docsearch({
-  apiKey: '5990ad008512000bba2cf951ccf0332f',
-  indexName: 'bootstrap',
-  inputSelector: '.docsearch-live-demo-input',
-  enhancedSearchInput: true,
-  debug: false,
-});

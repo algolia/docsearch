@@ -1,0 +1,36 @@
+/* Content converted form markdown */
+.documentation-content {
+  /* Paragraphs */
+  p {
+    @apply .leading-2 my-1;
+  }
+  ul {
+    @apply .leading-2 my-1;
+  }
+  /* Titles */
+  h2 {
+    @apply .text-solstice .text-4 .normal;
+    @apply .mb-1 .mt-2;
+    /* Trick to have heading scroll into view and not being hidden by header */
+    &:before {
+      content: "";
+      @apply hidden .h-3;
+    }
+    &:target:before {
+      @apply block;
+    }
+    .anchor {
+      @apply .hidden;
+      &:after {
+        content: "#";
+      }
+    }
+    &:hover .anchor {
+      @apply .inline-block;
+    }
+  }
+}
+
+.navigation-sidebar{
+  min-width: 200px;
+}

@@ -1,16 +1,13 @@
 extends main.pug
 block content
-  .bgtb-white-pure-moon.pt-3x.pb-3.poppins
-    .max-w-lg.m-auto.text-center
-      .text-6.lg_text-8.uppercase.tracking-poppins.text-solstice.bold=current.title
-  .bgtb-moon-white-pure
-    .flex.flrnw.max-w-lg.m-auto
-      .fla
+  .bgtb-moon-white-pure.px-2
+    .md_flex.max-w-lg.m-auto
+      .navigation-sidebar.hidden.absolute.z-90.top-16.w-full.border-b.md_static.md_bg-transparent.md_w-25.md_block.md_border-0
         // Adding subsections from markdown
-        .sticky.pin-t.top-3.h-100vh-3.pl-1.lg_pl-2.overflow-y-auto
+        .sticky.pin-t.top-3.h-100vh-3.pl-1.lg_pl-2.overflow-y-auto.pt-3
           each category in sidebar
-            .category.text-nebula.poppins.uppercase.mt-1=category.title
-            ul.list-reset.pt-05.pb-1.text-2
+            .category.text-nebula.poppins.uppercase=category.title
+            ul.list-reset.pt-05.pb-1.text-1.mb-1
               each page in category.pages
                 - var isCurrent = current.url === page.url
                 - var additionalClasses = isCurrent ? 'text-nebula' : 'text-solstice'
@@ -23,7 +20,12 @@ block content
                         li
                           a.block.py-0x.text-telluric(href=`${page.url}#${heading.anchor}`)=heading.title
 
-      .documentation-content.fln.w-md.text-2.pb-2.pr-1.sm_px-2.overflow-hidden
+      .documentation-content.text-1.pt-2.md_pt-3.max-w-md
+        .block.md_hidden.mb-1
+          a(href="https://community.algolia.com/") DocSearch
+          span &nbsp;>&nbsp;
+          a(href="https://community.algolia.com/documentation") Documentation
+        .text-5.lg_text-6.uppercase.tracking-poppins.text-solstice.bold.mb-2=current.title
         !=current.content
         // Include the apply form
         if current.includeForm
