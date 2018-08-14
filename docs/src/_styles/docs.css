@@ -1,5 +1,6 @@
 /* Content converted form markdown */
 .documentation-content {
+  /* max-width: 700px; */
   /* Paragraphs */
   p {
     @apply .leading-2 my-1;
@@ -32,7 +33,7 @@
 }
 
 .navigation-sidebar{
-  min-width: 180px;
+  min-width: 200px;
 }
 
 body.navigation-menu-open {
