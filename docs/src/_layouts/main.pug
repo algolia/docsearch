@@ -18,6 +18,7 @@ html(lang='en')
     meta(property='og:description', content=siteDescription)
     meta(property='og:image', content=ogImage)
     link(rel="shortcut icon", href="./favicon.ico")
+    link(rel="icon", type="image/x-icon", sizes="16x16 32x32", href="favicon.ico")
     link(href="https://fonts.googleapis.com/css?family=Hind:400,600|Poppins:700", rel="stylesheet")
     link(type="text/css", rel="stylesheet", href="./style.css")
     link(type="text/css", rel="stylesheet", href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css")
@@ -32,5 +33,6 @@ html(lang='en')
       script(src="https://unpkg.com/@glidejs/glide@3.2.3/dist/glide.min.js")
       script(src="https://unpkg.com/popper.js/dist/umd/popper.min.js")
       script(src="js/main.js")
+      block script
 
     include ../_includes/tag-manager.pug

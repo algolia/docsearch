@@ -1,11 +1,11 @@
 .header.fixed.pin-t.w-100.h-3.z-5.bg-white-pure
   .max-w-xl.m-auto.h-100.flex.flrnw
     //- Algolia logo
-    .hidden.sm_flex.fln.flcnw.flc.px-0x
-      a.cursor-pointer.text-0(href="https://www.algolia.com/", target="_blank")
+    .hidden.sm_flex.fln.flcnw.flc
+      a.cursor-pointer.text-0.pl-2(href="https://www.algolia.com/", target="_blank")
         img.h-1.sm_h-1x(src="assets/algolia-logo.svg", alt="Algolia")
     //- Separator
-    .hidden.sm_flex.fln.flrnw.flc.mr-1
+    .hidden.sm_flex.fln.flrnw.flc
       .w-1.h-1.sm_w-1x.sm_h-1x.text-telluric.fill-current
         include ../assets/icons/arrow-separator.svg
     //- Community logo
@@ -42,30 +42,36 @@
             |Community forum
 
     //- Separator
-    .hidden.lg_flex.fln.flrnw.flc.mr-1
+    .hidden.lg_flex.fln.flrnw.flc
       .w-1.h-1.sm_w-1x.sm_h-1x.text-telluric.fill-current
         include ../assets/icons/arrow-separator.svg
         
     //- Project link
     .flex.fln.flrnw.flc.pl-1.sm_pl-0
-      a.hidden.sm_block.cursor-pointer.uppercase.tracking-poppins.poppins.text-solstice.hover_text-nebula.hover_no-underline(href=site.url)=site.title
-      a.sm_hidden(href=site.url)
-        img(src="assets/docsearch-avatar.png" width=40 alt="DocSearch logo")
+      a.cursor-pointer.uppercase.tracking-poppins.poppins.text-solstice.hover_text-nebula.hover_no-underline(href=site.url)
+        span.hidden.sm_block.ml-0x=site.title
+        img.h-100.sm_hidden.ml-1(src="assets/docsearch-mark.svg" width=40 alt="DocSearch logo")
 
     //- DocSearch
-    .flex.fla.flrnw.flrcv.flrar.ml-2.mr-1
+    .flex.fla.flrnw.flrcv.flrar.ml-2
       .w-100.flrnw.flex.flrar
         .custom-search-wrapper.fln.h-60.w-100.rounded-auto.relative
           label.absolute.pin-left.z-1.w-1.h-100.ml-05.text-solstice.fill-current.cursor-pointer(for="docsearch")
             include ../assets/icons/magnifying-glass.svg
-          input.custom-search-input.w-100.h-100.outline-none.text-solstice.pl-2.rounded-auto.bg-moon.focus_bg-transparent#docsearch(placeholder="Search the documentation...")
+          input.custom-search-input.w-100.h-100.outline-none.text-solstice.pl-2.rounded-auto.bg-moon.focus_bg-transparent#docsearch(placeholder="Search the docs...")
     
     //- Links
-    .hidden.sm_flex.justify-start.items-center
-      a.text-2.text-solstice.hover_text-nebula.hover_no-underline.mr-1(href="./what-is-docsearch.html") Documentation
-      a.w-1x.h-1x.text-solstice.fill-current.items-center.hover_text-grey-darker.mr-1(href=site.repo, target="_blank")
+    .hidden.md_flex.justify-start.items-center.mx-1
+      a.text-1.text-solstice.hover_text-nebula.hover_no-underline.mr-1(href="./what-is-docsearch.html") Documentation
+      a.h-1x.w-1x.text-solstice.fill-current.items-center.hover_text-grey-darker.mr-1(href=site.repo, target="_blank")
         include ../assets/icons/github.svg
 
-    .sm_hidden
-      a.w-1x.h-1x.text-solstice.fill-current(href=site.repo, target="_blank")
-        include ../assets/icons/menu.svg
+    .md_hidden.flex.justify-start.items-center.mx-2
+      button.text-solstice.items-center.hover_text-grey-darker(href="#", onclick="toggleNav()")
+        svg.h-1x.w-1x.fill-current(role="button", xmlns="http://www.w3.org/2000/svg", viewBox="0 0 20 20")
+          path(d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z")
+            
+        svg.hidden.h-1x.w-1x.fill-current(role="button", xmlns="http://www.w3.org/2000/svg", viewBox="0 0 20 20")
+          path(d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z")
+              
+              

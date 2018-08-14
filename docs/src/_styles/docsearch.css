@@ -20,6 +20,6 @@
 /* Dropdown menu */
 /* purgecss start ignore */
 .ds-dropdown-menu {
-  //@apply w-100;
+  @apply w-100;
 }
 /* purgecss end ignore */
