@@ -106,14 +106,15 @@
 
 .demo-header-wrapper{
   height: 42px;
-  background: url("assets/bg-docsearch-live-demo-bootstrap.png") #563E7C no-repeat;
+  background: url("assets/bg-docsearch-live-demo-bootstrap.jpg") no-repeat;
+  background-color: #563E7C;
   background-size: 1200px;
   background-position: left top;
 }
 
 .demo-content-wrapper{
   height: 400px;
-  background: url("assets/bg-docsearch-live-demo-bootstrap.png") no-repeat;
+  background: url("assets/bg-docsearch-live-demo-bootstrap.jpg") no-repeat;
   background-size: 1200px;
   background-position: center -46px;
 }
