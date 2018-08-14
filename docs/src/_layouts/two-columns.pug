@@ -38,9 +38,9 @@ block content
 
       .documentation-content.text-1.pt-2.md_pt-3.max-w-md
         .block.md_hidden.mb-1
-          a(href="https://community.algolia.com/") DocSearch
+          a(href=site.url) DocSearch
           span &nbsp;>&nbsp;
-          a(href="https://community.algolia.com/documentation") Documentation
+          a(href=`${site.url}/what-is-docsearch.html`) Documentation
         .text-5.lg_text-6.uppercase.tracking-poppins.text-solstice.bold.mb-2=current.title
         !=current.content
         // Include the apply form
