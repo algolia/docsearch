@@ -15,31 +15,31 @@
       .custom-community-projects.hidden.sm_block.absolute.z-5.pin-t.mt-3.ml-3.border.border-proton.rounded-auto.bg-white-pure.shadow-1
         .flex.flrw.pt-0x
           a.fln.w-50.flex.flrnw.p-05.flc.hover_no-underline(href="https://community.algolia.com/talksearch/")
-            .fln.bg-teal.rounded-auto.w-2x.h-2x
+            .fln.bg-blue.rounded-auto.w-2x.h-2x
               img.w-100(src="assets/community/talksearch-icon.svg", alt="TalkSearch")
-            .fla.pl-1.text-solstice.text-2.bold.hover_text-nebula TalkSearch
+            .fla.pl-1.text-solstice.text-1.bold.hover_text-nebula TalkSearch
           a.fln.w-50.flex.flrnw.p-05.flc.hover_no-underline(href="https://community.algolia.com/jekyll-algolia/")
-            .fln.bg-purple.rounded-auto.w-2x.h-2x
+            .fln.bg-blue.rounded-auto.w-2x.h-2x
               img.w-100(src="assets/community/jekyll-icon.svg", alt="Jekyll")
-            .fla.pl-1.text-solstice.text-2.bold.hover_text-nebula Jekyll
+            .fla.pl-1.text-solstice.text-1.bold.hover_text-nebula Jekyll
           a.fln.w-50.flex.flrnw.p-05.flc.hover_no-underline(href="https://community.algolia.com/instantsearch.js/")
-            .fln.bg-yellow.rounded-auto.w-2x.h-2x
+            .fln.bg-blue.rounded-auto.w-2x.h-2x
               img.w-100(src="assets/community/instantsearch-icon.svg", alt="InstantSearch")
-            .fla.pl-1.text-solstice.text-2.bold.hover_text-nebula InstantSearch
+            .fla.pl-1.text-solstice.text-1.bold.hover_text-nebula InstantSearch
           a.fln.w-50.flex.flrnw.p-05.flc.hover_no-underline(href="https://community.algolia.com/react-instantsearch/")
             .fln.bg-blue.rounded-auto.w-2x.h-2x
               img.w-100(src="assets/community/react-icon.svg", alt="React InstantSearch")
-            .fla.pl-1.text-solstice.text-2.bold.hover_text-nebula React InstantSearch
+            .fla.pl-1.text-solstice.text-1.bold.hover_text-nebula React InstantSearch
           a.fln.w-50.flex.flrnw.p-05.flc.hover_no-underline
-            .fln.bg-green.rounded-auto.w-2x.h-2x(href="https://community.algolia.com/vue-instantsearch/")
+            .fln.bg-blue.rounded-auto.w-2x.h-2x(href="https://community.algolia.com/vue-instantsearch/")
               img.w-100(src="assets/community/vue-icon.svg", alt="Vue InstantSearch")
-            .fla.pl-1.text-solstice.text-2.bold.hover_text-nebula Vue InstantSearch
+            .fla.pl-1.text-solstice.text-1.bold.hover_text-nebula Vue InstantSearch
           a.fln.w-50.flex.flrnw.p-05.flc.hover_no-underline(href="https://community.algolia.com/angular-instantsearch/")
-            .fln.bg-red.rounded-auto.w-2x.h-2x.flex.flrnw.flc
+            .fln.bg-blue.rounded-auto.w-2x.h-2x.flex.flrnw.flc
               img.w-80(src="assets/community/angular-icon.svg", alt="Angular InstantSearch")
-            .fla.pl-1.text-solstice.text-2.bold.hover_text-nebula Angular InstantSearch
-          a.fla.flex.flrnw.p-0x.flc.text-solstice.bold.bg-moon.rounded-auto.py-1(href="https://discourse.algolia.com/")
-            |Community forum
+            .fla.pl-1.text-solstice.text-1.bold.hover_text-nebula Angular InstantSearch
+          a.fla.flex.flrnw.p-0x.flc.text-2.text-solstice.bold.bg-moon.rounded-auto.py-1(href="https://discourse.algolia.com/")
+            |Community Forum
 
     //- Separator
     .hidden.lg_flex.fln.flrnw.flc
@@ -58,20 +58,8 @@
         .custom-search-wrapper.fln.h-60.w-100.rounded-auto.relative
           label.absolute.pin-left.z-1.w-1.h-100.ml-05.text-solstice.fill-current.cursor-pointer(for="docsearch")
             include ../assets/icons/magnifying-glass.svg
-          input.custom-search-input.w-100.h-100.outline-none.text-solstice.pl-2.rounded-auto.bg-moon.focus_bg-transparent#docsearch(placeholder="Search the docs...")
+          input.custom-search-input.w-100.h-100.outline-none.text-solstice.pl-2.rounded-auto.bg-moon.focus_bg-moon--1#docsearch(placeholder="Search the docs...")
     
     //- Links
-    .hidden.md_flex.justify-start.items-center.mx-1
-      a.text-1.text-solstice.hover_text-nebula.hover_no-underline.mr-1(href="./what-is-docsearch.html") Documentation
-      a.h-1x.w-1x.text-solstice.fill-current.items-center.hover_text-grey-darker.mr-1(href=site.repo, target="_blank")
-        include ../assets/icons/github.svg
-
-    .md_hidden.flex.justify-start.items-center.mx-2
-      button.text-solstice.items-center.hover_text-grey-darker(href="#", onclick="toggleNav()")
-        svg.h-1x.w-1x.fill-current(role="button", xmlns="http://www.w3.org/2000/svg", viewBox="0 0 20 20")
-          path(d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z")
-            
-        svg.hidden.h-1x.w-1x.fill-current(role="button", xmlns="http://www.w3.org/2000/svg", viewBox="0 0 20 20")
-          path(d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z")
-              
-              
+    block nav
+    

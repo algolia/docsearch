@@ -11,6 +11,8 @@ const algoliaColors = {
   cosmos: '#21243d',
   nebula: '#5468ff', // links
 
+  'moon--1': '#EBEBF2', // input focus
+
   'neptune-2': '#3A46A1',
   'neptune-1': '#5560B5',
   neptune: '#707BCC',

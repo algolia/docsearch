@@ -3,6 +3,12 @@ extends main.pug
 block script
   script(src="js/home.js")
 
+block nav
+  .flex.justify-start.items-center.mx-1
+    a.text-1.text-solstice.hover_text-nebula.hover_no-underline.mr-1(href="./what-is-docsearch.html") Docs
+    a.h-1x.w-1x.text-solstice.fill-current.items-center.hover_text-grey-darker.mr-1(href=site.repo, target="_blank")
+      include ../assets/icons/github.svg
+
 block content
   .bg-docsearch-hero
     .max-w-md.m-auto.text-center.px-2
