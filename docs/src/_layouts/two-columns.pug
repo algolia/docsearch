@@ -10,17 +10,17 @@ block nav
 
   .md_hidden.flex.justify-start.items-center.mx-2
     button.text-solstice.items-center.hover_text-grey-darker.focus_outline-none(href="#", onclick="toggleNav()")
-      svg.navigation-open.h-1x.w-1x.fill-current(role="button", xmlns="http://www.w3.org/2000/svg", viewBox="0 0 20 20")
+      svg.align-text-bottom.navigation-open.h-1x.w-1x.fill-current(role="button", xmlns="http://www.w3.org/2000/svg", viewBox="0 0 20 20")
         path(d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z")      
-      svg.navigation-close.hidden.h-1x.w-1x.fill-current(role="button", xmlns="http://www.w3.org/2000/svg", viewBox="0 0 20 20")
+      svg.align-text-bottom.navigation-close.hidden.h-1x.w-1x.fill-current(role="button", xmlns="http://www.w3.org/2000/svg", viewBox="0 0 20 20")
         path(d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z")
             
 block content
   .bgtb-moon-white-pure.px-2
     .md_flex.max-w-lg.m-auto
-      .navigation-sidebar.hidden.absolute.z-90.-m-2.md_m-0.w-100.top-16.border-b.md_static.bg-white.md_bg-transparent.md_w-25.md_block.md_border-0.text-center.md_text-left
+      .navigation-sidebar.hidden.absolute.z-90.-m-2.md_m-0.w-100.md_static.bg-white.md_bg-transparent.md_w-25.md_block.md_border-0.text-center.md_text-left
         // Adding subsections from markdown
-        .sticky.pin-t.top-3.h-100vh-3.overflow-y-auto.pt-4.md_pt-3
+        .sticky.pin-t.h-100vh.overflow-y-auto.pt-4.md_pt-3.lg_pt-4
           each category in sidebar
             .category.text-nebula.poppins.uppercase.mb-1.text-2.md_text-1=category.title
             ul.list-reset.pb-1.text-1.mb-1.md_ml-0x
@@ -36,7 +36,7 @@ block content
                         li
                           a.block.py-0x.text-telluric(href=`${page.url}#${heading.anchor}`)=heading.title
 
-      .documentation-content.text-1.pt-2.md_pt-3.max-w-md
+      .documentation-content.text-1.pt-2.md_pt-3.lg_pt-4.max-w-md.pb-4.md_pl-2
         .block.md_hidden.mb-1
           a(href=site.url) DocSearch
           span &nbsp;>&nbsp;

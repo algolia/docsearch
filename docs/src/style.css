@@ -13,10 +13,6 @@
 }
 
 /* Global styles */
-body {
-  background-color: #f5f5fa;
-}
-
 a,
 a:active {
   @apply .cursor-pointer;

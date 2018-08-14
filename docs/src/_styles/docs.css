@@ -32,5 +32,10 @@
 }
 
 .navigation-sidebar{
-  min-width: 220px;
+  min-width: 180px;
+}
+
+body.navigation-menu-open {
+  max-width: 100%;
+  overflow: hidden;
 }
