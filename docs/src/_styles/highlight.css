@@ -29,4 +29,11 @@ pre code.hljs {
   .hljs-literal {
     @apply .text-nebula;
   }
+  /* CSS */
+  .hljs-selector-class {
+    @apply .text-saturn-2;
+  }
+  .hljs-attribute {
+    @apply .text-saturn;
+  }
 }

@@ -1,81 +1,82 @@
 ---
 layout: two-columns
-title: Customize autocomplete styles
+title: Styling DocSearch
 ---
 
-// TODO
+DocSearch default colorscheme comes in grey colors with blue highlight. 
 
-## Attribution
+![Default colorscheme](./assets/default-colorscheme.png)
 
-We're happy to provide DocSearch free of charge for your site, and you're
-welcome to customize that experience in a way that works for you; all we ask is
-that Algolia be attributed within the search context. For example, in the
-default implementation, we place a small "Search by Algolia" logo in the
-corner. If you prefer to roll your own UX, you'll need to make sure that this
-logo is included in your implementation as well.
+This theme works well with most websites, but we encourage you to style it to
+your own colors. This can be achieved by overriding the CSS classes used by the
+default theme. 
 
-## Default styling
-
-The default colorscheme is white and gray:
-
-![Default colorscheme](https://community.algolia.com/docsearch/assets/images/default-colorscheme.png)
-
-To update the colors to suit your website, you just need to override a few
-colors. Here is an example of a CSS file that you can use as a basis to
-set white and purple colors.
+The following annotated example will help you style each part:
 
 ```css
-/* Bottom border of each suggestion */
-.algolia-docsearch-suggestion {
-  border-bottom-color: #3A3DD1;
-}
-/* Main category headers */
-.algolia-docsearch-suggestion--category-header {
-  background-color: #4B54DE;
-}
-/* Highlighted search terms */
-.algolia-docsearch-suggestion--highlight {
-  color: #3A33D1;
-}
-/* Highlighted search terms in the main category headers */
-.algolia-docsearch-suggestion--category-header .algolia-docsearch-suggestion--highlight  {
-  background-color: #4D47D5;
-}
-/* Currently selected suggestion */
-.aa-cursor .algolia-docsearch-suggestion--content {
-  color: #272296;
-}
-.aa-cursor .algolia-docsearch-suggestion {
-  background: #EBEBFB;
+/* Match title (eg. Bootstrap CDN) */
+.algolia-docsearch-suggestion--title {
+  font-weight: bold;
+  color: black;
 }
 
-/* For bigger screens, when displaying results in two columns */
-@media (min-width: 768px) {
-  /* Bottom border of each suggestion */
-  .algolia-docsearch-suggestion {
-    border-bottom-color: #7671df;
-  }
-  /* Left column, with secondary category header */
-  .algolia-docsearch-suggestion--subcategory-column {
-    border-right-color: #7671df;
-    background-color: #F2F2FF;
-    color: #4E4726;
-  }
+/* Match description (eg. Bootstrap currently works...) */
+.algolia-docsearch-suggestion--text {
+  font-size: .8rem;
+  color: gray;
+}
+
+/* Match category (eg. Downloads) */
+.algolia-docsearch-suggestion--subcategory-column {
+  color: gray;
+}
+
+/* Match main category (eg. Getting Started) */
+.algolia-docsearch-suggestion--category-header {
+  color: darkgray;
+  border: 1px solid gray;
+}
+
+/* Highlighted text */
+.algolia-docsearch-suggestion--highlight {
+  color: blue;
 }
 ```
 
+## Debugging
+
+If you want to inspect the dropdown markup with your browser tools, you should
+add `debug: true` to your `docsearch` call to prevent it from closing on
+inspection.
+
+```javascript
+docsearch({ 
+  […],
+  debug: true
+});
+```
+
+## Other considerations
+
+Currently selected suggestion are wrapped in a `.ds-cursor` class. This means
+that you can use `.ds-cursor .algolia-docsearch-suggestion--content` to style
+the currently selected suggestion for example.
+
+On small screens, DocSearch reverts to a single column layout, while the
+two-column layout shown in the screenshot is only used on larger screens. You
+can media queries (for example `@media (min-width: 768px) {}`) to target one or
+the other display.
+
+We ask you not to try to hide the _search by Algolia_ logo through CSS, as its
+display is mandatory if you're using the free hosted version of DocSearch.
+
+
 ## Advanced styling
 
-If you want to do heavy changes to the way results are displayed, you might find
-it easier to directly edit the `scss` files in this repository.
+If you want to more heavily style the results, feel free to have a look at the
+[SCSS source code](https://github.com/algolia/docsearch/tree/master/src/styles).
+`_variables.scss` contains all the default colors, sizing and breakpoints.
 
-[`_variables.scss`](https://github.com/algolia/docsearch/blob/master/src/styles/_variables.scss)
-contains all the color, breakpoints and size definitions while
-[`main.scss`](https://github.com/algolia/docsearch/blob/master/src/styles/main.scss)
-holds the structure of the display.
-
-You can regenerate the whole final `css` file from those `scss` files by running
-`npm run build:css`. The resulting files will be found in `./dist/cdn/`.
-
-All you have to do now is change the `link` tag that was loading the default
-styling from our CDN, to one that is loading your newly compiled file.
+You can generate your own CSS file by cloning the repo and running `yarn run
+build:css`. The resulting file will be generated in `./dist/cdn`, and should be
+used instead of the default one.
