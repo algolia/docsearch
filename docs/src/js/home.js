@@ -20,6 +20,7 @@ window.onload = function() {
 
   const anotherPopper = new Popper(reference, popper, {
     placement: 'bottom-start',
+    removeOnDestroy: 'true',
   });
 
   function openDocsearch(sampleQuery) {
