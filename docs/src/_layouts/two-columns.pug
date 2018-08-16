@@ -16,27 +16,28 @@ block nav
         path(d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z")
             
 block content
-  .bgtb-moon-white-pure
+  .bgtb-moon-white-pure.relative
     .md_flex.max-w-lg.m-auto
-      .navigation-sidebar.hidden.absolute.z-90.md_static.bg-white.md_bg-transparent.w-100.md_w-25.md_block.md_border-0.text-center.md_text-left.md_pl-2
+      .navigation-sidebar.absolute.hidden.md_static.bg-white.md_bg-transparent.w-100.md_w-25.md_block.md_border-0.text-left.md_pl-2
         // Adding subsections from markdown
-        .sticky.pin-t.h-100vh.overflow-y-auto.pt-4.md_pt-3.lg_pt-4.w-full
+        .sticky.pin-t.h-100vh-3.overflow-y-auto.pt-2.w-5.m-auto.sm_flex.sm_w-90.md_block.md_w-100
           each category in sidebar
-            .category.text-nebula.poppins.uppercase.mb-1.text-2.md_text-1=category.title
-            ul.list-reset.pb-1.text-1.mb-1.md_ml-0x
-              each page in category.pages
-                - var isCurrent = current.url === page.url
-                - var additionalClasses = isCurrent ? 'text-nebula' : 'text-solstice'
-                li
-                  a.block.py-0x(href=page.url, class=additionalClasses)=page.title
-                  - var hasSubLinks = (page.headings && page.headings.length)
-                  if hasSubLinks
-                    ul.list-reset.pl-1.text-2
-                      each heading in page.headings
-                        li
-                          a.block.py-0x.text-telluric(href=`${page.url}#${heading.anchor}`)=heading.title
+            .flcnw.flspa.sm_flex-auto.sm_w-33.sm_p-1.md_w-100.md_p-0
+              .category.text-nebula.poppins.uppercase.mb-1.text-2=category.title
+              ul.list-reset.text-1.mb-1.md_ml-0x
+                each page in category.pages
+                  - var isCurrent = current.url === page.url
+                  - var additionalClasses = isCurrent ? 'text-nebula' : 'text-solstice'
+                  li
+                    a.block.py-0x(href=page.url, class=additionalClasses)=page.title
+                    - var hasSubLinks = (page.headings && page.headings.length)
+                    if hasSubLinks
+                      ul.list-reset.pl-1.text-2
+                        each heading in page.headings
+                          li
+                            a.block.py-0x.text-telluric(href=`${page.url}#${heading.anchor}`)=heading.title
 
-      .documentation-content.text-1.pt-2.md_pt-3.lg_pt-4.pb-4.px-2.w_100.md_w-75
+      .documentation-content.text-1.pt-2.pb-1.px-2.w_100.md_w-75
         .block.md_hidden.mb-1
           a(href=site.url) DocSearch
           span &nbsp;>&nbsp;
