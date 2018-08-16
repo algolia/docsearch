@@ -18,9 +18,9 @@ block nav
 block content
   .bgtb-moon-white-pure.relative
     .md_flex.max-w-lg.m-auto
-      .navigation-sidebar.absolute.hidden.md_static.bg-white.md_bg-transparent.w-100.md_w-25.md_block.md_border-0.text-left.md_pl-2
+      .navigation-sidebar.sticky.pin-t.top-3.h-100vh-3.overflow-y-auto.hidden.md_block.bg-white
         // Adding subsections from markdown
-        .sticky.pin-t.h-100vh-3.overflow-y-auto.pt-2.w-5.m-auto.sm_flex.sm_w-90.md_block.md_w-100
+        .pt-2.w-5.m-auto.sm_flex.sm_w-90.md_block.md_w-100.md_pl-2
           each category in sidebar
             .flcnw.flspa.sm_flex-auto.sm_w-33.sm_p-1.md_w-100.md_p-0
               .category.text-nebula.poppins.uppercase.mb-1.text-2=category.title
@@ -37,7 +37,7 @@ block content
                           li
                             a.block.py-0x.text-telluric(href=`${page.url}#${heading.anchor}`)=heading.title
 
-      .documentation-content.text-1.pt-2.pb-1.px-2.w_100.md_w-75
+      .documentation-content.text-2.pt-2.pb-1.px-2.w_100.md_w-75
         .block.md_hidden.mb-1
           a(href=site.url) DocSearch
           span &nbsp;>&nbsp;
