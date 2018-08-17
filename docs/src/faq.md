@@ -75,6 +75,26 @@ What we recommend instead is to exclude the code blocks from the indexing (by
 using the `selectors_exclude` option in your config), and instead structure your
 content so the method names are actual headers.
 
+## Why do I have duplicate content in my results?
+
+This can happen when you have several urls pointing to the same content, for
+example with `./docs`, `./docs/` and `./docs/index.html` or even both `http` and
+`https` in place.
+
+This can be fixed by `stop_urls` to all the patterns you want to exclude. The
+following example will exclude all urls ending with `/` or `index.html` as well
+as those starting with `http://`.
+
+```json
+{
+  "stop_urls": [
+    "/$",
+    "/index.html$",
+    "^http://"
+  ]
+}
+```
+
 ## My favorite project documentation does not use DocSearch. What can I do?
 
 We'd love to help!
