@@ -11,7 +11,7 @@ We're always sad to have to turn down applications, but with the number of
 requests we received everyday, we had to focus on technical documentations.
 We hope you understand.
 
-## The checklist
+### The checklist
 
 To have your request validated, please make sure you comply with the following
 points:
@@ -33,7 +33,7 @@ great search on your website. DocSearch is entirely open-source and you can run
 it yourself, or use any of our other API clients to take advantage of the
 features of Algolia.
 
-## Priority
+### Priority
 
 We're receiving many requests every day, and while we strive to answer them all
 as fast as we can, we sometimes give priority to some of them based on the

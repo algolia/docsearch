@@ -1,24 +1,37 @@
-form.m-auto.max-w-sm.elevation.p-2.md_p-3(method="POST",action="https://www.algolia.com/docsearch/join")
-  .form-content
+form.custom-apply-form.m-auto.max-w-sm.elevation.p-2.md_p-3(method="POST", action="https://www.algolia.com/docsearch/join")
+  .custom-form-content.form-content
     .mb-2
-      label.control-label(for="url") Website URL
-      input#url.form-control(name="url", placeholder="https://project.org/doc", type="url", required)  
-      p.text-grey-dark.text-xs.italic We’ll crawl the <u>documentation pages</u> of your website and index them on Algolia.
+      label.control-label(for="url") Documentation URL
+      input#url.form-control(name="url", placeholder="https://project.org/docs", type="url", required)  
+      p.text-grey-dark.text--1.leading-2.my-1.italic We'll crawl pages at this address and index the content on Algolia.
+
     .mb-2
       label.control-label(for="email") Email
       input#email.form-control(name="email", placeholder="you@project.org", type="email", required)
-      p.text-grey-dark.text-xs.italic We’ll email you the code you need to integrate the search into your documentation.
+      p.text-grey-dark.text--1.leading-2.my-1.italic We'll send you the JavaScript snippet you'll have to integrate into your documentation.
     .mb-2
-      label
+      label.cursor-pointer
         input(name="owner", type="checkbox", required)
-        span  I'm the <u>owner</u> of that website
+        span
+          |  I'm the 
+          .bold.inline owner
+          |  of the website and I 
+          a(href="./who-can-apply.html") read the checklist
+        |  before applying.
     .mb-2
-      p.leading-2 Refer to 
-        a.clickable(href="https://www.algolia.com/policies/terms") Algolia's Privacy Policy for more information on how we use and protect your data
     button.c-button.c-button-primary.w-100(type="submit") Apply to DocSearch
+    p.leading-2.text-1.my-1 Refer to 
+      a.clickable(href="https://www.algolia.com/policies/terms") Algolia's Privacy Policy
+      |  for more information on how we use and protect your data
 
 
-  .form-join-thank-you.hidden
-    .poppins.text-4.mb-2 Thank you !
-    p.text-2.leading-2.mb-1 Your request will be reviewed to make sure your website is eligible to the DocSearch program.
-    p.text-2.leading-2 This is a manual process and can take some time. We'll then email you the code you need to integrate on your website.
+  .custom-form-thank-you.hidden
+    .poppins.text-4.mb-2 Thank you!
+    p.text-2.leading-2.mb-1 Your request will be processed by our team. 
+    p.text-2.leading-2.mb-1
+      |We'll get back to you on 
+      span.custom-placeholder-email.inline.text-nebula your email
+      |  with the snippet of JavaScript you'll need to integrate into 
+      span.custom-placeholder-url.inline.text-nebula your website
+      |.
+    p.text-2.leading-2  Please be patient, it can take a few days.

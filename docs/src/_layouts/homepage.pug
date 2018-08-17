@@ -1,11 +1,13 @@
 extends main.pug
 
 block script
+  script(src="https://unpkg.com/@glidejs/glide@3.2.3/dist/glide.min.js")
+  script(src="https://unpkg.com/popper.js/dist/umd/popper.min.js")
   script(src="js/home.js")
 
 block nav
   .flex.justify-start.items-center.mx-1
-    a.text-1.text-solstice.hover_text-nebula.hover_no-underline.mr-1(href="./what-is-docsearch.html") Docs
+    a.text-1.text-solstice.hover_text-nebula.hover_no-underline.mr-1(href="./what-is-docsearch.html") Documentation
     a.h-1x.w-1x.text-solstice.fill-current.items-center.hover_text-grey-darker.mr-1(href=site.repo, target="_blank")
       include ../assets/icons/github.svg
 
@@ -147,7 +149,7 @@ block content
   
     .max-w-xl.m-auto.mt-3.px-1.pb-3
       .text-solstice.text-5.normal.pb-2.text-center Try it live
-      .pb-2.text-3.leading-2.text-center We’ve helped to integrate DocSearch into several open source projects. Take a look.
+      .pb-2.text-3.leading-2.text-center We helped integrate DocSearch into several open source projects. Have a look.
       .flex.flrw
         .fln.w-100.sm_w-50.md_w-25.p-1.flex.flrnw
           a.c-card.custom-demo.fla.flex.flcnw.p-05(href='http://getbootstrap.com/docs/4.1/getting-started/introduction/')
@@ -182,14 +184,15 @@ block content
                 img.h-2(src='assets/logos/stripe.jpg', alt='Stripe')
               .fla.pl-1.text-solstice.uppercase.bold Stripe
 
-  .bg-footer(id="join-docsearch-program").px-2
+  .bg-footer.px-2
     .max-w-sm.m-auto.mt-2
       .max-w-md.m-auto.py-3
         .text-5.normal.pb-2.text-white.text-center Get started
         .pb-1.text-3.leading-2.text-white.text-center We’ll get back to you with everything you need to integrate your new search into your website.
         .text-3.leading-2.text-white.text-center Oh, and did we mention it's FREE?
-        .pb-3.text-3.leading-2.text-white.text-center No commitment. No subscription. Everything is on us!
-        include ../_includes/apply-form.pug
+        .text-3.leading-2.text-white.text-center No commitment. No subscription. Everything is on us!
+        .block.pt-3(id="join-docsearch-program")
+          include ../_includes/apply-form.pug
 
     .text-center.mt-2
       .text-1.mb-3.leading-2
@@ -221,7 +224,7 @@ block content
         | Try to search for expressions like 
         a.ds-sample-query(data-sample='grid', href='#') grid
         | , 
-        a.ds-sample-query(data-sample='flex', href='#') flex
-        |  or 
         a.ds-sample-query(data-sample='form group', href='#') form group
-        | .
+        |  or 
+        a.ds-sample-query(data-sample='invisble', href='#') invisble
+        |  (sic) .

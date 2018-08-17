@@ -1,5 +1,3 @@
-/* global Glide, docsearch, Popper */
-
 window.onload = function() {
   let i = 0;
   let txt;
@@ -40,9 +38,10 @@ window.onload = function() {
 
   document.querySelectorAll('.ds-sample-query').forEach(el => {
     const element = el;
-    element.onclick = function() {
+    element.onclick = function(event) {
       txt = el.getAttribute('data-sample');
       typeWriter();
+      event.preventDefault();
     };
   });
 

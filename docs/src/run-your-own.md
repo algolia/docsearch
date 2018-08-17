@@ -97,7 +97,7 @@ results.
 _Note that if the command fails (it can happen on non-Mac machines), you can get
 the same result by running a live server in the `./playground` subdirectory.`_
 
-## Adding it to your website
+## Integration
 
 Once you're satisfied with your config, you can integrate the dropdown menu in
 your website by following the [instructions here][5].

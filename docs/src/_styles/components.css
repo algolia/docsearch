@@ -78,7 +78,7 @@
 
 /* Logo slider (gslide) */
 .glide__slide {
-  @apply text-center cursor-pointer relative block;
+  @apply text-center relative block;
   margin: 3px 0;
   min-height: 80px;
 
@@ -213,11 +213,10 @@
 }
 
 .form-control {
-  border-radius: 4px;
+  @apply rounded-auto;
   border: solid 1px #dbdbe7;
-  padding: 8px 16px;
+  @apply p-1;
   width: 100%;
-  margin-bottom: 8px;
 }
 
 .form-control-primary {

@@ -2,12 +2,9 @@
 module.exports = {
   extends: ['algolia', 'algolia/jest'],
   globals: {
-    instantsearch: true,
-    search: true,
-    talksearch: true,
-    indexName: true,
-    apiKey: true,
-    placeholder: true,
+    docsearch: true,
+    Glide: true,
+    Popper: true
   },
   rules: {
     'no-console': 0,

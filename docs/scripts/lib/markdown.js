@@ -67,8 +67,7 @@ export default {
     const sidebar = _.clone(pageConfig.sidebar);
     _.each(sidebar, category => {
       _.each(category.pages, page => {
-        const linkBasename = path.basename(page.url, '.html');
-        if (linkBasename === currentUrl) {
+        if (page.url === currentUrl) {
           page.headings = headings; // eslint-disable-line no-param-reassign
         }
       });

@@ -22,7 +22,7 @@ docsearch({
 });
 ```
 
-## `handleSelected(input, event, suggestion)`
+## `handleSelected`
 
 This method is called when a suggestion is selected. By default, DocSearch will
 redirect the browser to the page matching part of the page, but you can override
@@ -43,7 +43,7 @@ docsearch({
 });
 ```
 
-## `queryHook(query)`
+## `queryHook`
 
 This method will be called on every keystroke to transform the typed keywords
 before sending them to Algolia. By default, it does not do anything, but we
@@ -58,7 +58,7 @@ docsearch({
 });
 ```
 
-## `transformData(suggestions)`
+## `transformData`
 
 This method will be called on all suggestions before displaying them. It
 doesn't do anything by default, but we provide this hook if you want to add your

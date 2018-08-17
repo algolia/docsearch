@@ -7,7 +7,7 @@ DocSearch can work with almost any website, but we found that some site
 structure yield more relevant result and/or faster indexing time. In this page
 we'll share some tips on how you can make the most out of DocSearch.
 
-## Use a `sitemap.xml`
+### Use a `sitemap.xml`
 
 If your website has a sitemap, DocSearch will use it to get the list of pages to
 index. If it can't find one, it will follow every link of every page instead.
@@ -19,7 +19,7 @@ control over which page you'd like to include or not in the indexing.
 Sitemaps are also considered good practice for other aspects, including SEO
 ([more information on sitemaps][1]).
 
-## Structure the hierarchy of information
+### Structure the hierarchy of information
 
 DocSearch works better on structured documentation. Relevance of results is
 based on the structural hierarchy of content. In simpler terms it means that we
@@ -39,7 +39,7 @@ _Note that you don't have to use `<hX>` tags and can use `<span
 class="title-X">` for example instead. Your crawling configuration file will
  need to mirror those changes, though._
 
-## Set a unique class to the element holding the content
+### Set a unique class to the element holding the content
 
 As DocSearch is extracting content based on the HTML structure, it is important
 to narrow its results to only the relevant content. In that regard, we
@@ -51,7 +51,7 @@ will make sure all content that is indexed is relevant content. We found that
 this is the most reliable way to exclude headers, sidebars and footers content
 that are not relevant to the search.
 
-## Add anchors to headings
+### Add anchors to headings
 
 When using headings (as mentioned above), you should also try to add a custom
 anchor to each of them. Anchors are HTML attributes (`name` or `id`)
@@ -61,7 +61,7 @@ position in the page when clicking a link with a `#` in it.
 DocSearch will honor such anchors and automatically bring your users to the
 anchor closest to the search result they selected.
 
-## Marking the active page(s) in the navigation
+### Marking the active page(s) in the navigation
 
 If you're using a multi-level navigation, we recommend that you mark
 each active level with a custom CSS class. This will make it easier for

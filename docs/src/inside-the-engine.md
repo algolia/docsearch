@@ -6,7 +6,7 @@ title: Inside the engine
 This page will explain in more details how the crawler extracts content from your
 page, and how it ranks it in the results.
 
-## Crawling all your pages
+## Crawling
 
 Each crawl will begin its journey by the value of the `start_urls` you have in
 your config. It will read those pages and recursively follow every link in those
@@ -15,7 +15,7 @@ pages until it has crawled all your website.
 If it detects a `sitemap.xml`, it will use this link list instead of crawling
 all pages.
 
-## Extracting content from each page
+## Extracting content
 
 Then, for each page, it will read the HTML markup from top to bottom. It will
 look for HTML elements matching your CSS `selectors`. It will specifically look
