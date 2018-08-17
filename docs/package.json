@@ -3,10 +3,10 @@
   "description": "DocSearch documentation",
   "scripts": {
     "build": "NODE_ENV=production babel-node ./scripts/build.js",
-    "lint": "./scripts/lint",
-    "serve": "babel-node ./scripts/serve.js",
     "deploy": "./scripts/deploy",
-    "precommit": "yarn lint"
+    "lint": "./scripts/lint",
+    "precommit": "./scripts/precommit",
+    "serve": "babel-node ./scripts/serve.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.51",

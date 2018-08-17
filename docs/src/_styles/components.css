@@ -8,7 +8,7 @@
 
   /* Those dimensions are not in the Tailwind config scale */
   height: 2.625rem;
-  font-size: .9rem;
+  font-size: 0.9rem;
 
   background: linear-gradient(#fff, #e4e4e9);
   transition: box-shadow 0.15s ease, transform 0.15s ease;
@@ -55,22 +55,22 @@
 
 /* Backgrounds */
 .bg-docsearch-hero {
-  background-image: url('assets/bg-docsearch.svg'), linear-gradient(#fff, #f5f5fa);
-  background-size: cover;
-  background-repeat: no-repeat;
+  @apply bg-cover bg-no-repeat;
+  background-image: url("assets/bg-docsearch.svg"),
+    linear-gradient(#fff, #f5f5fa);
   background-position: center calc(100% - 18px);
 }
 
 .bg-analytics {
-  background-image: url('assets/bg-analytics.svg');
+  @apply bg-no-repeat;
+  background-image: url("assets/bg-analytics.svg");
   background-size: 1800px;
-  background-repeat: no-repeat;
   background-position: center 450px;
 }
 
 .bg-footer {
-  background-image: url('assets/bg-footer.svg');
-  background-color: #FDFDFE;
+  background-image: url("assets/bg-footer.svg");
+  background-color: #fdfdfe;
   background-size: 2200px;
   background-repeat: no-repeat;
   background-position: center top;
@@ -78,31 +78,28 @@
 
 /* Logo slider (gslide) */
 .glide__slide {
-  text-align: center;
-  cursor: pointer;
+  @apply text-center cursor-pointer relative block;
   margin: 3px 0;
-  position: relative;
   min-height: 80px;
-  display: block;
 
   .glide__caption {
     display: inline-block;
     position: relative;
-    background-color: #4F61EE;
+    background-color: #4f61ee;
     color: white;
-    margin: 8px auto 0 ;
+    margin: 8px auto 0;
     padding: 3px 6px 1px;
     border-radius: 4px;
     top: -2px;
     font-size: 13px;
     width: auto;
     opacity: 0;
-    transition: opacity .5s ease;
+    transition: opacity 0.5s ease;
 
     &:before {
-      content:"";
+      content: "";
       position: absolute;
-      border-color: #4F61EE;
+      border-color: #4f61ee;
       border-width: 0 6px 6px 6px;
       border-left-color: transparent;
       border-right-color: transparent;
@@ -112,7 +109,6 @@
       margin-top: 0;
       margin-bottom: 0;
     }
-
   }
   &:hover .glide__caption {
     opacity: 1;
@@ -126,12 +122,11 @@
     position: relative;
     &:hover {
       top: -1px;
-      box-shadow: 0 2px 4px 0 rgba(93,100,148,0.20), 0 5px 15px 0 rgba(37,44,97,0.15);
+      box-shadow: 0 2px 4px 0 rgba(93, 100, 148, 0.2),
+        0 5px 15px 0 rgba(37, 44, 97, 0.15);
     }
   }
 }
-
-
 
 /* Live Demo */
 .docsearch-live-demo-input-wrapper {
@@ -142,21 +137,22 @@
   max-width: 450px;
   min-width: 250px;
 
-  input, form {
+  input,
+  form {
     box-shadow: none !important;
     width: 100%;
   }
 }
 
-.demo-header-wrapper{
+.demo-header-wrapper {
   height: 42px;
   background: url("assets/bg-docsearch-live-demo-bootstrap.jpg") no-repeat;
-  background-color: #563E7C;
+  background-color: #563e7c;
   background-size: 1200px;
   background-position: left top;
 }
 
-.demo-content-wrapper{
+.demo-content-wrapper {
   height: 400px;
   background: url("assets/bg-docsearch-live-demo-bootstrap.jpg") no-repeat;
   background-size: 1200px;
@@ -169,12 +165,11 @@
   min-width: 350px;
   max-width: 48%;
   margin: 0 auto;
-  box-shadow: 0 0 10px 2px #ccc;
-  background: #FFFFFF;
-  box-shadow: 0 8px 18px 0 rgba(37,44,97,0.15), 0 2px 4px 0 rgba(93,100,148,0.2);
-  z-index: 200;
+  background: #ffffff;
+  box-shadow: 0 8px 18px 0 rgba(37, 44, 97, 0.15),
+    0 2px 4px 0 rgba(93, 100, 148, 0.2);
   font-size: 14px;
-  color: #8A8AAB;
+  color: #8a8aab;
   line-height: 28px;
   text-align: center;
   background-image: linear-gradient(#fff, #f5f5fa);
@@ -182,31 +177,31 @@
   border-top: solid 3px #5468ff;
 }
 
-.my-popper .popper__arrow{
-    width: 0;
-    height: 0;
-    border-style: solid;
-    position: absolute;
-    margin: 8px;
+.my-popper .popper__arrow {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  position: absolute;
+  margin: 8px;
 }
 
 .my-popper .popper__arrow {
-    border-color: white;
+  border-color: white;
 }
 
 .my-popper[x-placement^="bottom"] {
-    margin-top: 8px;
+  margin-top: 8px;
 }
 
 .my-popper[x-placement^="bottom"] .popper__arrow {
-    border-width: 0 8px 8px 8px;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    border-top-color: transparent;
-    top: -8px;
-    left: calc(50% - 8px);
-    margin-top: 0;
-    margin-bottom: 0;
+  border-width: 0 8px 8px 8px;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  top: -8px;
+  left: calc(50% - 8px);
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 /* Forms */
@@ -219,23 +214,25 @@
 
 .form-control {
   border-radius: 4px;
-  border: solid 1px #DBDBE7;
+  border: solid 1px #dbdbe7;
   padding: 8px 16px;
   width: 100%;
   margin-bottom: 8px;
 }
 
 .form-control-primary {
-  background: #FFFFFF;
-  box-shadow: 0 2px 0 0 rgba(255,255,255,0.80), inset 0 2px 9px 0 rgba(93,100,148,0.30);
+  background: #ffffff;
+  box-shadow: 0 2px 0 0 rgba(255, 255, 255, 0.8),
+    inset 0 2px 9px 0 rgba(93, 100, 148, 0.3);
   border-radius: 24px;
   height: 42px;
   padding: 0 16px;
 }
 
 .elevation {
-  background-image: linear-gradient(0deg, #F5F5FA 0%, #FFFFFF 100%);
-  box-shadow: 0 2px 4px 0 rgba(93,100,148,0.20), 0 5px 15px 0 rgba(37,44,97,0.15);
+  background-image: linear-gradient(0deg, #f5f5fa 0%, #ffffff 100%);
+  box-shadow: 0 2px 4px 0 rgba(93, 100, 148, 0.2),
+    0 5px 15px 0 rgba(37, 44, 97, 0.15);
   border-radius: 5px;
 }
 

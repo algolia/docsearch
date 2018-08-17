@@ -2,3 +2,4 @@
 set -e
 
 eslint ./scripts/**/*.js ./src/*.js ./*.js
+stylelint ./src/style.css ./src/_styles/*.css
