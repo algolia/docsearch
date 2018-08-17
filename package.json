@@ -4,21 +4,19 @@
   "description": "Add an autocomplete dropdown to your documentation",
   "main": "dist/npm/index.js",
   "scripts": {
-    "dev": "./scripts/dev",
-    "serve": "./scripts/serve",
-    "doctoc": "doctoc --maxlevel 3 README.md CONTRIBUTING.md",
     "build": "./scripts/build",
     "build:css": "./scripts/build-css",
     "build:js": "./scripts/build-js",
+    "docs:build": "cd ./docs && yarn build",
+    "docs:lint": "cd ./docs && yarn lint",
+    "docs:serve": "cd ./docs && yarn serve",
+    "doctoc": "doctoc --maxlevel 3 README.md CONTRIBUTING.md",
+    "lint": "./scripts/lint",
     "release": "./scripts/release",
     "release:beta": "./scripts/release-beta",
-    "lint": "./scripts/lint",
-    "lint:fix": "npm run lint -- --fix",
+    "serve": "./scripts/serve",
     "test": "./scripts/test",
-    "test:watch": "jest --watch",
-    "docs:build": "cd ./docs && yarn build",
-    "docs:serve": "cd ./docs && yarn serve",
-    "docs:lint": "cd ./docs && yarn lint"
+    "test:watch": "./scripts/test-watch"
   },
   "files": [
     "dist/"
@@ -57,10 +55,10 @@
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-jest": "21.21.0",
     "eslint-plugin-prettier": "2.6.2",
-    "gh-pages": "1.2.0",
-    "jest": "21.2.1",
+    "jest": "23.0.0",
     "jsdom": "11.12.0",
     "json": "9.0.6",
+    "live-server": "^1.2.0",
     "mversion": "1.12.0",
     "node-sass": "4.9.3",
     "onchange": "4.1.0",
@@ -71,20 +69,17 @@
     "sinon": "6.1.5",
     "uglify-js": "3.4.7",
     "webpack": "3.12.0",
-    "webpack-dev-server": "3.1.5"
+    "webpack-cli": "^3.1.0"
   },
   "peerDependencies": {},
   "dependencies": {
     "algoliasearch": "^3.24.5",
     "autocomplete.js": "^0.31.0",
     "hogan.js": "^3.0.2",
+    "parallelshell": "^3.0.2",
     "request": "^2.87.0",
     "stack-utils": "^1.0.1",
     "to-factory": "^1.0.0",
     "zepto": "^1.2.0"
-  },
-  "jest": {
-    "verbose": true,
-    "testURL": "http://localhost/"
   }
 }

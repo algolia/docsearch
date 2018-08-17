@@ -1,6 +1,6 @@
 /* eslint-disable import/no-commonjs */
 module.exports = {
-  extends: ['algolia/jest'],
+  extends: ['algolia', 'algolia/jest'],
   globals: {
     instantsearch: true,
     search: true,

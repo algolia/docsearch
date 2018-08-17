@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 set -e
-
 jest \
   --no-cache \
+  --watch \
   ./src/lib/
+
