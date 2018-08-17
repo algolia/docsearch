@@ -27,7 +27,7 @@ block content
               ul.list-reset.text-1.mb-1.md_ml-0x
                 each page in category.pages
                   - var isCurrent = current.url === page.url
-                  - var additionalClasses = isCurrent ? 'text-nebula' : 'text-solstice'
+                  - var additionalClasses = isCurrent ? 'current-page text-nebula' : 'text-solstice'
                   li
                     a.block.py-0x(href=page.url, class=additionalClasses)=page.title
                     - var hasSubLinks = (page.headings && page.headings.length)
@@ -42,7 +42,7 @@ block content
           a(href=site.url) DocSearch
           span &nbsp;>&nbsp;
           a(href=`${site.url}/what-is-docsearch.html`) Documentation
-        .text-5.lg_text-7.uppercase.tracking-poppins.text-solstice.bold.mb-2=current.title
+        .custom-main-title.text-5.lg_text-7.uppercase.tracking-poppins.text-solstice.bold.mb-2=current.title
         !=current.content
         // Include the apply form
         if current.includeForm
