@@ -4,25 +4,27 @@ Hi (future) collaborator!
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
-- [Where to start?](#where-to-start)
-- [Development workflow](#development-workflow)
-  - [Requirements](#requirements)
-  - [Launch](#launch)
-  - [Local build](#local-build)
-- [Commit message guidelines](#commit-message-guidelines)
-  - [Revert](#revert)
-  - [Type](#type)
-  - [Scope](#scope)
-  - [Subject](#subject)
-  - [Body](#body)
-  - [Footer](#footer)
-- [Releasing](#releasing)
+- [Where to start?][1]
+- [Development workflow][2]
+  - [Requirements][3]
+  - [Launch][4]
+  - [Local build][5]
+- [Commit message guidelines][6]
+  - [Revert][7]
+  - [Type][8]
+  - [Scope][9]
+  - [Subject][10]
+  - [Body][11]
+  - [Footer][12]
+- [Releasing][13]
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Where to start?
 
-Have a fix or a new feature? [Search for corresponding issues](https://github.com/algolia/docsearch/issues) first then create a new one.
+Have a fix or a new feature? [Search for corresponding
+issues][14] first then create a new
+one.
 
 # Development workflow
 
@@ -30,9 +32,8 @@ Have a fix or a new feature? [Search for corresponding issues](https://github.co
 
 To run this project, you will need:
 
-- Node.js >= v8.7.0, use nvm - [install instructions](https://github.com/creationix/nvm#install-script)
-- [Ruby](https://www.ruby-lang.org/en/)
-- [Bundler](http://bundler.io/)
+- Node.js >= v8.7.0, use nvm - [install
+  instructions][15]
 
 ## Build
 
@@ -40,7 +41,7 @@ To run this project, you will need:
 minified files for `<script>` inclusion, as well as classes for `import`ing.
 
 The command itself is split into `yarn run build:js` and `yarn run build:css` if
-you want to build only a subset.
+you want to build a subset.
 
 ## Serve
 
@@ -56,12 +57,26 @@ them with auto-reload.
 
 - `yarn docs:build` will build the docs website in `./docs/dist`.
 - `yarn docs:serve` will do the same, but with live-reload enabled
-- `yarn docs:lint` will check for linting errors in the doc website
 - `yarn docs:deploy` will deploy the doc website
 
 ## Release
 
-`npm run release` will guid you through the release process. Note that you have
-to use `npm` and not `yarn` for this one otherwise it won't correctly deploy to
-npm.
+`npm run release` will guide you through the release process. Note that you have
+to use `npm` and not `yarn` for this one otherwise it won't deploy to npm.
 
+
+[1]: #where-to-start
+[2]: #development-workflow
+[3]: #requirements
+[4]: #launch
+[5]: #local-build
+[6]: #commit-message-guidelines
+[7]: #revert
+[8]: #type
+[9]: #scope
+[10]: #subject
+[11]: #body
+[12]: #footer
+[13]: #releasing
+[14]: https://github.com/algolia/docsearch/issues
+[15]: https://github.com/creationix/nvm#install-script
