@@ -57,7 +57,7 @@ be used there.
 
 You can also use mixins or include other files from the layouts.
 
-_Note that the current layout logic is quite simple and might not handle complex
+_Note that the current layout logic is simple and might not handle complex
 recursive cases, but should be enough for simple cases._
 
 ## CSS
@@ -65,14 +65,14 @@ recursive cases, but should be enough for simple cases._
 CSS is processed through PostCSS. It expects an entry file in
 `./src/style.css`.
 
-It is using `postcss-import`, allowing you to `@import` files from the
+We are using `postcss-import`, allowing you to `@import` files from the
 `./src/_styles/` directory to better split your CSS code in logical chunks.
 
 Most of the styling based on tailwind.css, with the config file behing
 `tailwind.config.js`. It contains default sizing and coloring to follow the
 Algolia brand guidelines.
 
-The final CSS files is then compressed through PurgeCSS (to only keep CSS
+The final CSS files is then compressed through PurgeCSS (to keep CSS
 classes that are actually used) and CleanCSS (to minify it).
 
 ## JavaScript
@@ -80,8 +80,8 @@ classes that are actually used) and CleanCSS (to minify it).
 JavaScript code is processed through Babel. It will compile all files situated
 in `./src/js`.
 
-_Note it currently only compile JS, and does not bundle them. We might add
-Webpack/Parcel support later._
+_Note that it compiles JS, and does not bundle it. We might add Webpack/Parcel
+support later._
 
 ## Assets
 
@@ -105,7 +105,7 @@ For example if you have:
 }
 ```
 
-Every occurence of `{{projectVersion}}` in any `.md` or `.js` file will be
+Every occurrence of `{{projectVersion}}` in any `.md` or `.js` file will be
 replaced with `1.4.2`.
 
 ## Sidebar
@@ -127,7 +127,7 @@ this location, that will redirect anyone visiting it to the page defined in
 `to`.
 
 _Note that both those links must be defined as relative to the `site.url`
-value.`.
+value._
 
 
 
