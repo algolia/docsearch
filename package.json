@@ -66,7 +66,7 @@
     "postcss-cli": "6.0.0",
     "prettier": "1.14.2",
     "pretty-bytes-cli": "2.0.0",
-    "semver": "5.5.0",
+    "semver": "5.5.1",
     "sinon": "6.1.5",
     "uglify-js": "3.4.7",
     "webpack": "3.12.0",
