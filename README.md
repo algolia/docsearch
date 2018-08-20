@@ -17,6 +17,17 @@ Check out our [website][8] for a complete explanation and documentation.
 
 [![Bootstrap demo][9]][8]
 
+## Related projects
+
+DocSearch is made of 3 repositories:
+
+- [algolia/docsearch][10] contains the `docsearch.js` code source and the
+  documentation website.
+- [algolia/docsearch-configs][11] contains the JSON files representing all the
+  configs for all the documentations DocSearch is powering
+- [algolia/docsearch-scraper][12] contains the crawler we use to extract data
+  from your documentation. The code is open-source and you can run it from
+  a Docker image
 
 [1]: ./.github/docsearch-logo.svg
 [2]: https://img.shields.io/npm/v/docsearch.js.svg?style=flat-square
@@ -27,3 +38,6 @@ Check out our [website][8] for a complete explanation and documentation.
 [7]: https://data.jsdelivr.com/v1/package/npm/docsearch.js/badge
 [8]: https://community.algolia.com/docsearch/
 [9]: ./.github/demo.gif
+[10]: https://github.com/algolia/docsearch
+[11]: https://github.com/algolia/docsearch-configs
+[12]: https://github.com/algolia/docsearch-scraper
