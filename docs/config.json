@@ -81,5 +81,47 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    { 
+      "from": "documentation/docsearch/introduction/index.html",
+      "to": "what-is-docsearch.html"
+    },
+    {
+      "from": "documentation/docsearch/how-it-works/index.html",
+      "to": "how-does-it-work.html"
+    },
+    {
+      "from": "documentation/docsearch/recommendations/index.html",
+      "to": "tips.html"
+    },
+    {
+      "from": "documentation/docsearch-scraper/overview/index.html",
+      "to": "crawler-overview.html"
+    },
+    {
+      "from": "documentation/docsearch-scraper/config-options/index.html",
+      "to": "config-file.html"
+    },
+    {
+      "from": "documentation/docsearch-autocomplete/customize-autocomplete-styles/index.html",
+      "to": "styling.html"
+    },
+    {
+      "from": "documentation/docsearch-autocomplete/configuring-the-search/index.html",
+      "to": "behavior.html"
+    },
+    {
+      "from": "documentation/docsearch-FAQ/customize-configuration-file/index.html",
+      "to": "config-file.html"
+    },
+    {
+      "from": "documentation/docsearch-FAQ/global-questions/index.html",
+      "to": "faq.html"
+    },
+    {
+      "from": "documentation/docsearch-FAQ/does-my-project-qualify/index.html",
+      "to": "faq.html"
+    }
   ]
 }

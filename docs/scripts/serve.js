@@ -3,6 +3,7 @@ import _ from 'lodash';
 import css from './lib/css';
 import js from './lib/js';
 import assets from './lib/assets';
+import redirects from './lib/redirects';
 import liveServer from 'live-server';
 import pAll from 'p-all';
 
@@ -14,6 +15,7 @@ import pAll from 'p-all';
     },
     async () => await js.run(),
     async () => await assets.run(),
+    async () => await redirects.run(),
   ]);
 
   markdown.watch();

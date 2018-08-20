@@ -11,6 +11,9 @@ const writeFile = pify(fs.writeFile);
 const mkdirp = pify(fs.mkdirp);
 
 export default {
+  async mkdirp(filepath) {
+    return await mkdirp(filepath);
+  },
   // Read a file and return its content as a string
   async readFile(filepath) {
     return (await readFile(filepath)).toString('utf-8');
@@ -26,7 +29,7 @@ export default {
   // Write a file to disk
   async writeFile(filepath, content) {
     const dirname = path.dirname(filepath);
-    await mkdirp(dirname);
+    await this.mkdirp(dirname);
     await writeFile(filepath, content);
 
     const extname = path.extname(filepath);
