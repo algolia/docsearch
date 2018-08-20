@@ -69,11 +69,12 @@
 }
 
 .bg-footer {
+  @apply bg-cover bg-no-repeat;
+  @apply absolute pin-x z-1;
   background-image: url("assets/bg-footer.svg");
-  background-color: #fdfdfe;
-  background-size: 2200px;
-  background-repeat: no-repeat;
-  background-position: center top;
+  background-position: 100% 100%;
+  height: 500px;
+
 }
 
 /* Logo slider (gslide) */

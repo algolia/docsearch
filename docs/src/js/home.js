@@ -14,9 +14,9 @@ window.onload = function() {
   const reference = document.querySelector(
     '.docsearch-live-demo-input-wrapper'
   );
-  const popper = document.querySelector('.my-popper');
+  const popperElement = document.querySelector('.my-popper');
 
-  const anotherPopper = new Popper(reference, popper, {
+  const anotherPopper = new Popper(reference, popperElement, {
     placement: 'bottom-start',
     removeOnDestroy: 'true',
   });

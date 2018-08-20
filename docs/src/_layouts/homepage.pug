@@ -85,9 +85,6 @@ block content
               img(src="assets/logos/stripe.jpg", alt="DocSearch + Stripe", width=60)
               .glide__caption Stripe
             .glide__slide
-              img(src="assets/logos/symfony.jpg", alt="DocSearch + Symfony", width=60)
-              .glide__caption Symfony
-            .glide__slide
               img(src="assets/logos/trello.jpg", alt="DocSearch + Trello", width=60)
               .glide__caption Trello
             .glide__slide
@@ -111,7 +108,7 @@ block content
           input.docsearch-live-demo-input
       .demo-content-wrapper
 
-  .bg-analytics.px-2
+  .px-2.bg-analytics
     .max-w-xl.m-auto.text-center.mb-2
       .max-w-md.m-auto.mb-3
         .text-solstice.text-5.normal.pb-2 Learn-as-you-type experience
@@ -136,16 +133,16 @@ block content
       .flex.flrw
         .fln.w-100.md_w-33.px-2.p-2
           h3.pb-1.text-3.leading-2 We crawl your documentation pages
-          p.text-1.leading-2.text-justify We built a website crawler designed to index every section of your documentation.
-          p.text-1.leading-2.text-justify Just send us the URL of your documentation, and we’ll run the crawler every 24h so you’re always up-to-date.
+          p.text-1.leading-2 We built a website crawler designed to index every section of your documentation.
+          p.text-1.leading-2 Just send us the URL of your documentation, and we’ll run the crawler every 24h so you’re always up-to-date.
         .fln.w-100.md_w-33.px-2.p-2
           h3.pb-1.text-3.leading-2 We configure your search experience
-          p.text-1.leading-2.text-justify You don’t need to configure any settings or even have an Algolia account.
-          p.text-1.leading-2.text-justify We take care of all of this automatically to ensure the best documentation search experience.
+          p.text-1.leading-2 You don’t need to configure any settings or even have an Algolia account.
+          p.text-1.leading-2 We take care of all of this automatically to ensure the best documentation search experience.
         .fln.w-100.md_w-33.px-2.p-2
           h3.pb-1.text-3.leading-2 You add the search autocomplete to your UI
-          p.text-1.leading-2.text-justify We’ll send you the script so you can integrate Algolia autocomplete to power your search.
-          p.text-1.leading-2.text-justify You will receive the same speed, relevance and best-in-class UX as our paying customers.
+          p.text-1.leading-2 We’ll send you the script so you can integrate Algolia autocomplete to power your search.
+          p.text-1.leading-2 You will receive the same speed, relevance and best-in-class UX as our paying customers.
   
     .max-w-xl.m-auto.mt-3.px-1.pb-3
       .text-solstice.text-5.normal.pb-2.text-center Try it live
@@ -184,8 +181,9 @@ block content
                 img.h-2(src='assets/logos/stripe.jpg', alt='Stripe')
               .fla.pl-1.text-solstice.uppercase.bold Stripe
 
-  .bg-footer.px-2
-    .max-w-sm.m-auto.mt-2
+  .relative.bg-white-pure
+    .bg-footer
+    .relative.max-w-sm.m-auto.mt-2.z-2
       .max-w-md.m-auto.py-3
         .text-5.normal.pb-2.text-white.text-center Get started
         .pb-1.text-3.leading-2.text-white.text-center We’ll get back to you with everything you need to integrate your new search into your website.
@@ -217,14 +215,14 @@ block content
       
       //include ../_includes/newsletter.pug
 
-    .my-popper
-      .popper__arrow(x-arrow='right')
-      img(src='https://docsearch-shared.netlify.com/docsearch-logo.png', alt='DocSearch', width=200)
-      p
-        | Try to search for expressions like 
-        a.ds-sample-query(data-sample='grid', href='#') grid
-        | , 
-        a.ds-sample-query(data-sample='form group', href='#') form group
-        |  or 
-        a.ds-sample-query(data-sample='invisble', href='#') invisble
-        |  (sic) .
+  .my-popper
+    .popper__arrow(x-arrow='right')
+    img(src='https://docsearch-shared.netlify.com/docsearch-logo.png', alt='DocSearch', width=200)
+    p
+      | Try to search for expressions like 
+      a.ds-sample-query(data-sample='grid', href='#') grid
+      | , 
+      a.ds-sample-query(data-sample='form group', href='#') form group
+      |  or 
+      a.ds-sample-query(data-sample='invisble', href='#') invisble
+      |  (sic) .
