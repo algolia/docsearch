@@ -53,7 +53,7 @@
     "eslint": "5.4.0",
     "eslint-config-algolia": "13.1.0",
     "eslint-config-prettier": "2.10.0",
-    "eslint-plugin-import": "2.13.0",
+    "eslint-plugin-import": "2.14.0",
     "eslint-plugin-jest": "21.21.0",
     "eslint-plugin-prettier": "2.6.2",
     "gh-pages": "1.2.0",
