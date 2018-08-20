@@ -11,7 +11,7 @@ Check out our [website][1] to add an outstanding search to your documentation.
 [travis-svg]: https://img.shields.io/travis/algolia/docsearch/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/algolia/docsearch.svg?branch=master
 [coveralls-svg]: https://img.shields.io/coveralls/algolia/docsearch/master.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/github/algolia/docsearch?branch=docs%2Fbadges
+[coveralls-url]: https://coveralls.io/github/algolia/docsearch?branch=master
 [license-image]: http://img.shields.io/badge/license-MIT-green.svg?style=flat-square
 [license-url]: LICENSE
 [downloads-image]: https://img.shields.io/npm/dm/docsearch.js.svg?style=flat-square
