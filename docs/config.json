@@ -1,7 +1,7 @@
 {
   "site": {
     "project": "DocSearch",
-    "title": "Algolia DocSearch: Search made for documentation",
+    "title": "DocSearch: Search made for documentation",
     "description": "The easiest way to add search to your documentation",
     "url": "https://community.algolia.com/docsearch",
     "repo": "https://github.com/algolia/docsearch"
