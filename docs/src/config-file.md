@@ -79,15 +79,6 @@ The following example will make it clearer:
 }
 ```
 
-<<<<<<< HEAD
-We mostly attribute it on our own regarding plenty of underlying factors. The `apiKey` that we provide is generated with a restriction on the `index_name`. Changing the `index_name` would require to ask for a new key. Thus if you want to **change the name**, please **submit a new configuration**, we will generate a new key accordingly.
-### `start_urls` _Mandatory_
-You can pass either a string or an array of urls. The crawler will go to each
-page in order, following every link it finds on the page. It will only stop if
-the domain is outside of the `allowed_domains` or if the link is blacklisted from the `stop_urls`.
-
-Note that we currently do not follow *301* redirects.
-=======
 The beneficial side effect of using this syntax is that all records that will
 then be extracted from crawling `http://www.example.com/docs/en/latest` will have
 `lang: en` and `version: latest` added to it, allowing you to then filter based on
