@@ -1,0 +1,31 @@
+@import "./_styles/tailwind.css";
+@import "./_styles/debug.css";
+@import "./_styles/components.css";
+@import "./_styles/fonts.css";
+@import "./_styles/highlight.css";
+@import "./_styles/docs.css";
+@import "./_styles/docsearch.css";
+
+/* Antialiasing */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Global styles */
+a,
+a:active {
+  @apply .cursor-pointer;
+  @apply .text-nebula .no-underline;
+}
+a:hover,
+a:focus {
+  @apply .underline;
+}
+code {
+  @apply .code .text-mars-2;
+  @apply .p-0x;
+  @apply .bg-moon;
+  @apply .rounded-1;
+  font-size: .9em;
+}

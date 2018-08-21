@@ -4,20 +4,19 @@
   "description": "Add an autocomplete dropdown to your documentation",
   "main": "dist/npm/index.js",
   "scripts": {
-    "dev": "./scripts/dev",
-    "dev:docs": "./scripts/dev-docs",
-    "serve": "./scripts/serve",
-    "doctoc": "doctoc --maxlevel 3 README.md CONTRIBUTING.md",
     "build": "./scripts/build",
     "build:css": "./scripts/build-css",
     "build:js": "./scripts/build-js",
-    "build:docs": "./scripts/build-docs",
+    "docs:build": "cd ./docs && yarn build",
+    "docs:serve": "cd ./docs && yarn serve",
+    "docs:deploy": "cd ./docs && yarn deploy",
+    "doctoc": "doctoc --maxlevel 3 README.md CONTRIBUTING.md",
+    "lint": "./scripts/lint",
     "release": "./scripts/release",
     "release:beta": "./scripts/release-beta",
-    "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
-    "test": "jest --coverage && npm run lint",
-    "test:watch": "jest --watch"
+    "serve": "./scripts/serve",
+    "test": "./scripts/test",
+    "test:watch": "./scripts/test-watch"
   },
   "files": [
     "dist/"
@@ -37,7 +36,7 @@
     ]
   },
   "devDependencies": {
-    "autoprefixer": "9.1.0",
+    "autoprefixer": "9.1.1",
     "babel-cli": "6.26.0",
     "babel-core": "6.26.3",
     "babel-eslint": "8.2.6",
@@ -50,40 +49,37 @@
     "conventional-changelog-cli": "2.0.1",
     "cssnano": "4.0.5",
     "doctoc": "1.3.1",
-    "eslint": "5.3.0",
+    "eslint": "5.4.0",
     "eslint-config-algolia": "13.1.0",
-    "eslint-config-prettier": "2.9.0",
-    "eslint-plugin-import": "2.13.0",
-    "eslint-plugin-jest": "21.18.0",
+    "eslint-config-prettier": "2.10.0",
+    "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-jest": "21.21.0",
     "eslint-plugin-prettier": "2.6.2",
-    "gh-pages": "1.2.0",
-    "jest": "21.2.1",
+    "jest": "23.0.0",
     "jsdom": "11.12.0",
     "json": "9.0.6",
+    "live-server": "^1.2.0",
     "mversion": "1.12.0",
-    "node-sass": "4.9.2",
+    "node-sass": "4.9.3",
     "onchange": "4.1.0",
     "postcss-cli": "6.0.0",
-    "prettier": "1.14.0",
+    "prettier": "1.14.2",
     "pretty-bytes-cli": "2.0.0",
-    "semver": "5.5.0",
-    "sinon": "6.1.4",
-    "uglify-js": "3.4.6",
+    "semver": "5.5.1",
+    "sinon": "6.1.5",
+    "uglify-js": "3.4.7",
     "webpack": "3.12.0",
-    "webpack-dev-server": "3.1.5"
+    "webpack-cli": "^3.1.0"
   },
   "peerDependencies": {},
   "dependencies": {
     "algoliasearch": "^3.24.5",
-    "autocomplete.js": "^0.30.0",
+    "autocomplete.js": "^0.31.0",
     "hogan.js": "^3.0.2",
+    "parallelshell": "^3.0.2",
     "request": "^2.87.0",
     "stack-utils": "^1.0.1",
     "to-factory": "^1.0.0",
     "zepto": "^1.2.0"
-  },
-  "jest": {
-    "verbose": true,
-    "testURL": "http://localhost/"
   }
 }

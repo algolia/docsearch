@@ -1,24 +1,9 @@
 #!/usr/bin/env bash
-# Serves the current build version on a local server available (by default) on 
-# http://127.0.0.1:8080/docsearch.js and http://127.0.0.1/docsearch.css
-#
-# This is useful when you want to test the latest docsearch.js version
-# (including your own branches) on a specific local project. Just run `npm run
-# serve` in the docsearch repository, and link the file in your project.
-#
-# This works by running webpack in watch mode as well as simply serving the dist
-# folder through a local web server.
 
-npm run build:css
+yarn run build:css
 
-# Watch changes and rebuild file if needed
-NODE_ENV=production \
-  webpack \
-  --config webpack.serve.config.babel.js \
-  -w &
-# Serve files
-cd dist/cdn && http-server &
-# Rebuild css
-onchange './src/styles/*.scss' -- npm run build:css & \
-
-wait
+echo "Find all files at http://127.0.0.1:8080/";
+parallelshell \
+  'webpack --config webpack.serve.config.babel.js -w' \
+  'onchange "./src/styles/*.scss" -- yarn run build:css' \
+  'live-server ./dist/cdn' \

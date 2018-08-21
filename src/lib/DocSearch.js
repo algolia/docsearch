@@ -306,7 +306,7 @@ class DocSearch {
 
   handleSelected(input, event, suggestion) {
     input.setVal('');
-    window.location.href = suggestion.url;
+    window.location.assign(suggestion.url);
   }
 
   handleShown(input) {

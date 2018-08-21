@@ -1,0 +1,25 @@
+/* Change the width of the parent element when the input is focused */
+.custom-search-wrapper {
+  transition: width 0.15s ease;
+  will-change: width;
+}
+.custom-search-wrapper:focus-within {
+  width: 100%;
+}
+/* Wrapper added by DocSearch */
+/* purgecss start ignore */
+.algolia-autocomplete {
+  @apply w-100;
+}
+/* purgecss end ignore */
+/* Main search input */
+.custom-search-input {
+  padding-top: calc(0.5rem + 2px);
+  @apply .pb-05;
+}
+/* Dropdown menu */
+/* purgecss start ignore */
+.ds-dropdown-menu {
+  @apply w-100;
+}
+/* purgecss end ignore */

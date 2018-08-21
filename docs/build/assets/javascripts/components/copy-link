@@ -1,0 +1,33 @@
+'use strict';
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+
+var copy_links = [].concat(_toConsumableArray(document.querySelectorAll('.copy-link')));
+
+copy_links.forEach(function (link) {
+  link.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    return false;
+  });
+});
+
+var clipboard = new Clipboard('.copy-link', {
+  text: function text(trigger) {
+    var wrapper = $(trigger).closest('.snippet-wrapper');
+    var current_snippet = wrapper.find('.tab-pane.active pre');
+
+    return current_snippet.text().replace('<?php\n', '');
+  }
+});
+
+clipboard.on('success', function (e) {
+  var nodes = e.trigger.querySelector('.tooltip').childNodes;
+  var lastNode = nodes[nodes.length - 1];
+
+  lastNode.nodeValue = 'Copied!';
+
+  setTimeout(function (e2) {
+    lastNode.nodeValue = 'Copy';
+  }, 3000);
+});

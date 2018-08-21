@@ -3,10 +3,6 @@
 import sinon from 'sinon';
 import $ from '../zepto.js';
 import DocSearch from '../DocSearch.js';
-Object.defineProperty(window.location, 'href', {
-  writable: true,
-  value: 'some url',
-});
 
 describe('DocSearch', () => {
   beforeEach(() => {
@@ -22,6 +18,8 @@ describe('DocSearch', () => {
 
     // We prevent the logging of expected errors
     window.console.warn = sinon.spy();
+
+    window.location.assign = jest.fn();
   });
 
   describe('constructor', () => {
@@ -405,8 +403,11 @@ describe('DocSearch', () => {
       ds.autocomplete.trigger('autocomplete:selected', {
         url: 'https://website.com/doc/page',
       });
+
       return new Promise(resolve => {
-        expect(window.location.href).toEqual('https://website.com/doc/page');
+        expect(window.location.assign).toHaveBeenCalledWith(
+          'https://website.com/doc/page'
+        );
         resolve();
       });
     });

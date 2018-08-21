@@ -1,0 +1,127 @@
+{
+  "site": {
+    "project": "DocSearch",
+    "title": "DocSearch: Search made for documentation",
+    "description": "The easiest way to add search to your documentation",
+    "url": "https://community.algolia.com/docsearch",
+    "repo": "https://github.com/algolia/docsearch"
+  },
+  "placeholders": {
+    "docSearchJSVersion": "2"
+  },
+  "sidebar": [
+    {
+      "title": "Essentials",
+      "pages": [
+        {
+          "title": "What is DocSearch?",
+          "url": "what-is-docsearch.html"
+        },
+        {
+          "title": "How does it work?",
+          "url": "how-does-it-work.html"
+        },
+        {
+          "title": "Who can apply?",
+          "url": "who-can-apply.html"
+        },
+        {
+          "title": "Apply now",
+          "url": "apply.html"
+        },
+        {
+          "title": "Integrations",
+          "url": "integrations.html"
+        },
+        {
+          "title": "Tips",
+          "url": "tips.html"
+        },
+        {
+          "title": "FAQ",
+          "url": "faq.html"
+        }
+      ]
+    },
+    {
+      "title": "Dropdown UI",
+      "pages": [
+        {
+          "title": "Overview",
+          "url": "dropdown.html"
+        },
+        {
+          "title": "Styling",
+          "url": "styling.html"
+        },
+        {
+          "title": "Behavior",
+          "url": "behavior.html"
+        }
+      ]
+    },
+    {
+      "title": "Crawler",
+      "pages": [
+        {
+          "title": "Overview",
+          "url": "crawler-overview.html"
+        },
+        {
+          "title": "Inside the engine",
+          "url": "inside-the-engine.html"
+        },
+        {
+          "title": "Config files",
+          "url": "config-file.html"
+        },
+        {
+          "title": "Run your own",
+          "url": "run-your-own.html"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    { 
+      "from": "documentation/docsearch/introduction/index.html",
+      "to": "what-is-docsearch.html"
+    },
+    {
+      "from": "documentation/docsearch/how-it-works/index.html",
+      "to": "how-does-it-work.html"
+    },
+    {
+      "from": "documentation/docsearch/recommendations/index.html",
+      "to": "tips.html"
+    },
+    {
+      "from": "documentation/docsearch-scraper/overview/index.html",
+      "to": "crawler-overview.html"
+    },
+    {
+      "from": "documentation/docsearch-scraper/config-options/index.html",
+      "to": "config-file.html"
+    },
+    {
+      "from": "documentation/docsearch-autocomplete/customize-autocomplete-styles/index.html",
+      "to": "styling.html"
+    },
+    {
+      "from": "documentation/docsearch-autocomplete/configuring-the-search/index.html",
+      "to": "behavior.html"
+    },
+    {
+      "from": "documentation/docsearch-FAQ/customize-configuration-file/index.html",
+      "to": "config-file.html"
+    },
+    {
+      "from": "documentation/docsearch-FAQ/global-questions/index.html",
+      "to": "faq.html"
+    },
+    {
+      "from": "documentation/docsearch-FAQ/does-my-project-qualify/index.html",
+      "to": "faq.html"
+    }
+  ]
+}

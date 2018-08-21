@@ -1,18 +1,6 @@
 language: node_js
-before_install:
-- git config --global user.email "algobot@users.noreply.github.com"
-- git config --global user.name "algobot"
-- rvm install 2.4.2
-- rvm use 2.4.2
-script: "./scripts/test-ci"
+script: "./scripts/test"
 sudo: false
 branches:
   only:
   - master
-cache:
-  bundler: true
-# before_cache:
-# - rm -f ./node_modules/.bin/which
-env:
-  global:
-    secure: TDLpvycpMbbXpwSKLLeDBZdpi05rbZEbPcII9LSglUG9teF/zrqxRMl+Eivvho8IkeJRDQVwdc8EbYCzZ9cAwRHOyqzDNwRFhlpKVwz+fl5uHfxDo5DANsut6F+l/RrBf4n2MWKkJlbo4kq8mUqL89vcPqfRTLpx62FawywDgiJc2s+ixR1lkm5GNlF74ovoUkeOXiLi605LE0sN7H/1TRdD6WOJTBT2yoiuDU3U/RUKJxka6Sz4u9kqUQpn+kJUIPiBiasbz65qglnrxpBL/mYgAEZfRcbVyC5zd+CeFSIlIiGdhMFoVInNMqshq7gl/UWcJyxdnGIIfhO3l/Y/lyEXQQknEZS4M2h7UKeCuu0E1hh7eT7kVVyXDW+nCUNVYPTuupvLwcpnXw02Flef72OpDy6bl19NEdH79lNK4l440GJb+Lhda2M2mMZJmRkg31j9HFjl0wCYqRopzNTKNBFJAPTB4rG6H/y7NgPFjrATphEDLZgq73eNDxtRNBQHtLqGl8IsaFHU4+8vAQ2iEbi5+R/D5Rua2BXSbYAdQjxnvmPojQ7voZgj+w5GHx2573plCvqO4pZvV/u5/Z18tEYIV+4LFC7KR+30Snbk0JAbRogQr6P4mkVrKG/7pAcGS5tpxhMY3OUNaJWdDP8NE1c3/0Q2pKqdB0RauGoUO2w=

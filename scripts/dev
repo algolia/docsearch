@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-npm run build:css
-
-webpack-dev-server --config webpack.dev.config.babel.js &
-onchange './src/styles/*.scss' -- npm run build:css &
-wait
