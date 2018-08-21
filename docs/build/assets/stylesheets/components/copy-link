@@ -1,4 +1,0 @@
-.snippet-wrapper .copy-link {
-  position: absolute;
-  right: calc(1em + 8px);
-  top: 8px; }
