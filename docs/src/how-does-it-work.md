@@ -4,7 +4,7 @@ title: How does it work?
 ---
 
 Getting up and ready with DocSearch is a straightforward process that requires
-a few steps: you apply, we configure the crawler for you, and you update your
+a three steps: you apply, we configure the crawler for you, and you update your
 front-end.
 
 <img src="./assets/docsearch-how-it-works.png" alt="How it works" class="mt-2"/>
@@ -38,14 +38,15 @@ We'll then get back to you with the JavaScript snippet you'll need to add to
 your website. This will bind your search `input` field to display results from
 your Algolia index on each keystroke in a dropdown menu.
 
-The default styling of the dropdown uses grey colors to fit in most designs. The
-dropdown itself is made of HTML with custom CSS classes and we recommend that
-you overwrite those classes to provide a theming more inline with the rest of
-your website.
+The default styling of the dropdown uses a grey theme to fit in most designs.
+The dropdown itself is made of HTML with custom CSS classes and we recommend
+that you overwrite those classes to provide a theming more inline with the rest
+of your website.
 
 Now that DocSearch is set, you don't have anything else to do. We'll keep
 crawling your website every day and update your search results automatically.
-
+All we ask is that you keep the "search by Algolia" logo next to your search
+results.
 
 [1]: https://github.com/algolia/docsearch-configs/tree/master/configs
 [2]: https://github.com/algolia/docsearch-scraper
