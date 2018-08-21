@@ -79,15 +79,6 @@ The following example will make it clearer:
 }
 ```
 
-<<<<<<< HEAD
-We mostly attribute it on our own regarding plenty of underlying factors. The `apiKey` that we provide is generated with a restriction on the `index_name`. Changing the `index_name` would require to ask for a new key. Thus if you want to **change the name**, please **submit a new configuration**, we will generate a new key accordingly.
-### `start_urls` _Mandatory_
-You can pass either a string or an array of urls. The crawler will go to each
-page in order, following every link it finds on the page. It will only stop if
-the domain is outside of the `allowed_domains` or if the link is blacklisted from the `stop_urls`.
-
-Note that we currently do not follow *301* redirects.
-=======
 The beneficial side effect of using this syntax is that all records that will
 then be extracted from crawling `http://www.example.com/docs/en/latest` will have
 `lang: en` and `version: latest` added to it, allowing you to then filter based on
@@ -104,7 +95,6 @@ docsearch({
   },
 });
 ```
->>>>>>> Updating config doc
 
 ### Using custom tags
 
@@ -204,17 +194,10 @@ set of selectors should be applied to specific pages.
 }
 ```
 
-<<<<<<< HEAD
-### `start_urls.tags`
-
-Tags will be apllied to every record from the matchin matched pages, i.e., its URL is matchin the `url`. These `tags` will [be processed as `attributesForFaceting`](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/) . If you want further detail, [check the original documentation](https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/).
-We do recommend to use `tags` if you want [to refine the scope of your search](https://www.algolia.com/doc/guides/searching/faceting/#faceting-overview).
-=======
 Here, all documentation pages will use the selectors defined in
 `selectors.default` while the page under `./concepts` will use
 `selectors.concepts` and those under `./contributors` will use
 `selectors.contributors`.
->>>>>>> Updating config doc
 
 ## `selectors`
 
