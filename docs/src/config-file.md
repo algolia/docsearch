@@ -398,13 +398,13 @@ If used, `min_indexed_level` is ignored.
 
 ### `scrape_start_urls` _Optional_
 
-By default, the crawler will not extract content from the pages defined in
-`starts_urls`.  If you have valuable content on your homepage, you should set
-this to `true`.
+By default, the crawler will extract content from the pages defined in
+`starts_urls`.  If you do have valuable content on your `starts_urls` or these pages are duplicates from another one, you should set
+this to `false`.
 
 ```json
 {
-  "scrape_start_urls": true
+  "scrape_start_urls": false
 }
 ```
 
