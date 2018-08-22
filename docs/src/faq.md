@@ -27,20 +27,20 @@ you need to do is keep your website online, and we take care of the rest.
 
 Nothing.
 
-We know that paying for search infrastructure is a cost not many Open Source
+We know that paying for search infrastructure is a cost not all Open Source
 projects can afford. That's why we decided to keep DocSearch free for everyone.
 All we ask in exchange is that you keep the _powered by
 [Algolia][2]_ logo displayed next to the search results.
 
-If this is not possible for you, you're totally free to open your own Algolia
-account and run DocSearch on your own without this limitation. In that case
+If this is not possible for you, you're totally free to [open your own Algolia
+account][3] and run DocSearch on your own without this limitation. In that case
 though, depending on the size of your documentation, you might need a paid
-account (free accounts can hold as much as 10k records).
+account ([free accounts][4] can hold as much as 10k records).
 
 ### What data are you collecting?
 
 The data we save in the index is the data we extract from your website
-markup, in a custom JSON format instead of HTML. Exactly which part of the
+markup, in a custom JSON format instead of HTML. Which part of the
 page is defined in your custom config.
 
 As the website owner, we also give you access to the Algolia Analytics
@@ -48,28 +48,30 @@ dashboard, that will let you have more data about the anonymized searches that
 were done on your website. You'll be able to see the most searched terms, or
 those with no results.
 
+_If you don't have Analytics access, send us an email and we'll enable it._
+
 ### Where is my data hosted?
 
 All DocSearch data is hosted on Algolia's servers, with replication around the
-globe. You can find more details about the actual [server specs here][3], and more
-complete information in our [privacy policy][4].
+globe. You can find more details about the actual [server specs here][5], and more
+complete information in our [privacy policy][6].
 
 ### Can I use DocSearch on non-doc pages?
 
-The free DocSearch we provide will only crawl documentation pages. If you want
+The free DocSearch we provide will crawl documentation pages. If you want
 to use it on other parts of your website, you'll need to create your own Algolia
 account and either:
 
-- Run the [DocSearch crawler][5] on your own
-- Use one of our other [framework integrations or API clients][6]
+- Run the [DocSearch crawler][7] on your own
+- Use one of our other [framework integrations or API clients][8]
 
 ### Can you index code samples?
 
-Yes, but we do not recommend it. 
+Yes, but we do not recommend it.
 
 Code samples are a great way for humans to understand how a specific pattern
-/ method should be used. Unfortunately, it often requires boilerplate code,
-repeated into several examples, which will only add noise to the results.
+/ method should be used. It often requires boilerplate code though, repeated
+across examples, which will add noise to the results.
 
 What we recommend instead is to exclude the code blocks from the indexing (by
 using the `selectors_exclude` option in your config), and instead structure your
@@ -77,9 +79,9 @@ content so the method names are actual headers.
 
 ### Why do I have duplicate content in my results?
 
-This can happen when you have several urls pointing to the same content, for
-example with `./docs`, `./docs/` and `./docs/index.html` or even both `http` and
-`https` in place.
+This can happen when you have more than one urls pointing to the same content,
+for example with `./docs`, `./docs/` and `./docs/index.html` or even both `http`
+and `https` in place.
 
 This can be fixed by `stop_urls` to all the patterns you want to exclude. The
 following example will exclude all urls ending with `/` or `index.html` as well
@@ -107,7 +109,9 @@ well, and we'll provide all the help we can.
 
 [1]: mailto:docsearch@algolia.com
 [2]: https://www.algolia.com/
-[3]: https://www.algolia.com/doc/guides/infrastructure/servers/
-[4]: https://www.algolia.com/policies/privacy
-[5]: ./crawler-overview.html
-[6]: https://www.algolia.com/doc/api-reference/
+[3]: https://www.algolia.com/pricing
+[4]: https://www.algolia.com/pricing#community
+[5]: https://www.algolia.com/doc/guides/infrastructure/servers/
+[6]: https://www.algolia.com/policies/privacy
+[7]: ./crawler-overview.html
+[8]: https://www.algolia.com/doc/api-reference/

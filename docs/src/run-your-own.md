@@ -124,7 +124,7 @@ Note that we use this CLI tool internally at Algolia to run the free hosted
 version, so you might not need all the listed commands.
 
 [1]: https://github.com/algolia/docsearch-scraper
-[2]: https://www.algolia.com/users/sign_up
+[2]: https://www.algolia.com/pricing#community
 [3]: ./config-file.html
 [4]: https://github.com/algolia/docsearch-configs/tree/master/configs
 [5]: ./dropdown.html
