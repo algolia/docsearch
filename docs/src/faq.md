@@ -48,6 +48,8 @@ dashboard, that will let you have more data about the anonymized searches that
 were done on your website. You'll be able to see the most searched terms, or
 those with no results.
 
+You will understand what people do not.
+
 _If you don't have Analytics access, send us an email and we'll enable it._
 
 ### Where is my data hosted?
