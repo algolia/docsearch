@@ -9,7 +9,6 @@ front-end.
 
 <img src="./assets/docsearch-how-it-works.png" alt="How it works" class="mt-2"/>
 
-
 ### 1. You apply
 
 The first thing you'll need to do is to apply for DocSearch by filling the
@@ -49,6 +48,3 @@ All we ask is that you keep the "search by Algolia" logo next to your search
 results.
 
 [1]: https://github.com/algolia/docsearch-configs/tree/master/configs
-[2]: https://github.com/algolia/docsearch-scraper
-[3]: https://github.com/algolia/docsearch-scraper
-[4]: https://www.sitemaps.org/

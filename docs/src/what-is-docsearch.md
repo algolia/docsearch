@@ -23,5 +23,7 @@ you is to check that you're eligible (most tech projects are), and apply! After
 that, we'll share with you the JavaScript snippet needed to add DocSearch to
 your website. We just ask that you keep the "powered by Algolia" link displayed.
 
-DocSearch is [one of our ways](https://opencollective.com/algolia) to give back
+DocSearch is [one of our ways][1] to give back
 to the Open-Source community for everything it did for us already.
+
+[1]: https://opencollective.com/algolia

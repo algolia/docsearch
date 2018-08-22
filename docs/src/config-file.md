@@ -27,7 +27,7 @@ A DocSearch looks like this:
 }
 ```
 
-## ``index_name``
+## `index_name`
 
 This is the name of the Algolia index where your records will be pushed. The
 `apiKey` we will share with you will be restricted to work on this index.
@@ -80,9 +80,9 @@ The following example will make it clearer:
 ```
 
 The beneficial side effect of using this syntax is that all records that will
-then be extracted from crawling `http://www.example.com/docs/en/latest` will have
-`lang: en` and `version: latest` added to it, allowing you to then filter based on
-those values.
+then be extracted from crawling `http://www.example.com/docs/en/latest` will
+have `lang: en` and `version: latest` added to it, allowing you to then filter
+based on those values.
 
 The following example shows how you can filter results matching specifics
 language and version from the front-end
@@ -342,7 +342,9 @@ recommend changing it as the default settings are meant to work for all
 websites.
 
 One use case would be to configure the `separatorsToIndex` setting. By default
-Algolia will consider all special character as a word separator. In some contexts, like for method names, you might want `_`, `/` or `#` to keep their meaning.
+Algolia will consider all special character as a word separator. In some
+contexts, like for method names, you might want `_`, `/` or `#` to keep their
+meaning.
 
 ```json
 {
@@ -353,7 +355,6 @@ Algolia will consider all special character as a word separator. In some context
 ```
 
 Check the [Algolia documentation][2] for more information on the settings.
-
 
 ### `min_indexed_level` _Optional_
 
@@ -485,11 +486,11 @@ With the above config and the `sitemap.xml` below, both
 `http://www.example.com/docs/` and `http://www.example.com/docs/de/` will be
 crawled.
 
-```
-<url>
-  <loc>http://www.example.com/docs/</loc>
-  <xhtml:link rel="alternate" hreflang="de" href="http://www.example.com/de/"/>
-</url>
+```html
+  <url>
+    <loc>http://www.example.com/docs/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="http://www.example.com/de/"/>
+  </url>
 ```
 
 ## JavaScript rendering
@@ -547,4 +548,5 @@ DocSearch to index all your content.
 ```
 
 [1]: https://github.com/algolia/docsearch-configs/tree/master/configs
+
 [2]: https://www.algolia.com/doc/api-reference/settings-api-parameters/

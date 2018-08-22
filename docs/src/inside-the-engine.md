@@ -3,8 +3,8 @@ layout: two-columns
 title: Inside the engine
 ---
 
-This page will explain in more details how the crawler extracts content from your
-page, and how it ranks it in the results.
+This page will explain in more details how the crawler extracts content from
+your page, and how it ranks it in the results.
 
 ## Crawling
 
@@ -36,8 +36,8 @@ overwrite your previous index.
 ## Ranking records
 
 Algolia always returns the most relevant results first, using a [tie-breaking
-approach][1]. DocSearch will first search for exact matches in your keywords then
-fallback to partial matches. Those results will then be ordered based, once
+approach][1]. DocSearch will first search for exact matches in your keywords
+then fallback to partial matches. Those results will then be ordered based, once
 again, on the page hierarchy, as extracted from the `selectors`.
 
 The default strategy is to first look at the closest header of the matching
@@ -59,7 +59,4 @@ If you want to get fancy, you could even overwrite the default
 `customRanking` used by the index by using the `custom_settings` option of
 your config.
 
-
 [1]: https://www.algolia.com/doc/guides/ranking/ranking-formula/#tie-breaking-approach
-[2]: https://www.algolia.com/doc/guides/ranking/ranking-formula/#tie-breaking-approach
-[3]: https://www.algolia.com/doc/guides/ranking/custom-ranking/

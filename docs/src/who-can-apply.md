@@ -55,4 +55,5 @@ following criteria:
   rendering if you can.
 
 [1]: ./apply.html
+
 [2]: ./integrations.html

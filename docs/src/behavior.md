@@ -32,8 +32,10 @@ The method is called with three arguments:
 
 - `input`, a reference to the search `input` element. It comes with the `.open()`,
   `.close()`, `.getVal()` and `.setVal()` methods.
+
 - `event`, the actual event triggering the selection. This can come from a click
   or a keyboard navigation.
+
 - `suggestion`, the object representing the current selection.
 
 ```javascript

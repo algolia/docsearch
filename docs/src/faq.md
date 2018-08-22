@@ -11,9 +11,9 @@ question to us][1] directly.
 
 Every day.
 
-The exact time of day might vary each day, but we'll crawl your
-website at most every 24 hours. We will also trigger a manual crawling every time
-your config is updated.
+The exact time of day might vary each day, but we'll crawl your website at most
+every 24 hours. We will also trigger a manual crawling every time your config is
+updated.
 
 ### What do I need to install on my side?
 
@@ -55,8 +55,8 @@ _If you don't have Analytics access, send us an email and we'll enable it._
 ### Where is my data hosted?
 
 All DocSearch data is hosted on Algolia's servers, with replication around the
-globe. You can find more details about the actual [server specs here][5], and more
-complete information in our [privacy policy][6].
+globe. You can find more details about the actual [server specs here][5], and
+more complete information in our [privacy policy][6].
 
 ### Can I use DocSearch on non-doc pages?
 
@@ -99,21 +99,27 @@ as those starting with `http://`.
 }
 ```
 
-### My favorite project documentation does not use DocSearch. What can I do?
+### A documentation I like does not use DocSearch. What can I do?
 
 We'd love to help!
 
-If one of your favorite tool documentation is missing
-DocSearch, we encourage you to file an issue in their repository explaining how
-DocSearch could help. Feel free to ping `@docsearch` on GitHub in the issue as
-well, and we'll provide all the help we can.
-
+If one of your favorite tool documentation is missing DocSearch, we encourage
+you to file an issue in their repository explaining how DocSearch could help.
+Feel free to ping `@docsearch` on GitHub in the issue as well, and we'll provide
+all the help we can.
 
 [1]: mailto:docsearch@algolia.com
+
 [2]: https://www.algolia.com/
+
 [3]: https://www.algolia.com/pricing
+
 [4]: https://www.algolia.com/pricing#community
+
 [5]: https://www.algolia.com/doc/guides/infrastructure/servers/
+
 [6]: https://www.algolia.com/policies/privacy
+
 [7]: ./crawler-overview.html
+
 [8]: https://www.algolia.com/doc/api-reference/

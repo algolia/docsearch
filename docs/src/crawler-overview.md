@@ -27,5 +27,7 @@ open-source][3] and even packaged as a Docker image. Just grab it, and run it
 with your own credentials.
 
 [1]: https://scrapy.org/
+
 [2]: ./crawler-config.html
+
 [3]: https://github.com/algolia/docsearch-scraper

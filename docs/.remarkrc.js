@@ -17,6 +17,8 @@ const lintConfig = {
     'lint-no-trailing-spaces', // No trailing spaces
     ['lint-emphasis-marker', '_'], // Italic with _, bold with **
     ['lint-list-item-indent', 'space'], // Indent list items with one space
+    ['lint-maximum-heading-length', 80], // Warn on heading that can be too long
+    ['lint-maximum-line-length', 120], // Warn on lines that are too long
   ],
 };
 const fixConfig = {
@@ -28,7 +30,6 @@ const fixConfig = {
   plugins: {
     frontmatter: true,
     'reference-links': true,
-    'word-wrap': true,
   },
 };
 

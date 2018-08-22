@@ -3,5 +3,5 @@
 REMARK_MODE=fix \
   remark \
     --quiet \
-    --output ./src/updated.md \
-    ./src/test.md
+    ./src/*.md \
+    --output
