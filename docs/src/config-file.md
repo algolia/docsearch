@@ -95,7 +95,6 @@ docsearch({
   },
 });
 ```
->>>>>>> Updating config doc
 
 ### Using custom tags
 
@@ -195,17 +194,10 @@ set of selectors should be applied to specific pages.
 }
 ```
 
-<<<<<<< HEAD
-### `start_urls.tags`
-
-Tags will be apllied to every record from the matchin matched pages, i.e., its URL is matchin the `url`. These `tags` will [be processed as `attributesForFaceting`](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/) . If you want further detail, [check the original documentation](https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/).
-We do recommend to use `tags` if you want [to refine the scope of your search](https://www.algolia.com/doc/guides/searching/faceting/#faceting-overview).
-=======
 Here, all documentation pages will use the selectors defined in
 `selectors.default` while the page under `./concepts` will use
 `selectors.concepts` and those under `./contributors` will use
 `selectors.contributors`.
->>>>>>> Updating config doc
 
 ## `selectors`
 
@@ -406,13 +398,13 @@ If used, `min_indexed_level` is ignored.
 
 ### `scrape_start_urls` _Optional_
 
-By default, the crawler will not extract content from the pages defined in
-`starts_urls`.  If you have valuable content on your homepage, you should set
-this to `true`.
+By default, the crawler will extract content from the pages defined in
+`starts_urls`.  If you do have valuable content on your `starts_urls` or these pages are duplicates from another one, you should set
+this to `false`.
 
 ```json
 {
-  "scrape_start_urls": true
+  "scrape_start_urls": false
 }
 ```
 
