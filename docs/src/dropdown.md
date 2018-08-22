@@ -30,3 +30,15 @@ created your config.
   });
 </script>
 ```
+
+## Testing
+
+If you're eager to test DocSearch but don't have credentials of your own yet,
+you can use the one we use on this own website:
+
+```javascript
+  docsearch({ 
+    apiKey: '25626fae796133dc1e734c6bcaaeac3c',
+    indexName: 'docsearch',
+  });
+```
