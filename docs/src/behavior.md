@@ -100,14 +100,20 @@ search.autocomplete.on('autocomplete:opened', event => {
 You can pass options to the Algolia API by using the `algoliaOptions`
 key. You will find all Algolia API options in their [own documentation][3].
 
+For example, you might want to increase the number of results displayed in the dropdown.
+[`hitsPerPage `set the number of shown hits][4].
+
 ```javascript
 docsearch({
   algoliaOptions: {
+    hitsPerPage: 10,
     // See https://www.algolia.com/doc/api-reference/api-parameters/
   }
 });
 ```
 
+
 [1]: https://github.com/algolia/autocomplete.js
 [2]: https://github.com/algolia/autocomplete.js#options
 [3]: https://www.algolia.com/doc/api-reference/api-parameters/
+[4]: https://www.algolia.com/doc/api-reference/api-parameters/hitsPerPage/
