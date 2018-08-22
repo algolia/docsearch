@@ -3,4 +3,4 @@ set -e
 
 yarn run lint:js
 yarn run lint:css
-# yarn run lint:md
+yarn run lint:md
