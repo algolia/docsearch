@@ -75,5 +75,4 @@ class to the `Installation` and `Troubleshooting` links in your sidebar.
 The name of the CSS class does not matter, as long as it's something that can be
 used as part of a CSS selector.
 
-
 [1]: https://www.sitemaps.org/index.html

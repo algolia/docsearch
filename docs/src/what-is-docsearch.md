@@ -6,7 +6,7 @@ title: What is DocSearch?
 DocSearch is born out of the need to scratch our own itch. As developers, we
 spent a lot of time reading documentation, and we often found it hard to find
 relevant information we need quickly. We're not blaming anyone here; building
-a good search is a challenge. 
+a good search is a challenge.
 
 It just happens that we are a search company and we actually have a lot of
 experience building search interfaces. We wanted to put those skills to good

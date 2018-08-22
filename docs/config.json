@@ -83,7 +83,7 @@
     }
   ],
   "redirects": [
-    { 
+    {
       "from": "documentation/docsearch/introduction/index.html",
       "to": "what-is-docsearch.html"
     },
@@ -104,15 +104,18 @@
       "to": "config-file.html"
     },
     {
-      "from": "documentation/docsearch-autocomplete/customize-autocomplete-styles/index.html",
+      "from":
+        "documentation/docsearch-autocomplete/customize-autocomplete-styles/index.html",
       "to": "styling.html"
     },
     {
-      "from": "documentation/docsearch-autocomplete/configuring-the-search/index.html",
+      "from":
+        "documentation/docsearch-autocomplete/configuring-the-search/index.html",
       "to": "behavior.html"
     },
     {
-      "from": "documentation/docsearch-FAQ/customize-configuration-file/index.html",
+      "from":
+        "documentation/docsearch-FAQ/customize-configuration-file/index.html",
       "to": "config-file.html"
     },
     {

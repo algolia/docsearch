@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+remark \
+  --no-stdout \
+  --quiet \
+  --frail \
+  ./src/*.md

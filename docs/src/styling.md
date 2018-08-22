@@ -87,8 +87,6 @@ two-column layout shown in the screenshot is used on larger screens. You can
 media queries (for example `@media (min-width: 768px) {}`) to target one or the
 other display.
 
-
-
 ## Advanced styling
 
 If you want to more heavily style the results, feel free to have a look at the
@@ -99,8 +97,10 @@ You can generate your own CSS file by cloning the repo and running `yarn run
 build:css`. The resulting file will be generated in `./dist/cdn`, and should be
 used instead of the default one.
 
-
 [1]: ./assets/default-colorscheme.png
+
 [2]: https://www.algolia.com/pricing
+
 [3]: ./crawler-overview.html
+
 [4]: https://github.com/algolia/docsearch/tree/master/src/styles

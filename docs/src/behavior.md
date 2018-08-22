@@ -29,6 +29,7 @@ redirect the browser to the page matching part of the page, but you can override
 it to add your own behavior.
 
 The method is called with three arguments:
+
 - `input`, a reference to the search `input` element. It comes with the `.open()`,
   `.close()`, `.getVal()` and `.setVal()` methods.
 - `event`, the actual event triggering the selection. This can come from a click
@@ -114,6 +115,8 @@ docsearch({
 
 
 [1]: https://github.com/algolia/autocomplete.js
+
 [2]: https://github.com/algolia/autocomplete.js#options
+
 [3]: https://www.algolia.com/doc/api-reference/api-parameters/
 [4]: https://www.algolia.com/doc/api-reference/api-parameters/hitsPerPage/

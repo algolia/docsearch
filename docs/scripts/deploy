@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 set -e
 
+yarn run lint
+
 rm -rf ./dist
 yarn run build
 gh-pages -d dist

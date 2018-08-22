@@ -16,7 +16,8 @@
     "release:beta": "./scripts/release-beta",
     "serve": "./scripts/serve",
     "test": "./scripts/test",
-    "test:watch": "./scripts/test-watch"
+    "test:watch": "./scripts/test-watch",
+    "postinstall": "cd ./docs && yarn install"
   },
   "files": [
     "dist/"

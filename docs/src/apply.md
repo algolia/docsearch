@@ -4,7 +4,6 @@ title: Applying to DocSearch
 includeForm: true
 ---
 
-__Please make sure you [read the checklist][1] before applying.__
-
+**Please make sure you [read the checklist][1] before applying.**
 
 [1]: who-can-apply.html

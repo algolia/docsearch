@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 set -e
 
-eslint ./scripts/**/*.js ./src/*.js ./*.js
-stylelint ./src/style.css ./src/_styles/*.css
+yarn run lint:js
+yarn run lint:css
+# yarn run lint:md
