@@ -4,8 +4,8 @@ title: Run your own
 ---
 
 The version of DocSearch we provide for free is one hosted on our own
-servers, running every 24 hours. If you need to update your results
-more often than that, or need to index content sitting behind a
+servers, running every 24 hours. To update your results
+more often than that, or to index content sitting behind a
 firewall, you might want to run the crawler yourself.
 
 The code of DocSearch is Open-Source, and we packaged it as a Docker
@@ -108,7 +108,7 @@ menu in your website by following the [instructions here][5].
 
 The difference is that you'll also have to add the `appId` key to your
 `docsearch()` instance. Also don't forget to use a **search** API key
-here (ie. not the **write** API key you used for the crawling).
+here (in other words, not the **write** API key you used for the crawling).
 
 ```javascript
 docsearch({

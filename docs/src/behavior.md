@@ -64,7 +64,7 @@ docsearch({
 ## `transformData`
 
 This method will be called on all suggestions before displaying them. It
-doesn't do anything by default, but we provide this hook if you want to add your
+doesn't do anything by default, but we provide this hook for you to add your
 own logic.
 
 ```javascript

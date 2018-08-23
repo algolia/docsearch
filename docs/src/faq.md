@@ -32,7 +32,7 @@ projects can afford. That's why we decided to keep DocSearch free for everyone.
 All we ask in exchange is that you keep the _powered by
 [Algolia][2]_ logo displayed next to the search results.
 
-If this is not possible for you, you're totally free to [open your own Algolia
+If this is not possible for you, you're free to [open your own Algolia
 account][3] and run DocSearch on your own without this limitation. In that case
 though, depending on the size of your documentation, you might need a paid
 account ([free accounts][4] can hold as much as 10k records).
@@ -45,8 +45,8 @@ page is defined in your custom config.
 
 As the website owner, we also give you access to the Algolia Analytics
 dashboard, that will let you have more data about the anonymized searches that
-were done on your website. You'll be able to see the most searched terms, or
-those with no results.
+were done on your website. You'll see the most searched terms, or those with no
+results.
 
 You will understand what people do not.
 

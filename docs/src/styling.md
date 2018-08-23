@@ -65,7 +65,7 @@ yourself][3], you don't have to keep the logo.
 
 ## Debugging
 
-If you want to inspect the dropdown markup with your browser tools, you should
+To inspect the dropdown markup with your browser tools, you should
 add `debug: true` to your `docsearch` call to prevent it from closing on
 inspection.
 
@@ -89,7 +89,7 @@ other display.
 
 ## Advanced styling
 
-If you want to more heavily style the results, feel free to have a look at the
+To more heavily style the results, feel free to have a look at the
 [SCSS source code][4].
 `_variables.scss` contains all the default theming, sizing and breakpoints.
 

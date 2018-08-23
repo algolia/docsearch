@@ -5,3 +5,7 @@ REMARK_MODE=fix \
     --quiet \
     ./src/*.md \
     --output
+
+textlint \
+  --fix \
+  ./src/*.md 

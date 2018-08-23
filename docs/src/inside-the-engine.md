@@ -18,9 +18,9 @@ all pages.
 ## Extracting content
 
 Then, for each page, it will read the HTML markup from top to bottom. It will
-look for HTML elements matching your CSS `selectors`. It will specifically look
-for elements matching your `text` selector (`<p>` by default). Each of those
-matches will be later transformed into an Algolia record.
+look for HTML elements matching your CSS `selectors`. It will look for elements
+matching your `text` selector (`<p>` by default). Each of those matches will be
+later transformed into an Algolia record.
 
 For each matching `text` element, the crawler will also keep in memory the
 current hierarchy of headers (identified by the `lvl0` to `lvl5` selectors) that
@@ -55,8 +55,7 @@ You also have a way to boost some pages directly in your config by using the
 `page_rank` option. This accepts a numeric value, and all pages with
 a `page_rank` of 5 will be returned before pages with a `page_rank` of 1.
 
-If you want to get fancy, you could even overwrite the default
-`customRanking` used by the index by using the `custom_settings` option of
-your config.
+You could even overwrite the default `customRanking` used by the index by using
+the `custom_settings` option of your config.
 
 [1]: https://www.algolia.com/doc/guides/ranking/ranking-formula/#tie-breaking-approach

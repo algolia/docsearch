@@ -16,8 +16,8 @@ form on this page (make sure to double check that you qualify first). We are
 receiving a lot of requests, so this form makes sure we won't be forgetting
 anyone.
 
-We guarantee that we will answer to every request, but due to the amount of
-applications we receive, please give us a couple of days to get back to you :)
+We guarantee that we will answer to every request, but we receive a lot
+of applications, so please give us a couple of days to get back to you :)
 
 ### 2. We create a configuration
 

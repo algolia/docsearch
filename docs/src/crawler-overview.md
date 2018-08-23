@@ -12,10 +12,9 @@ any content, and will use the semantics of your HTML structure to construct its
 records. This means that `h1`...`h6` titles will be used for the hierarchy, and
 each `p` of text will be used as a potential result.
 
-Those CSS selectors can of course be overwritten, and each website actually has
-its own JSON configuration file that describe in more details how the crawling
-should behave. You can find the complete list of options in [our
-documentation][2].
+Those CSS selectors can be overwritten, and each website actually has its own
+JSON configuration file that describe in more details how the crawling should
+behave. You can find the complete list of options in [our documentation][2].
 
 We automatically run each config every 24h. This is done from our own
 infrastructure, meaning that you don't need to install anything on your side.

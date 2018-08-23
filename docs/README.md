@@ -1,11 +1,11 @@
 # Documentation website
 
 This subdirectory holds the documentation website content as well as scripts to
-generate it. 
+generate it.
 
-# Main commands
+## Main commands
 
-## Building the website
+### Building the website
 
 You can build a new version of the website by running `yarn run build` in this
 directory or `yarn run docs:build` at the repository root.
@@ -13,7 +13,7 @@ directory or `yarn run docs:build` at the repository root.
 It will read all source files in `./src` and build the final static website in
 `./dist`.
 
-## Local development
+### Local development
 
 You can run a local copy of the documentation website by running `yarn run
 serve` in this directory or `yarn run docs:serve` at the repository root.
@@ -21,7 +21,7 @@ serve` in this directory or `yarn run docs:serve` at the repository root.
 This will build the website in `./dist` and expose it on `localhost`, along with
 live-reload.
 
-## Deploying the website
+### Deploying the website
 
 You can deploy the website by running `yarn run deploy` in this directory or
 `yarn run docs:deploy` at the repository root.
@@ -29,7 +29,7 @@ You can deploy the website by running `yarn run deploy` in this directory or
 This will build the website and then commit the content of the `./dist` folder
 to the `gh-pages` branch and push it to GitHub.
 
-# Internals
+## Internals
 
 The documentation generation is not using any existing static websites
 generators, but custom javascript scripts.
@@ -37,7 +37,7 @@ generators, but custom javascript scripts.
 The main two entry points are `./scripts/build.js` and `./scripts/serve.js`. The
 second one adds a webserver with live-reload on top of the first one.
 
-## HTML
+### HTML
 
 All markdown files situated in `./src` will be transformed into `.html` files in
 `./dist`. They will be wrapped into the layout defined in their front-matter.
@@ -48,7 +48,7 @@ a unique `#id` to allow for easy anchoring.
 You can also use plain HTML inside those markdown files if you need more
 advanced styling.
 
-## Layouts
+### Layouts
 
 All layouts are saved in the `./src/_layouts` folder.
 
@@ -60,7 +60,7 @@ You can also use mixins or include other files from the layouts.
 _Note that the current layout logic is simple and might not handle complex
 recursive cases, but should be enough for simple cases._
 
-## CSS
+### CSS
 
 CSS is processed through PostCSS. It expects an entry file in
 `./src/style.css`.
@@ -75,7 +75,7 @@ Algolia brand guidelines.
 The final CSS files is then compressed through PurgeCSS (to keep CSS
 classes that are actually used) and CleanCSS (to minify it).
 
-## JavaScript
+### JavaScript
 
 JavaScript code is processed through Babel. It will compile all files situated
 in `./src/js`.
@@ -83,16 +83,16 @@ in `./src/js`.
 _Note that it compiles JS, and does not bundle it. We might add Webpack/Parcel
 support later._
 
-## Assets
+### Assets
 
 Any file with the following extensions found in the `./src` folder will be
 automatically copied to the `./dist` folder with the same folder structure:
 `gif`, `jpg`, `png`, `ico`, `html`, `svg` and `woff`.
 
-## Placeholders
+### Placeholders
 
 Values defined in the `placeholders` key of the `config.json` file can be used
-in JavaScript and Markdown files by using the `{{key}}` syntax. 
+in JavaScript and Markdown files by using the `{{key}}` syntax.
 
 For example if you have:
 
@@ -108,7 +108,7 @@ For example if you have:
 Every occurrence of `{{projectVersion}}` in any `.md` or `.js` file will be
 replaced with `1.4.2`.
 
-## Sidebar
+### Sidebar
 
 The left sidebar of the documentation is generated based on the `sidebar` key of
 the `config.json`. The key should contain an array where each key is a part of
@@ -119,7 +119,7 @@ The layout will then automatically create all the links and color the active
 page. Subsections inside the current page will also be added for every `h2`
 element extracted from the markup of the current page.
 
-## Redirects
+### Redirects
 
 The `config.json` file can hold a `redirects` array, with object containing both
 a `from` and a `to` key. For each `from`, it will create a plain html page at
@@ -128,8 +128,3 @@ this location, that will redirect anyone visiting it to the page defined in
 
 _Note that both those links must be defined as relative to the `site.url`
 value._
-
-
-
-
-

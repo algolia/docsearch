@@ -4,7 +4,7 @@ title: Tips for a good search
 ---
 
 DocSearch can work with almost any website, but we found that some site
-structure yield more relevant result and/or faster indexing time. In this page
+structure yield more relevant result or faster indexing time. In this page
 we'll share some tips on how you can make the most out of DocSearch.
 
 ### Use a `sitemap.xml`
@@ -47,7 +47,7 @@ recommend that you add a custom `id` to the HTML element that will be the parent
 of all your textual content.
 
 Having such a unique identifier will make your configuration more robust as it
-will make sure all content that is indexed is relevant content. We found that
+will make sure all indexed content is relevant content. We found that
 this is the most reliable way to exclude headers, sidebars and footers content
 that are not relevant to the search.
 

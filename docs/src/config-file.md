@@ -33,8 +33,8 @@ This is the name of the Algolia index where your records will be pushed. The
 `apiKey` we will share with you will be restricted to work on this index.
 
 When using the free DocSearch crawler, the `indexName` will always be the name
-of the config. If you're running DocSearch yourself, you can of course use any
-name you'd like.
+of the config. If you're running DocSearch yourself, you can use any name you'd
+like.
 
 ```json
 {
@@ -125,7 +125,7 @@ docsearch({
 
 ### Using Page Rank
 
-If you want to give more weight to some pages to boost their ranking in the
+To give more weight to some pages to boost their ranking in the
 results, you can attribute a custom `page_rank` to specific urls. Pages with
 highest `page_rank` will be returned before pages with a lower `page_rank`. Note
 that you can pass any numeric value, including negative values.
@@ -365,8 +365,7 @@ a `min_indexed_level: 2`, records that have at least `lvl0`, `lvl1` and
 
 This is useful when your documentation has pages that share the same `lvl0` and
 `lvl1` for example. In that case, you don't want to index all the shared
-records, but want to keep the one matching content that is different across
-pages.
+records, but want to keep the content different across pages.
 
 ```json
 {

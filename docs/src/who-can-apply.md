@@ -13,8 +13,8 @@ We hope you understand.
 
 ### The checklist
 
-To have your request validated, please make sure you comply with the following
-points:
+To have your request validated, we'll ask that you valide all the following
+points.
 
 - You must be the **owner** of the website, or at least have the power to update
   its content. You'll have to include a JavaScript snippet to enable DocSearch.
@@ -43,16 +43,14 @@ as fast as we can, we sometimes give priority to some of them based on the
 following criteria:
 
 - 🙂 If your project is Open-Source, we'll handle it before any other
-  close-source product. We care about the OSS community and want to help as much
-  as we can.
+  close-source product. We love Open-Source and want to help as much as we can.
 
 - 🙂 If you're using one of our [official integrations][2], creating your config
   will be much faster for us.
 
-- ☹️ If your website is rendered in the browser through JavaScript, it means
-  that we'll have to crawl it through a browser emulation which is much slower
-  than a typical crawl. We highly recommend that you implement server-side
-  rendering if you can.
+- ☹️ If your website is rendered in the browser through JavaScript, it means that
+  we'll have to crawl it through a much slower browser emulation. We highly
+  recommend that you implement server-side rendering if you can.
 
 [1]: ./apply.html
 
