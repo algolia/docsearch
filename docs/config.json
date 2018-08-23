@@ -84,6 +84,26 @@
   ],
   "redirects": [
     {
+      "from": "documentation/index.html",
+      "to": "what-is-docsearch.html"
+    },
+    {
+      "from": "documentation/docsearch/index.html",
+      "to": "what-is-docsearch.html"
+    },
+    {
+      "from": "documentation/docsearch/docsearch-autocomplete/index.html",
+      "to": "what-is-docsearch.html"
+    },
+    {
+      "from": "documentation/docsearch/docsearch-FAQ/index.html",
+      "to": "what-is-docsearch.html"
+    },
+    {
+      "from": "documentation/docsearch/docsearch-scraper/index.html",
+      "to": "what-is-docsearch.html"
+    },
+    {
       "from": "documentation/docsearch/introduction/index.html",
       "to": "what-is-docsearch.html"
     },
