@@ -1,6 +1,9 @@
 /* eslint-disable import/no-commonjs */
 module.exports = {
   rules: {
+    alex: {
+      allow: ['color', 'hook', 'host-hostess', 'itch'],
+    },
     'common-misspellings': true,
     'en-capitalization': true,
     'stop-words': {
