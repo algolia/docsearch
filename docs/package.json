@@ -51,7 +51,7 @@
     "postcss-clean": "^1.1.0",
     "postcss-import": "^11.1.0",
     "postcss-nested": "^3.0.0",
-    "prettier": "1.9.2",
+    "prettier": "^1.14.2",
     "pug": "^2.0.3",
     "puppeteer": "^1.6.1",
     "remark-cli": "^5.0.0",

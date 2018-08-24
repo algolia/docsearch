@@ -1,12 +1,17 @@
 #!/usr/bin/env sh
-
-# Check text content (misspelling, weasel words, offensive writing)
-textlint ./*.md ./src/*.md
+set -e
 
 # Check markdown styling (links, spacing, etc)
 remark \
   --no-stdout \
   --quiet \
   --frail \
+  ./*.md \
   ./src/*.md
+
+# Check text content (misspelling, weasel words, offensive writing)
+textlint \
+  ./*.md \
+  ./src/*.md
+
 
