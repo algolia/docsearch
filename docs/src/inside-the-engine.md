@@ -42,7 +42,7 @@ again, on the page hierarchy, as extracted from the `selectors`.
 
 The default strategy is to first look at the closest header of the matching
 text. For example, a paragraph under `Settings / API / verySpecificMethod()`,
-will be ranked higher than one under `Settings / API`.  The idea here is that if
+will be ranked higher than one under `Settings / API`. The idea here is that if
 you have a match under a deep hierarchy, chances are that this match is specific
 and might be more interesting that something found in a broad topic.
 
@@ -51,10 +51,11 @@ hierarchy. In that case, we use the paragraph position. The first paragraph of
 the page will be ranked higher than the last one.
 
 You also have a way to boost some pages directly in your config by using the
-`page_rank` option. This accepts a numeric value, and all pages with
-a `page_rank` of 5 will be returned before pages with a `page_rank` of 1.
+`page_rank` option. This accepts a numeric value, and all pages with a
+`page_rank` of 5 will be returned before pages with a `page_rank` of 1.
 
 You could even overwrite the default `customRanking` used by the index by using
 the `custom_settings` option of your config.
 
-[1]: https://www.algolia.com/doc/guides/ranking/ranking-formula/#tie-breaking-approach
+[1]:
+  https://www.algolia.com/doc/guides/ranking/ranking-formula/#tie-breaking-approach

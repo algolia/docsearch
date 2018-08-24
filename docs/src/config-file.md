@@ -12,9 +12,7 @@ A DocSearch looks like this:
 ```json
 {
   "index_name": "example",
-  "start_urls": [
-    "https://www.example.com/docs"
-  ],
+  "start_urls": ["https://www.example.com/docs"],
   "selectors": {
     "lvl0": "#content header h1",
     "lvl1": "#content article h1",
@@ -23,7 +21,7 @@ A DocSearch looks like this:
     "lvl4": "#content section h5",
     "lvl5": "#content section h6",
     "text": "#content header p,#content section p,#content section ol"
-  },
+  }
 }
 ```
 
@@ -46,13 +44,12 @@ like.
 
 This array contains the list of URLs that will be used to start crawling your
 website. The crawler will recursively follow any links on those pages. It will
-not follow links that are on another domain and never follow links defined in `stop_urls`.
+not follow links that are on another domain and never follow links defined in
+`stop_urls`.
 
 ```json
 {
-  "start_urls": [
-    "https://www.example.com/docs"
-  ]
+  "start_urls": ["https://www.example.com/docs"]
 }
 ```
 
@@ -68,14 +65,14 @@ The following example will make it clearer:
 ```json
 {
   "start_urls": [
-     {
-       "url": "http://www.example.com/docs/(?P<lang>.*?)/(?P<version>.*?)/",
-       "variables": {
-         "lang": ["en", "fr"],
-         "version": ["latest", "3.3", "3.2"]
-       }
-     }
-   ]
+    {
+      "url": "http://www.example.com/docs/(?P<lang>.*?)/(?P<version>.*?)/",
+      "variables": {
+        "lang": ["en", "fr"],
+        "version": ["latest", "3.3", "3.2"]
+      }
+    }
+  ]
 }
 ```
 
@@ -99,18 +96,18 @@ docsearch({
 ### Using custom tags
 
 You can also apply custom tags to some pages without the need to use regular
-expressions. In that case, add the list of tags to the `tags` key. Note
-that those tags will be automatically added as facets in Algolia, allowing you
-to filter based on their values as well.
+expressions. In that case, add the list of tags to the `tags` key. Note that
+those tags will be automatically added as facets in Algolia, allowing you to
+filter based on their values as well.
 
 ```json
 {
   "start_urls": [
     {
       "url": "http://www.example.com/docs/concepts/",
-      "tags": ['concepts', 'terminology']
+      "tags": ["concepts", "terminology"]
     }
- ]
+  ]
 }
 ```
 
@@ -125,21 +122,21 @@ docsearch({
 
 ### Using Page Rank
 
-To give more weight to some pages to boost their ranking in the
-results, you can attribute a custom `page_rank` to specific URLs. Pages with
-highest `page_rank` will be returned before pages with a lower `page_rank`. Note
-that you can pass any numeric value, including negative values.
+To give more weight to some pages to boost their ranking in the results, you can
+attribute a custom `page_rank` to specific URLs. Pages with highest `page_rank`
+will be returned before pages with a lower `page_rank`. Note that you can pass
+any numeric value, including negative values.
 
 ```json
 {
   "start_urls": [
     {
       "url": "http://www.example.com/docs/concepts/",
-      "page_rank": 5,
+      "page_rank": 5
     },
     {
       "url": "http://www.example.com/docs/contributors/",
-      "page_rank": 1,
+      "page_rank": 1
     }
   ]
 }
@@ -206,7 +203,7 @@ record hierarchy. It can contains up to 6 levels (`lvl0`, `lvl1`, `lvl2`,
 `lvl3`, `lvl4`, `lvl5`) and `text`.
 
 A default config would be to target the page `title` or `h1` as `lvl0`, the `h2`
-as `lvl1` and `h3` as `lvl2` and  `p` as `text`, but this is highly dependent on
+as `lvl1` and `h3` as `lvl2` and `p` as `text`, but this is highly dependent on
 the markup.
 
 The `text` key is mandatory, but we highly recommend setting also `lvl0`, `lvl1`
@@ -222,7 +219,7 @@ and `lvl2` to have a decent level of relevance.
     "lvl4": "#content section h5",
     "lvl5": "#content section h6",
     "text": "#content header p,#content section p,#content section ol"
-  },
+  }
 }
 ```
 
@@ -233,7 +230,7 @@ Other special keys can be set, as documented below.
 {
   "selectors": {
     "lvl0": {
-      "selector": "#content header h1",
+      "selector": "#content header h1"
     }
   }
 }
@@ -242,8 +239,8 @@ Other special keys can be set, as documented below.
 ### Using global selectors
 
 The default way of extracting content through selectors is to read the HTML
-markup from top to bottom. This works well with semi-structured content, like
-a hierarchy of headers. This breaks when relevant information is not part of the
+markup from top to bottom. This works well with semi-structured content, like a
+hierarchy of headers. This breaks when relevant information is not part of the
 same node flow. For example when the title is in a header or a sidebar.
 
 For that reason, you can set a selector as global, meaning that it will match on
@@ -262,8 +259,8 @@ the whole page, and will be the same for all records extracted on this page.
 
 ### Setting a default value
 
-If your selector might not match a valid element on the page, you can define
-a `default_value` to fallback to.
+If your selector might not match a valid element on the page, you can define a
+`default_value` to fallback to.
 
 ```json
 {
@@ -359,9 +356,9 @@ Check the [Algolia documentation][2] for more information on the settings.
 ### `min_indexed_level` _Optional_
 
 The default value is `0`. By increasing it, you can chose to not index some
-records if they don't have enough `lvlX` matching. For example, with
-a `min_indexed_level: 2`, records that have at least `lvl0`, `lvl1` and
-`lvl2` matching something will be indexed.
+records if they don't have enough `lvlX` matching. For example, with a
+`min_indexed_level: 2`, records that have at least `lvl0`, `lvl1` and `lvl2`
+matching something will be indexed.
 
 This is useful when your documentation has pages that share the same `lvl0` and
 `lvl1` for example. In that case, you don't want to index all the shared
@@ -377,11 +374,11 @@ records, but want to keep the content different across pages.
 
 `nb_hits` automatically updated by DocSearch every time it runs your config. It
 is set to the number of records that were extracted and indexed. We check this
-key internally to keep track of any unintended spike or drop that could reveal
-a misconfiguration.
+key internally to keep track of any unintended spike or drop that could reveal a
+misconfiguration.
 
-You don't have to touch it, we're documenting it here in case you were
-wondering what this was about.
+You don't have to touch it, we're documenting it here in case you were wondering
+what this was about.
 
 ### `only_content_level` _Optional_
 
@@ -413,15 +410,12 @@ if it's a duplicate of another page, you should set this to `false`.
 This expects an array of CSS selectors. Any element matching one of those
 selectors will be removed from the page before any data is extracted from it.
 
-This can be  used to remove a table of content, a sidebar or a footer, to
-make other selectors easier to write.
+This can be used to remove a table of content, a sidebar or a footer, to make
+other selectors easier to write.
 
 ```json
 {
-  "selectors_exclude": [
-    ".footer",
-    "ul.deprecated"
-  ],
+  "selectors_exclude": [".footer", "ul.deprecated"]
 }
 ```
 
@@ -438,10 +432,7 @@ Note that this is often used to avoid duplicate content, by adding
 
 ```json
 {
-  "stop_urls": [
-    "https://www.example.com/docs/index.html",
-    "license.html"
-  ],
+  "stop_urls": ["https://www.example.com/docs/index.html", "license.html"]
 }
 ```
 
@@ -458,9 +449,7 @@ following every link of your `starts_urls`.
 
 ```json
 {
-  "sitemap_urls": [
-    "http://www.example.com/docs/sitemap.xml"
-  ],
+  "sitemap_urls": ["http://www.example.com/docs/sitemap.xml"]
 }
 ```
 
@@ -474,9 +463,7 @@ Set this to `true` if you want those other version to be crawled as well.
 
 ```json
 {
-  "sitemap_urls": [
-    "http://www.example.com/docs/sitemap.xml"
-  ],
+  "sitemap_urls": ["http://www.example.com/docs/sitemap.xml"],
   "sitemap_alternate_links": true
 }
 ```
@@ -495,8 +482,8 @@ crawled.
 ## JavaScript rendering
 
 By default DocSearch expect websites to have server-side rendering, meaning that
-HTML source is returned directly by the server. If your content is generated by the
-front-end, you have to tell DocSearch to emulate a browser through Selenium.
+HTML source is returned directly by the server. If your content is generated by
+the front-end, you have to tell DocSearch to emulate a browser through Selenium.
 
 _As client-side crawling is way slower than server-side crawling, we highly
 encourage you to update your website to enable server-side rendering._
@@ -518,9 +505,9 @@ If your website is slow to load, you can use `js_wait` to tell DocSearch to wait
 a specific amount of time (in seconds) for the page to load before extracting
 its content.
 
-Note that this option might have a large impact on the time required
-to crawl your website and we would encourage you to enable server-side rendering
-on your website instead.
+Note that this option might have a large impact on the time required to crawl
+your website and we would encourage you to enable server-side rendering on your
+website instead.
 
 This option has no impact if `js_render` is set to `false`.
 
@@ -547,5 +534,4 @@ DocSearch to index all your content.
 ```
 
 [1]: https://github.com/algolia/docsearch-configs/tree/master/configs
-
 [2]: https://www.algolia.com/doc/api-reference/settings-api-parameters/

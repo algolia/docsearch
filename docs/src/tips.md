@@ -4,8 +4,8 @@ title: Tips for a good search
 ---
 
 DocSearch can work with almost any website, but we found that some site
-structure yield more relevant result or faster indexing time. In this page
-we'll share some tips on how you can make the most out of DocSearch.
+structure yield more relevant result or faster indexing time. In this page we'll
+share some tips on how you can make the most out of DocSearch.
 
 ### Use a `sitemap.xml`
 
@@ -35,9 +35,9 @@ DocSearch uses this structure to fine-tune the relevance of results as well as
 to provide potential filtering. Documentation that follow this pattern often
 have better relevance of search results.
 
-_Note that you don't have to use `<hX>` tags and can use `<span
-class="title-X">` for example instead. Your crawling configuration file will
- need to mirror those changes, though._
+_Note that you don't have to use `<hX>` tags and can use
+`<span class="title-X">` for example instead. Your crawling configuration file
+will need to mirror those changes, though._
 
 ### Set a unique class to the element holding the content
 
@@ -46,26 +46,25 @@ you add a custom `class` to the HTML element wrapping all your textual content.
 This will help narrow selectors to the relevant content.
 
 Having such a unique identifier will make your configuration more robust as it
-will make sure all indexed content is relevant content. We found that
-this is the most reliable way to exclude headers, sidebars and footers content
-that are not relevant to the search.
+will make sure all indexed content is relevant content. We found that this is
+the most reliable way to exclude headers, sidebars and footers content that are
+not relevant to the search.
 
 ### Add anchors to headings
 
 When using headings (as mentioned above), you should also try to add a custom
-anchor to each of them. Anchors are HTML attributes (`name` or `id`)
-added to headers that will allow the browser to directly scroll to the right
-position in the page when clicking a link with a `#` in it.
+anchor to each of them. Anchors are HTML attributes (`name` or `id`) added to
+headers that will allow the browser to directly scroll to the right position in
+the page when clicking a link with a `#` in it.
 
 DocSearch will honor such anchors and automatically bring your users to the
 anchor closest to the search result they selected.
 
 ### Marking the active page(s) in the navigation
 
-If you're using a multi-level navigation, we recommend that you mark
-each active level with a custom CSS class. This will make it easier for
-DocSearch to know _where_ the current page fits in the website
-hierarchy.
+If you're using a multi-level navigation, we recommend that you mark each active
+level with a custom CSS class. This will make it easier for DocSearch to know
+_where_ the current page fits in the website hierarchy.
 
 For example, if your `troubleshooting.html` page is located under the
 `Installation` menu in your sidebar, we recommend that you add a custom CSS

@@ -3,9 +3,9 @@ layout: two-columns
 title: FAQ
 ---
 
-If you're not finding the answer to your question in the website, this
-page will help you. If you're still unsure, don't hesitate to send [your
-question to us][1] directly.
+If you're not finding the answer to your question in the website, this page will
+help you. If you're still unsure, don't hesitate to send [your question to
+us][1] directly.
 
 ### How often will you crawl my website?
 
@@ -19,9 +19,9 @@ updated.
 
 Nothing.
 
-The DocSearch crawler is running on our own infra. It will read HTML
-content from your website and populate an Algolia index with it every day. All
-you need to do is keep your website online, and we take care of the rest.
+The DocSearch crawler is running on our own infra. It will read HTML content
+from your website and populate an Algolia index with it every day. All you need
+to do is keep your website online, and we take care of the rest.
 
 ### How much does it cost?
 
@@ -29,8 +29,8 @@ Nothing.
 
 We know that paying for search infrastructure is a cost not all Open Source
 projects can afford. That's why we decided to keep DocSearch free for everyone.
-All we ask in exchange is that you keep the _powered by
-[Algolia][2]_ logo displayed next to the search results.
+All we ask in exchange is that you keep the _powered by [Algolia][2]_ logo
+displayed next to the search results.
 
 If this is not possible for you, you're free to [open your own Algolia
 account][3] and run DocSearch on your own without this limitation. In that case
@@ -39,9 +39,9 @@ account ([free accounts][4] can hold as much as 10k records).
 
 ### What data are you collecting?
 
-The data we save in the index is the data we extract from your website
-markup, in a custom JSON format instead of HTML. Which part of the
-page is defined in your custom config.
+The data we save in the index is the data we extract from your website markup,
+in a custom JSON format instead of HTML. Which part of the page is defined in
+your custom config.
 
 As the website owner, we also give you access to the Algolia Analytics
 dashboard, that will let you have more data about the anonymized searches that
@@ -60,10 +60,9 @@ more complete information in our [privacy policy][6].
 
 ### Can I use DocSearch on non-doc pages?
 
-The free DocSearch we provide will crawl documentation pages. If you want
-to use it on other parts of your website, you'll need to create your own Algolia
-account and either:
- You need to use the searchableAttributes and attributesForFaceting.
+The free DocSearch we provide will crawl documentation pages. To use it on other
+parts of your website, you'll need to create your own Algolia account and
+either:
 
 - Run the [DocSearch crawler][7] on your own
 - Use one of our other [framework integrations or API clients][8]
@@ -72,10 +71,9 @@ account and either:
 
 Yes, but we do not recommend it.
 
-Code samples are a great way for humans to understand how a specific pattern
-ap alpha
-/ method should be used. It often requires boilerplate code though, repeated
-across examples, which will add noise to the results.
+Code samples are a great way for humans to understand how a specific pattern ap
+alpha / method should be used. It often requires boilerplate code though,
+repeated across examples, which will add noise to the results.
 
 What we recommend instead is to exclude the code blocks from the indexing (by
 using the `selectors_exclude` option in your config), and instead structure your
@@ -93,11 +91,7 @@ as those starting with `http://`.
 
 ```json
 {
-  "stop_urls": [
-    "/$",
-    "/index.html$",
-    "^http://"
-  ]
+  "stop_urls": ["/$", "/index.html$", "^http://"]
 }
 ```
 
@@ -111,17 +105,10 @@ Feel free to ping `@docsearch` on GitHub in the issue as well, and we'll provide
 all the help we can.
 
 [1]: mailto:docsearch@algolia.com
-
 [2]: https://www.algolia.com/
-
 [3]: https://www.algolia.com/pricing
-
 [4]: https://www.algolia.com/pricing#community
-
 [5]: https://www.algolia.com/doc/guides/infrastructure/servers/
-
 [6]: https://www.algolia.com/policies/privacy
-
 [7]: ./crawler-overview.html
-
 [8]: https://www.algolia.com/doc/api-reference/

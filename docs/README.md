@@ -15,9 +15,9 @@ It will read all source files in `./src` and build the final static website in
 
 ### Local development
 
-You can run a local copy of the documentation website by running `yarn run
-serve`. This is an alias for running `yarn run docs:serve` at the repository
-root.
+You can run a local copy of the documentation website by running
+`yarn run serve`. This is an alias for running `yarn run docs:serve` at the
+repository root.
 
 This will build the website in `./dist` and expose it on `localhost`, along with
 live-reload.
@@ -43,8 +43,8 @@ second one adds a webserver with live-reload on top of the first one.
 All Markdown files situated in `./src` will be transformed into `.html` files in
 `./dist`. They will be wrapped into the layout defined in their front-matter.
 
-All the headers will be converted to their respective `<hX>` tag, along with
-a unique `#id` to allow for easy anchoring.
+All the headers will be converted to their respective `<hX>` tag, along with a
+unique `#id` to allow for easy anchoring.
 
 You can also use plain HTML inside those Markdown files if you need more
 advanced styling.
@@ -63,8 +63,7 @@ recursive cases, but should be enough for simple cases._
 
 ### CSS
 
-CSS is processed through PostCSS. It expects an entry file in
-`./src/style.css`.
+CSS is processed through PostCSS. It expects an entry file in `./src/style.css`.
 
 We are using `postcss-import`, allowing you to `@import` files from the
 `./src/_styles/` directory to better split your CSS code in logical chunks.
@@ -73,8 +72,8 @@ Most of the styling based on tailwind.css, with the config file behing
 `tailwind.config.js`. It contains default sizing and coloring to follow the
 Algolia brand guidelines.
 
-The final CSS files is then compressed through PurgeCSS (to keep CSS
-classes that are actually used) and CleanCSS (to minify it).
+The final CSS files is then compressed through PurgeCSS (to keep CSS classes
+that are actually used) and CleanCSS (to minify it).
 
 ### JavaScript
 

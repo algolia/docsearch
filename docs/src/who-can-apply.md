@@ -8,8 +8,8 @@ large technical documentation. For that reason, we offering our free hosting
 version to all technical documentations.
 
 We're always sad to have to turn down applications, but with the number of
-requests we received everyday, we had to focus on technical documentations.
-We hope you understand.
+requests we received everyday, we had to focus on technical documentations. We
+hope you understand.
 
 ### The checklist
 
@@ -48,10 +48,9 @@ following criteria:
 - 🙂 If you're using one of our [official integrations][2], creating your config
   will be much faster for us.
 
-- ☹️ If your website is rendered in the browser through JavaScript, it means that
-  we'll have to crawl it through a much slower browser emulation. We highly
+- ☹️ If your website is rendered in the browser through JavaScript, it means
+  that we'll have to crawl it through a much slower browser emulation. We highly
   recommend that you put in place server-side rendering if you can.
 
 [1]: ./apply.html
-
 [2]: ./integrations.html
