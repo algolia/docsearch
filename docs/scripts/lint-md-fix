@@ -1,11 +1,14 @@
 #!/usr/bin/env sh
 
-REMARK_MODE=fix \
-  remark \
-    --quiet \
-    ./src/*.md \
-    --output
+# REMARK_MODE=fix \
+#   remark \
+#     --quiet \
+#     ./src/*.md \
+#     --output
 
-textlint \
-  --fix \
-  ./src/*.md 
+# textlint \
+#   --fix \
+#   ./src/*.md 
+
+prettier \
+  --config ./.prettierrc.markdown.js
