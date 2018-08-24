@@ -16,7 +16,8 @@ It will read all source files in `./src` and build the final static website in
 ### Local development
 
 You can run a local copy of the documentation website by running `yarn run
-serve` in this directory or `yarn run docs:serve` at the repository root.
+serve`. This is an alias for running `yarn run docs:serve` at the repository
+root.
 
 This will build the website in `./dist` and expose it on `localhost`, along with
 live-reload.

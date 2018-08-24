@@ -380,13 +380,13 @@ is set to the number of records that were extracted and indexed. We check this
 key internally to keep track of any unintended spike or drop that could reveal
 a misconfiguration.
 
-You don't have to touch, we're documenting it here in case you were
+You don't have to touch it, we're documenting it here in case you were
 wondering what this was about.
 
 ### `only_content_level` _Optional_
 
 When `only_content_level` is set to `true`, then the crawler won't create
-records for each `lvlX` selectors, but only for the `text` selectors.
+records for the `lvlX` selectors.
 
 If used, `min_indexed_level` is ignored.
 

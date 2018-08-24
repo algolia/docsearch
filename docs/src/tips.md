@@ -41,10 +41,9 @@ class="title-X">` for example instead. Your crawling configuration file will
 
 ### Set a unique class to the element holding the content
 
-As DocSearch is extracting content based on the HTML structure, it is important
-to narrow its results to only the relevant content. In that regard, we
-recommend that you add a custom `id` to the HTML element that will be the parent
-of all your textual content.
+DocSearch is extracting content based on the HTML structure. We recommend that
+you add a custom `class` to the HTML element wrapping all your textual content.
+This will help narrow selectors to the relevant content.
 
 Having such a unique identifier will make your configuration more robust as it
 will make sure all indexed content is relevant content. We found that

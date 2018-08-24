@@ -41,11 +41,10 @@ then fallback to partial matches. Those results will then be ordered based, once
 again, on the page hierarchy, as extracted from the `selectors`.
 
 The default strategy is to first look at the closest header of the matching
-text. If a matching paragraph of text is under `Advanced Settings / API Options
-/ verySpecificMethod()`, it will be ranked higher than if it is only found under
-`Gettings Started > Installation`. The idea here is that if you have a match
-under a very deep hierarchy, chances are that this match is very specific and
-might be more interesting that something found in a very broad topic.
+text. For example, a paragraph under `Settings / API / verySpecificMethod()`,
+will be ranked higher than one under `Settings / API`.  The idea here is that if
+you have a match under a deep hierarchy, chances are that this match is specific
+and might be more interesting that something found in a broad topic.
 
 But this does not work in all cases as some documentations don't have deep
 hierarchy. In that case, we use the paragraph position. The first paragraph of

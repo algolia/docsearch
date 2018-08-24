@@ -18,11 +18,11 @@ behave. You can find the complete list of options in [our documentation][2].
 
 We automatically run each config every 24h. This is done from our own
 infrastructure, meaning that you don't need to install anything on your side.
-We run this service entirely free of charge, we're just asking that you keep the
+We run this service entirely free of charge, but we're asking that you keep the
 "powered by Algolia" logo next to the search results.
 
 That being said, if you'd like to run DocSearch on your own, [all the code is
-open source][3] and even packaged as a Docker image. Just grab it, and run it
+open source][3] and even packaged as a Docker image. Download it, and run it
 with your own credentials.
 
 [1]: https://scrapy.org/

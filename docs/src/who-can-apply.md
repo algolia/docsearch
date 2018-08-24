@@ -3,9 +3,9 @@ layout: two-columns
 title: Who can apply?
 ---
 
-DocSearch has been built from the ground up with the idea of improving search on
-large technical documentation. For that reason, we only provide the free hosting
-version to technical documentation websites.
+DocSearch was built from the ground up with the idea of improving search on
+large technical documentation. For that reason, we offering our free hosting
+version to all technical documentations.
 
 We're always sad to have to turn down applications, but with the number of
 requests we received everyday, we had to focus on technical documentations.
@@ -38,8 +38,8 @@ features of Algolia.
 
 ### Priority
 
-We're receiving many requests every day, and while we strive to answer them all
-as fast as we can, we sometimes give priority to some of them based on the
+We're receiving dozens of requests every day, and while we strive to answer them
+all as fast as we can, we sometimes give priority to some of them based on the
 following criteria:
 
 - 🙂 If your project is open source, We'll handle it before any other
@@ -50,7 +50,7 @@ following criteria:
 
 - ☹️ If your website is rendered in the browser through JavaScript, it means that
   we'll have to crawl it through a much slower browser emulation. We highly
-  recommend that you implement server-side rendering if you can.
+  recommend that you put in place server-side rendering if you can.
 
 [1]: ./apply.html
 
