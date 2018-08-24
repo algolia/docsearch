@@ -55,7 +55,7 @@ and you're encouraged to style it to fit your own theming. All we ask is that
 you keep the `search by Algolia` logo and link next to your search results.
 
 The logo is automatically added in the dropdown with the default styling. It's
-ok to hide it through CSS, as long as you re-add it somewhere else on your page
+OK to hide it through CSS, as long as you re-add it somewhere else on your page
 close to the search input or search results. It's our way to let more people
 know about what do, and how they could also have from fast and relevant search
 on their website.
@@ -93,9 +93,9 @@ To more heavily style the results, feel free to have a look at the
 [SCSS source code][4].
 `_variables.scss` contains all the default theming, sizing and breakpoints.
 
-You can generate your own CSS file by cloning the repo and running `yarn run
-build:css`. The resulting file will be generated in `./dist/cdn`, and should be
-used instead of the default one.
+You can generate your own CSS file by cloning the repository and running `yarn
+run build:css`. The resulting file will be generated in `./dist/cdn`, and should
+be used instead of the default one.
 
 [1]: ./assets/default-colorscheme.png
 

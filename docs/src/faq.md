@@ -63,6 +63,7 @@ more complete information in our [privacy policy][6].
 The free DocSearch we provide will crawl documentation pages. If you want
 to use it on other parts of your website, you'll need to create your own Algolia
 account and either:
+ You need to use the searchableAttributes and attributesForFaceting.
 
 - Run the [DocSearch crawler][7] on your own
 - Use one of our other [framework integrations or API clients][8]
@@ -72,6 +73,7 @@ account and either:
 Yes, but we do not recommend it.
 
 Code samples are a great way for humans to understand how a specific pattern
+ap alpha
 / method should be used. It often requires boilerplate code though, repeated
 across examples, which will add noise to the results.
 
@@ -81,12 +83,12 @@ content so the method names are actual headers.
 
 ### Why do I have duplicate content in my results?
 
-This can happen when you have more than one urls pointing to the same content,
+This can happen when you have more than one URL pointing to the same content,
 for example with `./docs`, `./docs/` and `./docs/index.html` or even both `http`
 and `https` in place.
 
 This can be fixed by `stop_urls` to all the patterns you want to exclude. The
-following example will exclude all urls ending with `/` or `index.html` as well
+following example will exclude all URLs ending with `/` or `index.html` as well
 as those starting with `http://`.
 
 ```json

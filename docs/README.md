@@ -32,20 +32,20 @@ to the `gh-pages` branch and push it to GitHub.
 ## Internals
 
 The documentation generation is not using any existing static websites
-generators, but custom javascript scripts.
+generators, but custom JavaScript scripts.
 
 The main two entry points are `./scripts/build.js` and `./scripts/serve.js`. The
 second one adds a webserver with live-reload on top of the first one.
 
 ### HTML
 
-All markdown files situated in `./src` will be transformed into `.html` files in
+All Markdown files situated in `./src` will be transformed into `.html` files in
 `./dist`. They will be wrapped into the layout defined in their front-matter.
 
 All the headers will be converted to their respective `<hX>` tag, along with
 a unique `#id` to allow for easy anchoring.
 
-You can also use plain HTML inside those markdown files if you need more
+You can also use plain HTML inside those Markdown files if you need more
 advanced styling.
 
 ### Layouts
@@ -122,7 +122,7 @@ element extracted from the markup of the current page.
 ### Redirects
 
 The `config.json` file can hold a `redirects` array, with object containing both
-a `from` and a `to` key. For each `from`, it will create a plain html page at
+a `from` and a `to` key. For each `from`, it will create a plain HTML page at
 this location, that will redirect anyone visiting it to the page defined in
 `to`.
 

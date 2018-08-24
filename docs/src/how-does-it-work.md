@@ -5,11 +5,11 @@ title: How does it work?
 
 Getting up and ready with DocSearch is a straightforward process that requires
 a three steps: you apply, we configure the crawler for you, and you update your
-front-end.
+frontend.
 
 <img src="./assets/docsearch-how-it-works.png" alt="How it works" class="mt-2"/>
 
-### 1. You apply
+### You apply
 
 The first thing you'll need to do is to apply for DocSearch by filling the
 form on this page (make sure to double check that you qualify first). We are
@@ -19,19 +19,19 @@ anyone.
 We guarantee that we will answer to every request, but we receive a lot
 of applications, so please give us a couple of days to get back to you :)
 
-### 2. We create a configuration
+### We create a configuration
 
 Once we receive your application, we'll have a look at your website and create
-a custom configuration file for it. This file defines which urls we
+a custom configuration file for it. This file defines which URLs we
 should crawl or ignore, as well as the specific CSS selectors to be used for
 selecting headers, subheaders, etc. All configs are publicly available in our
-[config repo][1].
+[config repository][1].
 
 This step still requires some manual work, but thanks to the 900+ configs we
 already created, we're able to automate most of it. Once done, we'll run a first
 indexing of your website and have it run automatically every 24h.
 
-### 3. You update your website
+### You update your website
 
 We'll then get back to you with the JavaScript snippet you'll need to add to
 your website. This will bind your search `input` field to display results from

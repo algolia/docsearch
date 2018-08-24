@@ -32,7 +32,7 @@ points.
 If in doubt, don't hesitate to [apply][1] and we'll figure it out together.
 
 Even if we cannot accept your request, this does not mean that you cannot enjoy
-great search on your website. DocSearch is entirely open-source and you can run
+great search on your website. DocSearch is entirely open source and you can run
 it yourself, or use any of our other API clients to take advantage of the
 features of Algolia.
 
@@ -42,8 +42,8 @@ We're receiving many requests every day, and while we strive to answer them all
 as fast as we can, we sometimes give priority to some of them based on the
 following criteria:
 
-- 🙂 If your project is Open-Source, we'll handle it before any other
-  close-source product. We love Open-Source and want to help as much as we can.
+- 🙂 If your project is open source, We'll handle it before any other
+  close-source product. We love open source and want to help as much as we can.
 
 - 🙂 If you're using one of our [official integrations][2], creating your config
   will be much faster for us.

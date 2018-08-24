@@ -66,7 +66,9 @@
     "tailwindcss": "^0.6.4",
     "textlint": "^11.0.0",
     "textlint-rule-common-misspellings": "^1.0.1",
-    "textlint-rule-stop-words": "pixelastic/textlint-rule-stop-words#master"
+    "textlint-rule-en-capitalization": "^2.0.1",
+    "textlint-rule-stop-words": "^1.0.4",
+    "textlint-rule-terminology": "^1.1.29"
   },
   "peerDependencies": {},
   "dependencies": {

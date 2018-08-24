@@ -44,7 +44,7 @@ like.
 
 ## `start_urls`
 
-This array contains the list of urls that will be used to start crawling your
+This array contains the list of URLs that will be used to start crawling your
 website. The crawler will recursively follow any links on those pages. It will
 not follow links that are on another domain and never follow links defined in `stop_urls`.
 
@@ -85,7 +85,7 @@ have `lang: en` and `version: latest` added to it, allowing you to then filter
 based on those values.
 
 The following example shows how you can filter results matching specifics
-language and version from the front-end
+language and version from the frontend
 
 ```js
 docsearch({
@@ -126,7 +126,7 @@ docsearch({
 ### Using Page Rank
 
 To give more weight to some pages to boost their ranking in the
-results, you can attribute a custom `page_rank` to specific urls. Pages with
+results, you can attribute a custom `page_rank` to specific URLs. Pages with
 highest `page_rank` will be returned before pages with a lower `page_rank`. Note
 that you can pass any numeric value, including negative values.
 
@@ -452,8 +452,8 @@ use it to define which pages to crawl.
 
 ### `sitemap_urls` _Optional_
 
-You can pass an array of urls pointing to your sitemap(s) files. If this value
-is set, DocSearch will try to read urls from your sitemap(s) instead of
+You can pass an array of URLs pointing to your sitemap(s) files. If this value
+is set, DocSearch will try to read URLs from your sitemap(s) instead of
 following every link of your `starts_urls`.
 
 ```json
@@ -466,9 +466,9 @@ following every link of your `starts_urls`.
 
 ### `sitemap_alternate_links` _Optional_
 
-Sitemaps can contain _alternative links_ for urls. Those are other versions of
-the same page, in a different language, or with a different url. By default
-DocSearch will ignore those urls.
+Sitemaps can contain _alternative links_ for URLs. Those are other versions of
+the same page, in a different language, or with a different URL. By default
+DocSearch will ignore those URLs.
 
 Set this to `true` if you want those other version to be crawled as well.
 
@@ -504,7 +504,7 @@ encourage you to update your website to enable server-side rendering._
 ### `js_render` _Optional_
 
 Set this value to true if your website requires client-side rendering. This will
-make DocSearch spawn a Selenium proxy to fetch all your webpages.
+make DocSearch spawn a Selenium proxy to fetch all your web pages.
 
 ```json
 {
@@ -534,7 +534,7 @@ This option has no impact if `js_render` is set to `false`.
 ### `use_anchors` _Optional_
 
 Websites using client-side rendering often don't use full urls, but instead take
-advantage of the url hash (the part after the `#`).
+advantage of the URL hash (the part after the `#`).
 
 If your website is using such urls, you should set `use_anchors` to `true` for
 DocSearch to index all your content.

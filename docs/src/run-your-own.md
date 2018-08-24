@@ -8,12 +8,12 @@ servers, running every 24 hours. To update your results
 more often than that, or to index content sitting behind a
 firewall, you might want to run the crawler yourself.
 
-The code of DocSearch is Open-Source, and we packaged it as a Docker
+The code of DocSearch is open source, and we packaged it as a Docker
 image to make this even easier for you to use.
 
 ## Installation
 
-Start by cloning [the repo][1] and then running `./docsearch
+Start by cloning [the repository][1] and then running `./docsearch
 docker:build` to create the local image.
 
 Even if not recommended, you can run DocSearch directly from you host.
@@ -73,7 +73,7 @@ index_name is example [enter to confirm]: <Enter>
 =================
 ```
 
-Copy-paste the content into a file name `example.json`, we'll use it
+Copy-paste the content into a filename `example.json`, we'll use it
 later to start the crawling. You can find the complete list of
 available options in [our documentation][3], or browse the [list of
 live configs][4].
@@ -123,7 +123,7 @@ docsearch({
 You can run `./docsearch` without any argument to see the list of all
 available commands.
 
-Note that we use this CLI tool internally at Algolia to run the free
+Note that we use this command-line tool internally at Algolia to run the free
 hosted version, so you might not need all the listed commands.
 
 [1]: https://github.com/algolia/docsearch-scraper
