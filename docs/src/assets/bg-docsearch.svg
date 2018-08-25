@@ -1,72 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="1440px" height="439px" viewBox="0 0 1440 439" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="3203px" height="524px" viewBox="0 0 3203 524" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
     <title>bg-docsearch</title>
     <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Docsearch-V3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="DocSearch_V3">
-            <g id="bg-docsearch" transform="translate(-62.000000, -44.000000)">
-                <g>
-                    <path d="M1563,482 L861,482" id="Shape" stroke="#5468FF"></path>
-                    <path d="M1563,445 C1521.35547,445 855,480 855,480" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M1563,407 C1479.72547,407 849,476 849,476" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M1563,371 C1438.12038,371 843,475 843,475" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M1563,334 C1396.51832,334 837,472 837,472" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M1563,296 C1354.9297,296 831,469 831,469" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M1562,260 C1312.35784,260 824,467 824,467" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M1563,222 C1271.4043,222 818,464 818,464" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M1563,185 C1229.80235,185 812,462 812,462" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M1563,148 C1188.21342,148 806,460 806,460" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M1563,111 C1146.64306,111 800,456 800,456" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M1563,74 C1104.48428,74 793,454 793,454" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M1563,37 C1062.88406,37 787,452 787,452" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M1562,0 C1020.94611,0 781,450 781,450" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M0,482 L861,482" id="Shape" stroke="#5468FF"></path>
-                    <path d="M0,445 C41.6445262,445 708,480 708,480" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M0,407 C83.2745305,407 714,476 714,476" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M0,371 C124.890383,371 720,475 720,475" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M0,334 C166.489976,334 726,472 726,472" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M0,296 C208.077997,296 732,469 732,469" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M0,260 C249.652915,260 738,467 738,467" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M0,222 C291.606472,222 745,464 745,464" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M0,185 C333.203635,185 751,462 751,462" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M0,148 C374.792012,148 757,460 757,460" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M0,111 C416.367701,111 763,456 763,456" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M0,74 C458.526494,74 770,454 770,454" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M0,37 C500.115939,37 776,452 776,452" id="Shape" stroke="#C5C9E0"></path>
-                    <path d="M0,0 C541.046441,0 781,450 781,450" id="Shape" stroke="#C5C9E0"></path>
-                    <circle id="Oval" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero" cx="210" cy="138" r="6"></circle>
-                    <circle id="Oval" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero" cx="462" cy="363" r="6"></circle>
-                    <circle id="Oval" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero" cx="1093" cy="414" r="6"></circle>
-                    <circle id="Oval" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero" cx="1346" cy="63" r="6"></circle>
-                    <rect id="Rectangle-path" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero" transform="translate(1219.500000, 147.500000) rotate(-45.000000) translate(-1219.500000, -147.500000) " x="1212" y="140" width="15" height="15"></rect>
-                    <path d="M1220,143 L1220,152" id="Shape" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero"></path>
-                    <path d="M1224,148 L1215,148" id="Shape" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero"></path>
-                    <rect id="Rectangle-path" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero" transform="translate(336.500000, 354.500000) rotate(-45.000000) translate(-336.500000, -354.500000) " x="329" y="347" width="15" height="15"></rect>
-                    <path d="M336,350 L336,359" id="Shape" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero"></path>
-                    <path d="M340,355 L331,355" id="Shape" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero"></path>
-                    <rect id="Rectangle-path" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero" transform="translate(83.500000, 153.500000) rotate(-45.000000) translate(-83.500000, -153.500000) " x="76" y="146" width="15" height="15"></rect>
-                    <path d="M83,149 L83,158" id="Shape" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero"></path>
-                    <path d="M88,154 L79,154" id="Shape" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero"></path>
-                    <rect id="Rectangle-path" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero" transform="translate(1471.500000, 379.500000) rotate(-45.000000) translate(-1471.500000, -379.500000) " x="1464" y="372" width="15" height="15"></rect>
-                    <path d="M1472,375 L1472,384" id="Shape" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero"></path>
-                    <path d="M1477,379 L1468,379" id="Shape" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero"></path>
-                    <rect id="Rectangle-path" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero" transform="translate(967.500000, 349.500000) rotate(-45.000000) translate(-967.500000, -349.500000) " x="960" y="342" width="15" height="15"></rect>
-                    <path d="M968,345 L968,354" id="Shape" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero"></path>
-                    <path d="M971,350 L962,350" id="Shape" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero"></path>
-                    <g id="Group-4" transform="translate(583.000000, 309.000000)" fill="#FFFFFF" fill-rule="nonzero" stroke="#C5C9E0">
-                        <rect id="Rectangle-path" transform="translate(10.968725, 10.928245) rotate(-45.000000) translate(-10.968725, -10.928245) " x="3.28958879" y="3.24910916" width="15.358272" height="15.358272"></rect>
-                        <path d="M10.9647202,6.13628037 L10.9647202,15.7311981" id="Shape"></path>
-                        <path d="M15.7675155,10.9284028 L6.17259781,10.9284028" id="Shape"></path>
-                    </g>
-                    <g id="Group-4-Copy" transform="translate(356.000000, 65.000000)" fill="#FFFFFF" fill-rule="nonzero" stroke="#C5C9E0">
-                        <rect id="Rectangle-path" transform="translate(10.968725, 10.928245) rotate(-45.000000) translate(-10.968725, -10.928245) " x="3.28958879" y="3.24910916" width="15.358272" height="15.358272"></rect>
-                        <path d="M10.9647202,6.13628037 L10.9647202,15.7311981" id="Shape"></path>
-                        <path d="M15.7675155,10.9284028 L6.17259781,10.9284028" id="Shape"></path>
-                    </g>
-                </g>
-            </g>
+    <defs>
+        <path d="M16.5390625,393.328125 L16.5390625,293.199219 L168.257813,87.2617187 C417.559875,-12.5449192 571.2005,-26.6503879 629.179688,44.9453125 C738.830729,180.348091 782.988281,330.432726 761.652344,495.199219 L0.8984375,495.199219 L16.5390625,393.328125 Z" id="path-1"></path>
+        <path d="M16.5390625,393.328125 L16.5390625,293.199219 L168.257813,87.2617187 C417.559875,-12.5449192 571.2005,-26.6503879 629.179688,44.9453125 C738.830729,180.348091 782.988281,330.432726 761.652344,495.199219 L0.8984375,495.199219 L16.5390625,393.328125 Z" id="path-3"></path>
+    </defs>
+    <g id="bg-docsearch" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M3209.5,523 L1681,523" id="Shape" stroke="#5468FF"></path>
+        <g id="Group" transform="translate(1591.000000, 57.000000)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Path-2"></g>
+            <path d="M792,429 C750.355474,429 84,464 84,464" id="Shape" stroke="#C5C9E0" mask="url(#mask-2)"></path>
+            <path d="M792,391 C708.72547,391 78,460 78,460" id="Shape" stroke="#C5C9E0" mask="url(#mask-2)"></path>
+            <path d="M792,355 C667.120377,355 72,459 72,459" id="Shape" stroke="#C5C9E0" mask="url(#mask-2)"></path>
+            <path d="M792,318 C625.518315,318 66,456 66,456" id="Shape" stroke="#C5C9E0" mask="url(#mask-2)"></path>
+            <path d="M792,280 C583.929702,280 60,453 60,453" id="Shape" stroke="#C5C9E0" mask="url(#mask-2)"></path>
+            <path d="M791,244 C541.357839,244 53,451 53,451" id="Shape" stroke="#C5C9E0" mask="url(#mask-2)"></path>
+            <path d="M792,206 C500.404295,206 47,448 47,448" id="Shape" stroke="#C5C9E0" mask="url(#mask-2)"></path>
+            <path d="M792,169 C458.802354,169 41,446 41,446" id="Shape" stroke="#C5C9E0" mask="url(#mask-2)"></path>
+            <path d="M792,132 C417.213422,132 35,444 35,444" id="Shape" stroke="#C5C9E0" mask="url(#mask-2)"></path>
+            <path d="M792,95 C375.643061,95 29,440 29,440" id="Shape" stroke="#C5C9E0" mask="url(#mask-2)"></path>
+            <path d="M1073.85156,58 L792,58 C333.48428,58 22,438 22,438" id="Shape" stroke="#C5C9E0" mask="url(#mask-2)"></path>
+            <path d="M1073.71484,21 L792,21 C291.884061,21 16,436 16,436" id="Shape" stroke="#C5C9E0" mask="url(#mask-2)"></path>
+            <path d="M1074.62109,-16 L791,-16 C249.946107,-16 10,434 10,434" id="Shape" stroke="#C5C9E0" mask="url(#mask-2)"></path>
+        </g>
+        <g id="Group" transform="translate(1227.393398, 305.000000) scale(-1, 1) translate(-1227.393398, -305.000000) translate(843.893398, 57.000000)">
+            <mask id="mask-4" fill="white">
+                <use xlink:href="#path-3"></use>
+            </mask>
+            <g id="Path-2"></g>
+            <path d="M792,429 C750.355474,429 84,464 84,464" id="Shape" stroke="#C5C9E0" mask="url(#mask-4)"></path>
+            <path d="M792,391 C708.72547,391 78,460 78,460" id="Shape" stroke="#C5C9E0" mask="url(#mask-4)"></path>
+            <path d="M792,355 C667.120377,355 72,459 72,459" id="Shape" stroke="#C5C9E0" mask="url(#mask-4)"></path>
+            <path d="M792,318 C625.518315,318 66,456 66,456" id="Shape" stroke="#C5C9E0" mask="url(#mask-4)"></path>
+            <path d="M792,280 C583.929702,280 60,453 60,453" id="Shape" stroke="#C5C9E0" mask="url(#mask-4)"></path>
+            <path d="M791,244 C541.357839,244 53,451 53,451" id="Shape" stroke="#C5C9E0" mask="url(#mask-4)"></path>
+            <path d="M792,206 C500.404295,206 47,448 47,448" id="Shape" stroke="#C5C9E0" mask="url(#mask-4)"></path>
+            <path d="M792,169 C458.802354,169 41,446 41,446" id="Shape" stroke="#C5C9E0" mask="url(#mask-4)"></path>
+            <path d="M792,132 C417.213422,132 35,444 35,444" id="Shape" stroke="#C5C9E0" mask="url(#mask-4)"></path>
+            <path d="M792,95 C375.643061,95 29,440 29,440" id="Shape" stroke="#C5C9E0" mask="url(#mask-4)"></path>
+            <path d="M1073.85156,58 L792,58 C333.48428,58 22,438 22,438" id="Shape" stroke="#C5C9E0" mask="url(#mask-4)"></path>
+            <path d="M1073.71484,21 L792,21 C291.884061,21 16,436 16,436" id="Shape" stroke="#C5C9E0" mask="url(#mask-4)"></path>
+            <path d="M1074.62109,-16 L791,-16 C249.946107,-16 10,434 10,434" id="Shape" stroke="#C5C9E0" mask="url(#mask-4)"></path>
+        </g>
+        <path d="M-7.5,523 L1681,523" id="Shape" stroke="#5468FF"></path>
+        <circle id="Oval" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero" cx="1030" cy="179" r="6"></circle>
+        <circle id="Oval" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero" cx="1282" cy="404" r="6"></circle>
+        <circle id="Oval" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero" cx="1913" cy="455" r="6"></circle>
+        <circle id="Oval" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero" cx="2176" cy="216" r="6"></circle>
+        <rect id="Rectangle-path" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero" transform="translate(2039.899495, 188.899495) rotate(-45.000000) translate(-2039.899495, -188.899495) " x="2032.89949" y="181.899495" width="14" height="14"></rect>
+        <path d="M2040,184 L2040,193" id="Shape" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero"></path>
+        <path d="M2045.5,189 L2035,189" id="Shape" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero"></path>
+        <rect id="Rectangle-path" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero" transform="translate(1156.500000, 395.500000) rotate(-45.000000) translate(-1156.500000, -395.500000) " x="1149" y="388" width="15" height="15"></rect>
+        <path d="M1156,391 L1156,400" id="Shape" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero"></path>
+        <path d="M1160,396 L1151,396" id="Shape" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero"></path>
+        <rect id="Rectangle-path" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero" transform="translate(903.500000, 194.500000) rotate(-45.000000) translate(-903.500000, -194.500000) " x="896" y="187" width="15" height="15"></rect>
+        <path d="M903,190 L903,199" id="Shape" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero"></path>
+        <path d="M908,195 L899,195" id="Shape" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero"></path>
+        <rect id="Rectangle-path" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero" transform="translate(2291.500000, 420.500000) rotate(-45.000000) translate(-2291.500000, -420.500000) " x="2284" y="413" width="15" height="15"></rect>
+        <path d="M2292,416 L2292,425" id="Shape" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero"></path>
+        <path d="M2297,420 L2288,420" id="Shape" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero"></path>
+        <rect id="Rectangle-path" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero" transform="translate(1787.500000, 390.500000) rotate(-45.000000) translate(-1787.500000, -390.500000) " x="1780" y="383" width="15" height="15"></rect>
+        <path d="M1788,386 L1788,395" id="Shape" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero"></path>
+        <path d="M1791,391 L1782,391" id="Shape" stroke="#C5C9E0" fill="#FFFFFF" fill-rule="nonzero"></path>
+        <g id="Group-4" transform="translate(1403.000000, 350.000000)" fill="#FFFFFF" fill-rule="nonzero" stroke="#C5C9E0">
+            <rect id="Rectangle-path" transform="translate(10.968725, 10.928245) rotate(-45.000000) translate(-10.968725, -10.928245) " x="3.28958879" y="3.24910916" width="15.358272" height="15.358272"></rect>
+            <path d="M10.9647202,6.13628037 L10.9647202,15.7311981" id="Shape"></path>
+            <path d="M15.7675155,10.9284028 L6.17259781,10.9284028" id="Shape"></path>
+        </g>
+        <g id="Group-4-Copy" transform="translate(1176.000000, 106.000000)" fill="#FFFFFF" fill-rule="nonzero" stroke="#C5C9E0">
+            <rect id="Rectangle-path" transform="translate(10.968725, 10.928245) rotate(-45.000000) translate(-10.968725, -10.928245) " x="3.28958879" y="3.24910916" width="15.358272" height="15.358272"></rect>
+            <path d="M10.9647202,6.13628037 L10.9647202,15.7311981" id="Shape"></path>
+            <path d="M15.7675155,10.9284028 L6.17259781,10.9284028" id="Shape"></path>
         </g>
     </g>
 </svg>
