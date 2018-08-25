@@ -9,6 +9,9 @@
     @apply .leading-2 my-1;
   }
   /* Titles */
+  h1 {
+    @apply .leading-0;
+  }
   h2 {
     @apply .text-solstice .text-4 .normal;
     @apply .mb-1 .mt-2;

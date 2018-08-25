@@ -23,8 +23,8 @@ block content
         .pt-2.w-5.m-auto.sm_flex.sm_w-90.md_block.md_w-100
           each category in sidebar
             .flcnw.flspa.sm_flex-auto.sm_w-33.sm_p-1.md_w-100.md_p-0
-              .category.text-nebula.poppins.uppercase.mb-1.text-2=category.title
-              ul.list-reset.text-1.mb-1.md_ml-0x
+              .category.text-nebula.poppins.uppercase.mb-05x.text-1x=category.title
+              ul.list-reset.mb-2
                 each page in category.pages
                   - var isCurrent = current.url === page.url
                   - var additionalClasses = isCurrent ? 'current-page text-nebula' : 'text-solstice'
@@ -38,17 +38,17 @@ block content
                             a.block.py-0x.text-telluric(href=`${page.url}#${heading.anchor}`)=heading.title
 
       .documentation-content.text-2.pt-2.pb-1.px-2.w_100.md_w-75
-        .block.md_hidden.mb-1
+        .md_hidden.mb-1
           a(href=site.url) DocSearch
           span &nbsp;>&nbsp;
           a(href=`${site.url}/what-is-docsearch.html`) Documentation
-        .custom-main-title.text-5.lg_text-7.uppercase.tracking-poppins.text-solstice.bold.mb-2=current.title
+        h1.custom-main-title.text-5.lg_text-7.uppercase.tracking-poppins.text-solstice.bold.mb-2=current.title
         !=current.content
-        br
-        br
-        a(href=current.src) edit this page
         
         // Include the apply form
         if current.includeForm
           .mt-2
             include ../_includes/apply-form.pug
+
+        .my-3.italic
+          a(href=current.src) Edit this page
