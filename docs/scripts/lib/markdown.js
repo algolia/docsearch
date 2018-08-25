@@ -41,6 +41,8 @@ export default {
       './src',
       _.replace(filepath, '.md', '.html')
     );
+    const srcpath =
+      siteConfig.site.repo + _.replace(filepath, './', '/tree/master/docs/');
     const destination = `./dist/${currentUrl}`;
 
     // Read file, and extract front-matter from raw text
@@ -86,6 +88,7 @@ export default {
       current: {
         url: currentUrl,
         content: htmlBody,
+        src: srcpath,
         ...fileConfig,
       },
     };
