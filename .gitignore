@@ -6,6 +6,4 @@ dist/
 npm-debug.log*
 yarn-error.log
 dist-es5-module/
-yarn.lock
 tmp
-docs/build/

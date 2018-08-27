@@ -24,11 +24,17 @@ live-reload.
 
 ### Deploying the website
 
-You can deploy the website by running `yarn run deploy` in this directory or
-`yarn run docs:deploy` at the repository root.
+You can deploy the website manually by running `yarn run deploy` in this
+directory or `yarn run docs:deploy` at the repository root.
 
 This will build the website and then commit the content of the `./dist` folder
 to the `gh-pages` branch and push it to GitHub.
+
+Netlify is configured to listen to all commits on `master` and
+run `netlify-master` (see`netlify.toml` in the root). This script will check if
+any changes were made in the `./docs` subfolder. If no changes were made, it
+will finish, otherwise it will build the website and push it to
+`gh-pages`.
 
 ## Internals
 

@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+set -e
+
+# This file is run on Netlify for every new push on master (check netlify.toml
+# for details)
+
+# ===== STOP IF NO ./DOCS CHANGES
+# We compare the date of last modification of the ./docs folder with the date of
+# last deploy. If we have recent changes, we deploy, otherwise we skip
+DOCS_UPDATE_LOCAL=$(git log -1 --pretty="format:%ct" ./docs)
+DOCS_UPDATE_PRODUCTION=$(curl -s https://raw.githubusercontent.com/algolia/docsearch/gh-pages/last_update)
+
+# This is the very first deploy, it should always go through
+if ! [[ $DOCS_UPDATE_PRODUCTION =~ ^[0-9]*$ ]]; then
+  DOCS_UPDATE_PRODUCTION=0
+fi
+
+# Check if the local changes are fresher than the last push
+TIME_DIFFERENCE=$((DOCS_UPDATE_LOCAL - DOCS_UPDATE_PRODUCTION));
+if [[ $TIME_DIFFERENCE -le 0 ]]; then
+  echo "Documentation deployment is skipped: no new content";
+  exit 0
+fi
+
+# ===== BUILD
+cd ./docs
+yarn build
+
+# ==== DEPLOY TO GH-PAGES
+# Configuring the user making the push
+git config --global user.email "algobot@users.noreply.github.com"
+git config --global user.name "algobot"
+
+# Adding the remote:
+# Note: We need to wrap it in a conditional to not re-add a remote that already
+# exists (can happen with the way Netlify caches builds). Attempting to add
+# a remote that already exists will generate an error.
+if ! git config remote.origin.url > /dev/null; then
+  git remote add origin git@github.com:algolia/docsearch.git
+fi
+
+# Configure the ssh private key
+# The public key is configured as part of GitHub Deploy keys.
+# The private key is stored in an environment variable (with underscore instead
+# of newlines as Netlify does not allow for new lines). We convert it and store
+# it in a file, then tell git to use it
+mkdir -p ~/.ssh
+echo -e "${GITHUB_DEPLOY_KEY_PRIVATE//_/\\n}" > ~/.ssh/id_rsa
+chmod 600 ~/.ssh/id_rsa
+export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" 
+
+# We add a file that contains the last updated date, to use on the next deploy
+echo "$DOCS_UPDATE_LOCAL" > ./dist/last_update
+yarn gh-pages -d dist
