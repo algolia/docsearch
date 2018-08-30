@@ -4,8 +4,8 @@ title: How does it work?
 ---
 
 Getting up and ready with DocSearch is a straightforward process that requires a
-three steps: you apply, we configure the crawler for you, and you update your
-frontend.
+three steps: you apply, we configure the crawler for you, and you integrate our Search-UI in your
+frontend. It is as simple as copying and pasting a snippet.
 
 <img src="./assets/docsearch-how-it-works.png" alt="How it works" class="mt-2"/>
 
@@ -21,7 +21,7 @@ applications, so please give us a couple of days to get back to you :)
 
 ### We create a configuration
 
-Once we receive your application, we'll have a look at your website and create a
+Once we receive [your application][2], we'll have a look at your website and create a
 custom configuration file for it. This file defines which URLs we should crawl
 or ignore, as well as the specific CSS selectors to be used for selecting
 headers, subheaders, etc. All configs are publicly available in our [config
@@ -48,3 +48,4 @@ All we ask is that you keep the "search by Algolia" logo next to your search
 results.
 
 [1]: https://github.com/algolia/docsearch-configs/tree/master/configs
+[2]: apply.html

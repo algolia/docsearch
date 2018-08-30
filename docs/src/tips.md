@@ -9,8 +9,8 @@ share some tips on how you can make the most out of DocSearch.
 
 ### Use a `sitemap.xml`
 
-If your website has a sitemap, DocSearch will use it to get the list of pages to
-index. If it can't find one, it will follow every link of every page instead.
+If you provide a sitemap from your configuration, DocSearch will use it to diretly browse the pages to
+index. Pages are still crawled which means we extract every compliant link.
 
 We highly recommend you add a `sitemap.xml` to your website if you don't have
 one already. This will make the indexing faster, but will also give you more
@@ -24,20 +24,23 @@ Sitemaps are also considered good practice for other aspects, including SEO
 DocSearch works better on structured documentation. Relevance of results is
 based on the structural hierarchy of content. In simpler terms it means that we
 read the `<h1>`, ..., `<h6>` headings of your page to guess the hierarchy of
-information.
+information. This hierarchy brings contextual information to your records.
 
-Documentation starts by explains generic concepts first and then goes deeper
+Documentation starts by explaining generic concepts first and then goes deeper
 into specifics. This is represented in your HTML markup by the hierarchy of
 headings you're using. For example, concepts discussed under a `<h4>` are more
-specific than concepts discussed under a `<h2>` in the same page.
+specific than concepts discussed under a `<h2>` in the same page. The sooner the information comes up within the page, the higher it is ranked. 
 
 DocSearch uses this structure to fine-tune the relevance of results as well as
 to provide potential filtering. Documentation that follow this pattern often
 have better relevance of search results.
 
+Finding the right depth of your documentation tree and how to split-up your content is one of the most complex tasks.
+For large documents, we usually recommend having 4 levels (from lvl0 until lvl3).
+Three different levels should be the minimum.
+
 _Note that you don't have to use `<hX>` tags and can use
-`<span class="title-X">` for example instead. Your crawling configuration file
-will need to mirror those changes, though._
+`<span class="title-X">` for example instead. Your will need to update your set of `selectors`
 
 ### Set a unique class to the element holding the content
 
@@ -74,3 +77,4 @@ The name of the CSS class does not matter, as long as it's something that can be
 used as part of a CSS selector.
 
 [1]: https://www.sitemaps.org/index.html
+https://blog.algolia.com/how-to-build-a-helpful-search-for-technical-documentation-the-laravel-example/
