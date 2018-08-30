@@ -38,7 +38,7 @@ The following annotated example will help you style each part:
 
 /* Description description (eg. Bootstrap currently works...) */
 .algolia-autocomplete .algolia-docsearch-suggestion--text {
-  font-size: .8rem;
+  font-size: 0.8rem;
   color: gray;
 }
 
@@ -55,7 +55,7 @@ and you're encouraged to style it to fit your own theming. All we ask is that
 you keep the `search by Algolia` logo and link next to your search results.
 
 The logo is automatically added in the dropdown with the default styling. It's
-ok to hide it through CSS, as long as you re-add it somewhere else on your page
+OK to hide it through CSS, as long as you re-add it somewhere else on your page
 close to the search input or search results. It's our way to let more people
 know about what do, and how they could also have from fast and relevant search
 on their website.
@@ -65,9 +65,8 @@ yourself][3], you don't have to keep the logo.
 
 ## Debugging
 
-If you want to inspect the dropdown markup with your browser tools, you should
-add `debug: true` to your `docsearch` call to prevent it from closing on
-inspection.
+To inspect the dropdown markup with your browser tools, you should add
+`debug: true` to your `docsearch` call to prevent it from closing on inspection.
 
 ```javascript
 docsearch({
@@ -78,27 +77,24 @@ docsearch({
 
 ## Other considerations
 
-Selected suggestion are wrapped in a `.ds-cursor` class. This means
-that you can use `.ds-cursor .algolia-docsearch-suggestion--content` to style
-the selected suggestion for example.
+Selected suggestion are wrapped in a `.ds-cursor` class. This means that you can
+use `.ds-cursor .algolia-docsearch-suggestion--content` to style the selected
+suggestion for example.
 
 On small screens, DocSearch reverts to a single column layout, while the
 two-column layout shown in the screenshot is used on larger screens. You can
 media queries (for example `@media (min-width: 768px) {}`) to target one or the
 other display.
 
-
-
 ## Advanced styling
 
-If you want to more heavily style the results, feel free to have a look at the
-[SCSS source code][4].
-`_variables.scss` contains all the default theming, sizing and breakpoints.
+To more heavily style the results, feel free to have a look at the [SCSS source
+code][4]. `_variables.scss` contains all the default theming, sizing and
+breakpoints.
 
-You can generate your own CSS file by cloning the repo and running `yarn run
-build:css`. The resulting file will be generated in `./dist/cdn`, and should be
-used instead of the default one.
-
+You can generate your own CSS file by cloning the repository and running
+`yarn run build:css`. The resulting file will be generated in `./dist/cdn`, and
+should be used instead of the default one.
 
 [1]: ./assets/default-colorscheme.png
 [2]: https://www.algolia.com/pricing

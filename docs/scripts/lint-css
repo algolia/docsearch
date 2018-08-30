@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+stylelint ./src/style.css ./src/_styles/*.css

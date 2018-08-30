@@ -29,10 +29,13 @@ redirect the browser to the page matching part of the page, but you can override
 it to add your own behavior.
 
 The method is called with three arguments:
-- `input`, a reference to the search `input` element. It comes with the `.open()`,
-  `.close()`, `.getVal()` and `.setVal()` methods.
+
+- `input`, a reference to the search `input` element. It comes with the
+  `.open()`, `.close()`, `.getVal()` and `.setVal()` methods.
+
 - `event`, the actual event triggering the selection. This can come from a click
   or a keyboard navigation.
+
 - `suggestion`, the object representing the current selection.
 
 ```javascript
@@ -60,9 +63,8 @@ docsearch({
 
 ## `transformData`
 
-This method will be called on all suggestions before displaying them. It
-doesn't do anything by default, but we provide this hook if you want to add your
-own logic.
+This method will be called on all suggestions before displaying them. It doesn't
+do anything by default, but we provide this hook for you to add your own logic.
 
 ```javascript
 docsearch({
@@ -97,21 +99,20 @@ search.autocomplete.on('autocomplete:opened', event => {
 
 ## `algoliaOptions`
 
-You can pass options to the Algolia API by using the `algoliaOptions`
-key. You will find all Algolia API options in their [own documentation][3].
+You can pass options to the Algolia API by using the `algoliaOptions` key. You
+will find all Algolia API options in their [own documentation][3].
 
-For example, you might want to increase the number of results displayed in the dropdown.
-[`hitsPerPage `set the number of shown hits][4].
+For example, you might want to increase the number of results displayed in the
+dropdown. [`hitsPerPage` set the number of shown hits][4].
 
 ```javascript
 docsearch({
   algoliaOptions: {
     hitsPerPage: 10,
     // See https://www.algolia.com/doc/api-reference/api-parameters/
-  }
+  },
 });
 ```
-
 
 [1]: https://github.com/algolia/autocomplete.js
 [2]: https://github.com/algolia/autocomplete.js#options

@@ -12,6 +12,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/**
+ * We're centering text in input by using a line-height equal to the height.
+ * It's still a few px off when using the Hind font, so we compensate with some padding 
+ **/
+input {
+  padding: 0.3rem 0 0 0;
+}
+
+
 /* Global styles */
 a,
 a:active {

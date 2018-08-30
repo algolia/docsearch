@@ -3,8 +3,8 @@ layout: two-columns
 title: Inside the engine
 ---
 
-This page will explain in more details how the crawler extracts content from your
-page, and how it ranks it in the results.
+This page will explain in more details how the crawler extracts content from
+your page, and how it ranks it in the results.
 
 ## Crawling
 
@@ -18,9 +18,9 @@ all pages.
 ## Extracting content
 
 Then, for each page, it will read the HTML markup from top to bottom. It will
-look for HTML elements matching your CSS `selectors`. It will specifically look
-for elements matching your `text` selector (`<p>` by default). Each of those
-matches will be later transformed into an Algolia record.
+look for HTML elements matching your CSS `selectors`. It will look for elements
+matching your `text` selector (`<p>` by default). Each of those matches will be
+later transformed into an Algolia record.
 
 For each matching `text` element, the crawler will also keep in memory the
 current hierarchy of headers (identified by the `lvl0` to `lvl5` selectors) that
@@ -36,30 +36,26 @@ overwrite your previous index.
 ## Ranking records
 
 Algolia always returns the most relevant results first, using a [tie-breaking
-approach][1]. DocSearch will first search for exact matches in your keywords then
-fallback to partial matches. Those results will then be ordered based, once
+approach][1]. DocSearch will first search for exact matches in your keywords
+then fallback to partial matches. Those results will then be ordered based, once
 again, on the page hierarchy, as extracted from the `selectors`.
 
 The default strategy is to first look at the closest header of the matching
-text. If a matching paragraph of text is under `Advanced Settings / API Options
-/ verySpecificMethod()`, it will be ranked higher than if it is only found under
-`Gettings Started > Installation`. The idea here is that if you have a match
-under a very deep hierarchy, chances are that this match is very specific and
-might be more interesting that something found in a very broad topic.
+text. For example, a paragraph under `Settings / API / verySpecificMethod()`,
+will be ranked higher than one under `Settings / API`. The idea here is that if
+you have a match under a deep hierarchy, chances are that this match is specific
+and might be more interesting that something found in a broad topic.
 
 But this does not work in all cases as some documentations don't have deep
 hierarchy. In that case, we use the paragraph position. The first paragraph of
 the page will be ranked higher than the last one.
 
 You also have a way to boost some pages directly in your config by using the
-`page_rank` option. This accepts a numeric value, and all pages with
-a `page_rank` of 5 will be returned before pages with a `page_rank` of 1.
+`page_rank` option. This accepts a numeric value, and all pages with a
+`page_rank` of 5 will be returned before pages with a `page_rank` of 1.
 
-If you want to get fancy, you could even overwrite the default
-`customRanking` used by the index by using the `custom_settings` option of
-your config.
+You could even overwrite the default `customRanking` used by the index by using
+the `custom_settings` option of your config.
 
-
-[1]: https://www.algolia.com/doc/guides/ranking/ranking-formula/#tie-breaking-approach
-[2]: https://www.algolia.com/doc/guides/ranking/ranking-formula/#tie-breaking-approach
-[3]: https://www.algolia.com/doc/guides/ranking/custom-ranking/
+[1]:
+  https://www.algolia.com/doc/guides/ranking/ranking-formula/#tie-breaking-approach

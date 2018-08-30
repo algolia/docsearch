@@ -57,7 +57,9 @@ them with auto-reload.
 
 - `yarn docs:build` will build the docs website in `./docs/dist`.
 - `yarn docs:serve` will do the same, but with live-reload enabled
-- `yarn docs:deploy` will deploy the doc website
+- `yarn docs:deploy` will deploy the doc website manually
+
+Refer to `./docs/README.md` for more information
 
 ## Release
 

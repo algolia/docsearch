@@ -6,19 +6,14 @@
 .custom-search-wrapper:focus-within {
   width: 100%;
 }
-/* Wrapper added by DocSearch */
+
 /* purgecss start ignore */
+/* Wrapper added by DocSearch */
 .algolia-autocomplete {
   @apply w-100;
 }
-/* purgecss end ignore */
-/* Main search input */
-.custom-search-input {
-  padding-top: calc(0.5rem + 2px);
-  @apply .pb-05;
-}
+
 /* Dropdown menu */
-/* purgecss start ignore */
 .ds-dropdown-menu {
   @apply w-100;
 }

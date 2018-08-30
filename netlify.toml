@@ -1,0 +1,10 @@
+[Settings]
+
+[build]
+[build.environment]
+  NODE_ENV = "development"
+  YARN_VERSION = "1.9.4"
+
+# Deploy documentation website on each commit on master
+[context.master]
+  command = "./scripts/netlify-master"

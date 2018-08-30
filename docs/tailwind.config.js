@@ -87,49 +87,15 @@ const colors = {
   'white-90': 'rgba(255, 255, 255, .90)',
 };
 
-const dimensionScale = {
-  auto: 'auto',
-  '0': '0',
-  '1': '1rem',
-  '1x': '1.5rem',
-  '2': '2rem',
-  '2x': '3rem',
-  '3': '4rem',
-  '3x': '6rem',
-  '4': '8rem',
-  '4x': '12rem',
-  '5': '16rem',
-  '10': '10%',
-  '20': '20%',
-  '25': '25%',
-  '30': '30%',
-  '33': 'calc(100% / 3)',
-  '40': '40%',
-  '50': '50%',
-  '60': '60%',
-  '66': 'calc(100% / 1.5)',
-  '70': '70%',
-  '75': '75%',
-  '80': '80%',
-  '90': '90%',
-  '100': '100%',
-  full: '100%',
+const screenSizes = {
   sm: '576px',
   md: '768px',
   lg: '992px',
   xl: '1200px',
 };
 
-const widthScale = {
-  ...dimensionScale,
-  '100vw': '100vw',
-};
-const heightScale = {
-  ...dimensionScale,
-  '100vh': '100vh',
-};
-
-const spacingScale = {
+const dimensionScale = {
+  auto: 'auto',
   '0': '0',
   '0x': '.25rem',
   '05': '.5rem',
@@ -157,10 +123,9 @@ const spacingScale = {
   '80': '80%',
   '90': '90%',
   '100': '100%',
-};
-const marginScale = {
-  ...spacingScale,
-  auto: 'auto',
+  '100vw': '100vw',
+  '100vh': '100vh',
+  ...screenSizes,
 };
 
 const fontScale = {
@@ -176,6 +141,24 @@ const fontScale = {
   '7': '3rem', // 48px
   '8': '3.5rem', // 56px
 };
+
+// Leading (line-height) uses values proportional to the current font-size.
+// In addition, it also allows setting it to exact values found in the font and
+// dimension scales.
+// .leading-2 => Proportional to the current font size
+// .leading-text-2 => Using exact font size
+// .leading-h-2 => Using exact dimension size
+const leadingScale = {
+  0: '1',
+  1: '1.25',
+  2: '1.5',
+};
+_.each(dimensionScale, (value, key) => {
+  leadingScale[`h-${key}`] = value;
+});
+_.each(fontScale, (value, key) => {
+  leadingScale[`text-${key}`] = value;
+});
 
 const fontWeights = {
   hairline: 100,
@@ -217,6 +200,26 @@ const opacity = {
   '50': '.5',
   '75': '.75',
   '100': '1',
+};
+
+const shadows = {
+  button:
+    '0 7px 14px -3px rgba(45, 35, 66, 0.3), 0 2px 4px 0 rgba(45, 35, 66, 0.4), inset 0 -2px 0 0 #cfd1e3',
+  'button-up':
+    '0 11px 16px -3px rgba(45, 35, 66, 0.3), 0 4px 5px 0 rgba(45, 35, 66, 0.4), inset 0 -2px 0 0 #cfd1e3',
+  'button-down':
+    'inset 0 2px 0 1px rgba(132, 138, 184, 0.11), inset 0 2px 9px 0 rgba(93, 100, 148, 0.5), inset 0 -1px 0 1px #fff',
+
+  'button-primary':
+    '0 7px 14px -3px rgba(45, 35, 66, 0.3), 0 2px 4px 0 rgba(45, 35, 66, 0.4), inset 0 -2px 0 0 #4b58ba;',
+  'button-primary-up':
+    '0 11px 16px -3px rgba(45, 35, 66, 0.3), 0 4px 5px 0 rgba(45, 35, 66, 0.4), inset 0 -2px 0 0 #4b58ba;',
+  'button-primary-down':
+    'inset 0 2px 0 1px rgba(132, 138, 184, 0.11), inset 0 2px 9px 0 rgba(93, 100, 148, 0.5), inset 0 -1px 0 1px #5468ff;',
+
+  '1':
+    '0 5px 15px 0 rgba(37, 44, 97, 0.15), 0 2px 4px 0 rgba(93, 100, 148, 0.2)',
+  none: 'none',
 };
 
 // Use font-weight without prefixes (.bold, .thin, etc)
@@ -292,9 +295,9 @@ const customFlexbox = {
     justifyContent: 'space-between',
   },
 };
-// Use the spacing scale for top/right/bottom/let positioning
+// Use the dimension scale for top/right/bottom/left positioning
 const customPositions = _.reduce(
-  spacingScale,
+  dimensionScale,
   (result, value, key) =>
     _.assign(result, {
       [`top-${key}`]: { top: value },
@@ -338,36 +341,37 @@ const plugins = [
 ];
 
 module.exports = {
+  width: dimensionScale,
+  minWidth: dimensionScale,
+  maxWidth: dimensionScale,
+  height: dimensionScale,
+  minHeight: dimensionScale,
+  maxHeight: dimensionScale,
+  padding: dimensionScale,
+  margin: dimensionScale,
+  negativeMargin: dimensionScale,
+
   textSizes: fontScale,
+
+  leading: leadingScale,
+
   fontWeights,
-  width: widthScale,
-  minWidth: widthScale,
-  maxWidth: widthScale,
-
-  height: heightScale,
-  minHeight: heightScale,
-  maxHeight: heightScale,
-
-  padding: spacingScale,
-
-  margin: marginScale,
-  negativeMargin: marginScale,
 
   colors,
+  textColors: colors,
+  backgroundColors: colors,
+  borderColors: global.Object.assign({ default: colors['grey-light'] }, colors),
+
   zIndex,
   opacity,
   borderRadius,
+  shadows,
 
   plugins,
   screens: {
-    sm: '576px',
-    md: '768px',
-    lg: '992px',
-    xl: '1200px',
+    ...screenSizes,
     print: { raw: 'print' },
   },
-  textColors: colors,
-  backgroundColors: colors,
   borderWidths: {
     default: '1px',
     '0': '0',
@@ -375,7 +379,6 @@ module.exports = {
     '2': '4px',
     '3': '8px',
   },
-  borderColors: global.Object.assign({ default: colors['grey-light'] }, colors),
   fonts: {
     sans: [
       'system-ui',
@@ -412,39 +415,12 @@ module.exports = {
       'monospace',
     ],
   },
-  // Line-height
-  leading: {
-    '0': '0',
-    '01': 1,
-    '1': 1.25,
-    '2': 1.5,
-    '3': 2,
-  },
   // Letter-spacing
   tracking: {
     tight: '-0.05em',
     normal: '0',
     wide: '0.05em',
     poppins: '1.5px',
-  },
-  shadows: {
-    button:
-      '0 7px 14px -3px rgba(45, 35, 66, 0.3), 0 2px 4px 0 rgba(45, 35, 66, 0.4), inset 0 -2px 0 0 #cfd1e3',
-    'button-up':
-      '0 11px 16px -3px rgba(45, 35, 66, 0.3), 0 4px 5px 0 rgba(45, 35, 66, 0.4), inset 0 -2px 0 0 #cfd1e3',
-    'button-down':
-      'inset 0 2px 0 1px rgba(132, 138, 184, 0.11), inset 0 2px 9px 0 rgba(93, 100, 148, 0.5), inset 0 -1px 0 1px #fff',
-
-    'button-primary':
-      '0 7px 14px -3px rgba(45, 35, 66, 0.3), 0 2px 4px 0 rgba(45, 35, 66, 0.4), inset 0 -2px 0 0 #4b58ba;',
-    'button-primary-up':
-      '0 11px 16px -3px rgba(45, 35, 66, 0.3), 0 4px 5px 0 rgba(45, 35, 66, 0.4), inset 0 -2px 0 0 #4b58ba;',
-    'button-primary-down':
-      'inset 0 2px 0 1px rgba(132, 138, 184, 0.11), inset 0 2px 9px 0 rgba(93, 100, 148, 0.5), inset 0 -1px 0 1px #5468ff;',
-
-    '1':
-      '0 5px 15px 0 rgba(37, 44, 97, 0.15), 0 2px 4px 0 rgba(93, 100, 148, 0.2)',
-    none: 'none',
   },
   svgFill: {
     current: 'currentColor',
