@@ -31,16 +31,16 @@ Documentation starts by explaining generic concepts first and then goes deeper
 into specifics. This is represented in your HTML markup by the hierarchy of
 headings you're using. For example, concepts discussed under a `<h4>` are more
 specific than concepts discussed under a `<h2>` in the same page. The sooner the
-information comes up within the page, the higher it is ranked.
+information comes up within the page, the higher is it ranked.
 
 DocSearch uses this structure to fine-tune the relevance of results as well as
 to provide potential filtering. Documentation that follow this pattern often
 have better relevance of search results.
 
 Finding the right depth of your documentation tree and how to split-up your
-content is one of the most complex tasks. For large documents, we usually
-recommend having 4 levels (from lvl0 until lvl3). Three different levels should
-be the minimum.
+content is one of the most complex tasks. For large documents, we recommend
+having 4 levels (from lvl0 until lvl3). Three different levels should be a
+minimum.
 
 \_Note that you don't have to use `<hX>` tags and can use
 `<span class="title-X">` for example instead. Your will need to update your set
@@ -82,20 +82,20 @@ used as part of a CSS selector.
 
 ## Consistency of your content
 
-Consistency is a pillar of a meaningful documentation. In addition to increasing
-the **intelligibility** of a document it also shortens the time required for a
-user to find the coveted information. The document's **topic** should be easily
-**identifiable** and its **outline** sharply demarcated.
+Consistency is a pillar of a meaningful documentation. To increase the
+**intelligibility** of a document it also shortens the time required for a user
+to find the coveted information. The document's **topic** should be
+**identifiable** and its **outline** demarcated.
 
 The hierarchy should always have the same size. Try to **avoid orphan records**
 such like the implicit introduction/conclusion or asides. The selectors must be
 efficient for **every document** and highlight the proper hierarchy. They need
-to match only the coveted elements depending on their level. Be careful to avoid
-the **edge effect** by matching unexpected **superfluous elements**.
+to match the coveted elements depending on their level. Be careful to avoid the
+**edge effect** by matching unexpected **superfluous elements**.
 
-Selectors should only match information from **real document webpage** and
-remain ineffective for others ones (e.g., landing page, table of content, etc.).
-We urge the maintainer to define a **dedicated class** for the **main DOM
+Selectors should match information from **real document web page** and stay
+ineffective for others ones (e.g., landing page, table of content, etc.). We
+urge the maintainer to define a **dedicated class** for the **main DOM
 container** that includes the actual document content such as
 `.docSearch-content`
 
@@ -109,15 +109,14 @@ experience**. The **way to find the information** plays a key role in
 ## Avoid duplicates by promoting unicity
 
 The more time-consuming reading documentation is, the more painful and reluctant
-its use will be. You must avoid hazy points or catch-all. In addition to it
-being unhelpful, the catch-all document may be **confusing** and
-**counterproductive**.
+its use will be. You must avoid hazy points or catch-all. With being unhelpful,
+the catch-all document may be **confusing** and **counterproductive**.
 
-Last but not least duplicates introduce noise and mislead users. This is why you
-should always focus on the relevant content and avoid duplicating content within
-your site (e.g. landing page which contains all of the information, summing up,
-etc.). In cases where the duplicates's existence is expected since it belongs to
-another dataset (e.g. a different version), you should use
+Duplicates introduce noise and mislead users. This is why you should always
+focus on the relevant content and avoid duplicating content within your site
+(for example landing page which contains all information, summing up, etc.). In
+cases where the duplicates's existence is expected since it belongs to another
+dataset (for example a different version), you should use
 [facets](https://www.algolia.com/doc/guides/searching/faceting/).
 
 ## Conciseness

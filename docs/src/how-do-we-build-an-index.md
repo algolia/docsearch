@@ -10,7 +10,7 @@ In this section you will learn how do we build a DocSearch index from your page.
 <img src="./assets/how_do_we_build_docsearch_index_1.png" alt="1st step" class="mt-2"/>
 
 _Note: We would rather avoid useless js rendering. Every used information should
-be avaible without any client side rendering. You can use `curl` in order to
+be avaible without any client-side rendering. You can use `curl` in order to
 have a better idea of how does it look._
 
 ### We extract the payload thank to your set of `selectors`

@@ -20,17 +20,18 @@ input {
   padding: 0.3rem 0 0 0;
 }
 
-
 /* Global styles */
 a,
 a:active {
   @apply .cursor-pointer;
   @apply .text-nebula .no-underline;
 }
+
 a:hover,
 a:focus {
   @apply .underline;
 }
+
 code {
   @apply .code .text-mars-2;
   @apply .p-0x;

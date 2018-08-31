@@ -88,9 +88,9 @@ other display.
 
 ## Advanced styling
 
-If you want to do more heavy styling, feel free to have a look at the [SCSS
-source code][4]. `_variables.scss` contains all the default theming, sizing and
-breakpoints.
+Whether you would like to do more heavy styling, feel free to have a look at the
+[SCSS source code][4]. `_variables.scss` contains all the default theming,
+sizing and breakpoints.
 
 You can generate your own CSS file by cloning the repository and running
 `yarn run build:css`. The resulting file will be generated in `./dist/cdn`, and
