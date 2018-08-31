@@ -21,7 +21,8 @@ Nothing.
 
 The DocSearch crawler is running on our own infra. It will read the HTML content
 from your website and populate an Algolia index with it every day. All you need
-to do is keep your website online, and we take care of the rest. If you wante to edit your configuration; please submit a pull request.
+to do is keep your website online, and we take care of the rest. If you wante to
+edit your configuration; please submit a pull request.
 
 ### How much does it cost?
 

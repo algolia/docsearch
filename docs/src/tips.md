@@ -9,8 +9,9 @@ share some tips on how you can make the most out of DocSearch.
 
 ### Use a `sitemap.xml`
 
-If you provide a sitemap from your configuration, DocSearch will use it to diretly browse the pages to
-index. Pages are still crawled which means we extract every compliant link.
+If you provide a sitemap from your configuration, DocSearch will use it to
+diretly browse the pages to index. Pages are still crawled which means we
+extract every compliant link.
 
 We highly recommend you add a `sitemap.xml` to your website if you don't have
 one already. This will make the indexing faster, but will also give you more
@@ -29,18 +30,21 @@ information. This hierarchy brings contextual information to your records.
 Documentation starts by explaining generic concepts first and then goes deeper
 into specifics. This is represented in your HTML markup by the hierarchy of
 headings you're using. For example, concepts discussed under a `<h4>` are more
-specific than concepts discussed under a `<h2>` in the same page. The sooner the information comes up within the page, the higher it is ranked. 
+specific than concepts discussed under a `<h2>` in the same page. The sooner the
+information comes up within the page, the higher it is ranked.
 
 DocSearch uses this structure to fine-tune the relevance of results as well as
 to provide potential filtering. Documentation that follow this pattern often
 have better relevance of search results.
 
-Finding the right depth of your documentation tree and how to split-up your content is one of the most complex tasks.
-For large documents, we usually recommend having 4 levels (from lvl0 until lvl3).
-Three different levels should be the minimum.
+Finding the right depth of your documentation tree and how to split-up your
+content is one of the most complex tasks. For large documents, we usually
+recommend having 4 levels (from lvl0 until lvl3). Three different levels should
+be the minimum.
 
-_Note that you don't have to use `<hX>` tags and can use
-`<span class="title-X">` for example instead. Your will need to update your set of `selectors`
+\_Note that you don't have to use `<hX>` tags and can use
+`<span class="title-X">` for example instead. Your will need to update your set
+of `selectors`
 
 ### Set a unique class to the element holding the content
 
@@ -79,46 +83,50 @@ used as part of a CSS selector.
 ## Consistency of your content
 
 Consistency is a pillar of a meaningful documentation. In addition to increasing
-the **intelligibility** of a document it also shortens the time required for a user
-to find the coveted information. The document's **topic** should be easily **identifiable**
-and its **outline** sharply demarcated.
+the **intelligibility** of a document it also shortens the time required for a
+user to find the coveted information. The document's **topic** should be easily
+**identifiable** and its **outline** sharply demarcated.
 
 The hierarchy should always have the same size. Try to **avoid orphan records**
 such like the implicit introduction/conclusion or asides. The selectors must be
-efficient for **every document** and highlight the proper hierarchy.
-They need to match only the coveted elements depending on their level.
-Be careful to avoid the **edge effect** by matching unexpected **superfluous elements**.
+efficient for **every document** and highlight the proper hierarchy. They need
+to match only the coveted elements depending on their level. Be careful to avoid
+the **edge effect** by matching unexpected **superfluous elements**.
 
-Selectors should only match information from **real document webpage**
-and remain ineffective for others ones (e.g., landing page, table of content, etc.).
-We urge the maintainer to define a **dedicated class** for the **main DOM container**
-that includes the actual document content such as `.docSearch-content`
+Selectors should only match information from **real document webpage** and
+remain ineffective for others ones (e.g., landing page, table of content, etc.).
+We urge the maintainer to define a **dedicated class** for the **main DOM
+container** that includes the actual document content such as
+`.docSearch-content`
 
-Since documentation should be **interactive**, it is a key point to
-**verbalize concepts with standardized words**.
-This **redundancy**, empowered with the **search experience** (dropdown),
-will even enable the **learn-as-you-type experience**.
-The **way to find the information** plays a key role in **leading** the user to the
-**retrieved knowledge itself**. You can also use the **synonym feature**.
-
+Since documentation should be **interactive**, it is a key point to **verbalize
+concepts with standardized words**. This **redundancy**, empowered with the
+**search experience** (dropdown), will even enable the **learn-as-you-type
+experience**. The **way to find the information** plays a key role in
+**leading** the user to the **retrieved knowledge itself**. You can also use the
+**synonym feature**.
 
 ## Avoid duplicates by promoting unicity
 
-The more time-consuming reading documentation is, the more painful and reluctant its use will be.
-You must avoid hazy points or catch-all. In addition to it being unhelpful,
-the catch-all document may be **confusing** and **counterproductive**.
+The more time-consuming reading documentation is, the more painful and reluctant
+its use will be. You must avoid hazy points or catch-all. In addition to it
+being unhelpful, the catch-all document may be **confusing** and
+**counterproductive**.
 
-Last but not least duplicates introduce noise and mislead users. This is why
-you should always focus on the relevant content and avoid duplicating content
-within your site (e.g. landing page which contains all of the information, summing up, etc.).
-In cases where the duplicates's existence is expected since it belongs to another
-dataset (e.g. a different version), you should use [facets](https://www.algolia.com/doc/guides/searching/faceting/).
+Last but not least duplicates introduce noise and mislead users. This is why you
+should always focus on the relevant content and avoid duplicating content within
+your site (e.g. landing page which contains all of the information, summing up,
+etc.). In cases where the duplicates's existence is expected since it belongs to
+another dataset (e.g. a different version), you should use
+[facets](https://www.algolia.com/doc/guides/searching/faceting/).
 
 ## Conciseness
 
 What is clearly thought out is clearly and concisely expressed.
 
-We really recommend you to read this blog post about [how to build a helpful search for techniacal documentation][2].
+We really recommend you to read this blog post about [how to build a helpful
+search for techniacal documentation][2].
 
 [1]: https://www.sitemaps.org/index.html
-[2]: https://blog.algolia.com/how-to-build-a-helpful-search-for-technical-documentation-the-laravel-example/
+[2]:
+  https://blog.algolia.com/how-to-build-a-helpful-search-for-technical-documentation-the-laravel-example/

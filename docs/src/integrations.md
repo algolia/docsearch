@@ -13,8 +13,8 @@ DocSearch on your website:
 - [GitBook][5]
 - [pkgdown][6] - [DocSearch indexing][7]
 
-If you're a maintaining a similar tool and would like to be added to the list, get
-[in touch with us][8], we would be happy to help.
+If you're a maintaining a similar tool and would like to be added to the list,
+get [in touch with us][8], we would be happy to help.
 
 [1]: https://docusaurus.io/
 [2]: https://docusaurus.io/docs/en/search#docsNav

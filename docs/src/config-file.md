@@ -240,8 +240,8 @@ Other special keys can be set, as documented below.
 
 The default way of extracting content through selectors is to read the HTML
 markup from top to bottom. This works well with semi-structured content, like a
-hierarchy of headers. This breaks when the relevant information is not part of the
-same flow. For example when the title is apart in a header or a sidebar.
+hierarchy of headers. This breaks when the relevant information is not part of
+the same flow. For example when the title is apart in a header or a sidebar.
 
 For that reason, you can set a selector as global, meaning that it will match on
 the whole page, and will be the same for all records extracted on this page.

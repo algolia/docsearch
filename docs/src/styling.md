@@ -55,10 +55,10 @@ and you're encouraged to style it to fit your own theming. All we ask is that
 you keep the `search by Algolia` logo and link next to your search results.
 
 The logo is automatically added in the dropdown with the default styling. It's
-fine if you hide it through CSS, as long as you re-add it somewhere else on your page
-close to the search input or search results. It's our way to let more people
-know about what we do, and how they could also have a fast and relevant search
-on their website.
+fine if you hide it through CSS, as long as you re-add it somewhere else on your
+page close to the search input or search results. It's our way to let more
+people know about what we do, and how they could also have a fast and relevant
+search on their website.
 
 If you're using your own [paid Algolia account][2] and [run the crawler
 yourself][3], you don't have to keep the logo.
@@ -88,8 +88,8 @@ other display.
 
 ## Advanced styling
 
-If you want to do more heavy styling, feel free to have a look at the [SCSS source
-code][4]. `_variables.scss` contains all the default theming, sizing and
+If you want to do more heavy styling, feel free to have a look at the [SCSS
+source code][4]. `_variables.scss` contains all the default theming, sizing and
 breakpoints.
 
 You can generate your own CSS file by cloning the repository and running

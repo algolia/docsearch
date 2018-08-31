@@ -8,8 +8,8 @@ large technical documentation. For that reason, we offering our free hosting
 version to all technical documentations.
 
 We're always sad to have to turn down applications, but with the number of
-requests we received everyday, we had to focus on several criteria. We
-hope you understand.
+requests we received everyday, we had to focus on several criteria. We hope you
+understand.
 
 ### The checklist
 
@@ -25,16 +25,17 @@ points.
 - Your website must be a **documentation website**. We do not index blogs and
   commercial content.
 
-- Your website must **have some final content**. We won't index empty websites nor
-  those filled with lorem ipsum placeholder content. Please, wait until you have
-  written some documentation before applying. We would be happy to help you as soon as you have a steady design.
+- Your website must **have some final content**. We won't index empty websites
+  nor those filled with lorem ipsum placeholder content. Please, wait until you
+  have written some documentation before applying. We would be happy to help you
+  as soon as you have a steady design.
 
 If in doubt, don't hesitate to [apply][1] and we'll figure it out together.
 
 Even if we cannot accept your request, this does not mean that you cannot enjoy
 great search on your website. DocSearch is entirely open source and [you can run
-it yourself][2], or use any of [our other API clients][3] to take advantage of the
-Algolia's features.
+it yourself][2], or use any of [our other API clients][3] to take advantage of
+the Algolia's features.
 
 ### Priority
 
@@ -50,11 +51,10 @@ following criteria:
 
 - ☹️ If your website is rendered in the browser through JavaScript, it means
   that we'll have to crawl it through a much slower browser emulation. We highly
-  recommend that you put in place server-side rendering for the useful textual content.
+  recommend that you put in place server-side rendering for the useful textual
+  content.
 
 [1]: ./apply.html
 [2]: ./run-your-own.html
 [3]: https://www.algolia.com/doc/api-reference/
 [4]: ./integrations.html
-
-
