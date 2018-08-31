@@ -13,11 +13,11 @@ _Note: We would rather avoid useless js rendering. Every used information should
 be avaible without any client-side rendering. You can use `curl` in order to
 have a better idea of how does it look._
 
-### We extract the payload thank to your set of `selectors`
+### We extract the payload thanks to your set of `selectors`
 
 <img src="./assets/how_do_we_build_docsearch_index_2.png" alt="2nd step" class="mt-2"/>
 
-We will only focus on the information highlted thank to your selectors.
+We will focus on the information highlted via your selectors.
 
 ### We iterate though the HTML flow and build the payload
 
@@ -28,9 +28,9 @@ This payload will be the only considered data from your page.
 ### We iterate though the payload and start pushing record
 
 <img src="./assets/how_do_we_build_docsearch_index_4.png" alt="4th step" class="mt-2"/>
- 
-We index the temporary record at every time we agregate an element int it (if
-`min_indexed_level` is set to `0` ).
+
+We index the temporary record at every time we add an element int it (if
+`min_indexed_level` is set to `0` )
 
 ### We pile them up based on the current temporary record
 
