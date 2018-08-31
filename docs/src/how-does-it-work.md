@@ -27,7 +27,7 @@ or ignore, as well as the specific CSS selectors to be used for selecting
 headers, subheaders, etc. All configs are publicly available in our [config
 repository][1].
 
-This step still requires some manual work, but thanks to the 900+ configs we
+This step still requires some manual work, but thanks to the 1 000+ configs we
 already created, we're able to automate most of it. Once done, we'll run a first
 indexing of your website and have it run automatically every 24h.
 
@@ -39,7 +39,7 @@ your Algolia index on each keystroke in a dropdown menu.
 
 The default styling of the dropdown uses a grey theme to fit in most designs.
 The dropdown itself is made of HTML with custom CSS classes and we recommend
-that you overwrite those classes to provide a theming more inline with the rest
+that [you overwrite those classes][3] to provide a theming more inline with the rest
 of your website.
 
 Now that DocSearch is set, you don't have anything else to do. We'll keep
@@ -49,3 +49,4 @@ results.
 
 [1]: https://github.com/algolia/docsearch-configs/tree/master/configs
 [2]: apply.html
+[3]: styling.html

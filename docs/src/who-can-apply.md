@@ -50,7 +50,7 @@ following criteria:
 
 - ☹️ If your website is rendered in the browser through JavaScript, it means
   that we'll have to crawl it through a much slower browser emulation. We highly
-  recommend that you put in place server-side rendering if you can.
+  recommend that you put in place server-side rendering for the useful textual content.
 
 [1]: ./apply.html
 [2]: ./run-your-own.html

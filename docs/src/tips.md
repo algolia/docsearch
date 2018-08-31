@@ -76,5 +76,49 @@ class to the `Installation` and `Troubleshooting` links in your sidebar.
 The name of the CSS class does not matter, as long as it's something that can be
 used as part of a CSS selector.
 
+## Consistency of your content
+
+Consistency is a pillar of a meaningful documentation. In addition to increasing
+the **intelligibility** of a document it also shortens the time required for a user
+to find the coveted information. The document's **topic** should be easily **identifiable**
+and its **outline** sharply demarcated.
+
+The hierarchy should always have the same size. Try to **avoid orphan records**
+such like the implicit introduction/conclusion or asides. The selectors must be
+efficient for **every document** and highlight the proper hierarchy.
+They need to match only the coveted elements depending on their level.
+Be careful to avoid the **edge effect** by matching unexpected **superfluous elements**.
+
+Selectors should only match information from **real document webpage**
+and remain ineffective for others ones (e.g., landing page, table of content, etc.).
+We urge the maintainer to define a **dedicated class** for the **main DOM container**
+that includes the actual document content such as `.docSearch-content`
+
+Since documentation should be **interactive**, it is a key point to
+**verbalize concepts with standardized words**.
+This **redundancy**, empowered with the **search experience** (dropdown),
+will even enable the **learn-as-you-type experience**.
+The **way to find the information** plays a key role in **leading** the user to the
+**retrieved knowledge itself**. You can also use the **synonym feature**.
+
+
+## Avoid duplicates by promoting unicity
+
+The more time-consuming reading documentation is, the more painful and reluctant its use will be.
+You must avoid hazy points or catch-all. In addition to it being unhelpful,
+the catch-all document may be **confusing** and **counterproductive**.
+
+Last but not least duplicates introduce noise and mislead users. This is why
+you should always focus on the relevant content and avoid duplicating content
+within your site (e.g. landing page which contains all of the information, summing up, etc.).
+In cases where the duplicates's existence is expected since it belongs to another
+dataset (e.g. a different version), you should use [facets](https://www.algolia.com/doc/guides/searching/faceting/).
+
+## Conciseness
+
+What is clearly thought out is clearly and concisely expressed.
+
+We really recommend you to read this blog post about [how to build a helpful search for techniacal documentation][2].
+
 [1]: https://www.sitemaps.org/index.html
-https://blog.algolia.com/how-to-build-a-helpful-search-for-technical-documentation-the-laravel-example/
+[2]: https://blog.algolia.com/how-to-build-a-helpful-search-for-technical-documentation-the-laravel-example/

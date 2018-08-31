@@ -240,8 +240,8 @@ Other special keys can be set, as documented below.
 
 The default way of extracting content through selectors is to read the HTML
 markup from top to bottom. This works well with semi-structured content, like a
-hierarchy of headers. This breaks when relevant information is not part of the
-same node flow. For example when the title is in a header or a sidebar.
+hierarchy of headers. This breaks when the relevant information is not part of the
+same flow. For example when the title is apart in a header or a sidebar.
 
 For that reason, you can set a selector as global, meaning that it will match on
 the whole page, and will be the same for all records extracted on this page.
@@ -308,8 +308,7 @@ CSS selectors are a clear and concise way to target elements of a page, but they
 have a limitations. For example, you cannot go _up_ the cascade with CSS.
 
 If you need a more powerful selector mecanism, you can write your selectors
-using XPath by setting `type: xpath`. You should also set `global: true` on the
-same selector.
+using XPath by setting `type: xpath`.
 
 The following example will look for a `li.chapter.active.done` and then go up
 two levels in the DOM until it found a `a`. The content of this `a` will then be
@@ -472,7 +471,7 @@ With the above config and the `sitemap.xml` below, both
 `http://www.example.com/docs/` and `http://www.example.com/docs/de/` will be
 crawled.
 
-```html
+```xml
   <url>
     <loc>http://www.example.com/docs/</loc>
     <xhtml:link rel="alternate" hreflang="de" href="http://www.example.com/de/"/>
