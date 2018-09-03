@@ -4,8 +4,8 @@ title: Dropdown Behavior
 ---
 
 Our JS library `docsearch.js` is a wrapper of the [autocomplete.js][1] library.
-This library will listen to keystrokes in the search input, query Algolia and
-displays the results in a dropdown. Everything is already configured for you to
+This library will listen to keystrokes in the search input, query Algolia, and
+display the results in a dropdown. Everything is already configured for you to
 work with DocSearch, but it also exposes configuration options you can use to go
 even further.
 
@@ -25,7 +25,7 @@ docsearch({
 ## `handleSelected`
 
 This method is called when a suggestion is selected. By default, DocSearch will
-redirect the browser to the result's page at the related anchor, but you can
+redirect the browser to the results page at the related anchor, but you can
 override it to add your own behavior.
 
 The method is called with three arguments:
@@ -78,8 +78,8 @@ docsearch({
 ## `autocompleteOptions`
 
 You can pass any option to the underlying `autocomplete.js` instance by using
-the `autocompleteOptions` parameter. You will find all the list of all available
-value in its [the official documentation][2].
+the `autocompleteOptions` parameter. You will find the list of all available
+values in [the official documentation][2].
 
 You can also listen to `autocomplete` events through the `.autocomplete`
 property of the `docsearch` instance.
