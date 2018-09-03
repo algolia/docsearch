@@ -3,7 +3,7 @@ layout: two-columns
 title: FAQ
 ---
 
-If you're not finding the answer to your question in the website, this page will
+If you're not finding the answer to your question on this website, this page will
 help you. If you're still unsure, don't hesitate to send [your question to
 us][1] directly.
 
@@ -21,8 +21,8 @@ Nothing.
 
 The DocSearch crawler is running on our own infra. It will read the HTML content
 from your website and populate an Algolia index with it every day. All you need
-to do is keep your website online, and we take care of the rest. If you wante to
-edit your configuration; please submit a pull request.
+to do is keep your website online, and we take care of the rest. If you want to
+edit your configuration, please submit a pull request.
 
 ### How much does it cost?
 
@@ -34,28 +34,29 @@ All we ask in exchange is that you keep the _powered by [Algolia][2]_ logo
 displayed next to the search results.
 
 If this is not possible for you, you're free to [open your own Algolia
-account][3] and run DocSearch on your own without this limitation. In that case
+account][3] and run DocSearch on your own without this limitation. In that case,
 though, depending on the size of your documentation, you might need a paid
 account ([free accounts][4] can hold as much as 10k records).
 
 ### What data are you collecting?
 
-The data we save in the index is the data we extract from your website markup,
-in a custom JSON format instead of HTML. Which part of the page is defined in
-your custom config.
+We only save the data we extract from your website markup, 
+which we put in a custom JSON format instead of HTML.
+This is the only data we put in the Algolia DocSearch index.
+This data is based on the selectors defined in your config file,
 
 As the website owner, we also give you access to the Algolia Analytics
-dashboard, that will let you have more data about the anonymized searches that
+dashboard. This will let you have more data about the anonymized searches that
 were done on your website. You'll see the most searched terms, or those with no
 results.
 
-You will understand what people do not.
+With such Analytiucs, you will understand better what your users are doing.
 
 _If you don't have Analytics access, [send us an email][1] and we'll enable it._
 
 ### Where is my data hosted?
 
-All DocSearch data is hosted on Algolia's servers, with replication around the
+All DocSearch data is hosted on Algolia's servers, with replications around the
 globe. You can find more details about the actual [server specs here][5], and
 more complete information in our [privacy policy][6].
 
@@ -96,11 +97,11 @@ as those starting with `http://`.
 }
 ```
 
-### A documentation I like does not use DocSearch. What can I do?
+### A documentation website I like does not use DocSearch. What can I do?
 
 We'd love to help!
 
-If one of your favorite tool documentation is missing DocSearch, we encourage
+If one of your favorite tool documentation websites is missing DocSearch, we encourage
 you to file an issue in their repository explaining how DocSearch could help.
 Feel free to ping `@docsearch` on GitHub in the issue as well, and we'll provide
 all the help we can.
