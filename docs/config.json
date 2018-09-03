@@ -9,11 +9,9 @@
   "placeholders": {
     "docSearchJSVersion": "2"
   },
- "sidebar": [
-    {
-      "title": “Getting Started”,
-      "pages": [
-        {
+  "sidebar": [{
+      "title": "Getting Started",
+      "pages": [{
           "title": "What is DocSearch?",
           "url": "what-is-docsearch.html"
         },
@@ -28,14 +26,13 @@
         {
           "title": "Apply Now!",
           "url": "apply.html"
-        },
+        }
       ]
     },
     {
-      "title": “Adding DocSearch To Your UI",
-      "pages": [
-        {
-          "title": “Dropdown UI Overview",
+      "title": "Adding DocSearch To Your UI",
+      "pages": [{
+          "title": "Dropdown UI Overview",
           "url": "dropdown.html"
         },
         {
@@ -43,15 +40,14 @@
           "url": "styling.html"
         },
         {
-          "title": “Behavior",
+          "title": "Behavior",
           "url": "behavior.html"
         }
       ]
     },
     {
-      "title": “Tips, FAQ, Misc”,
-      "pages": [
-        {
+      "title": "Tips, FAQ, Misc",
+      "pages": [{
           "title": "Tips",
           "url": "tips.html"
         },
@@ -60,16 +56,15 @@
           "url": "faq.html"
         },
         {
-          "title": "Website Generators“,
+          "title": "Website Generators",
           "url": "integrations.html"
         }
       ]
     },
     {
-      "title": “Let’s Get Technical",
-      "pages": [
-        {
-          "title": “DocSearch Technical Overview (the Crawler)“,
+      "title": "Let’s Get Technical",
+      "pages": [{
+          "title": "DocSearch Technical Overview (the Crawler)",
           "url": "crawler-overview.html"
         },
         {
@@ -79,7 +74,7 @@
         {
           "title": "Config Files",
           "url": "config-file.html"
-        },{
+        }, {
           "title": "Build An Index",
           "url": "how-do-we-build-an-index.html"
         },
@@ -90,8 +85,7 @@
       ]
     }
   ],
-  "redirects": [
-    {
+  "redirects": [{
       "from": "documentation/index.html",
       "to": "what-is-docsearch.html"
     },
@@ -132,18 +126,15 @@
       "to": "config-file.html"
     },
     {
-      "from":
-        "documentation/docsearch-autocomplete/customize-autocomplete-styles/index.html",
+      "from": "documentation/docsearch-autocomplete/customize-autocomplete-styles/index.html",
       "to": "styling.html"
     },
     {
-      "from":
-        "documentation/docsearch-autocomplete/configuring-the-search/index.html",
+      "from": "documentation/docsearch-autocomplete/configuring-the-search/index.html",
       "to": "behavior.html"
     },
     {
-      "from":
-        "documentation/docsearch-FAQ/customize-configuration-file/index.html",
+      "from": "documentation/docsearch-FAQ/customize-configuration-file/index.html",
       "to": "config-file.html"
     },
     {
