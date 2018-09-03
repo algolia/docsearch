@@ -77,13 +77,13 @@ docsearch({
 
 ## Other considerations
 
-Selected suggestions are wrapped in a `.ds-cursor` class. This means that you can
-use `.ds-cursor .algolia-docsearch-suggestion--content` to style the selected
-suggestion for example.
+Selected suggestions are wrapped in a `.ds-cursor` class. This means that you
+can use `.ds-cursor .algolia-docsearch-suggestion--content` to style the
+selected suggestion for example.
 
 On small screens, DocSearch reverts to a single column layout, while the
-two-column layout shown in the screenshot is used on larger screens. You can
-add media queries (for example `@media (min-width: 768px) {}`) to target different
+two-column layout shown in the screenshot is used on larger screens. You can add
+media queries (for example `@media (min-width: 768px) {}`) to target different
 displays.
 
 ## Advanced styling

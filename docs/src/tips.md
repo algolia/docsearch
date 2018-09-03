@@ -4,14 +4,14 @@ title: Tips for a good search
 ---
 
 DocSearch can work with almost any website, but we found that some site
-structures yield more relevant result or faster indexing time. In this page we'll
-share some tips on how you can make the most out of DocSearch.
+structures yield more relevant result or faster indexing time. In this page
+we'll share some tips on how you can make the most out of DocSearch.
 
 ### Use a `sitemap.xml`
 
-If you provide a sitemap in your configuration, DocSearch will use it to
-diretly browse the pages to index. Pages are still crawled which means we
-extract every compliant link.
+If you provide a sitemap in your configuration, DocSearch will use it to diretly
+browse the pages to index. Pages are still crawled which means we extract every
+compliant link.
 
 We highly recommend you add a `sitemap.xml` to your website if you don't have
 one already. This will make the indexing faster, but will also give you more
@@ -54,8 +54,8 @@ This will help narrow selectors to the relevant content.
 
 Having such a unique identifier will make your configuration more robust as it
 will make sure all indexed content is relevant content. We found that this is
-the most reliable way to exclude content in headers, sidebars, and footers that are
-not relevant to the search.
+the most reliable way to exclude content in headers, sidebars, and footers that
+are not relevant to the search.
 
 ### Add anchors to headings
 

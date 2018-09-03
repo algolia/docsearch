@@ -8,8 +8,8 @@ large technical documentation. For that reason, we are offering a free hosting
 version to all online technical documentation.
 
 We're always sad to have to turn down applications, but with the number of
-requests we receive everyday, we've had to focus on several criteria. We hope you
-understand.
+requests we receive everyday, we've had to focus on several criteria. We hope
+you understand.
 
 ### The checklist
 
@@ -40,8 +40,8 @@ Algolia's features.
 ### Priority
 
 We're receiving dozens of requests every day, and while we strive to answer them
-all as fast as we can, we sometimes give priority to some based on the
-following criteria:
+all as fast as we can, we sometimes give priority to some based on the following
+criteria:
 
 - 🙂 If your project is open source, we'll handle it before any other
   closed-source product. We love open source and want to help as much as we can.

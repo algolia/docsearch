@@ -3,8 +3,8 @@ layout: two-columns
 title: Inside the engine
 ---
 
-This page will explain in more detail how the crawler extracts content from
-your page every 24h, and how it ranks the results.
+This page will explain in more detail how the crawler extracts content from your
+page every 24h, and how it ranks the results.
 
 ## Crawling
 
@@ -24,8 +24,8 @@ settings, we extract the payload of your web page and index it, preserving your
 data's structure. This is achieved in a simple way:
 
 - We **read top down** your web page following your HTML flow and pick out your
-  matching elements according to their **levels** based on the
-  `selectors_level` defined.
+  matching elements according to their **levels** based on the `selectors_level`
+  defined.
 - We create a record for each paragraph along with its hierarchical path. This
   construction is based on their **time of appearance** along the flow.
 - We **index** these records with the appropriate global settings (e.g.
@@ -65,5 +65,4 @@ your config.
 [1]: https://www.sitemaps.org/
 [2]:
   https://www.algolia.com/doc/guides/ranking/ranking-formula/#tie-breaking-approach
-
-[3]:[https://www.algolia.com/doc/guides/ranking/custom-ranking/]
+[3]: https://www.algolia.com/doc/guides/ranking/custom-ranking/

@@ -4,18 +4,18 @@ title: Supported Integrations
 ---
 
 We worked with **documentation website generators** to have DocSearch directly
-embedded as a first class citizen in the websites they produce. 
+embedded as a first class citizen in the websites they produce.
 
-So, if you're using one of the following tools, 
-checkout their documentation to see how to enable DocSearch on your website:
+So, if you're using one of the following tools, checkout their documentation to
+see how to enable DocSearch on your website:
 
 - [Docusaurus][1] - [How to enable search][2]
 - [VuePress][3] - [Algolia Search][4]
 - [GitBook][5]
 - [pkgdown][6] - [DocSearch indexing][7]
 
-Additionally, if you're a maintaining a similar tool and would like to be added to the list,
-get [in touch with us][8]. We'd be happy to help.
+Additionally, if you're a maintaining a similar tool and would like to be added
+to the list, get [in touch with us][8]. We'd be happy to help.
 
 [1]: https://docusaurus.io/
 [2]: https://docusaurus.io/docs/en/search#docsNav

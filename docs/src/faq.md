@@ -3,8 +3,8 @@ layout: two-columns
 title: FAQ
 ---
 
-If you're not finding the answer to your question on this website, this page will
-help you. If you're still unsure, don't hesitate to send [your question to
+If you're not finding the answer to your question on this website, this page
+will help you. If you're still unsure, don't hesitate to send [your question to
 us][1] directly.
 
 ### How often will you crawl my website?
@@ -40,10 +40,10 @@ account ([free accounts][4] can hold as much as 10k records).
 
 ### What data are you collecting?
 
-We only save the data we extract from your website markup, 
-which we put in a custom JSON format instead of HTML.
-This is the only data we put in the Algolia DocSearch index.
-This data is based on the selectors defined in your config file,
+We only save the data we extract from your website markup, which we put in a
+custom JSON format instead of HTML. This is the only data we put in the Algolia
+DocSearch index. This data is based on the selectors defined in your config
+file,
 
 As the website owner, we also give you access to the Algolia Analytics
 dashboard. This will let you have more data about the anonymized searches that
@@ -101,10 +101,10 @@ as those starting with `http://`.
 
 We'd love to help!
 
-If one of your favorite tool documentation websites is missing DocSearch, we encourage
-you to file an issue in their repository explaining how DocSearch could help.
-Feel free to ping `@docsearch` on GitHub in the issue as well, and we'll provide
-all the help we can.
+If one of your favorite tool documentation websites is missing DocSearch, we
+encourage you to file an issue in their repository explaining how DocSearch
+could help. Feel free to ping `@docsearch` on GitHub in the issue as well, and
+we'll provide all the help we can.
 
 [1]: mailto:docsearch@algolia.com
 [2]: https://www.algolia.com/

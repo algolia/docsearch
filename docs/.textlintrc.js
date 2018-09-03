@@ -10,7 +10,7 @@ module.exports = {
       exclude: [
         'relative to', // We need to talk about links "relative to the root",
         'pick out', // Needed word, not to clumsy
-        'encounter' // Needed word, not to clumsy
+        'encounter', // Needed word, not to clumsy
       ],
     },
     terminology: {
