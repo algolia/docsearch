@@ -15,7 +15,7 @@ records. This means that `h1`...`h6` (`selectors`) titles will be used for the
 hierarchy, and each `p` of text will be used as a potential result.
 
 Those CSS selectors can be overwritten, and each website actually has its own
-JSON configuration file that describe in more details how the crawling should
+JSON configuration file that describes in more detail how the crawling should
 behave. You can find the complete list of options in [our documentation][2].
 
 ### When?
