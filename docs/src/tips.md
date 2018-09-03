@@ -4,12 +4,12 @@ title: Tips for a good search
 ---
 
 DocSearch can work with almost any website, but we found that some site
-structure yield more relevant result or faster indexing time. In this page we'll
+structures yield more relevant result or faster indexing time. In this page we'll
 share some tips on how you can make the most out of DocSearch.
 
 ### Use a `sitemap.xml`
 
-If you provide a sitemap from your configuration, DocSearch will use it to
+If you provide a sitemap in your configuration, DocSearch will use it to
 diretly browse the pages to index. Pages are still crawled which means we
 extract every compliant link.
 
@@ -34,11 +34,11 @@ specific than concepts discussed under a `<h2>` in the same page. The sooner the
 information comes up within the page, the higher is it ranked.
 
 DocSearch uses this structure to fine-tune the relevance of results as well as
-to provide potential filtering. Documentation that follow this pattern often
-have better relevance of search results.
+to provide potential filtering. Documentation that follows this pattern often
+has better relevance in its search results.
 
 Finding the right depth of your documentation tree and how to split-up your
-content is one of the most complex tasks. For large documents, we recommend
+content are two of the most complex tasks. For large documents, we recommend
 having 4 levels (from lvl0 until lvl3). Three different levels should be a
 minimum.
 
@@ -54,7 +54,7 @@ This will help narrow selectors to the relevant content.
 
 Having such a unique identifier will make your configuration more robust as it
 will make sure all indexed content is relevant content. We found that this is
-the most reliable way to exclude headers, sidebars and footers content that are
+the most reliable way to exclude content in headers, sidebars, and footers that are
 not relevant to the search.
 
 ### Add anchors to headings
@@ -82,18 +82,18 @@ used as part of a CSS selector.
 
 ## Consistency of your content
 
-Consistency is a pillar of a meaningful documentation. To increase the
+Consistency is a pillar of meaningful documentation. To increase the
 **intelligibility** of a document it also shortens the time required for a user
 to find the coveted information. The document's **topic** should be
 **identifiable** and its **outline** demarcated.
 
 The hierarchy should always have the same size. Try to **avoid orphan records**
-such like the implicit introduction/conclusion or asides. The selectors must be
+such as the implicit introduction/conclusion, or asides. The selectors must be
 efficient for **every document** and highlight the proper hierarchy. They need
 to match the coveted elements depending on their level. Be careful to avoid the
 **edge effect** by matching unexpected **superfluous elements**.
 
-Selectors should match information from **real document web page** and stay
+Selectors should match information from **real document web pages** and stay
 ineffective for others ones (e.g., landing page, table of content, etc.). We
 urge the maintainer to define a **dedicated class** for the **main DOM
 container** that includes the actual document content such as
@@ -123,8 +123,8 @@ dataset (for example a different version), you should use
 
 What is clearly thought out is clearly and concisely expressed.
 
-We really recommend you to read this blog post about [how to build a helpful
-search for techniacal documentation][2].
+We really recommend that you read this blog post about [how to build a helpful
+search for technical documentation][2].
 
 [1]: https://www.sitemaps.org/index.html
 [2]:
