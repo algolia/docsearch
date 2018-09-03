@@ -4,16 +4,16 @@ title: Who can apply?
 ---
 
 DocSearch was built from the ground up with the idea of improving search on
-large technical documentation. For that reason, we offering our free hosting
-version to all technical documentations.
+large technical documentation. For that reason, we are offering a free hosting
+version to all online technical documentation.
 
 We're always sad to have to turn down applications, but with the number of
-requests we received everyday, we had to focus on several criteria. We hope you
+requests we receive everyday, we've had to focus on several criteria. We hope you
 understand.
 
 ### The checklist
 
-To have your request validated, we'll ask that you valide all the following
+To have your request validated, we'll ask that you validate all the following
 points.
 
 - You must be the **owner** of the website, or at least have the power to update
@@ -22,7 +22,7 @@ points.
 - Your website must be **publicly available**. We do not host index for websites
   that are available behind an authentication or a private network.
 
-- Your website must be a **documentation website**. We do not index blogs and
+- Your website must be a **documentation website**. We do not index blogs or
   commercial content.
 
 - Your website must **have some final content**. We won't index empty websites
@@ -35,16 +35,16 @@ If in doubt, don't hesitate to [apply][1] and we'll figure it out together.
 Even if we cannot accept your request, this does not mean that you cannot enjoy
 great search on your website. DocSearch is entirely open source and [you can run
 it yourself][2], or use any of [our other API clients][3] to take advantage of
-the Algolia's features.
+Algolia's features.
 
 ### Priority
 
 We're receiving dozens of requests every day, and while we strive to answer them
-all as fast as we can, we sometimes give priority to some of them based on the
+all as fast as we can, we sometimes give priority to some based on the
 following criteria:
 
-- 🙂 If your project is open source, We'll handle it before any other
-  close-source product. We love open source and want to help as much as we can.
+- 🙂 If your project is open source, we'll handle it before any other
+  closed-source product. We love open source and want to help as much as we can.
 
 - 🙂 If you're using one of our [official integrations][4], creating your config
   will be much faster for us.
