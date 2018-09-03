@@ -16,7 +16,8 @@ module.exports = {
       terms: `${__dirname}/.textlint.terms.json`,
     },
     'write-good': {
-      passive: false,
+      passive: true,
+      severity: 'warning',
     },
   },
 };
