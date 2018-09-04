@@ -3,15 +3,15 @@ layout: two-columns
 title: Dropdown Behavior
 ---
 
-`docsearch.js` is a wrapper around the [autocomplete.js][1] library. This
-library will listen to keystrokes in the search input, query Algolia and display
-the results in a dropdown. Everything is already configured for you to work with
-DocSearch, but it also exposes configuration options you can use to go even
-further.
+Our JS library `docsearch.js` is a wrapper of the [autocomplete.js][1] library.
+This library will listen to keystrokes in the search input, query Algolia, and
+display the results in a dropdown. Everything is already configured for you to
+work with DocSearch, but it also exposes configuration options you can use to go
+even further.
 
 ## `appId`
 
-If you're running the DocSearch crawler yourself, you'll need to define your
+If you're running the DocSearch crawler on your own, you'll need to define your
 application ID using the `appId` key. If you're using the free hosted version,
 you don't need to add anything.
 
@@ -25,8 +25,8 @@ docsearch({
 ## `handleSelected`
 
 This method is called when a suggestion is selected. By default, DocSearch will
-redirect the browser to the page matching part of the page, but you can override
-it to add your own behavior.
+redirect the browser to the results page at the related anchor, but you can
+override it to add your own behavior.
 
 The method is called with three arguments:
 
@@ -50,7 +50,7 @@ docsearch({
 
 This method will be called on every keystroke to transform the typed keywords
 before sending them to Algolia. By default, it does not do anything, but we
-provide this hook for you to add your own logic if you want.
+provide this hook for you to add your own logic if needed.
 
 ```javascript
 docsearch({
@@ -78,8 +78,8 @@ docsearch({
 ## `autocompleteOptions`
 
 You can pass any option to the underlying `autocomplete.js` instance by using
-the `autocompleteOptions` parameter. You will find all the list of all available
-value in its [the official documentation][2].
+the `autocompleteOptions` parameter. You will find the list of all available
+values in [the official documentation][2].
 
 You can also listen to `autocomplete` events through the `.autocomplete`
 property of the `docsearch` instance.
