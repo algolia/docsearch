@@ -8,7 +8,9 @@ module.exports = {
     'en-capitalization': true,
     'stop-words': {
       exclude: [
-        'relative to', // We need to talk about links "relative to the root"
+        'relative to', // We need to talk about links "relative to the root",
+        'pick out', // Needed word, not to clumsy
+        'encounter', // Needed word, not to clumsy
       ],
     },
     terminology: {
@@ -16,7 +18,8 @@ module.exports = {
       terms: `${__dirname}/.textlint.terms.json`,
     },
     'write-good': {
-      passive: false,
+      passive: true,
+      severity: 'warning',
     },
   },
 };

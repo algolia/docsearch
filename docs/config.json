@@ -74,6 +74,9 @@
         {
           "title": "Config files",
           "url": "config-file.html"
+        },{
+          "title": "Build an index",
+          "url": "how-do-we-build-an-index.html"
         },
         {
           "title": "Run your own",

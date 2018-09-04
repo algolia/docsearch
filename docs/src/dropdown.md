@@ -3,10 +3,12 @@ layout: two-columns
 title: Dropdown
 ---
 
-To add the dropdown of results next to your search input, you'll have to include
-the `docsearch.js` library into your website as per the following example. Your
-`apiKey` and `indexName` credentials will be given to you as soon as we've
-created your config.
+Once your Algolia DocSearch index is ready, correctly set up, and filled with
+the right data, you will need to integrate our dedicated Search-UI. To add the
+dropdown of results below your search input, you'll have to include our
+DocSearch library into your website as per the following example. Your `apiKey`
+and `indexName` credentials will be given to you as soon as we've created your
+config.
 
 ```html
 <!-- Before the closing </head> -->
@@ -26,6 +28,8 @@ created your config.
     // Replace inputSelector with a CSS selector
     // matching your search input
     inputSelector: '<YOUR_CSS_SELECTOR>',
+    // Set debug to true if you want to inspect the dropdown
+    debug: false
   });
 </script>
 ```
@@ -33,7 +37,7 @@ created your config.
 ## Testing
 
 If you're eager to test DocSearch but don't have credentials of your own yet,
-you can use the one we use on this own website:
+you can use the one we use on this website:
 
 ```javascript
 docsearch({
