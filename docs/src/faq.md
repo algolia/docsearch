@@ -97,14 +97,26 @@ as those starting with `http://`.
 }
 ```
 
+### Why are the custom changes from the Algolia dashboard ineffective?
+
+Changing your setting from the dashboard might be something you want to do for
+some reasons .
+
+Please be aware that your DocSearch settings are set at every time the crawler
+is successful. These settings will be overridden at the next crawl. We **do not
+recommend to edit anything from the dashboard**. These changes have be made from
+the JSON configuration itself.
+
+You can use the [custom_settings parameter][9] in such purpose.
+
 ### A documentation website I like does not use DocSearch. What can I do?
 
 We'd love to help!
 
 If one of your favorite tool documentation websites is missing DocSearch, we
 encourage you to file an issue in their repository explaining how DocSearch
-could help. Feel free to ping `@docsearch` on GitHub in the issue as well, and
-we'll provide all the help we can.
+could help. Feel free to [send us an email][1] as well, and we'll provide all
+the help we can.
 
 [1]: mailto:docsearch@algolia.com
 [2]: https://www.algolia.com/
@@ -112,5 +124,6 @@ we'll provide all the help we can.
 [4]: https://www.algolia.com/pricing#community
 [5]: https://www.algolia.com/doc/guides/infrastructure/servers/
 [6]: https://www.algolia.com/policies/privacy
-[7]: ./crawler-overview.html
+[7]: ./run-your-own.html
 [8]: https://www.algolia.com/doc/api-reference/
+[9]: ./config-file.html#custom_settings-optional
