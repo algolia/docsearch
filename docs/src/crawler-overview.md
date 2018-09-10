@@ -25,10 +25,10 @@ infrastructure, meaning that you don't need to install anything on your side. We
 run this service entirely free of charge, but we're asking that you keep the
 "powered by Algolia" logo next to the search results.
 
-That being said, if you'd like to run DocSearch on your own, [all the code is
-open source][3] and even packaged as a Docker image. Download it, and run it
-with your own credentials.
+That being said, if you'd like to [run DocSearch on your own][3], all the code
+is open source and even packaged as a Docker image. Download it, and run it with
+your own credentials.
 
 [1]: https://scrapy.org/
 [2]: ./crawler-config.html
-[3]: https://github.com/algolia/docsearch-scraper
+[3]: ./run-your-own.html
