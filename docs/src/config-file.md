@@ -53,6 +53,72 @@ not follow links that are on another domain and never follow links defined in
 }
 ```
 
+### `selectors_key`, tailor your selectors
+
+You can define finer sets of selectors depending on the URL. This is done thanks
+to the parameter `selectors_key` from your `start_urls` item.
+
+```json
+{
+  "start_urls": [
+    {
+      "url": "http://www.example.com/docs/faq/",
+      "selectors_key": "faq"
+    },
+    {
+      "url": "http://www.example.com/docs/"
+    }
+  ],
+  […],
+  "selectors": {
+    "default": {
+      "lvl0": ".docs h1",
+      "lvl1": ".docs h2",
+      "lvl2": ".docs h3",
+      "lvl3": ".docs h4",
+      "lvl4": ".docs h5",
+      "text": ".docs p, .docs li"
+    },
+    "faq": {
+      "lvl0": ".faq h1",
+      "lvl1": ".faq h2",
+      "lvl2": ".faq h3",
+      "lvl3": ".faq h4",
+      "lvl4": ".faq h5",
+      "text": ".faq p, .faq li"
+    }
+  }
+}
+```
+
+To find the right subset to use based on the URL, we iterate over these
+`start_urls` items. The first one matching is applied.
+
+Considering the URL `http://www.example.com/en/api/` with the configuration:
+
+```json
+{
+  "start_urls": [
+    {
+      "url": "http://www.example.com/doc/",
+      "selectors_key": "doc"
+    },
+    {
+      "url": "http://www.example.com/doc/faq/",
+      "selectors_key": "faq"
+    },
+   […],
+  ]
+}
+```
+
+Only the set of selector related to "doc" will be applied to the URL. The
+correct configuration should be build the other way around (as primarily
+described).
+
+If one `start_urls` item has no `selectors_key` defined, the `default` set will
+be used. Do not forget to precise this fallback.
+
 ### Using regular expressions
 
 The `start_urls` option also allows for passing an object in place of a string,
@@ -90,6 +156,7 @@ docsearch({
   algoliaOptions: {
     'facetFilters': ["lang:en", "version:latest"]
   },
+  […],
 });
 ```
 
@@ -110,6 +177,8 @@ filter based on their values as well.
   ]
 }
 ```
+
+From your JS snippet:
 
 ```js
 docsearch({
