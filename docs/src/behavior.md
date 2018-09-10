@@ -11,9 +11,9 @@ even further.
 
 ## `appId`
 
-If you're running the DocSearch crawler on your own, you'll need to define your
-application ID using the `appId` key. If you're using the free hosted version,
-you don't need to add anything.
+If you're [running the DocSearch crawler on your own][2], you'll need to define
+your application ID using the `appId` key. If you're using the free hosted
+version, you don't need to add anything.
 
 ```javascript
 docsearch({
@@ -79,7 +79,7 @@ docsearch({
 
 You can pass any option to the underlying `autocomplete.js` instance by using
 the `autocompleteOptions` parameter. You will find the list of all available
-values in [the official documentation][2].
+values in [the official documentation][3].
 
 You can also listen to `autocomplete` events through the `.autocomplete`
 property of the `docsearch` instance.
@@ -100,10 +100,10 @@ search.autocomplete.on('autocomplete:opened', event => {
 ## `algoliaOptions`
 
 You can pass options to the Algolia API by using the `algoliaOptions` key. You
-will find all Algolia API options in their [own documentation][3].
+will find all Algolia API options in their [own documentation][4].
 
 For example, you might want to increase the number of results displayed in the
-dropdown. [`hitsPerPage` set the number of shown hits][4].
+dropdown. [`hitsPerPage` set the number of shown hits][5].
 
 ```javascript
 docsearch({
@@ -115,6 +115,7 @@ docsearch({
 ```
 
 [1]: https://github.com/algolia/autocomplete.js
-[2]: https://github.com/algolia/autocomplete.js#options
-[3]: https://www.algolia.com/doc/api-reference/api-parameters/
-[4]: https://www.algolia.com/doc/api-reference/api-parameters/hitsPerPage/
+[2]: ./run-your-own.html
+[3]: https://github.com/algolia/autocomplete.js#options
+[4]: https://www.algolia.com/doc/api-reference/api-parameters/
+[5]: https://www.algolia.com/doc/api-reference/api-parameters/hitsPerPage/
