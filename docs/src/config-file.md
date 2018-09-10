@@ -112,7 +112,7 @@ Considering the URL `http://www.example.com/en/api/` with the configuration:
 }
 ```
 
-Only the set of selector related to "doc" will be applied to the URL. The
+Only the set of selector related to `doc` will be applied to the URL. The
 correct configuration should be build the other way around (as primarily
 described).
 
