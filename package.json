@@ -43,7 +43,7 @@
     "babel-istanbul": "0.12.2",
     "babel-jest": "23.4.2",
     "babel-loader": "7.1.5",
-    "babel-plugin-rewire": "1.1.0",
+    "babel-plugin-rewire": "1.2.0",
     "babel-preset-env": "1.7.0",
     "babel-preset-stage-3": "6.24.1",
     "conventional-changelog-cli": "2.0.5",
