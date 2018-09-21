@@ -680,9 +680,9 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@fullhuman/postcss-purgecss@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@fullhuman/postcss-purgecss/-/postcss-purgecss-1.0.1.tgz#e3269e9e2824d815f83a35ab0b5312ceb18b419b"
+"@fullhuman/postcss-purgecss@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@fullhuman/postcss-purgecss/-/postcss-purgecss-1.1.0.tgz#fa423630e01b09604de42637f89eac72471b8961"
   dependencies:
     purgecss "^1.0.0"
 
