@@ -39,7 +39,7 @@
     "autoprefixer": "9.1.1",
     "babel-cli": "6.26.0",
     "babel-core": "6.26.3",
-    "babel-eslint": "8.2.6",
+    "babel-eslint": "9.0.0",
     "babel-istanbul": "0.12.2",
     "babel-jest": "23.6.0",
     "babel-loader": "7.1.5",
