@@ -62,7 +62,7 @@
     "node-sass": "4.9.3",
     "onchange": "4.1.0",
     "postcss-cli": "6.0.0",
-    "prettier": "1.14.2",
+    "prettier": "1.14.3",
     "pretty-bytes-cli": "2.0.0",
     "semver": "5.5.1",
     "sinon": "6.3.3",
