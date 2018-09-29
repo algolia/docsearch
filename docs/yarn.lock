@@ -4972,7 +4972,14 @@ remark-cli@5.0.0:
     remark "^9.0.0"
     unified-args "^5.0.0"
 
-remark-frontmatter@1.2.1, remark-frontmatter@^1.1.0, remark-frontmatter@^1.2.0:
+remark-frontmatter@1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/remark-frontmatter/-/remark-frontmatter-1.3.0.tgz#daa33e88e2354197184878acbde528b1160b79b2"
+  dependencies:
+    fault "^1.0.1"
+    xtend "^4.0.1"
+
+remark-frontmatter@^1.1.0, remark-frontmatter@^1.2.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/remark-frontmatter/-/remark-frontmatter-1.2.1.tgz#6427e8da41d8e78b1b955a0af46ca71350085f50"
   dependencies:
