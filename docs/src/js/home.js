@@ -7,6 +7,9 @@ window.onload = function() {
     apiKey: '5990ad008512000bba2cf951ccf0332f',
     indexName: 'bootstrap',
     inputSelector: '.docsearch-live-demo-input',
+    algoliaOptions: {
+      facetFilters: ['version:4.1'],
+    },
     enhancedSearchInput: true,
     debug: false,
   });
@@ -55,11 +58,21 @@ window.onload = function() {
     perView: 16,
     autoplay: 1300,
     breakpoints: {
-      400: { perView: 4 },
-      600: { perView: 6 },
-      800: { perView: 8 },
-      1000: { perView: 10 },
-      1200: { perView: 12 },
+      400: {
+        perView: 4,
+      },
+      600: {
+        perView: 6,
+      },
+      800: {
+        perView: 8,
+      },
+      1000: {
+        perView: 10,
+      },
+      1200: {
+        perView: 12,
+      },
     },
   }).mount();
 };
