@@ -2075,11 +2075,11 @@ eslint-config-algolia@13.2.3:
   version "13.2.3"
   resolved "https://registry.yarnpkg.com/eslint-config-algolia/-/eslint-config-algolia-13.2.3.tgz#e157431033e4d47c3fe1fc4486eb24198dde33a4"
 
-eslint-config-prettier@2.10.0:
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-2.10.0.tgz#ec07bc1d01f87d09f61d3840d112dc8a9791e30b"
+eslint-config-prettier@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-3.1.0.tgz#2c26d2cdcfa3a05f0642cd7e6e4ef3316cdabfa2"
   dependencies:
-    get-stdin "^5.0.1"
+    get-stdin "^6.0.0"
 
 eslint-import-resolver-node@^0.3.1:
   version "0.3.2"
