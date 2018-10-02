@@ -47,7 +47,7 @@
     "pify": "3.0.0",
     "postcss": "6.0.23",
     "postcss-clean": "1.1.0",
-    "postcss-import": "11.1.0",
+    "postcss-import": "12.0.0",
     "postcss-nested": "3.0.0",
     "prettier": "1.14.3",
     "pug": "2.0.3",
