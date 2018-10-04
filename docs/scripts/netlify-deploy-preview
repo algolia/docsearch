@@ -14,3 +14,13 @@ echo "COMMIT_REF: $COMMIT_REF"
 echo "CONTEXT: $CONTEXT"
 echo "REVIEW_ID: $REVIEW_ID"
 
+
+echo "All branches"
+git branch -a
+
+echo "Difference with master"
+git diff master...$BRANCH
+
+echo "Files changed"
+git diff --name-status master
+
