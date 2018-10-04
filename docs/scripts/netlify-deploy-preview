@@ -1,23 +1,18 @@
 #!/usr/bin/env sh
-# This script will be triggered on every new PR (see netlify.toml for details)
-# It will check if the PR contains changes in the ./docs folder and if so, will
-# create a deploy preview of it.
-# If no change were made in the ./docs folder, then no preview will be generated
-# (which will make the process much faster).
+# This script is triggered on every new PR (see netlify.toml for details)
+# It will create a live preview of the PR
 set -e
 
-echo "REPOSITORY_URL: $REPOSITORY_URL"
-echo "BRANCH: $BRANCH"
-echo "PULL_REQUEST: $PULL_REQUEST"
-echo "HEAD: $HEAD"
-echo "COMMIT_REF: $COMMIT_REF"
-echo "CONTEXT: $CONTEXT"
-echo "REVIEW_ID: $REVIEW_ID"
+# Environment variables exposed by Netlify:
+# https://www.netlify.com/docs/continuous-deployment/#build-environment-variables
+# $REPOSITORY_URL, $BRANCH, $PULL_REQUEST, $HEAD, $COMMIT_REF, $CONTEXT,
+# $REVIEW_ID
 
-
-echo "All branches"
-git branch -a
-
-echo "Files changed"
-git diff --name-status master
-
+# We build a very simple preview if no change were made to the docs
+cd ./docs
+if ! git diff --name-status master | grep 'docs/' 1>/dev/null; then
+  mkdir -p ./dist
+  echo "No deploy preview available as this PR does not change the documentation." > ./dist/index.html
+else
+  yarn run build
+fi
