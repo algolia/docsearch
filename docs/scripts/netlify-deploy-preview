@@ -19,7 +19,7 @@ echo "All branches"
 git branch -a
 
 echo "Difference with master"
-git diff master...$BRANCH
+git diff master...$HEAD
 
 echo "Files changed"
 git diff --name-status master
