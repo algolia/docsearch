@@ -36,6 +36,25 @@ any changes were made in the `./docs` subfolder. If no changes were made, it
 will finish, otherwise it will build the website and push it to
 `gh-pages`.
 
+### Deploy previews
+
+Any new Pull Request to the documentation will trigger a deploy preview build.
+
+Netlify is configured to run `./scripts/netlify-deploy-preview` on each new PR
+(check `netlify.toml` for details).
+
+This script will first check if changes were made to the `./docs` subfolder in
+the PR. If no change were made, the preview will not be generated (this will
+make processing time faster).
+
+Whenever the preview is ready, a message from Algobot will be added to the PR,
+along with the link to the preview. This is configured in Netlify UI in _Build
+and Deploy > Deploy notifications > Comment on GitHub pull request when deploy
+succeeds_. It uses a GitHub token from Algobot to post on its behalf. To
+generate such a token, login to Netlify with Algobot and pretend to create such
+a notification on any project, generate a token, and then copy-paste it in the
+real DocSearch account in Netlify.
+
 ## Internals
 
 The documentation generation is not using any existing static websites

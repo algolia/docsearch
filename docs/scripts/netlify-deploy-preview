@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+# This script will be triggered on every new PR (see netlify.toml for details)
+# It will check if the PR contains changes in the ./docs folder and if so, will
+# create a deploy preview of it.
+# If no change were made in the ./docs folder, then no preview will be generated
+# (which will make the process much faster).
+set -e
+
+echo "REPOSITORY_URL: $REPOSITORY_URL"
+echo "BRANCH: $BRANCH"
+echo "PULL_REQUEST: $PULL_REQUEST"
+echo "HEAD: $HEAD"
+echo "COMMIT_REF: $COMMIT_REF"
+echo "CONTEXT: $CONTEXT"
+echo "REVIEW_ID: $REVIEW_ID"
+
