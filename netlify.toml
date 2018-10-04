@@ -11,5 +11,5 @@
 
 # Deploy previews on each PR
 [context.deploy-preview]
-  command = "yarn run docs:build"
+  command = "./docs/scripts/netlify-deploy-preview"
   publish = "docs/dist"
