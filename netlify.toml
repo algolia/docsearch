@@ -8,3 +8,8 @@
 # Deploy documentation website on each commit on master
 [context.master]
   command = "./scripts/netlify-master"
+
+# Deploy previews on each PR
+[context.deploy-preview]
+  command = "yarn run docs:build"
+  publish = "docs/dist"
