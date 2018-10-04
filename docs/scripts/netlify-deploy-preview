@@ -18,9 +18,6 @@ echo "REVIEW_ID: $REVIEW_ID"
 echo "All branches"
 git branch -a
 
-echo "Difference with master"
-git diff master...$HEAD
-
 echo "Files changed"
 git diff --name-status master
 
