@@ -4,7 +4,7 @@
 #
 # Note: Check the following link for a list of available environment variables:
 # https://www.netlify.com/docs/continuous-deployment/#build-environment-variables
-set -ex
+set -x
 
 if [ "$CONTEXT" != "deploy-preview" ]; then
   echo "This script should only be run on Netlify."
