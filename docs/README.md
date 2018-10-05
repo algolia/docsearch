@@ -89,8 +89,23 @@ All Markdown files situated in `./src` will be transformed into `.html` files in
 All the headers will be converted to their respective `<hX>` tag, along with a
 unique `#id` to allow for easy anchoring.
 
-You can also use plain HTML inside those Markdown files if you need more
-advanced styling.
+You can use plain HTML inside those Markdown files if you need more advanced
+styling. The custom `{my-class}` syntax is also possible if to add CSS classes
+to elements.
+
+```markdown
+This is my paragraph. {p-2}
+
+![Pretty image](./img.jpg) {mt-2}
+```
+
+```html
+<p class="p-2">This is my paragraph</p>
+
+<p class="mt-2">
+  <img src="./img.jpg" alt="Pretty image" />
+</p>
+```
 
 ### Layouts
 
