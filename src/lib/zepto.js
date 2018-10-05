@@ -1,2 +1,2 @@
-import zepto from 'autocomplete.js/zepto.js';
+import zepto from 'autocomplete.js/zepto';
 export default zepto;

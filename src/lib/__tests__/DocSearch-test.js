@@ -1,8 +1,8 @@
 /* eslint no-new:0 */
 /* eslint-disable max-len */
 import sinon from 'sinon';
-import $ from '../zepto.js';
-import DocSearch from '../DocSearch.js';
+import $ from '../zepto';
+import DocSearch from '../DocSearch';
 
 describe('DocSearch', () => {
   beforeEach(() => {

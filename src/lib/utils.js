@@ -1,4 +1,4 @@
-import $ from './zepto.js';
+import $ from './zepto';
 
 const utils = {
   /*
