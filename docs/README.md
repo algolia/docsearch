@@ -3,6 +3,8 @@
 This subdirectory holds the documentation website content as well as scripts to
 generate it.
 
+This should generate a live preview.
+
 ## Main commands
 
 ### Building the website
