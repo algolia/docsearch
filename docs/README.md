@@ -22,7 +22,7 @@ repository root.
 This will build the website in `./dist` and expose it on `localhost`, along with
 live-reload.
 
-### Deploying the website
+### Deploying the website manually
 
 You can deploy the website manually by running `yarn run deploy` in this
 directory or `yarn run docs:deploy` at the repository root.
@@ -30,11 +30,29 @@ directory or `yarn run docs:deploy` at the repository root.
 This will build the website and then commit the content of the `./dist` folder
 to the `gh-pages` branch and push it to GitHub.
 
-Netlify is configured to listen to all commits on `master` and
-run `netlify-master` (see`netlify.toml` in the root). This script will check if
-any changes were made in the `./docs` subfolder. If no changes were made, it
-will finish, otherwise it will build the website and push it to
-`gh-pages`.
+### Auto-deploying
+
+Any new commit on `master` that modifies the `./docs` folder will
+automatically trigger a build and deploy it.
+
+It works by having Netlify listen to any new commit on `master` and running
+`./scripts/netlify-master` in response (see `netlify.toml` for details). Note
+that the website is **not** hosted on Netlify, but on GitHub Pages (more on that
+later).
+
+The script compares the date of the last commit in `./docs` with the date of the
+last deploy. If no new commits were added, it will stop. Otherwise, it will
+continue and build the website.
+
+To make this comparison, both this script and the manual deploy script add
+a `last_update` file to the `./dist` folder containing the timestamp of the last
+deploy. This file is then used to see if changes are present and should be
+deployed.
+
+Once the build is complete, the `./dist` folder is committed to the `gh-pages`
+branch and pushed to GitHub. This part requires some non-trivial `git` and `ssh`
+configuration commands to push data from Netlify to GitHub pages on our behalf
+(check `./scripts/netlify-master` for more details).
 
 ### Deploy previews
 
