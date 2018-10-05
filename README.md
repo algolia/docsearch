@@ -2,6 +2,8 @@
 
 The easiest way to add search to your documentation. For free.
 
+No live preview.
+
 [![npm version][2]](https://npmjs.org/package/docsearch.js)
 [![build][3]](https://travis-ci.org/algolia/docsearch)
 [![coverage][4]](https://coveralls.io/github/algolia/docsearch)
