@@ -92,7 +92,7 @@ You can test your results by running `./docsearch playground`. This will open a
 web page with a search input where you can do live tests against the indexed
 results.
 
-<img src="./assets/playground.png" alt="Playground" class="mt-2"/>
+![Playground](./assets/playground.png) {mt-2}
 
 _Note that if the command fails (it can happen on non-Mac machines), you can get
 the same result by running a live server in the `./playground` subdirectory.\`_

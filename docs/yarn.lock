@@ -3659,6 +3659,11 @@ markdown-it-anchor@5.0.2:
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/markdown-it-anchor/-/markdown-it-anchor-5.0.2.tgz#cdd917a05b7bf92fb736a6dae3385c6d0d0fa552"
 
+markdown-it-classy@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/markdown-it-classy/-/markdown-it-classy-0.2.0.tgz#832b43c9383003b8c15627198a4eef665943a50e"
+  integrity sha1-gytDyTgwA7jBVicZik7vZllDpQ4=
+
 markdown-it-highlightjs@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/markdown-it-highlightjs/-/markdown-it-highlightjs-3.0.0.tgz#ed3dd619ca2b98e6bf2112d163bf444043340210"
