@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 # This script is triggered on every new PR (see netlify.toml for details)
 # It will create a live preview of the PR
-set -e
+set -ex
 
 # Environment variables exposed by Netlify:
 # https://www.netlify.com/docs/continuous-deployment/#build-environment-variables
@@ -11,6 +11,7 @@ set -e
 # We build a very simple preview if no change were made to the docs
 cd ./docs
 if ! git diff --name-status master | grep 'docs/' 1>/dev/null; then
+  ls
   mkdir -p ./dist
   echo "No deploy preview available as this PR does not change the documentation." > ./dist/index.html
 else
