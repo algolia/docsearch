@@ -8,10 +8,11 @@ set -ex
 # $REPOSITORY_URL, $BRANCH, $PULL_REQUEST, $HEAD, $COMMIT_REF, $CONTEXT,
 # $REVIEW_ID
 
+git fetch master
+git diff --name-status master
+
 # We build a very simple preview if no change were made to the docs
 cd ./docs
-git branch -a
-git diff --name-status master
 if ! git diff --name-status master | grep 'docs/' 1>/dev/null; then
   mkdir -p ./dist
   echo "No deploy preview available as this PR does not change the documentation." > ./dist/index.html
