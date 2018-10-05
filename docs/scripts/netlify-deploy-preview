@@ -1,18 +1,31 @@
 #!/usr/bin/env sh
 # This script is triggered on every new PR (see netlify.toml for details)
 # It will create a live preview of the PR
+#
+# Note: Check the following link for a list of available environment variables:
+# https://www.netlify.com/docs/continuous-deployment/#build-environment-variables
 set -e
 
-# Environment variables exposed by Netlify:
-# https://www.netlify.com/docs/continuous-deployment/#build-environment-variables
-# $REPOSITORY_URL, $BRANCH, $PULL_REQUEST, $HEAD, $COMMIT_REF, $CONTEXT,
-# $REVIEW_ID
+if [ "$CONTEXT" != "deploy-preview" ]; then
+  echo "This script should only be run on Netlify."
+  exit 1
+fi
 
-# We build a very simple preview if no change were made to the docs
+# Compare current branch with master to see if there are changes in the docs/
+# folder
+git remote set-url origin https://github.com/algolia/docsearch.git
+git fetch
+git diff --name-status origin/master | grep 'docs/' 1>/dev/null
+DOCS_FOLDER_HAS_CHANGED=$?
+
 cd ./docs
-if ! git diff --name-status master | grep 'docs/' 1>/dev/null; then
+
+# No change, we create a simple preview
+if [ "$DOCS_FOLDER_HAS_CHANGED" = "1" ]; then
   mkdir -p ./dist
   echo "No deploy preview available as this PR does not change the documentation." > ./dist/index.html
-else
-  yarn run build
+  exit 0
 fi
+
+# Full build if documentation changed
+yarn run build
