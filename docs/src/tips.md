@@ -116,8 +116,7 @@ Duplicates introduce noise and mislead users. This is why you should always
 focus on the relevant content and avoid duplicating content within your site
 (for example landing page which contains all information, summing up, etc.). In
 cases where the duplicates's existence is expected since it belongs to another
-dataset (for example a different version), you should use
-[facets](https://www.algolia.com/doc/guides/searching/faceting/).
+dataset (for example a different version), you should use [facets][3].
 
 ## Conciseness
 
@@ -129,3 +128,4 @@ search for technical documentation][2].
 [1]: https://www.sitemaps.org/index.html
 [2]:
   https://blog.algolia.com/how-to-build-a-helpful-search-for-technical-documentation-the-laravel-example/
+[3]: https://www.algolia.com/doc/guides/searching/faceting/
