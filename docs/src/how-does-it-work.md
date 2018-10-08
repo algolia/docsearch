@@ -7,7 +7,7 @@ Getting up and ready with DocSearch is a straightforward process that requires
 three steps: you apply, we configure the crawler for you, and you integrate our
 Search-UI in your frontend. It is as simple as copying and pasting a snippet.
 
-<img src="./assets/docsearch-how-it-works.png" alt="How it works" class="mt-2"/>
+![How it works](./assets/docsearch-how-it-works.png) {mt-2}
 
 ### You apply
 

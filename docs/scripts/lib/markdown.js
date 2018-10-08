@@ -4,6 +4,7 @@ import path from 'path';
 import frontMatter from 'front-matter';
 import markdownIt from 'markdown-it';
 import markdownItAnchor from 'markdown-it-anchor';
+import markdownItClassy from 'markdown-it-classy';
 import markdownItHighlight from 'markdown-it-highlightjs';
 import cheerio from 'cheerio';
 import pug from 'pug';
@@ -17,6 +18,7 @@ const markdown = markdownIt({
     permalinkClass: 'anchor',
     permalinkSymbol: '',
   })
+  .use(markdownItClassy)
   .use(markdownItHighlight);
 
 export default {
