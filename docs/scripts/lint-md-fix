@@ -14,15 +14,18 @@ REMARK_MODE=fix \
 
 # We then check the actual natural language content of the file, to fix
 # misspellings, punctuation and other fixable issues.
-textlint \
+TEXTLINT_MODE=fix textlint \
   --fix \
+  --cache \
   ./*.md \
-  ./src/*.md 
+  ./src/*.md \
+  1>/dev/null
 
 # Finally, we'll run everything through prettier to make sure all files are
 # formatted the same way. This will remove trailing spaces, fit all content
 # under 80 char long lines, etc
 prettier \
+  --loglevel error \
   --write \
   ./*.md \
   ./src/*.md
