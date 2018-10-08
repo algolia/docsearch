@@ -7,7 +7,7 @@
 
 # Deploy documentation website on each commit on master
 [context.master]
-  command = "./scripts/netlify-master"
+  command = "./docs/scripts/netlify-master"
 
 # Deploy previews on each PR
 [context.deploy-preview]
