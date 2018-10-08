@@ -12,9 +12,8 @@ Search-UI in your frontend. It is as simple as copying and pasting a snippet.
 ### You apply
 
 The first thing you'll need to do is apply for DocSearch by filling out the form
-on this page (double check first that you qualify). We are
-receiving a lot of requests, so this form makes sure we won't be forgetting
-anyone.
+on this page (double check first that you qualify). We are receiving a lot of
+requests, so this form makes sure we won't be forgetting anyone.
 
 We guarantee that we will answer every request, but as we receive a lot of
 applications, please give us a couple of days to get back to you :)
