@@ -12,4 +12,4 @@
 # Deploy previews on each PR
 [context.deploy-preview]
   command = "./docs/scripts/netlify-deploy-preview"
-  publish = "docs/dist"
+  publish = "./docs/dist"

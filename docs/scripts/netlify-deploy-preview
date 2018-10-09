@@ -30,18 +30,21 @@ mkdir -p ./tmp
 rm -rf ./tmp/*
 
 # We build the website and store it
-yarn run docs:build
-mv ./docs/dist ./tmp/preview
+cd ./docs || return
+yarn run build
+mv ./dist ../tmp/preview
 
 # We go back on master and build the current version
 git checkout master
 yarn install
-yarn run docs:build
-mv ./docs/dist ./tmp/production
+pwd
+yarn run build
+mv ./dist ../tmp/production
+which diff2html
 
 # We go back on our branch and compare the two
 git checkout "preview"
-diff -ur ./tmp/production ./tmp/preview \
+diff -ur ../tmp/production ../tmp/preview \
   | diff2html --input stdin --output stdout \
-  > ./tmp/preview/diff.html
-mv ./tmp/preview ./docs/dist
+  > ../tmp/preview/diff.html
+mv ../tmp/preview ./dist
