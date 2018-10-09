@@ -1,17 +1,18 @@
 language: node_js
 sudo: false
 cache: yarn
+# We only run the build steps on pull requests and on pushes to master
 branches:
   only:
     master
-script:
-  - "${SCRIPT}"
 matrix:
   include:
-  # - name: "[docsearch.js] Linting"
-  #   env: SCRIPT=./scripts/travis/lint
+  - name: "[docsearch.js] Linting"
+    before_install: ./scripts/travis/lint-before-install
+    script: "./scripts/travis/lint"
   - name: "[docsearch.js] Testing"
-    env: SCRIPT=./scripts/travis/test
+    before_install: ./scripts/travis/test-before-install
+    script: "./scripts/travis/test"
   # - name: "[documentation] PR linting"
   #   env: SCRIPT=./docs/scripts/travis/lint
   # - name: "[documentation] PR build diff"

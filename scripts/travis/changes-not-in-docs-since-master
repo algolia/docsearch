@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Check if the current git repo has changes done outside of the ./docs folder
+# since last push to master
+CHANGES_OUTSIDE_OF_DOCS="$(git diff --name-only master | grep -v '^docs/')"
+if [ "$CHANGES_OUTSIDE_OF_DOCS" = "" ]; then
+  exit 1
+fi
+exit 0

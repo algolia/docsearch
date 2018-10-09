@@ -1,31 +1,8 @@
 #!/usr/bin/env bash
-set -x
+set -ex
 # This script will warn about failing tests in PR and will also be used to
 # display the GitHub badge.
 
-if ! ./scripts/travis/is-running; then
-  echo "This script can only be run from Travis."
-  exit 1
-fi
-
 ./scripts/travis/debug
 
-# On a PR, we only run if there are changes outside of the ./docs directory
-if ./scripts/travis/is-pr; then
-  echo $TRAVIS_PULL_REQUEST
-  echo $TRAVIS_PULL_REQUEST_BRANCH
-  echo $TRAVIS_BRANCH
-  echo $TRAVIS_COMMIT
-  echo $TRAVIS_COMMIT_RANGE
-  git diff --name-only master
-fi
- 
-# On master, we run everytime
-if ./scripts/travis/is-branch "master"; then
-  yarn run test || exit 1
-  exit 0
-fi
-
-# If we go that far, we're not in a PR nor on master.
-echo "This script only runs on Pull Requests or on master"
-exit 1
+yarn run test

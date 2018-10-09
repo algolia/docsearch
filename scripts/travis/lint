@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
-set -x
+set -ex
 # This script will display potential linting violations of DocSearch.js on PR.
-#
-# Stop if not running inside Travis
-# Stop if not in a PR
-# Stop if changes only apply to the ./docs
-exit 0
 
+./scripts/travis/debug
+
+yarn run lint
