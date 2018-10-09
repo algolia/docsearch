@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-echo "This fails"
-exit 1
-

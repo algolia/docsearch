@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# This script will deploy the documentation website whenever a change to it is
+# pushed to master
+#
+# Stop if not running inside Travis
+# Stop if not on master
+# Stop if no changes made to the ./docs
+exit 0
+

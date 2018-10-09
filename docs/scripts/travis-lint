@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# This script will warn about any lint violation when doing PRs to the docs
+#
+# Stop if not running inside Travis
+# Stop if not in a PR
+# Stop if no changes made to the ./docs
+exit 0
+

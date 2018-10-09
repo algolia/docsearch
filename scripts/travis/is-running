@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Check if running inside Travis
+if [ ! "$TRAVIS" = "true" ]; then
+  exit 1
+fi
+
+exit 0

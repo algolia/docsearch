@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+USER_BRANCH="$1"
+# Check if in the specified branch
+if [ ! "$TRAVIS_BRANCH" = "$USER_BRANCH" ]; then
+  exit 1
+fi
+
+exit 0

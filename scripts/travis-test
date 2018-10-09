@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-echo "This works"
-exit 0
-

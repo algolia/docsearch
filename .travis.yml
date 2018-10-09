@@ -1,11 +1,20 @@
 language: node_js
 sudo: false
 cache: yarn
+branches:
+  only:
+    master
 script:
   - "${SCRIPT}"
 matrix:
   include:
-  - name: "Testing"
-    env: SCRIPT=./scripts/travis-test
-  - name: "Linting"
-    env: SCRIPT=./scripts/travis-lint
+  # - name: "[docsearch.js] Linting"
+  #   env: SCRIPT=./scripts/travis/lint
+  - name: "[docsearch.js] Testing"
+    env: SCRIPT=./scripts/travis/test
+  # - name: "[documentation] PR linting"
+  #   env: SCRIPT=./docs/scripts/travis/lint
+  # - name: "[documentation] PR build diff"
+  #   env: SCRIPT=./docs/scripts/travis/build-diff
+  # - name: "[documentation] Deploying"
+  #   env: SCRIPT=./docs/scripts/travis/deploy
