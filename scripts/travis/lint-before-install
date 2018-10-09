@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -x
+exit 1
 
 # On a PR, we stop if the only changes are made in the ./docs folder.
 # No need to lint the code if we're only editing the documentation
