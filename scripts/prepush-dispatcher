@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# This will be called on every push to the repo and will trigger the appropriate
+# ./prepush script for the root project and the ./docs subfolder based on which
+# file were changed
+HAS_CHANGES_IN_ROOT="0"
+HAS_CHANGES_IN_DOCS="0"
+HAS_SCRIPT_IN_ROOT="0"
+HAS_SCRIPT_IN_DOCS="0"
+
+# Did we change files in root or docs?
+CHANGED_FILES="$(git diff --name-only master)"
+if echo "$CHANGED_FILES" | grep -qv '^docs/'; then
+  HAS_CHANGES_IN_ROOT="1"
+fi
+if echo "$CHANGED_FILES" | grep -q '^docs/'; then
+  HAS_CHANGES_IN_DOCS="1"
+fi
+
+# Do we have a prepush script in root or docs?
+if [ -x ./scripts/prepush ]; then
+  HAS_SCRIPT_IN_ROOT="1"
+fi
+if [ -x ./docs/scripts/prepush ]; then
+  HAS_SCRIPT_IN_DOCS="1"
+fi
+
+# Execute the needed scripts
+if [ $HAS_CHANGES_IN_ROOT = "1" ] && [ $HAS_SCRIPT_IN_ROOT = "1" ]; then
+  echo "Running prepush in ./"
+  ./scripts/prepush || exit 1
+fi
+if [ $HAS_CHANGES_IN_DOCS = "1" ] && [ $HAS_SCRIPT_IN_DOCS = "1" ]; then
+  echo "Running prepush in ./docs"
+  ./docs/scripts/prepush || exit 1
+fi
+
+

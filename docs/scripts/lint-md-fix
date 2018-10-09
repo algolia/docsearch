@@ -1,15 +1,21 @@
-#!/usr/bin/env sh
-set -e
+#!/usr/bin/env bash
 # This will attempt to automatically fix most of the Markdown linting issues
 # detected.
+set -e
+
+# Lint only file specified through FILES_TO_LINT (done in the pre-commit hook)
+# or fallback to all markdown files
+FILES_TO_LINT=($FILES_TO_LINT)
+if [ "${#FILES_TO_LINT[@]}" = "0" ]; then
+  FILES_TO_LINT=(./*.md ./src/*.md)
+fi
 
 # We will first transform the file according to remark config. This will mostly
 # convert inline links to references at the bottom of the file.
 REMARK_MODE=fix \
   remark \
     --quiet \
-    ./*.md \
-    ./src/*.md \
+    "${FILES_TO_LINT[@]}" \
     --output
 
 # We then check the actual natural language content of the file, to fix
@@ -17,8 +23,7 @@ REMARK_MODE=fix \
 TEXTLINT_MODE=fix textlint \
   --fix \
   --cache \
-  ./*.md \
-  ./src/*.md \
+  "${FILES_TO_LINT[@]}" \
   1>/dev/null
 
 # Finally, we'll run everything through prettier to make sure all files are
@@ -27,5 +32,4 @@ TEXTLINT_MODE=fix textlint \
 prettier \
   --loglevel error \
   --write \
-  ./*.md \
-  ./src/*.md
+  "${FILES_TO_LINT[@]}"

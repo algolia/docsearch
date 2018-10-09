@@ -1,23 +1,24 @@
-#!/usr/bin/env sh
-
-# This script is run before each commit on the repo and will try to fix linting
-# issues of the documentation.
-
-# This is run from ./docs folder, we need to go back to the git root to run the
-# git methods
-cd ../ || exit 1
-
-# We only run the auto-fix when changes are actually made to markdown files
-git diff --name-status master | grep '^\(.*\)docs/\(.*\).md$' 1>/dev/null
-DOCS_FOLDER_HAS_CHANGED=$?
-if [ "$DOCS_FOLDER_HAS_CHANGED" = "1" ]; then
+#!/usr/bin/env bash
+# We first check if, among the files ready to be committed, we have some
+# documentation markdown files.
+CHANGED_MARKDOWN_FILES="$(git diff --cached --name-only HEAD | grep '^docs/\(.*\).md$')"
+if [ "$CHANGED_MARKDOWN_FILES" = "" ]; then
+  echo "No markdown file changed"
   exit 0
 fi
 
-echo "Markdown documentation updated."
-echo "Running auto-lint..."
+# We now run the auto-fix linting on only those files
 cd ./docs || exit 1
-yarn run lint:md:fix
+echo "Running auto-lint..."
+# Converting the list into a list relative to the ./docs folder, all on one line
+RELATIVE_CHANGED_MARKDOWN_FILES="$(
+  echo "$CHANGED_MARKDOWN_FILES" \
+    | sed 's/^docs/./g' \
+    | tr '\n' ' '
+)"
+FILES_TO_LINT="$RELATIVE_CHANGED_MARKDOWN_FILES" yarn run lint:md:fix
 
-cd ../ || exit 1
-git add ./docs/**/*.md
+# We re-add those changed files to the index so they show up in the commit
+cd ..
+FILES_TO_ADD=($CHANGED_MARKDOWN_FILES)
+git add "${FILES_TO_ADD[@]}"

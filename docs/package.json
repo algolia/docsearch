@@ -9,8 +9,6 @@
     "lint:css": "./scripts/lint-css",
     "lint:md": "./scripts/lint-md",
     "lint:md:fix": "./scripts/lint-md-fix",
-    "precommit": "./scripts/precommit",
-    "prepush": "yarn lint",
     "serve": "babel-node ./scripts/serve.js"
   },
   "devDependencies": {
@@ -37,7 +35,6 @@
     "fs-extra": "7.0.0",
     "gh-pages": "1.2.0",
     "glob": "7.1.3",
-    "husky": "0.14.3",
     "inquirer": "6.2.0",
     "live-server": "1.2.0",
     "lodash": "4.17.11",
