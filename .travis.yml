@@ -1,6 +1,11 @@
 language: node_js
-script: "./scripts/test"
 sudo: false
-branches:
-  only:
-  - master
+cache: yarn
+script:
+  - "${SCRIPT}"
+matrix:
+  include:
+  - name: "Testing"
+    env: SCRIPT=./scripts/travis-test
+  - name: "Linting"
+    env: SCRIPT=./scripts/travis-lint
