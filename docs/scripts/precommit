@@ -8,7 +8,7 @@
 cd ../ || exit 1
 
 # We only run the auto-fix when changes are actually made to markdown files
-git diff --name-status master | grep '^\(.*\)docs/\(.*\).md$' 1>/dev/null
+git diff --name-status master | grep -q '^\(.*\)docs/\(.*\).md$'
 DOCS_FOLDER_HAS_CHANGED=$?
 if [ "$DOCS_FOLDER_HAS_CHANGED" = "1" ]; then
   exit 0

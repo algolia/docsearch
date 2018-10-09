@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 # This script is triggered on every new PR (see netlify.toml for details)
 # It will create a live preview of the PR
 #
@@ -6,27 +6,42 @@
 # https://www.netlify.com/docs/continuous-deployment/#build-environment-variables
 set -x
 
-if [ "$CONTEXT" != "deploy-preview" ]; then
-  echo "This script should only be run on Netlify."
-  exit 1
+# Add the git remote in case it does not exist (can be deleted between caches)
+if ! git config remote.origin.url > /dev/null; then
+  git remote add origin https://github.com/algolia/docsearch.git
 fi
 
-# Compare current branch with master to see if there are changes in the docs/
-# folder
-git remote set-url origin https://github.com/algolia/docsearch.git
-git fetch
-git diff --name-status origin/master | grep 'docs/' 1>/dev/null
-DOCS_FOLDER_HAS_CHANGED=$?
+# Make sure we have the latest version of master
+git fetch origin master
 
-cd ./docs || exit
-
-# No change, we create a simple preview
-if [ "$DOCS_FOLDER_HAS_CHANGED" = "1" ]; then
+# If no changes in the ./docs folder, we deploy a simple page
+if ! git diff --name-only origin/master | grep -q '^docs/'; then
   mkdir -p ./dist
   echo "No deploy preview available as this PR does not change the documentation." > ./dist/index.html
   exit 0
 fi
 
-# Full build if documentation changed
-yarn run build
+# We create a branch where we are to be able to get back to it later
+git branch -d "preview" &>/dev/null
+git checkout -b "preview"
 
+# We create a tmp folder where we'll copy our content
+mkdir -p ./tmp
+rm -rf ./tmp/*
+
+# We build the website and store it
+yarn run docs:build
+mv ./docs/dist ./tmp/preview
+
+# We go back on master and build the current version
+git checkout master
+yarn install
+yarn run docs:build
+mv ./docs/dist ./tmp/production
+
+# We go back on our branch and compare the two
+git checkout "preview"
+diff -ur ./tmp/production ./tmp/preview \
+  | diff2html --input stdin --output stdout \
+  > ./tmp/preview/diff.html
+mv ./tmp/preview ./docs/dist
