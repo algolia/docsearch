@@ -13,5 +13,5 @@ matrix:
   - name: "[docsearch.js] Testing"
     script: "./scripts/travis/test"
 
-  - name: "[documentation] PR linting"
+  - name: "[documentation] Linting"
     script: "./docs/scripts/travis/lint"

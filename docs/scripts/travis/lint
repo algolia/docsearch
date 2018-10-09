@@ -12,10 +12,12 @@ if ./scripts/travis/is-pr; then
   fi
 fi
 
-# No need to lint on master anyway
-if ./scripts/travis/on-master; then
-  echo "No need to lint pushes to master"
-  exit 0
+# No need to lint on direct pushes to master
+if ! ./scripts/travis/is-pr; then
+  if ./scripts/travis/on-master; then
+    echo "No need to lint pushes to master"
+    exit 0
+  fi
 fi
 
 cd ./docs || exit 1
