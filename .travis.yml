@@ -8,14 +8,10 @@ branches:
 matrix:
   include:
   - name: "[docsearch.js] Linting"
-    before_install: ./scripts/travis/lint-before-install
     script: "./scripts/travis/lint"
+
   - name: "[docsearch.js] Testing"
-    before_install: ./scripts/travis/test-before-install
     script: "./scripts/travis/test"
-  # - name: "[documentation] PR linting"
-  #   env: SCRIPT=./docs/scripts/travis/lint
-  # - name: "[documentation] PR build diff"
-  #   env: SCRIPT=./docs/scripts/travis/build-diff
-  # - name: "[documentation] Deploying"
-  #   env: SCRIPT=./docs/scripts/travis/deploy
+
+  - name: "[documentation] PR linting"
+    script: "./docs/scripts/travis/lint"

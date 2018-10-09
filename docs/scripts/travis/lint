@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -x
+# This script will display potential linting violations of the documentation on
+# PRs.
+
+# On a PR, we stop if no changes were made in the ./docs folder
+# No need to lint the documentation if it hasn't changed
+if ./scripts/travis/is-pr; then
+  if ! ./scripts/travis/changes-in-docs-since-master; then
+    echo "No changes were made to documentation. Skipping the linting."
+    exit 1
+  fi
+fi
+
+# No need to lint on master anyway
+if ./scripts/travis/on-master; then
+  echo "No need to lint pushes to master"
+  exit 0
+fi
+
+cd ./docs || exit 1
+yarn run lint || exit 1

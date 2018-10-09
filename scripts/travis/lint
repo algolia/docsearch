@@ -1,7 +1,20 @@
 #!/usr/bin/env bash
-set -ex
+set -x
 # This script will display potential linting violations of DocSearch.js on PR.
 
-./scripts/travis/debug
+# On a PR, we succeed quickly if the only changes are made in the ./docs folder.
+# No need to lint the code if we're only editing the documentation
+if ./scripts/travis/is-pr; then
+  if ! ./scripts/travis/changes-not-in-docs-since-master; then
+    echo "No changes were made to the main code. Skipping the linting."
+    exit 0
+  fi
+fi
 
-yarn run lint
+# No need to lint on master
+if ./scripts/travis/on-master; then
+  echo "No need to lint pushes to master"
+  exit 0
+fi
+
+yarn run lint || exit 1
