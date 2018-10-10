@@ -12,12 +12,12 @@ make this even easier for you to use.
 
 ## Installation
 
-Start by cloning [the repository][1] and then running `./docsearch docker:build`
-to create the local image.
+Start by cloning [the repository][1] and then installing the python 2
+dependencies using `pip install -r requirements.txt`. This will give you access
+to the `./docsearch` command-line tool.
 
-Even if not recommended, you can run DocSearch directly from you host. For that,
-you'll need to have `python` and `pip` installed, and then run
-`pip install --user -r requirements.txt`.
+We then recommend using DocSearch from inside a Docker image. You can setup one
+by running `./docsearch docker:build`.
 
 ## Configuration
 
@@ -92,7 +92,7 @@ You can test your results by running `./docsearch playground`. This will open a
 web page with a search input where you can do live tests against the indexed
 results.
 
-![Playground](./assets/playground.png) {mt-2}
+![Playground][6] {mt-2}
 
 _Note that if the command fails (it can happen on non-Mac machines), you can get
 the same result by running a live server in the `./playground` subdirectory.\`_
@@ -127,3 +127,4 @@ hosted version, so you might not need all the listed commands.
 [3]: ./config-file.html
 [4]: https://github.com/algolia/docsearch-configs/tree/master/configs
 [5]: ./dropdown.html
+[6]: ./assets/playground.png
