@@ -602,5 +602,17 @@ DocSearch to index all your content.
 }
 ```
 
+### `user_agent` _Optional_
+
+You can override the user agent used to crawl your website. By default, this
+value is:
+`'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36'`
+
+```json
+{
+  "user_agent": "Googlebot"
+}
+```
+
 [1]: https://github.com/algolia/docsearch-configs/tree/master/configs
 [2]: https://www.algolia.com/doc/api-reference/settings-api-parameters/

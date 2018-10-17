@@ -7,7 +7,7 @@ Getting up and ready with DocSearch is a straightforward process that requires
 three steps: you apply, we configure the crawler for you, and you integrate our
 Search-UI in your frontend. It is as simple as copying and pasting a snippet.
 
-![How it works](./assets/docsearch-how-it-works.png) {mt-2}
+![How it works][4] {mt-2}
 
 ### You apply
 
@@ -49,3 +49,4 @@ results.
 [1]: https://github.com/algolia/docsearch-configs/tree/master/configs
 [2]: apply.html
 [3]: styling.html
+[4]: ./assets/docsearch-how-it-works.png
