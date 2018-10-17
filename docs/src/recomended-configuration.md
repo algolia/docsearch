@@ -4,126 +4,99 @@ title: Recommended recommendation
 ---
 
 This is great news to know that you want to integrate DocSearch in your website.
-A good search experience is key to help your users discover your content
+A good search experience is key to help your users discover your content.
 
-This secrtion, [empowered by the details regarding how we build a DocSearch
+This section, [empowered by the details regarding how we build a DocSearch
 index][1], this section will give what is the requirements in order to have a
 great experience.
 
 ## Recommendations
 
 - My website should have [an updated sitemap][2]. This is key in order to let us
-  know what should be updated. Do not worry, we will stil crawl your website in
-  order to have a great content.
+  know what should be updated. Do not worry, we will still crawl your website
+  and discover embedded hyperlinks to find your great content.
 
 - Every pages needs to have her full context available. Using [metadata is
   meaningful][3].
 
 - Every `lvlx` DOM elements (matching your selectors) must have a unique `id` or
-  `name`. This will help the redirection to direclty scroll down to the exact
+  `name`. This will help the redirection to directly scroll down to the exact
   place of the matching elements.
 
-- Your website should not required some JavaScript rendering to generate the
+- Your website should not require some JavaScript rendering to generate the
   payload of your website (that-is-to-say your documentation). You can change
-  the user_agent parameter in order to do so.
+  [the `user_agent` parameter][4] in order to do so.
 
--
-- `API_KEY` should be set to your API Key. Make sure to use an API key with
-  **write** access to your index.
+- Use the recommended selectors. See below:
 
-For convenience, you can create a `.env` file in the repository root with the
-following format and DocSearch will use those values.
+### Recommended selectors
 
-```sh
-APPLICATION_ID=YOUR_APP_ID
-API_KEY=YOUR_API_KEY
-```
+Your HTML can add some specific static classes with no styling. These classes
+will not impact your content and will help us to create a great discovery
+experience. Impatient to know how?, read the following element.
 
-## Creating a new config
+- Add a static `docSearch-content` class to the biggest and smaller element
+  gathering your documentation. This element is the main container of your
+  textual content. It is mostly a main or article element.
 
-To create your config, run `./docsearch bootstrap`. A prompt will ask you for a
-some information and will then output a JSON config you can use as a base.
+- Every elements outside this main documentation container (e.g. in nav) should
+  be `global`. They should be sorted according to their `lvl` along the HTML
+  flow (i.e. `lvl0` appears before `lvl1`).
 
-```sh
-$ ./docsearch bootstrap
-# Enter your documentation url
-start url: http://www.example.com/docs/
-# You most probably don't need variables
-Does the start_urls require variables ? [y/n]: n
-# Pick another name, or press enter
-index_name is example [enter to confirm]: <Enter>
+- Use the standard title tags like `h1`, `h2`, `h3` ... Do not forget to set a
+  unique `id` or `name` attribute to these elements as described previously.
 
-=================
+- Stay consistent and do not follow that we need to have some regularity along
+  the HTML flow [as presented here][1].
+
+### Overview of a clear layout
+
+A website implementing these good practises will look simple and crystal clear.
+It can have this following aspect:
+
+![Recommended layout for your page][5] {mt-2}
+
+The biggest blue element will be you `docSearch-content` container. Every
+selectors outside this element will be `global`. Every selectors appear in the
+same order than their `lvl` along the HTML flow.
+
+### The genreic configuration example
+
+```json
 {
-  "index_name": "example",
-  "start_urls": [
-    "http://www.example.com/docs/"
-  ],
+  "index_name": "perfect_docsearch_website",
+  "start_urls": ["https://myperfectwebsite.io"],
+  "sitemap_urls": ["https://myperfectwebsite.io/sitemap.xml"],
   "stop_urls": [],
   "selectors": {
-    "lvl0": "FIXME h1",
-    "lvl1": "FIXME h2",
-    "lvl2": "FIXME h3",
-    "lvl3": "FIXME h4",
-    "lvl4": "FIXME h5",
-    "text": "FIXME p, FIXME li"
-  }
+    "lvl0": {
+      "selector": ".header .active",
+      "global": true,
+      "default_value": "Documentation"
+    },
+    "lvl1": {
+      "selector": "nav .active",
+      "global": true,
+      "default_value": "Chapter"
+    },
+    "lvl1": ".docSearch-content h1",
+    "lvl2": ".docSearch-content h2",
+    "lvl3": ".docSearch-content h3",
+    "lvl4": ".docSearch-content h4",
+    "text": ".docSearch-content p, .docSearch-content li"
+  },
+  "custom_settings": {
+    "attributesForFaceting": ["language(meta)", "version(meta)", "tags"]
+  },
+  "nb_hits": "OUTPUT OF THE CRAWL"
 }
-=================
 ```
 
-Copy-paste the content into a filename `example.json`, we'll use it later to
-start the crawling. You can find the complete list of available options in [our
-documentation][3], or browse the [list of live configs][4].
+Any question ? [Send us an email][6].
 
-## Running your config
-
-Now that you have your environment variables set, you can run the crawler
-according to your config.
-
-```sh
-$ ./docsearch docker:run /path/to/your/config.json
-```
-
-This will crawl all pages, extract content from them and then push it to
-Algolia.
-
-## Testing your results
-
-You can test your results by running `./docsearch playground`. This will open a
-web page with a search input where you can do live tests against the indexed
-results.
-
-![Playground][6] {mt-2}
-
-_Note that if the command fails (it can happen on non-Mac machines), you can get
-the same result by running a live server in the `./playground` subdirectory.\`_
-
-## Integration
-
-Once you're satisfied with your config, you can integrate the dropdown menu in
-your website by following the [instructions here][5].
-
-The difference is that you'll also have to add the `appId` key to your
-`docsearch()` instance. Also don't forget to use a **search** API key here (in
-other words, not the **write** API key you used for the crawling).
-
-```javascript
-docsearch({
-  appId: '<APP_ID>', // Add your own Application ID
-  apiKey: '<API_KEY>', // Set it to your own search API key
-  […] // Other settings are identical
-});
-```
-
-## Help
-
-You can run `./docsearch` without any argument to see the list of all available
-commands.
-
-Note that we use this command-line tool internally at Algolia to run the free
-hosted version, so you might not need all the listed commands.
-
-[1]: how-do-we-build-an-index.html
+[1]: ./how-do-we-build-an-index.html
 [2]: https://www.sitemaps.org/
 [3]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
+[4]: ./config-file.html
+[5]: ./assets/proper_layout.png
+[6]: mailto:docsearch@algolia.com

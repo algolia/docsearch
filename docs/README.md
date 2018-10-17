@@ -32,8 +32,8 @@ to the `gh-pages` branch and push it to GitHub.
 
 ### Auto-deploying
 
-Any new commit on `master` that modifies the `./docs` folder will
-automatically trigger a build and deploy it.
+Any new commit on `master` that modifies the `./docs` folder will automatically
+trigger a build and deploy it.
 
 It works by having Netlify listen to any new commit on `master` and running
 `./scripts/netlify-master` in response (see `netlify.toml` for details). Note
@@ -44,8 +44,8 @@ The script compares the date of the last commit in `./docs` with the date of the
 last deploy. If no new commits were added, it will stop. Otherwise, it will
 continue and build the website.
 
-To make this comparison, both this script and the manual deploy script add
-a `last_update` file to the `./dist` folder containing the timestamp of the last
+To make this comparison, both this script and the manual deploy script add a
+`last_update` file to the `./dist` folder containing the timestamp of the last
 deploy. This file is then used to see if changes are present and should be
 deployed.
 

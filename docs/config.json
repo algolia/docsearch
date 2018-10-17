@@ -48,6 +48,9 @@
     {
       "title": "Tips, FAQ, Misc",
       "pages": [{
+          "title": "Recommended configuration",
+          "url": "recomended-configuration.html"
+        }, {
           "title": "Tips",
           "url": "tips.html"
         },
