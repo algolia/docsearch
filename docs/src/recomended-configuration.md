@@ -60,7 +60,7 @@ The biggest blue element will be you `docSearch-content` container. Every
 selectors outside this element will be `global`. Every selectors appear in the
 same order than their `lvl` along the HTML flow.
 
-### The genreic configuration example
+### The generic configuration example
 
 ```json
 {
