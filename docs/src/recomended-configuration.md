@@ -6,7 +6,7 @@ title: Recommended configuration
 This is great news to know that you want to integrate DocSearch in your website.
 A good search experience is key to help your users discover your content.
 
-This section, [empowered by the details about how do we build a DocSearch
+This section, [empowered by the details about how we build a DocSearch
 index][1], gives you the best practices to optimize our crawl. It will enhance
 your user's journey.
 
@@ -22,11 +22,10 @@ your user's journey.
 - Every `lvlx` DOM elements (matching the selectors defined in your
   configuration) must have a unique `id` or `name`. This will help the
   redirection to directly scroll down to the exact place of the matching
-  elements.\[]
+  elements.
 
 - Your website should not require some JavaScript rendering to generate the
-  payload of your website (that-is-to-say your documentation). You can change
-  [the `user_agent` parameter][4] to do so.
+  payload of your website (that-is-to-say your documentation).
 
 - Use the recommended selectors. See below:
 
