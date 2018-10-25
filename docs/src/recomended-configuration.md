@@ -6,7 +6,7 @@ title: Recommended configuration
 This is great news to know that you want to integrate DocSearch in your website.
 A good search experience is key to help your users discover your content.
 
-This section, [empowered by the details regarding how we build a DocSearch
+This section, [empowered by the details about how do we build a DocSearch
 index][1], gives you the best practices to optimize our crawl. It will enhance
 your user's journey.
 
@@ -16,7 +16,7 @@ your user's journey.
   what should be updated. Do not worry, we will still crawl your website and
   discover embedded hyperlinks to find your great content.
 
-- Every pages needs to have her full context available. Using [metadata is
+- Every pages needs to have their full context available. Using [metadata is
   meaningful][3].
 
 - Every `lvlx` DOM elements (matching the selectors defined in your
@@ -26,7 +26,7 @@ your user's journey.
 
 - Your website should not require some JavaScript rendering to generate the
   payload of your website (that-is-to-say your documentation). You can change
-  [the `user_agent` parameter][4] in order to do so.
+  [the `user_agent` parameter][4] to do so.
 
 - Use the recommended selectors. See below:
 
@@ -40,9 +40,9 @@ experience. Impatient to know how?, read the following element.
   gathering your documentation. This element is the main container of your
   textual content. It is mostly a main or article element.
 
-- Every elements outside this main documentation container (e.g. in nav) should
-  be `global`. They should be sorted according to their `lvl` along the HTML
-  flow (i.e. `lvl0` appears before `lvl1`).
+- Every elements outside this main documentation container (for instance in nav)
+  should be `global`. They should be sorted according to their `lvl` along the
+  HTML flow (`lvl0` appears before `lvl1`).
 
 - Use the standard title tags like `h1`, `h2`, `h3` ... Do not forget to set a
   unique `id` or `name` attribute to these elements as previously described.
