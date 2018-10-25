@@ -1,27 +1,28 @@
 ---
 layout: two-columns
-title: Recommended recommendation
+title: Recommended configuration
 ---
 
 This is great news to know that you want to integrate DocSearch in your website.
 A good search experience is key to help your users discover your content.
 
 This section, [empowered by the details regarding how we build a DocSearch
-index][1], this section will give what is the requirements in order to have a
-great experience.
+index][1], gives you the best practices to optimize our crawl. It will enhance
+your user's journey.
 
 ## Recommendations
 
-- My website should have [an updated sitemap][2]. This is key in order to let us
-  know what should be updated. Do not worry, we will still crawl your website
-  and discover embedded hyperlinks to find your great content.
+- Your website should have [an updated sitemap][2]. This is key to let us know
+  what should be updated. Do not worry, we will still crawl your website and
+  discover embedded hyperlinks to find your great content.
 
 - Every pages needs to have her full context available. Using [metadata is
   meaningful][3].
 
-- Every `lvlx` DOM elements (matching your selectors) must have a unique `id` or
-  `name`. This will help the redirection to directly scroll down to the exact
-  place of the matching elements.
+- Every `lvlx` DOM elements (matching the selectors defined in your
+  configuration) must have a unique `id` or `name`. This will help the
+  redirection to directly scroll down to the exact place of the matching
+  elements.\[]
 
 - Your website should not require some JavaScript rendering to generate the
   payload of your website (that-is-to-say your documentation). You can change
@@ -44,7 +45,7 @@ experience. Impatient to know how?, read the following element.
   flow (i.e. `lvl0` appears before `lvl1`).
 
 - Use the standard title tags like `h1`, `h2`, `h3` ... Do not forget to set a
-  unique `id` or `name` attribute to these elements as described previously.
+  unique `id` or `name` attribute to these elements as previously described.
 
 - Stay consistent and do not follow that we need to have some regularity along
   the HTML flow [as presented here][1].
