@@ -24,8 +24,9 @@ your user's journey.
   redirection to directly scroll down to the exact place of the matching
   elements.
 
-- Your website should not require some JavaScript rendering to generate the
-  payload of your website (that-is-to-say your documentation).
+- Make sure your documentation content is available even without JavaScript
+  rendering on the client-side. If you absolutely need JavaScript turned on, you
+  need to [set js_render: true in your config][4].
 
 - Use the recommended selectors. See below:
 
@@ -47,14 +48,14 @@ experience. Impatient to know how?, read the following element.
   unique `id` or `name` attribute to these elements as previously described.
 
 - Stay consistent and do not follow that we need to have some regularity along
-  the HTML flow [as presented here][1].
+  the HTML flow [as presented here][5].
 
 ### Overview of a clear layout
 
 A website implementing these good practises will look simple and crystal clear.
 It can have this following aspect:
 
-![Recommended layout for your page][5] {mt-2}
+![Recommended layout for your page][6] {mt-2}
 
 The biggest blue element will be you `docSearch-content` container. Every
 selectors outside this element will be `global`. Every selectors appear in the
@@ -92,11 +93,12 @@ same order than their `lvl` along the HTML flow.
 }
 ```
 
-Any question ? [Send us an email][6].
+Any question ? [Send us an email][7].
 
 [1]: ./how-do-we-build-an-index.html
 [2]: https://www.sitemaps.org/
-[3]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
-[4]: ./config-file.html
-[5]: ./assets/proper_layout.png
-[6]: mailto:docsearch@algolia.com
+[3]: ./config-file.html#js_render-optional
+[4]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
+[5]: ./config-file.html
+[6]: ./assets/proper_layout.png
+[7]: mailto:docsearch@algolia.com
