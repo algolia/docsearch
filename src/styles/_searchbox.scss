@@ -1,12 +1,12 @@
 @function even-px($value) {
-  @if type-of($value) == "number" {
+  @if type-of($value) == 'number' {
     @if (unitless($value)) {
       $value: $value * 1px;
-    } @else if unit($value) == "em" {
+    } @else if unit($value) == 'em' {
       $value: ($value / 1em * 16px);
-    } @else if unit($value) == "pts" {
+    } @else if unit($value) == 'pts' {
       $value: $value * 1.3333 * 1px;
-    } @else if unit($value) == "%" {
+    } @else if unit($value) == '%' {
       $value: $value * 16 / 100% * 1px;
     }
     $value: round($value);
@@ -28,13 +28,13 @@
   $input-background: #f8f8f8,
   $input-focus-background: #fff,
   $placeholder-color: #aaa,
-  $icon: "sbx-icon-search-1",
+  $icon: 'sbx-icon-search-1',
   $icon-size: $input-height / 1.6,
   $icon-position: left,
   $icon-color: #888,
   $icon-background: $input-focus-border-color,
   $icon-background-opacity: 0.1,
-  $icon-clear: "sbx-icon-clear-1",
+  $icon-clear: 'sbx-icon-clear-1',
   $icon-clear-size: $font-size / 1.1
 ) {
   .searchbox {
@@ -69,12 +69,12 @@
       background: $input-background !important;
       padding: 0;
       padding-right: if(
-          $icon-position == "right",
+          $icon-position == 'right',
           even-px($input-height) + even-px($icon-clear-size) + 8px,
           even-px($input-height * 0.8)
         ) + if($icon-background-opacity == 0, 0, even-px($font-size));
       padding-left: if(
-        $icon-position == "right",
+        $icon-position == 'right',
         even-px($font-size / 2) + even-px($border-radius / 2),
         even-px($input-height) +
           if($icon-background-opacity == 0, 0, even-px($font-size * 1.2))
@@ -115,7 +115,7 @@
       margin: 0;
       border: 0;
       border-radius: if(
-        $icon-position == "right",
+        $icon-position == 'right',
         0 $border-radius $border-radius 0,
         $border-radius 0 0 $border-radius
       );
@@ -128,7 +128,7 @@
       text-align: center;
       font-size: inherit;
       user-select: none;
-      @if $icon-position == "right" {
+      @if $icon-position == 'right' {
         right: 0;
         left: inherit;
       } @else {
@@ -142,7 +142,7 @@
         margin-right: -4px;
         height: 100%;
         vertical-align: middle;
-        content: "";
+        content: '';
       }
 
       &:hover,
@@ -167,7 +167,7 @@
       position: absolute;
       top: (even-px($input-height) - even-px($icon-clear-size)) / 2 - 4px;
       right: if(
-        $icon-position == "right",
+        $icon-position == 'right',
         even-px($input-height) +
           if($icon-background-opacity == 0, 0, even-px($font-size)),
         (even-px($input-height) - even-px($icon-clear-size)) / 2 - 4px
