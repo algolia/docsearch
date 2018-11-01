@@ -304,11 +304,6 @@ class DocSearch {
     return suggestion => template.render(suggestion);
   }
 
-  handleSelected(input, event, suggestion) {
-    input.setVal('');
-    window.location.assign(suggestion.url);
-  }
-
   handleShown(input) {
     const middleOfInput = input.offset().left + input.width() / 2;
     let middleOfWindow = $(document).width() / 2;

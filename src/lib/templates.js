@@ -1,15 +1,19 @@
 const prefix = 'algolia-docsearch';
 const suggestionPrefix = `${prefix}-suggestion`;
 const footerPrefix = `${prefix}-footer`;
+const searchByAddress =
+  'https://www.algolia.com/static_assets/images/v3/shared/logos/algolia/search-by-algolia-light-background-8762ce8b.svg';
 
 /* eslint-disable max-len */
 
 const templates = {
   suggestion: `
-  <div class="${suggestionPrefix}
+  <a class="${suggestionPrefix}
     {{#isCategoryHeader}}${suggestionPrefix}__main{{/isCategoryHeader}}
     {{#isSubCategoryHeader}}${suggestionPrefix}__secondary{{/isSubCategoryHeader}}
-  ">
+    "
+    target="_blank" rel="noopener noreferrer" href="{{{url}}}"
+    >
     <div class="${suggestionPrefix}--category-header">
         <span class="${suggestionPrefix}--category-header-lvl0">{{{category}}}</span>
     </div>
@@ -25,7 +29,7 @@ const templates = {
       </div>
       {{/isTextOrSubcategoryNonEmpty}}
     </div>
-  </div>
+  </a>
   `,
   suggestionSimple: `
   <div class="${suggestionPrefix}
@@ -67,7 +71,9 @@ const templates = {
   `,
   footer: `
     <div class="${footerPrefix}">
-      Search by <a class="${footerPrefix}--logo" href="https://www.algolia.com/docsearch">Algolia</a>
+      <a class="${footerPrefix}--logo" aria-label="Search by algolia" href="https://www.algolia.com/docsearch">
+        <img src="${searchByAddress}" alt="Search by algolia" height="100%" width="100%">
+      </a>
     </div>
   `,
   empty: `
