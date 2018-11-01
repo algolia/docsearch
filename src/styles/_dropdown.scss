@@ -9,10 +9,10 @@
 
 // Spacing
 @function spacing($type) {
-  @if $type == "compact" {
+  @if $type == 'compact' {
     @return 12px;
   }
-  @if $type == "spacious" {
+  @if $type == 'spacious' {
     @return 22px;
   } @else {
     @return 16px;
@@ -30,34 +30,34 @@
 
 // Layout type
 @mixin layout-width($type) {
-  @if $type == "small" {
+  @if $type == 'small' {
     max-width: 500px;
     min-width: 400px;
   }
-  @if $type == "normal" {
+  @if $type == 'normal' {
     max-width: 600px;
     min-width: 500px;
   }
-  @if $type == "large" {
+  @if $type == 'large' {
     max-width: 800px;
     min-width: 600px;
   }
-  @if $type == "full" {
+  @if $type == 'full' {
     width: 100%;
   }
 }
 
 // Alignment type
 @mixin alignment-type($type) {
-  @if $type == "left" {
+  @if $type == 'left' {
     left: 0 !important;
     right: inherit !important;
   }
-  @if $type == "right" {
+  @if $type == 'right' {
     right: 0 !important;
     left: inherit !important;
   }
-  @if $type == "center" {
+  @if $type == 'center' {
     left: 0 !important;
     right: 0 !important;
     margin: auto !important;
@@ -66,10 +66,10 @@
 
 // Mixin - Shadow type
 @mixin shadow-type($type) {
-  @if $type == "light" {
+  @if $type == 'light' {
     box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.2), 0 2px 3px 0 rgba(0, 0, 0, 0.1);
   }
-  @if $type == "heavy" {
+  @if $type == 'heavy' {
     box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2),
       0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
@@ -88,7 +88,7 @@
   $main-color: #458ee1,
   $layout-width: normal,
   $layout-type: normal,
-  $layout-alignment: "align",
+  $layout-alignment: 'align',
   $background-color: #ffffff,
   $border-radius: 4,
   $border-width: 1,
@@ -105,7 +105,7 @@
   $include-desc: true,
   $background-category-header: #ffffff,
   $highlight-opacity: 0.1,
-  $highlight-type: "underline",
+  $highlight-type: 'underline',
   $code-background: #ebebeb,
   $responsive-breakpoint: 768px
 ) {
@@ -115,12 +115,12 @@
   $subtitle-size: 0.9em;
   $padding: spacing($spacing);
 
-  @if $font-size == "small" {
+  @if $font-size == 'small' {
     $header-size: 0.95em;
     $title-size: 0.8em;
     $text-size: 0.75em;
     $subtitle-size: 0.8em;
-  } @else if $font-size == "large" {
+  } @else if $font-size == 'large' {
     $header-size: 1.1em;
     $title-size: 1em;
     $text-size: 0.9em;
@@ -161,7 +161,7 @@
       &:before {
         display: block;
         position: absolute;
-        content: "";
+        content: '';
         width: 14px;
         height: 14px;
         background: $background-color;
@@ -198,7 +198,7 @@
         }
       }
 
-      [class^="ds-dataset-"] {
+      [class^='ds-dataset-'] {
         position: relative;
         border: solid $border-width + px $border-color;
         background: $background-color;
@@ -263,7 +263,7 @@
         cursor: pointer;
 
         &:before {
-          content: "";
+          content: '';
           position: absolute;
           display: block;
           top: 0;
@@ -302,7 +302,7 @@
         word-wrap: break-word;
 
         &:before {
-          content: "";
+          content: '';
           position: absolute;
           display: block;
           top: 0;
@@ -349,7 +349,7 @@
         color: #222222;
         background-color: $code-background;
         border-radius: 3px;
-        font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+        font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
       }
 
       // Rules to display categories and subcategories
@@ -385,7 +385,7 @@
             display: none;
           }
           &:after {
-            content: "|";
+            content: '|';
           }
         }
         .algolia-docsearch-suggestion--content {
@@ -438,7 +438,7 @@
 
             &::before {
               background-image: url('data:image/svg+xml;utf8,<svg width="10" height="10" viewBox="0 0 20 38" xmlns="http://www.w3.org/2000/svg"><path d="M1.49 4.31l14 16.126.002-2.624-14 16.074-1.314 1.51 3.017 2.626 1.313-1.508 14-16.075 1.142-1.313-1.14-1.313-14-16.125L3.2.18.18 2.8l1.31 1.51z" fill-rule="evenodd" fill="%231D3657" /></svg>');
-              content: "";
+              content: '';
               width: 10px;
               height: 10px;
               display: inline-block;
@@ -465,7 +465,7 @@
           font-weight: normal;
 
           &::before {
-            content: "#";
+            content: '#';
             font-weight: bold;
             color: $main-color;
             display: inline-block;
