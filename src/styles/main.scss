@@ -2,9 +2,9 @@
 @import "dropdown";
 @import "searchbox";
 
-$searchbox: true!default;
+$searchbox: true !default;
 
-@if($searchbox == true){
+@if ($searchbox == true) {
   @include searchbox($searchbox-config...);
 }
 
