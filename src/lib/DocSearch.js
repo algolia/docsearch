@@ -79,8 +79,6 @@ class DocSearch {
       this.autocompleteOptions.cssClasses.prefix || 'ds';
 
     // eslint-disable-next-line no-param-reassign
-    handleSelected = handleSelected || this.handleSelected;
-
     this.isSimpleLayout = layout === 'simple';
 
     this.client = algoliasearch(this.appId, this.apiKey);
@@ -100,10 +98,12 @@ class DocSearch {
         },
       },
     ]);
-    this.autocomplete.on(
-      'autocomplete:selected',
-      handleSelected.bind(null, this.autocomplete.autocomplete)
-    );
+    if (handleSelected) {
+      this.autocomplete.on(
+        'autocomplete:selected',
+        handleSelected.bind(null, this.autocomplete.autocomplete)
+      );
+    }
     this.autocomplete.on(
       'autocomplete:shown',
       this.handleShown.bind(null, this.input)
@@ -320,7 +320,6 @@ class DocSearch {
       middleOfInput - middleOfWindow < 0
         ? 'algolia-autocomplete-right'
         : 'algolia-autocomplete-left';
-
     const autocompleteWrapper = $('.algolia-autocomplete');
     if (!autocompleteWrapper.hasClass(alignClass)) {
       autocompleteWrapper.addClass(alignClass);
