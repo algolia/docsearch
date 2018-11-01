@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>DocSearch playground</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <!-- at the end of the HEAD -->
+    <link rel="stylesheet" href="http://127.0.0.1:8080/docsearch.min.css" />
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="mt-1">
+            <h1> Search thanks to the assests serves http://127.0.0.1:8080/ </h1>
+            <p>Do not forget to hard refresh: cmd + maj + R</p>
+
+        </div>
+        <div class="col-md-12">
+
+            <div class="input-group">
+                <div id="">
+                </div>
+                <input type="search" class="form-control" id="q">
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- at the end of the BODY -->
+    <script type="text/javascript" src="http://127.0.0.1:8080/docsearch.min.js"></script>
+    <script type="text/javascript"> docsearch({
+            apiKey: '25626fae796133dc1e734c6bcaaeac3c',
+            indexName: 'docsearch',
+            inputSelector: '#q',
+            debug: true // Set debug to true if you want to inspect the dropdown
+        });
+    </script>
+    <style>
+        .container {
+            margin: 10%;
+        }
+
+        .input-group {
+            width: 60%;
+            margin: auto;
+            margin-top: 10%;
+        }
+    </style>
+</body>
+
+</html>

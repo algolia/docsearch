@@ -3,7 +3,9 @@
 yarn run build:css
 
 echo "Find all files at http://127.0.0.1:8080/";
+open scripts/playground.html
 parallelshell \
   'webpack --config webpack.serve.config.babel.js -w' \
   'onchange "./src/styles/*.scss" -- yarn run build:css' \
   'live-server ./dist/cdn' \
+
