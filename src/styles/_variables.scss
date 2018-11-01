@@ -1,26 +1,26 @@
 // SEARCHBOX
 $searchbox-config: (
   input-width: 200px,
-	input-height: 32px,
-	border-width: 1px,
-	border-radius: 16px,
-	input-border-color: #CCCCCC,
-	input-focus-border-color: #AAAAAA,
-	input-background: #FFFFFF,
-	input-focus-background: #FFFFFF,
-	font-size: 12px,
-	placeholder-color: #AAAAAA,
-	icon-size: 14px,
-	icon-position: left,
-	icon-color: #6D7E96,
-	icon-background: #458EE1,
-	icon-background-opacity: 0,
-	icon-clear-size: 8px
+  input-height: 32px,
+  border-width: 1px,
+  border-radius: 16px,
+  input-border-color: #cccccc,
+  input-focus-border-color: #aaaaaa,
+  input-background: #ffffff,
+  input-focus-background: #ffffff,
+  font-size: 12px,
+  placeholder-color: #aaaaaa,
+  icon-size: 14px,
+  icon-position: left,
+  icon-color: #6d7e96,
+  icon-background: #458ee1,
+  icon-background-opacity: 0,
+  icon-clear-size: 8px
 ) !default;
 
 // DROPDOWN
 $dropdown-config: (
-  main-color: #458EE1,
+  main-color: #458ee1,
   layout-type: normal,
   layout-width: normal,
   layout-alignment: align,
@@ -32,14 +32,14 @@ $dropdown-config: (
   branding-position: bottom,
   spacing: normal,
   include-desc: yes,
-  background-category-header:  #ffffff,
+  background-category-header: #ffffff,
   font-size: normal,
-  header-color: #33363D,
-  title-color: #02060C,
-  subtitle-color: #A4A7AE,
-  text-color: #63676D,
-  highlight-color: #3881FF,
-  highlight-opacity: .1,
+  header-color: #33363d,
+  title-color: #02060c,
+  subtitle-color: #a4a7ae,
+  text-color: #63676d,
+  highlight-color: #3881ff,
+  highlight-opacity: 0.1,
   highlight-type: underline
 ) !default;
 
