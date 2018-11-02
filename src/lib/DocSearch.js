@@ -184,9 +184,13 @@ class DocSearch {
     } else {
       const selectors = selector.split(',');
       if (selectors.length === 1) {
-        return [$(selector).filter('input')];
+        const input = $(selector).filter('input');
+        return input.length ? [$(input[0])] : null;
       } else {
-        return selectors.map(s => $(s).filter('input'));
+        return selectors.map(s => {
+          const input = $(s).filter('input');
+          return input.length ? $(input[0]) : null;
+        });
       }
     }
   }
