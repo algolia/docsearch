@@ -1,8 +1,6 @@
 const prefix = 'algolia-docsearch';
 const suggestionPrefix = `${prefix}-suggestion`;
 const footerPrefix = `${prefix}-footer`;
-const searchByAddress =
-  'https://www.algolia.com/static_assets/images/v3/shared/logos/algolia/search-by-algolia-light-background-8762ce8b.svg';
 
 /* eslint-disable max-len */
 
