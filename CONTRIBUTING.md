@@ -2,6 +2,7 @@ Hi (future) collaborator!
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 **Table of Contents**
 
 - [Where to start?][1]
@@ -65,7 +66,6 @@ Refer to `./docs/README.md` for more information
 
 `npm run release` will guide you through the release process. Note that you have
 to use `npm` and not `yarn` for this one otherwise it won't deploy to npm.
-
 
 [1]: #where-to-start
 [2]: #development-workflow

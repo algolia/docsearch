@@ -11,6 +11,8 @@
     "docs:serve": "cd ./docs && yarn serve",
     "docs:deploy": "cd ./docs && yarn deploy",
     "lint": "./scripts/lint",
+    "format:scss": "prettier --write ./src/**/*.scss",
+    "format:md": "prettier --write '**/*.md'",
     "release": "./scripts/release",
     "release:beta": "./scripts/release-beta",
     "serve": "./scripts/serve",
