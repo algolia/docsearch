@@ -16,8 +16,8 @@ your user's journey.
   what should be updated. Do not worry, we will still crawl your website and
   discover embedded hyperlinks to find your great content.
 
-- Every pages needs to have their full context available. Using [metadata is
-  meaningful][3].
+- Every pages needs to have their full context available. Using global element
+  might help.
 
 - Every `lvlx` DOM elements (matching the selectors defined in your
   configuration) must have a unique `id` or `name`. This will help the
