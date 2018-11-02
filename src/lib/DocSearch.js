@@ -64,7 +64,7 @@ class DocSearch {
     this.apiKey = apiKey;
     this.appId = appId;
     this.indexName = indexName;
-    this.input = DocSearch.getInputsFromSelector(inputSelector);
+    this.inputs = DocSearch.getInputsFromSelector(inputSelector);
     this.algoliaOptions = { hitsPerPage: 5, ...algoliaOptions };
     const autocompleteOptionsDebug =
       autocompleteOptions && autocompleteOptions.debug
@@ -83,15 +83,13 @@ class DocSearch {
 
     this.client = algoliasearch(this.appId, this.apiKey);
     this.client.addAlgoliaAgent(`docsearch.js ${version}`);
-    let uniqInput = null;
-    console.log(this.input);
-    for (uniqInput in this.input) {
+
+    for (let i = 0; i < this.inputs.length; i++) {
+      let uniqInput = this.inputs[i];
       if (uniqInput) {
-        uniqInput = this.input[uniqInput];
         if (enhancedSearchInput) {
           uniqInput = DocSearch.injectSearchBox(uniqInput);
         }
-
         this.autocomplete = autocomplete(uniqInput, autocompleteOptions, [
           {
             source: this.getAutocompleteSource(transformData, queryHook),
@@ -129,6 +127,14 @@ class DocSearch {
   static checkArguments(args) {
     if (!args.apiKey || !args.indexName) {
       throw new Error(usage);
+    }
+
+    if (typeof args.inputSelector !== 'string') {
+      throw new Error(
+        `inputSelector:${
+          args.inputSelector
+        }  must be a string. Each selector must match only one element and separated by ','`
+      );
     }
 
     if (!DocSearch.getInputsFromSelector(args.inputSelector)) {
@@ -175,10 +181,13 @@ class DocSearch {
   static getInputsFromSelector(selector) {
     if (!selector.length) {
       return null;
-    } else if (selector.length === 1) {
-      return [$(selector).filter('input')];
     } else {
-      return selector.map(s => $(s).filter('input'));
+      const selectors = selector.split(',');
+      if (selectors.length === 1) {
+        return [$(selector).filter('input')];
+      } else {
+        return selectors.map(s => $(s).filter('input'));
+      }
     }
   }
 
