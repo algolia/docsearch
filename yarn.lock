@@ -7724,9 +7724,9 @@ webidl-conversions@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
 
-webpack-cli@3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-3.1.1.tgz#92be3e324c1788208a301172139febb476566262"
+webpack-cli@3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-3.1.2.tgz#17d7e01b77f89f884a2bbf9db545f0f6a648e746"
   dependencies:
     chalk "^2.4.1"
     cross-spawn "^6.0.5"
