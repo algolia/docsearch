@@ -71,7 +71,7 @@ const templates = {
   `,
   footer: `
     <div class="${footerPrefix}">
-      <a class="${footerPrefix}--logo" aria-label="Search by algolia" href="https://www.algolia.com/docsearch">
+      <a class="${footerPrefix}--logo" aria-labelledby="Search by Algolia" href="https://www.algolia.com/docsearch">
         <img src="${searchByAddress}" alt="Search by algolia" height="100%" width="100%">
       </a>
     </div>
