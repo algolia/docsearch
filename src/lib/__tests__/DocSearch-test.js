@@ -194,7 +194,7 @@ describe('DocSearch', () => {
         autocompleteOptions: { anOption: '44' },
       };
       const $input = $('<input name="foo" />');
-      DocSearch.getInputsFromSelector.returns($input);
+      DocSearch.getInputsFromSelector.returns([$input]);
 
       // When
       new DocSearch(options);
