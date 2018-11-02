@@ -26,11 +26,11 @@ your user's journey.
 
 - Make sure your documentation content is available even without JavaScript
   rendering on the client-side. If you absolutely need JavaScript turned on, you
-  need to [set js_render: true in your config][4].
+  need to [set js_render: true in your config][3].
 
 - Use the recommended selectors. See below:
 
-### Recommended selectors
+### Recommended [selectors][4]
 
 Your HTML can add some specific static classes with no styling. These classes
 will not impact your content and will help us to create a great discovery
@@ -55,7 +55,7 @@ experience. Impatient to know how?, read the following element.
 A website implementing these good practises will look simple and crystal clear.
 It can have this following aspect:
 
-![Recommended layout for your page][6] {mt-2}
+![Recommended layout for your page][5] {mt-2}
 
 The biggest blue element will be you `docSearch-content` container. Every
 selectors outside this element will be `global`. Every selectors appear in the
@@ -93,12 +93,11 @@ same order than their `lvl` along the HTML flow.
 }
 ```
 
-Any question ? [Send us an email][7].
+Any question ? [Send us an email][6].
 
 [1]: ./how-do-we-build-an-index.html
 [2]: https://www.sitemaps.org/
 [3]: ./config-file.html#js_render-optional
-[4]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
-[5]: ./config-file.html
-[6]: ./assets/proper_layout.png
-[7]: mailto:docsearch@algolia.com
+[4]: ./config-file.html
+[5]: ./assets/proper_layout.png
+[6]: mailto:docsearch@algolia.com
