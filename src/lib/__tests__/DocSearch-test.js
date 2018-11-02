@@ -305,7 +305,7 @@ describe('DocSearch', () => {
       const actual = getInputsFromSelector(selector);
 
       // Then
-      expect($.zepto.isZ(actual)).toBe(true);
+      expect($.zepto.isZ(actual[0])).toBe(true);
     });
   });
 
