@@ -396,6 +396,7 @@ describe('DocSearch', () => {
         apiKey: 'key',
         indexName: 'foo',
         inputSelector: '#input',
+        handleSelected: true,
       };
 
       // When
