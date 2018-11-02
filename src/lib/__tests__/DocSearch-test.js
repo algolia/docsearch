@@ -142,9 +142,9 @@ describe('DocSearch', () => {
       const actual = new DocSearch(options);
 
       // Then
-      const $input = actual.input;
-      expect($input.text()).toEqual('foo');
-      expect($input[0].tagName).toEqual('SPAN');
+      const $inputs = actual.inputs;
+      expect($inputs.text()).toEqual('foo');
+      expect($inputs[0].tagName).toEqual('SPAN');
     });
     it('should pass secondary options as instance properties', () => {
       // Given
