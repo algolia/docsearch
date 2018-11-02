@@ -101,9 +101,15 @@ class DocSearch {
           },
         ]);
         if (handleSelected) {
+          let handleSelectedFn = null;
+          if (typeof handleSelected === 'function') {
+            handleSelectedFn = handleSelected;
+          } else {
+            handleSelectedFn = this.handleSelected;
+          }
           this.autocomplete.on(
             'autocomplete:selected',
-            handleSelected.bind(null, this.autocomplete.autocomplete)
+            handleSelectedFn.bind(null, this.autocomplete.autocomplete)
           );
         }
         this.autocomplete.on(
@@ -326,6 +332,11 @@ class DocSearch {
       : templates.suggestion;
     const template = Hogan.compile(stringTemplate);
     return suggestion => template.render(suggestion);
+  }
+
+  handleSelected(input, event, suggestion) {
+    input.setVal('');
+    window.location.assign(suggestion.url);
   }
 
   handleShown(input) {
