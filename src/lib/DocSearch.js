@@ -131,7 +131,7 @@ class DocSearch {
 
     if (typeof args.inputSelector !== 'string') {
       throw new Error(
-        `inputSelector:${
+        `Error: inputSelector:${
           args.inputSelector
         }  must be a string. Each selector must match only one element and separated by ','`
       );
