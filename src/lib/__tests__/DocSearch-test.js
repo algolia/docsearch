@@ -46,7 +46,7 @@ describe('DocSearch', () => {
       };
 
       sinon.spy(DocSearch, 'checkArguments');
-      sinon.stub(DocSearch, 'getInputFromSelector').returns(true);
+      sinon.stub(DocSearch, 'getInputsFromSelector').returns(true);
 
       DocSearch.__Rewire__('algoliasearch', AlgoliaSearch);
       DocSearch.__Rewire__('autocomplete', AutoComplete);
@@ -54,7 +54,7 @@ describe('DocSearch', () => {
 
     afterEach(() => {
       DocSearch.checkArguments.restore();
-      DocSearch.getInputFromSelector.restore();
+      DocSearch.getInputsFromSelector.restore();
       DocSearch.__ResetDependency__('algoliasearch');
       DocSearch.__ResetDependency__('autocomplete');
     });
@@ -136,7 +136,7 @@ describe('DocSearch', () => {
     it('should pass the input element as an instance property', () => {
       // Given
       const options = defaultOptions;
-      DocSearch.getInputFromSelector.returns($('<span>foo</span>'));
+      DocSearch.getInputsFromSelector.returns($('<span>foo</span>'));
 
       // When
       const actual = new DocSearch(options);
@@ -194,7 +194,7 @@ describe('DocSearch', () => {
         autocompleteOptions: { anOption: '44' },
       };
       const $input = $('<input name="foo" />');
-      DocSearch.getInputFromSelector.returns($input);
+      DocSearch.getInputsFromSelector.returns($input);
 
       // When
       new DocSearch(options);
@@ -229,8 +229,8 @@ describe('DocSearch', () => {
     });
 
     afterEach(() => {
-      if (DocSearch.getInputFromSelector.restore) {
-        DocSearch.getInputFromSelector.restore();
+      if (DocSearch.getInputsFromSelector.restore) {
+        DocSearch.getInputsFromSelector.restore();
       }
     });
 
@@ -262,7 +262,7 @@ describe('DocSearch', () => {
         apiKey: 'apiKey',
         indexName: 'indexName',
       };
-      sinon.stub(DocSearch, 'getInputFromSelector').returns(false);
+      sinon.stub(DocSearch, 'getInputsFromSelector').returns(false);
 
       // When
       expect(() => {
@@ -271,10 +271,10 @@ describe('DocSearch', () => {
     });
   });
 
-  describe('getInputFromSelector', () => {
-    let getInputFromSelector;
+  describe('getInputsFromSelector', () => {
+    let getInputsFromSelector;
     beforeEach(() => {
-      getInputFromSelector = DocSearch.getInputFromSelector;
+      getInputsFromSelector = DocSearch.getInputsFromSelector;
     });
 
     it('should return null if no element matches the selector', () => {
@@ -282,7 +282,7 @@ describe('DocSearch', () => {
       const selector = '.i-do-not-exist > at #all';
 
       // When
-      const actual = getInputFromSelector(selector);
+      const actual = getInputsFromSelector(selector);
 
       // Then
       expect(actual).toEqual(null);
@@ -292,7 +292,7 @@ describe('DocSearch', () => {
       const selector = '.i-am-a-span';
 
       // When
-      const actual = getInputFromSelector(selector);
+      const actual = getInputsFromSelector(selector);
 
       // Then
       expect(actual).toEqual(null);
@@ -302,7 +302,7 @@ describe('DocSearch', () => {
       const selector = '#input';
 
       // When
-      const actual = getInputFromSelector(selector);
+      const actual = getInputsFromSelector(selector);
 
       // Then
       expect($.zepto.isZ(actual)).toBe(true);
