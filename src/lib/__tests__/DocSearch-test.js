@@ -211,7 +211,7 @@ describe('DocSearch', () => {
     });
     it('should listen to the selected and shown event of autocomplete', () => {
       // Given
-      const options = defaultOptions;
+      const options = { ...defaultOptions, handleSelected: true };
 
       // When
       new DocSearch(options);
