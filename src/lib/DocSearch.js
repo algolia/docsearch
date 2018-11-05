@@ -64,7 +64,7 @@ class DocSearch {
     this.apiKey = apiKey;
     this.appId = appId;
     this.indexName = indexName;
-    this.inputs = DocSearch.getInputsFromSelector(inputSelector);
+    this.input = DocSearch.getInputFromSelector(inputSelector);
     this.algoliaOptions = { hitsPerPage: 5, ...algoliaOptions };
     const autocompleteOptionsDebug =
       autocompleteOptions && autocompleteOptions.debug
@@ -79,48 +79,50 @@ class DocSearch {
       this.autocompleteOptions.cssClasses.prefix || 'ds';
 
     // eslint-disable-next-line no-param-reassign
+    handleSelected = handleSelected || this.handleSelected;
+
     this.isSimpleLayout = layout === 'simple';
 
     this.client = algoliasearch(this.appId, this.apiKey);
     this.client.addAlgoliaAgent(`docsearch.js ${version}`);
 
-    for (let i = 0; i < this.inputs.length; i++) {
-      let uniqInput = this.inputs[i];
-      if (uniqInput) {
-        if (enhancedSearchInput) {
-          uniqInput = DocSearch.injectSearchBox(uniqInput);
-        }
-        this.autocomplete = autocomplete(uniqInput, autocompleteOptions, [
-          {
-            source: this.getAutocompleteSource(transformData, queryHook),
-            templates: {
-              suggestion: DocSearch.getSuggestionTemplate(this.isSimpleLayout),
-              footer: templates.footer,
-              empty: DocSearch.getEmptyTemplate(),
-            },
-          },
-        ]);
-        if (handleSelected) {
-          let handleSelectedFn = null;
-          if (typeof handleSelected === 'function') {
-            handleSelectedFn = handleSelected;
-          } else {
-            handleSelectedFn = this.handleSelected;
-          }
-          this.autocomplete.on(
-            'autocomplete:selected',
-            handleSelectedFn.bind(null, this.autocomplete.autocomplete)
-          );
-        }
-        this.autocomplete.on(
-          'autocomplete:shown',
-          this.handleShown.bind(null, uniqInput)
-        );
+    if (enhancedSearchInput) {
+      this.input = DocSearch.injectSearchBox(this.input);
+    }
 
-        if (enhancedSearchInput) {
-          DocSearch.bindSearchBoxEvent();
-        }
-      }
+    this.autocomplete = autocomplete(this.input, autocompleteOptions, [
+      {
+        source: this.getAutocompleteSource(transformData, queryHook),
+        templates: {
+          suggestion: DocSearch.getSuggestionTemplate(this.isSimpleLayout),
+          footer: templates.footer,
+          empty: DocSearch.getEmptyTemplate(),
+        },
+      },
+    ]);
+
+    // If user defined its own handleSelected, we prevent clicks on suggestions
+    // link to do anything
+    if (handleSelected) {
+      $('.algolia-autocomplete').on('click', '.ds-suggestions a', event => {
+        event.preventDefault();
+      });
+    }
+
+    // Click on suggestions will follow the link, but keyboard navigation still
+    // need the handleSelected
+    this.autocomplete.on(
+      'autocomplete:selected',
+      handleSelected.bind(null, this.autocomplete.autocomplete)
+    );
+
+    this.autocomplete.on(
+      'autocomplete:shown',
+      this.handleShown.bind(null, this.input)
+    );
+
+    if (enhancedSearchInput) {
+      DocSearch.bindSearchBoxEvent();
     }
   }
 
@@ -143,7 +145,7 @@ class DocSearch {
       );
     }
 
-    if (!DocSearch.getInputsFromSelector(args.inputSelector)) {
+    if (!DocSearch.getInputFromSelector(args.inputSelector)) {
       throw new Error(
         `Error: No input element in the page matches ${args.inputSelector}`
       );
@@ -179,26 +181,14 @@ class DocSearch {
 
   /**
    * Returns the matching input from a CSS selector, null if none matches
-   * @function getInputsFromSelector
+   * @function getInputFromSelector
    * @param  {string} selector CSS selector that matches the search
    * input of the page
    * @returns {void}
    */
-  static getInputsFromSelector(selector) {
-    if (!selector.length) {
-      return null;
-    } else {
-      const selectors = selector.split(',');
-      if (selectors.length === 1) {
-        const input = $(selector).filter('input');
-        return input.length ? [$(input[0])] : null;
-      } else {
-        return selectors.map(s => {
-          const input = $(s).filter('input');
-          return input.length ? $(input[0]) : null;
-        });
-      }
-    }
+  static getInputFromSelector(selector) {
+    const input = $(selector).filter('input');
+    return input.length ? $(input[0]) : null;
   }
 
   /**
