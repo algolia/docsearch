@@ -46,7 +46,7 @@ describe('DocSearch', () => {
       };
 
       sinon.spy(DocSearch, 'checkArguments');
-      sinon.stub(DocSearch, 'getInputsFromSelector').returns(true);
+      sinon.stub(DocSearch, 'getInputFromSelector').returns(true);
 
       DocSearch.__Rewire__('algoliasearch', AlgoliaSearch);
       DocSearch.__Rewire__('autocomplete', AutoComplete);
@@ -54,7 +54,7 @@ describe('DocSearch', () => {
 
     afterEach(() => {
       DocSearch.checkArguments.restore();
-      DocSearch.getInputsFromSelector.restore();
+      DocSearch.getInputFromSelector.restore();
       DocSearch.__ResetDependency__('algoliasearch');
       DocSearch.__ResetDependency__('autocomplete');
     });
@@ -136,13 +136,13 @@ describe('DocSearch', () => {
     it('should pass the input element as an instance property', () => {
       // Given
       const options = defaultOptions;
-      DocSearch.getInputsFromSelector.returns($('<span>foo</span>'));
+      DocSearch.getInputFromSelector.returns($('<span>foo</span>'));
 
       // When
       const actual = new DocSearch(options);
 
       // Then
-      const $inputs = actual.inputs;
+      const $inputs = actual.input;
       expect($inputs.text()).toEqual('foo');
       expect($inputs[0].tagName).toEqual('SPAN');
     });
@@ -194,7 +194,7 @@ describe('DocSearch', () => {
         autocompleteOptions: { anOption: '44' },
       };
       const $input = $('<input name="foo" />');
-      DocSearch.getInputsFromSelector.returns([$input]);
+      DocSearch.getInputFromSelector.returns($input);
 
       // When
       new DocSearch(options);
@@ -211,7 +211,7 @@ describe('DocSearch', () => {
     });
     it('should listen to the selected and shown event of autocomplete', () => {
       // Given
-      const options = { ...defaultOptions, handleSelected: true };
+      const options = { ...defaultOptions, handleSelected() {} };
 
       // When
       new DocSearch(options);
@@ -229,8 +229,8 @@ describe('DocSearch', () => {
     });
 
     afterEach(() => {
-      if (DocSearch.getInputsFromSelector.restore) {
-        DocSearch.getInputsFromSelector.restore();
+      if (DocSearch.getInputFromSelector.restore) {
+        DocSearch.getInputFromSelector.restore();
       }
     });
 
@@ -262,7 +262,7 @@ describe('DocSearch', () => {
         apiKey: 'apiKey',
         indexName: 'indexName',
       };
-      sinon.stub(DocSearch, 'getInputsFromSelector').returns(false);
+      sinon.stub(DocSearch, 'getInputFromSelector').returns(false);
 
       // When
       expect(() => {
@@ -271,10 +271,10 @@ describe('DocSearch', () => {
     });
   });
 
-  describe('getInputsFromSelector', () => {
-    let getInputsFromSelector;
+  describe('getInputFromSelector', () => {
+    let getInputFromSelector;
     beforeEach(() => {
-      getInputsFromSelector = DocSearch.getInputsFromSelector;
+      getInputFromSelector = DocSearch.getInputFromSelector;
     });
 
     it('should return null if no element matches the selector', () => {
@@ -282,7 +282,7 @@ describe('DocSearch', () => {
       const selector = '.i-do-not-exist > at #all';
 
       // When
-      const actual = getInputsFromSelector(selector);
+      const actual = getInputFromSelector(selector);
 
       // Then
       expect(actual).toEqual(null);
@@ -292,7 +292,7 @@ describe('DocSearch', () => {
       const selector = '.i-am-a-span';
 
       // When
-      const actual = getInputsFromSelector(selector);
+      const actual = getInputFromSelector(selector);
 
       // Then
       expect(actual).toEqual(null);
@@ -302,10 +302,10 @@ describe('DocSearch', () => {
       const selector = '#input';
 
       // When
-      const actual = getInputsFromSelector(selector);
+      const actual = getInputFromSelector(selector);
 
       // Then
-      expect($.zepto.isZ(actual[0])).toBe(true);
+      expect($.zepto.isZ(actual)).toBe(true);
     });
   });
 
@@ -390,13 +390,12 @@ describe('DocSearch', () => {
   });
 
   describe('handleSelected', () => {
-    it('should change the location', () => {
+    it('should change the location if no handleSelected specified', () => {
       // Given
       const options = {
         apiKey: 'key',
         indexName: 'foo',
         inputSelector: '#input',
-        handleSelected: true,
       };
 
       // When
@@ -411,6 +410,45 @@ describe('DocSearch', () => {
         );
         resolve();
       });
+    });
+    it('should call the custom handleSelected if defined', () => {
+      // Given
+      const customHandleSelected = jest.fn();
+      const options = {
+        apiKey: 'key',
+        indexName: 'foo',
+        inputSelector: '#input',
+        handleSelected: customHandleSelected,
+      };
+      const expectedInput = expect.objectContaining({
+        open: expect.any(Function),
+      });
+      const expectedEvent = expect.objectContaining({
+        type: 'autocomplete:selected'
+      });
+      const expectedSuggestion = expect.objectContaining({
+        url: 'https://website.com/doc/page',
+      });
+
+      // When
+      const ds = new DocSearch(options);
+      ds.autocomplete.trigger('autocomplete:selected', {
+        url: 'https://website.com/doc/page',
+      });
+
+      return new Promise(resolve => {
+        expect(customHandleSelected).toHaveBeenCalledWith(
+          expectedInput,
+          expectedEvent,
+          expectedSuggestion,
+        );
+        resolve();
+      });
+    });
+    xit('should prevent all clicks on links if a custom handleSelected is specified', () => {
+      // TODO
+      // If handleSelected, we target one link, we manually trigger a click on
+      // it, and we check that preventDefault is called on the event
     });
   });
 
