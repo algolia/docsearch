@@ -3,6 +3,17 @@
 import sinon from 'sinon';
 import $ from '../zepto';
 import DocSearch from '../DocSearch';
+/**
+ * Pitfalls:
+ * Whenever you call new DocSearch(), it will add the a new dropdown markup to
+ * the page. Because we are clearing the document.body.innerHTML between each
+ * test, it usually is not a problem.
+ * Except that autocomplete.js remembers internally how many times it has been
+ * called, and adds this number to classes of elements it creates.
+ * DO NOT rely on any .ds-dataset-X, .ds-suggestions-X, etc classes where X is
+ * a number. This will change if you add or remove tests and will break your
+ * tests.
+ **/
 
 describe('DocSearch', () => {
   beforeEach(() => {
@@ -424,7 +435,7 @@ describe('DocSearch', () => {
         open: expect.any(Function),
       });
       const expectedEvent = expect.objectContaining({
-        type: 'autocomplete:selected'
+        type: 'autocomplete:selected',
       });
       const expectedSuggestion = expect.objectContaining({
         url: 'https://website.com/doc/page',
@@ -440,15 +451,38 @@ describe('DocSearch', () => {
         expect(customHandleSelected).toHaveBeenCalledWith(
           expectedInput,
           expectedEvent,
-          expectedSuggestion,
+          expectedSuggestion
         );
         resolve();
       });
     });
-    xit('should prevent all clicks on links if a custom handleSelected is specified', () => {
-      // TODO
-      // If handleSelected, we target one link, we manually trigger a click on
-      // it, and we check that preventDefault is called on the event
+    it('should prevent all clicks on links if a custom handleSelected is specified', () => {
+      // Given
+      const options = {
+        apiKey: 'key',
+        indexName: 'foo',
+        inputSelector: '#input',
+        handleSelected: jest.fn(),
+      };
+
+      // Building a dropdown with links inside
+      const ds = new DocSearch(options);
+      ds.autocomplete.trigger('autocomplete:shown');
+      const dataset = $('.algolia-autocomplete');
+      const suggestions = $('<div class="ds-suggestions"></div>');
+      const testLink = $('<a href="#">test link</a>');
+      dataset.append(suggestions);
+      suggestions.append(testLink);
+
+      // Simulating a click on the link
+      const clickEvent = new $.Event('click');
+      clickEvent.preventDefault = jest.fn();
+      testLink.trigger(clickEvent);
+
+      return new Promise(resolve => {
+        expect(clickEvent.preventDefault).toHaveBeenCalled();
+        resolve();
+      });
     });
   });
 
