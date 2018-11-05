@@ -35,6 +35,7 @@ To run this project, you will need:
 
 - Node.js >= v8.7.0, use nvm - [install
   instructions][15]
+- Yarn 
 
 ## Build
 
