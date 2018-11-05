@@ -11,6 +11,8 @@
     "docs:serve": "cd ./docs && yarn serve",
     "docs:deploy": "cd ./docs && yarn deploy",
     "lint": "./scripts/lint",
+    "format:scss": "prettier --write ./src/**/*.scss",
+    "format:md": "prettier --write '**/*.md'",
     "release": "./scripts/release",
     "release:beta": "./scripts/release-beta",
     "serve": "./scripts/serve",
@@ -46,7 +48,7 @@
     "babel-plugin-rewire": "1.2.0",
     "babel-preset-env": "1.7.0",
     "babel-preset-stage-3": "6.24.1",
-    "conventional-changelog-cli": "2.0.5",
+    "conventional-changelog-cli": "2.0.11",
     "cssnano": "4.1.4",
     "eslint": "5.4.0",
     "eslint-config-algolia": "13.2.3",
@@ -68,7 +70,7 @@
     "sinon": "6.3.5",
     "uglify-js": "3.4.9",
     "webpack": "3.12.0",
-    "webpack-cli": "3.1.1"
+    "webpack-cli": "3.1.2"
   },
   "peerDependencies": {},
   "dependencies": {
