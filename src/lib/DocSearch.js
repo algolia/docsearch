@@ -100,10 +100,22 @@ class DocSearch {
         },
       },
     ]);
+
+    // If user defined its own handleSelected, we prevent clicks on suggestions
+    // link to do anything
+    if (handleSelected) {
+      $('.algolia-autocomplete').on('click', '.ds-suggestions a', event => {
+        event.preventDefault();
+      });
+    }
+
+    // Click on suggestions will follow the link, but keyboard navigation still
+    // need the handleSelected
     this.autocomplete.on(
       'autocomplete:selected',
       handleSelected.bind(null, this.autocomplete.autocomplete)
     );
+
     this.autocomplete.on(
       'autocomplete:shown',
       this.handleShown.bind(null, this.input)
@@ -123,6 +135,14 @@ class DocSearch {
   static checkArguments(args) {
     if (!args.apiKey || !args.indexName) {
       throw new Error(usage);
+    }
+
+    if (typeof args.inputSelector !== 'string') {
+      throw new Error(
+        `Error: inputSelector:${
+          args.inputSelector
+        }  must be a string. Each selector must match only one element and separated by ','`
+      );
     }
 
     if (!DocSearch.getInputFromSelector(args.inputSelector)) {
@@ -325,7 +345,6 @@ class DocSearch {
       middleOfInput - middleOfWindow < 0
         ? 'algolia-autocomplete-right'
         : 'algolia-autocomplete-left';
-
     const autocompleteWrapper = $('.algolia-autocomplete');
     if (!autocompleteWrapper.hasClass(alignClass)) {
       autocompleteWrapper.addClass(alignClass);

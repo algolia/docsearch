@@ -142,9 +142,9 @@ describe('DocSearch', () => {
       const actual = new DocSearch(options);
 
       // Then
-      const $input = actual.input;
-      expect($input.text()).toEqual('foo');
-      expect($input[0].tagName).toEqual('SPAN');
+      const $inputs = actual.input;
+      expect($inputs.text()).toEqual('foo');
+      expect($inputs[0].tagName).toEqual('SPAN');
     });
     it('should pass secondary options as instance properties', () => {
       // Given
@@ -211,7 +211,7 @@ describe('DocSearch', () => {
     });
     it('should listen to the selected and shown event of autocomplete', () => {
       // Given
-      const options = defaultOptions;
+      const options = { ...defaultOptions, handleSelected() {} };
 
       // When
       new DocSearch(options);
@@ -390,7 +390,7 @@ describe('DocSearch', () => {
   });
 
   describe('handleSelected', () => {
-    it('should change the location', () => {
+    it('should change the location if no handleSelected specified', () => {
       // Given
       const options = {
         apiKey: 'key',
@@ -410,6 +410,45 @@ describe('DocSearch', () => {
         );
         resolve();
       });
+    });
+    it('should call the custom handleSelected if defined', () => {
+      // Given
+      const customHandleSelected = jest.fn();
+      const options = {
+        apiKey: 'key',
+        indexName: 'foo',
+        inputSelector: '#input',
+        handleSelected: customHandleSelected,
+      };
+      const expectedInput = expect.objectContaining({
+        open: expect.any(Function),
+      });
+      const expectedEvent = expect.objectContaining({
+        type: 'autocomplete:selected'
+      });
+      const expectedSuggestion = expect.objectContaining({
+        url: 'https://website.com/doc/page',
+      });
+
+      // When
+      const ds = new DocSearch(options);
+      ds.autocomplete.trigger('autocomplete:selected', {
+        url: 'https://website.com/doc/page',
+      });
+
+      return new Promise(resolve => {
+        expect(customHandleSelected).toHaveBeenCalledWith(
+          expectedInput,
+          expectedEvent,
+          expectedSuggestion,
+        );
+        resolve();
+      });
+    });
+    xit('should prevent all clicks on links if a custom handleSelected is specified', () => {
+      // TODO
+      // If handleSelected, we target one link, we manually trigger a click on
+      // it, and we check that preventDefault is called on the event
     });
   });
 

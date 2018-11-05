@@ -1,3 +1,10 @@
 {
-  "singleQuote": true
+  "overrides": [
+    {
+      "files": "*.scss",
+      "options": {
+        "singleQuote": true
+      }
+    }
+  ]
 }
