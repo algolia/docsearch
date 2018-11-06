@@ -27,7 +27,7 @@ your user's journey.
 
 - Make sure your documentation content is also available without JavaScript
   rendering on the client-side. If you absolutely need JavaScript turned on, you
-  need to [set js_render: true in your config][3].
+  need to [set `js_render: true` in your config][3].
 
 - Use the recommended selectors. See below:
 
