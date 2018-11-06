@@ -9,9 +9,11 @@
   "placeholders": {
     "docSearchJSVersion": "2"
   },
-  "sidebar": [{
+  "sidebar": [
+    {
       "title": "Getting Started",
-      "pages": [{
+      "pages": [
+        {
           "title": "What is DocSearch?",
           "url": "what-is-docsearch.html"
         },
@@ -31,7 +33,8 @@
     },
     {
       "title": "Adding DocSearch To Your UI",
-      "pages": [{
+      "pages": [
+        {
           "title": "Dropdown UI Overview",
           "url": "dropdown.html"
         },
@@ -47,10 +50,12 @@
     },
     {
       "title": "Tips, FAQ, Misc",
-      "pages": [{
+      "pages": [
+        {
           "title": "Recommended configuration",
-          "url": "recomended-configuration.html"
-        }, {
+          "url": "recommended-configuration.html"
+        },
+        {
           "title": "Tips",
           "url": "tips.html"
         },
@@ -66,7 +71,8 @@
     },
     {
       "title": "Let’s Get Technical",
-      "pages": [{
+      "pages": [
+        {
           "title": "DocSearch Technical Overview (the Crawler)",
           "url": "crawler-overview.html"
         },
@@ -93,7 +99,8 @@
       ]
     }
   ],
-  "redirects": [{
+  "redirects": [
+    {
       "from": "documentation/index.html",
       "to": "what-is-docsearch.html"
     },

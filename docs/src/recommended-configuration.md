@@ -1,35 +1,37 @@
 ---
 layout: two-columns
-title: Recommended recommendation
+title: Recommended configuration
 ---
 
 This is great news to know that you want to integrate DocSearch in your website.
 A good search experience is key to help your users discover your content.
+Documentation is a part of your tool.
 
-This section, [empowered by the details regarding how we build a DocSearch
-index][1], this section will give what is the requirements in order to have a
-great experience.
+This section, [empowered by the details about how we build a DocSearch
+index][1], gives you the best practices to optimize our crawl. It will enhance
+your user's journey.
 
 ## Recommendations
 
-- My website should have [an updated sitemap][2]. This is key in order to let us
-  know what should be updated. Do not worry, we will still crawl your website
-  and discover embedded hyperlinks to find your great content.
+- Your website should have [an updated sitemap][2]. This is key to let our
+  crawler know what should be updated. Do not worry, we will still crawl your
+  website and discover embedded hyperlinks to find your great content.
 
-- Every pages needs to have her full context available. Using [metadata is
-  meaningful][3].
+- Every pages needs to have their full context available. Using global element
+  might help.
 
-- Every `lvlx` DOM elements (matching your selectors) must have a unique `id` or
-  `name`. This will help the redirection to directly scroll down to the exact
-  place of the matching elements.
+- Every `lvlx` DOM elements (matching the selectors defined in your
+  configuration) must have a unique `id` or `name`. This will help the
+  redirection to directly scroll down to the exact place of the matching
+  elements. These attributes defined the right anchor to use.
 
-- Your website should not require some JavaScript rendering to generate the
-  payload of your website (that-is-to-say your documentation). You can change
-  [the `user_agent` parameter][4] in order to do so.
+- Make sure your documentation content is also available without JavaScript
+  rendering on the client-side. If you absolutely need JavaScript turned on, you
+  need to [set js_render: true in your config][3].
 
 - Use the recommended selectors. See below:
 
-### Recommended selectors
+### Recommended [selectors][4]
 
 Your HTML can add some specific static classes with no styling. These classes
 will not impact your content and will help us to create a great discovery
@@ -39,15 +41,15 @@ experience. Impatient to know how?, read the following element.
   gathering your documentation. This element is the main container of your
   textual content. It is mostly a main or article element.
 
-- Every elements outside this main documentation container (e.g. in nav) should
-  be `global`. They should be sorted according to their `lvl` along the HTML
-  flow (i.e. `lvl0` appears before `lvl1`).
+- Every elements outside this main documentation container (for instance in nav)
+  should be `global`. They should be sorted according to their `lvl` along the
+  HTML flow (`lvl0` appears before `lvl1`).
 
 - Use the standard title tags like `h1`, `h2`, `h3` ... Do not forget to set a
-  unique `id` or `name` attribute to these elements as described previously.
+  unique `id` or `name` attribute to these elements as previously described.
 
-- Stay consistent and do not follow that we need to have some regularity along
-  the HTML flow [as presented here][1].
+- Stay consistent and do not forget that we need to have some regularity along
+  the HTML flow [as presented here][5].
 
 ### Overview of a clear layout
 
@@ -96,7 +98,7 @@ Any question ? [Send us an email][6].
 
 [1]: ./how-do-we-build-an-index.html
 [2]: https://www.sitemaps.org/
-[3]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
+[3]: ./config-file.html#js_render-optional
 [4]: ./config-file.html
 [5]: ./assets/proper_layout.png
 [6]: mailto:docsearch@algolia.com
