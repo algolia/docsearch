@@ -63,6 +63,7 @@
     "mversion": "1.12.0",
     "node-sass": "4.9.4",
     "onchange": "4.1.0",
+    "parallelshell": "3.0.2",
     "postcss-cli": "6.0.1",
     "prettier": "1.14.3",
     "pretty-bytes-cli": "2.0.0",
@@ -75,9 +76,8 @@
   "peerDependencies": {},
   "dependencies": {
     "algoliasearch": "^3.24.5",
-    "autocomplete.js": "^0.31.0",
+    "autocomplete.js": "0.32.0",
     "hogan.js": "^3.0.2",
-    "parallelshell": "^3.0.2",
     "request": "^2.87.0",
     "stack-utils": "^1.0.1",
     "to-factory": "^1.0.0",
