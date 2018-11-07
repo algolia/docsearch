@@ -28,8 +28,8 @@ echo "Release: update working tree"
 git pull origin master
 git fetch origin --tags
 
-echo "Release: npm install"
-npm install
+echo "Release: yarn install"
+yarn install
 
 currentVersion=$(json version < package.json)
 
@@ -54,7 +54,7 @@ read -re newVersion
 VERSION=$newVersion babel-node ./scripts/bump-package-version.js
 
 # build new version
-NODE_ENV=production VERSION=$newVersion npm run build
+NODE_ENV=production VERSION=$newVersion yarn run build
 
 # update changelog
 echo
@@ -65,7 +65,7 @@ conventional-changelog --preset angular --infile CHANGELOG.md --same-file -r 0
 # regenerate readme TOC
 echo
 echo "Release: generate TOCS"
-npm run doctoc
+yarn run doctoc
 
 # git add and tag
 commitMessage="v$newVersion\n\n$changelog"
