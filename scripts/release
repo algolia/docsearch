@@ -8,26 +8,27 @@ export npm_config_registry='https://registry.npmjs.org/'
 
 if ! npm owner ls | grep -q "$(npm whoami)"
 then
-  printf "Release: Not an owner of the npm repo, ask for it"
+  echo "Release: Not an owner of the npm repo, ask for it"
   exit 1
 fi
 
 currentBranch=$(git rev-parse --abbrev-ref HEAD)
 if [ "$currentBranch" != 'master' ]; then
-  printf "Release: You must be on master"
+  echo "Release: You must be on master"
   exit 1
 fi
 
 if [[ -n $(git status --porcelain) ]]; then
-  printf "Release: Working tree is not clean (git status)"
+  echo "Release: Working tree is not clean (git status)"
   exit 1
 fi
 
-printf "\n\nRelease: update working tree"
+echo
+echo "Release: update working tree"
 git pull origin master
 git fetch origin --tags
 
-printf "Release: npm install"
+echo "Release: npm install"
 npm install
 
 currentVersion=$(json version < package.json)
@@ -43,26 +44,27 @@ echo ""
 
 
 # preview changelog
-read -p "=> Release: press [ENTER] to view changes since latest version.."
+read -rp "=> Release: press [ENTER] to view changes since latest version.."
 
 conventional-changelog --preset angular --output-unreleased | less
 
 # choose and bump new version
-# printf "\n\nRelease: Please enter the new chosen version > "
-printf "\n=> Release: please type the new chosen version > "
-read -e newVersion
+echo "=> Release: please type the new chosen version > "
+read -re newVersion
 VERSION=$newVersion babel-node ./scripts/bump-package-version.js
 
 # build new version
 NODE_ENV=production VERSION=$newVersion npm run build
 
 # update changelog
-printf "\n\nRelease: update changelog"
+echo
+echo "Release: update changelog"
 changelog=$(conventional-changelog -p angular)
 conventional-changelog --preset angular --infile CHANGELOG.md --same-file -r 0
 
 # regenerate readme TOC
-printf "\n\nRelease: generate TOCS"
+echo
+echo "Release: generate TOCS"
 npm run doctoc
 
 # git add and tag
@@ -71,12 +73,14 @@ git add src/lib/version.js package.json CHANGELOG.md README.md CONTRIBUTING.md
 echo "$commitMessage" | git commit --file -
 git tag "v$newVersion"
 
-printf "\n\nRelease: almost done, check everything in another terminal tab.\n"
-read -p "=> Release: when ready, press [ENTER] to push to github and publish the package"
+echo
+echo "Release: almost done, check everything in another terminal tab."
+read -rp "=> Release: when ready, press [ENTER] to push to github and publish the package"
 
-printf "\n\nRelease: push to github, publish on npm"
+echo
+echo "Release: push to github, publish on npm"
 git push origin master
 git push origin --tags
 npm publish
 
-printf "Release: Package was published to npm."
+echo "Release: Package was published to npm."
