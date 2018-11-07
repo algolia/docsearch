@@ -2,6 +2,10 @@
 
 set -e # exit when error
 
+# When running through yarn, this variable is changed, preventing the publishing
+# to actually work. We revert it to its default value.
+export npm_config_registry='https://registry.npmjs.org/'
+
 if ! npm owner ls | grep -q "$(npm whoami)"
 then
   printf "Release: Not an owner of the npm repo, ask for it"
