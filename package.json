@@ -15,7 +15,6 @@
     "format:scss": "prettier --write ./src/**/*.scss",
     "format:md": "prettier --write '**/*.md'",
     "release": "./scripts/release",
-    "release:beta": "./scripts/release-beta",
     "serve": "./scripts/serve",
     "test": "./scripts/test",
     "test:watch": "./scripts/test-watch",
