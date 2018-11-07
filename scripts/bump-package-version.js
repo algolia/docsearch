@@ -34,6 +34,6 @@ const versionFile = path.join(__dirname, '../src/lib/version.js');
 const newContent = `export default '${newVersion}';\n`;
 fs.writeFileSync(versionFile, newContent);
 
-console.log('..Updating package.json, npm-shrinwrap.json');
+console.log('..Updating package.json');
 
 mversion.update(newVersion);
