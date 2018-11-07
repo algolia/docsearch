@@ -51,6 +51,9 @@ them with auto-reload.
 
 ## Docs
 
+The documentation lives in the `./docs` folder. You should start by installing
+its dependencies with `cd ./docs && yarn install`. Then:
+
 - `yarn docs:build` will build the docs website in `./docs/dist`.
 - `yarn docs:serve` will do the same, but with live-reload enabled
 - `yarn docs:deploy` will deploy the doc website manually
