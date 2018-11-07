@@ -15,7 +15,7 @@ fi
 currentBranch=$(git rev-parse --abbrev-ref HEAD)
 if [ "$currentBranch" != 'master' ]; then
   echo "Release: You must be on master"
-  # exit 1
+  exit 1
 fi
 
 if [[ -n $(git status --porcelain) ]]; then
