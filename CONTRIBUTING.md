@@ -3,21 +3,15 @@ Hi (future) collaborator!
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-**Table of Contents**
 
-- [Where to start?][1]
-- [Development workflow][2]
-  - [Requirements][3]
-  - [Launch][4]
-  - [Local build][5]
-- [Commit message guidelines][6]
-  - [Revert][7]
-  - [Type][8]
-  - [Scope][9]
-  - [Subject][10]
-  - [Body][11]
-  - [Footer][12]
-- [Releasing][13]
+- [Where to start?](#where-to-start)
+- [Development workflow](#development-workflow)
+  - [Requirements](#requirements)
+  - [Build](#build)
+  - [Serve](#serve)
+  - [Test](#test)
+  - [Docs](#docs)
+  - [Release](#release)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
