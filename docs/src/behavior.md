@@ -24,24 +24,34 @@ docsearch({
 
 ## `handleSelected`
 
-This method is called when a suggestion is selected. By default, DocSearch will
-redirect the browser to the results page at the related anchor, but you can
-override it to add your own behavior.
+This method is called when a suggestion is selected (either with a click or
+keyboard). By default, DocSearch will redirect the browser to the results page
+at the related anchor, but you can override it to add your own behavior.
 
-The method is called with three arguments:
+The method is called with the following arguments:
 
 - `input`, a reference to the search `input` element. It comes with the
   `.open()`, `.close()`, `.getVal()` and `.setVal()` methods.
 
-- `event`, the actual event triggering the selection. This can come from a click
-  or a keyboard navigation.
+- `event`, the actual event triggering the selection.
 
-- `suggestion`, the object representing the current selection.
+- `suggestion`, the object representing the current selection. Contains a `.url`
+  key representing the destination.
+
+- `datasetNumber`, this should always equal `1` as DocSearch is searching
+  into one dataset at a time. You can ignore this attribute.
+
+- `context`, additional information about the selection. Contains
+  a `.selectionMethod` key that can be either `click`, `enterKey`, `tabKey` or
+  `blur`, depending how the suggestion was selected.
 
 ```javascript
 docsearch({
   […],
-  handleSelected: function(input, event, suggestion) {
+  handleSelected: function(input, event, suggestion, datasetNumber, context) {
+    // Default implementation is as follow:
+    input.setVal('');
+    window.location.assign(suggestion.url);
   }
 });
 ```
