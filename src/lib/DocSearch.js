@@ -322,7 +322,7 @@ class DocSearch {
     return suggestion => template.render(suggestion);
   }
 
-  handleSelected(input, event, suggestion, datasetNumber, context) {
+  handleSelected(input, event, suggestion, datasetNumber, context = {}) {
     // Do nothing if click on the suggestion, as it's already a <a href>, the
     // browser will take care of it. This allow Ctrl-Clicking on results and not
     // having the main window being redirected as well
