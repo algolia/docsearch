@@ -1,6 +1,5 @@
 language: node_js
 script: "./scripts/test"
-sudo: false
 branches:
   only:
   - master
