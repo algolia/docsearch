@@ -484,6 +484,59 @@ describe('DocSearch', () => {
         resolve();
       });
     });
+    describe('default handleSelected', () => {
+      it('enterKey: should change the page', () => {
+        const options = {
+          apiKey: 'key',
+          indexName: 'foo',
+          inputSelector: '#input',
+        };
+        const mockSetVal = jest.fn();
+        const mockInput = { setVal: mockSetVal };
+        const mockSuggestion = { url: 'www.example.com' };
+        const mockContext = { selectionMethod: 'enterKey' };
+
+        new DocSearch(options).handleSelected(
+          mockInput,
+          undefined, // Event
+          mockSuggestion,
+          undefined, // Dataset
+          mockContext
+        );
+
+        return new Promise(resolve => {
+          expect(mockSetVal).toHaveBeenCalledWith('');
+          expect(window.location.assign).toHaveBeenCalledWith(
+            'www.example.com'
+          );
+          resolve();
+        });
+      });
+      it('click: should not change the page', () => {
+        const options = {
+          apiKey: 'key',
+          indexName: 'foo',
+          inputSelector: '#input',
+        };
+        const mockSetVal = jest.fn();
+        const mockInput = { setVal: mockSetVal };
+        const mockContext = { selectionMethod: 'click' };
+
+        new DocSearch(options).handleSelected(
+          mockInput,
+          undefined, // Event
+          undefined, // Suggestion
+          undefined, // Dataset
+          mockContext
+        );
+
+        return new Promise(resolve => {
+          expect(mockSetVal).not.toHaveBeenCalled();
+          expect(window.location.assign).not.toHaveBeenCalled();
+          resolve();
+        });
+      });
+    });
   });
 
   describe('handleShown', () => {
