@@ -1,3 +1,12 @@
+## [2.6.2](https://github.com/algolia/docsearch/compare/v2.6.1...v2.6.2) (2018-11-22)
+
+
+### Features
+
+* **ctrl-click:** Enable Ctrl-Click on suggestions ([#542](https://github.com/algolia/docsearch/issues/542)) ([a470c48](https://github.com/algolia/docsearch/commit/a470c48))
+
+
+
 ## [2.6.1](https://github.com/algolia/docsearch/compare/v2.6.0...v2.6.1) (2018-11-07)
 
 
