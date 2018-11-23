@@ -4,25 +4,32 @@ title: Run your own
 ---
 
 The version of DocSearch we provide for free is one hosted on our own servers,
-running every 24 hours. To update your results more often than that, or to index
-content sitting behind a firewall, you might want to run the crawler yourself.
+running every 24 hours. To update your results with more control, if you are not
+compliant with our checking list, or to index content sitting behind a firewall,
+you might want to run the crawler yourself.
 
-The code of DocSearch is open source, and we packaged it as a Docker image to
-make this even easier for you to use.
+The whole code of DocSearch is open source, and we packaged it as a Docker image
+to make this even easier for you to use.
 
 ## Installation
 
-Start by cloning [the repository][1] and then installing the python 2
-dependencies using `pip install -r requirements.txt`. This will give you access
-to the `./docsearch` command-line tool.
+The scraper is a python tool [based on scrapy][1]. ] Start by cloning [the open
+source repository][2]. We do recommend [pipenv][3] to install the whole python
+environment
 
-We then recommend using DocSearch from inside a Docker image. You can setup one
-by running `./docsearch docker:build`.
+- [Install pipenv][4]
+- `pipenv install`
+- `pipenv shell`
+
+You should be ready to go.
+
+You can use DocSearch from inside a Docker image. You can setup one by running
+`./docsearch docker:build`.
 
 ## Configuration
 
 You'll need to set your Algolia application ID and admin API key as environment
-variables. If you don't have an Algolia account, you should [create one][2].
+variables. If you don't have an Algolia account, you should [create one][5].
 
 - `APPLICATION_ID` should be set to your Application ID
 
@@ -37,17 +44,15 @@ APPLICATION_ID=YOUR_APP_ID
 API_KEY=YOUR_API_KEY
 ```
 
-## Creating a new config
+## Create a new config
 
-To create your config, run `./docsearch bootstrap`. A prompt will ask you for a
+To create a config, run `./docsearch bootstrap`. A prompt will ask you for a
 some information and will then output a JSON config you can use as a base.
 
 ```sh
 $ ./docsearch bootstrap
 # Enter your documentation url
 start url: http://www.example.com/docs/
-# You most probably don't need variables
-Does the start_urls require variables ? [y/n]: n
 # Pick another name, or press enter
 index_name is example [enter to confirm]: <Enter>
 
@@ -70,29 +75,37 @@ index_name is example [enter to confirm]: <Enter>
 =================
 ```
 
-Copy-paste the content into a filename `example.json`, we'll use it later to
-start the crawling. You can find the complete list of available options in [our
-documentation][3], or browse the [list of live configs][4].
+Create a file from this text into a filename `example.json`, we'll use it later
+on to start the crawl. You can find the complete list of available options in
+[the configuration documentation][6], or browse the [list of live configs][7].
 
 ## Running your config
 
 Now that you have your environment variables set, you can run the crawler
 according to your config.
 
+After that `pipenv shell` enable your virtua environment, run one crawl from the
+code source
+
+```sh
+$ ./docsearch run /path/to/your/config.json
+```
+
+Or from your builded docker image:
+
 ```sh
 $ ./docsearch docker:run /path/to/your/config.json
 ```
 
-This will crawl all pages, extract content from them and then push it to
-Algolia.
+This will start the crawl. It extracts content from parsed pages and push the
+builded records to Algolia.
 
 ## Testing your results
 
 You can test your results by running `./docsearch playground`. This will open a
-web page with a search input where you can do live tests against the indexed
-results.
+web page with a search input. You can do live tests against the indexed results.
 
-![Playground][6] {mt-2}
+![Playground][9] {mt-2}
 
 _Note that if the command fails (it can happen on non-Mac machines), you can get
 the same result by running a live server in the `./playground` subdirectory.\`_
@@ -100,7 +113,7 @@ the same result by running a live server in the `./playground` subdirectory.\`_
 ## Integration
 
 Once you're satisfied with your config, you can integrate the dropdown menu in
-your website by following the [instructions here][5].
+your website by following the [instructions here][8].
 
 The difference is that you'll also have to add the `appId` key to your
 `docsearch()` instance. Also don't forget to use a **search** API key here (in
@@ -122,9 +135,12 @@ commands.
 Note that we use this command-line tool internally at Algolia to run the free
 hosted version, so you might not need all the listed commands.
 
-[1]: https://github.com/algolia/docsearch-scraper
-[2]: https://www.algolia.com/pricing#community
-[3]: ./config-file.html
-[4]: https://github.com/algolia/docsearch-configs/tree/master/configs
-[5]: ./dropdown.html
-[6]: ./assets/playground.png
+[1]: https://scrapy.org/
+[2]: https://github.com/algolia/docsearch-scraper
+[3]: https://github.com/pypa/pipenv
+[4]: https://pipenv.readthedocs.io/en/latest/install/#installing-pipenv
+[5]: https://www.algolia.com/pricing#community
+[6]: ./config-file.html
+[7]: https://github.com/algolia/docsearch-configs/tree/master/configs
+[8]: ./dropdown.html
+[9]: ./assets/playground.png
