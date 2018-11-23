@@ -7,7 +7,7 @@ Our JS library `docsearch.js` is a wrapper of the [autocomplete.js][1] library.
 This library will listen to every keystrokes in the search input, query Algolia,
 and display the results in a dropdown. Everything is already configured for you
 to work with DocSearch. Our UI library also exposes configuration options you
-can use to go even further. You will empower Algolia.
+can use to go even further. You will discover Algolia.
 
 ## `appId`
 
