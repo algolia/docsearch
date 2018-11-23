@@ -4,15 +4,15 @@ title: Dropdown Behavior
 ---
 
 Our JS library `docsearch.js` is a wrapper of the [autocomplete.js][1] library.
-This library will listen to keystrokes in the search input, query Algolia, and
-display the results in a dropdown. Everything is already configured for you to
-work with DocSearch, but it also exposes configuration options you can use to go
-even further.
+This library will listen to every keystrokes in the search input, query Algolia,
+and display the results in a dropdown. Everything is already configured for you
+to work with DocSearch. Our UI library also exposes configuration options you
+can use to go even further. You will empower Algolia.
 
 ## `appId`
 
 If you're [running the DocSearch crawler on your own][2], you'll need to define
-your application ID using the `appId` key. If you're using the free hosted
+your own application ID using the `appId` key. If you're using the free hosted
 version, you don't need to add anything.
 
 ```javascript
@@ -24,9 +24,10 @@ docsearch({
 
 ## `handleSelected`
 
-This method is called when a suggestion is selected (either with a click or
-keyboard). By default, DocSearch will redirect the browser to the results page
-at the related anchor, but you can override it to add your own behavior.
+This method is called when a suggestion is selected (either from a click or a
+keystroke). By default, DocSearch will display links redirecting to the results
+page, at the related anchor. You can override it to add your own behavior.
+Please note that you can already open a new tab thanks to the `CMD/CTRL + Click`
 
 The method is called with the following arguments:
 
@@ -38,11 +39,11 @@ The method is called with the following arguments:
 - `suggestion`, the object representing the current selection. Contains a `.url`
   key representing the destination.
 
-- `datasetNumber`, this should always equal `1` as DocSearch is searching
-  into one dataset at a time. You can ignore this attribute.
+- `datasetNumber`, this should always equal `1` as DocSearch is searching into
+  one dataset at a time. You can ignore this attribute.
 
-- `context`, additional information about the selection. Contains
-  a `.selectionMethod` key that can be either `click`, `enterKey`, `tabKey` or
+- `context`, additional information about the selection. Contains a
+  `.selectionMethod` key that can be either `click`, `enterKey`, `tabKey` or
   `blur`, depending how the suggestion was selected.
 
 ```javascript
@@ -59,7 +60,7 @@ docsearch({
 ## `queryHook`
 
 This method will be called on every keystroke to transform the typed keywords
-before sending them to Algolia. By default, it does not do anything, but we
+before querying them to Algolia. By default, it does not do anything, but we
 provide this hook for you to add your own logic if needed.
 
 ```javascript
