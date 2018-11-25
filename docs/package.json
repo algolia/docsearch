@@ -20,7 +20,7 @@
     "@babel/plugin-proposal-object-rest-spread": "7.0.0",
     "@babel/preset-env": "7.1.0",
     "@fullhuman/postcss-purgecss": "1.1.0",
-    "autoprefixer": "8.6.5",
+    "autoprefixer": "9.3.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "8.2.6",
     "babel-plugin-dynamic-import-node-sync": "2.0.1",
