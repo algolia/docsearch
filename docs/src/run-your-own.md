@@ -98,7 +98,7 @@ $ ./docsearch docker:run /path/to/your/config.json
 ```
 
 This will start the crawl. It extracts content from parsed pages and push the
-builded records to Algolia.
+built records to Algolia.
 
 ## Testing your results
 
