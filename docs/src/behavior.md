@@ -60,7 +60,7 @@ docsearch({
 ## `queryHook`
 
 This method will be called on every keystroke to transform the typed keywords
-before querying them to Algolia. By default, it does not do anything, but we
+before querying Algolia. By default, it does not do anything, but we
 provide this hook for you to add your own logic if needed.
 
 ```javascript
