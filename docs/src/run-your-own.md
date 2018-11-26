@@ -84,7 +84,7 @@ on to start the crawl. You can find the complete list of available options in
 Now that you have your environment variables set, you can run the crawler
 according to your config.
 
-After that `pipenv shell` enable your virtua environment, run one crawl from the
+Running `pipenv shell` will enable your virtual environment. From there, you can run one crawl with the following command:
 code source
 
 ```sh
