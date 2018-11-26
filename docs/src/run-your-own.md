@@ -91,7 +91,7 @@ code source
 $ ./docsearch run /path/to/your/config.json
 ```
 
-Or from your builded docker image:
+Or from your built docker image:
 
 ```sh
 $ ./docsearch docker:run /path/to/your/config.json
