@@ -28,7 +28,7 @@ A DocSearch looks like this:
 ## `index_name`
 
 This is the name of the Algolia index where your records will be pushed. The
-`apiKey` we will share you is restricted to only work with this index.
+`apiKey` we will share with you is restricted to work with this index.
 
 When using the free DocSearch crawler, the `indexName` will always be the name
 of the configuration file. If you're running DocSearch yourself, you can use any
