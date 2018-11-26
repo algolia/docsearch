@@ -46,7 +46,7 @@ API_KEY=YOUR_API_KEY
 
 ## Create a new config
 
-To create a config, run `./docsearch bootstrap`. A prompt will ask you for a
+To create a config, run `./docsearch bootstrap`. A prompt will ask you for
 some information and will then output a JSON config you can use as a base.
 
 ```sh
