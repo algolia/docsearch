@@ -606,11 +606,11 @@ DocSearch to index all your content.
 
 You can override the user agent used to crawl your website. By default, this
 value is:
-`'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36'`
+`'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/70.0.3538.110 Safari/537.36'`
 
 ```json
 {
-  "user_agent": "Googlebot"
+  "user_agent": "DocSeach Bot"
 }
 ```
 
