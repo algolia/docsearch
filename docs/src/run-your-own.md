@@ -5,8 +5,8 @@ title: Run your own
 
 The version of DocSearch we provide for free is one hosted on our own servers,
 running every 24 hours. To update your results with more control, if you are not
-compliant with our checklist, or to index content sitting behind a firewall,
-you might want to run the crawler yourself.
+compliant with our checklist, or to index content sitting behind a firewall, you
+might want to run the crawler yourself.
 
 The whole code of DocSearch is open source, and we packaged it as a Docker image
 to make this even easier for you to use.
@@ -46,8 +46,8 @@ API_KEY=YOUR_API_KEY
 
 ## Create a new config
 
-To create a config, run `./docsearch bootstrap`. A prompt will ask you for
-some information and will then output a JSON config you can use as a base.
+To create a config, run `./docsearch bootstrap`. A prompt will ask you for some
+information and will then output a JSON config you can use as a base.
 
 ```sh
 $ ./docsearch bootstrap
@@ -84,8 +84,8 @@ on to start the crawl. You can find the complete list of available options in
 Now that you have your environment variables set, you can run the crawler
 according to your config.
 
-Running `pipenv shell` will enable your virtual environment. From there, you can run one crawl with the following command:
-code source
+Running `pipenv shell` will enable your virtual environment. From there, you can
+run one crawl with the following command: code source
 
 ```sh
 $ ./docsearch run /path/to/your/config.json
