@@ -10,6 +10,8 @@
   command = "./docs/scripts/netlify-master"
 
 # Deploy previews on each PR
-[context.deploy-preview]
-  command = "./docs/scripts/netlify-deploy-preview"
-  publish = "docs/dist"
+# Disabled for security reasons. Should be enabled back when main deploy is
+# moved to Travis
+# [context.deploy-preview]
+#   command = "./docs/scripts/netlify-deploy-preview"
+#   publish = "docs/dist"
