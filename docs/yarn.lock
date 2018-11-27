@@ -6644,10 +6644,10 @@ remark-preset-lint-recommended@3.0.2:
     remark-lint-no-unused-definitions "^1.0.0"
     remark-lint-ordered-list-marker-style "^1.0.0"
 
-remark-reference-links@4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/remark-reference-links/-/remark-reference-links-4.0.2.tgz#817c63486901bd4f5f8a0cf48a695f5ecd2c966d"
-  integrity sha512-871gKTysBtdQUjoqXA0URWmVhI2jFrpLkWrM3/bydAbsngilDYRjjl2LDAgmNooW8bYbHa57YQ13ld+mYr3TLg==
+remark-reference-links@4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/remark-reference-links/-/remark-reference-links-4.0.3.tgz#eb51ad4fddb009199f98ac403d0558d732e2df89"
+  integrity sha512-Q9d7JaK5r0JDBo3TInfrodBuI3xulI8htCr8jlX+0oXosF3GaebJbo5y228VYFoV6xJ+syDukkUGMKNlwSJWjQ==
   dependencies:
     unist-util-visit "^1.0.0"
 
