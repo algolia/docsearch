@@ -117,7 +117,7 @@ correct configuration should be built the other way around (as primarily
 described).
 
 If one `start_urls` item has no `selectors_key` defined, the `default` set will
-be used. Do not forget to precise this fallback set of selectors.
+be used. Do not forget to set this fallback set of selectors.
 
 ### Using regular expressions
 

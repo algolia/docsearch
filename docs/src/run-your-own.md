@@ -5,7 +5,7 @@ title: Run your own
 
 The version of DocSearch we provide for free is one hosted on our own servers,
 running every 24 hours. To update your results with more control, if you are not
-compliant with our checking list, or to index content sitting behind a firewall,
+compliant with our checklist, or to index content sitting behind a firewall,
 you might want to run the crawler yourself.
 
 The whole code of DocSearch is open source, and we packaged it as a Docker image
@@ -13,7 +13,7 @@ to make this even easier for you to use.
 
 ## Installation
 
-The scraper is a python tool [based on scrapy][1]. ] Start by cloning [the open
+The scraper is a python tool [based on scrapy][1]. Start by cloning [the open
 source repository][2]. We do recommend [pipenv][3] to install the whole python
 environment
 
