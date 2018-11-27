@@ -3,9 +3,9 @@ layout: two-columns
 title: Config Files
 ---
 
-For each DocSearch request we receive, we create a custom JSON config file that
-will define how the crawler should behave. You can find all the configs in [this
-repository][1].
+For each DocSearch request we receive, we'll create a custom JSON config file
+that will define how the crawler should behave. You can find all the configs in
+[this repository][1].
 
 A DocSearch looks like this:
 
@@ -28,11 +28,11 @@ A DocSearch looks like this:
 ## `index_name`
 
 This is the name of the Algolia index where your records will be pushed. The
-`apiKey` we will share with you is restricted to work with this index.
+`apiKey` we will share with you will be restricted to work on this index.
 
 When using the free DocSearch crawler, the `indexName` will always be the name
-of the configuration file. If you're running DocSearch yourself, you can use any
-name you'd like.
+of the config. If you're running DocSearch yourself, you can use any name you'd
+like.
 
 ```json
 {
@@ -43,9 +43,9 @@ name you'd like.
 ## `start_urls`
 
 This array contains the list of URLs that will be used to start crawling your
-website. The crawler will recursively follow any links (`<a/>` tags) from those
-pages. It will not follow links that are on another domain and never follow
-matching links from `stop_urls`.
+website. The crawler will recursively follow any links on those pages. It will
+not follow links that are on another domain and never follow links defined in
+`stop_urls`.
 
 ```json
 {
@@ -56,7 +56,7 @@ matching links from `stop_urls`.
 ### `selectors_key`, tailor your selectors
 
 You can define finer sets of selectors depending on the URL. This is done thanks
-to the parameter `selectors_key` from your `start_urls`.
+to the parameter `selectors_key` from your `start_urls` item.
 
 ```json
 {
@@ -92,7 +92,7 @@ to the parameter `selectors_key` from your `start_urls`.
 ```
 
 To find the right subset to use based on the URL, we iterate over these
-`start_urls` items. Only the first one matching is applied.
+`start_urls` items. The first one matching is applied.
 
 Considering the URL `http://www.example.com/en/api/` with the configuration:
 
@@ -113,20 +113,20 @@ Considering the URL `http://www.example.com/en/api/` with the configuration:
 ```
 
 Only the set of selector related to `doc` will be applied to the URL. The
-correct configuration should be built the other way around (as primarily
+correct configuration should be build the other way around (as primarily
 described).
 
 If one `start_urls` item has no `selectors_key` defined, the `default` set will
-be used. Do not forget to set this fallback set of selectors.
+be used. Do not forget to precise this fallback.
 
 ### Using regular expressions
 
-The `start_urls` and `stop_urls` options also enable you to provide regular
-expression to express more complex patterns. This object must at least contain a
-`url` key targeting a reachable page.
+The `start_urls` option also allows for passing an object in place of a string,
+to express more complex patterns. This object must contain a `url` key
+containing the regular expression matching the url, as well as a `variables` key
+that will be used to replace the named matches.
 
-You can also define `variables` key that will be injected into your specific URL
-pattern. The following example makes this variable feature clearer:
+The following example will make it clearer:
 
 ```json
 {
@@ -142,10 +142,10 @@ pattern. The following example makes this variable feature clearer:
 }
 ```
 
-The beneficial side effect of using this syntax is that every records extracted
-from pages matching `http://www.example.com/docs/en/latest` will have attributes
-`lang: en` and `version: latest`. It enables you to filter on [these
-`facetFilters`][3].
+The beneficial side effect of using this syntax is that all records that will
+then be extracted from crawling `http://www.example.com/docs/en/latest` will
+have `lang: en` and `version: latest` added to it, allowing you to then filter
+based on those values.
 
 The following example shows how you can filter results matching specifics
 language and version from the frontend
@@ -616,4 +616,3 @@ value is:
 
 [1]: https://github.com/algolia/docsearch-configs/tree/master/configs
 [2]: https://www.algolia.com/doc/api-reference/settings-api-parameters/
-[3]: https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/
