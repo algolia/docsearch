@@ -28,5 +28,6 @@ if [ "$DOCS_FOLDER_HAS_CHANGED" = "1" ]; then
 fi
 
 # Full build if documentation changed
+yarn install
 yarn run build
 
