@@ -610,7 +610,7 @@ value is:
 
 ```json
 {
-  "user_agent": "DocSeach Bot"
+  "user_agent": "DocSearch Bot"
 }
 ```
 
