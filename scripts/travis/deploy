@@ -15,7 +15,7 @@ if ! ./scripts/travis/on-master; then
 fi
 
 if ! ./scripts/travis/changes-in-docs-since-master; then
-  echo "✘ Documentation is not deployed if their are no changes in ./docs";
+  echo "✘ Documentation is not deployed if there are no changes in ./docs";
   exit 0
 fi
 
