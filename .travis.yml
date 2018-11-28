@@ -2,4 +2,9 @@ language: node_js
 script: "./scripts/test"
 branches:
   only:
-  - master
+    - master
+
+matrix:
+  include:
+    - name: "[Documentation] Deploy"
+      script: "./scripts/travis/deploy"
