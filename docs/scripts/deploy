@@ -1,13 +1,7 @@
 #!/usr/bin/env sh
 set -e
 
-yarn run lint
-
 rm -rf ./dist
 yarn run build
-
-# Add the date of last deploy, so the automatic deployment know if it needs to
-# override it or not (check ./scripts/netflify-master)
-date +%s > ./dist/last_update
 
 gh-pages -d dist
