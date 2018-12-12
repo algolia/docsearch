@@ -4,7 +4,8 @@ module.exports = {
   globals: {
     docsearch: true,
     Glide: true,
-    Popper: true
+    Popper: true,
+    grecaptcha: true
   },
   rules: {
     'no-console': 0,

@@ -7,7 +7,8 @@
     "repo": "https://github.com/algolia/docsearch"
   },
   "placeholders": {
-    "docSearchJSVersion": "2"
+    "docSearchJSVersion": "2",
+    "recaptchaKey": "6Le61n0UAAAAAGruCSV0p8Hl7zyQo9F3fzaSmxwJ"
   },
   "sidebar": [
     {
