@@ -5,13 +5,7 @@
   NODE_ENV = "development"
   YARN_VERSION = "1.9.4"
 
-# Deploy documentation website on each commit on master
-[context.master]
-  command = "./docs/scripts/netlify-master"
-
 # Deploy previews on each PR
-# Disabled for security reasons. Should be enabled back when main deploy is
-# moved to Travis
-# [context.deploy-preview]
-#   command = "./docs/scripts/netlify-deploy-preview"
-#   publish = "docs/dist"
+[context.deploy-preview]
+  command = "./scripts/netlify/deploy-preview"
+  publish = "docs/dist"
