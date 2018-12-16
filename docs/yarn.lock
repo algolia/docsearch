@@ -7544,10 +7544,10 @@ table@^5.0.0:
     slice-ansi "1.0.0"
     string-width "^2.1.1"
 
-tailwindcss@0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-0.7.2.tgz#a81e0c532911ec665a749c03d821a17b49e30165"
-  integrity sha512-mpDe9BBgdnvHatmdQ2GF/QVNQ/0nMX7lfmL3hV6D7r1NLVqYZIwFB4Z0vuIO2TIdVobdwwtLKPYOZ+MECv6vhw==
+tailwindcss@0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-0.7.3.tgz#7b58605dd7857507c4dbc6edaccab4c14d30c054"
+  integrity sha512-YbIa8lrngcObqaJEjza8/jwmx3F6L0TQ3vWTf6KD/EHWjRTVlcExDhtWbTwEUnX0fxuK5UvfSl2gfW0mP3Skzg==
   dependencies:
     autoprefixer "^9.3.1"
     bytes "^3.0.0"
