@@ -85,7 +85,7 @@ Now that you have your environment variables set, you can run the crawler
 according to your config.
 
 Running `pipenv shell` will enable your virtual environment. From there, you can
-run one crawl with the following command: 
+run one crawl with the following command:
 
 ```sh
 $ ./docsearch run /path/to/your/config.json
