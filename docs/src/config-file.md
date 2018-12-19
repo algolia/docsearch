@@ -612,7 +612,7 @@ value is:
 However, if the crawl of your website requires a browser emulation (i.e.
 `js_render=true`), our `user_agent` is:
 
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/71.0.3578.98 Safari/537.36"
+    Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/71.0.3578.98 Safari/537.36
 
 To override it, from the configuration:
 
