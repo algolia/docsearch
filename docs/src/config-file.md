@@ -606,11 +606,19 @@ DocSearch to index all your content.
 
 You can override the user agent used to crawl your website. By default, this
 value is:
-`'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/70.0.3538.110 Safari/537.36'`
+
+`'Algolia DocSearch Crawler'`
+
+However, if the crawl of your website requires a browser emulation (i.e.
+`js_render=true`), our `user_agent` is:
+
+`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/71.0.3578.98 Safari/537.36`
+
+To override it, from the configuration:
 
 ```json
 {
-  "user_agent": "DocSearch Bot"
+  "user_agent": "Custom Bot"
 }
 ```
 
