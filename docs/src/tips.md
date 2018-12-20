@@ -7,7 +7,7 @@ DocSearch can work with almost any website, but we found that some site
 structures yield more relevant result or faster indexing time. In this page
 we'll share some tips on how you can make the most out of DocSearch.
 
-### Use a `sitemap.xml`
+## Use a `sitemap.xml`
 
 If you provide a sitemap in your configuration, DocSearch will use it to diretly
 browse the pages to index. Pages are still crawled which means we extract every
@@ -20,7 +20,7 @@ control over which page you'd like to include or not in the indexing.
 Sitemaps are also considered good practice for other aspects, including SEO
 ([more information on sitemaps][1]).
 
-### Structure the hierarchy of information
+## Structure the hierarchy of information
 
 DocSearch works better on structured documentation. Relevance of results is
 based on the structural hierarchy of content. In simpler terms it means that we
@@ -46,7 +46,7 @@ minimum.
 `<span class="title-X">` for example instead. Your will need to update your set
 of `selectors`
 
-### Set a unique class to the element holding the content
+## Set a unique class to the element holding the content
 
 DocSearch is extracting content based on the HTML structure. We recommend that
 you add a custom `class` to the HTML element wrapping all your textual content.
@@ -57,7 +57,7 @@ will make sure all indexed content is relevant content. We found that this is
 the most reliable way to exclude content in headers, sidebars, and footers that
 are not relevant to the search.
 
-### Add anchors to headings
+## Add anchors to headings
 
 When using headings (as mentioned above), you should also try to add a custom
 anchor to each of them. Anchors are HTML attributes (`name` or `id`) added to
@@ -67,7 +67,7 @@ the page when clicking a link with a `#` in it.
 DocSearch will honor such anchors and automatically bring your users to the
 anchor closest to the search result they selected.
 
-### Marking the active page(s) in the navigation
+## Marking the active page(s) in the navigation
 
 If you're using a multi-level navigation, we recommend that you mark each active
 level with a custom CSS class. This will make it easier for DocSearch to know
