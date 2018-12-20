@@ -5,30 +5,32 @@ title: How does it work?
 
 Getting up and ready with DocSearch is a straightforward process that requires
 three steps: you apply, we configure the crawler for you, and you integrate our
-Search-UI in your frontend. It is as simple as copying and pasting a snippet.
+Search-UI in your frontend. It is as simple as copying and pasting a JavaScript
+snippet.
 
 ![How it works][4] {mt-2}
 
 ### You apply
 
-The first thing you'll need to do is apply for DocSearch by filling out the form
-on this page (double check first that you qualify). We are receiving a lot of
-requests, so this form makes sure we won't be forgetting anyone.
+The first thing you'll need to do is to apply for DocSearch by [filling out the
+form on this page][1] (double check first that you qualify). We are receiving a
+lot of requests, so this form makes sure we won't be forgetting anyone.
 
 We guarantee that we will answer every request, but as we receive a lot of
 applications, please give us a couple of days to get back to you :)
 
 ### We create a configuration
 
-Once we receive [your application][2], we'll have a look at your website and
+Once we receive [your application][1], we'll have a look at your website and
 create a custom configuration file for it. This file defines which URLs we
 should crawl or ignore, as well as the specific CSS selectors to be used for
 selecting headers, subheaders, etc. All configs are publicly available in our
-[config repository][1].
+[config repository][2].
 
-This step still requires some manual work, but thanks to the 1 000+ configs we
-already created, we're able to automate most of it. Once done, we'll run a first
-indexing of your website and have it run automatically every 24h.
+This step still requires some manual work and human brain, but thanks to the +1
+000 configs we already created, we're able to automate most of it. Once this
+creation is done, we'll run a first indexing of your website and have it run
+automatically every 24h.
 
 ### You update your website
 
@@ -46,7 +48,7 @@ crawling your website every day and update your search results automatically.
 All we ask is that you keep the "search by Algolia" logo next to your search
 results.
 
-[1]: https://github.com/algolia/docsearch-configs/tree/master/configs
-[2]: apply.html
+[1]: apply.html
+[2]: https://github.com/algolia/docsearch-configs/tree/master/configs
 [3]: styling.html
 [4]: ./assets/docsearch-how-it-works.png
