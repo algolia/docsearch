@@ -7,7 +7,7 @@ If you're not finding the answer to your question on this website, this page
 will help you. If you're still unsure, don't hesitate to send [your question to
 us][1] directly.
 
-### How often will you crawl my website?
+## How often will you crawl my website?
 
 Every day.
 
@@ -15,7 +15,7 @@ The exact time of day might vary each day, but we'll crawl your website at most
 every 24 hours. We will also trigger a manual crawling every time your config is
 updated.
 
-### What do I need to install on my side?
+## What do I need to install on my side?
 
 Nothing.
 
@@ -24,7 +24,7 @@ from your website and populate an Algolia index with it every day. All you need
 to do is keep your website online, and we take care of the rest. If you want to
 edit your configuration, please submit a pull request.
 
-### How much does it cost?
+## How much does it cost?
 
 Nothing.
 
@@ -38,7 +38,7 @@ account][3] and run DocSearch on your own without this limitation. In that case,
 though, depending on the size of your documentation, you might need a paid
 account ([free accounts][4] can hold as much as 10k records).
 
-### What data are you collecting?
+## What data are you collecting?
 
 We only save the data we extract from your website markup, which we put in a
 custom JSON format instead of HTML. This is the only data we put in the Algolia
@@ -54,13 +54,13 @@ With such Analytiucs, you will understand better what your users are doing.
 
 _If you don't have Analytics access, [send us an email][1] and we'll enable it._
 
-### Where is my data hosted?
+## Where is my data hosted?
 
 All DocSearch data is hosted on Algolia's servers, with replications around the
 globe. You can find more details about the actual [server specs here][5], and
 more complete information in our [privacy policy][6].
 
-### Can I use DocSearch on non-doc pages?
+## Can I use DocSearch on non-doc pages?
 
 The free DocSearch we provide will crawl documentation pages. To use it on other
 parts of your website, you'll need to create your own Algolia account and
@@ -69,7 +69,7 @@ either:
 - Run the [DocSearch crawler][7] on your own
 - Use one of our other [framework integrations or API clients][8]
 
-### Can you index code samples?
+## Can you index code samples?
 
 Yes, but we do not recommend it.
 
@@ -81,7 +81,7 @@ What we recommend instead is to exclude the code blocks from the indexing (by
 using the `selectors_exclude` option in your config), and instead structure your
 content so the method names are actual headers.
 
-### Why do I have duplicate content in my results?
+## Why do I have duplicate content in my results?
 
 This can happen when you have more than one URL pointing to the same content,
 for example with `./docs`, `./docs/` and `./docs/index.html` or even both `http`
@@ -97,7 +97,7 @@ as those starting with `http://`.
 }
 ```
 
-### Why are the custom changes from the Algolia dashboard ineffective?
+## Why are the custom changes from the Algolia dashboard ineffective?
 
 Changing your setting from the dashboard might be something you want to do for
 some reasons .
@@ -109,7 +109,7 @@ the JSON configuration itself.
 
 You can use the [custom_settings parameter][9] in such purpose.
 
-### A documentation website I like does not use DocSearch. What can I do?
+## A documentation website I like does not use DocSearch. What can I do?
 
 We'd love to help!
 
