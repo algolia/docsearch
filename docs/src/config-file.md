@@ -276,7 +276,7 @@ as `lvl1`, `h3` as `lvl2`, and `p` as `text`, but this is highly dependent on
 the markup.
 
 The `text` key is mandatory, but we highly recommend setting also `lvl0`, `lvl1`
-and `lvl2` to have a decent level of relevance.
+and `lvl2` to have a decent depth of relevance.
 
 ```json
 {
@@ -313,7 +313,7 @@ hierarchy of headers. This breaks when the relevant information is not part of
 the same flow. For example when the title is not part of a header or sidebar.
 
 For that reason, you can set a selector as global, meaning that it will match on
-the whole page, and will be the same for all records extracted on this page.
+the whole page, and will be the same for all records extracted from this page.
 
 ```json
 {
@@ -329,7 +329,7 @@ the whole page, and will be the same for all records extracted on this page.
 ### Setting a default value
 
 If your selector might not match a valid element on the page, you can define a
-`default_value` to fallback to.
+`default_value` as a fallback.
 
 ```json
 {
@@ -589,10 +589,10 @@ This option has no impact if `js_render` is set to `false`.
 
 ### `use_anchors` _Optional_
 
-Websites using client-side rendering often don't use full urls, but instead take
+Websites using client-side rendering often don't use full URLs, but instead take
 advantage of the URL hash (the part after the `#`).
 
-If your website is using such urls, you should set `use_anchors` to `true` for
+If your website is using such URLs, you should set `use_anchors` to `true` for
 DocSearch to index all your content.
 
 ```json
