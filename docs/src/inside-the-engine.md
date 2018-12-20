@@ -31,9 +31,9 @@ data's structure. This is achieved in a simple way:
 - We **index** these records with the appropriate global settings (e.g.
   metadata, tags, etc.)
 
-_**Note:** The above process performs sanity tests as it scrapes, in order to
-detect errors. If indeed there are any serious warnings, it will abort and hence
-not overwrite your current index. These checks ensure that your dedicated index
+_**Note:** The above process performs sanity tests as it scrapes to detect
+errors. If indeed there are any serious warnings, it will abort and hence not
+overwrite your current index. These checks ensure that your dedicated index
 isn't flushed._
 
 ## Ranking records

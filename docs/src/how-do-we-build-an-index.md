@@ -11,7 +11,7 @@ In this section you will learn how we build a DocSearch index from your page.
 
 _Note: We would rather avoid useless JavaScript rendering. All useful
 information should be available without any client-side rendering. You can use
-`curl` command in order to have a better idea of how it would look without any
+`curl` command to have a better idea of how it would look without any
 client-side rendering. You can also disable JavaScript from your browser
 settings_
 
