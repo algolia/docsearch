@@ -10,7 +10,7 @@ snippet.
 
 ![How it works][4] {mt-2}
 
-### You apply
+## You apply
 
 The first thing you'll need to do is to apply for DocSearch by [filling out the
 form on this page][1] (double check first that you qualify). We are receiving a
@@ -19,7 +19,7 @@ lot of requests, so this form makes sure we won't be forgetting anyone.
 We guarantee that we will answer every request, but as we receive a lot of
 applications, please give us a couple of days to get back to you :)
 
-### We create a configuration
+## We create a configuration
 
 Once we receive [your application][1], we'll have a look at your website and
 create a custom configuration file for it. This file defines which URLs we
@@ -32,7 +32,7 @@ This step still requires some manual work and human brain, but thanks to the +1
 creation is done, we'll run a first indexing of your website and have it run
 automatically every 24h.
 
-### You update your website
+## You update your website
 
 We'll then get back to you with the JavaScript snippet you'll need to add to
 your website. This will bind your search `input` field to display results from
