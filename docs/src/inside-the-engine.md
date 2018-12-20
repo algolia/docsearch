@@ -45,17 +45,17 @@ again, on the page hierarchy, as extracted from the `selectors`.
 
 The default strategy is to promote records having matching words in the highest
 level first. Thus if two results have the same matching words, the one having
-them in the highest level (lvl0) will be ranked higher. We also use the
-position of the matching words. The sooner they appear within the HTML flow, the
-higher the record will be ranked.
+them in the highest level (lvl0) will be ranked higher. We also use the position
+of the matching words. The sooner they appear within the HTML flow, the higher
+the record will be ranked.
 
 The relevancy is based on several factors and can be customized according to the
 Algolia tie-breaking method.
 
 You can boost pages depending on their URLs. This is done from the `start_urls`
-and its `page_rank` attributes. It is a numeric value (defaults to 0). The higher
-it is, the higher results from the matching pages will be ranked. For example
-all pages with a `page_rank` of 5 will be returned before pages with a
+and its `page_rank` attributes. It is a numeric value (defaults to 0). The
+higher it is, the higher results from the matching pages will be ranked. For
+example all pages with a `page_rank` of 5 will be returned before pages with a
 `page_rank` of 1.
 
 You could even change the relevancy strategy by [overwriting the default
