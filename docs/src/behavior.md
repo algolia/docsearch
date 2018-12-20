@@ -3,17 +3,19 @@ layout: two-columns
 title: Dropdown Behavior
 ---
 
-Our JS library `docsearch.js` is a wrapper of the [autocomplete.js][1] library.
-This library will listen to every keystrokes in the search input, query Algolia,
-and display the results in a dropdown. Everything is already configured for you
-to work with DocSearch. Our UI library also exposes configuration options you
-can use to go even further. You will discover Algolia.
+Our JS library `docsearch.js` is a wrapper of the [Algolia autocomplete.js][1]
+library. This library will listen to every keystrokes type in the search input,
+query Algolia, and display the results in a dropdown. Everything is already
+configured for you to work with DocSearch. Our UI library also exposes
+configuration options you can use to go even further. You will discover Algolia
+out of the box for documentation. Let's start the **learn as you type**
+experience.
 
 ## `appId`
 
-If you're [running the DocSearch crawler on your own][2], you'll need to define
-your own application ID using the `appId` key. If you're using the free hosted
-version, you don't need to add anything.
+Only required if you're [running the DocSearch crawler on your own][2]. It
+defines your own application ID using the `appId` key. If you're using the free
+hosted version, you don't need to consider this parameter.
 
 ```javascript
 docsearch({
@@ -26,8 +28,9 @@ docsearch({
 
 This method is called when a suggestion is selected (either from a click or a
 keystroke). By default, DocSearch will display links redirecting to the results
-page, at the related anchor. You can override it to add your own behavior.
-Please note that you can already open a new tab thanks to the `CMD/CTRL + Click`
+page, at the related position (using anchor). You can override results (hit) to
+add your own behavior. Please note that you can already open a new tab thanks to
+the `CMD/CTRL + Click` action.
 
 The method is called with the following arguments:
 
@@ -36,11 +39,11 @@ The method is called with the following arguments:
 
 - `event`, the actual event triggering the selection.
 
-- `suggestion`, the object representing the current selection. Contains a `.url`
-  key representing the destination.
+- `suggestion`, the object representing the current selection. It contains a
+  `.url` key representing the destination.
 
-- `datasetNumber`, this should always equal `1` as DocSearch is searching into
-  one dataset at a time. You can ignore this attribute.
+- `datasetNumber`, this should always be equal `1` as DocSearch is searching
+  into one dataset at a time. You can ignore this attribute.
 
 - `context`, additional information about the selection. Contains a
   `.selectionMethod` key that can be either `click`, `enterKey`, `tabKey` or
@@ -50,7 +53,13 @@ The method is called with the following arguments:
 docsearch({
   […],
   handleSelected: function(input, event, suggestion, datasetNumber, context) {
-    // Default implementation is as follow:
+    // Do nothing if click on the suggestion, as it's already a <a href>, the
+    // browser will take care of it. This allow Ctrl-Clicking on results and not
+    // having the main window being redirected as well
+    if (context.selectionMethod === 'click') {
+      return;
+    }
+
     input.setVal('');
     window.location.assign(suggestion.url);
   }
@@ -59,9 +68,9 @@ docsearch({
 
 ## `queryHook`
 
-This method will be called on every keystroke to transform the typed keywords
-before querying Algolia. By default, it does not do anything, but we provide
-this hook for you to add your own logic if needed.
+This method is called on every keystroke to transform the typed keywords before
+querying Algolia. By default, it does not do anything, but we provide this hook
+for you to add your own logic if needed.
 
 ```javascript
 docsearch({
@@ -88,7 +97,7 @@ docsearch({
 
 ## `autocompleteOptions`
 
-You can pass any option to the underlying `autocomplete.js` instance by using
+You can pass any options to the underlying `autocomplete.js` instance by using
 the `autocompleteOptions` parameter. You will find the list of all available
 values in [the official documentation][3].
 
