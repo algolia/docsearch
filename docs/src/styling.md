@@ -5,6 +5,8 @@ title: Styling DocSearch
 
 DocSearch default colorscheme comes in a grey theme with blue highlight.
 
+## Colorscheme
+
 ![Default colorscheme][1]
 
 This theme works well with most websites, but we encourage you to style it to
