@@ -1,6 +1,6 @@
 ---
 layout: two-columns
-title: Dropdown
+title: Dropdown Search-UI
 ---
 
 Once your Algolia DocSearch index is ready, correctly set up, and filled with
