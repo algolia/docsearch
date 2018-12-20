@@ -4,9 +4,9 @@ title: Run your own
 ---
 
 The version of DocSearch we provide for free is one hosted on our own servers,
-running every 24 hours. To update your results with more control, if you are not
-compliant with our checklist, or to index content sitting behind a firewall, you
-might want to run the crawler yourself.
+running every 24 hours. To update your results with more control, or if you are
+not compliant with our checklist, or to index content sitting behind a firewall,
+you might want to run the crawler yourself.
 
 The whole code of DocSearch is open source, and we packaged it as a Docker image
 to make this even easier for you to use.
