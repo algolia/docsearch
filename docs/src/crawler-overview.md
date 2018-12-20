@@ -3,7 +3,7 @@ layout: two-columns
 title: Crawler Overview
 ---
 
-### How?
+## How?
 
 The DocSearch crawler is written in python and heavily based on the [Scrapy][1]
 framework. It will crawl all pages of your website and extract content from the
@@ -19,7 +19,7 @@ Those CSS selectors can be overwritten, and each website actually has its own
 JSON configuration file that describes in more detail how the crawling should
 behave. You can find the complete list of options in [the related section][2].
 
-### When?
+## When?
 
 We automatically run each config every 24h. This is done from our own
 infrastructure, meaning that you don't need to install anything on your side. We
