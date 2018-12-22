@@ -1,6 +1,6 @@
 ---
 layout: two-columns
-title: Applying to DocSearch
+title: Apply for DocSearch
 includeForm: true
 ---
 

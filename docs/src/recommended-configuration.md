@@ -1,17 +1,17 @@
 ---
 layout: two-columns
-title: Recommended configuration
+title: Recommendation
 ---
 
 This is great news to know that you want to integrate DocSearch in your website.
 A good search experience is key to help your users discover your content.
-Documentation is a part of your tool.
+Documentation is a huge part of your tool.
 
 This section, [empowered by the details about how we build a DocSearch
 index][1], gives you the best practices to optimize our crawl. It will enhance
 your user's journey.
 
-## Recommendations
+## Nice to have
 
 - Your website should have [an updated sitemap][2]. This is key to let our
   crawler know what should be updated. Do not worry, we will still crawl your
@@ -62,6 +62,33 @@ The biggest blue element will be you `docSearch-content` container. Every
 selectors outside this element will be `global`. Every selectors appear in the
 same order than their `lvl` along the HTML flow.
 
+### Introduces global information as meta tags
+
+Our crawler automatically extract information from our DocSearch specific meta
+taf:
+
+```html
+<meta name="docsearch:language" content="en">
+<meta name="docsearch:version" content="1.0.0">
+```
+
+The `content` value of the meta will be added to every records extracted from
+the page. Given that the name is `docsearch:$NAME`, `$NAME` will be set as a
+attribute in each of them. Its value will be its related `content` value. You
+can then transform them as [`facetFilters`][6] to filter over them. We will need
+to use Algolia settings via the DocSearch `custom_settings` parameter and set
+`attributesForFaceting` Algolia parameter.
+
+Look at this example with our vuepress integration:
+
+```json
+"custom_settings": {
+    "attributesForFaceting": [
+      "lang"
+    ]
+  }
+```
+
 ### The generic configuration example
 
 ```json
@@ -94,11 +121,12 @@ same order than their `lvl` along the HTML flow.
 }
 ```
 
-Any question ? [Send us an email][6].
+Any question ? [Send us an email][7].
 
 [1]: ./how-do-we-build-an-index.html
 [2]: https://www.sitemaps.org/
 [3]: ./config-file.html#js_render-optional
 [4]: ./config-file.html
 [5]: ./assets/proper_layout.png
-[6]: mailto:docsearch@algolia.com
+[6]: https://www.algolia.com/doc/guides/searching/filtering/#facet-filters
+[7]: mailto:docsearch@algolia.com

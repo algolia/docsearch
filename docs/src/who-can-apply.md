@@ -11,7 +11,7 @@ We're always sad to have to turn down applications, but with the number of
 requests we receive everyday, we've had to focus on several criteria. We hope
 you understand.
 
-### The checklist
+## The checklist
 
 To have your request validated, we'll ask that you validate all the following
 points.
@@ -37,7 +37,7 @@ great search on your website. DocSearch is entirely open source and [you can run
 it yourself][2], or use any of [our other API clients][3] to take advantage of
 Algolia's features.
 
-### Priority
+## Priority
 
 We're receiving dozens of requests every day, and while we strive to answer them
 all as fast as we can, we sometimes give priority to some based on the following
@@ -57,4 +57,4 @@ criteria:
 [1]: ./apply.html
 [2]: ./run-your-own.html
 [3]: https://www.algolia.com/doc/api-reference/
-[4]: ./integrations.html
+[4]: ./integrations.HTML

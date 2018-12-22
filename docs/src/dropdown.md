@@ -1,6 +1,6 @@
 ---
 layout: two-columns
-title: Dropdown
+title: Dropdown Search-UI
 ---
 
 Once your Algolia DocSearch index is ready, correctly set up, and filled with
@@ -36,8 +36,8 @@ config.
 
 ## Testing
 
-If you're eager to test DocSearch but don't have credentials of your own yet,
-you can use the one we use on this website:
+If you're eager to test DocSearch but don't have any credentials of your own
+yet, you can try out the one we use on this website:
 
 ```javascript
 docsearch({
