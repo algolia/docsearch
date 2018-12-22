@@ -74,7 +74,7 @@ taf:
 
 The `content` value of the meta will be added to every records extracted from
  the page. Given that the name is `docsearch:$NAME`, `$NAME` will be set as a
-attribute in every of them. Its value will be its related `content`value. You
+ attribute in each of them. Its value will be its related `content` value. You
 can then transform them as [`facetFilter`][6] to let you filter over it.
 
 Look at this example with our vuepress integration:
