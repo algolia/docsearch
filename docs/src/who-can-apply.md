@@ -57,5 +57,4 @@ criteria:
 [1]: ./apply.html
 [2]: ./run-your-own.html
 [3]: https://www.algolia.com/doc/api-reference/
-
-E[4]&#x3A; ./integrations.HTML
+[4]: ./integrations.HTML
