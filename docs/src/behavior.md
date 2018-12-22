@@ -42,7 +42,7 @@ The method is called with the following arguments:
 - `suggestion`, the object representing the current selection. It contains a
   `.url` key representing the destination.
 
-- `datasetNumber`, this should always be equal `1` as DocSearch is searching
+- `datasetNumber`, this should always be equal to `1` as DocSearch is searching
   into one dataset at a time. You can ignore this attribute.
 
 - `context`, additional information about the selection. Contains a
