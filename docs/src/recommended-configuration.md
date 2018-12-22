@@ -73,9 +73,11 @@ taf:
 ```
 
 The `content` value of the meta will be added to every records extracted from
- the page. Given that the name is `docsearch:$NAME`, `$NAME` will be set as a
- attribute in each of them. Its value will be its related `content` value. You
- can then transform them as [`facetFilters`][6] to filter over them.
+the page. Given that the name is `docsearch:$NAME`, `$NAME` will be set as a
+attribute in each of them. Its value will be its related `content` value. You
+can then transform them as [`facetFilters`][6] to filter over them. We will need
+to use Algolia settings via the DocSearch `custom_settings` parameter and set
+`attributesForFaceting` Algolia parameter.
 
 Look at this example with our vuepress integration:
 
