@@ -71,7 +71,7 @@
     "textlint-rule-common-misspellings": "1.0.1",
     "textlint-rule-en-capitalization": "2.0.1",
     "textlint-rule-stop-words": "1.0.5",
-    "textlint-rule-terminology": "1.1.29",
+    "textlint-rule-terminology": "1.1.30",
     "textlint-rule-write-good": "1.6.2"
   },
   "peerDependencies": {},
