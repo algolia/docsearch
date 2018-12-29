@@ -23,7 +23,7 @@ to the list, get [in touch with us][10]. We'd be happy to help.
 [1]: https://docusaurus.io/
 [2]: https://docusaurus.io/docs/en/search#docsNav
 [3]: https://vuepress.vuejs.org/
-[4]: https://vuepress.vuejs.org/default-theme-config/#algolia-search
+[4]: https://v0.vuepress.vuejs.org/default-theme-config/#algolia-search
 [5]: https://docs.gitbook.com/
 [6]: http://pkgdown.r-lib.org/index.html
 [7]: http://pkgdown.r-lib.org/articles/pkgdown.html#search
