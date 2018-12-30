@@ -932,12 +932,12 @@
   dependencies:
     map-like "^2.0.0"
 
-"@textlint/fixer-formatter@^3.0.8":
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/@textlint/fixer-formatter/-/fixer-formatter-3.0.8.tgz#90ef804c60b9e694c8c048a06febbf1f331abd49"
-  integrity sha512-LTHcCLTyESdz90NGYzrYC0juSqLzGBc5VMMRO8Xvz3fapBya/Sn5ncgvsHqnKY0OIbV/IdOT54G2F46D8R6P9Q==
+"@textlint/fixer-formatter@^3.0.9":
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/@textlint/fixer-formatter/-/fixer-formatter-3.0.9.tgz#127f46c5e27d5f851fd4df1dd6f25a6338acb002"
+  integrity sha512-ypuYZ+A20OGKr4FlECLJF6WXj7bxUKrCH2tY89I/ITwlO2jAD8l8eFj3ECSb1mvICtktWCPel18dI7GXscesxQ==
   dependencies:
-    "@textlint/kernel" "^3.0.0"
+    "@textlint/kernel" "^3.0.1"
     chalk "^1.1.3"
     debug "^2.1.0"
     diff "^2.2.2"
@@ -947,10 +947,10 @@
     text-table "^0.2.0"
     try-resolve "^1.0.1"
 
-"@textlint/kernel@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@textlint/kernel/-/kernel-3.0.0.tgz#ba10962acff64f17b9e5fce8089a40f1f8880dcd"
-  integrity sha512-SxHWr6VAD/SdqTCy1uB03bFLbGYbhZeQTeUuIJE6s1pD7wtQ1+Y1n8nx9I9m7nqGZi5eYuVA6WnpvCq10USz+w==
+"@textlint/kernel@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@textlint/kernel/-/kernel-3.0.1.tgz#0fd66bd4aa539c7435c36d0b37a0bff058d4cd54"
+  integrity sha512-K65L9KdzxZoeziMhyA00Crd/UPGT9a5R9hIOzZGz6dCwc1K90Wp6b/EEUUPPAhMrVcJcA6ZOOaikk9fSbznFjA==
   dependencies:
     "@textlint/ast-node-types" "^4.0.3"
     "@textlint/ast-traverse" "^2.0.9"
@@ -963,14 +963,14 @@
     object-assign "^4.1.1"
     structured-source "^3.0.2"
 
-"@textlint/linter-formatter@^3.0.8":
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/@textlint/linter-formatter/-/linter-formatter-3.0.8.tgz#030aa03ff3d85dda94ca9fa9e6bf824f9c1cb7ef"
-  integrity sha512-hayZi4ybj01Km9Soi34cT8EkmEcqGgQKHu1tvPQVd8S2zaE3m/8nmf6qhwAo/HAwMzbIj0XxdV8nVuiUfz8ADQ==
+"@textlint/linter-formatter@^3.0.9":
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/@textlint/linter-formatter/-/linter-formatter-3.0.9.tgz#e70764c4e1f9e37a68806fa634038ed51ce87aae"
+  integrity sha512-eF4V2Jjn7FYQHkFNud3pABv0O/Ti/ErxjMDclaIg5bUOh+FZUgc54x4dvGJO6F64slgwzlv4TUGryXJsg/M/JQ==
   dependencies:
     "@azu/format-text" "^1.0.1"
     "@azu/style-format" "^1.0.0"
-    "@textlint/kernel" "^3.0.0"
+    "@textlint/kernel" "^3.0.1"
     chalk "^1.0.0"
     concat-stream "^1.5.1"
     js-yaml "^3.2.4"
@@ -1004,17 +1004,17 @@
   dependencies:
     "@textlint/ast-node-types" "^4.0.3"
 
-"@textlint/textlint-plugin-markdown@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/@textlint/textlint-plugin-markdown/-/textlint-plugin-markdown-5.0.1.tgz#edc4aa84302596d7aea5b67a91333b9caa8dc658"
-  integrity sha512-5YnBu14lejHsNgY1jAbvDo7DT73NdQ3tMme49l0aG8bMpYq24kblE0bHHl+oQOAqDMav7vYU840Z7rkUrnlKIA==
+"@textlint/textlint-plugin-markdown@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@textlint/textlint-plugin-markdown/-/textlint-plugin-markdown-5.0.2.tgz#15e50e51c8859faa3d382965058201ea7dd21540"
+  integrity sha512-vGYcm3opTtvfkT5B3c6IThTOIESRww/0ummHjqKc4jMXrZ4eZKQlyetl4uHR54bqA2MRmR4stEt/mJfSPmqMqw==
   dependencies:
     "@textlint/markdown-to-ast" "^6.0.9"
 
-"@textlint/textlint-plugin-text@^4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@textlint/textlint-plugin-text/-/textlint-plugin-text-4.0.1.tgz#6017c789409ea141a4a66b7a0f68dedf1ee61141"
-  integrity sha512-7LIzZy/3Fczfxb0+PkpcvOTHRP5nWl6RDB4yglEcTF/WSih8poUU9Pkv/DPViFtF1NHLQC8L6k0eCf0JNE6I6w==
+"@textlint/textlint-plugin-text@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@textlint/textlint-plugin-text/-/textlint-plugin-text-4.0.2.tgz#8a0bb5165837cd85338bced8204e07e2920012fb"
+  integrity sha512-ApJrWnfOZmaaP/bS7Ftfascdkr2omnJRgFxpG/73OPY7j3WPhdqw7XCd7CU+OyX//2PyLnxf5hbK6r1K6svi2w==
   dependencies:
     "@textlint/text-to-ast" "^3.0.9"
 
@@ -7688,19 +7688,19 @@ textlint-rule-write-good@1.6.2:
     textlint-rule-helper "^2.0.0"
     write-good "^0.11.0"
 
-textlint@11.0.1:
-  version "11.0.1"
-  resolved "https://registry.yarnpkg.com/textlint/-/textlint-11.0.1.tgz#2c4ce2bcefdf8307374ec19ac1b33261a50e294c"
-  integrity sha512-PxIYevqDYactPIuVHOrMpEXB+2oraTV76yggLzq3QCkylKRp73qyPX9jdFsUxU4HkX80WRr+aumkvwzs3QRgdg==
+textlint@11.0.2:
+  version "11.0.2"
+  resolved "https://registry.yarnpkg.com/textlint/-/textlint-11.0.2.tgz#cc3c8fdded03a7ad405de4397b99487960686e3b"
+  integrity sha512-uYnkgPzlDvfhuYQNhBEowj7PBtmWhm5MO9RyEKlWrEUCp1o/KtENke2Pm4IO1nsJTDg63VGzZGsJK8R2/7yyOQ==
   dependencies:
     "@textlint/ast-node-types" "^4.0.3"
     "@textlint/ast-traverse" "^2.0.9"
     "@textlint/feature-flag" "^3.0.5"
-    "@textlint/fixer-formatter" "^3.0.8"
-    "@textlint/kernel" "^3.0.0"
-    "@textlint/linter-formatter" "^3.0.8"
-    "@textlint/textlint-plugin-markdown" "^5.0.1"
-    "@textlint/textlint-plugin-text" "^4.0.1"
+    "@textlint/fixer-formatter" "^3.0.9"
+    "@textlint/kernel" "^3.0.1"
+    "@textlint/linter-formatter" "^3.0.9"
+    "@textlint/textlint-plugin-markdown" "^5.0.2"
+    "@textlint/textlint-plugin-text" "^4.0.2"
     "@types/bluebird" "^3.5.18"
     bluebird "^3.0.5"
     debug "^2.1.0"
