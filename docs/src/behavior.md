@@ -53,18 +53,18 @@ The method is called with the following arguments:
 docsearch({
   […],
   handleSelected: function(input, event, suggestion, datasetNumber, context) {
-    // Do nothing if click on the suggestion, as it's already a <a href>, the
-    // browser will take care of it. This allow Ctrl-Clicking on results and not
-    // having the main window being redirected as well
+
     if (context.selectionMethod === 'click') {
+      //Your own logic
       return;
     }
 
-    input.setVal('');
-    window.location.assign(suggestion.url);
   }
 });
 ```
+
+When a custom `handleSelected` is set, default browser clicks on suggestions are
+disabled and only `handleSelected` is called.
 
 ## `queryHook`
 
