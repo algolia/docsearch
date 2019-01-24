@@ -64,7 +64,7 @@ docsearch({
 ```
 
 When a custom `handleSelected` is set, default browser clicks on suggestions are
-disabled and only `handleSelected` is called.
+turned off and only `handleSelected` is called.
 
 ## `queryHook`
 
