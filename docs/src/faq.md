@@ -50,7 +50,7 @@ dashboard. This will let you have more data about the anonymized searches that
 were done on your website. You'll see the most searched terms, or those with no
 results.
 
-With such Analytiucs, you will understand better what your users are doing.
+With such Analytics, you will understand better what your users are doing.
 
 _If you don't have Analytics access, [send us an email][1] and we'll enable it._
 
