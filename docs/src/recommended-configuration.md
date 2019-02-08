@@ -39,7 +39,7 @@ experience. Impatient to know how?, follow these points:
 
 - Add a static `docSearch-content` class to the biggest and smaller element
   gathering your documentation. This element is the main container of your
-  textual content. It is mostly a main or article element.
+  textual content. HTML tag used are often main or article element.
 
 - Every elements outside this main documentation container (for instance in nav)
   should be `global`. They should be sorted according to their `lvl` along the
@@ -72,11 +72,11 @@ tags:
 <meta name="docsearch:version" content="1.0.0">
 ```
 
-The `content` value of the meta will be added to every records extracted from
-the page. Given that the name is `docsearch:$NAME`, `$NAME` will be set as a
-attribute in each of them. Its value will be its related `content` value. You
-can then transform them as [`facetFilters`][6] to filter over them. We will need
-to use Algolia settings via the DocSearch `custom_settings` parameter and set
+The `content` value of the meta is added to every records extracted from the
+page. Given that the name is `docsearch:$NAME`, `$NAME` is set as an attribute
+to every records while its value is the related `content` value. You can then
+transform them as [`facetFilters`][6] to filter over them. We will need to use
+Algolia settings via the DocSearch `custom_settings` parameter and set
 `attributesForFaceting` Algolia parameter.
 
 Look at this example with our vuepress integration:
