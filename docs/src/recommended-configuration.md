@@ -35,7 +35,7 @@ your user's journey.
 
 Your HTML can add some specific static classes with no styling. These classes
 will not impact your content and will help us to create a great discovery
-experience. Impatient to know how?, read the following element.
+experience. Impatient to know how?, follow these points:
 
 - Add a static `docSearch-content` class to the biggest and smaller element
   gathering your documentation. This element is the main container of your
@@ -65,7 +65,7 @@ same order than their `lvl` along the HTML flow.
 ### Introduces global information as meta tags
 
 Our crawler automatically extract information from our DocSearch specific meta
-taf:
+tags:
 
 ```html
 <meta name="docsearch:language" content="en">
