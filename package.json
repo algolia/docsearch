@@ -60,7 +60,7 @@
     "jsdom": "11.12.0",
     "json": "9.0.6",
     "live-server": "1.2.1",
-    "mversion": "1.12.0",
+    "mversion": "1.13.0",
     "node-sass": "4.11.0",
     "onchange": "4.1.0",
     "parallelshell": "3.0.2",
