@@ -3095,12 +3095,12 @@ eslint-config-algolia@13.2.3:
   resolved "https://registry.yarnpkg.com/eslint-config-algolia/-/eslint-config-algolia-13.2.3.tgz#e157431033e4d47c3fe1fc4486eb24198dde33a4"
   integrity sha512-fpAWSf5agR8xlUU55I4ngkcXVuboCQX0dLLSlL+Ibe619rRevCTcRTejG7jdqEDhm31Cfeibqr5Q3nC2T0UbNA==
 
-eslint-config-prettier@2.10.0:
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-2.10.0.tgz#ec07bc1d01f87d09f61d3840d112dc8a9791e30b"
-  integrity sha512-Mhl90VLucfBuhmcWBgbUNtgBiK955iCDK1+aHAz7QfDQF6wuzWZ6JjihZ3ejJoGlJWIuko7xLqNm8BA5uenKhA==
+eslint-config-prettier@4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-4.1.0.tgz#181364895899fff9fd3605fecb5c4f20e7d5f395"
+  integrity sha512-zILwX9/Ocz4SV2vX7ox85AsrAgXV3f2o2gpIicdMIOra48WYqgUnWNH/cR/iHtmD2Vb3dLSC3LiEJnS05Gkw7w==
   dependencies:
-    get-stdin "^5.0.1"
+    get-stdin "^6.0.0"
 
 eslint-import-resolver-node@^0.3.2:
   version "0.3.2"
