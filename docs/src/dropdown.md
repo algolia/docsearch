@@ -25,6 +25,7 @@ config.
     // we create your config
     apiKey: '<API_KEY>',
     indexName: '<INDEX_NAME>',
+    //appId: '<APP_ID>', // Should be only included if you are running DocSearch on your own.
     // Replace inputSelector with a CSS selector
     // matching your search input
     inputSelector: '<YOUR_CSS_SELECTOR>',
