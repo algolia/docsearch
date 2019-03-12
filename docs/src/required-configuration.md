@@ -63,36 +63,37 @@ role. These classes can not involve any style changes. These dedicated classes
 will help us to create a great learn as you type experience from your
 documentation.
 
-- Add a static `DocSearch-content` class to the main container of your textual
-  content. It is mostly a main or article HTML element.
+- Add a static class `DocSearch-content` to the main container of your textual
+  content. It is mostly a `<main/>` or an `<article/>` HTML element.
 
 - Every searchable `lvl` elements outside this main documentation container (for
   instance in a sidebar) must be `global` selectors. They will be globally
   pickup and injected to every records built from your page. Be careful, the
   level's value matter and every matching element must have an increasing level
   along the HTML flow. The level `X` (for `lvlX`) should appear after a level
-  `Y` while `X>Y`. We do not recommend `text` element to be global.
+  `Y` while `X>Y`.
 
-- `lvlX` selectors should use the standard title tags like `h1`, `h2`, `h3` ...
-  You can add a class to these elements. Do not forget to set a unique `id` or
-  `name` attribute to these elements as explain below.
+- `lvlX` selectors should use the standard title tags like `h1`, `h2`, `h3`,
+  etc. You can also use static class. Set a unique `id` or `name` attribute to
+  these elements as detailed below.
 
-- Every `lvlx` DOM elements (matching the selectors defined in your
-  configuration) must have a unique `id` or `name`. This will help the
-  redirection to directly scroll down to the exact place of the matching
-  elements. These attributes defined the right anchor to use.
+- Every DOM elements matching the `lvlX` selectors must have a unique `id` or
+  `name` attribute. This will help the redirection to directly scroll down to
+  the exact place of the matching elements. These attributes defined the right
+  anchor to use.
 
 - Every textual element (selector `text`) must be wrapped in a tag `<p/>` or
   `<li/>`. This content must be atomic and split into small entities. Be careful
-  to never nest one of these tags into another one, it will create duplicates.
+  to never nest one matching elements into another one, it will create
+  duplicates.
 
 - Stay consistent and do not forget that we need to have some regularity along
-  the HTML flow [as presented here][2].
+  the HTML flow [as presented here][1].
 
 ## Introduces global information as meta tags
 
 Our crawler automatically extract information from our DocSearch specific meta
-tag:
+tags:
 
 ```html
 <meta name="docsearch:language" content="en" />
@@ -100,19 +101,15 @@ tag:
 ```
 
 The `content` value of the meta will be added to every records extracted from
-the page. Given that the name is `DocSearch:$NAME`, `$NAME` will be set as a
+the page. Given that the name is `DocSearch:$NAME`, `$NAME` will be set as an
 attribute in each of them. Its value will be its related `content` value. You
 can then transform them as [`facetFilters`][4] to filter over them. We will need
-to use Algolia settings via the DocSearch `custom_settings` parameter and set
-`attributesForFaceting` Algolia parameter.
-
-Look at this example with our vuepress integration:
+to set the settings of your Algolia indec via the DocSearch `custom_settings`
+parameter and set `attributesForFaceting` Algolia parameter accordingly.
 
 ```json
 "custom_settings": {
-    "attributesForFaceting": [
-      "lang"
-    ]
+    "attributesForFaceting": ["language", "version"]
   }
 ```
 

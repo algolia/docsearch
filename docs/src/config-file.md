@@ -326,6 +326,8 @@ the whole page, and will be the same for all records extracted from this page.
 }
 ```
 
+We do not recommend `text` selectors to be global.
+
 ### Setting a default value
 
 If your selector might not match a valid element on the page, you can define a
