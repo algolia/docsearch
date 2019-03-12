@@ -49,11 +49,11 @@
       ]
     },
     {
-      "title": "Tips, FAQ, Misc",
+      "title": "Requirements, Tips, FAQ",
       "pages": [
         {
-          "title": "Recommended configuration",
-          "url": "recommended-configuration.html"
+          "title": "Required configuration",
+          "url": "required-configuration.html"
         },
         {
           "title": "Tips",
@@ -159,6 +159,10 @@
     {
       "from": "documentation/docsearch-FAQ/does-my-project-qualify/index.html",
       "to": "faq.html"
+    },
+    {
+      "from": "recommended-configuration.html",
+      "to": "required-configuration.html"
     }
   ]
 }

@@ -12,24 +12,25 @@ config.
 
 ```html
 <!-- Before the closing </head> -->
-<link rel="stylesheet"
+<link
+  rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/docsearch.js@{{docSearchJSVersion}}/dist/cdn/docsearch.min.css"
 />
 
 <!-- Before the closing </body> -->
-<script
-  src="https://cdn.jsdelivr.net/npm/docsearch.js@{{docSearchJSVersion}}/dist/cdn/docsearch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsearch.js@{{docSearchJSVersion}}/dist/cdn/docsearch.min.js"></script>
 <script>
   docsearch({
     // Your apiKey and indexName will be given to you once
     // we create your config
     apiKey: '<API_KEY>',
     indexName: '<INDEX_NAME>',
+    //appId: '<APP_ID>', // Should be only included if you are running DocSearch on your own.
     // Replace inputSelector with a CSS selector
     // matching your search input
     inputSelector: '<YOUR_CSS_SELECTOR>',
     // Set debug to true if you want to inspect the dropdown
-    debug: false
+    debug: false,
   });
 </script>
 ```
