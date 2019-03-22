@@ -442,13 +442,18 @@ records, but want to keep the content different across pages.
 
 ### `nb_hits` _Special_
 
-`nb_hits` automatically updated by DocSearch every time it runs your config. It
-is set to the number of records that were extracted and indexed. We check this
+The number of records that were extracted and index by DocSearch. We check this
 key internally to keep track of any unintended spike or drop that could reveal a
 misconfiguration.
 
-You don't have to touch it, we're documenting it here in case you were wondering
-what this was about.
+`nb_hits` is updated automatically each time you run DocSearch on your config.
+If the term is a tty, DocSearch will prompt you before updating the field. To
+avoid being prompted, set the `UPDATE_NB_HITS` environment variable to `true`
+(to enable) or `false` (to disable). This variable can be set in the .env file
+alongside `APPLICATION_ID` and `API_KEY`.
+
+You don't have to modify this field. We're documenting it here in case you were
+wondering what it's all about.
 
 ### `only_content_level` _Optional_
 
