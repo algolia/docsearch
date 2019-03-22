@@ -101,7 +101,7 @@ tags:
 ```
 
 The `content` value of the meta will be added to every records extracted from
-the page. Given that the name is `DocSearch:$NAME`, `$NAME` will be set as an
+the page. Given that the name is `docsearch:$NAME`, `$NAME` will be set as an
 attribute in every records. Its value will be its related `content` value. You
 can then transform these attributes as [`facetFilters`][4] to filter over them
 from the UI. We will need to set `attributesForFaceting` of your Algolia index
