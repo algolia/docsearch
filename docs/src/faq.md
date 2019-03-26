@@ -12,8 +12,8 @@ us][1] directly.
 Every day.
 
 The exact time of day might vary each day, but we'll crawl your website at most
-every 24 hours. We will also trigger a manual crawling every time your config is
-updated.
+every 24 hours. We will also trigger a manual crawl every time your
+configurations is updated.
 
 ## What do I need to install on my side?
 
