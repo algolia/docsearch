@@ -445,7 +445,7 @@ For example:
   },
 ```
 
-_Note that you can leverage [advanced synonym thanks to Algolia][3]. Our scraper
+_Note that you can use [advanced synonym thanks to Algolia][3]. Our scraper
 supports only supports regular one word synonyms._
 
 ### `min_indexed_level` _Optional_

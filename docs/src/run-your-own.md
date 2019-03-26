@@ -36,7 +36,7 @@ You can run a crawl from the packaged Docker image to crawl your website. You
 will need to [install jq, a lightweight command-line JSON processor][4]
 
 Then you only need to start the crawl according to your configuration. You
-should refer to the [dedicated configuration documentation][5].
+should check the [dedicated configuration documentation][5].
 
 ```sh
 docker run -it --env-file=.env -e "CONFIG=$(cat /path/to/your/config.json | jq -r tostring)" algolia/docsearch-scraper
@@ -52,7 +52,7 @@ The scraper is a python tool [based on scrapy][6]. We do recommend to use
 - `pipenv install`
 - `pipenv shell`
 
-If you need to use the browser emulation [(`js_render` set to true)][10], you
+If you plan to use the browser emulation [(`js_render` set to true)][10], you
 need to follow this extra step. If you don't, you can dismiss this step.
 
 ### Installing Chrome driver
