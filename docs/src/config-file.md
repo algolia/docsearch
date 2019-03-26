@@ -3,9 +3,9 @@ layout: two-columns
 title: Config Files
 ---
 
-For each DocSearch request we receive, we create a custom JSON config file that
-will define how the crawler should behave. You can find all the configs in [this
-repository][1].
+For each DocSearch request we receive, we create a custom JSON configuration
+file that will define how the crawler should behave. You can find all the
+configs in [this repository][1].
 
 A DocSearch looks like this:
 
@@ -121,9 +121,9 @@ be used. Do not forget to set this fallback set of selectors.
 
 ### Using regular expressions
 
-The `start_urls` and `stop_urls` options also enable you to provide regular
-expression to express more complex patterns. This object must at least contain a
-`url` key targeting a reachable page.
+The `start_urls` and `stop_urls` options also enable you to use regular
+expressions to express more complex patterns. This object must at least contain
+a `url` key targeting a reachable page.
 
 You can also define `variables` key that will be injected into your specific URL
 pattern. The following example makes this variable feature clearer:
@@ -364,8 +364,8 @@ value by setting the `strip_chars` key.
 }
 ```
 
-Note that you can also define `strip_chars` directly at the root of the config
-and it will be applied to all selectors.
+Note that you can also define `strip_chars` directly at the root of the
+configuration and it will be applied to all selectors.
 
 ```json
 {
@@ -423,9 +423,9 @@ meaning.
 
 Check the [Algolia documentation][2] for more information on the settings.
 
-You can includes synonyms key that is an array of synonyms (up to 20 elements).
-Each element is an array of one word synonyms which can be replaced by the
-others.
+`custom_settings` can include synonyms key that is an array of synonyms (up to
+20 elements). Each element is an array of one word synonyms which can be
+replaced by the others.
 
 For example:
 
@@ -477,7 +477,7 @@ avoid being prompted, set the `UPDATE_NB_HITS` environment variable to `true`
 (to enable) or `false` (to disable). This variable can be set in the .env file
 alongside `APPLICATION_ID` and `API_KEY`.
 
-You don't have to modify this field. We're documenting it here in case you were
+You don't have to edit this field. We're documenting it here in case you were
 wondering what it's all about.
 
 ### `only_content_level` _Optional_
@@ -571,7 +571,7 @@ Set this to `true` if you want those other versions to be crawled as well.
 }
 ```
 
-With the above config and the `sitemap.xml` below, both
+With the above configuration and the `sitemap.xml` below, both
 `http://www.example.com/docs/` and `http://www.example.com/docs/de/` will be
 crawled.
 
