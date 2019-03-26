@@ -6,7 +6,7 @@ title: Supported Integrations
 We worked with **documentation website generators** to have DocSearch directly
 embedded as a first class citizen in the websites they produce.
 
-## Our great integrations:
+## Our great integrations
 
 So, if you're using one of the following tools, checkout their documentation to
 see how to enable DocSearch on your website:
