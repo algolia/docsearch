@@ -159,7 +159,7 @@ _Note that we use this command-line tool internally at Algolia to run the free
 hosted version, so you might not need all the listed commands._
 
 [1]: ./who-can-apply.html
-[2]: https://www.algolia.com/pricing#community
+[2]: https://www.algolia.com/pricing
 [3]: https://www.algolia.com/doc/guides/security/api-keys/#acl
 [4]: https://github.com/stedolan/jq/wiki/Installation
 [5]: ./config-file.html
