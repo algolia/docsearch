@@ -145,7 +145,7 @@ pattern. The following example makes this variable feature clearer:
 The beneficial side effect of using this syntax is that every records extracted
 from pages matching `http://www.example.com/docs/en/latest` will have attributes
 `lang: en` and `version: latest`. It enables you to filter on [these
-`facetFilters`][3].
+`facetFilters`][4].
 
 The following example shows how you can filter results matching specifics
 language and version from the frontend
@@ -376,7 +376,7 @@ and it will be applied to all selectors.
 ### Targeting elements using XPath instead of CSS
 
 CSS selectors are a clear and concise way to target elements of a page, but they
-have a limitations. For example, you cannot go _up_ the cascade with CSS.
+have a limitations. For example, you cannot go up the cascade with CSS.
 
 If you need a more powerful selector mechanism, you can write your selectors
 using XPath by setting `type: xpath`.
@@ -422,6 +422,31 @@ meaning.
 ```
 
 Check the [Algolia documentation][2] for more information on the settings.
+
+You can includes synonyms key that is an array of synonyms (up to 20 elements).
+Each element is an array of one word synonyms which can be replaced by the
+others.
+
+For example:
+
+```json
+"custom_settings": {
+    "synonyms": [
+      [
+        "js",
+        "javascript"
+      ],
+      [
+        "es6",
+        "ECMAScript6",
+        "ECMAScript 6"
+      ]
+    ]
+  },
+```
+
+_Note that you can leverage [advanced synonym thanks to Algolia][3]. Our scraper
+supports only supports regular one word synonyms._
 
 ### `min_indexed_level` _Optional_
 
@@ -631,4 +656,6 @@ To override it, from the configuration:
 
 [1]: https://github.com/algolia/docsearch-configs/tree/master/configs
 [2]: https://www.algolia.com/doc/api-reference/settings-api-parameters/
-[3]: https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/
+[3]:
+  https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms
+[4]: https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/
