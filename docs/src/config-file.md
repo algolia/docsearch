@@ -553,6 +553,9 @@ following every link of your `starts_urls`.
 }
 ```
 
+You must explicitly defined this parameter, our scraper doesn't follow
+`robots.txt`
+
 ### `sitemap_alternate_links` _Optional_
 
 Sitemaps can contain _alternative links_ for URLs. Those are other versions of
