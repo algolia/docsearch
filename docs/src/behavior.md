@@ -108,7 +108,7 @@ property of the `docsearch` instance.
 const search = docsearch({
   […]
   autocompleteOptions: {
-    // See https://github.com/algolia/autocomplete.js#options
+    // See https://github.com/algolia/autocomplete.js#global-options
   }
 });
 
@@ -136,6 +136,6 @@ docsearch({
 
 [1]: https://github.com/algolia/autocomplete.js
 [2]: ./run-your-own.html
-[3]: https://github.com/algolia/autocomplete.js#options
+[3]: https://github.com/algolia/autocomplete.js#global-options
 [4]: https://www.algolia.com/doc/api-reference/api-parameters/
 [5]: https://www.algolia.com/doc/api-reference/api-parameters/hitsPerPage/
