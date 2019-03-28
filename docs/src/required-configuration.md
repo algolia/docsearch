@@ -9,7 +9,7 @@ following specification is required to let our crawler build the best experience
 from your website. You will need to update your website and follow these rules.
 Your documentation will match our generic configuration:
 
-Note: If your website is generated thank to one of our supported tool, you do
+Note: If your website is generated thanks to one of our supported tool, you do
 not need to change your website as it is already compliant with our
 requirements.
 
@@ -58,10 +58,9 @@ in the following guidelines.
 
 ### Implement the right classes as [selectors][3]
 
-You can add some specific static classes to help us identify your content's
-role. These classes can not involve any style changes. These dedicated classes
-will help us to create a great learn as you type experience from your
-documentation.
+You can add some specific static classes to help us find your content's role.
+These classes can not involve any style changes. These dedicated classes will
+help us to create a great learn as you type experience from your documentation.
 
 - Add a static class `DocSearch-content` to the main container of your textual
   content. It is mostly a `<main/>` or an `<article/>` HTML element.
@@ -124,7 +123,7 @@ exposed via the DocSearch `custom_settings` parameter.
 
 - Make sure your documentation content is also available without JavaScript
   rendering on the client-side. If you absolutely need JavaScript turned on, you
-  need to [set `js_render: true` in your config][6].
+  need to [set `js_render: true` in your configuration][6].
 
 Any question ? [Send us an email][7].
 

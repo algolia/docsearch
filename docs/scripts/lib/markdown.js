@@ -14,6 +14,11 @@ const markdown = markdownIt({
   linkify: true,
 })
   .use(markdownItAnchor, {
+    slugify: e =>
+      e
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w-]/g, ''),
     permalink: true,
     permalinkClass: 'anchor',
     permalinkSymbol: '',
@@ -28,7 +33,6 @@ export default {
     const headings = $('h2');
     return _.map(headings, heading => {
       const $el = $(heading);
-
       return {
         title: $el.text(),
         anchor: $el.attr('id'),

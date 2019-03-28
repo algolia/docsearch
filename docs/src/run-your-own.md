@@ -3,51 +3,74 @@ layout: two-columns
 title: Run your own
 ---
 
-The version of DocSearch we provide for free is one hosted on our own servers,
-running every 24 hours. To update your results with more control, or if you are
-not compliant with our checklist, or to index content sitting behind a firewall,
-you might want to run the crawler yourself.
+The version of DocSearch we offer for free is hosted on our own servers, running
+every 24 hours. You do not need to think about the crawl. However if you want to
+update your results with more control, or if you are [not compliant with our
+checklist][1], or if your website sits behind a firewall, you might want to run
+the crawler yourself.
 
-The whole code of DocSearch is open source, and we packaged it as a Docker image
-to make this even easier for you to use.
+The whole code base of DocSearch is open source, and we package it as a Docker
+image to make this even easier for you to use.
 
-## Installation
-
-The scraper is a python tool [based on scrapy][1]. Start by cloning [the open
-source repository][2]. We do recommend [pipenv][3] to install the whole python
-environment
-
-- [Install pipenv][4]
-- `pipenv install`
-- `pipenv shell`
-
-You should be ready to go.
-
-You can use DocSearch from inside a Docker image. You can setup one by running
-`./docsearch docker:build`.
-
-## Configuration
+## Set up your environment
 
 You'll need to set your Algolia application ID and admin API key as environment
-variables. If you don't have an Algolia account, you should [create one][5].
+variables. If you don't have an Algolia account, you need to [create one][2].
 
-- `APPLICATION_ID` should be set to your Application ID
+- `APPLICATION_ID` set to your Algolia Application ID
 
-- `API_KEY` should be set to your API Key. Make sure to use an API key with
-  **write** access to your index.
+- `API_KEY` set to your API Key. Make sure to use an API key with **write**
+  access to your index. [The ACL `addObject`, `editSettings` and
+  `deleteIndex`][3] must be allowed to this key.
 
-For convenience, you can create a `.env` file in the repository root with the
-following format and DocSearch will use those values.
+For convenience, you can create a `.env` file in the repository root.
 
 ```sh
 APPLICATION_ID=YOUR_APP_ID
 API_KEY=YOUR_API_KEY
 ```
 
-## Create a new config
+## Run the crawl from the Docker image
 
-To create a config, run `./docsearch bootstrap`. A prompt will ask you for some
-information and will then output a JSON config you can use as a base.
+You can run a crawl from the packaged Docker image to crawl your website. You
+will need to [install jq, a lightweight command-line JSON processor][4]
+
+Then you only need to start the crawl according to your configuration. You
+should check the [dedicated configuration documentation][5].
+
+```sh
+docker run -it --env-file=.env -e "CONFIG=$(cat /path/to/your/config.json | jq -r tostring)" algolia/docsearch-scraper
+```
+
+## Installation
+
+The scraper is a python tool [based on scrapy][6]. We do recommend to use
+[pipenv][8] to install the python environment.
+
+- [Clone the scraper repository][7].
+- [Install pipenv][9]
+- `pipenv install`
+- `pipenv shell`
+
+If you plan to use the browser emulation [(`js_render` set to true)][10], you
+need to follow this extra step. If you don't, you can dismiss this step.
+
+### Installing Chrome driver
+
+Some websites rendering requires JavaScript. Our crawler rely on a headless
+chrome emulation. You will need to set up a ChromeDriver.
+
+- [Install the driver][11] suited to your OS and the version of your Chrome. We
+  do recommend to use the latest version.
+- Set the environment variable `CHROMEDRIVER_PATH` in your `.env` file. This
+  path must target the downloaded extracted driver.
+
+You are ready to go.
+
+## Create a new configuration
+
+To create a configuration, run `./docsearch bootstrap`. A prompt will ask you
+for some information and will create a JSON configuration you can use as a base.
 
 ```sh
 $ ./docsearch bootstrap
@@ -69,6 +92,7 @@ index_name is example [enter to confirm]: <Enter>
     "lvl2": "FIXME h3",
     "lvl3": "FIXME h4",
     "lvl4": "FIXME h5",
+    "lvl5": "FIXME h6",
     "text": "FIXME p, FIXME li"
   }
 }
@@ -76,13 +100,12 @@ index_name is example [enter to confirm]: <Enter>
 ```
 
 Create a file from this text into a filename `example.json`, we'll use it later
-on to start the crawl. You can find the complete list of available options in
-[the configuration documentation][6], or browse the [list of live configs][7].
+on to start the crawl. You can browse the [list of live configurations][12].
 
-## Running your config
+## Run the crawl from the code base
 
 Now that you have your environment variables set, you can run the crawler
-according to your config.
+according to your configuration.
 
 Running `pipenv shell` will enable your virtual environment. From there, you can
 run one crawl with the following command:
@@ -91,7 +114,7 @@ run one crawl with the following command:
 $ ./docsearch run /path/to/your/config.json
 ```
 
-Or from your built docker image:
+Or from the Docker image:
 
 ```sh
 $ ./docsearch docker:run /path/to/your/config.json
@@ -105,7 +128,7 @@ built records to Algolia.
 You can test your results by running `./docsearch playground`. This will open a
 web page with a search input. You can do live tests against the indexed results.
 
-![Playground][9] {mt-2}
+![Playground][13] {mt-2}
 
 _Note that if the command fails (it can happen on non-Mac machines), you can get
 the same result by running a live server in the `./playground` subdirectory.\`_
@@ -113,17 +136,17 @@ the same result by running a live server in the `./playground` subdirectory.\`_
 ## Integration
 
 Once you're satisfied with your config, you can integrate the dropdown menu in
-your website by following the [instructions here][8].
+your website by following the [instructions here][14].
 
 The difference is that you'll also have to add the `appId` key to your
 `docsearch()` instance. Also don't forget to use a **search** API key here (in
-other words, not the **write** API key you used for the crawling).
+other words, not the **write** API key you used for the crawl).
 
 ```javascript
 docsearch({
   appId: '<APP_ID>', // Add your own Application ID
-  apiKey: '<API_KEY>', // Set it to your own search API key
-  […] // Other settings are identical
+  apiKey: '<API_KEY>', // Set it to your own *search* API key
+  […] // Other parameters are the same
 });
 ```
 
@@ -132,15 +155,20 @@ docsearch({
 You can run `./docsearch` without any argument to see the list of all available
 commands.
 
-Note that we use this command-line tool internally at Algolia to run the free
-hosted version, so you might not need all the listed commands.
+_Note that we use this command-line tool internally at Algolia to run the free
+hosted version, so you might not need all the listed commands._
 
-[1]: https://scrapy.org/
-[2]: https://github.com/algolia/docsearch-scraper
-[3]: https://github.com/pypa/pipenv
-[4]: https://pipenv.readthedocs.io/en/latest/install/#installing-pipenv
-[5]: https://www.algolia.com/pricing#community
-[6]: ./config-file.html
-[7]: https://github.com/algolia/docsearch-configs/tree/master/configs
-[8]: ./dropdown.html
-[9]: ./assets/playground.png
+[1]: ./who-can-apply.html
+[2]: https://www.algolia.com/pricing
+[3]: https://www.algolia.com/doc/guides/security/api-keys/#acl
+[4]: https://github.com/stedolan/jq/wiki/Installation
+[5]: ./config-file.html
+[6]: https://scrapy.org/
+[7]: https://github.com/algolia/docsearch-scraper
+[8]: https://github.com/pypa/pipenv
+[9]: https://pipenv.readthedocs.io/en/latest/install/#installing-pipenv
+[10]: ./config-file.html#js_render-optional
+[11]: http://chromedriver.chromium.org/getting-started
+[12]: https://github.com/algolia/docsearch-configs/tree/master/configs
+[13]: ./assets/playground.png
+[14]: ./dropdown.html

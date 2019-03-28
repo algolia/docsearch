@@ -6,4 +6,4 @@ includeForm: true
 
 **Please make sure you [read the checklist][1] before applying.**
 
-[1]: who-can-apply.html
+[1]: ./who-can-apply.html

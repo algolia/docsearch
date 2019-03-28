@@ -12,8 +12,8 @@ us][1] directly.
 Every day.
 
 The exact time of day might vary each day, but we'll crawl your website at most
-every 24 hours. We will also trigger a manual crawling every time your config is
-updated.
+every 24 hours. We will also trigger a manual crawl every time your
+configurations is updated.
 
 ## What do I need to install on my side?
 
@@ -36,7 +36,7 @@ displayed next to the search results.
 If this is not possible for you, you're free to [open your own Algolia
 account][3] and run DocSearch on your own without this limitation. In that case,
 though, depending on the size of your documentation, you might need a paid
-account ([free accounts][4] can hold as much as 10k records).
+account (free accounts can hold as much as 10k records).
 
 ## What data are you collecting?
 
@@ -57,8 +57,8 @@ _If you don't have Analytics access, [send us an email][1] and we'll enable it._
 ## Where is my data hosted?
 
 All DocSearch data is hosted on Algolia's servers, with replications around the
-globe. You can find more details about the actual [server specs here][5], and
-more complete information in our [privacy policy][6].
+globe. You can find more details about the actual [server specs here][4], and
+more complete information in our [privacy policy][5].
 
 ## Can I use DocSearch on non-doc pages?
 
@@ -66,8 +66,8 @@ The free DocSearch we provide will crawl documentation pages. To use it on other
 parts of your website, you'll need to create your own Algolia account and
 either:
 
-- Run the [DocSearch crawler][7] on your own
-- Use one of our other [framework integrations or API clients][8]
+- Run the [DocSearch crawler][6] on your own
+- Use one of our other [framework integrations or API clients][7]
 
 ## Can you index code samples?
 
@@ -107,7 +107,7 @@ is successful. These settings will be overridden at the next crawl. We **do not
 recommend to edit anything from the dashboard**. These changes have be made from
 the JSON configuration itself.
 
-You can use the [custom_settings parameter][9] in such purpose.
+You can use the [custom_settings parameter][8] in such purpose.
 
 ## A documentation website I like does not use DocSearch. What can I do?
 
@@ -121,9 +121,8 @@ the help we can.
 [1]: mailto:docsearch@algolia.com
 [2]: https://www.algolia.com/
 [3]: https://www.algolia.com/pricing
-[4]: https://www.algolia.com/pricing#community
-[5]: https://www.algolia.com/doc/guides/infrastructure/servers/
-[6]: https://www.algolia.com/policies/privacy
-[7]: ./run-your-own.html
-[8]: https://www.algolia.com/doc/api-reference/
-[9]: ./config-file.html#custom_settings-optional
+[4]: https://www.algolia.com/doc/guides/infrastructure/servers/
+[5]: https://www.algolia.com/policies/privacy
+[6]: ./run-your-own.html
+[7]: https://www.algolia.com/doc/api-reference/
+[8]: ./config-file.html#custom_settings-optional

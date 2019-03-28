@@ -6,7 +6,7 @@ title: Supported Integrations
 We worked with **documentation website generators** to have DocSearch directly
 embedded as a first class citizen in the websites they produce.
 
-## Our great integrations:
+## Our great integrations
 
 So, if you're using one of the following tools, checkout their documentation to
 see how to enable DocSearch on your website:
@@ -25,8 +25,8 @@ to the list, get [in touch with us][10]. We'd be happy to help.
 [3]: https://vuepress.vuejs.org/
 [4]: https://vuepress.vuejs.org/default-theme-config/#search-box
 [5]: https://docs.gitbook.com/
-[6]: http://pkgdown.r-lib.org/index.html
-[7]: http://pkgdown.r-lib.org/articles/pkgdown.html#search
-[8]: https://larecipe.binarytorch.com.my/docs/1.2/overview
-[9]: https://larecipe.binarytorch.com.my/docs/1.2/configurations#search
+[6]: https://pkgdown.r-lib.org/
+[7]: https://pkgdown.r-lib.org/articles/pkgdown.html?q=search#docsearch-indexing
+[8]: https://larecipe.binarytorch.com.my/docs/1.3/overview
+[9]: https://larecipe.binarytorch.com.my/docs/1.3/configurations#search
 [10]: mailto:docsearch@algolia.com

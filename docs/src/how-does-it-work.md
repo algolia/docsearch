@@ -48,7 +48,7 @@ crawling your website every day and update your search results automatically.
 All we ask is that you keep the "search by Algolia" logo next to your search
 results.
 
-[1]: apply.html
+[1]: ./apply.html
 [2]: https://github.com/algolia/docsearch-configs/tree/master/configs
-[3]: styling.html
+[3]: ./styling.html
 [4]: ./assets/docsearch-how-it-works.png
