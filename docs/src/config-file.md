@@ -145,7 +145,7 @@ pattern. The following example makes this variable feature clearer:
 The beneficial side effect of using this syntax is that every records extracted
 from pages matching `http://www.example.com/docs/en/latest` will have attributes
 `lang: en` and `version: latest`. It enables you to filter on [these
-`facetFilters`][4].
+`facetFilters`][2].
 
 The following example shows how you can filter results matching specifics
 language and version from the frontend
@@ -400,13 +400,13 @@ used as the value of the `lvl0` selector.
 XPath selector can be hard to read. We highly encourage you to test them in your
 browser first, making sure they match what you're expecting.
 
-## Other options
-
 ### `custom_settings` _Optional_
 
 This key can be used to overwrite your Algolia index settings. We don't
 recommend changing it as the default settings are meant to work for all
 websites.
+
+### `custom_settings.separatorsToIndex`_Optional_
 
 One use case would be to configure the `separatorsToIndex` setting. By default
 Algolia will consider all special character as a word separator. In some
@@ -421,11 +421,14 @@ meaning.
 }
 ```
 
-Check the [Algolia documentation][2] for more information on the settings.
+Check the [Algolia documentation][3] for more information about the Algolia
+settings.
 
-`custom_settings` can include synonyms key that is an array of synonyms (up to
-20 elements). Each element is an array of one word synonyms which can be
-replaced by the others.
+### `custom_settings.synonyms` _Optional_
+
+`custom_settings` can include synonyms key that is an array of synonyms. This
+array includes up to 20 elements. Each element is an array of one word synonyms
+which can be used interchangeably.
 
 For example:
 
@@ -439,59 +442,14 @@ For example:
       [
         "es6",
         "ECMAScript6",
-        "ECMAScript 6"
+        "ECMAScript2015"
       ]
     ]
   },
 ```
 
-_Note that you can use [advanced synonym thanks to Algolia][3]. Our scraper
+_Note that you can use [advanced synonym thanks to Algolia][4]. Our scraper
 supports only supports regular one word synonyms._
-
-### `min_indexed_level` _Optional_
-
-The default value is `0`. By increasing it, you can chose to not index some
-records if they don't have enough `lvlX` matching. For example, with a
-`min_indexed_level: 2`, records that have at least `lvl0`, `lvl1` and `lvl2`
-matching something will be indexed.
-
-This is useful when your documentation has pages that share the same `lvl0` and
-`lvl1` for example. In that case, you don't want to index all the shared
-records, but want to keep the content different across pages.
-
-```json
-{
-  "min_indexed_level": 2
-}
-```
-
-### `nb_hits` _Special_
-
-The number of records that were extracted and index by DocSearch. We check this
-key internally to keep track of any unintended spike or drop that could reveal a
-misconfiguration.
-
-`nb_hits` is updated automatically each time you run DocSearch on your config.
-If the term is a tty, DocSearch will prompt you before updating the field. To
-avoid being prompted, set the `UPDATE_NB_HITS` environment variable to `true`
-(to enable) or `false` (to disable). This variable can be set in the .env file
-alongside `APPLICATION_ID` and `API_KEY`.
-
-You don't have to edit this field. We're documenting it here in case you were
-wondering what it's all about.
-
-### `only_content_level` _Optional_
-
-When `only_content_level` is set to `true`, then the crawler won't create
-records for the `lvlX` selectors.
-
-If used, `min_indexed_level` is ignored.
-
-```json
-{
-  "only_content_level": true
-}
-```
 
 ### `scrape_start_urls` _Optional_
 
@@ -535,6 +493,52 @@ Note that this is often used to avoid duplicate content, by adding
   "stop_urls": ["https://www.example.com/docs/index.html", "license.html"]
 }
 ```
+
+### `min_indexed_level` _Optional_
+
+The default value is `0`. By increasing it, you can chose to not index some
+records if they don't have enough `lvlX` matching. For example, with a
+`min_indexed_level: 2`, the scraper only index temporary records having at least
+`lvl0`, `lvl1` and `lvl2` set. You can [find out more details about this
+strategy in this section][5].
+
+This is useful when your documentation has pages that share the same `lvl0` and
+`lvl1` for example. In that case, you don't want to index all the shared
+records, but want to keep the content different across pages.
+
+```json
+{
+  "min_indexed_level": 2
+}
+```
+
+### `only_content_level` _Optional_
+
+When `only_content_level` is set to `true`, then the crawler won't create
+records for the `lvlX` selectors.
+
+If used, `min_indexed_level` is ignored.
+
+```json
+{
+  "only_content_level": true
+}
+```
+
+### `nb_hits` _Special_
+
+The number of records that were extracted and index by DocSearch. We check this
+key internally to keep track of any unintended spike or drop that could reveal a
+misconfiguration.
+
+`nb_hits` is updated automatically each time you run DocSearch on your config.
+If the term is a tty, DocSearch will prompt you before updating the field. To
+avoid being prompted, set the `UPDATE_NB_HITS` environment variable to `true`
+(to enable) or `false` (to disable). This variable can be set in the .env file
+alongside `APPLICATION_ID` and `API_KEY`.
+
+You don't have to edit this field. We're documenting it here in case you were
+wondering what it's all about.
 
 ## Sitemaps
 
@@ -658,7 +662,8 @@ To override it, from the configuration:
 ```
 
 [1]: https://github.com/algolia/docsearch-configs/tree/master/configs
-[2]: https://www.algolia.com/doc/api-reference/settings-api-parameters/
-[3]:
+[2]: https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/
+[3]: https://www.algolia.com/doc/api-reference/settings-api-parameters/
+[4]:
   https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms
-[4]: https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/
+[5]: https://www.algolia.com/doc/api-reference/settings-api-parameters/
