@@ -646,7 +646,7 @@ DocSearch to index all your content.
 You can override the user agent used to crawl your website. By default, this
 value is:
 
-    Algolia DocSearch Crawler
+      Algolia DocSearch Crawler
 
 However, if the crawl of your website requires a browser emulation (i.e.
 `js_render=true`), our `user_agent` is:
