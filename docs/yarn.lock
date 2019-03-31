@@ -8060,10 +8060,10 @@ textlint-rule-helper@^2.0.0:
   dependencies:
     unist-util-visit "^1.1.0"
 
-textlint-rule-stop-words@1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/textlint-rule-stop-words/-/textlint-rule-stop-words-1.0.8.tgz#52581ce90e60307295ecba9e719d75cffd724658"
-  integrity sha512-KANjzeAs/Ja9Oh7ULcNVJ4kqI5len1mzHvDR8mkaumIQEE7IwadtpH18FifWmo8Ok/ozfRjuTh9YgvN+XIp+pA==
+textlint-rule-stop-words@1.0.12:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/textlint-rule-stop-words/-/textlint-rule-stop-words-1.0.12.tgz#0c273b65520068fd99ce8da27da1e0361fd3d39b"
+  integrity sha512-Aw6VfygCwwgsUN/YHtBxD8/cFu2BJZSyGAvYyVe/ngKTmdtflX+O7rmKpL6NW73YyBx3t/Y1GZUyK3OqDPYjkQ==
   dependencies:
     lodash "^4.17.10"
     split-lines "^2.0.0"
