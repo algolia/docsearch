@@ -4,7 +4,7 @@ title: Config Files
 ---
 
 For each DocSearch request we receive, we create a custom JSON configuration
-file that will define how the crawler should behave. You can find all the
+file that defines how the crawler should behave. You can find all the
 configs in [this repository][1].
 
 A DocSearch looks like this:
@@ -92,7 +92,7 @@ to the parameter `selectors_key` from your `start_urls`.
 ```
 
 To find the right subset to use based on the URL, we iterate over these
-`start_urls` items. Only the first one matching is applied.
+`start_urls` items. Only the first one to match is applied.
 
 Considering the URL `http://www.example.com/en/api/` with the configuration:
 
@@ -112,7 +112,7 @@ Considering the URL `http://www.example.com/en/api/` with the configuration:
 }
 ```
 
-Only the set of selector related to `doc` will be applied to the URL. The
+Only the set of selectors related to `doc` will be applied to the URL. The
 correct configuration should be built the other way around (as primarily
 described).
 
@@ -125,7 +125,7 @@ The `start_urls` and `stop_urls` options also enable you to use regular
 expressions to express more complex patterns. This object must at least contain
 a `url` key targeting a reachable page.
 
-You can also define `variables` key that will be injected into your specific URL
+You can also define a `variables` key that will be injected into your specific URL
 pattern. The following example makes this variable feature clearer:
 
 ```json
@@ -142,12 +142,12 @@ pattern. The following example makes this variable feature clearer:
 }
 ```
 
-The beneficial side effect of using this syntax is that every records extracted
+The beneficial side effect of using this syntax is that every record extracted
 from pages matching `http://www.example.com/docs/en/latest` will have attributes
 `lang: en` and `version: latest`. It enables you to filter on [these
 `facetFilters`][2].
 
-The following example shows how you can filter results matching specifics
+The following example shows how you can filter results matching a specific
 language and version from the frontend
 
 ```js
@@ -292,7 +292,7 @@ and `lvl2` to have a decent depth of relevance.
 }
 ```
 
-Selectors can be passed as string, or as objects containing a `selector` key.
+Selectors can be passed as strings, or as objects containing a `selector` key.
 Other special keys can be set, as documented below.
 
 ```json
@@ -313,7 +313,7 @@ hierarchy of headers. This breaks when the relevant information is not part of
 the same flow. For example when the title is not part of a header or sidebar.
 
 For that reason, you can set a selector as global, meaning that it will match on
-the whole page, and will be the same for all records extracted from this page.
+the whole page and will be the same for all records extracted from this page.
 
 ```json
 {
@@ -409,7 +409,7 @@ websites.
 ### `custom_settings.separatorsToIndex`_Optional_
 
 One use case would be to configure the `separatorsToIndex` setting. By default
-Algolia will consider all special character as a word separator. In some
+Algolia will consider all special characters as a word separator. In some
 contexts, like for method names, you might want `_`, `/` or `#` to keep their
 meaning.
 
@@ -426,8 +426,8 @@ settings.
 
 ### `custom_settings.synonyms` _Optional_
 
-`custom_settings` can include synonyms key that is an array of synonyms. This
-array includes up to 20 elements. Each element is an array of one word synonyms
+`custom_settings` can include a synonyms key that is an array of synonyms. This
+array includes up to 20 elements. Each element is an array of one-word synonyms
 which can be used interchangeably.
 
 For example:
@@ -448,8 +448,7 @@ For example:
   },
 ```
 
-_Note that you can use [advanced synonym thanks to Algolia][4]. Our scraper
-supports only supports regular one word synonyms._
+_Note that you can use [advanced synonym thanks to Algolia][4]. Our scraper only supports regular one-word synonyms._
 
 ### `scrape_start_urls` _Optional_
 
