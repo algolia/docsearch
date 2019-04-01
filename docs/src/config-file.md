@@ -496,9 +496,9 @@ Note that this is often used to avoid duplicate content, by adding
 
 ### `min_indexed_level` _Optional_
 
-The default value is `0`. By increasing it, you can chose to not index some
+The default value is `0`. By increasing it, you can choose not to index some
 records if they don't have enough `lvlX` matching. For example, with a
-`min_indexed_level: 2`, the scraper only index temporary records having at least
+`min_indexed_level: 2`, the scraper only indexes temporary records having at least
 `lvl0`, `lvl1` and `lvl2` set. You can [find out more details about this
 strategy in this section][5].
 
@@ -527,7 +527,7 @@ If used, `min_indexed_level` is ignored.
 
 ### `nb_hits` _Special_
 
-The number of records that were extracted and index by DocSearch. We check this
+The number of records that were extracted and indexed by DocSearch. We check this
 key internally to keep track of any unintended spike or drop that could reveal a
 misconfiguration.
 
