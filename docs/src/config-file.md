@@ -4,8 +4,8 @@ title: Config Files
 ---
 
 For each DocSearch request we receive, we create a custom JSON configuration
-file that defines how the crawler should behave. You can find all the
-configs in [this repository][1].
+file that defines how the crawler should behave. You can find all the configs in
+[this repository][1].
 
 A DocSearch looks like this:
 
@@ -125,8 +125,8 @@ The `start_urls` and `stop_urls` options also enable you to use regular
 expressions to express more complex patterns. This object must at least contain
 a `url` key targeting a reachable page.
 
-You can also define a `variables` key that will be injected into your specific URL
-pattern. The following example makes this variable feature clearer:
+You can also define a `variables` key that will be injected into your specific
+URL pattern. The following example makes this variable feature clearer:
 
 ```json
 {
@@ -448,7 +448,8 @@ For example:
   },
 ```
 
-_Note that you can use [advanced synonym thanks to Algolia][4]. Our scraper only supports regular one-word synonyms._
+_Note that you can use [advanced synonym thanks to Algolia][4]. Our scraper only
+supports regular one-word synonyms._
 
 ### `scrape_start_urls` _Optional_
 
@@ -497,8 +498,8 @@ Note that this is often used to avoid duplicate content, by adding
 
 The default value is `0`. By increasing it, you can choose not to index some
 records if they don't have enough `lvlX` matching. For example, with a
-`min_indexed_level: 2`, the scraper only indexes temporary records having at least
-`lvl0`, `lvl1` and `lvl2` set. You can [find out more details about this
+`min_indexed_level: 2`, the scraper only indexes temporary records having at
+least `lvl0`, `lvl1` and `lvl2` set. You can [find out more details about this
 strategy in this section][5].
 
 This is useful when your documentation has pages that share the same `lvl0` and
@@ -526,9 +527,9 @@ If used, `min_indexed_level` is ignored.
 
 ### `nb_hits` _Special_
 
-The number of records that were extracted and indexed by DocSearch. We check this
-key internally to keep track of any unintended spike or drop that could reveal a
-misconfiguration.
+The number of records that were extracted and indexed by DocSearch. We check
+this key internally to keep track of any unintended spike or drop that could
+reveal a misconfiguration.
 
 `nb_hits` is updated automatically each time you run DocSearch on your config.
 If the term is a tty, DocSearch will prompt you before updating the field. To
