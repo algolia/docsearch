@@ -4,8 +4,8 @@ title: Config Files
 ---
 
 For each DocSearch request we receive, we create a custom JSON configuration
-file that will define how the crawler should behave. You can find all the
-configs in [this repository][1].
+file that defines how the crawler should behave. You can find all the configs in
+[this repository][1].
 
 A DocSearch looks like this:
 
@@ -92,7 +92,7 @@ to the parameter `selectors_key` from your `start_urls`.
 ```
 
 To find the right subset to use based on the URL, we iterate over these
-`start_urls` items. Only the first one matching is applied.
+`start_urls` items. Only the first one to match is applied.
 
 Considering the URL `http://www.example.com/en/api/` with the configuration:
 
@@ -112,7 +112,7 @@ Considering the URL `http://www.example.com/en/api/` with the configuration:
 }
 ```
 
-Only the set of selector related to `doc` will be applied to the URL. The
+Only the set of selectors related to `doc` will be applied to the URL. The
 correct configuration should be built the other way around (as primarily
 described).
 
@@ -125,8 +125,8 @@ The `start_urls` and `stop_urls` options also enable you to use regular
 expressions to express more complex patterns. This object must at least contain
 a `url` key targeting a reachable page.
 
-You can also define `variables` key that will be injected into your specific URL
-pattern. The following example makes this variable feature clearer:
+You can also define a `variables` key that will be injected into your specific
+URL pattern. The following example makes this variable feature clearer:
 
 ```json
 {
@@ -142,12 +142,12 @@ pattern. The following example makes this variable feature clearer:
 }
 ```
 
-The beneficial side effect of using this syntax is that every records extracted
+The beneficial side effect of using this syntax is that every record extracted
 from pages matching `http://www.example.com/docs/en/latest` will have attributes
 `lang: en` and `version: latest`. It enables you to filter on [these
-`facetFilters`][4].
+`facetFilters`][2].
 
-The following example shows how you can filter results matching specifics
+The following example shows how you can filter results matching a specific
 language and version from the frontend
 
 ```js
@@ -292,7 +292,7 @@ and `lvl2` to have a decent depth of relevance.
 }
 ```
 
-Selectors can be passed as string, or as objects containing a `selector` key.
+Selectors can be passed as strings, or as objects containing a `selector` key.
 Other special keys can be set, as documented below.
 
 ```json
@@ -313,7 +313,7 @@ hierarchy of headers. This breaks when the relevant information is not part of
 the same flow. For example when the title is not part of a header or sidebar.
 
 For that reason, you can set a selector as global, meaning that it will match on
-the whole page, and will be the same for all records extracted from this page.
+the whole page and will be the same for all records extracted from this page.
 
 ```json
 {
@@ -400,16 +400,16 @@ used as the value of the `lvl0` selector.
 XPath selector can be hard to read. We highly encourage you to test them in your
 browser first, making sure they match what you're expecting.
 
-## Other options
-
 ### `custom_settings` _Optional_
 
 This key can be used to overwrite your Algolia index settings. We don't
 recommend changing it as the default settings are meant to work for all
 websites.
 
+### `custom_settings.separatorsToIndex`_Optional_
+
 One use case would be to configure the `separatorsToIndex` setting. By default
-Algolia will consider all special character as a word separator. In some
+Algolia will consider all special characters as a word separator. In some
 contexts, like for method names, you might want `_`, `/` or `#` to keep their
 meaning.
 
@@ -421,11 +421,14 @@ meaning.
 }
 ```
 
-Check the [Algolia documentation][2] for more information on the settings.
+Check the [Algolia documentation][3] for more information about the Algolia
+settings.
 
-`custom_settings` can include synonyms key that is an array of synonyms (up to
-20 elements). Each element is an array of one word synonyms which can be
-replaced by the others.
+### `custom_settings.synonyms` _Optional_
+
+`custom_settings` can include a synonyms key that is an array of synonyms. This
+array includes up to 20 elements. Each element is an array of one-word synonyms
+which can be used interchangeably.
 
 For example:
 
@@ -439,59 +442,14 @@ For example:
       [
         "es6",
         "ECMAScript6",
-        "ECMAScript 6"
+        "ECMAScript2015"
       ]
     ]
   },
 ```
 
-_Note that you can use [advanced synonym thanks to Algolia][3]. Our scraper
-supports only supports regular one word synonyms._
-
-### `min_indexed_level` _Optional_
-
-The default value is `0`. By increasing it, you can chose to not index some
-records if they don't have enough `lvlX` matching. For example, with a
-`min_indexed_level: 2`, records that have at least `lvl0`, `lvl1` and `lvl2`
-matching something will be indexed.
-
-This is useful when your documentation has pages that share the same `lvl0` and
-`lvl1` for example. In that case, you don't want to index all the shared
-records, but want to keep the content different across pages.
-
-```json
-{
-  "min_indexed_level": 2
-}
-```
-
-### `nb_hits` _Special_
-
-The number of records that were extracted and index by DocSearch. We check this
-key internally to keep track of any unintended spike or drop that could reveal a
-misconfiguration.
-
-`nb_hits` is updated automatically each time you run DocSearch on your config.
-If the term is a tty, DocSearch will prompt you before updating the field. To
-avoid being prompted, set the `UPDATE_NB_HITS` environment variable to `true`
-(to enable) or `false` (to disable). This variable can be set in the .env file
-alongside `APPLICATION_ID` and `API_KEY`.
-
-You don't have to edit this field. We're documenting it here in case you were
-wondering what it's all about.
-
-### `only_content_level` _Optional_
-
-When `only_content_level` is set to `true`, then the crawler won't create
-records for the `lvlX` selectors.
-
-If used, `min_indexed_level` is ignored.
-
-```json
-{
-  "only_content_level": true
-}
-```
+_Note that you can use [advanced synonym thanks to Algolia][4]. Our scraper only
+supports regular one-word synonyms._
 
 ### `scrape_start_urls` _Optional_
 
@@ -535,6 +493,52 @@ Note that this is often used to avoid duplicate content, by adding
   "stop_urls": ["https://www.example.com/docs/index.html", "license.html"]
 }
 ```
+
+### `min_indexed_level` _Optional_
+
+The default value is `0`. By increasing it, you can choose not to index some
+records if they don't have enough `lvlX` matching. For example, with a
+`min_indexed_level: 2`, the scraper only indexes temporary records having at
+least `lvl0`, `lvl1` and `lvl2` set. You can [find out more details about this
+strategy in this section][5].
+
+This is useful when your documentation has pages that share the same `lvl0` and
+`lvl1` for example. In that case, you don't want to index all the shared
+records, but want to keep the content different across pages.
+
+```json
+{
+  "min_indexed_level": 2
+}
+```
+
+### `only_content_level` _Optional_
+
+When `only_content_level` is set to `true`, then the crawler won't create
+records for the `lvlX` selectors.
+
+If used, `min_indexed_level` is ignored.
+
+```json
+{
+  "only_content_level": true
+}
+```
+
+### `nb_hits` _Special_
+
+The number of records that were extracted and indexed by DocSearch. We check
+this key internally to keep track of any unintended spike or drop that could
+reveal a misconfiguration.
+
+`nb_hits` is updated automatically each time you run DocSearch on your config.
+If the term is a tty, DocSearch will prompt you before updating the field. To
+avoid being prompted, set the `UPDATE_NB_HITS` environment variable to `true`
+(to enable) or `false` (to disable). This variable can be set in the .env file
+alongside `APPLICATION_ID` and `API_KEY`.
+
+You don't have to edit this field. We're documenting it here in case you were
+wondering what it's all about.
 
 ## Sitemaps
 
@@ -642,7 +646,7 @@ DocSearch to index all your content.
 You can override the user agent used to crawl your website. By default, this
 value is:
 
-    Algolia DocSearch Crawler
+      Algolia DocSearch Crawler
 
 However, if the crawl of your website requires a browser emulation (i.e.
 `js_render=true`), our `user_agent` is:
@@ -658,7 +662,8 @@ To override it, from the configuration:
 ```
 
 [1]: https://github.com/algolia/docsearch-configs/tree/master/configs
-[2]: https://www.algolia.com/doc/api-reference/settings-api-parameters/
-[3]:
+[2]: https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/
+[3]: https://www.algolia.com/doc/api-reference/settings-api-parameters/
+[4]:
   https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms
-[4]: https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/
+[5]: https://www.algolia.com/doc/api-reference/settings-api-parameters/
