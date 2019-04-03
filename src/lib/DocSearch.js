@@ -305,7 +305,7 @@ class DocSearch {
   static formatURL(hit) {
     const { url, anchor } = hit;
     if (url) {
-      const containsAnchor = url.indexOf('#') !== -1;
+      const containsAnchor = !!url.match(/#[^\/]/);
       if (containsAnchor) return url;
       else if (anchor) return `${hit.url}#${hit.anchor}`;
       return url;
