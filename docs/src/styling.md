@@ -57,10 +57,8 @@ and you're encouraged to style it to fit your own theming. All we ask is that
 you keep the `search by Algolia` logo and link next to your search results.
 
 The logo is automatically added in the dropdown with the default styling. It's
-fine if you hide it through CSS, as long as you re-add it somewhere else on your
-page close to the search input or search results. It's our way to let more
-people know about what we do, and how they could also have a fast and relevant
-search on their website.
+our way to let more people know about what we do, and how they could benefit
+from a fast and relevant search on their website.
 
 If you're using your own [paid Algolia account][2] and [run the crawler
 yourself][3], you don't have to keep the logo.
