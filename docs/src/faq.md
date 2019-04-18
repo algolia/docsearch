@@ -118,6 +118,16 @@ encourage you to file an issue in their repository explaining how DocSearch
 could help. Feel free to [send us an email][1] as well, and we'll provide all
 the help we can.
 
+## How many records are created by DocSearch?
+
+First of all, the [parameter `nb_hits`][9] available from your configuration and
+output after every crawl is the number of records extracted from your website.
+
+The DocSearch scraper follow [the recommended atomic-reindexing strategy][10].
+It creates a brand new temporary index to populate the data scraped from your
+website. Once the crawl is successfully achieved, this temporary index overwites
+the old index defined from your configuration with the key `index_name`.
+
 [1]: mailto:docsearch@algolia.com
 [2]: https://www.algolia.com/
 [3]: https://www.algolia.com/pricing
@@ -126,3 +136,6 @@ the help we can.
 [6]: ./run-your-own.html
 [7]: https://www.algolia.com/doc/api-reference/
 [8]: ./config-file.html#custom_settings-optional
+[9]: ./config-file.html#nb_hits-special
+[10]:
+  https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/in-depth/asynchronicity-and-when-to-wait-for-tasks/#atomic-reindexing
