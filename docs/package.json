@@ -29,7 +29,7 @@
     "chokidar": "2.1.5",
     "cpx": "1.5.0",
     "eslint": "4.19.1",
-    "eslint-config-algolia": "13.2.3",
+    "eslint-config-algolia": "13.3.0",
     "eslint-config-prettier": "4.1.0",
     "eslint-plugin-import": "2.16.0",
     "eslint-plugin-prettier": "2.7.0",
