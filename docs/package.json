@@ -33,7 +33,7 @@
     "eslint-config-prettier": "4.1.0",
     "eslint-plugin-import": "2.17.2",
     "eslint-plugin-prettier": "2.7.0",
-    "front-matter": "3.0.1",
+    "front-matter": "3.0.2",
     "fs-extra": "7.0.1",
     "gh-pages": "1.2.0",
     "glob": "7.1.3",
