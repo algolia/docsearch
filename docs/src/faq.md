@@ -121,7 +121,8 @@ the help we can.
 ## How many records are created by DocSearch?
 
 The [property `nb_hits`][9] in your configuration keeps track of the number of
-output after every crawl is the number of records extracted from your website.
+records that were extracted and indexed by the last DocSearch run. It is updated
+automatically at each run.
 
 The DocSearch scraper follows [the recommended atomic-reindexing strategy][10].
 It creates a brand new temporary index to populate the data scraped from your
