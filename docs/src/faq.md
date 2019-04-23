@@ -126,7 +126,7 @@ output after every crawl is the number of records extracted from your website.
 The DocSearch scraper follows [the recommended atomic-reindexing strategy][10].
 It creates a brand new temporary index to populate the data scraped from your
 website. Once the crawl is successfully achieved, this temporary index overwites
-the old index defined from your configuration with the key `index_name`.
+the old index defined in your configuration with the key `index_name`.
 
 [1]: mailto:docsearch@algolia.com
 [2]: https://www.algolia.com/
