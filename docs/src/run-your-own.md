@@ -42,17 +42,21 @@ should check the [dedicated configuration documentation][5].
 docker run -it --env-file=.env -e "CONFIG=$(cat /path/to/your/config.json | jq -r tostring)" algolia/docsearch-scraper
 ```
 
-## Installation
+Once the crawl is done, you can [jump to the Integration step][6].
 
-The scraper is a python tool [based on scrapy][6]. We do recommend to use
+## Running the crawler from the code base
+
+### Installation
+
+The scraper is a python tool [based on scrapy][7]. We do recommend to use
 [pipenv][8] to install the python environment.
 
-- [Clone the scraper repository][7].
-- [Install pipenv][9]
+- [Clone the scraper repository][9].
+- [Install pipenv][10]
 - `pipenv install`
 - `pipenv shell`
 
-If you plan to use the browser emulation [(`js_render` set to true)][10], you
+If you plan to use the browser emulation [(`js_render` set to true)][11], you
 need to follow this extra step. If you don't, you can dismiss this step.
 
 ### Installing Chrome driver
@@ -60,12 +64,31 @@ need to follow this extra step. If you don't, you can dismiss this step.
 Some websites rendering requires JavaScript. Our crawler rely on a headless
 chrome emulation. You will need to set up a ChromeDriver.
 
-- [Install the driver][11] suited to your OS and the version of your Chrome. We
+- [Install the driver][12] suited to your OS and the version of your Chrome. We
   do recommend to use the latest version.
 - Set the environment variable `CHROMEDRIVER_PATH` in your `.env` file. This
   path must target the downloaded extracted driver.
 
 You are ready to go.
+
+### Running the crawler
+
+
+Running `pipenv shell` will enable your virtual environment. From there, you can
+run one crawl with the following command:
+
+```sh
+$ ./docsearch run /path/to/your/config.json
+```
+
+Or from the Docker image:
+
+```sh
+$ ./docsearch docker:run /path/to/your/config.json
+```
+
+This will start the crawl. It extracts content from parsed pages and push the
+built records to Algolia.
 
 ## Create a new configuration
 
@@ -100,35 +123,14 @@ index_name is example [enter to confirm]: <Enter>
 ```
 
 Create a file from this text into a filename `example.json`, we'll use it later
-on to start the crawl. You can browse the [list of live configurations][12].
-
-## Run the crawl from the code base
-
-Now that you have your environment variables set, you can run the crawler
-according to your configuration.
-
-Running `pipenv shell` will enable your virtual environment. From there, you can
-run one crawl with the following command:
-
-```sh
-$ ./docsearch run /path/to/your/config.json
-```
-
-Or from the Docker image:
-
-```sh
-$ ./docsearch docker:run /path/to/your/config.json
-```
-
-This will start the crawl. It extracts content from parsed pages and push the
-built records to Algolia.
+on to start the crawl. You can browse the [list of live configurations][13].
 
 ## Testing your results
 
 You can test your results by running `./docsearch playground`. This will open a
 web page with a search input. You can do live tests against the indexed results.
 
-![Playground][13] {mt-2}
+![Playground][14] {mt-2}
 
 _Note that if the command fails (it can happen on non-Mac machines), you can get
 the same result by running a live server in the `./playground` subdirectory.\`_
@@ -136,7 +138,7 @@ the same result by running a live server in the `./playground` subdirectory.\`_
 ## Integration
 
 Once you're satisfied with your config, you can integrate the dropdown menu in
-your website by following the [instructions here][14].
+your website by following the [instructions here][15].
 
 The difference is that you'll also have to add the `appId` key to your
 `docsearch()` instance. Also don't forget to use a **search** API key here (in
@@ -163,12 +165,13 @@ hosted version, so you might not need all the listed commands._
 [3]: https://www.algolia.com/doc/guides/security/api-keys/#acl
 [4]: https://github.com/stedolan/jq/wiki/Installation
 [5]: ./config-file.html
-[6]: https://scrapy.org/
-[7]: https://github.com/algolia/docsearch-scraper
+[6]: #integration
+[7]: https://scrapy.org/
 [8]: https://github.com/pypa/pipenv
-[9]: https://pipenv.readthedocs.io/en/latest/install/#installing-pipenv
-[10]: ./config-file.html#js_render-optional
-[11]: http://chromedriver.chromium.org/getting-started
-[12]: https://github.com/algolia/docsearch-configs/tree/master/configs
-[13]: ./assets/playground.png
-[14]: ./dropdown.html
+[9]: https://github.com/algolia/docsearch-scraper
+[10]: https://pipenv.readthedocs.io/en/latest/install/#installing-pipenv
+[11]: ./config-file.html#js_render-optional
+[12]: http://chromedriver.chromium.org/getting-started
+[13]: https://github.com/algolia/docsearch-configs/tree/master/configs
+[14]: ./assets/playground.png
+[15]: ./dropdown.html
