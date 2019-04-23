@@ -71,7 +71,7 @@ chrome emulation. You will need to set up a ChromeDriver.
 
 You are ready to go.
 
-### Run the crawl
+### Running the crawler
 
 You can run the crawler according to your configuration.
 
