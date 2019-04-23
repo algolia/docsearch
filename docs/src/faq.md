@@ -123,7 +123,7 @@ the help we can.
 First of all, the [parameter `nb_hits`][9] available from your configuration and
 output after every crawl is the number of records extracted from your website.
 
-The DocSearch scraper follow [the recommended atomic-reindexing strategy][10].
+The DocSearch scraper follows [the recommended atomic-reindexing strategy][10].
 It creates a brand new temporary index to populate the data scraped from your
 website. Once the crawl is successfully achieved, this temporary index overwites
 the old index defined from your configuration with the key `index_name`.
