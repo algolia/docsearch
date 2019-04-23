@@ -44,7 +44,7 @@ docker run -it --env-file=.env -e "CONFIG=$(cat /path/to/your/config.json | jq -
 
 Once the crawl is done, you can [jump to the Integration step][6].
 
-## Run the crawl from the code base
+## Running the crawler from the code base
 
 ### Installation
 
