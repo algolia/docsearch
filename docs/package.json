@@ -37,7 +37,7 @@
     "fs-extra": "7.0.1",
     "gh-pages": "1.2.0",
     "glob": "7.1.4",
-    "husky": "0.14.3",
+    "husky": "2.2.0",
     "inquirer": "6.3.1",
     "live-server": "1.2.1",
     "lodash": "4.17.11",
