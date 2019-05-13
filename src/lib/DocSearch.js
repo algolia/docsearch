@@ -80,7 +80,6 @@ class DocSearch {
       this.autocompleteOptions.cssClasses || {};
     this.autocompleteOptions.cssClasses.prefix =
       this.autocompleteOptions.cssClasses.prefix || 'ds';
-   this.autocompleteOptions.ariaLabel = this.autocompleteOptions.ariaLabel || $(this.input)[0].getAttribute('aria-label') || 'search input';
 
 
     this.isSimpleLayout = layout === 'simple';
