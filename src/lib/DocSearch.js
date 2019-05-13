@@ -80,7 +80,9 @@ class DocSearch {
       this.autocompleteOptions.cssClasses || {};
     this.autocompleteOptions.cssClasses.prefix =
       this.autocompleteOptions.cssClasses.prefix || 'ds';
-
+    const inputAriaLabel = this.input && typeof this.input.attr === 'function' && this.input.attr('aria-label');
+    this.autocompleteOptions.ariaLabel = 
+      this.autocompleteOptions.ariaLabel || inputAriaLabel || "search input";
 
     this.isSimpleLayout = layout === 'simple';
 

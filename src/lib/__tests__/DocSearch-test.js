@@ -175,6 +175,7 @@ describe('DocSearch', () => {
         debug: false,
         cssClasses: { prefix: 'ds' },
         anOption: 44,
+        ariaLabel: 'search input',
       });
     });
     it('should instantiate algoliasearch with the correct values', () => {
@@ -217,6 +218,7 @@ describe('DocSearch', () => {
           anOption: '44',
           cssClasses: { prefix: 'ds' },
           debug: false,
+          ariaLabel: 'search input'
         })
       ).toBe(true);
     });
