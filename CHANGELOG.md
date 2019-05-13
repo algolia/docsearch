@@ -1,3 +1,16 @@
+## [2.6.3](https://github.com/algolia/docsearch/compare/v2.6.2...v2.6.3) (2019-05-13)
+
+
+### Bug Fixes
+
+* **deps:** update dependency autocomplete.js to v0.35.0 ([2d67a21](https://github.com/algolia/docsearch/commit/2d67a21))
+* **deps:** update dependency autocomplete.js to v0.36.0 ([bbd4ef5](https://github.com/algolia/docsearch/commit/bbd4ef5))
+* **security:** Fix dependencies to avoid infected event-stream ([9f93ffb](https://github.com/algolia/docsearch/commit/9f93ffb))
+* docsearch input should have aria-label (a11y) ([#687](https://github.com/algolia/docsearch/issues/687)) ([59d21f5](https://github.com/algolia/docsearch/commit/59d21f5))
+* search input a11y issue ([#679](https://github.com/algolia/docsearch/issues/679)) ([a68d2a4](https://github.com/algolia/docsearch/commit/a68d2a4))
+
+
+
 ## [2.6.2](https://github.com/algolia/docsearch/compare/v2.6.1...v2.6.2) (2018-11-22)
 
 
