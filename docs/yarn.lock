@@ -7123,10 +7123,10 @@ remark-lint-no-table-indentation@^1.0.0:
     unist-util-position "^3.0.0"
     unist-util-visit "^1.1.1"
 
-remark-lint-no-trailing-spaces@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/remark-lint-no-trailing-spaces/-/remark-lint-no-trailing-spaces-2.0.0.tgz#0bd8904f7377e64e0228573124dfef32776ae565"
-  integrity sha512-UVb0xAFO5lsa/kRNC/qHOz7GuF91TjW7hk+m8hUircj1Nh53BP9rH24DJ/NVPF1Ve+u5k+pfOTJPqJcvD0zgUw==
+remark-lint-no-trailing-spaces@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/remark-lint-no-trailing-spaces/-/remark-lint-no-trailing-spaces-2.0.1.tgz#70e5b1a9487c8f013a2c3ada29b17dd4be280844"
+  integrity sha512-cj8t+nvtO6eAY2lJC7o5du8VeOCK13XiDUHL4U6k5aw6ZLr3EYWbQ/rNc6cr60eHkh5Ldm09KiZjV3CWpxqJ0g==
   dependencies:
     unified-lint-rule "^1.0.2"
 
