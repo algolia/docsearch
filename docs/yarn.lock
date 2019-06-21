@@ -7273,10 +7273,10 @@ remark-preset-lint-recommended@3.0.2:
     remark-lint-no-unused-definitions "^1.0.0"
     remark-lint-ordered-list-marker-style "^1.0.0"
 
-remark-reference-links@4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/remark-reference-links/-/remark-reference-links-4.0.3.tgz#eb51ad4fddb009199f98ac403d0558d732e2df89"
-  integrity sha512-Q9d7JaK5r0JDBo3TInfrodBuI3xulI8htCr8jlX+0oXosF3GaebJbo5y228VYFoV6xJ+syDukkUGMKNlwSJWjQ==
+remark-reference-links@4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/remark-reference-links/-/remark-reference-links-4.0.4.tgz#190579a0d6b002859d6cdbdc5aeb8bbdae4e06ab"
+  integrity sha512-+2X8hwSQqxG4tvjYZNrTcEC+bXp8shQvwRGG6J/rnFTvBoU4G0BBviZoqKGZizLh/DG+0gSYhiDDWCqyxXW1iQ==
   dependencies:
     unist-util-visit "^1.0.0"
 
