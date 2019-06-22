@@ -49,7 +49,7 @@
     "babel-preset-stage-3": "6.24.1",
     "conventional-changelog-cli": "2.0.21",
     "cssnano": "4.1.10",
-    "eslint": "5.4.0",
+    "eslint": "5.16.0",
     "eslint-config-algolia": "13.3.0",
     "eslint-config-prettier": "4.3.0",
     "eslint-plugin-import": "2.17.3",
