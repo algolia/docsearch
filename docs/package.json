@@ -31,7 +31,7 @@
     "eslint": "5.16.0",
     "eslint-config-algolia": "13.3.0",
     "eslint-config-prettier": "4.3.0",
-    "eslint-plugin-import": "2.17.3",
+    "eslint-plugin-import": "2.18.0",
     "eslint-plugin-prettier": "2.7.0",
     "front-matter": "3.0.2",
     "fs-extra": "8.0.1",
