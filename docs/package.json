@@ -34,7 +34,7 @@
     "eslint-plugin-import": "2.18.0",
     "eslint-plugin-prettier": "2.7.0",
     "front-matter": "3.0.2",
-    "fs-extra": "8.0.1",
+    "fs-extra": "8.1.0",
     "gh-pages": "1.2.0",
     "glob": "7.1.4",
     "husky": "2.4.1",
