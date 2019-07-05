@@ -50,7 +50,7 @@
     "conventional-changelog-cli": "2.0.21",
     "cssnano": "4.1.10",
     "eslint": "5.16.0",
-    "eslint-config-algolia": "13.3.0",
+    "eslint-config-algolia": "13.4.0",
     "eslint-config-prettier": "4.3.0",
     "eslint-plugin-import": "2.18.0",
     "eslint-plugin-jest": "22.7.1",
