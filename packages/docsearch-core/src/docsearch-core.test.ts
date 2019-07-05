@@ -208,7 +208,9 @@ See: https://community.algolia.com/docsearch"
           {
             query: 'query',
             indexName: 'indexName',
-            params: {},
+            params: {
+              hitsPerPage: 5,
+            },
           },
         ]);
       });
@@ -219,7 +221,7 @@ See: https://community.algolia.com/docsearch"
           indexName: 'indexName',
         });
 
-        await docsearchIndex.search({ query: 'query', hitsPerPage: 5 });
+        await docsearchIndex.search({ query: 'query', hitsPerPage: 42 });
 
         expect(search).toHaveBeenCalledTimes(1);
         expect(search).toHaveBeenCalledWith([
@@ -227,7 +229,7 @@ See: https://community.algolia.com/docsearch"
             query: 'query',
             indexName: 'indexName',
             params: {
-              hitsPerPage: 5,
+              hitsPerPage: 42,
             },
           },
         ]);

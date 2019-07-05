@@ -93,7 +93,11 @@ function docsearch<THits extends FormattedHits, TContainerNode = HTMLElement>(
   function search(
     searchParameters: QueryParameters = {}
   ): Promise<{ hits: FormattedHits; result: Result }> {
-    const { query = '', ...params } = searchParameters;
+    const { query = '', ...userParams } = searchParameters;
+    const params = {
+      hitsPerPage: 5,
+      ...userParams,
+    };
 
     // On empty query, we don't send an unecessary request
     // because we don't want to perform any search.
