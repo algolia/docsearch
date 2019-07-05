@@ -96,6 +96,8 @@ function docsearch<THits extends FormattedHits, TContainerNode = HTMLElement>(
     const { query = '', ...userParams } = searchParameters;
     const params = {
       hitsPerPage: 5,
+      highlightPreTag: '<mark>',
+      highlightPostTag: '</mark>',
       ...userParams,
     };
 

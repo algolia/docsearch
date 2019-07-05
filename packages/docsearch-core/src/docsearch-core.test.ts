@@ -210,6 +210,8 @@ See: https://community.algolia.com/docsearch"
             indexName: 'indexName',
             params: {
               hitsPerPage: 5,
+              highlightPreTag: '<mark>',
+              highlightPostTag: '</mark>',
             },
           },
         ]);
@@ -230,6 +232,8 @@ See: https://community.algolia.com/docsearch"
             indexName: 'indexName',
             params: {
               hitsPerPage: 42,
+              highlightPreTag: '<mark>',
+              highlightPostTag: '</mark>',
             },
           },
         ]);
