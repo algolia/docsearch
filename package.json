@@ -10,7 +10,8 @@
     "watch": "lerna run watch --parallel",
     "start": "yarn run watch",
     "test": "jest",
-    "lint": "eslint --ext .js,.ts,.tsx ."
+    "lint": "eslint --ext .js,.ts,.tsx .",
+    "type-check": "lerna run type-check"
   },
   "devDependencies": {
     "@babel/preset-env": "7.4.5",

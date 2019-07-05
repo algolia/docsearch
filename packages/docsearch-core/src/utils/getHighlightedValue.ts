@@ -1,7 +1,7 @@
-import { DocSearchHit } from '../types';
+import { DocSearchHitWithRootLevels } from '../types';
 
 export function getHighlightedValue(
-  hit: DocSearchHit,
+  hit: DocSearchHitWithRootLevels,
   property: string
 ): string {
   if (

@@ -5,7 +5,8 @@ script:
 
 env:
   matrix:
-    - SCRIPT="yarn lint"
+    - SCRIPT="yarn run lint"
+    - SCRIPT="yarn run type-check"
     - SCRIPT="yarn test"
 
 branches:

@@ -1,6 +1,6 @@
 import { getHighlightedValue, getSnippetedValue } from '../utils';
 
-import { DocSearchHit } from '../types';
+import { DocSearchHit, DocSearchHitWithRootLevels } from '../types';
 
 interface FormattedHit {
   objectID: string;
@@ -31,7 +31,9 @@ function groupBy<TValue = any>(
   }, {});
 }
 
-export function copyHierarchyValuesToRoot(rawHit: DocSearchHit): DocSearchHit {
+export function copyHierarchyValuesToRoot(
+  rawHit: DocSearchHit
+): DocSearchHitWithRootLevels {
   const levels = Object.entries(rawHit._highlightResult.hierarchy).reduce(
     (acc, [key, level]) => ({ ...acc, [key]: level.value }),
     {}
@@ -44,7 +46,7 @@ export function copyHierarchyValuesToRoot(rawHit: DocSearchHit): DocSearchHit {
   };
 }
 
-function getUrl(hit: DocSearchHit): string {
+function getUrl(hit: DocSearchHitWithRootLevels): string {
   const { url, anchor } = hit;
 
   if (url) {
@@ -64,7 +66,7 @@ function getUrl(hit: DocSearchHit): string {
   return '';
 }
 
-export function formatHit(hit: DocSearchHit): FormattedHit {
+export function formatHit(hit: DocSearchHitWithRootLevels): FormattedHit {
   const levels = [
     getHighlightedValue(hit, 'lvl0'),
     getHighlightedValue(hit, 'lvl1'),

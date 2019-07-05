@@ -1,6 +1,9 @@
-import { DocSearchHit } from '../types';
+import { DocSearchHitWithRootLevels } from '../types';
 
-export function getSnippetedValue(hit: DocSearchHit, property: string): string {
+export function getSnippetedValue(
+  hit: DocSearchHitWithRootLevels,
+  property: string
+): string {
   if (
     !(
       hit._snippetResult &&
