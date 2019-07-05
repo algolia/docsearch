@@ -10,6 +10,7 @@
     "watch": "lerna run watch --parallel",
     "start": "yarn run watch",
     "test": "jest",
+    "test:size": "bundlesize",
     "lint": "eslint --ext .js,.ts,.tsx .",
     "type-check": "lerna run type-check"
   },
@@ -21,6 +22,7 @@
     "@typescript-eslint/parser": "1.11.0",
     "babel-eslint": "10.0.2",
     "babel-jest": "24.8.0",
+    "bundlesize": "0.18.0",
     "eslint": "6.0.1",
     "eslint-config-algolia": "13.4.0",
     "eslint-config-prettier": "6.0.0",

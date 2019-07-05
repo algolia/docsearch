@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "path": "packages/docsearch-core/dist/umd/index.js",
+      "maxSize": "12 kB"
+    },
+    {
+      "path": "packages/docsearch/dist/umd/index.js",
+      "maxSize": "20 kB"
+    },
+    {
+      "path": "packages/docsearch-autocomplete/dist/umd/index.js",
+      "maxSize": "30 kB"
+    }
+  ]
+}
