@@ -1,8 +1,6 @@
 import docsearch from 'docsearch.js';
 import autocomplete from 'autocomplete.js';
 
-console.log(docsearch);
-
 // const inputNode = document.querySelector('#searchbox');
 
 // inputNode.addEventListener('input', event => {
@@ -98,8 +96,8 @@ function docsearchAutocomplete({
 }
 
 docsearchAutocomplete({
-  apiKey: '05f2b9f825e93891445000c63e103290',
-  indexName: 'francoischalifour',
+  apiKey: '25626fae796133dc1e734c6bcaaeac3c',
+  indexName: 'docsearch',
   inputSelector: '#searchbox',
 });
 

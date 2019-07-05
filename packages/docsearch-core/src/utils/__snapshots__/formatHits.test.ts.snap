@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`formatHits with actual hits 1`] = `
+Object {
+  "How many records are created by DocSearch?": Array [
+    Object {
+      "content": "The  property  nb_<span class=\\"algolia-docsearch-suggestion--highlight\\">hit</span>s  in your configuration keeps track…",
+      "levelIndex": 2,
+      "levels": Array [
+        "Requirements, Tips, FAQ",
+        "FAQ",
+        "How many records are created by DocSearch?",
+      ],
+      "objectID": "2356575660",
+      "url": "https://community.algolia.com/docsearch/faq.html#how-many-records-are-created-by-docsearch",
+    },
+  ],
+  "Structure the <span class=\\"algolia-docsearch-suggestion--highlight\\">hie</span>rarchy of information": Array [
+    Object {
+      "content": null,
+      "levelIndex": 2,
+      "levels": Array [
+        "Requirements, Tips, FAQ",
+        "Tips for a good search",
+        "Structure the <span class=\\"algolia-docsearch-suggestion--highlight\\">hie</span>rarchy of information",
+      ],
+      "objectID": "2356576240",
+      "url": "https://community.algolia.com/docsearch/tips.html#structure-the-hierarchy-of-information",
+    },
+  ],
+  "algoliaOptions": Array [
+    Object {
+      "content": "…dropdown.  <span class=\\"algolia-docsearch-suggestion--highlight\\">hit</span>sPerPage  set the number of shown <span class=\\"algolia-docsearch-suggestion--highlight\\">hit</span>s …",
+      "levelIndex": 2,
+      "levels": Array [
+        "Adding DocSearch To Your UI",
+        "Dropdown Behavior",
+        "algoliaOptions",
+      ],
+      "objectID": "2356570030",
+      "url": "https://community.algolia.com/docsearch/behavior.html#algoliaoptions",
+    },
+  ],
+  "handleSelected": Array [
+    Object {
+      "content": "…anchor). You can override results (<span class=\\"algolia-docsearch-suggestion--highlight\\">hit</span>) to
+add your own…",
+      "levelIndex": 2,
+      "levels": Array [
+        "Adding DocSearch To Your UI",
+        "Dropdown Behavior",
+        "handleSelected",
+      ],
+      "objectID": "2356569750",
+      "url": "https://community.algolia.com/docsearch/behavior.html#handleselected",
+    },
+  ],
+  "nb_<span class=\\"algolia-docsearch-suggestion--highlight\\">hit</span>s   Special": Array [
+    Object {
+      "content": null,
+      "levelIndex": 3,
+      "levels": Array [
+        "Let’s Get Technical",
+        "Config Files",
+        "selectors",
+        "nb_<span class=\\"algolia-docsearch-suggestion--highlight\\">hit</span>s   Special",
+      ],
+      "objectID": "2356572690",
+      "url": "https://community.algolia.com/docsearch/config-file.html#nb_hits-special",
+    },
+  ],
+}
+`;

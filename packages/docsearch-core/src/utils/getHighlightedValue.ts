@@ -1,26 +1,15 @@
-import { Hit, HitAttributeHighlightResult, HitHighlightResult } from '../types';
+import { DocSearchHit } from '../types';
 
-export function getHighlightedValue(hit: Hit, property: string): string {
-  if (
-    hit._highlightResult &&
-    hit._highlightResult.hierarchy_camel &&
-    (hit._highlightResult.hierarchy_camel as HitHighlightResult)[property] &&
-    ((hit._highlightResult.hierarchy_camel as HitHighlightResult)[
-      property
-    ] as HitAttributeHighlightResult).value
-  ) {
-    return ((hit._highlightResult.hierarchy_camel as HitHighlightResult)[
-      property
-    ] as HitAttributeHighlightResult).value;
-  }
-
+export function getHighlightedValue(
+  hit: DocSearchHit,
+  property: string
+): string {
   if (
     hit._highlightResult &&
     hit._highlightResult[property] &&
-    (hit._highlightResult[property] as HitAttributeHighlightResult).value
+    hit._highlightResult[property].value
   ) {
-    return (hit._highlightResult[property] as HitAttributeHighlightResult)
-      .value;
+    return hit._highlightResult[property].value;
   }
 
   return hit[property];

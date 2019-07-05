@@ -1,34 +1,52 @@
-export interface HitAttributeHighlightResult {
+interface DocSearchHitAttributeHighlightResult {
   value: string;
-  matchLevel: 'none' | 'partial' | 'full';
+  matchLevel: string; // 'none' | 'partial' | 'full'
   matchedWords: string[];
   fullyHighlighted?: boolean;
 }
 
-export interface HitHighlightResult {
-  [attribute: string]:
-    | HitAttributeHighlightResult
-    | HitAttributeHighlightResult[]
-    | HitHighlightResult;
+interface DocSearchHitHighlightResultHierarchy {
+  lvl0?: DocSearchHitAttributeHighlightResult;
+  lvl1?: DocSearchHitAttributeHighlightResult;
+  lvl2?: DocSearchHitAttributeHighlightResult;
+  lvl3?: DocSearchHitAttributeHighlightResult;
+  lvl4?: DocSearchHitAttributeHighlightResult;
+  lvl5?: DocSearchHitAttributeHighlightResult;
+  lvl6?: DocSearchHitAttributeHighlightResult;
 }
 
-export type HitAttributeSnippetResult = Pick<
-  HitAttributeHighlightResult,
-  'value' | 'matchLevel'
->;
-
-interface HitSnippetResult {
-  [attribute: string]:
-    | HitAttributeSnippetResult
-    | HitAttributeSnippetResult[]
-    | HitSnippetResult;
+export interface DocSearchHitHighlightResult {
+  content?: DocSearchHitAttributeHighlightResult;
+  hierarchy: DocSearchHitHighlightResultHierarchy;
+  hierarchy_camel: DocSearchHitHighlightResultHierarchy[];
 }
 
-export interface Hit {
+interface DocSearchHitAttributeSnippetResult {
+  value: string;
+  matchLevel: string; // 'none' | 'partial' | 'full'
+}
+
+interface DocSearchHitSnippetResult {
+  content: DocSearchHitAttributeSnippetResult;
+}
+
+export interface DocSearchHit {
   [attribute: string]: any;
   objectID: string;
-  _highlightResult: HitHighlightResult;
-  _snippetResult: HitSnippetResult;
+  content: string | null;
+  url: string;
+  anchor: string | null;
+  hierarchy: {
+    lvl0: string | null;
+    lvl1: string | null;
+    lvl2: string | null;
+    lvl3: string | null;
+    lvl4: string | null;
+    lvl5: string | null;
+    lvl6: string | null;
+  };
+  _highlightResult: DocSearchHitHighlightResult;
+  _snippetResult?: DocSearchHitSnippetResult;
   _rankingInfo?: {
     promoted: boolean;
     nbTypos: number;
