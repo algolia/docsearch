@@ -1,0 +1,19 @@
+{
+  "name": "vanilla-example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "browserslist": [
+    "last 2 Chrome versions"
+  ],
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "dependencies": {
+    "autocomplete.js": "0.36.0",
+    "docsearch.js": "3.0.0",
+    "parcel-bundler": "1.12.3"
+  }
+}

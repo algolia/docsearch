@@ -1,13 +1,17 @@
-/* eslint-disable import/no-commonjs */
 module.exports = {
-  extends: ['algolia', 'algolia/jest'],
-  globals: {
-    docsearch: true,
-    Glide: true,
-    Popper: true
+  extends: ['algolia', 'algolia/jest', 'algolia/typescript'],
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.ts', '.tsx'],
+      },
+    },
   },
   rules: {
-    'no-console': 0,
-    'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    'no-param-reassign': 'off',
+    // @TODO: re-enable once the rule is properly setup for monorepos
+    // https://github.com/benmosher/eslint-plugin-import/issues/1103
+    // https://github.com/benmosher/eslint-plugin-import/issues/1174
+    'import/no-extraneous-dependencies': 'off',
   },
 };

@@ -1,6 +1,8 @@
 node_modules/
-*.log
+npm-debug.log
+yarn-error.log
 .DS_Store
 
 # Bundle build files
 dist/
+.cache/

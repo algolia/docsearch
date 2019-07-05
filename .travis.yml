@@ -1,10 +1,18 @@
 language: node_js
-script: "./scripts/test"
+
+script:
+  - '${SCRIPT}'
+
+env:
+  matrix:
+    - SCRIPT="yarn lint"
+    - SCRIPT="yarn test"
+
 branches:
   only:
     - master
 
 matrix:
   include:
-    - name: "[Documentation] Deploy"
-      script: "./scripts/travis/deploy"
+    - name: '[Documentation] Deploy'
+      script: './scripts/travis/deploy'

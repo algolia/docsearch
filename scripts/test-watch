@@ -1,8 +1,0 @@
-#!/usr/bin/env sh
-set -e
-jest \
-  --no-cache \
-  --watch \
-  --no-watchman \
-  ./src/lib/
-

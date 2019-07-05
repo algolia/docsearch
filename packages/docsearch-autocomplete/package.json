@@ -1,0 +1,32 @@
+{
+  "name": "docsearch.js-autocomplete",
+  "version": "3.0.0",
+  "license": "MIT",
+  "homepage": "https://community.algolia.com/docsearch/",
+  "repository": "algolia/docsearch",
+  "author": {
+    "name": "Algolia, Inc.",
+    "url": "https://www.algolia.com"
+  },
+  "files": [
+    "dist/"
+  ],
+  "source": "src/index.ts",
+  "module": "dist/es/index.js",
+  "main": "dist/umd/index.js",
+  "umd:main": "dist/umd/index.js",
+  "unpkg": "dist/umd/index.js",
+  "jsdelivr": "dist/umd/index.js",
+  "sideEffects": false,
+  "scripts": {
+    "build:umd": "rollup --config",
+    "build:es": "babel src --root-mode upward --extensions '.js,.ts,.tsx' --out-dir dist/es --quiet",
+    "build:types": "tsc --emitDeclarationOnly --outDir dist/",
+    "build": "yarn build:umd && yarn build:es",
+    "watch": "babel src --root-mode upward --extensions '.js,.ts,.tsx' --out-dir dist/es --quiet"
+  },
+  "dependencies": {
+    "autocomplete.js": "^0.36.0",
+    "docsearch.js-core": "^3.0.0"
+  }
+}
