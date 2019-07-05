@@ -20,10 +20,10 @@
   "sideEffects": false,
   "scripts": {
     "build:umd": "rollup --config",
-    "build:es": "babel src --root-mode upward --extensions '.js,.ts,.tsx' --out-dir dist/es --quiet",
+    "build:es": "babel src --root-mode upward --extensions '.js,.ts,.tsx' --ignore '**/*/*.test.*' --out-dir dist/es --quiet",
     "build:types": "tsc --emitDeclarationOnly --outDir dist/",
     "build": "yarn build:umd && yarn build:es",
-    "watch": "babel src --root-mode upward --extensions '.js,.ts,.tsx' --out-dir dist/es --quiet --watch"
+    "watch": "babel src --root-mode upward --extensions '.js,.ts,.tsx' --ignore '**/*/*.test.*' --out-dir dist/es --quiet --watch"
   },
   "dependencies": {
     "docsearch.js-core": "^3.0.0"
