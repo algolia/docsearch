@@ -24,7 +24,7 @@
     "build:es": "babel src --root-mode upward --extensions '.js,.ts,.tsx' --out-dir dist/es --quiet",
     "build:types": "tsc --emitDeclarationOnly --outDir dist/",
     "build": "yarn build:umd && yarn build:es",
-    "watch": "babel src --root-mode upward --extensions '.js,.ts,.tsx' --out-dir dist/es --quiet"
+    "watch": "babel src --root-mode upward --extensions '.js,.ts,.tsx' --out-dir dist/es --quiet --watch"
   },
   "dependencies": {
     "algoliasearch": "^3.33.0"

@@ -82,7 +82,7 @@ function docsearchAutocomplete({
         source: (query, callback) => {
           return searchService
             .search({ ...algoliaOptions, query })
-            .then(hits => {
+            .then(({ hits }) => {
               callback([hits]);
             });
         },

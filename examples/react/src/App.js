@@ -19,13 +19,12 @@ function DocSearch({ apiKey, indexName }) {
   const searchService = docsearch({
     apiKey,
     indexName,
-    onResult: ({ hits }) => {
-      setHits(hits);
-    },
   });
 
-  function onChange(event) {
-    searchService.search({ query: event.target.value });
+  async function onChange(event) {
+    const { hits } = await searchService.search({ query: event.target.value });
+
+    setHits(hits);
   }
 
   return (

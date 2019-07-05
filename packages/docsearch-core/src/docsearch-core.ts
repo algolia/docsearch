@@ -93,15 +93,17 @@ function docsearch<THits extends FormattedHits, TContainerNode = HTMLElement>(
   function search(searchParameters: QueryParameters = {}) {
     const { query = '', ...params } = searchParameters;
 
-    return searchClient.search([{ indexName, query, params }]).then(results => {
-      const result = results[0];
-      const formattedHits = formatHits(result.hits);
-      const hits = transformHits(formattedHits);
+    return searchClient
+      .search([{ indexName, query, params }])
+      .then(({ results }) => {
+        const result = results[0];
+        const formattedHits = formatHits(result.hits);
+        const hits = transformHits(formattedHits);
 
-      onResult({ containerNode, hits, result });
+        onResult({ containerNode, hits, result });
 
-      return result;
-    });
+        return { hits, result };
+      });
   }
 
   return {

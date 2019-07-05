@@ -8,7 +8,7 @@ jest.mock('algoliasearch/lite');
 const castToJestMock = (obj: any): jest.Mock => obj;
 
 const fakeResult = {
-  hits: [],
+  results: [{ hits: [] }],
 };
 
 describe('docsearch-core', () => {
@@ -16,7 +16,7 @@ describe('docsearch-core', () => {
   let addAlgoliaAgent: any;
 
   beforeEach(() => {
-    search = jest.fn().mockResolvedValue([fakeResult]);
+    search = jest.fn().mockResolvedValue(fakeResult);
     addAlgoliaAgent = jest.fn();
 
     castToJestMock(algoliasearch).mockImplementation(() => ({
@@ -148,6 +148,7 @@ See: https://community.algolia.com/docsearch"
           apiKey: 'apiKey',
           indexName: 'indexName',
         });
+
         await docsearchIndex.search();
 
         expect(search).toHaveBeenCalledTimes(1);
@@ -165,6 +166,7 @@ See: https://community.algolia.com/docsearch"
           apiKey: 'apiKey',
           indexName: 'indexName',
         });
+
         await docsearchIndex.search({ query: 'query', hitsPerPage: 5 });
 
         expect(search).toHaveBeenCalledTimes(1);
@@ -187,6 +189,7 @@ See: https://community.algolia.com/docsearch"
           indexName: 'indexName',
           transformHits,
         });
+
         await docsearchIndex.search({ query: 'query' });
 
         expect(transformHits).toHaveBeenCalledTimes(1);
@@ -196,19 +199,21 @@ See: https://community.algolia.com/docsearch"
       test('calls `onResults`', async () => {
         const containerNode = document.createElement('div');
         const onResult = jest.fn();
-
         const docsearchIndex = docsearchCore({
           apiKey: 'apiKey',
           indexName: 'indexName',
           containerNode,
           onResult,
         });
-        const result = await docsearchIndex.search({ query: 'query' });
+
+        const { hits, result } = await docsearchIndex.search({
+          query: 'query',
+        });
 
         expect(onResult).toHaveBeenCalledTimes(1);
         expect(onResult).toHaveBeenCalledWith({
           containerNode,
-          hits: {},
+          hits,
           result,
         });
       });

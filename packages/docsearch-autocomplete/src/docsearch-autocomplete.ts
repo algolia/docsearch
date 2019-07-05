@@ -41,7 +41,7 @@ function docsearchAutocomplete({
       source: (query: string, callback: SourceCallback) => {
         return docsearchIndex
           .search({ ...algoliaOptions, query })
-          .then(hits => {
+          .then(({ hits }) => {
             callback([hits]);
           });
       },
