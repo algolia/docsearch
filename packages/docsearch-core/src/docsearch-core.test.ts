@@ -143,25 +143,77 @@ See: https://community.algolia.com/docsearch"
     });
 
     describe('search', () => {
-      test('without query propagate the search parameters to the search client', async () => {
+      test('without search parameters does not perform a search', async () => {
         const docsearchIndex = docsearchCore({
           apiKey: 'apiKey',
           indexName: 'indexName',
         });
 
-        await docsearchIndex.search();
+        const response = await docsearchIndex.search();
+
+        expect(search).toHaveBeenCalledTimes(0);
+        expect(response).toEqual({
+          hits: {},
+          result: {
+            exhaustiveNbHits: true,
+            hits: [],
+            hitsPerPage: 5,
+            index: 'indexName',
+            nbHits: 0,
+            nbPages: 0,
+            page: 0,
+            params: 'query=',
+            processingTimeMS: 1,
+            query: '',
+          },
+        });
+      });
+
+      test('with empty query does not perform a search', async () => {
+        const docsearchIndex = docsearchCore({
+          apiKey: 'apiKey',
+          indexName: 'indexName',
+        });
+
+        const response = await docsearchIndex.search({ query: '' });
+
+        expect(search).toHaveBeenCalledTimes(0);
+        expect(response).toEqual({
+          hits: {},
+          result: {
+            exhaustiveNbHits: true,
+            hits: [],
+            hitsPerPage: 5,
+            index: 'indexName',
+            nbHits: 0,
+            nbPages: 0,
+            page: 0,
+            params: 'query=',
+            processingTimeMS: 1,
+            query: '',
+          },
+        });
+      });
+
+      test('with query propagates the search parameters to the search client', async () => {
+        const docsearchIndex = docsearchCore({
+          apiKey: 'apiKey',
+          indexName: 'indexName',
+        });
+
+        await docsearchIndex.search({ query: 'query' });
 
         expect(search).toHaveBeenCalledTimes(1);
         expect(search).toHaveBeenCalledWith([
           {
+            query: 'query',
             indexName: 'indexName',
-            query: '',
             params: {},
           },
         ]);
       });
 
-      test('with query propagates the search parameters to the search client', async () => {
+      test('with query and search parameters propagates the search parameters to the search client', async () => {
         const docsearchIndex = docsearchCore({
           apiKey: 'apiKey',
           indexName: 'indexName',

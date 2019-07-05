@@ -66,7 +66,7 @@ function docsearch<THits extends FormattedHits, TContainerNode = HTMLElement>(
     apiKey,
     indexName,
     containerNode,
-    // @ts-ignore
+    // @ts-ignore @TODO: fix types
     transformHits = hits => hits,
     onResult = () => {},
   }: DocSearchOptions<THits, TContainerNode> = {} as DocSearchOptions<
@@ -90,8 +90,35 @@ function docsearch<THits extends FormattedHits, TContainerNode = HTMLElement>(
 
   (searchClient as any).addAlgoliaAgent(`docsearch.js ${version}`);
 
-  function search(searchParameters: QueryParameters = {}) {
+  function search(
+    searchParameters: QueryParameters = {}
+  ): Promise<{ hits: FormattedHits; result: Result }> {
     const { query = '', ...params } = searchParameters;
+
+    // On empty query, we don't send an unecessary request
+    // because we don't want to perform any search.
+    // We fake an Algolia response without hits.
+    if (!query) {
+      const hits = {};
+      const result: Result = {
+        // @ts-ignore `exhaustiveNbHits` is mistyped in `@types/algoliasearch`
+        exhaustiveNbHits: true,
+        hits: [],
+        hitsPerPage: searchParameters.hitsPerPage || 5,
+        index: indexName,
+        nbHits: 0,
+        nbPages: 0,
+        page: 0,
+        params: 'query=',
+        processingTimeMS: 1,
+        query: '',
+      };
+
+      // @ts-ignore @TODO: fix types
+      onResult({ containerNode, hits, result });
+
+      return Promise.resolve({ hits, result });
+    }
 
     return searchClient
       .search([{ indexName, query, params }])
