@@ -5,7 +5,7 @@
     "examples/*"
   ],
   "scripts": {
-    "postinstall": "lerna run build:es",
+    "postinstall": "lerna run build:prepare",
     "build": "lerna run build --scope docsearch*",
     "watch": "lerna run watch --scope docsearch* --parallel",
     "start": "yarn run watch",
@@ -21,6 +21,7 @@
     "@types/jest": "^24.0.15",
     "@typescript-eslint/eslint-plugin": "1.11.0",
     "@typescript-eslint/parser": "1.11.0",
+    "autoprefixer": "9.6.1",
     "babel-eslint": "10.0.2",
     "babel-jest": "24.8.0",
     "bundlesize": "0.18.0",
@@ -33,6 +34,9 @@
     "jest": "24.8.0",
     "jest-watch-typeahead": "0.3.1",
     "lerna": "3.15.0",
+    "nodemon": "1.19.1",
+    "postcss": "7.0.17",
+    "postcss-css-variables": "0.13.0",
     "prettier": "1.18.2",
     "rollup": "1.16.6",
     "rollup-plugin-babel": "4.3.3",

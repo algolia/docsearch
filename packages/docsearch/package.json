@@ -21,8 +21,9 @@
   "scripts": {
     "build:umd": "rollup --config",
     "build:es": "babel src --root-mode upward --extensions '.js,.ts,.tsx' --ignore '**/*/*.test.*' --out-dir dist/es --quiet",
+    "build:prepare": "yarn run build:es",
     "build:types": "tsc --emitDeclarationOnly --outDir dist/",
-    "build": "yarn build:umd && yarn build:es",
+    "build": "yarn run build:umd && yarn run build:es",
     "watch": "babel src --root-mode upward --extensions '.js,.ts,.tsx' --ignore '**/*/*.test.*' --out-dir dist/es --quiet --watch",
     "type-check": "tsc"
   },

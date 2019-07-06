@@ -8,9 +8,17 @@
     "name": "Algolia, Inc.",
     "url": "https://www.algolia.com"
   },
+  "files": [
+    "dist/"
+  ],
   "source": "src/index.css",
-  "main": "src/index.css",
-  "unpkg": "src/index.css",
-  "jsdelivr": "src/index.css",
-  "sideEffects": false
+  "main": "dist/index.css",
+  "unpkg": "dist/index.css",
+  "jsdelivr": "dist/index.css",
+  "sideEffects": false,
+  "scripts": {
+    "build": "node postcss.config.js",
+    "build:prepare": "yarn run build",
+    "watch": "nodemon postcss.config.js --watch src --ext js,json,css"
+  }
 }
