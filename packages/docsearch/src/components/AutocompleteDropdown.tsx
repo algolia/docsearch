@@ -16,7 +16,6 @@ interface AutocompleteProps {
   search(
     searchParameters: QueryParameters
   ): Promise<{ hits: DocSearchHits; result: Result }>;
-  searchParameters?: QueryParameters;
   onItemSelect?({ hit }: { hit: DocSearchHit }): void;
 }
 
@@ -104,7 +103,6 @@ export class AutocompleteDropdown extends Component<
                   onChange: (event: any) => {
                     this.props
                       .search({
-                        ...this.props.searchParameters,
                         query: event.target.value,
                       })
                       .then(({ hits }) => {

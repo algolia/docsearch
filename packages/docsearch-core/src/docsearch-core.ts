@@ -28,17 +28,17 @@ export interface DocSearchCoreOptions {
    */
   indexName: string;
   /**
+   * The search parameters to forward to Algolia.
+   *
+   * @see https://www.algolia.com/doc/api-reference/api-parameters/
+   */
+  searchParameters?: QueryParameters;
+  /**
    * Transforms the hits before displaying them.
    *
    * @param hits The formatted hits
    */
   transformHits?(hits: DocSearchHits): DocSearchHits;
-  /**
-   * The renderer to inject the hits in the container node.
-   *
-   * @param options The renderer options
-   */
-  onResult?(options: OnResultOptions): void;
 }
 
 export function withUsage(message: string) {
@@ -54,8 +54,8 @@ function docsearch(
     appId = 'BH4D9OD16A',
     apiKey,
     indexName,
+    searchParameters = {},
     transformHits = hits => hits,
-    onResult = () => {},
   }: DocSearchCoreOptions = {} as DocSearchCoreOptions
 ) {
   if (typeof appId !== 'string') {
@@ -75,14 +75,15 @@ function docsearch(
   (searchClient as any).addAlgoliaAgent(`docsearch.js ${version}`);
 
   function search(
-    searchParameters: QueryParameters = {}
+    searchParametersFromSearch: QueryParameters = {}
   ): Promise<{ hits: DocSearchHits; result: Result }> {
-    const { query = '', ...userParams } = searchParameters;
+    const { query = '', ...userSearchParameters } = searchParametersFromSearch;
     const params: QueryParameters = {
       hitsPerPage: 5,
       highlightPreTag: '<mark>',
       highlightPostTag: '</mark>',
-      ...userParams,
+      ...searchParameters,
+      ...userSearchParameters,
     };
 
     // On empty query, we don't send an unecessary request
@@ -93,7 +94,7 @@ function docsearch(
       const result: Result = {
         exhaustiveNbHits: true,
         hits: [],
-        hitsPerPage: searchParameters.hitsPerPage || 5,
+        hitsPerPage: params.hitsPerPage!,
         index: indexName,
         nbHits: 0,
         nbPages: 0,
@@ -102,8 +103,6 @@ function docsearch(
         processingTimeMS: 1,
         query: '',
       };
-
-      onResult({ hits, result });
 
       return Promise.resolve({ hits, result });
     }
@@ -116,8 +115,6 @@ function docsearch(
           const result = results[0];
           const formattedHits = formatHits(result.hits);
           const hits = transformHits(formattedHits);
-
-          onResult({ hits, result });
 
           return { hits, result };
         })

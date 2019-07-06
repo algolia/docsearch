@@ -217,7 +217,34 @@ See: https://community.algolia.com/docsearch"
         ]);
       });
 
-      test('with query and search parameters forwards the search parameters to the search client', async () => {
+      test('with query and global search parameters forwards the search parameters to the search client', async () => {
+        const docsearchIndex = docsearchCore({
+          apiKey: 'apiKey',
+          indexName: 'indexName',
+          searchParameters: {
+            hitsPerPage: 3,
+            filters: 'lang:en',
+          },
+        });
+
+        await docsearchIndex.search({ query: 'query' });
+
+        expect(search).toHaveBeenCalledTimes(1);
+        expect(search).toHaveBeenCalledWith([
+          {
+            query: 'query',
+            indexName: 'indexName',
+            params: {
+              hitsPerPage: 3,
+              highlightPreTag: '<mark>',
+              highlightPostTag: '</mark>',
+              filters: 'lang:en',
+            },
+          },
+        ]);
+      });
+
+      test('with query and user search parameters forwards the search parameters to the search client', async () => {
         const docsearchIndex = docsearchCore({
           apiKey: 'apiKey',
           indexName: 'indexName',
@@ -239,6 +266,33 @@ See: https://community.algolia.com/docsearch"
         ]);
       });
 
+      test('with query, global search parameters and user search parameters forwards the search parameters to the search client', async () => {
+        const docsearchIndex = docsearchCore({
+          apiKey: 'apiKey',
+          indexName: 'indexName',
+          searchParameters: {
+            filters: 'lang:en',
+            hitsPerPage: 3,
+          },
+        });
+
+        await docsearchIndex.search({ query: 'query', hitsPerPage: 42 });
+
+        expect(search).toHaveBeenCalledTimes(1);
+        expect(search).toHaveBeenCalledWith([
+          {
+            query: 'query',
+            indexName: 'indexName',
+            params: {
+              hitsPerPage: 42,
+              highlightPreTag: '<mark>',
+              highlightPostTag: '</mark>',
+              filters: 'lang:en',
+            },
+          },
+        ]);
+      });
+
       test('transforms hits', async () => {
         const transformHits = jest.fn();
 
@@ -252,25 +306,6 @@ See: https://community.algolia.com/docsearch"
 
         expect(transformHits).toHaveBeenCalledTimes(1);
         expect(transformHits).toHaveBeenCalledWith({});
-      });
-
-      test('calls `onResults`', async () => {
-        const onResult = jest.fn();
-        const docsearchIndex = docsearchCore({
-          apiKey: 'apiKey',
-          indexName: 'indexName',
-          onResult,
-        });
-
-        const { hits, result } = await docsearchIndex.search({
-          query: 'query',
-        });
-
-        expect(onResult).toHaveBeenCalledTimes(1);
-        expect(onResult).toHaveBeenCalledWith({
-          hits,
-          result,
-        });
       });
     });
   });
