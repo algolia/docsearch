@@ -23,7 +23,11 @@ const plugins = [
     extensions: ['.js', '.ts', '.tsx'],
     rootMode: 'upward',
   }),
-  commonjs(),
+  commonjs({
+    namedExports: {
+      'react-is': ['isForwardRef'],
+    },
+  }),
   filesize({
     showMinifiedSize: false,
     showGzippedSize: true,

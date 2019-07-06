@@ -1,5 +1,16 @@
 import docsearch from 'docsearch.js';
-import autocomplete from 'autocomplete.js';
+// import autocomplete from 'autocomplete.js';
+
+import './docsearch.css';
+
+const searchService = docsearch({
+  apiKey: '3949f721e5d8ca1de8928152ff745b28',
+  indexName: 'yarnpkg',
+  containerNode: document.querySelector('#searchbox'),
+  searchParameters: {
+    filters: 'lang:en',
+  },
+});
 
 // const inputNode = document.querySelector('#searchbox');
 
@@ -7,99 +18,99 @@ import autocomplete from 'autocomplete.js';
 //   searchService.search({ query: event.target.value });
 // });
 
-const docsearchPrefix = 'algolia-docsearch-suggestion';
+// const docsearchPrefix = 'algolia-docsearch-suggestion';
 
-function suggestionTemplate(hits) {
-  return Object.values(hits)
-    .map(hits => {
-      return hits
-        .map(hit => {
-          const {
-            isCategoryHeader,
-            isSubCategoryHeader,
-            category,
-            subcategory,
-            isTextOrSubcategoryNonEmpty,
-            url,
-            title,
-            text,
-          } = hit;
+// function suggestionTemplate(hits) {
+//   return Object.values(hits)
+//     .map(hits => {
+//       return hits
+//         .map(hit => {
+//           const {
+//             isCategoryHeader,
+//             isSubCategoryHeader,
+//             category,
+//             subcategory,
+//             isTextOrSubcategoryNonEmpty,
+//             url,
+//             title,
+//             text,
+//           } = hit;
 
-          return `
-<a
-  class="${docsearchPrefix}
-    ${isCategoryHeader ? `${docsearchPrefix}__main` : ''}
-    ${isSubCategoryHeader ? `${docsearchPrefix}__secondary` : ''}
-  "
-  aria-label="Link to the result"
-  href="${url}"
-  >
-  <div class="${docsearchPrefix}--category-header">
-      <span class="${docsearchPrefix}--category-header-lvl0">${category}</span>
-  </div>
-  <div class="${docsearchPrefix}--wrapper">
-    <div class="${docsearchPrefix}--subcategory-column">
-      <span class="${docsearchPrefix}--subcategory-column-text">${subcategory}</span>
-    </div>
-    ${
-      isTextOrSubcategoryNonEmpty
-        ? `
-    <div class="${docsearchPrefix}--content">
-      <div class="${docsearchPrefix}--subcategory-inline">${subcategory}</div>
-      <div class="${docsearchPrefix}--title">${title}</div>
-      ${text ? `<div class="${docsearchPrefix}--text">${text}</div>` : ''}
-    </div>
-`
-        : ''
-    }
-  </div>
-</a>
-`;
-        })
-        .join('');
-    })
-    .join('');
-}
+//           return `
+// <a
+//   class="${docsearchPrefix}
+//     ${isCategoryHeader ? `${docsearchPrefix}__main` : ''}
+//     ${isSubCategoryHeader ? `${docsearchPrefix}__secondary` : ''}
+//   "
+//   aria-label="Link to the result"
+//   href="${url}"
+//   >
+//   <div class="${docsearchPrefix}--category-header">
+//       <span class="${docsearchPrefix}--category-header-lvl0">${category}</span>
+//   </div>
+//   <div class="${docsearchPrefix}--wrapper">
+//     <div class="${docsearchPrefix}--subcategory-column">
+//       <span class="${docsearchPrefix}--subcategory-column-text">${subcategory}</span>
+//     </div>
+//     ${
+//       isTextOrSubcategoryNonEmpty
+//         ? `
+//     <div class="${docsearchPrefix}--content">
+//       <div class="${docsearchPrefix}--subcategory-inline">${subcategory}</div>
+//       <div class="${docsearchPrefix}--title">${title}</div>
+//       ${text ? `<div class="${docsearchPrefix}--text">${text}</div>` : ''}
+//     </div>
+// `
+//         : ''
+//     }
+//   </div>
+// </a>
+// `;
+//         })
+//         .join('');
+//     })
+//     .join('');
+// }
 
-function docsearchAutocomplete({
-  apiKey,
-  indexName,
-  inputSelector,
-  algoliaOptions,
-}) {
-  const searchService = docsearch({
-    apiKey,
-    indexName,
-  });
+// function docsearchAutocomplete({
+//   apiKey,
+//   indexName,
+//   inputSelector,
+//   algoliaOptions,
+// }) {
+//   const searchService = docsearch({
+//     apiKey,
+//     indexName,
+//   });
 
-  autocomplete(
-    document.querySelector(inputSelector),
-    { hint: false, debug: true },
-    [
-      {
-        source: (query, callback) => {
-          return searchService
-            .search({ ...algoliaOptions, query })
-            .then(({ hits }) => {
-              callback([hits]);
-            });
-        },
-        displayKey: 'name',
-        templates: {
-          suggestion: suggestionTemplate,
-        },
-      },
-    ]
-  ).on('autocomplete:selected', function(event, suggestion, dataset, context) {
-    console.log(event, suggestion, dataset, context);
-  });
-}
+//   autocomplete(
+//     document.querySelector(inputSelector),
+//     { hint: false, debug: true },
+//     [
+//       {
+//         source: (query, callback) => {
+//           return searchService
+//             .search({ ...algoliaOptions, query })
+//             .then(({ hits }) => {
+//               callback([hits]);
+//             });
+//         },
+//         displayKey: 'name',
+//         templates: {
+//           suggestion: suggestionTemplate,
+//         },
+//       },
+//     ]
+//   ).on('autocomplete:selected', function(event, suggestion, dataset, context) {
+//     console.log(event, suggestion, dataset, context);
+//   });
+// }
 
-docsearchAutocomplete({
-  apiKey: '25626fae796133dc1e734c6bcaaeac3c',
-  indexName: 'docsearch',
-  inputSelector: '#searchbox',
-});
+// docsearchAutocomplete({
+//   apiKey: '25626fae796133dc1e734c6bcaaeac3c',
+//   indexName: 'docsearch',
+//   inputSelector: '#searchbox',
+// });
 
 // function suggestionTemplate(hits: any) {
 //   const itemsTemplate = Object.entries(hits)

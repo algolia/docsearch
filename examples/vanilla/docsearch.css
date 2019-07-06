@@ -22,6 +22,7 @@
   max-width: 532px;
   overflow: scroll;
   width: 100%;
+  position: absolute;
 }
 
 .algolia-docsearch-dropdown ul,
@@ -101,6 +102,8 @@
   padding: 0.5rem 0;
 }
 
+/* li:hover .algolia-docsearch-content, */
+li[aria-selected='true'] .algolia-docsearch-content,
 .algolia-docsearch-content--active {
   background-color: #dadbea;
 }

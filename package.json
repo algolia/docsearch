@@ -6,8 +6,8 @@
   ],
   "scripts": {
     "postinstall": "lerna run build:es",
-    "build": "lerna run build",
-    "watch": "lerna run watch --parallel",
+    "build": "lerna run build --scope docsearch*",
+    "watch": "lerna run watch --scope docsearch* --parallel",
     "start": "yarn run watch",
     "test": "jest",
     "test:size": "bundlesize",
@@ -15,6 +15,7 @@
     "type-check": "lerna run type-check"
   },
   "devDependencies": {
+    "@babel/plugin-transform-react-jsx": "7.3.0",
     "@babel/preset-env": "7.4.5",
     "@babel/preset-typescript": "7.3.3",
     "@types/jest": "^24.0.15",

@@ -1,7 +1,6 @@
 import docsearchCore from 'docsearch.js-core';
 
 import docsearch from '.';
-import renderer from './renderer';
 
 jest.mock('docsearch.js-core');
 
@@ -16,21 +15,24 @@ describe('docsearch', () => {
     castToJestMock(docsearchCore).mockReset();
   });
 
-  test('propagates the options to docsearch-core', () => {
+  test('forwards the options to docsearch-core', () => {
+    const containerNode = document.createElement('div');
     const docsearchOptions = {
       appId: 'appId',
       apiKey: 'apiKey',
       indexName: 'indexName',
+      containerNode,
     };
 
     docsearch(docsearchOptions);
 
     expect(docsearchCore).toHaveBeenCalledTimes(1);
     expect(docsearchCore).toHaveBeenCalledWith(
-      expect.objectContaining(docsearchOptions)
-    );
-    expect(docsearchCore).toHaveBeenCalledWith(
-      expect.objectContaining({ onResult: renderer })
+      expect.objectContaining({
+        appId: 'appId',
+        apiKey: 'apiKey',
+        indexName: 'indexName',
+      })
     );
   });
 });

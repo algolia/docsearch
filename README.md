@@ -1,10 +1,10 @@
 [![DocSearch][1]][8]
 
-The easiest way to add search to your documentation. For free.
+The easiest way to add search to your documentation – for free.
 
 [![npm version][2]](https://npmjs.org/package/docsearch.js) [![build][3]](https://travis-ci.org/algolia/docsearch) [![coverage][4]](https://coveralls.io/github/algolia/docsearch) [![License][5]](./LICENSE) [![Downloads][6]](https://npm-stat.com/charts.html?package=docsearch.js) [![jsDelivr Hits][7]](https://www.jsdelivr.com/package/npm/docsearch.js)
 
-DocSearch will crawl your documentation website, push its content to an Algolia index, and allow you to add a dropdown search menu for your users to find relevant content in no time.
+DocSearch crawls your documentation website, pushes the content to an Algolia index, and provides a dropdown search menu for your users to find relevant content in no time.
 
 Check out our [website][8] for a complete explanation and documentation.
 
@@ -14,9 +14,11 @@ Check out our [website][8] for a complete explanation and documentation.
 
 DocSearch is made of 3 repositories:
 
-- [algolia/docsearch][10] contains the `docsearch.js` code source and the documentation website.
-- [algolia/docsearch-configs][11] contains the JSON files representing all the configs for all the documentations DocSearch is powering
-- [algolia/docsearch-scraper][12] contains the crawler we use to extract data from your documentation. The code is open-source and you can run it from a Docker image
+- [algolia/docsearch][10] contains the `docsearch.js` source code and the documentation website.
+- [algolia/docsearch-configs][11] contains the JSON files representing all the configs for the documentations DocSearch is powering.
+- [algolia/docsearch-scraper][12] contains the crawler we use to extract data from your documentation. The code is open-source and you can run it from a Docker image.
+
+<!-- Links -->
 
 [1]: ./.github/docsearch-logo.svg
 [2]: https://img.shields.io/npm/v/docsearch.js.svg?style=flat-square

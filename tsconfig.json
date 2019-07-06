@@ -4,7 +4,6 @@
     "module": "es2015",
     "moduleResolution": "node",
     "jsx": "preserve",
-    "noEmit": true,
     "strict": true,
     "noImplicitAny": false,
     "noUnusedLocals": true,
@@ -12,6 +11,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "declaration": true
   }
 }

@@ -22,5 +22,11 @@ module.exports = api => {
         },
       ],
     ],
+    overrides: [
+      {
+        test: './packages/docsearch/',
+        plugins: [['@babel/plugin-transform-react-jsx', { pragma: 'h' }]],
+      },
+    ],
   };
 };

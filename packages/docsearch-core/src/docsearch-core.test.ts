@@ -195,7 +195,7 @@ See: https://community.algolia.com/docsearch"
         });
       });
 
-      test('with query propagates the search parameters to the search client', async () => {
+      test('with query forwards the search parameters to the search client', async () => {
         const docsearchIndex = docsearchCore({
           apiKey: 'apiKey',
           indexName: 'indexName',
@@ -217,7 +217,7 @@ See: https://community.algolia.com/docsearch"
         ]);
       });
 
-      test('with query and search parameters propagates the search parameters to the search client', async () => {
+      test('with query and search parameters forwards the search parameters to the search client', async () => {
         const docsearchIndex = docsearchCore({
           apiKey: 'apiKey',
           indexName: 'indexName',

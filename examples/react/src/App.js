@@ -6,19 +6,20 @@ import './DocSearch.css';
 
 function App() {
   return (
-    <DocSearch
-      apiKey="05f2b9f825e93891445000c63e103290"
-      indexName="francoischalifour"
-    />
+    <DocSearch apiKey="3949f721e5d8ca1de8928152ff745b28" indexName="yarnpkg" />
   );
 }
 
-function Autocomplete({ hits }) {
+function Autocomplete({ hits, activeIndex, setActiveIndex }) {
+  let globalIndex = 0;
+
   return (
     <div className="algolia-docsearch-dropdown">
       <div className="algolia-docsearch-results">
         <ul>
-          {Object.entries(hits).map(([title, matches]) => {
+          {Object.entries(hits).map(([title, matches], categoryIndex) => {
+            globalIndex++;
+
             return (
               <li key={title}>
                 <section className="algolia-docsearch-section">
@@ -33,7 +34,16 @@ function Autocomplete({ hits }) {
 
                       return (
                         <li key={objectID}>
-                          <a href={url} className="algolia-docsearch-content">
+                          <a
+                            href={url}
+                            className={`algolia-docsearch-content
+                            ${
+                              activeIndex === globalIndex
+                                ? ' algolia-docsearch-content--active'
+                                : ''
+                            }`}
+                            // onMouseEnter={() => setActiveIndex(globalIndex)}
+                          >
                             <h2
                               className="algolia-docsearch-lvl1"
                               dangerouslySetInnerHTML={{ __html: category }}
@@ -214,6 +224,7 @@ function Autocomplete({ hits }) {
 
 function DocSearch({ apiKey, indexName }) {
   const [hits, setHits] = useState({});
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const searchService = docsearch({
     apiKey,
@@ -226,9 +237,31 @@ function DocSearch({ apiKey, indexName }) {
   }, [indexName]);
 
   async function onChange(event) {
-    const { hits } = await searchService.search({ query: event.target.value });
+    const { hits } = await searchService.search({
+      query: event.target.value,
+      filters: 'lang:en',
+    });
 
     setHits(hits);
+  }
+
+  function onKeyDown(event) {
+    if (event.keyCode === 13) {
+    } else if (event.keyCode === 38) {
+      if (activeIndex <= 0) {
+        return;
+      }
+
+      setActiveIndex(activeIndex - 1);
+    } else if (event.keyCode === 40) {
+      if (activeIndex >= 4) {
+        return;
+      }
+
+      setActiveIndex(activeIndex + 1);
+    }
+
+    console.log('activeIndex', activeIndex);
   }
 
   return (
@@ -236,6 +269,7 @@ function DocSearch({ apiKey, indexName }) {
       <input
         placeholder="Search the documentation"
         onChange={onChange}
+        onKeyDown={onKeyDown}
         style={{
           padding: 12,
           border: '1px solid #ddd',
@@ -249,7 +283,11 @@ function DocSearch({ apiKey, indexName }) {
       />
 
       <div>
-        <Autocomplete hits={hits} />
+        <Autocomplete
+          hits={hits}
+          activeIndex={activeIndex}
+          setActiveIndex={setActiveIndex}
+        />
       </div>
     </div>
   );
