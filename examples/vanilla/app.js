@@ -1,7 +1,8 @@
 import docsearch from 'docsearch.js';
+import 'docsearch-theme-light';
 // import autocomplete from 'autocomplete.js';
 
-import './docsearch.css';
+// import './docsearch.css';
 
 const searchService = docsearch({
   apiKey: '3949f721e5d8ca1de8928152ff745b28',

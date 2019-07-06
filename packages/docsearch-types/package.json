@@ -8,9 +8,6 @@
     "name": "Algolia, Inc.",
     "url": "https://www.algolia.com"
   },
-  "files": [
-    "dist/"
-  ],
   "source": "src/index.ts",
   "main": "src/index.ts",
   "unpkg": "src/index.ts",

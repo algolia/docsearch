@@ -1,0 +1,16 @@
+{
+  "name": "docsearch-theme-light",
+  "version": "3.0.0",
+  "license": "MIT",
+  "homepage": "https://community.algolia.com/docsearch/",
+  "repository": "algolia/docsearch",
+  "author": {
+    "name": "Algolia, Inc.",
+    "url": "https://www.algolia.com"
+  },
+  "source": "src/index.css",
+  "main": "src/index.css",
+  "unpkg": "src/index.css",
+  "jsdelivr": "src/index.css",
+  "sideEffects": false
+}
