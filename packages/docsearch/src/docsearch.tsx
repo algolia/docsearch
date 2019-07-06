@@ -1,23 +1,14 @@
 /** @jsx h */
 
 import { h, render } from 'preact';
-import docsearchCore from 'docsearch.js-core';
-import {
-  DocSearchHit,
-  DocSearchHits,
-  QueryParameters,
-} from 'docsearch.js-types';
+import docsearchCore, { DocSearchCoreOptions } from 'docsearch.js-core';
+import { DocSearchHit, QueryParameters } from 'docsearch.js-types';
 
 import { AutocompleteDropdown } from './components';
 
-export interface DocSearchOptions {
-  appId?: string;
-  apiKey: string;
-  indexName: string;
+export interface DocSearchOptions extends DocSearchCoreOptions {
   container: HTMLElement | string;
   searchParameters?: QueryParameters;
-  transformHits?(hits: DocSearchHits): DocSearchHits;
-  onResult?(options: any): void;
   onItemSelect?({ hit }: { hit: DocSearchHit }): void;
 }
 

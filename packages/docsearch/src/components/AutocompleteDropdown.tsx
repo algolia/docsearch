@@ -15,7 +15,7 @@ import { AutocompleteFooter } from './AutocompleteFooter';
 interface AutocompleteProps {
   search(
     searchParameters: QueryParameters
-  ): Promise<{ hits: any; result: Result }>;
+  ): Promise<{ hits: DocSearchHits; result: Result }>;
   searchParameters?: QueryParameters;
   onItemSelect?({ hit }: { hit: DocSearchHit }): void;
 }

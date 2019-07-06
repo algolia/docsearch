@@ -255,12 +255,10 @@ See: https://community.algolia.com/docsearch"
       });
 
       test('calls `onResults`', async () => {
-        const containerNode = document.createElement('div');
         const onResult = jest.fn();
         const docsearchIndex = docsearchCore({
           apiKey: 'apiKey',
           indexName: 'indexName',
-          containerNode,
           onResult,
         });
 
@@ -270,7 +268,6 @@ See: https://community.algolia.com/docsearch"
 
         expect(onResult).toHaveBeenCalledTimes(1);
         expect(onResult).toHaveBeenCalledWith({
-          containerNode,
           hits,
           result,
         });

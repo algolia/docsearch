@@ -1,15 +1,15 @@
 import algoliasearch from 'algoliasearch/lite';
-import { QueryParameters, Result } from 'docsearch.js-types';
+import { DocSearchHits, QueryParameters, Result } from 'docsearch.js-types';
 
 import version from './version';
-import formatHits, { FormattedHits } from './utils/formatHits';
+import formatHits from './utils/formatHits';
 
-export interface OnResultOptions<THits> {
-  hits: THits;
+export interface OnResultOptions {
+  hits: DocSearchHits;
   result: Result;
 }
 
-export interface DocSearchOptions<THits = FormattedHits> {
+export interface DocSearchCoreOptions {
   /**
    * The Algolia application identifier.
    *
@@ -32,13 +32,13 @@ export interface DocSearchOptions<THits = FormattedHits> {
    *
    * @param hits The formatted hits
    */
-  transformHits?(hits: FormattedHits): THits;
+  transformHits?(hits: DocSearchHits): DocSearchHits;
   /**
    * The renderer to inject the hits in the container node.
    *
    * @param options The renderer options
    */
-  onResult?(options: OnResultOptions<THits>): void;
+  onResult?(options: OnResultOptions): void;
 }
 
 export function withUsage(message: string) {
@@ -49,15 +49,14 @@ See: https://community.algolia.com/docsearch
 `.trim();
 }
 
-function docsearch<THits extends FormattedHits>(
+function docsearch(
   {
     appId = 'BH4D9OD16A',
     apiKey,
     indexName,
-    // @ts-ignore @TODO: fix types
     transformHits = hits => hits,
     onResult = () => {},
-  }: DocSearchOptions<THits> = {} as DocSearchOptions<THits>
+  }: DocSearchCoreOptions = {} as DocSearchCoreOptions
 ) {
   if (typeof appId !== 'string') {
     throw new Error(withUsage('The `appId` option expects a `string`.'));
@@ -77,7 +76,7 @@ function docsearch<THits extends FormattedHits>(
 
   function search(
     searchParameters: QueryParameters = {}
-  ): Promise<{ hits: FormattedHits; result: Result }> {
+  ): Promise<{ hits: DocSearchHits; result: Result }> {
     const { query = '', ...userParams } = searchParameters;
     const params: QueryParameters = {
       hitsPerPage: 5,
@@ -104,7 +103,6 @@ function docsearch<THits extends FormattedHits>(
         query: '',
       };
 
-      // @ts-ignore @TODO: fix types
       onResult({ hits, result });
 
       return Promise.resolve({ hits, result });
@@ -112,7 +110,7 @@ function docsearch<THits extends FormattedHits>(
 
     return (
       searchClient
-        // @ts-ignore `aroundLatLngViaIP` is mistyed (should be a boolean)
+        // @ts-ignore `aroundLatLngViaIP` is mistyped (should be a boolean)
         .search([{ indexName, query, params }])
         .then(({ results }) => {
           const result = results[0];
