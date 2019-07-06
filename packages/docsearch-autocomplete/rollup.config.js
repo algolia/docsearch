@@ -1,7 +1,9 @@
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
-import { uglify } from 'rollup-plugin-uglify';
+import replace from 'rollup-plugin-replace';
+import { terser } from 'rollup-plugin-terser';
+import license from 'rollup-plugin-license';
 import filesize from 'rollup-plugin-filesize';
 
 import pkg from './package.json';
@@ -10,7 +12,7 @@ const version =
   process.env.VERSION || `UNRELEASED (${new Date().toUTCString()})`;
 const algolia = '© Algolia, Inc. and contributors; MIT License';
 const link = 'https://github.com/algolia/docsearch';
-const license = `/*! DocSearch.js Autocomplete ${version} | ${algolia} | ${link} */`;
+const banner = `/*! DocSearch.js Autocomplete ${version} | ${algolia} | ${link} */`;
 
 const plugins = [
   resolve({
@@ -18,20 +20,23 @@ const plugins = [
     preferBuiltins: false,
     extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],
   }),
+  commonjs(),
+  replace({
+    'process.env.NODE_ENV': JSON.stringify('production'),
+    'process.env.RESET_APP_DATA_TIMER': JSON.stringify(undefined),
+  }),
   babel({
     exclude: 'node_modules/**',
     extensions: ['.js', '.ts', '.tsx'],
     rootMode: 'upward',
   }),
-  commonjs(),
+  terser(),
+  license({
+    banner,
+  }),
   filesize({
     showMinifiedSize: false,
     showGzippedSize: true,
-  }),
-  uglify({
-    output: {
-      preamble: license,
-    },
   }),
 ];
 
@@ -41,12 +46,7 @@ const configuration = {
     file: pkg['umd:main'],
     name: 'docsearchAutocomplete',
     format: 'umd',
-    globals: {
-      'docsearch.js-core': 'docsearchCore',
-    },
-    banner: license,
     sourcemap: true,
-    exports: 'named',
   },
   plugins,
 };

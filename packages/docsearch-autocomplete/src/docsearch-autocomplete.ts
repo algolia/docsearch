@@ -1,4 +1,4 @@
-import docsearch, { withUsage, QueryParameters } from 'docsearch.js-core';
+import docsearch, { QueryParameters } from 'docsearch.js-core';
 import autocomplete from 'autocomplete.js';
 
 import { suggestionTemplate } from './templates';
@@ -18,9 +18,7 @@ function docsearchAutocomplete({
 }: DocSearchAutocompleteOptions) {
   if (!inputSelector) {
     throw new Error(
-      withUsage(
-        'The `inputSelector` option expects a `string` or an `HTMLElement`.'
-      )
+      'The `inputSelector` option expects a `string` or an `HTMLElement`.'
     );
   }
 

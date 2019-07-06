@@ -1,10 +1,7 @@
 /** @jsx h */
 
 import { h, render } from 'preact';
-import docsearchCore, {
-  withUsage,
-  DocSearchCoreOptions,
-} from 'docsearch.js-core';
+import docsearchCore, { DocSearchCoreOptions } from 'docsearch.js-core';
 import { DocSearchHit } from 'docsearch.js-types';
 
 import { AutocompleteDropdown } from './components';
@@ -23,9 +20,7 @@ function docsearch(options: DocSearchOptions = {} as DocSearchOptions) {
 
   if (!containerNode) {
     throw new Error(
-      withUsage(
-        'The `container` option expects a `string` or an `HTMLElement`.'
-      )
+      'The `container` option expects a `string` or an `HTMLElement`.'
     );
   }
 
