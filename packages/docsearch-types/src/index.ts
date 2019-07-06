@@ -1,3 +1,4 @@
+export * from './AlgoliaHit';
 export * from './DocSearchHit';
 export * from './DocSearchHits';
 export * from './QueryParameters';

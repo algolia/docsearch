@@ -1,17 +1,16 @@
-import { DocSearchHit, DocSearchHitWithRootLevels } from '../types';
+import { DocSearchHit, DocSearchHits, AlgoliaHit } from 'docsearch.js-types';
+
 import { getHighlightedValue, getSnippetedValue } from '../utils';
 
-interface FormattedHit {
-  objectID: string;
-  levels: string[];
-  levelIndex: number;
-  content: string;
-  url: string;
-}
-
-export interface FormattedHits {
-  [title: string]: FormattedHit[];
-}
+export type AlgoliaHitWithRootLevels = Omit<AlgoliaHit, 'hierarchy'> & {
+  lvl0?: AlgoliaHit['_highlightResult']['content'];
+  lvl1?: AlgoliaHit['_highlightResult']['content'];
+  lvl2?: AlgoliaHit['_highlightResult']['content'];
+  lvl3?: AlgoliaHit['_highlightResult']['content'];
+  lvl4?: AlgoliaHit['_highlightResult']['content'];
+  lvl5?: AlgoliaHit['_highlightResult']['content'];
+  lvl6?: AlgoliaHit['_highlightResult']['content'];
+};
 
 function groupBy<TValue = any>(
   values: TValue[],
@@ -31,8 +30,8 @@ function groupBy<TValue = any>(
 }
 
 export function copyHierarchyValuesToRoot(
-  rawHit: DocSearchHit
-): DocSearchHitWithRootLevels {
+  rawHit: AlgoliaHit
+): AlgoliaHitWithRootLevels {
   const levels = Object.entries(rawHit._highlightResult.hierarchy).reduce(
     (acc, [key, level]) => ({ ...acc, [key]: level.value }),
     {}
@@ -45,7 +44,7 @@ export function copyHierarchyValuesToRoot(
   };
 }
 
-function getUrl(hit: DocSearchHitWithRootLevels): string {
+function getUrl(hit: AlgoliaHitWithRootLevels): string {
   const { url, anchor } = hit;
 
   if (url) {
@@ -65,7 +64,7 @@ function getUrl(hit: DocSearchHitWithRootLevels): string {
   return '';
 }
 
-export function formatHit(hit: DocSearchHitWithRootLevels): FormattedHit {
+export function formatHit(hit: AlgoliaHitWithRootLevels): DocSearchHit {
   const levels = [
     getHighlightedValue(hit, 'lvl0'),
     getHighlightedValue(hit, 'lvl1'),
@@ -85,7 +84,7 @@ export function formatHit(hit: DocSearchHitWithRootLevels): FormattedHit {
   };
 }
 
-function formatHits(rawHits: DocSearchHit[]): FormattedHits {
+function formatHits(rawHits: AlgoliaHit[]): DocSearchHits {
   const hits = rawHits.map(copyHierarchyValuesToRoot).map(formatHit);
   const formattedHits = groupBy(hits, hit => hit.levels[hit.levelIndex]);
 

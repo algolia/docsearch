@@ -1,7 +1,7 @@
-import { DocSearchHitWithRootLevels } from '../types';
+import { AlgoliaHitWithRootLevels } from './formatHits';
 
 export function getSnippetedValue(
-  hit: DocSearchHitWithRootLevels,
+  hit: AlgoliaHitWithRootLevels,
   property: string
 ): string {
   if (

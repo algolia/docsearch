@@ -5,7 +5,7 @@ interface DocSearchHitAttributeHighlightResult {
   fullyHighlighted?: boolean;
 }
 
-export interface DocSearchHitHighlightResultHierarchy {
+interface DocSearchHitHighlightResultHierarchy {
   lvl0?: DocSearchHitAttributeHighlightResult;
   lvl1?: DocSearchHitAttributeHighlightResult;
   lvl2?: DocSearchHitAttributeHighlightResult;
@@ -15,7 +15,7 @@ export interface DocSearchHitHighlightResultHierarchy {
   lvl6?: DocSearchHitAttributeHighlightResult;
 }
 
-export interface DocSearchHitHighlightResult {
+interface DocSearchHitHighlightResult {
   content?: DocSearchHitAttributeHighlightResult;
   hierarchy: DocSearchHitHighlightResultHierarchy;
   hierarchy_camel: DocSearchHitHighlightResultHierarchy[];
@@ -30,12 +30,21 @@ interface DocSearchHitSnippetResult {
   content: DocSearchHitAttributeSnippetResult;
 }
 
-interface CommonDocSearchHit {
+export interface AlgoliaHit {
   [attribute: string]: any;
   objectID: string;
   content: string | null;
   url: string;
   anchor: string | null;
+  hierarchy: {
+    lvl0: string | null;
+    lvl1: string | null;
+    lvl2: string | null;
+    lvl3: string | null;
+    lvl4: string | null;
+    lvl5: string | null;
+    lvl6: string | null;
+  };
   _highlightResult: DocSearchHitHighlightResult;
   _snippetResult?: DocSearchHitSnippetResult;
   _rankingInfo?: {
@@ -57,19 +66,3 @@ interface CommonDocSearchHit {
   };
   _distinctSeqID?: number;
 }
-
-export interface DocSearchHit extends CommonDocSearchHit {
-  hierarchy: {
-    lvl0: string | null;
-    lvl1: string | null;
-    lvl2: string | null;
-    lvl3: string | null;
-    lvl4: string | null;
-    lvl5: string | null;
-    lvl6: string | null;
-  };
-}
-
-export interface DocSearchHitWithRootLevels
-  extends CommonDocSearchHit,
-    DocSearchHitHighlightResultHierarchy {}
