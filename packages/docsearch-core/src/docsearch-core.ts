@@ -34,9 +34,15 @@ export interface DocSearchCoreOptions {
    */
   searchParameters?: QueryParameters;
   /**
+   * Transforms the query before sending to Algolia.
+   *
+   * @param query The transformed query
+   */
+  transformQuery?(query: string): string;
+  /**
    * Transforms the hits before displaying them.
    *
-   * @param hits The formatted hits
+   * @param hits The hits
    */
   transformHits?(hits: DocSearchHits): DocSearchHits;
 }
@@ -55,6 +61,7 @@ function docsearch(
     apiKey,
     indexName,
     searchParameters = {},
+    transformQuery = query => query,
     transformHits = hits => hits,
   }: DocSearchCoreOptions = {} as DocSearchCoreOptions
 ) {
@@ -77,7 +84,11 @@ function docsearch(
   function search(
     searchParametersFromSearch: QueryParameters = {}
   ): Promise<{ hits: DocSearchHits; result: Result }> {
-    const { query = '', ...userSearchParameters } = searchParametersFromSearch;
+    const {
+      query: rawQuery = '',
+      ...userSearchParameters
+    } = searchParametersFromSearch;
+    const query = transformQuery(rawQuery);
     const params: QueryParameters = {
       hitsPerPage: 5,
       highlightPreTag: '<mark>',

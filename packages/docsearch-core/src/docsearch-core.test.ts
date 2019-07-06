@@ -293,6 +293,27 @@ See: https://community.algolia.com/docsearch"
         ]);
       });
 
+      test('transforms query', async () => {
+        const transformQuery = jest.fn(() => 'transformed');
+
+        const docsearchIndex = docsearchCore({
+          apiKey: 'apiKey',
+          indexName: 'indexName',
+          transformQuery,
+        });
+
+        await docsearchIndex.search({ query: 'query' });
+
+        expect(transformQuery).toHaveBeenCalledTimes(1);
+        expect(transformQuery).toHaveBeenCalledWith('query');
+        expect(search).toHaveBeenCalledTimes(1);
+        expect(search).toHaveBeenCalledWith(
+          expect.arrayContaining([
+            expect.objectContaining({ query: 'transformed' }),
+          ])
+        );
+      });
+
       test('transforms hits', async () => {
         const transformHits = jest.fn();
 
