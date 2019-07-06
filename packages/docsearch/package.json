@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "docsearch.js-core": "^3.0.0",
+    "docsearch.js-types": "^3.0.0",
     "downshift": "^3.2.10",
     "preact": "^8.4.2"
   }

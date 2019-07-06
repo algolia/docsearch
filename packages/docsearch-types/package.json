@@ -1,0 +1,25 @@
+{
+  "name": "docsearch.js-types",
+  "version": "3.0.0",
+  "license": "MIT",
+  "homepage": "https://community.algolia.com/docsearch/",
+  "repository": "algolia/docsearch",
+  "author": {
+    "name": "Algolia, Inc.",
+    "url": "https://www.algolia.com"
+  },
+  "files": [
+    "dist/"
+  ],
+  "source": "src/index.ts",
+  "main": "src/index.ts",
+  "unpkg": "src/index.ts",
+  "jsdelivr": "src/index.ts",
+  "sideEffects": false,
+  "scripts": {
+    "type-check": "tsc"
+  },
+  "dependencies": {
+    "@types/algoliasearch": "^3.30.12"
+  }
+}

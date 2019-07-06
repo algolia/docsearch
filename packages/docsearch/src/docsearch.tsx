@@ -2,39 +2,41 @@
 
 import { h, render } from 'preact';
 import docsearchCore from 'docsearch.js-core';
+import {
+  DocSearchHit,
+  DocSearchHits,
+  QueryParameters,
+} from 'docsearch.js-types';
 
 import { AutocompleteDropdown } from './components';
-
-export type DocSearchHit = {
-  objectID: string;
-  levels: string[];
-  levelIndex: number;
-  content: string;
-  url: string;
-};
-
-export type DocSearchHits = {
-  [title: string]: DocSearchHit[];
-};
 
 export interface DocSearchOptions {
   appId?: string;
   apiKey: string;
   indexName: string;
-  containerNode: any;
-  transformHits?(hits: any): any;
+  container: HTMLElement | string;
+  searchParameters?: QueryParameters;
+  transformHits?(hits: DocSearchHits): DocSearchHits;
   onResult?(options: any): void;
-  onItemSelect?({ hit }: { hit: any }): void;
-  searchParameters?: any;
+  onItemSelect?({ hit }: { hit: DocSearchHit }): void;
 }
 
 function docsearch(options: DocSearchOptions = {} as DocSearchOptions) {
   const {
-    containerNode,
+    container,
     searchParameters,
     onItemSelect,
     ...docsearchCoreOptions
   } = options;
+  const containerNode =
+    typeof container === 'string'
+      ? document.querySelector<HTMLElement>(container)
+      : container;
+
+  if (!containerNode) {
+    throw new Error('The `container` is not a DOM element.');
+  }
+
   const docsearchIndex = docsearchCore(docsearchCoreOptions);
 
   render(

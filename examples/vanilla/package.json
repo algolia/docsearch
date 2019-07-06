@@ -14,6 +14,7 @@
   "dependencies": {
     "autocomplete.js": "0.36.0",
     "docsearch.js": "3.0.0",
+    "docsearch.js-types": "^3.0.0",
     "parcel-bundler": "1.12.3"
   }
 }

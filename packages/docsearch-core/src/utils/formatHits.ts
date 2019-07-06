@@ -1,6 +1,5 @@
-import { getHighlightedValue, getSnippetedValue } from '../utils';
-
 import { DocSearchHit, DocSearchHitWithRootLevels } from '../types';
+import { getHighlightedValue, getSnippetedValue } from '../utils';
 
 interface FormattedHit {
   objectID: string;

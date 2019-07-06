@@ -28,7 +28,8 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "algoliasearch": "^3.33.0"
+    "algoliasearch": "^3.33.0",
+    "docsearch.js-types": "^3.0.0"
   },
   "devDependencies": {
     "@babel/cli": "7.4.4",

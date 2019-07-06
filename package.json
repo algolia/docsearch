@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-react-jsx": "7.3.0",
-    "@babel/preset-env": "7.4.5",
+    "@babel/preset-env": "7.5.0",
     "@babel/preset-typescript": "7.3.3",
     "@types/jest": "^24.0.15",
     "@typescript-eslint/eslint-plugin": "1.11.0",
@@ -34,7 +34,7 @@
     "jest-watch-typeahead": "0.3.1",
     "lerna": "3.15.0",
     "prettier": "1.18.2",
-    "rollup": "1.16.4",
+    "rollup": "1.16.6",
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-commonjs": "10.0.1",
     "rollup-plugin-filesize": "6.1.1",

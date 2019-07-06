@@ -1,21 +1,15 @@
 import algoliasearch from 'algoliasearch/lite';
+import { QueryParameters, Result } from 'docsearch.js-types';
 
 import version from './version';
 import formatHits, { FormattedHits } from './utils/formatHits';
-import { QueryParameters, Result } from './types';
 
-// export { QueryParameters };
-
-export interface OnResultOptions<THits, TContainerNode = HTMLElement> {
-  containerNode?: TContainerNode;
+export interface OnResultOptions<THits> {
   hits: THits;
   result: Result;
 }
 
-export interface DocSearchOptions<
-  THits = FormattedHits,
-  TContainerNode = HTMLElement
-> {
+export interface DocSearchOptions<THits = FormattedHits> {
   /**
    * The Algolia application identifier.
    *
@@ -34,11 +28,6 @@ export interface DocSearchOptions<
    */
   indexName: string;
   /**
-   * The container node passed to the `onResult` callback.
-   * It can be used to display results when they're received.
-   */
-  containerNode?: TContainerNode;
-  /**
    * Transforms the hits before displaying them.
    *
    * @param hits The formatted hits
@@ -49,7 +38,7 @@ export interface DocSearchOptions<
    *
    * @param options The renderer options
    */
-  onResult?(options: OnResultOptions<THits, TContainerNode>): void;
+  onResult?(options: OnResultOptions<THits>): void;
 }
 
 export function withUsage(message: string) {
@@ -60,19 +49,15 @@ See: https://community.algolia.com/docsearch
 `.trim();
 }
 
-function docsearch<THits extends FormattedHits, TContainerNode = HTMLElement>(
+function docsearch<THits extends FormattedHits>(
   {
     appId = 'BH4D9OD16A',
     apiKey,
     indexName,
-    containerNode,
     // @ts-ignore @TODO: fix types
     transformHits = hits => hits,
     onResult = () => {},
-  }: DocSearchOptions<THits, TContainerNode> = {} as DocSearchOptions<
-    THits,
-    TContainerNode
-  >
+  }: DocSearchOptions<THits> = {} as DocSearchOptions<THits>
 ) {
   if (typeof appId !== 'string') {
     throw new Error(withUsage('The `appId` option expects a `string`.'));
@@ -94,7 +79,7 @@ function docsearch<THits extends FormattedHits, TContainerNode = HTMLElement>(
     searchParameters: QueryParameters = {}
   ): Promise<{ hits: FormattedHits; result: Result }> {
     const { query = '', ...userParams } = searchParameters;
-    const params = {
+    const params: QueryParameters = {
       hitsPerPage: 5,
       highlightPreTag: '<mark>',
       highlightPostTag: '</mark>',
@@ -107,7 +92,6 @@ function docsearch<THits extends FormattedHits, TContainerNode = HTMLElement>(
     if (!query) {
       const hits = {};
       const result: Result = {
-        // @ts-ignore `exhaustiveNbHits` is mistyped in `@types/algoliasearch`
         exhaustiveNbHits: true,
         hits: [],
         hitsPerPage: searchParameters.hitsPerPage || 5,
@@ -121,22 +105,25 @@ function docsearch<THits extends FormattedHits, TContainerNode = HTMLElement>(
       };
 
       // @ts-ignore @TODO: fix types
-      onResult({ containerNode, hits, result });
+      onResult({ hits, result });
 
       return Promise.resolve({ hits, result });
     }
 
-    return searchClient
-      .search([{ indexName, query, params }])
-      .then(({ results }) => {
-        const result = results[0];
-        const formattedHits = formatHits(result.hits);
-        const hits = transformHits(formattedHits);
+    return (
+      searchClient
+        // @ts-ignore `aroundLatLngViaIP` is mistyed (should be a boolean)
+        .search([{ indexName, query, params }])
+        .then(({ results }) => {
+          const result = results[0];
+          const formattedHits = formatHits(result.hits);
+          const hits = transformHits(formattedHits);
 
-        onResult({ containerNode, hits, result });
+          onResult({ hits, result });
 
-        return { hits, result };
-      });
+          return { hits, result };
+        })
+    );
   }
 
   return {

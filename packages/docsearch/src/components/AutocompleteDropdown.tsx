@@ -2,14 +2,22 @@
 
 import { h, Component } from 'preact';
 import Downshift from 'downshift/preact';
+import {
+  DocSearchHit,
+  DocSearchHits,
+  QueryParameters,
+  Result,
+} from 'docsearch.js-types';
 
-import { DocSearchHit, DocSearchHits } from '../docsearch';
-import { AutocompleteResults, AutocompleteFooter } from '.';
+import { AutocompleteResults } from './AutocompleteResults';
+import { AutocompleteFooter } from './AutocompleteFooter';
 
 interface AutocompleteProps {
-  search(searchParameters: any): Promise<{ hits: any; result: any }>;
-  searchParameters?: any;
-  onItemSelect?({ hit }: { hit: any }): void;
+  search(
+    searchParameters: QueryParameters
+  ): Promise<{ hits: any; result: Result }>;
+  searchParameters?: QueryParameters;
+  onItemSelect?({ hit }: { hit: DocSearchHit }): void;
 }
 
 interface AutocompleteState {

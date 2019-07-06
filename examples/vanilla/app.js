@@ -6,7 +6,7 @@ import './docsearch.css';
 const searchService = docsearch({
   apiKey: '3949f721e5d8ca1de8928152ff745b28',
   indexName: 'yarnpkg',
-  containerNode: document.querySelector('#searchbox'),
+  container: '#searchbox',
   searchParameters: {
     filters: 'lang:en',
   },

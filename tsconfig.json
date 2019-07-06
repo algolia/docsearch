@@ -10,8 +10,6 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "declaration": true
+    "allowSyntheticDefaultImports": true
   }
 }
