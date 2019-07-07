@@ -18,6 +18,13 @@ export interface DocSearchOptions extends DocSearchCoreOptions {
    */
   placeholder?: string;
   /**
+   * The number of milliseconds before the search is considered
+   * as stalled
+   *
+   * @defaults `300`
+   */
+  stalledSearchDelay?: number;
+  /**
    * Function called when the user selects an item.
    */
   onItemSelect?({ hit }: { hit: DocSearchHit }): void;
@@ -27,6 +34,7 @@ function docsearch(options: DocSearchOptions = {} as DocSearchOptions) {
   const {
     container,
     placeholder = 'Search',
+    stalledSearchDelay = 300,
     onItemSelect,
     ...docsearchCoreOptions
   } = options;
@@ -46,6 +54,7 @@ function docsearch(options: DocSearchOptions = {} as DocSearchOptions) {
   render(
     <DocSearchAutocomplete
       placeholder={placeholder}
+      stalledSearchDelay={stalledSearchDelay}
       search={docsearchIndex.search}
       onItemSelect={onItemSelect}
     />,

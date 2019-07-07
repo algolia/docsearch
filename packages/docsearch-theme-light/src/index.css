@@ -4,6 +4,12 @@
   --algolia-docsearch-third-color: #232533;
 }
 
+/* Form */
+
+.algolia-docsearch-form {
+  position: relative;
+}
+
 /* Dropdown */
 
 .algolia-docsearch-dropdown * {

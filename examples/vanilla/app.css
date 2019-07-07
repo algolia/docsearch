@@ -8,7 +8,7 @@ body {
   padding: 2rem;
 }
 
-input {
+.algolia-docsearch-input {
   padding: 12px;
   border: 1px solid #ddd;
   border-radius: 3px;
@@ -16,4 +16,36 @@ input {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16);
   width: 100%;
   max-width: 500;
+  padding-left: 3rem;
+}
+
+.algolia-docsearch-input:focus {
+  outline: none;
+  border: 1px solid #bbb;
+}
+
+.algolia-docsearch-form::before {
+  content: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"%0A%3E%3Cpath fill-opacity="0.5" d="M26.804 29.01c-2.832 2.34-6.465 3.746-10.426 3.746C7.333 32.756 0 25.424 0 16.378 0 7.333 7.333 0 16.378 0c9.046 0 16.378 7.333 16.378 16.378 0 3.96-1.406 7.594-3.746 10.426l10.534 10.534c.607.607.61 1.59-.004 2.202-.61.61-1.597.61-2.202.004L26.804 29.01zm-10.426.627c7.323 0 13.26-5.936 13.26-13.26 0-7.32-5.937-13.257-13.26-13.257C9.056 3.12 3.12 9.056 3.12 16.378c0 7.323 5.936 13.26 13.258 13.26z" %3E%3C/path%3E%3C/svg%3E');
+  display: block;
+  width: 16px;
+  height: 16px;
+  display: block;
+  position: absolute;
+  z-index: 1;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.algolia-docsearch--stalled .algolia-docsearch-form::before {
+  content: url('data:image/svg+xml,%3Csvg viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="%23222" stroke-opacity=".5" %3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg transform="translate(1 1)" stroke-width="2"%3E%3Ccircle stroke-opacity=".3" cx="18" cy="18" r="18" /%3E%3Cpath d="M36 18c0-9.94-8.06-18-18-18"%3E%3CanimateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="1s" repeatCount="indefinite" /%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+  display: block;
+  width: 16px;
+  height: 16px;
+  display: block;
+  position: absolute;
+  z-index: 1;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
 }

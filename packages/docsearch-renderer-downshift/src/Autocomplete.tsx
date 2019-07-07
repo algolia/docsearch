@@ -14,6 +14,7 @@ import { AutocompleteFooter } from './AutocompleteFooter';
 
 interface AutocompleteProps {
   placeholder: string;
+  stalledSearchDelay: number;
   search(
     searchParameters: QueryParameters
   ): Promise<{ hits: DocSearchHits; result: Result }>;
@@ -24,7 +25,7 @@ interface AutocompleteState {
   hits: DocSearchHits;
   isDropdownOpen: boolean;
   isLoading: boolean;
-  hasErrored: boolean;
+  isStalled: boolean;
 }
 
 let docsearchIdCounter = 0;
@@ -53,6 +54,8 @@ function stateReducer(state: any, changes: any) {
   }
 }
 
+let setIsStalledId: number | null;
+
 export class Autocomplete extends Component<
   AutocompleteProps,
   AutocompleteState
@@ -64,7 +67,7 @@ export class Autocomplete extends Component<
       hits: {},
       isDropdownOpen: false,
       isLoading: false,
-      hasErrored: false,
+      isStalled: false,
     };
   }
 
@@ -97,8 +100,7 @@ export class Autocomplete extends Component<
           <div
             className={[
               'algolia-docsearch',
-              this.state.isLoading && 'algolia-docsearch--loading',
-              this.state.hasErrored && 'algolia-docsearch--errored',
+              this.state.isStalled && 'algolia-docsearch--stalled',
             ]
               .filter(Boolean)
               .join(' ')}
@@ -119,25 +121,47 @@ export class Autocomplete extends Component<
                   spellCheck: 'false',
                   maxLength: '512',
                   onChange: (event: any) => {
+                    if (setIsStalledId) {
+                      clearTimeout(setIsStalledId);
+                    }
+
                     this.setState({
                       isLoading: true,
-                      hasErrored: false,
+                      isStalled: false,
                     });
+
+                    setIsStalledId =
+                      typeof window === 'undefined'
+                        ? null
+                        : window.setTimeout(() => {
+                            this.setState({
+                              isStalled: true,
+                            });
+                          }, this.props.stalledSearchDelay);
 
                     this.props
                       .search({
                         query: event.target.value,
                       })
                       .then(({ hits }) => {
+                        if (setIsStalledId) {
+                          clearTimeout(setIsStalledId);
+                        }
+
                         this.setState({
                           hits,
                           isLoading: false,
+                          isStalled: false,
                         });
                       })
                       .catch(error => {
+                        if (setIsStalledId) {
+                          clearTimeout(setIsStalledId);
+                        }
+
                         this.setState({
                           isLoading: false,
-                          hasErrored: true,
+                          isStalled: false,
                         });
 
                         throw error;
@@ -153,19 +177,17 @@ export class Autocomplete extends Component<
               />
             </form>
 
-            {this.state.isDropdownOpen &&
-              Boolean(inputValue) &&
-              !this.state.isLoading && (
-                <div className="algolia-docsearch-dropdown">
-                  <AutocompleteResults
-                    hits={this.state.hits}
-                    getItemProps={getItemProps}
-                    getMenuProps={getMenuProps}
-                  />
+            {this.state.isDropdownOpen && Boolean(inputValue) && (
+              <div className="algolia-docsearch-dropdown">
+                <AutocompleteResults
+                  hits={this.state.hits}
+                  getItemProps={getItemProps}
+                  getMenuProps={getMenuProps}
+                />
 
-                  <AutocompleteFooter />
-                </div>
-              )}
+                <AutocompleteFooter />
+              </div>
+            )}
           </div>
         )}
       </Downshift>
@@ -175,6 +197,7 @@ export class Autocomplete extends Component<
 
 Autocomplete.defaultProps = {
   placeholder: '',
+  stalledSearchDelay: 300,
   onItemSelect: ({ hit }) => {
     if (typeof window !== 'undefined') {
       window.location.assign(hit.url);
