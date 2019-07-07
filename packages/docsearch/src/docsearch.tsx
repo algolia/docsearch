@@ -11,13 +11,25 @@ export interface DocSearchOptions extends DocSearchCoreOptions {
    */
   container: HTMLElement | string;
   /**
+   * The text that appears in the search box input when there is
+   * no query.
+   *
+   * @default `"Search"`
+   */
+  placeholder?: string;
+  /**
    * Function called when the user selects an item.
    */
   onItemSelect?({ hit }: { hit: DocSearchHit }): void;
 }
 
 function docsearch(options: DocSearchOptions = {} as DocSearchOptions) {
-  const { container, onItemSelect, ...docsearchCoreOptions } = options;
+  const {
+    container,
+    placeholder = 'Search',
+    onItemSelect,
+    ...docsearchCoreOptions
+  } = options;
   const containerNode =
     typeof container === 'string'
       ? document.querySelector<HTMLElement>(container)
@@ -33,6 +45,7 @@ function docsearch(options: DocSearchOptions = {} as DocSearchOptions) {
 
   render(
     <DocSearchAutocomplete
+      placeholder={placeholder}
       search={docsearchIndex.search}
       onItemSelect={onItemSelect}
     />,

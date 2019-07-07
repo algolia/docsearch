@@ -13,6 +13,7 @@ import { AutocompleteResults } from './AutocompleteResults';
 import { AutocompleteFooter } from './AutocompleteFooter';
 
 interface AutocompleteProps {
+  placeholder: string;
   search(
     searchParameters: QueryParameters
   ): Promise<{ hits: DocSearchHits; result: Result }>;
@@ -93,7 +94,7 @@ export class Autocomplete extends Component<
             <form action="" role="search" noValidate>
               <input
                 {...getInputProps({
-                  placeholder: 'Search docs...',
+                  placeholder: this.props.placeholder,
                   type: 'search',
                   autoComplete: 'off',
                   autoCorrect: 'off',
@@ -137,6 +138,7 @@ export class Autocomplete extends Component<
 }
 
 Autocomplete.defaultProps = {
+  placeholder: '',
   onItemSelect: ({ hit }) => {
     if (typeof window !== 'undefined') {
       window.location.assign(hit.url);
