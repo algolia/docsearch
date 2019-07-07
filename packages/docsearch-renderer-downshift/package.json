@@ -1,5 +1,5 @@
 {
-  "name": "docsearch.js-autocomplete",
+  "name": "docsearch-renderer-downshift",
   "version": "3.0.0",
   "license": "MIT",
   "homepage": "https://community.algolia.com/docsearch/",
@@ -28,8 +28,9 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "autocomplete.js": "^0.36.0",
-    "docsearch.js-core": "^3.0.0",
-    "docsearch.js-types": "^3.0.0"
+    "docsearch-core": "^3.0.0",
+    "docsearch-types": "^3.0.0",
+    "downshift": "^3.2.10",
+    "preact": "^8.4.2"
   }
 }

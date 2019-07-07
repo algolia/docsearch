@@ -1,4 +1,4 @@
-import { DocSearchHit, DocSearchHits, AlgoliaHit } from 'docsearch.js-types';
+import { DocSearchHit, DocSearchHits, AlgoliaHit } from 'docsearch-types';
 
 import { getHighlightedValue, getSnippetedValue } from '../utils';
 

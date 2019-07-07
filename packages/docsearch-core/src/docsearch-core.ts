@@ -1,5 +1,5 @@
 import algoliasearch from 'algoliasearch/lite';
-import { DocSearchHits, QueryParameters, Result } from 'docsearch.js-types';
+import { DocSearchHits, QueryParameters, Result } from 'docsearch-types';
 
 import version from './version';
 import formatHits from './utils/formatHits';

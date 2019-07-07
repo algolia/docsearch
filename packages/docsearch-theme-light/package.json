@@ -17,8 +17,8 @@
   "jsdelivr": "dist/index.css",
   "sideEffects": false,
   "scripts": {
-    "build": "node postcss.config.js",
+    "build": "node build",
     "build:prepare": "yarn run build",
-    "watch": "nodemon postcss.config.js --watch src --ext js,json,css"
+    "watch": "nodemon build --watch src --ext js,json,css"
   }
 }

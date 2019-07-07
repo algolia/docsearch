@@ -12,7 +12,7 @@ const version =
   process.env.VERSION || `UNRELEASED (${new Date().toUTCString()})`;
 const algolia = '© Algolia, Inc. and contributors; MIT License';
 const link = 'https://github.com/algolia/docsearch';
-const banner = `/*! DocSearch.js ${version} | ${algolia} | ${link} */`;
+const banner = `/*! DocSearch Core ${version} | ${algolia} | ${link} */`;
 
 const plugins = [
   resolve({

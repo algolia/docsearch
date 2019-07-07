@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import docsearch from 'docsearch.js-core';
+import docsearch from 'docsearch-core';
 
 import './App.css';
 import './DocSearch.css';

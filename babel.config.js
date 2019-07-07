@@ -24,7 +24,10 @@ module.exports = api => {
     ],
     overrides: [
       {
-        test: './packages/docsearch/',
+        test: [
+          './packages/docsearch/',
+          './packages/docsearch-renderer-downshift',
+        ],
         plugins: [['@babel/plugin-transform-react-jsx', { pragma: 'h' }]],
       },
     ],

@@ -28,10 +28,9 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "docsearch.js-core": "^3.0.0",
-    "docsearch.js-types": "^3.0.0",
-    "downshift": "^3.2.10",
+    "docsearch-core": "^3.0.0",
+    "docsearch-renderer-downshift": "^3.0.0",
+    "docsearch-types": "^3.0.0",
     "preact": "^8.4.2"
-  },
-  "devDependencies": {}
+  }
 }

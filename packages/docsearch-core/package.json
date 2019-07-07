@@ -1,5 +1,5 @@
 {
-  "name": "docsearch.js-core",
+  "name": "docsearch-core",
   "version": "3.0.0",
   "license": "MIT",
   "homepage": "https://community.algolia.com/docsearch/",
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "algoliasearch": "^3.33.0",
-    "docsearch.js-types": "^3.0.0"
+    "docsearch-types": "^3.0.0"
   },
   "devDependencies": {
     "@babel/cli": "7.4.4",

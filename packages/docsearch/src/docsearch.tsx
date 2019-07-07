@@ -1,10 +1,9 @@
 /** @jsx h */
 
 import { h, render } from 'preact';
-import docsearchCore, { DocSearchCoreOptions } from 'docsearch.js-core';
-import { DocSearchHit } from 'docsearch.js-types';
-
-import { AutocompleteDropdown } from './components';
+import docsearchCore, { DocSearchCoreOptions } from 'docsearch-core';
+import DocSearchAutocomplete from '../../docsearch-renderer-downshift/dist/umd';
+import { DocSearchHit } from 'docsearch-types';
 
 export interface DocSearchOptions extends DocSearchCoreOptions {
   container: HTMLElement | string;
@@ -27,7 +26,7 @@ function docsearch(options: DocSearchOptions = {} as DocSearchOptions) {
   const docsearchIndex = docsearchCore(docsearchCoreOptions);
 
   render(
-    <AutocompleteDropdown
+    <DocSearchAutocomplete
       search={docsearchIndex.search}
       onItemSelect={onItemSelect}
     />,

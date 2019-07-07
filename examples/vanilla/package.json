@@ -12,13 +12,8 @@
     "build": "parcel build index.html"
   },
   "dependencies": {
-    "app.css": "^0.1.2",
-    "autocomplete.js": "0.36.0",
     "docsearch-theme-light": "3.0.0",
     "docsearch.js": "3.0.0",
     "parcel-bundler": "1.12.3"
-  },
-  "devDependencies": {
-    "postcss-modules": "^1.4.1"
   }
 }

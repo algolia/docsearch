@@ -1,7 +1,7 @@
 /** @jsx h */
 
 import { h } from 'preact';
-import { DocSearchHit } from 'docsearch.js-types';
+import { DocSearchHit } from 'docsearch-types';
 
 export const AutocompleteResults = ({ getItemProps, getMenuProps, hits }) => {
   return (

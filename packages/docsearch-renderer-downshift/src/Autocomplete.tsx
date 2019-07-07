@@ -7,7 +7,7 @@ import {
   DocSearchHits,
   QueryParameters,
   Result,
-} from 'docsearch.js-types';
+} from 'docsearch-types';
 
 import { AutocompleteResults } from './AutocompleteResults';
 import { AutocompleteFooter } from './AutocompleteFooter';
@@ -50,7 +50,7 @@ function stateReducer(state: any, changes: any) {
   }
 }
 
-export class AutocompleteDropdown extends Component<
+export class Autocomplete extends Component<
   AutocompleteProps,
   AutocompleteState
 > {
@@ -136,7 +136,7 @@ export class AutocompleteDropdown extends Component<
   }
 }
 
-AutocompleteDropdown.defaultProps = {
+Autocomplete.defaultProps = {
   onItemSelect: ({ hit }) => {
     if (typeof window !== 'undefined') {
       window.location.assign(hit.url);
