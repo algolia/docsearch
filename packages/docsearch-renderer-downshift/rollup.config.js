@@ -48,7 +48,7 @@ const configuration = {
   input: pkg.source,
   output: {
     file: pkg['umd:main'],
-    name: 'docsearch',
+    name: 'docsearchDownshiftRenderer',
     format: 'umd',
     sourcemap: true,
   },

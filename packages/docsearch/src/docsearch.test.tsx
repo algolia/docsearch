@@ -6,7 +6,7 @@ jest.mock('docsearch-core');
 
 const castToJestMock = (obj: any): jest.Mock => obj;
 
-describe('docsearch-preset-autocomplete', () => {
+describe('docsearch', () => {
   let search: jest.Mock;
 
   beforeEach(() => {
@@ -71,7 +71,7 @@ describe('docsearch-preset-autocomplete', () => {
       const searchParameters = { filters: 'lang:en' };
       const transformQuery = jest.fn();
       const transformHits = jest.fn();
-      const docsearchCoreoptions = {
+      const docsearchCoreOptions = {
         appId,
         apiKey,
         indexName,
@@ -82,11 +82,11 @@ describe('docsearch-preset-autocomplete', () => {
 
       docsearch({
         container,
-        ...docsearchCoreoptions,
+        ...docsearchCoreOptions,
       });
 
       expect(docsearchCore).toHaveBeenCalledTimes(1);
-      expect(docsearchCore).toHaveBeenCalledWith(docsearchCoreoptions);
+      expect(docsearchCore).toHaveBeenCalledWith(docsearchCoreOptions);
     });
   });
 });
