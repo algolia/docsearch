@@ -4,11 +4,6 @@ import { DocSearchHits, QueryParameters, Result } from 'docsearch-types';
 import version from './version';
 import formatHits from './utils/formatHits';
 
-export interface OnResultOptions {
-  hits: DocSearchHits;
-  result: Result;
-}
-
 export interface DocSearchCoreOptions {
   /**
    * The Algolia application identifier.
