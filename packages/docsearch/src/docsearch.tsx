@@ -2,7 +2,7 @@
 
 import { h, render } from 'preact';
 import docsearchCore, { DocSearchCoreOptions } from 'docsearch-core';
-import DocSearchAutocomplete from '../../docsearch-renderer-downshift/dist/umd';
+import DocSearchAutocomplete from 'docsearch-renderer-downshift';
 import { DocSearchHit } from 'docsearch-types';
 
 export interface DocSearchOptions extends DocSearchCoreOptions {

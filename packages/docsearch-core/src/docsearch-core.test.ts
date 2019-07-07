@@ -12,8 +12,8 @@ const fakeResult = {
 };
 
 describe('docsearch-core', () => {
-  let search: any;
-  let addAlgoliaAgent: any;
+  let search: jest.Mock;
+  let addAlgoliaAgent: jest.Mock;
 
   beforeEach(() => {
     search = jest.fn().mockResolvedValue(fakeResult);
