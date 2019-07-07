@@ -6,7 +6,13 @@ import DocSearchAutocomplete from 'docsearch-renderer-downshift';
 import { DocSearchHit } from 'docsearch-types';
 
 export interface DocSearchOptions extends DocSearchCoreOptions {
+  /**
+   * The container of the search box.
+   */
   container: HTMLElement | string;
+  /**
+   * Function called when the user selects an item.
+   */
   onItemSelect?({ hit }: { hit: DocSearchHit }): void;
 }
 
