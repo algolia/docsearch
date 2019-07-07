@@ -9,11 +9,11 @@ export const AutocompleteResults = ({ getItemProps, getMenuProps, hits }) => {
       <ul {...getMenuProps()}>
         {Object.entries<DocSearchHit[]>(hits).map(([title, hits]) => {
           return (
-            <li key={title}>
-              <section className="algolia-docsearch-section">
+            <li key={title} className="algolia-docsearch-item">
+              <section>
                 <ul>
                   <h1
-                    className="algolia-docsearch-lvl0"
+                    className="algolia-docsearch-item-header"
                     dangerouslySetInnerHTML={{ __html: title }}
                   ></h1>
 
@@ -30,17 +30,17 @@ export const AutocompleteResults = ({ getItemProps, getMenuProps, hits }) => {
                       >
                         <a
                           href={url}
-                          className="algolia-docsearch-content"
+                          className="algolia-docsearch-item-body"
                           tabIndex={0}
                         >
                           <h2
-                            className="algolia-docsearch-lvl1"
+                            className="algolia-docsearch-item-body-title"
                             dangerouslySetInnerHTML={{
                               __html: category,
                             }}
                           ></h2>
                           <h3
-                            className="algolia-docsearch-lvl2"
+                            className="algolia-docsearch-item-body-subtitle"
                             dangerouslySetInnerHTML={{
                               __html: [title, levels[1]]
                                 .filter(Boolean)
@@ -48,7 +48,7 @@ export const AutocompleteResults = ({ getItemProps, getMenuProps, hits }) => {
                             }}
                           ></h3>
                           <p
-                            className="algolia-docsearch-paragraph"
+                            className="algolia-docsearch-item-body-paragraph"
                             dangerouslySetInnerHTML={{
                               __html: content,
                             }}

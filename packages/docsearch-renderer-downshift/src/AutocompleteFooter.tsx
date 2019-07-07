@@ -4,7 +4,7 @@ import { h } from 'preact';
 
 export const AutocompleteFooter = () => {
   return (
-    <footer className="algolia-docsearch-footer">
+    <footer className="algolia-docsearch-information">
       <ul className="algolia-docsearch-commands">
         <li>
           <svg width="16" height="16" viewBox="0 0 16 16">
@@ -127,12 +127,11 @@ export const AutocompleteFooter = () => {
         </li>
       </ul>
 
-      <a href="https://www.algolia.com/docsearch">
-        <svg
-          className="algolia-docsearch-logo"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 168 24"
-        >
+      <a
+        href="https://www.algolia.com/docsearch"
+        className="algolia-docsearch-logo"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 24">
           <g fill="none">
             <path
               fill="#5468FF"

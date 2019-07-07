@@ -23,6 +23,8 @@ interface AutocompleteProps {
 interface AutocompleteState {
   hits: DocSearchHits;
   isDropdownOpen: boolean;
+  isLoading: boolean;
+  hasErrored: boolean;
 }
 
 let docsearchIdCounter = 0;
@@ -61,6 +63,8 @@ export class Autocomplete extends Component<
     this.state = {
       hits: {},
       isDropdownOpen: false,
+      isLoading: false,
+      hasErrored: false,
     };
   }
 
@@ -90,8 +94,21 @@ export class Autocomplete extends Component<
         stateReducer={stateReducer}
       >
         {({ getInputProps, getItemProps, getMenuProps, inputValue }) => (
-          <div>
-            <form action="" role="search" noValidate>
+          <div
+            className={[
+              'algolia-docsearch',
+              this.state.isLoading && 'algolia-docsearch--loading',
+              this.state.hasErrored && 'algolia-docsearch--errored',
+            ]
+              .filter(Boolean)
+              .join(' ')}
+          >
+            <form
+              action=""
+              role="search"
+              noValidate
+              className="algolia-docsearch-form"
+            >
               <input
                 {...getInputProps({
                   placeholder: this.props.placeholder,
@@ -102,12 +119,28 @@ export class Autocomplete extends Component<
                   spellCheck: 'false',
                   maxLength: '512',
                   onChange: (event: any) => {
+                    this.setState({
+                      isLoading: true,
+                      hasErrored: false,
+                    });
+
                     this.props
                       .search({
                         query: event.target.value,
                       })
                       .then(({ hits }) => {
-                        this.setState({ hits });
+                        this.setState({
+                          hits,
+                          isLoading: false,
+                        });
+                      })
+                      .catch(error => {
+                        this.setState({
+                          isLoading: false,
+                          hasErrored: true,
+                        });
+
+                        throw error;
                       });
                   },
                   onFocus: () => {
@@ -116,20 +149,23 @@ export class Autocomplete extends Component<
                     });
                   },
                 })}
+                className="algolia-docsearch-input"
               />
             </form>
 
-            {this.state.isDropdownOpen && Boolean(inputValue) && (
-              <div className="algolia-docsearch-dropdown">
-                <AutocompleteResults
-                  hits={this.state.hits}
-                  getItemProps={getItemProps}
-                  getMenuProps={getMenuProps}
-                />
+            {this.state.isDropdownOpen &&
+              Boolean(inputValue) &&
+              !this.state.isLoading && (
+                <div className="algolia-docsearch-dropdown">
+                  <AutocompleteResults
+                    hits={this.state.hits}
+                    getItemProps={getItemProps}
+                    getMenuProps={getMenuProps}
+                  />
 
-                <AutocompleteFooter />
-              </div>
-            )}
+                  <AutocompleteFooter />
+                </div>
+              )}
           </div>
         )}
       </Downshift>
