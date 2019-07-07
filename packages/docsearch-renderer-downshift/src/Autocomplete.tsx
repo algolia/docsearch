@@ -10,6 +10,7 @@ import {
 } from 'docsearch-types';
 
 import { AutocompleteResults } from './AutocompleteResults';
+import { AutocompleteNoResults } from './AutocompleteNoResults';
 import { AutocompleteFooter } from './AutocompleteFooter';
 
 interface AutocompleteProps {
@@ -22,6 +23,7 @@ interface AutocompleteProps {
 }
 
 interface AutocompleteState {
+  query: string;
   hits: DocSearchHits;
   isDropdownOpen: boolean;
   isLoading: boolean;
@@ -64,6 +66,7 @@ export class Autocomplete extends Component<
     super(props);
 
     this.state = {
+      query: '',
       hits: {},
       isDropdownOpen: false,
       isLoading: false,
@@ -128,6 +131,7 @@ export class Autocomplete extends Component<
                     this.setState({
                       isLoading: true,
                       isStalled: false,
+                      query: event.target.value,
                     });
 
                     setIsStalledId =
@@ -141,7 +145,7 @@ export class Autocomplete extends Component<
 
                     this.props
                       .search({
-                        query: event.target.value,
+                        query: this.state.query,
                       })
                       .then(({ hits }) => {
                         if (setIsStalledId) {
@@ -179,11 +183,15 @@ export class Autocomplete extends Component<
 
             {this.state.isDropdownOpen && Boolean(inputValue) && (
               <div className="algolia-docsearch-dropdown">
-                <AutocompleteResults
-                  hits={this.state.hits}
-                  getItemProps={getItemProps}
-                  getMenuProps={getMenuProps}
-                />
+                {Object.keys(this.state.hits).length === 0 ? (
+                  <AutocompleteNoResults query={this.state.query} />
+                ) : (
+                  <AutocompleteResults
+                    hits={this.state.hits}
+                    getItemProps={getItemProps}
+                    getMenuProps={getMenuProps}
+                  />
+                )}
 
                 <AutocompleteFooter />
               </div>
