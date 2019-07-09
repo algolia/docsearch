@@ -3,10 +3,7 @@ import 'docsearch-theme-light';
 import './docsearch-theme.css';
 
 docsearch({
-  apiKey: '3949f721e5d8ca1de8928152ff745b28',
-  indexName: 'yarnpkg',
+  apiKey: '25626fae796133dc1e734c6bcaaeac3c',
+  indexName: 'docsearch',
   container: '#searchbox',
-  searchParameters: {
-    filters: 'lang:en',
-  },
 });
