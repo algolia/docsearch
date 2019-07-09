@@ -83,7 +83,10 @@
 
 li[aria-selected='true'] .algolia-docsearch-item-body,
 .algolia-docsearch-item-body--active {
-  background-color: #dadbea;
+  background-color: rgba(218, 219, 234, 0.4);
+  border-radius: 3px;
+  margin: 0.5rem -1rem;
+  padding: 0.5rem 1rem;
 }
 
 .algolia-docsearch-item-body-title {
@@ -92,6 +95,7 @@ li[aria-selected='true'] .algolia-docsearch-item-body,
   letter-spacing: -0.15px;
   line-height: 24px;
   margin: 0.5rem 0 1px 0;
+  font-weight: normal;
 }
 
 .algolia-docsearch-item-body-subtitle {
