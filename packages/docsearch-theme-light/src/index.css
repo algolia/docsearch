@@ -29,8 +29,14 @@
   max-height: 553px;
   max-width: 532px;
   overflow: scroll;
-  width: 100%;
+  -ms-overflow-style: none; /* IE 10+ */
   position: absolute;
+  scrollbar-width: none; /* Firefox */
+  width: 100%;
+}
+
+.algolia-docsearch-dropdown::-webkit-scrollbar {
+  display: none; /* Chrome and Safari */
 }
 
 .algolia-docsearch-dropdown ul,
@@ -92,10 +98,10 @@ li[aria-selected='true'] .algolia-docsearch-item-body,
 .algolia-docsearch-item-body-title {
   color: var(--algolia-docsearch-third-color);
   font-size: 14px;
+  font-weight: normal;
   letter-spacing: -0.15px;
   line-height: 24px;
   margin: 0.5rem 0 1px 0;
-  font-weight: normal;
 }
 
 .algolia-docsearch-item-body-subtitle {
