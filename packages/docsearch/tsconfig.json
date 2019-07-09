@@ -2,6 +2,8 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "jsx": "react",
-    "jsxFactory": "h"
-  }
+    "jsxFactory": "h",
+    "declarationDir": "dist/es"
+  },
+  "exclude": ["node_modules", "dist", "__fixtures__", "**/*.test.*"]
 }

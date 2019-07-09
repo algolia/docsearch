@@ -50,7 +50,7 @@ export const AutocompleteResults = ({ getItemProps, getMenuProps, hits }) => {
                           <p
                             className="algolia-docsearch-item-body-paragraph"
                             dangerouslySetInnerHTML={{
-                              __html: content,
+                              __html: content || '',
                             }}
                           />
                         </a>

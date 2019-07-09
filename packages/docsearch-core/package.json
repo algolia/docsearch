@@ -23,10 +23,10 @@
     "build:umd": "rollup --config",
     "build:es": "babel src --root-mode upward --extensions '.js,.ts,.tsx' --ignore '**/*/*.test.ts' --out-dir dist/es --quiet",
     "build:prepare": "yarn run build:es",
-    "build:types": "tsc --emitDeclarationOnly --outDir dist/es",
-    "build": "yarn run build:umd && yarn run build:es",
+    "build:types": "tsc",
+    "build": "yarn run build:umd && yarn run build:es && yarn run build:types",
     "watch": "babel src --root-mode upward --extensions '.js,.ts,.tsx' --ignore '**/*/*.test.ts' --out-dir dist/es --quiet --watch",
-    "type-check": "tsc"
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "algoliasearch": "^3.33.0",
