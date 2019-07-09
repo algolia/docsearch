@@ -95,7 +95,9 @@ export class Autocomplete extends Component<
           });
         }}
         scrollIntoView={(itemNode: HTMLElement) => {
-          itemNode.scrollIntoView(false);
+          if (itemNode) {
+            itemNode.scrollIntoView(false);
+          }
         }}
         stateReducer={stateReducer}
       >
