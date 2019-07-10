@@ -3,7 +3,7 @@ import 'docsearch-theme-light';
 import './docsearch-theme.css';
 
 docsearch({
-  apiKey: '25626fae796133dc1e734c6bcaaeac3c',
-  indexName: 'docsearch',
+  apiKey: '05f2b9f825e93891445000c63e103290',
+  indexName: 'francoischalifour',
   container: '#searchbox',
 });
