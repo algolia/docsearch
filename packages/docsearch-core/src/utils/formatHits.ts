@@ -86,7 +86,10 @@ export function formatHit(hit: AlgoliaHitWithRootLevels): DocSearchHit {
 
 function formatHits(rawHits: AlgoliaHit[]): DocSearchHits {
   const hits = rawHits.map(copyHierarchyValuesToRoot).map(formatHit);
-  const formattedHits = groupBy(hits, hit => hit.levels[hit.levelIndex]);
+  const formattedHits = groupBy(
+    hits,
+    hit => hit.levels[hit.levelIndex - 1] || hit.levels[hit.levelIndex]
+  );
 
   return formattedHits;
 }
