@@ -185,7 +185,8 @@ export class Autocomplete extends Component<
 
             {this.state.isDropdownOpen && Boolean(inputValue) && (
               <div className="algolia-docsearch-dropdown">
-                {Object.keys(this.state.hits).length === 0 ? (
+                {!this.state.isLoading &&
+                Object.keys(this.state.hits).length === 0 ? (
                   <AutocompleteNoResults query={this.state.query} />
                 ) : (
                   <AutocompleteResults

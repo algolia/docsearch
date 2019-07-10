@@ -38,15 +38,15 @@ export const AutocompleteResults = ({ getItemProps, getMenuProps, hits }) => {
                             dangerouslySetInnerHTML={{
                               __html: category,
                             }}
-                          ></h2>
+                          />
                           <h3
                             className="algolia-docsearch-item-body-subtitle"
                             dangerouslySetInnerHTML={{
-                              __html: [title, levels[1]]
+                              __html: [levels[0], levels[1]]
                                 .filter(Boolean)
                                 .join(' / '),
                             }}
-                          ></h3>
+                          />
                           <p
                             className="algolia-docsearch-item-body-paragraph"
                             dangerouslySetInnerHTML={{
