@@ -116,6 +116,27 @@ export class Autocomplete extends Component<
               noValidate
               className="algolia-docsearch-form"
             >
+              <button
+                type="submit"
+                title="Search"
+                className="algolia-docsearch-submit"
+                onClick={(event: Event) => {
+                  event.preventDefault();
+                }}
+              >
+                <svg viewBox="0 0 18 18">
+                  <path
+                    d="M13.14 13.14L17 17l-3.86-3.86A7.11 7.11 0 1 1 3.08 3.08a7.11 7.11 0 0 1 10.06 10.06z"
+                    stroke="currentColor"
+                    stroke-width="1.78"
+                    fill="none"
+                    fill-rule="evenodd"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+
               <input
                 {...getInputProps({
                   placeholder: this.props.placeholder,
@@ -181,22 +202,38 @@ export class Autocomplete extends Component<
                 })}
                 className="algolia-docsearch-input"
               />
+
+              <button
+                type="reset"
+                title="Clear the query"
+                className="algolia-docsearch-reset"
+              >
+                <svg viewBox="0 0 10 10">
+                  <path
+                    d="M5 4.12L8.93.18a.62.62 0 1 1 .89.89L5.88 5l3.94 3.93a.62.62 0 1 1-.89.89L5 5.88 1.07 9.82a.62.62 0 1 1-.89-.89L4.12 5 .18 1.07a.62.62 0 1 1 .89-.89L5 4.12z"
+                    fill="currentColor"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </button>
             </form>
 
             {this.state.isDropdownOpen && Boolean(inputValue) && (
               <div className="algolia-docsearch-dropdown">
-                {!this.state.isLoading &&
-                Object.keys(this.state.hits).length === 0 ? (
-                  <AutocompleteNoResults query={this.state.query} />
-                ) : (
-                  <AutocompleteResults
-                    hits={this.state.hits}
-                    getItemProps={getItemProps}
-                    getMenuProps={getMenuProps}
-                  />
-                )}
+                <div className="algolia-docsearch-dropdown-container">
+                  {!this.state.isLoading &&
+                  Object.keys(this.state.hits).length === 0 ? (
+                    <AutocompleteNoResults query={this.state.query} />
+                  ) : (
+                    <AutocompleteResults
+                      hits={this.state.hits}
+                      getItemProps={getItemProps}
+                      getMenuProps={getMenuProps}
+                    />
+                  )}
 
-                <AutocompleteFooter />
+                  <AutocompleteFooter />
+                </div>
               </div>
             )}
           </div>

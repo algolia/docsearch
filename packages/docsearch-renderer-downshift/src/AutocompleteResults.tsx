@@ -42,7 +42,8 @@ export const AutocompleteResults = ({ getItemProps, getMenuProps, hits }) => {
                           <h3
                             className="algolia-docsearch-item-body-subtitle"
                             dangerouslySetInnerHTML={{
-                              __html: [levels[0], levels[1]]
+                              __html: levels
+                                .slice(-2)
                                 .filter(Boolean)
                                 .join(' / '),
                             }}

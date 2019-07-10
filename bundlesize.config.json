@@ -14,7 +14,7 @@
     },
     {
       "path": "packages/docsearch-theme-light/dist/index.css",
-      "maxSize": "1 kB"
+      "maxSize": "2 kB"
     }
   ]
 }
