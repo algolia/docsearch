@@ -235,7 +235,6 @@ li[aria-selected='true'] .algolia-docsearch-item-body,
   justify-content: flex-end;
   padding: 1.5rem;
   position: relative;
-  position: fixed;
   width: 100%;
 }
 
