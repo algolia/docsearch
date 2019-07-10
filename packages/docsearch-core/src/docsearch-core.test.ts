@@ -212,6 +212,7 @@ See: https://community.algolia.com/docsearch"
               hitsPerPage: 5,
               highlightPreTag: '<mark>',
               highlightPostTag: '</mark>',
+              attributesToSnippet: ['content:20'],
             },
           },
         ]);
@@ -238,6 +239,7 @@ See: https://community.algolia.com/docsearch"
               hitsPerPage: 3,
               highlightPreTag: '<mark>',
               highlightPostTag: '</mark>',
+              attributesToSnippet: ['content:20'],
               filters: 'lang:en',
             },
           },
@@ -261,6 +263,7 @@ See: https://community.algolia.com/docsearch"
               hitsPerPage: 42,
               highlightPreTag: '<mark>',
               highlightPostTag: '</mark>',
+              attributesToSnippet: ['content:20'],
             },
           },
         ]);
@@ -287,6 +290,7 @@ See: https://community.algolia.com/docsearch"
               hitsPerPage: 42,
               highlightPreTag: '<mark>',
               highlightPostTag: '</mark>',
+              attributesToSnippet: ['content:20'],
               filters: 'lang:en',
             },
           },

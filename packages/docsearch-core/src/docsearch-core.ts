@@ -88,6 +88,7 @@ function docsearch(
       hitsPerPage: 5,
       highlightPreTag: '<mark>',
       highlightPostTag: '</mark>',
+      attributesToSnippet: ['content:20'],
       ...searchParameters,
       ...userSearchParameters,
     };
