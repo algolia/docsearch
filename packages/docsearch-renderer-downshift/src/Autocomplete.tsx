@@ -78,6 +78,18 @@ export class Autocomplete extends Component<
   }
 
   render() {
+    const hasQuery = this.state.query.length > 0;
+    const hasResults = Object.keys(this.state.hits).length > 0;
+    const isOpen =
+      this.state.isDropdownOpen &&
+      // We don't want to open the dropdown when the results
+      // are loading coming from an empty input.
+      !(this.state.isLoading && !hasResults) &&
+      // However, we do want to leave the dropdown open when it's
+      // already open because there are results displayed. Otherwise,
+      // it would result in a flashy behavior.
+      hasQuery;
+
     return (
       <Downshift
         id={`docsearch-${generateId()}`}
@@ -182,7 +194,6 @@ export class Autocomplete extends Component<
                       isLoading: true,
                       isStalled: false,
                       query: event.target.value,
-                      isDropdownOpen: true,
                     });
 
                     setIsStalledId =
@@ -207,6 +218,7 @@ export class Autocomplete extends Component<
                           hits,
                           isLoading: false,
                           isStalled: false,
+                          isDropdownOpen: true,
                         });
                       })
                       .catch(error => {
@@ -217,15 +229,18 @@ export class Autocomplete extends Component<
                         this.setState({
                           isLoading: false,
                           isStalled: false,
+                          isDropdownOpen: false,
                         });
 
                         throw error;
                       });
                   },
                   onFocus: () => {
-                    this.setState({
-                      isDropdownOpen: true,
-                    });
+                    if (hasQuery) {
+                      this.setState({
+                        isDropdownOpen: true,
+                      });
+                    }
                   },
                   onKeyDown: (event: KeyboardEvent) => {
                     if (event.key === 'Escape') {
@@ -262,11 +277,10 @@ export class Autocomplete extends Component<
               </button>
             </form>
 
-            {this.state.isDropdownOpen && this.state.query.length > 0 && (
+            {isOpen && (
               <div className="algolia-docsearch-dropdown">
                 <div className="algolia-docsearch-dropdown-container">
-                  {!this.state.isLoading &&
-                  Object.keys(this.state.hits).length === 0 ? (
+                  {!this.state.isLoading && !hasResults ? (
                     <AutocompleteNoResults query={this.state.query} />
                   ) : (
                     <AutocompleteResults
