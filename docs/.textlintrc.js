@@ -7,7 +7,6 @@ const allRules = {
     allow: ['color', 'hook', 'host-hostess', 'itch'],
   },
   'common-misspellings': true,
-  'en-capitalization': true,
   'stop-words': {
     exclude: [
       'relative to', // We need to talk about links "relative to the root",
@@ -23,15 +22,15 @@ const allRules = {
     passive: true,
     severity: 'warning',
   },
+  'en-capitalization': {
+    passive: true,
+    severity: 'warning',
+  },
 };
 
 // Not all rules are automatically fixable, so when running `yarn run
 // lint:md:fix`, we only run the one that can be fixed.
-const fixableRules = _.pick(allRules, [
-  'common-misspellings',
-  'en-capitalization',
-  'terminology',
-]);
+const fixableRules = _.pick(allRules, ['common-misspellings', 'terminology']);
 
 module.exports = {
   rules: textlintMode === 'fix' ? fixableRules : allRules,
