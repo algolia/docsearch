@@ -243,6 +243,7 @@ export class Autocomplete extends Component<
                 type="reset"
                 title="Clear the query"
                 className="algolia-docsearch-reset"
+                hidden={this.state.query.length === 0}
                 onClick={() => {
                   this.setState({
                     query: '',
@@ -261,7 +262,7 @@ export class Autocomplete extends Component<
               </button>
             </form>
 
-            {this.state.isDropdownOpen && Boolean(this.state.query) && (
+            {this.state.isDropdownOpen && this.state.query.length > 0 && (
               <div className="algolia-docsearch-dropdown">
                 <div className="algolia-docsearch-dropdown-container">
                   {!this.state.isLoading &&

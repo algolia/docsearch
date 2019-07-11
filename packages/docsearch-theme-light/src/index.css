@@ -76,6 +76,10 @@
   cursor: pointer;
 }
 
+.algolia-docsearch-reset[hidden] {
+  display: none;
+}
+
 .algolia-docsearch-reset:focus {
   outline: none;
   color: var(--algolia-docsearch-primary-color);
