@@ -62,6 +62,8 @@ export class Autocomplete extends Component<
   AutocompleteProps,
   AutocompleteState
 > {
+  inputRef: null | HTMLElement;
+
   constructor(props: AutocompleteProps) {
     super(props);
 
@@ -72,6 +74,7 @@ export class Autocomplete extends Component<
       isLoading: false,
       isStalled: false,
     };
+    this.inputRef = null;
   }
 
   render() {
@@ -101,7 +104,7 @@ export class Autocomplete extends Component<
         }}
         stateReducer={stateReducer}
       >
-        {({ getInputProps, getItemProps, getMenuProps, inputValue }) => (
+        {({ getInputProps, getItemProps, getMenuProps }) => (
           <div
             className={[
               'algolia-docsearch',
@@ -165,12 +168,16 @@ export class Autocomplete extends Component<
               <input
                 {...getInputProps({
                   placeholder: this.props.placeholder,
+                  ref: (ref: HTMLElement) => {
+                    this.inputRef = ref;
+                  },
                   type: 'search',
                   autoComplete: 'off',
                   autoCorrect: 'off',
                   autoCapitalize: 'off',
                   spellCheck: 'false',
                   maxLength: '512',
+                  value: this.state.query,
                   onChange: (event: any) => {
                     if (setIsStalledId) {
                       clearTimeout(setIsStalledId);
@@ -180,6 +187,7 @@ export class Autocomplete extends Component<
                       isLoading: true,
                       isStalled: false,
                       query: event.target.value,
+                      isDropdownOpen: true,
                     });
 
                     setIsStalledId =
@@ -224,6 +232,14 @@ export class Autocomplete extends Component<
                       isDropdownOpen: true,
                     });
                   },
+                  onKeyDown: (event: KeyboardEvent) => {
+                    if (event.key === 'Escape') {
+                      this.setState({
+                        query: '',
+                        isDropdownOpen: false,
+                      });
+                    }
+                  },
                 })}
                 className="algolia-docsearch-input"
               />
@@ -232,6 +248,13 @@ export class Autocomplete extends Component<
                 type="reset"
                 title="Clear the query"
                 className="algolia-docsearch-reset"
+                onClick={() => {
+                  this.setState({
+                    query: '',
+                  });
+
+                  this.inputRef!.focus();
+                }}
               >
                 <svg viewBox="0 0 10 10">
                   <path
@@ -243,7 +266,7 @@ export class Autocomplete extends Component<
               </button>
             </form>
 
-            {this.state.isDropdownOpen && Boolean(inputValue) && (
+            {this.state.isDropdownOpen && Boolean(this.state.query) && (
               <div className="algolia-docsearch-dropdown">
                 <div className="algolia-docsearch-dropdown-container">
                   {!this.state.isLoading &&
