@@ -32,6 +32,16 @@ export const AutocompleteResults = ({ getItemProps, getMenuProps, hits }) => {
                           href={url}
                           className="algolia-docsearch-item-body"
                           tabIndex={0}
+                          onClick={(event: MouseEvent) => {
+                            if (
+                              event.shiftKey ||
+                              event.metaKey ||
+                              event.ctrlKey ||
+                              event.altKey
+                            ) {
+                              (event as any).preventDownshiftDefault = true;
+                            }
+                          }}
                         >
                           <h2
                             className="algolia-docsearch-item-body-title"
