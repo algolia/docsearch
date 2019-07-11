@@ -3,13 +3,21 @@ layout: two-columns
 title: Dropdown Behavior
 ---
 
-Our JS library `docsearch.js` is a wrapper of the [Algolia autocomplete.js][1]
-library. This library will listen to every keystrokes typed in the search input,
-query Algolia, and display the results in a dropdown. Everything is already
-configured for you to work with DocSearch. Our UI library also exposes
-configuration options you can use to go even further. You will discover Algolia
-out of the box for documentation. Let's start the **learn as you type**
-experience.
+Our JS library `docsearch.js` is packaged into underlying packages to enhance
+the modularity of the codebase. This library will listen to every keystrokes
+typed in the search input, query Algolia, and display the results in a dropdown.
+Everything is already configured for you to work with DocSearch. Our UI library
+also exposes configuration options you can use to go even further. You will
+discover Algolia out of the box for documentation. Let's start the **learn as
+you type** experience.
+
+To go under thee hood, here is a quick description of the packages:
+
+- Docsearch-core: the behavior logic business.
+- Docsearch-renderer-downshift: the renderer used to create the autocomplete.
+  The default renderer relies on [downshift][1] but it can be replaced
+- Docsearch-theme-light: the defacto theme that can be replaced too These 3
+  packages are the basis of the library.
 
 ## `appId`
 
@@ -66,7 +74,7 @@ docsearch({
 });
 ```
 
-## `queryHook`
+## `transformQuery`
 
 This method is called on every keystroke to transform the typed keywords before
 querying Algolia. By default, it does not do anything, but we provide this hook
@@ -75,8 +83,8 @@ for you to add your own logic if needed.
 ```javascript
 docsearch({
   […],
-  queryHook: function(query) {
-    // Transform query, and then return the updated version
+  transformQuery: function(query) {
+    // Transforms the query before sending to Algolia
   }
 });
 ```
@@ -108,11 +116,9 @@ property of the `docsearch` instance.
 const search = docsearch({
   […]
   autocompleteOptions: {
-    // See https://github.com/algolia/autocomplete.js#global-options
   }
 });
 
-// See https://github.com/algolia/autocomplete.js#custom-events
 search.autocomplete.on('autocomplete:opened', event => {
 });
 ```
@@ -134,8 +140,8 @@ docsearch({
 });
 ```
 
-[1]: https://github.com/algolia/autocomplete.js
+[1]: https://github.com/downshift-js/downshift
 [2]: ./run-your-own.html
-[3]: https://github.com/algolia/autocomplete.js#global-options
+[3]: .js#global-options
 [4]: https://www.algolia.com/doc/api-reference/api-parameters/
 [5]: https://www.algolia.com/doc/api-reference/api-parameters/hitsPerPage/
