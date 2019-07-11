@@ -119,13 +119,9 @@ export class Autocomplete extends Component<
               noValidate
               className="algolia-docsearch-form"
             >
-              <button
-                type="submit"
-                title="Search"
-                className="algolia-docsearch-submit"
-                onClick={(event: Event) => {
-                  event.preventDefault();
-                }}
+              <label
+                for={getInputProps().id}
+                className="algolia-docsearch-magnifierLabel"
               >
                 <svg viewBox="0 0 18 18">
                   <path
@@ -138,12 +134,11 @@ export class Autocomplete extends Component<
                     stroke-linejoin="round"
                   />
                 </svg>
-              </button>
+              </label>
 
               <div className="algolia-docsearch-loadingIndicator">
                 <svg
                   viewBox="0 0 38 38"
-                  xmlns="http://www.w3.org/2000/svg"
                   stroke="currentColor"
                   stroke-opacity=".5"
                 >
