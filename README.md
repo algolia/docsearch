@@ -24,7 +24,7 @@ Check out our [website][docsearch-website] for a complete explanation and docume
 
 **1.** Import the library as an EcmaScript module:
 
-```
+```sh
 npm install docsearch.js
 # or
 yarn add docsearch.js
