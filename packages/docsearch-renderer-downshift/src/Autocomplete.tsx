@@ -62,7 +62,7 @@ export class Autocomplete extends Component<
   AutocompleteProps,
   AutocompleteState
 > {
-  inputRef: null | HTMLElement;
+  private inputRef: null | HTMLElement;
 
   constructor(props: AutocompleteProps) {
     super(props);

@@ -30,6 +30,13 @@ module.exports = api => {
         ],
         plugins: [['@babel/plugin-transform-react-jsx', { pragma: 'h' }]],
       },
+      {
+        test: ['./packages/docsearch-renderer-downshift'],
+        plugins: [
+          ['@babel/plugin-transform-react-jsx', { pragma: 'h' }],
+          '@babel/plugin-proposal-class-properties',
+        ],
+      },
     ],
   };
 };
