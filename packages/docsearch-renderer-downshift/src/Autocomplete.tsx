@@ -13,6 +13,14 @@ import { AutocompleteResults } from './AutocompleteResults';
 import { AutocompleteNoResults } from './AutocompleteNoResults';
 import { AutocompleteFooter } from './AutocompleteFooter';
 
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      animateTransform: SVGAttributes;
+    }
+  }
+}
+
 interface AutocompleteProps {
   placeholder: string;
   stalledSearchDelay: number;
