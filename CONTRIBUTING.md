@@ -61,7 +61,7 @@ It is necessary for Yarn workspaces to be aware of the EcmaScript builds to link
 
 #### `test`
 
-> This commands runs the tests for all packages.
+> This commands runs the tests for all the packages.
 
 You can refer to the [Jest CLI options](https://jestjs.io/docs/en/cli#options) to run specific packages or files.
 
