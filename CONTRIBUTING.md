@@ -1,72 +1,100 @@
-Hi (future) collaborator!
+# Contributing
+
+Welcome to the contributing guide for [DocSearch.js](https://yarnpkg.com/en/package/docsearch.js). Thanks for considering participating in our project.
+
+If this guide does not contain what you are looking for and thus prevents you from contributing, don't hesitate to [open an issue](https://github.com/algolia/docsearch/issues/new).
+
+###### Content
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Where to start?](#where-to-start)
-- [Development workflow](#development-workflow)
+- [Where to start](#where-to-start)
+- [Development](#development)
   - [Requirements](#requirements)
-  - [Build](#build)
-  - [Serve](#serve)
-  - [Test](#test)
-  - [Docs](#docs)
-  - [Release](#release)
+  - [Setup](#setup)
+  - [Commands](#commands)
+- [Documentation](#documentation)
+  - [Commands](#commands-1)
+- [Release](#release)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Where to start?
+## Where to start
 
-Have a fix or a new feature? [Search for corresponding issues][14] first then create a new one.
+- Found a bug in the library? [Check the issues](https://github.com/algolia/docsearch/issues/) and [open a new one](https://github.com/algolia/docsearch/issues/new) if it doesn't exist yet.
+- Have a feature request? [Get in touch](https://github.com/algolia/docsearch/issues/)!
+- Want to participate to the code? [Check the development workflow](#development-workflow).
 
-# Development workflow
+## Development
 
-## Requirements
+### Requirements
 
 To run this project, you will need:
 
-- Node.js >= v8.7.0, use nvm - [install instructions][15]
-- Yarn
+- Node.js ≥ 10 – [nvm](https://github.com/creationix/nvm#install-script) is recommended
+- [Yarn](https://yarnpkg.com)
 
-## Build
+### Setup
 
-`yarn run build` will build all files in `./dist`. This includes regular and minified files for `<script>` inclusion, as well as classes for `import`ing.
+```
+git clone https://github.com/algolia/docsearch
+cd docsearch
+yarn install
+```
 
-The command itself is split into `yarn run build:js` and `yarn run build:css` if you want to build a subset.
+### Commands
 
-## Serve
+#### `postinstall`
 
-You can have all this files served on localhost, along with live-reload, with the `yarn run serve` command.
+> This command is automatically run after the dependencies are installed.
 
-## Test
+It is necessary for Yarn workspaces to be aware of the EcmaScript builds to link the packages in the monorepo.
 
-You can run all tests with `yarn run test`, and `yarn run test:watch` will run them with auto-reload.
+#### `build`
 
-## Docs
+> This commands builds all the DocSearch packages in the monorepo into their own folders.
 
-The documentation lives in the `./docs` folder. You should start by installing its dependencies with `cd ./docs && yarn install`. Then:
+#### `watch`
 
-- `yarn docs:build` will build the docs website in `./docs/dist`.
-- `yarn docs:serve` will do the same, but with live-reload enabled
-- `yarn docs:deploy` will deploy the doc website manually
+> This commands builds all the DocSearch packages in the monorepo into their own folders in watch mode.
 
-Refer to `./docs/README.md` for more information
+#### `test`
+
+> This commands runs the tests for all packages.
+
+You can refer to the [Jest CLI options](https://jestjs.io/docs/en/cli#options) to run specific packages or files.
+
+#### `lint`
+
+> This commands lints the source files.
+
+#### `type-check`
+
+> This commands type check the source files.
+
+## Documentation
+
+The documentation lives in the [`./docs`](docs/) folder. Start by installing its dependencies with `cd ./docs && yarn install`. Then:
+
+### Commands
+
+#### `docs:build`
+
+> Builds the documentation website in `./docs/dist`.
+
+#### `docs:serve`
+
+> Runs the documentation build in watch mode.
+
+#### `docs:deploy`
+
+> Deploys the documentation website manually.
+
+Refer to [`./docs/README.md`](./docs/README.md) for more information.
 
 ## Release
 
-`npm run release` will guide you through the release process. Note that you have to use `npm` and not `yarn` for this one otherwise it won't deploy to npm.
+`npm run release` will guide you through the release process.
 
-[1]: #where-to-start
-[2]: #development-workflow
-[3]: #requirements
-[4]: #launch
-[5]: #local-build
-[6]: #commit-message-guidelines
-[7]: #revert
-[8]: #type
-[9]: #scope
-[10]: #subject
-[11]: #body
-[12]: #footer
-[13]: #releasing
-[14]: https://github.com/algolia/docsearch/issues
-[15]: https://github.com/creationix/nvm#install-script
+_Note that you have to use `npm` and not `yarn` for this command to publish on npm._
