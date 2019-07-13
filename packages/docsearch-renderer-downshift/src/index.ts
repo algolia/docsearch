@@ -1,3 +1,3 @@
-import { Autocomplete } from './Autocomplete';
+import { DocSearch } from './DocSearch';
 
-export default Autocomplete;
+export default DocSearch;
