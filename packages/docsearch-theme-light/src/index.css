@@ -1,8 +1,22 @@
 :root {
-  --algolia-docsearch-primary-color: #5468ff;
-  --algolia-docsearch-secondary-color: #5d6494;
-  --algolia-docsearch-title-color: #232533;
-  --algolia-docsearch-subtitle-color: rgba(93, 100, 148, 0.7);
+  --algolia-docsearch-input-color: #5d6494;
+  --algolia-docsearch-highlight-color: #5468ff;
+  --algolia-docsearch-lvl0-color: #5d6494;
+  --algolia-docsearch-lvl1-color: #232533;
+  --algolia-docsearch-lvl2-color: rgba(93, 100, 148, 0.7);
+  --algolia-docsearch-gradient-start-color: rgb(245, 245, 250);
+  --algolia-docsearch-gradient-end-color: #fff;
+  --algolia-docsearch-background-highlight-color: rgba(218, 219, 234, 0.4);
+  --algolia-docsearch-text-color: rgba(0, 0, 0, 0.5);
+  --algolia-docsearch-border-color: rgba(197, 201, 224, 0.4);
+  --algolia-docsearch-logo-color-outer: #5468ff;
+  --algolia-docsearch-logo-color-inner: #fff;
+}
+
+@media (min-width: 640px) {
+  .algolia-docsearch {
+    position: relative;
+  }
 }
 
 .algolia-docsearch * {
@@ -17,10 +31,9 @@
 
 .algolia-docsearch-form {
   align-items: center;
-  border-bottom: 1px solid rgba(197, 201, 224, 0.4);
+  /* border-bottom: 1px solid rgba(197, 201, 224, 0.4); */
   display: flex;
   margin: 0;
-  padding: 0 1rem;
   position: relative;
 }
 
@@ -28,9 +41,10 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  background: inherit;
   border: none;
   font: inherit;
-  min-height: 4rem;
+  height: 100%;
   outline: none;
   padding: 1rem;
   width: 100%;
@@ -46,8 +60,8 @@
 .algolia-docsearch-magnifierLabel,
 .algolia-docsearch-reset,
 .algolia-docsearch-loadingIndicator {
-  color: var(--algolia-docsearch-secondary-color);
-  height: 64px;
+  color: var(--algolia-docsearch-input-color);
+  height: 100%;
 }
 
 .algolia-docsearch-magnifierLabel,
@@ -74,6 +88,8 @@
   background: none;
   border: none;
   cursor: pointer;
+  position: absolute;
+  right: 0;
 }
 
 .algolia-docsearch-reset[hidden] {
@@ -81,7 +97,7 @@
 }
 
 .algolia-docsearch-reset:focus {
-  color: var(--algolia-docsearch-primary-color);
+  color: var(--algolia-docsearch-highlight-color);
   outline: none;
 }
 
@@ -101,11 +117,13 @@
 .algolia-docsearch-dropdown {
   background: linear-gradient(
     0deg,
-    rgb(245, 245, 250) 0%,
-    rgb(255, 255, 255) 100%
+    var(--algolia-docsearch-gradient-start-color) 0%,
+    var(--algolia-docsearch-gradient-end-color) 100%
   );
   border-radius: 6px;
-  height: 100%;
+  box-shadow: 0px 2px 4px 0px rgba(93, 100, 148, 0.2),
+    0px 5px 15px 0px rgba(37, 44, 97, 0.15);
+  margin-top: 1rem;
   overflow: scroll;
   -ms-overflow-style: none; /* IE 10+ */
   position: absolute;
@@ -116,12 +134,7 @@
 
 @media (min-width: 640px) {
   .algolia-docsearch-dropdown {
-    box-shadow: 0px 2px 4px 0px rgba(93, 100, 148, 0.2),
-      0px 5px 15px 0px rgba(37, 44, 97, 0.15);
-    height: auto;
-    margin-top: 1rem;
-    max-height: 564px;
-    max-width: 532px;
+    min-width: 532px;
   }
 }
 
@@ -153,7 +166,8 @@
 
 /* Items */
 
-/* .algolia-docsearch-item::after {
+/*
+.algolia-docsearch-item::after {
   background: linear-gradient(
     -90deg,
     rgba(197, 201, 224, 0) 0%,
@@ -165,14 +179,15 @@
   height: 1px;
   margin: 1.5rem 0;
   width: 484px;
-} */
+}
+*/
 
 .algolia-docsearch-item {
   padding-bottom: 1rem;
 }
 
 .algolia-docsearch-item-header {
-  color: var(--algolia-docsearch-secondary-color);
+  color: var(--algolia-docsearch-lvl0-color);
   font-size: 0.875rem;
   font-weight: bold;
   letter-spacing: 0.078125rem;
@@ -189,14 +204,14 @@
 }
 
 li[aria-selected='true'] .algolia-docsearch-item-body {
-  background-color: rgba(218, 219, 234, 0.4);
+  background-color: var(--algolia-docsearch-background-highlight-color);
   border-radius: 0.1875rem;
   margin: 0.5rem -1rem;
   padding: 0.5rem 1rem;
 }
 
 .algolia-docsearch-item-body-title {
-  color: var(--algolia-docsearch-title-color);
+  color: var(--algolia-docsearch-lvl1-color);
   font-size: 0.875rem;
   font-weight: normal;
   letter-spacing: -0.009375rem;
@@ -205,7 +220,7 @@ li[aria-selected='true'] .algolia-docsearch-item-body {
 }
 
 .algolia-docsearch-item-body-subtitle {
-  color: var(--algolia-docsearch-subtitle-color);
+  color: var(--algolia-docsearch-lvl2-color);
   font-size: 0.625rem;
   font-weight: bold;
   letter-spacing: 0.078125rem;
@@ -215,7 +230,7 @@ li[aria-selected='true'] .algolia-docsearch-item-body {
 }
 
 .algolia-docsearch-item-body-paragraph {
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--algolia-docsearch-text-color);
   font-size: 0.75rem;
   font-weight: normal;
   line-height: 1rem;
@@ -226,7 +241,7 @@ li[aria-selected='true'] .algolia-docsearch-item-body {
 
 .algolia-docsearch-results mark {
   background: none;
-  color: var(--algolia-docsearch-primary-color);
+  color: var(--algolia-docsearch-highlight-color);
   font-weight: bold;
 }
 
@@ -234,8 +249,9 @@ li[aria-selected='true'] .algolia-docsearch-item-body {
 
 .algolia-docsearch-footer {
   align-items: center;
-  background-color: #f5f5fa;
-  border-top: 1px solid rgba(197, 201, 224, 0.4);
+  background-color: var(--algolia-docsearch-gradient-start-color);
+  border-top: 1px solid var(--algolia-docsearch-border-color);
+  color: var(--algolia-docsearch-text-color);
   display: flex;
   height: 55px;
   justify-content: flex-end;
@@ -251,7 +267,7 @@ li[aria-selected='true'] .algolia-docsearch-item-body {
   }
 
   .algolia-docsearch-footer::before {
-    background-color: rgba(197, 201, 224, 0.4);
+    background-color: var(--algolia-docsearch-border-color);
     content: '';
     display: block;
     height: 1px;
@@ -289,7 +305,6 @@ li[aria-selected='true'] .algolia-docsearch-item-body {
   }
 
   .algolia-docsearch-commands-description {
-    color: var(--algolia-docsearch-secondary-color);
     font-size: 0.75rem;
     letter-spacing: 0;
     margin-left: 0.25rem;
@@ -298,6 +313,19 @@ li[aria-selected='true'] .algolia-docsearch-item-body {
 
 /* Logo */
 
+.algolia-docsearch-logo a {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.algolia-docsearch-logo-brand-outer {
+  fill: var(--algolia-docsearch-logo-color-outer);
+}
+.algolia-docsearch-logo-brand-inner {
+  fill: var(--algolia-docsearch-logo-color-inner);
+}
+
 .algolia-docsearch-logo svg {
-  height: 1.2rem;
+  height: 1.1rem;
 }
