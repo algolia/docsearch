@@ -58,7 +58,8 @@ function docsearch(options: DocSearchOptions = {} as DocSearchOptions) {
       search={docsearchIndex.search}
       onItemSelect={onItemSelect}
     />,
-    containerNode
+    containerNode,
+    containerNode.lastChild as Element
   );
 
   return docsearchIndex;
