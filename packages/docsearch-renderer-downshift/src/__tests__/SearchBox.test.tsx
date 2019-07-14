@@ -11,7 +11,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/extend-expect';
 
-import { SearchBox, SearchBoxProps } from './SearchBox';
+import { SearchBox, SearchBoxProps } from '../SearchBox';
 
 describe('SearchBox', () => {
   const inputId = 'docsearch-0-input';

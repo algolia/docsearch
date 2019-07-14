@@ -1,5 +1,5 @@
-import formatHits from './formatHits';
-import { hits } from './fixtures/';
+import formatHits from '../formatHits';
+import { hits } from '../__fixtures__';
 
 describe('formatHits', () => {
   test('with empty hits', () => {

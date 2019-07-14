@@ -1,7 +1,7 @@
 import docsearchCore from 'docsearch-core';
 import docsearchRenderer from 'docsearch-renderer-downshift';
 
-import docsearch from './docsearch';
+import docsearch from '../docsearch';
 
 jest.mock('docsearch-core');
 jest.mock('docsearch-renderer-downshift');

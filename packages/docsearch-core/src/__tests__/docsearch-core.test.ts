@@ -1,7 +1,7 @@
 import algoliasearch from 'algoliasearch/lite';
 
-import docsearchCore from './';
-import pkg from '../package.json';
+import docsearchCore from '..';
+import pkg from '../../package.json';
 
 jest.mock('algoliasearch/lite');
 

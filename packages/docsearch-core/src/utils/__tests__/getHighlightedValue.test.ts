@@ -1,4 +1,4 @@
-import { getHighlightedValue } from './getHighlightedValue';
+import { getHighlightedValue } from '../getHighlightedValue';
 
 describe('getHighlightedValue', () => {
   test('returns the correct highlighted property', () => {
