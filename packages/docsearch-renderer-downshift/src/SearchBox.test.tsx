@@ -24,7 +24,7 @@ describe('SearchBox', () => {
       onKeyDown: jest.fn(),
       onChange: jest.fn(),
       onReset: jest.fn(),
-      getInputProps: (options: object) => ({
+      getInputProps: (options?: object) => ({
         ...options,
         id: inputId,
       }),
