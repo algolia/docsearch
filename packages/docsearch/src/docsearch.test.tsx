@@ -28,9 +28,11 @@ describe('docsearch', () => {
         docsearch();
       };
 
-      expect(trigger).toThrowErrorMatchingInlineSnapshot(
-        `"The \`container\` option expects a \`string\` or an \`HTMLElement\`."`
-      );
+      expect(trigger).toThrowErrorMatchingInlineSnapshot(`
+"The \`container\` option expects a \`string\` or an \`HTMLElement\`.
+
+See: https://community.algolia.com/docsearch"
+`);
     });
 
     test('throws for container with empty options', () => {
@@ -41,9 +43,11 @@ describe('docsearch', () => {
         docsearch(options);
       };
 
-      expect(trigger).toThrowErrorMatchingInlineSnapshot(
-        `"The \`container\` option expects a \`string\` or an \`HTMLElement\`."`
-      );
+      expect(trigger).toThrowErrorMatchingInlineSnapshot(`
+"The \`container\` option expects a \`string\` or an \`HTMLElement\`.
+
+See: https://community.algolia.com/docsearch"
+`);
     });
 
     test('throws without container', () => {
@@ -56,9 +60,11 @@ describe('docsearch', () => {
         docsearch(options);
       };
 
-      expect(trigger).toThrowErrorMatchingInlineSnapshot(
-        `"The \`container\` option expects a \`string\` or an \`HTMLElement\`."`
-      );
+      expect(trigger).toThrowErrorMatchingInlineSnapshot(`
+"The \`container\` option expects a \`string\` or an \`HTMLElement\`.
+
+See: https://community.algolia.com/docsearch"
+`);
     });
   });
 

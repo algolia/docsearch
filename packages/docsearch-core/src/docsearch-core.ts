@@ -42,7 +42,7 @@ export interface DocSearchCoreOptions {
   transformHits?(hits: DocSearchHits): DocSearchHits;
 }
 
-export function withUsage(message: string) {
+function withUsage(message: string) {
   return `
 ${message}
 

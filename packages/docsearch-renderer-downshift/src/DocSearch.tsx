@@ -18,6 +18,7 @@ type DocSearchProps = {
   search(
     searchParameters: QueryParameters
   ): Promise<{ hits: DocSearchHits; result: Result }>;
+  onItemHighlight?({ hit }: { hit: DocSearchHit }): void;
   onItemSelect?({ hit }: { hit: DocSearchHit }): void;
 } & typeof defaultProps;
 
@@ -39,26 +40,10 @@ function generateId(): string {
   return String(docsearchIdCounter++);
 }
 
-function stateReducer(state: any, changes: any) {
-  switch (changes.type) {
-    case Downshift.stateChangeTypes.mouseUp:
-      return {
-        ...changes,
-        inputValue: state.inputValue,
-      };
-    case Downshift.stateChangeTypes.blurInput:
-      return {
-        ...changes,
-        inputValue: state.inputValue,
-      };
-    default:
-      return changes;
-  }
-}
-
 const defaultProps = {
   placeholder: '',
   stalledSearchDelay: 300,
+  onItemHighlight: () => {},
   onItemSelect: ({ hit }) => {
     if (typeof window !== 'undefined') {
       window.location.assign(hit.url);
@@ -95,6 +80,20 @@ export class DocSearch extends Component<DocSearchProps, DocSearchState> {
         id={`docsearch-${generateId()}`}
         itemToString={() => ''}
         defaultHighlightedIndex={0}
+        onStateChange={(changes: { highlightedIndex?: number }) => {
+          if (changes.highlightedIndex === undefined) {
+            return;
+          }
+
+          const items: DocSearchHit[] = Array.prototype.concat.apply(
+            [],
+            Object.values<DocSearchHit>(this.state.hits)
+          );
+
+          const highlightedItem = items[changes.highlightedIndex];
+
+          this.props.onItemHighlight({ hit: highlightedItem });
+        }}
         onSelect={(item: DocSearchHit) => {
           this.setState({
             isDropdownOpen: false,
@@ -114,7 +113,6 @@ export class DocSearch extends Component<DocSearchProps, DocSearchState> {
             itemNode.scrollIntoView(false);
           }
         }}
-        stateReducer={stateReducer}
       >
         {({ getInputProps, getItemProps, getMenuProps }) => (
           <div

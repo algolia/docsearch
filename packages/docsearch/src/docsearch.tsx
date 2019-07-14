@@ -2,7 +2,7 @@
 
 import { h, render } from 'preact';
 import docsearchCore, { DocSearchCoreOptions } from 'docsearch-core';
-import DocSearchAutocomplete from 'docsearch-renderer-downshift';
+import DocSearch from 'docsearch-renderer-downshift';
 import { DocSearchHit } from 'docsearch-types';
 
 export interface DocSearchOptions extends DocSearchCoreOptions {
@@ -25,9 +25,22 @@ export interface DocSearchOptions extends DocSearchCoreOptions {
    */
   stalledSearchDelay?: number;
   /**
+   * Function called when the user highlights an item.
+   * Highlighting happens on hover and on keyboard navigation.
+   */
+  onItemHighlight?({ hit }: { hit: DocSearchHit }): void;
+  /**
    * Function called when the user selects an item.
    */
   onItemSelect?({ hit }: { hit: DocSearchHit }): void;
+}
+
+function withUsage(message: string) {
+  return `
+${message}
+
+See: https://community.algolia.com/docsearch
+`.trim();
 }
 
 function docsearch(options: DocSearchOptions = {} as DocSearchOptions) {
@@ -36,6 +49,7 @@ function docsearch(options: DocSearchOptions = {} as DocSearchOptions) {
     placeholder = 'Search',
     stalledSearchDelay = 300,
     onItemSelect,
+    onItemHighlight,
     ...docsearchCoreOptions
   } = options;
   const containerNode =
@@ -45,21 +59,24 @@ function docsearch(options: DocSearchOptions = {} as DocSearchOptions) {
 
   if (!containerNode) {
     throw new Error(
-      'The `container` option expects a `string` or an `HTMLElement`.'
+      withUsage(
+        'The `container` option expects a `string` or an `HTMLElement`.'
+      )
     );
   }
 
   const docsearchIndex = docsearchCore(docsearchCoreOptions);
 
   render(
-    <DocSearchAutocomplete
+    <DocSearch
       placeholder={placeholder}
       stalledSearchDelay={stalledSearchDelay}
       search={docsearchIndex.search}
       onItemSelect={onItemSelect}
+      onItemHighlight={onItemHighlight}
     />,
     containerNode,
-    containerNode.lastChild as Element
+    containerNode.firstElementChild as Element
   );
 
   return docsearchIndex;

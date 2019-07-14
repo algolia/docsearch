@@ -6,7 +6,6 @@ import {
   cleanup,
   fireEvent,
   getByPlaceholderText,
-  getByRole,
   getByDisplayValue,
 } from 'preact-testing-library';
 import userEvent from '@testing-library/user-event';
