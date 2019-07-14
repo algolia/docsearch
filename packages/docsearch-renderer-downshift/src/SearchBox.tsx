@@ -1,7 +1,6 @@
 /** @jsx h */
 
 import { h, Component } from 'preact';
-import { QueryParameters, DocSearchHits, Result } from 'docsearch-types';
 
 declare global {
   namespace JSX {
@@ -11,21 +10,23 @@ declare global {
   }
 }
 
-interface SearchBoxProps {
+export type SearchBoxProps = {
   placeholder: string;
   query: string;
-  stalledSearchDelay: number;
-  getInputProps(options?: object): any;
-  search(
-    searchParameters: QueryParameters
-  ): Promise<{ hits: DocSearchHits; result: Result }>;
   onChange: (event: any) => void;
   onFocus: () => void;
   onKeyDown: (event: KeyboardEvent) => void;
-  onResetClick: (event: MouseEvent) => void;
-}
+  onReset: (event: MouseEvent) => void;
+  getInputProps?(options?: object): any;
+} & typeof defaultProps;
+
+const defaultProps = {
+  getInputProps: (options?: object) => options,
+};
 
 export class SearchBox extends Component<SearchBoxProps> {
+  static defaultProps = defaultProps;
+
   private inputRef: null | HTMLElement = null;
 
   render() {
@@ -99,7 +100,7 @@ export class SearchBox extends Component<SearchBoxProps> {
           className="algolia-docsearch-reset"
           hidden={this.props.query.length === 0}
           onClick={(event: MouseEvent) => {
-            this.props.onResetClick(event);
+            this.props.onReset(event);
 
             this.inputRef!.focus();
           }}

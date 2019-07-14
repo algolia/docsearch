@@ -12,22 +12,22 @@ import {
 import { Dropdown } from './Dropdown';
 import { SearchBox } from './SearchBox';
 
-interface DocSearchProps {
+type DocSearchProps = {
   placeholder: string;
   stalledSearchDelay: number;
   search(
     searchParameters: QueryParameters
   ): Promise<{ hits: DocSearchHits; result: Result }>;
   onItemSelect?({ hit }: { hit: DocSearchHit }): void;
-}
+} & typeof defaultProps;
 
-interface DocSearchState {
+type DocSearchState = {
   query: string;
   hits: DocSearchHits;
   isDropdownOpen: boolean;
   isLoading: boolean;
   isStalled: boolean;
-}
+};
 
 let setIsStalledId: number | null;
 let docsearchIdCounter = 0;
@@ -56,18 +56,26 @@ function stateReducer(state: any, changes: any) {
   }
 }
 
-export class DocSearch extends Component<DocSearchProps, DocSearchState> {
-  constructor(props: DocSearchProps) {
-    super(props);
+const defaultProps = {
+  placeholder: '',
+  stalledSearchDelay: 300,
+  onItemSelect: ({ hit }) => {
+    if (typeof window !== 'undefined') {
+      window.location.assign(hit.url);
+    }
+  },
+};
 
-    this.state = {
-      query: '',
-      hits: {},
-      isDropdownOpen: false,
-      isLoading: false,
-      isStalled: false,
-    };
-  }
+export class DocSearch extends Component<DocSearchProps, DocSearchState> {
+  static defaultProps = defaultProps;
+
+  state = {
+    query: '',
+    hits: {},
+    isDropdownOpen: false,
+    isLoading: false,
+    isStalled: false,
+  };
 
   render() {
     const hasQuery = this.state.query.length > 0;
@@ -93,7 +101,7 @@ export class DocSearch extends Component<DocSearchProps, DocSearchState> {
           });
 
           if (item) {
-            this.props.onItemSelect!({ hit: item });
+            this.props.onItemSelect({ hit: item });
           }
         }}
         onOuterClick={() => {
@@ -120,8 +128,6 @@ export class DocSearch extends Component<DocSearchProps, DocSearchState> {
             <SearchBox
               placeholder={this.props.placeholder}
               query={this.state.query}
-              stalledSearchDelay={this.props.stalledSearchDelay}
-              search={this.props.search}
               getInputProps={getInputProps}
               onFocus={() => {
                 if (hasQuery) {
@@ -138,7 +144,7 @@ export class DocSearch extends Component<DocSearchProps, DocSearchState> {
                   });
                 }
               }}
-              onResetClick={() => {
+              onReset={() => {
                 this.setState({
                   query: '',
                 });
@@ -217,13 +223,3 @@ export class DocSearch extends Component<DocSearchProps, DocSearchState> {
     );
   }
 }
-
-DocSearch.defaultProps = {
-  placeholder: '',
-  stalledSearchDelay: 300,
-  onItemSelect: ({ hit }) => {
-    if (typeof window !== 'undefined') {
-      window.location.assign(hit.url);
-    }
-  },
-};
