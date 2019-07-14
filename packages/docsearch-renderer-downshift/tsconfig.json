@@ -5,5 +5,5 @@
     "jsxFactory": "h",
     "declarationDir": "dist/es"
   },
-  "exclude": ["node_modules", "dist", "__fixtures__", "**/*.test.*"]
+  "exclude": ["node_modules", "dist", "**/*.test.*"]
 }

@@ -14,7 +14,7 @@
   "jsdelivr": "src/index.ts",
   "sideEffects": false,
   "scripts": {
-    "type-check": "tsc"
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@types/algoliasearch": "^3.30.12"
