@@ -3,13 +3,13 @@ import { DocSearchHit, DocSearchHits, AlgoliaHit } from 'docsearch-types';
 import { getHighlightedValue, getSnippetedValue } from '../utils';
 
 export type AlgoliaHitWithRootLevels = Omit<AlgoliaHit, 'hierarchy'> & {
-  lvl0?: AlgoliaHit['_highlightResult']['content'];
-  lvl1?: AlgoliaHit['_highlightResult']['content'];
-  lvl2?: AlgoliaHit['_highlightResult']['content'];
-  lvl3?: AlgoliaHit['_highlightResult']['content'];
-  lvl4?: AlgoliaHit['_highlightResult']['content'];
-  lvl5?: AlgoliaHit['_highlightResult']['content'];
-  lvl6?: AlgoliaHit['_highlightResult']['content'];
+  lvl0?: string;
+  lvl1?: string;
+  lvl2?: string;
+  lvl3?: string;
+  lvl4?: string;
+  lvl5?: string;
+  lvl6?: string;
 };
 
 function groupBy<TValue = any>(
@@ -48,9 +48,9 @@ function getUrl(hit: AlgoliaHitWithRootLevels): string {
   const { url, anchor } = hit;
 
   if (url) {
-    const containsAnchor = url.indexOf('#') !== -1;
+    const urlContainsAnchor = url.indexOf('#') !== -1;
 
-    if (containsAnchor) {
+    if (urlContainsAnchor) {
       return url;
     } else if (anchor) {
       return `${hit.url}#${hit.anchor}`;

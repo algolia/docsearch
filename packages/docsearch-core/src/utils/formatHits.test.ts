@@ -1,5 +1,5 @@
 import formatHits from './formatHits';
-import { docsearchHits } from './fixtures/';
+import { hits } from './fixtures/';
 
 describe('formatHits', () => {
   test('with empty hits', () => {
@@ -10,7 +10,6 @@ describe('formatHits', () => {
   });
 
   test('with actual hits', () => {
-    const hits = docsearchHits;
     const formattedHits = formatHits(hits);
 
     expect(formattedHits).toMatchSnapshot();

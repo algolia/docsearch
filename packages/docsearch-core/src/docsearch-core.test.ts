@@ -37,7 +37,7 @@ describe('docsearch-core', () => {
       };
 
       expect(trigger).toThrowErrorMatchingInlineSnapshot(`
-"The \`apiKey\` option expects a \`string\`.
+"The \`indexName\` option expects a \`string\`.
 
 See: https://community.algolia.com/docsearch"
 `);
@@ -50,7 +50,7 @@ See: https://community.algolia.com/docsearch"
       };
 
       expect(trigger).toThrowErrorMatchingInlineSnapshot(`
-"The \`apiKey\` option expects a \`string\`.
+"The \`indexName\` option expects a \`string\`.
 
 See: https://community.algolia.com/docsearch"
 `);
@@ -61,6 +61,8 @@ See: https://community.algolia.com/docsearch"
         // @ts-ignore incorrect options
         docsearchCore({
           appId: true,
+          indexName: 'indexName',
+          apiKey: 'apiKey',
         });
       };
 
@@ -71,26 +73,30 @@ See: https://community.algolia.com/docsearch"
 `);
     });
 
-    test('throws with a non-string apiKey', () => {
+    test('throws with a non-string indexName', () => {
       const trigger = () => {
         // @ts-ignore incorrect options
         docsearchCore({
-          apiKey: true,
+          appId: 'appId',
+          indexName: true,
+          apiKey: 'apiKey',
         });
       };
 
       expect(trigger).toThrowErrorMatchingInlineSnapshot(`
-"The \`apiKey\` option expects a \`string\`.
+"The \`indexName\` option expects a \`string\`.
 
 See: https://community.algolia.com/docsearch"
 `);
     });
 
-    test('throws with a non-string indexName', () => {
+    test('throws with a non-string apiKey', () => {
       const trigger = () => {
         // @ts-ignore incorrect options
         docsearchCore({
-          indexName: true,
+          appId: 'appId',
+          indexName: 'indexName',
+          apiKey: true,
         });
       };
 

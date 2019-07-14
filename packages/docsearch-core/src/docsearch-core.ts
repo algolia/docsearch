@@ -64,12 +64,12 @@ function docsearch(
     throw new Error(withUsage('The `appId` option expects a `string`.'));
   }
 
-  if (typeof apiKey !== 'string') {
-    throw new Error(withUsage('The `apiKey` option expects a `string`.'));
-  }
-
   if (typeof indexName !== 'string') {
     throw new Error(withUsage('The `indexName` option expects a `string`.'));
+  }
+
+  if (typeof apiKey !== 'string') {
+    throw new Error(withUsage('The `apiKey` option expects a `string`.'));
   }
 
   const searchClient = algoliasearch(appId, apiKey);

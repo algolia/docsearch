@@ -1,1 +1,1 @@
-export * from './formatHits';
+export * from './hits';

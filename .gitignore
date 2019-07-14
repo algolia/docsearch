@@ -1,6 +1,6 @@
 node_modules/
 *.log
-.DS_Store
-
-# Bundle build files
 dist/
+coverage/
+.DS_Store
+.eslintcache

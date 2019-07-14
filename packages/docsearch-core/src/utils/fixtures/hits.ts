@@ -1,4 +1,5 @@
-export const docsearchHits = [
+export const hits = [
+  // Normal hit
   {
     anchor: 'nb_hits-special',
     content: null,
@@ -67,8 +68,9 @@ export const docsearchHits = [
       ],
     },
   },
+  // Hit without `anchor` nor anchor in the `url`
   {
-    anchor: 'how-many-records-are-created-by-docsearch',
+    anchor: '',
     content:
       'The  property  nb_hits  in your configuration keeps track of the number of\nrecords that were extracted and indexed by the last DocSearch run. It is updated\nautomatically at each run',
     hierarchy: {
@@ -80,8 +82,7 @@ export const docsearchHits = [
       lvl5: null,
       lvl6: null,
     },
-    url:
-      'https://community.algolia.com/docsearch/faq.html#how-many-records-are-created-by-docsearch',
+    url: 'https://community.algolia.com/docsearch/faq.html',
     objectID: '2356575660',
     _snippetResult: {
       content: {
@@ -136,8 +137,9 @@ export const docsearchHits = [
       ],
     },
   },
+  // Hit without `anchor`
   {
-    anchor: 'algoliaoptions',
+    anchor: '',
     content:
       'For example, you might want to increase the number of results displayed in the\ndropdown.  hitsPerPage  set the number of shown hits ',
     hierarchy: {
@@ -149,7 +151,7 @@ export const docsearchHits = [
       lvl5: null,
       lvl6: null,
     },
-    url: 'https://community.algolia.com/docsearch/behavior.html#algoliaoptions',
+    url: '',
     objectID: '2356570030',
     _snippetResult: {
       content: {
@@ -204,6 +206,7 @@ export const docsearchHits = [
       ],
     },
   },
+  // Hit without anchor in the `url`
   {
     anchor: 'handleselected',
     content:
@@ -217,7 +220,7 @@ export const docsearchHits = [
       lvl5: null,
       lvl6: null,
     },
-    url: 'https://community.algolia.com/docsearch/behavior.html#handleselected',
+    url: 'https://community.algolia.com/docsearch/behavior.html',
     objectID: '2356569750',
     _snippetResult: {
       content: {
@@ -272,6 +275,7 @@ export const docsearchHits = [
       ],
     },
   },
+  // Hit without `url`
   {
     anchor: 'structure-the-hierarchy-of-information',
     content: null,
@@ -284,8 +288,7 @@ export const docsearchHits = [
       lvl5: null,
       lvl6: null,
     },
-    url:
-      'https://community.algolia.com/docsearch/tips.html#structure-the-hierarchy-of-information',
+    url: '',
     objectID: '2356576240',
     _highlightResult: {
       hierarchy: {

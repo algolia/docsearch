@@ -12,7 +12,7 @@ Object {
         "algoliaOptions",
       ],
       "objectID": "2356570030",
-      "url": "https://community.algolia.com/docsearch/behavior.html#algoliaoptions",
+      "url": "",
     },
     Object {
       "content": "…anchor). You can override results (<span class=\\"algolia-docsearch-suggestion--highlight\\">hit</span>) to
@@ -37,7 +37,7 @@ add your own…",
         "How many records are created by DocSearch?",
       ],
       "objectID": "2356575660",
-      "url": "https://community.algolia.com/docsearch/faq.html#how-many-records-are-created-by-docsearch",
+      "url": "https://community.algolia.com/docsearch/faq.html",
     },
   ],
   "Tips for a good search": Array [
@@ -50,7 +50,7 @@ add your own…",
         "Structure the <span class=\\"algolia-docsearch-suggestion--highlight\\">hie</span>rarchy of information",
       ],
       "objectID": "2356576240",
-      "url": "https://community.algolia.com/docsearch/tips.html#structure-the-hierarchy-of-information",
+      "url": "#structure-the-hierarchy-of-information",
     },
   ],
   "selectors": Array [
