@@ -22,7 +22,7 @@ Check out our [website][docsearch-website] for a complete explanation and docume
 
 > Don't have your Algolia credentials yet? [Apply to DocSearch](https://community.algolia.com/docsearch/apply.html)!
 
-**1.** Import the library as an EcmaScript module:
+**1.** Import the library as an ECMAScript module:
 
 ```sh
 npm install docsearch.js
@@ -34,17 +34,15 @@ yarn add docsearch.js
 import docsearch from 'docsearch.js';
 ```
 
-**1–bis.** Or with a script tag:
+**1–bis.** Or with a script tag (at the end of the `body`):
 
 ```html
-<!-- At the end of the `body` -->
 <script src="https://cdn.jsdelivr.net/docsearch.js/3"></script>
 ```
 
-**2.** Import the theme:
+**2.** Import the theme (in the `head`):
 
 ```html
-<!-- In the `head` -->
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/docsearch-theme-light@3"
@@ -55,8 +53,8 @@ import docsearch from 'docsearch.js';
 
 ```js
 docsearch({
-  apiKey: 'YOUR_API_KEY',
   indexName: 'YOUR_INDEX_NAME',
+  apiKey: 'YOUR_API_KEY',
   container: '#searchbox',
 });
 ```
@@ -81,7 +79,7 @@ DocSearch is made of 3 repositories:
 
 - **[algolia/docsearch][docsearch-github]**: DocSearch.js source code and website.
 - **[algolia/docsearch-configs][docsearch-configs-github]**: DocSearch website configurations that DocSearch powers.
-- **[algolia/docsearch-scraper][docsearch-scraper-github]** DocSearch crawler that extracts data from your documentation.
+- **[algolia/docsearch-scraper][docsearch-scraper-github]**: DocSearch crawler that extracts data from your documentation.
 
 ## License
 
