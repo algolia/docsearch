@@ -78,8 +78,6 @@ function docsearch(options: DocSearchOptions = {} as DocSearchOptions) {
     containerNode,
     containerNode.firstElementChild as Element
   );
-
-  return docsearchIndex;
 }
 
 export default docsearch;

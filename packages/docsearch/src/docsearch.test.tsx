@@ -1,8 +1,10 @@
 import docsearchCore from 'docsearch-core';
+import docsearchRenderer from 'docsearch-renderer-downshift';
 
 import docsearch from './docsearch';
 
 jest.mock('docsearch-core');
+jest.mock('docsearch-renderer-downshift');
 
 const castToJestMock = (obj: any): jest.Mock => obj;
 
@@ -19,6 +21,7 @@ describe('docsearch', () => {
 
   afterEach(() => {
     castToJestMock(docsearchCore).mockReset();
+    castToJestMock(docsearchRenderer).mockReset();
   });
 
   describe('Usage', () => {
@@ -69,7 +72,7 @@ See: https://community.algolia.com/docsearch"
   });
 
   describe('Lifecycle', () => {
-    test('forwards the option to docsearch-core', () => {
+    test('forwards options to docsearch-core', () => {
       const container = document.createElement('div');
       const appId = 'appId';
       const apiKey = 'apiKey';
@@ -93,6 +96,33 @@ See: https://community.algolia.com/docsearch"
 
       expect(docsearchCore).toHaveBeenCalledTimes(1);
       expect(docsearchCore).toHaveBeenCalledWith(docsearchCoreOptions);
+    });
+
+    test('forwards options to docsearch-renderer-downshift', () => {
+      const container = document.createElement('div');
+      const onItemSelect = jest.fn();
+      const onItemHighlight = jest.fn();
+      const docsearchRendererOptions = {
+        placeholder: 'Search',
+        stalledSearchDelay: 600,
+        onItemSelect,
+        onItemHighlight,
+        search,
+      };
+
+      docsearch({
+        container,
+        ...docsearchRendererOptions,
+      });
+
+      expect(docsearchRenderer).toHaveBeenCalledTimes(1);
+      expect(docsearchRenderer).toHaveBeenCalledWith(
+        {
+          ...docsearchRendererOptions,
+          children: [],
+        },
+        expect.any(Object)
+      );
     });
   });
 });
