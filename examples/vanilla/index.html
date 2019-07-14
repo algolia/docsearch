@@ -22,11 +22,24 @@
 
     <div class="container">
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
-        dolorem maiores minus facere, dolor dolores quis ut obcaecati eaque
-        pariatur, similique voluptate nemo sit laudantium harum. Praesentium
-        omnis numquam fugiat.
+        Change the Algolia credentials to try your own DocSearch configuration.
       </p>
+
+      <form method="get" action="" class="form">
+        <div class="form-input">
+          <label for="indexName">Index name</label>
+          <input type="text" id="indexName" name="indexName" />
+        </div>
+
+        <div class="form-input">
+          <label for="apiKey">API Key</label>
+          <input type="text" id="apiKey" name="apiKey" />
+        </div>
+
+        <div class="form-button">
+          <button type="submit">Apply configuration</button>
+        </div>
+      </form>
     </div>
 
     <script src="app.js"></script>

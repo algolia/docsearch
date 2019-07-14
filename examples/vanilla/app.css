@@ -30,3 +30,37 @@ body {
   display: flex;
   align-items: center;
 }
+
+.form {
+  margin: auto;
+  max-width: 300px;
+}
+
+.form-input {
+  padding: 8px;
+}
+
+.form-input label {
+  cursor: pointer;
+  font-weight: bold;
+  display: block;
+}
+
+.form-input input,
+.form-button button {
+  border: 1px solid #ddd;
+  background: none;
+  border-radius: 3px;
+  padding: 8px 4px;
+  min-width: 200px;
+  font: inherit;
+}
+
+.form-button {
+  text-align: center;
+}
+
+.form-button button {
+  cursor: pointer;
+  margin: 1rem 0;
+}
