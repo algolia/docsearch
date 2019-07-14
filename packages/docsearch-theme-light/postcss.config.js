@@ -6,10 +6,10 @@ const cssnano = require('cssnano');
 
 module.exports = {
   plugins: [
-    autoprefixer,
     cssVariables({
       preserve: true,
     }),
+    autoprefixer,
     cssnano(),
   ],
 };
