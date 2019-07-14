@@ -115,12 +115,14 @@ const Results = ({ getItemProps, getMenuProps, hits }: ResultsProps) => {
                                 .join(' / '),
                             }}
                           />
-                          <p
-                            className="algolia-docsearch-item-body-paragraph"
-                            dangerouslySetInnerHTML={{
-                              __html: content || '',
-                            }}
-                          />
+                          {content && (
+                            <p
+                              className="algolia-docsearch-item-body-paragraph"
+                              dangerouslySetInnerHTML={{
+                                __html: content || '',
+                              }}
+                            />
+                          )}
                         </a>
                       </li>
                     );
