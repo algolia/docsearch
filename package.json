@@ -52,7 +52,7 @@
     "eslint": "5.16.0",
     "eslint-config-algolia": "13.4.0",
     "eslint-config-prettier": "4.3.0",
-    "eslint-plugin-import": "2.18.0",
+    "eslint-plugin-import": "2.18.2",
     "eslint-plugin-jest": "22.7.2",
     "eslint-plugin-prettier": "2.7.0",
     "jest": "23.6.0",
