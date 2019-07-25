@@ -129,6 +129,8 @@
   right: 0;
   scrollbar-width: none; /* Firefox */
   width: 100%;
+  height: 100%;
+  min-height: max-content;
 }
 
 @media (min-width: 640px) {
@@ -149,10 +151,16 @@
 
 .algolia-docsearch-dropdown-container {
   position: relative;
+  height: 100%;
+  min-height: max-content;
 }
 
 .algolia-docsearch-results {
   padding: 1.5rem;
+  max-height: calc(100% - 55px);
+  height: 100%;
+  min-height: max-content;
+  overflow: scroll;
 }
 
 /* Items */
