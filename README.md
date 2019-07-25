@@ -73,6 +73,16 @@ docsearch({
 
 Please read our [contributing guide](CONTRIBUTING.md) to learn more.
 
+### Live design on the Vanilla example
+
+> Use the following command:
+
+```sh
+yarn watch & cd examples/vanilla && yarn start &
+```
+
+It will watch the changes made to the source and will serve the vanilla example at http://localhost:1234
+
 ## Related
 
 DocSearch is made of 3 repositories:
