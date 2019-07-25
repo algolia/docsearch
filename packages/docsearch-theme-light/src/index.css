@@ -157,10 +157,16 @@
 
 .algolia-docsearch-results {
   padding: 1.5rem;
-  max-height: calc(100% - 55px);
-  height: 100%;
-  min-height: max-content;
+  height: calc(100% - 55px);
+  max-height: 85vh;
+  min-height: unset;
   overflow: scroll;
+}
+
+@media (min-width: 640px) {
+  .algolia-docsearch-results {
+    min-height: max-content;
+  }
 }
 
 /* Items */
