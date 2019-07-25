@@ -157,10 +157,16 @@
 
 .algolia-docsearch-results {
   padding: 1.5rem;
-  max-height: calc(100% - 55px);
-  height: 100%;
-  min-height: max-content;
+  height: calc(100% - 55px);
+  max-height: 85vh;
+  min-height: unset;
   overflow: scroll;
+}
+
+@media (min-width: 640px) {
+  .algolia-docsearch-results {
+    min-height: max-content;
+  }
 }
 
 /* Items */
@@ -342,8 +348,7 @@ li[aria-selected='true'] .algolia-docsearch-item-body {
   line-height: 1.2rem;
   margin: 0 0 .5rem;
   text-transform: uppercase;
-  padding: 1.5rem;
-  padding-bottom: .25rem;
+  padding: 1.5rem 1.5rem .25rem;
 }
 
 .algolia-docsearch-dropdown-container > div > p:not(:first-child) {
