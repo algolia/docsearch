@@ -332,3 +332,24 @@ li[aria-selected='true'] .algolia-docsearch-item-body {
   height: 1.1875rem;
   color: var(--algolia-docsearch-lvl0-color);
 }
+
+.algolia-docsearch-dropdown-container > div > p:first-child {
+  color: #5d6494;
+  color: var(--algolia-docsearch-lvl0-color);
+  font-size: .875rem;
+  font-weight: 700;
+  letter-spacing: .078125rem;
+  line-height: 1.2rem;
+  margin: 0 0 .5rem;
+  text-transform: uppercase;
+  padding: 1.5rem;
+  padding-bottom: .25rem;
+}
+
+.algolia-docsearch-dropdown-container > div > p:not(:first-child) {
+  align-items: center;
+  width: 100%;
+  letter-spacing: 0;
+  padding-left: 1.5rem;
+  color: var(--algolia-docsearch-content-color);
+}
