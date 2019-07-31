@@ -218,7 +218,7 @@ describe('DocSearch', () => {
           anOption: '44',
           cssClasses: { prefix: 'ds' },
           debug: false,
-          ariaLabel: 'search input'
+          ariaLabel: 'search input',
         })
       ).toBe(true);
     });

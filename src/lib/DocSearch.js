@@ -80,9 +80,12 @@ class DocSearch {
       this.autocompleteOptions.cssClasses || {};
     this.autocompleteOptions.cssClasses.prefix =
       this.autocompleteOptions.cssClasses.prefix || 'ds';
-    const inputAriaLabel = this.input && typeof this.input.attr === 'function' && this.input.attr('aria-label');
-    this.autocompleteOptions.ariaLabel = 
-      this.autocompleteOptions.ariaLabel || inputAriaLabel || "search input";
+    const inputAriaLabel =
+      this.input &&
+      typeof this.input.attr === 'function' &&
+      this.input.attr('aria-label');
+    this.autocompleteOptions.ariaLabel =
+      this.autocompleteOptions.ariaLabel || inputAriaLabel || 'search input';
 
     this.isSimpleLayout = layout === 'simple';
 
@@ -142,9 +145,7 @@ class DocSearch {
 
     if (typeof args.inputSelector !== 'string') {
       throw new Error(
-        `Error: inputSelector:${
-          args.inputSelector
-        }  must be a string. Each selector must match only one element and separated by ','`
+        `Error: inputSelector:${args.inputSelector}  must be a string. Each selector must match only one element and separated by ','`
       );
     }
 
@@ -219,8 +220,11 @@ class DocSearch {
           },
         ])
         .then(data => {
-          if (this.queryDataCallback && typeof this.queryDataCallback == "function") {
-            this.queryDataCallback(data)
+          if (
+            this.queryDataCallback &&
+            typeof this.queryDataCallback === 'function'
+          ) {
+            this.queryDataCallback(data);
           }
           let hits = data.results[0].hits;
           if (transformData) {
