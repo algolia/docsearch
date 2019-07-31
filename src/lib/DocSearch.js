@@ -1,4 +1,3 @@
-import Hogan from 'hogan.js';
 import algoliasearch from 'algoliasearch/lite';
 import autocomplete from 'autocomplete.js';
 import templates from './templates';
@@ -236,7 +235,7 @@ class DocSearch {
   }
 
   // Given a list of hits returned by the API, will reformat them to be used in
-  // a Hogan template
+  // a template
   static formatHits(receivedHits) {
     const clonedHits = utils.deepClone(receivedHits);
     const hits = clonedHits.map(hit => {
@@ -323,15 +322,11 @@ class DocSearch {
   }
 
   static getEmptyTemplate() {
-    return args => Hogan.compile(templates.empty).render(args);
+    return templates.empty;
   }
 
   static getSuggestionTemplate(isSimpleLayout) {
-    const stringTemplate = isSimpleLayout
-      ? templates.suggestionSimple
-      : templates.suggestion;
-    const template = Hogan.compile(stringTemplate);
-    return suggestion => template.render(suggestion);
+    return isSimpleLayout ? templates.suggestionSimple : templates.suggestion;
   }
 
   handleSelected(input, event, suggestion, datasetNumber, context = {}) {

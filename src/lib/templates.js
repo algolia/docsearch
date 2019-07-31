@@ -5,87 +5,109 @@ const footerPrefix = `${prefix}-footer`;
 /* eslint-disable max-len */
 
 const templates = {
-  suggestion: `
+  suggestion(s) {
+    return `
   <a class="${suggestionPrefix}
-    {{#isCategoryHeader}}${suggestionPrefix}__main{{/isCategoryHeader}}
-    {{#isSubCategoryHeader}}${suggestionPrefix}__secondary{{/isSubCategoryHeader}}
+    ${s.isCategoryHeader ? `${suggestionPrefix}__main` : ''}
+    ${s.isSubCategoryHeader ? `${suggestionPrefix}__secondary` : ''}
     "
     aria-label="Link to the result"
-    href="{{{url}}}"
+    href="${s.url}"
     >
     <div class="${suggestionPrefix}--category-header">
-        <span class="${suggestionPrefix}--category-header-lvl0">{{{category}}}</span>
+        <span class="${suggestionPrefix}--category-header-lvl0">
+          ${s.category}
+        </span>
     </div>
     <div class="${suggestionPrefix}--wrapper">
       <div class="${suggestionPrefix}--subcategory-column">
-        <span class="${suggestionPrefix}--subcategory-column-text">{{{subcategory}}}</span>
+        <span class="${suggestionPrefix}--subcategory-column-text">
+          ${s.subcategory}
+        </span>
       </div>
-      {{#isTextOrSubcategoryNonEmpty}}
-      <div class="${suggestionPrefix}--content">
-        <div class="${suggestionPrefix}--subcategory-inline">{{{subcategory}}}</div>
-        <div class="${suggestionPrefix}--title">{{{title}}}</div>
-        {{#text}}<div class="${suggestionPrefix}--text">{{{text}}}</div>{{/text}}
-      </div>
-      {{/isTextOrSubcategoryNonEmpty}}
+      ${
+        s.isTextOrSubcategoryNonEmpty
+          ? `
+        <div class="${suggestionPrefix}--content">
+          <div class="${suggestionPrefix}--subcategory-inline">
+            ${s.subcategory}
+          </div>
+          <div class="${suggestionPrefix}--title">${s.title}</div>
+          ${
+            s.text
+              ? `<div class="${suggestionPrefix}--text">${s.text}</div>`
+              : ''
+          }
+        </div>`
+          : ''
+      }
     </div>
   </a>
-  `,
-  suggestionSimple: `
+  `;
+  },
+  suggestionSimple(suggestion) {
+    return `
   <div class="${suggestionPrefix}
-    {{#isCategoryHeader}}${suggestionPrefix}__main{{/isCategoryHeader}}
-    {{#isSubCategoryHeader}}${suggestionPrefix}__secondary{{/isSubCategoryHeader}}
+    ${suggestion.isCategoryHeader ? `${suggestionPrefix}__main` : ''}
+    ${suggestion.isSubCategoryHeader ? `${suggestionPrefix}__secondary` : ''}
     suggestion-layout-simple
   ">
     <div class="${suggestionPrefix}--category-header">
-        {{^isLvl0}}
-        <span class="${suggestionPrefix}--category-header-lvl0 ${suggestionPrefix}--category-header-item">{{{category}}}</span>
-          {{^isLvl1}}
-          {{^isLvl1EmptyOrDuplicate}}
-          <span class="${suggestionPrefix}--category-header-lvl1 ${suggestionPrefix}--category-header-item">
-              {{{subcategory}}}
-          </span>
-          {{/isLvl1EmptyOrDuplicate}}
-          {{/isLvl1}}
-        {{/isLvl0}}
+        ${
+          !suggestion.isLvl0
+            ? `
+            <span class="${suggestionPrefix}--category-header-lvl0 ${suggestionPrefix}--category-header-item">
+                ${suggestion.category}
+            </span>
+            ${
+              !suggestion.isLvl1 && !suggestion.isLvl1EmptyOrDuplicate
+                ? `
+            <span class="${suggestionPrefix}--category-header-lvl1 ${suggestionPrefix}--category-header-item">
+                ${suggestion.subcategory}
+            </span>`
+                : ''
+            }`
+            : ''
+        }
         <div class="${suggestionPrefix}--title ${suggestionPrefix}--category-header-item">
-            {{#isLvl2}}
-                {{{title}}}
-            {{/isLvl2}}
-            {{#isLvl1}}
-                {{{subcategory}}}
-            {{/isLvl1}}
-            {{#isLvl0}}
-                {{{category}}}
-            {{/isLvl0}}
+            ${suggestion.isLvl2 ? suggestion.title : ''}
+            ${suggestion.isLvl1 ? suggestion.subcategory : ''}
+            ${suggestion.isLvl0 ? suggestion.category : ''}
         </div>
     </div>
     <div class="${suggestionPrefix}--wrapper">
-      {{#text}}
+      ${
+        suggestion.text
+          ? `
       <div class="${suggestionPrefix}--content">
-        <div class="${suggestionPrefix}--text">{{{text}}}</div>
-      </div>
-      {{/text}}
+        <div class="${suggestionPrefix}--text">${suggestion.text}</div>
+      </div>`
+          : ''
+      }
     </div>
   </div>
-  `,
+  `;
+  },
   footer: `
     <div class="${footerPrefix}">
       Search by <a class="${footerPrefix}--logo" href="https://www.algolia.com/docsearch">Algolia</a>
     </div>
   `,
-  empty: `
+  empty(args) {
+    return `
   <div class="${suggestionPrefix}">
     <div class="${suggestionPrefix}--wrapper">
         <div class="${suggestionPrefix}--content ${suggestionPrefix}--no-results">
             <div class="${suggestionPrefix}--title">
                 <div class="${suggestionPrefix}--text">
-                    No results found for query <b>"{{query}}"</b>
+                    No results found for query <b>"${args.query}"</b>
                 </div>
             </div>
         </div>
     </div>
   </div>
-  `,
+  `;
+  },
   searchBox: `
   <form novalidate="novalidate" onsubmit="return false;" class="searchbox">
     <div role="search" class="searchbox__wrapper">
