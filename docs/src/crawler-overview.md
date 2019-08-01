@@ -6,7 +6,7 @@ title: Scraper Overview
 ## How?
 
 The DocSearch scraper is written in python and heavily based on the [Scrapy][1]
-framework. It will crawl all pages of your website and extract content from the
+framework. It will scrap all pages of your website and extract content from the
 HTML structure to populate an Algolia index.
 
 It will automatically follow every internal links to make sure we are not
@@ -16,7 +16,7 @@ will be used for the hierarchy, and each `p` of text will be used as a potential
 result.
 
 Those CSS selectors can be overwritten, and each website actually has its own
-JSON configuration file that describes in more detail how the crawl should
+JSON configuration file that describes in more detail how the scrap should
 behave. You can find the complete list of options in [the related section][2].
 
 ## When?
