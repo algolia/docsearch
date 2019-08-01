@@ -1,11 +1,11 @@
 ---
 layout: two-columns
-title: Crawler Overview
+title: Scraper Overview
 ---
 
 ## How?
 
-The DocSearch crawler is written in python and heavily based on the [Scrapy][1]
+The DocSearch scraper is written in python and heavily based on the [Scrapy][1]
 framework. It will crawl all pages of your website and extract content from the
 HTML structure to populate an Algolia index.
 
