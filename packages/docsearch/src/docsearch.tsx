@@ -19,18 +19,18 @@ export interface DocSearchOptions extends DocSearchCoreOptions {
   placeholder?: string;
   /**
    * The number of milliseconds before the search is considered
-   * as stalled
+   * as stalled.
    *
-   * @defaults `300`
+   * @default `300`
    */
   stalledSearchDelay?: number;
   /**
-   * Function called when the user highlights an item.
+   * The function called when the user highlights an item.
    * Highlighting happens on hover and on keyboard navigation.
    */
   onItemHighlight?({ hit }: { hit: DocSearchHit }): void;
   /**
-   * Function called when the user selects an item.
+   * The function called when the user selects an item.
    */
   onItemSelect?({ hit }: { hit: DocSearchHit }): void;
 }

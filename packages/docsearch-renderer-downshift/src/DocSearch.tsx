@@ -13,12 +13,32 @@ import { Dropdown } from './Dropdown';
 import { SearchBox } from './SearchBox';
 
 type DocSearchProps = {
+  /**
+   * The text that appears in the search box input when there is
+   * no query.
+   */
   placeholder: string;
+  /**
+   * The number of milliseconds before the search is considered
+   * as stalled.
+   */
   stalledSearchDelay: number;
+  /**
+   * The search method to call at each key stroke.
+   *
+   * @param searchParameters The search parameters to send to Algolia
+   */
   search(
     searchParameters: QueryParameters
   ): Promise<{ hits: DocSearchHits; result: Result }>;
+  /**
+   * The function called when the user highlights an item.
+   * Highlighting happens on hover and on keyboard navigation.
+   */
   onItemHighlight?({ hit }: { hit: DocSearchHit }): void;
+  /**
+   * The function called when the user selects an item.
+   */
   onItemSelect?({ hit }: { hit: DocSearchHit }): void;
 } & typeof defaultProps;
 

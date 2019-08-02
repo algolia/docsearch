@@ -63,25 +63,25 @@ docsearch({
 
 ## Contributing
 
-### `watch`
+### Commands
+
+#### `watch`
 
 > This commands builds all the DocSearch packages in the monorepo into their own folders in watch mode.
 
-### `test`
+#### `test`
 
 > This commands runs the tests for all the packages.
 
 Please read our [contributing guide](CONTRIBUTING.md) to learn more.
 
-### Live design on the Vanilla example
-
-> Use the following command:
+### Running the example
 
 ```sh
-yarn watch & cd examples/vanilla && yarn start &
+yarn watch & cd examples/vanilla && yarn && yarn start
 ```
 
-It will watch the changes made to the source and will serve the vanilla example at http://localhost:1234
+It watches the changes made to the source packages and serves the example at http://localhost:1234.
 
 ## Related
 

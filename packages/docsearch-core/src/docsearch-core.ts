@@ -11,7 +11,7 @@ export interface DocSearchCoreOptions {
    * It needs to be specified only if you run DocSearch
    * on your own.
    *
-   * @defaults `"BH4D9OD16A"`
+   * @default `"BH4D9OD16A"`
    */
   appId?: string;
   /**
