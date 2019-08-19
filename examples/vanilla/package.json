@@ -12,8 +12,8 @@
     "build": "parcel build index.html"
   },
   "dependencies": {
-    "docsearch-theme-light": "3.0.0",
-    "docsearch.js": "3.0.0",
+    "docsearch-theme-light": "3.0.0-beta.0",
+    "docsearch.js": "3.0.0-beta.0",
     "parcel-bundler": "1.12.3"
   }
 }
