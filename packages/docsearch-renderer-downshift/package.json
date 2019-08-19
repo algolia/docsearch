@@ -1,6 +1,6 @@
 {
   "name": "docsearch-renderer-downshift",
-  "version": "3.0.0-beta.0",
+  "version": "3.0.0-beta.1",
   "license": "MIT",
   "homepage": "https://community.algolia.com/docsearch/",
   "repository": "algolia/docsearch",
@@ -28,8 +28,8 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "docsearch-core": "^3.0.0-beta.0",
-    "docsearch-types": "^3.0.0-beta.0",
+    "docsearch-core": "3.0.0-beta.1",
+    "docsearch-types": "3.0.0-beta.1",
     "downshift": "^3.2.10",
     "preact": "^8.4.2"
   }
