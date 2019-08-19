@@ -14,7 +14,7 @@ module.exports = {
   versionUpdated: ({ version, exec }) => {
     [
       `npx json -I -f examples/vanilla/package.json -e 'this.dependencies["docsearch-theme-light"] = "${version}"'`,
-      `npx json -I -f examples/vanilla/package.json -e 'this.dependencies["docsearch"] = "${version}"'`,
+      `npx json -I -f examples/vanilla/package.json -e 'this.dependencies["docsearch.js"] = "${version}"'`,
       `npx json -I -f packages/docsearch-core/package.json -e 'this.dependencies["docsearch-types"] = "^${version}"'`,
       `npx json -I -f packages/docsearch-renderer-downshift/package.json -e 'this.dependencies["docsearch-core"] = "^${version}"'`,
       `npx json -I -f packages/docsearch-renderer-downshift/package.json -e 'this.dependencies["docsearch-types"] = "^${version}"'`,
