@@ -12,7 +12,7 @@ Each crawl will begin its journey by the value of the `start_urls` you have in
 your config. It will read those pages and recursively extract and follow every
 link in those pages until it has browsed every compliant page.
 
-If you have explicitly defined a `sitemap.xml`, our crawler will scrap every
+If you have explicitly defined a `sitemap.xml`, our crawler will scrape every
 provided and compliant page. We do recommend using [a sitemap][1] since it
 clearly exposes URLs to crawl and avoid missing pages that aren't linked from
 another one.
