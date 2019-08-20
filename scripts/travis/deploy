@@ -4,11 +4,6 @@
 # Note that this will be triggered even for PR targeting master
 set -x
 
-if ./scripts/travis/is-pr; then
-  echo "✘ Documentation is not deployed for pull requests";
-  exit 0
-fi
-
 if ! ./scripts/travis/on-master; then
   echo "✘ Documentation is only deployed on the master branch";
   exit 0
