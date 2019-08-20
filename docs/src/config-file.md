@@ -45,9 +45,11 @@ complete, it moves that index to the name specified by `index_name` (replacing
 the existing index).
 
 By default, the name of the temporary index is the value of `index_name` +
-_\_tmp_. If you want to use a different name, set the `INDEX_NAME_TMP`
-environment variable to a different value. This variable can be set in the .env
-file alongside `APPLICATION_ID` and `API_KEY`.
+_\_tmp_.
+
+To use a different name, set the `INDEX_NAME_TMP` environment variable to a
+different value. This variable can be set in the .env file alongside
+`APPLICATION_ID` and `API_KEY`.
 
 ## `start_urls`
 
