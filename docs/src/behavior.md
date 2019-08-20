@@ -83,14 +83,15 @@ docsearch({
 
 ## `transformData`
 
-This method will be called on all suggestions before displaying them. It doesn't
-do anything by default, but we provide this hook for you to add your own logic.
+This method will be called on every hits before displaying them. It doesn't do
+anything by default, but we provide this hook for you to add your own logic and
+pre-process the hits returned by Algolia.
 
 ```javascript
 docsearch({
   […],
-  transformData: function(suggestions) {
-    // Transform the list of suggestions, and the return the updated list
+  transformData: function(hits) {
+    // Transform the list of hits
   }
 });
 ```

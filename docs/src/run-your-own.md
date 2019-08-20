@@ -73,7 +73,6 @@ You are ready to go.
 
 ### Running the crawler
 
-
 Running `pipenv shell` will enable your virtual environment. From there, you can
 run one crawl with the following command:
 
