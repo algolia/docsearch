@@ -8,3 +8,6 @@ matrix:
   include:
     - name: "[Documentation] Deploy"
       script: "./scripts/travis/deploy"
+
+node_js:
+  - 9.11.2
