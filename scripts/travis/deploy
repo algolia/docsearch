@@ -20,5 +20,6 @@ if ! ./scripts/travis/changes-in-docs-since-master; then
 fi
 
 cd ./docs || exit 1
+nvm use
 yarn install
 yarn run deploy
