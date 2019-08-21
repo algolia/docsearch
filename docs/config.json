@@ -73,8 +73,8 @@
       "title": "Let’s Get Technical",
       "pages": [
         {
-          "title": "DocSearch Technical Overview (the Crawler)",
-          "url": "crawler-overview.html"
+          "title": "DocSearch Technical Overview (the Scraper)",
+          "url": "scraper-overview.html"
         },
         {
           "title": "Inside The Engine",
@@ -163,6 +163,10 @@
     {
       "from": "recommended-configuration.html",
       "to": "required-configuration.html"
+    },
+    {
+      "from": "crawler-overview.html",
+      "to": "scraper-overview.html"
     }
   ]
 }
