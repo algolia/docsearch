@@ -32,7 +32,7 @@ defaults: &defaults
 
 version: 2
 jobs:
-  test:
+  test_lint:
     <<: *defaults
     steps:
       - checkout
@@ -44,8 +44,16 @@ jobs:
           name: Lint
           command: yarn run lint
       - run:
-          name: Lint
+          name: Type Checking
           command: yarn run type-check
+  test_unit:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: *install_yarn_version
+      - restore_cache: *restore_yarn_cache
+      - run: *run_yarn_install
+      - save_cache: *save_yarn_cache
       - run:
           name: Unit Tests
           command: yarn test
@@ -65,7 +73,8 @@ workflows:
   version: 2
   ci:
     jobs:
-      - test
+      - test_lint
+      - test_unit
   doc:
     jobs:
       - release_doc:
