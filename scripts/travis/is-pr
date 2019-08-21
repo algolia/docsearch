@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-# Check if in a Pull Request
-if [ "$TRAVIS_EVENT_TYPE" = "pull_request" ]; then
-  exit 0
-fi
-exit 1
