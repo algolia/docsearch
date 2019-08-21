@@ -1,3 +1,11 @@
+# [3.0.0-beta.0](https://github.com/algolia/docsearch/compare/v2.6.3...v3.0.0-beta.0) (2019-08-21)
+
+### Features
+
+- **feat:** setup DocSearch.js v3 ([0d3485c](https://github.com/algolia/docsearch/commit/0d3485c))
+- **theme:** add docsearch-theme-light package ([dc28ef1](https://github.com/algolia/docsearch/commit/dc28ef1))
+- **types:** add docsearch-types package ([a400956](https://github.com/algolia/docsearch/commit/a400956))
+
 ## [2.6.3](https://github.com/algolia/docsearch/compare/v2.6.2...v2.6.3) (2019-05-13)
 
 ### Bug Fixes
