@@ -57,6 +57,17 @@ jobs:
       - run:
           name: Unit Tests
           command: yarn test
+  try_to_release:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: *install_yarn_version
+      - restore_cache: *restore_yarn_cache
+      - run: *run_yarn_install
+      - save_cache: *save_yarn_cache
+      - run:
+          name: Try to Release
+          command: yarn shipjs:release
   release_doc:
     <<: *defaults
     steps:
@@ -75,6 +86,10 @@ workflows:
     jobs:
       - test_lint
       - test_unit
+      - try_to_release:
+          requires:
+            - test_lint
+            - test_unit
   doc:
     jobs:
       - release_doc:
