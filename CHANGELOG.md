@@ -1,3 +1,60 @@
+# [](https://github.com/algolia/docsearch/compare/v3.0.0...v) (2019-08-21)
+
+
+### Bug Fixes
+
+* **build:** ignore test files in ES modules ([d222c35](https://github.com/algolia/docsearch/commit/d222c35))
+* **core:** default `hitsPerPage` to 5 ([0b14b84](https://github.com/algolia/docsearch/commit/0b14b84))
+* **core:** fix search method ([752083e](https://github.com/algolia/docsearch/commit/752083e))
+* **core:** implement `searchParameters` in core ([809722a](https://github.com/algolia/docsearch/commit/809722a))
+* **core:** improve hits types ([e400ddf](https://github.com/algolia/docsearch/commit/e400ddf))
+* **core:** increase default snippet size ([22430a0](https://github.com/algolia/docsearch/commit/22430a0))
+* **core:** update container error message ([2661c46](https://github.com/algolia/docsearch/commit/2661c46))
+* **core:** update default hit formatting ([b9ca0a4](https://github.com/algolia/docsearch/commit/b9ca0a4))
+* **core:** update title structure ([d0499e5](https://github.com/algolia/docsearch/commit/d0499e5))
+* **docsearch:** merge container nodes on rerenders ([aaaf560](https://github.com/algolia/docsearch/commit/aaaf560))
+* **renderer:** add `animateTransform` to `JSX.IntrinsicElements` ([dc47e94](https://github.com/algolia/docsearch/commit/dc47e94))
+* **renderer:** add paragraph node only if present ([4365e10](https://github.com/algolia/docsearch/commit/4365e10))
+* **renderer:** add support for reset button ([7e5b9d5](https://github.com/algolia/docsearch/commit/7e5b9d5))
+* **renderer:** check item before scrolling ([075560e](https://github.com/algolia/docsearch/commit/075560e))
+* **renderer:** convert submit button to label ([4b1b478](https://github.com/algolia/docsearch/commit/4b1b478))
+* **renderer:** display loading indicator as SVG ([70dd630](https://github.com/algolia/docsearch/commit/70dd630))
+* **renderer:** don't show no results if loading ([dad1128](https://github.com/algolia/docsearch/commit/dad1128))
+* **renderer:** hide reset button when no query ([ceb07de](https://github.com/algolia/docsearch/commit/ceb07de))
+* **renderer:** prevent default behavior on click with a special key ([b0154a9](https://github.com/algolia/docsearch/commit/b0154a9))
+* **renderer:** update low-network strategy ([6b93a75](https://github.com/algolia/docsearch/commit/6b93a75))
+* **theme:** add design for mobile ([979409a](https://github.com/algolia/docsearch/commit/979409a))
+* **theme:** align dropdown to the right ([87eff29](https://github.com/algolia/docsearch/commit/87eff29))
+* **theme:** hide scrollbar ([befbe30](https://github.com/algolia/docsearch/commit/befbe30))
+* **theme:** remove footer fixed position ([badc4c2](https://github.com/algolia/docsearch/commit/badc4c2))
+* **theme:** remove wrong height property ([4d0f1d8](https://github.com/algolia/docsearch/commit/4d0f1d8))
+* **theme:** support more theme variables ([e20adcd](https://github.com/algolia/docsearch/commit/e20adcd))
+* **theme:** update design ([35cf1f9](https://github.com/algolia/docsearch/commit/35cf1f9))
+* **theme:** update design ([7c58f7f](https://github.com/algolia/docsearch/commit/7c58f7f))
+* **theme:** update mobile design and footer ([8f17da5](https://github.com/algolia/docsearch/commit/8f17da5))
+* **types:** extend QueryParameters type ([d4d823e](https://github.com/algolia/docsearch/commit/d4d823e))
+* **types:** fix content type in DocSearchHit ([a5d6f75](https://github.com/algolia/docsearch/commit/a5d6f75))
+* **types:** share types between packages ([93ddc25](https://github.com/algolia/docsearch/commit/93ddc25))
+
+
+### Features
+
+* **types:** add AlgoliaHit type ([5be51eb](https://github.com/algolia/docsearch/commit/5be51eb))
+* setup DocSearch.js v3 ([0d3485c](https://github.com/algolia/docsearch/commit/0d3485c))
+* **autocomplete:** start design ([be54e00](https://github.com/algolia/docsearch/commit/be54e00))
+* **core:** add `transformQuery` option ([f5f1c2f](https://github.com/algolia/docsearch/commit/f5f1c2f))
+* **core:** don't send empty requests ([c1d7e58](https://github.com/algolia/docsearch/commit/c1d7e58))
+* **docsearch:** implement dropdown ([2224066](https://github.com/algolia/docsearch/commit/2224066))
+* **renderer:** add no results component ([82a638c](https://github.com/algolia/docsearch/commit/82a638c))
+* **renderer:** add placeholder prop ([8edfa03](https://github.com/algolia/docsearch/commit/8edfa03))
+* **renderer:** add stalled search feature ([33fa71a](https://github.com/algolia/docsearch/commit/33fa71a))
+* **renderer:** add support for `onItemHighlight` ([3bc5964](https://github.com/algolia/docsearch/commit/3bc5964))
+* **renderer:** handle loading and error states ([a9916c9](https://github.com/algolia/docsearch/commit/a9916c9))
+* **theme:** add docsearch-theme-light package ([dc28ef1](https://github.com/algolia/docsearch/commit/dc28ef1))
+* **types:** add docsearch-types package ([a400956](https://github.com/algolia/docsearch/commit/a400956))
+
+
+
 ## [2.6.3](https://github.com/algolia/docsearch/compare/v2.6.2...v2.6.3) (2019-05-13)
 
 ### Bug Fixes
