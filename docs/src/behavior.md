@@ -51,20 +51,21 @@ The method is called with the following arguments:
 
 ```javascript
 docsearch({
-  […],
+  // ...
   handleSelected: function(input, event, suggestion, datasetNumber, context) {
-
+    // Prevents the default behavior on click and rather open the suggestion
+    // in a new tab.
     if (context.selectionMethod === 'click') {
-      //Your own logic
-      return;
-    }
+      input.setVal('');
 
-  }
+      const windowReference = window.open(suggestion.url, '_blank');
+      windowReference.focus();
+    }
+  },
 });
 ```
 
-When a custom `handleSelected` is set, default browser clicks on suggestions are
-turned off and only `handleSelected` is called.
+You can [try it live on CodeSandbox][3].
 
 ## `queryHook`
 
@@ -100,7 +101,7 @@ docsearch({
 
 You can pass any options to the underlying `autocomplete.js` instance by using
 the `autocompleteOptions` parameter. You will find the list of all available
-values in [the official documentation][3].
+values in [the official documentation][4].
 
 You can also listen to `autocomplete` events through the `.autocomplete`
 property of the `docsearch` instance.
@@ -121,10 +122,10 @@ search.autocomplete.on('autocomplete:opened', event => {
 ## `algoliaOptions`
 
 You can pass options to the Algolia API by using the `algoliaOptions` key. You
-will find all Algolia API options in their [own documentation][4].
+will find all Algolia API options in their [own documentation][5].
 
 For example, you might want to increase the number of results displayed in the
-dropdown. [`hitsPerPage` set the number of shown hits][5].
+dropdown. [`hitsPerPage` set the number of shown hits][6].
 
 ```javascript
 docsearch({
@@ -137,6 +138,7 @@ docsearch({
 
 [1]: https://github.com/algolia/autocomplete.js
 [2]: ./run-your-own.html
-[3]: https://github.com/algolia/autocomplete.js#global-options
-[4]: https://www.algolia.com/doc/api-reference/api-parameters/
-[5]: https://www.algolia.com/doc/api-reference/api-parameters/hitsPerPage/
+[3]: https://codesandbox.io/s/docsearchjs-open-in-new-tab-tgs2h
+[4]: https://github.com/algolia/autocomplete.js#global-options
+[5]: https://www.algolia.com/doc/api-reference/api-parameters/
+[6]: https://www.algolia.com/doc/api-reference/api-parameters/hitsPerPage/
