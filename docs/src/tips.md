@@ -39,8 +39,8 @@ has better relevance in its search results.
 
 Finding the right depth of your documentation tree and how to split-up your
 content are two of the most complex tasks. For large documents, we recommend
-having 4 levels (from lvl0 until lvl3). Three different levels should be a
-minimum.
+having 4 levels (from lvl0 until lvl3). We recommend three different levels at
+least.
 
 \_Note that you don't have to use `<hX>` tags and can use
 `<span class="title-X">` for example instead. Your will need to update your set
