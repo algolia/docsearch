@@ -122,7 +122,7 @@ dataset (for example a different version), you should use [facets][3].
 
 What is clearly thought out is clearly and concisely expressed.
 
-We really recommend that you read this blog post about [how to build a helpful
+We highly recommend that you read this blog post about [how to build a helpful
 search for technical documentation][2].
 
 [1]: https://www.sitemaps.org/index.html

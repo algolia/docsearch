@@ -66,8 +66,8 @@ matching links from `stop_urls`.
 
 ### `selectors_key`, tailor your selectors
 
-You can define finer sets of selectors depending on the URL. This is done thanks
-to the parameter `selectors_key` from your `start_urls`.
+You can define finer sets of selectors depending on the URL. You need to use the
+parameter `selectors_key` from your `start_urls`.
 
 ```json
 {
@@ -509,8 +509,8 @@ Note that this is often used to avoid duplicate content, by adding
 
 The default value is `0`. By increasing it, you can choose not to index some
 records if they don't have enough `lvlX` matching. For example, with a
-`min_indexed_level: 2`, the scraper only indexes temporary records having at
-least `lvl0`, `lvl1` and `lvl2` set. You can [find out more details about this
+`min_indexed_level: 2`, the scraper indexes temporary records having at least
+`lvl0`, `lvl1` and `lvl2` set. You can [find out more details about this
 strategy in this section][5].
 
 This is useful when your documentation has pages that share the same `lvl0` and
