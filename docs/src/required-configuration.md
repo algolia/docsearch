@@ -56,14 +56,14 @@ It can have this following aspect:
 The biggest blue element will be you `DocSearch-content` container. More details
 in the following guidelines.
 
-### Implement the right classes as [selectors][3]
+### Use the right classes as [selectors][3]
 
 You can add some specific static classes to help us find your content's role.
 These classes can not involve any style changes. These dedicated classes will
 help us to create a great learn as you type experience from your documentation.
 
 - Add a static class `DocSearch-content` to the main container of your textual
-  content. It is mostly a `<main/>` or an `<article/>` HTML element.
+  content. Most of the time, this tag `<main/>` or an `<article/>` HTML element.
 
 - Every searchable `lvl` elements outside this main documentation container (for
   instance in a sidebar) must be `global` selectors. They will be globally

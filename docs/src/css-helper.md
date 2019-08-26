@@ -4,7 +4,7 @@ title: CSS config helper
 ---
 
 To speed up the process of defining which selectors could make a good candidate,
-we created a custom CSS file to help us see what tags are used at a glance.
+we created a custom CSS file to help us to see what tags it needs.
 
 ![Jest documentation after][3]
 
