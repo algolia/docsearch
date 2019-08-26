@@ -46,7 +46,8 @@ continue and build the website.
 
 To make this comparison, both this script and the manual deploy script add a
 `last_update` file to the `./dist` folder containing the timestamp of the last
-deploy. This file is then used to see if changes are present if it should deploy anything.
+deploy. This file is then used to see if changes are present if it should deploy
+anything.
 
 Once the build is complete, it commits the `./dist` folder to the `gh-pages`
 branch and pushed to GitHub. This part requires some non-trivial `git` and `ssh`
@@ -108,7 +109,7 @@ This is my paragraph. {p-2}
 
 ### Layouts
 
-All layouts are saved in the `./src/_layouts` folder.
+Layouts are in the `./src/_layouts` folder.
 
 All config options defined into `config.json` are passed to the layouts and can
 be used there.
