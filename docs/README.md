@@ -62,7 +62,7 @@ Netlify runs `./scripts/netlify-deploy-preview` on each new PR (check
 `netlify.toml` for details).
 
 This script will first check if PR changes anything to the `./docs` subfolder.
-If PR doesn't change anything, the preview will not be generated (this will make
+If PR doesn't change anything, it will not generate the preview (this will make
 processing time faster).
 
 Whenever the preview is ready, a message from Algobot will be added to the PR,
