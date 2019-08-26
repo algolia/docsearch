@@ -111,7 +111,8 @@ This is my paragraph. {p-2}
 
 Layouts are in the `./src/_layouts` folder.
 
-It passes every config options defined into `config.json` to the layouts and are available there.
+It passes every config options defined into `config.json` to the layouts and are
+available there.
 
 You can also use mixins or include other files from the layouts.
 
@@ -134,7 +135,7 @@ that are actually used) and CleanCSS (to minify it).
 
 ### JavaScript
 
-JavaScript code is processed through Babel. It will compile all files situated
+Babel processes JavaScript code. It will compile all files situated
 in `./src/js`.
 
 _Note that it compiles JS, and does not bundle it. We might add Webpack/Parcel
