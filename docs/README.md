@@ -46,8 +46,7 @@ continue and build the website.
 
 To make this comparison, both this script and the manual deploy script add a
 `last_update` file to the `./dist` folder containing the timestamp of the last
-deploy. This file is then used to see if changes are present and should be
-deployed.
+deploy. This file is then used to see if changes are present if it should deploy anything.
 
 Once the build is complete, it commits the `./dist` folder to the `gh-pages`
 branch and pushed to GitHub. This part requires some non-trivial `git` and `ssh`
@@ -86,8 +85,8 @@ second one adds a webserver with live-reload on top of the first one.
 It transforms every Markdown files situated in `./src` into `.html` files in
 `./dist`. It wrapps them into the layout defined in their front-matter.
 
-It converts every headers to their respective `<hX>` tag, along with a
-unique `#id` to allow for easy anchoring.
+It converts every headers to their respective `<hX>` tag, along with a unique
+`#id` to allow for easy anchoring.
 
 You can use plain HTML inside those Markdown files if you need more advanced
 styling. The custom `{my-class}` syntax is also possible if to add CSS classes
