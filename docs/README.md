@@ -149,7 +149,7 @@ automatically copied to the `./dist` folder with the same folder structure:
 
 ### Placeholders
 
-Values defined in the `placeholders` key of the `config.json` file can be used
+You can use the values defined in the `placeholders` key of the `config.json`
 in JavaScript and Markdown files by using the `{{key}}` syntax.
 
 For example if you have:
@@ -163,18 +163,17 @@ For example if you have:
 }
 ```
 
-Every occurrence of `{{projectVersion}}` in any `.md` or `.js` file will be
-replaced with `1.4.2`.
+It replaces every occurrence of `{{projectVersion}}` in any `.md` or `.js` file with `1.4.2`.
 
 ### Sidebar
 
-The left sidebar of the documentation is generated based on the `sidebar` key of
+It generates the left sidebar of the documentation based on the `sidebar` key of
 the `config.json`. The key should contain an array where each key is a part of
 the sidebar, with a `title` and a list of `pages`. Each of those pages in turn
 is an object with a `title` and `url` value.
 
 The layout will then automatically create all the links and color the active
-page. Subsections inside the current page will also be added for every `h2`
+page. It adds subsections inside the current page for every `h2`
 element extracted from the markup of the current page.
 
 ### Redirects
@@ -184,5 +183,5 @@ a `from` and a `to` key. For each `from`, it will create a plain HTML page at
 this location, that will redirect anyone visiting it to the page defined in
 `to`.
 
-_Note that both those links must be defined as relative to the `site.url`
+_Note You must define the links as relative to the `site.url`
 value._
