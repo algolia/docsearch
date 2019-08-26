@@ -26,7 +26,7 @@ This payload will be the only data extracted from your page.
 ![4th step][5] {mt-2}
 
 We index the temporary record when we add an element to it (if
-`min_indexed_level` is set to `0`)
+`min_indexed_level` equals `0`)
 
 ## We pile up the elements based on the current temporary record
 
