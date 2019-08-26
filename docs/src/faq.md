@@ -44,9 +44,8 @@ JSON format instead of HTML. This is the data we put in the Algolia DocSearch
 index. The selectors in your config define the data on file,
 
 As the website owner, we also give you access to the Algolia Analytics
-dashboard. This will let you have more data about the anonymized searches that
-were done on your website. You'll see the most searched terms, or those with no
-results.
+dashboard. This will let you have more data about the anonymized searches in
+your website. You'll see the most searched terms, or those with no results.
 
 With such Analytics, you will understand better what your users are doing.
 
@@ -54,7 +53,7 @@ _If you don't have Analytics access, [send us an email][1] and we'll enable it._
 
 ## Where is my data hosted?
 
-All DocSearch data is hosted on Algolia's servers, with replications around the
+We host the DocSearch data in Algolia's servers, with replications around the
 globe. You can find more details about the actual [server specs here][4], and
 more complete information in our [privacy policy][5].
 
@@ -71,9 +70,9 @@ either:
 
 Yes, but we do not recommend it.
 
-Code samples are a great way for humans to understand how a specific pattern ap
-alpha / method should be used. It often requires boilerplate code though,
-repeated across examples, which will add noise to the results.
+Code samples are a great way for humans to understand how people use a specific
+method. It often requires boilerplate code though, repeated across examples,
+which will add noise to the results.
 
 What we recommend instead is to exclude the code blocks from the indexing (by
 using the `selectors_exclude` option in your config), and instead structure your
@@ -85,7 +84,7 @@ This can happen when you have more than one URL pointing to the same content,
 for example with `./docs`, `./docs/` and `./docs/index.html` or even both `http`
 and `https` in place.
 
-This can be fixed by `stop_urls` to all the patterns you want to exclude. The
+You can fixe the `stop_urls` to all the patterns you want to exclude. The
 following example will exclude all URLs ending with `/` or `index.html` as well
 as those starting with `http://`.
 
@@ -100,10 +99,9 @@ as those starting with `http://`.
 Changing your setting from the dashboard might be something you want to do for
 some reasons .
 
-Please be aware that your DocSearch settings are set at every time the crawler
-is successful. These settings will be overridden at the next crawl. We **do not
-recommend to edit anything from the dashboard**. These changes have be made from
-the JSON configuration itself.
+Every successful crawl sets the DocSearch settings. These settings will be
+overridden at the next crawl. We **do not recommend to edit anything from the
+dashboard**. These changes come from the JSON configuration itself.
 
 You can use the [custom_settings parameter][8] in such purpose.
 
@@ -116,33 +114,33 @@ encourage you to file an issue in their repository explaining how DocSearch
 could help. Feel free to [send us an email][1] as well, and we'll provide all
 the help we can.
 
-## How many records are created by DocSearch?
+## How many records the DocSearch crawl creates?
 
 The [property `nb_hits`][9] in your configuration keeps track of the number of
-records that were extracted and indexed by the last DocSearch run. It is updated
-automatically at each run.
+records the crawl has extracted and indexed by the last DocSearch run. It
+updates this number automatically.
 
 The DocSearch scraper follows [the recommended atomic-reindexing strategy][10].
 It creates a brand new temporary index to populate the data scraped from your
-website. Once the crawl is successfully achieved, this temporary index overwites
-the old index defined in your configuration with the key `index_name`.
+website. When successful, the crawl overwites the old index defined in your
+configuration with the key `index_name`.
 
 ## Why aren't my pages indexed?
 
 We are scraping your website according to your configuration. It might happen
-that some pages are missing from the search. There are several possible reasons
-for that:
+that some pages are missing from the search. You should know the possibles
+reasons of that and:
 
 - Makes sure you are not filtering on the search by wrongly using
   `facetFilters`. [See here for more details][11].
-- Make sure the page missing is referenced from an other indexed page thanks to
-  a hyperlink tag `<a/>`.
+- Make sure that an other indexed page references the page missing from thanks
+  to a hyperlink tag `<a/>`.
 - Make sure you are [providing a compliant sitemap from the configuration][12]
-  and that this page is referenced by it.
+  and that it references the page.
 
 ## Can I know when the next crawl will happen?
 
-No you can't. You can only know that every crawls are made in a day. The
+No you can't. You should be aware that we made every crawls in a day. The
 position of your crawl in the queue is the inverse of the lexicographic order of
 your `index_name` amongs the whole list of featured website.
 
