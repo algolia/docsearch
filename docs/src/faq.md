@@ -132,8 +132,8 @@ the old index defined in your configuration with the key `index_name`.
 ## Why aren't my pages indexed?
 
 We are scraping your website according to your configuration. It might happen
-that some pages are missing from the search. There are several possible
-reasons for that:
+that some pages are missing from the search. There are several possible reasons
+for that:
 
 - Makes sure you are not filtering on the search by wrongly using
   `facetFilters`. [See here for more details][11].
@@ -141,6 +141,12 @@ reasons for that:
   a hyperlink tag `<a/>`.
 - Make sure you are [providing a compliant sitemap from the configuration][12]
   and that this page is referenced by it.
+
+## Can I know when the next crawl will happen?
+
+No you can't. You can only know that every crawls are made in a day. The
+position of your crawl in the queue is the inverse of the lexicographic order of
+your `index_name` amongs the whole list of featured website.
 
 If none of the previous points help, you can contact our support.
 
