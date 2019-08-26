@@ -49,7 +49,7 @@ To make this comparison, both this script and the manual deploy script add a
 deploy. This file is then used to see if changes are present and should be
 deployed.
 
-Once the build is complete, the `./dist` folder is committed to the `gh-pages`
+Once the build is complete, it commits the `./dist` folder to the `gh-pages`
 branch and pushed to GitHub. This part requires some non-trivial `git` and `ssh`
 configuration commands to push data from Netlify to GitHub pages on our behalf
 (check `./scripts/netlify-master` for more details).
