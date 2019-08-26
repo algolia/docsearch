@@ -129,6 +129,21 @@ It creates a brand new temporary index to populate the data scraped from your
 website. Once the crawl is successfully achieved, this temporary index overwites
 the old index defined in your configuration with the key `index_name`.
 
+## Why my pages is not indexed or can not be retrieved?
+
+We are crawling your website according to your configuration. It might happen
+that some pages might be missing from the search. There is several possible
+reasons for that:
+
+- Makes sure you are not filtering on the search by wrongly using
+  `facetFilters`. [See here for more details][11].
+- Make sure the page missing is referenced from an other indexed page thanks to
+  a hyperlink tag `<a/>`.
+- Make sure you are [providing a compliant sitemap from the configuration][12]
+  and that this page is referenced by it.
+
+If none of the previous points helps, you can contact our support.
+
 [1]: mailto:docsearch@algolia.com
 [2]: https://www.algolia.com/
 [3]: https://www.algolia.com/pricing
@@ -140,3 +155,5 @@ the old index defined in your configuration with the key `index_name`.
 [9]: ./config-file.html#nb_hits-special
 [10]:
   https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/in-depth/asynchronicity-and-when-to-wait-for-tasks/#atomic-reindexing
+[11]: https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/
+[12]: ./tips.html#use-a-sitemapxml
