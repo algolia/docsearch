@@ -41,7 +41,7 @@ that the website is **not** hosted on Netlify, but on GitHub Pages (more on that
 later).
 
 The script compares the date of the last commit in `./docs` with the date of the
-last deploy. If no new commits were added, it will stop. Otherwise, it will
+last deploy. If there is not any new commits, it will stop. Otherwise, it will
 continue and build the website.
 
 To make this comparison, both this script and the manual deploy script add a
