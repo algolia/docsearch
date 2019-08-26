@@ -121,7 +121,7 @@ recursive cases, but should be enough for simple cases._
 
 ### CSS
 
-CSS is processed through PostCSS. It expects an entry file in `./src/style.css`.
+PostCSS processes CSS. It expects an entry file in `./src/style.css`.
 
 We are using `postcss-import`, allowing you to `@import` files from the
 `./src/_styles/` directory to better split your CSS code in logical chunks.
@@ -135,8 +135,8 @@ that are actually used) and CleanCSS (to minify it).
 
 ### JavaScript
 
-Babel processes JavaScript code. It will compile all files situated
-in `./src/js`.
+Babel processes JavaScript code. It will compile all files situated in
+`./src/js`.
 
 _Note that it compiles JS, and does not bundle it. We might add Webpack/Parcel
 support later._
