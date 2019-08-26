@@ -39,10 +39,9 @@ account (free accounts can hold as much as 10k records).
 
 ## What data are you collecting?
 
-We only save the data we extract from your website markup, which we put in a
-custom JSON format instead of HTML. This is the only data we put in the Algolia
-DocSearch index. This data is based on the selectors defined in your config
-file,
+We save the data we extract from your website markup, which we put in a custom
+JSON format instead of HTML. This is the data we put in the Algolia DocSearch
+index. The selectors in your config define the data on file,
 
 As the website owner, we also give you access to the Algolia Analytics
 dashboard. This will let you have more data about the anonymized searches that
