@@ -66,12 +66,12 @@ If PR doesn't change anything, it will not generate the preview (this will make
 processing time faster).
 
 Whenever the preview is ready, Algobot ads a meassage to the PR, along with the
-link to the preview. It is a Netlify UI settings in _Build and Deploy >
-Deploy notifications > Comment on GitHub pull request when deploy succeeds_. It
-uses a GitHub token from Algobot to post on its behalf. To generate such a
-token, login to Netlify with Algobot and pretend to create such a notification
-on any project, generate a token, and then copy-paste it in the real DocSearch
-account in Netlify.
+link to the preview. This is a Netlify UI settings in _Build and Deploy > Deploy
+notifications > Comment on GitHub pull request when deploy succeeds_. It uses a
+GitHub token from Algobot to post on its behalf. To generate such a token, login
+to Netlify with Algobot and pretend to create such a notification on any
+project, generate a token, and then copy-paste it in the real DocSearch account
+in Netlify.
 
 ## Internals
 
