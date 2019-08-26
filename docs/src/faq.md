@@ -129,7 +129,7 @@ It creates a brand new temporary index to populate the data scraped from your
 website. Once the crawl is successfully achieved, this temporary index overwites
 the old index defined in your configuration with the key `index_name`.
 
-## Why my pages is not indexed or can not be retrieved?
+## Why aren't my pages indexed?
 
 We are crawling your website according to your configuration. It might happen
 that some pages might be missing from the search. There is several possible
