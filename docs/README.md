@@ -58,7 +58,7 @@ configuration commands to push data from Netlify to GitHub pages on our behalf
 
 Any new Pull Request to the documentation will trigger a deploy preview build.
 
-Netlify is configured to run `./scripts/netlify-deploy-preview` on each new PR
+Netlify runs `./scripts/netlify-deploy-preview` on each new PR
 (check `netlify.toml` for details).
 
 This script will first check if changes were made to the `./docs` subfolder in
