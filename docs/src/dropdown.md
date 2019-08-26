@@ -35,6 +35,9 @@ config.
 </script>
 ```
 
+This snippet needs to be integrated to every pages that should integrate the
+dropdown UI.
+
 ## Testing
 
 If you're eager to test DocSearch but don't have any credentials of your own
