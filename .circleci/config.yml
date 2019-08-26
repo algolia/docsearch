@@ -90,9 +90,12 @@ workflows:
           requires:
             - test_lint
             - test_unit
+          filters:
+            branches:
+              only: next
   doc:
     jobs:
       - release_doc:
           filters:
             branches:
-              only: master
+              only: next
