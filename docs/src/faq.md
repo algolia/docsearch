@@ -131,7 +131,7 @@ the old index defined in your configuration with the key `index_name`.
 
 ## Why aren't my pages indexed?
 
-We are crawling your website according to your configuration. It might happen
+We are scraping your website according to your configuration. It might happen
 that some pages are missing from the search. There are several possible
 reasons for that:
 
