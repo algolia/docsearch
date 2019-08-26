@@ -36,7 +36,6 @@ config.
 ```
 
 This snippet needs to be integrated to every page that integrates the dropdown UI
-dropdown UI.
 
 ## Testing
 
