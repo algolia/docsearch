@@ -142,7 +142,7 @@ reasons for that:
 - Make sure you are [providing a compliant sitemap from the configuration][12]
   and that this page is referenced by it.
 
-If none of the previous points helps, you can contact our support.
+If none of the previous points help, you can contact our support.
 
 [1]: mailto:docsearch@algolia.com
 [2]: https://www.algolia.com/
