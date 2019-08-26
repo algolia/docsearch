@@ -83,7 +83,7 @@ second one adds a webserver with live-reload on top of the first one.
 
 ### HTML
 
-All Markdown files situated in `./src` will be transformed into `.html` files in
+It transforms every Markdown files situated in `./src` into `.html` files in
 `./dist`. They will be wrapped into the layout defined in their front-matter.
 
 All the headers will be converted to their respective `<hX>` tag, along with a
