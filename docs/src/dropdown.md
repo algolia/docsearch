@@ -35,7 +35,7 @@ config.
 </script>
 ```
 
-This snippet needs to be integrated to every pages that should integrate the
+This snippet needs to be integrated to every page that integrates the dropdown UI
 dropdown UI.
 
 ## Testing
