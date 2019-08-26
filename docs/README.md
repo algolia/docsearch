@@ -111,8 +111,7 @@ This is my paragraph. {p-2}
 
 Layouts are in the `./src/_layouts` folder.
 
-All config options defined into `config.json` are passed to the layouts and can
-be used there.
+It passes every config options defined into `config.json` to the layouts and are available there.
 
 You can also use mixins or include other files from the layouts.
 
