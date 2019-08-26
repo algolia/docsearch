@@ -3,17 +3,17 @@ layout: two-columns
 title: Who can apply?
 ---
 
-DocSearch was built from the ground up with the idea of improving search on
-large technical documentation. For that reason, we are offering a free hosting
-version to all online technical documentation.
+We built DocSearch from the ground up with the idea of improving search on large
+technical documentation. For that reason, we are offering a free hosting version
+to all online technical documentation.
 
 We're always sad to have to turn down applications, but with the number of
-requests we receive everyday, we've had to focus on several criteria. We hope
-you understand.
+requests we receive everyday, we've had to focus on fair criteria. We hope you
+understand.
 
 ## The checklist
 
-To have your request validated, we'll ask that you validate all the following
+To have your request validated, we'll ask that you check all the following
 points.
 
 - You must be the **owner** of the website, or at least have the power to update
@@ -49,10 +49,10 @@ criteria:
 - 🙂 If you're using one of our [official integrations][4], creating your config
   will be much faster for us.
 
-- ☹️ If your website is rendered in the browser through JavaScript, it means
-  that we'll have to crawl it through a much slower browser emulation. We highly
-  recommend that you put in place server-side rendering for the useful textual
-  content.
+- ☹️ If we need to render your website in the browser through JavaScript, it
+  means that we'll have to crawl it through a much slower browser emulation. We
+  highly recommend that you put in place server-side rendering for the useful
+  textual content.
 
 [1]: ./apply.html
 [2]: ./run-your-own.html
