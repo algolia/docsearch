@@ -84,7 +84,7 @@ second one adds a webserver with live-reload on top of the first one.
 ### HTML
 
 It transforms every Markdown files situated in `./src` into `.html` files in
-`./dist`. They will be wrapped into the layout defined in their front-matter.
+`./dist`. It wrapps them into the layout defined in their front-matter.
 
 All the headers will be converted to their respective `<hX>` tag, along with a
 unique `#id` to allow for easy anchoring.
