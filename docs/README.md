@@ -86,7 +86,7 @@ second one adds a webserver with live-reload on top of the first one.
 It transforms every Markdown files situated in `./src` into `.html` files in
 `./dist`. It wrapps them into the layout defined in their front-matter.
 
-All the headers will be converted to their respective `<hX>` tag, along with a
+It converts every headers to their respective `<hX>` tag, along with a
 unique `#id` to allow for easy anchoring.
 
 You can use plain HTML inside those Markdown files if you need more advanced
