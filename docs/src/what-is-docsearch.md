@@ -17,7 +17,7 @@ and make it available to everyone from the first keystroke.
 
 ## Quick description
 
-We split DocSearch in a crawler and a frontend library. We run the crawler on
+We split DocSearch into a crawler and a frontend library. We run the crawler on
 our end every 24h to extract content from your website and push it to an Algolia
 index. You can then add the frontend library to your website to search in that index.
 all the search requests to this index.
