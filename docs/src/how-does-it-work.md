@@ -29,7 +29,7 @@ selecting headers, subheaders, etc. All configs are publicly available in our
 
 This step still requires some manual work and human brain, but thanks to the +1
 000 configs we already created, we're able to automate most of it. Once this
-creation finished, we'll run a first indexing of your website and have it run
+creation finishes, we'll run a first indexing of your website and have it run
 automatically every 24h.
 
 ## You update your website
