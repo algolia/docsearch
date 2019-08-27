@@ -38,7 +38,7 @@
     "gh-pages": "1.2.0",
     "glob": "7.1.4",
     "husky": "3.0.3",
-    "inquirer": "6.5.1",
+    "inquirer": "6.5.2",
     "live-server": "1.2.1",
     "lodash": "4.17.15",
     "markdown-it": "9.1.0",
