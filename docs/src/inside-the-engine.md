@@ -21,7 +21,7 @@ another one.
 
 Building records using the scraper is pretty intuitive. According to your
 settings, we extract the payload of your web page and index it, preserving your
-data's structure. It achieves it in a simple way:
+data's structure. It achieves this in a simple way:
 
 - We **read top down** your web page following your HTML flow and pick out your
   matching elements according to their **levels** based on the `selectors_level`

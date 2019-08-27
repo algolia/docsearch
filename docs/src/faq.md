@@ -128,8 +128,7 @@ configuration with the key `index_name`.
 ## Why aren't my pages indexed?
 
 We are scraping your website according to your configuration. It might happen
-that some pages are missing from the search. You should know the possibles
-reasons of that and:
+that some pages are missing from the search. The possible reasons for that are:
 
 - Makes sure you are not filtering on the search by wrongly using
   `facetFilters`. [See here for more details][11].
