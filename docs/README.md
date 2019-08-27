@@ -65,7 +65,7 @@ This script will first check if the PR changes anything to the `./docs` subfolde
 If PR doesn't change anything, it will not generate the preview (this will make
 processing time faster).
 
-Whenever the preview is ready, Algobot ads a meassage to the PR, along with the
+Whenever the preview is ready, Algobot adds a message to the PR, along with the
 link to the preview. This is a Netlify UI settings in _Build and Deploy > Deploy
 notifications > Comment on GitHub pull request when deploy succeeds_. It uses a
 GitHub token from Algobot to post on its behalf. To generate such a token, login
