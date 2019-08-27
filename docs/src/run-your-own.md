@@ -42,7 +42,7 @@ check the [dedicated configuration documentation][5].
 docker run -it --env-file=.env -e "CONFIG=$(cat /path/to/your/config.json | jq -r tostring)" algolia/docsearch-scraper
 ```
 
-Once the crawl finished, you can [jump to the Integration step][6].
+Once the scraping finishes, you can [jump to the Integration step][6].
 
 ## Running the crawler from the code base
 
