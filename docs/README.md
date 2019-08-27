@@ -61,7 +61,7 @@ Any new Pull Request to the documentation will trigger a deploy preview build.
 Netlify runs `./scripts/netlify-deploy-preview` on each new PR (check
 `netlify.toml` for details).
 
-This script will first check if PR changes anything to the `./docs` subfolder.
+This script will first check if the PR changes anything to the `./docs` subfolder.
 If PR doesn't change anything, it will not generate the preview (this will make
 processing time faster).
 
