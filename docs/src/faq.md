@@ -114,7 +114,7 @@ encourage you to file an issue in their repository explaining how DocSearch
 could help. Feel free to [send us an email][1] as well, and we'll provide all
 the help we can.
 
-## How many records the DocSearch crawl creates?
+## How many records does the DocSearch crawl create?
 
 The [property `nb_hits`][9] in your configuration keeps track of the number of
 records the crawl has extracted and indexed by the last DocSearch run. It
