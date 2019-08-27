@@ -5,7 +5,7 @@ title: What is DocSearch?
 
 ## Why?
 
-We have created DocSearch because we used to scratch our own itch. As
+We have created DocSearch because we are scratching our own itch. As
 developers, we spent a lot of time reading documentation, and it can be hard to
 find relevant information in large documentations. We're not blaming anyone
 here; building a good search is a challenge.
