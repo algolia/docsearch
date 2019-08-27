@@ -41,15 +41,15 @@ that the website is **not** hosted on Netlify, but on GitHub Pages (more on that
 later).
 
 The script compares the date of the last commit in `./docs` with the date of the
-last deploy. If no new commits were added, it will stop. Otherwise, it will
+last deploy. If there are no new commits, it will stop. Otherwise, it will
 continue and build the website.
 
 To make this comparison, both this script and the manual deploy script add a
 `last_update` file to the `./dist` folder containing the timestamp of the last
-deploy. This file is then used to see if changes are present and should be
-deployed.
+deploy. This file is then used to see if changes are present if it should deploy
+anything.
 
-Once the build is complete, the `./dist` folder is committed to the `gh-pages`
+Once the build is complete, it commits the `./dist` folder to the `gh-pages`
 branch and pushed to GitHub. This part requires some non-trivial `git` and `ssh`
 configuration commands to push data from Netlify to GitHub pages on our behalf
 (check `./scripts/netlify-master` for more details).
@@ -58,20 +58,20 @@ configuration commands to push data from Netlify to GitHub pages on our behalf
 
 Any new Pull Request to the documentation will trigger a deploy preview build.
 
-Netlify is configured to run `./scripts/netlify-deploy-preview` on each new PR
-(check `netlify.toml` for details).
+Netlify runs `./scripts/netlify-deploy-preview` on each new PR (check
+`netlify.toml` for details).
 
-This script will first check if changes were made to the `./docs` subfolder in
-the PR. If no change were made, the preview will not be generated (this will
-make processing time faster).
+This script will first check if the PR changes anything to the `./docs` subfolder.
+If PR doesn't change anything, it will not generate the preview (this will make
+processing time faster).
 
-Whenever the preview is ready, a message from Algobot will be added to the PR,
-along with the link to the preview. This is configured in Netlify UI in _Build
-and Deploy > Deploy notifications > Comment on GitHub pull request when deploy
-succeeds_. It uses a GitHub token from Algobot to post on its behalf. To
-generate such a token, login to Netlify with Algobot and pretend to create such
-a notification on any project, generate a token, and then copy-paste it in the
-real DocSearch account in Netlify.
+Whenever the preview is ready, Algobot adds a message to the PR, along with the
+link to the preview. This is a Netlify UI setting in _Build and Deploy > Deploy
+notifications > Comment on GitHub pull request when deploy succeeds_. It uses a
+GitHub token from Algobot to post on its behalf. To generate such a token, login
+to Netlify with Algobot and pretend to create such a notification on any
+project, generate a token, and then copy-paste it in the real DocSearch account
+in Netlify.
 
 ## Internals
 
@@ -83,11 +83,11 @@ second one adds a webserver with live-reload on top of the first one.
 
 ### HTML
 
-All Markdown files situated in `./src` will be transformed into `.html` files in
-`./dist`. They will be wrapped into the layout defined in their front-matter.
+It transforms every Markdown files situated in `./src` into `.html` files in
+`./dist`. It wrapps them into the layout defined in their front-matter.
 
-All the headers will be converted to their respective `<hX>` tag, along with a
-unique `#id` to allow for easy anchoring.
+It converts every header to their respective `<hX>` tag, along with a unique
+`#id` to allow for easy anchoring.
 
 You can use plain HTML inside those Markdown files if you need more advanced
 styling. The custom `{my-class}` syntax is also possible if to add CSS classes
@@ -109,10 +109,10 @@ This is my paragraph. {p-2}
 
 ### Layouts
 
-All layouts are saved in the `./src/_layouts` folder.
+Layouts are in the `./src/_layouts` folder.
 
-All config options defined into `config.json` are passed to the layouts and can
-be used there.
+It passes every config options defined into `config.json` to the layouts and are
+available there.
 
 You can also use mixins or include other files from the layouts.
 
@@ -121,7 +121,7 @@ recursive cases, but should be enough for simple cases._
 
 ### CSS
 
-CSS is processed through PostCSS. It expects an entry file in `./src/style.css`.
+PostCSS processes CSS. It expects an entry file in `./src/style.css`.
 
 We are using `postcss-import`, allowing you to `@import` files from the
 `./src/_styles/` directory to better split your CSS code in logical chunks.
@@ -135,8 +135,8 @@ that are actually used) and CleanCSS (to minify it).
 
 ### JavaScript
 
-JavaScript code is processed through Babel. It will compile all files situated
-in `./src/js`.
+Babel processes JavaScript code. It will compile all files situated in
+`./src/js`.
 
 _Note that it compiles JS, and does not bundle it. We might add Webpack/Parcel
 support later._
@@ -149,8 +149,8 @@ automatically copied to the `./dist` folder with the same folder structure:
 
 ### Placeholders
 
-Values defined in the `placeholders` key of the `config.json` file can be used
-in JavaScript and Markdown files by using the `{{key}}` syntax.
+You can use the values defined in the `placeholders` key of the `config.json` in
+JavaScript and Markdown files by using the `{{key}}` syntax.
 
 For example if you have:
 
@@ -163,19 +163,19 @@ For example if you have:
 }
 ```
 
-Every occurrence of `{{projectVersion}}` in any `.md` or `.js` file will be
-replaced with `1.4.2`.
+It replaces every occurrence of `{{projectVersion}}` in any `.md` or `.js` file
+with `1.4.2`.
 
 ### Sidebar
 
-The left sidebar of the documentation is generated based on the `sidebar` key of
+It generates the left sidebar of the documentation based on the `sidebar` key of
 the `config.json`. The key should contain an array where each key is a part of
 the sidebar, with a `title` and a list of `pages`. Each of those pages in turn
 is an object with a `title` and `url` value.
 
 The layout will then automatically create all the links and color the active
-page. Subsections inside the current page will also be added for every `h2`
-element extracted from the markup of the current page.
+page. It adds subsections inside the current page for every `h2` element
+extracted from the markup of the current page.
 
 ### Redirects
 
@@ -184,5 +184,4 @@ a `from` and a `to` key. For each `from`, it will create a plain HTML page at
 this location, that will redirect anyone visiting it to the page defined in
 `to`.
 
-_Note that both those links must be defined as relative to the `site.url`
-value._
+_Note You must define the links as relative to the `site.url` value._

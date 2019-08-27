@@ -10,7 +10,7 @@ DocSearch default colorscheme comes in a grey theme with blue highlight.
 ![Default colorscheme][1]
 
 This theme works well with most websites, but we encourage you to style it to
-your own theme. This can be achieved by overriding the CSS classes used by the
+your own theme. You can achieved it by overriding the CSS classes used by the
 default theme.
 
 The following annotated example will help you style each part:
@@ -77,13 +77,13 @@ docsearch({
 
 ## Other considerations
 
-Selected suggestions are wrapped in a `.ds-cursor` class. This means that you
-can use `.ds-cursor .algolia-docsearch-suggestion--content` to style the
-selected suggestion for example.
+It wraps selected suggestions in a `.ds-cursor` class. This means that you can
+use `.ds-cursor .algolia-docsearch-suggestion--content` to style the selected
+suggestion for example.
 
-On small screens, DocSearch reverts to a single column layout, while the
-two-column layout shown in the screenshot is used on larger screens. You can add
-media queries (for example `@media (min-width: 768px) {}`) to target different
+On small screens, DocSearch reverts to a single column layout, while is uses the
+two-column layout shown in the screenshot on larger screens. You can add media
+queries (for example `@media (min-width: 768px) {}`) to target different
 displays.
 
 ## Advanced styling
@@ -93,8 +93,8 @@ Whether you would like to do more heavy styling, feel free to have a look at the
 sizing and breakpoints.
 
 You can generate your own CSS file by cloning the repository and running
-`yarn run build:css`. The resulting file will be generated in `./dist/cdn`, and
-should be used instead of the default one.
+`yarn run build:css`. It generates the resulting file in `./dist/cdn`, and you
+should use them instead of the default one.
 
 [1]: ./assets/default-colorscheme.png
 [2]: https://www.algolia.com/pricing

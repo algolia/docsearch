@@ -39,8 +39,7 @@ has better relevance in its search results.
 
 Finding the right depth of your documentation tree and how to split-up your
 content are two of the most complex tasks. For large documents, we recommend
-having 4 levels (from lvl0 until lvl3). Three different levels should be a
-minimum.
+having 4 levels (from lvl0 until lvl3). We recommend at least three different levels.
 
 \_Note that you don't have to use `<hX>` tags and can use
 `<span class="title-X">` for example instead. Your will need to update your set
@@ -122,7 +121,7 @@ dataset (for example a different version), you should use [facets][3].
 
 What is clearly thought out is clearly and concisely expressed.
 
-We really recommend that you read this blog post about [how to build a helpful
+We highly recommend that you read this blog post about [how to build a helpful
 search for technical documentation][2].
 
 [1]: https://www.sitemaps.org/index.html

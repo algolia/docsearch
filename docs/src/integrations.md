@@ -17,8 +17,8 @@ see how to enable DocSearch on your website:
 - [pkgdown][6] - [DocSearch indexing][7]
 - [LaRecipe][8] - [Algolia Search][9]
 
-Additionally, if you're a maintaining a similar tool and would like to be added
-to the list, get [in touch with us][10]. We'd be happy to help.
+If you're a maintaining a similar tool and wants us to add you to the list, get
+[in touch with us][10]. We'd be happy to help.
 
 [1]: https://docusaurus.io/
 [2]: https://docusaurus.io/docs/en/search#docsNav

@@ -20,8 +20,8 @@ variables. If you don't have an Algolia account, you need to [create one][2].
 - `APPLICATION_ID` set to your Algolia Application ID
 
 - `API_KEY` set to your API Key. Make sure to use an API key with **write**
-  access to your index. [The ACL `addObject`, `editSettings` and
-  `deleteIndex`][3] must be allowed to this key.
+  access to your index. It needs [the ACL `addObject`, `editSettings` and
+  `deleteIndex`][3].
 
 For convenience, you can create a `.env` file in the repository root.
 
@@ -35,14 +35,14 @@ API_KEY=YOUR_API_KEY
 You can run a crawl from the packaged Docker image to crawl your website. You
 will need to [install jq, a lightweight command-line JSON processor][4]
 
-Then you only need to start the crawl according to your configuration. You
-should check the [dedicated configuration documentation][5].
+Then you need to start the crawl according to your configuration. You should
+check the [dedicated configuration documentation][5].
 
 ```sh
 docker run -it --env-file=.env -e "CONFIG=$(cat /path/to/your/config.json | jq -r tostring)" algolia/docsearch-scraper
 ```
 
-Once the crawl is done, you can [jump to the Integration step][6].
+Once the scraping finishes, you can [jump to the Integration step][6].
 
 ## Running the crawler from the code base
 

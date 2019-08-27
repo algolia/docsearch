@@ -3,12 +3,11 @@ layout: two-columns
 title: Dropdown Search-UI
 ---
 
-Once your Algolia DocSearch index is ready, correctly set up, and filled with
-the right data, you will need to integrate our dedicated Search-UI. To add the
-dropdown of results below your search input, you'll have to include our
-DocSearch library into your website as per the following example. Your `apiKey`
-and `indexName` credentials will be given to you as soon as we've created your
-config.
+Once your Algolia DocSearch index is ready, set up, and filled with the right
+data, you will need to integrate our dedicated Search-UI. To add the dropdown of
+results below your search input, you'll have to include our DocSearch library
+into your website as per the following example. You will receive your `apiKey`
+and `indexName` credentials as soon as we've created your config.
 
 ```html
 <!-- Before the closing </head> -->
@@ -35,7 +34,8 @@ config.
 </script>
 ```
 
-This snippet needs to be integrated to every page that integrates the dropdown UI
+You need to integrate this snippet into every page that integrates the
+dropdown UI
 
 ## Testing
 
