@@ -84,7 +84,7 @@ This can happen when you have more than one URL pointing to the same content,
 for example with `./docs`, `./docs/` and `./docs/index.html` or even both `http`
 and `https` in place.
 
-You can fixe the `stop_urls` to all the patterns you want to exclude. The
+You can fix the `stop_urls` to all the patterns you want to exclude. The
 following example will exclude all URLs ending with `/` or `index.html` as well
 as those starting with `http://`.
 
