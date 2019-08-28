@@ -1,5 +1,4 @@
 ---
-layout: two-columns
 title: Dropdown Search-UI
 ---
 

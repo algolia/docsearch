@@ -1,5 +1,4 @@
 ---
-layout: two-columns
 title: Styling DocSearch
 ---
 
@@ -96,7 +95,7 @@ You can generate your own CSS file by cloning the repository and running
 `yarn run build:css`. It generates the resulting file in `./dist/cdn`, and you
 should use them instead of the default one.
 
-[1]: ./assets/default-colorscheme.png
+[1]: ../img/default-colorscheme.png
 [2]: https://www.algolia.com/pricing
-[3]: ./crawler-overview.html
+[3]: ./scraper
 [4]: https://github.com/algolia/docsearch/tree/master/src/styles

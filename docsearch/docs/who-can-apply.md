@@ -1,5 +1,4 @@
 ---
-layout: two-columns
 title: Who can apply?
 ---
 
@@ -54,7 +53,7 @@ criteria:
   highly recommend that you put in place server-side rendering for the useful
   textual content.
 
-[1]: ./apply.html
-[2]: ./run-your-own.html
+[1]: ./apply
+[2]: ./run-your-own
 [3]: https://www.algolia.com/doc/api-reference/
-[4]: ./integrations.html
+[4]: ./integrations

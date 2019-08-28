@@ -1,5 +1,5 @@
 ---
-layout: two-columns
+id: requirements
 title: Required configuration
 ---
 
@@ -127,10 +127,10 @@ exposed via the DocSearch `custom_settings` parameter.
 
 Any question ? [Send us an email][7].
 
-[1]: ./how-do-we-build-an-index.html
-[2]: ./assets/proper_layout.png
-[3]: ./config-file.html
+[1]: ./how-do-we-build-an-index
+[2]: ../img/proper_layout.png
+[3]: ./config
 [4]: https://www.algolia.com/doc/guides/searching/filtering/#facet-filters
 [5]: https://www.sitemaps.org/
-[6]: ./config-file.html#js_render-optional
+[6]: ./config#js_render-optional
 [7]: mailto:DocSearch@algolia.com

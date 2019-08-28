@@ -6,39 +6,42 @@
  */
 
 module.exports = {
-  title: 'My Site',
-  tagline: 'The tagline of my site',
-  url: 'https://your-docusaurus-test-site.com',
+  title: 'DocSearch',
+  tagline: 'The best search experience for docs, integrates in minutes, for free',
+  url: 'https://community.algolia.com/docsearch',
   baseUrl: '/',
   favicon: 'img/favicon.ico',
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'Algolia',
+  projectName: 'DocSearch',
+  themes: ['@docusaurus/theme-search-algolia'],
   themeConfig: {
+    algolia: {
+      apiKey: '25626fae796133dc1e734c6bcaaeac3c',
+      indexName: 'docsearch',
+      algoliaOptions: {}, // Optional, if provided by Algolia
+    },
     navbar: {
-      title: 'My Site',
       logo: {
-        alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        alt: 'DocSearch',
+        src: 'img/docsearch-logo.svg',
       },
       links: [
-        {to: 'docs/doc1', label: 'Docs', position: 'left'},
-        {to: 'blog', label: 'Blog', position: 'left'},
+        {to: 'docs/what-is-docsearch', label: 'Documentation', position: 'left'},
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/algolia/DocSearch',
           label: 'GitHub',
           position: 'right',
         },
       ],
     },
     footer: {
-      style: 'dark',
       links: [
         {
-          title: 'Docs',
+          title: 'Documentation',
           items: [
             {
-              label: 'Docs',
-              to: 'docs/doc1',
+              label: 'Documentation',
+              to: 'docs/what-is-docsearch',
             },
           ],
         },
@@ -47,7 +50,7 @@ module.exports = {
           items: [
             {
               label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
+              href: 'https://discordapp.com/invite/algolia',
             },
           ],
         },
@@ -62,10 +65,10 @@ module.exports = {
         },
       ],
       logo: {
-        alt: 'Facebook Open Source Logo',
-        src: 'https://docusaurus.io/img/oss_logo.png',
+        alt: 'Algolia',
+        src: 'img/algolia-logo.svg',
       },
-      copyright: `Copyright © ${new Date().getFullYear()} Facebook, Inc. Built with Docusaurus.`,
+      copyright: `DocSearch 2015-now • Designed and Built by Algolia with Docusaurus.`,
     },
   },
   presets: [

@@ -40,3 +40,39 @@
   height: 200px;
   width: 200px;
 }
+
+.hero{
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* background-image: url('img/bg-docsearch.svg'),linear-gradient(#fff,#f5f5fa); */
+  background-position: center calc(100% - 18px);
+}
+
+
+.getStarted{
+  display: inline-flex;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 9999px;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 1.5px;
+  color: #5d6494;
+  box-shadow: 0 7px 14px -3px rgba(45,35,66,.3), 0 2px 4px 0 rgba(45,35,66,.4), inset 0 -2px 0 0 #cfd1e3;
+  height: 2.625rem;
+  font-size: .9rem;
+  background: linear-gradient(#fff,#e4e4e9);
+  transition: box-shadow .15s ease,-webkit-transform .15s ease;
+  transition: box-shadow .15s ease,transform .15s ease;
+  transition: box-shadow .15s ease,transform .15s ease,-webkit-transform .15s ease;
+  will-change: box-shadow,transform;
+  text-shadow: 0 1px 0 #4b5ef0;
+  background: linear-gradient(#aeb7ff,#5468ff);
+  box-shadow: 0 7px 14px -3px rgba(45,35,66,.3), 0 2px 4px 0 rgba(45,35,66,.4), inset 0 -2px 0 0 #4b58ba;
+  color: #f5f5fa;
+}

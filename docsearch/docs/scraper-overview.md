@@ -1,5 +1,5 @@
 ---
-layout: two-columns
+id: scraper
 title: Scraper Overview
 ---
 

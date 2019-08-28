@@ -1,5 +1,4 @@
 ---
-layout: two-columns
 title: Tips for a good search
 ---
 

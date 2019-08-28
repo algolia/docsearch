@@ -1,5 +1,5 @@
 ---
-layout: two-columns
+id: how
 title: How does it work?
 ---
 
@@ -8,7 +8,7 @@ three steps: you apply, we configure the crawler for you, and you integrate our
 Search-UI in your frontend. You only need to copy and paste a JavaScript
 snippet.
 
-![How it works][4] {mt-2}
+![How it works][4]
 
 ## You apply
 
@@ -48,7 +48,7 @@ crawling your website every day and update your search results automatically.
 All we ask is that you keep the "search by Algolia" logo next to your search
 results.
 
-[1]: ./apply.html
+[1]: ./apply
 [2]: https://github.com/algolia/docsearch-configs/tree/master/configs
-[3]: ./styling.html
-[4]: ./assets/docsearch-how-it-works.png
+[3]: ./styling
+[4]: ../img/docsearch-how-it-works.png

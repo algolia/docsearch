@@ -1,5 +1,5 @@
 ---
-layout: two-columns
+id: config
 title: Config Files
 ---
 
