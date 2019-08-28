@@ -1,5 +1,5 @@
 ---
-layout: two-columns
+id: engine
 title: Inside the engine
 ---
 

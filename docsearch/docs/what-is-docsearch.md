@@ -1,6 +1,6 @@
 ---
-layout: two-columns
 title: What is DocSearch?
+
 ---
 
 ## Why?
@@ -32,4 +32,4 @@ DocSearch is [one of our ways][1] to give back to the open source community for
 everything it did for us already.
 
 [1]: https://opencollective.com/algolia
-[2]: ./who-can-apply.html
+[2]: ./who-can-apply

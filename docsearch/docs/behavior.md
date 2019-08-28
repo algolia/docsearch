@@ -1,6 +1,6 @@
 ---
-layout: two-columns
 title: Dropdown Behavior
+sidebar_label: Behavior
 ---
 
 Our JS library `docsearch.js` is a wrapper of the [Algolia autocomplete.js][1]
