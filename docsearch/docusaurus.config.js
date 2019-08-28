@@ -8,8 +8,8 @@
 module.exports = {
   title: 'DocSearch',
   tagline: 'The best search experience for docs, integrates in minutes, for free',
-  url: 'https://community.algolia.com/docsearch',
-  baseUrl: '/',
+  url: 'https://docsearch.netlify.com',
+  baseUrl: '/docsearch',
   favicon: 'img/favicon.ico',
   organizationName: 'Algolia',
   projectName: 'DocSearch',
