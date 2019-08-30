@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { Section, SectionTitle, Button, Text, TextBlock, Hero, LabelText, Input, SectionHeader, SmallText } from '@algolia/ui-library';
+import { Section, SectionTitle, Button, Text, TextBlock, Hero, LabelText, Input, SectionHeader, SmallText, NumberedList } from '@algolia/ui-library';
 import classnames from 'classnames';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
@@ -123,29 +123,20 @@ function Home() {
 
     <Section>
       <SectionHeader title='How it works'></SectionHeader>
-      <div className="row">
-        <div className="col col--4">
-          <img src="img/illus1.png"/>
-          <TextBlock title="We scrap your documentation"  label='1 - Scraping'>
-            <Text small>We built a website crawler designed to index every section of your documentation.</Text>
-            <Text small>Just send us the URL of your documentation, and we’ll run the scraper every 24h so you’re always up-to-date.</Text>
-          </TextBlock>
-        </div>
-        <div className="col col--4">
-          <img src="img/illus2.png"/>
-          <TextBlock title="We configure your search"  label='2 - Configuration'>
-            <Text small>You don’t need to configure any settings or even have an Algolia account.</Text>
-            <Text small>We take care of this automatically to ensure the best documentation search experience.</Text>
-          </TextBlock>
-        </div>
-        <div className="col col--4">
-          <img src="img/illus3.png"/>
-          <TextBlock title="You add docsearch.js to your docs"  label='3 - Implementation'>
-            <Text small>We'll send you a script that integrates Algolia's autocomplete to power your search.</Text>
-            <Text small>You will receive the same speed, relevance, and best-in-class UX as our paying customers.</Text>
-          </TextBlock>
-        </div>
-      </div>
+      <NumberedList columns={3}>
+      <TextBlock title="We scrap your documentation"  label='Scraping'>
+        <Text small>We built a website crawler designed to index every section of your documentation.</Text>
+        <Text small>Just send us the URL of your documentation, and we’ll run the scraper every 24h so you’re always up-to-date.</Text>
+      </TextBlock>
+      <TextBlock title="We configure your search"  label='Configuration'>
+        <Text small>You don’t need to configure any settings or even have an Algolia account.</Text>
+        <Text small>We take care of this automatically to ensure the best documentation search experience.</Text>
+      </TextBlock>
+      <TextBlock title="You add docsearch.js to your docs"  label='Implementation'>
+        <Text small>We'll send you a script that integrates Algolia's autocomplete to power your search.</Text>
+        <Text small>You will receive the same speed, relevance, and best-in-class UX as our paying customers.</Text>
+      </TextBlock>
+      </NumberedList>
     </Section>
 
     <Section>
@@ -167,7 +158,7 @@ function Home() {
               <Text small className="uil-pv-8">We'll send you the JavaScript snippet you'll have to integrate into your documentation.</Text>
             </div>
             <div className="uil-mb-16 uil-ph-32 uil-bdtw-1 uil-bdc-proton uil-bgc-moon uil-bdts-solid uil-pv-32 uil-ta-center">
-              <LabelText className="" tag="label" htmlFor="owner">
+              <LabelText tag="label" htmlFor="owner">
                 <input id="owner" name="owner" type="checkbox" required=""/>
                 I'm the <span class="bold inline">owner</span> of the website and I've <a href="./who-can-apply.html">read the checklist</a>
               </LabelText>
@@ -184,14 +175,12 @@ function Home() {
     </Section>
 
     <Section>
-    <TextBlock title="Thank you!">
-      <Text small>Your request will be processed by our team.</Text>
-      <Text small>We'll get back to you on <span class="custom-placeholder-email">your email</span> with the snippet of JavaScript you'll need to integrate into <span class="custom-placeholder-url">your website</span>.</Text>
-      <Text small>Please be patient, it can take a few days.</Text>
-    </TextBlock>
+      <TextBlock title="Thank you!">
+        <Text small>Your request will be processed by our team.</Text>
+        <Text small>We'll get back to you on <span class="custom-placeholder-email">your email</span> with the snippet of JavaScript you'll need to integrate into <span class="custom-placeholder-url">your website</span>.</Text>
+        <Text small>Please be patient, it can take a few days.</Text>
+      </TextBlock>
     </Section>
-
-
 
     </Layout>
   );
