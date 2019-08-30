@@ -38,7 +38,7 @@ module.exports = {
     footer: {
       links: [
         {
-          title: 'Documentation',
+          title: 'DocSearch',
           items: [
             {
               label: 'Documentation',
@@ -56,10 +56,7 @@ module.exports = {
               label:'Changelog',
               to: ''
             },
-            {
-              label:'Community Forum',
-              to: ''
-            }
+
           ],
         },
         {
@@ -69,11 +66,14 @@ module.exports = {
               label: 'Discord',
               href: 'https://discordapp.com/invite/algolia',
             },
-          ],
-        },
-        {
-          title: 'Social',
-          items: [
+            {
+              label: 'Slack',
+              to: 'https://twitter.com/algolia',
+            },
+            {
+              label:'Forum',
+              to: ''
+            },
             {
               label: 'Twitter',
               to: 'https://twitter.com/algolia',

@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { Section, SectionTitle, Button, Text, TextBlock, Hero, LabelText, Input, SectionHeader, SmallText, NumberedList } from '@algolia/ui-library';
+import { LightCta, Section, SectionTitle, Button, Text, TextBlock, Hero, LabelText, Input, SectionHeader, SmallText, NumberedList, Card, CardsRow } from '@algolia/ui-library';
 import classnames from 'classnames';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
@@ -139,6 +139,35 @@ function Home() {
       </NumberedList>
     </Section>
 
+<Section>
+  <SectionHeader title='Try it Live'>
+    <Text>We helped integrate DocSearch into several open source projects. Have a look.</Text>
+  </SectionHeader>
+
+  <CardsRow>
+    <Card image='img/demos/example-bootstrap.gif'>
+      <LightCta withArrow>
+        <img style={{ height: '30px', verticalAlign: 'middle', marginRight: '12px', marginTop: '-2px' }} src="img/logos/bootstrap.jpg" />
+        Visit Bootstrap
+      </LightCta>
+    </Card>
+    <Card image='img/demos/example-vuejs.gif'>
+      <img style={{ height: '30px', verticalAlign: 'middle', marginRight: '12px', marginTop: '-2px' }} src="img/logos/vue.jpg" />
+      <LightCta withArrow>Visit Vue</LightCta>
+    </Card>
+    <Card image='img/demos/example-react.gif'>
+    <img style={{ height: '30px', verticalAlign: 'middle', marginRight: '12px', marginTop: '-2px' }} src="img/logos/react.jpg" />
+      <LightCta withArrow>Visit React</LightCta>
+    </Card>
+    <Card image='img/demos/example-momentjs.gif'>
+      <img style={{ height: '30px', verticalAlign: 'middle', marginRight: '12px', marginTop: '-2px' }} src="img/logos/momentjs.jpg" />
+      <LightCta withArrow>Visit Momenjs</LightCta>
+    </Card>
+  </CardsRow>
+
+</Section>
+
+
     <Section>
       <div className="row">
         <div className="col col--6 col--offset-3">
@@ -150,12 +179,12 @@ function Home() {
                 Documentation URL
                 <Input id="url" name="url" placeholder="https://project.org/docs" backgroundColor="white" type="url" required />
               </LabelText>
-              <Text small className="uil-pv-8">We'll crawl pages at this address and index the content on Algolia.</Text>
+              <Text small className="uil-pv-8 uil-mb-16" tag="div">We'll crawl pages at this address and index the content on Algolia.</Text>
               <LabelText tag="label" htmlFor="Email">
                 Email
               </LabelText>
               <Input id="email" name="email" placeholder="you@project.org" backgroundColor="white" type="email" required />
-              <Text small className="uil-pv-8">We'll send you the JavaScript snippet you'll have to integrate into your documentation.</Text>
+              <Text small className="uil-pv-8" tag="div">We'll send you the JavaScript snippet you'll have to integrate into your documentation.</Text>
             </div>
             <div className="uil-mb-16 uil-ph-32 uil-bdtw-1 uil-bdc-proton uil-bgc-moon uil-bdts-solid uil-pv-32 uil-ta-center">
               <LabelText tag="label" htmlFor="owner">
@@ -172,14 +201,18 @@ function Home() {
           </form>
         </div>
       </div>
-    </Section>
 
-    <Section>
-      <TextBlock title="Thank you!">
-        <Text small>Your request will be processed by our team.</Text>
-        <Text small>We'll get back to you on <span class="custom-placeholder-email">your email</span> with the snippet of JavaScript you'll need to integrate into <span class="custom-placeholder-url">your website</span>.</Text>
-        <Text small>Please be patient, it can take a few days.</Text>
-      </TextBlock>
+      <div className="row">
+        <div className="col col--6 col--offset-3">
+          <div className="shadow--md uil-bgc-white uil-pv-32 uil-ph-32">
+            <TextBlock title="Thank you!">
+              <Text small>Your request will be processed by our team.</Text>
+              <Text small>We'll get back to you on <span class="custom-placeholder-email">your email</span> with the snippet of JavaScript you'll need to integrate into <span class="custom-placeholder-url">your website</span>.</Text>
+              <Text small>Please be patient, it can take a few days.</Text>
+            </TextBlock>
+          </div>
+        </div>
+      </div>
     </Section>
 
     </Layout>
