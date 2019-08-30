@@ -6,13 +6,14 @@
  */
 
 import React from 'react';
-import { Section, SectionTitle, Button, Text, TextBlock, Hero, LabelText, Input, SectionHeader } from '@algolia/ui-library';
+import { Section, SectionTitle, Button, Text, TextBlock, Hero, LabelText, Input, SectionHeader, SmallText } from '@algolia/ui-library';
 import classnames from 'classnames';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import withBaseUrl from '@docusaurus/withBaseUrl';
 import styles from './styles.module.css';
+import bg from '../../static/img/bg-docsearch.svg';
 
 function Home() {
   const context = useDocusaurusContext();
@@ -22,15 +23,15 @@ function Home() {
       title="DocSearch: Search made for documentation"
       description="The easiest way to add search to your documentation - Powered by Algolia">
       <Hero
-      background="curves"
       title={<img src="img/docsearch-logo.svg" alt="DocSearch"/>}
       subtitle= {siteConfig.tagline}
       cta={[
-        <Button primary to={withBaseUrl('docs/what-is-docsearch')}>
+        <Button primary tag="a" href={withBaseUrl('docs/what-is-docsearch')}>
           Join the Program
         </Button>,
       ]}
     />
+
     <Section>
       <SectionHeader title='State-of-the-art search for technical documentation'>
         <Text>We're kind of scratching our own itch here. As developers, we spend
@@ -44,6 +45,49 @@ function Home() {
         <div class="demo-header-wrapper">
           <div class="docsearch-live-demo-input-wrapper">
           </div>
+        </div>
+      </div>
+    </Section>
+
+    <Section background="white">
+      <SectionHeader title='Providing Search for 1500+ docs, and counting'>
+      </SectionHeader>
+      <div className="row">
+        <div className="col col--1">
+          <img style={{ height: '50px' }} src="img/logos/bootstrap.jpg" />
+        </div>
+        <div className="col col--1">
+          <img style={{ height: '50px' }} src="img/logos/babel.jpg" />
+        </div>
+        <div className="col col--1">
+        <img style={{ height: '50px' }} src="img/logos/graphql.jpg" />
+        </div>
+        <div className="col col--1">
+        <img style={{ height: '50px' }} src="img/logos/jest.png" />
+        </div>
+        <div className="col col--1">
+        <img style={{ height: '50px' }} src="img/logos/react.jpg" />
+        </div>
+        <div className="col col--1">
+        <img style={{ height: '50px' }} src="img/logos/webpack.jpg" />
+        </div>
+        <div className="col col--1">
+        <img style={{ height: '50px' }} src="img/logos/gatsby.png" />
+        </div>
+        <div className="col col--1">
+        <img style={{ height: '50px' }} src="img/logos/brew.png" />
+        </div>
+        <div className="col col--1">
+        <img style={{ height: '50%' }} src="img/logos/jquery.jpg" />
+        </div>
+        <div className="col col--1">
+        <img style={{ height: '50px' }} src="img/logos/netlify.jpg" />
+        </div>
+        <div className="col col--1">
+        <img style={{ height: '50px' }} src="img/logos/vue.jpg" />
+        </div>
+        <div className="col col--1">
+        <img style={{ height: '50px' }} src="img/logos/yarn.jpg" />
         </div>
       </div>
     </Section>
@@ -107,42 +151,47 @@ function Home() {
     <Section>
       <div className="row">
         <div className="col col--6 col--offset-3">
-          <form className="shadow--md uil-p-48" method="POST" action="https://www.algolia.com/docsearch/join">
-
-            <LabelText tag="label" htmlFor="url">
-              Documentation URL
-              <Input id="url" name="url" placeholder="https://project.org/docs" backgroundColor="white" type="url" required />
-            </LabelText>
-            <Text small>We'll crawl pages at this address and index the content on Algolia.</Text>
-
-            <LabelText tag="label" htmlFor="Email">
-              Email
-            </LabelText>
-            <Input id="email" name="email" placeholder="you@project.org" backgroundColor="white" type="email" required />
-            <Text small>We'll send you the JavaScript snippet you'll have to integrate into your documentation.</Text>
-
-            <LabelText tag="label" htmlFor="owner">
-              <input name="owner" type="checkbox" required=""/>
-              I'm the <span class="bold inline">owner</span> of the website and I <a href="./who-can-apply.html">read the checklist</a> before applying.
-            </LabelText>
-
-            <Button className="uil-m-48" type="submit" primary>Apply to DocSearch</Button>
-
-            <Text small>
-              Refer to <a href="https://www.algolia.com/policies/terms">Algolia's Privacy Policy</a> for more information on how we use and protect your data
-            </Text>
-
-            <div class="poppins text-4 mb-2">Thank you!</div>
-            <p class="text-2 leading-2 mb-1">Your request will be processed by our team. </p>
-            <p class="text-2 leading-2 mb-1">
-              We'll get back to you on <span class="custom-placeholder-email inline text-nebula">your email</span> with the snippet of JavaScript you'll need to integrate into <span class="custom-placeholder-url inline text-nebula">your website</span>.
-            </p>
-            <p class="text-2 leading-2"> Please be patient, it can take a few days.</p>
-
+          <form className="shadow--md uil-bgc-white" method="POST" action="https://www.algolia.com/docsearch/join">
+            <div className="uil-pv-32 uil-ph-32 uil-bdr-6">
+              <SectionTitle>Join the Program</SectionTitle>
+              <br/>
+              <LabelText tag="label" htmlFor="url">
+                Documentation URL
+                <Input id="url" name="url" placeholder="https://project.org/docs" backgroundColor="white" type="url" required />
+              </LabelText>
+              <Text small className="uil-pv-8">We'll crawl pages at this address and index the content on Algolia.</Text>
+              <LabelText tag="label" htmlFor="Email">
+                Email
+              </LabelText>
+              <Input id="email" name="email" placeholder="you@project.org" backgroundColor="white" type="email" required />
+              <Text small className="uil-pv-8">We'll send you the JavaScript snippet you'll have to integrate into your documentation.</Text>
+            </div>
+            <div className="uil-mb-16 uil-ph-32 uil-bdtw-1 uil-bdc-proton uil-bgc-moon uil-bdts-solid uil-pv-32 uil-ta-center">
+              <LabelText className="" tag="label" htmlFor="owner">
+                <input id="owner" name="owner" type="checkbox" required=""/>
+                I'm the <span class="bold inline">owner</span> of the website and I've <a href="./who-can-apply.html">read the checklist</a>
+              </LabelText>
+              <br/><br/>
+              <Button className="uil-mh-48 uil-d-block" type="submit" primary>Apply to DocSearch</Button>
+              <br/><br/><br/>
+              <Text small>
+                Refer to <a href="https://www.algolia.com/policies/terms">Algolia's Privacy Policy</a> for<br/>more information on how we use and protect your data
+              </Text>
+            </div>
           </form>
         </div>
       </div>
     </Section>
+
+    <Section>
+    <TextBlock title="Thank you!">
+      <Text small>Your request will be processed by our team.</Text>
+      <Text small>We'll get back to you on <span class="custom-placeholder-email">your email</span> with the snippet of JavaScript you'll need to integrate into <span class="custom-placeholder-url">your website</span>.</Text>
+      <Text small>Please be patient, it can take a few days.</Text>
+    </TextBlock>
+    </Section>
+
+
 
     </Layout>
   );
