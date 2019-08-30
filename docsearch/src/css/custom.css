@@ -44,3 +44,10 @@
   background-image: url(../../static/img/bg-docsearch.svg),linear-gradient(#fff,#f5f5fa);
   background-position: center calc(100% - 18px);
 }
+
+.bg-analytics{
+  background-repeat: no-repeat;
+  background-image: url(../../static/img/bg-analytics.svg);
+  background-size: cover;
+  background-position: center -250px;
+}
