@@ -38,25 +38,45 @@ module.exports = {
     footer: {
       links: [
         {
+          title: 'Documentation',
+          items: [
+            {
+              label: 'Getting Started',
+              to: 'docs/what-is-docsearch'
+            },
+            {
+              label: 'DocSearch.js',
+              to: 'docs/dropdown'
+            },
+            {
+              label: 'FAQ',
+              to: 'docs/faq'
+            },
+            {
+              label: 'Run your own scraper',
+              to: 'docs/run-your-own'
+            },
+          ]
+        },
+        {
           title: 'DocSearch',
           items: [
             {
-              label: 'Documentation',
-              to: 'docs/what-is-docsearch',
+              label:'Code licensed under MIT',
+              to: 'https://github.com/algolia/docsearch/blob/master/LICENSE'
             },
             {
-              label:'Code licensed under MIT',
-              to: ''
+              label: 'Github',
+              to: 'https://github.com/algolia/docsearch',
             },
             {
               label:'Issues',
-              to: ''
+              to: 'https://github.com/algolia/docsearch/issues'
             },
             {
               label:'Changelog',
-              to: ''
+              to: 'https://github.com/algolia/docsearch/blob/master/CHANGELOG.md'
             },
-
           ],
         },
         {

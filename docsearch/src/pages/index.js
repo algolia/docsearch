@@ -55,41 +55,41 @@ function Home() {
       <SectionHeader title='Providing Search for 1500+ docs, and counting'>
       </SectionHeader>
       <div className="row">
-        <div className="col">
+        <div className="col text--center">
           <img style={{ height: '50px' }} src="img/logos/bootstrap.jpg" />
+          <SmallText tag="p">Bootstrap</SmallText>
         </div>
-        <div className="col">
+        <div className="col text--center">
           <img style={{ height: '50px' }} src="img/logos/babel.jpg" />
+          <SmallText tag="p">Babel</SmallText>
         </div>
-        <div className="col">
+        <div className="col text--center">
           <img style={{ height: '50px' }} src="img/logos/graphql.jpg" />
+          <SmallText tag="p">Graphql</SmallText>
         </div>
-        <div className="col">
-          <img style={{ height: '50px' }} src="img/logos/jest.png" />
-        </div>
-        <div className="col col--1">
+        <div className="col text--center">
           <img style={{ height: '50px' }} src="img/logos/react.jpg" />
+          <SmallText tag="p">React</SmallText>
         </div>
-        <div className="col col--1">
+        <div className="col text--center">
           <img style={{ height: '50px' }} src="img/logos/webpack.jpg" />
+          <SmallText tag="p">Webpack</SmallText>
         </div>
-        <div className="col col--1">
+        <div className="col text--center">
           <img style={{ height: '50px' }} src="img/logos/gatsby.png" />
+          <SmallText tag="p">Gatsby</SmallText>
         </div>
-        <div className="col col--1">
-          <img style={{ height: '50px' }} src="img/logos/brew.png" />
-        </div>
-        <div className="col col--1">
-          <img style={{ height: '50%' }} src="img/logos/jquery.jpg" />
-        </div>
-        <div className="col col--1">
+        <div className="col text--center">
           <img style={{ height: '50px' }} src="img/logos/Netlify.svg" />
+          <SmallText tag="p">Netlify</SmallText>
         </div>
-        <div className="col col--1">
+        <div className="col text--center">
           <img style={{ height: '50px' }} src="img/logos/vue.jpg" />
+          <SmallText tag="p">Vue</SmallText>
         </div>
-        <div className="col col--1">
+        <div className="col text--center">
           <img style={{ height: '50px' }} src="img/logos/yarn.jpg" />
+          <SmallText tag="p">Yarn</SmallText>
         </div>
       </div>
     </Section>
@@ -147,22 +147,22 @@ function Home() {
       </SectionHeader>
       <CardsRow>
         <Card image='img/demos/example-bootstrap.gif'>
-          <LightCta withArrow>
+          <LightCta withArrow href="http://getbootstrap.com/docs/4.1/getting-started/introduction/" target="_blank">
             <img style={{ height: '30px', verticalAlign: 'middle', marginRight: '12px', marginTop: '-2px' }} src="img/logos/bootstrap.jpg" />
             Visit Bootstrap
           </LightCta>
         </Card>
         <Card image='img/demos/example-vuejs.gif'>
           <img style={{ height: '30px', verticalAlign: 'middle', marginRight: '12px', marginTop: '-2px' }} src="img/logos/vue.jpg" />
-          <LightCta withArrow>Visit Vue</LightCta>
+          <LightCta withArrow href="https://vuejs.org/v2/guide/" target="_blank">Visit Vue</LightCta>
         </Card>
         <Card image='img/demos/example-react.gif'>
         <img style={{ height: '30px', verticalAlign: 'middle', marginRight: '12px', marginTop: '-2px' }} src="img/logos/react.jpg" />
-          <LightCta withArrow>Visit React</LightCta>
+          <LightCta withArrow href="https://reactjs.org/docs/getting-started.html" target="_blank">Visit React</LightCta>
         </Card>
         <Card image='img/demos/example-momentjs.gif'>
           <img style={{ height: '30px', verticalAlign: 'middle', marginRight: '12px', marginTop: '-2px' }} src="img/logos/momentjs.jpg" />
-          <LightCta withArrow>Visit Momenjs</LightCta>
+          <LightCta withArrow href="https://momentjs.com/" target="_blank">Visit Momenjs</LightCta>
         </Card>
       </CardsRow>
     </Section>
@@ -208,8 +208,8 @@ function Home() {
           <div className="shadow--md uil-bgc-white uil-pv-32 uil-ph-32">
             <TextBlock title="Thank you!">
               <Text>Your request will be processed by our team.</Text>
-              <Text>We'll get back to you on <span class="custom-placeholder-email">your email</span> with the snippet of JavaScript you'll need to integrate into <span class="custom-placeholder-url">your website</span>.</Text>
-              <Text>Please be patient, it can take a few days.</Text>
+              <Text small>We'll get back to you on <span class="custom-placeholder-email">your email</span> with the snippet of JavaScript you'll need to integrate into <span class="custom-placeholder-url">your website</span>.</Text>
+              <Text small>Please be patient, it can take a few days.</Text>
             </TextBlock>
           </div>
         </div>

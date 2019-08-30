@@ -18,7 +18,6 @@
     "image-webpack-loader": "^5.0.0",
     "imagemin": "^7.0.0",
     "my-loaders": "file:plugins/my-loaders",
-    "@glidejs/glide": "^3.2.3",
     "popper.js": "^1.14.4"
   },
   "browserslist": {
