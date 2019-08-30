@@ -21,3 +21,25 @@
   --ifm-color-primary-lighter: rgb(102, 212, 189);
   --ifm-color-primary-lightest: rgb(146, 224, 208);
 }
+
+.demo-content-wrapper {
+    height: 400px;
+    background: url(../../static/img/bg-docsearch-live-demo-bootstrap.jpg) no-repeat;
+    background-size: 1200px;
+    background-position: center -46px;
+}
+
+.demo-header-wrapper {
+  height: 42px;
+  background: url(../../static/img/bg-docsearch-live-demo-bootstrap.jpg) no-repeat;
+  background-color: #563e7c;
+  background-size: 1200px;
+  background-position: left top;
+}
+
+.header{
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url(../../static/img/bg-docsearch.svg),linear-gradient(#fff,#f5f5fa);
+  background-position: center calc(100% - 18px);
+}

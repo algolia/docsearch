@@ -14,6 +14,7 @@ module.exports = {
   organizationName: 'Algolia',
   projectName: 'DocSearch',
   themes: ['@docusaurus/theme-search-algolia'],
+  plugins: ['my-loaders'],
   themeConfig: {
     algolia: {
       apiKey: '25626fae796133dc1e734c6bcaaeac3c',
@@ -26,7 +27,7 @@ module.exports = {
         src: 'img/docsearch-logo.svg',
       },
       links: [
-        {to: 'docs/what-is-docsearch', label: 'Documentation', position: 'left'},
+        {to: 'docs/what-is-docsearch', label: 'Documentation', position: 'right'},
         {
           href: 'https://github.com/algolia/DocSearch',
           label: 'GitHub',
@@ -43,6 +44,22 @@ module.exports = {
               label: 'Documentation',
               to: 'docs/what-is-docsearch',
             },
+            {
+              label:'Code licensed under MIT',
+              to: ''
+            },
+            {
+              label:'Issues',
+              to: ''
+            },
+            {
+              label:'Changelog',
+              to: ''
+            },
+            {
+              label:'Community Forum',
+              to: ''
+            }
           ],
         },
         {
@@ -58,8 +75,8 @@ module.exports = {
           title: 'Social',
           items: [
             {
-              label: 'Blog',
-              to: 'blog',
+              label: 'Twitter',
+              to: 'https://twitter.com/algolia',
             },
           ],
         },
@@ -68,7 +85,7 @@ module.exports = {
         alt: 'Algolia',
         src: 'img/algolia-logo.svg',
       },
-      copyright: `DocSearch 2015-now • Designed and Built by Algolia with Docusaurus.`,
+      copyright: `DocSearch 2015-now • Designed and Built by Algolia`,
     },
   },
   presets: [
