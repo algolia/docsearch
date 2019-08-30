@@ -22,7 +22,7 @@
     "@fullhuman/postcss-purgecss": "1.2.0",
     "autoprefixer": "8.6.5",
     "babel-core": "7.0.0-bridge.0",
-    "babel-eslint": "10.0.2",
+    "babel-eslint": "10.0.3",
     "babel-plugin-dynamic-import-node-sync": "2.0.1",
     "chalk": "2.4.2",
     "cheerio": "1.0.0-rc.3",
