@@ -10,11 +10,15 @@
     "deploy": "docusaurus deploy"
   },
   "dependencies": {
+    "@algolia/ui-library": "^1.0.0-beta.97",
     "@docusaurus/core": "^2.0.0-alpha.24",
     "@docusaurus/preset-classic": "^2.0.0-alpha.24",
     "classnames": "^2.2.6",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4"
+    "file-loader": "^4.2.0",
+    "image-webpack-loader": "^5.0.0",
+    "imagemin": "^7.0.0",
+    "my-loaders": "file:plugins/my-loaders",
+    "svg-loader": "^0.0.2"
   },
   "browserslist": {
     "production": [
