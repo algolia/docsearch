@@ -37,7 +37,7 @@
     ]
   },
   "devDependencies": {
-    "autoprefixer": "9.1.1",
+    "autoprefixer": "9.6.1",
     "babel-cli": "6.26.0",
     "babel-core": "6.26.3",
     "babel-eslint": "10.0.2",
@@ -51,9 +51,9 @@
     "cssnano": "4.1.10",
     "eslint": "5.16.0",
     "eslint-config-algolia": "13.4.0",
-    "eslint-config-prettier": "6.0.0",
+    "eslint-config-prettier": "6.1.0",
     "eslint-plugin-import": "2.18.2",
-    "eslint-plugin-jest": "22.15.1",
+    "eslint-plugin-jest": "22.16.0",
     "eslint-plugin-prettier": "2.7.0",
     "jest": "23.6.0",
     "jsdom": "15.1.1",
