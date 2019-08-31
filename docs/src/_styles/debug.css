@@ -5,7 +5,7 @@
 }
 .debug:before {
   content: "N/A";
-  @apply absolute top-0 left-0;
+  @apply absolute;
   @apply bg-neptune-2 bold text-white;
   @apply p-0x;
 }
