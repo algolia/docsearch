@@ -341,93 +341,98 @@ const plugins = [
 ];
 
 module.exports = {
-  width: dimensionScale,
-  minWidth: dimensionScale,
-  maxWidth: dimensionScale,
-  height: dimensionScale,
-  minHeight: dimensionScale,
-  maxHeight: dimensionScale,
-  padding: dimensionScale,
-  margin: dimensionScale,
-  negativeMargin: dimensionScale,
+  theme: {
+    width: dimensionScale,
+    minWidth: dimensionScale,
+    maxWidth: dimensionScale,
+    height: dimensionScale,
+    minHeight: dimensionScale,
+    maxHeight: dimensionScale,
+    padding: dimensionScale,
+    margin: dimensionScale,
+    negativeMargin: dimensionScale,
 
-  textSizes: fontScale,
+    textSizes: fontScale,
 
-  leading: leadingScale,
+    leading: leadingScale,
 
-  fontWeights,
+    fontWeights,
 
-  colors,
-  textColors: colors,
-  backgroundColors: colors,
-  borderColors: global.Object.assign({ default: colors['grey-light'] }, colors),
+    colors,
+    textColors: colors,
+    backgroundColors: colors,
+    borderColors: global.Object.assign(
+      { default: colors['grey-light'] },
+      colors
+    ),
 
-  zIndex,
-  opacity,
-  borderRadius,
-  shadows,
+    zIndex,
+    opacity,
+    borderRadius,
+    shadows,
 
+    screens: {
+      ...screenSizes,
+      print: { raw: 'print' },
+    },
+    borderWidths: {
+      default: '1px',
+      '0': '0',
+      '1': '2px',
+      '2': '4px',
+      '3': '8px',
+    },
+    fonts: {
+      sans: [
+        'system-ui',
+        'BlinkMacSystemFont',
+        '-apple-system',
+        'Segoe UI',
+        'Roboto',
+        'Oxygen',
+        'Ubuntu',
+        'Cantarell',
+        'Fira Sans',
+        'Droid Sans',
+        'Helvetica Neue',
+        'sans-serif',
+      ],
+      serif: [
+        'Constantia',
+        'Lucida Bright',
+        'Lucidabright',
+        'Lucida Serif',
+        'Lucida',
+        'DejaVu Serif',
+        'Bitstream Vera Serif',
+        'Liberation Serif',
+        'Georgia',
+        'serif',
+      ],
+      mono: [
+        'Menlo',
+        'Monaco',
+        'Consolas',
+        'Liberation Mono',
+        'Courier New',
+        'monospace',
+      ],
+    },
+    // Letter-spacing
+    tracking: {
+      tight: '-0.05em',
+      normal: '0',
+      wide: '0.05em',
+      poppins: '1.5px',
+    },
+    svgFill: {
+      current: 'currentColor',
+    },
+    svgStroke: {
+      current: 'currentColor',
+    },
+  },
   plugins,
-  screens: {
-    ...screenSizes,
-    print: { raw: 'print' },
-  },
-  borderWidths: {
-    default: '1px',
-    '0': '0',
-    '1': '2px',
-    '2': '4px',
-    '3': '8px',
-  },
-  fonts: {
-    sans: [
-      'system-ui',
-      'BlinkMacSystemFont',
-      '-apple-system',
-      'Segoe UI',
-      'Roboto',
-      'Oxygen',
-      'Ubuntu',
-      'Cantarell',
-      'Fira Sans',
-      'Droid Sans',
-      'Helvetica Neue',
-      'sans-serif',
-    ],
-    serif: [
-      'Constantia',
-      'Lucida Bright',
-      'Lucidabright',
-      'Lucida Serif',
-      'Lucida',
-      'DejaVu Serif',
-      'Bitstream Vera Serif',
-      'Liberation Serif',
-      'Georgia',
-      'serif',
-    ],
-    mono: [
-      'Menlo',
-      'Monaco',
-      'Consolas',
-      'Liberation Mono',
-      'Courier New',
-      'monospace',
-    ],
-  },
-  // Letter-spacing
-  tracking: {
-    tight: '-0.05em',
-    normal: '0',
-    wide: '0.05em',
-    poppins: '1.5px',
-  },
-  svgFill: {
-    current: 'currentColor',
-  },
-  svgStroke: {
-    current: 'currentColor',
-  },
 
   modules: {
     appearance: ['responsive'],
@@ -486,7 +491,10 @@ module.exports = {
   | leaving these options alone unless you absolutely need to change them.
   |
   */
-  prefix: '',
-  important: false,
-  separator: '_',
+
+  options: {
+    prefix: '',
+    important: false,
+    separator: '_',
+  },
 };
