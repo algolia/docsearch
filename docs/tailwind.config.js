@@ -486,10 +486,7 @@ module.exports = {
   | leaving these options alone unless you absolutely need to change them.
   |
   */
-
-  options: {
-    prefix: '',
-    important: false,
-    separator: '_',
-  },
+  prefix: '',
+  important: false,
+  separator: '_',
 };
