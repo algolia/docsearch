@@ -350,7 +350,6 @@ module.exports = {
     maxHeight: dimensionScale,
     padding: dimensionScale,
     margin: dimensionScale,
-    negativeMargin: dimensionScale,
 
     textSizes: fontScale,
 
@@ -459,7 +458,6 @@ module.exports = {
     maxWidth: ['responsive'],
     minHeight: ['responsive'],
     minWidth: ['responsive'],
-    negativeMargin: ['responsive'],
     opacity: ['responsive'],
     overflow: ['responsive'],
     padding: ['responsive'],
