@@ -160,7 +160,7 @@ _.each(fontScale, (value, key) => {
   leadingScale[`text-${key}`] = value;
 });
 
-const fontWeights = {
+const fontWeight = {
   hairline: 100,
   thin: 200,
   light: 300,
@@ -202,7 +202,7 @@ const opacity = {
   '100': '1',
 };
 
-const shadows = {
+const boxShadow = {
   button:
     '0 7px 14px -3px rgba(45, 35, 66, 0.3), 0 2px 4px 0 rgba(45, 35, 66, 0.4), inset 0 -2px 0 0 #cfd1e3',
   'button-up':
@@ -223,7 +223,7 @@ const shadows = {
 };
 
 // Use font-weight without prefixes (.bold, .thin, etc)
-const customFontWeight = _.reduce(fontWeights, (result, value, key) =>
+const customFontWeight = _.reduce(fontWeight, (result, value, key) =>
   _.assign(result, {
     [`${key}`]: { fontWeight: value },
   })
@@ -351,16 +351,16 @@ module.exports = {
     padding: dimensionScale,
     margin: dimensionScale,
 
-    textSizes: fontScale,
+    fontSize: fontScale,
 
-    leading: leadingScale,
+    lineHeight: leadingScale,
 
-    fontWeights,
+    fontWeight,
 
     colors,
-    textColors: colors,
-    backgroundColors: colors,
-    borderColors: global.Object.assign(
+    textColor: colors,
+    backgroundColor: colors,
+    borderColor: global.Object.assign(
       { default: colors['grey-light'] },
       colors
     ),
@@ -368,20 +368,20 @@ module.exports = {
     zIndex,
     opacity,
     borderRadius,
-    shadows,
+    boxShadow,
 
     screens: {
       ...screenSizes,
       print: { raw: 'print' },
     },
-    borderWidths: {
+    borderWidth: {
       default: '1px',
       '0': '0',
       '1': '2px',
       '2': '4px',
       '3': '8px',
     },
-    fonts: {
+    fontFamily: {
       sans: [
         'system-ui',
         'BlinkMacSystemFont',
@@ -418,16 +418,16 @@ module.exports = {
       ],
     },
     // Letter-spacing
-    tracking: {
+    letterSpacing: {
       tight: '-0.05em',
       normal: '0',
       wide: '0.05em',
       poppins: '1.5px',
     },
-    svgFill: {
+    fill: {
       current: 'currentColor',
     },
-    svgStroke: {
+    stroke: {
       current: 'currentColor',
     },
   },
@@ -436,22 +436,22 @@ module.exports = {
   variants: {
     appearance: ['responsive'],
     backgroundAttachment: ['responsive'],
-    backgroundColors: ['responsive', 'hover', 'focus'],
+    backgroundColor: ['responsive', 'hover', 'focus'],
     backgroundPosition: ['responsive'],
     backgroundRepeat: ['responsive'],
     backgroundSize: ['responsive'],
-    borderColors: ['responsive', 'hover'],
+    borderColor: ['responsive', 'hover'],
     borderRadius: ['responsive'],
     borderStyle: ['responsive'],
-    borderWidths: ['responsive'],
+    borderWidth: ['responsive'],
     cursor: ['responsive'],
     display: ['responsive'],
     flexbox: ['responsive'],
     float: ['responsive'],
-    fonts: ['responsive'],
-    fontWeights: ['responsive', 'hover'],
+    fontFamily: ['responsive'],
+    fontWeight: ['responsive', 'hover'],
     height: ['responsive'],
-    leading: ['responsive'],
+    lineHeight: ['responsive'],
     lists: ['responsive'],
     margin: ['responsive'],
     maxHeight: ['responsive'],
@@ -464,14 +464,14 @@ module.exports = {
     pointerEvents: ['responsive'],
     position: ['responsive'],
     resize: ['responsive'],
-    shadows: ['responsive', 'hover'],
-    svgFill: [],
-    svgStroke: [],
+    boxShadow: ['responsive', 'hover'],
+    fill: [],
+    stroke: [],
     textAlign: ['responsive'],
-    textColors: ['responsive', 'hover'],
-    textSizes: ['responsive'],
+    textColor: ['responsive', 'hover'],
+    fontSize: ['responsive'],
     textStyle: ['responsive', 'hover'],
-    tracking: ['responsive'],
+    letterSpacing: ['responsive'],
     userSelect: ['responsive'],
     verticalAlign: ['responsive'],
     visibility: ['responsive'],
