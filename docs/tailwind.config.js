@@ -482,19 +482,7 @@ module.exports = {
     zIndex: ['responsive'],
   },
 
-  /*
-  |-----------------------------------------------------------------------------
-  | Advanced Options         https://tailwindcss.com/docs/configuration#options
-  |-----------------------------------------------------------------------------
-  |
-  | Here is where you can tweak advanced configuration options. We recommend
-  | leaving these options alone unless you absolutely need to change them.
-  |
-  */
-
-  options: {
-    prefix: '',
-    important: false,
-    separator: '_',
-  },
+  prefix: '',
+  important: false,
+  separator: '_',
 };
