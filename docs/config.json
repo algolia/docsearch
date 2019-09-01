@@ -74,7 +74,7 @@
       "pages": [
         {
           "title": "DocSearch Technical Overview (the Scraper)",
-          "url": "scraper-overview.html"
+          "url": "crawler-overview.html"
         },
         {
           "title": "Inside The Engine",
