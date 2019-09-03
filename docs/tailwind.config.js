@@ -160,7 +160,7 @@ _.each(fontScale, (value, key) => {
   leadingScale[`text-${key}`] = value;
 });
 
-const fontWeights = {
+const fontWeight = {
   hairline: 100,
   thin: 200,
   light: 300,
@@ -202,7 +202,7 @@ const opacity = {
   '100': '1',
 };
 
-const shadows = {
+const boxShadow = {
   button:
     '0 7px 14px -3px rgba(45, 35, 66, 0.3), 0 2px 4px 0 rgba(45, 35, 66, 0.4), inset 0 -2px 0 0 #cfd1e3',
   'button-up':
@@ -223,7 +223,7 @@ const shadows = {
 };
 
 // Use font-weight without prefixes (.bold, .thin, etc)
-const customFontWeight = _.reduce(fontWeights, (result, value, key) =>
+const customFontWeight = _.reduce(fontWeight, (result, value, key) =>
   _.assign(result, {
     [`${key}`]: { fontWeight: value },
   })
@@ -341,134 +341,137 @@ const plugins = [
 ];
 
 module.exports = {
-  width: dimensionScale,
-  minWidth: dimensionScale,
-  maxWidth: dimensionScale,
-  height: dimensionScale,
-  minHeight: dimensionScale,
-  maxHeight: dimensionScale,
-  padding: dimensionScale,
-  margin: dimensionScale,
-  negativeMargin: dimensionScale,
+  theme: {
+    width: dimensionScale,
+    minWidth: dimensionScale,
+    maxWidth: dimensionScale,
+    height: dimensionScale,
+    minHeight: dimensionScale,
+    maxHeight: dimensionScale,
+    padding: dimensionScale,
+    margin: dimensionScale,
 
-  textSizes: fontScale,
+    fontSize: fontScale,
 
-  leading: leadingScale,
+    lineHeight: leadingScale,
 
-  fontWeights,
+    fontWeight,
 
-  colors,
-  textColors: colors,
-  backgroundColors: colors,
-  borderColors: global.Object.assign({ default: colors['grey-light'] }, colors),
+    colors,
+    textColor: colors,
+    backgroundColor: colors,
+    borderColor: global.Object.assign(
+      { default: colors['grey-light'] },
+      colors
+    ),
 
-  zIndex,
-  opacity,
-  borderRadius,
-  shadows,
+    zIndex,
+    opacity,
+    borderRadius,
+    boxShadow,
 
+    screens: {
+      ...screenSizes,
+      print: { raw: 'print' },
+    },
+    borderWidth: {
+      default: '1px',
+      '0': '0',
+      '1': '2px',
+      '2': '4px',
+      '3': '8px',
+    },
+    fontFamily: {
+      sans: [
+        'system-ui',
+        'BlinkMacSystemFont',
+        '-apple-system',
+        'Segoe UI',
+        'Roboto',
+        'Oxygen',
+        'Ubuntu',
+        'Cantarell',
+        'Fira Sans',
+        'Droid Sans',
+        'Helvetica Neue',
+        'sans-serif',
+      ],
+      serif: [
+        'Constantia',
+        'Lucida Bright',
+        'Lucidabright',
+        'Lucida Serif',
+        'Lucida',
+        'DejaVu Serif',
+        'Bitstream Vera Serif',
+        'Liberation Serif',
+        'Georgia',
+        'serif',
+      ],
+      mono: [
+        'Menlo',
+        'Monaco',
+        'Consolas',
+        'Liberation Mono',
+        'Courier New',
+        'monospace',
+      ],
+    },
+    // Letter-spacing
+    letterSpacing: {
+      tight: '-0.05em',
+      normal: '0',
+      wide: '0.05em',
+      poppins: '1.5px',
+    },
+    fill: {
+      current: 'currentColor',
+    },
+    stroke: {
+      current: 'currentColor',
+    },
+  },
   plugins,
-  screens: {
-    ...screenSizes,
-    print: { raw: 'print' },
-  },
-  borderWidths: {
-    default: '1px',
-    '0': '0',
-    '1': '2px',
-    '2': '4px',
-    '3': '8px',
-  },
-  fonts: {
-    sans: [
-      'system-ui',
-      'BlinkMacSystemFont',
-      '-apple-system',
-      'Segoe UI',
-      'Roboto',
-      'Oxygen',
-      'Ubuntu',
-      'Cantarell',
-      'Fira Sans',
-      'Droid Sans',
-      'Helvetica Neue',
-      'sans-serif',
-    ],
-    serif: [
-      'Constantia',
-      'Lucida Bright',
-      'Lucidabright',
-      'Lucida Serif',
-      'Lucida',
-      'DejaVu Serif',
-      'Bitstream Vera Serif',
-      'Liberation Serif',
-      'Georgia',
-      'serif',
-    ],
-    mono: [
-      'Menlo',
-      'Monaco',
-      'Consolas',
-      'Liberation Mono',
-      'Courier New',
-      'monospace',
-    ],
-  },
-  // Letter-spacing
-  tracking: {
-    tight: '-0.05em',
-    normal: '0',
-    wide: '0.05em',
-    poppins: '1.5px',
-  },
-  svgFill: {
-    current: 'currentColor',
-  },
-  svgStroke: {
-    current: 'currentColor',
-  },
 
-  modules: {
+  variants: {
     appearance: ['responsive'],
     backgroundAttachment: ['responsive'],
-    backgroundColors: ['responsive', 'hover', 'focus'],
+    backgroundColor: ['responsive', 'hover', 'focus'],
     backgroundPosition: ['responsive'],
     backgroundRepeat: ['responsive'],
     backgroundSize: ['responsive'],
-    borderColors: ['responsive', 'hover'],
+    borderColor: ['responsive', 'hover'],
     borderRadius: ['responsive'],
     borderStyle: ['responsive'],
-    borderWidths: ['responsive'],
+    borderWidth: ['responsive'],
     cursor: ['responsive'],
     display: ['responsive'],
-    flexbox: ['responsive'],
+    flexGrow: ['responsive'],
     float: ['responsive'],
-    fonts: ['responsive'],
-    fontWeights: ['responsive', 'hover'],
+    fontFamily: ['responsive'],
+    fontWeight: ['responsive', 'hover'],
     height: ['responsive'],
-    leading: ['responsive'],
-    lists: ['responsive'],
+    lineHeight: ['responsive'],
+    listStyleType: ['responsive'],
     margin: ['responsive'],
     maxHeight: ['responsive'],
     maxWidth: ['responsive'],
     minHeight: ['responsive'],
     minWidth: ['responsive'],
-    negativeMargin: ['responsive'],
     opacity: ['responsive'],
     overflow: ['responsive'],
     padding: ['responsive'],
     pointerEvents: ['responsive'],
     position: ['responsive'],
     resize: ['responsive'],
-    shadows: ['responsive', 'hover'],
-    svgFill: [],
-    svgStroke: [],
+    boxShadow: ['responsive', 'hover'],
+    fill: [],
+    stroke: [],
     textAlign: ['responsive'],
-    textColors: ['responsive', 'hover'],
-    textSizes: ['responsive'],
+    textColor: ['responsive', 'hover'],
+    fontSize: ['responsive'],
     textStyle: ['responsive', 'hover'],
-    tracking: ['responsive'],
+    letterSpacing: ['responsive'],
     userSelect: ['responsive'],
     verticalAlign: ['responsive'],
     visibility: ['responsive'],
@@ -477,19 +480,7 @@ module.exports = {
     zIndex: ['responsive'],
   },
 
-  /*
-  |-----------------------------------------------------------------------------
-  | Advanced Options         https://tailwindcss.com/docs/configuration#options
-  |-----------------------------------------------------------------------------
-  |
-  | Here is where you can tweak advanced configuration options. We recommend
-  | leaving these options alone unless you absolutely need to change them.
-  |
-  */
-
-  options: {
-    prefix: '',
-    important: false,
-    separator: '_',
-  },
+  prefix: '',
+  important: false,
+  separator: '_',
 };

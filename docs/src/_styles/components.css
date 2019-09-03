@@ -70,7 +70,7 @@
 
 .bg-footer {
   @apply bg-cover bg-no-repeat;
-  @apply absolute pin-x z-1;
+  @apply absolute inset-x-0 z-1;
   background-image: url("assets/bg-footer.svg");
   background-position: 100% 100%;
   height: 500px;

@@ -18,13 +18,13 @@ block nav
 block content
   .bgtb-moon-white-pure.relative
     .md_flex.max-w-lg.m-auto
-      .navigation-sidebar.sticky.pin-t.top-3.h-100vh-3.overflow-y-auto.hidden.md_block.bg-white.pl-1
+      .navigation-sidebar.sticky.top-0.top-3.h-100vh-3.overflow-y-auto.hidden.md_block.bg-white.pl-1
         // Adding subsections from markdown
         .pt-2.w-5.m-auto.sm_flex.sm_w-90.md_block.md_w-100
           each category in sidebar
             .flcnw.flspa.sm_flex-auto.sm_w-33.sm_p-1.md_w-100.md_p-0
               .category.text-nebula.poppins.uppercase.mb-05x.text-1x=category.title
-              ul.list-reset.mb-2
+              ul.mb-2
                 each page in category.pages
                   - var isCurrent = current.url === page.url
                   - var additionalClasses = isCurrent ? 'current-page text-nebula' : 'text-solstice'
@@ -32,7 +32,7 @@ block content
                     a.block.py-0x(href=page.url, class=additionalClasses)=page.title
                     - var hasSubLinks = (page.headings && page.headings.length)
                     if hasSubLinks
-                      ul.list-reset.pl-1.text-1
+                      ul.pl-1.text-1
                         each heading in page.headings
                           li
                             a.block.py-0x.text-telluric(href=`${page.url}#${heading.anchor}`)=heading.title
