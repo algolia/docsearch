@@ -1,11 +1,17 @@
 import React from "react";
-import { Input, LabelText, Text, Button } from "@algolia/ui-library";
+import {
+  Input,
+  LabelText,
+  Text,
+  Button,
+  InlineLink
+} from "@algolia/ui-library";
 
 const MAX_WIDTH = "600px";
 export default class ApplyForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { url: "", email: "" };
+    this.state = { url: "", email: "", freeze: false };
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleURLChange = this.handleURLChange.bind(this);
@@ -20,8 +26,20 @@ export default class ApplyForm extends React.Component {
   }
 
   handleSubmit(event) {
-    console.log("A name was submitted: " + this.state.value);
-    // event.preventDefault();
+    fetch("https://www.algolia.com/docsearch/join", {
+      method: "POST",
+      headers: {
+        'Access-Control-Allow-Origin':'*',
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        url: this.state.url,
+        email: this.state.email
+      })
+    });
+    event.preventDefault();
+    this.setState({ freeze: true });
   }
 
   render() {
@@ -30,8 +48,8 @@ export default class ApplyForm extends React.Component {
         onSubmit={this.handleSubmit}
         id="form"
         style={{ maxWidth: MAX_WIDTH, margin: "auto" }}
-        action="https://www.algolia.com/docsearch/join"
-        method="POST"
+        target="formSending"
+        disabled={this.setState.freeze}
       >
         <LabelText style={{ fontSize: "1.2em" }}>
           DOCUMENTATION URL:
@@ -75,9 +93,11 @@ export default class ApplyForm extends React.Component {
           <Button primary>Join the program</Button>
         </button>
 
-        <Text>
-          Refer to Algolia's Privacy Policy for more information on how we use
-          and protect your data
+        <Text style={{ marginTop: "1em" }}>
+          <InlineLink href="https://www.algolia.com/policies/terms">
+            Refer to Algolia's Privacy Policy for more information on how we use
+            and protect your data
+          </InlineLink>
         </Text>
       </form>
     );
