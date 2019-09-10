@@ -49,7 +49,7 @@ export default class ApplyForm extends React.Component {
         <Card style={{ maxWidth: MAX_WIDTH, margin: "auto" }}>
           <form
             onSubmit={this.handleSubmit}
-            id="form"
+            id="form-apply-docsearch"
             style={{ maxWidth: MAX_WIDTH, margin: "auto" }}
           >
             <LabelText style={{ fontSize: "1.2em" }}>
@@ -58,6 +58,7 @@ export default class ApplyForm extends React.Component {
             <Input
               type="url"
               name="url"
+              aria-label="URL of the documentation website"
               value={this.state.url}
               onChange={this.handleURLChange}
               style={{ margin: "1em 0em" }}
@@ -72,6 +73,7 @@ export default class ApplyForm extends React.Component {
             <Input
               type="email"
               name="email"
+              aria-label="Email address of the owner of this website"
               value={this.state.email}
               onChange={this.handleEmailChange}
               style={{ margin: "1em 0em" }}
@@ -87,12 +89,15 @@ export default class ApplyForm extends React.Component {
               form="form"
               value="Submit"
               style={{
-                "border-color": "transparent",
+                borderColor: "transparent",
                 background: "none",
                 width: "100%"
               }}
+              aria-describedby="joinButton"
             >
-              <Button primary>Join the program</Button>
+              <Button id="joinButton" primary>
+                Join the program
+              </Button>
             </button>
             <Text style={{ marginTop: "1em" }}>
               <InlineLink href="https://www.algolia.com/policies/terms">
@@ -108,13 +113,16 @@ export default class ApplyForm extends React.Component {
         <Card style={{ maxWidth: MAX_WIDTH, margin: "auto" }}>
           <LabelText style={{ fontSize: "1.2em" }}>Thank you!</LabelText>
           <br />
-          <Text style={{ marginTop: "1em" }}>
+          <Text
+            style={{ marginTop: "1em" }}
+            aria-label="Request will be processed"
+          >
             Your request will be processed by our team. We'll get back to you on{" "}
             {this.state.email} with the snippet of JavaScript you'll need to
-            integrate into 
+            integrate into
             <InlineLink href={this.state.url}> {this.state.url}</InlineLink> .
           </Text>
-          <Text>
+          <Text aria-label="recommendations">
             Please be patient, in the meantime, you can implement{" "}
             <InlineLink href="/tips.html">
               our recommendations for the best experience with DocSearch.
