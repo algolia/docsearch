@@ -1,29 +1,42 @@
-// eslint-disable-next-line import/no-commonjs
+/* eslint-disable import/no-commonjs */
+const fs = require('fs');
+const path = require('path');
+
 module.exports = {
   mergeStrategy: {
     toSameBranch: ['next'],
   },
-  packageJsons: [
-    'lerna.json',
-    'packages/docsearch/package.json',
-    'packages/docsearch-core/package.json',
-    'packages/docsearch-renderer-downshift/package.json',
-    'packages/docsearch-theme-light/package.json',
-    'packages/docsearch-types/package.json',
-  ],
-  versionUpdated: ({ version, exec }) => {
-    [
-      `npx json -I -f examples/vanilla/package.json -e 'this.dependencies["docsearch-theme-light"] = "${version}"'`,
-      `npx json -I -f examples/vanilla/package.json -e 'this.dependencies["docsearch.js"] = "${version}"'`,
-      `npx json -I -f packages/docsearch-core/package.json -e 'this.dependencies["docsearch-types"] = "${version}"'`,
-      `npx json -I -f packages/docsearch-renderer-downshift/package.json -e 'this.dependencies["docsearch-core"] = "${version}"'`,
-      `npx json -I -f packages/docsearch-renderer-downshift/package.json -e 'this.dependencies["docsearch-types"] = "${version}"'`,
-      `npx json -I -f packages/docsearch/package.json -e 'this.dependencies["docsearch-core"] = "${version}"'`,
-      `npx json -I -f packages/docsearch/package.json -e 'this.dependencies["docsearch-renderer-downshift"] = "${version}"'`,
-      `npx json -I -f packages/docsearch/package.json -e 'this.dependencies["docsearch-types"] = "${version}"'`,
-      `echo "export default '${version}';" > packages/docsearch-core/src/version.ts`,
-    ].forEach(exec);
+  monorepo: {
+    readVersionFrom: 'lerna.json',
+    packagesToBump: ['packages/*'],
+    packagesToPublish: ['packages/*'],
   },
-  publishCommand: () =>
-    `lerna exec --scope docsearch* -- yarn publish --no-git-tag-version --non-interactive`,
+  versionUpdated: ({ version, dir, exec }) => {
+    const update = (package, dependency) =>
+      exec(`yarn workspace ${package} add ${dependency}@${version}`);
+
+    // update internal dependencies
+    update('vanilla-example', 'docsearch-theme-light');
+    update('vanilla-example', 'docsearch.js');
+    update('docsearch-core', 'docsearch-types');
+    update('docsearch-renderer-downshift', 'docsearch-core');
+    update('docsearch-renderer-downshift', 'docsearch-types');
+    update('docsearch.js', 'docsearch-core');
+    update('docsearch.js', 'docsearch-renderer-downshift');
+    update('docsearch.js', 'docsearch-types');
+
+    // update lerna.json
+    const lernaConfigPath = path.resolve(dir, 'lerna.json');
+    const lernaConfig = {
+      ...JSON.parse(fs.readFileSync(lernaConfigPath)),
+      version,
+    };
+    fs.writeFileSync(lernaConfigPath, JSON.stringify(lernaConfig, null, 2));
+
+    // update version.ts
+    fs.writeFileSync(
+      path.resolve(dir, 'packages/docsearch-core/src/version.ts'),
+      `export default '${version}';\n`
+    );
+  },
 };
