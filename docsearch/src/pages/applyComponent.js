@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Card,
   Input,
   LabelText,
   Text,
@@ -29,7 +30,7 @@ export default class ApplyForm extends React.Component {
     fetch("https://www.algolia.com/docsearch/join", {
       method: "POST",
       headers: {
-        'Access-Control-Allow-Origin':'*',
+        "Access-Control-Allow-Origin": "*",
         Accept: "application/json",
         "Content-Type": "application/json"
       },
@@ -43,63 +44,84 @@ export default class ApplyForm extends React.Component {
   }
 
   render() {
-    return (
-      <form
-        onSubmit={this.handleSubmit}
-        id="form"
-        style={{ maxWidth: MAX_WIDTH, margin: "auto" }}
-        target="formSending"
-        disabled={this.setState.freeze}
-      >
-        <LabelText style={{ fontSize: "1.2em" }}>
-          DOCUMENTATION URL:
-          <Input
-            type="url"
-            name="url"
-            value={this.state.url}
-            onChange={this.handleURLChange}
-            placeholder={"https://project.org/docs"}
-            required
-          />
-          <Text style={{ fontSize: "0.6em" }}>
-            We'll crawl pages at this address and index the content on Algolia
-          </Text>
-        </LabelText>
-        <LabelText style={{ fontSize: "1.2em" }}>
-          EMAIL:
-          <Input
-            type="email"
-            name="email"
-            value={this.state.email}
-            onChange={this.handleEmailChange}
-            placeholder={"you@project.orgs"}
-            required
-          />
-          <Text style={{ fontSize: "0.6em" }}>
-            We'll send you the JavaScript snippet you'll have to integrate into
-            your documentation
-          </Text>
-        </LabelText>
-        <button
-          type="submit"
-          form="form"
-          value="Submit"
-          style={{
-            "border-color": "transparent",
-            background: "none",
-            width: "100%"
-          }}
-        >
-          <Button primary>Join the program</Button>
-        </button>
+    if (!this.state.freeze) {
+      return (
+        <Card style={{ maxWidth: MAX_WIDTH, margin: "auto" }}>
+          <form
+            onSubmit={this.handleSubmit}
+            id="form"
+            style={{ maxWidth: MAX_WIDTH, margin: "auto" }}
+          >
+            <LabelText style={{ fontSize: "1.2em" }}>
+              DOCUMENTATION URL:
+            </LabelText>
+            <Input
+              type="url"
+              name="url"
+              value={this.state.url}
+              onChange={this.handleURLChange}
+              style={{ margin: "1em 0em" }}
+              placeholder={"https://project.org/docs"}
+              required
+            />
+            <Text>
+              We'll crawl pages at this address and index the content on Algolia
+            </Text>
+            <LabelText style={{ fontSize: "1.2em" }}>EMAIL:</LabelText>
 
-        <Text style={{ marginTop: "1em" }}>
-          <InlineLink href="https://www.algolia.com/policies/terms">
-            Refer to Algolia's Privacy Policy for more information on how we use
-            and protect your data
-          </InlineLink>
-        </Text>
-      </form>
-    );
+            <Input
+              type="email"
+              name="email"
+              value={this.state.email}
+              onChange={this.handleEmailChange}
+              style={{ margin: "1em 0em" }}
+              placeholder={"you@project.orgs"}
+              required
+            />
+            <Text>
+              We'll send you the JavaScript snippet you'll have to integrate
+              into your documentation
+            </Text>
+            <button
+              type="submit"
+              form="form"
+              value="Submit"
+              style={{
+                "border-color": "transparent",
+                background: "none",
+                width: "100%"
+              }}
+            >
+              <Button primary>Join the program</Button>
+            </button>
+            <Text style={{ marginTop: "1em" }}>
+              <InlineLink href="https://www.algolia.com/policies/terms">
+                Refer to Algolia's Privacy Policy for more information on how we
+                use and protect your data
+              </InlineLink>
+            </Text>
+          </form>
+        </Card>
+      );
+    } else {
+      return (
+        <Card style={{ maxWidth: MAX_WIDTH, margin: "auto" }}>
+          <LabelText style={{ fontSize: "1.2em" }}>Thank you!</LabelText>
+          <br />
+          <Text style={{ marginTop: "1em" }}>
+            Your request will be processed by our team. We'll get back to you on{" "}
+            {this.state.email} with the snippet of JavaScript you'll need to
+            integrate into 
+            <InlineLink href={this.state.url}> {this.state.url}</InlineLink> .
+          </Text>
+          <Text>
+            Please be patient, in the meantime, you can implement{" "}
+            <InlineLink href="/tips.html">
+              our recommendations for the best experience with DocSearch.
+            </InlineLink>
+          </Text>
+        </Card>
+      );
+    }
   }
 }
