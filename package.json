@@ -13,8 +13,8 @@
     "test:size": "bundlesize",
     "lint": "eslint --ext .js,.ts,.tsx .",
     "type-check": "lerna run type-check",
-    "shipjs:prepare": "shipjs prepare",
-    "shipjs:release": "shipjs release"
+    "release:prepare": "shipjs prepare",
+    "release:trigger": "shipjs trigger"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "7.5.0",
