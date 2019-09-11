@@ -77,6 +77,10 @@ module.exports = {
               label:'Changelog',
               to: 'https://github.com/algolia/docsearch/blob/master/CHANGELOG.md'
             },
+            {
+              label:'Apply',
+              to: 'apply'
+            }
           ],
         },
         {
