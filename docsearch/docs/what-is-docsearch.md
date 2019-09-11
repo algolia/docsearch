@@ -31,5 +31,8 @@ the "powered by Algolia" link displayed.
 DocSearch is [one of our ways][1] to give back to the open source community for
 everything it did for us already.
 
+You can now [apply to the program][3]
+
 [1]: https://opencollective.com/algolia
 [2]: ./who-can-apply
+[3]: /apply
