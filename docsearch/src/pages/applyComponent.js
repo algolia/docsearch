@@ -27,20 +27,25 @@ export default class ApplyForm extends React.Component {
   }
 
   handleSubmit(event) {
-    fetch("https://www.algolia.com/docsearch/join", {
-      method: "POST",
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        url: this.state.url,
-        email: this.state.email
-      })
-    });
     event.preventDefault();
-    this.setState({ freeze: true });
+
+    const applyForm = event.target;
+    const method = applyForm.getAttribute("method");
+    const url = applyForm.getAttribute("action");
+    const formData = new FormData(applyForm);
+
+    fetch(url, {
+      method: method,
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "multipart/form-data"
+      },
+      body: formData
+    }).then(response => {
+      if (response.ok) {
+        this.setState({ freeze: true });
+      }
+    });
   }
 
   render() {
@@ -50,9 +55,10 @@ export default class ApplyForm extends React.Component {
           <form
             onSubmit={this.handleSubmit}
             id="form-apply-docsearch"
-            style={{ maxWidth: MAX_WIDTH, margin: "auto" }}
+            method="POST"
+            action="www.algolia.com/docsearch/join"
           >
-            <LabelText style={{ fontSize: "1.2em" }}>
+            <LabelText key="url" style={{ fontSize: "1.2em" }}>
               DOCUMENTATION URL:
             </LabelText>
             <Input
@@ -68,7 +74,9 @@ export default class ApplyForm extends React.Component {
             <Text>
               We'll crawl pages at this address and index the content on Algolia
             </Text>
-            <LabelText style={{ fontSize: "1.2em" }}>EMAIL:</LabelText>
+            <LabelText key="email" style={{ fontSize: "1.2em" }}>
+              EMAIL:
+            </LabelText>
 
             <Input
               type="email"
@@ -77,21 +85,35 @@ export default class ApplyForm extends React.Component {
               value={this.state.email}
               onChange={this.handleEmailChange}
               style={{ margin: "1em 0em" }}
-              placeholder={"you@project.orgs"}
+              placeholder={"you@project.org"}
               required
             />
-            <Text>
+            <LabelText tag="label" htmlFor="owner" key="owner">
+              <input
+                id="owner"
+                name="owner"
+                aria-label="Confirm I am owner of the website"
+                type="checkbox"
+                required
+              />
+              I'm the owner of the website and I've{" "}
+              <InlineLink href="./who-can-apply.html">
+                read the checklist
+              </InlineLink>
+            </LabelText>
+            <Text style={{ margin: "1em 0em 0em" }}>
               We'll send you the JavaScript snippet you'll have to integrate
               into your documentation
             </Text>
             <button
               type="submit"
-              form="form"
+              form="form-apply-docsearch"
               value="Submit"
               style={{
                 borderColor: "transparent",
                 background: "none",
-                width: "100%"
+                width: "100%",
+                margin: "1.5em 0em"
               }}
               aria-describedby="joinButton"
             >
@@ -99,12 +121,10 @@ export default class ApplyForm extends React.Component {
                 Join the program
               </Button>
             </button>
-            <Text style={{ marginTop: "1em" }}>
-              <InlineLink href="https://www.algolia.com/policies/terms">
-                Refer to Algolia's Privacy Policy for more information on how we
-                use and protect your data
-              </InlineLink>
-            </Text>
+            <InlineLink href="https://www.algolia.com/policies/terms" small>
+              Refer to Algolia's Privacy Policy for more information on how we
+              use and protect your data
+            </InlineLink>
           </form>
         </Card>
       );
