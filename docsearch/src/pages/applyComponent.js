@@ -117,12 +117,12 @@ export default class ApplyForm extends React.Component {
                 Join the program
               </Button>
             </div>
-            <div className="uil-ta-center">
-              <InlineLink href="https://www.algolia.com/policies/terms" small>
+            <Text className="uil-ta-center" small>
+              <InlineLink href="https://www.algolia.com/policies/terms">
                 Refer to Algolia's Privacy Policy for more information on how we
                 use and protect your data
               </InlineLink>
-            </div>
+            </Text>
           </form>
         </Card>
       );
