@@ -105,22 +105,20 @@ export default class ApplyForm extends React.Component {
               We'll send you the JavaScript snippet you'll have to integrate
               into your documentation
             </Text>
-            <button
-              type="submit"
+
+            <Button
+              id="joinButton"
+              primary
               form="form-apply-docsearch"
-              value="Submit"
+              tag="button"
               style={{
-                borderColor: "transparent",
-                background: "none",
                 width: "100%",
                 margin: "1.5em 0em"
               }}
               aria-describedby="joinButton"
             >
-              <Button id="joinButton" primary>
-                Join the program
-              </Button>
-            </button>
+              Join the program
+            </Button>
             <InlineLink href="https://www.algolia.com/policies/terms" small>
               Refer to Algolia's Privacy Policy for more information on how we
               use and protect your data
