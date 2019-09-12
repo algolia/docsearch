@@ -16,7 +16,6 @@ import styles from './styles.module.css';
 import bg from '../../static/img/bg-docsearch.svg';
 import ApplyForm from "./applyComponent.js";
 
-
 function Home() {
   const context = useDocusaurusContext();
   const {siteConfig = {}} = context;
