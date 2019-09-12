@@ -14,6 +14,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import withBaseUrl from '@docusaurus/withBaseUrl';
 import styles from './styles.module.css';
 import bg from '../../static/img/bg-docsearch.svg';
+import ApplyForm from "./applyComponent.js";
 
 function Home() {
   const context = useDocusaurusContext();
@@ -172,48 +173,7 @@ function Home() {
         <Text>We’ll get back to you with everything you need to integrate your new search into your website.</Text>
         <Text>Oh, and did we mention it's FREE?<br/>No commitment. No subscription. Everything is on us!</Text>
       </SectionHeader>
-      <div className="row">
-        <div className="col col--6 col--offset-3">
-          <form className="shadow--md uil-bgc-white" method="POST" action="https://www.algolia.com/docsearch/join">
-            <div className="uil-pv-32 uil-ph-32 uil-bdr-6">
-              <LabelText tag="label" htmlFor="url">
-                Documentation URL
-                <Input id="url" name="url" placeholder="https://project.org/docs" backgroundColor="white" type="url" required />
-              </LabelText>
-              <Text small className="uil-pv-8 uil-mb-16" tag="div">We'll crawl pages at this address and index the content on Algolia.</Text>
-              <LabelText tag="label" htmlFor="Email">
-                Email
-              </LabelText>
-              <Input id="email" name="email" placeholder="you@project.org" backgroundColor="white" type="email" required />
-              <Text small className="uil-pv-8" tag="div">We'll send you the JavaScript snippet you'll have to integrate into your documentation.</Text>
-            </div>
-            <div className="uil-mb-16 uil-ph-32 uil-bdtw-1 uil-bdc-proton uil-bgc-moon uil-bdts-solid uil-pv-32 uil-ta-center">
-              <LabelText tag="label" htmlFor="owner">
-                <input id="owner" name="owner" type="checkbox" required=""/>
-                I'm the <span class="bold inline">owner</span> of the website and I've <a href="./who-can-apply.html">read the checklist</a>
-              </LabelText>
-              <br/><br/>
-              <Button className="uil-mh-48 uil-d-block" type="submit" primary>Apply to DocSearch</Button>
-              <br/><br/><br/>
-              <Text small>
-                Refer to <a href="https://www.algolia.com/policies/terms">Algolia's Privacy Policy</a> for<br/>more information on how we use and protect your data
-              </Text>
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="col col--6 col--offset-3">
-          <div className="shadow--md uil-bgc-white uil-pv-32 uil-ph-32">
-            <TextBlock title="Thank you!">
-              <Text>Your request will be processed by our team.</Text>
-              <Text small>We'll get back to you on <span class="custom-placeholder-email">your email</span> with the snippet of JavaScript you'll need to integrate into <span class="custom-placeholder-url">your website</span>.</Text>
-              <Text small>Please be patient, it can take a few days.</Text>
-            </TextBlock>
-          </div>
-        </div>
-      </div>
+      <ApplyForm />
     </Section>
 
     </Layout>
