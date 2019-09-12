@@ -56,73 +56,72 @@ export default class ApplyForm extends React.Component {
             onSubmit={this.handleSubmit}
             id="form-apply-docsearch"
             method="POST"
-            action="www.algolia.com/docsearch/join"
+            action="https://www.algolia.com/docsearch/join"
           >
-            <LabelText key="url" style={{ fontSize: "1.2em" }}>
-              DOCUMENTATION URL:
-            </LabelText>
-            <Input
-              type="url"
-              name="url"
-              aria-label="URL of the documentation website"
-              value={this.state.url}
-              onChange={this.handleURLChange}
-              style={{ margin: "1em 0em" }}
-              placeholder={"https://project.org/docs"}
-              required
-            />
-            <Text>
-              We'll crawl pages at this address and index the content on Algolia
-            </Text>
-            <LabelText key="email" style={{ fontSize: "1.2em" }}>
-              EMAIL:
-            </LabelText>
-
-            <Input
-              type="email"
-              name="email"
-              aria-label="Email address of the owner of this website"
-              value={this.state.email}
-              onChange={this.handleEmailChange}
-              style={{ margin: "1em 0em" }}
-              placeholder={"you@project.org"}
-              required
-            />
-            <LabelText tag="label" htmlFor="owner" key="owner">
-              <input
-                id="owner"
-                name="owner"
-                aria-label="Confirm I am owner of the website"
-                type="checkbox"
+            <LabelText key="url" tag="label" htmlFor='url'>
+              Documentation URL
+              <Input
+                id ="url"
+                type="url"
+                name="url"
+                aria-label="URL of the documentation website"
+                value={this.state.url}
+                onChange={this.handleURLChange}
+                placeholder={"https://project.org/docs"}
                 required
               />
-              I'm the owner of the website and I've{" "}
-              <InlineLink href="./who-can-apply.html">
-                read the checklist
-              </InlineLink>
             </LabelText>
-            <Text style={{ margin: "1em 0em 0em" }}>
+            <Text small className="uil-pv-8 uil-d-block">
+              We'll crawl pages at this address and index the content on Algolia
+            </Text>
+
+            <LabelText tag="label" forHtml="email" key="email">
+              Email
+              <Input
+                id="email"
+                type="email"
+                name="email"
+                aria-label="Email address of the owner of this website"
+                value={this.state.email}
+                onChange={this.handleEmailChange}
+                placeholder={"you@project.org"}
+                required
+              />
+            </LabelText>
+            <Text small className="uil-pv-8 uil-d-block">
               We'll send you the JavaScript snippet you'll have to integrate
               into your documentation
             </Text>
 
-            <Button
-              id="joinButton"
-              primary
-              form="form-apply-docsearch"
-              tag="button"
-              style={{
-                width: "100%",
-                margin: "1.5em 0em"
-              }}
-              aria-describedby="joinButton"
-            >
-              Join the program
-            </Button>
-            <InlineLink href="https://www.algolia.com/policies/terms" small>
-              Refer to Algolia's Privacy Policy for more information on how we
-              use and protect your data
-            </InlineLink>
+            <div className="uil-ph-32 uil-pv-32 uil-bgc-moon uil-ta-center uil-d-flex uil-fxd-column">
+              <div>
+                <LabelText tag="label" htmlFor="owner" key="owner">
+                  <input
+                    id="owner"
+                    name="owner"
+                    aria-label="Confirm I am owner of the website"
+                    type="checkbox"
+                    className="uil-mr-8"
+                    required
+                  />
+                  I'm the owner of the website and I've{" "}
+                  <InlineLink href="./who-can-apply.html">
+                    read the checklist
+                  </InlineLink>
+                </LabelText>
+              </div>
+              <div className="uil-pv-32">
+                <Button tag="button" type="submit" id="joinButton" primary >
+                  Join the program
+                </Button>
+              </div>
+              <div>
+                <InlineLink href="https://www.algolia.com/policies/terms" small>
+                  Refer to Algolia's Privacy Policy for more information on how we
+                  use and protect your data
+                </InlineLink>
+              </div>
+            </div>
           </form>
         </Card>
       );
