@@ -75,7 +75,7 @@ export default class ApplyForm extends React.Component {
               We'll crawl pages at this address and index the content on Algolia
             </Text>
 
-            <LabelText tag="label" forHtml="email" key="email">
+            <LabelText tag="label" htmlFor="email" key="email">
               Email
               <Input
                 id="email"
