@@ -58,10 +58,10 @@ export default class ApplyForm extends React.Component {
             method="POST"
             action="https://www.algolia.com/docsearch/join"
           >
-            <LabelText key="url" tag="label" htmlFor='url'>
+            <LabelText key="url" tag="label" htmlFor="url">
               Documentation URL
               <Input
-                id ="url"
+                id="url"
                 type="url"
                 name="url"
                 aria-label="URL of the documentation website"
@@ -92,35 +92,36 @@ export default class ApplyForm extends React.Component {
               We'll send you the JavaScript snippet you'll have to integrate
               into your documentation
             </Text>
-
-            <div className="uil-ph-32 uil-pv-32 uil-bgc-moon uil-ta-center uil-d-flex uil-fxd-column">
-              <div>
-                <LabelText tag="label" htmlFor="owner" key="owner">
-                  <input
-                    id="owner"
-                    name="owner"
-                    aria-label="Confirm I am owner of the website"
-                    type="checkbox"
-                    className="uil-mr-8"
-                    required
-                  />
-                  I'm the owner of the website and I've{" "}
-                  <InlineLink href="./who-can-apply.html">
-                    read the checklist
-                  </InlineLink>
-                </LabelText>
-              </div>
-              <div className="uil-pv-32">
-                <Button tag="button" type="submit" id="joinButton" primary >
-                  Join the program
-                </Button>
-              </div>
-              <div>
-                <InlineLink href="https://www.algolia.com/policies/terms" small>
-                  Refer to Algolia's Privacy Policy for more information on how we
-                  use and protect your data
+            <div className="uil-ph-32 uil-ta-center uil-d-flex uil-fxd-column">
+              <LabelText tag="label" htmlFor="owner" key="owner">
+                <input
+                  id="owner"
+                  name="owner"
+                  aria-label="Confirm I am owner of the website"
+                  type="checkbox"
+                  className="uil-mr-8"
+                  required
+                />
+                I'm the owner of the website and I've{" "}
+                <InlineLink href="./who-can-apply.html">
+                  read the checklist
                 </InlineLink>
-              </div>
+              </LabelText>
+              <Button
+                className="uil-mt-16 uil-mb-16"
+                tag="button"
+                type="submit"
+                id="joinButton"
+                primary
+              >
+                Join the program
+              </Button>
+            </div>
+            <div className="uil-ta-center">
+              <InlineLink href="https://www.algolia.com/policies/terms" small>
+                Refer to Algolia's Privacy Policy for more information on how we
+                use and protect your data
+              </InlineLink>
             </div>
           </form>
         </Card>
@@ -131,7 +132,8 @@ export default class ApplyForm extends React.Component {
           <LabelText style={{ fontSize: "1.2em" }}>Thank you!</LabelText>
           <br />
           <Text
-            style={{ marginTop: "1em" }}
+            small
+            className="uil-pv-8 uil-d-block"
             aria-label="Request will be processed"
           >
             Your request will be processed by our team. We'll get back to you on{" "}
