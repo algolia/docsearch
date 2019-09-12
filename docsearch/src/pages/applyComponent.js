@@ -33,14 +33,16 @@ export default class ApplyForm extends React.Component {
     const method = applyForm.getAttribute("method");
     const url = applyForm.getAttribute("action");
     const formData = new FormData(applyForm);
+    const object = {};
+    formData.forEach(function(value, key){
+      object[key] = value;
+    });
+    const json = JSON.stringify(object);
 
     fetch(url, {
       method: method,
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "multipart/form-data"
-      },
-      body: formData
+      headers: { 'Content-Type': 'application/json' },
+      body: json,
     }).then(response => {
       if (response.ok) {
         this.setState({ freeze: true });
@@ -56,7 +58,7 @@ export default class ApplyForm extends React.Component {
             onSubmit={this.handleSubmit}
             id="form-apply-docsearch"
             method="POST"
-            action="https://www.algolia.com/docsearch/join"
+            action="https://docsearch-hub.herokuapp.com/form/inbound"
           >
             <LabelText key="url" tag="label" htmlFor="url">
               Documentation URL
