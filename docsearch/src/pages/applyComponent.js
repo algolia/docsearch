@@ -34,15 +34,15 @@ export default class ApplyForm extends React.Component {
     const url = applyForm.getAttribute("action");
     const formData = new FormData(applyForm);
     const object = {};
-    formData.forEach(function(value, key){
+    formData.forEach(function(value, key) {
       object[key] = value;
     });
     const json = JSON.stringify(object);
 
     fetch(url, {
       method: method,
-      headers: { 'Content-Type': 'application/json' },
-      body: json,
+      headers: { "Content-Type": "application/json" },
+      body: json
     }).then(response => {
       if (response.ok) {
         this.setState({ freeze: true });
