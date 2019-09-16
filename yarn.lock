@@ -5783,10 +5783,10 @@ init-package-json@^1.10.3:
     validate-npm-package-license "^3.0.1"
     validate-npm-package-name "^3.0.0"
 
-inquirer@6.5.1:
-  version "6.5.1"
-  resolved "https://registry.npmjs.org/inquirer/-/inquirer-6.5.1.tgz#8bfb7a5ac02dac6ff641ac4c5ff17da112fcdb42"
-  integrity sha512-uxNHBeQhRXIoHWTSNYUFhQVrHYFThIt6IVo2fFmSe8aBwdR3/w6b58hJpiL/fMukFkvGzjg+hSxFtwvVmKZmXw==
+inquirer@7.0.0:
+  version "7.0.0"
+  resolved "https://registry.npmjs.org/inquirer/-/inquirer-7.0.0.tgz#9e2b032dde77da1db5db804758b8fea3a970519a"
+  integrity sha512-rSdC7zelHdRQFkWnhsMu2+2SO41mpv2oF2zy4tMhmiLWkcKbOAs87fWAJhVXttKVwhdZvymvnuM95EyEXg2/tQ==
   dependencies:
     ansi-escapes "^4.2.1"
     chalk "^2.4.2"
@@ -9882,20 +9882,20 @@ shellwords@^0.1.1:
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==
 
-shipjs-lib@0.4.0:
-  version "0.4.0"
-  resolved "https://registry.npmjs.org/shipjs-lib/-/shipjs-lib-0.4.0.tgz#c1c49cd1b8456799a232e5fe2d7f27d1c62aa6c7"
-  integrity sha512-ljLdHWponRcGghXQN6aoIVkOs9shQiggKyv8MESUbvn3dQCOmY+rOyskATVgR4hXDjssd7ySdosX2MWPeese1Q==
+shipjs-lib@0.5.1:
+  version "0.5.1"
+  resolved "https://registry.npmjs.org/shipjs-lib/-/shipjs-lib-0.5.1.tgz#0bd04ee4486c1c19de16ad5e1c62c33fe30884c5"
+  integrity sha512-MhN5DmzoQK7Zjtha+tfxy2Miep79knplkZu3zgYVLZJUaa4wE8kIG2vgI2J0zC2Ik5oD3uV1LYs8qnNlLDIVfA==
   dependencies:
     dotenv "^8.1.0"
     parse-github-url "1.0.2"
     semver "6.3.0"
     shelljs "0.8.3"
 
-shipjs@0.4.0:
-  version "0.4.0"
-  resolved "https://registry.npmjs.org/shipjs/-/shipjs-0.4.0.tgz#ccc37267cf8d77fead38e7bd75f531d8c0e29bca"
-  integrity sha512-8F1/DM+4r6DHs/3XR20zHCtSIZeaSDlGulnKukXcYVqBGMDi+V0Lo6roD6vhFx+qMm5ZyOOPjrEWV1JNDdqPCA==
+shipjs@0.5.1:
+  version "0.5.1"
+  resolved "https://registry.npmjs.org/shipjs/-/shipjs-0.5.1.tgz#90f417804f770eae8c569aeb9c9467618c6b81a3"
+  integrity sha512-YmPNJ/MpdBFKpZDREL/rumr7FOVqIhTOLK+HhBrp94rkWOxMEAS07mQYtXtkuDw+yut4N6g3Xc07gp5pkLwhZA==
   dependencies:
     "@slack/webhook" "^5.0.1"
     arg "4.1.1"
@@ -9903,8 +9903,8 @@ shipjs@0.4.0:
     change-case "3.1.0"
     conventional-changelog-cli "2.0.23"
     esm "3.2.25"
-    inquirer "6.5.1"
-    shipjs-lib "0.4.0"
+    inquirer "7.0.0"
+    shipjs-lib "0.5.1"
     temp-write "4.0.0"
 
 sigmund@^1.0.1:
