@@ -31,6 +31,6 @@
     "docsearch-core": "3.0.0-beta.0",
     "docsearch-renderer-downshift": "3.0.0-beta.0",
     "docsearch-types": "3.0.0-beta.0",
-    "preact": "^8.4.2"
+    "preact": "^8.5.2"
   }
 }
