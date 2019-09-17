@@ -1,6 +1,6 @@
 # DocSearch.js
 
-Library that packages DocSearch in a single function.
+Autocomplete dropdown for your documentation.
 
 ## Installation
 
