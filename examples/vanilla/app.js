@@ -14,5 +14,5 @@ apiKeyInput.value = apiKey;
 docsearch({
   indexName,
   apiKey,
-  container: '#searchbox',
+  inputSelector: '#searchbox',
 });

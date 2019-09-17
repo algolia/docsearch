@@ -16,7 +16,7 @@ yarn add docsearch.js
 docsearch({
   indexName: 'YOUR_INDEX_NAME',
   apiKey: 'YOUR_API_KEY',
-  container: 'input[type="search"]',
+  inputSelector: 'input[type="search"]',
 });
 ```
 
@@ -26,7 +26,7 @@ docsearch({
 
 ```ts
 docsearch({
-  container,
+  inputSelector,
   placeholder,
   stalledSearchDelay,
   onItemSelect,
@@ -37,7 +37,7 @@ interface DocSearchOptions extends DocSearchCoreOptions {
   /**
    * The container of the search box.
    */
-  container: HTMLElement | string;
+  inputSelector: HTMLElement | string;
   /**
    * The text that appears in the search box input when there is
    * no query.

@@ -25,20 +25,20 @@ describe('docsearch', () => {
   });
 
   describe('Usage', () => {
-    test('throws for container without options', () => {
+    test('throws for inputSelector without options', () => {
       const trigger = () => {
         // @ts-ignore incompatible options
         docsearch();
       };
 
       expect(trigger).toThrowErrorMatchingInlineSnapshot(`
-"The \`container\` option expects a \`string\` or an \`HTMLElement\`.
+"The \`inputSelector\` option expects a \`string\` or an \`HTMLElement\`.
 
 See: https://community.algolia.com/docsearch"
 `);
     });
 
-    test('throws for container with empty options', () => {
+    test('throws for inputSelector with empty options', () => {
       const options = {};
 
       const trigger = () => {
@@ -47,15 +47,15 @@ See: https://community.algolia.com/docsearch"
       };
 
       expect(trigger).toThrowErrorMatchingInlineSnapshot(`
-"The \`container\` option expects a \`string\` or an \`HTMLElement\`.
+"The \`inputSelector\` option expects a \`string\` or an \`HTMLElement\`.
 
 See: https://community.algolia.com/docsearch"
 `);
     });
 
-    test('throws without container', () => {
+    test('throws without inputSelector', () => {
       const options = {
-        container: undefined,
+        inputSelector: undefined,
       };
 
       const trigger = () => {
@@ -64,7 +64,7 @@ See: https://community.algolia.com/docsearch"
       };
 
       expect(trigger).toThrowErrorMatchingInlineSnapshot(`
-"The \`container\` option expects a \`string\` or an \`HTMLElement\`.
+"The \`inputSelector\` option expects a \`string\` or an \`HTMLElement\`.
 
 See: https://community.algolia.com/docsearch"
 `);
@@ -73,7 +73,7 @@ See: https://community.algolia.com/docsearch"
 
   describe('Lifecycle', () => {
     test('forwards options to docsearch-core', () => {
-      const container = document.createElement('div');
+      const inputSelector = document.createElement('div');
       const appId = 'appId';
       const apiKey = 'apiKey';
       const indexName = 'indexName';
@@ -90,7 +90,7 @@ See: https://community.algolia.com/docsearch"
       };
 
       docsearch({
-        container,
+        inputSelector,
         ...docsearchCoreOptions,
       });
 
@@ -99,7 +99,7 @@ See: https://community.algolia.com/docsearch"
     });
 
     test('forwards options to docsearch-renderer-downshift', () => {
-      const container = document.createElement('div');
+      const inputSelector = document.createElement('div');
       const onItemSelect = jest.fn();
       const onItemHighlight = jest.fn();
       const docsearchRendererOptions = {
@@ -111,7 +111,7 @@ See: https://community.algolia.com/docsearch"
       };
 
       docsearch({
-        container,
+        inputSelector,
         ...docsearchRendererOptions,
       });
 

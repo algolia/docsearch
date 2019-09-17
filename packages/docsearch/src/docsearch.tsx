@@ -9,7 +9,7 @@ export interface DocSearchOptions extends DocSearchCoreOptions {
   /**
    * The container of the search box.
    */
-  container: HTMLElement | string;
+  inputSelector: HTMLElement | string;
   /**
    * The text that appears in the search box input when there is
    * no query.
@@ -45,22 +45,22 @@ See: https://community.algolia.com/docsearch
 
 function docsearch(options: DocSearchOptions = {} as DocSearchOptions) {
   const {
-    container,
+    inputSelector,
     placeholder = 'Search',
     stalledSearchDelay = 300,
     onItemSelect,
     onItemHighlight,
     ...docsearchCoreOptions
   } = options;
-  const containerNode =
-    typeof container === 'string'
-      ? document.querySelector<HTMLElement>(container)
-      : container;
+  const inputNode =
+    typeof inputSelector === 'string'
+      ? document.querySelector<HTMLElement>(inputSelector)
+      : inputSelector;
 
-  if (!containerNode) {
+  if (!inputNode) {
     throw new Error(
       withUsage(
-        'The `container` option expects a `string` or an `HTMLElement`.'
+        'The `inputSelector` option expects a `string` or an `HTMLElement`.'
       )
     );
   }
@@ -75,8 +75,8 @@ function docsearch(options: DocSearchOptions = {} as DocSearchOptions) {
       onItemSelect={onItemSelect}
       onItemHighlight={onItemHighlight}
     />,
-    containerNode,
-    containerNode.firstElementChild as Element
+    inputNode,
+    inputNode.firstElementChild as Element
   );
 }
 
