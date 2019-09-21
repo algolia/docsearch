@@ -237,37 +237,37 @@ set of selectors should be applied to specific pages.
     "http://www.example.com/docs/",
     {
       "url": "http://www.example.com/docs/concepts/",
-       "selectors_key": "concepts"
+      "selectors_key": "concepts"
     },
     {
       "url": "http://www.example.com/docs/contributors/",
-       "selectors_key": "contributors"
+      "selectors_key": "contributors"
     }
-  ]
-   "selectors": {
-     "default": {
-       "lvl0": ".main h1",
-       "lvl1": ".main h2",
-       "lvl2": ".main h3",
-       "lvl3": ".main h4",
-       "lvl4": ".main h5",
-       "text": ".main p"
-      },
-     "concepts": {
-       "lvl0": ".header h2",
-       "lvl1": ".main h1.title",
-       "lvl2": ".main h2.title",
-       "lvl3": ".main h3.title",
-       "lvl4": ".main h5.title",
-       "text": ".main p"
-     },
-     "contributors": {
-       "lvl0": ".main h1",
-       "lvl1": ".contributors .name",
-       "lvl2": ".contributors .title",
-       "text": ".contributors .description"
-     }
-   }
+  ],
+  "selectors": {
+    "default": {
+      "lvl0": ".main h1",
+      "lvl1": ".main h2",
+      "lvl2": ".main h3",
+      "lvl3": ".main h4",
+      "lvl4": ".main h5",
+      "text": ".main p"
+    },
+    "concepts": {
+      "lvl0": ".header h2",
+      "lvl1": ".main h1.title",
+      "lvl2": ".main h2.title",
+      "lvl3": ".main h3.title",
+      "lvl4": ".main h5.title",
+      "text": ".main p"
+    },
+    "contributors": {
+      "lvl0": ".main h1",
+      "lvl1": ".contributors .name",
+      "lvl2": ".contributors .title",
+      "text": ".contributors .description"
+    }
+  }
 }
 ```
 
@@ -341,7 +341,7 @@ We do not recommend `text` selectors to be global.
 
 ### Setting a default value
 
-If your selector might not match a valid element on the page, you can define a
+If a selector doesn't match a valid element on the page, you can define a
 `default_value` as a fallback.
 
 ```json
