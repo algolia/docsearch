@@ -120,7 +120,7 @@ updates this number automatically.
 
 The DocSearch scraper follows [the recommended atomic-reindexing strategy][10].
 It creates a brand new temporary index to populate the data scraped from your
-website. When successful, the crawl overwites the old index defined in your
+website. When successful, the crawl overwrite the old index defined in your
 configuration with the key `index_name`.
 
 ## Why aren't my pages indexed?
