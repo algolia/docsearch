@@ -158,8 +158,8 @@ from pages matching `http://www.example.com/docs/en/latest` will have attributes
 `lang: en` and `version: latest`. It enables you to filter on [these
 `facetFilters`][2].
 
-The following example shows how you can filter results matching a specific
-language and version from the frontend
+The following example shows how the UI filters results matching a specific
+language and version.
 
 ```js
 docsearch({
@@ -189,7 +189,7 @@ filter based on their values as well.
 }
 ```
 
-From your JS snippet:
+From the JS snippet:
 
 ```js
 docsearch({
@@ -202,10 +202,10 @@ docsearch({
 
 ### Using Page Rank
 
-To give more weight to some pages to boost their ranking in the results, you can
-attribute a custom `page_rank` to specific URLs. Pages with highest `page_rank`
-will be returned before pages with a lower `page_rank`. Note that you can pass
-any numeric value, including negative values.
+To give more weight to some pages. This parameter helps to boost records built
+from the page. Pages with highest `page_rank` will be returned before pages with
+a lower `page_rank`. Note that you can pass any numeric value, including
+negative values.
 
 ```json
 {
@@ -222,8 +222,8 @@ any numeric value, including negative values.
 }
 ```
 
-In this example, results extracted from the _Concepts_ page will be ranked
-higher than results extracted from the _Contributors_ page.
+In this example, records built from the _Concepts_ page will be ranked higher
+than results extracted from the _Contributors_ page.
 
 ### Using custom selectors per page
 
