@@ -40,7 +40,7 @@ name you'd like.
 }
 ```
 
-When DocSearch runs, it writes records to a temporary index. Once scraping is
+When the DocSearch scraper runs, it builds a temporary index. Once scraping is
 complete, it moves that index to the name specified by `index_name` (replacing
 the existing index).
 
@@ -56,7 +56,7 @@ different value. This variable can be set in the .env file alongside
 This array contains the list of URLs that will be used to start crawling your
 website. The crawler will recursively follow any links (`<a/>` tags) from those
 pages. It will not follow links that are on another domain and never follow
-matching links from `stop_urls`.
+links matching `stop_urls`.
 
 ```json
 {
@@ -102,8 +102,8 @@ parameter `selectors_key` from your `start_urls`.
 }
 ```
 
-To find the right subset to use based on the URL, we iterate over these
-`start_urls` items. Only the first one to match is applied.
+To find the right subset to use based on the URL, the scraper iterates over
+these `start_urls` items. Only the first one to match is applied.
 
 Considering the URL `http://www.example.com/en/api/` with the configuration:
 
