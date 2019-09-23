@@ -9,7 +9,7 @@ we'll share some tips on how you can make the most out of DocSearch.
 
 ## Use a `sitemap.xml`
 
-If you provide a sitemap in your configuration, DocSearch will use it to diretly
+If you provide a sitemap in your configuration, DocSearch will use it to directly
 browse the pages to index. Pages are still crawled which means we extract every
 compliant link.
 
