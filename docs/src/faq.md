@@ -138,10 +138,10 @@ that some pages are missing from the search. The possible reasons for that are:
 ## Can I know when the next crawl will happen?
 
 No you can't. You should be aware that we made every crawls in a day. The
-position of your crawl in the queue is the inverse of the lexicographic order of
+position of your crawl in the queue is the lexicographic order of
 your `index_name` amongs the whole list of featured website.
 
-If none of the previous points help, you can contact our support.
+If none of the previous points help, you [can contact our support][1].
 
 [1]: mailto:docsearch@algolia.com
 [2]: https://www.algolia.com/
