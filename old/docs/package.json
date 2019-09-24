@@ -7,8 +7,6 @@
     "lint": "./scripts/lint",
     "lint:js": "./scripts/lint-js",
     "lint:css": "./scripts/lint-css",
-    "lint:md": "./scripts/lint-md",
-    "lint:md:fix": "./scripts/lint-md-fix",
     "precommit": "./scripts/precommit",
     "prepush": "yarn lint",
     "serve": "babel-node ./scripts/serve.js"
