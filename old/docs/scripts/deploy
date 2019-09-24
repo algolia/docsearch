@@ -1,7 +1,0 @@
-#!/usr/bin/env sh
-set -e
-
-rm -rf ./dist
-yarn run build
-
-gh-pages -d dist
