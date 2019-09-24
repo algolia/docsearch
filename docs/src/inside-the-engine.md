@@ -36,10 +36,12 @@ errors. If indeed there are any serious warnings, it will abort and hence not
 overwrite your current index. These checks ensure that your dedicated index
 isn't flushed._
 
+You can [find more explanations in this dedicated section.][2]
+
 ## Ranking records
 
 Algolia always returns the most relevant results first, using a [tie-breaking
-approach][2]. DocSearch will first search for exact matches in your keywords
+approach][3]. DocSearch will first search for exact matches in your keywords
 then fallback to partial matches. It sorts those results, once again, on the
 page hierarchy, as extracted from the `selectors`.
 
@@ -59,10 +61,11 @@ For example all pages with a `page_rank` of 5 will be returned before pages with
 a `page_rank` of 1.
 
 You could even change the relevancy strategy by [overwriting the default
-`customRanking`][3] used by the index by using the `custom_settings` option of
+`customRanking`][4] used by the index by using the `custom_settings` option of
 your config.
 
 [1]: https://www.sitemaps.org/
-[2]:
+[2]: ./how-do-we-build-an-index.html
+[3]:
   https://www.algolia.com/doc/guides/ranking/ranking-formula/#tie-breaking-approach
-[3]: https://www.algolia.com/doc/guides/ranking/custom-ranking/
+[4]: https://www.algolia.com/doc/guides/ranking/custom-ranking/

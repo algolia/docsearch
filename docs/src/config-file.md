@@ -40,7 +40,7 @@ name you'd like.
 }
 ```
 
-When DocSearch runs, it writes records to a temporary index. Once scraping is
+When the DocSearch scraper runs, it builds a temporary index. Once scraping is
 complete, it moves that index to the name specified by `index_name` (replacing
 the existing index).
 
@@ -56,7 +56,7 @@ different value. This variable can be set in the .env file alongside
 This array contains the list of URLs that will be used to start crawling your
 website. The crawler will recursively follow any links (`<a/>` tags) from those
 pages. It will not follow links that are on another domain and never follow
-matching links from `stop_urls`.
+links matching `stop_urls`.
 
 ```json
 {
@@ -102,8 +102,8 @@ parameter `selectors_key` from your `start_urls`.
 }
 ```
 
-To find the right subset to use based on the URL, we iterate over these
-`start_urls` items. Only the first one to match is applied.
+To find the right subset to use based on the URL, the scraper iterates over
+these `start_urls` items. Only the first one to match is applied.
 
 Considering the URL `http://www.example.com/en/api/` with the configuration:
 
@@ -158,8 +158,8 @@ from pages matching `http://www.example.com/docs/en/latest` will have attributes
 `lang: en` and `version: latest`. It enables you to filter on [these
 `facetFilters`][2].
 
-The following example shows how you can filter results matching a specific
-language and version from the frontend
+The following example shows how the UI filters results matching a specific
+language and version.
 
 ```js
 docsearch({
@@ -189,7 +189,7 @@ filter based on their values as well.
 }
 ```
 
-From your JS snippet:
+From the JS snippet:
 
 ```js
 docsearch({
@@ -202,10 +202,10 @@ docsearch({
 
 ### Using Page Rank
 
-To give more weight to some pages to boost their ranking in the results, you can
-attribute a custom `page_rank` to specific URLs. Pages with highest `page_rank`
-will be returned before pages with a lower `page_rank`. Note that you can pass
-any numeric value, including negative values.
+To give more weight to some pages. This parameter helps to boost records built
+from the page. Pages with highest `page_rank` will be returned before pages with
+a lower `page_rank`. Note that you can pass any numeric value, including
+negative values.
 
 ```json
 {
@@ -222,8 +222,8 @@ any numeric value, including negative values.
 }
 ```
 
-In this example, results extracted from the _Concepts_ page will be ranked
-higher than results extracted from the _Contributors_ page.
+In this example, records built from the _Concepts_ page will be ranked higher
+than results extracted from the _Contributors_ page.
 
 ### Using custom selectors per page
 
@@ -237,37 +237,37 @@ set of selectors should be applied to specific pages.
     "http://www.example.com/docs/",
     {
       "url": "http://www.example.com/docs/concepts/",
-       "selectors_key": "concepts"
+      "selectors_key": "concepts"
     },
     {
       "url": "http://www.example.com/docs/contributors/",
-       "selectors_key": "contributors"
+      "selectors_key": "contributors"
     }
-  ]
-   "selectors": {
-     "default": {
-       "lvl0": ".main h1",
-       "lvl1": ".main h2",
-       "lvl2": ".main h3",
-       "lvl3": ".main h4",
-       "lvl4": ".main h5",
-       "text": ".main p"
-      },
-     "concepts": {
-       "lvl0": ".header h2",
-       "lvl1": ".main h1.title",
-       "lvl2": ".main h2.title",
-       "lvl3": ".main h3.title",
-       "lvl4": ".main h5.title",
-       "text": ".main p"
-     },
-     "contributors": {
-       "lvl0": ".main h1",
-       "lvl1": ".contributors .name",
-       "lvl2": ".contributors .title",
-       "text": ".contributors .description"
-     }
-   }
+  ],
+  "selectors": {
+    "default": {
+      "lvl0": ".main h1",
+      "lvl1": ".main h2",
+      "lvl2": ".main h3",
+      "lvl3": ".main h4",
+      "lvl4": ".main h5",
+      "text": ".main p"
+    },
+    "concepts": {
+      "lvl0": ".header h2",
+      "lvl1": ".main h1.title",
+      "lvl2": ".main h2.title",
+      "lvl3": ".main h3.title",
+      "lvl4": ".main h5.title",
+      "text": ".main p"
+    },
+    "contributors": {
+      "lvl0": ".main h1",
+      "lvl1": ".contributors .name",
+      "lvl2": ".contributors .title",
+      "text": ".contributors .description"
+    }
+  }
 }
 ```
 
@@ -341,7 +341,7 @@ We do not recommend `text` selectors to be global.
 
 ### Setting a default value
 
-If your selector might not match a valid element on the page, you can define a
+If a selector doesn't match a valid element on the page, you can define a
 `default_value` as a fallback.
 
 ```json
