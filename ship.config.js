@@ -12,18 +12,19 @@ module.exports = {
     packagesToPublish: ['packages/*'],
   },
   versionUpdated: ({ version, dir, exec }) => {
-    const update = (package, dependency) =>
-      exec(`yarn workspace ${package} add ${dependency}@${version}`);
-
     // update internal dependencies
-    update('vanilla-example', 'docsearch-theme-light');
-    update('vanilla-example', 'docsearch.js');
-    update('docsearch-core', 'docsearch-types');
-    update('docsearch-renderer-downshift', 'docsearch-core');
-    update('docsearch-renderer-downshift', 'docsearch-types');
-    update('docsearch.js', 'docsearch-core');
-    update('docsearch.js', 'docsearch-renderer-downshift');
-    update('docsearch.js', 'docsearch-types');
+    exec(`yarn workspace vanilla-example add docsearch-theme-light@${version}`);
+    exec(`yarn workspace vanilla-example add docsearch.js@${version}`);
+    exec(`yarn workspace docsearch-core add docsearch-types@^${version}`);
+    exec(
+      `yarn workspace docsearch-renderer-downshift add docsearch-core@^${version}`
+    );
+    exec(
+      `yarn workspace docsearch-renderer-downshift add docsearch-types@^${version}`
+    );
+    exec(`yarn workspace docsearch.js add docsearch-core@^${version}`);
+    exec(`yarn workspace docsearch.js add docsearch-renderer-downshift@^${version}`);
+    exec(`yarn workspace docsearch.js add docsearch-types@^${version}`);
 
     // update lerna.json
     const lernaConfigPath = path.resolve(dir, 'lerna.json');
