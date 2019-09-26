@@ -23,7 +23,7 @@ module.exports = {
       `yarn workspace docsearch-renderer-downshift add docsearch-types@^${version}`
     );
     exec(`yarn workspace docsearch.js add docsearch-core@^${version}`);
-    exec(`yarn workspace docsearch.js add renderer-downshift@^${version}`);
+    exec(`yarn workspace docsearch.js add docsearch-renderer-downshift@^${version}`);
     exec(`yarn workspace docsearch.js add docsearch-types@^${version}`);
 
     // update lerna.json
