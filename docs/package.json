@@ -30,7 +30,7 @@
     "cpx": "1.5.0",
     "eslint": "5.16.0",
     "eslint-config-algolia": "13.4.0",
-    "eslint-config-prettier": "6.1.0",
+    "eslint-config-prettier": "6.3.0",
     "eslint-plugin-import": "2.18.2",
     "eslint-plugin-prettier": "2.7.0",
     "front-matter": "3.0.2",
