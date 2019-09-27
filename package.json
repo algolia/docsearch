@@ -67,7 +67,7 @@
     "prettier": "1.18.2",
     "pretty-bytes-cli": "2.0.0",
     "semver": "6.3.0",
-    "sinon": "7.4.2",
+    "sinon": "7.5.0",
     "tailwindcss": "^1.1.2",
     "uglify-js": "3.6.0",
     "webpack": "4.39.3",
