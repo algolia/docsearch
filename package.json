@@ -54,7 +54,7 @@
     "eslint-config-prettier": "6.1.0",
     "eslint-plugin-import": "2.18.2",
     "eslint-plugin-jest": "22.16.0",
-    "eslint-plugin-prettier": "3.1.0",
+    "eslint-plugin-prettier": "3.1.1",
     "jest": "24.9.0",
     "jsdom": "15.1.1",
     "json": "9.0.6",
