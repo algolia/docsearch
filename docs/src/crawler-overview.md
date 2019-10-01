@@ -9,7 +9,7 @@ The DocSearch scraper is written in python and heavily based on the [Scrapy][1]
 framework. It will go through all pages of your website and extract content from
 the HTML structure to populate an Algolia index.
 
-It will automatically follow every internal links to make sure we are not
+It will automatically follow every internal link to make sure we are not
 missing any content, and will use the semantics of your HTML structure to
 construct its records. This means that `h1`,`h2`, etc., (`selectors`) titles
 will be used for the hierarchy, and each `p` of text will be used as a potential
