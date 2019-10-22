@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-# Check if on master
-if [ "$TRAVIS_BRANCH" = "master" ]; then
-  exit 0
-fi
-
-exit 1
