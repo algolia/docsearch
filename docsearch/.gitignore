@@ -18,3 +18,12 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# legacy
+coverage/
+dist/
+.idea/
+dist-es5-module/
+tmp
+docs/.textlintcache
+.netlify
