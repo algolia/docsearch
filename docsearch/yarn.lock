@@ -14,10 +14,10 @@
     ora "^3.0.0"
     postcss "^6.0.22"
 
-"@algolia/ui-library@^1.0.0-beta.97":
-  version "1.0.0-beta.97"
-  resolved "https://registry.yarnpkg.com/@algolia/ui-library/-/ui-library-1.0.0-beta.97.tgz#c8bbbdb267635a5e567c561f9935118be357f1be"
-  integrity sha512-sRpCjLdKoyfmhu+QhSECup3323OOFyHaEHxK8f03+aPyKjCRx4o//jwGFaxjQXEPL2low9IIKyrj9pIi6R/FyQ==
+"@algolia/ui-library@^1.0.0-beta.109":
+  version "1.0.0-beta.109"
+  resolved "https://registry.yarnpkg.com/@algolia/ui-library/-/ui-library-1.0.0-beta.109.tgz#5446e2a14a313c1a4c4966f890613cee83517991"
+  integrity sha512-hmMDALT+4m81WT4mCeOQ8WTjc2BujvGy5LFOciXdW4CMx+fGbxGpKcvbf/LqoQlXRHqITOnBbW3e2AwCcJ0p3w==
   dependencies:
     "@algolia/fragments.js" "^2.0.0-beta.12"
     "@emotion/babel-preset-css-prop" "^10.0.14"
