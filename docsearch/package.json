@@ -8,10 +8,10 @@
     "build": "yarn lint && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "yarn lint && docusaurus deploy",
-    "lint":"yarn run textlint docs"
+    "lint": "yarn run textlint docs"
   },
   "dependencies": {
-    "@algolia/ui-library": "^1.0.0-beta.97",
+    "@algolia/ui-library": "^1.0.0-beta.109",
     "@docusaurus/core": "^2.0.0-alpha.24",
     "@docusaurus/preset-classic": "^2.0.0-alpha.24",
     "classnames": "^2.2.6",
