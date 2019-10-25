@@ -42,13 +42,13 @@ We're receiving dozens of requests every day, and while we strive to answer them
 all as fast as we can, we sometimes give priority to some based on the following
 criteria:
 
-- 🙂 If your project is open source, we'll handle it before any other
+- 😀 If your project is open source, we'll handle it before any other
   closed-source product. We love open source and want to help as much as we can.
 
 - 🙂 If you're using one of our [official integrations][4], creating your config
   will be much faster for us.
 
-- ☹️ If we need to render your website in the browser through JavaScript, it
+- 🙁 If we need to render your website in the browser through JavaScript, it
   means that we'll have to crawl it through a much slower browser emulation. We
   highly recommend that you put in place server-side rendering for the useful
   textual content.
