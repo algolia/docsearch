@@ -5,7 +5,7 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "yarn lint && docusaurus start",
-    "build": "docusaurus build",
+    "build": " yarn list --pattern 'docusaurus|core-js|react|babel' && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "yarn lint && docusaurus deploy",
     "lint": "yarn run textlint docs"
