@@ -11,7 +11,7 @@ import Toggle from 'react-toggle';
 import Link from '@docusaurus/Link';
 import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import withBaseUrl from '@docusaurus/withBaseUrl';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 import SearchBar from '@theme/SearchBar';
 
@@ -32,7 +32,7 @@ function NavLink(props) {
           }
         : {
             activeClassName: 'navbar__link--active',
-            to: withBaseUrl(props.to),
+            to: useBaseUrl(props.to),
           })}>
       {props.label}
     </Link>
@@ -121,7 +121,7 @@ function Navbar() {
               {logo != null && (
                 <img
                   className="navbar__logo"
-                  src={withBaseUrl(logo.src)}
+                  src={useBaseUrl(logo.src)}
                   alt={logo.alt}
                 />
               )}
@@ -169,7 +169,7 @@ function Navbar() {
               {logo != null && (
                 <img
                   className="navbar__logo"
-                  src={withBaseUrl(logo.src)}
+                  src={useBaseUrl(logo.src)}
                   alt={logo.alt}
                 />
               )}
