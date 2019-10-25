@@ -15,6 +15,7 @@
     "@docusaurus/core": "^2.0.0-alpha.30",
     "@docusaurus/preset-classic": "^2.0.0-alpha.30",
     "classnames": "^2.2.6",
+    "core-js": "^3.3.4",
     "file-loader": "^4.2.0",
     "image-webpack-loader": "^5.0.0",
     "imagemin": "^7.0.0",
