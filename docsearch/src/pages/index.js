@@ -9,11 +9,8 @@ import React from 'react';
 import { LightCta, Section, SectionTitle, Button, Text, TextBlock, Hero, LabelText, Input, SectionHeader, SmallText, NumberedList, Card, CardsRow } from '@algolia/ui-library';
 import classnames from 'classnames';
 import Layout from '@theme/Layout';
-import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
-import styles from './styles.module.css';
-import bg from '../../static/img/bg-docsearch.svg';
 import ApplyForm from "./applyComponent.js";
 
 function Home() {
