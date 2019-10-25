@@ -10,7 +10,7 @@ import classnames from 'classnames';
 
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import withBaseUrl from '@docusaurus/withBaseUrl';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 function Footer() {
   const context = useDocusaurusContext();
@@ -53,7 +53,7 @@ function Footer() {
                                 href: item.href,
                               }
                             : {
-                                to: withBaseUrl(item.to),
+                                to: useBaseUrl(item.to),
                               })}>
                           {item.label}
                         </Link>

@@ -11,7 +11,7 @@ import classnames from 'classnames';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import withBaseUrl from '@docusaurus/withBaseUrl';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import styles from './styles.module.css';
 import bg from '../../static/img/bg-docsearch.svg';
 import ApplyForm from "./applyComponent.js";
@@ -29,7 +29,7 @@ function Home() {
       title={<img src="img/docsearch-logo.svg" alt="DocSearch"/>}
       subtitle= {siteConfig.tagline}
       cta={[
-        <Button style={{textDecoration:"none"}} primary tag="a" href={withBaseUrl('docs/what-is-docsearch')}>
+        <Button style={{textDecoration:"none"}} primary tag="a" href={useBaseUrl('docs/what-is-docsearch')}>
           Join the Program
         </Button>,
       ]}
