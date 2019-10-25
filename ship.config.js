@@ -7,7 +7,7 @@ module.exports = {
     toSameBranch: ['next'],
   },
   monorepo: {
-    readVersionFrom: 'lerna.json',
+    mainVersionFile: 'lerna.json',
     packagesToBump: ['packages/*'],
     packagesToPublish: ['packages/*'],
   },
@@ -23,16 +23,10 @@ module.exports = {
       `yarn workspace docsearch-renderer-downshift add docsearch-types@^${version}`
     );
     exec(`yarn workspace docsearch.js add docsearch-core@^${version}`);
-    exec(`yarn workspace docsearch.js add docsearch-renderer-downshift@^${version}`);
+    exec(
+      `yarn workspace docsearch.js add docsearch-renderer-downshift@^${version}`
+    );
     exec(`yarn workspace docsearch.js add docsearch-types@^${version}`);
-
-    // update lerna.json
-    const lernaConfigPath = path.resolve(dir, 'lerna.json');
-    const lernaConfig = {
-      ...JSON.parse(fs.readFileSync(lernaConfigPath)),
-      version,
-    };
-    fs.writeFileSync(lernaConfigPath, JSON.stringify(lernaConfig, null, 2));
 
     // update version.ts
     fs.writeFileSync(
