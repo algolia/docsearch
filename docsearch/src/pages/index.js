@@ -41,8 +41,8 @@ function Home() {
         share it with the developer community.</Text>
       </SectionHeader>
       <div className="demo-content-wrapper">
-        <div class="demo-header-wrapper">
-          <div class="docsearch-live-demo-input-wrapper">
+        <div className="demo-header-wrapper">
+          <div className="docsearch-live-demo-input-wrapper">
           </div>
         </div>
       </div>
