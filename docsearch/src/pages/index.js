@@ -7,7 +7,6 @@
 
 import React from 'react';
 import { LightCta, Section, SectionTitle, Button, Text, TextBlock, Hero, LabelText, Input, SectionHeader, SmallText, NumberedList, Card, CardsRow } from '@algolia/ui-library';
-import classnames from 'classnames';
 import Layout from '@theme/Layout';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
