@@ -5,7 +5,9 @@ module.exports = function(context, options) {
       return {
         module: {
           rules: [
-            { test: /\.(gif|png|jpe?g|svg)$/i,
+            {
+              test: /\.(gif|png|jpe?g|svg)$/i,
+              exclude: /\.(mdx?)$/i,
              use: ['file-loader',{ loader: 'image-webpack-loader' }]
             }
           ]
