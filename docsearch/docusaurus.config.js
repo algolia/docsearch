@@ -9,7 +9,7 @@ module.exports = {
   title: 'DocSearch',
   tagline: 'The best search experience for docs, integrates in minutes, for free',
   url: 'https://docsearch.netlify.com',
-  baseUrl: '/',
+  baseUrl: '/docusaurus/', // Make sure netlify settings for base directory is empty
   favicon: 'img/favicon.ico',
   organizationName: 'Algolia',
   projectName: 'DocSearch',
