@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "start": "yarn lint && docusaurus start",
-    "build": "docusaurus build --bundle-analyzer",
+    "start": "docusaurus start",
+    "build": "yarn lint && docusaurus build --bundle-analyzer",
     "swizzle": "docusaurus swizzle",
-    "deploy": "yarn lint && docusaurus deploy",
+    "deploy": "docusaurus deploy",
     "lint": "yarn run textlint docs"
   },
   "dependencies": {
