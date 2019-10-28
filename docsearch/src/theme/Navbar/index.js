@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, {useCallback, useState, useEffect} from 'react';
-import Toggle from 'react-toggle';
+import React, { useCallback, useState, useEffect } from "react";
+import Toggle from "react-toggle";
 
-import Link from '@docusaurus/Link';
-import Head from '@docusaurus/Head';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import useBaseUrl from '@docusaurus/useBaseUrl';
+import Link from "@docusaurus/Link";
+import Head from "@docusaurus/Head";
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import useBaseUrl from "@docusaurus/useBaseUrl";
 
-import SearchBar from '@theme/SearchBar';
+import SearchBar from "@theme/SearchBar";
 
-import classnames from 'classnames';
+import classnames from "classnames";
 
-import styles from './styles.module.css';
+import styles from "./styles.module.css";
 
 function NavLink(props) {
   return (
@@ -26,14 +26,15 @@ function NavLink(props) {
       {...props}
       {...(props.href
         ? {
-            target: '_blank',
-            rel: 'noopener noreferrer',
-            href: props.href,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            href: props.href
           }
         : {
-            activeClassName: 'navbar__link--active',
-            to: useBaseUrl(props.to),
-          })}>
+            activeClassName: "navbar__link--active",
+            to: useBaseUrl(props.to)
+          })}
+    >
       {props.label}
     </Link>
   );
@@ -46,14 +47,14 @@ function Navbar() {
   const context = useDocusaurusContext();
   const [sidebarShown, setSidebarShown] = useState(false);
   const currentTheme =
-    typeof document !== 'undefined'
-      ? document.querySelector('html').getAttribute('data-theme')
-      : '';
+    typeof document !== "undefined"
+      ? document.querySelector("html").getAttribute("data-theme")
+      : "";
   const [theme, setTheme] = useState(currentTheme);
-  const {siteConfig = {}} = context;
-  const {baseUrl, themeConfig = {}} = siteConfig;
-  const {algolia, navbar = {}} = themeConfig;
-  const {title, logo, links = []} = navbar;
+  const { siteConfig = {} } = context;
+  const { baseUrl, themeConfig = {} } = siteConfig;
+  const { algolia, navbar = {} } = themeConfig;
+  const { title, logo, links = [] } = navbar;
 
   const showSidebar = useCallback(() => {
     setSidebarShown(true);
@@ -64,7 +65,7 @@ function Navbar() {
 
   useEffect(() => {
     try {
-      const localStorageTheme = localStorage.getItem('theme');
+      const localStorageTheme = localStorage.getItem("theme");
       setTheme(localStorageTheme);
     } catch (err) {
       console.error(err);
@@ -72,10 +73,10 @@ function Navbar() {
   }, []);
 
   const onToggleChange = e => {
-    const nextTheme = e.target.checked ? 'dark' : '';
+    const nextTheme = e.target.checked ? "dark" : "";
     setTheme(nextTheme);
     try {
-      localStorage.setItem('theme', nextTheme);
+      localStorage.setItem("theme", nextTheme);
     } catch (err) {
       console.error(err);
     }
@@ -88,9 +89,10 @@ function Navbar() {
         <html lang="en" data-theme={theme} />
       </Head>
       <nav
-        className={classnames('navbar', 'navbar--light', 'navbar--fixed-top', {
-          'navbar--sidebar-show': sidebarShown,
-        })}>
+        className={classnames("navbar", "navbar--light", "navbar--fixed-top", {
+          "navbar--sidebar-show": sidebarShown
+        })}
+      >
         <div className="navbar__inner">
           <div className="navbar__items">
             <div
@@ -99,14 +101,16 @@ function Navbar() {
               role="button"
               tabIndex={0}
               onClick={showSidebar}
-              onKeyDown={showSidebar}>
+              onKeyDown={showSidebar}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="30"
                 height="30"
                 viewBox="0 0 30 30"
                 role="img"
-                focusable="false">
+                focusable="false"
+              >
                 <title>Menu</title>
                 <path
                   stroke="currentColor"
@@ -128,25 +132,25 @@ function Navbar() {
               {title != null && <strong>{title}</strong>}
             </Link>
             {links
-              .filter(linkItem => linkItem.position !== 'right')
+              .filter(linkItem => linkItem.position !== "right")
               .map((linkItem, i) => (
                 <NavLink {...linkItem} key={i} />
               ))}
           </div>
           <div className="navbar__items navbar__items--right">
             {links
-              .filter(linkItem => linkItem.position === 'right')
+              .filter(linkItem => linkItem.position === "right")
               .map((linkItem, i) => (
                 <NavLink {...linkItem} key={i} />
               ))}
             <Toggle
               className={styles.displayOnlyInLargeViewport}
               aria-label="Dark mode toggle"
-              checked={theme === 'dark'}
+              checked={theme === "dark"}
               onChange={onToggleChange}
               icons={{
                 checked: <Moon />,
-                unchecked: <Sun />,
+                unchecked: <Sun />
               }}
             />
             {algolia && (
@@ -178,11 +182,11 @@ function Navbar() {
             {sidebarShown && (
               <Toggle
                 aria-label="Dark mode toggle in sidebar"
-                checked={theme === 'dark'}
+                checked={theme === "dark"}
                 onChange={onToggleChange}
                 icons={{
                   checked: <Moon />,
-                  unchecked: <Sun />,
+                  unchecked: <Sun />
                 }}
               />
             )}
