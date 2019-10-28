@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@algolia/ui-library": "^1.0.0-beta.109",
-    "@docusaurus/core": "^2.0.0-alpha.30",
-    "@docusaurus/preset-classic": "^2.0.0-alpha.30",
+    "@docusaurus/core": "^2.0.0-alpha.31",
+    "@docusaurus/preset-classic": "^2.0.0-alpha.31",
     "classnames": "^2.2.6",
     "file-loader": "^4.2.0",
     "image-webpack-loader": "^5.0.0",
