@@ -3,6 +3,7 @@ module.exports = function(context, options) {
     name: 'loaders',
     configureWebpack(config, isServer) {
       return {
+        mode: 'development',
         module: {
           rules: [
             { test: /\.(gif|png|jpe?g|svg)$/i,
