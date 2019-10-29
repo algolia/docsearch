@@ -66,7 +66,7 @@ module.exports = {
               to: 'https://github.com/algolia/docsearch/blob/master/LICENSE'
             },
             {
-              label: 'Github',
+              label: 'GitHub',
               to: 'https://github.com/algolia/docsearch',
             },
             {
