@@ -75,70 +75,313 @@ function Home() {
       </Section>
 
       <Section background="white">
-        <SectionHeader title="Providing Search for 1500+ docs, and counting"></SectionHeader>
-        <div className="row">
-          <div className="col text--center">
-            <img
-              style={{ height: "50px" }}
-              src={useBaseUrl("img/logos/bootstrap.jpg")}
-            />
-            <SmallText tag="p">Bootstrap</SmallText>
+        <SectionHeader title="Providing search to your favorite projects"></SectionHeader>
+        <div
+          className="uil-jc-between uil-d-flex"
+          style={{ flexWrap: "wrap", maxWidth: "800px", margin: "auto" }}
+        >
+          <div className="uil-ta-center">
+            <a href="https://getbootstrap.com/docs/4.1/getting-started/introduction/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/bootstrap.jpg")}
+              />
+              <SmallText tag="p">Bootstrap</SmallText>
+            </a>
           </div>
-          <div className="col text--center">
-            <img
-              style={{ height: "50px" }}
-              src={useBaseUrl("img/logos/babel.jpg")}
-            />
-            <SmallText tag="p">Babel</SmallText>
+          <div className="uil-ta-center">
+            <a href="https://babeljs.io/docs/en/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/babel.jpg")}
+              />
+              <SmallText tag="p">Babel</SmallText>
+            </a>
           </div>
-          <div className="col text--center">
-            <img
-              style={{ height: "50px" }}
-              src={useBaseUrl("img/logos/graphql.jpg")}
-            />
-            <SmallText tag="p">Graphql</SmallText>
+          <div className="uil-ta-center">
+            <a href="https://graphql.org/learn/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/graphql.jpg")}
+              />
+              <SmallText tag="p">Graphql</SmallText>
+            </a>
           </div>
-          <div className="col text--center">
-            <img
-              style={{ height: "50px" }}
-              src={useBaseUrl("img/logos/react.jpg")}
-            />
-            <SmallText tag="p">React</SmallText>
+          <div className="uil-ta-center">
+            <a href="https://cordova.apache.org/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/cordova.png")}
+              />
+              <SmallText tag="p">CORDOVA</SmallText>
+            </a>
           </div>
-          <div className="col text--center">
-            <img
-              style={{ height: "50px" }}
-              src={useBaseUrl("img/logos/webpack.jpg")}
-            />
-            <SmallText tag="p">Webpack</SmallText>
+          <div className="uil-ta-center">
+            <a href="https://reactjs.org/docs/getting-started.html">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/react.jpg")}
+              />
+              <SmallText tag="p">React</SmallText>
+            </a>
           </div>
-          <div className="col text--center">
-            <img
-              style={{ height: "50px" }}
-              src={useBaseUrl("img/logos/gatsby.png")}
-            />
-            <SmallText tag="p">Gatsby</SmallText>
+          <div className="uil-ta-center">
+            <a href="https://requests.readthedocs.io/en/master/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/requests.png")}
+              />
+              <SmallText tag="p">Requests</SmallText>
+            </a>
           </div>
-          <div className="col text--center">
-            <img
-              style={{ height: "50px" }}
-              src={useBaseUrl("img/logos/Netlify.svg")}
-            />
-            <SmallText tag="p">Netlify</SmallText>
+          <div className="uil-ta-center">
+            <a href="https://eslint.org/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/eslint.svg")}
+              />
+              <SmallText tag="p">ESLint</SmallText>
+            </a>
           </div>
-          <div className="col text--center">
-            <img
-              style={{ height: "50px" }}
-              src={useBaseUrl("img/logos/vue.jpg")}
-            />
-            <SmallText tag="p">Vue</SmallText>
+          <div className="uil-ta-center">
+            <a href="https://webpack.js.org/concepts/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/webpack.jpg")}
+              />
+              <SmallText tag="p">Webpack</SmallText>
+            </a>
           </div>
-          <div className="col text--center">
-            <img
-              style={{ height: "50px" }}
-              src={useBaseUrl("img/logos/yarn.jpg")}
-            />
-            <SmallText tag="p">Yarn</SmallText>
+          <div className="uil-ta-center">
+            <a href="https://www.gatsbyjs.org/docs/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/gatsby.png")}
+              />
+              <SmallText tag="p">Gatsby</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://docs.netlify.com/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/Netlify.svg")}
+              />
+              <SmallText tag="p">Netlify</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://vuejs.org/">
+              <img className="uil-h-50" src={useBaseUrl("img/logos/vue.jpg")} />
+              <SmallText tag="p">Vue</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://yarnpkg.com/lang/en/docs/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/yarn.jpg")}
+              />
+              <SmallText tag="p">Yarn</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://material-ui.com">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/material-ui.svg")}
+              />
+              <SmallText tag="p">MATERIAL-UI</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://ant.design/index-cn">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/ant-design.svg")}
+              />
+              <SmallText tag="p">Ant Design</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://facebook.github.io/react-native/docs/getting-started">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/react-native.svg")}
+              />
+              <SmallText tag="p">React Native</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://api.jquery.com/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/jquery.jpg")}
+              />
+              <SmallText tag="p">jQuery</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://docs.gitlab.com/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/gitlab.svg")}
+              />
+              <SmallText tag="p">GitLab</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://brew.sh/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/homebrew.png")}
+              />
+              <SmallText tag="p">Homebrew</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://momentjs.com/docs/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/momentjs.svg")}
+              />
+              <SmallText tag="p">Moment.js</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://tailwindcss.com/docs/installation/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/tailwindcss.svg")}
+              />
+              <SmallText tag="p">tailwindcss</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://sass-lang.com/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/sass.png")}
+              />
+              <SmallText tag="p">Sass</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://www.twilio.com/docs">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/twilio.png")}
+              />
+              <SmallText tag="p">Twilio</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://docusaurus.io/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/docusaurus.svg")}
+              />
+              <SmallText tag="p">Docusaurus</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://docs.gradle.org/current/userguide/userguide.html">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/gradle.png")}
+              />
+              <SmallText tag="p">Gradle</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://nuxtjs.org/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/nuxtjs.svg")}
+              />
+              <SmallText tag="p">NUXTJS</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://vuetifyjs.com/en/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/vuetify.png")}
+              />
+              <SmallText tag="p">Vuetify.js</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://jekyllrb.com/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/jekyll.png")}
+              />
+              <SmallText tag="p">Jekyll</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://pytorch.org/get-started/locally/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/pytorch.svg")}
+              />
+              <SmallText tag="p">PyTorch</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://www.apollographql.com/docs/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/apollo.png")}
+              />
+              <SmallText tag="p">Apollo</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://docs.scala-lang.org/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/scala.svg")}
+              />
+              <SmallText tag="p">Scala</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://laravel.com/docs/6.x">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/laravel.svg")}
+              />
+              <SmallText tag="p">Laravel</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://socket.io/docs/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/socketio.svg")}
+              />
+              <SmallText tag="p">socket.io</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href="https://jestjs.io/">
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/jest.png")}
+              />
+              <SmallText tag="p">Jest</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center">
+            <a href={useBaseUrl("/apply")}>
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/three-dots.svg")}
+              />
+              <SmallText tag="p">You?</SmallText>
+            </a>
           </div>
         </div>
       </Section>
@@ -229,8 +472,8 @@ function Home() {
       <Section>
         <SectionHeader title="Try it live">
           <Text>
-            We helped integrate DocSearch into several open source projects.
-            Try it live.
+            We helped integrate DocSearch into several open source projects. Try
+            it live.
           </Text>
         </SectionHeader>
         <CardsRow>
@@ -296,9 +539,13 @@ function Home() {
                 marginRight: "12px",
                 marginTop: "-2px"
               }}
-              src={useBaseUrl("img/logos/momentjs.jpg")}
+              src={useBaseUrl("img/logos/momentjs.svg")}
             />
-            <LightCta withArrow href="https://momentjs.com/docs/" target="_blank">
+            <LightCta
+              withArrow
+              href="https://momentjs.com/docs/"
+              target="_blank"
+            >
               Visit Moment.js
             </LightCta>
           </Card>
