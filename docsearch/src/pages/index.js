@@ -230,14 +230,14 @@ function Home() {
         <SectionHeader title="Try it live">
           <Text>
             We helped integrate DocSearch into several open source projects.
-            Have a look.
+            Try it live.
           </Text>
         </SectionHeader>
         <CardsRow>
           <Card image="img/demos/example-bootstrap.gif">
             <LightCta
               withArrow
-              href="http://getbootstrap.com/docs/4.1/getting-started/introduction/"
+              href="https://getbootstrap.com/docs/4.3/getting-started/introduction/"
               target="_blank"
             >
               <img
@@ -267,7 +267,7 @@ function Home() {
               href="https://vuejs.org/v2/guide/"
               target="_blank"
             >
-              Visit Vue
+              Visit Vue.js
             </LightCta>
           </Card>
           <Card image="img/demos/example-react.gif">
@@ -298,8 +298,8 @@ function Home() {
               }}
               src={useBaseUrl("img/logos/momentjs.jpg")}
             />
-            <LightCta withArrow href="https://momentjs.com/" target="_blank">
-              Visit Momenjs
+            <LightCta withArrow href="https://momentjs.com/docs/" target="_blank">
+              Visit Moment.js
             </LightCta>
           </Card>
         </CardsRow>
