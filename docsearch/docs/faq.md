@@ -147,11 +147,11 @@ If none of the previous points help, you [can contact our support][1].
 [3]: https://www.algolia.com/pricing
 [4]: https://www.algolia.com/doc/guides/infrastructure/servers/
 [5]: https://www.algolia.com/policies/privacy
-[6]: ./run-your-own.html
+[6]: run-your-own.md
 [7]: https://www.algolia.com/doc/api-reference/
 [8]: ./config-file.html#custom_settings-optional
 [9]: ./config-file.html#nb_hits-special
 [10]:
   https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/in-depth/asynchronicity-and-when-to-wait-for-tasks/#atomic-reindexing
 [11]: https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/
-[12]: ./tips.html#use-a-sitemapxml
+[12]: tips.md

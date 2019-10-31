@@ -33,5 +33,5 @@ everything it did for us already.
 You can now [apply to the program][3]
 
 [1]: https://opencollective.com/algolia
-[2]: ./who-can-apply
-[3]: /apply
+[2]: who-can-apply.md
+[3]: apply.md

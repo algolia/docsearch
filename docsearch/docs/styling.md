@@ -97,5 +97,5 @@ should use them instead of the default one.
 
 [1]: ../img/default-colorscheme.png
 [2]: https://www.algolia.com/pricing
-[3]: ./scraper
+[3]: scraper-overview.md
 [4]: https://github.com/algolia/docsearch/tree/master/src/styles
