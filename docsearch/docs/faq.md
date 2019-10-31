@@ -46,7 +46,7 @@ As the website owner, we also give you access to the Algolia Analytics
 dashboard. This will let you have more data about the anonymized searches in
 your website. You'll see the most searched terms, or those with no results.
 
-With such Analytics, you will understand better what your users are doing.
+With such Analytics, you will better understand what your users are doing.
 
 _If you don't have Analytics access, [send us an email][1] and we'll enable it._
 
@@ -80,16 +80,14 @@ content so the method names are actual headers.
 ## Why do I have duplicate content in my results?
 
 This can happen when you have more than one URL pointing to the same content,
-for example with `./docs`, `./docs/` and `./docs/index.html` or even both `http`
-and `https` in place.
+for example with `./docs`, `./docs/` and `./docs/index.html`.
 
-You can fix the `stop_urls` to all the patterns you want to exclude. The
-following example will exclude all URLs ending with `/` or `index.html` as well
-as those starting with `http://`.
+You set the `stop_urls` to all the patterns you want to exclude. The following
+example will exclude all URLs ending with `/` or `index.html`
 
 ```json
 {
-  "stop_urls": ["/$", "/index.html$", "^http://"]
+  "stop_urls": ["/$", "/index.html$"]
 }
 ```
 
@@ -121,7 +119,7 @@ updates this number automatically.
 
 The DocSearch scraper follows [the recommended atomic-reindexing strategy][10].
 It creates a brand new temporary index to populate the data scraped from your
-website. When successful, the crawl overwites the old index defined in your
+website. When successful, the crawl overwrite the old index defined in your
 configuration with the key `index_name`.
 
 ## Why aren't my pages indexed?
