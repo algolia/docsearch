@@ -14,7 +14,7 @@ module.exports = {
   organizationName: 'Algolia',
   projectName: 'DocSearch',
   themes: ['@docusaurus/theme-search-algolia'],
-  plugins: ['my-loaders'],
+  plugins: ['my-loaders'], // loader required for .svg
   themeConfig: {
     algolia: {
       apiKey: '25626fae796133dc1e734c6bcaaeac3c',
