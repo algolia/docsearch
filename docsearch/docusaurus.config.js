@@ -91,8 +91,8 @@ module.exports = {
               href: 'https://discordapp.com/invite/algolia',
             },
             {
-              label:'Forum',
-              to: ''
+              label: 'Forum',
+              href: 'https://discourse.algolia.com/tags/docsearch',
             },
             {
               label: 'Twitter',
