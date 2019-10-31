@@ -129,8 +129,8 @@ Any question ? [Send us an email][7].
 
 [1]: how-do-we-build-an-index.md
 [2]: ../img/proper_layout.png
-[3]: docs/config
+[3]: config-file.md
 [4]: https://www.algolia.com/doc/guides/searching/filtering/#facet-filters
 [5]: https://www.sitemaps.org/
-[6]: docs/config#js_render-optional
+[6]: config-file.md
 [7]: mailto:DocSearch@algolia.com

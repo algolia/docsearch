@@ -31,5 +31,5 @@ is open source and even packaged as a Docker image. Download it, and run it with
 your own credentials.
 
 [1]: https://scrapy.org/
-[2]: ./config-file.html
-[3]: ./run-your-own.html
+[2]: config-file.md
+[3]: run-your-own.md

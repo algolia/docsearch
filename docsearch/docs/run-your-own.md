@@ -158,18 +158,18 @@ commands.
 _Note that we use this command-line tool internally at Algolia to run the free
 hosted version, so you might not need all the listed commands._
 
-[1]: ./who-can-apply.html
+[1]: who-can-apply.md
 [2]: https://www.algolia.com/pricing
 [3]: https://www.algolia.com/doc/guides/security/api-keys/#acl
 [4]: https://github.com/stedolan/jq/wiki/Installation
-[5]: ./config-file.html
+[5]: config-file.md
 [6]: #integration
 [7]: https://scrapy.org/
 [8]: https://github.com/pypa/pipenv
 [9]: https://github.com/algolia/docsearch-scraper
 [10]: https://pipenv.readthedocs.io/en/latest/install/#installing-pipenv
-[11]: ./config-file.html#js_render-optional
+[11]: config-file.md
 [12]: http://chromedriver.chromium.org/getting-started
 [13]: https://github.com/algolia/docsearch-configs/tree/master/configs
 [14]: ./assets/playground.png
-[15]: ./dropdown.html
+[15]: dropdown.md
