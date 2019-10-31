@@ -12,6 +12,9 @@
  */
 
 /* You can override the default Infima variables here. */
+/* Please make sure to comply with the design system defined by 
+fragments.css (underling style lib used from @algolia/ui-library*/
+
 :root {
   --ifm-color-primary: rgb(84, 104, 255);
   --ifm-color-primary-dark: rgb(33, 175, 144);
@@ -21,31 +24,35 @@
   --ifm-color-primary-lighter: rgb(102, 212, 189);
   --ifm-color-primary-lightest: rgb(146, 224, 208);
   --ifm-footer-background-color: white;
+  --ifm-font-family-base: Hind, Arial, sans-serif;
 }
 
 .demo-content-wrapper {
-    height: 400px;
-    background: url(../../static/img/bg-docsearch-live-demo-bootstrap.jpg) no-repeat;
-    background-size: 1200px;
-    background-position: center -46px;
+  height: 400px;
+  background: url(../../static/img/bg-docsearch-live-demo-bootstrap.jpg)
+    no-repeat;
+  background-size: 1200px;
+  background-position: center -46px;
 }
 
 .demo-header-wrapper {
   height: 42px;
-  background: url(../../static/img/bg-docsearch-live-demo-bootstrap.jpg) no-repeat;
+  background: url(../../static/img/bg-docsearch-live-demo-bootstrap.jpg)
+    no-repeat;
   background-color: #563e7c;
   background-size: 1200px;
   background-position: left top;
 }
 
-.header{
+.header {
   background-size: cover;
   background-repeat: no-repeat;
-  background-image: url(../../static/img/bg-docsearch.svg),linear-gradient(#fff,#f5f5fa);
+  background-image: url(../../static/img/bg-docsearch.svg),
+    linear-gradient(#fff, #f5f5fa);
   background-position: center calc(100% - 18px);
 }
 
-.bg-analytics{
+.bg-analytics {
   background-repeat: no-repeat;
   background-image: url(../../static/img/bg-analytics.svg);
   background-size: cover;
