@@ -83,7 +83,7 @@ function Navbar() {
     }
   };
 
-  const logoUrl = useBaseUrl(logo.src);
+  const logoUrl = useBaseUrl(theme === "dark" ? logo.src.dark : logo.src.light);
   return (
     <React.Fragment>
       <Head>
