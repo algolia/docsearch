@@ -14,8 +14,6 @@ import {
   Text,
   TextBlock,
   Hero,
-  LabelText,
-  Input,
   SectionHeader,
   SmallText,
   NumberedList,
