@@ -51,7 +51,7 @@ requirements.
 A website implementing these good practises will look simple and crystal clear.
 It can have this following aspect:
 
-![Recommended layout for your page][2] {mt-2}
+![Recommended layout for your page][2]
 
 The biggest blue element will be you `DocSearch-content` container. More details
 in the following guidelines.
