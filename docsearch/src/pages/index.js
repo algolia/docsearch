@@ -25,7 +25,7 @@ import {
 import Layout from "@theme/Layout";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import useBaseUrl from "@docusaurus/useBaseUrl";
-import ApplyForm from "./applyComponent.js";
+import ApplyForm from "../components/ApplyForm.js";
 
 function Home() {
   const context = useDocusaurusContext();
