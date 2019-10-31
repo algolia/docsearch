@@ -14,6 +14,7 @@
     "@algolia/ui-library": "^1.0.0-beta.109",
     "@docusaurus/core": "^2.0.0-alpha.31",
     "@docusaurus/preset-classic": "^2.0.0-alpha.31",
+    "@docusaurus/theme-classic": "^2.0.0-alpha.23",
     "classnames": "^2.2.6",
     "core-js": "^2.6.10",
     "file-loader": "^4.2.0",
