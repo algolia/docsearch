@@ -10,7 +10,7 @@ module.exports = {
     "Getting Started": ["what-is-docsearch", "how", "who-can-apply", "apply"],
     "Adding DocSearch to your UI": ["dropdown", "styling", "behavior"],
     "Requirements, tips, FAQ": ["requirements", "tips", "faq", "integrations"],
-    "Let's Get Technical": [
+    "Under the Hood": [
       "scraper",
       "engine",
       "config",
