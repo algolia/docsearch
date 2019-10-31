@@ -27,10 +27,13 @@ module.exports = {
         src: 'img/docsearch-logo.svg',
       },
       links: [
-        {to: 'docs/what-is-docsearch', label: 'Documentation', position: 'right'},
         {
-          href: 'https://github.com/algolia/DocSearch',
+          label: 'Documentation',
+          to: 'docs/what-is-docsearch',
+          position: 'right'},
+        {
           label: 'GitHub',
+          href: 'https://github.com/algolia/DocSearch',
           position: 'right',
         },
       ],
@@ -38,19 +41,19 @@ module.exports = {
     footer: {
       links: [
         {
-          title: 'Documentation',
+          title: 'Docs',
           items: [
             {
               label: 'Getting Started',
               to: 'docs/what-is-docsearch'
             },
             {
-              label: 'DocSearch.js',
-              to: 'docs/dropdown'
-            },
-            {
               label: 'FAQ',
               to: 'docs/faq'
+            },
+            {
+              label: 'DocSearch.js',
+              to: 'docs/dropdown'
             },
             {
               label: 'Run your own scraper',
@@ -62,44 +65,53 @@ module.exports = {
           title: 'DocSearch',
           items: [
             {
-              label:'Code licensed under MIT',
-              to: 'https://github.com/algolia/docsearch/blob/master/LICENSE'
-            },
-            {
-              label: 'GitHub',
-              to: 'https://github.com/algolia/docsearch',
-            },
-            {
               label:'Issues',
               to: 'https://github.com/algolia/docsearch/issues'
             },
             {
-              label:'Changelog',
-              to: 'https://github.com/algolia/docsearch/blob/master/CHANGELOG.md'
+              label:'Scraper',
+              to: 'https://github.com/algolia/docsearch-scraper'
             },
             {
-              label:'Apply',
-              to: 'apply'
-            }
+              label:'Configurations',
+              to: 'https://github.com/algolia/docsearch-configs'
+            },
           ],
         },
         {
           title: 'Community',
           items: [
             {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/algolia',
+              label:'Apply',
+              to: 'apply'
             },
             {
               label: 'Forum',
               href: 'https://discourse.algolia.com/tags/docsearch',
             },
             {
-              label: 'Twitter',
-              to: 'https://twitter.com/algolia',
+              label: 'Discord',
+              href: 'https://discord.gg/tXdr5mP',
             },
           ],
         },
+        {
+          title: 'Social',
+          items: [
+            {
+              label: 'GitHub',
+              to: 'https://github.com/algolia/docsearch',
+            },
+            {
+              label: 'Twitter',
+              to: 'https://twitter.com/docsearch_',
+            },
+            {
+              label: 'Algolia Blog',
+              to: 'https://blog.algolia.com/',
+            },
+          ],
+        }
       ],
       logo: {
         alt: 'Algolia',
