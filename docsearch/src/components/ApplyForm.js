@@ -105,7 +105,7 @@ export default class ApplyForm extends React.Component {
                   required
                 />
                 I'm the owner of the website and I've{" "}
-                <InlineLink href="./who-can-apply.html">
+                <InlineLink href="/docs/who-can-apply">
                   read the checklist
                 </InlineLink>
               </LabelText>
@@ -145,7 +145,7 @@ export default class ApplyForm extends React.Component {
           </Text>
           <Text aria-label="recommendations">
             Please be patient, in the meantime, you can implement{" "}
-            <InlineLink href="/tips.html">
+            <InlineLink href="/docs/tips">
               our recommendations for the best experience with DocSearch.
             </InlineLink>
           </Text>
