@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "@theme/Layout";
 import { Section, Hero } from "@algolia/ui-library";
-import ApplyForm from "./applyComponent.js";
+import ApplyForm from "../components/ApplyForm.js";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 
 function Apply() {
