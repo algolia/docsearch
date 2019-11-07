@@ -1,13 +1,89 @@
-<?xml version="1.0"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="492.509" height="453.68" viewBox="0 0 492.509 453.68">
-  <g fill="none" fill-rule="evenodd">
-    <path d="M491.589 259.398l-27.559-84.814L409.413 6.486c-2.81-8.648-15.045-8.648-17.856 0l-54.619 168.098H155.572L100.952 6.486c-2.81-8.648-15.046-8.648-17.856 0L28.478 174.584.921 259.398a18.775 18.775 0 006.82 20.992l238.513 173.29L484.77 280.39a18.777 18.777 0 006.82-20.992" fill="#fc6d26"/>
-    <path d="M246.255 453.68l90.684-279.096H155.57z" fill="#e24329"/>
-    <path d="M246.255 453.68L155.57 174.583H28.479z" fill="#fc6d26"/>
-    <path d="M28.479 174.584L.92 259.4a18.773 18.773 0 006.821 20.99l238.514 173.29z" fill="#fca326"/>
-    <path d="M28.479 174.584H155.57L100.952 6.487c-2.81-8.65-15.047-8.65-17.856 0z" fill="#e24329"/>
-    <path d="M246.255 453.68l90.684-279.096H464.03z" fill="#fc6d26"/>
-    <path d="M464.03 174.584l27.56 84.815a18.773 18.773 0 01-6.822 20.99L246.255 453.68z" fill="#fca326"/>
-    <path d="M464.03 174.584H336.94L391.557 6.487c2.811-8.65 15.047-8.65 17.856 0z" fill="#e24329"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0beta1 (32d4812, 2019-09-19)"
+   sodipodi:docname="gitlab.svg"
+   id="svg226"
+   version="1.1"
+   viewBox="0 0 492.509 453.68"
+   height="453.68"
+   width="492.509">
+  <metadata
+     id="metadata232">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs230" />
+  <sodipodi:namedview
+     inkscape:current-layer="svg226"
+     inkscape:window-maximized="0"
+     inkscape:window-y="23"
+     inkscape:window-x="0"
+     inkscape:cy="560"
+     inkscape:cx="400"
+     inkscape:zoom="0.35"
+     showgrid="false"
+     id="namedview228"
+     inkscape:window-height="907"
+     inkscape:window-width="1440"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     inkscape:document-rotation="0"
+     bordercolor="#666666"
+     pagecolor="#ffffff" />
+  <g
+     id="g224"
+     fill-rule="evenodd"
+     fill="none">
+    <path
+       id="path208"
+       fill="#fc6d26"
+       d="M491.589 259.398l-27.559-84.814L409.413 6.486c-2.81-8.648-15.045-8.648-17.856 0l-54.619 168.098H155.572L100.952 6.486c-2.81-8.648-15.046-8.648-17.856 0L28.478 174.584.921 259.398a18.775 18.775 0 006.82 20.992l238.513 173.29L484.77 280.39a18.777 18.777 0 006.82-20.992" />
+    <path
+       id="path210"
+       fill="#e24329"
+       d="M246.255 453.68l90.684-279.096H155.57z" />
+    <path
+       id="path212"
+       fill="#fc6d26"
+       d="M246.255 453.68L155.57 174.583H28.479z" />
+    <path
+       id="path214"
+       fill="#fca326"
+       d="M28.479 174.584L.92 259.4a18.773 18.773 0 006.821 20.99l238.514 173.29z" />
+    <path
+       id="path216"
+       fill="#e24329"
+       d="M28.479 174.584H155.57L100.952 6.487c-2.81-8.65-15.047-8.65-17.856 0z" />
+    <path
+       id="path218"
+       fill="#fc6d26"
+       d="M246.255 453.68l90.684-279.096H464.03z" />
+    <path
+       id="path220"
+       fill="#fca326"
+       d="M464.03 174.584l27.56 84.815a18.773 18.773 0 01-6.822 20.99L246.255 453.68z" />
+    <path
+       id="path222"
+       fill="#e24329"
+       d="M464.03 174.584H336.94L391.557 6.487c2.811-8.65 15.047-8.65 17.856 0z" />
   </g>
 </svg>
