@@ -78,7 +78,7 @@ function Home() {
           className="uil-jc-between uil-d-flex"
           style={{ flexWrap: "wrap", maxWidth: "800px", margin: "auto" }}
         >
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a
               href="https://getbootstrap.com/docs/4.1/getting-started/introduction/"
               rel="noreferrer"
@@ -91,7 +91,7 @@ function Home() {
               <SmallText tag="p">Bootstrap</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a
               href="https://babeljs.io/docs/en/"
               rel="noreferrer"
@@ -104,7 +104,7 @@ function Home() {
               <SmallText tag="p">Babel</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a
               href="https://graphql.org/learn/"
               rel="noreferrer"
@@ -117,7 +117,20 @@ function Home() {
               <SmallText tag="p">Graphql</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
+            <a
+              href="https://www.typescriptlang.org/index.html"
+              rel="noreferrer"
+              target="_blank"
+            >
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/typescriptlang.svg")}
+              />
+              <SmallText tag="p">TypeScript</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a
               href="https://cordova.apache.org/"
               rel="noreferrer"
@@ -130,7 +143,7 @@ function Home() {
               <SmallText tag="p">CORDOVA</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a
               href="https://reactjs.org/docs/getting-started.html"
               rel="noreferrer"
@@ -143,7 +156,7 @@ function Home() {
               <SmallText tag="p">React</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a
               href="https://requests.readthedocs.io/en/master/"
               rel="noreferrer"
@@ -156,7 +169,7 @@ function Home() {
               <SmallText tag="p">Requests</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a href="https://eslint.org/" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
@@ -165,7 +178,7 @@ function Home() {
               <SmallText tag="p">ESLint</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a
               href="https://webpack.js.org/concepts/"
               rel="noreferrer"
@@ -173,12 +186,12 @@ function Home() {
             >
               <img
                 className="uil-h-50"
-                src={useBaseUrl("img/logos/webpack.jpg")}
+                src={useBaseUrl("img/logos/webpack.svg")}
               />
               <SmallText tag="p">Webpack</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a
               href="https://www.gatsbyjs.org/docs/"
               rel="noreferrer"
@@ -191,7 +204,7 @@ function Home() {
               <SmallText tag="p">Gatsby</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a
               href="https://docs.netlify.com/"
               rel="noreferrer"
@@ -199,18 +212,18 @@ function Home() {
             >
               <img
                 className="uil-h-50"
-                src={useBaseUrl("img/logos/Netlify.svg")}
+                src={useBaseUrl("img/logos/netlify.svg")}
               />
               <SmallText tag="p">Netlify</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a href="https://vuejs.org/" rel="noreferrer" target="_blank">
               <img className="uil-h-50" src={useBaseUrl("img/logos/vue.jpg")} />
               <SmallText tag="p">Vue</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a
               href="https://yarnpkg.com/lang/en/docs/"
               rel="noreferrer"
@@ -223,7 +236,7 @@ function Home() {
               <SmallText tag="p">Yarn</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a href="https://material-ui.com" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
@@ -232,7 +245,7 @@ function Home() {
               <SmallText tag="p">MATERIAL-UI</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a
               href="https://ant.design/index-cn"
               rel="noreferrer"
@@ -245,7 +258,7 @@ function Home() {
               <SmallText tag="p">Ant Design</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a
               href="https://facebook.github.io/react-native/docs/getting-started"
               rel="noreferrer"
@@ -258,7 +271,7 @@ function Home() {
               <SmallText tag="p">React Native</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a href="https://api.jquery.com/" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
@@ -267,7 +280,7 @@ function Home() {
               <SmallText tag="p">jQuery</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a href="https://docs.gitlab.com/" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
@@ -276,7 +289,7 @@ function Home() {
               <SmallText tag="p">GitLab</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a href="https://brew.sh/" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
@@ -285,7 +298,7 @@ function Home() {
               <SmallText tag="p">Homebrew</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a
               href="https://momentjs.com/docs/"
               rel="noreferrer"
@@ -298,7 +311,7 @@ function Home() {
               <SmallText tag="p">Moment.js</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a
               href="https://tailwindcss.com/docs/installation/"
               rel="noreferrer"
@@ -311,7 +324,20 @@ function Home() {
               <SmallText tag="p">tailwindcss</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
+            <a
+              href="https://bootstrap-vue.js.org/docs"
+              rel="noreferrer"
+              target="_blank"
+            >
+              <img
+                className="uil-h-50"
+                src={useBaseUrl("img/logos/bootstrap-vue.svg")}
+              />
+              <SmallText tag="p">BootstrapVue</SmallText>
+            </a>
+          </div>
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a href="https://sass-lang.com/" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
@@ -320,7 +346,7 @@ function Home() {
               <SmallText tag="p">Sass</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a
               href="https://www.twilio.com/docs"
               rel="noreferrer"
@@ -333,7 +359,7 @@ function Home() {
               <SmallText tag="p">Twilio</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a href="https://docusaurus.io/" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
@@ -342,7 +368,7 @@ function Home() {
               <SmallText tag="p">Docusaurus</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a
               href="https://docs.gradle.org/current/userguide/userguide.html"
               rel="noreferrer"
@@ -355,7 +381,7 @@ function Home() {
               <SmallText tag="p">Gradle</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a href="https://nuxtjs.org/" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
@@ -364,7 +390,7 @@ function Home() {
               <SmallText tag="p">NUXTJS</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a
               href="https://vuetifyjs.com/en/"
               rel="noreferrer"
@@ -377,7 +403,7 @@ function Home() {
               <SmallText tag="p">Vuetify.js</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a href="https://jekyllrb.com/" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
@@ -386,7 +412,7 @@ function Home() {
               <SmallText tag="p">Jekyll</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a
               href="https://pytorch.org/get-started/locally/"
               rel="noreferrer"
@@ -399,7 +425,7 @@ function Home() {
               <SmallText tag="p">PyTorch</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a
               href="https://www.apollographql.com/docs/"
               rel="noreferrer"
@@ -412,7 +438,7 @@ function Home() {
               <SmallText tag="p">Apollo</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a
               href="https://docs.scala-lang.org/"
               rel="noreferrer"
@@ -425,7 +451,7 @@ function Home() {
               <SmallText tag="p">Scala</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a
               href="https://laravel.com/docs/6.x"
               rel="noreferrer"
@@ -438,7 +464,7 @@ function Home() {
               <SmallText tag="p">Laravel</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a href="https://socket.io/docs/" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
@@ -447,7 +473,7 @@ function Home() {
               <SmallText tag="p">socket.io</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a href="https://jestjs.io/" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
@@ -456,7 +482,7 @@ function Home() {
               <SmallText tag="p">Jest</SmallText>
             </a>
           </div>
-          <div className="uil-ta-center">
+          <div className="uil-ta-center" style={{ margin: "1rem" }}>
             <a href={useBaseUrl("/apply")} rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
