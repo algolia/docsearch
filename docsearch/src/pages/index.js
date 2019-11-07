@@ -79,7 +79,11 @@ function Home() {
           style={{ flexWrap: "wrap", maxWidth: "800px", margin: "auto" }}
         >
           <div className="uil-ta-center">
-            <a href="https://getbootstrap.com/docs/4.1/getting-started/introduction/">
+            <a
+              href="https://getbootstrap.com/docs/4.1/getting-started/introduction/"
+              rel="noreferrer"
+              target="_blank"
+            >
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/bootstrap.jpg")}
@@ -88,7 +92,11 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://babeljs.io/docs/en/">
+            <a
+              href="https://babeljs.io/docs/en/"
+              rel="noreferrer"
+              target="_blank"
+            >
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/babel.jpg")}
@@ -97,7 +105,11 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://graphql.org/learn/">
+            <a
+              href="https://graphql.org/learn/"
+              rel="noreferrer"
+              target="_blank"
+            >
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/graphql.jpg")}
@@ -106,7 +118,11 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://cordova.apache.org/">
+            <a
+              href="https://cordova.apache.org/"
+              rel="noreferrer"
+              target="_blank"
+            >
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/cordova.png")}
@@ -115,7 +131,11 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://reactjs.org/docs/getting-started.html">
+            <a
+              href="https://reactjs.org/docs/getting-started.html"
+              rel="noreferrer"
+              target="_blank"
+            >
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/react.jpg")}
@@ -124,7 +144,11 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://requests.readthedocs.io/en/master/">
+            <a
+              href="https://requests.readthedocs.io/en/master/"
+              rel="noreferrer"
+              target="_blank"
+            >
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/requests.png")}
@@ -133,7 +157,7 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://eslint.org/">
+            <a href="https://eslint.org/" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/eslint.svg")}
@@ -142,7 +166,11 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://webpack.js.org/concepts/">
+            <a
+              href="https://webpack.js.org/concepts/"
+              rel="noreferrer"
+              target="_blank"
+            >
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/webpack.jpg")}
@@ -151,7 +179,11 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://www.gatsbyjs.org/docs/">
+            <a
+              href="https://www.gatsbyjs.org/docs/"
+              rel="noreferrer"
+              target="_blank"
+            >
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/gatsby.png")}
@@ -160,7 +192,11 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://docs.netlify.com/">
+            <a
+              href="https://docs.netlify.com/"
+              rel="noreferrer"
+              target="_blank"
+            >
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/Netlify.svg")}
@@ -169,13 +205,17 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://vuejs.org/">
+            <a href="https://vuejs.org/" rel="noreferrer" target="_blank">
               <img className="uil-h-50" src={useBaseUrl("img/logos/vue.jpg")} />
               <SmallText tag="p">Vue</SmallText>
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://yarnpkg.com/lang/en/docs/">
+            <a
+              href="https://yarnpkg.com/lang/en/docs/"
+              rel="noreferrer"
+              target="_blank"
+            >
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/yarn.jpg")}
@@ -184,7 +224,7 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://material-ui.com">
+            <a href="https://material-ui.com" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/material-ui.svg")}
@@ -193,7 +233,11 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://ant.design/index-cn">
+            <a
+              href="https://ant.design/index-cn"
+              rel="noreferrer"
+              target="_blank"
+            >
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/ant-design.svg")}
@@ -202,7 +246,11 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://facebook.github.io/react-native/docs/getting-started">
+            <a
+              href="https://facebook.github.io/react-native/docs/getting-started"
+              rel="noreferrer"
+              target="_blank"
+            >
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/react-native.svg")}
@@ -211,7 +259,7 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://api.jquery.com/">
+            <a href="https://api.jquery.com/" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/jquery.jpg")}
@@ -220,7 +268,7 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://docs.gitlab.com/">
+            <a href="https://docs.gitlab.com/" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/gitlab.svg")}
@@ -229,7 +277,7 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://brew.sh/">
+            <a href="https://brew.sh/" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/homebrew.png")}
@@ -238,7 +286,11 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://momentjs.com/docs/">
+            <a
+              href="https://momentjs.com/docs/"
+              rel="noreferrer"
+              target="_blank"
+            >
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/momentjs.svg")}
@@ -247,7 +299,11 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://tailwindcss.com/docs/installation/">
+            <a
+              href="https://tailwindcss.com/docs/installation/"
+              rel="noreferrer"
+              target="_blank"
+            >
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/tailwindcss.svg")}
@@ -256,7 +312,7 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://sass-lang.com/">
+            <a href="https://sass-lang.com/" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/sass.png")}
@@ -265,7 +321,11 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://www.twilio.com/docs">
+            <a
+              href="https://www.twilio.com/docs"
+              rel="noreferrer"
+              target="_blank"
+            >
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/twilio.png")}
@@ -274,7 +334,7 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://docusaurus.io/">
+            <a href="https://docusaurus.io/" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/docusaurus.svg")}
@@ -283,7 +343,11 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://docs.gradle.org/current/userguide/userguide.html">
+            <a
+              href="https://docs.gradle.org/current/userguide/userguide.html"
+              rel="noreferrer"
+              target="_blank"
+            >
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/gradle.png")}
@@ -292,7 +356,7 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://nuxtjs.org/">
+            <a href="https://nuxtjs.org/" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/nuxtjs.svg")}
@@ -301,7 +365,11 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://vuetifyjs.com/en/">
+            <a
+              href="https://vuetifyjs.com/en/"
+              rel="noreferrer"
+              target="_blank"
+            >
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/vuetify.png")}
@@ -310,7 +378,7 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://jekyllrb.com/">
+            <a href="https://jekyllrb.com/" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/jekyll.png")}
@@ -319,7 +387,11 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://pytorch.org/get-started/locally/">
+            <a
+              href="https://pytorch.org/get-started/locally/"
+              rel="noreferrer"
+              target="_blank"
+            >
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/pytorch.svg")}
@@ -328,7 +400,11 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://www.apollographql.com/docs/">
+            <a
+              href="https://www.apollographql.com/docs/"
+              rel="noreferrer"
+              target="_blank"
+            >
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/apollo.png")}
@@ -337,7 +413,11 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://docs.scala-lang.org/">
+            <a
+              href="https://docs.scala-lang.org/"
+              rel="noreferrer"
+              target="_blank"
+            >
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/scala.svg")}
@@ -346,7 +426,11 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://laravel.com/docs/6.x">
+            <a
+              href="https://laravel.com/docs/6.x"
+              rel="noreferrer"
+              target="_blank"
+            >
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/laravel.svg")}
@@ -355,7 +439,7 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://socket.io/docs/">
+            <a href="https://socket.io/docs/" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/socketio.svg")}
@@ -364,7 +448,7 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href="https://jestjs.io/">
+            <a href="https://jestjs.io/" rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/jest.png")}
@@ -373,7 +457,7 @@ function Home() {
             </a>
           </div>
           <div className="uil-ta-center">
-            <a href={useBaseUrl("/apply")}>
+            <a href={useBaseUrl("/apply")} rel="noreferrer" target="_blank">
               <img
                 className="uil-h-50"
                 src={useBaseUrl("img/logos/three-dots.svg")}
