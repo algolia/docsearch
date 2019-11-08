@@ -51,4 +51,4 @@ results.
 [1]: apply.mdx
 [2]: https://github.com/algolia/docsearch-configs/tree/master/configs
 [3]: styling.md
-[4]: ../img/docsearch-how-it-works.png
+[4]: ../img/assets/docsearch-how-it-works.png
