@@ -53,7 +53,7 @@ export default class ApplyForm extends React.Component {
   render() {
     if (!this.state.freeze) {
       return (
-        <Card style={{ maxWidth: MAX_WIDTH, margin: "auto" }}>
+        <Card className="uil-m-auto" style={{ maxWidth: MAX_WIDTH }}>
           <form
             onSubmit={this.handleSubmit}
             id="form-apply-docsearch"
