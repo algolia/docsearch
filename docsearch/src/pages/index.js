@@ -82,6 +82,7 @@ function Home() {
               <img
                 className="h-50"
                 src={useBaseUrl("img/logos/bootstrap.jpg")}
+                alt={"Bootstrap logo"}
               />
               <SmallText tag="p">Bootstrap</SmallText>
             </a>
@@ -92,7 +93,11 @@ function Home() {
               rel="noreferrer"
               target="_blank"
             >
-              <img className="h-50" src={useBaseUrl("img/logos/babel.jpg")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/babel.jpg")}
+                alt={"Babel logo"}
+              />
               <SmallText tag="p">Babel</SmallText>
             </a>
           </div>
@@ -102,7 +107,11 @@ function Home() {
               rel="noreferrer"
               target="_blank"
             >
-              <img className="h-50" src={useBaseUrl("img/logos/graphql.jpg")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/graphql.jpg")}
+                alt={"Graphql logo"}
+              />
               <SmallText tag="p">Graphql</SmallText>
             </a>
           </div>
@@ -115,6 +124,7 @@ function Home() {
               <img
                 className="h-50"
                 src={useBaseUrl("img/logos/typescriptlang.svg")}
+                alt={"TypeScript logo"}
               />
               <SmallText tag="p">TypeScript</SmallText>
             </a>
@@ -125,7 +135,11 @@ function Home() {
               rel="noreferrer"
               target="_blank"
             >
-              <img className="h-50" src={useBaseUrl("img/logos/react.jpg")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/react.jpg")}
+                alt={"React logo"}
+              />
               <SmallText tag="p">React</SmallText>
             </a>
           </div>
@@ -138,13 +152,18 @@ function Home() {
               <img
                 className="h-50"
                 src={useBaseUrl("img/logos/requests.png")}
+                alt={"Requests logo"}
               />
               <SmallText tag="p">Requests</SmallText>
             </a>
           </div>
           <div className="ta-center w-20p">
             <a href="https://eslint.org/" rel="noreferrer" target="_blank">
-              <img className="h-50" src={useBaseUrl("img/logos/eslint.svg")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/eslint.svg")}
+                alt={"ESLint logo"}
+              />
               <SmallText tag="p">ESLint</SmallText>
             </a>
           </div>
@@ -154,7 +173,11 @@ function Home() {
               rel="noreferrer"
               target="_blank"
             >
-              <img className="h-50" src={useBaseUrl("img/logos/webpack.svg")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/webpack.svg")}
+                alt={"Webpack logo"}
+              />
               <SmallText tag="p">Webpack</SmallText>
             </a>
           </div>
@@ -164,7 +187,11 @@ function Home() {
               rel="noreferrer"
               target="_blank"
             >
-              <img className="h-50" src={useBaseUrl("img/logos/gatsby.png")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/gatsby.png")}
+                alt={"Gatsby logo"}
+              />
               <SmallText tag="p">Gatsby</SmallText>
             </a>
           </div>
@@ -174,13 +201,21 @@ function Home() {
               rel="noreferrer"
               target="_blank"
             >
-              <img className="h-50" src={useBaseUrl("img/logos/netlify.svg")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/netlify.svg")}
+                alt={"Netlify logo"}
+              />
               <SmallText tag="p">Netlify</SmallText>
             </a>
           </div>
           <div className="ta-center w-20p">
             <a href="https://vuejs.org/" rel="noreferrer" target="_blank">
-              <img className="h-50" src={useBaseUrl("img/logos/vue.svg")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/vue.svg")}
+                alt={"Vue logo"}
+              />
               <SmallText tag="p">Vue</SmallText>
             </a>
           </div>
@@ -190,7 +225,11 @@ function Home() {
               rel="noreferrer"
               target="_blank"
             >
-              <img className="h-50" src={useBaseUrl("img/logos/yarn.jpg")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/yarn.jpg")}
+                alt={"Yarn logo"}
+              />
               <SmallText tag="p">Yarn</SmallText>
             </a>
           </div>
@@ -199,6 +238,7 @@ function Home() {
               <img
                 className="h-50"
                 src={useBaseUrl("img/logos/material-ui.svg")}
+                alt={"MATERIAL-UI logo"}
               />
               <SmallText tag="p">MATERIAL-UI</SmallText>
             </a>
@@ -212,6 +252,7 @@ function Home() {
               <img
                 className="h-50"
                 src={useBaseUrl("img/logos/ant-design.svg")}
+                alt={"Ant Design logo"}
               />
               <SmallText tag="p">Ant Design</SmallText>
             </a>
@@ -225,19 +266,28 @@ function Home() {
               <img
                 className="h-50"
                 src={useBaseUrl("img/logos/react-native.svg")}
+                alt={"React Native logo"}
               />
               <SmallText tag="p">React Native</SmallText>
             </a>
           </div>
           <div className="ta-center w-20p">
             <a href="https://api.jquery.com/" rel="noreferrer" target="_blank">
-              <img className="h-50" src={useBaseUrl("img/logos/jquery.jpg")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/jquery.jpg")}
+                alt={"jQuery logo"}
+              />
               <SmallText tag="p">jQuery</SmallText>
             </a>
           </div>
           <div className="ta-center w-20p">
             <a href="https://docs.gitlab.com/" rel="noreferrer" target="_blank">
-              <img className="h-50" src={useBaseUrl("img/logos/gitlab.svg")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/gitlab.svg")}
+                alt={"GitLab logo"}
+              />
               <SmallText tag="p">GitLab</SmallText>
             </a>
           </div>
@@ -246,6 +296,7 @@ function Home() {
               <img
                 className="h-50"
                 src={useBaseUrl("img/logos/homebrew.png")}
+                alt={"Homebrew logo"}
               />
               <SmallText tag="p">Homebrew</SmallText>
             </a>
@@ -259,6 +310,7 @@ function Home() {
               <img
                 className="h-50"
                 src={useBaseUrl("img/logos/momentjs.svg")}
+                alt={"Moment.js logo"}
               />
               <SmallText tag="p">Moment.js</SmallText>
             </a>
@@ -272,6 +324,7 @@ function Home() {
               <img
                 className="h-50"
                 src={useBaseUrl("img/logos/tailwindcss.svg")}
+                alt={"Tailwindcss logo"}
               />
               <SmallText tag="p">tailwindcss</SmallText>
             </a>
@@ -285,13 +338,18 @@ function Home() {
               <img
                 className="h-50"
                 src={useBaseUrl("img/logos/bootstrap-vue.svg")}
+                alt={"BootstrapVue logo"}
               />
               <SmallText tag="p">BootstrapVue</SmallText>
             </a>
           </div>
           <div className="ta-center w-20p">
             <a href="https://sass-lang.com/" rel="noreferrer" target="_blank">
-              <img className="h-50" src={useBaseUrl("img/logos/sass.png")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/sass.png")}
+                alt={"Sass logo"}
+              />
               <SmallText tag="p">Sass</SmallText>
             </a>
           </div>
@@ -301,7 +359,11 @@ function Home() {
               rel="noreferrer"
               target="_blank"
             >
-              <img className="h-50" src={useBaseUrl("img/logos/twilio.png")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/twilio.png")}
+                alt={"Twilio logo"}
+              />
               <SmallText tag="p">Twilio</SmallText>
             </a>
           </div>
@@ -310,6 +372,7 @@ function Home() {
               <img
                 className="h-50"
                 src={useBaseUrl("img/logos/docusaurus.svg")}
+                alt={"Docusaurus logo"}
               />
               <SmallText tag="p">Docusaurus</SmallText>
             </a>
@@ -320,13 +383,21 @@ function Home() {
               rel="noreferrer"
               target="_blank"
             >
-              <img className="h-50" src={useBaseUrl("img/logos/gradle.png")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/gradle.png")}
+                alt={"Gradle logo"}
+              />
               <SmallText tag="p">Gradle</SmallText>
             </a>
           </div>
           <div className="ta-center w-20p">
             <a href="https://nuxtjs.org/" rel="noreferrer" target="_blank">
-              <img className="h-50" src={useBaseUrl("img/logos/nuxtjs.svg")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/nuxtjs.svg")}
+                alt={"NUXTJS logo"}
+              />
               <SmallText tag="p">NUXTJS</SmallText>
             </a>
           </div>
@@ -336,13 +407,21 @@ function Home() {
               rel="noreferrer"
               target="_blank"
             >
-              <img className="h-50" src={useBaseUrl("img/logos/vuetify.png")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/vuetify.png")}
+                alt={"Vuetify.js logo"}
+              />
               <SmallText tag="p">Vuetify.js</SmallText>
             </a>
           </div>
           <div className="ta-center w-20p">
             <a href="https://jekyllrb.com/" rel="noreferrer" target="_blank">
-              <img className="h-50" src={useBaseUrl("img/logos/jekyll.png")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/jekyll.png")}
+                alt={"Jekyll logo"}
+              />
               <SmallText tag="p">Jekyll</SmallText>
             </a>
           </div>
@@ -352,7 +431,11 @@ function Home() {
               rel="noreferrer"
               target="_blank"
             >
-              <img className="h-50" src={useBaseUrl("img/logos/pytorch.svg")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/pytorch.svg")}
+                alt={"PyTorch logo"}
+              />
               <SmallText tag="p">PyTorch</SmallText>
             </a>
           </div>
@@ -362,7 +445,11 @@ function Home() {
               rel="noreferrer"
               target="_blank"
             >
-              <img className="h-50" src={useBaseUrl("img/logos/apollo.png")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/apollo.png")}
+                alt={"Apollo logo"}
+              />
               <SmallText tag="p">Apollo</SmallText>
             </a>
           </div>
@@ -372,7 +459,11 @@ function Home() {
               rel="noreferrer"
               target="_blank"
             >
-              <img className="h-50" src={useBaseUrl("img/logos/scala.svg")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/scala.svg")}
+                alt={"Scala logo"}
+              />
               <SmallText tag="p">Scala</SmallText>
             </a>
           </div>
@@ -382,7 +473,11 @@ function Home() {
               rel="noreferrer"
               target="_blank"
             >
-              <img className="h-50" src={useBaseUrl("img/logos/laravel.svg")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/laravel.svg")}
+                alt={"Laravel logo"}
+              />
               <SmallText tag="p">Laravel</SmallText>
             </a>
           </div>
@@ -391,21 +486,27 @@ function Home() {
               <img
                 className="h-50"
                 src={useBaseUrl("img/logos/socketio.svg")}
+                alt={"Socket.io logo"}
               />
               <SmallText tag="p">socket.io</SmallText>
             </a>
           </div>
           <div className="ta-center w-20p">
             <a href="https://jestjs.io/" rel="noreferrer" target="_blank">
-              <img className="h-50" src={useBaseUrl("img/logos/jest.png")} />
+              <img
+                className="h-50"
+                src={useBaseUrl("img/logos/jest.png")}
+                alt={"Jest logo"}
+              />
               <SmallText tag="p">Jest</SmallText>
             </a>
           </div>
-          <div className="ta-center w-20p">
+          <div className="ta-center w-t20p">
             <a href={useBaseUrl("/apply")} rel="noreferrer" target="_blank">
               <img
                 className="h-50"
                 src={useBaseUrl("img/logos/three-dots.svg")}
+                alt={"Your project logo?"}
               />
               <SmallText tag="p">You?</SmallText>
             </a>
@@ -504,7 +605,10 @@ function Home() {
           </Text>
         </SectionHeader>
         <CardsRow>
-          <Card image="img/demos/example-bootstrap.gif">
+          <Card
+            image="img/demos/example-bootstrap.gif"
+            imageAlt="Bootstrap demo"
+          >
             <LightCta
               withArrow
               href="https://getbootstrap.com/docs/4.3/getting-started/introduction/"
@@ -518,11 +622,12 @@ function Home() {
                 }}
                 className={"h-30 va-middle"}
                 src={useBaseUrl("img/logos/bootstrap.jpg")}
+                alt={"Bootstrap logo"}
               />
               Visit Bootstrap
             </LightCta>
           </Card>
-          <Card image="img/demos/example-vuejs.gif">
+          <Card image="img/demos/example-vuejs.gif" imageAlt="Vue demo">
             <img
               style={{
                 marginTop: "-2px",
@@ -530,6 +635,7 @@ function Home() {
               }}
               className={"h-30 va-middle"}
               src={useBaseUrl("img/logos/vue.svg")}
+              alt={"Vue logo"}
             />
             <LightCta
               withArrow
@@ -540,7 +646,7 @@ function Home() {
               Visit Vue.js
             </LightCta>
           </Card>
-          <Card image="img/demos/example-react.gif">
+          <Card image="img/demos/example-react.gif" imageAlt="React demo">
             <img
               style={{
                 marginTop: "-2px",
@@ -548,6 +654,7 @@ function Home() {
               }}
               className={"h-30 va-middle"}
               src={useBaseUrl("img/logos/react.jpg")}
+              alt={"React logo"}
             />
             <LightCta
               withArrow
@@ -558,7 +665,10 @@ function Home() {
               Visit React
             </LightCta>
           </Card>
-          <Card image="img/demos/example-momentjs.gif">
+          <Card
+            image="img/demos/example-momentjs.gif"
+            imageAlt="Moment.js demo"
+          >
             <img
               style={{
                 marginTop: "-2px",
@@ -566,6 +676,7 @@ function Home() {
               }}
               className={"h-30 va-middle"}
               src={useBaseUrl("img/logos/momentjs.svg")}
+              alt={"Moment.js logo"}
             />
             <LightCta
               withArrow
