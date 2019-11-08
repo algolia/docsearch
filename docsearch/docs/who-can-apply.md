@@ -53,7 +53,7 @@ criteria:
   highly recommend that you put in place server-side rendering for the useful
   textual content.
 
-[1]: apply.md
+[1]: apply.mdx
 [2]: run-your-own.md
 [3]: https://www.algolia.com/doc/api-reference/
 [4]: integrations.md

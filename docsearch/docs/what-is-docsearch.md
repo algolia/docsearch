@@ -34,4 +34,4 @@ You can now [apply to the program][3]
 
 [1]: https://opencollective.com/algolia
 [2]: who-can-apply.md
-[3]: apply.md
+[3]: apply.mdx
