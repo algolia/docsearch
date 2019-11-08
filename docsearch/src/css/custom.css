@@ -37,34 +37,17 @@ fragments.css (underling style lib used from @algolia/ui-library*/
   }
 }
 
-.demo-content-wrapper {
-  height: 400px;
-  background: url(../../static/img/bg-docsearch-live-demo-bootstrap.jpg)
-    no-repeat;
-  background-size: 1200px;
-  background-position: center -46px;
-}
-
-.demo-header-wrapper {
-  height: 42px;
-  background: url(../../static/img/bg-docsearch-live-demo-bootstrap.jpg)
-    no-repeat;
-  background-color: #563e7c;
-  background-size: 1200px;
-  background-position: left top;
-}
-
 .header {
   background-size: cover;
   background-repeat: no-repeat;
-  background-image: url(../../static/img/bg-docsearch.svg),
+  background-image: url(../../static/img/assets/bg-docsearch.svg),
     linear-gradient(#fff, #f5f5fa);
   background-position: center calc(100% - 18px);
 }
 
 .bg-analytics {
   background-repeat: no-repeat;
-  background-image: url(../../static/img/bg-analytics.svg);
+  background-image: url(../../static/img/assets/bg-analytics.svg);
   background-size: cover;
   background-position: center -300px;
 }

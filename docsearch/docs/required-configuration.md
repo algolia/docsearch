@@ -128,7 +128,7 @@ exposed via the DocSearch `custom_settings` parameter.
 Any question ? [Send us an email][7].
 
 [1]: how-do-we-build-an-index.md
-[2]: ../img/proper_layout.png
+[2]: ../img/assets/recommended-layout.png
 [3]: config-file.md
 [4]: https://www.algolia.com/doc/guides/searching/filtering/#facet-filters
 [5]: https://www.sitemaps.org/

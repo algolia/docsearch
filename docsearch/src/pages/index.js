@@ -65,11 +65,6 @@ function Home() {
             share it with the developer community.
           </Text>
         </SectionHeader>
-        <div className="demo-content-wrapper">
-          <div className="demo-header-wrapper">
-            <div className="docsearch-live-demo-input-wrapper"></div>
-          </div>
-        </div>
       </Section>
 
       <Section background="white">
@@ -433,7 +428,7 @@ function Home() {
           </Text>
         </SectionHeader>
         <img
-          src={useBaseUrl("img/docsearch-UI-anatomy.png")}
+          src={useBaseUrl("img/assets/docsearch-ui-anatomy.png")}
           alt="Anatomy of DocSearch UI"
         />
       </Section>
@@ -442,7 +437,7 @@ function Home() {
         <div className="row">
           <div className="col col--4 col--offset-1">
             <img
-              src={useBaseUrl("img/illus-analytics.svg")}
+              src={useBaseUrl("img/assets/illus-analytics.svg")}
               alt="DocSearch Analytics"
               width="400"
             />

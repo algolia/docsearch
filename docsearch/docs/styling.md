@@ -95,7 +95,7 @@ You can generate your own CSS file by cloning the repository and running
 `yarn run build:css`. It generates the resulting file in `./dist/cdn`, and you
 should use them instead of the default one.
 
-[1]: ../img/default-colorscheme.png
+[1]: ../img/assets/default-colorscheme.png
 [2]: https://www.algolia.com/pricing
 [3]: scraper-overview.md
 [4]: https://github.com/algolia/docsearch/tree/master/src/styles
