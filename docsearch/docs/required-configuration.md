@@ -51,12 +51,12 @@ requirements.
 A website implementing these good practises will look simple and crystal clear.
 It can have this following aspect:
 
-![Recommended layout for your page][2]
+<img src="https://docsearch.algolia.com/img/assets/recommended-layout.png" alt="Recommended layout for your page"/>
 
 The biggest blue element will be you `DocSearch-content` container. More details
 in the following guidelines.
 
-### Use the right classes as [selectors][3]
+### Use the right classes as [selectors][2]
 
 You can add some specific static classes to help us find your content's role.
 These classes can not involve any style changes. These dedicated classes will
@@ -102,7 +102,7 @@ tags:
 The `content` value of the meta will be added to every records extracted from
 the page. Given that the name is `docsearch:$NAME`, `$NAME` will be set as an
 attribute in every records. Its value will be its related `content` value. You
-can then transform these attributes as [`facetFilters`][4] to filter over them
+can then transform these attributes as [`facetFilters`][3] to filter over them
 from the UI. We will need to set `attributesForFaceting` of your Algolia index
 exposed via the DocSearch `custom_settings` parameter.
 
@@ -114,7 +114,7 @@ exposed via the DocSearch `custom_settings` parameter.
 
 ## Nice to have
 
-- Your website should have [an updated sitemap][5]. This is key to let our
+- Your website should have [an updated sitemap][4]. This is key to let our
   crawler know what should be updated. Do not worry, we will still crawl your
   website and discover embedded hyperlinks to find your great content.
 
@@ -123,14 +123,13 @@ exposed via the DocSearch `custom_settings` parameter.
 
 - Make sure your documentation content is also available without JavaScript
   rendering on the client-side. If you absolutely need JavaScript turned on, you
-  need to [set `js_render: true` in your configuration][6].
+  need to [set `js_render: true` in your configuration][5].
 
-Any question ? [Send us an email][7].
+Any question ? [Send us an email][6].
 
 [1]: how-do-we-build-an-index.md
-[2]: ../img/assets/recommended-layout.png
-[3]: config-file.md
-[4]: https://www.algolia.com/doc/guides/searching/filtering/#facet-filters
-[5]: https://www.sitemaps.org/
-[6]: config-file.md
-[7]: mailto:DocSearch@algolia.com
+[2]: config-file.md
+[3]: https://www.algolia.com/doc/guides/searching/filtering/#facet-filters
+[4]: https://www.sitemaps.org/
+[5]: config-file.md
+[6]: mailto:DocSearch@algolia.com
