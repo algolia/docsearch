@@ -126,16 +126,6 @@ function Home() {
           </div>
           <div className="ta-center w-20p">
             <a
-              href="https://cordova.apache.org/"
-              rel="noreferrer"
-              target="_blank"
-            >
-              <img className="h-50" src={useBaseUrl("img/logos/cordova.png")} />
-              <SmallText tag="p">CORDOVA</SmallText>
-            </a>
-          </div>
-          <div className="ta-center w-20p">
-            <a
               href="https://reactjs.org/docs/getting-started.html"
               rel="noreferrer"
               target="_blank"
