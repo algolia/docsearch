@@ -25,6 +25,18 @@ fragments.css (underling style lib used from @algolia/ui-library*/
   --ifm-color-primary-lightest: rgb(146, 224, 208);
 }
 
+@media screen and (max-width: 996px) {
+  :root {
+    --ifm-font-size-base: 15px;
+  }
+}
+
+@media screen and (min-width: 997px) {
+  :root {
+    --ifm-font-size-base: 17px;
+  }
+}
+
 .demo-content-wrapper {
   height: 400px;
   background: url(../../static/img/bg-docsearch-live-demo-bootstrap.jpg)
