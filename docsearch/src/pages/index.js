@@ -75,7 +75,7 @@ function Home() {
       <Section background="white">
         <SectionHeader title="Providing search to your favorite projects"></SectionHeader>
         <div
-          className="jc-between d-flex m-auto fxw-wrap"
+          className="jc-between d-flex m-auto fx-wrap"
           style={{ maxWidth: "800px" }}
         >
           <div className="ta-center w-20p">
