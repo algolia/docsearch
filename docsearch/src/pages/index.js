@@ -508,6 +508,7 @@ function Home() {
             <LightCta
               withArrow
               href="https://getbootstrap.com/docs/4.3/getting-started/introduction/"
+              rel="noreferrer"
               target="_blank"
             >
               <img
@@ -533,6 +534,7 @@ function Home() {
             <LightCta
               withArrow
               href="https://vuejs.org/v2/guide/"
+              rel="noreferrer"
               target="_blank"
             >
               Visit Vue.js
@@ -550,6 +552,7 @@ function Home() {
             <LightCta
               withArrow
               href="https://reactjs.org/docs/getting-started.html"
+              rel="noreferrer"
               target="_blank"
             >
               Visit React
@@ -567,6 +570,7 @@ function Home() {
             <LightCta
               withArrow
               href="https://momentjs.com/docs/"
+              rel="noreferrer"
               target="_blank"
             >
               Visit Moment.js
