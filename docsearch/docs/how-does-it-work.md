@@ -8,7 +8,7 @@ three steps: you apply, we configure the crawler for you, and you integrate our
 Search-UI in your frontend. You only need to copy and paste a JavaScript
 snippet.
 
-![How it works][4]
+<img src="https://docsearch.algolia.com/img/assets/docsearch-how-it-works.png" alt="How it works"/>
 
 ## You apply
 
@@ -51,4 +51,3 @@ results.
 [1]: apply.mdx
 [2]: https://github.com/algolia/docsearch-configs/tree/master/configs
 [3]: styling.md
-[4]: ../img/assets/docsearch-how-it-works.png
