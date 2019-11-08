@@ -195,7 +195,7 @@ function Home() {
           </div>
           <div className="ta-center w-20p">
             <a href="https://vuejs.org/" rel="noreferrer" target="_blank">
-              <img className="h-50" src={useBaseUrl("img/logos/vue.jpg")} />
+              <img className="h-50" src={useBaseUrl("img/logos/vue.svg")} />
               <SmallText tag="p">Vue</SmallText>
             </a>
           </div>
@@ -527,9 +527,10 @@ function Home() {
             >
               <img
                 style={{
-                  marginTop: "-2px"
+                  marginTop: "-2px",
+                  marginRight: "12px"
                 }}
-                className={"h-30 va-middle mr-12"}
+                className={"h-30 va-middle"}
                 src={useBaseUrl("img/logos/bootstrap.jpg")}
               />
               Visit Bootstrap
@@ -538,10 +539,11 @@ function Home() {
           <Card image="img/demos/example-vuejs.gif">
             <img
               style={{
-                marginTop: "-2px"
+                marginTop: "-2px",
+                marginRight: "12px"
               }}
-              className={"h-30 va-middle mr-12"}
-              src={useBaseUrl("img/logos/vue.jpg")}
+              className={"h-30 va-middle"}
+              src={useBaseUrl("img/logos/vue.svg")}
             />
             <LightCta
               withArrow
@@ -554,9 +556,10 @@ function Home() {
           <Card image="img/demos/example-react.gif">
             <img
               style={{
-                marginTop: "-2px"
+                marginTop: "-2px",
+                marginRight: "12px"
               }}
-              className={"h-30 va-middle mr-12"}
+              className={"h-30 va-middle"}
               src={useBaseUrl("img/logos/react.jpg")}
             />
             <LightCta
@@ -570,9 +573,10 @@ function Home() {
           <Card image="img/demos/example-momentjs.gif">
             <img
               style={{
-                marginTop: "-2px"
+                marginTop: "-2px",
+                marginRight: "12px"
               }}
-              className={"h-30 va-middle mr-12"}
+              className={"h-30 va-middle"}
               src={useBaseUrl("img/logos/momentjs.svg")}
             />
             <LightCta
