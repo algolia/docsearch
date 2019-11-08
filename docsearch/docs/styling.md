@@ -6,7 +6,7 @@ DocSearch default colorscheme comes in a grey theme with blue highlight.
 
 ## Colorscheme
 
-![Default colorscheme][1]
+<img src="https://docsearch.algolia.com/img/assets/default-colorscheme.png" alt="Default colorscheme"/>
 
 This theme works well with most websites, but we encourage you to style it to
 your own theme. You can achieved it by overriding the CSS classes used by the
@@ -59,8 +59,8 @@ The logo is automatically added in the dropdown with the default styling. It's
 our way to let more people know about what we do, and how they could benefit
 from a fast and relevant search on their website.
 
-If you're using your own [paid Algolia account][2] and [run the crawler
-yourself][3], you don't have to keep the logo.
+If you're using your own [paid Algolia account][1] and [run the crawler
+yourself][2], you don't have to keep the logo.
 
 ## Debugging
 
@@ -88,14 +88,13 @@ displays.
 ## Advanced styling
 
 Whether you would like to do more heavy styling, feel free to have a look at the
-[SCSS source code][4]. `_variables.scss` contains all the default theming,
+[SCSS source code][3]. `_variables.scss` contains all the default theming,
 sizing and breakpoints.
 
 You can generate your own CSS file by cloning the repository and running
 `yarn run build:css`. It generates the resulting file in `./dist/cdn`, and you
 should use them instead of the default one.
 
-[1]: ../img/assets/default-colorscheme.png
-[2]: https://www.algolia.com/pricing
-[3]: scraper-overview.md
-[4]: https://github.com/algolia/docsearch/tree/master/src/styles
+[1]: https://www.algolia.com/pricing
+[2]: scraper-overview.md
+[3]: https://github.com/algolia/docsearch/tree/master/src/styles
