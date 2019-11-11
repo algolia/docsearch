@@ -501,7 +501,7 @@ function Home() {
               <SmallText tag="p">Jest</SmallText>
             </a>
           </div>
-          <div className="ta-center w-t20p">
+          <div className="ta-center w-20p">
             <a href={useBaseUrl("/apply")} rel="noreferrer" target="_blank">
               <img
                 className="h-50"
