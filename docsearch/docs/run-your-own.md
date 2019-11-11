@@ -136,7 +136,7 @@ the same result by running a live server in the `./playground` subdirectory.\`_
 ## Integration
 
 Once you're satisfied with your config, you can integrate the dropdown menu in
-your website by following the [instructions here][15].
+your website by following the [instructions here][14].
 
 The difference is that you'll also have to add the `appId` key to your
 `docsearch()` instance. Also don't forget to use a **search** API key here (in
@@ -171,5 +171,4 @@ hosted version, so you might not need all the listed commands._
 [11]: config-file.md
 [12]: http://chromedriver.chromium.org/getting-started
 [13]: https://github.com/algolia/docsearch-configs/tree/master/configs
-[14]: ./assets/playground.png
-[15]: dropdown.md
+[14]: dropdown.md
