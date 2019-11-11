@@ -14,7 +14,6 @@ module.exports = {
       "scraper",
       "engine",
       "config",
-      "css-helper",
       "index",
       "run-your-own"
     ]
