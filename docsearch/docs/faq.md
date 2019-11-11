@@ -113,11 +113,11 @@ the help we can.
 
 ## How many records does the DocSearch crawl create?
 
-The [property `nb_hits`][9] in your configuration keeps track of the number of
+The [property `nb_hits`][8] in your configuration keeps track of the number of
 records the crawl has extracted and indexed by the last DocSearch run. It
 updates this number automatically.
 
-The DocSearch scraper follows [the recommended atomic-reindexing strategy][10].
+The DocSearch scraper follows [the recommended atomic-reindexing strategy][9].
 It creates a brand new temporary index to populate the data scraped from your
 website. When successful, the crawl overwrite the old index defined in your
 configuration with the key `index_name`.
@@ -128,10 +128,10 @@ We are scraping your website according to your configuration. It might happen
 that some pages are missing from the search. The possible reasons for that are:
 
 - Makes sure you are not filtering on the search by wrongly using
-  `facetFilters`. [See here for more details][11].
-- Make sure that an other indexed page references the page missing thanks to a
-  hyperlink tag `<a>`.
-- Make sure you are [providing a compliant sitemap from the configuration][12]
+  `facetFilters`. [See here for more details]10].
+- Make sure that an other indexed page references the page missing thanks
+  to a hyperlink tag `<a/>`.
+- Make sure you are [providing a compliant sitemap from the configuration]11]
   and that it references the page.
 
 ## Can I know when the next crawl will happen?
@@ -149,9 +149,8 @@ If none of the previous points help, you [can contact our support][1].
 [5]: https://www.algolia.com/policies/privacy
 [6]: run-your-own.md
 [7]: https://www.algolia.com/doc/api-reference/
-[8]: ./config-file.html#custom_settings-optional
-[9]: ./config-file.html#nb_hits-special
-[10]:
+[8]: config-file.md
+[9]:
   https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/in-depth/asynchronicity-and-when-to-wait-for-tasks/#atomic-reindexing
-[11]: https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/
-[12]: tips.md
+[10]: https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/
+[11]: tips.md
