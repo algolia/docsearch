@@ -45,6 +45,7 @@ function Home() {
         cta={[
           <Button
             primary
+            style={{ textDecoration: "none" }}
             href={useBaseUrl("docs/what-is-docsearch")}
           >
             Join the Program
