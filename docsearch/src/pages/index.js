@@ -23,8 +23,8 @@ import {
 import Layout from "@theme/Layout";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import useBaseUrl from "@docusaurus/useBaseUrl";
-import projects from "./demo-projects.json";
-import showcase from "./showcase-projects.json";
+import showcaseProjects from "./showcase-projects.json";
+import demoProjects from "./demo-projects.json";
 import ApplyForm from "../components/ApplyForm.js";
 
 function Home() {
@@ -75,7 +75,7 @@ function Home() {
           className="jc-between d-flex m-auto fx-wrap"
           style={{ maxWidth: "800px" }}
         >
-          {projects.map(({ name, href, image }) => (
+          {showcaseProjects.map(({ name, href, image }) => (
             <div key={href} className="ta-center w-20p">
               <a
                 href={href}
@@ -197,7 +197,7 @@ function Home() {
           </Text>
         </SectionHeader>
         <CardsRow>
-          {showcase.map(({ name, href, logo, preview }) => (
+          {demoProjects.map(({ name, href, logo, preview }) => (
             <Card image={preview} imageAlt={`${name} demo`}>
               <LightCta withArrow href={href} rel="noreferrer" target="_blank">
                 <img
