@@ -1,0 +1,172 @@
+[
+  {
+    "name": "Bootstrap",
+    "image": "img/logos/bootstrap.jpg",
+    "href": "https://getbootstrap.com/docs/4.1/getting-started/introduction/"
+  },
+  {
+    "name": "Babel",
+    "image": "img/logos/babel.jpg",
+    "href": "https://babeljs.io/docs/en/"
+  },
+  {
+    "name": "GraphQL",
+    "image": "img/logos/graphql.jpg",
+    "href": "https://graphql.org/learn/"
+  },
+  {
+    "name": "TypeScript",
+    "image": "img/logos/typescriptlang.svg",
+    "href": "https://www.typescriptlang.org/index.html"
+  },
+  {
+    "name": "React",
+    "image": "img/logos/react.jpg",
+    "href": "https://reactjs.org/docs/getting-started.html"
+  },
+  {
+    "name": "Requests",
+    "image": "img/logos/requests.png",
+    "href": "https://requests.readthedocs.io/en/master/"
+  },
+  {
+    "name": "ESLint",
+    "image": "img/logos/eslint.svg",
+    "href": "https://eslint.org/"
+  },
+  {
+    "name": "webpack",
+    "image": "img/logos/webpack.svg",
+    "href": "https://webpack.js.org/concepts/"
+  },
+  {
+    "name": "Gatsby",
+    "image": "img/logos/gatsby.png",
+    "href": "https://www.gatsbyjs.org/docs/"
+  },
+  {
+    "name": "Netlify",
+    "image": "img/logos/netlify.svg",
+    "href": "https://docs.netlify.com/"
+  },
+  {
+    "name": "Vue.js",
+    "image": "img/logos/vue.svg",
+    "href": "https://vuejs.org/"
+  },
+  {
+    "name": "Yarn",
+    "image": "img/logos/yarn.jpg",
+    "href": "https://yarnpkg.com/lang/en/docs/"
+  },
+  {
+    "name": "Material-UI",
+    "image": "img/logos/material-ui.svg",
+    "href": "https://material-ui.com"
+  },
+  {
+    "name": "Ant Design",
+    "image": "img/logos/ant-design.svg",
+    "href": "https://ant.design/index-cn"
+  },
+  {
+    "name": "React Native",
+    "image": "img/logos/react-native.svg",
+    "href": "https://facebook.github.io/react-native/docs/getting-started"
+  },
+  {
+    "name": "jQuery",
+    "image": "img/logos/jquery.jpg",
+    "href": "https://api.jquery.com/"
+  },
+  {
+    "name": "GitLab",
+    "image": "img/logos/gitlab.svg",
+    "href": "https://docs.gitlab.com/"
+  },
+  {
+    "name": "Homebrew",
+    "image": "img/logos/homebrew.png",
+    "href": "https://brew.sh/"
+  },
+  {
+    "name": "Moment.js",
+    "image": "img/logos/momentjs.svg",
+    "href": "https://momentjs.com/docs/"
+  },
+  {
+    "name": "Tailwind",
+    "image": "img/logos/tailwindcss.svg",
+    "href": "https://tailwindcss.com/docs/installation/"
+  },
+  {
+    "name": "BootstrapVue",
+    "image": "img/logos/bootstrap-vue.svg",
+    "href": "https://bootstrap-vue.js.org/docs"
+  },
+  {
+    "name": "Sass",
+    "image": "img/logos/sass.png",
+    "href": "https://sass-lang.com/"
+  },
+  {
+    "name": "Twilio",
+    "image": "img/logos/twilio.png",
+    "href": "https://www.twilio.com/docs"
+  },
+  {
+    "name": "Docusaurus",
+    "image": "img/logos/docusaurus.svg",
+    "href": "https://docusaurus.io/"
+  },
+  {
+    "name": "Gradle",
+    "image": "img/logos/gradle.png",
+    "href": "https://docs.gradle.org/current/userguide/userguide.html"
+  },
+  {
+    "name": "Nuxt.js",
+    "image": "img/logos/nuxtjs.svg",
+    "href": "https://nuxtjs.org/"
+  },
+  {
+    "name": "Vuetify",
+    "image": "img/logos/vuetify.png",
+    "href": "https://vuetifyjs.com/en/"
+  },
+  {
+    "name": "Jekyll",
+    "image": "img/logos/jekyll.png",
+    "href": "https://jekyllrb.com/"
+  },
+  {
+    "name": "PyTorch",
+    "image": "img/logos/pytorch.svg",
+    "href": "https://pytorch.org/get-started/locally/"
+  },
+  {
+    "name": "Apollo",
+    "image": "img/logos/apollo.png",
+    "href": "https://www.apollographql.com/docs/"
+  },
+  {
+    "name": "Scala",
+    "image": "img/logos/scala.svg",
+    "href": "https://docs.scala-lang.org/"
+  },
+  {
+    "name": "Laravel",
+    "image": "img/logos/laravel.svg",
+    "href": "https://laravel.com/docs/6.x"
+  },
+  {
+    "name": "socket.io",
+    "image": "img/logos/socketio.svg",
+    "href": "https://socket.io/docs/"
+  },
+  {
+    "name": "Jest",
+    "image": "img/logos/jest.png",
+    "href": "https://jestjs.io/"
+  }
+]

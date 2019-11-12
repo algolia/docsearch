@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Bootstrap",
+    "logo": "img/logos/bootstrap.jpg",
+    "preview": "img/demos/example-bootstrap.gif",
+    "href": "https://getbootstrap.com/docs/4.3/getting-started/introduction/"
+  },
+  {
+    "name": "Vue.js",
+    "logo": "img/logos/vue.svg",
+    "preview": "img/demos/example-vuejs.gif",
+    "href": "https://vuejs.org/v2/guide/"
+  },
+  {
+    "name": "React",
+    "logo": "img/logos/react.jpg",
+    "preview": "img/demos/example-react.gif",
+    "href": "https://reactjs.org/docs/getting-started.html"
+  },
+  {
+    "name": "Moment.js",
+    "logo": "img/logos/momentjs.svg",
+    "preview": "img/demos/example-momentjs.gif",
+    "href": "https://momentjs.com/docs/"
+  }
+]
