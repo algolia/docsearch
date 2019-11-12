@@ -98,7 +98,7 @@ function Home() {
               <img
                 className="h-50"
                 src={useBaseUrl("img/logos/three-dots.svg")}
-                alt="Your project logo?"
+                alt="Your project logo? Apply for DocSearch"
               />
               <SmallText tag="p">You?</SmallText>
             </a>
