@@ -1,7 +1,0 @@
-#!/usr/bin/env sh
-
-eslint \
-  ./*.js \
-  ./.*.js \
-  ./src/**/*.js \
-  ./scripts/**/*.js

@@ -1,6 +1,0 @@
-#!/usr/bin/env sh
-set -e
-
-yarn run lint:js
-yarn run lint:css
-yarn run lint:md
