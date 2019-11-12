@@ -44,9 +44,7 @@ function Home() {
         subtitle={siteConfig.tagline}
         cta={[
           <Button
-            className={"td-none"}
             primary
-            tag="a"
             href={useBaseUrl("docs/what-is-docsearch")}
           >
             Join the Program
