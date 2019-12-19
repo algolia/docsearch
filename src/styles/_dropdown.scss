@@ -150,7 +150,6 @@
       padding: 0;
       text-align: left;
       height: auto;
-      position: relative;
       background: transparent;
       border: none;
       z-index: 999;
@@ -381,7 +380,6 @@
           color: #02060c;
           font-size: 0.9em;
           font-weight: bold;
-          text-align: left;
           opacity: 0.5;
 
           &:before {
