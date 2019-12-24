@@ -16,9 +16,10 @@ see how to enable DocSearch on your website:
 - [GitBook][5]
 - [pkgdown][6] - [DocSearch indexing][7]
 - [LaRecipe][8] - [Algolia Search][9]
+- [Orchid][10] - [Algolia Search][11]
 
 If you're a maintaining a similar tool and wants us to add you to the list, get
-[in touch with us][10]. We'd be happy to help.
+[in touch with us][12]. We'd be happy to help.
 
 [1]: https://docusaurus.io/
 [2]: https://docusaurus.io/docs/en/search#docsNav
@@ -29,4 +30,6 @@ If you're a maintaining a similar tool and wants us to add you to the list, get
 [7]: https://pkgdown.r-lib.org/articles/search.html
 [8]: https://larecipe.binarytorch.com.my/docs/1.3/overview
 [9]: https://larecipe.binarytorch.com.my/docs/1.3/configurations#search
-[10]: mailto:docsearch@algolia.com
+[10]: https://orchid.run
+[11]: https://orchid.run/plugins/orchidsearch#algolia-docsearch
+[12]: mailto:docsearch@algolia.com
