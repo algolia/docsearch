@@ -54,7 +54,7 @@ different value. This variable can be set in the .env file alongside
 ## `start_urls`
 
 This array contains the list of URLs that will be used to start crawling your
-website. The crawler will recursively follow any links (`<a/>` tags) from those
+website. The crawler will recursively follow any links (`<a>` tags) from those
 pages. It will not follow links that are on another domain and never follow
 links matching `stop_urls`.
 
