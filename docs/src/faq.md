@@ -131,7 +131,7 @@ that some pages are missing from the search. The possible reasons for that are:
 - Makes sure you are not filtering on the search by wrongly using
   `facetFilters`. [See here for more details][11].
 - Make sure that an other indexed page references the page missing thanks to a
-  hyperlink tag `<a/>`.
+  hyperlink tag `<a>`.
 - Make sure you are [providing a compliant sitemap from the configuration][12]
   and that it references the page.
 

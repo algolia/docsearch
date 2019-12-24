@@ -63,7 +63,7 @@ These classes can not involve any style changes. These dedicated classes will
 help us to create a great learn as you type experience from your documentation.
 
 - Add a static class `DocSearch-content` to the main container of your textual
-  content. Most of the time, this tag `<main/>` or an `<article/>` HTML element.
+  content. Most of the time, this tag `<main>` or an `<article>` HTML element.
 
 - Every searchable `lvl` elements outside this main documentation container (for
   instance in a sidebar) must be `global` selectors. They will be globally
@@ -81,8 +81,8 @@ help us to create a great learn as you type experience from your documentation.
   the exact place of the matching elements. These attributes defined the right
   anchor to use.
 
-- Every textual element (selector `text`) must be wrapped in a tag `<p/>` or
-  `<li/>`. This content must be atomic and split into small entities. Be careful
+- Every textual element (selector `text`) must be wrapped in a tag `<p>` or
+  `<li>`. This content must be atomic and split into small entities. Be careful
   to never nest one matching elements into another one, it will create
   duplicates.
 
