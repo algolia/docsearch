@@ -47,7 +47,7 @@
     "babel-plugin-rewire": "1.2.0",
     "babel-preset-env": "1.7.0",
     "babel-preset-stage-3": "6.24.1",
-    "conventional-changelog-cli": "2.0.23",
+    "conventional-changelog-cli": "2.0.31",
     "cssnano": "4.1.10",
     "eslint": "6.3.0",
     "eslint-config-algolia": "13.4.0",
