@@ -46,7 +46,7 @@ class DocSearch {
     queryHook = false,
     handleSelected = false,
     enhancedSearchInput = false,
-    layout = 'collumns',
+    layout = 'columns',
   }) {
     DocSearch.checkArguments({
       apiKey,
