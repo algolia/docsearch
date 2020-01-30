@@ -18,7 +18,7 @@ jobs:
             git config --global user.email "s-pace@users.noreply.github.com"
             git config --global user.name "s-pace"
             echo "machine github.com login s-pace password $GITHUB_TOKEN" > ~/.netrc
-            yarn install && GIT_USER=s-pace yarn run publish-gh-pages
+            yarn install && GIT_USER=s-pace yarn run docs:deploy
 workflows:
   version: 2
   build_and_deploy:
