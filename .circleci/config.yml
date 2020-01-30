@@ -4,6 +4,7 @@ aliases:
     branches:
       only:
         - master
+        - docusaurus
 version: 2
 jobs:
   deploy-website:
