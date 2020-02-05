@@ -8,7 +8,7 @@ window.onload = function() {
     indexName: 'bootstrap',
     inputSelector: '.docsearch-live-demo-input',
     algoliaOptions: {
-      facetFilters: ['version:4.1'],
+      facetFilters: ['version:4.4'],
     },
     enhancedSearchInput: true,
     debug: false,
