@@ -275,3 +275,7 @@
       50px 0 0 rgba(236, 139, 99, 0.5);
   }
 }
+
+.docsearch-live-demo-input-wrapper button.searchbox__submit > svg {
+  display: inline;
+}
