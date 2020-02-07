@@ -4594,7 +4594,7 @@ lodash.toarray@^4.4.0:
   resolved "https://registry.yarnpkg.com/lodash.toarray/-/lodash.toarray-4.4.0.tgz#24c4bfcd6b2fba38bfd0594db1179d8e9b656561"
   integrity sha1-JMS/zWsvuji/0FlNsRedjptlZWE=
 
-lodash@4.17.15, lodash@^4.17.12, lodash@^4.17.13:
+lodash@4.17.15, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.15:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
@@ -8279,14 +8279,14 @@ textlint-rule-helper@^2.1.1:
     structured-source "^3.0.2"
     unist-util-visit "^1.1.0"
 
-textlint-rule-stop-words@1.0.18:
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/textlint-rule-stop-words/-/textlint-rule-stop-words-1.0.18.tgz#c76365cfffe71ca524307c56c7d58daffefdc089"
-  integrity sha512-/Cg20pLZgEl8vi6gUu44DGRG+iOtXa4rcvfiOURrwP5lbaQHpuo/0bQSKJnnFzih/hRHw/qnEXqd7PsfpnuEYw==
+textlint-rule-stop-words@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/textlint-rule-stop-words/-/textlint-rule-stop-words-2.0.1.tgz#d5bf17fd5ec078c792235d9193e3dba489965362"
+  integrity sha512-TUnOIMXl850Px9bl3H522UeeStmh92EYwXXnkMZOBIerHwFLG2KaaH+qGN+FaL0EugKj6WY8QKG6jOufGAiJsQ==
   dependencies:
-    lodash "^4.17.10"
+    lodash "^4.17.15"
     split-lines "^2.0.0"
-    textlint-rule-helper "^2.0.0"
+    textlint-rule-helper "^2.1.1"
 
 textlint-rule-terminology@1.1.30:
   version "1.1.30"
