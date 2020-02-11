@@ -5,9 +5,9 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
-    "build": "yarn lint && docusaurus build",
+    "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
-    "deploy": "docusaurus deploy",
+    "deploy": "yarn lint & docusaurus deploy",
     "lint": "yarn run textlint docs"
   },
   "dependencies": {
