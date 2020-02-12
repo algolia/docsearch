@@ -63,7 +63,7 @@
     "node-sass": "4.12.0",
     "onchange": "6.0.0",
     "parallelshell": "3.0.2",
-    "postcss-cli": "6.1.3",
+    "postcss-cli": "7.1.0",
     "prettier": "1.19.1",
     "pretty-bytes-cli": "2.0.0",
     "semver": "6.3.0",
