@@ -79,7 +79,7 @@
     "autocomplete.js": "0.37.0",
     "hogan.js": "^3.0.2",
     "request": "^2.87.0",
-    "stack-utils": "^1.0.1",
+    "stack-utils": "^2.0.0",
     "to-factory": "^1.0.0",
     "zepto": "^1.2.0"
   }
