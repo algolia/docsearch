@@ -2,6 +2,7 @@
   "name": "docsearch.js",
   "version": "2.6.3",
   "description": "Add an autocomplete dropdown to your documentation",
+  "homepage": "https://docsearch.algolia.com/",
   "main": "dist/npm/index.js",
   "scripts": {
     "build": "./scripts/build",
