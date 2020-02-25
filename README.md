@@ -36,7 +36,7 @@ DocSearch is made of 3 repositories:
 [5]: https://img.shields.io/badge/license-MIT-green.svg?style=flat-square
 [6]: https://img.shields.io/npm/dm/docsearch.js.svg?style=flat-square
 [7]: https://data.jsdelivr.com/v1/package/npm/docsearch.js/badge
-[8]: https://community.algolia.com/docsearch/
+[8]: https://docsearch.algolia.com/
 [9]: ./.github/demo.gif
 [10]: https://github.com/algolia/docsearch
 [11]: https://github.com/algolia/docsearch-configs
