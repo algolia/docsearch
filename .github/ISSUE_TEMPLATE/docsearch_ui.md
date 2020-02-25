@@ -21,5 +21,5 @@ and `npm start`.**
 **What is the expected behavior?**
 
 [1]: https://github.com/algolia/docsearch-configs
-[2]: https://community.algolia.com/docsearch/config-file.html
-[3]: (https://jsfiddle.net/)
+[2]: https://docsearch.algolia.com/docs/config-file
+[3]: https://jsfiddle.net/
