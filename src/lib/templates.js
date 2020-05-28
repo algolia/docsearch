@@ -10,7 +10,7 @@ const templates = {
     {{#isCategoryHeader}}${suggestionPrefix}__main{{/isCategoryHeader}}
     {{#isSubCategoryHeader}}${suggestionPrefix}__secondary{{/isSubCategoryHeader}}
     "
-    aria-label="Link to the result"
+    aria-label="Link to the result: {{{subcategory}}}"
     href="{{{url}}}"
     >
     <div class="${suggestionPrefix}--category-header">
