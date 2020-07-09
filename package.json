@@ -1,0 +1,36 @@
+{
+  "name": "@docsearch/js",
+  "version": "1.0.0-alpha.21",
+  "license": "MIT",
+  "homepage": "https://github.com/algolia/autocomplete.js",
+  "repository": "algolia/autocomplete.js",
+  "author": {
+    "name": "Algolia, Inc.",
+    "url": "https://www.algolia.com"
+  },
+  "sideEffects": false,
+  "files": [
+    "dist/"
+  ],
+  "source": "src/index.ts",
+  "types": "dist/esm/index.d.ts",
+  "module": "dist/esm/index.js",
+  "main": "dist/umd/index.js",
+  "umd:main": "dist/umd/index.js",
+  "unpkg": "dist/umd/index.js",
+  "jsdelivr": "dist/umd/index.js",
+  "scripts": {
+    "build": "yarn build:clean && yarn build:umd && yarn build:esm",
+    "build:esm": "babel src --root-mode upward --extensions '.ts,.tsx' --out-dir dist/esm",
+    "build:esm:watch": "yarn build:esm --watch",
+    "build:umd": "rollup --config",
+    "build:types": "tsc -p ./tsconfig.declaration.json --outDir ./dist/esm",
+    "build:types:watch": "chokidar \"**/*.ts\" \"**/*.tsx\" --command \"yarn build:types\" --ignore \"dist\"",
+    "build:clean": "rm -rf ./dist",
+    "watch": "concurrently \"yarn build:esm:watch\" \"yarn build:types:watch\""
+  },
+  "dependencies": {
+    "@docsearch/react": "^1.0.0-alpha.21",
+    "preact": "^10.0.0"
+  }
+}
