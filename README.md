@@ -19,9 +19,10 @@ Check out our [website][8] for a complete explanation and documentation.
 
 ## Related projects
 
-DocSearch is made of 3 repositories:
+DocSearch is made of 4 repositories:
 
-- [algolia/docsearch][10] contains the `docsearch.js` code source and the
+- [algolia/docsearch][10] contains the `docsearch.js` code source 
+- [algolia/docsearch-website](https://github.com/algolia/docsearch-website) contains the
   documentation website.
 - [algolia/docsearch-configs][11] contains the JSON files representing all the
   configs for all the documentations DocSearch is powering
