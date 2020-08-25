@@ -72,7 +72,7 @@
     "tailwindcss": "1.1.2",
     "uglify-js": "3.7.6",
     "webpack": "4.39.3",
-    "webpack-cli": "3.3.10"
+    "webpack-cli": "3.3.12"
   },
   "peerDependencies": {},
   "dependencies": {
