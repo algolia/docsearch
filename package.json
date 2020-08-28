@@ -58,7 +58,7 @@
     "eslint-plugin-prettier": "3.1.0",
     "jest": "24.9.0",
     "jsdom": "15.1.1",
-    "json": "9.0.6",
+    "json": "10.0.0",
     "live-server": "1.2.1",
     "mversion": "2.0.0",
     "node-sass": "4.12.0",
