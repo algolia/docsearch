@@ -21,12 +21,12 @@ aliases:
     command: yarn install
 
 defaults: &defaults
-  working_directory: ~/autocompletejs
+  working_directory: ~/docsearch
   docker:
     - image: circleci/node:12.14.1
 
 cypress: &cypress
-  working_directory: ~/autocompletejs
+  working_directory: ~/docsearch
   docker:
     - image: cypress/browsers:node13.8.0-chrome81-ff75
       environment:
