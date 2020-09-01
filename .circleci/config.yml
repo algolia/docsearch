@@ -63,7 +63,7 @@ jobs:
           command: yarn run lint
       - run:
           name: Type Checking
-          command: yarn run type-check
+          command: yarn run test:types
 
   test_unit:
     <<: *defaults

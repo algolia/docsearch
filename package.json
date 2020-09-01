@@ -24,8 +24,8 @@
     "release": "shipjs prepare",
     "start": "yarn run watch",
     "test:size": "bundlesize",
+    "test:types": "tsc --noEmit",
     "test": "jest",
-    "type-check": "tsc --noEmit",
     "watch": "lerna run watch --parallel --scope @docsearch/*"
   },
   "devDependencies": {
