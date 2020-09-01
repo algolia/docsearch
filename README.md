@@ -1,28 +1,61 @@
-# Autocomplete
+<div align="center">
 
-Suite of Autocomplete libraries to build fast and fully-featured autocomplete experiences.
+[![DocSearch](.github/docsearch-logo.svg)](https://docsearch.algolia.com)
+
+The easiest way to add search to your documentation – for free.
+
+[![npm version](https://img.shields.io/npm/v/@docsearch/js.svg?style=flat-square)](https://npmjs.org/package/@docsearch/js@alpha) [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](./LICENSE)
+
+</div>
 
 ---
 
-[![Version](https://img.shields.io/npm/v/autocomplete.js.svg?style=flat-square)](https://www.npmjs.com/package/autocomplete.js) [![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/autocomplete.js/badge?style=flat-square)](https://www.jsdelivr.com/package/npm/autocomplete.js) [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
+DocSearch crawls your documentation, pushes the content to an Algolia index and provides a dropdown search experience on your website.
 
-## Why
+Check out our [website](https://docsearch.algolia.com) for a complete explanation and documentation.
 
-You should be using Autocomplete if you want to:
+## Usage
 
-- Display suggestions as you type
-- Support input completion
-- Support custom templates for UI flexibility
-- Create custom interactions and behaviors based on your sources
-- Plug the Algolia realtime search engine
+> Don't have your Algolia credentials yet? [Apply to DocSearch](https://docsearch.algolia.com/apply)!
 
-## Packages
+**1.** Import the library as an ECMAScript module:
 
-| Package | Description | Documentation |
-| --- | --- | --- |
-| [`docsearch-js`](packages/docsearch-js) | JavaScript package for DocSearch | [Documentation](https://autocomplete-experimental.netlify.app/docs/docsearch-js) |
-| [`docsearch-react`](packages/docsearch-react) | React package for DocSearch | [Documentation](https://autocomplete-experimental.netlify.app/docs/DocSearch) |
-| [`docsearch-css`](packages/docsearch-css) | Styles for DocSearch | [Documentation](https://autocomplete-experimental.netlify.app/docs/docsearch-css) |
+```sh
+npm install @docsearch/js@alpha
+# or
+yarn add @docsearch/js@alpha
+```
+
+```js
+import docsearch from '@docsearch/js';
+```
+
+**1–bis.** Or with a script tag (at the end of the `body`):
+
+```html
+<script src="https://cdn.jsdelivr.net/@docsearch/js@alpha"></script>
+```
+
+**2.** Use the library:
+
+```js
+docsearch({
+  container: '#docsearch',
+  indexName: 'YOUR_INDEX_NAME',
+  apiKey: 'YOUR_API_KEY',
+});
+```
+
+**3.** [Customize the color scheme](https://docsearch.algolia.com/docs/styling/).
+
+## Related projects
+
+DocSearch is made of the following repositories:
+
+- **[algolia/docsearch](https://github.com/algolia/docsearch)**: DocSearch source code.
+- **[algolia/docsearch-website](https://github.com/algolia/docsearch-website)**: DocSearch website and documentation.
+- **[algolia/docsearch-configs](https://github.com/algolia/docsearch-configs)**: DocSearch websites configurations that DocSearch powers.
+- **[algolia/docsearch-scraper](https://github.com/algolia/docsearch-scraper)**: DocSearch crawler that extracts data from your documentation.
 
 ## License
 
