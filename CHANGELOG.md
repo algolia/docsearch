@@ -1,630 +1,238 @@
-# [1.0.0-alpha.28](https://github.com/francoischalifour/autocomplete.js/compare/v1.0.0-alpha.27...v1.0.0-alpha.28) (2020-08-26)
+## [2.6.3](https://github.com/algolia/docsearch/compare/v2.6.2...v2.6.3) (2019-05-13)
 
 ### Bug Fixes
 
-- **core:** add type `search` to `getInputProps` ([92d95cc](https://github.com/francoischalifour/autocomplete.js/commit/92d95ccbd6683a1d8cd3ce53786f7fffc192cd00))
-- **core:** add type to `GetDropdownProps` ([6bd21fc](https://github.com/francoischalifour/autocomplete.js/commit/6bd21fc67451058f32460b1afaf65ae3a73ce71c)), closes [#70](https://github.com/francoischalifour/autocomplete.js/issues/70)
-- **core:** allow calling `getDropdownProps` without argument ([c44e494](https://github.com/francoischalifour/autocomplete.js/commit/c44e49439684e8577e3341a84381acf8dba463aa))
-- **core:** prevent `mousedown` event on dropdown to keep it open ([ec9733b](https://github.com/francoischalifour/autocomplete.js/commit/ec9733bfcce0be0e94a8f4d402d1bae9c3090549))
-- **core:** rename `showCompletion` to `enableCompletion` ([07b46af](https://github.com/francoischalifour/autocomplete.js/commit/07b46afb6c382a3f8be5bb711b477b4cbc0c1382))
-- **core:** type form props ([1c2551b](https://github.com/francoischalifour/autocomplete.js/commit/1c2551b838933c095543c7abd807c0de1ac5aeb1))
-- **docsearch:** add type to `GetDropdownProps` ([50b4879](https://github.com/francoischalifour/autocomplete.js/commit/50b487969c0a1b355499b7526315eb9e4967c47a))
-- **docsearch:** allow a single instance to open ([90bfaaa](https://github.com/francoischalifour/autocomplete.js/commit/90bfaaa81740be5dac4abac23c9180718527b55e))
-- **docsearch:** capture `mousedown` event to close modal ([b802621](https://github.com/francoischalifour/autocomplete.js/commit/b802621c1e999d11296f1d1b711e454f980fb314)), closes [/github.com/facebook/react-native-website/pull/2139#issuecomment-678330203](https://github.com//github.com/facebook/react-native-website/pull/2139/issues/issuecomment-678330203)
-- **docsearch:** remove `data-cy` attributes ([6bedbb7](https://github.com/francoischalifour/autocomplete.js/commit/6bedbb7d0fd4a086a5af974eb814e0ffaa355d1f))
-- **docsearch:** remove Docusaurus style ([a52cc44](https://github.com/francoischalifour/autocomplete.js/commit/a52cc448843cba0e4a04f8cb0e180c316870abb4))
-- **docsearch:** use `"false"` value for `spellCheck` in vanilla version ([d22bea7](https://github.com/francoischalifour/autocomplete.js/commit/d22bea77d7e098b6e849bd57302244c0fe15dc0a))
-- **js:** return setters and `refresh` only ([758565e](https://github.com/francoischalifour/autocomplete.js/commit/758565e71f73415e9b0d9f0f454e8c1d43a43f51))
-- **js:** revert highlighting conditions ([8fb33b1](https://github.com/francoischalifour/autocomplete.js/commit/8fb33b1e07eb5e18461c2290cbafaea61fc5c65f))
-- **js:** update types ([607ea45](https://github.com/francoischalifour/autocomplete.js/commit/607ea4547067ca994ed8e3b5e855cb3a6f85b81c))
-- **types:** allow arbitrary keys in sources ([6ed9e4a](https://github.com/francoischalifour/autocomplete.js/commit/6ed9e4ae14c6e8534f8904676b1c6d5c2755e759))
+- **deps:** update dependency autocomplete.js to v0.35.0 ([2d67a21](https://github.com/algolia/docsearch/commit/2d67a21))
+- **deps:** update dependency autocomplete.js to v0.36.0 ([bbd4ef5](https://github.com/algolia/docsearch/commit/bbd4ef5))
+- **security:** Fix dependencies to avoid infected event-stream ([9f93ffb](https://github.com/algolia/docsearch/commit/9f93ffb))
+- docsearch input should have aria-label (a11y) ([#687](https://github.com/algolia/docsearch/issues/687)) ([59d21f5](https://github.com/algolia/docsearch/commit/59d21f5))
+- search input a11y issue ([#679](https://github.com/algolia/docsearch/issues/679)) ([a68d2a4](https://github.com/algolia/docsearch/commit/a68d2a4))
+
+## [2.6.2](https://github.com/algolia/docsearch/compare/v2.6.1...v2.6.2) (2018-11-22)
 
 ### Features
 
-- **autocomplete:** introduce JavaScript API ([fd9d2b7](https://github.com/francoischalifour/autocomplete.js/commit/fd9d2b7d62ad5ad4ad8d641eb5bda12d02cc7931))
-- **core:** add default form props ([2264f2b](https://github.com/francoischalifour/autocomplete.js/commit/2264f2bbd6b470d758a98ae445fb7efa945d34fa))
-- **docsearch:** add `enterkeyhint` to `go` ([d652514](https://github.com/francoischalifour/autocomplete.js/commit/d652514bc35c16f4d406a7b89ac7b479ed316c54))
-- **js:** pass state to `render` ([7f7da3d](https://github.com/francoischalifour/autocomplete.js/commit/7f7da3db27ab34c841692d034c2135d3c4e0a7a8))
+- **ctrl-click:** Enable Ctrl-Click on suggestions ([#542](https://github.com/algolia/docsearch/issues/542)) ([a470c48](https://github.com/algolia/docsearch/commit/a470c48))
 
-# [1.0.0-alpha.27](https://github.com/francoischalifour/autocomplete.js/compare/v1.0.0-alpha.26...vv1.0.0-alpha.27) (2020-08-07)
+## [2.6.1](https://github.com/algolia/docsearch/compare/v2.6.0...v2.6.1) (2018-11-07)
+
+# [2.6.0](https://github.com/algolia/docsearch/compare/v2.5.2...v2.6.0) (2018-11-07)
 
 ### Bug Fixes
 
-- **docsearch:** fix vanilla DocSearch types ([2b5e7aa](https://github.com/francoischalifour/autocomplete.js/commit/2b5e7aad3cc02c4021970bc1971a719843416474))
+- **deps:** update dependency algolia-aerial to v1.3.4 ([7e72fe0](https://github.com/algolia/docsearch/commit/7e72fe0))
+- **deps:** update dependency algolia-aerial to v1.5.3 ([665438e](https://github.com/algolia/docsearch/commit/665438e))
+- **deps:** update dependency algolia-frontend-components to v0.0.35 ([bd5c03f](https://github.com/algolia/docsearch/commit/bd5c03f))
+- **deps:** update dependency autocomplete.js to ^0.30.0 ([21eb76a](https://github.com/algolia/docsearch/commit/21eb76a))
+- **deps:** update dependency autocomplete.js to ^0.31.0 ([6c65eb2](https://github.com/algolia/docsearch/commit/6c65eb2))
+- **deps:** update dependency chalk to v2 ([#323](https://github.com/algolia/docsearch/issues/323)) ([f8962bd](https://github.com/algolia/docsearch/commit/f8962bd))
+- **deps:** update dependency deepmerge to v2 ([#324](https://github.com/algolia/docsearch/issues/324)) ([db212d0](https://github.com/algolia/docsearch/commit/db212d0))
+- **deps:** update dependency progress to v2 ([#325](https://github.com/algolia/docsearch/issues/325)) ([a99347a](https://github.com/algolia/docsearch/commit/a99347a))
+- **wording:** fixed case of DocSearch ([#262](https://github.com/algolia/docsearch/issues/262)) ([d451545](https://github.com/algolia/docsearch/commit/d451545))
 
 ### Features
 
-- **docsearch:** export DocSearch types ([b499fee](https://github.com/francoischalifour/autocomplete.js/commit/b499fee3e88a496b89c62f327f25e114c8e8f486))
-- **docsearch:** update missing results issue link ([fb8d735](https://github.com/francoischalifour/autocomplete.js/commit/fb8d735354d5b06752abd1008f14cef8bd986b42))
+- **css:** Update menu on small screen ([b5733d2](https://github.com/algolia/docsearch/commit/b5733d2))
+- **docsearch:** Add custom classes on titles for better crawling ([fc79098](https://github.com/algolia/docsearch/commit/fc79098))
 
-# [1.0.0-alpha.26](https://github.com/francoischalifour/autocomplete.js/compare/v1.0.0-alpha.25...v1.0.0-alpha.26) (2020-08-04)
+## [2.5.2](https://github.com/algolia/docsearch/compare/v2.5.1...v2.5.2) (2017-12-07)
 
-### Bug Fixes
+## [2.5.1](https://github.com/algolia/docsearch/compare/v2.5.0...v2.5.1) (2017-11-28)
 
-- **docsearch:** don't open modal on `/` when editing text ([6118725](https://github.com/francoischalifour/autocomplete.js/commit/6118725dda6a3c0fc92ec478923c6b3187a43ad7))
-
-# [1.0.0-alpha.25](https://github.com/francoischalifour/autocomplete.js/compare/v1.0.0-alpha.24...v1.0.0-alpha.25) (2020-07-30)
+# [2.5.0](https://github.com/algolia/docsearch/compare/v2.4.1...v2.5.0) (2017-11-28)
 
 ### Bug Fixes
 
-- **docsearch:** pass `autoFocus` prop to autocomplete for mobiles ([8f4d3fb](https://github.com/francoischalifour/autocomplete.js/commit/8f4d3fb8d9926e74d44da2b7b1eb388e5283b0db))
+- **autocompleteOptions:** allow cssClasses options ([#246](https://github.com/algolia/docsearch/issues/246)) ([6de70c3](https://github.com/algolia/docsearch/commit/6de70c3))
 
 ### Features
 
-- **docsearch:** add `aria-label` to search button ([5bc08ca](https://github.com/francoischalifour/autocomplete.js/commit/5bc08cabc87c876fb26bf7608509cfcd000fac89))
+- **global:** Add responsive feature to the dropdown ([777d2d4](https://github.com/algolia/docsearch/commit/777d2d4))
 
-# [1.0.0-alpha.24](https://github.com/francoischalifour/autocomplete.js/compare/v1.0.0-alpha.23...v1.0.0-alpha.24) (2020-07-23)
+## [2.4.1](https://github.com/algolia/docsearch/compare/v2.4.0...v2.4.1) (2017-08-08)
 
-### Bug Fixes
+# [2.4.0](https://github.com/algolia/docsearch/compare/v2.3.3...v2.4.0) (2017-08-08)
 
-- **docsearch:** don't blur input on submit ([86da0fc](https://github.com/francoischalifour/autocomplete.js/commit/86da0fc3c66f8bb0757ce7b3a760ea752184de82))
-- **docsearch:** focus input on Selection Search ([9f1fa52](https://github.com/francoischalifour/autocomplete.js/commit/9f1fa52c68b765a36060aef8ce25728cda37affa))
-
-# [1.0.0-alpha.23](https://github.com/francoischalifour/autocomplete.js/compare/v1.0.0-alpha.22...v1.0.0-alpha.23) (2020-07-22)
+## [2.3.3](https://github.com/algolia/docsearch/compare/v2.3.2...v2.3.3) (2017-03-27)
 
 ### Bug Fixes
 
-- **docsearch:** add padding to dropdown when no recent searches ([0e3d0f5](https://github.com/francoischalifour/autocomplete.js/commit/0e3d0f570abee1361651e07de47b93c1b990a8b0))
-- **docsearch:** rename `DocSearch-Button` CSS class ([f3a5449](https://github.com/francoischalifour/autocomplete.js/commit/f3a5449a7ddfdf987422e213db3b2baa52d54d0e))
-- **docsearch:** use Preact alias in Babel config ([31b3bd4](https://github.com/francoischalifour/autocomplete.js/commit/31b3bd42d6677c2dbd40ee7012059bcd1202c781))
-- **search:** hide content when `disableUserPersonalization` ([4940538](https://github.com/francoischalifour/autocomplete.js/commit/4940538563b89545612fbe8f19acbd0f89d1219d))
-- **website:** memoize `onInput` callback ([9fa7d30](https://github.com/francoischalifour/autocomplete.js/commit/9fa7d30629578774d318989a7200385034e5ff3c))
+- **build:** fix badly handled webpack upgrade ([3cbfbb1](https://github.com/algolia/docsearch/commit/3cbfbb1))
+
+## [2.3.2](https://github.com/algolia/docsearch/compare/v2.3.1...v2.3.2) (2017-03-27)
+
+## [2.3.1](https://github.com/algolia/docsearch/compare/v2.3.0...v2.3.1) (2017-02-23)
+
+# [2.3.0](https://github.com/algolia/docsearch/compare/v2.2.1...v2.3.0) (2017-02-08)
+
+## [2.2.1](https://github.com/algolia/docsearch/compare/v2.2.0...v2.2.1) (2017-01-11)
+
+# [2.2.0](https://github.com/algolia/docsearch/compare/v2.1.8...v2.2.0) (2016-12-13)
+
+## [2.1.8](https://github.com/algolia/docsearch/compare/v2.1.7...v2.1.8) (2016-10-04)
+
+## [2.1.7](https://github.com/algolia/docsearch/compare/v2.1.6...v2.1.7) (2016-10-03)
+
+### Bug Fixes
+
+- **zepto:** upgrade autocomplete.js ([#150](https://github.com/algolia/docsearch/issues/150)) ([e024917](https://github.com/algolia/docsearch/commit/e024917))
+
+## [2.1.6](https://github.com/algolia/docsearch/compare/v2.1.5...v2.1.6) (2016-10-02)
+
+## [2.1.5](https://github.com/algolia/docsearch/compare/v2.1.4...v2.1.5) (2016-09-15)
+
+### Bug Fixes
+
+- **empty:** query should be escaped (self-XSS) ([#147](https://github.com/algolia/docsearch/issues/147)) ([3aed41b](https://github.com/algolia/docsearch/commit/3aed41b))
+
+## [2.1.4](https://github.com/algolia/docsearch/compare/v2.1.3...v2.1.4) (2016-08-03)
+
+## [2.1.3](https://github.com/algolia/docsearch/compare/v2.1.2...v2.1.3) (2016-08-03)
+
+## [2.1.2](https://github.com/algolia/docsearch/compare/v2.1.1...v2.1.2) (2016-07-22)
+
+## [2.1.1](https://github.com/algolia/docsearch/compare/v2.1.0...v2.1.1) (2016-07-22)
+
+# [2.1.0](https://github.com/algolia/docsearch/compare/v2.0.7...v2.1.0) (2016-07-07)
+
+### Bug Fixes
+
+- **doc:** docsearch header link ([#117](https://github.com/algolia/docsearch/issues/117)) ([66e68a9](https://github.com/algolia/docsearch/commit/66e68a9))
+
+## [2.0.7](https://github.com/algolia/docsearch/compare/v2.0.6...v2.0.7) (2016-06-28)
+
+## [2.0.6](https://github.com/algolia/docsearch/compare/v2.0.5...v2.0.6) (2016-06-28)
+
+### Bug Fixes
+
+- **typos:** no result page ([0f40e1d](https://github.com/algolia/docsearch/commit/0f40e1d))
 
 ### Features
 
-- **docsearch:** introduce `disableUserPersonalization` API ([de31121](https://github.com/francoischalifour/autocomplete.js/commit/de311210ae2bc63d7907abfbf75b61d3b624e976))
-- **docsearch:** support `initialQuery` ([11aa27b](https://github.com/francoischalifour/autocomplete.js/commit/11aa27bf332b91542cf9c0f6f7e88b0412172fb6)), closes [#51](https://github.com/francoischalifour/autocomplete.js/issues/51)
-- **DocSearch:** add `DocSearch` CSS class to DocSearch elements ([0e93615](https://github.com/francoischalifour/autocomplete.js/commit/0e9361568440281f5c632d7a086cda523bf4948e))
-- **website:** forward Docusaurus props to DocSearch ([abfb06d](https://github.com/francoischalifour/autocomplete.js/commit/abfb06d6ebb6973ac40c890fa9d91dbe05459c13))
+- **docs:** new community header / footer ([#114](https://github.com/algolia/docsearch/issues/114)) ([af76d31](https://github.com/algolia/docsearch/commit/af76d31))
 
-# [1.0.0-alpha.22](https://github.com/francoischalifour/autocomplete.js/compare/v1.0.0-alpha.21...v1.0.0-alpha.22) (2020-07-09)
+## [2.0.5](https://github.com/algolia/docsearch/compare/v2.0.4...v2.0.5) (2016-06-21)
 
 ### Bug Fixes
 
-- **docsearch:** support initial query ([dc476d3](https://github.com/francoischalifour/autocomplete.js/commit/dc476d322de3a8d4d589c638076767e009dd59e4))
-- **website:** import DS variables and button styles dynamically ([bef75be](https://github.com/francoischalifour/autocomplete.js/commit/bef75be039479c6b45c0f12ec12c21d1af42520f))
+- **DOM:** potential issue with simple layout if there is lvl0, lvl2 but no lvl1 ([57c0101](https://github.com/algolia/docsearch/commit/57c0101))
+
+## [2.0.4](https://github.com/algolia/docsearch/compare/v2.0.3...v2.0.4) (2016-06-21)
 
 ### Features
 
-- **docsearch:** attach `docsearch.js` user agent to vanilla renderer ([e1bd8d3](https://github.com/francoischalifour/autocomplete.js/commit/e1bd8d3a94147b325adacafd5f609d5184d4aeb2))
-- **docsearch:** introduce `transformSearchClient` API ([edf6b9b](https://github.com/francoischalifour/autocomplete.js/commit/edf6b9b77b187d6d32e43c335593eb8b1a3daacf))
-- **docsearch:** introduce DocSearch.js v3 ([#56](https://github.com/francoischalifour/autocomplete.js/issues/56)) ([0ff2462](https://github.com/francoischalifour/autocomplete.js/commit/0ff2462b44eb6b42f1e4d8f53361315b0247a17b))
-- **docsearch:** track `docsearch-react` UA ([2c280e2](https://github.com/francoischalifour/autocomplete.js/commit/2c280e2ad9ca6a8d99c7e60ac6da48dd06991d30))
-- **website:** lazy load DocSearch styles ([e3bc021](https://github.com/francoischalifour/autocomplete.js/commit/e3bc021b52e282c5e516e84c2988e4c8c8355837))
-- **website:** track `docsearch-docusaurus` UA ([eb400f2](https://github.com/francoischalifour/autocomplete.js/commit/eb400f2e4ac4c4fe2eb08bb84581ea07dd20665a))
+- **DOM:** split simple and collumns template ([2a3b7eb](https://github.com/algolia/docsearch/commit/2a3b7eb))
 
-# [1.0.0-alpha.21](https://github.com/francoischalifour/autocomplete.js/compare/v1.0.0-alpha.20...v1.0.0-alpha.21) (2020-07-07)
+## [2.0.3](https://github.com/algolia/docsearch/compare/v2.0.2...v2.0.3) (2016-06-20)
 
-### Bug Fixes
-
-- **css:** don't display key shortcuts on mobile ([1adc418](https://github.com/francoischalifour/autocomplete.js/commit/1adc418722f0017b1d504e7d3f7dda8e8104a352))
-- **css:** firefox placeholder opacity ([49f7ac3](https://github.com/francoischalifour/autocomplete.js/commit/49f7ac3c9a7680a4e49593f278cb815d52d8d48b))
-- **docsearch:** remove theme media query ([a1030e4](https://github.com/francoischalifour/autocomplete.js/commit/a1030e493c22c5c615fa9c49e385030452b18729))
-- **test:** removed extra percy snapshot ([24e38b7](https://github.com/francoischalifour/autocomplete.js/commit/24e38b7771471609e190c5c1a61c57627126551a))
+## [2.0.2](https://github.com/algolia/docsearch/compare/v2.0.1...v2.0.2) (2016-06-14)
 
 ### Features
 
-- **docsearch:** support keyboard on focus on default integration ([7600f2a](https://github.com/francoischalifour/autocomplete.js/commit/7600f2a385b193fe5f60b67e135c1810e496052c))
-- **docsearch:** support typing query when search button is focused ([#54](https://github.com/francoischalifour/autocomplete.js/issues/54)) ([dcf2247](https://github.com/francoischalifour/autocomplete.js/commit/dcf22474d93ab261d59d12a44b3d677b7271e86e))
+- **dom:** better handling of simple design ([6bba640](https://github.com/algolia/docsearch/commit/6bba640))
 
-# [1.0.0-alpha.20](https://github.com/francoischalifour/autocomplete.js/compare/v1.0.0-alpha.19...v1.0.0-alpha.20) (2020-07-01)
+## [2.0.1](https://github.com/algolia/docsearch/compare/v2.0.0...v2.0.1) (2016-06-14)
 
-### Features
-
-- **docsearch:** add `/` keyboard shortcut ([d3a7275](https://github.com/francoischalifour/autocomplete.js/commit/d3a7275f03c8d397d797c9375a42bf977fc824ed))
-
-# [1.0.0-alpha.19](https://github.com/francoischalifour/autocomplete.js/compare/v1.0.0-alpha.18...v1.0.0-alpha.19) (2020-06-24)
-
-### Bug Fixes
-
-- **ci:** fix orbs declaration ([db902a1](https://github.com/francoischalifour/autocomplete.js/commit/db902a12972a206f2b75646f40625376a80cad82))
-- **ci:** Install cypress ([fb32788](https://github.com/francoischalifour/autocomplete.js/commit/fb327886b6d22d3c59cab2f8e6a32b24c5bd8eaf))
-- **ci:** install cypress with Yarn ([5f7dc27](https://github.com/francoischalifour/autocomplete.js/commit/5f7dc27547bcf195586d1ddb43f5a981bc1c7f42))
-- **ci:** npm script + percy ([949a24a](https://github.com/francoischalifour/autocomplete.js/commit/949a24a9da50a6f1ca2c7b0a6891d0a09f63ae20))
-- **ci:** remove test cypress job args ([c1bf37b](https://github.com/francoischalifour/autocomplete.js/commit/c1bf37b7966eb468281410e055a107f0e9ac3d0d))
-- **ci:** rerun ([04fb6f6](https://github.com/francoischalifour/autocomplete.js/commit/04fb6f6f93da0fdd14949cb79176a1b678e83dbd))
-- **ci:** use cypress docker image ([fa5521b](https://github.com/francoischalifour/autocomplete.js/commit/fa5521bce55e029e8510e41903024c4252ac2567))
-- **ci:** use latest cypress browsers image with node 13 ([bdab390](https://github.com/francoischalifour/autocomplete.js/commit/bdab3901876668e7cbc5b3b15498ca82af90077a))
-- **css:** fixed Modal height undefined on Gecko ([85753c5](https://github.com/francoischalifour/autocomplete.js/commit/85753c546da2465b731f70c4f7b6c6e06206feea))
-- **cypress:** Added Verify and Info npm scripts ([5f4ae05](https://github.com/francoischalifour/autocomplete.js/commit/5f4ae05c58fb76d92517fab07f622444c3d9a5b3))
-- **cypress:** changed env var name for cypress key ([28307a8](https://github.com/francoischalifour/autocomplete.js/commit/28307a84c92b2fe79939cfa4e0755a44326de54c))
-- **docsearch:** hoist `transformItems` default value ([1e0ae9e](https://github.com/francoischalifour/autocomplete.js/commit/1e0ae9eefb5fc185cbf41e6ac5c876ed8be24075))
-- **lint:** Disable import/no-common for percy ([8af940d](https://github.com/francoischalifour/autocomplete.js/commit/8af940d69bf9eb35bcc70fbc533abdcf721ea209))
-- **lint:** set cariage return in prettier config ([3016601](https://github.com/francoischalifour/autocomplete.js/commit/3016601a47699a37e9fa30620e71eef3f30f8c6d))
-- **lint:** set eol to auto ([e6db26e](https://github.com/francoischalifour/autocomplete.js/commit/e6db26e57aaf433b149dc16d9a846cdfa19c0314))
-- **test:** lint ([896ef59](https://github.com/francoischalifour/autocomplete.js/commit/896ef5959f06576f03d6ecd4ff7ee6ce96333a6d))
-- **ypress:** Record reuslts ([7dac93e](https://github.com/francoischalifour/autocomplete.js/commit/7dac93e6a538f69bfe44bfdfe0fbb939b0e241e1))
-
-# [1.0.0-alpha.18](https://github.com/francoischalifour/autocomplete.js/compare/v1.0.0-alpha.17...v1.0.0-alpha.18) (2020-06-11)
-
-### Bug Fixes
-
-- **css:** overflow overlay not supported on gecko ([9e5b764](https://github.com/francoischalifour/autocomplete.js/commit/9e5b764794b5de5e2169ed13f48e024f5f1df812))
+# [2.0.0](https://github.com/algolia/docsearch/compare/v1.3.0...v2.0.0) (2016-06-14)
 
 ### Features
 
-- **docsearch:** introduce `initialScrollY` option ([2d5b216](https://github.com/francoischalifour/autocomplete.js/commit/2d5b21684174f0940c405d4da6839b0e94412f61))
+- **v2:** modification for v2 ([#112](https://github.com/algolia/docsearch/issues/112)) ([f0a7e6b](https://github.com/algolia/docsearch/commit/f0a7e6b)), closes [#92](https://github.com/algolia/docsearch/issues/92) [#102](https://github.com/algolia/docsearch/issues/102)
 
-# [1.0.0-alpha.17](https://github.com/francoischalifour/autocomplete.js/compare/v1.0.0-alpha.16...v1.0.0-alpha.17) (2020-06-08)
+# [1.3.0](https://github.com/algolia/docsearch/compare/1.2.0...v1.3.0) (2016-06-12)
 
-### Bug Fixes
-
-- **docsearch:** use `scrollTo` when unmounting modal ([aae0a14](https://github.com/francoischalifour/autocomplete.js/commit/aae0a1420caf17bb87249c988c735be5d5ae5c8a))
-
-# [1.0.0-alpha.16](https://github.com/francoischalifour/autocomplete.js/compare/v1.0.0-alpha.15...v1.0.0-alpha.16) (2020-06-08)
-
-### Bug Fixes
-
-- **docsearch:** always use `aria-expanded` to `true` ([b89aeb5](https://github.com/francoischalifour/autocomplete.js/commit/b89aeb5c2eccb43b3657239c519caa34ed62299e))
-- **dosearch:** don't add `distinct` search parameter ([1c11457](https://github.com/francoischalifour/autocomplete.js/commit/1c1145768a74f372c683fbee9d0aaaf0dd3fb62a))
-- **website:** don't pass default `appId` ([62e0609](https://github.com/francoischalifour/autocomplete.js/commit/62e060917b864e2a86328ea9816252d50c189654))
-- **website:** support missing `algolia` config ([4b30cdd](https://github.com/francoischalifour/autocomplete.js/commit/4b30cdd90bfb2226cfd5f34642ea1593a64f833b))
-- **website:** update netlify.com to netlify.app ([9cbb80b](https://github.com/francoischalifour/autocomplete.js/commit/9cbb80bb9078a7a19750e8f2bbef6e69ecce9cda))
+# [1.2.0](https://github.com/algolia/docsearch/compare/v1.1.3...1.2.0) (2016-06-10)
 
 ### Features
 
-- **docsearch:** display 5 hits per category maximum ([7e6582c](https://github.com/francoischalifour/autocomplete.js/commit/7e6582cf0be5df74e8f239432db6309929caf1a6))
-- **docsearch:** introduce `resultsFooterComponent` option ([b613bb2](https://github.com/francoischalifour/autocomplete.js/commit/b613bb2a63da604cbd44e5d3dff32a4e60c63723))
-- **website:** add "Creating a renderer" guide ([71a94ea](https://github.com/francoischalifour/autocomplete.js/commit/71a94eab8cbe6e76219730b7eda3c60460dfc35b))
-- **website:** add link to search page in DocSearch modal ([d610ce9](https://github.com/francoischalifour/autocomplete.js/commit/d610ce9cd717253b33a4596ee855268e38c82ffa))
+- **DOM:** add an align class ([#108](https://github.com/algolia/docsearch/issues/108)) ([9421897](https://github.com/algolia/docsearch/commit/9421897))
+- **serve:** Watch and serve all needed files ([#91](https://github.com/algolia/docsearch/issues/91)) ([ef83775](https://github.com/algolia/docsearch/commit/ef83775))
+- **website:** add echo ([#94](https://github.com/algolia/docsearch/issues/94)) ([8a34ecb](https://github.com/algolia/docsearch/commit/8a34ecb))
 
-# [1.0.0-alpha.15](https://github.com/francoischalifour/autocomplete.js/compare/v1.0.0-alpha.14...v1.0.0-alpha.15) (2020-05-20)
-
-### Bug Fixes
-
-- **css:** scroll windows ([a966e74](https://github.com/francoischalifour/autocomplete.js/commit/a966e74aee86cf4b7b25818c3f2b0e2b463636ef))
-- **css:** separate docusaurus css variables ([f41c31d](https://github.com/francoischalifour/autocomplete.js/commit/f41c31dd4af5bf5178982ed725f03dc67d0d4a6e))
-- **docsearch:** use `scrollTop` on body ([129c1d1](https://github.com/francoischalifour/autocomplete.js/commit/129c1d13aa77e1f6c38d09ee3b9cfa2eb9df8f57))
-- **website:** update DocSearch integration ([d41605d](https://github.com/francoischalifour/autocomplete.js/commit/d41605dd0d1451c1760ad78ab361fa5a52e35820))
-
-# [1.0.0-alpha.14](https://github.com/francoischalifour/autocomplete.js/compare/v1.0.0-alpha.13...v1.0.0-alpha.14) (2020-05-15)
+## [1.1.3](https://github.com/algolia/docsearch/compare/v1.1.2...v1.1.3) (2016-04-04)
 
 ### Bug Fixes
 
-- **docsearch:** remove blur effect to avoid performance issues ([978229f](https://github.com/francoischalifour/autocomplete.js/commit/978229f2b838f71effe04b77876cbcf36f17e0a4))
-- **docsearch:** use `scrollTop` for IE support ([b51e81d](https://github.com/francoischalifour/autocomplete.js/commit/b51e81d94b473ed3602b02073911899cc5dc6a4a))
-- **docsearch:** use absolute URLs ([e1ed4e8](https://github.com/francoischalifour/autocomplete.js/commit/e1ed4e887a9e57af37e384fb08423d293502423c))
+- **autocomplete.js:** upgrade the underlying autocomplete.js to ensur… ([4d7022e](https://github.com/algolia/docsearch/commit/4d7022e)), closes [#89](https://github.com/algolia/docsearch/issues/89)
+
+## [1.1.2](https://github.com/algolia/docsearch/compare/v1.1.1...v1.1.2) (2016-03-24)
 
 ### Features
 
-- **docsearch:** add `DocSearch` component ([218944e](https://github.com/francoischalifour/autocomplete.js/commit/218944e4412dc0afee54521895247736a86f16ca))
-- **docsearch:** add `useDocSearchKeyboardEvents` API ([5697895](https://github.com/francoischalifour/autocomplete.js/commit/5697895167e7bdc61429b9794c92ef57cd0315bc))
-- **docusaurus:** import DocSearch modal on hover ([e680f24](https://github.com/francoischalifour/autocomplete.js/commit/e680f2453a9339467f3e502586d3bccc23edb911))
+- **website:** React :raised_hands:, popped out on the top with React ([db9c100](https://github.com/algolia/docsearch/commit/db9c100))
 
-# [1.0.0-alpha.13](https://github.com/francoischalifour/autocomplete.js/compare/v1.0.0-alpha.12...v1.0.0-alpha.13) (2020-04-24)
+## [1.1.1](https://github.com/algolia/docsearch/compare/v1.1.0...v1.1.1) (2016-03-16)
 
 ### Bug Fixes
 
-- **fix**: update workspace dependencies when releasing ([076b7be](076b7be69f89fa677a66cb0a91c51d02d440ac0a))
-
-# [1.0.0-alpha.12](https://github.com/francoischalifour/autocomplete.js/compare/v1.0.0-alpha.11...v1.0.0-alpha.12) (2020-04-24)
-
-### Bug Fixes
-
-- **docsearch:** add index name to localStorage key ([f5fbaa3](https://github.com/francoischalifour/autocomplete.js/commit/f5fbaa3b544038caa76cd8382af2a9c990f80a4f))
-
-# [](https://github.com/francoischalifour/autocomplete.js/compare/v1.0.0-alpha.11...v) (2020-04-24)
-
-### Bug Fixes
-
-- **docsearch:** add index name to localStorage key ([f5fbaa3](https://github.com/francoischalifour/autocomplete.js/commit/f5fbaa3b544038caa76cd8382af2a9c990f80a4f))
-
-# [1.0.0-alpha.11](https://github.com/francoischalifour/autocomplete.js/compare/v1.0.0-alpha.10...v1.0.0-alpha.11) (2020-04-24)
+- **algoliaOptions:** ensure we keep default options ([b284dda](https://github.com/algolia/docsearch/commit/b284dda)), closes [#78](https://github.com/algolia/docsearch/issues/78)
+- **autocomplete:** auto select top result ([473824a](https://github.com/algolia/docsearch/commit/473824a)), closes [#81](https://github.com/algolia/docsearch/issues/81)
+- **dev:** Fixed the dev example, targeting an existing index ([df13e34](https://github.com/algolia/docsearch/commit/df13e34))
+- **website:** responsive logo ([b856d67](https://github.com/algolia/docsearch/commit/b856d67))
 
 ### Features
 
-- **docsearch**: create clean exports ([d0f8ff3](https://github.com/francoischalifour/autocomplete.js/commit/d0f8ff3ab4f89c9dce1f2bdc923d94aed7515dc1))
-- **design:** icon actions ([056d333](https://github.com/francoischalifour/autocomplete.js/commit/056d333780d6c5f48cf86236b443916b75b073b4))
-- **design:** new error icons + update icons + update light shadows / searchbox ([2e77e70](https://github.com/francoischalifour/autocomplete.js/commit/2e77e70e792ccb52d7c6300f149697fad441fd2e))
-- **design:** new icons ([5bd3cbc](https://github.com/francoischalifour/autocomplete.js/commit/5bd3cbc10693d3b65f7908e3523fa9bcc187f0ea))
-- **docsearch:** add `hitComponent` and `transformItems` options ([daaafe5](https://github.com/francoischalifour/autocomplete.js/commit/daaafe5178cd43e258e389f579bc7517a3935b09))
-- **docsearch:** add DocSearch for Docusaurus ([#39](https://github.com/francoischalifour/autocomplete.js/issues/39)) ([ad63053](https://github.com/francoischalifour/autocomplete.js/commit/ad630539c444417f414e0e8bcf74fd20f7cd73c8))
-- **docsearch:** add recent searches ([#40](https://github.com/francoischalifour/autocomplete.js/issues/40)) ([36e7fab](https://github.com/francoischalifour/autocomplete.js/commit/36e7fabe43582fe358cb15f92e5afddecd5f1a7d))
-- **docsearch:** add search suggestions ([d1fe8b2](https://github.com/francoischalifour/autocomplete.js/commit/d1fe8b2be3d30f067892ac9f04f6f802b6b40826))
-- **docsearch:** allow placeholder customization ([3a4f13b](https://github.com/francoischalifour/autocomplete.js/commit/3a4f13b35198a0372f6d4cab7b661e774e424c6f))
-- **docsearch:** animate cards on action ([8c7bdc1](https://github.com/francoischalifour/autocomplete.js/commit/8c7bdc117f6a76a53c9245a2089cda5dd02b71e6))
-- **docsearch:** append modal to body ([73a7f0e](https://github.com/francoischalifour/autocomplete.js/commit/73a7f0ed491407d9c80ef9d14ddd704c0ac8f7c4))
-- **docsearch:** catch retry errors in the search client ([750c4b5](https://github.com/francoischalifour/autocomplete.js/commit/750c4b51e2159a787613aa959ac62238c1f1a65b))
-- **docsearch:** display more recent searches when no favorites ([a4c7082](https://github.com/francoischalifour/autocomplete.js/commit/a4c70825cc5d204b0ee44bcb8965a325f7fa5471))
-- **docsearch:** forward props to autocomplete-core ([7cbcb12](https://github.com/francoischalifour/autocomplete.js/commit/7cbcb128bd59fe5c550ffb534f399b2b1022e5a3))
-- **docsearch:** introduce favorite searches ([61bd0aa](https://github.com/francoischalifour/autocomplete.js/commit/61bd0aa5f768658c70f7cb0b7bb465c9b9579da7))
-- **docsearch:** introduce Selection Search ([d5fd4d6](https://github.com/francoischalifour/autocomplete.js/commit/d5fd4d66a08a1b6d7f990757261c5f9e32e95c1c))
-- **docsearch:** save content record hit parent in recent searches ([3fe547f](https://github.com/francoischalifour/autocomplete.js/commit/3fe547f2cc17f2c5a2f1c526bca4e98b42093e1f))
-- **docsearch:** trap focus in modal ([0ca92ca](https://github.com/francoischalifour/autocomplete.js/commit/0ca92ca18b60d3949f4150a7afb5eb1f6984612d))
-- **docsearch:** use `preconnect` link in Docusaurus integration ([33e2e8b](https://github.com/francoischalifour/autocomplete.js/commit/33e2e8bd9436222933e7bd949082c3a446cb9f6e))
-- **docsearch:** use relative URLs ([f434ca1](https://github.com/francoischalifour/autocomplete.js/commit/f434ca1f92c9638ddfa42f3cd8b7d0093490830f))
+- **serve:** Add `npm run serve` to expose js and css locally ([31e5d13](https://github.com/algolia/docsearch/commit/31e5d13))
+- **website:** community header ([366cc0d](https://github.com/algolia/docsearch/commit/366cc0d))
+- **website:** Logo Update - Og screen + favicon ([c7eb54a](https://github.com/algolia/docsearch/commit/c7eb54a))
+- **website:** removed demos ([6d8eb34](https://github.com/algolia/docsearch/commit/6d8eb34))
+- **website:** update ([9498e3b](https://github.com/algolia/docsearch/commit/9498e3b))
+- **website:** updated logo ([fa413d9](https://github.com/algolia/docsearch/commit/fa413d9))
 
-# [1.0.0-alpha.10](https://github.com/francoischalifour/autocomplete.js/compare/v0.37.0...v1.0.0-alpha.10) (2020-03-31)
+# [1.1.0](https://github.com/algolia/docsearch/compare/v1.0.2...v1.1.0) (2016-02-01)
 
 ### Bug Fixes
 
-- remove unused prop getters ([074c92d](https://github.com/francoischalifour/autocomplete.js/commit/074c92d3601cd0208759a211b2d22ca2430a2340))
-- **core:** call `generateAutocompleteId` only if necessary ([ce4d496](https://github.com/francoischalifour/autocomplete.js/commit/ce4d496d1f074d02051c1cbe1f296d2a5d6e1c1c))
-- **getters:** compute `aria-autocomplete` based on the props ([9ea5042](https://github.com/francoischalifour/autocomplete.js/commit/9ea5042c3a78126c09b03daff2b682db4535aba1))
-- **getters:** don't forward data prop getters ([0deb9a1](https://github.com/francoischalifour/autocomplete.js/commit/0deb9a14a14e7730c2b54c63a5138a4bfcd2d1e7))
-- **react:** fix options types ([fdde35f](https://github.com/francoischalifour/autocomplete.js/commit/fdde35ff26da7a097c073816e1da76d6f0e6ed49))
-- **react:** remove dropdown from DOM when closed ([c647224](https://github.com/francoischalifour/autocomplete.js/commit/c64722467f7ab77babc6e53b4f46386efd335d95))
+- **dropdown:** Visually group suggestions together ([592c8f2](https://github.com/algolia/docsearch/commit/592c8f2))
 
 ### Features
 
-- **core:** allow input pause in keyboard navigation ([0000499](https://github.com/francoischalifour/autocomplete.js/commit/000049971884e958e92cbfd14331ab88ff2b5e1f))
-- **core:** introduce `getDropdownProps` ([9b758ee](https://github.com/francoischalifour/autocomplete.js/commit/9b758eee271954eb7228916bf822b09a1a715e61))
-- **react:** attach Algolia agents in React renderer ([c6c4da5](https://github.com/francoischalifour/autocomplete.js/commit/c6c4da580afec6dbf69b55c55809b1e1f9b8e9fc))
-- **react:** create highlighting components ([fb49161](https://github.com/francoischalifour/autocomplete.js/commit/fb49161ea59f3ff925bcffe3e74435acb6e47c18))
-- add openOnFocus and remove minLength ([#31](https://github.com/francoischalifour/autocomplete.js/issues/31)) ([553ea68](https://github.com/francoischalifour/autocomplete.js/commit/553ea68950bfc94eb8588a71dd5580db4682931c))
-- swap Preact with React ([#34](https://github.com/francoischalifour/autocomplete.js/issues/34)) ([e0f2568](https://github.com/francoischalifour/autocomplete.js/commit/e0f25689440f7177e663ac6306e49f8f89a0727a))
-- **autoFocus:** add support for `autoFocus` option ([4d3f792](https://github.com/francoischalifour/autocomplete.js/commit/4d3f7921307ef9417a8dd1147e71309350de77fe))
-- **core:** filter out falsy sources ([f771522](https://github.com/francoischalifour/autocomplete.js/commit/f771522df77f3297644aec5214b459fc960f0b3f))
-- **core:** introduce `getEnvironmentProps` for mobile experience ([#27](https://github.com/francoischalifour/autocomplete.js/issues/27)) ([f9d7eed](https://github.com/francoischalifour/autocomplete.js/commit/f9d7eed75514911ee45ed3aaee47c30373fdbd8a))
-- **core:** process completion as a state enhancer ([#29](https://github.com/francoischalifour/autocomplete.js/issues/29)) ([53c2ef7](https://github.com/francoischalifour/autocomplete.js/commit/53c2ef7b1b985486199ae2dc54069a7bcfe3b41a))
-- **core:** rename `shouldDropdownOpen` to `shouldDropdownShow` ([f2c3eb2](https://github.com/francoischalifour/autocomplete.js/commit/f2c3eb2d5ec6e5338df5b685af8edfb6cc477659)), closes [/github.com/francoischalifour/autocomplete.js/pull/16#pullrequestreview-355978230](https://github.com//github.com/francoischalifour/autocomplete.js/pull/16/issues/pullrequestreview-355978230)
-- **core:** support `onHighlight` on sources ([0f4101b](https://github.com/francoischalifour/autocomplete.js/commit/0f4101bbf82e15afcc6f02ae1075a05dee7f261c))
-- **core:** support `onSelect` on sources ([0cf0a93](https://github.com/francoischalifour/autocomplete.js/commit/0cf0a93bf3e5c04972e70c716867ce82e220c640))
-- **onInput:** support `onInput` prop for controlled mode ([7345eb9](https://github.com/francoischalifour/autocomplete.js/commit/7345eb9c279b28a00bc833912fa9697654becab0))
-- **onSubmit:** introduce `onSubmit` option ([#24](https://github.com/francoischalifour/autocomplete.js/issues/24)) ([ca0891c](https://github.com/francoischalifour/autocomplete.js/commit/ca0891c87256f0eb6a04f28fbf92b42826346c67))
-- **react:** introduce `inputRef` for focus management ([#32](https://github.com/francoischalifour/autocomplete.js/issues/32)) ([4d804fe](https://github.com/francoischalifour/autocomplete.js/commit/4d804fe62ee7d67fb335866aeeb87f070255319e))
-- **react:** place dropdown with Popper ([#25](https://github.com/francoischalifour/autocomplete.js/issues/25)) ([ca38070](https://github.com/francoischalifour/autocomplete.js/commit/ca380704f6506dc6c9c82b564701da3ce5772109))
-- **website:** add Docusaurus 2 website ([#33](https://github.com/francoischalifour/autocomplete.js/issues/33)) ([3ee0ab5](https://github.com/francoischalifour/autocomplete.js/commit/3ee0ab53bd3d78ac3943fd35ec54f14d016dbd5a))
+- **website:** ensure the inputs are mandatory ([e59d132](https://github.com/algolia/docsearch/commit/e59d132))
 
-<a name="0.37.0"></a>
-
-# [0.37.0](https://github.com/algolia/autocomplete.js/compare/v0.36.0...v0.37.0) (2019-08-30)
+## [1.0.2](https://github.com/algolia/docsearch/compare/v1.0.1...v1.0.2) (2015-12-28)
 
 ### Bug Fixes
 
-- **clear:** Avoid error when clear is called after destroy ([#287](https://github.com/algolia/autocomplete.js/issues/287)) ([244425d](https://github.com/algolia/autocomplete.js/commit/244425d))
+- **debut:** do not enable debug by default ([188f49e](https://github.com/algolia/docsearch/commit/188f49e))
+- **url:** Removes concatenation of URL with hash if it contains a hash ([348df1c](https://github.com/algolia/docsearch/commit/348df1c)), closes [#53](https://github.com/algolia/docsearch/issues/53)
+- **usage:** fixed usage to match the latest prototype version ([f6edc9e](https://github.com/algolia/docsearch/commit/f6edc9e))
 
-<a name="0.36.0"></a>
-
-# [0.36.0](https://github.com/algolia/autocomplete.js/compare/v0.35.0...v0.36.0) (2019-02-21)
-
-### Bug Fixes
-
-- **standalone:** use aria label from input ([#276](https://github.com/algolia/autocomplete.js/issues/276)) ([4b94466](https://github.com/algolia/autocomplete.js/commit/4b94466))
-
-<a name="0.35.0"></a>
-
-# [0.35.0](https://github.com/algolia/autocomplete.js/compare/v0.34.0...v0.35.0) (2018-12-17)
+## [1.0.1](https://github.com/algolia/docsearch/compare/v1.0.0...v1.0.1) (2015-12-24)
 
 ### Bug Fixes
 
-- **chrome-only:** Change autocomplete from 'nope' to 'off' ([#273](https://github.com/algolia/autocomplete.js/issues/273)) ([892a8f0](https://github.com/algolia/autocomplete.js/commit/892a8f0))
-- **utils:** correct \_.every method ([#274](https://github.com/algolia/autocomplete.js/issues/274)) ([55af1e3](https://github.com/algolia/autocomplete.js/commit/55af1e3))
+- **handleSelected:** ensure we're calling setVal on the right object ([31abbd7](https://github.com/algolia/docsearch/commit/31abbd7)), closes [#51](https://github.com/algolia/docsearch/issues/51)
 
-<a name="0.34.0"></a>
+# [1.0.0](https://github.com/algolia/docsearch/compare/v0.0.7...v1.0.0) (2015-12-24)
 
-# [0.34.0](https://github.com/algolia/autocomplete.js/compare/v0.33.0...v0.34.0) (2018-12-04)
+### Bug Fixes
+
+- **isSubCategoryHeader:** ensure we hide the content of the left column if this flag is not set ([0e04ce4](https://github.com/algolia/docsearch/commit/0e04ce4)), closes [#47](https://github.com/algolia/docsearch/issues/47)
+
+## [0.0.7](https://github.com/algolia/docsearch/compare/v0.0.6...v0.0.7) (2015-12-22)
+
+### Bug Fixes
+
+- **appId:** Allow passing a custom appId ([e1777d3](https://github.com/algolia/docsearch/commit/e1777d3)), closes [#21](https://github.com/algolia/docsearch/issues/21)
+- **css:** Renaming all `ads-` prefix to `algolia-docsearch-` ([c6fc53f](https://github.com/algolia/docsearch/commit/c6fc53f))
+
+## [0.0.6](https://github.com/algolia/docsearch/compare/v0.0.5...v0.0.6) (2015-12-16)
+
+## [0.0.5](https://github.com/algolia/docsearch/compare/v0.0.4...v0.0.5) (2015-12-16)
+
+## [0.0.4](https://github.com/algolia/docsearch/compare/v0.0.3...v0.0.4) (2015-12-16)
+
+## [0.0.3](https://github.com/algolia/docsearch/compare/v0.0.2...v0.0.3) (2015-12-16)
+
+## [0.0.2](https://github.com/algolia/docsearch/compare/bdac9dd...v0.0.2) (2015-12-16)
+
+### Bug Fixes
+
+- **colors:** Reduce number of colors ([125d1c7](https://github.com/algolia/docsearch/commit/125d1c7))
+- **snippet:** Fix typo in method name ([751dfdb](https://github.com/algolia/docsearch/commit/751dfdb))
 
 ### Features
 
-- change autocomplete from 'off' to 'nope' ([#250](https://github.com/algolia/autocomplete.js/issues/250)) ([fbbed04](https://github.com/algolia/autocomplete.js/commit/fbbed04))
-
-<a name="0.33.0"></a>
-
-# [0.33.0](https://github.com/algolia/autocomplete.js/compare/v0.32.0...v0.33.0) (2018-11-19)
-
-### Bug Fixes
-
-- **release:** Update mversion to 1.12 ([#268](https://github.com/algolia/autocomplete.js/issues/268)) ([08b8e30](https://github.com/algolia/autocomplete.js/commit/08b8e30))
-
-### Features
-
-- **selected:** Adding context.selectionMethod to selected event ([#267](https://github.com/algolia/autocomplete.js/issues/267)) ([36028a6](https://github.com/algolia/autocomplete.js/commit/36028a6))
-
-<a name="0.32.0"></a>
-
-# [0.32.0](https://github.com/algolia/autocomplete.js/compare/v0.31.0...v0.32.0) (2018-11-06)
-
-### Bug Fixes
-
-- **zepto:** apply patch to prevent an error ([#263](https://github.com/algolia/autocomplete.js/issues/263)) ([917d5a7](https://github.com/algolia/autocomplete.js/commit/917d5a7))
-
-### Features
-
-- **source:** add cache disabling for datasets ([#254](https://github.com/algolia/autocomplete.js/issues/254)) ([0e65fee](https://github.com/algolia/autocomplete.js/commit/0e65fee))
-- add flag for toggling tab autocompletion ([#260](https://github.com/algolia/autocomplete.js/issues/260)) ([4dc7c52](https://github.com/algolia/autocomplete.js/commit/4dc7c52))
-- Throw err on update if suggestions are invalid type ([#256](https://github.com/algolia/autocomplete.js/issues/256)) ([179febf](https://github.com/algolia/autocomplete.js/commit/179febf)), closes [#131](https://github.com/algolia/autocomplete.js/issues/131)
-
-<a name="0.31.0"></a>
-
-# [0.31.0](https://github.com/algolia/autocomplete.js/compare/v0.30.0...v0.31.0) (2018-08-08)
-
-### Bug Fixes
-
-- **dataset:** avoid to call the source when upadte is canceled ([a47696d](https://github.com/algolia/autocomplete.js/commit/a47696d))
-- **dataset:** avoid usage of callNow for debounce ([1a0ce74](https://github.com/algolia/autocomplete.js/commit/1a0ce74))
-- Handle an odd case with the user agent ([#242](https://github.com/algolia/autocomplete.js/issues/242)) ([c194736](https://github.com/algolia/autocomplete.js/commit/c194736))
-
-### Features
-
-- update dist files ([9babf2e](https://github.com/algolia/autocomplete.js/commit/9babf2e))
-- **clearOnSelected:** allow users to clear the input instead of filling ([#244](https://github.com/algolia/autocomplete.js/issues/244)) ([aa2edbb](https://github.com/algolia/autocomplete.js/commit/aa2edbb)), closes [#241](https://github.com/algolia/autocomplete.js/issues/241)
-
-<a name="0.30.0"></a>
-
-# [0.30.0](https://github.com/algolia/autocomplete.js/compare/v0.29.0...v0.30.0) (2018-04-30)
-
-<a name="0.29.0"></a>
-
-# [0.29.0](https://github.com/algolia/autocomplete.js/compare/v0.28.3...v0.29.0) (2017-10-12)
-
-### Features
-
-- **a11y:** Add ariaLabel option. ([6db8e1b](https://github.com/algolia/autocomplete.js/commit/6db8e1b))
-- **a11y:** Add option to control `aria-labelledby` attribute. ([0491c43](https://github.com/algolia/autocomplete.js/commit/0491c43))
-
-<a name="0.28.3"></a>
-
-## [0.28.3](https://github.com/algolia/autocomplete.js/compare/v0.28.2...v0.28.3) (2017-07-31)
-
-<a name="0.28.2"></a>
-
-## [0.28.2](https://github.com/algolia/autocomplete.js/compare/v0.28.1...v0.28.2) (2017-06-22)
-
-### Bug Fixes
-
-- **empty template:** hide main empty template as long as we have results ([344e225](https://github.com/algolia/autocomplete.js/commit/344e225)), closes [#185](https://github.com/algolia/autocomplete.js/issues/185)
-
-<a name="0.28.1"></a>
-
-## [0.28.1](https://github.com/algolia/autocomplete.js/compare/v0.28.0...v0.28.1) (2017-03-29)
-
-### Bug Fixes
-
-- **iOS:** remove double tap bug on hrefs in suggestions ([e532bd8](https://github.com/algolia/autocomplete.js/commit/e532bd8))
-
-<a name="0.28.0"></a>
-
-# [0.28.0](https://github.com/algolia/autocomplete.js/compare/v0.27.0...v0.28.0) (2017-03-24)
-
-<a name="0.27.0"></a>
-
-# [0.27.0](https://github.com/algolia/autocomplete.js/compare/v0.26.0...v0.27.0) (2017-03-06)
-
-### Bug Fixes
-
-- **UA:** add failsafe if params not provided ([30df97a](https://github.com/algolia/autocomplete.js/commit/30df97a)), closes [#166](https://github.com/algolia/autocomplete.js/issues/166)
-
-<a name="0.26.0"></a>
-
-# [0.26.0](https://github.com/algolia/autocomplete.js/compare/v0.25.0...v0.26.0) (2017-02-28)
-
-### Bug Fixes
-
-- **test:** bad handling of no actual inner mechanics of client ([622aec5](https://github.com/algolia/autocomplete.js/commit/622aec5))
-
-### Features
-
-- **algolia agent:** provide an algolia agent when searching ([6ca7ac2](https://github.com/algolia/autocomplete.js/commit/6ca7ac2))
-- **algolia agent:** provide an algolia agent when searching ([ef604e1](https://github.com/algolia/autocomplete.js/commit/ef604e1))
-
-<a name="0.25.0"></a>
-
-# [0.25.0](https://github.com/algolia/autocomplete.js/compare/v0.24.2...v0.25.0) (2017-02-07)
-
-### Bug Fixes
-
-- **zepto:** .is() only accepts selectors, reworked code to use pure DOM ([a47a4d4](https://github.com/algolia/autocomplete.js/commit/a47a4d4)), closes [#144](https://github.com/algolia/autocomplete.js/issues/144)
-
-<a name="0.24.2"></a>
-
-## [0.24.2](https://github.com/algolia/autocomplete.js/compare/v0.24.1...v0.24.2) (2017-01-20)
-
-### Bug Fixes
-
-- **dep:** immediate is a dependency, not a devDependency ([22164ad](https://github.com/algolia/autocomplete.js/commit/22164ad))
-
-<a name="0.24.1"></a>
-
-## [0.24.1](https://github.com/algolia/autocomplete.js/compare/v0.24.0...v0.24.1) (2017-01-20)
-
-### Bug Fixes
-
-- **postMessage:** avoid using postMessage when feasible ([a99f664](https://github.com/algolia/autocomplete.js/commit/a99f664)), closes [#142](https://github.com/algolia/autocomplete.js/issues/142)
-
-<a name="0.24.0"></a>
-
-# [0.24.0](https://github.com/algolia/autocomplete.js/compare/0.23.0...v0.24.0) (2017-01-10)
-
-### Bug Fixes
-
-- **angular:** do not launch the directive if autocomplete has a value ([f96a1ba](https://github.com/algolia/autocomplete.js/commit/f96a1ba)), closes [#136](https://github.com/algolia/autocomplete.js/issues/136)
-- **typeahead:** propagate redrawn ([82293e4](https://github.com/algolia/autocomplete.js/commit/82293e4))
-
-### Features
-
-- **appendTo:** new parameter ([e40cbd0](https://github.com/algolia/autocomplete.js/commit/e40cbd0))
-
-### 0.23.0 Dec 14, 2016
-
-- feat(build): add noConflict() for standalone build, fixes #133
-
-### 0.22.1 Nov 07, 2016
-
-- Fixes bad behavior when `autoselectOnBlur` used, fixes #113
-
-### 0.22.0 Oct 25, 2016
-
-- Add `autocomplete:cursorremoved` event, see #105
-- Add `autoselectOnBlur` option, fixes #113
-
-### 0.21.8 Oct 3, 2016
-
-- Do not allow Zepto to leak to window. Never.
-
-### 0.21.7 Sep 21, 2016
-
-- Ensure the `empty` templates get displayed before the `footer`.
-- Ensure the dataset `empty` templates are displayed when all datasets are empty.
-
-### 0.21.6 Sep 20, 2016
-
-- Make sure we don't leak/override `window.Zepto`.
-
-### 0.21.5 Sep 15, 2016
-
-- While selecting the top suggestion (autoselect=true), do not update the input.
-
-### 0.21.4 Sep 2, 2016
-
-- Ensure the cursor selects the first suggestion when the dropdown is shown + send the `cursorchanged` event.
-
-### 0.21.3 Aug 1, 2016
-
-- Ensure empty template displays from first keystroke (#104)
-
-### 0.21.2 July 26, 2016
-
-- fix(empty): fix the empty even handling, fixes #95
-
-### 0.21.1 July 19, 2016
-
-- fix(getVal): fix getVal on standalone build
-
-### 0.21.0 July 15, 2016
-
-- Upgrade to zepto 1.2.0
-
-### 0.20.1 June 14, 2016
-
-- Ensure the dropdown menu is hidden when there is an `$empty` block and blank query.
-
-### 0.20.0 June 04, 2016
-
-- Ensure we don't update the input value on mouseenter (#76)
-- Render an `empty` template if no results (#80)
-
-### 0.19.1 May 04, 2016
-
-- Fixed the angular build (\_.Event was undefined)
-
-### 0.19.0 Apr 25, 2016
-
-- Allow select handler to prevent menu from being closed (#72)
-- Do not trigger the cursorchanged event while entering/leaving nested divs (#71)
-
-### 0.18.0 Apr 07, 2016
-
-- Ability to customize the CSS classes used to render the DOM
-- Ensure the `autocomplete:cursorchanged` event is called on `mouseover` as well
-
-### 0.17.3 Apr 04, 2016
-
-- Standalone: ensure we actually use the Zepto object and not whatever is in `window.$`
-
-### 0.17.2 Mar 21, 2016
-
-- Ability to setup the autocomplete on a multi-inputs Zepto selector
-- Propagate the `shown` event to the top-level
-
-### 0.17.1 Mar 19, 2016
-
-- REVERT [Ability to setup the autocomplete on a multi-inputs Zepto selector] Fix #59
-
-### 0.17.0 Mar 18, 2016
-
-- Ability to setup the autocomplete on a multi-inputs Zepto selector
-- Add a new `shown` event triggered when the dropdown menu is opened and non-empty
-
-BREAKING CHANGE: the standalone object returned by the `autocomplete()` method is now a Zepto object.
-
-### 0.16.2 Jan 22, 2016
-
-- stop using weird zepto package. Stop using chained .data calls it seems that chaining them ended up in an `undefined` return value when passing `undefined` as a value
-
-### 0.16.1 Jan 22, 2016
-
-- remove npm-zepto, use zepto original package (now on npm) fixes #48
-
-### 0.16.0 Dec 11, 2015
-
-- Emit a new `autocomplete:updated` event as soon as a dataset is rendered
-
-### 0.15.0 Dec 10, 2015
-
-- Ability to configure the dropdown menu container
-
-### 0.14.1 Dec 2, 2015
-
-- Move Zepto as a dependency (not a peer dep)
-- Really use the `query` instead of the `displayKey` (was supposed to be fixed in 0.11.0)
-
-### 0.14.0 Nov 28, 2015
-
-- Move npm-zepto & angular to peerDependencies
-- Fixed custom dropdownMenu's footer & header not being displayed properly
-- Allow dataset with name=0
-
-### 0.13.1 Nov 25, 2015
-
-- Move the bower release name to `algolia-autocomplete.js` since `autocomplete.js` is already used
-
-### 0.13.0 Nov 25, 2015
-
-- Add Bower release
-
-### 0.12.0 Oct 15, 2015
-
-- Expose the underlying `close`, `open`, ... functions in the standalone build.
-
-### 0.11.1 Oct 13, 2015
-
-- Zepto doesn't work like jQuery regarding the `data` API, it doesn't support serializing objects.
-
-### 0.11.0 Oct 07, 2015
-
-- If the `displayKey` is not specified and the `value` attribute missing, don't update the input value with `undefined`.
-- Expose the `sources` object in the Angular.js build as well.
-
-### 0.10.0 Oct 06, 2015
-
-- Add a new `includeAll` option to the `popularIn` source to add an extra suggestion.
-
-### 0.9.0 Oct 01, 2015
-
-- Full CommonJS compliance (moved from browserify to webpack)
-
-### 0.8.0 Sep 24, 2015
-
-- UMD compliance
-
-### 0.7.0 Sep 16, 2015
-
-- New standalone build (including Zepto.js)
-- Get rid of lodash-compat and use jQuery, Zepto or Angular.js's helper functions
-
-### 0.6.0 Sep 11, 2015
-
-- Add Zepto.js support.
-
-### 0.5.0 Sep 9, 2015
-
-- The wrapper span will now have a `table-cell` display if the original input was a `block` inside a `table`.
-
-### 0.4.0 Aug 12, 2015
-
-- Add a new `openOnFocus` option to open the dropdown menu when the input is focused
-
-### 0.3.0 July 27, 2015
-
-- Add Angular.js support [#7]
-
-### 0.2.0 July 16, 2015
-
-- Ability to change the layout based on the matching datasets [#11]
-
-### 0.1.0 July 13, 2015
-
-- Start using semantic versioning
-
-### 0.0.2 July 13, 2015
-
-- Ability to keep the dropdown menu opened when the input if blurred [#1]
-- Ability to use a custom dropdown menu template [#2]
-- Ability to configure a custom header/footer on the dropdown menu [#3]
-
-### 0.0.1 July 12, 2015
-
-- First release based on Twitter's typeahead.js library
-- Travis-ci.org, Coveralls.io, Saucelabs.com integration
-- CommonJS compatibility
+- **gh-pages:** Add gh-pages deploy script ([ab1a299](https://github.com/algolia/docsearch/commit/ab1a299))
+- **main:** Add main wrapper ([bdac9dd](https://github.com/algolia/docsearch/commit/bdac9dd))
+- **styling:** Set grayscale as default, add styling as external file ([5d8cca8](https://github.com/algolia/docsearch/commit/5d8cca8))
