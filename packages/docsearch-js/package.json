@@ -4,7 +4,7 @@
   "version": "1.0.0-alpha.28",
   "license": "MIT",
   "homepage": "https://github.com/francoischalifour/autocomplete.js",
-  "repository": "francoischalifour/autocomplete.js",
+  "repository": "algolia/docsearch",
   "author": {
     "name": "Algolia, Inc.",
     "url": "https://www.algolia.com"
