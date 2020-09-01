@@ -1,0 +1,23 @@
+# Generated files
+node_modules/
+.DS_Store
+.eslintcache
+*.log
+coverage/
+.cache
+
+# Bundle build files
+dist/
+
+# Deployment build files
+/website/stories
+
+# IDE
+.vscode/
+
+# Environment files
+.env
+
+# Cypress Video and Screenshots output
+cypress/screenshots/
+cypress/videos/
