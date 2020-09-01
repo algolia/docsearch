@@ -3,7 +3,7 @@
   "description": "JavaScript package for DocSearch, the best search experience for docs.",
   "version": "1.0.0-alpha.28",
   "license": "MIT",
-  "homepage": "https://github.com/francoischalifour/autocomplete.js",
+  "homepage": "https://docsearch.algolia.com",
   "repository": "algolia/docsearch",
   "author": {
     "name": "Algolia, Inc.",
