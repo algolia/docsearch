@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-# Check if the current git repo has changes done in the ./docs folder since last
-# push to master
-CHANGES_IN_DOCS="$(git diff --name-only master | grep '^docs/')"
-if [ "$CHANGES_IN_DOCS" = "" ]; then
-  exit 1
-fi
-exit 0

@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-set -e
-
-rm -rf dist
-yarn run build:js
-yarn run build:css
