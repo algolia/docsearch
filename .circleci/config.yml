@@ -2,7 +2,7 @@ aliases:
   - &install_yarn_version
     name: Install specific Yarn version
     command: |
-      curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.21.1
+      curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.22.5
       echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
 
   - &restore_yarn_cache
