@@ -1,22 +1,6 @@
 {
   "files": [
     {
-      "path": "packages/autocomplete-core/dist/umd/index.js",
-      "maxSize": "4 kB"
-    },
-    {
-      "path": "packages/autocomplete-preset-algolia/dist/umd/index.js",
-      "maxSize": "1.25 kB"
-    },
-    {
-      "path": "packages/autocomplete-js/dist/umd/index.js",
-      "maxSize": "6.5 kB"
-    },
-    {
-      "path": "packages/autocomplete-react/dist/umd/index.js",
-      "maxSize": "11 kB"
-    },
-    {
       "path": "packages/docsearch-css/dist/style.css",
       "maxSize": "3 kB"
     },

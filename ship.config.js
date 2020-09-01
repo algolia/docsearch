@@ -4,9 +4,6 @@ const fs = require('fs');
 const path = require('path');
 
 const packages = [
-  'packages/autocomplete-core',
-  'packages/autocomplete-preset-algolia',
-  'packages/autocomplete-js',
   'packages/docsearch-css',
   'packages/docsearch-react',
   'packages/docsearch-js',
@@ -40,27 +37,12 @@ module.exports = {
 
     updatePackageDependencies(
       {
-        package: '@francoischalifour/autocomplete-js',
-        dependencies: [
-          `@francoischalifour/autocomplete-core@^${version}`,
-          `@francoischalifour/autocomplete-preset-algolia@^${version}`,
-        ],
-      },
-      {
         package: '@docsearch/react',
-        dependencies: [
-          `@docsearch/css@^${version}`,
-          `@francoischalifour/autocomplete-core@^${version}`,
-          `@francoischalifour/autocomplete-preset-algolia@^${version}`,
-        ],
+        dependencies: [`@docsearch/css@^${version}`],
       },
       {
         package: '@docsearch/js',
         dependencies: [`@docsearch/react@^${version}`],
-      },
-      {
-        package: '@francoischalifour/autocomplete-website',
-        dependencies: [`@docsearch/react@${version}`],
       }
     );
 
