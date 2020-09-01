@@ -21,12 +21,13 @@
   "unpkg": "dist/umd/index.js",
   "jsdelivr": "dist/umd/index.js",
   "scripts": {
-    "build": "yarn build:clean && yarn build:umd && yarn build:esm && yarn build:types",
-    "build:umd": "BUILD=umd rollup --config",
+    "build:clean": "rm -rf ./dist",
     "build:esm": "BUILD=esm rollup --config",
     "build:types": "tsc -p ./tsconfig.declaration.json --outFile ./dist/esm/index.d.ts",
-    "build:clean": "rm -rf ./dist",
+    "build:umd": "BUILD=umd rollup --config",
+    "build": "yarn build:clean && yarn build:umd && yarn build:esm && yarn build:types",
     "on:change": "concurrently \"yarn build:esm\" \"yarn build:types\"",
+    "prepare": "yarn build:esm",
     "watch": "watch \"yarn on:change\" --ignoreDirectoryPattern \"/dist/\""
   },
   "dependencies": {
