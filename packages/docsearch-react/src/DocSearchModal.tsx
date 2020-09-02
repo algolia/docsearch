@@ -51,6 +51,7 @@ export function DocSearchModal({
   } as any);
 
   const containerRef = React.useRef<HTMLDivElement | null>(null);
+  const modalRef = React.useRef<HTMLDivElement | null>(null);
   const searchBoxRef = React.useRef<HTMLDivElement | null>(null);
   const dropdownRef = React.useRef<HTMLDivElement | null>(null);
   const inputRef = React.useRef<HTMLInputElement | null>(null);
@@ -328,6 +329,22 @@ export function DocSearchModal({
     }
   }, [initialQuery, refresh]);
 
+  // We rely on a CSS property to set the modal height to the full viewport height
+  // because all mobile browsers don't compute their height the same way.
+  // See https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+  React.useEffect(() => {
+    const setFullViewportHeight = () => {
+      if (modalRef.current) {
+        const vh = window.innerHeight * 0.01;
+        modalRef.current.style.setProperty('--docsearch-vh', `${vh}px`);
+      }
+    };
+
+    setFullViewportHeight();
+    window.addEventListener('resize', setFullViewportHeight);
+    return () => window.removeEventListener('resize', setFullViewportHeight);
+  }, []);
+
   return (
     <div
       ref={containerRef}
@@ -348,7 +365,7 @@ export function DocSearchModal({
         }
       }}
     >
-      <div className="DocSearch-Modal">
+      <div className="DocSearch-Modal" ref={modalRef}>
         <header className="DocSearch-SearchBar" ref={searchBoxRef}>
           <SearchBox
             {...autocomplete}

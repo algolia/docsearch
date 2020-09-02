@@ -566,6 +566,7 @@ svg.DocSearch-Hit-Select-Icon {
   .DocSearch-Container {
     height: 100vh;
     height: -webkit-fill-available;
+    height: calc(var(--docsearch-vh, 1vh) * 100);
     position: absolute;
   }
 
@@ -586,9 +587,17 @@ svg.DocSearch-Hit-Select-Icon {
     box-shadow: none;
     height: 100vh;
     height: -webkit-fill-available;
+    height: calc(var(--docsearch-vh, 1vh) * 100);
     margin: 0;
     max-width: 100%;
     width: 100%;
+  }
+
+  .DocSearch-Dropdown {
+    max-height: calc(
+      var(--docsearch-vh, 1vh) * 100 - var(--docsearch-searchbox-height) -
+        var(--docsearch-spacing) - var(--docsearch-footer-height)
+    );
   }
 
   .DocSearch-Cancel {
