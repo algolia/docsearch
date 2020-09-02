@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation feedback
+    url: https://github.com/algolia/docsearch-website/issues/new
+    about: Share with us issues about the DocSearch documentation.
+  - name: Request changes to your DocSearch index configuration
+    url: https://github.com/algolia/docsearch-configs/issues/new
+    about: Get in touch with the team to update your search index configuration.
+  - name: Apply for DocSearch
+    url: https://docsearch.algolia.com/apply
+    about: Apply to integrate DocSearch to your website.
