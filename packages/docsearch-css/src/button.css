@@ -8,6 +8,7 @@
   display: flex;
   font-weight: 500;
   height: 36px;
+  justify-content: space-between;
   margin: 0 0 0 16px;
   padding: 0 8px;
   user-select: none;
@@ -22,6 +23,11 @@
   outline: none;
 }
 
+.DocSearch-Button-Container {
+  align-items: center;
+  display: flex;
+}
+
 .DocSearch-Search-Icon {
   stroke-width: 1.6;
 }
@@ -33,6 +39,10 @@
 .DocSearch-Button-Placeholder {
   font-size: 1rem;
   padding: 0 12px 0 6px;
+}
+
+.DocSearch-Button-Keys {
+  display: flex;
 }
 
 .DocSearch-Button-Key {
