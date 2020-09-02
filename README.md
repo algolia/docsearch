@@ -1,6 +1,6 @@
 <div align="center">
 
-[![DocSearch](.github/docsearch-logo.svg)](https://docsearch.algolia.com)
+[![DocSearch](.github/logo.svg)](https://docsearch.algolia.com)
 
 The easiest way to add search to your documentation – for free.
 
@@ -13,6 +13,14 @@ The easiest way to add search to your documentation – for free.
 DocSearch crawls your documentation, pushes the content to an Algolia index and provides a dropdown search experience on your website.
 
 Check out our [website](https://docsearch.algolia.com) for a complete explanation and documentation.
+
+## Preview
+
+![Screencast](.github/screencast.gif)
+
+| Light | Dark |
+| --- | --- |
+| ![Light preview](.github/preview-light.png) | ![Dark preview](.github/preview-dark.png) |
 
 ## Usage
 
