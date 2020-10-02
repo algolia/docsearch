@@ -50,10 +50,10 @@ Finally, if your work is based on an issue on GitHub, please add in the body of 
 
 Some examples of valid commit messages (used as first lines):
 
-> - fix(searchbox): increase magnifying glass size
+> - fix(searchbox): add `type` input property
 > - chore(deps): update dependency rollup-plugin-babel to v3.0.7
-> - fix(connectRefinementList): set default value for limit
-> - chore: reword contributions guides
+> - fix(modal): increase default height
+> - docs(contributing): reword release section
 
 ## Requirements
 
