@@ -21,6 +21,7 @@ interface SearchBoxProps
   autoFocus: boolean;
   inputRef: MutableRefObject<HTMLInputElement | null>;
   onClose(): void;
+  isFromSelection: boolean;
 }
 
 export function SearchBox(props: SearchBoxProps) {
@@ -33,6 +34,12 @@ export function SearchBox(props: SearchBoxProps) {
       props.inputRef.current.focus();
     }
   }, [props.autoFocus, props.inputRef]);
+
+  React.useEffect(() => {
+    if (props.isFromSelection && props.inputRef.current) {
+      props.inputRef.current.select();
+    }
+  }, [props.isFromSelection, props.inputRef]);
 
   return (
     <>

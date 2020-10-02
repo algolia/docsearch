@@ -56,10 +56,13 @@ export function DocSearchModal({
   const dropdownRef = React.useRef<HTMLDivElement | null>(null);
   const inputRef = React.useRef<HTMLInputElement | null>(null);
   const snippetLength = React.useRef<number>(10);
-  const initialQuery = React.useRef(
-    initialQueryFromProp || typeof window !== 'undefined'
+  const initialQueryFromSelection = React.useRef(
+    typeof window !== 'undefined'
       ? window.getSelection()!.toString().slice(0, MAX_QUERY_SIZE)
       : ''
+  ).current;
+  const initialQuery = React.useRef(
+    initialQueryFromProp || initialQueryFromSelection
   ).current;
 
   const searchClient = useSearchClient(appId, apiKey, transformSearchClient);
@@ -373,6 +376,10 @@ export function DocSearchModal({
             autoFocus={initialQuery.length === 0}
             onClose={onClose}
             inputRef={inputRef}
+            isFromSelection={
+              Boolean(initialQuery) &&
+              initialQuery === initialQueryFromSelection
+            }
           />
         </header>
 
