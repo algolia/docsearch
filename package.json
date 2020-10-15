@@ -61,7 +61,7 @@
     "json": "9.0.6",
     "live-server": "1.2.1",
     "mversion": "2.0.0",
-    "node-sass": "4.12.0",
+    "node-sass": "4.13.1",
     "onchange": "6.0.0",
     "parallelshell": "3.0.2",
     "postcss-cli": "6.1.3",
