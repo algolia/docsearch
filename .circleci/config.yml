@@ -23,7 +23,7 @@ aliases:
 defaults: &defaults
   working_directory: ~/docsearch
   docker:
-    - image: circleci/node:12.14.1
+    - image: circleci/node:14.15.0
 
 cypress: &cypress
   working_directory: ~/docsearch
