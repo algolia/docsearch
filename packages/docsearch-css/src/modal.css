@@ -64,6 +64,7 @@
   box-shadow: var(--docsearch-searchbox-shadow);
   display: flex;
   height: var(--docsearch-searchbox-height);
+  margin: 0;
   padding: 0 var(--docsearch-spacing);
   position: relative;
   width: 100%;
