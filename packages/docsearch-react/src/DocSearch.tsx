@@ -15,8 +15,7 @@ import {
 } from './types';
 import { useDocSearchKeyboardEvents } from './useDocSearchKeyboardEvents';
 
-export interface DocSearchProps
-  extends Pick<AutocompleteOptions<InternalDocSearchHit>, 'navigator'> {
+export interface DocSearchProps {
   appId?: string;
   apiKey: string;
   indexName: string;
@@ -33,6 +32,7 @@ export interface DocSearchProps
   transformSearchClient?(searchClient: SearchClient): SearchClient;
   disableUserPersonalization?: boolean;
   initialQuery?: string;
+  navigator?: AutocompleteOptions<InternalDocSearchHit>['navigator'];
 }
 
 export function DocSearch(props: DocSearchProps) {
