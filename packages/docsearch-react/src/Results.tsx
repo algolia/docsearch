@@ -1,7 +1,4 @@
-import {
-  AutocompleteApi,
-  AutocompleteState,
-} from '@francoischalifour/autocomplete-core';
+import { AutocompleteApi, AutocompleteState } from '@algolia/autocomplete-core';
 import React from 'react';
 
 import { DocSearchProps } from './DocSearch';
@@ -16,7 +13,7 @@ interface ResultsProps<TItem>
     React.KeyboardEvent
   > {
   title: string;
-  suggestion: AutocompleteState<TItem>['suggestions'][0];
+  collection: AutocompleteState<TItem>['collections'][0];
   renderIcon(props: { item: TItem; index: number }): React.ReactNode;
   renderAction(props: {
     item: TItem;
@@ -30,7 +27,7 @@ interface ResultsProps<TItem>
 export function Results<TItem extends StoredDocSearchHit>(
   props: ResultsProps<TItem>
 ) {
-  if (!props.suggestion || props.suggestion.items.length === 0) {
+  if (!props.collection || props.collection.items.length === 0) {
     return null;
   }
 
@@ -38,8 +35,8 @@ export function Results<TItem extends StoredDocSearchHit>(
     <section className="DocSearch-Hits">
       <div className="DocSearch-Hit-source">{props.title}</div>
 
-      <ul {...props.getMenuProps()}>
-        {props.suggestion.items.map((item, index) => {
+      <ul {...props.getListProps()}>
+        {props.collection.items.map((item, index) => {
           return (
             <Result
               key={[props.title, item.objectID].join(':')}
@@ -66,7 +63,7 @@ function Result<TItem extends StoredDocSearchHit>({
   renderAction,
   getItemProps,
   onItemClick,
-  suggestion,
+  collection,
   hitComponent,
 }: ResultProps<TItem>) {
   const [isDeleting, setIsDeleting] = React.useState(false);
@@ -102,7 +99,7 @@ function Result<TItem extends StoredDocSearchHit>({
       }}
       {...getItemProps({
         item,
-        source: suggestion.source,
+        source: collection.source,
         onClick() {
           onItemClick(item);
         },

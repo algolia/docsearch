@@ -1,8 +1,8 @@
 import {
   AutocompleteState,
   createAutocomplete,
-} from '@francoischalifour/autocomplete-core';
-import { getAlgoliaResults } from '@francoischalifour/autocomplete-preset-algolia';
+} from '@algolia/autocomplete-core';
+import { getAlgoliaResults } from '@algolia/autocomplete-preset-algolia';
 import React from 'react';
 
 import { MAX_QUERY_SIZE } from './constants';
@@ -47,8 +47,13 @@ export function DocSearchModal({
     AutocompleteState<InternalDocSearchHit>
   >({
     query: '',
-    suggestions: [],
-  } as any);
+    collections: [],
+    completion: null,
+    context: {},
+    isOpen: false,
+    selectedItemId: null,
+    status: 'idle',
+  });
 
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const modalRef = React.useRef<HTMLDivElement | null>(null);
@@ -134,33 +139,39 @@ export function DocSearchModal({
 
             return [
               {
-                onSelect({ suggestion }) {
-                  saveRecentSearch(suggestion);
-                  onClose();
+                onSelect({ item, event }) {
+                  saveRecentSearch(item);
+
+                  if (!event.shiftKey && !event.ctrlKey && !event.metaKey) {
+                    onClose();
+                  }
                 },
-                getSuggestionUrl({ suggestion }) {
-                  return suggestion.url;
+                getItemUrl({ item }) {
+                  return item.url;
                 },
-                getSuggestions() {
+                getItems() {
                   return recentSearches.getAll();
                 },
               },
               {
-                onSelect({ suggestion }) {
-                  saveRecentSearch(suggestion);
-                  onClose();
+                onSelect({ item, event }) {
+                  saveRecentSearch(item);
+
+                  if (!event.shiftKey && !event.ctrlKey && !event.metaKey) {
+                    onClose();
+                  }
                 },
-                getSuggestionUrl({ suggestion }) {
-                  return suggestion.url;
+                getItemUrl({ item }) {
+                  return item.url;
                 },
-                getSuggestions() {
+                getItems() {
                   return favoriteSearches.getAll();
                 },
               },
             ];
           }
 
-          return getAlgoliaResults({
+          return getAlgoliaResults<DocSearchHit>({
             searchClient,
             queries: [
               {
@@ -209,7 +220,7 @@ export function DocSearchModal({
               throw error;
             })
             .then((results) => {
-              const hits: DocSearchHit[] = results[0].hits;
+              const hits = results[0].hits;
               const nbHits: number = results[0].nbHits;
               const sources = groupBy(hits, (hit) => hit.hierarchy.lvl0);
 
@@ -228,14 +239,17 @@ export function DocSearchModal({
 
               return Object.values<DocSearchHit[]>(sources).map((items) => {
                 return {
-                  onSelect({ suggestion }) {
-                    saveRecentSearch(suggestion);
-                    onClose();
+                  onSelect({ item, event }) {
+                    saveRecentSearch(item);
+
+                    if (!event.shiftKey && !event.ctrlKey && !event.metaKey) {
+                      onClose();
+                    }
                   },
-                  getSuggestionUrl({ suggestion }) {
-                    return suggestion.url;
+                  getItemUrl({ item }) {
+                    return item.url;
                   },
-                  getSuggestions() {
+                  getItems() {
                     return Object.values(
                       groupBy(items, (item) => item.hierarchy.lvl1)
                     )

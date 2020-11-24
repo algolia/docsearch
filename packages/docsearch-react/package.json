@@ -35,9 +35,9 @@
   },
   "dependencies": {
     "@docsearch/css": "^1.0.0-alpha.28",
-    "@francoischalifour/autocomplete-core": "^1.0.0-alpha.28",
-    "@francoischalifour/autocomplete-preset-algolia": "^1.0.0-alpha.28",
-    "algoliasearch": "^4.0.0"
+    "@algolia/autocomplete-core": "^1.0.0-alpha.35",
+    "@algolia/autocomplete-preset-algolia": "^1.0.0-alpha.35",
+    "algoliasearch": "^4.8.0"
   },
   "peerDependencies": {
     "react": "^16.8.0",

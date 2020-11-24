@@ -1,7 +1,7 @@
 import {
   AutocompleteState,
-  PublicAutocompleteOptions,
-} from '@francoischalifour/autocomplete-core';
+  AutocompleteOptions,
+} from '@algolia/autocomplete-core';
 import React from 'react';
 import { createPortal } from 'react-dom';
 
@@ -16,7 +16,7 @@ import {
 import { useDocSearchKeyboardEvents } from './useDocSearchKeyboardEvents';
 
 export interface DocSearchProps
-  extends Pick<PublicAutocompleteOptions<InternalDocSearchHit>, 'navigator'> {
+  extends Pick<AutocompleteOptions<InternalDocSearchHit>, 'navigator'> {
   appId?: string;
   apiKey: string;
   indexName: string;

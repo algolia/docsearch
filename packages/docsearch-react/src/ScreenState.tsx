@@ -1,7 +1,4 @@
-import {
-  AutocompleteApi,
-  AutocompleteState,
-} from '@francoischalifour/autocomplete-core';
+import { AutocompleteApi, AutocompleteState } from '@algolia/autocomplete-core';
 import React from 'react';
 
 import { DocSearchProps } from './DocSearch';
@@ -36,15 +33,15 @@ export const ScreenState = React.memo(
       return <ErrorScreen />;
     }
 
-    const hasSuggestions = props.state.suggestions.some(
-      (suggestion) => suggestion.items.length > 0
+    const hasCollections = props.state.collections.some(
+      (collection) => collection.items.length > 0
     );
 
     if (!props.state.query) {
-      return <StartScreen {...props} hasSuggestions={hasSuggestions} />;
+      return <StartScreen {...props} hasCollections={hasCollections} />;
     }
 
-    if (hasSuggestions === false) {
+    if (hasCollections === false) {
       return <NoResultsScreen {...props} />;
     }
 

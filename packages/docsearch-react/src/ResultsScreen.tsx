@@ -10,19 +10,19 @@ type ResultsScreenProps = ScreenStateProps<InternalDocSearchHit>;
 export function ResultsScreen(props: ResultsScreenProps) {
   return (
     <div className="DocSearch-Dropdown-Container">
-      {props.state.suggestions.map((suggestion, index) => {
-        if (suggestion.items.length === 0) {
+      {props.state.collections.map((collection, index) => {
+        if (collection.items.length === 0) {
           return null;
         }
 
-        const title = suggestion.items[0].hierarchy.lvl0;
+        const title = collection.items[0].hierarchy.lvl0;
 
         return (
           <Results
             {...props}
             key={index}
             title={title}
-            suggestion={suggestion}
+            collection={collection}
             renderIcon={({ item, index }) => (
               <>
                 {item.__docsearch_parent && (
@@ -35,7 +35,7 @@ export function ResultsScreen(props: ResultsScreenProps) {
                       strokeLinejoin="round"
                     >
                       {item.__docsearch_parent !==
-                      suggestion.items[index + 1]?.__docsearch_parent ? (
+                      collection.items[index + 1]?.__docsearch_parent ? (
                         <path d="M8 6v21M20 27H8.3" />
                       ) : (
                         <path d="M8 6v42M20 27H8.3" />

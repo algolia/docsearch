@@ -1,7 +1,4 @@
-import {
-  AutocompleteApi,
-  AutocompleteState,
-} from '@francoischalifour/autocomplete-core';
+import { AutocompleteApi, AutocompleteState } from '@algolia/autocomplete-core';
 import React, { MutableRefObject } from 'react';
 
 import { MAX_QUERY_SIZE } from './constants';
@@ -44,9 +41,6 @@ export function SearchBox(props: SearchBoxProps) {
   return (
     <>
       <form
-        action=""
-        role="search"
-        noValidate
         className="DocSearch-Form"
         onSubmit={(event) => {
           event.preventDefault();
@@ -77,7 +71,6 @@ export function SearchBox(props: SearchBoxProps) {
           title="Clear the query"
           className="DocSearch-Reset"
           hidden={!props.state.query}
-          onClick={onReset}
         >
           <ResetIcon />
         </button>

@@ -6,11 +6,11 @@ import { ScreenStateProps } from './ScreenState';
 import { InternalDocSearchHit } from './types';
 
 interface StartScreenProps extends ScreenStateProps<InternalDocSearchHit> {
-  hasSuggestions: boolean;
+  hasCollections: boolean;
 }
 
 export function StartScreen(props: StartScreenProps) {
-  if (props.state.status === 'idle' && props.hasSuggestions === false) {
+  if (props.state.status === 'idle' && props.hasCollections === false) {
     if (props.disableUserPersonalization) {
       return null;
     }
@@ -22,7 +22,7 @@ export function StartScreen(props: StartScreenProps) {
     );
   }
 
-  if (props.hasSuggestions === false) {
+  if (props.hasCollections === false) {
     return null;
   }
 
@@ -31,7 +31,7 @@ export function StartScreen(props: StartScreenProps) {
       <Results
         {...props}
         title="Recent"
-        suggestion={props.state.suggestions[0]}
+        collection={props.state.collections[0]}
         renderIcon={() => (
           <div className="DocSearch-Hit-icon">
             <RecentIcon />
@@ -83,7 +83,7 @@ export function StartScreen(props: StartScreenProps) {
       <Results
         {...props}
         title="Favorites"
-        suggestion={props.state.suggestions[1]}
+        collection={props.state.collections[1]}
         renderIcon={() => (
           <div className="DocSearch-Hit-icon">
             <StarIcon />

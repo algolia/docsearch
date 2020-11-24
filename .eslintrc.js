@@ -24,6 +24,7 @@ module.exports = {
     'react/no-unescaped-entities': 0,
     'eslint-comments/disable-enable-pair': ['error', { allowWholeFile: true }],
     'import/extensions': 0,
+    'no-unused-expressions': 0,
     complexity: 0,
     'import/order': [
       'error',
