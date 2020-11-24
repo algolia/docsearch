@@ -336,16 +336,20 @@ export function DocSearchModal({
   // because all mobile browsers don't compute their height the same way.
   // See https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
   React.useEffect(() => {
-    const setFullViewportHeight = () => {
+    function setFullViewportHeight() {
       if (modalRef.current) {
         const vh = window.innerHeight * 0.01;
         modalRef.current.style.setProperty('--docsearch-vh', `${vh}px`);
       }
-    };
+    }
 
     setFullViewportHeight();
+
     window.addEventListener('resize', setFullViewportHeight);
-    return () => window.removeEventListener('resize', setFullViewportHeight);
+
+    return () => {
+      window.removeEventListener('resize', setFullViewportHeight);
+    };
   }, []);
 
   return (
