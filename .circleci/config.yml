@@ -18,7 +18,7 @@ aliases:
 
   - &run_yarn_install
     name: Install dependencies
-    command: yarn install
+    command: yarn install --frozen-lockfile
 
 defaults: &defaults
   working_directory: ~/docsearch
@@ -111,18 +111,9 @@ workflows:
   version: 2.1
   ci:
     jobs:
-      - test_build:
-          filters:
-            branches:
-              only: next
-      - test_unit:
-          filters:
-            branches:
-              only: next
-      - test_lint:
-          filters:
-            branches:
-              only: next
+      - test_build
+      - test_unit
+      - test_lint
       - test_cypress
       - release:
           filters:
