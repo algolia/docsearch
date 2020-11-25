@@ -10,39 +10,22 @@ const packages = [
 module.exports = {
   monorepo: {
     mainVersionFile: 'lerna.json',
-    packagesToBump: packages,
+    // We rely on Lerna to bump our dependencies.
+    packagesToBump: [],
     packagesToPublish: packages,
   },
   publishCommand({ tag }) {
     return `yarn publish --access public --tag ${tag}`;
   },
   versionUpdated({ exec, dir, version }) {
-    const updatePackageDependencies = (...changes) => {
-      for (const change of changes) {
-        const { package, dependencies } = change;
-
-        exec(
-          `yarn workspace ${package} add ${dependencies
-            .map((dep) => `"${dep}"`)
-            .join(' ')}`
-        );
-      }
-    };
+    // Update package dependencies
+    exec(
+      `yarn lerna version ${version} --exact --no-git-tag-version --no-push --yes`
+    );
 
     // Ship.js reads JSON and writes with `fs.writeFileSync(JSON.stringify(json, null, 2))`
     // which causes a lint error in the `lerna.json` file.
     exec('yarn eslint lerna.json --fix');
-
-    updatePackageDependencies(
-      {
-        package: '@docsearch/react',
-        dependencies: [`@docsearch/css@^${version}`],
-      },
-      {
-        package: '@docsearch/js',
-        dependencies: [`@docsearch/react@^${version}`],
-      }
-    );
 
     fs.writeFileSync(
       path.resolve(dir, 'packages', 'docsearch-react', 'src', 'version.ts'),
