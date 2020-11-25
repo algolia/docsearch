@@ -27,8 +27,8 @@
     "test:types": "tsc --noEmit",
     "test": "jest",
     "watch": "lerna run watch --parallel --scope @docsearch/*",
-    "website:build": "yarn workspace @algolia/docsearch-website build",
-    "website:start": "yarn workspace @algolia/docsearch-website start --host 0.0.0.0"
+    "website:build": "yarn workspace @docsearch/website build",
+    "website:start": "yarn workspace @docsearch/website start --host 0.0.0.0"
   },
   "devDependencies": {
     "@babel/cli": "7.11.5",
