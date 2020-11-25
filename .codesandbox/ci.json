@@ -1,4 +1,3 @@
 {
-  "packages": ["packages/docsearch-*"],
-  "buildCommand": false
+  "packages": ["packages/docsearch-*"]
 }
