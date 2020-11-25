@@ -1,11 +1,8 @@
-# [](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.30...v) (2020-11-25)
-
+# [3.0.0-alpha.31](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.30...v3.0.0-alpha.31) (2020-11-25)
 
 ### Bug Fixes
 
-* display keyboard shortcuts when platform exists ([79f5b27](https://github.com/algolia/docsearch/commit/79f5b274be9214adb36bf143eecaa6634275ddc0))
-
-
+- display keyboard shortcuts when platform exists ([79f5b27](https://github.com/algolia/docsearch/commit/79f5b274be9214adb36bf143eecaa6634275ddc0))
 
 # [3.0.0-alpha.30](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.29...v3.0.0-alpha.30) (2020-11-25)
 
