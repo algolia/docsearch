@@ -1,3 +1,7 @@
+# [](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.29...v) (2020-11-25)
+
+
+
 # [3.0.0-alpha.29](https://github.com/algolia/docsearch/compare/v2.6.3...v3.0.0-alpha.29) (2020-11-25)
 
 This version follows `1.0.0-alpha.28`.
