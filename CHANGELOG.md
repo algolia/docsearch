@@ -1,5 +1,7 @@
 # [3.0.0-alpha.29](https://github.com/algolia/docsearch/compare/v2.6.3...v3.0.0-alpha.29) (2020-11-25)
 
+This version follows `1.0.0-alpha.28`.
+
 ### Bug Fixes
 
 - **core:** add type `search` to `getInputProps` ([9c1b040](https://github.com/algolia/docsearch/commit/9c1b04003a72b76c4d05151d3e003c620e52c6c6))
