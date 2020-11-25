@@ -116,7 +116,8 @@ workflows:
   ci:
     jobs:
       - test_build
-      - test_unit
+      # TODO: Enable once the test env setup is ready.
+      # - test_unit
       - test_lint
       # TODO: Enable again once Cypress is installed on the repo.
       # - test_cypress
