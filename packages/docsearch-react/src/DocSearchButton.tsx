@@ -11,10 +11,6 @@ export type DocSearchButtonProps = React.DetailedHTMLProps<
 const ACTION_KEY_DEFAULT = 'Ctrl' as const;
 const ACTION_KEY_APPLE = '⌘' as const;
 
-function hasNavigator() {
-  return typeof navigator === 'undefined';
-}
-
 function isAppleDevice() {
   return /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
 }
@@ -28,7 +24,7 @@ export const DocSearchButton = React.forwardRef<
   >(null);
 
   useEffect(() => {
-    if (hasNavigator()) {
+    if (typeof navigator !== 'undefined') {
       setKey(isAppleDevice() ? ACTION_KEY_APPLE : ACTION_KEY_DEFAULT);
     }
   }, []);
