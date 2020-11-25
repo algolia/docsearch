@@ -26,7 +26,9 @@
     "test:size": "bundlesize",
     "test:types": "tsc --noEmit",
     "test": "jest",
-    "watch": "lerna run watch --parallel --scope @docsearch/*"
+    "watch": "lerna run watch --parallel --scope @docsearch/*",
+    "website:build": "yarn workspace @algolia/autocomplete-website build",
+    "website:start": "yarn workspace @algolia/autocomplete-website start --host 0.0.0.0"
   },
   "devDependencies": {
     "@babel/cli": "7.11.5",
