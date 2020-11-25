@@ -1,6 +1,8 @@
-# [](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.29...v) (2020-11-25)
+# [3.0.0-alpha.30](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.29...v3.0.0-alpha.30) (2020-11-25)
 
+### Bug Fixes
 
+- **react:** lower `algoliasearch` dependency ([64fbf75c040aa4ca23497395ad6cbdec8df5b8a5](https://github.com/algolia/docsearch/commit/64fbf75c040aa4ca23497395ad6cbdec8df5b8a5))
 
 # [3.0.0-alpha.29](https://github.com/algolia/docsearch/compare/v2.6.3...v3.0.0-alpha.29) (2020-11-25)
 
