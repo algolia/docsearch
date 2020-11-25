@@ -297,7 +297,7 @@ export function DocSearchModal({
 
   useTouchEvents({
     getEnvironmentProps,
-    dropdownElement: dropdownRef.current,
+    panelElement: dropdownRef.current,
     searchBoxElement: searchBoxRef.current,
     inputElement: inputRef.current,
   });
