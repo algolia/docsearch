@@ -45,11 +45,10 @@ jobs:
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
       - run:
-          name: Build & Test packages size
+          name: Build and Size
           command: |
             yarn run build
             yarn run test:size
-
   test_lint:
     <<: *defaults
     steps:
@@ -59,12 +58,19 @@ jobs:
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
       - run:
-          name: Lint & Code styles
+          name: Linting
           command: yarn run lint
+  test_types:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: *install_yarn_version
+      - restore_cache: *restore_yarn_cache
+      - run: *run_yarn_install
+      - save_cache: *save_yarn_cache
       - run:
-          name: Type Checking
+          name: Type checking
           command: yarn run test:types
-
   test_unit:
     <<: *defaults
     steps:
@@ -76,7 +82,6 @@ jobs:
       - run:
           name: Unit tests
           command: yarn run test --maxWorkers=4
-
   release:
     <<: *defaults
     steps:
@@ -88,7 +93,6 @@ jobs:
       - run:
           name: Release if needed
           command: yarn run shipjs trigger
-
   test_cypress:
     <<: *cypress
     steps:
@@ -114,7 +118,8 @@ workflows:
       - test_build
       - test_unit
       - test_lint
-      - test_cypress
+      # TODO: Enable again once Cypress is installed on the repo.
+      # - test_cypress
       - release:
           filters:
             branches:
