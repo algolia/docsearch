@@ -48,9 +48,7 @@
       "last 1 safari version"
     ]
   },
-  {
-    "resolutions": {
-      "**/terser-webpack-plugin": "^1.4.3"
-    }
+  "resolutions": {
+    "**/terser-webpack-plugin": "^1.4.3"
   }
 }
