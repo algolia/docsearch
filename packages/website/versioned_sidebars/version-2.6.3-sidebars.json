@@ -1,0 +1,96 @@
+{
+  "version-2.6.3/docs": [
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Getting Started",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-2.6.3/what-is-docsearch"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.6.3/how-does-it-work"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.6.3/who-can-apply"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.6.3/apply"
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Adding DocSearch to your UI",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-2.6.3/dropdown"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.6.3/styling"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.6.3/behavior"
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Requirements, tips, FAQ",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-2.6.3/required-configuration"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.6.3/tips"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.6.3/faq"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.6.3/integrations"
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Under the Hood",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-2.6.3/scraper"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.6.3/inside-the-engine"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.6.3/config-file"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.6.3/how-do-we-build-an-index"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.6.3/run-your-own"
+        }
+      ]
+    }
+  ]
+}

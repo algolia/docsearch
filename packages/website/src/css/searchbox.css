@@ -1,0 +1,149 @@
+.sbx-docsearch-demo {
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  width: 100%;
+  height: 3em;
+  white-space: nowrap;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.sbx-docsearch-demo__wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.sbx-docsearch-demo__input {
+  display: inline-block;
+  transition: box-shadow 0.4s ease, background 0.4s ease;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px #cccccc;
+  background: #ffffff;
+  padding: 0;
+  padding-right: 77px;
+  padding-left: 11px;
+  width: 100%;
+  height: 100%;
+  vertical-align: middle;
+  white-space: normal;
+  font-size: inherit;
+  appearance: none;
+}
+
+.sbx-docsearch-demo__input::-webkit-search-decoration,
+.sbx-docsearch-demo__input::-webkit-search-cancel-button,
+.sbx-docsearch-demo__input::-webkit-search-results-button,
+.sbx-docsearch-demo__input::-webkit-search-results-decoration {
+  display: none;
+}
+
+.sbx-docsearch-demo__input:hover {
+  box-shadow: inset 0 0 0 1px #b3b3b3;
+}
+
+.sbx-docsearch-demo__input:focus,
+.sbx-docsearch-demo__input:active {
+  outline: 0;
+  box-shadow: inset 0 0 0 1px rgb(84, 104, 255);
+  background: #ffffff;
+}
+
+.sbx-docsearch-demo__input::placeholder {
+  color: #aaaaaa;
+}
+
+.sbx-docsearch-demo__submit {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: inherit;
+  margin: 0;
+  border: 0;
+  border-radius: 0 3px 3px 0;
+  background-color: rgb(84, 104, 255);
+  padding: 0;
+  width: 48px;
+  height: 100%;
+  vertical-align: middle;
+  text-align: center;
+  font-size: inherit;
+  user-select: none;
+}
+
+.sbx-docsearch-demo__submit::before {
+  display: inline-block;
+  margin-right: -4px;
+  height: 100%;
+  vertical-align: middle;
+  content: '';
+}
+
+.sbx-docsearch-demo__submit:hover,
+.sbx-docsearch-demo__submit:active {
+  cursor: pointer;
+}
+
+.sbx-docsearch-demo__submit:focus {
+  outline: 0;
+}
+
+.sbx-docsearch-demo__submit svg {
+  width: 21px;
+  height: 21px;
+  vertical-align: middle;
+  fill: #ffffff;
+}
+
+.sbx-docsearch-demo__reset {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 56px;
+  margin: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+  user-select: none;
+  fill: rgba(0, 0, 0, 0.5);
+}
+
+.sbx-docsearch-demo__reset:focus {
+  outline: 0;
+}
+
+.sbx-docsearch-demo__reset svg {
+  display: block;
+  margin: 4px;
+  width: 13px;
+  height: 13px;
+}
+
+.sbx-docsearch-demo__input:valid ~ .sbx-docsearch-demo__reset {
+  display: block;
+  animation-name: sbx-reset-in;
+  animation-duration: 0.15s;
+}
+
+@keyframes sbx-reset-in {
+  0% {
+    transform: translate3d(-20%, 0, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.algolia-autocomplete {
+  height: 100%;
+  top: 50px !important;
+}
+body .algolia-autocomplete .ds-dropdown-menu {
+  min-width: 100%;
+  width: 100%;
+}

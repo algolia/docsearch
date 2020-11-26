@@ -1,0 +1,91 @@
+---
+title: Styling DocSearch
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+DocSearch v3 comes with two default color themes: light mode and dark mode.
+
+## Colorscheme
+
+<img
+  src={useBaseUrl('img/assets/default-colorscheme-v3-light.png')}
+  alt="Default colorscheme light mode"
+/>
+<img
+  src={useBaseUrl('img/assets/default-colorscheme-v3-dark.png')}
+  alt="Default colorscheme light mode"
+/>
+
+These themes work well with most websites, but we encourage you to style it to
+your own theme. You can achieved it by overriding the CSS classes used by the
+default themes.
+
+The following annotated example will help you style each part:
+
+```css
+/* Light mode */
+:root {
+  /* main variables */
+  --docsearch-primary-color: rgb(84, 104, 255);
+  --docsearch-text-color: rgb(28, 30, 33);
+  --docsearch-muted-color: rgb(150, 159, 175);
+  --docsearch-container-background: rgba(101, 108, 133, 0.8);
+
+  /* modal */
+  --docsearch-modal-background: rgb(245, 246, 247);
+
+  /* searchbox */
+  --docsearch-searchbox-background: rgb(235, 237, 240);
+  --docsearch-searchbox-focus-background: #fff;
+
+  /* hit */
+  --docsearch-hit-color: rgb(68, 73, 80);
+  --docsearch-hit-active-color: #fff;
+  --docsearch-hit-background: #fff;
+
+  /* footer */
+  --docsearch-footer-height: 44px;
+  --docsearch-footer-background: #fff;
+}
+
+/* Dark mode
+    The selector might change depending on how you
+    implement the dark mode detection.
+*/
+html[data-theme='dark'] {
+  /* main variables */
+  --docsearch-text-color: rgb(245, 246, 247);
+  --docsearch-muted-color: rgb(127, 132, 151);
+  --docsearch-container-background: rgba(9, 10, 17, 0.8);
+
+  /* modal */
+  --docsearch-modal-background: rgb(21, 23, 42);
+  /* searchbox */
+  --docsearch-searchbox-background: rgb(9, 10, 17);
+  --docsearch-searchbox-focus-background: #000;
+
+  /* hit */
+  --docsearch-hit-color: rgb(190, 195, 201);
+  --docsearch-hit-background: rgb(9, 10, 17);
+
+  /* footer */
+  --docsearch-footer-background: rgb(30, 33, 54);
+}
+```
+
+## Attribution
+
+We're happy to provide DocSearch free of charge for any documentation website,
+and you're encouraged to style it to fit your own theming. All we ask is that
+you keep the "Search by Algolia" logo visible.
+
+The logo is in the footer of the modal. It's our way to let more people know
+about what we do, and how they could benefit from a fast and relevant search on
+their website.
+
+If you're using your own [paid Algolia account][1] and [running the crawler by
+yourself][2], you don't have to keep the logo.
+
+[1]: https://www.algolia.com/pricing
+[2]: scraper-overview.md

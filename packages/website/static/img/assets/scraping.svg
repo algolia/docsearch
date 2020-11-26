@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="288px" height="249px" viewBox="0 0 288 249" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>scraping</title>
+    <defs>
+        <linearGradient x1="50%" y1="100%" x2="50%" y2="-2.48949813e-15%" id="linearGradient-1">
+            <stop stop-color="#F5F5FA" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" offset="100%"></stop>
+        </linearGradient>
+        <path d="M5.84772823,0 L186.41224,0 C189.641851,2.94908481e-16 192.259968,2.61811711 192.259968,5.84772823 L192.259968,145.030571 C192.259968,148.260182 189.641851,150.878299 186.41224,150.878299 L5.84772823,150.878299 C2.61811711,150.878299 1.28369171e-15,148.260182 0,145.030571 L0,5.84772823 C4.92665127e-16,2.61811711 2.61811711,1.48144836e-15 5.84772823,0 Z" id="path-2"></path>
+        <filter x="-11.4%" y="-11.3%" width="122.9%" height="129.2%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="0" dy="5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.145098039   0 0 0 0 0.17254902   0 0 0 0 0.380392157  0 0 0 0.15 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter2"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter2" result="shadowBlurOuter2"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.364705882   0 0 0 0 0.392156863   0 0 0 0 0.580392157  0 0 0 0.2 0" type="matrix" in="shadowBlurOuter2" result="shadowMatrixOuter2"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="shadowMatrixOuter2"></feMergeNode>
+            </feMerge>
+        </filter>
+        <linearGradient x1="50%" y1="81.3984375%" x2="50%" y2="2.77555756e-15%" id="linearGradient-5">
+            <stop stop-color="#A0AAF8" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#5468FF" stop-opacity="0.4" offset="100%"></stop>
+        </linearGradient>
+        <filter x="-42.4%" y="-42.4%" width="184.8%" height="184.8%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="0" dy="6" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="7" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.145098039   0 0 0 0 0.17254902   0 0 0 0 0.380392157  0 0 0 0.15 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <ellipse id="path-7" cx="45.8639053" cy="46" rx="34.9763314" ry="34.8402367"></ellipse>
+        <filter x="-11.4%" y="-14.4%" width="128.6%" height="128.7%" filterUnits="objectBoundingBox" id="filter-8">
+            <feOffset dx="2" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.768627451   0 0 0 0 0.831372549   0 0 0 0 0.905882353  0 0 0 0.354266827 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-216.000000, -1601.000000)">
+            <g id="How" transform="translate(0.000000, 1402.000000)">
+                <g id="scraping" transform="translate(216.332736, 228.246568)">
+                    <g id="Group-3" transform="translate(0.000000, 48.753432)">
+                        <g id="Group-8" transform="translate(21.571103, 0.380238)">
+                            <g id="Rectangle-+-Rectangle-Copy-+-Group-7-+-Group-6-Mask">
+                                <mask id="mask-3" fill="white">
+                                    <use xlink:href="#path-2"></use>
+                                </mask>
+                                <g id="Mask">
+                                    <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-2"></use>
+                                    <use fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+                                </g>
+                                <path d="M18.7808109,15.7927831 L30.6574667,15.7927831 C31.9284865,15.7927831 32.9588517,16.8231483 32.9588517,18.0941681 C32.9588517,19.365188 31.9284865,20.3955532 30.6574667,20.3955532 L18.7808109,20.3955532 C17.509791,20.3955532 16.4794259,19.365188 16.4794259,18.0941681 C16.4794259,16.8231483 17.509791,15.7927831 18.7808109,15.7927831 Z" id="Rectangle-7-Copy-10" fill="#C5C9E0" mask="url(#mask-3)"></path>
+                                <path d="M117.657366,15.7927831 L129.534022,15.7927831 C130.805042,15.7927831 131.835407,16.8231483 131.835407,18.0941681 C131.835407,19.365188 130.805042,20.3955532 129.534022,20.3955532 L117.657366,20.3955532 C116.386346,20.3955532 115.355981,19.365188 115.355981,18.0941681 C115.355981,16.8231483 116.386346,15.7927831 117.657366,15.7927831 Z" id="Rectangle-7-Copy-11" fill="#C5C9E0" mask="url(#mask-3)"></path>
+                                <path d="M139.629934,15.7927831 L151.50659,15.7927831 C152.777609,15.7927831 153.807975,16.8231483 153.807975,18.0941681 C153.807975,19.365188 152.777609,20.3955532 151.50659,20.3955532 L139.629934,20.3955532 C138.358914,20.3955532 137.328549,19.365188 137.328549,18.0941681 C137.328549,16.8231483 138.358914,15.7927831 139.629934,15.7927831 Z" id="Rectangle-7-Copy-12" fill="#C5C9E0" mask="url(#mask-3)"></path>
+                                <path d="M161.602502,15.7927831 L173.479157,15.7927831 C174.750177,15.7927831 175.780542,16.8231483 175.780542,18.0941681 C175.780542,19.365188 174.750177,20.3955532 173.479157,20.3955532 L161.602502,20.3955532 C160.331482,20.3955532 159.301117,19.365188 159.301117,18.0941681 C159.301117,16.8231483 160.331482,15.7927831 161.602502,15.7927831 Z" id="Rectangle-7-Copy-13" fill="#C5C9E0" mask="url(#mask-3)"></path>
+                                <rect id="Rectangle" fill="#C5C9E0" mask="url(#mask-3)" x="107.116268" y="31.5855662" width="68.6642744" height="34.3321372" rx="4.66019417"></rect>
+                                <rect id="Rectangle-Copy-4" fill="#C5C9E0" mask="url(#mask-3)" x="107.116268" y="105.496936" width="68.6642744" height="34.3321372" rx="4.66019417"></rect>
+                                <rect id="Rectangle-Copy" fill="#C5C9E0" mask="url(#mask-3)" x="16.4794259" y="70.7242026" width="68.6642744" height="29.525638" rx="4.66019417"></rect>
+                                <g id="Group-7" mask="url(#mask-3)" fill="#C5C9E0" opacity="0.5">
+                                    <g transform="translate(16.479426, 41.198565)">
+                                        <path d="M2.30138502,0 L14.1780408,0 C15.4490607,1.50553553e-15 16.4794259,1.03036517 16.4794259,2.30138502 C16.4794259,3.57240487 15.4490607,4.60277004 14.1780408,4.60277004 L2.30138502,4.60277004 C1.03036517,4.60277004 1.55655039e-16,3.57240487 0,2.30138502 C-1.55655039e-16,1.03036517 1.03036517,-2.10606651e-16 2.30138502,0 Z" id="Rectangle-7"></path>
+                                        <path d="M2.30138502,73.9113694 L14.1780408,73.9113694 C15.4490607,73.9113694 16.4794259,74.9417345 16.4794259,76.2127544 C16.4794259,77.4837742 15.4490607,78.5141394 14.1780408,78.5141394 L2.30138502,78.5141394 C1.03036517,78.5141394 1.4936963e-13,77.4837742 1.49213975e-13,76.2127544 C1.49058319e-13,74.9417345 1.03036517,73.9113694 2.30138502,73.9113694 Z" id="Rectangle-7-Copy-5"></path>
+                                        <rect id="Rectangle-7-Copy-4" x="18.5393541" y="-4.04121181e-14" width="50.1249203" height="4.60277004" rx="2.30138502"></rect>
+                                        <rect id="Rectangle-7-Copy-6" x="18.5393541" y="73.9113694" width="50.1249203" height="4.60277004" rx="2.30138502"></rect>
+                                        <path d="M2.30138502,10.3750964 L66.3628894,10.3750964 C67.6339092,10.3750964 68.6642744,11.4054616 68.6642744,12.6764814 C68.6642744,13.9475013 67.6339092,14.9778664 66.3628894,14.9778664 L2.30138502,14.9778664 C1.03036517,14.9778664 -1.13531183e-13,13.9475013 -1.13686838e-13,12.6764814 C-1.13842493e-13,11.4054616 1.03036517,10.3750964 2.30138502,10.3750964 Z" id="Rectangle-7-Copy"></path>
+                                        <path d="M2.30138502,84.2864658 L66.3628894,84.2864658 C67.6339092,84.2864658 68.6642744,85.3168309 68.6642744,86.5878508 C68.6642744,87.8588706 67.6339092,88.8892358 66.3628894,88.8892358 L2.30138502,88.8892358 C1.03036517,88.8892358 -1.13531183e-13,87.8588706 -1.13686838e-13,86.5878508 C-1.13842493e-13,85.3168309 1.03036517,84.2864658 2.30138502,84.2864658 Z" id="Rectangle-7-Copy-7"></path>
+                                    </g>
+                                </g>
+                                <g id="Group-6" mask="url(#mask-3)" fill="#C5C9E0" opacity="0.5">
+                                    <g transform="translate(107.116268, 80.337201)">
+                                        <path d="M2.30138502,-1.21236354e-13 L27.9108957,-1.21236354e-13 C29.1819156,-1.22358015e-13 30.2122807,1.03036517 30.2122807,2.30138502 C30.2122807,3.57240487 29.1819156,4.60277004 27.9108957,4.60277004 L2.30138502,4.60277004 C1.03036517,4.60277004 1.55655039e-16,3.57240487 0,2.30138502 C-1.55655039e-16,1.03036517 1.03036517,-1.21446961e-13 2.30138502,-1.21236354e-13 Z" id="Rectangle-7-Copy-2"></path>
+                                        <rect id="Rectangle-7-Copy-3" x="32.272209" y="-1.21236354e-13" width="36.3920654" height="4.60277004" rx="2.30138502"></rect>
+                                        <path d="M2.30138502,10.3750964 L14.1780408,10.3750964 C15.4490607,10.3750964 16.4794259,11.4054616 16.4794259,12.6764814 C16.4794259,13.9475013 15.4490607,14.9778664 14.1780408,14.9778664 L2.30138502,14.9778664 C1.03036517,14.9778664 1.55655039e-16,13.9475013 0,12.6764814 C-1.55655039e-16,11.4054616 1.03036517,10.3750964 2.30138502,10.3750964 Z" id="Rectangle-7-Copy-9"></path>
+                                        <rect id="Rectangle-7-Copy-8" x="18.5393541" y="10.3750964" width="50.1249203" height="4.60277004" rx="2.30138502"></rect>
+                                    </g>
+                                </g>
+                            </g>
+                            <circle id="Oval" fill="#ED5A6A" cx="6.1797847" cy="4.80649921" r="2.05992823"></circle>
+                            <circle id="Oval-Copy" fill="#F8BE9A" cx="14.4194976" cy="4.80649921" r="2.05992823"></circle>
+                            <circle id="Oval-Copy-2" fill="#61C5C8" cx="22.6592106" cy="4.80649921" r="2.05992823"></circle>
+                        </g>
+                        <g id="Group-12" transform="translate(0.285178, 69.925704)" fill-rule="nonzero">
+                            <rect id="Rectangle-2" fill="#5468FF" x="0" y="-5.68434189e-14" width="234.831818" height="3.08723094" rx="1.54361547"></rect>
+                            <rect id="Rectangle-3" fill="url(#linearGradient-5)" x="6.79776317" y="3.08723094" width="220.000335" height="16.6710471"></rect>
+                        </g>
+                    </g>
+                    <g id="Group" filter="url(#filter-6)" transform="translate(165.011827, 0.000000)">
+                        <circle id="Oval" fill-opacity="0.5" fill="#C5C9E0" cx="45.8639053" cy="45.8639053" r="45.8639053"></circle>
+                        <g id="Oval">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-8)" xlink:href="#path-7"></use>
+                            <use fill="#F5F5FA" fill-rule="evenodd" xlink:href="#path-7"></use>
+                        </g>
+                        <path d="M38.6327928,37.5340772 C38.9334449,37.5340772 39.1771715,37.7778038 39.1771715,38.0784559 L39.1771715,65.2973908 C39.1771715,65.5980428 38.9334449,65.8417695 38.6327928,65.8417695 C38.3321408,65.8417695 38.0884141,65.5980428 38.0884141,65.2973908 L38.0884141,38.0784559 C38.0884141,37.7778038 38.3321408,37.5340772 38.6327928,37.5340772 Z" id="Rectangle-Copy" fill="#848AB8" transform="translate(38.632793, 51.687923) rotate(52.000000) translate(-38.632793, -51.687923) "></path>
+                        <g id="Group-4" transform="translate(40.828402, 8.710059)">
+                            <rect id="Rectangle" fill="#21243D" x="0" y="36.7455621" width="23.408284" height="1.36094675" rx="0.680473373"></rect>
+                            <rect id="Rectangle" fill="#5468FF" x="3.53846154" y="35.6568047" width="3.26627219" height="3.26627219" rx="1.63313609"></rect>
+                            <rect id="Rectangle" fill="#5468FF" x="4.62721893" y="0" width="1.0887574" height="41.9171598" rx="0.544378698"></rect>
+                        </g>
+                        <g id="Group-3" transform="translate(3.810651, 3.810651)" fill="#FFFFFF">
+                            <g id="Group" transform="translate(41.644970, 0.000000)">
+                                <g id="Group" transform="translate(0.000000, 0.272189)">
+                                    <rect id="Rectangle" x="0" y="0" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                    <rect id="Rectangle-Copy-2" x="0" y="81.6568047" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                </g>
+                            </g>
+                            <g id="Group" transform="translate(41.644970, 0.000000)">
+                                <g id="Mins-Copy" transform="translate(0.544379, 42.053254) rotate(10.000000) translate(-0.544379, -42.053254) ">
+                                    <g id="Group" transform="translate(0.000000, 0.272189)">
+                                        <rect id="Rectangle" x="0" y="0" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                        <rect id="Rectangle-Copy-2" x="0" y="81.6568047" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="Group" transform="translate(41.644970, 0.000000)">
+                                <g id="Mins-Copy-2" transform="translate(0.544379, 42.053254) rotate(20.000000) translate(-0.544379, -42.053254) ">
+                                    <g id="Group" transform="translate(0.000000, 0.272189)">
+                                        <rect id="Rectangle" x="0" y="0" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                        <rect id="Rectangle-Copy-2" x="0" y="81.6568047" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="Group" transform="translate(41.644970, 0.000000)">
+                                <g id="Mins-Copy-3" transform="translate(0.544379, 42.053254) rotate(30.000000) translate(-0.544379, -42.053254) ">
+                                    <g id="Group" transform="translate(0.000000, 0.272189)">
+                                        <rect id="Rectangle" x="0" y="0" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                        <rect id="Rectangle-Copy-2" x="0" y="81.6568047" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="Group" transform="translate(41.644970, 0.000000)">
+                                <g id="Mins-Copy-4" transform="translate(0.544379, 42.053254) rotate(40.000000) translate(-0.544379, -42.053254) ">
+                                    <g id="Group" transform="translate(0.000000, 0.272189)">
+                                        <rect id="Rectangle" x="0" y="0" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                        <rect id="Rectangle-Copy-2" x="0" y="81.6568047" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="Group" transform="translate(41.644970, 0.000000)">
+                                <g id="Mins-Copy-5" transform="translate(0.544379, 42.053254) rotate(50.000000) translate(-0.544379, -42.053254) ">
+                                    <g id="Group" transform="translate(0.000000, 0.272189)">
+                                        <rect id="Rectangle" x="0" y="0" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                        <rect id="Rectangle-Copy-2" x="0" y="81.6568047" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="Group" transform="translate(41.644970, 0.000000)">
+                                <g id="Mins-Copy-6" transform="translate(0.544379, 42.053254) rotate(60.000000) translate(-0.544379, -42.053254) ">
+                                    <g id="Group" transform="translate(0.000000, 0.272189)">
+                                        <rect id="Rectangle" x="0" y="0" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                        <rect id="Rectangle-Copy-2" x="0" y="81.6568047" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="Group" transform="translate(41.644970, 0.000000)">
+                                <g id="Mins-Copy-7" transform="translate(0.544379, 42.053254) rotate(70.000000) translate(-0.544379, -42.053254) ">
+                                    <g id="Group" transform="translate(0.000000, 0.272189)">
+                                        <rect id="Rectangle" x="0" y="0" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                        <rect id="Rectangle-Copy-2" x="0" y="81.6568047" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="Group" transform="translate(41.644970, 0.000000)">
+                                <g id="Mins-Copy-8" transform="translate(0.544379, 42.053254) rotate(80.000000) translate(-0.544379, -42.053254) ">
+                                    <g id="Group" transform="translate(0.000000, 0.272189)">
+                                        <rect id="Rectangle" x="0" y="0" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                        <rect id="Rectangle-Copy-2" x="0" y="81.6568047" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="Group" transform="translate(41.644970, 0.000000)">
+                                <g id="Mins-Copy-9" transform="translate(0.544379, 42.053254) rotate(90.000000) translate(-0.544379, -42.053254) ">
+                                    <g id="Group" transform="translate(0.000000, 0.272189)">
+                                        <rect id="Rectangle" x="0" y="0" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                        <rect id="Rectangle-Copy-2" x="0" y="81.6568047" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="Group" transform="translate(41.644970, 0.000000)">
+                                <g id="Mins-Copy-10" transform="translate(0.544379, 42.053254) rotate(100.000000) translate(-0.544379, -42.053254) ">
+                                    <g id="Group" transform="translate(0.000000, 0.272189)">
+                                        <rect id="Rectangle" x="0" y="0" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                        <rect id="Rectangle-Copy-2" x="0" y="81.6568047" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="Group" transform="translate(41.644970, 0.000000)">
+                                <g id="Mins-Copy-11" transform="translate(0.544379, 42.053254) rotate(110.000000) translate(-0.544379, -42.053254) ">
+                                    <g id="Group" transform="translate(0.000000, 0.272189)">
+                                        <rect id="Rectangle" x="0" y="0" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                        <rect id="Rectangle-Copy-2" x="0" y="81.6568047" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="Group" transform="translate(41.644970, 0.000000)">
+                                <g id="Mins-Copy-12" transform="translate(0.544379, 42.053254) rotate(120.000000) translate(-0.544379, -42.053254) ">
+                                    <g id="Group" transform="translate(0.000000, 0.272189)">
+                                        <rect id="Rectangle" x="0" y="0" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                        <rect id="Rectangle-Copy-2" x="0" y="81.6568047" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="Group" transform="translate(41.644970, 0.000000)">
+                                <g id="Mins-Copy-13" transform="translate(0.544379, 42.053254) rotate(130.000000) translate(-0.544379, -42.053254) ">
+                                    <g id="Group" transform="translate(0.000000, 0.272189)">
+                                        <rect id="Rectangle" x="0" y="0" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                        <rect id="Rectangle-Copy-2" x="0" y="81.6568047" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="Group" transform="translate(41.644970, 0.000000)">
+                                <g id="Mins-Copy-14" transform="translate(0.544379, 42.053254) rotate(140.000000) translate(-0.544379, -42.053254) ">
+                                    <g id="Group" transform="translate(0.000000, 0.272189)">
+                                        <rect id="Rectangle" x="0" y="0" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                        <rect id="Rectangle-Copy-2" x="0" y="81.6568047" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="Group" transform="translate(41.644970, 0.000000)">
+                                <g id="Mins-Copy-15" transform="translate(0.544379, 42.053254) rotate(150.000000) translate(-0.544379, -42.053254) ">
+                                    <g id="Group" transform="translate(0.000000, 0.272189)">
+                                        <rect id="Rectangle" x="0" y="0" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                        <rect id="Rectangle-Copy-2" x="0" y="81.6568047" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="Group" transform="translate(41.644970, 0.000000)">
+                                <g id="Mins-Copy-16" transform="translate(0.544379, 42.053254) rotate(160.000000) translate(-0.544379, -42.053254) ">
+                                    <g id="Group" transform="translate(0.000000, 0.272189)">
+                                        <rect id="Rectangle" x="0" y="0" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                        <rect id="Rectangle-Copy-2" x="0" y="81.6568047" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                        <g transform="translate(45.455621, 3.810651)" fill="#FFFFFF" id="Mins-Copy-17">
+                            <g transform="translate(0.544379, 42.053254) rotate(170.000000) translate(-0.544379, -42.053254) ">
+                                <g id="Group" transform="translate(0.000000, 0.272189)">
+                                    <rect id="Rectangle" x="0" y="0" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                    <rect id="Rectangle-Copy-2" x="0" y="81.6568047" width="1.0887574" height="1.90532544" rx="0.5"></rect>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
