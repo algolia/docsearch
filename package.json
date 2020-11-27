@@ -1,9 +1,14 @@
 {
   "name": "@docsearch/monorepo",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/html-minifier-terser"
+    ]
+  },
   "scripts": {
     "build:clean": "lerna run build:clean --scope @docsearch/*",
     "build:esm": "lerna run build:esm --scope @docsearch/*",
