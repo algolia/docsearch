@@ -117,7 +117,7 @@ export function DocSearchModal({
         React.KeyboardEvent
       >({
         id: 'docsearch',
-        defaultHighlightedIndex: 0,
+        defaultSelectedItemId: 0,
         placeholder,
         openOnFocus: true,
         initialState: {
