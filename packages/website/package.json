@@ -24,6 +24,7 @@
     "image-webpack-loader": "6.0.0",
     "imagemin": "7.0.0",
     "my-loaders": "file:plugins/my-loaders",
+    "tailwind-loader": "file:plugins/tailwind-loader",
     "prism-react-renderer": "1.1.0",
     "query-string": "6.9.0",
     "react-autosuggest": "9.4.3",
@@ -34,7 +35,9 @@
     "textlint-rule-en-capitalization": "2.0.2",
     "textlint-rule-stop-words": "1.0.17",
     "textlint-rule-terminology": "1.1.30",
-    "textlint-rule-write-good": "1.6.2"
+    "textlint-rule-write-good": "1.6.2",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+    "postcss-import": "12.0.0"
   },
   "browserslist": {
     "production": [

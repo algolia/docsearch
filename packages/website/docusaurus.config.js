@@ -15,7 +15,7 @@ module.exports = {
   organizationName: 'Algolia',
   projectName: 'DocSearch',
   themes: ['@docusaurus/theme-live-codeblock'],
-  plugins: ['my-loaders'], // loader required for .svg
+  plugins: ['my-loaders', 'tailwind-loader'], // loader required for .svg
   themeConfig: {
     algolia: {
       apiKey: '25626fae796133dc1e734c6bcaaeac3c',

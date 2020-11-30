@@ -21,15 +21,20 @@ import showcaseProjects from './showcase-projects.json';
 import ApplyForm from '../components/ApplyForm.js';
 import { DocSearchLogo } from '../components/DocSearchLogo';
 
+// app.js
+import "tailwindcss/tailwind.css"
+
 function Home() {
   const { siteConfig } = useDocusaurusContext();
 
+  if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    document.querySelector('html').classList.add('dark')
+  } else {
+    document.querySelector('html').classList.remove('dark')
+  }
+
   return (
     <>
-      <link
-        href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
-        rel="stylesheet"
-      />
       <div class="pb-16 relative overflow-hidden">
         <div class="relative">
           <main class="flex mx-auto max-w-screen-xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 xl:mt-28">
@@ -37,7 +42,6 @@ function Home() {
               <img
                 src={useBaseUrl('img/algolia-logo.svg')}
                 width="140"
-                class="text-indigo-600"
               />
               <div class="mt-6">
                 <DocSearchLogo width="430px" />
@@ -69,7 +73,6 @@ function Home() {
               <img
                 src={useBaseUrl('img/assets/tailwind.png')}
                 width="600"
-                class="text-indigo-600"
               />
             </div>
           </main>
@@ -79,7 +82,7 @@ function Home() {
       <div class="py-16 overflow-hidden">
         <div class="relative max-w-xl mx-auto px-4 sm:px-6 lg:px-8 lg:max-w-screen-xl">
           <div class="relative">
-            <h3 class="text-center text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
+            <h3 class="dark:text-red-900 text-center text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
               Solve docs challenges with a search engine
             </h3>
             <p class="mt-4 max-w-3xl mx-auto text-center text-xl leading-7 text-gray-500">
@@ -842,7 +845,7 @@ function Home() {
         </div>
       </div>
 
-      <div class="pt-12 bg-gray-900"> 
+      <div class="pt-12 bg-gray-900">
         <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="lg:text-center">
             <p class="text-base leading-6 text-indigo-600 font-semibold tracking-wide uppercase"></p>
