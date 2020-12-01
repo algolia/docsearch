@@ -12,16 +12,6 @@ import 'tailwindcss/tailwind.css';
 function Home() {
   const { withBaseUrl } = useBaseUrlUtils();
 
-  if (
-    localStorage.theme === 'dark' ||
-    (!('theme' in localStorage) &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches)
-  ) {
-    document.querySelector('html').classList.add('dark');
-  } else {
-    document.querySelector('html').classList.remove('dark');
-  }
-
   return (
     <>
       <div className="pb-16 relative overflow-hidden">
