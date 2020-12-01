@@ -1,7 +1,3 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router';
-import queryString from 'query-string';
-import Layout from '@theme/Layout';
 import {
   Button,
   Hero,
@@ -10,14 +6,20 @@ import {
   LabelText,
   InlineLink,
 } from '@algolia/ui-library';
-import algoliasearch from 'algoliasearch/lite';
 import Card from '@algolia/ui-library/public/components/Card';
-import useBaseUrl from '@docusaurus/useBaseUrl';
 import { DocSearchModal } from '@docsearch/react';
-import ErrorBoundary from '../components/ErrorBoundary';
+import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
 import useThemeContext from '@theme/hooks/useThemeContext';
+import Layout from '@theme/Layout';
+import algoliasearch from 'algoliasearch/lite';
+import queryString from 'query-string';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router';
+
+import ErrorBoundary from '../components/ErrorBoundary';
 
 function V3Me() {
+  const { withBaseUrl } = useBaseUrlUtils();
   const theme = useThemeContext.isDarkTheme ? 'dark' : 'light';
 
   const getParams = queryString.parse(useLocation().search);
@@ -26,22 +28,6 @@ function V3Me() {
     indexName: indexNameQS = '',
     apiKey: apiKeyQS = '',
   } = getParams;
-
-  const searchParameters = { hitsPerPage: 10 };
-
-  for (const [name, value] of Object.entries(getParams)) {
-    if (name !== 'appId' && name !== 'indexName' && name !== 'apiKey') {
-      const parsedInt = parseInt(value, 10);
-      const parsedBool =
-        value === 'true' ? true : value === 'false' ? false : null;
-      searchParameters[name] =
-        parsedInt !== NaN
-          ? parsedInt
-          : parsedBool
-          ? parsedBool !== null
-          : value;
-    }
-  }
 
   const [isValidDSCred, setisValidDSCred] = useState(false);
   const [wrongCredentials, setWrongCredentials] = useState(false);
@@ -71,12 +57,28 @@ function V3Me() {
     const index = searchClient.initIndex(indexName);
     index
       .search('')
-      .then(_ => setisValidDSCred(true))
-      .catch(_ => {
+      .then((_) => setisValidDSCred(true))
+      .catch((_) => {
         setWrongCredentials(true);
         fallbackToDocSearchDocCred();
       });
   }, [appId, indexName, apiKey]);
+
+  const searchParameters = { hitsPerPage: 10 };
+  for (const [name, value] of Object.entries(getParams)) {
+    if (name !== 'appId' && name !== 'indexName' && name !== 'apiKey') {
+      const parsedInt = parseInt(value, 10);
+      const parsedBool =
+        // eslint-disable-next-line no-nested-ternary
+        value === 'true' ? true : value === 'false' ? false : null;
+      // eslint-disable-next-line no-nested-ternary
+      searchParameters[name] = !isNaN(parsedInt)
+        ? parsedInt
+        : parsedBool
+        ? parsedBool !== null
+        : value;
+    }
+  }
 
   return (
     <>
@@ -117,7 +119,7 @@ function V3Me() {
         </Text>
         <Text className="mt-4">
           <a
-            href={useBaseUrl('/v3me/?indexName=<indexName>&apiKey=<apiKey>')}
+            href={withBaseUrl('/v3me/?indexName=<indexName>&apiKey=<apiKey>')}
           >{`https://docsearch.algolia.com/v3me/?indexName=<indexName>&apiKey=<apiKey>&appId=<appId>`}</a>
         </Text>
         <Text className="mt-4">
@@ -145,7 +147,7 @@ function V3Me() {
           <Button
             primary
             style={{ textDecoration: 'none', alignItems: 'center' }}
-            href={useBaseUrl('/apply')}
+            href={withBaseUrl('/apply')}
           >
             Join the Program
           </Button>

@@ -1,7 +1,7 @@
-module.exports = function (context, options) {
+module.exports = function (_context, _options) {
   return {
     name: 'postcss-tailwindcss-loader',
-    configureWebpack(config, isServer, utils) {
+    configureWebpack(_config, _isServer, _utils) {
       return {
         module: {
           rules: [
@@ -28,7 +28,7 @@ module.exports = function (context, options) {
             },
           ],
         },
-      }
+      };
     },
-  }
-}
+  };
+};

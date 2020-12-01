@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from 'react';
 import Head from '@docusaurus/Head';
+import React, { useRef, useEffect } from 'react';
 
 export default function DocSearch({ appId, indexName, apiKey }) {
   const docsearchRef = useRef(null);
@@ -19,7 +19,7 @@ export default function DocSearch({ appId, indexName, apiKey }) {
         },
       });
     });
-  }, [docsearchRef, indexName, apiKey]);
+  }, [docsearchRef, indexName, apiKey, appId]);
 
   return (
     <>

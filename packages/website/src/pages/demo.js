@@ -1,7 +1,3 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Layout from '@theme/Layout';
-import { useLocation } from 'react-router';
-import queryString from 'query-string';
 import {
   Button,
   Hero,
@@ -10,21 +6,25 @@ import {
   LabelText,
   InlineLink,
 } from '@algolia/ui-library';
-import DocSearch from '../components/DocSearch';
-import ErrorBoundary from '../components/ErrorBoundary';
-import algoliasearch from 'algoliasearch/lite';
 import Card from '@algolia/ui-library/public/components/Card';
-import useBaseUrl from '@docusaurus/useBaseUrl';
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
+import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import useThemeContext from '@theme/hooks/useThemeContext';
+import Layout from '@theme/Layout';
+import algoliasearch from 'algoliasearch/lite';
 import github from 'prism-react-renderer/themes/github';
 import vsDark from 'prism-react-renderer/themes/vsDark';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import queryString from 'query-string';
+import React, { useState, useEffect, useRef } from 'react';
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
+import { useLocation } from 'react-router';
 
+import DocSearch from '../components/DocSearch';
 import { DocSearchLogo } from '../components/DocSearchLogo';
-
-import useThemeContext from '@theme/hooks/useThemeContext';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 function Demo() {
+  const { withBaseUrl } = useBaseUrlUtils();
   const { siteConfig } = useDocusaurusContext();
   const theme = useThemeContext.isDarkTheme ? 'dark' : 'light';
 
@@ -44,21 +44,22 @@ function Demo() {
     algoliasearch('DSW01O6QPF', 'e55d03a808bad4e426d28fd4a1a18338')
   );
 
-  function resetCredentials() {
-    setProjectName(DEFAULT_INDEX_NAME);
-    setIndexName(DEFAULT_INDEX_NAME);
-    setApiKey(DEFAULT_API_KEY);
-  }
-
   useEffect(() => {
+    function resetCredentials() {
+      setProjectName(DEFAULT_INDEX_NAME);
+      setIndexName(DEFAULT_INDEX_NAME);
+      setApiKey(DEFAULT_API_KEY);
+    }
+
     const index = searchClient.current.initIndex('live-demo');
+
     if (!selection && !projectName) {
       index
         .search(indexName, {
           filters: 'status.stage: "Outbound"',
           hitsPerPage: 1,
         })
-        .then(result => {
+        .then((result) => {
           if (result.nbHits === 0) {
             resetCredentials();
           } else {
@@ -70,7 +71,6 @@ function Demo() {
             setDocsearchIssueUrl(
               activeDocSearchIndex.outbound.docsearchIssueUrl
             );
-            console.log(activeDocSearchIndex.outbound);
           }
         })
         .catch(() => {
@@ -78,7 +78,7 @@ function Demo() {
         });
       setSelection(true);
     }
-  }, [indexName]);
+  }, [indexName, projectName, selection, DEFAULT_API_KEY, DEFAULT_INDEX_NAME]);
 
   const code = `<!-- at the end of the \`head\` -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
@@ -136,7 +136,7 @@ function Demo() {
           <DocSearchLogo width="190px" />
           <img
             className="ds-icon-heart"
-            src={useBaseUrl('/img/icons/icon-heart.png')}
+            src={withBaseUrl('/img/icons/icon-heart.png')}
             width="30px"
           />
           {projectName !== null && <LabelText big>{projectName}</LabelText>}
@@ -163,7 +163,7 @@ function Demo() {
             Thumb up the request to feature DocSearch on the repo 👍{' '}
             <img
               className="github__logo"
-              src={useBaseUrl('/img/icons/icon-github.png')}
+              src={withBaseUrl('/img/icons/icon-github.png')}
               width="30px"
               alt="GitHub"
             />
@@ -176,7 +176,7 @@ function Demo() {
           code={`<input type="text" id="search" placeholder="Search the doc" />`}
           language="html"
           noInline={true}
-          transformCode={_code =>
+          transformCode={(_code) =>
             `class Null extends React.Component {render(){return null}}`
           }
           theme={theme === 'dark' ? vsDark : github}
@@ -192,7 +192,7 @@ function Demo() {
           code={code}
           language="html"
           noInline={true}
-          transformCode={_code =>
+          transformCode={(_code) =>
             `class Null extends React.Component {render(){return null}}`
           }
           theme={theme === 'dark' ? vsDark : github}
@@ -223,7 +223,7 @@ function Demo() {
           <Button
             primary
             style={{ textDecoration: 'none', alignItems: 'center' }}
-            href={useBaseUrl('/apply')}
+            href={withBaseUrl('/apply')}
           >
             Join the Program
           </Button>

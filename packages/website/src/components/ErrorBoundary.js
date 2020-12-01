@@ -1,3 +1,6 @@
+/* eslint-disable eslint-comments/no-unlimited-disable */
+/* eslint-disable */
+
 import React from 'react';
 
 export default class ErrorBoundary extends React.Component {
@@ -17,8 +20,8 @@ export default class ErrorBoundary extends React.Component {
   componentDidCatch(error, info) {
     this.setState({
       hasError: true,
-      error: error,
-      info: info,
+      error,
+      info,
     });
   }
   render() {

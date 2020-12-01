@@ -2,7 +2,7 @@ import React from 'react';
 
 export function DocSearchLogo(props) {
   return (
-    <svg props {...props} viewBox="0 0 476 78" className="docsearch-logo">
+    <svg {...props} viewBox="0 0 476 78" className="docsearch-logo">
       <g fillRule="nonzero" fill="none">
         <path
           d="M36.493 77.289h-33.419c-1.698 0-3.074-1.37-3.074-3.061h36.523c12.769.062 24.6-6.663 31.038-17.642 6.438-10.979 6.504-24.543.174-35.584-6.331-11.041-18.096-17.88-30.865-17.942h-36.87c0-1.69 1.376-3.061 3.074-3.061h33.796c10.31.01 20.193 4.1 27.472 11.369 7.28 7.268 11.36 17.12 11.341 27.384-.059 21.366-17.741 38.536-39.191 38.536z"

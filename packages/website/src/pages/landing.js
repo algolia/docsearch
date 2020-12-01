@@ -1,7 +1,3 @@
-import React, { useState, useEffect } from 'react';
-import Layout from '@theme/Layout';
-import { useLocation } from 'react-router';
-import queryString from 'query-string';
 import {
   Button,
   Hero,
@@ -10,16 +6,20 @@ import {
   LabelText,
   InlineLink,
 } from '@algolia/ui-library';
-import DocSearch from '../components/DocSearch';
-import ErrorBoundary from '../components/ErrorBoundary';
-import algoliasearch from 'algoliasearch/lite';
 import Card from '@algolia/ui-library/public/components/Card';
 import useBaseUrl from '@docusaurus/useBaseUrl';
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
+import useThemeContext from '@theme/hooks/useThemeContext';
+import Layout from '@theme/Layout';
+import algoliasearch from 'algoliasearch/lite';
 import github from 'prism-react-renderer/themes/github';
 import vsDark from 'prism-react-renderer/themes/vsDark';
+import queryString from 'query-string';
+import React, { useState, useEffect } from 'react';
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
+import { useLocation } from 'react-router';
 
-import useThemeContext from '@theme/hooks/useThemeContext';
+import DocSearch from '../components/DocSearch';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 function Landing() {
   const theme = useThemeContext.isDarkTheme ? 'dark' : 'light';
@@ -58,8 +58,8 @@ function Landing() {
     const index = searchClient.initIndex(indexName);
     index
       .search('')
-      .then(_ => setisValidDSCred(true))
-      .catch(_ => {
+      .then((_) => setisValidDSCred(true))
+      .catch((_) => {
         setWrongCredentials(true);
         fallbackToDocSearchDocCred();
       });
@@ -106,7 +106,7 @@ function Landing() {
           code={`<input type="text" id="q" placeholder="Search the doc" />`}
           language="html"
           noInline={true}
-          transformCode={code =>
+          transformCode={(_code) =>
             `class Null extends React.Component {render(){return null}}`
           }
           theme={theme === 'dark' ? vsDark : github}
@@ -133,7 +133,7 @@ function Landing() {
 </script>`}
           language="html"
           noInline={true}
-          transformCode={code =>
+          transformCode={(_code) =>
             `class Null extends React.Component {render(){return null}}`
           }
           theme={theme === 'dark' ? vsDark : github}

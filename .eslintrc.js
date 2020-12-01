@@ -50,7 +50,7 @@ module.exports = {
     {
       files: ['**/rollup.config.js', 'stories/**/*', '**/__tests__/**'],
       rules: {
-        'import/no-extraneous-dependencies': 'off',
+        'import/no-extraneous-dependencies': 0,
       },
     },
     {
@@ -60,15 +60,27 @@ module.exports = {
         'cypress/globals': true,
       },
       rules: {
-        'jest/expect-expect': 'off',
-        'spaced-comment': 'off',
-        '@typescript-eslint/triple-slash-reference': 'off',
+        'jest/expect-expect': 0,
+        'spaced-comment': 0,
+        '@typescript-eslint/triple-slash-reference': 0,
       },
     },
     {
-      files: ['scripts/**/*', '*.config.js'],
+      files: [
+        'scripts/**/*',
+        '*.config.js',
+        'packages/website/plugins/**/*',
+        'packages/website/sidebars.js',
+      ],
       rules: {
-        'import/no-commonjs': 'off',
+        'import/no-commonjs': 0,
+      },
+    },
+    {
+      files: ['packages/website/**/*'],
+      rules: {
+        'import/no-unresolved': 0,
+        'import/no-extraneous-dependencies': 0,
       },
     },
   ],

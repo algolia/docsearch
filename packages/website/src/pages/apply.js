@@ -1,9 +1,10 @@
-import React from 'react';
-import Layout from '@theme/Layout';
 import { Section, Hero } from '@algolia/ui-library';
+import useThemeContext from '@theme/hooks/useThemeContext';
+import Layout from '@theme/Layout';
+import React from 'react';
+
 import ApplyForm from '../components/ApplyForm.js';
 import { DocSearchLogo } from '../components/DocSearchLogo';
-import useThemeContext from '@theme/hooks/useThemeContext';
 
 function Apply() {
   const theme = useThemeContext.isDarkTheme ? 'dark' : 'light';

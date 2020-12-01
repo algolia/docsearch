@@ -1,16 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Layout from '@theme/Layout';
-import { useLocation } from 'react-router';
-import queryString from 'query-string';
 import { Hero, Text, Pill, LabelText } from '@algolia/ui-library';
 import Card from '@algolia/ui-library/public/components/Card';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-
 import useThemeContext from '@theme/hooks/useThemeContext';
-import { DocSearchLogo } from '../components/DocSearchLogo';
-
+import Layout from '@theme/Layout';
 import algoliasearch from 'algoliasearch';
+import queryString from 'query-string';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router';
+
+import { DocSearchLogo } from '../components/DocSearchLogo';
 
 function Inspector() {
   const { siteConfig } = useDocusaurusContext();
@@ -18,10 +17,9 @@ function Inspector() {
 
   const DEFAULT_INDEX_NAME = siteConfig.themeConfig.algolia.indexName;
 
-  const {
-    indexName: indexNameFromUrl = DEFAULT_INDEX_NAME,
-  } = queryString.parse(useLocation().search);
-  const [indexName, setIndexName] = useState(indexNameFromUrl);
+  const { indexName = DEFAULT_INDEX_NAME } = queryString.parse(
+    useLocation().search
+  );
   const [record, setIndexRecord] = useState(null);
   const [objectID, setObjectID] = useState(null);
 
@@ -37,7 +35,7 @@ function Inspector() {
         setIndexRecord(results[0]);
       });
     }
-  }, [objectID]);
+  }, [index, objectID]);
 
   return (
     <>
@@ -71,7 +69,7 @@ function Inspector() {
         <input
           type="text"
           style={{ margin: '3em 0', height: '2em', width: '80%' }}
-          onChange={e => setObjectID(e.target.value)}
+          onChange={(e) => setObjectID(e.target.value)}
         />
         <br />
         {record ? <Record record={record}></Record> : null}

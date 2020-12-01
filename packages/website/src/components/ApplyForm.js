@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
   Card,
   Input,
@@ -7,11 +6,12 @@ import {
   Button,
   InlineLink,
 } from '@algolia/ui-library';
-import useBaseUrl from '@docusaurus/useBaseUrl';
-
+import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
 import useThemeContext from '@theme/hooks/useThemeContext';
+import React, { useState } from 'react';
 
 function ApplyForm() {
+  const { withBaseUrl } = useBaseUrlUtils();
   const theme = useThemeContext.isDarkTheme ? 'dark' : 'light';
   const [hasSent, setHasSent] = useState(false);
   const [url, setUrl] = useState('');
@@ -25,7 +25,7 @@ function ApplyForm() {
     const url = applyForm.getAttribute('action');
     const formData = new FormData(applyForm);
     const data = {};
-    formData.forEach(function(value, key) {
+    formData.forEach(function (value, key) {
       data[key] = value;
     });
     const body = JSON.stringify(data);
@@ -34,7 +34,7 @@ function ApplyForm() {
       method,
       headers: { 'Content-Type': 'application/json' },
       body,
-    }).then(response => {
+    }).then((response) => {
       if (response.ok) {
         setHasSent(true);
       }
@@ -59,7 +59,7 @@ function ApplyForm() {
 
         <Text aria-label="recommendations">
           Please be patient, in the meantime, you can implement{' '}
-          <InlineLink href={useBaseUrl('/docs/tips')}>
+          <InlineLink href={withBaseUrl('/docs/tips')}>
             our recommendations for building a great DocSearch experience.
           </InlineLink>
         </Text>
@@ -83,7 +83,7 @@ function ApplyForm() {
             name="url"
             aria-label="URL of the documentation website"
             value={url}
-            onChange={event => setUrl(event.target.value)}
+            onChange={(event) => setUrl(event.target.value)}
             placeholder="https://project.org/docs"
             required
           />
@@ -101,7 +101,7 @@ function ApplyForm() {
             name="email"
             aria-label="Email address of the owner of this website"
             value={email}
-            onChange={event => setEmail(event.target.value)}
+            onChange={(event) => setEmail(event.target.value)}
             placeholder="you@project.org"
             required
           />
@@ -123,7 +123,7 @@ function ApplyForm() {
               required
             />
             I'm the owner of the website and I have{' '}
-            <InlineLink href={useBaseUrl('/docs/who-can-apply')}>
+            <InlineLink href={withBaseUrl('/docs/who-can-apply')}>
               read the checklist
             </InlineLink>
           </LabelText>

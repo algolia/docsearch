@@ -1,7 +1,3 @@
-import React, { useState, useEffect } from 'react';
-import Layout from '@theme/Layout';
-import { useLocation } from 'react-router';
-import queryString from 'query-string';
 import {
   Button,
   Hero,
@@ -10,13 +6,17 @@ import {
   LabelText,
   InlineLink,
 } from '@algolia/ui-library';
-import DocSearch from '../components/DocSearch';
-import ErrorBoundary from '../components/ErrorBoundary';
-import algoliasearch from 'algoliasearch/lite';
 import Card from '@algolia/ui-library/public/components/Card';
 import useBaseUrl from '@docusaurus/useBaseUrl';
-
 import useThemeContext from '@theme/hooks/useThemeContext';
+import Layout from '@theme/Layout';
+import algoliasearch from 'algoliasearch/lite';
+import queryString from 'query-string';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router';
+
+import DocSearch from '../components/DocSearch';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 function Playground() {
   const theme = useThemeContext.isDarkTheme ? 'dark' : 'light';
@@ -55,8 +55,8 @@ function Playground() {
     const index = searchClient.initIndex(indexName);
     index
       .search('')
-      .then(_ => setisValidDSCred(true))
-      .catch(_ => {
+      .then((_) => setisValidDSCred(true))
+      .catch((_) => {
         setWrongCredentials(true);
         fallbackToDocSearchDocCred();
       });
