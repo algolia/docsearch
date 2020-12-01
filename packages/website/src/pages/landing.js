@@ -8,62 +8,94 @@ import {
 } from '@algolia/ui-library';
 import Card from '@algolia/ui-library/public/components/Card';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useThemeContext from '@theme/hooks/useThemeContext';
 import Layout from '@theme/Layout';
 import algoliasearch from 'algoliasearch/lite';
 import github from 'prism-react-renderer/themes/github';
 import vsDark from 'prism-react-renderer/themes/vsDark';
 import queryString from 'query-string';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import { useLocation } from 'react-router';
 
 import DocSearch from '../components/DocSearch';
 import ErrorBoundary from '../components/ErrorBoundary';
 
-function Landing() {
-  const theme = useThemeContext.isDarkTheme ? 'dark' : 'light';
-
-  const {
-    appId: appIdQS = 'BH4D9OD16A',
-    indexName: indexNameQS = '',
-    apiKey: apiKeyQS = '',
-  } = queryString.parse(useLocation().search);
-
-  const [isValidDSCred, setisValidDSCred] = useState(false);
-  const [wrongCredentials, setWrongCredentials] = useState(false);
-  const [appId, setAppId] = useState(appIdQS);
-  const [indexName, setIndexName] = useState(indexNameQS);
-  const [apiKey, setApiKey] = useState(apiKeyQS);
-
-  const fallbackToDocSearchDocCred = () => {
-    setisValidDSCred(false);
-    setAppId('BH4D9OD16A');
-    setIndexName('docsearch');
-    setApiKey('25626fae796133dc1e734c6bcaaeac3c');
-  };
+function Alert({ children }) {
+  const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
-    // Credential not provided
-    if (!indexName && !apiKey) {
-      fallbackToDocSearchDocCred();
+    if (!isActive) {
+      return undefined;
+    }
+
+    const timeoutId = setTimeout(() => {
+      setIsActive(false);
+    }, 5000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [isActive]);
+
+  if (!isActive) {
+    return null;
+  }
+
+  return children;
+}
+
+function Landing() {
+  const { siteConfig } = useDocusaurusContext();
+  const { isDarkTheme } = useThemeContext();
+  const location = useLocation();
+  const theme = isDarkTheme ? 'dark' : 'light';
+
+  const DEFAULT_APP_ID = siteConfig.themeConfig.algolia.appId;
+  const DEFAULT_API_KEY = siteConfig.themeConfig.algolia.apiKey;
+  const DEFAULT_INDEX_NAME = siteConfig.themeConfig.algolia.indexName;
+
+  const initialCredentials = useMemo(
+    () => ({
+      appId: DEFAULT_APP_ID,
+      apiKey: DEFAULT_API_KEY,
+      indexName: DEFAULT_INDEX_NAME,
+    }),
+    [DEFAULT_APP_ID, DEFAULT_API_KEY, DEFAULT_INDEX_NAME]
+  );
+  const [credentials, setCredentials] = useState(() => {
+    return {
+      ...initialCredentials,
+      ...queryString.parse(location.search),
+    };
+  });
+  const [areCredentialsValid, setAreCredentialsValid] = useState(true);
+
+  useEffect(() => {
+    if (!credentials.indexName || !credentials.apiKey) {
+      setAreCredentialsValid(false);
       return;
     }
-    if ((!indexName && !apiKey) || apiKey.length !== 32) {
-      setWrongCredentials(true);
-      fallbackToDocSearchDocCred();
-      return;
-    }
-    const searchClient = algoliasearch(appId, apiKey);
-    const index = searchClient.initIndex(indexName);
+
+    const searchClient = algoliasearch(credentials.appId, credentials.apiKey);
+    const index = searchClient.initIndex(credentials.indexName);
+
     index
       .search('')
-      .then((_) => setisValidDSCred(true))
+      .then((_) => {
+        setAreCredentialsValid(true);
+      })
       .catch((_) => {
-        setWrongCredentials(true);
-        fallbackToDocSearchDocCred();
+        setAreCredentialsValid(false);
       });
-  }, [appId, indexName, apiKey]);
+  }, [credentials.appId, credentials.apiKey, credentials.indexName]);
+
+  useEffect(() => {
+    if (!areCredentialsValid) {
+      setCredentials(initialCredentials);
+    }
+  }, [areCredentialsValid, initialCredentials]);
 
   return (
     <>
@@ -74,17 +106,22 @@ function Landing() {
         style={{ position: 'relative', maxWidth: '800px' }}
       >
         <Text>
-          Try it out with the index: <Pill>{`${indexName}`}</Pill>
+          Try it out with the index: <Pill>{credentials.indexName}</Pill>
         </Text>
         <ErrorBoundary>
-          {isValidDSCred && (
-            <DocSearch appId={appId} indexName={indexName} apiKey={apiKey} />
-          )}
-          {wrongCredentials && (
-            <Text color="mars-0">
-              The credentials provided from the URL were wrong, we will demo the
-              search with the search of our documentation instead.
-            </Text>
+          {areCredentialsValid ? (
+            <DocSearch
+              appId={credentials.appId}
+              apiKey={credentials.apiKey}
+              indexName={credentials.indexName}
+            />
+          ) : (
+            <Alert>
+              <Text color="mars-0">
+                The credentials provided from the URL were wrong, we will demo
+                the search with the search of our documentation instead.
+              </Text>
+            </Alert>
           )}
         </ErrorBoundary>
       </Card>
@@ -96,14 +133,15 @@ function Landing() {
         <LabelText big>Instructions:</LabelText>
 
         <Text className="mt-4">
-          We ha've successfully configured the underlying crawler and it will
-          now run every 24h.
-          <br />
+          We have successfully configured the underlying crawler and it will now
+          run every 24 hours.
+        </Text>
+        <Text>
           You're now a few steps away from having it working on your website:
         </Text>
         <Text className="mt-4">Include a search input:</Text>
         <LiveProvider
-          code={`<input type="text" id="q" placeholder="Search the doc" />`}
+          code={`<input type="text" id="q" placeholder="Search docs" />`}
           language="html"
           noInline={true}
           transformCode={(_code) =>
@@ -124,12 +162,13 @@ function Landing() {
 
 <!-- at the end of the BODY -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
-<script type="text/javascript"> docsearch({
-    apiKey: '${apiKey}',
-    indexName: '${indexName}',
-    inputSelector: '#q', // CSS selector to target <input/>
+<script type="text/javascript">
+  docsearch({
+    apiKey: '${credentials.apiKey}',
+    indexName: '${credentials.indexName}',
+    inputSelector: '#q', // CSS selector to target the <input/>
     debug: false // Set to true if you want to inspect the dropdown
-});
+  });
 </script>`}
           language="html"
           noInline={true}
@@ -150,7 +189,7 @@ function Landing() {
               alignItems: 'center',
               paddingLeft: '1em',
             }}
-            href={`https://github.com/algolia/docsearch-configs/blob/master/configs/${indexName}.json`}
+            href={`https://github.com/algolia/docsearch-configs/blob/master/configs/${credentials.indexName}.json`}
           >
             Please submit a PR on your configuration
           </InlineLink>
