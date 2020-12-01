@@ -1,16 +1,23 @@
 import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
 import Layout from '@theme/Layout';
 import React from 'react';
-
+import useThemeContext from '@theme/hooks/useThemeContext';
 import ApplyForm from '../components/ApplyForm.js';
 import { DocSearchLogo } from '../components/DocSearchLogo';
-
 import showcaseProjects from './showcase-projects.json';
-
 import 'tailwindcss/tailwind.css';
 
 function Home() {
   const { withBaseUrl } = useBaseUrlUtils();
+  const { isDarkTheme } = useThemeContext();
+
+  React.useEffect(() => {
+    if (isDarkTheme) {
+      document.querySelector('html').classList.add('dark')
+    } else {
+      document.querySelector('html').classList.remove('dark')
+    }
+  }, [isDarkTheme]);
 
   return (
     <>
@@ -46,7 +53,7 @@ function Home() {
               </div>
             </div>
             <div className="pl-6">
-              <img src={withBaseUrl('img/assets/tailwind.png')} width="600" />
+              <iframe className="vidyard_iframe" src="//play.vidyard.com/3NZeGgFeugUWPiEPiWoRWE.html?" width="540" height="504" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen></iframe>
             </div>
           </main>
         </div>
