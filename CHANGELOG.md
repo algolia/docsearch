@@ -1,3 +1,9 @@
+# [3.0.0-alpha.32](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.31...v3.0.0-alpha.32) (2020-12-01)
+
+### Bug Fixes
+
+- highlight first item by default ([777bc8e](https://github.com/algolia/docsearch/commit/777bc8ef6896bded5e0c97d07d8a55a77bcb37ad))
+
 # [3.0.0-alpha.31](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.30...v3.0.0-alpha.31) (2020-11-25)
 
 ### Bug Fixes
