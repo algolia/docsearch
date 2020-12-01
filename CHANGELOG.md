@@ -1,14 +1,8 @@
-# [](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.31...v) (2020-12-01)
-
+# [3.0.0-alpha.32](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.31...v3.0.0-alpha.32) (2020-12-01)
 
 ### Bug Fixes
 
-* highlight first item by default ([777bc8e](https://github.com/algolia/docsearch/commit/777bc8ef6896bded5e0c97d07d8a55a77bcb37ad))
-* **docs:** Adding Yarn resolution to lower terser-webpack-plugin ([50c33dd](https://github.com/algolia/docsearch/commit/50c33dd1b73c38105dd2c10042fa45d46f53d789))
-* **docs:** package website resolutions ([e24fa27](https://github.com/algolia/docsearch/commit/e24fa276abce6c7fa9c9dbf49c62a6af9f7bb760))
-* **website:** add workspace `nohoist` for Docusaurus ([#989](https://github.com/algolia/docsearch/issues/989)) ([e667698](https://github.com/algolia/docsearch/commit/e6676988b8bbb75554a269254a2c04fab5e2fac0))
-
-
+- highlight first item by default ([777bc8e](https://github.com/algolia/docsearch/commit/777bc8ef6896bded5e0c97d07d8a55a77bcb37ad))
 
 # [3.0.0-alpha.31](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.30...v3.0.0-alpha.31) (2020-11-25)
 
