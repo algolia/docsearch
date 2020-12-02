@@ -40,6 +40,11 @@ module.exports = {
           position: 'right',
         },
         {
+          label: 'Showcase',
+          to: 'showcase',
+          position: 'right',
+        },
+        {
           label: 'GitHub',
           href: 'https://github.com/algolia/DocSearch',
           position: 'right',
