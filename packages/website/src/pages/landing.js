@@ -22,30 +22,6 @@ import { useLocation } from 'react-router';
 import DocSearch from '../components/DocSearch';
 import ErrorBoundary from '../components/ErrorBoundary';
 
-function Alert({ children }) {
-  const [isActive, setIsActive] = useState(true);
-
-  useEffect(() => {
-    if (!isActive) {
-      return undefined;
-    }
-
-    const timeoutId = setTimeout(() => {
-      setIsActive(false);
-    }, 5000);
-
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [isActive]);
-
-  if (!isActive) {
-    return null;
-  }
-
-  return children;
-}
-
 function Landing() {
   const { siteConfig } = useDocusaurusContext();
   const { isDarkTheme } = useThemeContext();
@@ -116,12 +92,10 @@ function Landing() {
               indexName={credentials.indexName}
             />
           ) : (
-            <Alert>
-              <Text color="mars-0">
-                The credentials provided from the URL were wrong, we will demo
-                the search with the search of our documentation instead.
-              </Text>
-            </Alert>
+            <Text color="mars-0">
+              The credentials provided from the URL were wrong, we will demo the
+              search with the search of our documentation instead.
+            </Text>
           )}
         </ErrorBoundary>
       </Card>
