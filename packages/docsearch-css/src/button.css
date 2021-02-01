@@ -6,7 +6,6 @@
   color: var(--docsearch-muted-color);
   cursor: pointer;
   display: flex;
-  font-weight: 500;
   height: 36px;
   justify-content: space-between;
   margin: 0 0 0 16px;

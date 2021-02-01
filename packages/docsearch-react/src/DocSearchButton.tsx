@@ -30,13 +30,7 @@ export const DocSearchButton = React.forwardRef<
   }, []);
 
   return (
-    <button
-      type="button"
-      className="DocSearch DocSearch-Button"
-      aria-label="Search"
-      {...props}
-      ref={ref}
-    >
+    <div className="DocSearch DocSearch-Button" {...props} ref={ref}>
       <div className="DocSearch-Button-Container">
         <SearchIcon />
         <span className="DocSearch-Button-Placeholder">Search</span>
@@ -50,6 +44,6 @@ export const DocSearchButton = React.forwardRef<
           <span className="DocSearch-Button-Key">K</span>
         </div>
       ) : null}
-    </button>
+    </div>
   );
 });
