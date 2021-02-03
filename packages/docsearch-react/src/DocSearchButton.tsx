@@ -3,10 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ControlKeyIcon } from './icons/ControlKeyIcon';
 import { SearchIcon } from './icons/SearchIcon';
 
-export type DocSearchButtonProps = React.DetailedHTMLProps<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
->;
+export type DocSearchButtonProps = React.ComponentProps<'button'> & {placeholderLabel?: string}
 
 const ACTION_KEY_DEFAULT = 'Ctrl' as const;
 const ACTION_KEY_APPLE = '⌘' as const;
@@ -18,7 +15,7 @@ function isAppleDevice() {
 export const DocSearchButton = React.forwardRef<
   HTMLButtonElement,
   DocSearchButtonProps
->((props, ref) => {
+>(({placeholderLabel = "Search", ...props}, ref) => {
   const [key, setKey] = useState<
     typeof ACTION_KEY_APPLE | typeof ACTION_KEY_DEFAULT | null
   >(null);
@@ -39,7 +36,7 @@ export const DocSearchButton = React.forwardRef<
     >
       <span className="DocSearch-Button-Container">
         <SearchIcon />
-        <span className="DocSearch-Button-Placeholder">Search</span>
+        <span className="DocSearch-Button-Placeholder">{placeholderLabel}</span>
       </span>
 
       {key !== null ? (
