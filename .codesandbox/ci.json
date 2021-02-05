@@ -1,3 +1,4 @@
 {
-  "packages": ["packages/docsearch-*"]
+  "packages": ["packages/docsearch-*"],
+  "node": "14.15.0"
 }
