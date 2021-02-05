@@ -1,18 +1,14 @@
-# [](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.32...v) (2021-02-05)
-
+# [3.0.0-alpha.33](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.32...v3.0.0-alpha.33) (2021-02-05)
 
 ### Bug Fixes
 
-* use spans inside button tag instead of divs ([#994](https://github.com/algolia/docsearch/issues/994)) ([f5c2a27](https://github.com/algolia/docsearch/commit/f5c2a2713651985412cb57fc37aeac787270c77c))
-* **css:** remove `sideEffects` package field ([#991](https://github.com/algolia/docsearch/issues/991)) ([9216ffa](https://github.com/algolia/docsearch/commit/9216ffa0a86724144d1b34d83fc288711eb22322))
-* **website:** Sync tailwind darkmode class with docusaurus theme context ([3ade29f](https://github.com/algolia/docsearch/commit/3ade29f4e1569c05c3dcff430a8317611e471c28))
-
+- use spans inside button tag instead of divs ([#994](https://github.com/algolia/docsearch/issues/994)) ([f5c2a27](https://github.com/algolia/docsearch/commit/f5c2a2713651985412cb57fc37aeac787270c77c))
+- **css:** remove `sideEffects` package field ([#991](https://github.com/algolia/docsearch/issues/991)) ([9216ffa](https://github.com/algolia/docsearch/commit/9216ffa0a86724144d1b34d83fc288711eb22322))
+- **website:** Sync tailwind darkmode class with docusaurus theme context ([3ade29f](https://github.com/algolia/docsearch/commit/3ade29f4e1569c05c3dcff430a8317611e471c28))
 
 ### Features
 
-* add `translations` prop to search button ([#995](https://github.com/algolia/docsearch/issues/995)) ([44f5c7b](https://github.com/algolia/docsearch/commit/44f5c7b5f8ef647a221cf4d41ffe9f3485ad842d))
-
-
+- add `translations` prop to search button ([#995](https://github.com/algolia/docsearch/issues/995)) ([44f5c7b](https://github.com/algolia/docsearch/commit/44f5c7b5f8ef647a221cf4d41ffe9f3485ad842d))
 
 # [3.0.0-alpha.32](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.31...v3.0.0-alpha.32) (2020-12-01)
 
