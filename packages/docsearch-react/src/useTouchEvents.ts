@@ -4,24 +4,24 @@ import React from 'react';
 interface UseTouchEventsProps {
   getEnvironmentProps: AutocompleteApi<any>['getEnvironmentProps'];
   panelElement: HTMLDivElement | null;
-  searchBoxElement: HTMLDivElement | null;
+  formElement: HTMLDivElement | null;
   inputElement: HTMLInputElement | null;
 }
 
 export function useTouchEvents({
   getEnvironmentProps,
   panelElement,
-  searchBoxElement,
+  formElement,
   inputElement,
 }: UseTouchEventsProps) {
   React.useEffect(() => {
-    if (!(panelElement && searchBoxElement && inputElement)) {
+    if (!(panelElement && formElement && inputElement)) {
       return undefined;
     }
 
     const { onTouchStart, onTouchMove } = getEnvironmentProps({
       panelElement,
-      searchBoxElement,
+      formElement,
       inputElement,
     });
 
@@ -32,5 +32,5 @@ export function useTouchEvents({
       window.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchmove', onTouchMove);
     };
-  }, [getEnvironmentProps, panelElement, searchBoxElement, inputElement]);
+  }, [getEnvironmentProps, panelElement, formElement, inputElement]);
 }

@@ -51,13 +51,13 @@ export function DocSearchModal({
     completion: null,
     context: {},
     isOpen: false,
-    selectedItemId: null,
+    activeItemId: null,
     status: 'idle',
   });
 
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const modalRef = React.useRef<HTMLDivElement | null>(null);
-  const searchBoxRef = React.useRef<HTMLDivElement | null>(null);
+  const formElementRef = React.useRef<HTMLDivElement | null>(null);
   const dropdownRef = React.useRef<HTMLDivElement | null>(null);
   const inputRef = React.useRef<HTMLInputElement | null>(null);
   const snippetLength = React.useRef<number>(10);
@@ -139,6 +139,7 @@ export function DocSearchModal({
 
             return [
               {
+                sourceId: 'DocSearchRecentSearches',
                 onSelect({ item, event }) {
                   saveRecentSearch(item);
 
@@ -154,6 +155,7 @@ export function DocSearchModal({
                 },
               },
               {
+                sourceId: 'DocSearchFavoriteSearches',
                 onSelect({ item, event }) {
                   saveRecentSearch(item);
 
@@ -239,6 +241,7 @@ export function DocSearchModal({
 
               return Object.values<DocSearchHit[]>(sources).map((items) => {
                 return {
+                  sourceId: 'DocSearchHits',
                   onSelect({ item, event }) {
                     saveRecentSearch(item);
 
@@ -298,7 +301,7 @@ export function DocSearchModal({
   useTouchEvents({
     getEnvironmentProps,
     panelElement: dropdownRef.current,
-    searchBoxElement: searchBoxRef.current,
+    formElement: formElementRef.current,
     inputElement: inputRef.current,
   });
   useTrapFocus({ container: containerRef.current });
@@ -387,7 +390,7 @@ export function DocSearchModal({
       }}
     >
       <div className="DocSearch-Modal" ref={modalRef}>
-        <header className="DocSearch-SearchBar" ref={searchBoxRef}>
+        <header className="DocSearch-SearchBar" ref={formElementRef}>
           <SearchBox
             {...autocomplete}
             state={state}

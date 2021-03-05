@@ -42,7 +42,7 @@ interface DocSearchHitSnippetResult {
   hierarchy_camel: DocSearchHitHighlightResultHierarchy[];
 }
 
-export interface DocSearchHit {
+export declare type DocSearchHit = {
   objectID: string;
   content: string | null;
   url: string;
@@ -78,4 +78,4 @@ export interface DocSearchHit {
     };
   };
   _distinctSeqID?: number;
-}
+};
