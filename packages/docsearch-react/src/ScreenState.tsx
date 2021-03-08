@@ -1,4 +1,8 @@
-import { AutocompleteApi, AutocompleteState } from '@algolia/autocomplete-core';
+import {
+  AutocompleteApi,
+  AutocompleteState,
+  BaseItem,
+} from '@algolia/autocomplete-core';
 import React from 'react';
 
 import { DocSearchProps } from './DocSearch';
@@ -9,7 +13,7 @@ import { StartScreen } from './StartScreen';
 import { StoredSearchPlugin } from './stored-searches';
 import { InternalDocSearchHit, StoredDocSearchHit } from './types';
 
-export interface ScreenStateProps<TItem>
+export interface ScreenStateProps<TItem extends BaseItem>
   extends AutocompleteApi<
     TItem,
     React.FormEvent,

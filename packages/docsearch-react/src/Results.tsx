@@ -1,11 +1,15 @@
-import { AutocompleteApi, AutocompleteState } from '@algolia/autocomplete-core';
+import {
+  AutocompleteApi,
+  AutocompleteState,
+  BaseItem,
+} from '@algolia/autocomplete-core';
 import React from 'react';
 
 import { DocSearchProps } from './DocSearch';
 import { Snippet } from './Snippet';
 import { InternalDocSearchHit, StoredDocSearchHit } from './types';
 
-interface ResultsProps<TItem>
+interface ResultsProps<TItem extends BaseItem>
   extends AutocompleteApi<
     TItem,
     React.FormEvent,
@@ -51,7 +55,7 @@ export function Results<TItem extends StoredDocSearchHit>(
   );
 }
 
-interface ResultProps<TItem> extends ResultsProps<TItem> {
+interface ResultProps<TItem extends BaseItem> extends ResultsProps<TItem> {
   item: TItem;
   index: number;
 }

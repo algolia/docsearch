@@ -51,13 +51,13 @@ export function DocSearchModal({
     completion: null,
     context: {},
     isOpen: false,
-    selectedItemId: null,
+    activeItemId: null,
     status: 'idle',
   });
 
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const modalRef = React.useRef<HTMLDivElement | null>(null);
-  const searchBoxRef = React.useRef<HTMLDivElement | null>(null);
+  const formElementRef = React.useRef<HTMLDivElement | null>(null);
   const dropdownRef = React.useRef<HTMLDivElement | null>(null);
   const inputRef = React.useRef<HTMLInputElement | null>(null);
   const snippetLength = React.useRef<number>(10);
@@ -117,7 +117,7 @@ export function DocSearchModal({
         React.KeyboardEvent
       >({
         id: 'docsearch',
-        defaultSelectedItemId: 0,
+        defaultActiveItemId: 0,
         placeholder,
         openOnFocus: true,
         initialState: {
@@ -139,6 +139,7 @@ export function DocSearchModal({
 
             return [
               {
+                sourceId: 'recentSearches',
                 onSelect({ item, event }) {
                   saveRecentSearch(item);
 
@@ -154,6 +155,7 @@ export function DocSearchModal({
                 },
               },
               {
+                sourceId: 'favoriteSearches',
                 onSelect({ item, event }) {
                   saveRecentSearch(item);
 
@@ -237,43 +239,46 @@ export function DocSearchModal({
 
               setContext({ nbHits });
 
-              return Object.values<DocSearchHit[]>(sources).map((items) => {
-                return {
-                  onSelect({ item, event }) {
-                    saveRecentSearch(item);
+              return Object.values<DocSearchHit[]>(sources).map(
+                (items, index) => {
+                  return {
+                    sourceId: `hits${index}`,
+                    onSelect({ item, event }) {
+                      saveRecentSearch(item);
 
-                    if (!event.shiftKey && !event.ctrlKey && !event.metaKey) {
-                      onClose();
-                    }
-                  },
-                  getItemUrl({ item }) {
-                    return item.url;
-                  },
-                  getItems() {
-                    return Object.values(
-                      groupBy(items, (item) => item.hierarchy.lvl1)
-                    )
-                      .map(transformItems)
-                      .map((hits) =>
-                        hits.map((item) => {
-                          return {
-                            ...item,
-                            // eslint-disable-next-line @typescript-eslint/camelcase
-                            __docsearch_parent:
-                              item.type !== 'lvl1' &&
-                              hits.find(
-                                (siblingItem) =>
-                                  siblingItem.type === 'lvl1' &&
-                                  siblingItem.hierarchy.lvl1 ===
-                                    item.hierarchy.lvl1
-                              ),
-                          };
-                        })
+                      if (!event.shiftKey && !event.ctrlKey && !event.metaKey) {
+                        onClose();
+                      }
+                    },
+                    getItemUrl({ item }) {
+                      return item.url;
+                    },
+                    getItems() {
+                      return Object.values(
+                        groupBy(items, (item) => item.hierarchy.lvl1)
                       )
-                      .flat();
-                  },
-                };
-              });
+                        .map(transformItems)
+                        .map((hits) =>
+                          hits.map((item) => {
+                            return {
+                              ...item,
+                              // eslint-disable-next-line @typescript-eslint/camelcase
+                              __docsearch_parent:
+                                item.type !== 'lvl1' &&
+                                hits.find(
+                                  (siblingItem) =>
+                                    siblingItem.type === 'lvl1' &&
+                                    siblingItem.hierarchy.lvl1 ===
+                                      item.hierarchy.lvl1
+                                ),
+                            };
+                          })
+                        )
+                        .flat();
+                    },
+                  };
+                }
+              );
             });
         },
       }),
@@ -298,7 +303,7 @@ export function DocSearchModal({
   useTouchEvents({
     getEnvironmentProps,
     panelElement: dropdownRef.current,
-    searchBoxElement: searchBoxRef.current,
+    formElement: formElementRef.current,
     inputElement: inputRef.current,
   });
   useTrapFocus({ container: containerRef.current });
@@ -387,7 +392,7 @@ export function DocSearchModal({
       }}
     >
       <div className="DocSearch-Modal" ref={modalRef}>
-        <header className="DocSearch-SearchBar" ref={searchBoxRef}>
+        <header className="DocSearch-SearchBar" ref={formElementRef}>
           <SearchBox
             {...autocomplete}
             state={state}
