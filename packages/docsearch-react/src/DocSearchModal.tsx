@@ -242,7 +242,7 @@ export function DocSearchModal({
               return Object.values<DocSearchHit[]>(sources).map(
                 (items, index) => {
                   return {
-                    sourceId: `DocSearch-Hits-${index}`,
+                    sourceId: `hits${index}`,
                     onSelect({ item, event }) {
                       saveRecentSearch(item);
 
