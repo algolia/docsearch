@@ -62,7 +62,6 @@ export function SearchBox(props: SearchBoxProps) {
             inputElement: props.inputRef.current!,
             autoFocus: props.autoFocus,
             maxLength: MAX_QUERY_SIZE,
-            enterKeyHint: 'go',
           })}
         />
 
