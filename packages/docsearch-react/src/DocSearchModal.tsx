@@ -117,7 +117,7 @@ export function DocSearchModal({
         React.KeyboardEvent
       >({
         id: 'docsearch',
-        defaultSelectedItemId: 0,
+        defaultActiveItemId: 0,
         placeholder,
         openOnFocus: true,
         initialState: {
@@ -139,7 +139,7 @@ export function DocSearchModal({
 
             return [
               {
-                sourceId: 'DocSearchRecentSearches',
+                sourceId: 'recentSearches',
                 onSelect({ item, event }) {
                   saveRecentSearch(item);
 
@@ -155,7 +155,7 @@ export function DocSearchModal({
                 },
               },
               {
-                sourceId: 'DocSearchFavoriteSearches',
+                sourceId: 'favoriteSearches',
                 onSelect({ item, event }) {
                   saveRecentSearch(item);
 
@@ -239,44 +239,46 @@ export function DocSearchModal({
 
               setContext({ nbHits });
 
-              return Object.values<DocSearchHit[]>(sources).map((items) => {
-                return {
-                  sourceId: 'DocSearchHits',
-                  onSelect({ item, event }) {
-                    saveRecentSearch(item);
+              return Object.values<DocSearchHit[]>(sources).map(
+                (items, index) => {
+                  return {
+                    sourceId: `DocSearch-Hits-${index}`,
+                    onSelect({ item, event }) {
+                      saveRecentSearch(item);
 
-                    if (!event.shiftKey && !event.ctrlKey && !event.metaKey) {
-                      onClose();
-                    }
-                  },
-                  getItemUrl({ item }) {
-                    return item.url;
-                  },
-                  getItems() {
-                    return Object.values(
-                      groupBy(items, (item) => item.hierarchy.lvl1)
-                    )
-                      .map(transformItems)
-                      .map((hits) =>
-                        hits.map((item) => {
-                          return {
-                            ...item,
-                            // eslint-disable-next-line @typescript-eslint/camelcase
-                            __docsearch_parent:
-                              item.type !== 'lvl1' &&
-                              hits.find(
-                                (siblingItem) =>
-                                  siblingItem.type === 'lvl1' &&
-                                  siblingItem.hierarchy.lvl1 ===
-                                    item.hierarchy.lvl1
-                              ),
-                          };
-                        })
+                      if (!event.shiftKey && !event.ctrlKey && !event.metaKey) {
+                        onClose();
+                      }
+                    },
+                    getItemUrl({ item }) {
+                      return item.url;
+                    },
+                    getItems() {
+                      return Object.values(
+                        groupBy(items, (item) => item.hierarchy.lvl1)
                       )
-                      .flat();
-                  },
-                };
-              });
+                        .map(transformItems)
+                        .map((hits) =>
+                          hits.map((item) => {
+                            return {
+                              ...item,
+                              // eslint-disable-next-line @typescript-eslint/camelcase
+                              __docsearch_parent:
+                                item.type !== 'lvl1' &&
+                                hits.find(
+                                  (siblingItem) =>
+                                    siblingItem.type === 'lvl1' &&
+                                    siblingItem.hierarchy.lvl1 ===
+                                      item.hierarchy.lvl1
+                                ),
+                            };
+                          })
+                        )
+                        .flat();
+                    },
+                  };
+                }
+              );
             });
         },
       }),
