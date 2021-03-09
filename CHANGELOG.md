@@ -1,3 +1,12 @@
+# [](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.33...v) (2021-03-09)
+
+
+### Bug Fixes
+
+* **deps:** Update and pin Autocomplete to the latest version ([#999](https://github.com/algolia/docsearch/issues/999)) ([1421077](https://github.com/algolia/docsearch/commit/1421077637ca52284e33f95e1745df2796039891))
+
+
+
 # [3.0.0-alpha.33](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.32...v3.0.0-alpha.33) (2021-02-05)
 
 ### Bug Fixes
