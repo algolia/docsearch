@@ -6,11 +6,11 @@
     },
     {
       "path": "packages/docsearch-react/dist/umd/index.js",
-      "maxSize": "18.2 kB"
+      "maxSize": "18.3 kB"
     },
     {
       "path": "packages/docsearch-js/dist/umd/index.js",
-      "maxSize": "25.8 kB"
+      "maxSize": "25.9 kB"
     }
   ]
 }
