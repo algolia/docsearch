@@ -4,7 +4,7 @@ import { SelectIcon, SourceIcon } from './icons';
 import { Results } from './Results';
 import { ScreenStateProps } from './ScreenState';
 import { InternalDocSearchHit } from './types';
-import { unescape } from './utils';
+import { removeHighlightTags } from './utils';
 
 type ResultsScreenProps = ScreenStateProps<InternalDocSearchHit>;
 
@@ -16,7 +16,7 @@ export function ResultsScreen(props: ResultsScreenProps) {
           return null;
         }
 
-        const title = unescape(
+        const title = removeHighlightTags(
           collection.items[0]._highlightResult.hierarchy_camel[0].lvl0.value
         );
 

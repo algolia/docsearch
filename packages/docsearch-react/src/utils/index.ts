@@ -1,4 +1,4 @@
 export * from './groupBy';
 export * from './identity';
 export * from './noop';
-export * from './unescape';
+export * from './removeHighlightTags';
