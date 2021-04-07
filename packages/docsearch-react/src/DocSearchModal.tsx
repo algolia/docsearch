@@ -20,7 +20,7 @@ import {
 import { useSearchClient } from './useSearchClient';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
-import { groupBy, identity, noop } from './utils';
+import { groupBy, identity, noop, removeHighlightTags } from './utils';
 
 export interface DocSearchModalProps extends DocSearchProps {
   initialScrollY: number;
@@ -224,7 +224,9 @@ export function DocSearchModal({
             .then((results) => {
               const hits = results[0].hits;
               const nbHits: number = results[0].nbHits;
-              const sources = groupBy(hits, (hit) => hit.hierarchy.lvl0);
+              const sources = groupBy(hits, (hit) =>
+                removeHighlightTags(hit.hierarchy.lvl0)
+              );
 
               // We store the `lvl0`s to display them as search suggestions
               // in the “no results“ screen.

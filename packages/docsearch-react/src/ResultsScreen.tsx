@@ -4,6 +4,7 @@ import { SelectIcon, SourceIcon } from './icons';
 import { Results } from './Results';
 import { ScreenStateProps } from './ScreenState';
 import { InternalDocSearchHit } from './types';
+import { removeHighlightTags } from './utils';
 
 type ResultsScreenProps = ScreenStateProps<InternalDocSearchHit>;
 
@@ -15,7 +16,9 @@ export function ResultsScreen(props: ResultsScreenProps) {
           return null;
         }
 
-        const title = collection.items[0].hierarchy.lvl0;
+        const title = removeHighlightTags(
+          collection.items[0]._highlightResult.hierarchy.lvl0.value
+        );
 
         return (
           <Results
