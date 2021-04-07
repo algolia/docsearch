@@ -17,7 +17,7 @@ export function ResultsScreen(props: ResultsScreenProps) {
         }
 
         const title = removeHighlightTags(
-          collection.items[0]._highlightResult.hierarchy_camel[0].lvl0.value
+          collection.items[0]._highlightResult.hierarchy.lvl0.value
         );
 
         return (
