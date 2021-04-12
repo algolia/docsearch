@@ -1,4 +1,4 @@
-# [](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.34...v) (2021-04-12)
+# [3.0.0-alpha.35](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.34...v3.0.0-alpha.35) (2021-04-12)
 
 
 ### Bug Fixes
