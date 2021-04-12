@@ -1,3 +1,12 @@
+# [3.0.0-alpha.35](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.34...v3.0.0-alpha.35) (2021-04-12)
+
+
+### Bug Fixes
+
+* **results:** unescaped lvl0 ([#1001](https://github.com/algolia/docsearch/issues/1001)) ([117228b](https://github.com/algolia/docsearch/commit/117228b19b57755c1d1cc2762f73a5b1e76a1da4))
+
+
+
 # [3.0.0-alpha.34](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.33...v3.0.0-alpha.34) (2021-03-09)
 
 
