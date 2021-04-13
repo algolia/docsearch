@@ -224,9 +224,7 @@ export function DocSearchModal({
             .then((results) => {
               const hits = results[0].hits;
               const nbHits: number = results[0].nbHits;
-              const sources = groupBy(hits, (hit) =>
-                removeHighlightTags(hit.hierarchy.lvl0)
-              );
+              const sources = groupBy(hits, (hit) => removeHighlightTags(hit));
 
               // We store the `lvl0`s to display them as search suggestions
               // in the “no results“ screen.
