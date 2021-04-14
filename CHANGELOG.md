@@ -1,3 +1,12 @@
+# [](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.35...v) (2021-04-14)
+
+
+### Bug Fixes
+
+* **escapedResults:** _highlightResult is undefined ([#1003](https://github.com/algolia/docsearch/issues/1003)) ([16e6558](https://github.com/algolia/docsearch/commit/16e6558da735e014c809f1b549fdb7fccd682dbc))
+
+
+
 # [3.0.0-alpha.35](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.34...v3.0.0-alpha.35) (2021-04-12)
 
 
