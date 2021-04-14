@@ -3,7 +3,7 @@
 
 ### Bug Fixes
 
-* **escapedResults:** _highlightResult is undefined ([#1003](https://github.com/algolia/docsearch/issues/1003)) ([16e6558](https://github.com/algolia/docsearch/commit/16e6558da735e014c809f1b549fdb7fccd682dbc))
+* **escapedResults:** fix undefined `_highlightResult` ([#1003](https://github.com/algolia/docsearch/issues/1003)) ([16e6558](https://github.com/algolia/docsearch/commit/16e6558da735e014c809f1b549fdb7fccd682dbc))
 
 
 
