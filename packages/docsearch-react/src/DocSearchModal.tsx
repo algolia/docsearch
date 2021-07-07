@@ -2,7 +2,6 @@ import {
   AutocompleteState,
   createAutocomplete,
 } from '@algolia/autocomplete-core';
-import { getAlgoliaResults } from '@algolia/autocomplete-preset-algolia';
 import React from 'react';
 
 import { MAX_QUERY_SIZE } from './constants';
@@ -128,7 +127,7 @@ export function DocSearchModal({
         },
         navigator,
         onStateChange({ state }) {
-          setState(state as any);
+          setState(state);
         },
         // @ts-ignore Temporarily ignore bad typing in autocomplete-core.
         getSources({ query, state, setContext, setStatus }) {
@@ -173,43 +172,36 @@ export function DocSearchModal({
             ];
           }
 
-          return getAlgoliaResults<DocSearchHit>({
-            searchClient,
-            queries: [
-              {
-                indexName,
-                query,
-                params: {
-                  attributesToRetrieve: [
-                    'hierarchy.lvl0',
-                    'hierarchy.lvl1',
-                    'hierarchy.lvl2',
-                    'hierarchy.lvl3',
-                    'hierarchy.lvl4',
-                    'hierarchy.lvl5',
-                    'hierarchy.lvl6',
-                    'content',
-                    'type',
-                    'url',
-                  ],
-                  attributesToSnippet: [
-                    `hierarchy.lvl1:${snippetLength.current}`,
-                    `hierarchy.lvl2:${snippetLength.current}`,
-                    `hierarchy.lvl3:${snippetLength.current}`,
-                    `hierarchy.lvl4:${snippetLength.current}`,
-                    `hierarchy.lvl5:${snippetLength.current}`,
-                    `hierarchy.lvl6:${snippetLength.current}`,
-                    `content:${snippetLength.current}`,
-                  ],
-                  snippetEllipsisText: '…',
-                  highlightPreTag: '<mark>',
-                  highlightPostTag: '</mark>',
-                  hitsPerPage: 20,
-                  ...searchParameters,
-                },
-              },
-            ],
-          })
+          return searchClient
+            .initIndex(indexName)
+            .search<DocSearchHit>(query, {
+              attributesToRetrieve: [
+                'hierarchy.lvl0',
+                'hierarchy.lvl1',
+                'hierarchy.lvl2',
+                'hierarchy.lvl3',
+                'hierarchy.lvl4',
+                'hierarchy.lvl5',
+                'hierarchy.lvl6',
+                'content',
+                'type',
+                'url',
+              ],
+              attributesToSnippet: [
+                `hierarchy.lvl1:${snippetLength.current}`,
+                `hierarchy.lvl2:${snippetLength.current}`,
+                `hierarchy.lvl3:${snippetLength.current}`,
+                `hierarchy.lvl4:${snippetLength.current}`,
+                `hierarchy.lvl5:${snippetLength.current}`,
+                `hierarchy.lvl6:${snippetLength.current}`,
+                `content:${snippetLength.current}`,
+              ],
+              snippetEllipsisText: '…',
+              highlightPreTag: '<mark>',
+              highlightPostTag: '</mark>',
+              hitsPerPage: 20,
+              ...searchParameters,
+            })
             .catch((error) => {
               // The Algolia `RetryError` happens when all the servers have
               // failed, meaning that there's no chance the response comes
@@ -221,13 +213,11 @@ export function DocSearchModal({
 
               throw error;
             })
-            .then((results) => {
-              const hits = results[0].hits;
-              const nbHits: number = results[0].nbHits;
+            .then(({ hits, nbHits }) => {
               const sources = groupBy(hits, (hit) => removeHighlightTags(hit));
 
               // We store the `lvl0`s to display them as search suggestions
-              // in the “no results“ screen.
+              // in the "no results" screen.
               if (
                 (state.context.searchSuggestions as any[]).length <
                 Object.keys(sources).length

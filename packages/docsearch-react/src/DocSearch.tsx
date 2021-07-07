@@ -2,6 +2,7 @@ import {
   AutocompleteState,
   AutocompleteOptions,
 } from '@algolia/autocomplete-core';
+import { SearchClient } from 'algoliasearch/lite';
 import React from 'react';
 import { createPortal } from 'react-dom';
 
@@ -11,7 +12,6 @@ import {
   DocSearchHit,
   InternalDocSearchHit,
   StoredDocSearchHit,
-  SearchClient,
 } from './types';
 import { useDocSearchKeyboardEvents } from './useDocSearchKeyboardEvents';
 
