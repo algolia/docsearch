@@ -1,29 +1,26 @@
-# [v3.0.0-alpha.36](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.35...v3.0.0-alpha.36) (2021-04-14)
-
+# [v3.0.0-alpha.37](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.36...v3.0.0-alpha.37) (2021-07-09)
 
 ### Bug Fixes
 
-* **escapedResults:** fix undefined `_highlightResult` ([#1003](https://github.com/algolia/docsearch/issues/1003)) ([16e6558](https://github.com/algolia/docsearch/commit/16e6558da735e014c809f1b549fdb7fccd682dbc))
+- **dependencies:** upgrade dependencies ([#1015](https://github.com/algolia/docsearch/issues/1015)) ([9300cb4](https://github.com/algolia/docsearch/commit/9300cb4bd6fe09d9649eb3664a6fa6b40412cd6a))
 
+# [v3.0.0-alpha.36](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.35...v3.0.0-alpha.36) (2021-04-14)
 
+### Bug Fixes
+
+- **escapedResults:** fix undefined `_highlightResult` ([#1003](https://github.com/algolia/docsearch/issues/1003)) ([16e6558](https://github.com/algolia/docsearch/commit/16e6558da735e014c809f1b549fdb7fccd682dbc))
 
 # [3.0.0-alpha.35](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.34...v3.0.0-alpha.35) (2021-04-12)
 
-
 ### Bug Fixes
 
-* **results:** unescaped lvl0 ([#1001](https://github.com/algolia/docsearch/issues/1001)) ([117228b](https://github.com/algolia/docsearch/commit/117228b19b57755c1d1cc2762f73a5b1e76a1da4))
-
-
+- **results:** unescaped lvl0 ([#1001](https://github.com/algolia/docsearch/issues/1001)) ([117228b](https://github.com/algolia/docsearch/commit/117228b19b57755c1d1cc2762f73a5b1e76a1da4))
 
 # [3.0.0-alpha.34](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.33...v3.0.0-alpha.34) (2021-03-09)
 
-
 ### Bug Fixes
 
-* **deps:** Update and pin Autocomplete to the latest version ([#999](https://github.com/algolia/docsearch/issues/999)) ([1421077](https://github.com/algolia/docsearch/commit/1421077637ca52284e33f95e1745df2796039891))
-
-
+- **deps:** Update and pin Autocomplete to the latest version ([#999](https://github.com/algolia/docsearch/issues/999)) ([1421077](https://github.com/algolia/docsearch/commit/1421077637ca52284e33f95e1745df2796039891))
 
 # [3.0.0-alpha.33](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.32...v3.0.0-alpha.33) (2021-02-05)
 
