@@ -41,7 +41,7 @@ import docsearch from '@docsearch/js';
 **1–bis.** Or with a script tag (at the end of the `body`):
 
 ```html
-<script src="https://cdn.jsdelivr.net/@docsearch/js@alpha"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@alpha"></script>
 ```
 
 **2.** Use the library:
