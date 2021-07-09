@@ -4,7 +4,7 @@
 
 The easiest way to add search to your documentation – for free.
 
-[![npm version](https://img.shields.io/npm/v/@docsearch/js.svg?style=flat-square)](https://npmjs.org/package/@docsearch/js@alpha) [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](./LICENSE)
+[![npm version](https://img.shields.io/npm/v/@docsearch/js/alpha.svg?style=flat-square)](https://www.npmjs.com/package/@docsearch/js/v/alpha) [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](./LICENSE)
 
 </div>
 
