@@ -173,35 +173,40 @@ export function DocSearchModal({
           }
 
           return searchClient
-            .initIndex(indexName)
-            .search<DocSearchHit>(query, {
-              attributesToRetrieve: [
-                'hierarchy.lvl0',
-                'hierarchy.lvl1',
-                'hierarchy.lvl2',
-                'hierarchy.lvl3',
-                'hierarchy.lvl4',
-                'hierarchy.lvl5',
-                'hierarchy.lvl6',
-                'content',
-                'type',
-                'url',
-              ],
-              attributesToSnippet: [
-                `hierarchy.lvl1:${snippetLength.current}`,
-                `hierarchy.lvl2:${snippetLength.current}`,
-                `hierarchy.lvl3:${snippetLength.current}`,
-                `hierarchy.lvl4:${snippetLength.current}`,
-                `hierarchy.lvl5:${snippetLength.current}`,
-                `hierarchy.lvl6:${snippetLength.current}`,
-                `content:${snippetLength.current}`,
-              ],
-              snippetEllipsisText: '…',
-              highlightPreTag: '<mark>',
-              highlightPostTag: '</mark>',
-              hitsPerPage: 20,
-              ...searchParameters,
-            })
+            .search<DocSearchHit>([
+              {
+                query,
+                indexName,
+                params: {
+                  attributesToRetrieve: [
+                    'hierarchy.lvl0',
+                    'hierarchy.lvl1',
+                    'hierarchy.lvl2',
+                    'hierarchy.lvl3',
+                    'hierarchy.lvl4',
+                    'hierarchy.lvl5',
+                    'hierarchy.lvl6',
+                    'content',
+                    'type',
+                    'url',
+                  ],
+                  attributesToSnippet: [
+                    `hierarchy.lvl1:${snippetLength.current}`,
+                    `hierarchy.lvl2:${snippetLength.current}`,
+                    `hierarchy.lvl3:${snippetLength.current}`,
+                    `hierarchy.lvl4:${snippetLength.current}`,
+                    `hierarchy.lvl5:${snippetLength.current}`,
+                    `hierarchy.lvl6:${snippetLength.current}`,
+                    `content:${snippetLength.current}`,
+                  ],
+                  snippetEllipsisText: '…',
+                  highlightPreTag: '<mark>',
+                  highlightPostTag: '</mark>',
+                  hitsPerPage: 20,
+                  ...searchParameters,
+                },
+              },
+            ])
             .catch((error) => {
               // The Algolia `RetryError` happens when all the servers have
               // failed, meaning that there's no chance the response comes
@@ -213,7 +218,8 @@ export function DocSearchModal({
 
               throw error;
             })
-            .then(({ hits, nbHits }) => {
+            .then(({ results }) => {
+              const { hits, nbHits } = results[0];
               const sources = groupBy(hits, (hit) => removeHighlightTags(hit));
 
               // We store the `lvl0`s to display them as search suggestions
