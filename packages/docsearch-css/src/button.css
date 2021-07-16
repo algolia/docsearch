@@ -12,7 +12,7 @@
   margin: 0 0 0 16px;
   padding: 0 8px;
   user-select: none;
-  width: 155px;
+  min-width: 155px;
 }
 
 .DocSearch-Button:hover,
@@ -64,7 +64,7 @@
 
 @media (max-width: 750px) {
   .DocSearch-Button {
-    width: auto;
+    min-width: auto;
   }
 
   .DocSearch-Button-KeySeparator,
