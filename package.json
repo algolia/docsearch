@@ -78,7 +78,7 @@
     "eslint-plugin-react": "7.20.6",
     "eslint-plugin-react-hooks": "2.3.0",
     "jest": "26.4.2",
-    "jest-watch-typeahead": "0.6.0",
+    "jest-watch-typeahead": "0.6.4",
     "lerna": "4.0.0",
     "postcss": "7.0.32",
     "prettier": "2.1.1",
