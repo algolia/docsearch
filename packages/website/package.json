@@ -22,7 +22,7 @@
     "docsearch.js": "2.6.3",
     "file-loader": "4.3.0",
     "image-webpack-loader": "6.0.0",
-    "imagemin": "7.0.0",
+    "imagemin": "7.0.1",
     "my-loaders": "file:plugins/my-loaders",
     "postcss-import": "12.0.0",
     "prism-react-renderer": "1.1.0",
