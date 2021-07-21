@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 
 import { ControlKeyIcon } from './icons/ControlKeyIcon';
 import { SearchIcon } from './icons/SearchIcon';
@@ -25,14 +25,13 @@ export const DocSearchButton = React.forwardRef<
 >(({ translations = {}, ...props }, ref) => {
   const { buttonText = 'Search', buttonAriaLabel = 'Search' } = translations;
 
-  const [key, setKey] = useState<
+  const key = useMemo<
     typeof ACTION_KEY_APPLE | typeof ACTION_KEY_DEFAULT | null
-  >(null);
-
-  useEffect(() => {
+  >(() => {
     if (typeof navigator !== 'undefined') {
-      setKey(isAppleDevice() ? ACTION_KEY_APPLE : ACTION_KEY_DEFAULT);
+      return isAppleDevice() ? ACTION_KEY_APPLE : ACTION_KEY_DEFAULT;
     }
+    return null;
   }, []);
 
   return (
