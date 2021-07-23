@@ -43,6 +43,7 @@
 
 .DocSearch-Button-Keys {
   display: flex;
+  min-width: calc(2 * 20px + 2 * 0.4em);
 }
 
 .DocSearch-Button-Key {
@@ -62,11 +63,7 @@
 }
 
 @media (max-width: 750px) {
-  .DocSearch-Button-KeySeparator,
-  .DocSearch-Button-Key {
-    display: none;
-  }
-
+  .DocSearch-Button-Keys,
   .DocSearch-Button-Placeholder {
     display: none;
   }
