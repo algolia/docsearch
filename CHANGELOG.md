@@ -1,3 +1,10 @@
+# [v3.0.0-alpha.38](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.37...v3.0.0-alpha.38) (2021-07-23)
+
+### Bug Fixes
+
+- eliminate keyboard shortcuts UI flash ([#1021](https://github.com/algolia/docsearch/issues/1021)) ([c8e0c27](https://github.com/algolia/docsearch/commit/c8e0c270f3ab2c3ddf27f2247e69c31ed4a732f3))
+- **searchClient:** use client `search` method ([#1019](https://github.com/algolia/docsearch/issues/1019)) ([9da72a8](https://github.com/algolia/docsearch/commit/9da72a8909c1403396f0fe147ecf7bc768f1bab9))
+
 # [v3.0.0-alpha.37](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.36...v3.0.0-alpha.37) (2021-07-09)
 
 ### Bug Fixes
