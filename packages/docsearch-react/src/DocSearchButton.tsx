@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { Fragment, useMemo } from 'react';
 
 import { ControlKeyIcon } from './icons/ControlKeyIcon';
 import { SearchIcon } from './icons/SearchIcon';
@@ -47,14 +47,16 @@ export const DocSearchButton = React.forwardRef<
         <span className="DocSearch-Button-Placeholder">{buttonText}</span>
       </span>
 
-      {key !== null && (
-        <span className="DocSearch-Button-Keys">
-          <span className="DocSearch-Button-Key">
-            {key === ACTION_KEY_DEFAULT ? <ControlKeyIcon /> : key}
-          </span>
-          <span className="DocSearch-Button-Key">K</span>
-        </span>
-      )}
+      <span className="DocSearch-Button-Keys">
+        {key !== null && (
+          <Fragment>
+            <span className="DocSearch-Button-Key">
+              {key === ACTION_KEY_DEFAULT ? <ControlKeyIcon /> : key}
+            </span>
+            <span className="DocSearch-Button-Key">K</span>
+          </Fragment>
+        )}
+      </span>
     </button>
   );
 });

@@ -43,6 +43,7 @@
 
 .DocSearch-Button-Keys {
   display: flex;
+  width: calc(2 * 20px + 2 * 0.4em);
 }
 
 .DocSearch-Button-Key {
