@@ -1,3 +1,12 @@
+# [](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.38...v) (2021-07-23)
+
+
+### Bug Fixes
+
+* **button:** prevent container keys ui flash ([#1033](https://github.com/algolia/docsearch/issues/1033)) ([7fad6a4](https://github.com/algolia/docsearch/commit/7fad6a46c18f2e08befc6ddf02817bb1d5930828))
+
+
+
 # [v3.0.0-alpha.38](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.37...v3.0.0-alpha.38) (2021-07-23)
 
 ### Bug Fixes
