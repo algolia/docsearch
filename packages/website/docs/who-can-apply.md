@@ -29,6 +29,9 @@ points.
   nor those filled with lorem ipsum placeholder content. Please, wait until you
   have written some documentation before applying. We would be happy to help you
   as soon as you have a steady design.
+  
+- Your project must be open source.  DocSearch is now exclusively provided for
+  Open Source projects.
 
 If in doubt, don't hesitate to [apply][2] and we'll figure it out together.
 
@@ -42,9 +45,6 @@ Algolia's features.
 We're receiving dozens of requests every day, and while we strive to answer them
 all as fast as we can, we sometimes give priority to some based on the following
 criteria:
-
-- 😀 If your project is open source, we'll handle it before any other
-  closed-source product. We love open source and want to help as much as we can.
 
 - 🙂 If you're using one of our [official integrations][4], creating your config
   will be much faster for us.
