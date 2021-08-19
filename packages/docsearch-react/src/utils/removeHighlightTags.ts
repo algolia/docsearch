@@ -1,5 +1,4 @@
 import { DocSearchHit, InternalDocSearchHit } from './../types';
-import { getAttributeValueByPath } from './getAttributeValueByPath';
 
 const regexHighlightTags = /(<mark>|<\/mark>)/g;
 const regexHasHighlightTags = RegExp(regexHighlightTags.source);
@@ -13,11 +12,11 @@ export function removeHighlightTags(
     return hit.hierarchy.lvl0;
   }
 
-  const value: string =
-    getAttributeValueByPath(
-      hit._highlightResult ? hit : internalDocSearchHit.__docsearch_parent,
-      ['_highlightResult', 'hierarchy', 'lvl0', 'value']
-    ) || '';
+  const { value } =
+    (internalDocSearchHit.__docsearch_parent
+      ? internalDocSearchHit.__docsearch_parent?._highlightResult?.hierarchy
+          ?.lvl0
+      : hit._highlightResult?.hierarchy?.lvl0) || '';
 
   return value && regexHasHighlightTags.test(value)
     ? value.replace(regexHighlightTags, '')
