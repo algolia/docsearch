@@ -1,3 +1,10 @@
+# [v3.0.0-alpha.40](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.39...v3.0.0-alpha.40) (2021-08-23)
+
+### Bug Fixes
+
+- **ci:** update config file ([#1040](https://github.com/algolia/docsearch/issues/1040)) ([4673f00](https://github.com/algolia/docsearch/commit/4673f00bf3feb114e5e1dd043c56c78177c7292a))
+- **removeHighlightTags:** prevent destructuring `undefined` object ([#1039](https://github.com/algolia/docsearch/issues/1039)) ([6a6f7f6](https://github.com/algolia/docsearch/commit/6a6f7f6e8d0f803062c42b0c4521a0501bb287a1))
+
 # [v3.0.0-alpha.39](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.38...v3.0.0-alpha.39) (2021-07-23)
 
 ### Bug Fixes
