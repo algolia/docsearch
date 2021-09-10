@@ -5,14 +5,20 @@
 The easiest way to add search to your documentation – for free.
 
 [![npm version](https://img.shields.io/npm/v/@docsearch/js/alpha.svg?style=flat-square)](https://www.npmjs.com/package/@docsearch/js/v/alpha) [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](./LICENSE)
+  
+<p align="center">
+  <strong>
+  <a href="https://docsearch.algolia.com">Documentation</a> •
+  <a href="https://codesandbox.io/s/docsearchjs-v3-playground-z9oxj">JavaScript Playground</a> •
+  <a href="https://codesandbox.io/s/docsearch-react-v3-playground-619yg">React Playground</a>
+  </strong>
+</p>
 
 </div>
 
 ---
 
 DocSearch crawls your documentation, pushes the content to an Algolia index and provides a dropdown search experience on your website.
-
-Check out our [website](https://docsearch.algolia.com) for a complete explanation and documentation.
 
 ## Preview
 
