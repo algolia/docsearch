@@ -21,7 +21,7 @@
   "unpkg": "dist/umd/index.js",
   "jsdelivr": "dist/umd/index.js",
   "scripts": {
-    "build:clean": "rimraf ./dist",
+    "build:clean": "rm -rf ./dist",
     "build:esm": "cross-env BUILD=esm rollup --config",
     "build:types": "tsc -p ./tsconfig.declaration.json --outFile ./dist/esm/index.d.ts",
     "build:umd": "cross-env BUILD=umd rollup --config",

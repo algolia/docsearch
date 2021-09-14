@@ -1,0 +1,229 @@
+---
+title: API Reference
+authors:
+  - name: Clément Vannicatte
+    title: Software Engineer @ Algolia
+    url: https://github.com/shortcuts
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+:::info
+
+The following content is for **[DocSearch v3][2]**. If you are using **[DocSearch v2][3]**, see the **[legacy][4]** documentation.
+
+:::
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', },
+    { label: 'React', value: 'react', }
+  ]
+}>
+<TabItem value="js">
+
+
+## `container`
+
+> `type: string | HTMLElement` | **required**
+
+The container for the DocSearch search box. You can either pass a [CSS selector][5] or an [Element][6]. If there are several containers matching the selector, DocSearch picks up the first one.
+
+## `environment`
+
+> `type: typeof window` | `default: window` | **optional**
+
+The environment in which your application is running.
+
+This is useful if you’re using DocSearch in a different context than window.
+
+## `appId`
+
+> `type: string` | **required**
+
+Your Algolia application ID.
+
+## `apiKey`
+
+> `type: string` | **required**
+
+Your Algolia Search API key.
+
+## `indexName`
+
+> `type: string` | **required**
+
+Your Algolia index name.
+
+## `placeholder`
+
+> `type: string` | `default: "Search docs" | **optional**
+
+The placeholder of the input of the DocSearch pop-up modal.
+
+## `searchParameters`
+
+> `type: SearchParameters` | **optional**
+
+The [Algolia Search Parameters][7].
+
+## `transformItems`
+
+> `type: function` | `default: items => items` | **optional**
+
+Receives the items from the search response, and is called before displaying them. Should return a new array with the same shape as the original array. Useful for mapping over the items to transform, and remove or reorder them.
+
+```js
+docsearch({
+  // ...
+  transformItems(items) {
+    return items.map((item) => ({
+      ...item,
+      content: item.content.toUpperCase(),
+    }));
+  },
+});
+```
+
+## `hitComponent`
+
+> `type: ({ hit, children }) => JSX.Element` | `default: Hit` | **optional**
+
+The component to display each item.
+
+See the [default implementation][8].
+
+## `transformSearchClient`
+
+> `type: function` | `default: searchClient => searchClient` | **optional**
+
+Useful for transforming the [Algolia Search Client][10], for example to [debounce search queries][9]
+
+## `disableUserPersonalization`
+
+> `type: boolean` | `default: false` | **optional**
+
+Disable saving recent searches and favorites to the local storage.
+
+## `initialQuery`
+
+> `type: string` | **optional**
+
+The search input initial query.
+
+## `navigator`
+
+> `type: Navigator` | **optional**
+
+An implementation of [Algolia Autocomplete][1]’s Navigator API to redirect the user when opening a link.
+
+Learn more on the [Navigator API][11] documentation.
+
+</TabItem>
+
+
+<TabItem value="react">
+
+
+## `appId`
+
+> `type: string` | **required**
+
+Your Algolia application ID.
+
+## `apiKey`
+
+> `type: string` | **required**
+
+Your Algolia Search API key.
+
+## `indexName`
+
+> `type: string` | **required**
+
+Your Algolia index name.
+
+## `placeholder`
+
+> `type: string` | `default: "Search docs" | **optional**
+
+The placeholder of the input of the DocSearch pop-up modal.
+
+## `searchParameters`
+
+> `type: SearchParameters` | **optional**
+
+The [Algolia Search Parameters][7].
+
+## `transformItems`
+
+> `type: function` | `default: items => items` | **optional**
+
+Receives the items from the search response, and is called before displaying them. Should return a new array with the same shape as the original array. Useful for mapping over the items to transform, and remove or reorder them.
+
+```jsx
+<DocSearch
+  // ...
+  transformItems={(items) => {
+    return items.map((item) => ({
+      ...item,
+      content: item.content.toUpperCase(),
+    }));
+  }}
+/>
+```
+
+## `hitComponent`
+
+> `type: ({ hit, children }) => JSX.Element` | `default: Hit` | **optional**
+
+The component to display each item.
+
+See the [default implementation][8].
+
+## `transformSearchClient`
+
+> `type: function` | `default: searchClient => searchClient` | **optional**
+
+Useful for transforming the [Algolia Search Client][10], for example to [debounce search queries][9]
+
+## `disableUserPersonalization`
+
+> `type: boolean` | `default: false` | **optional**
+
+Disable saving recent searches and favorites to the local storage.
+
+## `initialQuery`
+
+> `type: string` | **optional**
+
+The search input initial query.
+
+## `navigator`
+
+> `type: Navigator` | **optional**
+
+An implementation of [Algolia Autocomplete][1]’s Navigator API to redirect the user when opening a link.
+
+Learn more on the [Navigator API][11] documentation.
+
+</TabItem>
+
+
+</Tabs>
+
+
+[1]: https://www.algolia.com/doc/ui-libraries/autocomplete/introduction/what-is-autocomplete/
+[2]: https://github.com/algolia/docsearch/
+[3]: https://github.com/algolia/docsearch/tree/master
+[4]: legacy/dropdown
+[5]: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors
+[6]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement
+[7]: https://www.algolia.com/doc/api-reference/search-api-parameters/
+[8]: https://github.com/algolia/docsearch/blob/next/packages/docsearch-react/src/Hit.tsx
+[9]: https://codesandbox.io/s/docsearch-v3-debounced-search-gnx87
+[10]: https://www.algolia.com/doc/api-client/getting-started/what-is-the-api-client/javascript/?client=javascript
+[11]: https://www.algolia.com/doc/ui-libraries/autocomplete/core-concepts/keyboard-navigation/

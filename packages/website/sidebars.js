@@ -1,31 +1,25 @@
 /**
- * Copyright (c) 2017-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * Creating a sidebar enables you to:
+ - create an ordered group of docs
+ - render a sidebar for each doc of that group
+ - provide next/previous navigation
+
+ The sidebars can be generated from the filesystem, or explicitly defined here.
+
+ Create as many sidebars as you want.
  */
 
 module.exports = {
   docs: {
-    'Getting Started': [
+    'Getting started': [
       'what-is-docsearch',
-      'how-does-it-work',
       'who-can-apply',
       'apply',
+      'migrating-from-legacy',
     ],
-    'Adding DocSearch to your UI': ['migration-guide', 'styling'],
-    'Requirements, tips, FAQ': [
-      'required-configuration',
-      'tips',
-      'faq',
-      'integrations',
-    ],
-    'Under the Hood': [
-      'scraper',
-      'inside-the-engine',
-      'config-file',
-      'how-do-we-build-an-index',
-      'run-your-own',
-    ],
+    'Adding DocSearch to your UI': ['DocSearch-v3', 'api', 'styling'],
+    'Algolia Crawler': ['helpers.docsearch', 'templates'],
+    'Requirements, tips, FAQ': ['faq', 'tips', 'integrations'],
+    'Under the hood': ['how-does-it-work', 'required-configuration'],
   },
 };

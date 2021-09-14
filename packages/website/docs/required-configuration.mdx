@@ -1,0 +1,216 @@
+---
+title: Required configuration
+authors:
+  - name: Clément Vannicatte
+    title: Software Engineer @ Algolia
+    url: https://github.com/shortcuts
+---
+
+This section, gives you the best practices to optimize our crawl. Adopting this following specification is required to let our crawler build the best experience from your website. You will need to update your website and follow these rules.
+
+:::note
+
+If your website is generated, thanks to one of [our supported tool][1], you do not need to change your website as it is already compliant with our requirements.
+
+:::
+
+## The generic configuration example
+
+You can find the default DocSearch config template below and tweak it with some examples from our [`complex extractors` section][12].
+
+If you are using one of [our integrations][13], please see [the templates page][11]
+
+<details><summary>docsearch-default.js</summary>
+<p>
+
+
+```js
+new Crawler({
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_API_KEY',
+  startUrls: ['https://YOUR_START_URL.io/'],
+  sitemaps: ['https://YOUR_START_URL.io/sitemap.xml'],
+  actions: [
+    {
+      indexName: 'YOUR_INDEX_NAME',
+      pathsToMatch: ['https://YOUR_START_URL.io/**'],
+      recordExtractor: ({ helpers }) => {
+        return helpers.docsearch({
+          recordProps: {
+            lvl0: {
+              selectors: '',
+              defaultValue: 'Documentation',
+            },
+            lvl1: 'header h1',
+            lvl2: 'article h2',
+            lvl3: 'article h3',
+            lvl4: 'article h4',
+            lvl5: 'article h5',
+            lvl6: 'article h6',
+            content: 'article p, article li',
+          },
+        });
+      },
+    },
+  ],
+  initialIndexSettings: {
+    YOUR_INDEX_NAME: {
+      // These attributes can be used as `facetFilters` in the frontend
+      attributesForFaceting: ['type'],
+      // Below are all the default settings of your Algolia index in order to
+      // make DocSearch v3 work. Changing them can cause issue with the final
+      // rendering
+      attributesToRetrieve: [
+        'hierarchy',
+        'content',
+        'anchor',
+        'url',
+        'url_without_anchor',
+        'type',
+      ],
+      attributesToHighlight: ['hierarchy', 'hierarchy_camel', 'content'],
+      attributesToSnippet: ['content:10'],
+      camelCaseAttributes: ['hierarchy', 'hierarchy_radio', 'content'],
+      searchableAttributes: [
+        'unordered(hierarchy_radio_camel.lvl0)',
+        'unordered(hierarchy_radio.lvl0)',
+        'unordered(hierarchy_radio_camel.lvl1)',
+        'unordered(hierarchy_radio.lvl1)',
+        'unordered(hierarchy_radio_camel.lvl2)',
+        'unordered(hierarchy_radio.lvl2)',
+        'unordered(hierarchy_radio_camel.lvl3)',
+        'unordered(hierarchy_radio.lvl3)',
+        'unordered(hierarchy_radio_camel.lvl4)',
+        'unordered(hierarchy_radio.lvl4)',
+        'unordered(hierarchy_radio_camel.lvl5)',
+        'unordered(hierarchy_radio.lvl5)',
+        'unordered(hierarchy_radio_camel.lvl6)',
+        'unordered(hierarchy_radio.lvl6)',
+        'unordered(hierarchy_camel.lvl0)',
+        'unordered(hierarchy.lvl0)',
+        'unordered(hierarchy_camel.lvl1)',
+        'unordered(hierarchy.lvl1)',
+        'unordered(hierarchy_camel.lvl2)',
+        'unordered(hierarchy.lvl2)',
+        'unordered(hierarchy_camel.lvl3)',
+        'unordered(hierarchy.lvl3)',
+        'unordered(hierarchy_camel.lvl4)',
+        'unordered(hierarchy.lvl4)',
+        'unordered(hierarchy_camel.lvl5)',
+        'unordered(hierarchy.lvl5)',
+        'unordered(hierarchy_camel.lvl6)',
+        'unordered(hierarchy.lvl6)',
+        'content',
+      ],
+      distinct: true,
+      attributeForDistinct: 'url',
+      customRanking: [
+        'desc(weight.pageRank)',
+        'desc(weight.level)',
+        'asc(weight.position)',
+      ],
+      ranking: [
+        'words',
+        'filters',
+        'typo',
+        'attribute',
+        'proximity',
+        'exact',
+        'custom',
+      ],
+      highlightPreTag: '<span class="algolia-docsearch-suggestion--highlight">',
+      highlightPostTag: '</span>',
+      minWordSizefor1Typo: 3,
+      minWordSizefor2Typos: 7,
+      allowTyposOnNumericTokens: false,
+      minProximity: 1,
+      ignorePlurals: true,
+      advancedSyntax: true,
+      attributeCriteriaComputedByMinProximity: true,
+      removeWordsIfNoResults: 'allOptional',
+      separatorsToIndex: '_',
+    },
+  },
+});
+```
+
+</p>
+</details>
+
+
+### Overview of a clear layout
+
+A website implementing these good practises will look simple and crystal clear. It can have this following aspect:
+
+<img
+  src="https://docsearch.algolia.com/img/assets/recommended-layout.png"
+  alt="Recommended layout for your page"
+/>
+
+The main blue element will be your `.DocSearch-content` container. More details in the following guidelines.
+
+### Use the right classes as [`recordProps`][2]
+
+You can add some specific static classes to help us find your content role. These classes can not involve any style changes. These dedicated classes will help us to create a great learn-as-you-type experience from your documentation.
+
+- Add a static class `DocSearch-content` to the main container of your textual content. Most of the time, this tag is a `<main>` or an `<article>` HTML element.
+
+- Every searchable `lvl` elements outside this main documentation container (for instance in a sidebar) must be `global` selectors. They will be globally picked up and injected to every record built from your page. Be careful, the level value matters and every matching element must have an increasing level along the HTML flow. A level `X` (for `lvlX`) should appear after a level `Y` while `X > Y`.
+
+- `lvlX` selectors should use the standard title tags like `h1`, `h2`, `h3`, etc. You can also use static classes. Set a unique `id` or `name` attribute to these elements as detailed below.
+
+- Every DOM elements matching the `lvlX` selectors must have a unique `id` or `name` attribute. This will help the redirection to directly scroll down to the exact place of the matching elements. These attributes define the right anchor to use.
+
+- Every textual element (recordProps `content`) must be wrapped in a `<p>` or `<li>` tag. This content must be atomic and split into small entities. Be careful to never nest one matching element into another one as it will create duplicates.
+
+- Stay consistent and do not forget that we need to have some consistency along the HTML flow.
+
+## Introduce global information as meta tags
+
+Our crawler automatically extracts information from our DocSearch specific meta tags:
+
+```html
+<meta name="docsearch:language" content="en" />
+<meta name="docsearch:version" content="1.0.0" />
+```
+
+The crawl adds the `content` value of these `meta` tags to all records extracted from the page. The meta tags `name` must follow the `docsearch:$NAME` pattern. `$NAME` is the name of the attribute set to all records.
+
+The `docsearch:version` meta tag can be a set [of comma-separated tokens][5], each of which is a version relevant to the page. These tokens must be compliant with [the SemVer specification][6] or only contain alphanumeric characters (e.g. `latest`, `next`, etc.). As facet filters, these version tokens are case-insensitive.
+
+For example, all records extracted from a page with the following meta tag:
+
+```html
+<meta name="docsearch:version" content="2.0.0-alpha.62,latest" />
+```
+
+The `version` attribute of these records will be :
+
+```json
+version:["2.0.0-alpha.62", "latest"]
+```
+
+You can then [transform these attributes as `facetFilters`][3] to [filter over them from the UI][10].
+
+## Nice to have
+
+- Your website should have [an updated sitemap][7]. This is key to let our crawler know what should be updated. Do not worry, we will still crawl your website and discover embedded hyperlinks to find your great content.
+
+- Every page needs to have their full context available. Using global elements might help (see above).
+
+- Make sure your documentation content is also available without JavaScript rendering on the client-side. If you absolutely need JavaScript turned on, you need to [set `renderJavaScript: true` in your configuration][8].
+
+Any questions? [Send us an email][9].
+
+[1]: integrations
+[2]: helpers.docsearch#recordProps-api-reference
+[3]: https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/
+[5]: https://html.spec.whatwg.org/dev/common-microsyntaxes.html#comma-separated-tokens
+[6]: https://semver.org/
+[7]: https://www.sitemaps.org/
+[8]: https://www.algolia.com/doc/tools/crawler/apis/configuration/render-java-script/
+[9]: mailto:DocSearch@algolia.com
+[10]: DocSearch-v3#filtering-your-search
+[11]: templates
+[12]: helpers.docsearch#complex-extractors
+[13]: integrations

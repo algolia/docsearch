@@ -1,0 +1,69 @@
+{
+  "version-legacy/docs": [
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Adding DocSearch to your UI",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-legacy/dropdown"
+        },
+        {
+          "type": "doc",
+          "id": "version-legacy/styling"
+        },
+        {
+          "type": "doc",
+          "id": "version-legacy/behavior"
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Requirements, tips, FAQ",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-legacy/required-configuration"
+        },
+        {
+          "type": "doc",
+          "id": "version-legacy/tips"
+        },
+        {
+          "type": "doc",
+          "id": "version-legacy/faq"
+        },
+        {
+          "type": "doc",
+          "id": "version-legacy/integrations"
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Under the Hood",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-legacy/inside-the-engine"
+        },
+        {
+          "type": "doc",
+          "id": "version-legacy/config-file"
+        },
+        {
+          "type": "doc",
+          "id": "version-legacy/how-do-we-build-an-index"
+        },
+        {
+          "type": "doc",
+          "id": "version-legacy/run-your-own"
+        }
+      ]
+    }
+  ]
+}
