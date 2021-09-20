@@ -1,3 +1,5 @@
+import replace from '@rollup/plugin-replace';
+
 import { plugins } from '../../rollup.base.config';
 import { getBundleBanner } from '../../scripts/getBundleBanner';
 
@@ -17,5 +19,10 @@ export default {
     name: pkg.name,
     banner: getBundleBanner(pkg),
   },
-  plugins,
+  plugins: [
+    ...plugins,
+    replace({
+      'process.env.NODE_ENV': JSON.stringify('production'),
+    }),
+  ],
 };
