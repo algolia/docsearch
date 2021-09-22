@@ -10,8 +10,8 @@ If you're not finding the answer to your question on this website, this page wil
 
 You can also read our [Crawler FAQ][17], to understand how it behaves:
 
-- [One of my pages was not crawled][4]
-- [Why are my pages skipped?][5]
+- [One of my pages was not crawled][15]
+- [Why are my pages skipped?][16]
 
 ## How often will you crawl my website?
 

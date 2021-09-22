@@ -41,6 +41,7 @@ Below are the keys that can be found in the [`legacy` DocSearch configs][14] and
 | `legacy` | `current` | description |
 | --- | --- | --- |
 | `start_urls` | [`startUrls`][20] | Now accepts URLs only, see [`helpers.docsearch`][30] to handle custom variables |
+| `page_rank` | [`pageRank`][31] | Can be added to the `recordProps` in [`helpers.docsearch`][30] |
 | `js_render` | [`renderJavaScript`][21] | Unchanged |
 | `js_wait` | [`renderJavascript.waitTime`][22] | See documentation of [`renderJavaScript`][21] |
 | `index_name` | **remove**, see [`actions`][23] | Handled directly in the [`actions`][23] |
@@ -113,3 +114,4 @@ At the time you are reading this, the migration hasn't been completed, so yes.
 [28]: https://www.algolia.com/doc/tools/crawler/apis/configuration/actions/#parameter-param-recordextractor
 [29]: helpers.docsearch
 [30]: helpers.docsearch#with-custom-variables
+[31]: helpers.docsearch#pagerank
