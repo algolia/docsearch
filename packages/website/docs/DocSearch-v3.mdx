@@ -148,11 +148,44 @@ export default App;
 
 If you're eager to test DocSearch v3 and can't wait to receive your credentails, you can use ours!
 
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', },
+    { label: 'React', value: 'react', }
+  ]
+}>
+<TabItem value="js">
+
+
 ```js
-appId: 'BH4D9OD16A';
-apiKey: '25626fae796133dc1e734c6bcaaeac3c';
-indexName: 'docsearch';
+docsearch({
+  appId: 'BH4D9OD16A',
+  apiKey: '25626fae796133dc1e734c6bcaaeac3c',
+  indexName: 'docsearch',
+});
 ```
+
+</TabItem>
+
+
+<TabItem value="react">
+
+
+```jsx
+<DocSearch
+  appId="BH4D9OD16A"
+  apiKey="25626fae796133dc1e734c6bcaaeac3c"
+  indexName="docsearch"
+/>
+```
+
+</TabItem>
+
+
+</Tabs>
+
 
 ### Filtering your search
 
@@ -205,7 +238,7 @@ docsearch({
 
 ### Preconnect
 
-You can hint the browser that the website will load data from Algolia, and allows it to preconnect to the DocSearch cluster. It makes the first query faster, especially on mobile.
+By adding this snippet to the `head` of your website, you can hint the browser that the website will load data from Algolia, and allows it to preconnect to the DocSearch cluster. It makes the first query faster, especially on mobile.
 
 ```html
 <link rel="preconnect" href="https://YOUR_APP_ID-dsn.algolia.net" crossorigin />
