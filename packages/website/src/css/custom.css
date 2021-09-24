@@ -39,6 +39,10 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   transform: skewY(6deg);
 }
 
+[class^='announcementBar'] {
+  z-index: 10;
+}
+
 /* apply */
 #hero-apply {
   z-index: -1;

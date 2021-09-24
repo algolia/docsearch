@@ -81,7 +81,6 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
         respectPrefersColorScheme: true,
       },
       announcementBar: {
-        id: 'supportus',
         content:
           '⭐️ If you like DocSearch, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/algolia/docsearch">GitHub</a>! ⭐️',
       },
