@@ -8,7 +8,7 @@ authors:
 
 :::info
 
-The following content is for **[DocSearch v3][2]** and **[it's new infrastructure][5]**. If you are using **[DocSearch v2][3]** or the **[docsearch-scraper][6]**, see the **[legacy][4]** documentation.
+The following content is for **[DocSearch v3][2]** and **[its new infrastructure][5]**. If you are using **[DocSearch v2][3]** or the **[docsearch-scraper][6]**, see the **[legacy][4]** documentation.
 
 :::
 

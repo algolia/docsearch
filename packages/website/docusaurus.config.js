@@ -147,7 +147,7 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
               },
               {
                 label: 'Algolia Blog',
-                to: 'https://blog.algolia.com/',
+                to: 'https://algolia.com/blog/',
               },
             ],
           },

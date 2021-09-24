@@ -120,7 +120,7 @@ export default App;
 DocSearch is made of the following repositories:
 
 - **[algolia/docsearch](https://github.com/algolia/docsearch)**: DocSearch source code.
-- **[algolia/docsearch-website](https://github.com/algolia/docsearch/tree/next/packages/website)**: DocSearch website and documentation.
+- **[algolia/docsearch/packages/website](https://github.com/algolia/docsearch/tree/next/packages/website)**: DocSearch website and documentation.
 - **[algolia/docsearch-configs](https://github.com/algolia/docsearch-configs)**: DocSearch websites configurations that DocSearch powers.
 - **[algolia/docsearch-scraper](https://github.com/algolia/docsearch-scraper)**: DocSearch crawler that extracts data from your documentation.
 

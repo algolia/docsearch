@@ -17,7 +17,7 @@ It happens that we are a search company and we actually have a lot of experience
 
 We split DocSearch into a crawler and a frontend library.
 
-- Crawls are handled by the [Algolia Crawler][4] and sheculed to run once a week, you can then trigger new crawls yourself and monitor them directly from the [Crawler interface][5], which also offers a live editor where you can maintain your config.
+- Crawls are handled by the [Algolia Crawler][4] and scheduled to run once a week by default, you can then trigger new crawls yourself and monitor them directly from the [Crawler interface][5], which also offers a live editor where you can maintain your config.
 - The frontend library is built on top of [Algolia Autocomplete][6] and provide an immersive search experience through its modal.
 
 ## How to feature DocSearch?

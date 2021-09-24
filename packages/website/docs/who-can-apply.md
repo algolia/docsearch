@@ -14,9 +14,9 @@ We're always sad to have to turn down applications, but with the number of reque
 
 To have your request validated, we'll ask that you check all the following points.
 
-- You must be the **owner** of the website, or at least have the permissions to update its content. You'll have to [include a JavaScript snippet][1] to enable DocSearch.
+- You must be the **owner** of the website, or at least have the permissions to update its content. You'll need to [include a JavaScript snippet][1] to your frontend to implement DocSearch.
 
-- Your website must be **publicly available**. We do not host search indices for websites that are available behind an authentication or a private network.
+- Your website must be **publicly available**. We do not host search indices for websites that are only available behind an authentication or a private network.
 
 - Your website must be a **technical documentation of an open source project or a technical blog**. We do not index commercial content.
 
@@ -24,7 +24,7 @@ To have your request validated, we'll ask that you check all the following point
 
 If in doubt, don't hesitate to [apply][2] and we'll figure it out together.
 
-Even if we cannot accept your request, this does not mean that you cannot enjoy great search on your website. DocSearch is entirely open source and [you can run it yourself][3], or use any of [our other API clients][4] to take advantage of Algolia's features.
+Even if we cannot accept your request, this does not mean that you cannot enjoy great search on your website. Legacy DocSearch is entirely open source and [you can run it yourself][3], or use any of [our other API clients][4] to take advantage of Algolia's features.
 
 ## Priority
 

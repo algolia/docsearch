@@ -19,7 +19,7 @@ The following content is for **[DocSearch v3][2]**. If you are using **[DocSearc
 
 DocSearch v3 is built on top of the latest version of [Algolia Autocomplete][1], which provides better accessibility, increased responsiveness, themability, a better built-in design, and customizability under low-network conditions.
 
-This version has been rewritten in React, and now exposes React components. Vanilla JavaScript version is based on the React version with an alias to Preact.
+This version has been rewritten in React, and now exposes React components. The vanilla JavaScript version is based on the React version with an alias to Preact.
 
 ### Stable version
 
@@ -156,7 +156,9 @@ indexName: 'docsearch';
 
 ### Filtering your search
 
-If your website supports [docsearch meta tags][13] or if you've added [custom variables to your config][14], you'll be able to use the [`facetFilters`][16] option to scope your search results to a [`facet`][15]
+If your website supports [DocSearch meta tags][13] or if you've added [custom variables to your config][14], you'll be able to use the [`facetFilters`][16] option to scope your search results to a [`facet`][15]
+
+This is useful to limit the scope of the search to one language or one version.
 
 <Tabs
   groupId="language"
