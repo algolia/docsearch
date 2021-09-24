@@ -53,27 +53,27 @@ function Home() {
       <>
         {/* Showcase */}
         <div className="py-16 overflow-hidden">
-          <div className="relative max-w-xl mx-auto px-4 sm:px-6 lg:px-8 lg:max-w-screen-xl">
-            <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative max-w-xl mx-auto px-4 md:px-6 lg:px-8 lg:max-w-screen-xl">
+            <div className="max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8">
               <div className="max-w-4xl mx-auto text-center">
-                <h2 className="text-3xlleading-9 font-extrabold sm:text-4xl sm:leading-10">
+                <h2 className="text-3xlleading-9 font-extrabold md:text-4xl md:leading-10">
                   Already trusted by your favorite docs
                 </h2>
               </div>
             </div>
-            <div className="pt-4 pb-12 sm:pb-16">
+            <div className="pt-4 pb-12 md:pb-16">
               <div className="relative">
-                <div className="relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="relative max-w-screen-xl mx-auto px-4 lg:px-6">
                   <div className="max-w-4xl mx-auto">
                     <dl
                       className={`rounded-lg ${
                         isDarkTheme ? 'showcase' : 'bg-white'
-                      } shadow-xl sm:grid sm:grid-cols-3`}
+                      } shadow-xl lg:grid lg:grid-cols-3`}
                     >
                       <div
                         className={`${
                           isDarkTheme ? 'border-gray-700' : 'border-gray-100'
-                        } flex flex-col border-b p-6 text-center sm:border-0 sm:border-r`}
+                        } flex flex-col border-b p-6 text-center lg:border-0 lg:border-r`}
                       >
                         <dt
                           className={`order-2 mt-2 text-lg leading-6 font-medium text-gray-${
@@ -93,7 +93,7 @@ function Home() {
                       <div
                         className={`${
                           isDarkTheme ? 'border-gray-700' : 'border-gray-100'
-                        } flex flex-col border-t border-b p-6 text-center sm:border-0 sm:border-l sm:border-r`}
+                        } flex flex-col border-t border-b p-6 text-center lg:border-0 lg:border-l lg:border-r`}
                       >
                         <dt
                           className={`order-2 mt-2 text-lg leading-6 font-medium text-gray-${
@@ -109,7 +109,7 @@ function Home() {
                       <div
                         className={`${
                           isDarkTheme ? 'border-gray-700' : 'border-gray-100'
-                        } flex flex-col border-t p-6 text-center sm:border-0 sm:border-l`}
+                        } flex flex-col border-t p-6 text-center lg:border-0 lg:border-l`}
                       >
                         <dt
                           className={`order-2 mt-2 text-lg leading-6 font-medium text-gray-${
@@ -160,9 +160,9 @@ function Home() {
 
         {/* Description */}
         <div className="py-16 overflow-hidden">
-          <div className="relative max-w-xl mx-auto px-4 sm:px-6 lg:px-8 lg:max-w-screen-xl">
+          <div className="relative max-w-xl mx-auto px-4 md:px-6 lg:px-8 lg:max-w-screen-xl">
             <div className="relative">
-              <h3 className="text-center text-3xl leading-8 font-extrabold tracking-tight sm:text-4xl sm:leading-10">
+              <h3 className="text-center text-3xl leading-8 font-extrabold tracking-tight md:text-4xl md:leading-10">
                 Solve docs challenges with a search engine
               </h3>
               <p className="mt-4 max-w-3xl mx-auto text-center text-xl leading-7 text-gray-500">
@@ -173,7 +173,7 @@ function Home() {
             </div>
 
             <div className="pt-16">
-              <ul className="md:grid md:grid-cols-3 md:col-gap-8 md:row-gap-10">
+              <ul className="lg:grid lg:grid-cols-3 lg:col-gap-8 lg:row-gap-10">
                 <li>
                   <div className="flex">
                     <div className="flex-shrink-0">
@@ -205,7 +205,7 @@ function Home() {
                     </div>
                   </div>
                 </li>
-                <li className="mt-10 md:mt-0">
+                <li className="mt-10 lg:mt-0">
                   <div className="flex">
                     <div className="flex-shrink-0">
                       <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
@@ -237,7 +237,7 @@ function Home() {
                     </div>
                   </div>
                 </li>
-                <li className="mt-10 md:mt-0">
+                <li className="mt-10 lg:mt-0">
                   <div className="flex">
                     <div className="flex-shrink-0">
                       <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
@@ -275,10 +275,10 @@ function Home() {
 
         {/* How it works */}
         <div className="diagonal-box py-16 bg-gray-200 overflow-hidden">
-          <div className="diagonal-content max-w-xl mx-auto px-4 sm:px-6 lg:px-8 lg:max-w-screen-xl">
-            <div className="max-w-screen-xl mx-auto pt-6 px-4 sm:px-6 lg:px-8">
+          <div className="diagonal-content max-w-xl mx-auto px-4 md:px-6 lg:px-8 lg:max-w-screen-xl">
+            <div className="max-w-screen-xl mx-auto pt-6 px-4 md:px-6 lg:px-8">
               <div className="max-w-4xl mx-auto text-center">
-                <h2 className="text-3xl leading-9 font-extrabold text-gray-900 sm:text-4xl sm:leading-10">
+                <h2 className="text-3xl leading-9 font-extrabold text-gray-900 md:text-4xl md:leading-10">
                   How it works
                 </h2>
                 <p className="mt-4 max-w-2xl text-xl leading-7 text-gray-500 lg:mx-auto">
@@ -289,7 +289,7 @@ function Home() {
             </div>
 
             <div className="py-16">
-              <div className="max-w-xl mx-auto px-4 sm:px-6 lg:max-w-screen-lg lg:px-8 ">
+              <div className="max-w-xl mx-auto px-4 md:px-6 lg:max-w-screen-lg lg:px-8 ">
                 <div className="lg:grid lg:grid-cols-3 lg:gap-8">
                   <div>
                     <div className="flex items-center justify-center">
@@ -357,10 +357,10 @@ function Home() {
 
         {/* Anatomy of DocSearch */}
         <div className="py-16 overflow-hidden lg:py-24">
-          <div className="relative max-w-xl mx-auto px-4 sm:px-6 lg:px-8 lg:max-w-screen-xl">
+          <div className="relative max-w-xl mx-auto px-4 md:px-6 lg:px-8 lg:max-w-screen-xl">
             <div className="relative mt-12 lg:mt-24 lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
               <div className="relative">
-                <h4 className="text-2xl leading-8 font-extrabold tracking-tight sm:text-3xl sm:leading-9">
+                <h4 className="text-2xl leading-8 font-extrabold tracking-tight md:text-3xl md:leading-9">
                   Anatomy of DocSearch
                 </h4>
                 <p className="mt-3 text-lg leading-7 text-gray-500">
@@ -448,7 +448,7 @@ function Home() {
               </div>
             </div>
 
-            <div className="relative mt-12 sm:mt-16 lg:mt-24">
+            <div className="relative mt-12 md:mt-16 lg:mt-24">
               <div className="lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:gap-8 lg:items-center">
                 <div className="lg:col-start-2">
                   <ul className="mt-10">
@@ -535,12 +535,12 @@ function Home() {
 
         {/* Powered by Algolia */}
         <div className="py-16 bg-indigo-600 overflow-hidden lg:py-24">
-          <div className="lg:text-center">
-            <h3 className="mt-2 text-3xl leading-8 font-extrabold text-white tracking-tight sm:text-4xl sm:leading-10">
+          <div className="text-center">
+            <h3 className="mt-2 text-3xl leading-8 font-extrabold text-white tracking-tight md:text-4xl md:leading-10">
               Powered by Algolia
             </h3>
           </div>
-          <div className="relative max-w-xl mx-auto px-4 sm:px-6 lg:px-8 lg:max-w-screen-xl">
+          <div className="relative max-w-xl mx-auto px-4 md:px-6 lg:px-8 lg:max-w-screen-xl">
             <div className="relative lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
               <div className="relative">
                 <ul className="mt-10">
@@ -678,12 +678,12 @@ function Home() {
 
         {/* Accessibility */}
         <div className="py-16 lg:py-24">
-          <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="lg:text-center">
-              <h3 className="mt-2 text-3xl leading-8 font-extrabold tracking-tight sm:text-4xl sm:leading-10">
+          <div className="max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8">
+            <div className="text-center">
+              <h3 className="mt-2 text-3xl leading-8 font-extrabold tracking-tight md:text-4xl md:leading-10">
                 It’s all about keyboards!
               </h3>
-              <p className="mt-4 max-w-2xl text-xl leading-7 text-gray-500 lg:mx-auto">
+              <p className="mt-4 max-w-3xl mx-auto text-center text-xl text-gray-500 lg:mx-auto">
                 Once users become familiar with a system they will become better
                 and faster at doing what they need to. DocSearch offers
                 accelerators to experts.
