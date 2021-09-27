@@ -78,7 +78,7 @@ Your credentials will remain available, but **once all the existing configs have
 
 ### Are the [`docsearch-scraper`][8] and [`docsearch-configs`][9] repository still maintained?
 
-At the time you are reading this, the migration hasn't been completed, so yes.
+At the time you are reading this, the migration hasn't been completed, so yes they are still maintained. 
 
 **Once the migration has been completed:**
 
