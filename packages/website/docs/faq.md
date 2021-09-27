@@ -54,7 +54,9 @@ Code samples are a great way for humans to understand how people use a specific 
 
 This can happen when you have more than one URL pointing to the same content, for example with `./docs`, `./docs/` and `./docs/index.html`.
 
-You set the [`exclusionPatterns`][10] to all the patterns you want to exclude.
+We recommend configuring canonical URLs on your website, you can read more on the ["Consolidate duplicate URLs" guide by Google](https://developers.google.com/search/docs/advanced/crawling/consolidate-duplicate-urls) and use our [`ignoreCanonicalTo`](https://www.algolia.com/doc/tools/crawler/apis/configuration/ignore-canonical-to/) option directly in your crawler config.
+
+Ultimately, it is possible to set set the [`exclusionPatterns`][10] to all the patterns you want to exclude.
 
 ## A documentation website I like does not use DocSearch. What can I do?
 
