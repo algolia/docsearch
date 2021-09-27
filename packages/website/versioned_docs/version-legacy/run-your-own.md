@@ -1,9 +1,5 @@
 ---
 title: Run your own
-authors:
-  - name: Clément Vannicatte
-    title: Software Engineer @ Algolia
-    url: https://github.com/shortcuts
 ---
 
 If you want to update your results with more control, or if you are [not compliant with our checklist][1], or if your website sits behind a firewall, you might want to run the crawler yourself.

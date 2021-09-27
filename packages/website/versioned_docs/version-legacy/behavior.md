@@ -1,10 +1,6 @@
 ---
 title: Dropdown Behavior
 sidebar_label: Behavior
-authors:
-  - name: Clément Vannicatte
-    title: Software Engineer @ Algolia
-    url: https://github.com/shortcuts
 ---
 
 :::caution

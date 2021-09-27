@@ -1,9 +1,5 @@
 ---
 title: Config Files
-authors:
-  - name: Clément Vannicatte
-    title: Software Engineer @ Algolia
-    url: https://github.com/shortcuts
 ---
 
 A DocSearch looks like this:

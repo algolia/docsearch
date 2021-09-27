@@ -1,9 +1,5 @@
 ---
 title: Supported Integrations
-authors:
-  - name: Clément Vannicatte
-    title: Software Engineer @ Algolia
-    url: https://github.com/shortcuts
 ---
 
 We worked with **documentation website generators** to have DocSearch directly embedded as a first class citizen in the websites they produce.

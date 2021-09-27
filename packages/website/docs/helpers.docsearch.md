@@ -1,9 +1,5 @@
 ---
 title: helpers.docsearch
-authors:
-  - name: Clément Vannicatte
-    title: Software Engineer @ Algolia
-    url: https://github.com/shortcuts
 ---
 
 :::info

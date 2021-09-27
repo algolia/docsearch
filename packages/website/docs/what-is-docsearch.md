@@ -1,10 +1,6 @@
 ---
 title: What is DocSearch?
 sidebar_label: Getting started
-authors:
-  - name: Clément Vannicatte
-    title: Software Engineer @ Algolia
-    url: https://github.com/shortcuts
 ---
 
 ## Why?

@@ -1,9 +1,5 @@
 ---
 title: Inside the engine
-authors:
-  - name: Clément Vannicatte
-    title: Software Engineer @ Algolia
-    url: https://github.com/shortcuts
 ---
 
 This page explains in more detail how the crawler extracts content from your page, and how it ranks the results.

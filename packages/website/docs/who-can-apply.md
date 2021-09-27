@@ -1,9 +1,5 @@
 ---
 title: Who can apply?
-authors:
-  - name: Clément Vannicatte
-    title: Software Engineer @ Algolia
-    url: https://github.com/shortcuts
 ---
 
 We built DocSearch from the ground up with the idea of improving search on large technical documentations. For this reason, we are offering a free hosting version to all online technical documentations of open-source projects and technical blogs.
