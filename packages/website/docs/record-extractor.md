@@ -1,5 +1,5 @@
 ---
-title: helpers.docsearch
+title: Record Extractor
 ---
 
 :::info
@@ -10,7 +10,7 @@ The following content is for **[DocSearch v3][2]** and **[its new infrastructure
 
 ## Introduction
 
-:::note
+:::info
 
 This documentation will only contain informations regarding the **helpers.docsearch** method, see **[Algolia Crawler Documentation][7]** for more informations on the **[Algolia Crawler][8]**.
 
@@ -234,7 +234,7 @@ Contains values that can be used as [`facetFilters`][15]
 [10]: https://www.algolia.com/doc/tools/crawler/apis/configuration/actions/#parameter-param-recordextractor-2
 [11]: https://www.algolia.com/doc/tools/crawler/guides/extracting-data/#extracting-records
 [12]: https://www.algolia.com/doc/tools/crawler/apis/configuration/actions/
-[13]: /docs/helpers.docsearch#with-custom-variables
+[13]: /docs/record-extractor#with-custom-variables
 [14]: https://cheerio.js.org/
 [15]: https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/
 [16]: DocSearch-v3#filtering-your-search

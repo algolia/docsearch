@@ -88,7 +88,7 @@ At the time you are reading this, the migration hasn't been completed, so yes.
 [1]: DocSearch-v3
 [2]: https://www.algolia.com/products/search-and-discovery/crawler/
 [3]: legacy/run-your-own
-[4]: helpers.docsearch
+[4]: record-extractor
 [7]: https://crawler.algolia.com/
 [8]: https://github.com/algolia/docsearch-scraper
 [9]: https://github.com/algolia/docsearch-configs
@@ -108,6 +108,6 @@ At the time you are reading this, the migration hasn't been completed, so yes.
 [26]: https://www.algolia.com/doc/tools/crawler/apis/configuration/initial-index-settings/
 [27]: https://github.com/micromatch/micromatch
 [28]: https://www.algolia.com/doc/tools/crawler/apis/configuration/actions/#parameter-param-recordextractor
-[29]: helpers.docsearch
-[30]: helpers.docsearch#with-custom-variables
-[31]: helpers.docsearch#pagerank
+[29]: record-extractor
+[30]: record-extractor#with-custom-variables
+[31]: record-extractor#pagerank

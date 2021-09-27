@@ -14,11 +14,10 @@ module.exports = {
     'Getting started': [
       'what-is-docsearch',
       'who-can-apply',
-      'apply',
       'migrating-from-legacy',
     ],
     'Adding DocSearch to your UI': ['DocSearch-v3', 'api', 'styling'],
-    'Algolia Crawler': ['helpers.docsearch', 'templates'],
+    'Algolia Crawler': ['record-extractor', 'templates'],
     'Requirements, tips, FAQ': ['faq', 'tips', 'integrations'],
     'Under the hood': ['how-does-it-work', 'required-configuration'],
   },

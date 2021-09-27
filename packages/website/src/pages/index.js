@@ -14,6 +14,10 @@ function Home() {
   const { withBaseUrl } = useBaseUrlUtils();
   const { isDarkTheme } = useThemeContext();
 
+  const backgroundTheme = isDarkTheme ? 'showcase' : 'bg-white';
+  const borderTheme = isDarkTheme ? 'border-gray-700' : 'border-gray-100';
+  const textTheme = isDarkTheme ? '300' : '500';
+
   React.useEffect(() => {
     if (isDarkTheme) {
       document.querySelector('html').classList.add('dark');
@@ -66,19 +70,13 @@ function Home() {
                 <div className="relative max-w-screen-xl mx-auto px-4 lg:px-6">
                   <div className="max-w-4xl mx-auto">
                     <dl
-                      className={`rounded-lg ${
-                        isDarkTheme ? 'showcase' : 'bg-white'
-                      } shadow-xl lg:grid lg:grid-cols-3`}
+                      className={`rounded-lg ${backgroundTheme} shadow-xl lg:grid lg:grid-cols-3`}
                     >
                       <div
-                        className={`${
-                          isDarkTheme ? 'border-gray-700' : 'border-gray-100'
-                        } flex flex-col border-b p-6 text-center lg:border-0 lg:border-r`}
+                        className={`${borderTheme} flex flex-col border-b p-6 text-center lg:border-0 lg:border-r`}
                       >
                         <dt
-                          className={`order-2 mt-2 text-lg leading-6 font-medium text-gray-${
-                            isDarkTheme ? '300' : '500'
-                          }`}
+                          className={`order-2 mt-2 text-lg leading-6 font-medium text-gray-${textTheme}`}
                           id="item-1"
                         >
                           Free
@@ -91,14 +89,10 @@ function Home() {
                         </dd>
                       </div>
                       <div
-                        className={`${
-                          isDarkTheme ? 'border-gray-700' : 'border-gray-100'
-                        } flex flex-col border-t border-b p-6 text-center lg:border-0 lg:border-l lg:border-r`}
+                        className={`${borderTheme} flex flex-col border-t border-b p-6 text-center lg:border-0 lg:border-l lg:border-r`}
                       >
                         <dt
-                          className={`order-2 mt-2 text-lg leading-6 font-medium text-gray-${
-                            isDarkTheme ? '300' : '500'
-                          }`}
+                          className={`order-2 mt-2 text-lg leading-6 font-medium text-gray-${textTheme}`}
                         >
                           Searches per month
                         </dt>
@@ -107,14 +101,10 @@ function Home() {
                         </dd>
                       </div>
                       <div
-                        className={`${
-                          isDarkTheme ? 'border-gray-700' : 'border-gray-100'
-                        } flex flex-col border-t p-6 text-center lg:border-0 lg:border-l`}
+                        className={`${borderTheme} flex flex-col border-t p-6 text-center lg:border-0 lg:border-l`}
                       >
                         <dt
-                          className={`order-2 mt-2 text-lg leading-6 font-medium text-gray-${
-                            isDarkTheme ? '300' : '500'
-                          }`}
+                          className={`order-2 mt-2 text-lg leading-6 font-medium text-gray-${textTheme}`}
                         >
                           DocSearch Live
                         </dt>
@@ -145,9 +135,7 @@ function Home() {
                       alt={`Discover DocSearch on the ${name} documentation`}
                     />
                     <div
-                      className={`text-gray-${
-                        isDarkTheme ? '300' : '500'
-                      } uppercase text-xs py-2`}
+                      className={`text-gray-${textTheme} uppercase text-xs py-2`}
                     >
                       {name}
                     </div>
@@ -165,7 +153,9 @@ function Home() {
               <h3 className="text-center text-3xl leading-8 font-extrabold tracking-tight md:text-4xl md:leading-10">
                 Solve docs challenges with a search engine
               </h3>
-              <p className="mt-4 max-w-3xl mx-auto text-center text-xl leading-7 text-gray-500">
+              <p
+                className={`mt-4 max-w-3xl mx-auto text-center text-xl leading-7 text-gray-${textTheme}`}
+              >
                 Reducing users’ efforts to get started on your product or to
                 resolve problems is the trick to smooth the learning curve.
                 DocSearch brings relevancy to the fingers of your users.
@@ -195,7 +185,9 @@ function Home() {
                       <h4 className="text-lg leading-6 font-medium">
                         Respect users efforts
                       </h4>
-                      <p className="mt-2 text-base leading-6 text-gray-500">
+                      <p
+                        className={`mt-2 text-base leading-6 text-gray-${textTheme}`}
+                      >
                         First built to fulfill our own developers' needs,
                         DocSearch quickly evolved as a successful community
                         project. Over the years, the project kept on adressing
@@ -228,7 +220,9 @@ function Home() {
                       <h4 className="text-lg leading-6 font-medium">
                         Speak to all users
                       </h4>
-                      <p className="mt-2 text-base leading-6 text-gray-500">
+                      <p
+                        className={`mt-2 text-base leading-6 text-gray-${textTheme}`}
+                      >
                         DocSearch understands your data, the user input, the
                         context and sends back instantly a fine selection of
                         your content available with less interactions than any
@@ -260,7 +254,9 @@ function Home() {
                       <h4 className="text-lg leading-6 font-medium">
                         Eliminate confusion
                       </h4>
-                      <p className="mt-2 text-base leading-6 text-gray-500">
+                      <p
+                        className={`mt-2 text-base leading-6 text-gray-${textTheme}`}
+                      >
                         With a design very close to the native experience on
                         mobile, we leverage users acquaintance with the
                         interaction patterns of each OS.
@@ -281,7 +277,9 @@ function Home() {
                 <h2 className="text-3xl leading-9 font-extrabold text-gray-900 md:text-4xl md:leading-10">
                   How it works
                 </h2>
-                <p className="mt-4 max-w-2xl text-xl leading-7 text-gray-500 lg:mx-auto">
+                <p
+                  className={`mt-4 max-w-2xl text-xl leading-7 text-gray-500 lg:mx-auto`}
+                >
                   We scrap your documentation, configure the Algolia application
                   and send you the snippet you'll have to integrate.
                 </p>
@@ -363,7 +361,7 @@ function Home() {
                 <h4 className="text-2xl leading-8 font-extrabold tracking-tight md:text-3xl md:leading-9">
                   Anatomy of DocSearch
                 </h4>
-                <p className="mt-3 text-lg leading-7 text-gray-500">
+                <p className={`mt-3 text-lg leading-7 text-gray-${textTheme}`}>
                   Search is a conversation so we used a modal dialog to ask for
                   information that, when provided, significantly lessen users’
                   effort to navigate through the results.
@@ -393,7 +391,9 @@ function Home() {
                         <h5 className="text-lg leading-6 font-medium">
                           All featured search box
                         </h5>
-                        <p className="mt-2 text-base leading-6 text-gray-500">
+                        <p
+                          className={`mt-2 text-base leading-6 text-gray-${textTheme}`}
+                        >
                           The conversation start here: you want to have the
                           state-of-the-art search box to represent your voice.
                           DocSearch comes with our extensive experience in
@@ -426,7 +426,9 @@ function Home() {
                         <h5 className="text-lg leading-6 font-medium">
                           Hierarchical display
                         </h5>
-                        <p className="mt-2 text-base leading-6 text-gray-500">
+                        <p
+                          className={`mt-2 text-base leading-6 text-gray-${textTheme}`}
+                        >
                           When displaying the results it's important to get a
                           sense of the documentation structure. DocSearch split
                           your content in small chunks and the UI is returning
@@ -475,7 +477,9 @@ function Home() {
                           <h5 className="text-lg leading-6 font-medium">
                             Search shortcut
                           </h5>
-                          <p className="mt-2 text-base leading-6 text-gray-500">
+                          <p
+                            className={`mt-2 text-base leading-6 text-gray-${textTheme}`}
+                          >
                             It looks almost similar to a search input but it’s a
                             button. When you click/touch or use the keyboard
                             shortcut, it opens a modal dropdown and focuses the
@@ -507,7 +511,9 @@ function Home() {
                           <h5 className="text-lg leading-6 font-medium">
                             Always sized and positionned correctly
                           </h5>
-                          <p className="mt-2 text-base leading-6 text-gray-500">
+                          <p
+                            className={`mt-2 text-base leading-6 text-gray-${textTheme}`}
+                          >
                             The modal experience leverages behavior of most
                             populars Integrated Developement Environements or
                             native experience on mobile. An opaque layer is
@@ -681,9 +687,11 @@ function Home() {
           <div className="max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8">
             <div className="text-center">
               <h3 className="mt-2 text-3xl leading-8 font-extrabold tracking-tight md:text-4xl md:leading-10">
-                It’s all about keyboards!
+                It’s all about keyboards
               </h3>
-              <p className="mt-4 max-w-3xl mx-auto text-center text-xl text-gray-500 lg:mx-auto">
+              <p
+                className={`mt-4 max-w-3xl mx-auto text-center text-xl text-gray-${textTheme} lg:mx-auto`}
+              >
                 Once users become familiar with a system they will become better
                 and faster at doing what they need to. DocSearch offers
                 accelerators to experts.
@@ -722,7 +730,9 @@ function Home() {
                       <h4 className="text-lg leading-6 font-medium">
                         Keyboard Shortcut & Navigation
                       </h4>
-                      <p className="mt-2 text-base leading-6 text-gray-500">
+                      <p
+                        className={`mt-2 text-base leading-6 text-gray-${textTheme}`}
+                      >
                         We aim at keeping the experience as smooth as your
                         interaction with an IDE, which explains the Ctrl+K (⌘+K
                         on macOS) keyboard shortcut to open the search modal.
@@ -753,7 +763,9 @@ function Home() {
                       <h4 className="text-lg leading-6 font-medium">
                         Accessibility
                       </h4>
-                      <p className="mt-2 text-base leading-6 text-gray-500">
+                      <p
+                        className={`mt-2 text-base leading-6 text-gray-${textTheme}`}
+                      >
                         We are releasing this version with our best efforts in
                         regards to accessibility and we are willing to go
                         deeper. We'd like to work closely with expert of the

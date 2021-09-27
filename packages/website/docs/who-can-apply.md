@@ -31,7 +31,7 @@ We're receiving dozens of requests every day, and while we strive to answer them
 - 🙁 If we need to render your website in the browser through JavaScript, it means that we'll have to crawl it through a much slower browser emulation. We highly recommend that you put in place server-side rendering for the useful textual content.
 
 [1]: DocSearch-v3
-[2]: apply.mdx
+[2]: /apply
 [3]: /docs/legacy/run-your-own
 [4]: https://www.algolia.com/doc/api-client/getting-started/install/javascript/?client=javascript
 [5]: integrations.md
