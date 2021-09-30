@@ -39,7 +39,7 @@ export function DocSearch(props: DocSearchProps) {
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
   const [isOpen, setIsOpen] = React.useState(false);
   const [initialQuery, setInitialQuery] = React.useState<string | undefined>(
-    undefined
+    props?.initialQuery || undefined
   );
 
   const onOpen = React.useCallback(() => {
