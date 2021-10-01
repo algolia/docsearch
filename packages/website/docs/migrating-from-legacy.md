@@ -40,7 +40,7 @@ Below are the keys that can be found in the [`legacy` DocSearch configs][14] and
 | `page_rank` | [`pageRank`][31] | Can be added to the `recordProps` in [`helpers.docsearch`][30] |
 | `js_render` | [`renderJavaScript`][21] | Unchanged |
 | `js_wait` | [`renderJavascript.waitTime`][22] | See documentation of [`renderJavaScript`][21] |
-| `index_name` | **remove**, see [`actions`][23] | Handled directly in the [`actions`][23] |
+| `index_name` | **removed**, see [`actions`][23] | Handled directly in the [`actions`][23] |
 | `sitemap_urls` | [`sitemaps`][24] | Unchanged |
 | `stop_urls` | [`exclusionPatterns`][25] | Supports [`micromatch`][27] |
 | `selectors_exclude` | **removed** | Should be handled in the [`recordExtractor`][28] and [`helpers.docsearch`][29] |
@@ -78,7 +78,7 @@ Your credentials will remain available, but **once all the existing configs have
 
 ### Are the [`docsearch-scraper`][8] and [`docsearch-configs`][9] repository still maintained?
 
-At the time you are reading this, the migration hasn't been completed, so yes they are still maintained. 
+At the time you are reading this, the migration hasn't been completed, so yes they are still maintained.
 
 **Once the migration has been completed:**
 

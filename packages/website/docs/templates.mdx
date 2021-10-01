@@ -2,12 +2,25 @@
 title: Config templates
 ---
 
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 To help you create the best search experience for your users, we provide config templates for multiple websites generators. If you'd like to add a new template to our list, or believe we should update an existing one, please [send us an email][1] or [open a pull request][2]
+
+## From the Crawler UI
+
+Templates are available when you [create a new Crawler](https://crawler.algolia.com/admin/crawlers/create). They will automatically be filled with your website URL, Algolia credentials and index name.
+
+<div style={{ textAlign: 'center' }}>
+  <img
+    src={useBaseUrl('img/assets/new-crawler-creation.png')}
+    alt="Algolia Crawler creation page"
+  />
+</div>
 
 ## Docusaurus v1 template
 
 <details><summary>docusaurus-v1.js</summary>
-<p>
+<div>
 
 
 ```js
@@ -155,14 +168,14 @@ new Crawler({
 });
 ```
 
-</p>
+</div>
 </details>
 
 
 ## Docusaurus v2 template
 
 <details><summary>docusaurus-v2.js</summary>
-<p>
+<div>
 
 
 ```js
@@ -284,14 +297,14 @@ new Crawler({
 });
 ```
 
-</p>
+</div>
 </details>
 
 
 ## Vuepress v1 template
 
 <details><summary>vuepress-v1.js</summary>
-<p>
+<div>
 
 
 ```js
@@ -395,14 +408,14 @@ new Crawler({
 });
 ```
 
-</p>
+</div>
 </details>
 
 
 ## Vuepress v2 template
 
 <details><summary>vuepress-v2.js</summary>
-<p>
+<div>
 
 
 ```js
@@ -506,14 +519,14 @@ new Crawler({
 });
 ```
 
-</p>
+</div>
 </details>
 
 
 ## Vitepress template
 
 <details><summary>vitepress.js</summary>
-<p>
+<div>
 
 
 ```js
@@ -616,14 +629,14 @@ new Crawler({
 });
 ```
 
-</p>
+</div>
 </details>
 
 
 ## pkgdown template
 
 <details><summary>pkgdown.js</summary>
-<p>
+<div>
 
 
 ```js
@@ -798,7 +811,7 @@ new Crawler({
 });
 ```
 
-</p>
+</div>
 </details>
 
 

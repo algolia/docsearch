@@ -1,6 +1,6 @@
 ---
 title: What is DocSearch?
-sidebar_label: Getting started
+sidebar_label: What is DocSearch?
 ---
 
 ## Why?

@@ -17,7 +17,7 @@ module.exports = {
       'migrating-from-legacy',
     ],
     'Adding DocSearch to your UI': ['DocSearch-v3', 'api', 'styling'],
-    'Algolia Crawler': ['record-extractor', 'templates'],
+    'Algolia Crawler': ['record-extractor', 'templates', 'manage-your-crawls'],
     'Requirements, tips, FAQ': ['faq', 'tips', 'integrations'],
     'Under the hood': ['how-does-it-work', 'required-configuration'],
   },
