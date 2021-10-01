@@ -8,14 +8,10 @@ import {
   Text,
 } from '@algolia/ui-library';
 import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
-import useThemeContext from '@theme/hooks/useThemeContext';
 import React, { useState } from 'react';
 
 function ApplyForm() {
   const { withBaseUrl } = useBaseUrlUtils();
-  const { isDarkTheme } = useThemeContext();
-  const backgroundTheme = isDarkTheme ? 'dark' : 'light';
-  const textTheme = isDarkTheme ? 'white' : 'grey';
   const [hasSent, setHasSent] = useState(false);
   const [url, setUrl] = useState('');
   const [email, setEmail] = useState('');
@@ -47,24 +43,22 @@ function ApplyForm() {
   if (hasSent) {
     return (
       <Card
-        background={backgroundTheme}
-        className="uil-m-auto uil-ta-center"
+        className="uil-m-auto uil-ta-center apply-form"
         style={{ maxWidth: 600 }}
       >
-        <Heading1 color={textTheme}>Thank you!</Heading1>
+        <Heading1 className="apply-text">Thank you!</Heading1>
         <br />
 
         <Text
-          className="uil-pv-8 uil-d-block"
+          className="uil-pv-8 uil-d-block apply-text"
           aria-label="Request will be processed"
-          color={textTheme}
         >
           Your request will be processed by our team. We'll get back to you at{' '}
           <strong>{email}</strong> with the snippet you'll need to integrate
           into <InlineLink href={url}>{url}</InlineLink>.
         </Text>
 
-        <Text aria-label="recommendations" color={textTheme}>
+        <Text aria-label="recommendations" className="apply-text">
           Please be patient, in the meantime, you can implement{' '}
           <InlineLink href={withBaseUrl('docs/tips')}>
             our recommendations for building a great DocSearch experience.
@@ -75,18 +69,14 @@ function ApplyForm() {
   }
 
   return (
-    <Card
-      background={backgroundTheme}
-      className="uil-m-auto"
-      style={{ maxWidth: 600 }}
-    >
+    <Card className="uil-m-auto apply-form" style={{ maxWidth: 600 }}>
       <form
         onSubmit={onSubmit}
         id="form-apply-docsearch"
         method="POST"
         action="https://docsearch-hub.herokuapp.com/form/inbound"
       >
-        <LabelText key="url" tag="label" htmlFor="url" color={textTheme}>
+        <LabelText key="url" tag="label" htmlFor="url" className="apply-text">
           Documentation or Blog URL
           <Input
             id="url"
@@ -100,11 +90,16 @@ function ApplyForm() {
           />
         </LabelText>
 
-        <Text small color={textTheme} className="uil-pv-8 uil-d-block">
+        <Text small className="uil-pv-8 uil-d-block apply-text">
           We'll scrape pages at this address and index the content on Algolia.
         </Text>
 
-        <LabelText tag="label" htmlFor="email" key="email" color={textTheme}>
+        <LabelText
+          tag="label"
+          htmlFor="email"
+          key="email"
+          className="apply-text"
+        >
           Email
           <Input
             id="email"
@@ -118,18 +113,17 @@ function ApplyForm() {
           />
         </LabelText>
 
-        <Text small color={textTheme} className="uil-pv-8 uil-d-block">
+        <Text small className="uil-pv-8 uil-d-block apply-text">
           We'll send you the snippet you'll have to integrate into your website
           and grant access to your Algolia application.
         </Text>
 
         <div className="uil-ph-32 uil-d-flex uil-fxd-column">
           <LabelText
-            className="uil-pt-12"
+            className="uil-pt-12 apply-text"
             tag="label"
             htmlFor="public"
             key="public"
-            color={textTheme}
           >
             <input
               id="public"
@@ -143,11 +137,10 @@ function ApplyForm() {
           </LabelText>
 
           <LabelText
-            className="uil-pt-12"
+            className="uil-pt-12 apply-text"
             tag="label"
             htmlFor="opensource"
             key="opensource"
-            color={textTheme}
           >
             <input
               id="opensource"
@@ -162,11 +155,10 @@ function ApplyForm() {
           </LabelText>
 
           <LabelText
-            className="uil-pt-12"
+            className="uil-pt-12 apply-text"
             tag="label"
             htmlFor="owner"
             key="owner"
-            color={textTheme}
           >
             <input
               id="owner"
