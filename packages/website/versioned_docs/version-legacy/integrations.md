@@ -6,7 +6,7 @@ We worked with **documentation website generators** to have DocSearch directly e
 
 ## Our great integrations
 
-So, if you're using one of the following tools, checkout their documentation to see how to enable DocSearch on your website:
+If you're using one of the following tools, checkout their documentation to see how to enable DocSearch on your website:
 
 - [Docusaurus v1][1] - [How to enable search][2]
 - [Docusaurus v2][3] - [Using Algolia DocSearch][4]

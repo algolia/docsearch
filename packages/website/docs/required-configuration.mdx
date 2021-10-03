@@ -6,7 +6,7 @@ This section, gives you the best practices to optimize our crawl. Adopting this 
 
 :::note
 
-If your website is generated, thanks to one of [our supported tool][1], you do not need to change your website as it is already compliant with our requirements.
+If your website is generated, thanks to one of [our supported tools][1], you do not need to change your website as it is already compliant with our requirements.
 
 :::
 
@@ -54,7 +54,7 @@ new Crawler({
       // These attributes can be used as `facetFilters` in the frontend
       attributesForFaceting: ['type'],
       // Below are all the default settings of your Algolia index in order to
-      // make DocSearch v3 work. Changing them can cause issue with the final
+      // make DocSearch v3 work. Changing them can cause issues with the final
       // rendering
       attributesToRetrieve: [
         'hierarchy',
@@ -151,11 +151,11 @@ You can add some specific static classes to help us find your content role. Thes
 
 - Add a static class `DocSearch-content` to the main container of your textual content. Most of the time, this tag is a `<main>` or an `<article>` HTML element.
 
-- Every searchable `lvl` elements outside this main documentation container (for instance in a sidebar) must be `global` selectors. They will be globally picked up and injected to every record built from your page. Be careful, the level value matters and every matching element must have an increasing level along the HTML flow. A level `X` (for `lvlX`) should appear after a level `Y` while `X > Y`.
+- Every searchable `lvl` element outside this main documentation container (for instance in a sidebar) must be a `global` selector. They will be globally picked up and injected to every record built from your page. Be careful, the level value matters and every matching element must have an increasing level along the HTML flow. A level `X` (for `lvlX`) should appear after a level `Y` while `X > Y`.
 
 - `lvlX` selectors should use the standard title tags like `h1`, `h2`, `h3`, etc. You can also use static classes. Set a unique `id` or `name` attribute to these elements as detailed below.
 
-- Every DOM elements matching the `lvlX` selectors must have a unique `id` or `name` attribute. This will help the redirection to directly scroll down to the exact place of the matching elements. These attributes define the right anchor to use.
+- Every DOM element matching the `lvlX` selectors must have a unique `id` or `name` attribute. This will help the redirection to directly scroll down to the exact place of the matching elements. These attributes define the right anchor to use.
 
 - Every textual element (recordProps `content`) must be wrapped in a `<p>` or `<li>` tag. This content must be atomic and split into small entities. Be careful to never nest one matching element into another one as it will create duplicates.
 

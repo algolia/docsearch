@@ -4,7 +4,7 @@ title: Migrating from legacy
 
 ## Introduction
 
-With this new version of the [DocSearch UI][1], we wanted to go further and provide a better tooling for you to create and maintain your config file, and some extra Algolia features that you all have been requested for a long time!
+With this new version of the [DocSearch UI][1], we wanted to go further and provide better tooling for you to create and maintain your config file, and some extra Algolia features that you all have been requesting for a long time!
 
 ## What's new?
 
@@ -56,9 +56,9 @@ Below are the keys that can be found in the [`legacy` DocSearch configs][14] and
 
 ### Migration seems to have started, but I don't have received any emails
 
-Due to the large number of indices DocSearch have, we need to migrate configs in small incremental batches.
+Due to the large number of indices DocSearch has, we need to migrate configs in small incremental batches.
 
-If you don't have received a migration mail yet, don't worry, your turn will come!
+If you have not received a migration mail yet, don't worry, your turn will come!
 
 ### What do I need to do to migrate?
 
@@ -83,7 +83,7 @@ At the time you are reading this, the migration hasn't been completed, so yes th
 **Once the migration has been completed:**
 
 - The [`docsearch-scraper`][8] will be archived and not maintained in favor of our [Algolia Crawler][2], you'll still be able to use our [run your own][3] solution if you want!
-- The [`docsearch-configs`][9] repository will be archived and and host **all** of [the existing and active **legacy** DocSearch config file][11], and [their parsed version][12]. You can have a preview [on this branch][10].
+- The [`docsearch-configs`][9] repository will be archived and and host **all** of [the existing and active **legacy** DocSearch config file][11], and [their parsed version][12]. You can get a preview [on this branch][10].
 
 [1]: DocSearch-v3
 [2]: https://www.algolia.com/products/search-and-discovery/crawler/

@@ -8,11 +8,11 @@ This page explains in more detail how the crawler extracts content from your pag
 
 Each crawl begins its journey at `start_urls` value specified in your config. It will read those pages, recursively extract and follow every link in those pages until it has browsed every compliant page.
 
-If you have explicitly defined a `sitemap.xml`, our crawler will scrape every provided and compliant page. We do recommend using [a sitemap][1] since it explicitly exposes URLs to crawl and avoid missing pages that aren't linked from another one.
+If you have explicitly defined a `sitemap.xml`, our crawler will scrape every provided and compliant page. We recommend using [a sitemap][1] since it explicitly exposes URLs to crawl and avoid missing pages that aren't linked from another page.
 
 ## Extracting content
 
-Building records using the scraper is pretty intuitive. Based to your settings, we extract the payload of your web page and index it, preserving your data structure. It achieves this in a simple way:
+Building records using the scraper is pretty intuitive. Based on your settings, we extract the payload of your web page and index it, preserving your data structure. It achieves this in a simple way:
 
 - We **read top down** your web page following your HTML flow and pick out your matching elements according to their **levels** based on the `selectors_level` defined.
 - We create a record for each paragraph along with its hierarchical path. This construction is based on their **time of appearance** along the flow.

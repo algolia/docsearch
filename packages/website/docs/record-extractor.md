@@ -12,7 +12,7 @@ The following content is for **[DocSearch v3][2]** and **[its new infrastructure
 
 :::info
 
-This documentation will only contain informations regarding the **helpers.docsearch** method, see **[Algolia Crawler Documentation][7]** for more informations on the **[Algolia Crawler][8]**.
+This documentation will only contain information regarding the **helpers.docsearch** method, see **[Algolia Crawler Documentation][7]** for more information on the **[Algolia Crawler][8]**.
 
 :::
 
@@ -76,7 +76,7 @@ recordExtractor: ({ $, helpers }) => {
 
 ### With fallback DOM selectors
 
-Each `lvlX` and `content` supports fallback selectors as an array of string, which allow robust config files:
+Each `lvlX` and `content` supports fallback selectors as an array of string, which allows for robust config files:
 
 ```js
 recordExtractor: ({ $, helpers }) => {
@@ -105,7 +105,7 @@ recordExtractor: ({ $, helpers }) => {
 
 Custom variables are useful to filter content in the frontend (`version`, `lang`, etc.).
 
-_These selectors also supports [`defaultValue`](#with-raw-text-defaultvalue) and [fallback selectors](#with-fallback-dom-selectors)_
+_These selectors also support [`defaultValue`](#with-raw-text-defaultvalue) and [fallback selectors](#with-fallback-dom-selectors)_
 
 ```js
 recordExtractor: ({ helpers }) => {

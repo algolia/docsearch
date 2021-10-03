@@ -4,7 +4,7 @@ title: Required configuration
 
 This section, [empowered by the details about how we build a DocSearch index][1], gives you the best practices to optimize our crawl. Adopting this following specification is required to let our crawler build the best experience from your website. You will need to update your website and follow these rules.
 
-Note: If your website is generated thanks to one of our supported tool, you do not need to change your website as it is already compliant with our requirements.
+Note: If your website is generated thanks to one of our supported tools, you do not need to change your website as it is already compliant with our requirements.
 
 ## The generic configuration example
 
@@ -41,7 +41,7 @@ Note: If your website is generated thanks to one of our supported tool, you do n
 
 ### Overview of a clear layout
 
-A website implementing these good practises will look simple and crystal clear. It can have this following aspect:
+A website implementing these best practices will look simple and crystal clear. It can have this following aspect:
 
 <img src="https://docsearch.algolia.com/img/assets/recommended-layout.png" alt="Recommended layout for your page"/>
 
@@ -53,7 +53,7 @@ You can add some specific static classes to help us find your content role. Thes
 
 - Add a static class `DocSearch-content` to the main container of your textual content. Most of the time, this tag is a `<main>` or an `<article>` HTML element.
 
-- Every searchable `lvl` elements outside this main documentation container (for instance in a sidebar) must be `global` selectors. They will be globally picked up and injected to every record built from your page. Be careful, the level value matters and every matching element must have an increasing level along the HTML flow. A level `X` (for `lvlX`) should appear after a level `Y` while `X > Y`.
+- Every searchable `lvl` element outside this main documentation container (for instance in a sidebar) must be a `global` selector. They will be globally picked up and injected to every record built from your page. Be careful, the level value matters and every matching element must have an increasing level along the HTML flow. A level `X` (for `lvlX`) should appear after a level `Y` while `X > Y`.
 
 - `lvlX` selectors should use the standard title tags like `h1`, `h2`, `h3`, etc. You can also use static classes. Set a unique `id` or `name` attribute to these elements as detailed below.
 
@@ -82,7 +82,7 @@ You can then [transform these attributes as `facetFilters`][3] to filter over th
 }
 ```
 
-It enables you to filter on the value of these meta tags. The following example shows how to update the JS snippet to retrieve records from these pages.
+It enables you to filter on the value of these meta tags. The following example shows how to update the JavaScript snippet to retrieve records from these pages.
 
 ```js
 docsearch({

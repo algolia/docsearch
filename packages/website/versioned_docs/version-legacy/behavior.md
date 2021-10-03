@@ -77,7 +77,7 @@ docsearch({
 
 ## `transformData`
 
-This method will be called on every hits before displaying them. It doesn't do anything by default, but we provide this hook for you to add your own logic and pre-process the hits returned by Algolia.
+This method will be called on every hit before displaying them. It doesn't do anything by default, but we provide this hook for you to add your own logic and pre-process the hits returned by Algolia.
 
 ```javascript
 docsearch({
@@ -90,7 +90,7 @@ docsearch({
 
 ## `autocompleteOptions`
 
-You can pass any options to the underlying [Autocomplete.js](https://github.com/algolia/autocomplete/tree/master) library by using the `autocompleteOptions` parameter. You will find the list of all available values in [the official documentation][4].
+You can pass any options to the underlying [Autocomplete.js](https://github.com/algolia/autocomplete/tree/master) library by using the `autocompleteOptions` parameter. You can find the list of all available values in [the official documentation][4].
 
 You can also listen to `autocomplete` events through the `.autocomplete` property of the `docsearch` instance.
 
@@ -109,7 +109,7 @@ search.autocomplete.on('autocomplete:opened', event => {
 
 ## `algoliaOptions`
 
-You can forward search parameters to the Algolia API by using the `algoliaOptions` key. You will find all Algolia API options in their [own documentation][5].
+You can forward search parameters to the Algolia API by using the `algoliaOptions` key. You can find all Algolia API options in their [own documentation][5].
 
 For example, you might want to increase the number of results displayed in the dropdown. [`hitsPerPage` set the number of shown hits][6].
 

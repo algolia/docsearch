@@ -12,11 +12,11 @@ To have your request validated, we'll ask that you check all the following point
 
 - You must be the **owner** of the website, or at least have the permissions to update its content. You'll need to [include a JavaScript snippet][1] to your frontend to implement DocSearch.
 
-- Your website must be **publicly available**. We do not host search indices for websites that are only available behind an authentication or a private network.
+- Your website must be **publicly available**. We do not host search indices for websites that are only available after authentication or are hosted on a private network.
 
 - Your website must be a **technical documentation of an open source project or a technical blog**. We do not index commercial content.
 
-- Your website must be **production ready**. We won't index empty websites nor those filled with lorem ipsum placeholder content. Please, wait until you have written some documentation before applying. We would be happy to help you as soon as you have a steady design.
+- Your website must be **production ready**. We won't index empty websites nor those filled with placeholder content. Please, wait until you have written some documentation before applying. We would be happy to help you as soon as you have a steady design.
 
 If in doubt, don't hesitate to [apply][2] and we'll figure it out together.
 

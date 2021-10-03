@@ -41,11 +41,11 @@ You set the `stop_urls` to all the patterns you want to exclude. The following e
 
 ## Why are custom changes from the Algolia dashboard ineffective?
 
-Changing your setting from the dashboard might be something you want to do for some reasons .
+Changing your settings from the dashboard might be something you want to do for some reasons.
 
-Every successful crawl sets the DocSearch settings. These settings will be overridden at the next crawl. We **do not recommend to edit anything from the dashboard**. These changes come from the JSON configuration itself.
+Every successful crawl sets the DocSearch settings. These settings will be overridden at the next crawl. We **do not recommend you edit anything from the dashboard**. These changes come from the JSON configuration itself.
 
-You can use the [custom_settings parameter][8] for such purpose.
+You can use the [custom_settings parameter][8] for this purpose.
 
 ## A documentation website I like does not use DocSearch. What can I do?
 
@@ -61,9 +61,9 @@ The DocSearch scraper follows [the recommended atomic-reindexing strategy][9]. I
 
 ## Why aren't my pages indexed?
 
-We are scraping your website according to your configuration. It might happen that some pages are missing from the search. Some possible reasons for that are:
+We are scraping your website according to your configuration. It might happen that some pages are missing from the search. Some possible reasons are:
 
-- Makes sure you are not filtering on the search by wrongly using `facetFilters`. [See here for more details][10].
+- Make sure you are not filtering on the search by wrongly using `facetFilters`. [See here for more details][10].
 - Make sure that an other indexed page references the page missing with an hyperlink tag `<a/>`.
 - Make sure you are [providing a compliant sitemap from the configuration][11] and that it references the page.
 
@@ -73,11 +73,11 @@ We build this website with [Docusaurus v2][12]. We were helped by a great man wh
 
 ## What is the timeline on the v3?
 
-We are pre-releasing the v3 on docusaurus 2. It will help us to iterate faster on it and make sure we are ready to release a vanilla version. We will provide a migration guide to help you move on this new version. If you want to have more information on this version, you can [watch the search party we made about this topic][16].
+We are pre-releasing the v3 on Docusaurus 2. It will help us to iterate faster on it and make sure we are ready to release a vanilla version. We will provide a migration guide to help you move on this new version. If you want to have more information on this version, you can [watch the search party we made about this topic][16].
 
 ## Can I share the `apiKey` in my repo?
 
-The `apiKey` the DocSearch team provides is [a search-only key][17] and can be safely shared publicly. You can track it in your version control system (e.g. git). If you are running the scraper on your own, please make sure to create a search-only key and [do not share your Admin key][18].
+The `apiKey` the DocSearch team provides is [a search-only key][17] and can be safely shared publicly. You can track it in your version control system (for example Git). If you are running the scraper on your own, please make sure to create a search-only key and [do not share your Admin key][18].
 
 [1]: mailto:docsearch@algolia.com
 [4]: https://www.algolia.com/doc/guides/infrastructure/servers/
