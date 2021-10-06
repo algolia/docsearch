@@ -1,3 +1,5 @@
+import replace from '@rollup/plugin-replace';
+
 import { plugins } from '../../rollup.base.config';
 import { getBundleBanner } from '../../scripts/getBundleBanner';
 
@@ -26,5 +28,13 @@ const output = {
 export default {
   input: 'src/index.ts',
   output: output[process.env.BUILD],
-  plugins,
+  plugins:
+    process.env.BUILD === 'umd'
+      ? [
+          ...plugins,
+          replace({
+            'process.env.NODE_ENV': JSON.stringify('production'),
+          }),
+        ]
+      : plugins,
 };
