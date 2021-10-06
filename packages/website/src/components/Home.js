@@ -263,6 +263,7 @@ function Home() {
                         className="h-200"
                         src={withBaseUrl('img/assets/scraping.svg')}
                         width="190px"
+                        height="220px"
                       />
                     </div>
                     <div className="mt-10 lg:mt-0 p-4">
@@ -286,6 +287,7 @@ function Home() {
                       <img
                         src={withBaseUrl('img/assets/configuration.svg')}
                         width="140px"
+                        height="220px"
                       />
                     </div>
                     <div>
@@ -303,6 +305,7 @@ function Home() {
                       <img
                         src={withBaseUrl('img/assets/implementation.svg')}
                         width="220px"
+                        height="220px"
                       />
                     </div>
                     <div>
@@ -404,7 +407,7 @@ function Home() {
                 </ul>
               </div>
 
-              <div className="mt-10 -mx-4 lg:mt-0">
+              <div className="mt-10 -mx-4 lg:mt-0 uil-ta-center">
                 <img
                   className="relative mx-auto"
                   width="490"
@@ -486,7 +489,7 @@ function Home() {
                   </ul>
                 </div>
 
-                <div className="mt-10 -mx-4 lg:mt-0 lg:col-start-1">
+                <div className="mt-10 -mx-4 lg:mt-0 lg:col-start-1 uil-ta-center">
                   <img
                     className="relative mx-auto"
                     width="490"

@@ -42,10 +42,7 @@ function ApplyForm() {
 
   if (hasSent) {
     return (
-      <Card
-        className="uil-m-auto uil-ta-center apply-form"
-        style={{ maxWidth: 600 }}
-      >
+      <Card className="uil-m-auto uil-ta-center apply-form">
         <Heading1 className="apply-text">Thank you!</Heading1>
         <br />
 
@@ -69,7 +66,7 @@ function ApplyForm() {
   }
 
   return (
-    <Card className="uil-m-auto apply-form" style={{ maxWidth: 600 }}>
+    <Card className="uil-m-auto apply-form uil-pb-24">
       <form
         onSubmit={onSubmit}
         id="form-apply-docsearch"

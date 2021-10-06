@@ -4,7 +4,7 @@ title: Required configuration
 
 This section, gives you the best practices to optimize our crawl. Adopting this following specification is required to let our crawler build the best experience from your website. You will need to update your website and follow these rules.
 
-:::note
+:::info
 
 If your website is generated, thanks to one of [our supported tools][1], you do not need to change your website as it is already compliant with our requirements.
 
@@ -51,11 +51,7 @@ new Crawler({
   ],
   initialIndexSettings: {
     YOUR_INDEX_NAME: {
-      // These attributes can be used as `facetFilters` in the frontend
       attributesForFaceting: ['type'],
-      // Below are all the default settings of your Algolia index in order to
-      // make DocSearch v3 work. Changing them can cause issues with the final
-      // rendering
       attributesToRetrieve: [
         'hierarchy',
         'content',

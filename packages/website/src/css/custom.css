@@ -90,6 +90,7 @@ html[data-theme='dark'] #hero-apply > div:first-child {
 
 .apply-form {
   background-image: linear-gradient(#fff, #f5f5fa);
+  max-width: 600px;
 }
 
 html[data-theme='dark'] .apply-form {
