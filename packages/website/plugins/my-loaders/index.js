@@ -1,7 +1,7 @@
-module.exports = function (_context, _options) {
+module.exports = function () {
   return {
     name: 'loaders',
-    configureWebpack(_config, _isServer) {
+    configureWebpack() {
       return {
         module: {
           rules: [

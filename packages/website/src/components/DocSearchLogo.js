@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function DocSearchLogo(props) {
+function DocSearchLogo(props) {
   return (
     <svg {...props} viewBox="0 0 476 78" className="docsearch-logo">
       <g fillRule="nonzero" fill="none">
@@ -16,3 +16,5 @@ export function DocSearchLogo(props) {
     </svg>
   );
 }
+
+export default DocSearchLogo;

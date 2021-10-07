@@ -81,6 +81,11 @@
             </feMerge>
         </filter>
     </defs>
+    <style>
+        tspan {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+    </style>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="Artboard" transform="translate(-913.000000, -1687.000000)">
             <g id="How" transform="translate(0.000000, 1402.000000)">

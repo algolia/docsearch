@@ -1,0 +1,819 @@
+---
+title: Config templates
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+To help you create the best search experience for your users, we provide config templates for multiple websites generators. If you'd like to add a new template to our list, or believe we should update an existing one, please [send us an email][1] or [open a pull request][2]
+
+## From the Crawler UI
+
+Templates are available when you [create a new Crawler](https://crawler.algolia.com/admin/crawlers/create). They will automatically be filled with your website URL, Algolia credentials and index name.
+
+<div className="uil-ta-center">
+  <img
+    src={useBaseUrl('img/assets/new-crawler-creation.png')}
+    alt="Algolia Crawler creation page"
+  />
+</div>
+
+## Docusaurus v1 template
+
+<details><summary>docusaurus-v1.js</summary>
+<div>
+
+
+```js
+new Crawler({
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_API_KEY',
+  rateLimit: 8,
+  startUrls: [
+    'https://YOUR_WEBSITE_URL/docs/',
+    'https://YOUR_WEBSITE_URL/',
+    'https://YOUR_WEBSITE_URL/blog/',
+  ],
+  sitemaps: ['https://YOUR_WEBSITE_URL/sitemap.xml'],
+  ignoreCanonicalTo: false,
+  discoveryPatterns: ['https://YOUR_WEBSITE_URL/**'],
+  actions: [
+    {
+      indexName: 'YOUR_INDEX_NAME',
+      pathsToMatch: ['https://YOUR_WEBSITE_URL/docs/**'],
+      recordExtractor: ({ $, helpers }) => {
+        // Removing DOM elements we don't want to crawl
+        const toRemove = '.hash-link';
+        $(toRemove).remove();
+
+        return helpers.docsearch({
+          recordProps: {
+            lvl0: {
+              selectors: '.navGroup > h3.collapsible',
+              defaultValue: 'Blog',
+            },
+            lvl1: '.post h1',
+            lvl2: '.post h2',
+            lvl3: '.post h3',
+            lvl4: '.post h4',
+            content: '.post article p, .post article li',
+            tags: {
+              defaultValue: ['docs'],
+            },
+          },
+          indexHeadings: true,
+        });
+      },
+    },
+    {
+      indexName: 'YOUR_INDEX_NAME',
+      pathsToMatch: ['https://YOUR_WEBSITE_URL/blog/**'],
+      recordExtractor: ({ $, helpers }) => {
+        // Removing DOM elements we don't want to crawl
+        const toRemove = '.hash-link';
+        $(toRemove).remove();
+
+        return helpers.docsearch({
+          recordProps: {
+            lvl0: {
+              selectors: '.navGroup > h3.collapsible',
+              defaultValue: 'Blog',
+            },
+            lvl1: '.post h1',
+            lvl2: '.post h2',
+            lvl3: '.post h3',
+            lvl4: '.post h4',
+            content: '.post article p, .post article li',
+            tags: {
+              defaultValue: ['blog'],
+            },
+          },
+          indexHeadings: true,
+        });
+      },
+    },
+  ],
+  initialIndexSettings: {
+    YOUR_INDEX_NAME: {
+      attributesForFaceting: ['type', 'lang', 'language', 'version', 'tags'],
+      attributesToRetrieve: [
+        'hierarchy',
+        'content',
+        'anchor',
+        'url',
+        'url_without_anchor',
+        'type',
+      ],
+      attributesToHighlight: ['hierarchy', 'hierarchy_camel', 'content'],
+      attributesToSnippet: ['content:10'],
+      camelCaseAttributes: ['hierarchy', 'hierarchy_radio', 'content'],
+      searchableAttributes: [
+        'unordered(hierarchy_radio_camel.lvl0)',
+        'unordered(hierarchy_radio.lvl0)',
+        'unordered(hierarchy_radio_camel.lvl1)',
+        'unordered(hierarchy_radio.lvl1)',
+        'unordered(hierarchy_radio_camel.lvl2)',
+        'unordered(hierarchy_radio.lvl2)',
+        'unordered(hierarchy_radio_camel.lvl3)',
+        'unordered(hierarchy_radio.lvl3)',
+        'unordered(hierarchy_radio_camel.lvl4)',
+        'unordered(hierarchy_radio.lvl4)',
+        'unordered(hierarchy_radio_camel.lvl5)',
+        'unordered(hierarchy_radio.lvl5)',
+        'unordered(hierarchy_radio_camel.lvl6)',
+        'unordered(hierarchy_radio.lvl6)',
+        'unordered(hierarchy_camel.lvl0)',
+        'unordered(hierarchy.lvl0)',
+        'unordered(hierarchy_camel.lvl1)',
+        'unordered(hierarchy.lvl1)',
+        'unordered(hierarchy_camel.lvl2)',
+        'unordered(hierarchy.lvl2)',
+        'unordered(hierarchy_camel.lvl3)',
+        'unordered(hierarchy.lvl3)',
+        'unordered(hierarchy_camel.lvl4)',
+        'unordered(hierarchy.lvl4)',
+        'unordered(hierarchy_camel.lvl5)',
+        'unordered(hierarchy.lvl5)',
+        'unordered(hierarchy_camel.lvl6)',
+        'unordered(hierarchy.lvl6)',
+        'content',
+      ],
+      distinct: true,
+      attributeForDistinct: 'url',
+      customRanking: [
+        'desc(weight.pageRank)',
+        'desc(weight.level)',
+        'asc(weight.position)',
+      ],
+      ranking: [
+        'words',
+        'filters',
+        'typo',
+        'attribute',
+        'proximity',
+        'exact',
+        'custom',
+      ],
+      highlightPreTag: '<span class="algolia-docsearch-suggestion--highlight">',
+      highlightPostTag: '</span>',
+      minWordSizefor1Typo: 3,
+      minWordSizefor2Typos: 7,
+      allowTyposOnNumericTokens: false,
+      minProximity: 1,
+      ignorePlurals: true,
+      advancedSyntax: true,
+      attributeCriteriaComputedByMinProximity: true,
+      removeWordsIfNoResults: 'allOptional',
+    },
+  },
+});
+```
+
+</div>
+</details>
+
+
+## Docusaurus v2 template
+
+<details><summary>docusaurus-v2.js</summary>
+<div>
+
+
+```js
+new Crawler({
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_API_KEY',
+  rateLimit: 8,
+  startUrls: ['https://YOUR_WEBSITE_URL/'],
+  sitemaps: ['https://YOUR_WEBSITE_URL/sitemap.xml'],
+  ignoreCanonicalTo: true,
+  discoveryPatterns: ['https://YOUR_WEBSITE_URL/**'],
+  actions: [
+    {
+      indexName: 'YOUR_INDEX_NAME',
+      pathsToMatch: ['https://YOUR_WEBSITE_URL/**'],
+      recordExtractor: ({ $, helpers }) => {
+        return helpers.docsearch({
+          recordProps: {
+            lvl0: {
+              selectors: [
+                '.menu__link.menu__link--sublist.menu__link--active',
+                '.navbar__item.navbar__link--active',
+              ],
+              defaultValue: 'Documentation',
+            },
+            lvl1: 'header h1',
+            lvl2: 'article h2',
+            lvl3: 'article h3',
+            lvl4: 'article h4',
+            lvl5: 'article h5, article td:first-child',
+            lvl6: 'article h6',
+            content: 'article p, article li, article td:last-child',
+          },
+          indexHeadings: true,
+        });
+      },
+    },
+  ],
+  initialIndexSettings: {
+    YOUR_INDEX_NAME: {
+      attributesForFaceting: [
+        'type',
+        'lang',
+        'language',
+        'version',
+        'docusaurus_tag',
+      ],
+      attributesToRetrieve: [
+        'hierarchy',
+        'content',
+        'anchor',
+        'url',
+        'url_without_anchor',
+        'type',
+      ],
+      attributesToHighlight: ['hierarchy', 'hierarchy_camel', 'content'],
+      attributesToSnippet: ['content:10'],
+      camelCaseAttributes: ['hierarchy', 'hierarchy_radio', 'content'],
+      searchableAttributes: [
+        'unordered(hierarchy_radio_camel.lvl0)',
+        'unordered(hierarchy_radio.lvl0)',
+        'unordered(hierarchy_radio_camel.lvl1)',
+        'unordered(hierarchy_radio.lvl1)',
+        'unordered(hierarchy_radio_camel.lvl2)',
+        'unordered(hierarchy_radio.lvl2)',
+        'unordered(hierarchy_radio_camel.lvl3)',
+        'unordered(hierarchy_radio.lvl3)',
+        'unordered(hierarchy_radio_camel.lvl4)',
+        'unordered(hierarchy_radio.lvl4)',
+        'unordered(hierarchy_radio_camel.lvl5)',
+        'unordered(hierarchy_radio.lvl5)',
+        'unordered(hierarchy_radio_camel.lvl6)',
+        'unordered(hierarchy_radio.lvl6)',
+        'unordered(hierarchy_camel.lvl0)',
+        'unordered(hierarchy.lvl0)',
+        'unordered(hierarchy_camel.lvl1)',
+        'unordered(hierarchy.lvl1)',
+        'unordered(hierarchy_camel.lvl2)',
+        'unordered(hierarchy.lvl2)',
+        'unordered(hierarchy_camel.lvl3)',
+        'unordered(hierarchy.lvl3)',
+        'unordered(hierarchy_camel.lvl4)',
+        'unordered(hierarchy.lvl4)',
+        'unordered(hierarchy_camel.lvl5)',
+        'unordered(hierarchy.lvl5)',
+        'unordered(hierarchy_camel.lvl6)',
+        'unordered(hierarchy.lvl6)',
+        'content',
+      ],
+      distinct: true,
+      attributeForDistinct: 'url',
+      customRanking: [
+        'desc(weight.pageRank)',
+        'desc(weight.level)',
+        'asc(weight.position)',
+      ],
+      ranking: [
+        'words',
+        'filters',
+        'typo',
+        'attribute',
+        'proximity',
+        'exact',
+        'custom',
+      ],
+      highlightPreTag: '<span class="algolia-docsearch-suggestion--highlight">',
+      highlightPostTag: '</span>',
+      minWordSizefor1Typo: 3,
+      minWordSizefor2Typos: 7,
+      allowTyposOnNumericTokens: false,
+      minProximity: 1,
+      ignorePlurals: true,
+      advancedSyntax: true,
+      attributeCriteriaComputedByMinProximity: true,
+      removeWordsIfNoResults: 'allOptional',
+      separatorsToIndex: '_',
+    },
+  },
+});
+```
+
+</div>
+</details>
+
+
+## Vuepress v1 template
+
+<details><summary>vuepress-v1.js</summary>
+<div>
+
+
+```js
+new Crawler({
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_API_KEY',
+  rateLimit: 8,
+  startUrls: ['https://YOUR_WEBSITE_URL/'],
+  sitemaps: ['https://YOUR_WEBSITE_URL/sitemap.xml'],
+  ignoreCanonicalTo: false,
+  discoveryPatterns: ['https://YOUR_WEBSITE_URL/**'],
+  actions: [
+    {
+      indexName: 'YOUR_INDEX_NAME',
+      pathsToMatch: ['https://YOUR_WEBSITE_URL/**'],
+      recordExtractor: ({ $, helpers }) => {
+        return helpers.docsearch({
+          recordProps: {
+            lvl0: {
+              selectors: 'p.sidebar-heading.open',
+              defaultValue: 'Documentation',
+            },
+            lvl1: '.content__default h1',
+            lvl2: '.content__default h2',
+            lvl3: '.content__default h3',
+            lvl4: '.content__default h4',
+            lvl5: '.content__default h5',
+            content: '.content__default p, .content__default li',
+          },
+          indexHeadings: true,
+        });
+      },
+    },
+  ],
+  initialIndexSettings: {
+    YOUR_INDEX_NAME: {
+      attributesForFaceting: ['type', 'lang'],
+      attributesToRetrieve: ['hierarchy', 'content', 'anchor', 'url'],
+      attributesToHighlight: ['hierarchy', 'hierarchy_camel', 'content'],
+      attributesToSnippet: ['content:10'],
+      camelCaseAttributes: ['hierarchy', 'hierarchy_radio', 'content'],
+      searchableAttributes: [
+        'unordered(hierarchy_radio_camel.lvl0)',
+        'unordered(hierarchy_radio.lvl0)',
+        'unordered(hierarchy_radio_camel.lvl1)',
+        'unordered(hierarchy_radio.lvl1)',
+        'unordered(hierarchy_radio_camel.lvl2)',
+        'unordered(hierarchy_radio.lvl2)',
+        'unordered(hierarchy_radio_camel.lvl3)',
+        'unordered(hierarchy_radio.lvl3)',
+        'unordered(hierarchy_radio_camel.lvl4)',
+        'unordered(hierarchy_radio.lvl4)',
+        'unordered(hierarchy_radio_camel.lvl5)',
+        'unordered(hierarchy_radio.lvl5)',
+        'unordered(hierarchy_radio_camel.lvl6)',
+        'unordered(hierarchy_radio.lvl6)',
+        'unordered(hierarchy_camel.lvl0)',
+        'unordered(hierarchy.lvl0)',
+        'unordered(hierarchy_camel.lvl1)',
+        'unordered(hierarchy.lvl1)',
+        'unordered(hierarchy_camel.lvl2)',
+        'unordered(hierarchy.lvl2)',
+        'unordered(hierarchy_camel.lvl3)',
+        'unordered(hierarchy.lvl3)',
+        'unordered(hierarchy_camel.lvl4)',
+        'unordered(hierarchy.lvl4)',
+        'unordered(hierarchy_camel.lvl5)',
+        'unordered(hierarchy.lvl5)',
+        'unordered(hierarchy_camel.lvl6)',
+        'unordered(hierarchy.lvl6)',
+        'content',
+      ],
+      distinct: true,
+      attributeForDistinct: 'url',
+      customRanking: [
+        'desc(weight.pageRank)',
+        'desc(weight.level)',
+        'asc(weight.position)',
+      ],
+      ranking: [
+        'words',
+        'filters',
+        'typo',
+        'attribute',
+        'proximity',
+        'exact',
+        'custom',
+      ],
+      highlightPreTag: '<span class="algolia-docsearch-suggestion--highlight">',
+      highlightPostTag: '</span>',
+      minWordSizefor1Typo: 3,
+      minWordSizefor2Typos: 7,
+      allowTyposOnNumericTokens: false,
+      minProximity: 1,
+      ignorePlurals: true,
+      advancedSyntax: true,
+      attributeCriteriaComputedByMinProximity: true,
+      removeWordsIfNoResults: 'allOptional',
+    },
+  },
+});
+```
+
+</div>
+</details>
+
+
+## Vuepress v2 template
+
+<details><summary>vuepress-v2.js</summary>
+<div>
+
+
+```js
+new Crawler({
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_API_KEY',
+  rateLimit: 8,
+  startUrls: ['https://YOUR_WEBSITE_URL/'],
+  sitemaps: ['https://YOUR_WEBSITE_URL/sitemap.xml'],
+  ignoreCanonicalTo: false,
+  discoveryPatterns: ['https://YOUR_WEBSITE_URL/**'],
+  actions: [
+    {
+      indexName: 'YOUR_INDEX_NAME',
+      pathsToMatch: ['https://YOUR_WEBSITE_URL/**'],
+      recordExtractor: ({ $, helpers }) => {
+        return helpers.docsearch({
+          recordProps: {
+            lvl0: {
+              selectors: '.sidebar-heading.active',
+              defaultValue: 'Documentation',
+            },
+            lvl1: '.theme-default-content h1',
+            lvl2: '.theme-default-content h2',
+            lvl3: '.theme-default-content h3',
+            lvl4: '.theme-default-content h4',
+            lvl5: '.theme-default-content h5',
+            content: '.theme-default-content p, .theme-default-content li',
+          },
+          indexHeadings: true,
+        });
+      },
+    },
+  ],
+  initialIndexSettings: {
+    YOUR_INDEX_NAME: {
+      attributesForFaceting: ['type', 'lang'],
+      attributesToRetrieve: ['hierarchy', 'content', 'anchor', 'url'],
+      attributesToHighlight: ['hierarchy', 'hierarchy_camel', 'content'],
+      attributesToSnippet: ['content:10'],
+      camelCaseAttributes: ['hierarchy', 'hierarchy_radio', 'content'],
+      searchableAttributes: [
+        'unordered(hierarchy_radio_camel.lvl0)',
+        'unordered(hierarchy_radio.lvl0)',
+        'unordered(hierarchy_radio_camel.lvl1)',
+        'unordered(hierarchy_radio.lvl1)',
+        'unordered(hierarchy_radio_camel.lvl2)',
+        'unordered(hierarchy_radio.lvl2)',
+        'unordered(hierarchy_radio_camel.lvl3)',
+        'unordered(hierarchy_radio.lvl3)',
+        'unordered(hierarchy_radio_camel.lvl4)',
+        'unordered(hierarchy_radio.lvl4)',
+        'unordered(hierarchy_radio_camel.lvl5)',
+        'unordered(hierarchy_radio.lvl5)',
+        'unordered(hierarchy_radio_camel.lvl6)',
+        'unordered(hierarchy_radio.lvl6)',
+        'unordered(hierarchy_camel.lvl0)',
+        'unordered(hierarchy.lvl0)',
+        'unordered(hierarchy_camel.lvl1)',
+        'unordered(hierarchy.lvl1)',
+        'unordered(hierarchy_camel.lvl2)',
+        'unordered(hierarchy.lvl2)',
+        'unordered(hierarchy_camel.lvl3)',
+        'unordered(hierarchy.lvl3)',
+        'unordered(hierarchy_camel.lvl4)',
+        'unordered(hierarchy.lvl4)',
+        'unordered(hierarchy_camel.lvl5)',
+        'unordered(hierarchy.lvl5)',
+        'unordered(hierarchy_camel.lvl6)',
+        'unordered(hierarchy.lvl6)',
+        'content',
+      ],
+      distinct: true,
+      attributeForDistinct: 'url',
+      customRanking: [
+        'desc(weight.pageRank)',
+        'desc(weight.level)',
+        'asc(weight.position)',
+      ],
+      ranking: [
+        'words',
+        'filters',
+        'typo',
+        'attribute',
+        'proximity',
+        'exact',
+        'custom',
+      ],
+      highlightPreTag: '<span class="algolia-docsearch-suggestion--highlight">',
+      highlightPostTag: '</span>',
+      minWordSizefor1Typo: 3,
+      minWordSizefor2Typos: 7,
+      allowTyposOnNumericTokens: false,
+      minProximity: 1,
+      ignorePlurals: true,
+      advancedSyntax: true,
+      attributeCriteriaComputedByMinProximity: true,
+      removeWordsIfNoResults: 'allOptional',
+    },
+  },
+});
+```
+
+</div>
+</details>
+
+
+## Vitepress template
+
+<details><summary>vitepress.js</summary>
+<div>
+
+
+```js
+new Crawler({
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_API_KEY',
+  rateLimit: 8,
+  startUrls: ['https://YOUR_WEBSITE_URL/'],
+  sitemaps: ['https://YOUR_WEBSITE_URL/sitemap.xml'],
+  discoveryPatterns: ['https://YOUR_WEBSITE_URL/**'],
+  actions: [
+    {
+      indexName: 'YOUR_INDEX_NAME',
+      pathsToMatch: ['https://YOUR_WEBSITE_URL/**'],
+      recordExtractor: ({ $, helpers }) => {
+        return helpers.docsearch({
+          recordProps: {
+            lvl0: {
+              selectors: '',
+              defaultValue: 'Documentation',
+            },
+            lvl1: '.content h1',
+            lvl2: '.content h2',
+            lvl3: '.content h3',
+            lvl4: '.content h4',
+            lvl5: '.content h5',
+            content: '.content p, .content li',
+          },
+          indexHeadings: true,
+        });
+      },
+    },
+  ],
+  initialIndexSettings: {
+    YOUR_INDEX_NAME: {
+      attributesForFaceting: ['type', 'lang'],
+      attributesToRetrieve: ['hierarchy', 'content', 'anchor', 'url'],
+      attributesToHighlight: ['hierarchy', 'hierarchy_camel', 'content'],
+      attributesToSnippet: ['content:10'],
+      camelCaseAttributes: ['hierarchy', 'hierarchy_radio', 'content'],
+      searchableAttributes: [
+        'unordered(hierarchy_radio_camel.lvl0)',
+        'unordered(hierarchy_radio.lvl0)',
+        'unordered(hierarchy_radio_camel.lvl1)',
+        'unordered(hierarchy_radio.lvl1)',
+        'unordered(hierarchy_radio_camel.lvl2)',
+        'unordered(hierarchy_radio.lvl2)',
+        'unordered(hierarchy_radio_camel.lvl3)',
+        'unordered(hierarchy_radio.lvl3)',
+        'unordered(hierarchy_radio_camel.lvl4)',
+        'unordered(hierarchy_radio.lvl4)',
+        'unordered(hierarchy_radio_camel.lvl5)',
+        'unordered(hierarchy_radio.lvl5)',
+        'unordered(hierarchy_radio_camel.lvl6)',
+        'unordered(hierarchy_radio.lvl6)',
+        'unordered(hierarchy_camel.lvl0)',
+        'unordered(hierarchy.lvl0)',
+        'unordered(hierarchy_camel.lvl1)',
+        'unordered(hierarchy.lvl1)',
+        'unordered(hierarchy_camel.lvl2)',
+        'unordered(hierarchy.lvl2)',
+        'unordered(hierarchy_camel.lvl3)',
+        'unordered(hierarchy.lvl3)',
+        'unordered(hierarchy_camel.lvl4)',
+        'unordered(hierarchy.lvl4)',
+        'unordered(hierarchy_camel.lvl5)',
+        'unordered(hierarchy.lvl5)',
+        'unordered(hierarchy_camel.lvl6)',
+        'unordered(hierarchy.lvl6)',
+        'content',
+      ],
+      distinct: true,
+      attributeForDistinct: 'url',
+      customRanking: [
+        'desc(weight.pageRank)',
+        'desc(weight.level)',
+        'asc(weight.position)',
+      ],
+      ranking: [
+        'words',
+        'filters',
+        'typo',
+        'attribute',
+        'proximity',
+        'exact',
+        'custom',
+      ],
+      highlightPreTag: '<span class="algolia-docsearch-suggestion--highlight">',
+      highlightPostTag: '</span>',
+      minWordSizefor1Typo: 3,
+      minWordSizefor2Typos: 7,
+      allowTyposOnNumericTokens: false,
+      minProximity: 1,
+      ignorePlurals: true,
+      advancedSyntax: true,
+      attributeCriteriaComputedByMinProximity: true,
+      removeWordsIfNoResults: 'allOptional',
+    },
+  },
+});
+```
+
+</div>
+</details>
+
+
+## pkgdown template
+
+<details><summary>pkgdown.js</summary>
+<div>
+
+
+```js
+new Crawler({
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_API_KEY',
+  rateLimit: 8,
+  startUrls: [
+    'https://YOUR_WEBSITE_URL/index.html',
+    'https://YOUR_WEBSITE_URL/',
+    'https://YOUR_WEBSITE_URL/reference',
+    'https://YOUR_WEBSITE_URL/articles',
+  ],
+  sitemaps: ['https://YOUR_WEBSITE_URL/sitemap.xml'],
+  exclusionPatterns: [
+    '**/reference/',
+    '**/reference/index.html',
+    '**/articles/',
+    '**/articles/index.html',
+  ],
+  discoveryPatterns: ['https://YOUR_WEBSITE_URL/**'],
+  actions: [
+    {
+      indexName: 'YOUR_INDEX_NAME',
+      pathsToMatch: ['https://YOUR_WEBSITE_URL/index.html**/**'],
+      recordExtractor: ({ $, helpers }) => {
+        // Removing DOM elements we don't want to crawl
+        const toRemove = '.dont-index';
+        $(toRemove).remove();
+
+        return helpers.docsearch({
+          recordProps: {
+            lvl0: {
+              selectors: '.contents h1',
+              defaultValue: 'YOUR_INDEX_NAME Home page',
+            },
+            lvl1: '.contents h2',
+            lvl2: '.contents h3',
+            lvl3: '.ref-arguments td, .ref-description',
+            content: '.contents p, .contents li, .contents .pre',
+            tags: {
+              defaultValue: ['homepage'],
+            },
+          },
+          indexHeadings: { from: 2, to: 6 },
+        });
+      },
+    },
+    {
+      indexName: 'YOUR_INDEX_NAME',
+      pathsToMatch: ['https://YOUR_WEBSITE_URL/reference**/**'],
+      recordExtractor: ({ $, helpers }) => {
+        // Removing DOM elements we don't want to crawl
+        const toRemove = '.dont-index';
+        $(toRemove).remove();
+
+        return helpers.docsearch({
+          recordProps: {
+            lvl0: {
+              selectors: '.contents h1',
+            },
+            lvl1: '.contents .name',
+            lvl2: '.ref-arguments th',
+            lvl3: '.ref-arguments td, .ref-description',
+            content: '.contents p, .contents li',
+            tags: {
+              defaultValue: ['reference'],
+            },
+          },
+          indexHeadings: { from: 2, to: 6 },
+        });
+      },
+    },
+    {
+      indexName: 'YOUR_INDEX_NAME',
+      pathsToMatch: ['https://YOUR_WEBSITE_URL/articles**/**'],
+      recordExtractor: ({ $, helpers }) => {
+        // Removing DOM elements we don't want to crawl
+        const toRemove = '.dont-index';
+        $(toRemove).remove();
+
+        return helpers.docsearch({
+          recordProps: {
+            lvl0: {
+              selectors: '.contents h1',
+            },
+            lvl1: '.contents .name',
+            lvl2: '.contents h2, .contents h3',
+            content: '.contents p, .contents li',
+            tags: {
+              defaultValue: ['articles'],
+            },
+          },
+          indexHeadings: { from: 2, to: 6 },
+        });
+      },
+    },
+  ],
+  initialIndexSettings: {
+    YOUR_INDEX_NAME: {
+      attributesForFaceting: ['type', 'lang'],
+      attributesToRetrieve: [
+        'hierarchy',
+        'content',
+        'anchor',
+        'url',
+        'url_without_anchor',
+      ],
+      attributesToHighlight: ['hierarchy', 'hierarchy_camel', 'content'],
+      attributesToSnippet: ['content:10'],
+      camelCaseAttributes: ['hierarchy', 'hierarchy_radio', 'content'],
+      searchableAttributes: [
+        'unordered(hierarchy_radio_camel.lvl0)',
+        'unordered(hierarchy_radio.lvl0)',
+        'unordered(hierarchy_radio_camel.lvl1)',
+        'unordered(hierarchy_radio.lvl1)',
+        'unordered(hierarchy_radio_camel.lvl2)',
+        'unordered(hierarchy_radio.lvl2)',
+        'unordered(hierarchy_radio_camel.lvl3)',
+        'unordered(hierarchy_radio.lvl3)',
+        'unordered(hierarchy_radio_camel.lvl4)',
+        'unordered(hierarchy_radio.lvl4)',
+        'unordered(hierarchy_radio_camel.lvl5)',
+        'unordered(hierarchy_radio.lvl5)',
+        'unordered(hierarchy_radio_camel.lvl6)',
+        'unordered(hierarchy_radio.lvl6)',
+        'unordered(hierarchy_camel.lvl0)',
+        'unordered(hierarchy.lvl0)',
+        'unordered(hierarchy_camel.lvl1)',
+        'unordered(hierarchy.lvl1)',
+        'unordered(hierarchy_camel.lvl2)',
+        'unordered(hierarchy.lvl2)',
+        'unordered(hierarchy_camel.lvl3)',
+        'unordered(hierarchy.lvl3)',
+        'unordered(hierarchy_camel.lvl4)',
+        'unordered(hierarchy.lvl4)',
+        'unordered(hierarchy_camel.lvl5)',
+        'unordered(hierarchy.lvl5)',
+        'unordered(hierarchy_camel.lvl6)',
+        'unordered(hierarchy.lvl6)',
+        'content',
+      ],
+      distinct: true,
+      attributeForDistinct: 'url',
+      customRanking: [
+        'desc(weight.pageRank)',
+        'desc(weight.level)',
+        'asc(weight.position)',
+      ],
+      ranking: [
+        'words',
+        'filters',
+        'typo',
+        'attribute',
+        'proximity',
+        'exact',
+        'custom',
+      ],
+      highlightPreTag: '<span class="algolia-docsearch-suggestion--highlight">',
+      highlightPostTag: '</span>',
+      minWordSizefor1Typo: 3,
+      minWordSizefor2Typos: 7,
+      allowTyposOnNumericTokens: false,
+      minProximity: 1,
+      ignorePlurals: true,
+      advancedSyntax: true,
+      attributeCriteriaComputedByMinProximity: true,
+      removeWordsIfNoResults: 'allOptional',
+      separatorsToIndex: '_',
+    },
+  },
+});
+```
+
+</div>
+</details>
+
+
+[1]: mailto:docsearch@algolia.com
+[2]: https://github.com/algolia/docsearch

@@ -1,0 +1,247 @@
+[
+  {
+    "name": "Bootstrap",
+    "image": "img/logos/bootstrap.jpg",
+    "href": "https://getbootstrap.com/docs/5.1/getting-started/introduction/"
+  },
+  {
+    "name": "Material UI",
+    "image": "img/logos/material-ui.svg",
+    "href": "https://mui.com"
+  },
+  {
+    "name": "Babel",
+    "image": "img/logos/babel.jpg",
+    "href": "https://babeljs.io/docs/en/"
+  },
+  {
+    "name": "GraphQL",
+    "image": "img/logos/graphql.jpg",
+    "href": "https://graphql.org/learn/"
+  },
+  {
+    "name": "TypeScript",
+    "image": "img/logos/typescriptlang.svg",
+    "href": "https://www.typescriptlang.org/"
+  },
+  {
+    "name": "Tailwind",
+    "image": "img/logos/tailwindcss.svg",
+    "href": "https://tailwindcss.com/docs/installation/"
+  },
+  {
+    "name": "Laravel",
+    "image": "img/logos/laravel.svg",
+    "href": "https://laravel.com/docs/master"
+  },
+  {
+    "name": "Docusaurus",
+    "image": "img/logos/docusaurus.svg",
+    "href": "https://docusaurus.io/"
+  },
+  {
+    "name": "Testing Library",
+    "image": "img/logos/testing-library.png",
+    "href": "https://testing-library.com/"
+  },
+  {
+    "name": "Ant Design",
+    "image": "img/logos/ant-design.svg",
+    "href": "https://ant.design/docs/react/introduce"
+  },
+  {
+    "name": "Homebrew",
+    "image": "img/logos/homebrew.png",
+    "href": "https://brew.sh/"
+  },
+  {
+    "name": "Vue.js",
+    "image": "img/logos/vue.svg",
+    "href": "https://v3.vuejs.org/"
+  },
+  {
+    "name": "Requests",
+    "image": "img/logos/requests.png",
+    "href": "https://requests.readthedocs.io/en/master/"
+  },
+  {
+    "name": "Discord",
+    "image": "img/logos/discord.svg",
+    "href": "https://discord.com/developers/docs/intro"
+  },
+  {
+    "name": "React",
+    "image": "img/logos/react.jpg",
+    "href": "https://reactjs.org/docs/getting-started.html"
+  },
+  {
+    "name": "jQuery",
+    "image": "img/logos/jquery.jpg",
+    "href": "https://api.jquery.com/"
+  },
+  {
+    "name": "BootstrapVue",
+    "image": "img/logos/bootstrap-vue.svg",
+    "href": "https://bootstrap-vue.js.org/docs"
+  },
+  {
+    "name": "GitLab",
+    "image": "img/logos/gitlab.svg",
+    "href": "https://docs.gitlab.com/"
+  },
+  {
+    "name": "Moment.js",
+    "image": "img/logos/momentjs.svg",
+    "href": "https://momentjs.com/docs/"
+  },
+  {
+    "name": "React Native",
+    "image": "img/logos/react-native.svg",
+    "href": "https://reactnative.dev/docs/getting-started"
+  },
+  {
+    "name": "React Navigation",
+    "image": "img/logos/reactnavigation.svg",
+    "href": "https://reactnavigation.org/"
+  },
+  {
+    "name": "Scala",
+    "image": "img/logos/scala.svg",
+    "href": "https://docs.scala-lang.org/"
+  },
+  {
+    "name": "Home Assistant",
+    "image": "img/logos/home-assistant.svg",
+    "href": "http://home-assistant.io/"
+  },
+  {
+    "name": "NestJS",
+    "image": "img/logos/nestjs.png",
+    "href": "https://docs.nestjs.com/"
+  },
+  {
+    "name": "Twilio",
+    "image": "img/logos/twilio.png",
+    "href": "https://www.twilio.com/docs"
+  },
+  {
+    "name": "Vant",
+    "image": "img/logos/vant.png",
+    "href": "https://youzan.github.io/vant/#/en-US/"
+  },
+  {
+    "name": "webpack",
+    "image": "img/logos/webpack.svg",
+    "href": "https://webpack.js.org/concepts/"
+  },
+  {
+    "name": "Gatsby",
+    "image": "img/logos/gatsby.png",
+    "href": "https://www.gatsbyjs.org/docs/"
+  },
+  {
+    "name": "Calico",
+    "image": "img/logos/calico.png",
+    "href": "https://docs.calicocloud.io/"
+  },
+  {
+    "name": "Jest",
+    "image": "img/logos/jest.png",
+    "href": "https://jestjs.io/"
+  },
+  {
+    "name": "Nuxt.js",
+    "image": "img/logos/nuxtjs.svg",
+    "href": "https://nuxtjs.org/"
+  },
+  {
+    "name": "Expo",
+    "image": "img/logos/expo.ico",
+    "href": "https://docs.expo.dev/"
+  },
+  {
+    "name": "Gradle",
+    "image": "img/logos/gradle.png",
+    "href": "https://docs.gradle.org/current/userguide/userguide.html"
+  },
+  {
+    "name": "expressjs",
+    "image": "img/logos/express.png",
+    "href": "https://expressjs.com/"
+  },
+  {
+    "name": "vue-router",
+    "image": "img/logos/vue.svg",
+    "href": "https://router.vuejs.org/"
+  },
+  {
+    "name": "Tachiyomi",
+    "image": "img/logos/tachiyomi.svg",
+    "href": "https://tachiyomi.org/help/"
+  },
+  {
+    "name": "socket.io",
+    "image": "img/logos/socketio.svg",
+    "href": "https://socket.io/"
+  },
+  {
+    "name": "ESLint",
+    "image": "img/logos/eslint.svg",
+    "href": "https://eslint.org/"
+  },
+  {
+    "name": "Redux",
+    "image": "img/logos/redux.svg",
+    "href": "https://redux.js.org/"
+  },
+  {
+    "name": "Sass",
+    "image": "img/logos/sass.png",
+    "href": "https://sass-lang.com/"
+  },
+  {
+    "name": "Jekyll",
+    "image": "img/logos/jekyll.png",
+    "href": "https://jekyllrb.com/"
+  },
+  {
+    "name": "GNS3",
+    "image": "img/logos/gns3.png",
+    "href": "https://docs.gns3.com/"
+  },
+  {
+    "name": "React Bootstrap",
+    "image": "img/logos/react-bootstrap.svg",
+    "href": "https://react-bootstrap.github.io/"
+  },
+  {
+    "name": "Symfony",
+    "image": "img/logos/symfony.png",
+    "href": "https://symfony.com/doc/current/index.html"
+  },
+  {
+    "name": "styled components",
+    "image": "img/logos/styled-components.png",
+    "href": "https://styled-components.com/docs"
+  },
+  {
+    "name": "Vue CLI",
+    "image": "img/logos/vue.svg",
+    "href": "https://cli.vuejs.org/"
+  },
+  {
+    "name": "Prismic",
+    "image": "img/logos/prismic.png",
+    "href": "https://prismic.io/docs"
+  },
+  {
+    "name": "Formik",
+    "image": "img/logos/formik.png",
+    "href": "https://formik.org/docs/overview"
+  },
+  {
+    "name": "Vite",
+    "image": "img/logos/vite.svg",
+    "href": "https://vitejs.dev/"
+  }
+]
