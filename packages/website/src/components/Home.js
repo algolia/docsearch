@@ -410,7 +410,6 @@ function Home() {
               <div className="mt-10 -mx-4 lg:mt-0 uil-ta-center">
                 <img
                   className="relative mx-auto"
-                  width="490"
                   src={withBaseUrl('img/assets/docsearch-shadow.png')}
                   alt="docsearch-modal"
                 />
