@@ -136,6 +136,10 @@ html[data-theme='dark'] .docsearch-logo {
   color: #fff;
 }
 
+.apply-button:hover {
+  color: #fff;
+}
+
 /* GitHub */
 .header-github-link:hover {
   opacity: 0.6;
