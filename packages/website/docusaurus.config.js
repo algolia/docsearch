@@ -44,8 +44,8 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       algolia: {
-        appId: 'QPBQ67WNIG',
-        apiKey: 'b590ae1153bf574215ca1605c19eb1fe',
+        appId: 'R2IYF7ETH7',
+        apiKey: '599cec31baffa4868cae4e79f180729b',
         indexName: 'docsearch',
         contextualSearch: true,
       },
