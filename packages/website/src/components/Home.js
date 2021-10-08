@@ -36,6 +36,7 @@ function Home() {
             href={withBaseUrl('apply')}
             background="blue"
             color="white"
+            className="apply-button"
           >
             Apply
           </Button>,
