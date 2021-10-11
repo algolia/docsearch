@@ -51,4 +51,4 @@ If you don’t want to use a package manager, you can use a standalone endpoint:
 [1]: DocSearch-v3
 [2]: https://github.com/algolia/docsearch/
 [3]: https://github.com/algolia/docsearch/tree/master
-[4]: legacy/dropdown
+[4]: /docs/legacy/dropdown
