@@ -87,7 +87,7 @@ At the time you are reading this, the migration hasn't been completed, so yes th
 
 [1]: DocSearch-v3
 [2]: https://www.algolia.com/products/search-and-discovery/crawler/
-[3]: legacy/run-your-own
+[3]: /docs/legacy/run-your-own
 [4]: record-extractor
 [7]: https://crawler.algolia.com/
 [8]: https://github.com/algolia/docsearch-scraper

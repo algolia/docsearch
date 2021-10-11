@@ -77,7 +77,7 @@ The `apiKey` the DocSearch team provides is [a search-only key][13] and can be s
 [3]: https://www.algolia.com/products/search-and-discovery/crawler/
 [4]: https://www.algolia.com/
 [5]: https://www.algolia.com/pricing
-[6]: legacy/run-your-own
+[6]: /docs/legacy/run-your-own
 [7]: https://www.algolia.com/doc/guides/infrastructure/servers/
 [8]: https://www.algolia.com/policies/privacy
 [9]: https://www.algolia.com/doc/api-client/getting-started/install/javascript/?client=javascript
