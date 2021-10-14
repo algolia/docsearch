@@ -249,8 +249,8 @@ function Home() {
                   How it works
                 </h2>
                 <p className="mt-4 max-w-2xl text-xl leading-7 text-gray-500 lg:mx-auto">
-                  We scrape your documentation, configure the Algolia application
-                  and send you the snippet you'll have to integrate.
+                  We scrape your documentation, configure the Algolia
+                  application and send you the snippet you'll have to integrate.
                 </p>
               </div>
             </div>
