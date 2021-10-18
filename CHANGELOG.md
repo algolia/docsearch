@@ -1,3 +1,18 @@
+# [v3.0.0-alpha.41](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.40...v3.0.0-alpha.41) (2021-10-18)
+
+### Bug Fixes
+
+- **build:** remove occurences of `process` in UMD build ([#1047](https://github.com/algolia/docsearch/issues/1047)) ([20f54c9](https://github.com/algolia/docsearch/commit/20f54c968cf02e95d8d85e5d6efdc163f2236edf))
+- **ci:** update docker image ([#1052](https://github.com/algolia/docsearch/issues/1052)) ([6b4944f](https://github.com/algolia/docsearch/commit/6b4944f4027e8a7107ab5b1f44cb7fe028d43a05))
+- **docs:** relative apply link ([#1060](https://github.com/algolia/docsearch/issues/1060)) ([7b48078](https://github.com/algolia/docsearch/commit/7b48078c277772ebb12f782602a66d14fc58d329))
+- **docs:** typo in `Home.js` ([#1054](https://github.com/algolia/docsearch/issues/1054)) ([2942246](https://github.com/algolia/docsearch/commit/29422464cc9c67a94e28ef7f1014221b5a17594c))
+- **v3:** pass `initialQuery` ([#1051](https://github.com/algolia/docsearch/issues/1051)) ([6e194c7](https://github.com/algolia/docsearch/commit/6e194c73bf604611a0b975554590efd748f1c2d3))
+- **website:** apply feedbacks from beta testers ([#1053](https://github.com/algolia/docsearch/issues/1053)) ([33d78e7](https://github.com/algolia/docsearch/commit/33d78e7d328bc17da259f7a83c84cd2612e6cd8b))
+
+### Features
+
+- **website:** new documentation ([#1048](https://github.com/algolia/docsearch/issues/1048)) ([9a89cde](https://github.com/algolia/docsearch/commit/9a89cde74605a1011dd3dcf8a02807228017b965))
+
 # [v3.0.0-alpha.40](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.39...v3.0.0-alpha.40) (2021-08-23)
 
 ### Bug Fixes
