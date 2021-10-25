@@ -80,7 +80,7 @@
     "jest": "26.4.2",
     "jest-watch-typeahead": "0.6.0",
     "lerna": "4.0.0",
-    "postcss": "7.0.32",
+    "postcss": "7.0.36",
     "prettier": "2.1.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
