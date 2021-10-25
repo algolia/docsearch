@@ -2,9 +2,16 @@
   "extends": ["config:js-lib", "algolia"],
   "packageRules": [
     {
+      "packagePatterns": ["*"],
+      "enabled": false
+    },
+    {
       "packagePatterns": ["^@types"],
       "depTypeList": ["devDependencies"],
       "rangeStrategy": "replace"
     }
-  ]
+  ],
+  "vulnerabilityAlerts": {
+    "enabled": true
+  }
 }
