@@ -129,7 +129,7 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
               },
               {
                 label: 'Discord',
-                to: 'https://discord.com/invite/AW2H22QyJc',
+                to: 'https://discord.com/invite/bRTacwYrfX',
               },
             ],
           },

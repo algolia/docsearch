@@ -2,7 +2,7 @@
 
 Welcome to the contributing guide for DocSearch!
 
-If this guide does not contain what you are looking for and thus prevents you from contributing, don't hesitate to leave a message on the [Discord](https://discord.gg/tXdr5mP) or to [open an issue](https://github.com/algolia/docsearch/issues).
+If this guide does not contain what you are looking for and thus prevents you from contributing, don't hesitate to leave a message on the [Discord](https://discord.gg/bRTacwYrfX) or to [open an issue](https://github.com/algolia/docsearch/issues).
 
 ## Reporting an issue
 
