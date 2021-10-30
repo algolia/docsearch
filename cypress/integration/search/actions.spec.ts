@@ -1,4 +1,4 @@
-context('Start', () => {
+describe('Start', () => {
   beforeEach(() => {
     cy.visit(Cypress.config().baseUrl!);
   });
@@ -29,7 +29,7 @@ context('Start', () => {
   });
 });
 
-context('End', () => {
+describe('End', () => {
   beforeEach(() => {
     cy.visit(Cypress.config().baseUrl!);
     cy.get('.DocSearch-Button').click();
@@ -57,7 +57,7 @@ context('End', () => {
   });
 });
 
-context('Search', () => {
+describe('Search', () => {
   beforeEach(() => {
     cy.visit(Cypress.config().baseUrl!);
     cy.get('.DocSearch-Button').click();
@@ -97,7 +97,7 @@ context('Search', () => {
   });
 });
 
-context('Recent and Favorites', () => {
+describe('Recent and Favorites', () => {
   beforeEach(() => {
     cy.visit(Cypress.config().baseUrl!);
     cy.get('.DocSearch-Button').click();

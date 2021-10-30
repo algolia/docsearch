@@ -1,3 +1,4 @@
+/* eslint-disable import/no-commonjs */
 module.exports = {
   extends: ['algolia', 'algolia/jest', 'algolia/react', 'algolia/typescript'],
   globals: {
@@ -45,6 +46,11 @@ module.exports = {
         pathGroupsExcludedImportTypes: ['builtin'],
       },
     ],
+
+    // TMP
+    '@typescript-eslint/explicit-function-return-type': ['off'],
+    'react/function-component-definition': ['off'],
+    'react/jsx-filename-extension': ['off'],
   },
   overrides: [
     {

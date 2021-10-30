@@ -1,11 +1,15 @@
-import { AutocompleteApi, AutocompleteState } from '@algolia/autocomplete-core';
-import React, { MutableRefObject } from 'react';
+import type {
+  AutocompleteApi,
+  AutocompleteState,
+} from '@algolia/autocomplete-core';
+import type { MutableRefObject } from 'react';
+import React from 'react';
 
 import { MAX_QUERY_SIZE } from './constants';
 import { LoadingIcon } from './icons/LoadingIcon';
 import { ResetIcon } from './icons/ResetIcon';
 import { SearchIcon } from './icons/SearchIcon';
-import { InternalDocSearchHit } from './types';
+import type { InternalDocSearchHit } from './types';
 
 interface SearchBoxProps
   extends AutocompleteApi<
@@ -17,7 +21,7 @@ interface SearchBoxProps
   state: AutocompleteState<InternalDocSearchHit>;
   autoFocus: boolean;
   inputRef: MutableRefObject<HTMLInputElement | null>;
-  onClose(): void;
+  onClose: () => void;
   isFromSelection: boolean;
 }
 
@@ -75,7 +79,7 @@ export function SearchBox(props: SearchBoxProps) {
         </button>
       </form>
 
-      <button className="DocSearch-Cancel" onClick={props.onClose}>
+      <button className="DocSearch-Cancel" type="reset" onClick={props.onClose}>
         Cancel
       </button>
     </>

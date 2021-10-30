@@ -2,8 +2,8 @@ import React from 'react';
 
 import { SelectIcon, SourceIcon } from './icons';
 import { Results } from './Results';
-import { ScreenStateProps } from './ScreenState';
-import { InternalDocSearchHit } from './types';
+import type { ScreenStateProps } from './ScreenState';
+import type { InternalDocSearchHit } from './types';
 import { removeHighlightTags } from './utils';
 
 type ResultsScreenProps = ScreenStateProps<InternalDocSearchHit>;
@@ -11,7 +11,7 @@ type ResultsScreenProps = ScreenStateProps<InternalDocSearchHit>;
 export function ResultsScreen(props: ResultsScreenProps) {
   return (
     <div className="DocSearch-Dropdown-Container">
-      {props.state.collections.map((collection, index) => {
+      {props.state.collections.map((collection) => {
         if (collection.items.length === 0) {
           return null;
         }
@@ -21,7 +21,7 @@ export function ResultsScreen(props: ResultsScreenProps) {
         return (
           <Results
             {...props}
-            key={index}
+            key={collection.source.sourceId}
             title={title}
             collection={collection}
             renderIcon={({ item, index }) => (

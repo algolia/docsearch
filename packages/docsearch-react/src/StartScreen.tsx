@@ -2,8 +2,8 @@ import React from 'react';
 
 import { RecentIcon, ResetIcon, StarIcon } from './icons';
 import { Results } from './Results';
-import { ScreenStateProps } from './ScreenState';
-import { InternalDocSearchHit } from './types';
+import type { ScreenStateProps } from './ScreenState';
+import type { InternalDocSearchHit } from './types';
 
 interface StartScreenProps extends ScreenStateProps<InternalDocSearchHit> {
   hasCollections: boolean;
@@ -47,6 +47,7 @@ export function StartScreen(props: StartScreenProps) {
               <button
                 className="DocSearch-Hit-action-button"
                 title="Save this search"
+                type="submit"
                 onClick={(event) => {
                   event.preventDefault();
                   event.stopPropagation();
@@ -64,6 +65,7 @@ export function StartScreen(props: StartScreenProps) {
               <button
                 className="DocSearch-Hit-action-button"
                 title="Remove this search from history"
+                type="submit"
                 onClick={(event) => {
                   event.preventDefault();
                   event.stopPropagation();
@@ -94,6 +96,7 @@ export function StartScreen(props: StartScreenProps) {
             <button
               className="DocSearch-Hit-action-button"
               title="Remove this search from favorites"
+              type="submit"
               onClick={(event) => {
                 event.preventDefault();
                 event.stopPropagation();

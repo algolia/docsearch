@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable import/no-commonjs, import/no-extraneous-dependencies */
 
 const { execSync } = require('child_process');
@@ -11,16 +12,16 @@ const pkg = require('./package.json');
 
 const readFile = util.promisify(fs.readFile);
 
-function getBundleBanner(pkg) {
+function getBundleBanner(_pkg) {
   const lastCommitHash = execSync('git rev-parse --short HEAD')
     .toString()
     .trim();
   const version = process.env.SHIPJS
-    ? pkg.version
-    : `${pkg.version} (UNRELEASED ${lastCommitHash})`;
+    ? _pkg.version
+    : `${_pkg.version} (UNRELEASED ${lastCommitHash})`;
   const authors = '© Algolia, Inc. and contributors';
 
-  return `/*! ${pkg.name} ${version} | MIT License | ${authors} | ${pkg.homepage} */`;
+  return `/*! ${_pkg.name} ${version} | MIT License | ${authors} | ${_pkg.homepage} */`;
 }
 
 function build({ input, output, banner }) {

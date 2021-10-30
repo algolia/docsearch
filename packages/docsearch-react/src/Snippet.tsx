@@ -1,18 +1,21 @@
 import { createElement } from 'react';
 
-import { StoredDocSearchHit } from './types';
+import type { StoredDocSearchHit } from './types';
 
-function getPropertyByPath(object: object, path: string): any {
+function getPropertyByPath(object: Record<string, any>, path: string): any {
   const parts = path.split('.');
 
-  return parts.reduce((current, key) => current && current[key], object);
+  return parts.reduce((prev, current) => {
+    if (prev?.[current]) return prev[current];
+    return null;
+  }, object);
 }
 
 interface SnippetProps<TItem> {
-  [prop: string]: unknown;
   hit: TItem;
   attribute: string;
   tagName?: string;
+  [prop: string]: unknown;
 }
 
 export function Snippet<TItem extends StoredDocSearchHit>({

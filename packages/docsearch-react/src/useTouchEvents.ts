@@ -1,4 +1,4 @@
-import { AutocompleteApi } from '@algolia/autocomplete-core';
+import type { AutocompleteApi } from '@algolia/autocomplete-core';
 import React from 'react';
 
 interface UseTouchEventsProps {

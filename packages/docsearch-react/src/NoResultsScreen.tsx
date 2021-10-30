@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { NoResultsIcon } from './icons';
-import { ScreenStateProps } from './ScreenState';
-import { InternalDocSearchHit } from './types';
+import type { ScreenStateProps } from './ScreenState';
+import type { InternalDocSearchHit } from './types';
 
 type NoResultsScreenProps = ScreenStateProps<InternalDocSearchHit>;
 
@@ -30,6 +30,7 @@ export function NoResultsScreen(props: NoResultsScreenProps) {
                   <button
                     className="DocSearch-Prefill"
                     key={search}
+                    type="button"
                     onClick={() => {
                       props.setQuery(search.toLowerCase() + ' ');
                       props.refresh();

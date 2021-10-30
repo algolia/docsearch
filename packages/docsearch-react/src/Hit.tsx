@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DocSearchHit } from './types';
+import type { DocSearchHit } from './types';
 
 interface HitProps {
   hit: DocSearchHit;
