@@ -16,7 +16,13 @@ function ApplyForm() {
   const [url, setUrl] = useState('');
   const [email, setEmail] = useState('');
 
-  function onSubmit(event) {
+  const handleSetUrl = (event) => {
+    setUrl(event.target.value);
+  };
+  const handleSetEmail = (event) => {
+    setEmail(event.target.value);
+  };
+  const onSubmit = (event) => {
     event.preventDefault();
 
     const applyForm = event.target;
@@ -38,7 +44,7 @@ function ApplyForm() {
         setHasSent(true);
       }
     });
-  }
+  };
 
   if (hasSent) {
     return (
@@ -71,7 +77,7 @@ function ApplyForm() {
         id="form-apply-docsearch"
         method="POST"
         action="https://docsearch-hub.herokuapp.com/form/inbound"
-        onSubmit={(e) => onSubmit(e)}
+        onSubmit={onSubmit}
       >
         <LabelText key="url" tag="label" htmlFor="url" className="apply-text">
           Documentation or Blog URL
@@ -83,7 +89,7 @@ function ApplyForm() {
             aria-label="URL of the open-source blog or documentation website"
             value={url}
             placeholder="https://project.org/docs"
-            onChange={(event) => setUrl(event.target.value)}
+            onChange={handleSetUrl}
           />
         </LabelText>
 
@@ -106,7 +112,7 @@ function ApplyForm() {
             aria-label="Email address of the owner of this website"
             value={email}
             placeholder="you@project.org"
-            onChange={(event) => setEmail(event.target.value)}
+            onChange={handleSetEmail}
           />
         </LabelText>
 

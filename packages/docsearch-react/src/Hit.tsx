@@ -1,9 +1,9 @@
 import React from 'react';
 
-import type { DocSearchHit } from './types';
+import type { InternalDocSearchHit, StoredDocSearchHit } from './types';
 
 interface HitProps {
-  hit: DocSearchHit;
+  hit: InternalDocSearchHit | StoredDocSearchHit;
   children: React.ReactNode;
 }
 

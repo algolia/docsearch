@@ -32,7 +32,6 @@ export function DocSearchModal({
   searchParameters,
   onClose = noop,
   transformItems = identity,
-  // @ts-expect-error TODO fix
   hitComponent = Hit,
   resultsFooterComponent = () => null,
   navigator,
@@ -253,13 +252,13 @@ export function DocSearchModal({
                         groupBy(items, (item) => item.hierarchy.lvl1)
                       )
                         .map(transformItems)
-                        .map((copyHits) =>
-                          copyHits.map((item) => {
+                        .map((groupedHits) =>
+                          groupedHits.map((item) => {
                             return {
                               ...item,
                               __docsearch_parent:
                                 item.type !== 'lvl1' &&
-                                copyHits.find(
+                                groupedHits.find(
                                   (siblingItem) =>
                                     siblingItem.type === 'lvl1' &&
                                     siblingItem.hierarchy.lvl1 ===
