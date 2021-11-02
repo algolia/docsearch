@@ -51,7 +51,7 @@ recordExtractor: ({ helpers }) => {
 
 ### Using the Cheerio instance (`$`)
 
-You can also use the provided [`Cheerio instance ($)`][14] to exclude content from the DOM:
+We provide a [`Cheerio instance ($)`][14] for you to retrieve or remove content from the DOM:
 
 ```js
 recordExtractor: ({ $, helpers }) => {
@@ -60,9 +60,7 @@ recordExtractor: ({ $, helpers }) => {
 
   return helpers.docsearch({
     recordProps: {
-      lvl0: {
-        selectors: "header h1",
-      },
+      lvl0: "header h1",
       lvl1: "article h2",
       lvl2: "article h3",
       lvl3: "article h4",
@@ -74,9 +72,9 @@ recordExtractor: ({ $, helpers }) => {
 },
 ```
 
-### With fallback DOM selectors
+### Handling fallback DOM selectors
 
-Each `lvlX` and `content` supports fallback selectors as an array of string, which allows for robust config files:
+Fallback selectors can be useful when retrieving content that might not exist in some pages:
 
 ```js
 recordExtractor: ({ $, helpers }) => {
@@ -103,9 +101,9 @@ recordExtractor: ({ $, helpers }) => {
 
 ### With custom variables
 
-Custom variables are useful to filter content in the frontend (`version`, `lang`, etc.).
-
 _These selectors also support [`defaultValue`](#with-raw-text-defaultvalue) and [fallback selectors](#with-fallback-dom-selectors)_
+
+Custom variables are added to your Algolia records to be used as filters in the frontend (e.g. `version`, `lang`, etc.):
 
 ```js
 recordExtractor: ({ helpers }) => {
@@ -150,7 +148,9 @@ You can now use them to [filter your search in the frontend][16]
 
 ### With raw text (`defaultValue`)
 
-The `lvl0` and [custom variables][13] selectors also accepts a fallback raw value:
+_Only the `lvl0` and [custom variables][13] selectors support this option_
+
+You might want to structure your search results differently than your website, or provide a `defaultValue` to a potentially non-existent selector:
 
 ```js
 recordExtractor: ({ $, helpers }) => {
@@ -180,6 +180,34 @@ recordExtractor: ({ $, helpers }) => {
 },
 ```
 
+### Boosting search results with `pageRank`
+
+_[`pageRank`](#pagerank) used to be an **integer**, it is now a **string**_
+
+This parameter helps to boost records built from the current `pathsToMatch`. Pages with highest [`pageRank`](#pagerank) will be returned before pages with a lower [`pageRank`](#pagerank). Note that you can pass any numeric value **as a string**, including negative values:
+
+```js
+{
+  indexName: "YOUR_INDEX_NAME",
+  pathsToMatch: ["https://YOUR_WEBSITE_URL/api/**"],
+  recordExtractor: ({ $, helpers }) => {
+    return helpers.docsearch({
+      recordProps: {
+        lvl0: "header h1",
+        lvl1: "article h2",
+        lvl2: "article h3",
+        lvl3: "article h4",
+        lvl4: "article h5",
+        lvl5: "article h6",
+        content: "article p, article li",
+        pageRank: "30",
+      },
+      indexHeadings: true,
+    });
+  },
+},
+```
+
 ## `recordProps` API Reference
 
 ### `lvl0`
@@ -204,6 +232,8 @@ type Lvl0 = {
 ### `pageRank`
 
 > `type: string` | **optional**
+
+See the [live example](#boosting-search-results-with-pagerank)
 
 ### Custom variables (`[k: string]`)
 
