@@ -1,4 +1,4 @@
-import { DocSearchHit, StoredDocSearchHit } from './types';
+import type { DocSearchHit, StoredDocSearchHit } from './types';
 
 function isLocalStorageSupported() {
   const key = '__TEST_KEY__';
@@ -41,9 +41,9 @@ type CreateStoredSearchesOptions = {
 };
 
 export type StoredSearchPlugin<TItem> = {
-  add(item: TItem): void;
-  remove(item: TItem): void;
-  getAll(): TItem[];
+  add: (item: TItem) => void;
+  remove: (item: TItem) => void;
+  getAll: () => TItem[];
 };
 
 export function createStoredSearches<TItem extends StoredDocSearchHit>({
@@ -55,11 +55,8 @@ export function createStoredSearches<TItem extends StoredDocSearchHit>({
 
   return {
     add(item: TItem) {
-      const {
-        _highlightResult,
-        _snippetResult,
-        ...hit
-      } = (item as unknown) as DocSearchHit;
+      const { _highlightResult, _snippetResult, ...hit } =
+        item as unknown as DocSearchHit;
 
       const isQueryAlreadySaved = items.findIndex(
         (x) => x.objectID === hit.objectID

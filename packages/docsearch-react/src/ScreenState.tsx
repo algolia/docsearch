@@ -1,17 +1,17 @@
-import {
+import type {
   AutocompleteApi,
   AutocompleteState,
   BaseItem,
 } from '@algolia/autocomplete-core';
 import React from 'react';
 
-import { DocSearchProps } from './DocSearch';
+import type { DocSearchProps } from './DocSearch';
 import { ErrorScreen } from './ErrorScreen';
 import { NoResultsScreen } from './NoResultsScreen';
 import { ResultsScreen } from './ResultsScreen';
 import { StartScreen } from './StartScreen';
-import { StoredSearchPlugin } from './stored-searches';
-import { InternalDocSearchHit, StoredDocSearchHit } from './types';
+import type { StoredSearchPlugin } from './stored-searches';
+import type { InternalDocSearchHit, StoredDocSearchHit } from './types';
 
 export interface ScreenStateProps<TItem extends BaseItem>
   extends AutocompleteApi<
@@ -23,8 +23,8 @@ export interface ScreenStateProps<TItem extends BaseItem>
   state: AutocompleteState<TItem>;
   recentSearches: StoredSearchPlugin<StoredDocSearchHit>;
   favoriteSearches: StoredSearchPlugin<StoredDocSearchHit>;
-  onItemClick(item: InternalDocSearchHit): void;
-  inputRef: React.MutableRefObject<null | HTMLInputElement>;
+  onItemClick: (item: InternalDocSearchHit) => void;
+  inputRef: React.MutableRefObject<HTMLInputElement | null>;
   hitComponent: DocSearchProps['hitComponent'];
   indexName: DocSearchProps['indexName'];
   disableUserPersonalization: boolean;

@@ -1,14 +1,14 @@
-import {
+import type {
   AutocompleteState,
   AutocompleteOptions,
 } from '@algolia/autocomplete-core';
-import { SearchClient } from 'algoliasearch/lite';
+import type { SearchClient } from 'algoliasearch/lite';
 import React from 'react';
 import { createPortal } from 'react-dom';
 
 import { DocSearchButton } from './DocSearchButton';
 import { DocSearchModal } from './DocSearchModal';
-import {
+import type {
   DocSearchHit,
   InternalDocSearchHit,
   StoredDocSearchHit,
@@ -21,15 +21,15 @@ export interface DocSearchProps {
   indexName: string;
   placeholder?: string;
   searchParameters?: any;
-  transformItems?(items: DocSearchHit[]): DocSearchHit[];
-  hitComponent?(props: {
+  transformItems?: (items: DocSearchHit[]) => DocSearchHit[];
+  hitComponent?: (props: {
     hit: InternalDocSearchHit | StoredDocSearchHit;
     children: React.ReactNode;
-  }): JSX.Element;
-  resultsFooterComponent?(props: {
+  }) => JSX.Element;
+  resultsFooterComponent?: (props: {
     state: AutocompleteState<InternalDocSearchHit>;
-  }): JSX.Element | null;
-  transformSearchClient?(searchClient: SearchClient): SearchClient;
+  }) => JSX.Element | null;
+  transformSearchClient?: (searchClient: SearchClient) => SearchClient;
   disableUserPersonalization?: boolean;
   initialQuery?: string;
   navigator?: AutocompleteOptions<InternalDocSearchHit>['navigator'];
@@ -68,7 +68,7 @@ export function DocSearch(props: DocSearchProps) {
 
   return (
     <>
-      <DocSearchButton onClick={onOpen} ref={searchButtonRef} />
+      <DocSearchButton ref={searchButtonRef} onClick={onOpen} />
 
       {isOpen &&
         createPortal(

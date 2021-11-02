@@ -1,4 +1,4 @@
-import { DocSearchHit, InternalDocSearchHit } from './../types';
+import type { DocSearchHit, InternalDocSearchHit } from '../types';
 
 const regexHighlightTags = /(<mark>|<\/mark>)/g;
 const regexHasHighlightTags = RegExp(regexHighlightTags.source);

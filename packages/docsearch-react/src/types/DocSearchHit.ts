@@ -10,7 +10,7 @@ type ContentType =
 
 interface DocSearchHitAttributeHighlightResult {
   value: string;
-  matchLevel: 'none' | 'partial' | 'full';
+  matchLevel: 'full' | 'none' | 'partial';
   matchedWords: string[];
   fullyHighlighted?: boolean;
 }
@@ -33,7 +33,7 @@ interface DocSearchHitHighlightResult {
 
 interface DocSearchHitAttributeSnippetResult {
   value: string;
-  matchLevel: 'none' | 'partial' | 'full';
+  matchLevel: 'full' | 'none' | 'partial';
 }
 
 interface DocSearchHitSnippetResult {

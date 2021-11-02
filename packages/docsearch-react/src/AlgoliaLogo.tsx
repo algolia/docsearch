@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function AlgoliaLogo() {
+export const AlgoliaLogo: React.FC = () => {
   return (
     <a
       href="https://www.algolia.com/docsearch"
@@ -17,4 +17,4 @@ export function AlgoliaLogo() {
       </svg>
     </a>
   );
-}
+};

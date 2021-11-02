@@ -1,17 +1,6 @@
 import React from 'react';
 
-export function SourceIcon(props: { type: string }) {
-  switch (props.type) {
-    case 'lvl1':
-      return <LvlIcon />;
-    case 'content':
-      return <ContentIcon />;
-    default:
-      return <AnchorIcon />;
-  }
-}
-
-function LvlIcon() {
+const LvlIcon: React.FC = () => {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20">
       <path
@@ -23,6 +12,17 @@ function LvlIcon() {
       />
     </svg>
   );
+};
+
+export function SourceIcon(props: { type: string }) {
+  switch (props.type) {
+    case 'lvl1':
+      return <LvlIcon />;
+    case 'content':
+      return <ContentIcon />;
+    default:
+      return <AnchorIcon />;
+  }
 }
 
 function AnchorIcon() {

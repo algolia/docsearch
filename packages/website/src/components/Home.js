@@ -265,6 +265,7 @@ function Home() {
                         src={withBaseUrl('img/assets/scraping.svg')}
                         width="190px"
                         height="220px"
+                        alt="Scraping with Algolia Crawler"
                       />
                     </div>
                     <div className="mt-10 lg:mt-0 p-4">
@@ -289,6 +290,7 @@ function Home() {
                         src={withBaseUrl('img/assets/configuration.svg')}
                         width="140px"
                         height="220px"
+                        alt="Configuration of your crawler"
                       />
                     </div>
                     <div>
@@ -307,6 +309,7 @@ function Home() {
                         src={withBaseUrl('img/assets/implementation.svg')}
                         width="220px"
                         height="220px"
+                        alt="Implementation on your website"
                       />
                     </div>
                     <div>

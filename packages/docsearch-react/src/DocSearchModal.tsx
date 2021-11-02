@@ -1,17 +1,15 @@
-import {
-  AutocompleteState,
-  createAutocomplete,
-} from '@algolia/autocomplete-core';
+import type { AutocompleteState } from '@algolia/autocomplete-core';
+import { createAutocomplete } from '@algolia/autocomplete-core';
 import React from 'react';
 
 import { MAX_QUERY_SIZE } from './constants';
-import { DocSearchProps } from './DocSearch';
+import type { DocSearchProps } from './DocSearch';
 import { Footer } from './Footer';
 import { Hit } from './Hit';
 import { ScreenState } from './ScreenState';
 import { SearchBox } from './SearchBox';
 import { createStoredSearches } from './stored-searches';
-import {
+import type {
   DocSearchHit,
   InternalDocSearchHit,
   StoredDocSearchHit,
@@ -23,7 +21,7 @@ import { groupBy, identity, noop, removeHighlightTags } from './utils';
 
 export interface DocSearchModalProps extends DocSearchProps {
   initialScrollY: number;
-  onClose?(): void;
+  onClose?: () => void;
 }
 
 export function DocSearchModal({
@@ -126,11 +124,11 @@ export function DocSearchModal({
           },
         },
         navigator,
-        onStateChange({ state }) {
-          setState(state);
+        onStateChange(props) {
+          setState(props.state);
         },
-        // @ts-ignore Temporarily ignore bad typing in autocomplete-core.
-        getSources({ query, state, setContext, setStatus }) {
+
+        getSources({ query, state: sourcesState, setContext, setStatus }) {
           if (!query) {
             if (disableUserPersonalization) {
               return [];
@@ -225,7 +223,7 @@ export function DocSearchModal({
               // We store the `lvl0`s to display them as search suggestions
               // in the "no results" screen.
               if (
-                (state.context.searchSuggestions as any[]).length <
+                (sourcesState.context.searchSuggestions as any[]).length <
                 Object.keys(sources).length
               ) {
                 setContext({
@@ -254,14 +252,13 @@ export function DocSearchModal({
                         groupBy(items, (item) => item.hierarchy.lvl1)
                       )
                         .map(transformItems)
-                        .map((hits) =>
-                          hits.map((item) => {
+                        .map((groupedHits) =>
+                          groupedHits.map((item) => {
                             return {
                               ...item,
-                              // eslint-disable-next-line @typescript-eslint/camelcase
                               __docsearch_parent:
                                 item.type !== 'lvl1' &&
-                                hits.find(
+                                groupedHits.find(
                                   (siblingItem) =>
                                     siblingItem.type === 'lvl1' &&
                                     siblingItem.hierarchy.lvl1 ===
@@ -381,6 +378,8 @@ export function DocSearchModal({
       ]
         .filter(Boolean)
         .join(' ')}
+      role="button"
+      tabIndex={0}
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) {
           onClose();
@@ -393,12 +392,12 @@ export function DocSearchModal({
             {...autocomplete}
             state={state}
             autoFocus={initialQuery.length === 0}
-            onClose={onClose}
             inputRef={inputRef}
             isFromSelection={
               Boolean(initialQuery) &&
               initialQuery === initialQueryFromSelection
             }
+            onClose={onClose}
           />
         </header>
 
@@ -412,11 +411,11 @@ export function DocSearchModal({
             disableUserPersonalization={disableUserPersonalization}
             recentSearches={recentSearches}
             favoriteSearches={favoriteSearches}
+            inputRef={inputRef}
             onItemClick={(item) => {
               saveRecentSearch(item);
               onClose();
             }}
-            inputRef={inputRef}
           />
         </div>
 

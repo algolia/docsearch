@@ -1,4 +1,4 @@
 {
   "packages": ["packages/docsearch-*"],
-  "node": "14"
+  "node": "16"
 }

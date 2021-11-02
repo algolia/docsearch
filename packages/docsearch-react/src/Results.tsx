@@ -1,13 +1,13 @@
-import {
+import type {
   AutocompleteApi,
   AutocompleteState,
   BaseItem,
 } from '@algolia/autocomplete-core';
 import React from 'react';
 
-import { DocSearchProps } from './DocSearch';
+import type { DocSearchProps } from './DocSearch';
 import { Snippet } from './Snippet';
-import { InternalDocSearchHit, StoredDocSearchHit } from './types';
+import type { InternalDocSearchHit, StoredDocSearchHit } from './types';
 
 interface ResultsProps<TItem extends BaseItem>
   extends AutocompleteApi<
@@ -18,13 +18,13 @@ interface ResultsProps<TItem extends BaseItem>
   > {
   title: string;
   collection: AutocompleteState<TItem>['collections'][0];
-  renderIcon(props: { item: TItem; index: number }): React.ReactNode;
-  renderAction(props: {
+  renderIcon: (props: { item: TItem; index: number }) => React.ReactNode;
+  renderAction: (props: {
     item: TItem;
     runDeleteTransition: (cb: () => void) => void;
     runFavoriteTransition: (cb: () => void) => void;
-  }): React.ReactNode;
-  onItemClick(item: TItem): void;
+  }) => React.ReactNode;
+  onItemClick: (item: TItem) => void;
   hitComponent: DocSearchProps['hitComponent'];
 }
 
@@ -89,7 +89,7 @@ function Result<TItem extends StoredDocSearchHit>({
     <li
       className={[
         'DocSearch-Hit',
-        ((item as unknown) as InternalDocSearchHit).__docsearch_parent &&
+        (item as unknown as InternalDocSearchHit).__docsearch_parent &&
           'DocSearch-Hit--Child',
         isDeleting && 'DocSearch-Hit--deleting',
         isFavoriting && 'DocSearch-Hit--favoriting',
