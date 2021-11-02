@@ -2,6 +2,9 @@
 title: Migrating from legacy
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 ## Introduction
 
 With this new version of the [DocSearch UI][1], we wanted to go further and provide better tooling for you to create and maintain your config file, and some extra Algolia features that you all have been requesting for a long time!
@@ -37,7 +40,7 @@ Below are the keys that can be found in the [`legacy` DocSearch configs][14] and
 | `legacy` | `current` | description |
 | --- | --- | --- |
 | `start_urls` | [`startUrls`][20] | Now accepts URLs only, see [`helpers.docsearch`][30] to handle custom variables |
-| `page_rank` | [`pageRank`][31] | Can be added to the `recordProps` in [`helpers.docsearch`][30] |
+| `page_rank` | [`pageRank`][31] | Can be added to the `recordProps` in [`helpers.docsearch`][30], should be passed as a **string** |
 | `js_render` | [`renderJavaScript`][21] | Unchanged |
 | `js_wait` | [`renderJavascript.waitTime`][22] | See documentation of [`renderJavaScript`][21] |
 | `index_name` | **removed**, see [`actions`][23] | Handled directly in the [`actions`][23] |
@@ -62,13 +65,52 @@ If you have not received a migration mail yet, don't worry, your turn will come!
 
 ### What do I need to do to migrate?
 
-Nothing!
+We've tried to make the migration as seamless as possible for you and took care of all the pain part:
 
-We handle all the migration on our side, [your existing config file][11] will be migrated to an [Algolia Crawler config][12], crawls will be started and scheduled for you, your Algolia application will be ready to go, and your Algolia index populated with your website content!
+- [Your existing config file][11] will be migrated to an [Algolia Crawler config][12]
+- Crawls will be started and scheduled
+- Your Algolia application will be ready to go with a populated index!
 
-### What do I need to update to make the migration work?
+All you need to do is **update your frontend integration with the credentials you'll receive by email** like below:
 
-We've tried to make the migration as seamless as possible for you, so **all you need to update is your frontend integration** with the new credentials you've received by mail, or directly from the [Algolia dashboard][13]!
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', },
+    { label: 'React', value: 'react', }
+  ]
+}>
+<TabItem value="js">
+
+```js app.js
+docsearch({
+  container: '#docsearch',
+  appId: 'YOUR_NEW_ALGOLIA_APP_ID',
+  apiKey: 'YOUR_NEW_ALGOLIA_SEARCH_API_KEY',
+  indexName: 'YOUR_INDEX_NAME', // it does not change
+});
+```
+
+</TabItem>
+
+<TabItem value="react">
+
+```jsx App.js
+<DocSearch
+  appId="YOUR_NEW_ALGOLIA_APP_ID"
+  apiKey="YOUR_NEW_ALGOLIA_SEARCH_API_KEY"
+  indexName="YOUR_INDEX_NAME" // it does not change
+/>
+```
+
+</TabItem>
+
+</Tabs>
+
+### Why is the API key different in the dashboard?
+
+Algolia apps come with a default search API key, which also allow you to list indices, settings and search on **every** indices of your app. In the email, we provide a search **ONLY** API key, scoped to your production index, so you don't have to worry disclosing it in the frontend.
 
 ### What should I do with my legacy config and credentials?
 
