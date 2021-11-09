@@ -267,4 +267,4 @@ Contains values that can be used as [`facetFilters`][15]
 [13]: /docs/record-extractor#with-custom-variables
 [14]: https://cheerio.js.org/
 [15]: https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/
-[16]: DocSearch-v3#filtering-your-search
+[16]: /docs/docsearch-v3/#filtering-your-search
