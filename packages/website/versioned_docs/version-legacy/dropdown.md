@@ -44,8 +44,8 @@ If you're eager to test DocSearch but don't have any credentials of your own yet
 
 ```javascript
 docsearch({
-  appId: 'BH4D9OD16A',
-  apiKey: '25626fae796133dc1e734c6bcaaeac3c',
+  appId: 'R2IYF7ETH7',
+  apiKey: '599cec31baffa4868cae4e79f180729b',
   indexName: 'docsearch',
 });
 ```

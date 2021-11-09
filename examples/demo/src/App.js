@@ -10,7 +10,8 @@ function App() {
       <h1>DocSearch v3 - React</h1>
       <DocSearch
         indexName="docsearch"
-        apiKey="25626fae796133dc1e734c6bcaaeac3c"
+        appId="R2IYF7ETH7"
+        apiKey="599cec31baffa4868cae4e79f180729b"
       />
     </div>
   );

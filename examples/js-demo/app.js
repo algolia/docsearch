@@ -6,5 +6,6 @@ import '@docsearch/css';
 docsearch({
   container: '#docsearch',
   indexName: 'docsearch',
-  apiKey: '25626fae796133dc1e734c6bcaaeac3c',
+  appId: 'R2IYF7ETH7',
+  apiKey: '599cec31baffa4868cae4e79f180729b',
 });
