@@ -90,7 +90,7 @@
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-filesize": "9.1.1",
-    "rollup-plugin-license": "0.13.0",
+    "rollup-plugin-license": "1.1.0",
     "rollup-plugin-terser": "5.2.0",
     "shipjs": "0.23.0",
     "start-server-and-test": "1.11.3",
