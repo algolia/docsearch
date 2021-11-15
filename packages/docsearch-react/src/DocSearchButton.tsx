@@ -10,6 +10,7 @@ export type ButtonTranslations = Partial<{
 
 export type DocSearchButtonProps = React.ComponentProps<'button'> & {
   translations?: ButtonTranslations;
+  toggleKey?: string;
 };
 
 const ACTION_KEY_DEFAULT = 'Ctrl' as const;
@@ -22,7 +23,7 @@ function isAppleDevice() {
 export const DocSearchButton = React.forwardRef<
   HTMLButtonElement,
   DocSearchButtonProps
->(({ translations = {}, ...props }, ref) => {
+>(({ translations = {}, toggleKey = 'k', ...props }, ref) => {
   const { buttonText = 'Search', buttonAriaLabel = 'Search' } = translations;
 
   const key = useMemo<
@@ -53,7 +54,9 @@ export const DocSearchButton = React.forwardRef<
             <span className="DocSearch-Button-Key">
               {key === ACTION_KEY_DEFAULT ? <ControlKeyIcon /> : key}
             </span>
-            <span className="DocSearch-Button-Key">K</span>
+            <span className="DocSearch-Button-Key">
+              {toggleKey.toLocaleUpperCase()}
+            </span>
           </>
         )}
       </span>

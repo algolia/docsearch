@@ -41,6 +41,7 @@ export interface DocSearchProps {
   initialQuery?: string;
   navigator?: AutocompleteOptions<InternalDocSearchHit>['navigator'];
   translations?: DocSearchTranslations;
+  toggleKey?: string;
 }
 
 export function DocSearch(props: DocSearchProps) {
@@ -49,6 +50,7 @@ export function DocSearch(props: DocSearchProps) {
   const [initialQuery, setInitialQuery] = React.useState<string | undefined>(
     props?.initialQuery || undefined
   );
+  const toggleKey = props?.toggleKey || 'k';
 
   const onOpen = React.useCallback(() => {
     setIsOpen(true);
@@ -72,6 +74,7 @@ export function DocSearch(props: DocSearchProps) {
     onClose,
     onInput,
     searchButtonRef,
+    toggleKey,
   });
 
   return (
@@ -79,6 +82,7 @@ export function DocSearch(props: DocSearchProps) {
       <DocSearchButton
         ref={searchButtonRef}
         translations={props?.translations?.button}
+        toggleKey={toggleKey}
         onClick={onOpen}
       />
 
