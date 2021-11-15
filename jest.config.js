@@ -1,11 +1,15 @@
 module.exports = {
-  rootDir: process.cwd(),
-  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
-  testPathIgnorePatterns: ['node_modules/', 'dist/', 'cypress/'],
-  watchPlugins: [
-    'jest-watch-typeahead/filename',
-    'jest-watch-typeahead/testname',
+  preset: 'ts-jest',
+  testMatch: ['<rootDir>/packages/docsearch-*/src/__tests__/*.test.(ts|tsx)'],
+  transformIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '<rootDir>/packages/docsearch-*/node_modules/',
   ],
+  transform: {
+    '^.+\\.(tsx|ts|js)$': 'babel-jest',
+  },
+  setupFilesAfterEnv: ['<rootDir>/scripts/jest/setupTests.ts'],
+  testEnvironment: 'jsdom',
   globals: {
     __DEV__: true,
   },

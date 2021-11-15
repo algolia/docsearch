@@ -20,6 +20,6 @@
     "**/__tests__/**/*",
     "**/dist",
     "**/node_modules",
-    "examples"
+    "cypress"
   ]
 }

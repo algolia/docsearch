@@ -21,7 +21,6 @@ The following content is for **[DocSearch v3][2]**. If you are using **[DocSearc
 }>
 <TabItem value="js">
 
-
 ## `container`
 
 > `type: string | HTMLElement` | **required**
@@ -118,11 +117,17 @@ An implementation of [Algolia Autocomplete][1]’s Navigator API to redirect the
 
 Learn more on the [Navigator API][11] documentation.
 
+## `translations`
+
+> `type: Partial<DocSearchTranslations>` | `default: docSearchTranslations` | **optional**
+
+Allow translations of any raw text present in the DocSearch button or modal components.
+
+See the [default implementation](https://github.com/algolia/docsearch/blob/next/packages/docsearch-react/src/DocSearch.tsx#L20-L23)
+
 </TabItem>
 
-
 <TabItem value="react">
-
 
 ## `appId`
 
@@ -206,11 +211,17 @@ An implementation of [Algolia Autocomplete][1]’s Navigator API to redirect the
 
 Learn more on the [Navigator API][11] documentation.
 
+## `translations`
+
+> `type: Partial<DocSearchTranslations>` | `default: docSearchTranslations` | **optional**
+
+Allow translations of any raw text present in the DocSearch button or modal components.
+
+See the [default implementation](https://github.com/algolia/docsearch/blob/next/packages/docsearch-react/src/DocSearch.tsx#L20-L23)
+
 </TabItem>
 
-
 </Tabs>
-
 
 [1]: https://www.algolia.com/doc/ui-libraries/autocomplete/introduction/what-is-autocomplete/
 [2]: https://github.com/algolia/docsearch/

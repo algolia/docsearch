@@ -6,12 +6,21 @@ import type {
 import React from 'react';
 
 import type { DocSearchProps } from './DocSearch';
+import type { ErrorScreenTranslations } from './ErrorScreen';
 import { ErrorScreen } from './ErrorScreen';
+import type { NoResultsScreenTranslations } from './NoResultsScreen';
 import { NoResultsScreen } from './NoResultsScreen';
 import { ResultsScreen } from './ResultsScreen';
+import type { StartScreenTranslations } from './StartScreen';
 import { StartScreen } from './StartScreen';
 import type { StoredSearchPlugin } from './stored-searches';
 import type { InternalDocSearchHit, StoredDocSearchHit } from './types';
+
+export type ScreenStateTranslations = Partial<{
+  errorScreen: ErrorScreenTranslations;
+  startScreen: StartScreenTranslations;
+  noResultsScreen: NoResultsScreenTranslations;
+}>;
 
 export interface ScreenStateProps<TItem extends BaseItem>
   extends AutocompleteApi<
@@ -29,12 +38,13 @@ export interface ScreenStateProps<TItem extends BaseItem>
   indexName: DocSearchProps['indexName'];
   disableUserPersonalization: boolean;
   resultsFooterComponent: DocSearchProps['resultsFooterComponent'];
+  translations: ScreenStateTranslations;
 }
 
 export const ScreenState = React.memo(
-  (props: ScreenStateProps<InternalDocSearchHit>) => {
+  ({ translations = {}, ...props }: ScreenStateProps<InternalDocSearchHit>) => {
     if (props.state.status === 'error') {
-      return <ErrorScreen />;
+      return <ErrorScreen translations={translations?.errorScreen} />;
     }
 
     const hasCollections = props.state.collections.some(
@@ -42,11 +52,22 @@ export const ScreenState = React.memo(
     );
 
     if (!props.state.query) {
-      return <StartScreen {...props} hasCollections={hasCollections} />;
+      return (
+        <StartScreen
+          {...props}
+          hasCollections={hasCollections}
+          translations={translations?.startScreen}
+        />
+      );
     }
 
     if (hasCollections === false) {
-      return <NoResultsScreen {...props} />;
+      return (
+        <NoResultsScreen
+          {...props}
+          translations={translations?.noResultsScreen}
+        />
+      );
     }
 
     return <ResultsScreen {...props} />;

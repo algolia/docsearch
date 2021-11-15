@@ -4,9 +4,30 @@ import { NoResultsIcon } from './icons';
 import type { ScreenStateProps } from './ScreenState';
 import type { InternalDocSearchHit } from './types';
 
-type NoResultsScreenProps = ScreenStateProps<InternalDocSearchHit>;
+export type NoResultsScreenTranslations = Partial<{
+  noResultsText: string;
+  suggestedQueryText: string;
+  openIssueText: string;
+  openIssueLinkText: string;
+}>;
 
-export function NoResultsScreen(props: NoResultsScreenProps) {
+type NoResultsScreenProps = Omit<
+  ScreenStateProps<InternalDocSearchHit>,
+  'translations'
+> & {
+  translations?: NoResultsScreenTranslations;
+};
+
+export function NoResultsScreen({
+  translations = {},
+  ...props
+}: NoResultsScreenProps) {
+  const {
+    noResultsText = 'No results for',
+    suggestedQueryText = 'Try searching for',
+    openIssueText = 'Believe this query should return results?',
+    openIssueLinkText = 'Let us know',
+  } = translations;
   const searchSuggestions: string[] | undefined = props.state.context
     .searchSuggestions as string[];
 
@@ -16,12 +37,12 @@ export function NoResultsScreen(props: NoResultsScreenProps) {
         <NoResultsIcon />
       </div>
       <p className="DocSearch-Title">
-        No results for "<strong>{props.state.query}</strong>"
+        {noResultsText} "<strong>{props.state.query}</strong>"
       </p>
 
       {searchSuggestions && searchSuggestions.length > 0 && (
         <div className="DocSearch-NoResults-Prefill-List">
-          <p className="DocSearch-Help">Try searching for:</p>
+          <p className="DocSearch-Help">{suggestedQueryText}:</p>
           <ul>
             {searchSuggestions.slice(0, 3).reduce<React.ReactNode[]>(
               (acc, search) => [
@@ -48,13 +69,13 @@ export function NoResultsScreen(props: NoResultsScreenProps) {
       )}
 
       <p className="DocSearch-Help">
-        Believe this query should return results?{' '}
+        {`${openIssueText} `}
         <a
           href={`https://github.com/algolia/docsearch-configs/issues/new?template=Missing_results.md&title=[${props.indexName}]+Missing+results+for+query+"${props.state.query}"`}
           target="_blank"
           rel="noopener noreferrer"
         >
-          Let us know
+          {openIssueLinkText}
         </a>
         .
       </p>
