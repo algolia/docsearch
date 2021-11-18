@@ -5,22 +5,22 @@ declare namespace Cypress {
     /**
      * Toggles the dark mode on the preview website.
      */
-    darkmode: () => Chainable<Element>;
+    darkmode: () => void;
     /**
      * Opens the DocSearch modal.
      */
-    openModal: () => Chainable<Element>;
+    openModal: () => void;
     /**
      * Closes the DocSearch modal.
      */
-    closeModal: () => Chainable<Element>;
+    closeModal: () => void;
     /**
      * Types a query that returns results.
      */
-    typeQueryMatching: () => Chainable<Element>;
+    typeQueryMatching: () => void;
     /**
      * Types a query that returns no results.
      */
-    typeQueryNotMatching: () => Chainable<Element>;
+    typeQueryNotMatching: () => void;
   }
 }
