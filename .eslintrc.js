@@ -51,6 +51,7 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': ['off'],
     'react/function-component-definition': ['off'],
     'react/jsx-filename-extension': ['off'],
+    'jsdoc/check-examples': ['off'],
   },
   overrides: [
     {
