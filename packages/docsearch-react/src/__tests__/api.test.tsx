@@ -79,9 +79,16 @@ describe('api', () => {
                 return new Promise((resolve) => {
                   resolve({
                     results: [
-                      // @ts-expect-error we only need `hits` here
                       {
                         hits: [],
+                        hitsPerPage: 0,
+                        nbHits: 0,
+                        nbPages: 0,
+                        page: 0,
+                        processingTimeMS: 0,
+                        exhaustiveNbHits: true,
+                        params: '',
+                        query: '',
                       },
                     ],
                   });
