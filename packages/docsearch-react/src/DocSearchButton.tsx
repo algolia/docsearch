@@ -3,13 +3,13 @@ import React, { useMemo } from 'react';
 import { ControlKeyIcon } from './icons/ControlKeyIcon';
 import { SearchIcon } from './icons/SearchIcon';
 
-type Translations = Partial<{
+export type ButtonTranslations = Partial<{
   buttonText: string;
   buttonAriaLabel: string;
 }>;
 
 export type DocSearchButtonProps = React.ComponentProps<'button'> & {
-  translations?: Translations;
+  translations?: ButtonTranslations;
 };
 
 const ACTION_KEY_DEFAULT = 'Ctrl' as const;

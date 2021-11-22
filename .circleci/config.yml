@@ -157,8 +157,7 @@ workflows:
           requires:
             - build
       - test_types
-      # TODO: Enable once the test env setup is ready.
-      # - test_unit
+      - test_unit
       # TODO: Enable again once Cypress is installed on the repo.
       # - test_cypress
       - release:

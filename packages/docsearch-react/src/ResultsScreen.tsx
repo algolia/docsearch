@@ -6,7 +6,10 @@ import type { ScreenStateProps } from './ScreenState';
 import type { InternalDocSearchHit } from './types';
 import { removeHighlightTags } from './utils';
 
-type ResultsScreenProps = ScreenStateProps<InternalDocSearchHit>;
+type ResultsScreenProps = Omit<
+  ScreenStateProps<InternalDocSearchHit>,
+  'translations'
+>;
 
 export function ResultsScreen(props: ResultsScreenProps) {
   return (

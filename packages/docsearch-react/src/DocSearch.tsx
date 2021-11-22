@@ -15,6 +15,13 @@ import type {
 } from './types';
 import { useDocSearchKeyboardEvents } from './useDocSearchKeyboardEvents';
 
+import type { ButtonTranslations, ModalTranslations } from '.';
+
+export type DocSearchTranslations = Partial<{
+  button: ButtonTranslations;
+  modal: ModalTranslations;
+}>;
+
 export interface DocSearchProps {
   appId?: string;
   apiKey: string;
@@ -33,6 +40,7 @@ export interface DocSearchProps {
   disableUserPersonalization?: boolean;
   initialQuery?: string;
   navigator?: AutocompleteOptions<InternalDocSearchHit>['navigator'];
+  translations?: DocSearchTranslations;
 }
 
 export function DocSearch(props: DocSearchProps) {
@@ -68,7 +76,11 @@ export function DocSearch(props: DocSearchProps) {
 
   return (
     <>
-      <DocSearchButton ref={searchButtonRef} onClick={onOpen} />
+      <DocSearchButton
+        ref={searchButtonRef}
+        translations={props?.translations?.button}
+        onClick={onOpen}
+      />
 
       {isOpen &&
         createPortal(
@@ -76,6 +88,7 @@ export function DocSearch(props: DocSearchProps) {
             {...props}
             initialScrollY={window.scrollY}
             initialQuery={initialQuery}
+            translations={props?.translations?.modal}
             onClose={onClose}
           />,
           document.body

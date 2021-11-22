@@ -21,7 +21,6 @@ The following content is for **[DocSearch v3][2]**. If you are using **[DocSearc
 }>
 <TabItem value="js">
 
-
 ## `container`
 
 > `type: string | HTMLElement` | **required**
@@ -118,11 +117,62 @@ An implementation of [Algolia Autocomplete][1]’s Navigator API to redirect the
 
 Learn more on the [Navigator API][11] documentation.
 
+## `translations`
+
+> `type: Partial<DocSearchTranslations>` | `default: docSearchTranslations` | **optional**
+
+Allow translations of any raw text present in the DocSearch button or modal components.
+
+<details><summary>docSearchTranslations</summary>
+<div>
+
+```ts
+const translations: DocSearchTranslations = {
+  button: {
+    buttonText: 'Search',
+    buttonAriaLabel: 'Search',
+  },
+  modal: {
+    searchBox: {
+      resetButtonTitle: 'Clear the query',
+      resetButtonAriaLabel: 'Clear the query',
+      cancelButtonText: 'Cancel',
+      cancelButtonAriaLabel: 'Cancel',
+    },
+    startScreen: {
+      recentSearchesTitle: 'Recent',
+      noRecentSearchesText: 'No recent searches',
+      saveRecentSearchButtonTitle: 'Save this search',
+      removeRecentSearchButtonTitle: 'Remove this search from history',
+      favoriteSearchesTitle: 'Favorite',
+      removeFavoriteSearchButtonTitle: 'Remove this search from favorites',
+    },
+    errorScreen: {
+      titleText: 'Unable to fetch results',
+      helpText: 'You might want to check your network connection.',
+    },
+    footer: {
+      selectText: 'to select',
+      navigateText: 'to navigate',
+      closeText: 'to close',
+      searchByText: 'Search by',
+    },
+    noResultsScreen: {
+      noResultsText: 'No results for',
+      suggestedQueryText: 'Try searching for',
+      openIssueText: 'Believe this query should return results?',
+      openIssueLinkText: 'Let us know',
+    },
+  },
+};
+```
+
+</div>
+</details>
+
 </TabItem>
 
-
 <TabItem value="react">
-
 
 ## `appId`
 
@@ -206,11 +256,62 @@ An implementation of [Algolia Autocomplete][1]’s Navigator API to redirect the
 
 Learn more on the [Navigator API][11] documentation.
 
+## `translations`
+
+> `type: Partial<DocSearchTranslations>` | `default: docSearchTranslations` | **optional**
+
+Allow translations of any raw text present in the DocSearch button or modal components.
+
+<details><summary>docSearchTranslations</summary>
+<div>
+
+```ts
+const translations: DocSearchTranslations = {
+  button: {
+    buttonText: 'Search',
+    buttonAriaLabel: 'Search',
+  },
+  modal: {
+    searchBox: {
+      resetButtonTitle: 'Clear the query',
+      resetButtonAriaLabel: 'Clear the query',
+      cancelButtonText: 'Cancel',
+      cancelButtonAriaLabel: 'Cancel',
+    },
+    startScreen: {
+      recentSearchesTitle: 'Recent',
+      noRecentSearchesText: 'No recent searches',
+      saveRecentSearchButtonTitle: 'Save this search',
+      removeRecentSearchButtonTitle: 'Remove this search from history',
+      favoriteSearchesTitle: 'Favorite',
+      removeFavoriteSearchButtonTitle: 'Remove this search from favorites',
+    },
+    errorScreen: {
+      titleText: 'Unable to fetch results',
+      helpText: 'You might want to check your network connection.',
+    },
+    footer: {
+      selectText: 'to select',
+      navigateText: 'to navigate',
+      closeText: 'to close',
+      searchByText: 'Search by',
+    },
+    noResultsScreen: {
+      noResultsText: 'No results for',
+      suggestedQueryText: 'Try searching for',
+      openIssueText: 'Believe this query should return results?',
+      openIssueLinkText: 'Let us know',
+    },
+  },
+};
+```
+
+</div>
+</details>
+
 </TabItem>
 
-
 </Tabs>
-
 
 [1]: https://www.algolia.com/doc/ui-libraries/autocomplete/introduction/what-is-autocomplete/
 [2]: https://github.com/algolia/docsearch/

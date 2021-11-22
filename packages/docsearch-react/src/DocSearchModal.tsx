@@ -4,9 +4,12 @@ import React from 'react';
 
 import { MAX_QUERY_SIZE } from './constants';
 import type { DocSearchProps } from './DocSearch';
+import type { FooterTranslations } from './Footer';
 import { Footer } from './Footer';
 import { Hit } from './Hit';
+import type { ScreenStateTranslations } from './ScreenState';
 import { ScreenState } from './ScreenState';
+import type { SearchBoxTranslations } from './SearchBox';
 import { SearchBox } from './SearchBox';
 import { createStoredSearches } from './stored-searches';
 import type {
@@ -19,10 +22,17 @@ import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
 import { groupBy, identity, noop, removeHighlightTags } from './utils';
 
-export interface DocSearchModalProps extends DocSearchProps {
+export type ModalTranslations = Partial<{
+  searchBox: SearchBoxTranslations;
+  footer: FooterTranslations;
+}> &
+  ScreenStateTranslations;
+
+export type DocSearchModalProps = DocSearchProps & {
   initialScrollY: number;
   onClose?: () => void;
-}
+  translations?: ModalTranslations;
+};
 
 export function DocSearchModal({
   appId = 'BH4D9OD16A',
@@ -39,7 +49,13 @@ export function DocSearchModal({
   transformSearchClient = identity,
   disableUserPersonalization = false,
   initialQuery: initialQueryFromProp = '',
+  translations = {},
 }: DocSearchModalProps) {
+  const {
+    footer: footerTranslations,
+    searchBox: searchBoxTranslations,
+    ...screenStateTranslations
+  } = translations;
   const [state, setState] = React.useState<
     AutocompleteState<InternalDocSearchHit>
   >({
@@ -127,7 +143,6 @@ export function DocSearchModal({
         onStateChange(props) {
           setState(props.state);
         },
-
         getSources({ query, state: sourcesState, setContext, setStatus }) {
           if (!query) {
             if (disableUserPersonalization) {
@@ -397,6 +412,7 @@ export function DocSearchModal({
               Boolean(initialQuery) &&
               initialQuery === initialQueryFromSelection
             }
+            translations={searchBoxTranslations}
             onClose={onClose}
           />
         </header>
@@ -412,6 +428,7 @@ export function DocSearchModal({
             recentSearches={recentSearches}
             favoriteSearches={favoriteSearches}
             inputRef={inputRef}
+            translations={screenStateTranslations}
             onItemClick={(item) => {
               saveRecentSearch(item);
               onClose();
@@ -420,7 +437,7 @@ export function DocSearchModal({
         </div>
 
         <footer className="DocSearch-Footer">
-          <Footer />
+          <Footer translations={footerTranslations} />
         </footer>
       </div>
     </div>

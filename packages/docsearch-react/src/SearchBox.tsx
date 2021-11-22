@@ -11,6 +11,13 @@ import { ResetIcon } from './icons/ResetIcon';
 import { SearchIcon } from './icons/SearchIcon';
 import type { InternalDocSearchHit } from './types';
 
+export type SearchBoxTranslations = Partial<{
+  resetButtonTitle: string;
+  resetButtonAriaLabel: string;
+  cancelButtonText: string;
+  cancelButtonAriaLabel: string;
+}>;
+
 interface SearchBoxProps
   extends AutocompleteApi<
     InternalDocSearchHit,
@@ -23,9 +30,16 @@ interface SearchBoxProps
   inputRef: MutableRefObject<HTMLInputElement | null>;
   onClose: () => void;
   isFromSelection: boolean;
+  translations?: SearchBoxTranslations;
 }
 
-export function SearchBox(props: SearchBoxProps) {
+export function SearchBox({ translations = {}, ...props }: SearchBoxProps) {
+  const {
+    resetButtonTitle = 'Clear the query',
+    resetButtonAriaLabel = 'Clear the query',
+    cancelButtonText = 'Cancel',
+    cancelButtonAriaLabel = 'Cancel',
+  } = translations;
   const { onReset } = props.getFormProps({
     inputElement: props.inputRef.current,
   });
@@ -71,16 +85,22 @@ export function SearchBox(props: SearchBoxProps) {
 
         <button
           type="reset"
-          title="Clear the query"
+          title={resetButtonTitle}
           className="DocSearch-Reset"
+          aria-label={resetButtonAriaLabel}
           hidden={!props.state.query}
         >
           <ResetIcon />
         </button>
       </form>
 
-      <button className="DocSearch-Cancel" type="reset" onClick={props.onClose}>
-        Cancel
+      <button
+        className="DocSearch-Cancel"
+        type="reset"
+        aria-label={cancelButtonAriaLabel}
+        onClick={props.onClose}
+      >
+        {cancelButtonText}
       </button>
     </>
   );
