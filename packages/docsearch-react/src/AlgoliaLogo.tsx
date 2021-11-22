@@ -1,10 +1,15 @@
 import React from 'react';
 
-type AlgoliaLogoProps = {
+type AlgoliaLogoTranslations = Partial<{
   searchByText: string;
+}>;
+
+type AlgoliaLogoProps = {
+  translations?: AlgoliaLogoTranslations;
 };
 
-export function AlgoliaLogo({ searchByText }: AlgoliaLogoProps) {
+export function AlgoliaLogo({ translations = {} }: AlgoliaLogoProps) {
+  const { searchByText = 'Search by' } = translations;
   return (
     <a
       href="https://www.algolia.com/docsearch"

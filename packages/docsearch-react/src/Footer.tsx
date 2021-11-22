@@ -44,7 +44,7 @@ export function Footer({ translations = {} }: FooterProps) {
   return (
     <>
       <div className="DocSearch-Logo">
-        <AlgoliaLogo searchByText={searchByText} />
+        <AlgoliaLogo translations={{ searchByText }} />
       </div>
       <ul className="DocSearch-Commands">
         <li>
