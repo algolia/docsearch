@@ -20,7 +20,7 @@ DocSearch v3 comes with a theme package called `@docsearch/css`, which offers a 
 
 :::note
 
-You don't need to install this package if you already have [`@docsearch/js`][1] or [`@docsearch/react`][1] installed!
+This package is a dependency of [`@docsearch/js`][1] and [`@docsearch/react`][1], you don't need to install it if you are using a package manager!
 
 :::
 
@@ -35,7 +35,10 @@ npm install @docsearch/css@alpha
 If you don’t want to use a package manager, you can use a standalone endpoint:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@alpha" />
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@docsearch/css@alpha"
+/>
 ```
 
 ## Files
