@@ -37,14 +37,24 @@ DocSearch packages are available on the [npm][10] registry.
 }>
 <TabItem value="js">
 
-
 ```bash
 yarn add @docsearch/js@alpha
 # or
 npm install @docsearch/js@alpha
 ```
 
-If you don’t want to use a package manager, you can use a standalone endpoint:
+### Without package manager
+
+If you don't want to use a package manger, you can add the CSS to the `<head>` of your website:
+
+```html
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@docsearch/css@alpha"
+/>
+```
+
+And the JavaScript at the end of your `<body>`:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@alpha"></script>
@@ -53,24 +63,32 @@ If you don’t want to use a package manager, you can use a standalone endpoint:
 </TabItem>
 <TabItem value="react">
 
-
 ```bash
 yarn add @docsearch/react@alpha
 # or
 npm install @docsearch/react@alpha
 ```
 
-If you don’t want to use a package manager, you can use a standalone endpoint:
+### Without package manager
+
+If you don't want to use a package manger, you can add the CSS to the `<head>` of your website:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/react@alpha"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@docsearch/css@alpha"
+/>
+```
+
+And the JavaScript at the end of your `<body>`:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@alpha"></script>
 ```
 
 </TabItem>
 
-
 </Tabs>
-
 
 ## Get started
 
@@ -83,7 +101,6 @@ If you don’t want to use a package manager, you can use a standalone endpoint:
   ]
 }>
 <TabItem value="js">
-
 
 To get started, you need a [`container`][11] for your DocSearch component to go in. If you don’t have one already, you can insert one into your markup:
 
@@ -110,9 +127,7 @@ docsearch({
 
 </TabItem>
 
-
 <TabItem value="react">
-
 
 DocSearch generates a fully accessible search box for you.
 
@@ -136,9 +151,7 @@ export default App;
 
 </TabItem>
 
-
 </Tabs>
-
 
 ### Testing
 
@@ -154,7 +167,6 @@ If you're eager to test DocSearch v3 and can't wait to receive your credentails,
 }>
 <TabItem value="js">
 
-
 ```js
 docsearch({
   appId: 'R2IYF7ETH7',
@@ -165,9 +177,7 @@ docsearch({
 
 </TabItem>
 
-
 <TabItem value="react">
-
 
 ```jsx
 <DocSearch
@@ -179,9 +189,7 @@ docsearch({
 
 </TabItem>
 
-
 </Tabs>
-
 
 ### Filtering your search
 
@@ -199,7 +207,6 @@ This is useful to limit the scope of the search to one language or one version.
 }>
 <TabItem value="js">
 
-
 ```js
 docsearch({
   // ...
@@ -211,9 +218,7 @@ docsearch({
 
 </TabItem>
 
-
 <TabItem value="react">
-
 
 ```jsx
 <DocSearch
@@ -226,9 +231,7 @@ docsearch({
 
 </TabItem>
 
-
 </Tabs>
-
 
 ## Performance optimization
 
