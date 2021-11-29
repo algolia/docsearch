@@ -29,7 +29,7 @@ describe('api', () => {
   });
 
   describe('toggleKey', () => {
-    it('opens the modal with the default shortcut', async () => {
+    it('opens and close the modal with the default shortcut', async () => {
       render(<DocSearch />);
 
       await waitFor(() => {
@@ -37,6 +37,14 @@ describe('api', () => {
       });
 
       expect(document.querySelector('.DocSearch-Modal')).toBeInTheDocument();
+
+      await waitFor(() => {
+        userEvent.keyboard('{meta}{k}');
+      });
+
+      expect(
+        document.querySelector('.DocSearch-Modal')
+      ).not.toBeInTheDocument();
     });
 
     it('overrides the default shortcut', async () => {
@@ -47,6 +55,14 @@ describe('api', () => {
       });
 
       expect(document.querySelector('.DocSearch-Modal')).toBeInTheDocument();
+
+      await waitFor(() => {
+        userEvent.keyboard('{meta}{u}');
+      });
+
+      expect(
+        document.querySelector('.DocSearch-Modal')
+      ).not.toBeInTheDocument();
     });
   });
 
