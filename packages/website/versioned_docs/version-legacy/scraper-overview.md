@@ -13,5 +13,5 @@ Those CSS selectors can be overwritten, and each website has its own JSON config
 If you'd like to [run DocSearch on your own][3], all the code is open sourced and even packaged as a Docker image. Download it, and run it with your own credentials.
 
 [1]: https://scrapy.org/
-[2]: config-file.md
-[3]: run-your-own.md
+[2]: /docs/legacy/config-file
+[3]: /docs/legacy/run-your-own

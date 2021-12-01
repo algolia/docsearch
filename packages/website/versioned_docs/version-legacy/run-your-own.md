@@ -136,13 +136,13 @@ _Note that we use this command-line tool internally at Algolia to run the free h
 [2]: https://www.algolia.com/pricing
 [3]: https://www.algolia.com/doc/guides/security/api-keys/#acl
 [4]: https://github.com/stedolan/jq/wiki/Installation
-[5]: config-file.md
+[5]: /docs/legacy/config-file
 [6]: #integration
 [7]: https://scrapy.org/
 [8]: https://github.com/pypa/pipenv
 [9]: https://github.com/algolia/docsearch-scraper
 [10]: https://pipenv.readthedocs.io/en/latest/install/#installing-pipenv
-[11]: config-file.md
+[11]: /docs/legacy/config-file
 [12]: http://chromedriver.chromium.org/getting-started
 [13]: https://github.com/algolia/docsearch-configs/tree/master/configs
-[14]: dropdown.md
+[14]: /docs/legacy/dropdown
