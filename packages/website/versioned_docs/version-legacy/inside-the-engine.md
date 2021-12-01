@@ -35,6 +35,6 @@ You can boost pages depending on their URLs. You should use the `start_urls` and
 You could even change the relevancy strategy by [overwriting the default `customRanking`][4] used by the index by using the `custom_settings` option of your config.
 
 [1]: https://www.sitemaps.org/
-[2]: how-do-we-build-an-index.mdx
+[2]: /docs/legacy/how-do-we-build-an-index
 [3]: https://www.algolia.com/doc/guides/ranking/ranking-formula/#tie-breaking-approach
 [4]: https://www.algolia.com/doc/guides/ranking/custom-ranking/

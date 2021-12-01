@@ -118,12 +118,12 @@ version:["2.0.0-alpha.62" , "latest"]
 
 Any questions? [Send us an email][9].
 
-[1]: how-do-we-build-an-index.mdx
-[2]: config-file.md#selectors
+[1]: /docs/legacy/how-do-we-build-an-index
+[2]: /docs/legacy/config-file#selectors
 [3]: https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/
-[4]: config-file.md#custom_settings-optional
+[4]: /docs/legacy/config-file#custom_settings-optional
 [5]: https://html.spec.whatwg.org/dev/common-microsyntaxes.html#comma-separated-tokens
 [6]: https://semver.org/
 [7]: https://www.sitemaps.org/
-[8]: config-file.md#js_render-optional
+[8]: /docs/legacy/config-file#js_render-optional
 [9]: mailto:DocSearch@algolia.com

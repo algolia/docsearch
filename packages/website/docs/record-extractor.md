@@ -252,7 +252,7 @@ type CustomVariable =
 
 Contains values that can be used as [`facetFilters`][15]
 
-[1]: DocSearch-v3
+[1]: /docs/DocSearch-v3
 [2]: https://github.com/algolia/docsearch/
 [3]: https://github.com/algolia/docsearch/tree/master
 [4]: /docs/legacy/dropdown

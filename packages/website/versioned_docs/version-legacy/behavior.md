@@ -123,7 +123,6 @@ docsearch({
 ```
 
 [1]: https://github.com/algolia/autocomplete/tree/master
-[2]: run-your-own.md
 [3]: https://codesandbox.io/s/docsearchjs-open-in-new-tab-tgs2h
 [4]: https://github.com/algolia/autocomplete/tree/master#global-options
 [5]: https://www.algolia.com/doc/api-reference/api-parameters/

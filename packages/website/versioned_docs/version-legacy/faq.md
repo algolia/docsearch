@@ -82,9 +82,9 @@ The `apiKey` the DocSearch team provides is [a search-only key][17] and can be s
 [1]: mailto:docsearch@algolia.com
 [4]: https://www.algolia.com/doc/guides/infrastructure/servers/
 [5]: https://www.algolia.com/policies/privacy
-[6]: run-your-own.md
+[6]: /docs/legacy/run-your-own
 [7]: https://www.algolia.com/doc/api-reference/
-[8]: config-file.md
+[8]: /docs/legacy/config-file
 [9]: https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/in-depth/asynchronicity-and-when-to-wait-for-tasks/#atomic-reindexing
 [10]: https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/
 [11]: tips.md
