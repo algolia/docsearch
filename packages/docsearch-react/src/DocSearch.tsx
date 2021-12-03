@@ -2,6 +2,7 @@ import type {
   AutocompleteState,
   AutocompleteOptions,
 } from '@algolia/autocomplete-core';
+import type { SearchOptions } from '@algolia/client-search';
 import type { SearchClient } from 'algoliasearch/lite';
 import React from 'react';
 import { createPortal } from 'react-dom';
@@ -27,7 +28,7 @@ export interface DocSearchProps {
   apiKey: string;
   indexName: string;
   placeholder?: string;
-  searchParameters?: any;
+  searchParameters?: SearchOptions;
   transformItems?: (items: DocSearchHit[]) => DocSearchHit[];
   hitComponent?: (props: {
     hit: InternalDocSearchHit | StoredDocSearchHit;
