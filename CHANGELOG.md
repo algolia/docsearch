@@ -1,3 +1,24 @@
+# [](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.41...v) (2021-12-03)
+
+
+### Bug Fixes
+
+* **deps:** update dependency postcss to v8.3.11 ([#1153](https://github.com/algolia/docsearch/issues/1153)) ([0ddad32](https://github.com/algolia/docsearch/commit/0ddad32aaff34c7660d3f0e3a71fe88eafa3dfb8))
+* **deps:** update dependency postcss-import to v14 ([#1155](https://github.com/algolia/docsearch/issues/1155)) ([ebaf66e](https://github.com/algolia/docsearch/commit/ebaf66e3ef26f74152ce25ea062f7010a45ad05a))
+* **deps:** update dependency postcss-preset-env to v7 ([#1194](https://github.com/algolia/docsearch/issues/1194)) ([96af398](https://github.com/algolia/docsearch/commit/96af3984110825baa4b048b9fef4fdfec44148bc))
+* **deps:** update docusaurus monorepo to v2.0.0-beta.9 ([#1166](https://github.com/algolia/docsearch/issues/1166)) ([5aed646](https://github.com/algolia/docsearch/commit/5aed646ba8d5f1adf3d5a6671387a8595bc7347a))
+* **discord:** update invite link ([510cbc6](https://github.com/algolia/docsearch/commit/510cbc679954919d58148f14d55d416b49d3009f))
+* **DocSearchProps:** type `searchParameters` ([#1200](https://github.com/algolia/docsearch/issues/1200)) ([80677fd](https://github.com/algolia/docsearch/commit/80677fd7d36a85b6a205383a7ca3d68969fbe3bf))
+* **examples:** use new infra credentials ([65d9414](https://github.com/algolia/docsearch/commit/65d9414fce6c26389e9e86c93b46a28d49f8102c))
+* **issue template:** update codesandbox link ([891fd88](https://github.com/algolia/docsearch/commit/891fd88d1bd3670533fc4a8b41d21678a6f6b832))
+
+
+### Features
+
+* **translations:** expose Button and Modal translations ([#1183](https://github.com/algolia/docsearch/issues/1183)) ([ef13dea](https://github.com/algolia/docsearch/commit/ef13dea393e02ec459c8adcb5883e896fbd64bb0))
+
+
+
 # [v3.0.0-alpha.41](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.40...v3.0.0-alpha.41) (2021-10-18)
 
 ### Bug Fixes
