@@ -16,6 +16,7 @@ So, if you're using one of the following tools, checkout their documentation to 
 - [Orchid][11] - [Algolia Search][12]
 - [Smooth DOC][13] - [DocSearch][14]
 - [Docsy][15] - [Configure Algolia DocSearch][16]
+- [dumi][18] - [algolia][19]
 
 If you're maintaining a similar tool and want us to add you to the list, [get in touch with us][17]. We'd be happy to help.
 
@@ -36,3 +37,5 @@ If you're maintaining a similar tool and want us to add you to the list, [get in
 [15]: https://www.docsy.dev/
 [16]: https://www.docsy.dev/docs/adding-content/navigation/#configure-algolia-docsearch
 [17]: mailto:docsearch@algolia.com
+[18]: https://d.umijs.org/
+[19]: https://d.umijs.org/config#algolia
