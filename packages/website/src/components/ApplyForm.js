@@ -12,7 +12,7 @@ import React, { useState } from 'react';
 
 function ApplyForm() {
   const { withBaseUrl } = useBaseUrlUtils();
-  const [hasSent, setHasSent] = useState(false);
+  const [status, setStatus] = useState('stalled');
   const [url, setUrl] = useState('');
   const [email, setEmail] = useState('');
 
@@ -24,6 +24,12 @@ function ApplyForm() {
   };
   const onSubmit = (event) => {
     event.preventDefault();
+
+    if (status === 'loading') {
+      return;
+    }
+
+    setStatus('loading');
 
     const applyForm = event.target;
     const method = applyForm.getAttribute('method');
@@ -39,14 +45,23 @@ function ApplyForm() {
       method,
       headers: { 'Content-Type': 'application/json' },
       body,
-    }).then((response) => {
-      if (response.ok) {
-        setHasSent(true);
-      }
-    });
+    })
+      .then((response) => response.json())
+      .then(({ success, message }) => {
+        if (!success) {
+          return setStatus('failed');
+        }
+
+        if (message === 'You already have a pending request.') {
+          return setStatus('duplicate');
+        }
+
+        return setStatus('succeed');
+      })
+      .catch(() => setStatus('failed'));
   };
 
-  if (hasSent) {
+  if (status === 'succeed' || status === 'duplicate') {
     return (
       <Card className="uil-m-auto uil-ta-center apply-form">
         <Heading1 className="apply-text">Thank you!</Heading1>
@@ -56,9 +71,12 @@ function ApplyForm() {
           className="uil-pv-8 uil-d-block apply-text"
           aria-label="Request will be processed"
         >
-          Your request will be processed by our team. We'll get back to you at{' '}
-          <strong>{email}</strong> with the snippet you'll need to integrate
-          into <InlineLink href={url}>{url}</InlineLink>.
+          {status === 'succeed'
+            ? 'Your request will be processed by our team.'
+            : 'Your request have already been received by our team and is being processed.'}{' '}
+          We'll get back to you at <strong>{email}</strong> with the snippet
+          you'll need to integrate into{' '}
+          <InlineLink href={url}>{url}</InlineLink>.
         </Text>
 
         <Text aria-label="recommendations" className="apply-text">
@@ -179,6 +197,7 @@ function ApplyForm() {
 
           <Button
             primary={true}
+            disabled={status === 'loading'}
             className="uil-mt-16 uil-mb-16"
             tag="button"
             type="submit"
