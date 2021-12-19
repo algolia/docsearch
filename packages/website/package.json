@@ -27,7 +27,7 @@
     "my-loaders": "file:plugins/my-loaders",
     "postcss": "8.3.11",
     "postcss-import": "14.0.2",
-    "postcss-preset-env": "7.0.1",
+    "postcss-preset-env": "7.0.2",
     "prism-react-renderer": "1.2.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
