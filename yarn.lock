@@ -8798,10 +8798,15 @@ caniuse-lite@^1.0.30001280:
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001283.tgz#8573685bdae4d733ef18f78d44ba0ca5fe9e896b"
   integrity sha512-9RoKo841j1GQFSJz/nCXOj0sD7tHBtlowjYlrqIUS812x9/emfBLBt6IyMz1zIaYc/eRL8Cs6HPUVi2Hzq4sIg==
 
-caniuse-lite@^1.0.30001286, caniuse-lite@^1.0.30001287:
+caniuse-lite@^1.0.30001286:
   version "1.0.30001291"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001291.tgz#08a8d2cfea0b2cf2e1d94dd795942d0daef6108c"
   integrity sha512-roMV5V0HNGgJ88s42eE70sstqGW/gwFndosYrikHthw98N5tLnOTxFqMLQjZVRxTWFlJ4rn+MsgXrR7MDPY4jA==
+
+caniuse-lite@^1.0.30001291:
+  version "1.0.30001292"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001292.tgz#4a55f61c06abc9595965cfd77897dc7bc1cdc456"
+  integrity sha512-jnT4Tq0Q4ma+6nncYQVe7d73kmDmE9C3OGTx3MvW7lBM/eY1S1DZTMBON7dqV481RhNiS5OxD7k9JQvmDOTirw==
 
 capital-case@^1.0.3, capital-case@^1.0.4:
   version "1.0.4"
@@ -18577,14 +18582,14 @@ postcss-place@^7.0.2:
   dependencies:
     postcss-value-parser "^4.2.0"
 
-postcss-preset-env@7.0.2:
-  version "7.0.2"
-  resolved "https://registry.yarnpkg.com/postcss-preset-env/-/postcss-preset-env-7.0.2.tgz#f143d4aa2eb0f13a50f20bbcff8b3bb3413e7bc6"
-  integrity sha512-xgmkS+H2xhjPQWewnH4ViKBCHIZ15FfpldGZuBFaBIi/iipxHTLnBHKtkCp1L531SdNEPwo9md2psjOU1G77lw==
+postcss-preset-env@7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/postcss-preset-env/-/postcss-preset-env-7.1.0.tgz#bb91486e15aa30307292acfcea07e871f30714d5"
+  integrity sha512-YZI44uxVJQQu18TeHEoDtdLsjKLQpCpzt/4FAzadIcnNYwvKSQqvxaHE6uWobEWQrcfU42zIddMPUKgYQxZs8g==
   dependencies:
     autoprefixer "^10.4.0"
     browserslist "^4.19.1"
-    caniuse-lite "^1.0.30001287"
+    caniuse-lite "^1.0.30001291"
     css-blank-pseudo "^3.0.0"
     css-has-pseudo "^3.0.0"
     css-prefers-color-scheme "^6.0.0"
