@@ -78,7 +78,7 @@
     "eslint-plugin-jsdoc": "37.4.0",
     "eslint-plugin-jsx-a11y": "6.5.1",
     "eslint-plugin-prettier": "4.0.0",
-    "eslint-plugin-react": "7.27.1",
+    "eslint-plugin-react": "7.28.0",
     "eslint-plugin-react-hooks": "4.3.0",
     "jest": "27.4.5",
     "jest-watch-typeahead": "1.0.0",
