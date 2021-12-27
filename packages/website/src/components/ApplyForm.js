@@ -12,7 +12,7 @@ import React, { useState } from 'react';
 
 function ApplyForm() {
   const { withBaseUrl } = useBaseUrlUtils();
-  const [status, setStatus] = useState('stalled');
+  const [state, setState] = useState({ status: 'stalled', message: '' });
   const [url, setUrl] = useState('');
   const [email, setEmail] = useState('');
 
@@ -25,11 +25,11 @@ function ApplyForm() {
   const onSubmit = (event) => {
     event.preventDefault();
 
-    if (status === 'loading') {
+    if (state.status === 'loading') {
       return;
     }
 
-    setStatus('loading');
+    setState({ status: 'loading' });
 
     const applyForm = event.target;
     const method = applyForm.getAttribute('method');
@@ -49,42 +49,54 @@ function ApplyForm() {
       .then((response) => response.json())
       .then(({ success, message }) => {
         if (!success) {
-          return setStatus('failed');
+          return setState({
+            status: 'failed',
+            message: 'Unable to submit your request.',
+          });
         }
 
-        if (message === 'You already have a pending request.') {
-          return setStatus('duplicate');
-        }
-
-        return setStatus('succeed');
+        return setState({ status: 'succeed', message });
       })
-      .catch(() => setStatus('failed'));
+      .catch(() =>
+        setState({
+          status: 'failed',
+          message: 'Unable to submit your request.',
+        })
+      );
   };
 
-  if (status === 'succeed' || status === 'duplicate') {
+  if (state.status === 'succeed' && state.message) {
     return (
       <Card className="uil-m-auto uil-ta-center apply-form">
         <Heading1 className="apply-text">Thank you!</Heading1>
         <br />
 
-        <Text
-          className="uil-pv-8 uil-d-block apply-text"
-          aria-label="Request will be processed"
-        >
-          {status === 'succeed'
-            ? 'Your request will be processed by our team.'
-            : 'Your request have already been received by our team and is being processed.'}{' '}
-          We'll get back to you at <strong>{email}</strong> with the snippet
-          you'll need to integrate into{' '}
-          <InlineLink href={url}>{url}</InlineLink>.
-        </Text>
+        {state.message.startsWith('Your DocSearch') ? (
+          <Text
+            className="uil-pv-8 uil-d-block apply-text"
+            aria-label="Request has already been processed"
+          >
+            {state.message}
+          </Text>
+        ) : (
+          <>
+            <Text
+              className="uil-pv-8 uil-d-block apply-text"
+              aria-label="Request will be processed"
+            >
+              {state.message} We'll get back to you at <strong>{email}</strong>{' '}
+              with the snippet you'll need to integrate into{' '}
+              <InlineLink href={url}>{url}</InlineLink>.
+            </Text>
 
-        <Text aria-label="recommendations" className="apply-text">
-          Please be patient, in the meantime, you can implement{' '}
-          <InlineLink href={withBaseUrl('docs/tips')}>
-            our recommendations for building a great DocSearch experience.
-          </InlineLink>
-        </Text>
+            <Text aria-label="recommendations" className="apply-text">
+              Please be patient, in the meantime, you can implement{' '}
+              <InlineLink href={withBaseUrl('docs/tips')}>
+                our recommendations for building a great DocSearch experience.
+              </InlineLink>
+            </Text>
+          </>
+        )}
       </Card>
     );
   }
@@ -197,7 +209,7 @@ function ApplyForm() {
 
           <Button
             primary={true}
-            disabled={status === 'loading'}
+            disabled={state.status === 'loading'}
             className="uil-mt-16 uil-mb-16"
             tag="button"
             type="submit"
