@@ -225,6 +225,13 @@ function ApplyForm() {
             and protect your data
           </InlineLink>
         </Text>
+
+        <Text small={true} className="uil-ta-center">
+          <strong>
+            Only apply if you don't have a DocSearch application yet.
+          </strong>{' '}
+          If you have any issue, please contact us at support@algolia.com
+        </Text>
       </form>
     </Card>
   );
