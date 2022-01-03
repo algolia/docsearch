@@ -39,10 +39,10 @@
     "website:start": "yarn workspace @docsearch/website start --host 0.0.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.16.0",
-    "@babel/plugin-transform-react-jsx": "7.16.5",
-    "@babel/preset-env": "7.16.5",
-    "@babel/preset-typescript": "7.16.5",
+    "@babel/cli": "7.16.7",
+    "@babel/plugin-transform-react-jsx": "7.16.7",
+    "@babel/preset-env": "7.16.7",
+    "@babel/preset-typescript": "7.16.7",
     "@percy/cypress": "2.3.4",
     "@rollup/plugin-json": "4.1.0",
     "@rollup/plugin-node-resolve": "7.1.1",
@@ -91,7 +91,7 @@
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-filesize": "9.1.1",
-    "rollup-plugin-license": "2.6.0",
+    "rollup-plugin-license": "2.6.1",
     "rollup-plugin-terser": "7.0.2",
     "shipjs": "0.24.1",
     "start-server-and-test": "1.11.3",
