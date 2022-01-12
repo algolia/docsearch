@@ -209,15 +209,13 @@ function ApplyForm() {
 
           <Button
             primary={true}
-            // disabled={state.status === 'loading'}
-            disabled={true}
+            disabled={state.status === 'loading'}
             className="uil-mt-16 uil-mb-16"
             tag="button"
             type="submit"
             id="joinButton"
           >
-            Disabled for maintenance: ETA 01-12-2022 @ 10AM EST
-            {/* Join the program */}
+            Join the program
           </Button>
         </div>
 
