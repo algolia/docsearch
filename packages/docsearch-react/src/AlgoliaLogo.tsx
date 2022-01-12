@@ -10,9 +10,10 @@ type AlgoliaLogoProps = {
 
 export function AlgoliaLogo({ translations = {} }: AlgoliaLogoProps) {
   const { searchByText = 'Search by' } = translations;
+
   return (
     <a
-      href="https://www.algolia.com/docsearch"
+      href={`https://www.algolia.com/ref/docsearch/?utm_source=docsearch&utm_medium=link&utm_term=footer&utm_campaign=${window.location.hostname}`}
       target="_blank"
       rel="noopener noreferrer"
     >
