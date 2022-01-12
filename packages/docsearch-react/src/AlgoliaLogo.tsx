@@ -13,7 +13,7 @@ export function AlgoliaLogo({ translations = {} }: AlgoliaLogoProps) {
 
   return (
     <a
-      href={`https://www.algolia.com/ref/docsearch/?utm_source=docsearch&utm_medium=link&utm_term=footer&utm_campaign=${window.location.hostname}`}
+      href={`https://www.algolia.com/ref/docsearch/?utm_source=${window.location.hostname}&utm_medium=referral&utm_content=powered_by&utm_campaign=docsearch`}
       target="_blank"
       rel="noopener noreferrer"
     >
