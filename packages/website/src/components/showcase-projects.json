@@ -243,5 +243,10 @@
     "name": "Vite",
     "image": "img/logos/vite.svg",
     "href": "https://vitejs.dev/"
+  },
+  {
+    "name": "Inkline",
+    "image": "img/logos/inkline.svg",
+    "href": "https://inkline.io/"
   }
 ]
