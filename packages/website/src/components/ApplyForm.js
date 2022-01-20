@@ -15,12 +15,16 @@ function ApplyForm() {
   const [state, setState] = useState({ status: 'stalled', message: '' });
   const [url, setUrl] = useState('');
   const [email, setEmail] = useState('');
+  const [repo, setRepo] = useState('');
 
   const handleSetUrl = (event) => {
     setUrl(event.target.value);
   };
   const handleSetEmail = (event) => {
     setEmail(event.target.value);
+  };
+  const handleSetRepo = (event) => {
+    setRepo(event.target.value);
   };
   const onSubmit = (event) => {
     event.preventDefault();
@@ -149,6 +153,29 @@ function ApplyForm() {
         <Text small={true} className="uil-pv-8 uil-d-block apply-text">
           We'll send you the snippet you'll have to integrate into your website
           and grant access to your Algolia application.
+        </Text>
+
+        <LabelText
+          tag="label"
+          htmlFor="repoURL"
+          key="repoURL"
+          className="apply-text"
+        >
+          Repository URL
+          <Input
+            required={true}
+            id="repoURL"
+            type="repoURL"
+            name="repoURL"
+            aria-label="The URL of your project repository"
+            value={repo}
+            placeholder="https://github.com/algolia/docsearch | https://gitlab.com/gitlab-org/gitlab"
+            onChange={handleSetRepo}
+          />
+        </LabelText>
+
+        <Text small={true} className="uil-pv-8 uil-d-block apply-text">
+          We will use this link to determine if your project is open-source.
         </Text>
 
         <div className="uil-ph-32 uil-d-flex uil-fxd-column">
