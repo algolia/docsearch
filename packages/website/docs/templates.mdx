@@ -53,7 +53,7 @@ new Crawler({
         return helpers.docsearch({
           recordProps: {
             lvl0: {
-              selectors: '.navGroup > h3.collapsible',
+              selectors: '.navBreadcrumb h2 span',
               defaultValue: 'Blog',
             },
             lvl1: '.post h1',
@@ -80,7 +80,7 @@ new Crawler({
         return helpers.docsearch({
           recordProps: {
             lvl0: {
-              selectors: '.navGroup > h3.collapsible',
+              selectors: '.navBreadcrumb h2 span',
               defaultValue: 'Blog',
             },
             lvl1: '.post h1',
