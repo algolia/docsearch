@@ -6,6 +6,7 @@ export interface UseDocSearchKeyboardEventsProps {
   onClose: () => void;
   onInput?: (event: KeyboardEvent) => void;
   searchButtonRef?: React.RefObject<HTMLButtonElement>;
+  toggleKey: string;
 }
 
 function isEditingContent(event: KeyboardEvent): boolean {
@@ -26,6 +27,7 @@ export function useDocSearchKeyboardEvents({
   onClose,
   onInput,
   searchButtonRef,
+  toggleKey = 'k',
 }: UseDocSearchKeyboardEventsProps) {
   React.useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -37,9 +39,9 @@ export function useDocSearchKeyboardEvents({
         }
       }
       if (
-        (event.keyCode === 27 && isOpen) ||
-        // The `Cmd+K` shortcut both opens and closes the modal.
-        (event.key === 'k' && (event.metaKey || event.ctrlKey)) ||
+        (event.key === 'Escape' && isOpen) ||
+        // The `Cmd+toggleKey` shortcut both opens and closes the modal.
+        (event.key === toggleKey && (event.metaKey || event.ctrlKey)) ||
         // The `/` shortcut opens but doesn't close the modal because it's
         // a character.
         (!isEditingContent(event) && event.key === '/' && !isOpen)
@@ -69,5 +71,5 @@ export function useDocSearchKeyboardEvents({
     return () => {
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [isOpen, onOpen, onClose, onInput, searchButtonRef]);
+  }, [isOpen, onOpen, onClose, onInput, searchButtonRef, toggleKey]);
 }

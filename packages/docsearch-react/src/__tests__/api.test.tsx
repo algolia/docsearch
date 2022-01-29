@@ -5,6 +5,7 @@ import {
   screen,
   act,
 } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import '@testing-library/jest-dom';
@@ -25,6 +26,44 @@ describe('api', () => {
     render(<DocSearch />);
 
     expect(document.querySelector('.DocSearch')).toBeInTheDocument();
+  });
+
+  describe('toggleKey', () => {
+    it('opens and close the modal with the default shortcut', async () => {
+      render(<DocSearch />);
+
+      await waitFor(() => {
+        userEvent.keyboard('{meta}{k}');
+      });
+
+      expect(document.querySelector('.DocSearch-Modal')).toBeInTheDocument();
+
+      await waitFor(() => {
+        userEvent.keyboard('{meta}{k}');
+      });
+
+      expect(
+        document.querySelector('.DocSearch-Modal')
+      ).not.toBeInTheDocument();
+    });
+
+    it('overrides the default shortcut', async () => {
+      render(<DocSearch toggleKey="u" />);
+
+      await waitFor(() => {
+        userEvent.keyboard('{meta}{u}');
+      });
+
+      expect(document.querySelector('.DocSearch-Modal')).toBeInTheDocument();
+
+      await waitFor(() => {
+        userEvent.keyboard('{meta}{u}');
+      });
+
+      expect(
+        document.querySelector('.DocSearch-Modal')
+      ).not.toBeInTheDocument();
+    });
   });
 
   describe('translations', () => {
