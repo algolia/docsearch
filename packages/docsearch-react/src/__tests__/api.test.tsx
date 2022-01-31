@@ -16,6 +16,27 @@ function DocSearch(props: Partial<DocSearchProps>) {
   return <DocSearchComponent apiKey="foo" indexName="bar" {...props} />;
 }
 
+// mock empty response
+function noResultSearch(_queries: any, _requestOptions?: any): Promise<any> {
+  return new Promise((resolve) => {
+    resolve({
+      results: [
+        {
+          hits: [],
+          hitsPerPage: 0,
+          nbHits: 0,
+          nbPages: 0,
+          page: 0,
+          processingTimeMS: 0,
+          exhaustiveNbHits: true,
+          params: '',
+          query: '',
+        },
+      ],
+    });
+  });
+}
+
 describe('api', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
@@ -71,40 +92,23 @@ describe('api', () => {
     it('overrides the default DocSearchModal noResultsScreen text', async () => {
       render(
         <DocSearch
-          // mock empty response
           transformSearchClient={(searchClient) => {
             return {
               ...searchClient,
-              search: () => {
-                return new Promise((resolve) => {
-                  resolve({
-                    results: [
-                      {
-                        hits: [],
-                        hitsPerPage: 0,
-                        nbHits: 0,
-                        nbPages: 0,
-                        page: 0,
-                        processingTimeMS: 0,
-                        exhaustiveNbHits: true,
-                        params: '',
-                        query: '',
-                      },
-                    ],
-                  });
-                });
-              },
+              search: noResultSearch,
             };
           }}
           translations={{
             modal: {
               noResultsScreen: {
                 noResultsText: 'Pas de résultats pour',
-                openIssueText: 'Ouvrez une issue sur docsearch-configs',
-                openIssueLinkText: 'Lien du repo',
+                reportMissingResultsText:
+                  'Ouvrez une issue sur docsearch-configs',
+                reportMissingResultsLinkText: 'Lien du repo',
               },
             },
           }}
+          reportMissingResultsUrl={() => 'algolia.com'}
         />
       );
 
@@ -188,6 +192,70 @@ describe('api', () => {
       expect(screen.getByText('Fermer')).toBeInTheDocument();
       expect(screen.getByText('Naviguer')).toBeInTheDocument();
       expect(screen.getByText('Selectionner')).toBeInTheDocument();
+    });
+  });
+
+  describe('reportMissingResultsUrl', () => {
+    it('does not render the link to the repository by default', async () => {
+      render(
+        <DocSearch
+          transformSearchClient={(searchClient) => {
+            return {
+              ...searchClient,
+              search: noResultSearch,
+            };
+          }}
+        />
+      );
+
+      await act(async () => {
+        await waitFor(() => {
+          fireEvent.click(document.querySelector('.DocSearch-Button'));
+        });
+
+        fireEvent.input(document.querySelector('.DocSearch-Input'), {
+          target: { value: 'q' },
+        });
+      });
+
+      expect(screen.getByText(/No results for/)).toBeInTheDocument();
+      expect(
+        document.querySelector('.DocSearch-Help a')
+      ).not.toBeInTheDocument();
+    });
+
+    it('render the link to the repository', async () => {
+      render(
+        <DocSearch
+          transformSearchClient={(searchClient) => {
+            return {
+              ...searchClient,
+              search: noResultSearch,
+            };
+          }}
+          reportMissingResultsUrl={({ query }) =>
+            `https://github.com/algolia/docsearch/issues/new?title=${query}`
+          }
+        />
+      );
+
+      await act(async () => {
+        await waitFor(() => {
+          fireEvent.click(document.querySelector('.DocSearch-Button'));
+        });
+
+        fireEvent.input(document.querySelector('.DocSearch-Input'), {
+          target: { value: 'q' },
+        });
+      });
+
+      expect(screen.getByText(/No results for/)).toBeInTheDocument();
+
+      const link = document.querySelector('.DocSearch-Help a');
+      expect(link).toBeInTheDocument();
+      expect(link.getAttribute('href')).toBe(
+        'https://github.com/algolia/docsearch/issues/new?title=q'
+      );
     });
   });
 });

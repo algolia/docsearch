@@ -42,6 +42,7 @@ export interface DocSearchProps {
   initialQuery?: string;
   navigator?: AutocompleteOptions<InternalDocSearchHit>['navigator'];
   translations?: DocSearchTranslations;
+  reportMissingResultsUrl?: ({ query: string }) => string;
 }
 
 export function DocSearch(props: DocSearchProps) {
