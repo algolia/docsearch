@@ -173,9 +173,11 @@ const translations: DocSearchTranslations = {
 
 ## `reportMissingResultsUrl`
 
-> `type: string` | **optional**
+> `type: ({ query:string }) => string` | **optional**
 
-URL of your documentation repository.
+> example: ({ query }) => `https://github.com/algolia/docsearch/issues/new?title=${query}`
+
+Function to return the URL of your documentation repository.
 
 When provided, an informative message wrapped with your link will be displayed on no results searches. The default text can be changed using the [translations](#translations) property.
 
@@ -327,9 +329,11 @@ const translations: DocSearchTranslations = {
 
 ## `reportMissingResultsUrl`
 
-> `type: string` | **optional**
+> `type: ({ query:string }) => string` | **optional**
 
-URL of your documentation repository.
+> example: ({ query }) => `https://github.com/algolia/docsearch/issues/new?title=${query}`
+
+Function to return the URL of your documentation repository.
 
 When provided, an informative message wrapped with your link will be displayed on no results searches. The default text can be changed using the [translations](#translations) property.
 
