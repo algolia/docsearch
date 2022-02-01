@@ -108,7 +108,7 @@ describe('api', () => {
               },
             },
           }}
-          reportMissingResultsUrl={() => 'algolia.com'}
+          getMissingResultsUrl={() => 'algolia.com'}
         />
       );
 
@@ -195,7 +195,7 @@ describe('api', () => {
     });
   });
 
-  describe('reportMissingResultsUrl', () => {
+  describe('getMissingResultsUrl', () => {
     it('does not render the link to the repository by default', async () => {
       render(
         <DocSearch
@@ -233,7 +233,7 @@ describe('api', () => {
               search: noResultSearch,
             };
           }}
-          reportMissingResultsUrl={({ query }) =>
+          getMissingResultsUrl={({ query }) =>
             `https://github.com/algolia/docsearch/issues/new?title=${query}`
           }
         />

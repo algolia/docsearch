@@ -39,7 +39,7 @@ export interface ScreenStateProps<TItem extends BaseItem>
   disableUserPersonalization: boolean;
   resultsFooterComponent: DocSearchProps['resultsFooterComponent'];
   translations: ScreenStateTranslations;
-  reportMissingResultsUrl?: DocSearchProps['reportMissingResultsUrl'];
+  getMissingResultsUrl?: DocSearchProps['getMissingResultsUrl'];
 }
 
 export const ScreenState = React.memo(

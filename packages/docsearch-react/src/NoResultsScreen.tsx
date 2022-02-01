@@ -68,11 +68,11 @@ export function NoResultsScreen({
         </div>
       )}
 
-      {props.reportMissingResultsUrl && (
+      {props.getMissingResultsUrl && (
         <p className="DocSearch-Help">
           {`${reportMissingResultsText} `}
           <a
-            href={props.reportMissingResultsUrl({ query: props.state.query })}
+            href={props.getMissingResultsUrl({ query: props.state.query })}
             target="_blank"
             rel="noopener noreferrer"
           >
