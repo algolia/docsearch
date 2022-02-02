@@ -50,6 +50,7 @@ export function DocSearchModal({
   disableUserPersonalization = false,
   initialQuery: initialQueryFromProp = '',
   translations = {},
+  getMissingResultsUrl,
 }: DocSearchModalProps) {
   const {
     footer: footerTranslations,
@@ -429,6 +430,7 @@ export function DocSearchModal({
             favoriteSearches={favoriteSearches}
             inputRef={inputRef}
             translations={screenStateTranslations}
+            getMissingResultsUrl={getMissingResultsUrl}
             onItemClick={(item) => {
               saveRecentSearch(item);
               onClose();
