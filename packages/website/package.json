@@ -1,6 +1,6 @@
 {
   "name": "@docsearch/website",
-  "version": "3.0.0-alpha.42",
+  "version": "3.0.0-alpha.50",
   "private": true,
   "homepage": "https://docsearch.algolia.com/",
   "scripts": {
@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@algolia/ui-library": "4.0.0-beta.71",
-    "@docsearch/react": "3.0.0-alpha.42",
+    "@docsearch/react": "3.0.0-alpha.50",
     "@docusaurus/core": "2.0.0-beta.14",
     "@docusaurus/preset-classic": "2.0.0-beta.14",
     "@mdx-js/react": "1.6.22",
