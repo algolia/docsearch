@@ -1,3 +1,25 @@
+# [3.0.0-alpha.50](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.42...v3.0.0-alpha.50) (2022-02-03)
+
+
+### Bug Fixes
+
+* **deps:** update algoliasearch-autocomplete monorepo to v1.5.2 ([#1225](https://github.com/algolia/docsearch/issues/1225)) ([aa309f5](https://github.com/algolia/docsearch/commit/aa309f54afddaca54b38f571e367c2ad2830fb3e))
+* **deps:** update dependency @svgr/webpack to v6 ([#1219](https://github.com/algolia/docsearch/issues/1219)) ([52d6927](https://github.com/algolia/docsearch/commit/52d6927c7e4c840f6201ce64793a811a2e17ff2e))
+* **deps:** update dependency postcss to v8.4.5 ([#1205](https://github.com/algolia/docsearch/issues/1205)) ([d348589](https://github.com/algolia/docsearch/commit/d34858949e7f6dd0e2ff3af68f459e00a1d6a337))
+* **deps:** update dependency postcss-preset-env to v7.0.2 ([#1228](https://github.com/algolia/docsearch/issues/1228)) ([1a7093b](https://github.com/algolia/docsearch/commit/1a7093b93ea03c20f1f1efaff2a450ce6aa007af))
+* **deps:** update dependency postcss-preset-env to v7.1.0 ([#1240](https://github.com/algolia/docsearch/issues/1240)) ([cbb14eb](https://github.com/algolia/docsearch/commit/cbb14eb11451c291299ceee38e39aae527196232))
+* **deps:** update dependency postcss-preset-env to v7.2.0 ([#1252](https://github.com/algolia/docsearch/issues/1252)) ([b3288fe](https://github.com/algolia/docsearch/commit/b3288feb31138bd61a0cc0953e6dc281870eac58))
+* **deps:** update docusaurus monorepo to v2.0.0-beta.13 ([#1226](https://github.com/algolia/docsearch/issues/1226)) ([02025e5](https://github.com/algolia/docsearch/commit/02025e5a2c0477eb39676a73f7cf2e17b761594b))
+* **deps:** update docusaurus monorepo to v2.0.0-beta.14 ([#1238](https://github.com/algolia/docsearch/issues/1238)) ([77f785d](https://github.com/algolia/docsearch/commit/77f785d66de0a9527b5a572855e3d8e938b0b7d4))
+* **logo:** empty utm campaign ([#1259](https://github.com/algolia/docsearch/issues/1259)) ([30ee161](https://github.com/algolia/docsearch/commit/30ee161921c61bf994a6be2da212fd999171fe47))
+
+
+### Features
+
+* **noResults:** allow providing URL to report missing results ([#1289](https://github.com/algolia/docsearch/issues/1289)) ([2c1fe7c](https://github.com/algolia/docsearch/commit/2c1fe7c77c5d5ab28875aa86c9a8ef3b4ffdb254))
+
+
+
 # [v3.0.0-alpha.42](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.41...v3.0.0-alpha.42) (2021-12-03)
 
 ### Bug Fixes
