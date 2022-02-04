@@ -16,13 +16,13 @@ For questions related to the DocSearch program, please see our [DocSearch progra
 
 ## How often will you crawl my website?
 
-Crawls are scheduled at a random time once a week, you are also able to trigger new ones directly from [the Crawler interface][2]
+Crawls are scheduled at a random time once a week, you are also able to trigger new ones directly from [the Crawler interface][2]. You can also configure your schedule [from the config file](https://www.algolia.com/doc/tools/crawler/apis/configuration/schedule/)
 
 ## Why do I have duplicate content in my results?
 
 This can happen when you have more than one URL pointing to the same content, for example with `./docs`, `./docs/` and `./docs/index.html`.
 
-We recommend configuring canonical URLs on your website, you can read more on the ["Consolidate duplicate URLs" guide by Google](https://developers.google.com/search/docs/advanced/crawling/consolidate-duplicate-urls) and use our [`ignoreCanonicalTo`](https://www.algolia.com/doc/tools/crawler/apis/configuration/ignore-canonical-to/) option directly in your crawler config.
+We recommend configuring canonical URLs on your website, you can read more on the ["Consolidate duplicate URLs" guide by Google](https://developers.google.com/search/docs/advanced/crawling/consolidate-duplicate-urls).
 
 Ultimately, it is possible to set set the [`exclusionPatterns`](https://www.algolia.com/doc/tools/crawler/apis/configuration/exclusion-patterns/) to all the patterns you want to exclude.
 
