@@ -1,5 +1,5 @@
 import { Hero, Button, InlineLink } from '@algolia/ui-library';
-import { useThemeContext } from '@docusaurus/theme-common';
+import { useColorMode } from '@docusaurus/theme-common';
 import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
 import React from 'react';
 
@@ -8,7 +8,7 @@ import showcaseProjects from './showcase-projects.json';
 
 function Home() {
   const { withBaseUrl } = useBaseUrlUtils();
-  const { isDarkTheme } = useThemeContext();
+  const { isDarkTheme } = useColorMode();
 
   React.useEffect(() => {
     if (isDarkTheme) {
