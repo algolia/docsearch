@@ -1,6 +1,6 @@
 import { Hero, Button, InlineLink } from '@algolia/ui-library';
+import { useThemeContext } from '@docusaurus/theme-common';
 import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
-import useThemeContext from '@theme/hooks/useThemeContext';
 import React from 'react';
 
 import DocSearchLogo from './DocSearchLogo';
