@@ -36,13 +36,13 @@ new Crawler({
               selectors: '',
               defaultValue: 'Documentation',
             },
-            lvl1: 'header h1',
-            lvl2: 'article h2',
-            lvl3: 'article h3',
-            lvl4: 'article h4',
-            lvl5: 'article h5',
-            lvl6: 'article h6',
-            content: 'article p, article li',
+            lvl1: ['header h1', 'article h1', 'main h1', 'h1', 'head > title'],
+            lvl2: ['article h2', 'main h2', 'h2'],
+            lvl3: ['article h3', 'main h3', 'h3'],
+            lvl4: ['article h4', 'main h4', 'h4'],
+            lvl5: ['article h5', 'main h5', 'h5'],
+            lvl6: ['article h6', 'main h6', 'h6'],
+            content: ['article p, article li', 'main p, main li', 'p, li'],
           },
         });
       },
@@ -50,7 +50,7 @@ new Crawler({
   ],
   initialIndexSettings: {
     YOUR_INDEX_NAME: {
-      attributesForFaceting: ['type'],
+      attributesForFaceting: ['type', 'lang'],
       attributesToRetrieve: [
         'hierarchy',
         'content',

@@ -18,8 +18,8 @@
   "dependencies": {
     "@algolia/ui-library": "4.0.0-beta.71",
     "@docsearch/react": "3.0.0-alpha.50",
-    "@docusaurus/core": "2.0.0-beta.14",
-    "@docusaurus/preset-classic": "2.0.0-beta.14",
+    "@docusaurus/core": "2.0.0-beta.15",
+    "@docusaurus/preset-classic": "2.0.0-beta.15",
     "@mdx-js/react": "1.6.22",
     "clsx": "1.1.1",
     "file-loader": "6.2.0",
