@@ -174,10 +174,14 @@ describe('api', () => {
           translations={{
             modal: {
               footer: {
-                closeText: 'Fermer',
-                navigateText: 'Naviguer',
+                closeText: 'Pour fermer',
+                closeKeyAriaLabel: "Touche d'échappement",
+                navigateText: 'Pour naviguer',
+                navigateUpKeyAriaLabel: 'Flèche vers le haut',
+                navigateDownKeyAriaLabel: 'Flèche le bas',
                 searchByText: 'Recherche par',
-                selectText: 'Selectionner',
+                selectText: 'Pour selectionner',
+                selectKeyAriaLabel: "Touche d'entrée",
               },
             },
           }}
@@ -189,9 +193,29 @@ describe('api', () => {
       });
 
       expect(screen.getByText('Recherche par')).toBeInTheDocument();
-      expect(screen.getByText('Fermer')).toBeInTheDocument();
-      expect(screen.getByText('Naviguer')).toBeInTheDocument();
-      expect(screen.getByText('Selectionner')).toBeInTheDocument();
+      expect(screen.getByText('Pour fermer')).toBeInTheDocument();
+      expect(screen.getByText('Pour naviguer')).toBeInTheDocument();
+      expect(screen.getByText('Pour selectionner')).toBeInTheDocument();
+      expect(
+        document.querySelector(
+          '.DocSearch-Commands-Key > svg[aria-label="Touche d\'échappement"]'
+        )
+      ).toBeInTheDocument();
+      expect(
+        document.querySelector(
+          '.DocSearch-Commands-Key > svg[aria-label="Flèche vers le haut"]'
+        )
+      ).toBeInTheDocument();
+      expect(
+        document.querySelector(
+          '.DocSearch-Commands-Key > svg[aria-label="Flèche le bas"]'
+        )
+      ).toBeInTheDocument();
+      expect(
+        document.querySelector(
+          '.DocSearch-Commands-Key > svg[aria-label="Touche d\'entrée"]'
+        )
+      ).toBeInTheDocument();
     });
   });
 
