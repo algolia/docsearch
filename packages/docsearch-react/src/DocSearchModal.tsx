@@ -35,7 +35,7 @@ export type DocSearchModalProps = DocSearchProps & {
 };
 
 export function DocSearchModal({
-  appId = 'BH4D9OD16A',
+  appId,
   apiKey,
   indexName,
   placeholder = 'Search docs',

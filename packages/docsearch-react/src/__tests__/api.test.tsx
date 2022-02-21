@@ -13,7 +13,9 @@ import { DocSearch as DocSearchComponent } from '../DocSearch';
 import type { DocSearchProps } from '../DocSearch';
 
 function DocSearch(props: Partial<DocSearchProps>) {
-  return <DocSearchComponent apiKey="foo" indexName="bar" {...props} />;
+  return (
+    <DocSearchComponent appId="woo" apiKey="foo" indexName="bar" {...props} />
+  );
 }
 
 // mock empty response

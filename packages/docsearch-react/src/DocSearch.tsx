@@ -24,7 +24,7 @@ export type DocSearchTranslations = Partial<{
 }>;
 
 export interface DocSearchProps {
-  appId?: string;
+  appId: string;
   apiKey: string;
   indexName: string;
   placeholder?: string;
