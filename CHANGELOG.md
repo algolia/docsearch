@@ -1,11 +1,8 @@
 # [3.0.0](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.50...v3.0.0) (2022-02-21)
 
+### Breaking Change
 
-### Features
-
-* **v3:** require appId ([#1299](https://github.com/algolia/docsearch/issues/1299)) ([80630cb](https://github.com/algolia/docsearch/commit/80630cb36dcfe486eff4f7b859deef5431775045))
-
-
+- **v3:** require appId ([#1299](https://github.com/algolia/docsearch/issues/1299)) ([80630cb](https://github.com/algolia/docsearch/commit/80630cb36dcfe486eff4f7b859deef5431775045))
 
 # [3.0.0-alpha.50](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.42...v3.0.0-alpha.50) (2022-02-03)
 
