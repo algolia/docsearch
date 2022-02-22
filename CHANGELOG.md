@@ -1,3 +1,13 @@
+# [3.0.0](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.50...v3.0.0) (2022-02-22)
+
+### Breaking Change
+
+- **v3:** require appId ([#1299](https://github.com/algolia/docsearch/issues/1299)) ([80630cb](https://github.com/algolia/docsearch/commit/80630cb36dcfe486eff4f7b859deef5431775045))
+
+### Bug Fixes
+
+- **footer:** make SVG accessible ([#1306](https://github.com/algolia/docsearch/issues/1306)) ([59a3ebf](https://github.com/algolia/docsearch/commit/59a3ebf5ecfca951da5139faa08812d450fab1e0))
+
 # [3.0.0-alpha.50](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.42...v3.0.0-alpha.50) (2022-02-03)
 
 ### Bug Fixes
