@@ -24,7 +24,7 @@ interface CommandIconProps {
 
 function CommandIcon(props: CommandIconProps) {
   return (
-    <svg width="15" height="15" aria-label={props.ariaLabel}>
+    <svg width="15" height="15" aria-label={props.ariaLabel} role="img">
       <g
         fill="none"
         stroke="currentColor"
