@@ -1,44 +1,33 @@
-[![DocSearch][1]][8]
+<div align="center">
 
-The easiest way to add search to your documentation. For free.
+[![DocSearch](.github/logo.svg)](https://docsearch.algolia.com)
 
-[![npm version][2]](https://npmjs.org/package/docsearch.js)
-[![build][3]](https://travis-ci.org/algolia/docsearch)
-[![coverage][4]](https://coveralls.io/github/algolia/docsearch)
-[![License][5]](./LICENSE)
-[![Downloads][6]](https://npm-stat.com/charts.html?package=docsearch.js)
-[![jsDelivr Hits][7]](https://www.jsdelivr.com/package/npm/docsearch.js)
+The easiest way to add search to your documentation – for free.
 
-DocSearch will crawl your documentation website, push its content to an Algolia
-index, and allow you to add a dropdown search menu for your users to find
-relevant content in no time.
+[![Netlify Status](https://api.netlify.com/api/v1/badges/30eacc09-d4b2-4a53-879b-04d40aaea454/deploy-status)](https://app.netlify.com/sites/docsearch/deploys) [![npm version](https://img.shields.io/npm/v/@docsearch/js.svg?style=flat-square)](https://www.npmjs.com/package/@docsearch/js/v/alpha) [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](./LICENSE)
 
-Check out our [website][8] for a complete explanation and documentation.
+<p align="center">
+  <strong>
+  <a href="https://docsearch.algolia.com">Documentation</a> •
+  <a href="https://codesandbox.io/s/docsearchjs-v3-playground-z9oxj">JavaScript Playground</a> •
+  <a href="https://codesandbox.io/s/docsearch-react-v3-playground-619yg">React Playground</a>
+  </strong>
+</p>
 
-[![Bootstrap demo][9]][8]
+</div>
 
-## Related projects
+---
 
-DocSearch is made of 4 repositories:
+DocSearch crawls your documentation, pushes the content to an Algolia index and provides a dropdown search experience on your website.
 
-- [algolia/docsearch][10] contains the `docsearch.js` code source 
-- [algolia/docsearch-website](https://github.com/algolia/docsearch-website) contains the
-  documentation website.
-- [algolia/docsearch-configs][11] contains the JSON files representing all the
-  configs for all the documentations DocSearch is powering
-- [algolia/docsearch-scraper][12] contains the crawler we use to extract data
-  from your documentation. The code is open-source and you can run it from
-  a Docker image
+## Preview
 
-[1]: ./.github/docsearch-logo.svg
-[2]: https://img.shields.io/npm/v/docsearch.js.svg?style=flat-square
-[3]: https://img.shields.io/travis/algolia/docsearch/master.svg?style=flat-square
-[4]: https://img.shields.io/coveralls/algolia/docsearch/master.svg?style=flat-square
-[5]: https://img.shields.io/badge/license-MIT-green.svg?style=flat-square
-[6]: https://img.shields.io/npm/dm/docsearch.js.svg?style=flat-square
-[7]: https://data.jsdelivr.com/v1/package/npm/docsearch.js/badge
-[8]: https://docsearch.algolia.com/
-[9]: ./.github/demo.gif
-[10]: https://github.com/algolia/docsearch
-[11]: https://github.com/algolia/docsearch-configs
-[12]: https://github.com/algolia/docsearch-scraper
+![Bootstrap demo](./.github/demo.gif)
+
+## Usage
+
+> Don't have your Algolia credentials yet? [Apply to DocSearch](https://docsearch.algolia.com/apply)!
+
+This version of DocSearch is deprecated and no longer maintained, but you can still [browse the documentation](https://docsearch.algolia.com/docs/legacy/dropdown).
+
+We recommend everyone to [upgrade to DocSearch v3](https://docsearch.algolia.com/docs/DocSearch-v3) in order to receive support for their UI and the latest features!
