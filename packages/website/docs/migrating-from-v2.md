@@ -2,7 +2,7 @@
 title: Migrating from DocSearch v2
 ---
 
-This page lists the differences between the [DocSearch v2][4] and [DocSearch v3][1] API, you can also take a look at [the exhaustive `API reference` list](/docs/api) and [the `Getting started` guide][1].
+This page lists the differences between the [DocSearch v2](/docs/legacy/dropdown) and [DocSearch v3](/docs/DocSearch-v3) API, you can also take a look at [the exhaustive `API reference` list](/docs/api) and [the `Getting started` guide](/docs/DocSearch-v3).
 
 ```diff
 docsearch({
@@ -22,8 +22,3 @@ docsearch({
 + searchParameters: {},
 });
 ```
-
-[1]: /docs/DocSearch-v3
-[2]: https://github.com/algolia/docsearch/
-[3]: https://github.com/algolia/docsearch/tree/master
-[4]: /docs/legacy/dropdown
