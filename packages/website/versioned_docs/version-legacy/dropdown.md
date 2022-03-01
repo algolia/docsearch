@@ -4,12 +4,6 @@ title: Dropdown Search-UI
 
 Once your Algolia DocSearch index is ready, set up, and filled with the right data, you will need to integrate our dedicated Search-UI. To add the dropdown of results below your search input, you'll have to include our DocSearch library into your website as per the following example.
 
-:::caution
-
-The following snippets are for **[DocSearch (v2)](https://github.com/algolia/docsearch/tree/master)**. We recommend using the latest version: **[DocSearch v3](/docs/DocSearch-v3)**.
-
-:::
-
 ```html
 <!-- Before the closing </head> -->
 <link

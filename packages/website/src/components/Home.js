@@ -413,8 +413,12 @@ function Home() {
 
               <div className="mt-10 -mx-4 lg:mt-0 uil-ta-center">
                 <img
-                  className="relative mx-auto"
-                  src={withBaseUrl('img/assets/docsearch-shadow.png')}
+                  className="relative mx-auto rounded-lg shadow-lg image-rendering-crisp"
+                  src={withBaseUrl(
+                    `img/assets/${
+                      isDarkTheme ? 'docsearch-shadow-dark' : 'docsearch-shadow'
+                    }.png`
+                  )}
                   alt="docsearch-modal"
                 />
               </div>
@@ -662,7 +666,7 @@ function Home() {
               </p>
               <div className="pt-12 items-center justify-center flex">
                 <img
-                  className="w-full max-w-4xl"
+                  className="w-full max-w-4xl image-rendering-pixel"
                   src={withBaseUrl('img/assets/keyboard.png')}
                   alt="keyboard-shortcuts"
                 />

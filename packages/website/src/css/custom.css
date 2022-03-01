@@ -159,6 +159,18 @@ html[data-theme='dark'] .header-github-link:before {
     no-repeat;
 }
 
+/* Images */
+.image-rendering-crisp {
+  image-rendering: crisp-edges;
+
+  /* alias for google chrome */
+  image-rendering: -webkit-optimize-contrast;
+}
+
+.image-rendering-pixel {
+  image-rendering: pixelated;
+}
+
 /* Tailwindcss */
 
 #tailwind dd,
