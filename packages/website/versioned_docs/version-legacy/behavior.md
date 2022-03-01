@@ -5,12 +5,6 @@ sidebar_label: Behavior
 
 :::caution
 
-The following snippets are for **[DocSearch (v2)](https://github.com/algolia/docsearch/tree/master)**. We recommend using the latest version: **[DocSearch v3](/docs/DocSearch-v3)**.
-
-:::
-
-:::caution
-
 The following references to **[Autocomplete.js](https://github.com/algolia/autocomplete/tree/master)** are outdated. If you would like to try the latest version, please visit the **[Autocomplete documentation](https://www.algolia.com/doc/ui-libraries/autocomplete/introduction/what-is-autocomplete/)**
 
 :::

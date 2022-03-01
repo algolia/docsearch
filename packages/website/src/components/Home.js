@@ -413,8 +413,12 @@ function Home() {
 
               <div className="mt-10 -mx-4 lg:mt-0 uil-ta-center">
                 <img
-                  className="relative mx-auto"
-                  src={withBaseUrl('img/assets/docsearch-shadow.png')}
+                  className="relative mx-auto rounded-lg shadow-lg"
+                  src={withBaseUrl(
+                    `img/assets/${
+                      isDarkTheme ? 'docsearch-shadow-dark' : 'docsearch-shadow'
+                    }.png`
+                  )}
                   alt="docsearch-modal"
                 />
               </div>
