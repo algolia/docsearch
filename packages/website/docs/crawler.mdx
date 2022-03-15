@@ -1,0 +1,97 @@
+---
+title: DocSearch x Algolia Crawler
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+If you're not finding the answer to your question on this website, this page will help you. If you're still unsure, don't hesitate to send [your question to us][1] directly.
+
+You can also read our [Crawler FAQ](https://www.algolia.com/doc/tools/crawler/troubleshooting/faq), to understand how it behaves:
+
+- [One of my pages was not crawled](https://www.algolia.com/doc/tools/crawler/troubleshooting/faq/#one-of-my-pages-was-not-crawled)
+- [Why are my pages skipped?](https://www.algolia.com/doc/tools/crawler/troubleshooting/faq/#when-are-pages-skipped-or-ignored)
+
+For questions related to the DocSearch program, please see our [DocSearch program FAQ](/docs/DocSearch-program).
+
+## How often will you crawl my website?
+
+Crawls are scheduled at a random time once a week. You can [configure this schedule from the config file](https://www.algolia.com/doc/tools/crawler/apis/configuration/schedule/) or trigger one manually from [the Crawler interface][2].
+
+## Why do I have duplicate content in my results?
+
+This can happen when you have more than one URL pointing to the same content, for example with `./docs`, `./docs/` and `./docs/index.html`.
+
+We recommend configuring canonical URLs on your website, you can read more on the ["Consolidate duplicate URLs" guide by Google](https://developers.google.com/search/docs/advanced/crawling/consolidate-duplicate-urls).
+
+Ultimately, it is possible to set set the [`exclusionPatterns`](https://www.algolia.com/doc/tools/crawler/apis/configuration/exclusion-patterns/) to all the patterns you want to exclude.
+
+## Are the [`docsearch-scraper`](https://github.com/algolia/docsearch-scraper) and [`docsearch-configs`](https://github.com/algolia/docsearch-configs) repository still maintained?
+
+We've deprecated our legacy infrastructure, but you can still use it to [run your own instance](/docs/legacy/run-your-own) and plug it to [DocSearch v3](/docs/DocSearch-v3)!
+
+## Migration seems to have started, but I don't have received any emails
+
+All of the indices from the [Legacy infrastructure](/docs/legacy/required-configuration) have been migrated, please search for emails from `docsearch@algolia.com`.
+
+It is also possible that you were not part of the members of the previous index, don't hesitate to [contact our support team](mailto:support@algolia.com)
+
+## What do I need to do to migrate?
+
+All the steps are detailed in the email you've received, but in order to use the new infrastructure you need to:
+
+- Join the Algolia application with the invite included in the email
+- Update your frontend integration with the credentials received in the email.
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', },
+    { label: 'React', value: 'react', }
+  ]
+}>
+<TabItem value="js">
+
+```js app.js
+docsearch({
+  container: '#docsearch',
+  appId: 'YOUR_NEW_ALGOLIA_APP_ID',
+  apiKey: 'YOUR_NEW_ALGOLIA_SEARCH_API_KEY',
+  indexName: 'YOUR_INDEX_NAME', // it does not change
+});
+```
+
+</TabItem>
+
+<TabItem value="react">
+
+```jsx App.js
+<DocSearch
+  appId="YOUR_NEW_ALGOLIA_APP_ID"
+  apiKey="YOUR_NEW_ALGOLIA_SEARCH_API_KEY"
+  indexName="YOUR_INDEX_NAME" // it does not change
+/>
+```
+
+</TabItem>
+
+</Tabs>
+
+## What should I do with my legacy config and credentials?
+
+You can forget about them, we will do the cleaning once all of our users have migrated to the new infrastructure!
+
+You should use [the dedicated web interface][2] to make any changes to your index.
+
+## Why do I see two Algolia apps in my dashboard?
+
+We did not remove access to the legacy DocSearch application (`BH4D9OD16A`) to give you the time to get familiar with our new infrastructure. `BH4D9OD16A` will remain available until the migration has been completed for all the DocSearch users.
+
+## Links related to the migration
+
+- [Docusaurus blog post](https://docusaurus.io/blog/2021/11/21/algolia-docsearch-migration)
+- [Algolia Dev chat 11-23-2021](https://www.youtube.com/watch?v=htsjpojpKtc&t=2404s)
+
+[1]: mailto:docsearch@algolia.com
+[2]: https://crawler.algolia.com/

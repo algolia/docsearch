@@ -4,6 +4,7 @@ title: API Reference
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 :::info
 
@@ -121,7 +122,7 @@ Learn more on the [Navigator API][11] documentation.
 
 > `type: Partial<DocSearchTranslations>` | `default: docSearchTranslations` | **optional**
 
-Allow translations of any raw text present in the DocSearch button or modal components.
+Allow translations of any raw text and aria-labels present in the DocSearch button or modal components.
 
 <details><summary>docSearchTranslations</summary>
 <div>
@@ -153,15 +154,19 @@ const translations: DocSearchTranslations = {
     },
     footer: {
       selectText: 'to select',
+      selectKeyAriaLabel: 'Enter key',
       navigateText: 'to navigate',
+      navigateUpKeyAriaLabel: 'Arrow up',
+      navigateDownKeyAriaLabel: 'Arrow down',
       closeText: 'to close',
+      closeKeyAriaLabel: 'Escape key',
       searchByText: 'Search by',
     },
     noResultsScreen: {
       noResultsText: 'No results for',
       suggestedQueryText: 'Try searching for',
-      openIssueText: 'Believe this query should return results?',
-      openIssueLinkText: 'Let us know',
+      reportMissingResultsText: 'Believe this query should return results?',
+      reportMissingResultsLinkText: 'Let us know.',
     },
   },
 };
@@ -169,6 +174,23 @@ const translations: DocSearchTranslations = {
 
 </div>
 </details>
+
+## `getMissingResultsUrl`
+
+> `type: ({ query: string }) => string` | **optional**
+
+> example: ({ query }) => `https://github.com/algolia/docsearch/issues/new?title=${query}`
+
+Function to return the URL of your documentation repository.
+
+When provided, an informative message wrapped with your link will be displayed on no results searches. The default text can be changed using the [translations](#translations) property.
+
+<div className="uil-ta-center">
+  <img
+    src={useBaseUrl('img/assets/noResultsScreen.png')}
+    alt="No results screen with informative message"
+  />
+</div>
 
 </TabItem>
 
@@ -260,7 +282,7 @@ Learn more on the [Navigator API][11] documentation.
 
 > `type: Partial<DocSearchTranslations>` | `default: docSearchTranslations` | **optional**
 
-Allow translations of any raw text present in the DocSearch button or modal components.
+Allow translations of any raw text and aria-labels present in the DocSearch button or modal components.
 
 <details><summary>docSearchTranslations</summary>
 <div>
@@ -292,15 +314,19 @@ const translations: DocSearchTranslations = {
     },
     footer: {
       selectText: 'to select',
+      selectKeyAriaLabel: 'Enter key',
       navigateText: 'to navigate',
+      navigateUpKeyAriaLabel: 'Arrow up',
+      navigateDownKeyAriaLabel: 'Arrow down',
       closeText: 'to close',
+      closeKeyAriaLabel: 'Escape key',
       searchByText: 'Search by',
     },
     noResultsScreen: {
       noResultsText: 'No results for',
       suggestedQueryText: 'Try searching for',
-      openIssueText: 'Believe this query should return results?',
-      openIssueLinkText: 'Let us know',
+      reportMissingResultsText: 'Believe this query should return results?',
+      reportMissingResultsLinkText: 'Let us know.',
     },
   },
 };
@@ -308,6 +334,23 @@ const translations: DocSearchTranslations = {
 
 </div>
 </details>
+
+## `getMissingResultsUrl`
+
+> `type: ({ query: string }) => string` | **optional**
+
+> example: ({ query }) => `https://github.com/algolia/docsearch/issues/new?title=${query}`
+
+Function to return the URL of your documentation repository.
+
+When provided, an informative message wrapped with your link will be displayed on no results searches. The default text can be changed using the [translations](#translations) property.
+
+<div className="uil-ta-center">
+  <img
+    src={useBaseUrl('img/assets/noResultsScreen.png')}
+    alt="No results screen with informative message"
+  />
+</div>
 
 </TabItem>
 

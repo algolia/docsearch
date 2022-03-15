@@ -13,7 +13,30 @@ import { DocSearch as DocSearchComponent } from '../DocSearch';
 import type { DocSearchProps } from '../DocSearch';
 
 function DocSearch(props: Partial<DocSearchProps>) {
-  return <DocSearchComponent apiKey="foo" indexName="bar" {...props} />;
+  return (
+    <DocSearchComponent appId="woo" apiKey="foo" indexName="bar" {...props} />
+  );
+}
+
+// mock empty response
+function noResultSearch(_queries: any, _requestOptions?: any): Promise<any> {
+  return new Promise((resolve) => {
+    resolve({
+      results: [
+        {
+          hits: [],
+          hitsPerPage: 0,
+          nbHits: 0,
+          nbPages: 0,
+          page: 0,
+          processingTimeMS: 0,
+          exhaustiveNbHits: true,
+          params: '',
+          query: '',
+        },
+      ],
+    });
+  });
 }
 
 describe('api', () => {
@@ -71,40 +94,23 @@ describe('api', () => {
     it('overrides the default DocSearchModal noResultsScreen text', async () => {
       render(
         <DocSearch
-          // mock empty response
           transformSearchClient={(searchClient) => {
             return {
               ...searchClient,
-              search: () => {
-                return new Promise((resolve) => {
-                  resolve({
-                    results: [
-                      {
-                        hits: [],
-                        hitsPerPage: 0,
-                        nbHits: 0,
-                        nbPages: 0,
-                        page: 0,
-                        processingTimeMS: 0,
-                        exhaustiveNbHits: true,
-                        params: '',
-                        query: '',
-                      },
-                    ],
-                  });
-                });
-              },
+              search: noResultSearch,
             };
           }}
           translations={{
             modal: {
               noResultsScreen: {
                 noResultsText: 'Pas de résultats pour',
-                openIssueText: 'Ouvrez une issue sur docsearch-configs',
-                openIssueLinkText: 'Lien du repo',
+                reportMissingResultsText:
+                  'Ouvrez une issue sur docsearch-configs',
+                reportMissingResultsLinkText: 'Lien du repo',
               },
             },
           }}
+          getMissingResultsUrl={() => 'algolia.com'}
         />
       );
 
@@ -170,10 +176,14 @@ describe('api', () => {
           translations={{
             modal: {
               footer: {
-                closeText: 'Fermer',
-                navigateText: 'Naviguer',
+                closeText: 'Pour fermer',
+                closeKeyAriaLabel: "Touche d'échappement",
+                navigateText: 'Pour naviguer',
+                navigateUpKeyAriaLabel: 'Flèche vers le haut',
+                navigateDownKeyAriaLabel: 'Flèche le bas',
                 searchByText: 'Recherche par',
-                selectText: 'Selectionner',
+                selectText: 'Pour selectionner',
+                selectKeyAriaLabel: "Touche d'entrée",
               },
             },
           }}
@@ -185,9 +195,93 @@ describe('api', () => {
       });
 
       expect(screen.getByText('Recherche par')).toBeInTheDocument();
-      expect(screen.getByText('Fermer')).toBeInTheDocument();
-      expect(screen.getByText('Naviguer')).toBeInTheDocument();
-      expect(screen.getByText('Selectionner')).toBeInTheDocument();
+      expect(screen.getByText('Pour fermer')).toBeInTheDocument();
+      expect(screen.getByText('Pour naviguer')).toBeInTheDocument();
+      expect(screen.getByText('Pour selectionner')).toBeInTheDocument();
+      expect(
+        document.querySelector(
+          '.DocSearch-Commands-Key > svg[aria-label="Touche d\'échappement"]'
+        )
+      ).toBeInTheDocument();
+      expect(
+        document.querySelector(
+          '.DocSearch-Commands-Key > svg[aria-label="Flèche vers le haut"]'
+        )
+      ).toBeInTheDocument();
+      expect(
+        document.querySelector(
+          '.DocSearch-Commands-Key > svg[aria-label="Flèche le bas"]'
+        )
+      ).toBeInTheDocument();
+      expect(
+        document.querySelector(
+          '.DocSearch-Commands-Key > svg[aria-label="Touche d\'entrée"]'
+        )
+      ).toBeInTheDocument();
+    });
+  });
+
+  describe('getMissingResultsUrl', () => {
+    it('does not render the link to the repository by default', async () => {
+      render(
+        <DocSearch
+          transformSearchClient={(searchClient) => {
+            return {
+              ...searchClient,
+              search: noResultSearch,
+            };
+          }}
+        />
+      );
+
+      await act(async () => {
+        await waitFor(() => {
+          fireEvent.click(document.querySelector('.DocSearch-Button'));
+        });
+
+        fireEvent.input(document.querySelector('.DocSearch-Input'), {
+          target: { value: 'q' },
+        });
+      });
+
+      expect(screen.getByText(/No results for/)).toBeInTheDocument();
+      expect(
+        document.querySelector('.DocSearch-Help a')
+      ).not.toBeInTheDocument();
+    });
+
+    it('render the link to the repository', async () => {
+      render(
+        <DocSearch
+          transformSearchClient={(searchClient) => {
+            return {
+              ...searchClient,
+              search: noResultSearch,
+            };
+          }}
+          getMissingResultsUrl={({ query }) =>
+            `https://github.com/algolia/docsearch/issues/new?title=${query}`
+          }
+        />
+      );
+
+      await act(async () => {
+        await waitFor(() => {
+          fireEvent.click(document.querySelector('.DocSearch-Button'));
+        });
+
+        fireEvent.input(document.querySelector('.DocSearch-Input'), {
+          target: { value: 'q' },
+        });
+      });
+
+      expect(screen.getByText(/No results for/)).toBeInTheDocument();
+
+      const link = document.querySelector('.DocSearch-Help a');
+      expect(link).toBeInTheDocument();
+      expect(link.getAttribute('href')).toBe(
+        'https://github.com/algolia/docsearch/issues/new?title=q'
+      );
     });
   });
 });

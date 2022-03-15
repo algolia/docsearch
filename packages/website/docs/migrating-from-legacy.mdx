@@ -1,5 +1,5 @@
 ---
-title: Migrating from legacy
+title: Migrating from the legacy scraper
 ---
 
 import Tabs from '@theme/Tabs';
@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 ## Introduction
 
-With this new version of the [DocSearch UI][1], we wanted to go further and provide better tooling for you to create and maintain your config file, and some extra Algolia features that you all have been requesting for a long time!
+With the new version of the [DocSearch UI][1], we wanted to go further and provide better tooling for you to create and maintain your config file, and some extra Algolia features that you all have been requesting for a long time!
 
 ## What's new?
 
@@ -33,6 +33,15 @@ We've received a lot of requests asking for:
 
 They are now all available, in **your own Algolia application**, for free :D
 
+## FAQ
+
+You can find answers related to the DocSearch migration in our [Crawler FAQ page](/docs/crawler).
+
+### Useful links
+
+- [Docusaurus blog post](https://docusaurus.io/blog/2021/11/21/algolia-docsearch-migration)
+- [Algolia Dev chat 11-23-2021](https://www.youtube.com/watch?v=htsjpojpKtc&t=2404s)
+
 ## Config file key mapping
 
 Below are the keys that can be found in the [`legacy` DocSearch configs][14] and their translation to an [Algolia Crawler config][16]. More detailed documentation of the Algolia Crawler can be found on the [the official documentation][15]
@@ -55,106 +64,11 @@ Below are the keys that can be found in the [`legacy` DocSearch configs][14] and
 | `sitemap_alternate_links` | **removed** | Not needed anymore |
 | `stop_content` | **removed** | Should be handled in the [`recordExtractor`][28] and [`helpers.docsearch`][29] |
 
-## FAQ
-
-### Migration seems to have started, but I don't have received any emails
-
-Due to the large number of indices DocSearch has, we need to migrate configs in small incremental batches.
-
-If you have not received a migration mail yet, don't worry, your turn will come!
-
-### What do I need to do to migrate?
-
-We've tried to make the migration as seamless as possible for you and took care of all the pain part:
-
-- [Your existing config file][11] will be migrated to an [Algolia Crawler config][12]
-- Crawls will be started and scheduled
-- Your Algolia application will be ready to go with a populated index!
-
-All you need to do is **update your frontend integration with the credentials you'll receive by email** like below:
-
-<Tabs
-  groupId="language"
-  defaultValue="js"
-  values={[
-    { label: 'JavaScript', value: 'js', },
-    { label: 'React', value: 'react', }
-  ]
-}>
-<TabItem value="js">
-
-```js app.js
-docsearch({
-  container: '#docsearch',
-  appId: 'YOUR_NEW_ALGOLIA_APP_ID',
-  apiKey: 'YOUR_NEW_ALGOLIA_SEARCH_API_KEY',
-  indexName: 'YOUR_INDEX_NAME', // it does not change
-});
-```
-
-</TabItem>
-
-<TabItem value="react">
-
-```jsx App.js
-<DocSearch
-  appId="YOUR_NEW_ALGOLIA_APP_ID"
-  apiKey="YOUR_NEW_ALGOLIA_SEARCH_API_KEY"
-  indexName="YOUR_INDEX_NAME" // it does not change
-/>
-```
-
-</TabItem>
-
-</Tabs>
-
-### Why is the API key different in the dashboard?
-
-Algolia apps come with a default search API key, which also allow you to list indices, settings and search on **every** indices of your app. In the email, we provide a search **ONLY** API key, scoped to your production index, so you don't have to worry disclosing it in the frontend.
-
-### What should I do with my legacy config and credentials?
-
-Your [legacy config][11] will be parsed to a [Crawler config][12], please use [the dedicated web interface][7] to make any changes if you already received your access!
-
-Your credentials will remain available, but **once all the existing configs have been migrated, we will stop the daily crawl jobs**.
-
-### Why do I see two Algolia apps in my dashboard?
-
-We did not remove access to the legacy DocSearch application (`BH4D9OD16A`) to give you the time to get familiar with our new infrastructure. `BH4D9OD16A` will remain available until the migration has been completed for all the DocSearch users.
-
-_Please only refer to your new Algolia application if you already have access_
-
-### Are the [`docsearch-scraper`][8] and [`docsearch-configs`][9] repository still maintained?
-
-At the time you are reading this, the migration hasn't been completed, so yes they are still maintained.
-
-**Once the migration has been completed:**
-
-- The [`docsearch-scraper`][8] will be archived and not maintained in favor of our [Algolia Crawler][2], you'll still be able to use our [run your own][3] solution if you want!
-- The [`docsearch-configs`][9] repository will be archived and and host **all** of [the existing and active **legacy** DocSearch config file][11], and [their parsed version][12]. You can get a preview [on this branch][10].
-
-### I just applied, can I join the new infra?
-
-We are still at an early stage of the migration, so our focus is on live configuration first.
-
-We plan to also include new indices (< 30 days activity) to the migration batch during December 2021.
-
-## Useful links
-
-- [Docusaurus blog post](https://docusaurus.io/blog/2021/11/21/algolia-docsearch-migration)
-- [Algolia Dev chat 11-23-2021](https://www.youtube.com/watch?v=htsjpojpKtc&t=2404s)
-
 [1]: /docs/DocSearch-v3
 [2]: https://www.algolia.com/products/search-and-discovery/crawler/
 [3]: /docs/legacy/run-your-own
 [4]: /docs/record-extractor
 [7]: https://crawler.algolia.com/
-[8]: https://github.com/algolia/docsearch-scraper
-[9]: https://github.com/algolia/docsearch-configs
-[10]: https://github.com/algolia/docsearch-configs/tree/feat/crawler
-[11]: https://github.com/algolia/docsearch-configs
-[12]: https://github.com/algolia/docsearch-configs/tree/feat/crawler/crawler-configs
-[13]: https://www.algolia.com/dashboard
 [14]: /docs/legacy/config-file
 [15]: https://www.algolia.com/doc/tools/crawler/getting-started/overview/
 [16]: https://www.algolia.com/doc/tools/crawler/apis/configuration/

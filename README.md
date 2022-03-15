@@ -4,7 +4,7 @@
 
 The easiest way to add search to your documentation – for free.
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/30eacc09-d4b2-4a53-879b-04d40aaea454/deploy-status)](https://app.netlify.com/sites/docsearch/deploys) [![npm version](https://img.shields.io/npm/v/@docsearch/js/alpha.svg?style=flat-square)](https://www.npmjs.com/package/@docsearch/js/v/alpha) [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](./LICENSE)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/30eacc09-d4b2-4a53-879b-04d40aaea454/deploy-status)](https://app.netlify.com/sites/docsearch/deploys) [![npm version](https://img.shields.io/npm/v/@docsearch/js.svg?style=flat-square)](https://www.npmjs.com/package/@docsearch/js/v/alpha) [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](./LICENSE)
 
 <p align="center">
   <strong>
@@ -37,15 +37,15 @@ DocSearch crawls your documentation, pushes the content to an Algolia index and 
 #### Installation
 
 ```sh
-yarn add @docsearch/js@alpha
+yarn add @docsearch/js@3
 # or
-npm install @docsearch/js@alpha
+npm install @docsearch/js@3
 ```
 
 If you don’t want to use a package manager, you can use a standalone endpoint:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@alpha"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
 ```
 
 #### Get started
@@ -78,15 +78,15 @@ docsearch({
 #### Installation
 
 ```bash
-yarn add @docsearch/react@alpha
+yarn add @docsearch/react@3
 # or
-npm install @docsearch/react@alpha
+npm install @docsearch/react@3
 ```
 
 If you don’t want to use a package manager, you can use a standalone endpoint:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/react@alpha"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/react@3"></script>
 ```
 
 #### Get started

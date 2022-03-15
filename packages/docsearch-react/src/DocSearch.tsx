@@ -24,7 +24,7 @@ export type DocSearchTranslations = Partial<{
 }>;
 
 export interface DocSearchProps {
-  appId?: string;
+  appId: string;
   apiKey: string;
   indexName: string;
   placeholder?: string;
@@ -42,6 +42,7 @@ export interface DocSearchProps {
   initialQuery?: string;
   navigator?: AutocompleteOptions<InternalDocSearchHit>['navigator'];
   translations?: DocSearchTranslations;
+  getMissingResultsUrl?: ({ query: string }) => string;
 }
 
 export function DocSearch(props: DocSearchProps) {

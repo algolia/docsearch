@@ -18,7 +18,8 @@ about: Help us improve DocSearch.
 
 **Live reproduction:**
 
-https://codesandbox.io/s/github/algolia/docsearch/tree/next/examples/js-demo
+- JavaScript: https://codesandbox.io/s/github/algolia/docsearch/tree/next/examples/js-demo
+- React: https://codesandbox.io/s/github/algolia/docsearch/tree/next/examples/demo
 
 ## Expected behavior
 

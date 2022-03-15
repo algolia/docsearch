@@ -2,12 +2,6 @@
 title: Record Extractor
 ---
 
-:::info
-
-The following content is for **[the new DocSearch infrastructure](/docs/migrating-from-legacy)**. If you haven't received an email to migrate your account yet, please refer to the **[legacy](/docs/legacy/dropdown)** documentation.
-
-:::
-
 ## Introduction
 
 :::info

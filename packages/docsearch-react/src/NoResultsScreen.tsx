@@ -7,8 +7,8 @@ import type { InternalDocSearchHit } from './types';
 export type NoResultsScreenTranslations = Partial<{
   noResultsText: string;
   suggestedQueryText: string;
-  openIssueText: string;
-  openIssueLinkText: string;
+  reportMissingResultsText: string;
+  reportMissingResultsLinkText: string;
 }>;
 
 type NoResultsScreenProps = Omit<
@@ -25,8 +25,8 @@ export function NoResultsScreen({
   const {
     noResultsText = 'No results for',
     suggestedQueryText = 'Try searching for',
-    openIssueText = 'Believe this query should return results?',
-    openIssueLinkText = 'Let us know',
+    reportMissingResultsText = 'Believe this query should return results?',
+    reportMissingResultsLinkText = 'Let us know.',
   } = translations;
   const searchSuggestions: string[] | undefined = props.state.context
     .searchSuggestions as string[];
@@ -68,17 +68,18 @@ export function NoResultsScreen({
         </div>
       )}
 
-      <p className="DocSearch-Help">
-        {`${openIssueText} `}
-        <a
-          href={`https://github.com/algolia/docsearch-configs/issues/new?template=Missing_results.md&title=[${props.indexName}]+Missing+results+for+query+"${props.state.query}"`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {openIssueLinkText}
-        </a>
-        .
-      </p>
+      {props.getMissingResultsUrl && (
+        <p className="DocSearch-Help">
+          {`${reportMissingResultsText} `}
+          <a
+            href={props.getMissingResultsUrl({ query: props.state.query })}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {reportMissingResultsLinkText}
+          </a>
+        </p>
+      )}
     </div>
   );
 }
