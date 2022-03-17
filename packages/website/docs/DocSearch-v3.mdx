@@ -207,7 +207,6 @@ This is useful to limit the scope of the search to one language or one version.
 
 ```js
 docsearch({
-  // ...
   searchParameters: {
     facetFilters: ['language:en', 'version:1.0.0'],
   },
@@ -220,7 +219,6 @@ docsearch({
 
 ```jsx
 <DocSearch
-  // ...
   searchParameters={{
     facetFilters: ['language:en', 'version:1.0.0'],
   }}
@@ -254,6 +252,6 @@ By adding this snippet to the `head` of your website, you can hint the browser t
 [11]: /docs/api#container
 [12]: /docs/api
 [13]: /docs/required-configuration#introduce-global-information-as-meta-tags
-[14]: /docs/record-extractor#with-custom-variables
+[14]: /docs/record-extractor#indexing-content-for-faceting
 [16]: https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/#facetfilters
 [15]: https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/

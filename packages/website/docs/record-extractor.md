@@ -41,11 +41,9 @@ recordExtractor: ({ helpers }) => {
 },
 ```
 
-## Complex extractors
+### Manipulate the DOM with Cheerio
 
-### Using the Cheerio instance (`$`)
-
-We provide a [`Cheerio instance ($)`][14] for you to retrieve or remove content from the DOM:
+The [`Cheerio instance ($)`](https://cheerio.js.org/) allows you to manipulate the DOM:
 
 ```js
 recordExtractor: ({ $, helpers }) => {
@@ -54,7 +52,9 @@ recordExtractor: ({ $, helpers }) => {
 
   return helpers.docsearch({
     recordProps: {
-      lvl0: "header h1",
+      lvl0: {
+        selectors: "header h1",
+      }
       lvl1: "article h2",
       lvl2: "article h3",
       lvl3: "article h4",
@@ -66,7 +66,7 @@ recordExtractor: ({ $, helpers }) => {
 },
 ```
 
-### Handling fallback DOM selectors
+### Provide fallback selectors
 
 Fallback selectors can be useful when retrieving content that might not exist in some pages:
 
@@ -93,54 +93,7 @@ recordExtractor: ({ $, helpers }) => {
 },
 ```
 
-### With custom variables
-
-_These selectors also support [`defaultValue`](#with-raw-text-defaultvalue) and [fallback selectors](#with-fallback-dom-selectors)_
-
-Custom variables are added to your Algolia records to be used as filters in the frontend (e.g. `version`, `lang`, etc.):
-
-```js
-recordExtractor: ({ helpers }) => {
-  return helpers.docsearch({
-    recordProps: {
-      lvl0: {
-        selectors: "header h1",
-      },
-      lvl1: "article h2",
-      lvl2: "article h3",
-      lvl3: "article h4",
-      lvl4: "article h5",
-      lvl5: "article h6",
-      content: "main p, main li",
-      // The variables below can be used to filter your search
-      foo: ".bar",
-      language: {
-        // It also supports the fallback DOM selectors syntax!
-        selectors: ".does-not-exists",
-        // Since custom variables are used for filtering, we allow sending
-        // multiple raw values
-        defaultValue: ["en", "en-US"],
-      },
-      version: {
-        // You can send raw values without `selectors`
-        defaultValue: ["latest", "stable"],
-      },
-    },
-  });
-},
-```
-
-The `version`, `lang` and `foo` attribute of these records will be :
-
-```json
-foo: "valueFromBarSelector",
-language: ["en", "en-US"],
-version: ["latest", "stable"]
-```
-
-You can now use them to [filter your search in the frontend][16]
-
-### With raw text (`defaultValue`)
+### Provide raw text (`defaultValue`)
 
 _Only the `lvl0` and [custom variables][13] selectors support this option_
 
@@ -174,11 +127,58 @@ recordExtractor: ({ $, helpers }) => {
 },
 ```
 
-### Boosting search results with `pageRank`
+### Indexing content for faceting
+
+_These selectors also support [`defaultValue`](#provide-raw-text-defaultvalue) and [fallback selectors](#provide-fallback-selectors)_
+
+You might want to index content that will be used as filters in your frontend (e.g. `version` or `lang`), you can defined any custom variable to the `recordProps` object to add them to your Algolia records:
+
+```js
+recordExtractor: ({ helpers }) => {
+  return helpers.docsearch({
+    recordProps: {
+      lvl0: {
+        selectors: "header h1",
+      },
+      lvl1: "article h2",
+      lvl2: "article h3",
+      lvl3: "article h4",
+      lvl4: "article h5",
+      lvl5: "article h6",
+      content: "main p, main li",
+      // The variables below can be used to filter your search
+      foo: ".bar",
+      language: {
+        // It also supports the fallback DOM selectors syntax!
+        selectors: ".does-not-exists",
+        // Since custom variables are used for filtering, we allow sending
+        // multiple raw values
+        defaultValue: ["en", "en-US"],
+      },
+      version: {
+        // You can send raw values without `selectors`
+        defaultValue: ["latest", "stable"],
+      },
+    },
+  });
+},
+```
+
+The following `version`, `lang` and `foo` attributes will be available in your records:
+
+```json
+foo: "valueFromBarSelector",
+language: ["en", "en-US"],
+version: ["latest", "stable"]
+```
+
+You can now use them to [filter your search in the frontend][16]
+
+### Boost search results with `pageRank`
 
 _[`pageRank`](#pagerank) used to be an **integer**, it is now a **string**_
 
-This parameter helps to boost records built from the current `pathsToMatch`. Pages with highest [`pageRank`](#pagerank) will be returned before pages with a lower [`pageRank`](#pagerank). Note that you can pass any numeric value **as a string**, including negative values:
+This parameter allow you to boost records built from the current `pathsToMatch`. Pages with highest [`pageRank`](#pagerank) will be returned before pages with a lower [`pageRank`](#pagerank). Note that you can pass any numeric value **as a string**, including negative values:
 
 ```js
 {
@@ -196,7 +196,31 @@ This parameter helps to boost records built from the current `pathsToMatch`. Pag
         content: "article p, article li",
         pageRank: "30",
       },
-      indexHeadings: true,
+    });
+  },
+},
+```
+
+### Reduce the number records
+
+If you encounter the `Extractors returned too many records` error when your page outputs more than 750 records, you can use the `aggregateContent` option to reduce the number of records at the `content` level.
+
+```js
+{
+  indexName: "YOUR_INDEX_NAME",
+  pathsToMatch: ["https://YOUR_WEBSITE_URL/api/**"],
+  recordExtractor: ({ $, helpers }) => {
+    return helpers.docsearch({
+      recordProps: {
+        lvl0: "header h1",
+        lvl1: "article h2",
+        lvl2: "article h3",
+        lvl3: "article h4",
+        lvl4: "article h5",
+        lvl5: "article h6",
+        content: "article p, article li",
+      },
+      aggregateContent: true,
     });
   },
 },
@@ -227,9 +251,9 @@ type Lvl0 = {
 
 > `type: string` | **optional**
 
-See the [live example](#boosting-search-results-with-pagerank)
+See the [live example](#boost-search-results-with-pagerank)
 
-### Custom variables (`[k: string]`)
+### Custom variables
 
 > `type: string | string[] | CustomVariable` | **optional**
 
@@ -244,7 +268,24 @@ type CustomVariable =
     };
 ```
 
-Contains values that can be used as [`facetFilters`][15]
+Custom variables are used to [`filter your search`](/docs/DocSearch-v3#filtering-your-search), you can define them in the [`recordProps`](#indexing-content-for-faceting)
+
+## `helpers.docsearch` API Reference
+
+### `aggregateContent`
+
+> `type: boolean` | default: `true` | **optional**
+
+[This options](#reduce-the-number-records) groups the Algolia records created at the `content` level of the selector into a single record for its matching heading.
+
+### `indexHeadings`
+
+> `type: boolean | { from: number, to: number }` | default: `true` | **optional**
+
+This option tells the crawler if the `headings` (`lvlX`) should be indexed.
+
+- When `false`, only records for the `content` level will be created.
+- When `from, to` is provided, only records for the `lvlX` to `lvlY` will be created.
 
 [1]: /docs/DocSearch-v3
 [2]: https://github.com/algolia/docsearch/
@@ -258,7 +299,6 @@ Contains values that can be used as [`facetFilters`][15]
 [10]: https://www.algolia.com/doc/tools/crawler/apis/configuration/actions/#parameter-param-recordextractor-2
 [11]: https://www.algolia.com/doc/tools/crawler/guides/extracting-data/#extracting-records
 [12]: https://www.algolia.com/doc/tools/crawler/apis/configuration/actions/
-[13]: /docs/record-extractor#with-custom-variables
-[14]: https://cheerio.js.org/
+[13]: /docs/record-extractor#indexing-content-for-faceting
 [15]: https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/
 [16]: /docs/docsearch-v3/#filtering-your-search
