@@ -10,7 +10,7 @@ This documentation will only contain information regarding the **helpers.docsear
 
 :::
 
-Pages are extracted by a [`recordExtractor`][9]. These extractors are assigned to [`actions`][12] via the [`recordExtractor`][9] parameter. This parameter links to a function that returns the data you want to index, organized in a array of JSON objects.
+Pages are extracted by a [`recordExtractor`][9]. These extractors are assigned to [`actions`][12] via the [`recordExtractor`][9] parameter. This parameter links to a function that returns the data you want to index, organized in an array of JSON objects.
 
 _The helpers are a collection of functions to help you extract content and generate Algolia records._
 
