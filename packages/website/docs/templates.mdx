@@ -48,7 +48,7 @@ new Crawler({
           recordProps: {
             lvl0: {
               selectors: '.navBreadcrumb h2 span',
-              defaultValue: 'Blog',
+              defaultValue: 'Docs',
             },
             lvl1: '.post h1',
             lvl2: '.post h2',
@@ -60,6 +60,7 @@ new Crawler({
             },
           },
           indexHeadings: true,
+          aggregateContent: true,
         });
       },
     },
@@ -87,6 +88,7 @@ new Crawler({
             },
           },
           indexHeadings: true,
+          aggregateContent: true,
         });
       },
     },
@@ -212,6 +214,7 @@ new Crawler({
             content: 'article p, article li, article td:last-child',
           },
           indexHeadings: true,
+          aggregateContent: true,
         });
       },
     },
@@ -335,6 +338,7 @@ new Crawler({
             content: '.content__default p, .content__default li',
           },
           indexHeadings: true,
+          aggregateContent: true,
         });
       },
     },
@@ -444,6 +448,7 @@ new Crawler({
             content: '.theme-default-content p, .theme-default-content li',
           },
           indexHeadings: true,
+          aggregateContent: true,
         });
       },
     },
@@ -552,6 +557,7 @@ new Crawler({
             content: '.content p, .content li',
           },
           indexHeadings: true,
+          aggregateContent: true,
         });
       },
     },
@@ -676,6 +682,7 @@ new Crawler({
             },
           },
           indexHeadings: { from: 2, to: 6 },
+          aggregateContent: true,
         });
       },
     },
@@ -701,6 +708,7 @@ new Crawler({
             },
           },
           indexHeadings: { from: 2, to: 6 },
+          aggregateContent: true,
         });
       },
     },
@@ -725,6 +733,7 @@ new Crawler({
             },
           },
           indexHeadings: { from: 2, to: 6 },
+          aggregateContent: true,
         });
       },
     },
