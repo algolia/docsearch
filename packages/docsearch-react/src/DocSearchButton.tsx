@@ -50,10 +50,10 @@ export const DocSearchButton = React.forwardRef<
       <span className="DocSearch-Button-Keys">
         {key !== null && (
           <>
-            <span className="DocSearch-Button-Key">
+            <kbd className="DocSearch-Button-Key">
               {key === ACTION_KEY_DEFAULT ? <ControlKeyIcon /> : key}
-            </span>
-            <span className="DocSearch-Button-Key">K</span>
+            </kbd>
+            <kbd className="DocSearch-Button-Key">K</kbd>
           </>
         )}
       </span>
