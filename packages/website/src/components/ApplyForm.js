@@ -257,7 +257,8 @@ function ApplyForm() {
           <strong>
             Only apply if you don't have a DocSearch application yet.
           </strong>{' '}
-          If you have any issue, please contact us at support@algolia.com
+          If you have any issue, please check our support page:
+          https://www.algolia.com/support/
         </Text>
       </form>
     </Card>
