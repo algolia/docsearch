@@ -196,7 +196,11 @@ When provided, an informative message wrapped with your link will be displayed o
 
 > `type: ({ state }) => JSX.Element` | **optional**
 
-The component to display a result count below the search results.
+The component to display below the search results.
+
+You get access to the [current state](https://github.com/algolia/autocomplete/blob/next/packages/autocomplete-core/src/types/AutocompleteState.ts) which allows you to retrieve the number of hits returned, the query etc.
+
+[You can find a working example without JSX in this sandbox](https://codesandbox.io/s/docsearch-v3-resultsfootercomponent-without-jsx-jperd5).
 
 ```js
 docsearch({
@@ -388,9 +392,13 @@ When provided, an informative message wrapped with your link will be displayed o
 
 > `type: ({ state }) => JSX.Element` | **optional**
 
-The component to display a result count below the search results.
+The component to display below the search results.
 
-```js
+You get access to the [current state](https://github.com/algolia/autocomplete/blob/next/packages/autocomplete-core/src/types/AutocompleteState.ts) which allows you to retrieve the number of hits returned, the query etc.
+
+[You can find a working example in this sandbox](https://codesandbox.io/s/docsearch-v3-resultsfootercomponent-wzie9y).
+
+```jsx
 <DocSearch
   // ...
   resultsFooterComponent={({ state }) => {
