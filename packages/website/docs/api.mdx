@@ -179,9 +179,16 @@ const translations: DocSearchTranslations = {
 
 > `type: ({ query: string }) => string` | **optional**
 
-> example: ({ query }) => `https://github.com/algolia/docsearch/issues/new?title=${query}`
-
 Function to return the URL of your documentation repository.
+
+```js
+docsearch({
+  // ...
+  getMissingResultsUrl({ query }) {
+    return `https://github.com/algolia/docsearch/issues/new?title=${query}`;
+  },
+});
+```
 
 When provided, an informative message wrapped with your link will be displayed on no results searches. The default text can be changed using the [translations](#translations) property.
 
@@ -375,9 +382,16 @@ const translations: DocSearchTranslations = {
 
 > `type: ({ query: string }) => string` | **optional**
 
-> example: ({ query }) => `https://github.com/algolia/docsearch/issues/new?title=${query}`
-
 Function to return the URL of your documentation repository.
+
+```jsx
+<DocSearch
+  // ...
+  getMissingResultsUrl={({ query }) => {
+    return `https://github.com/algolia/docsearch/issues/new?title=${query}`;
+  }}
+/>
+```
 
 When provided, an informative message wrapped with your link will be displayed on no results searches. The default text can be changed using the [translations](#translations) property.
 
