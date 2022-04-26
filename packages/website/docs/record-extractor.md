@@ -228,7 +228,7 @@ If you encounter the `Extractors returned too many records` error when your page
 
 ### Reduce the record size
 
-If you encounter the `Records extracted are too big` error when your crawling your website, it's mostly because there was too many informations in your records, or when your page is too big. The [`recordVersion`](#recordversion) option helps you reducing the records size by removing informations that are only used with [DocSearch v2](/docs/legacy/dropdown).
+If you encounter the `Records extracted are too big` error when crawling your website, it's mostly because there was too many informations in your records, or that your page is too big. The [`recordVersion`](#recordversion) option helps you reducing the records size by removing informations that are only used with [DocSearch v2](/docs/legacy/dropdown).
 
 ```js
 {
