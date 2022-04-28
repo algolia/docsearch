@@ -255,9 +255,14 @@ function ApplyForm() {
 
         <Text small={true} className="uil-ta-center">
           <strong>
-            Only apply if you don't have a DocSearch application yet.
+            Only apply if you don't have a DocSearch application yet. DocSearch
+            offers best effort support, make sure to first read the
+            documentation and the GitHub issues.
           </strong>{' '}
-          If you have any issue, please contact us at support@algolia.com
+          Ultimately, you can reach out via{' '}
+          <InlineLink href="https://www.algolia.com/support/">
+            our support page.
+          </InlineLink>
         </Text>
       </form>
     </Card>

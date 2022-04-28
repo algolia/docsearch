@@ -203,7 +203,7 @@ This parameter allow you to boost records built from the current `pathsToMatch`.
 
 ### Reduce the number records
 
-If you encounter the `Extractors returned too many records` error when your page outputs more than 750 records, you can use the `aggregateContent` option to reduce the number of records at the `content` level.
+If you encounter the `Extractors returned too many records` error when your page outputs more than 750 records. The [`aggregateContent`](#aggregatecontent) option helps you reducing the number of records at the `content` level of the extractor.
 
 ```js
 {
@@ -221,6 +221,31 @@ If you encounter the `Extractors returned too many records` error when your page
         content: "article p, article li",
       },
       aggregateContent: true,
+    });
+  },
+},
+```
+
+### Reduce the record size
+
+If you encounter the `Records extracted are too big` error when crawling your website, it's mostly because there was too many informations in your records, or that your page is too big. The [`recordVersion`](#recordversion) option helps you reducing the records size by removing informations that are only used with [DocSearch v2](/docs/legacy/dropdown).
+
+```js
+{
+  indexName: "YOUR_INDEX_NAME",
+  pathsToMatch: ["https://YOUR_WEBSITE_URL/api/**"],
+  recordExtractor: ({ $, helpers }) => {
+    return helpers.docsearch({
+      recordProps: {
+        lvl0: "header h1",
+        lvl1: "article h2",
+        lvl2: "article h3",
+        lvl3: "article h4",
+        lvl4: "article h5",
+        lvl5: "article h6",
+        content: "article p, article li",
+      },
+      recordVersion: "v3",
     });
   },
 },
@@ -277,6 +302,12 @@ Custom variables are used to [`filter your search`](/docs/DocSearch-v3#filtering
 > `type: boolean` | default: `true` | **optional**
 
 [This options](#reduce-the-number-records) groups the Algolia records created at the `content` level of the selector into a single record for its matching heading.
+
+### `recordVersion`
+
+> `type: 'v3' | 'v2'` | default: `v2` | **optional**
+
+[This options](#reduce-the-record-size) remove content from the Algolia records that are only used for [DocSearch v2](/docs/legacy/dropdown). If you are using [the latest version of DocSearch](/docs/DocSearch-v3), you can [set it to `v3`](#reduce-the-record-size).
 
 ### `indexHeadings`
 
