@@ -8186,19 +8186,26 @@ axe-core@^4.3.5:
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.3.5.tgz#78d6911ba317a8262bfee292aeafcc1e04b49cc5"
   integrity sha512-WKTW1+xAzhMS5dJsxWkliixlO/PqC4VhmO9T4juNYcaTg9jzWiJsou6m5pxWYGfigWbwzJWeFY6z47a+4neRXA==
 
-axios@0.21.1, axios@^0.21.0, axios@^0.21.1:
-  version "0.21.1"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
-  integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
+axios@0.21.3:
+  version "0.21.3"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.3.tgz#f85d9b747f9b66d59ca463605cedf1844872b82e"
+  integrity sha512-JtoZ3Ndke/+Iwt5n+BgSli/3idTvpt5OjKyoCmz4LX5+lPiY5l7C1colYezhlxThjNa/NhngCUWZSZFypIFuaA==
   dependencies:
-    follow-redirects "^1.10.0"
+    follow-redirects "^1.14.0"
 
-axios@^0.19.0, axios@^0.19.2:
+axios@^0.19.2:
   version "0.19.2"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
   integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
   dependencies:
     follow-redirects "1.5.10"
+
+axios@^0.21.0, axios@^0.21.1:
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
+  integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
+  dependencies:
+    follow-redirects "^1.10.0"
 
 axios@^0.25.0:
   version "0.25.0"
@@ -8868,18 +8875,18 @@ builtins@^1.0.3:
   resolved "https://registry.yarnpkg.com/builtins/-/builtins-1.0.3.tgz#cb94faeb61c8696451db36534e1422f94f0aee88"
   integrity sha1-y5T662HIaWRR2zZTThQi+U8K7og=
 
-bundlesize@0.18.0:
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/bundlesize/-/bundlesize-0.18.0.tgz#3625520f984f503df8c3d57dd9be2b9c0df40092"
-  integrity sha512-GZURr25umfYxZYZUyOlOtJRbYjAn0VfbjbnS0NBcOiF8VcjmhoEhmx8Gw4va8HeQb8j7Ra0ZltY/IeHgSHFXFw==
+bundlesize@0.18.1:
+  version "0.18.1"
+  resolved "https://registry.yarnpkg.com/bundlesize/-/bundlesize-0.18.1.tgz#17b5c158e7a0d01d70c65c616d87783dfd4b55f3"
+  integrity sha512-NAsKBH6BeVmDopoa4tod0m5/koM7iLY3saKyGn7wyAravBYmKNUpDJba4zyVhwRm5Dw9WXv8FIO0N//tCkx68Q==
   dependencies:
-    axios "^0.19.0"
+    axios "^0.21.1"
     brotli-size "0.1.0"
     bytes "^3.1.0"
     ci-env "^1.4.0"
     commander "^2.20.0"
     cosmiconfig "^5.2.1"
-    github-build "^1.2.0"
+    github-build "^1.2.2"
     glob "^7.1.4"
     gzip-size "^4.0.0"
     prettycli "^1.4.3"
@@ -12819,7 +12826,7 @@ follow-redirects@^1.0.0, follow-redirects@^1.10.0:
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.3.tgz#e5598ad50174c1bc4e872301e82ac2cd97f90267"
   integrity sha512-DUgl6+HDzB0iEptNQEXLx/KhTmDb8tZUHSeLqpnjpknR70H0nC2t9N73BK6fN4hOvJ84pKlIQVQ4k5FFlBedKA==
 
-follow-redirects@^1.14.7:
+follow-redirects@^1.14.0, follow-redirects@^1.14.7:
   version "1.14.9"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.9.tgz#dd4ea157de7bfaf9ea9b3fbd85aa16951f78d8d7"
   integrity sha512-MQDfihBQYMcyy5dhRDJUHcw7lb2Pv/TuE6xP1vyraLukNDHKbDxDNaOE3NbCAdKQApno+GPRyo1YAp89yCjK4w==
@@ -13230,12 +13237,12 @@ gitconfiglocal@^1.0.0:
   dependencies:
     ini "^1.3.2"
 
-github-build@^1.2.0:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/github-build/-/github-build-1.2.2.tgz#d5d5d989dc8cead0d46e2bb0864be7fddd50be15"
-  integrity sha512-xHVy8w+J09eD+uBqJ4CcRPr5HTa1BYaF6vPJ67yJekCWurPzimB/ExH1SGzW5iAFC2Uvw9TD1FpSIjh56hcB9Q==
+github-build@^1.2.2:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/github-build/-/github-build-1.2.3.tgz#1f61bf6edb789370f291e7f0e081236ed0fbb830"
+  integrity sha512-57zUA9ZbaKQHxoUATq3dkr+gUeaOWGGC/3Vw/AJNIUkiUmd7DnYM9TMTmUknbkuvx6+SeSqWpLBunZZzCPLUMg==
   dependencies:
-    axios "0.21.1"
+    axios "0.21.3"
 
 github-from-package@0.0.0:
   version "0.0.0"
