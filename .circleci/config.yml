@@ -43,7 +43,7 @@ defaults: &defaults
 cypress: &cypress
   working_directory: ~/docsearch
   docker:
-    - image: cypress/browsers:node13.8.0-chrome81-ff75
+    - image: cypress/browsers:node16.13.2-chrome100-ff98
       environment:
         ## this enables colors in the output
         TERM: xterm
@@ -141,15 +141,9 @@ jobs:
       - run:
           name: Cypress test Actions
           command: yarn run cy:run
-      - store_test_results:
-          path: cypress-results
-      - store_artifacts:
-          path: cypress\screenshots
-      - store_artifacts:
-          path: cypress\videos
 
 workflows:
-  version: 2.1
+  version: 2
   ci:
     jobs:
       - build
@@ -158,8 +152,7 @@ workflows:
             - build
       - test_types
       - test_unit
-      # TODO: Enable again once Cypress is installed on the repo.
-      # - test_cypress
+      - test_cypress
       - release:
           filters:
             branches:

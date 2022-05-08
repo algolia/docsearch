@@ -1,10 +1,4 @@
-import {
-  render,
-  fireEvent,
-  waitFor,
-  screen,
-  act,
-} from '@testing-library/react';
+import { render, act, fireEvent, screen } from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom';
@@ -40,14 +34,24 @@ function noResultSearch(_queries: any, _requestOptions?: any): Promise<any> {
 }
 
 describe('api', () => {
+  let container: HTMLDivElement;
+
+  const docSearchSelector = '.DocSearch';
+
   beforeEach(() => {
-    document.body.innerHTML = '';
+    container = document.createElement('div');
+    document.body.appendChild(container);
+  });
+
+  afterEach(() => {
+    document.body.removeChild(container);
+    container = null;
   });
 
   it('renders with minimal parameters', () => {
     render(<DocSearch />);
 
-    expect(document.querySelector('.DocSearch')).toBeInTheDocument();
+    expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
   });
 
   describe('translations', () => {
@@ -62,7 +66,7 @@ describe('api', () => {
           }}
         />
       );
-
+      expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
       expect(
         document.querySelector('.DocSearch-Button-Placeholder').innerHTML
       ).toBe('Recherche');
@@ -84,10 +88,13 @@ describe('api', () => {
         />
       );
 
-      await waitFor(() => {
-        fireEvent.click(document.querySelector('.DocSearch-Button'));
+      expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
+
+      await act(async () => {
+        fireEvent.click(await screen.findByText('Search'));
       });
 
+      expect(document.querySelector('.DocSearch-Modal')).toBeInTheDocument();
       expect(screen.getByText('Pas de recherche récentes')).toBeInTheDocument();
     });
 
@@ -114,12 +121,14 @@ describe('api', () => {
         />
       );
 
-      await act(async () => {
-        await waitFor(() => {
-          fireEvent.click(document.querySelector('.DocSearch-Button'));
-        });
+      expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
 
-        fireEvent.input(document.querySelector('.DocSearch-Input'), {
+      await act(async () => {
+        fireEvent.click(await screen.findByText('Search'));
+      });
+
+      await act(async () => {
+        fireEvent.input(await screen.findByPlaceholderText('Search docs'), {
           target: { value: 'q' },
         });
       });
@@ -151,8 +160,10 @@ describe('api', () => {
         />
       );
 
-      await waitFor(() => {
-        fireEvent.click(document.querySelector('.DocSearch-Button'));
+      expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
+
+      await act(async () => {
+        fireEvent.click(await screen.findByText('Search'));
       });
 
       expect(document.querySelector('.DocSearch-Cancel').innerHTML).toBe(
@@ -161,7 +172,6 @@ describe('api', () => {
       expect(
         document.querySelector('.DocSearch-Cancel').getAttribute('aria-label')
       ).toBe('Annuler');
-
       expect(
         document.querySelector('.DocSearch-Reset').getAttribute('title')
       ).toBe('Effacer');
@@ -190,8 +200,10 @@ describe('api', () => {
         />
       );
 
-      await waitFor(() => {
-        fireEvent.click(document.querySelector('.DocSearch-Button'));
+      expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
+
+      await act(async () => {
+        fireEvent.click(await screen.findByText('Search'));
       });
 
       expect(screen.getByText('Recherche par')).toBeInTheDocument();
@@ -234,12 +246,14 @@ describe('api', () => {
         />
       );
 
-      await act(async () => {
-        await waitFor(() => {
-          fireEvent.click(document.querySelector('.DocSearch-Button'));
-        });
+      expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
 
-        fireEvent.input(document.querySelector('.DocSearch-Input'), {
+      await act(async () => {
+        fireEvent.click(await screen.findByText('Search'));
+      });
+
+      await act(async () => {
+        fireEvent.input(await screen.findByPlaceholderText('Search docs'), {
           target: { value: 'q' },
         });
       });
@@ -266,17 +280,16 @@ describe('api', () => {
       );
 
       await act(async () => {
-        await waitFor(() => {
-          fireEvent.click(document.querySelector('.DocSearch-Button'));
-        });
+        fireEvent.click(await screen.findByText('Search'));
+      });
 
-        fireEvent.input(document.querySelector('.DocSearch-Input'), {
+      await act(async () => {
+        fireEvent.input(await screen.findByPlaceholderText('Search docs'), {
           target: { value: 'q' },
         });
       });
 
       expect(screen.getByText(/No results for/)).toBeInTheDocument();
-
       const link = document.querySelector('.DocSearch-Help a');
       expect(link).toBeInTheDocument();
       expect(link.getAttribute('href')).toBe(
