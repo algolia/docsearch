@@ -165,7 +165,7 @@ function Home() {
                       <p className="mt-2 text-base leading-6 text-description">
                         First built to fulfill our own developers' needs,
                         DocSearch quickly evolved as a successful community
-                        project. Over the years, the project kept on adressing
+                        project. Over the years, the project kept on addressing
                         the complex challenge of search for the open source
                         community.
                       </p>
@@ -481,11 +481,11 @@ function Home() {
                         </div>
                         <div className="ml-4">
                           <h5 className="text-lg leading-6 font-medium">
-                            Always sized and positionned correctly
+                            Always sized and positioned correctly
                           </h5>
                           <p className="mt-2 text-base leading-6 text-description">
                             The modal experience leverages behavior of most
-                            populars Integrated Developement Environements or
+                            popular Integrated Developement Environements (IDEs) or
                             native experience on mobile. An opaque layer is
                             making sure we keep the context of the documentation
                             but remove all visual pollution.
@@ -730,10 +730,10 @@ function Home() {
                         Accessibility
                       </h4>
                       <p className="mt-2 text-base leading-6 text-description">
-                        We are releasing this version with our best efforts in
-                        regards to accessibility and we are willing to go
-                        deeper. We'd like to work closely with expert of the
-                        topic. Please contact us.
+                        We have released this version with our best efforts on
+                        addressing accessibility issues and we are willing to make
+                        further changes. We'd like to work closely with an expert in 
+                        accessibility. Please contact us if you are interested.
                       </p>
                     </div>
                   </div>
