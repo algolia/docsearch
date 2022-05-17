@@ -30,11 +30,10 @@
     "build:umd": "rollup --config",
     "build": "yarn build:clean && yarn build:umd && yarn build:esm && yarn build:types",
     "on:change": "concurrently \"yarn build:esm\" \"yarn build:types\"",
-    "prepare": "yarn build:esm && yarn build:types",
     "watch": "watch \"yarn on:change\" --ignoreDirectoryPattern \"/dist/\""
   },
   "dependencies": {
-    "@algolia/autocomplete-core": "1.5.2",
+    "@algolia/autocomplete-core": "1.6.3",
     "@docsearch/css": "3.0.0",
     "algoliasearch": "^4.0.0"
   },
