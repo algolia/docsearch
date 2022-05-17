@@ -60,12 +60,12 @@ describe('Search', () => {
   });
 
   it('Results are displayed after a query', () => {
-    cy.search('get');
+    cy.typeQueryMatching();
     cy.get('.DocSearch-Hits').should('be.visible');
   });
 
   it('Query can be cleared', () => {
-    cy.search('get');
+    cy.typeQueryMatching();
     cy.get('.DocSearch-Reset').click();
     cy.get('.DocSearch-Hits').should('not.exist');
     cy.contains('No recent searches').should('be.visible');
@@ -74,7 +74,7 @@ describe('Search', () => {
   it('Keyboard navigation leads to result', () => {
     const currentURL = cy.url();
 
-    cy.search('get');
+    cy.typeQueryMatching();
     cy.get('.DocSearch-Input').type('{downArrow}{downArrow}{upArrow}');
     cy.get('.DocSearch-Input').type('{enter}');
     cy.on('url:changed', (newUrl) => {
@@ -85,7 +85,7 @@ describe('Search', () => {
   it('Pointer navigation leads to result', () => {
     const currentURL = cy.url();
 
-    cy.search('get');
+    cy.typeQueryMatching();
     cy.get('.DocSearch-Hits #docsearch-item-1 > a').click({ force: true });
     cy.on('url:changed', (newUrl) => {
       expect(newUrl).not.equal(currentURL);
@@ -93,8 +93,8 @@ describe('Search', () => {
   });
 
   it("No results are displayed if query doesn't match", () => {
-    cy.search('zzzzz');
-    cy.contains('No results for "zzzzz"').should('be.visible');
+    cy.typeQueryNotMatching();
+    cy.contains('No results for').should('be.visible');
   });
 });
 
@@ -102,14 +102,13 @@ describe('Recent and Favorites', () => {
   beforeEach(() => {
     cy.visit(Cypress.config().baseUrl!);
     cy.openModal();
-    cy.search('get');
-    cy.get('.DocSearch-Hits #docsearch-item-0 > a').click({ force: true });
-    cy.wait(2000);
+    cy.typeQueryMatching();
+    cy.get('#docsearch-item-0 > a').click({ force: true }).wait(3000);
     cy.openModal();
+    cy.contains('Recent').should('be.visible');
   });
 
   it('Recent search is displayed after visiting a result', () => {
-    cy.contains('Recent').should('be.visible');
     cy.get('#docsearch-item-0').should('be.visible');
   });
 
@@ -132,7 +131,7 @@ describe('Recent and Favorites', () => {
     cy.get('#docsearch-item-0')
       .find('[title="Save this search"]')
       .trigger('click');
-    cy.wait(2000);
+    cy.contains('Favorite').should('be.visible');
     cy.get('#docsearch-item-0')
       .find('[title="Remove this search from favorites"]')
       .trigger('click');

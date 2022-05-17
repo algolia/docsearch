@@ -1,11 +1,9 @@
 Cypress.Commands.add('modalIsVisibleAndFocused', () => {
-  cy.wait(1000);
   cy.get('.DocSearch-Modal').should('be.visible');
   cy.get('.DocSearch-Input').should('be.focus');
 });
 
 Cypress.Commands.add('modalIsNotVisible', () => {
-  cy.wait(1000);
   cy.get('body').should('not.have.class', 'DocSearch--active');
   cy.get('.DocSearch-Modal').should('not.exist');
 });
@@ -13,28 +11,27 @@ Cypress.Commands.add('modalIsNotVisible', () => {
 Cypress.Commands.add('darkmode', () => {
   cy.get('.react-toggle').click({ force: true });
   cy.get('.react-toggle-screenreader-only').blur();
-  cy.wait(1000);
+  cy.get('html.dark').should('be.visible');
 });
 
 Cypress.Commands.add('openModal', () => {
-  cy.get('.DocSearch-Button').click();
-  cy.wait(1000);
+  cy.get('.DocSearch-Button').should('be.visible').click();
+  cy.modalIsVisibleAndFocused();
 });
 
 Cypress.Commands.add('closeModal', () => {
   cy.get('body').type('{esc}');
-  cy.wait(1000);
+  cy.modalIsNotVisible();
 });
 
 Cypress.Commands.add('search', (query: string) => {
-  cy.wait(1000);
-  cy.get('.DocSearch-Input').type(query);
+  cy.get('.DocSearch-Input').should('be.visible').type(query);
 });
 
 Cypress.Commands.add('typeQueryMatching', () => {
-  cy.search('the checklist');
+  cy.search('g');
 });
 
 Cypress.Commands.add('typeQueryNotMatching', () => {
-  cy.search('zzzzz');
+  cy.search('zzz');
 });
