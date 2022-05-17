@@ -19,7 +19,6 @@
     "build:clean": "rm -rf ./dist",
     "build:css": "node build-css.js",
     "build": "yarn build:clean && mkdir dist && yarn build:css",
-    "prepare": "yarn build",
     "watch": "watch \"yarn build:css\" --ignoreDirectoryPattern \"/dist/\""
   }
 }
