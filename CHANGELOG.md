@@ -1,3 +1,14 @@
+# [3.1.0](https://github.com/algolia/docsearch/compare/v3.0.0...v3.1.0) (2022-05-18)
+
+### Bug Fixes
+
+- **button:** use kbd instead of span ([#1335](https://github.com/algolia/docsearch/issues/1335)) ([7459a42](https://github.com/algolia/docsearch/commit/7459a424d9435f46f3f6115921f1b7528e0c10da))
+- **css:** prevent `kbd` unwanted style overriding ([#1389](https://github.com/algolia/docsearch/issues/1389)) ([613f2a8](https://github.com/algolia/docsearch/commit/613f2a882d73a967d738971376fc30e799cc61eb))
+
+### Features
+
+- **deps:** bump peer to React 18 ([#1385](https://github.com/algolia/docsearch/issues/1385)) ([eb372f2](https://github.com/algolia/docsearch/commit/eb372f2743e9f74e2546cde59e676c32b903bece))
+
 # [3.0.0](https://github.com/algolia/docsearch/compare/v3.0.0-alpha.50...v3.0.0) (2022-02-22)
 
 ### Breaking Change
