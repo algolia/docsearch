@@ -39,6 +39,7 @@ export const DocSearchButton = React.forwardRef<
       type="button"
       className="DocSearch DocSearch-Button"
       aria-label={buttonAriaLabel}
+      aria-haspopup="dialog"
       {...props}
       ref={ref}
     >
