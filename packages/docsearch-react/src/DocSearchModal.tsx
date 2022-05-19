@@ -307,7 +307,7 @@ export function DocSearchModal({
     ]
   );
 
-  const { getEnvironmentProps, getRootProps, refresh } = autocomplete;
+  const { getEnvironmentProps, refresh } = autocomplete;
 
   useTouchEvents({
     getEnvironmentProps,
@@ -380,12 +380,25 @@ export function DocSearchModal({
     };
   }, []);
 
+  // Close the modal on clicks outside the dialog container
+  React.useEffect(() => {
+    function onClickOutsideContainer(event: MouseEvent) {
+      if (event.target === containerRef.current) {
+        onClose();
+      }
+    }
+    window.addEventListener('click', onClickOutsideContainer);
+    return () => {
+      window.removeEventListener('click', onClickOutsideContainer);
+    };
+  }, [onClose]);
+
   return (
     <div
       ref={containerRef}
-      {...getRootProps({
-        'aria-expanded': true,
-      })}
+      role="dialog"
+      aria-modal={true}
+      aria-label={placeholder}
       className={[
         'DocSearch',
         'DocSearch-Container',
@@ -394,13 +407,6 @@ export function DocSearchModal({
       ]
         .filter(Boolean)
         .join(' ')}
-      role="button"
-      tabIndex={0}
-      onMouseDown={(event) => {
-        if (event.target === event.currentTarget) {
-          onClose();
-        }
-      }}
     >
       <div className="DocSearch-Modal" ref={modalRef}>
         <header className="DocSearch-SearchBar" ref={formElementRef}>
