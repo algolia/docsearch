@@ -10,15 +10,45 @@
  */
 
 module.exports = {
-  docs: {
-    'Getting started': [
-      'what-is-docsearch',
-      'who-can-apply',
-      'migrating-from-legacy',
-    ],
-    'Adding DocSearch to your UI': ['DocSearch-v3', 'api', 'styling'],
-    'Algolia Crawler': ['record-extractor', 'templates', 'manage-your-crawls'],
-    'Requirements, tips, FAQ': ['faq', 'tips', 'integrations'],
-    'Under the hood': ['how-does-it-work', 'required-configuration'],
-  },
+  docs: [
+    {
+      type: 'category',
+      label: 'Introduction',
+      items: ['what-is-docsearch', 'who-can-apply', 'migrating-from-legacy'],
+    },
+    {
+      type: 'category',
+      label: 'DocSearch v3',
+      items: ['DocSearch-v3', 'api', 'styling', 'migrating-from-v2'],
+    },
+    {
+      type: 'category',
+      label: 'Algolia Crawler',
+      items: ['record-extractor', 'templates', 'manage-your-crawls'],
+    },
+    {
+      type: 'category',
+      label: 'Requirements, tips, FAQ',
+      items: [
+        {
+          type: 'category',
+          label: 'FAQ',
+          items: ['crawler', 'DocSearch-program'],
+        },
+        {
+          type: 'doc',
+          id: 'tips',
+        },
+        {
+          type: 'doc',
+          id: 'integrations',
+        },
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Under the hood',
+      items: ['how-does-it-work', 'required-configuration'],
+    },
+  ],
 };

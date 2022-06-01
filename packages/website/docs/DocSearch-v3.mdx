@@ -1,5 +1,5 @@
 ---
-title: DocSearch v3
+title: Getting Started
 ---
 
 import Tabs from '@theme/Tabs';
@@ -38,9 +38,9 @@ DocSearch packages are available on the [npm][10] registry.
 <TabItem value="js">
 
 ```bash
-yarn add @docsearch/js@alpha
+yarn add @docsearch/js@3
 # or
-npm install @docsearch/js@alpha
+npm install @docsearch/js@3
 ```
 
 ### Without package manager
@@ -48,25 +48,22 @@ npm install @docsearch/js@alpha
 If you don't want to use a package manger, you can add the CSS to the `<head>` of your website:
 
 ```html
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@docsearch/css@alpha"
-/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
 ```
 
 And the JavaScript at the end of your `<body>`:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@alpha"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
 ```
 
 </TabItem>
 <TabItem value="react">
 
 ```bash
-yarn add @docsearch/react@alpha
+yarn add @docsearch/react@3
 # or
-npm install @docsearch/react@alpha
+npm install @docsearch/react@3
 ```
 
 ### Without package manager
@@ -74,16 +71,13 @@ npm install @docsearch/react@alpha
 If you don't want to use a package manger, you can add the CSS to the `<head>` of your website:
 
 ```html
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@docsearch/css@alpha"
-/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
 ```
 
 And the JavaScript at the end of your `<body>`:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/react@alpha"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/react@3"></script>
 ```
 
 </TabItem>
@@ -94,7 +88,7 @@ And the JavaScript at the end of your `<body>`:
 
 You can hint the browser to improve the speed of the first query by adding a `preconnect`, see [#preconnect](#preconnect)
 
-## Get started
+## Implementation
 
 <Tabs
   groupId="language"
@@ -159,7 +153,7 @@ export default App;
 
 ### Testing
 
-If you're eager to test DocSearch v3 and can't wait to receive your credentails, you can use ours!
+If you're eager to test DocSearch v3 and can't wait to receive your credentials, you can use ours!
 
 <Tabs
   groupId="language"
@@ -213,7 +207,6 @@ This is useful to limit the scope of the search to one language or one version.
 
 ```js
 docsearch({
-  // ...
   searchParameters: {
     facetFilters: ['language:en', 'version:1.0.0'],
   },
@@ -226,7 +219,6 @@ docsearch({
 
 ```jsx
 <DocSearch
-  // ...
   searchParameters={{
     facetFilters: ['language:en', 'version:1.0.0'],
   }}
@@ -260,6 +252,6 @@ By adding this snippet to the `head` of your website, you can hint the browser t
 [11]: /docs/api#container
 [12]: /docs/api
 [13]: /docs/required-configuration#introduce-global-information-as-meta-tags
-[14]: /docs/record-extractor#with-custom-variables
+[14]: /docs/record-extractor#indexing-content-for-faceting
 [16]: https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/#facetfilters
 [15]: https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/

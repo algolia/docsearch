@@ -15,12 +15,16 @@ function ApplyForm() {
   const [state, setState] = useState({ status: 'stalled', message: '' });
   const [url, setUrl] = useState('');
   const [email, setEmail] = useState('');
+  const [repo, setRepo] = useState('');
 
   const handleSetUrl = (event) => {
     setUrl(event.target.value);
   };
   const handleSetEmail = (event) => {
     setEmail(event.target.value);
+  };
+  const handleSetRepo = (event) => {
+    setRepo(event.target.value);
   };
   const onSubmit = (event) => {
     event.preventDefault();
@@ -151,6 +155,29 @@ function ApplyForm() {
           and grant access to your Algolia application.
         </Text>
 
+        <LabelText
+          tag="label"
+          htmlFor="repoURL"
+          key="repoURL"
+          className="apply-text"
+        >
+          Repository URL
+          <Input
+            required={true}
+            id="repoURL"
+            type="repoURL"
+            name="repoURL"
+            aria-label="The URL of your project repository"
+            value={repo}
+            placeholder="https://github.com/algolia/docsearch | https://gitlab.com/gitlab-org/gitlab"
+            onChange={handleSetRepo}
+          />
+        </LabelText>
+
+        <Text small={true} className="uil-pv-8 uil-d-block apply-text">
+          We will use this link to determine if your project is open-source.
+        </Text>
+
         <div className="uil-ph-32 uil-d-flex uil-fxd-column">
           <LabelText
             className="uil-pt-12 apply-text"
@@ -228,9 +255,14 @@ function ApplyForm() {
 
         <Text small={true} className="uil-ta-center">
           <strong>
-            Only apply if you don't have a DocSearch application yet.
+            Only apply if you don't have a DocSearch application yet. DocSearch
+            offers best effort support, make sure to first read the
+            documentation and the GitHub issues.
           </strong>{' '}
-          If you have any issue, please contact us at support@algolia.com
+          Ultimately, you can reach out via{' '}
+          <InlineLink href="https://www.algolia.com/support/">
+            our support page.
+          </InlineLink>
         </Text>
       </form>
     </Card>

@@ -15,7 +15,7 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
     organizationName: 'Algolia',
     projectName: 'DocSearch',
     onBrokenLinks: 'throw',
-    onBrokenMarkdownLinks: 'warn',
+    onBrokenMarkdownLinks: 'throw',
     presets: [
       [
         '@docusaurus/preset-classic',
@@ -97,7 +97,7 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
                 },
                 {
                   label: 'FAQ',
-                  to: 'docs/faq',
+                  to: 'docs/docsearch-program',
                 },
                 {
                   label: 'DocSearch v3',

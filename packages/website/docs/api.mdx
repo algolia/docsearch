@@ -4,6 +4,7 @@ title: API Reference
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 :::info
 
@@ -121,7 +122,7 @@ Learn more on the [Navigator API][11] documentation.
 
 > `type: Partial<DocSearchTranslations>` | `default: docSearchTranslations` | **optional**
 
-Allow translations of any raw text present in the DocSearch button or modal components.
+Allow translations of any raw text and aria-labels present in the DocSearch button or modal components.
 
 <details><summary>docSearchTranslations</summary>
 <div>
@@ -153,15 +154,19 @@ const translations: DocSearchTranslations = {
     },
     footer: {
       selectText: 'to select',
+      selectKeyAriaLabel: 'Enter key',
       navigateText: 'to navigate',
+      navigateUpKeyAriaLabel: 'Arrow up',
+      navigateDownKeyAriaLabel: 'Arrow down',
       closeText: 'to close',
+      closeKeyAriaLabel: 'Escape key',
       searchByText: 'Search by',
     },
     noResultsScreen: {
       noResultsText: 'No results for',
       suggestedQueryText: 'Try searching for',
-      openIssueText: 'Believe this query should return results?',
-      openIssueLinkText: 'Let us know',
+      reportMissingResultsText: 'Believe this query should return results?',
+      reportMissingResultsLinkText: 'Let us know.',
     },
   },
 };
@@ -169,6 +174,66 @@ const translations: DocSearchTranslations = {
 
 </div>
 </details>
+
+## `getMissingResultsUrl`
+
+> `type: ({ query: string }) => string` | **optional**
+
+Function to return the URL of your documentation repository.
+
+```js
+docsearch({
+  // ...
+  getMissingResultsUrl({ query }) {
+    return `https://github.com/algolia/docsearch/issues/new?title=${query}`;
+  },
+});
+```
+
+When provided, an informative message wrapped with your link will be displayed on no results searches. The default text can be changed using the [translations](#translations) property.
+
+<div className="uil-ta-center">
+  <img
+    src={useBaseUrl('img/assets/noResultsScreen.png')}
+    alt="No results screen with informative message"
+  />
+</div>
+
+## `resultsFooterComponent`
+
+> `type: ({ state }) => JSX.Element` | **optional**
+
+The component to display below the search results.
+
+You get access to the [current state](https://github.com/algolia/autocomplete/blob/next/packages/autocomplete-core/src/types/AutocompleteState.ts) which allows you to retrieve the number of hits returned, the query etc.
+
+[You can find a working example without JSX in this sandbox](https://codesandbox.io/s/docsearch-v3-resultsfootercomponent-without-jsx-jperd5).
+
+```js
+docsearch({
+  // ...
+  resultsFooterComponent({ state }) {
+    return {
+      // The HTML `tag`
+      type: 'a',
+      ref: undefined,
+      constructor: undefined,
+      key: state.query,
+      // Its props
+      props: {
+        href: 'https://docsearch.algolia.com/apply',
+        target: '_blank',
+        onClick: (event) => {
+          console.log(event);
+        },
+        // Raw text rendered in the HTML element
+        children: `${state.context.nbHits} hits found!`,
+      },
+      __v: null,
+    };
+  },
+});
+```
 
 </TabItem>
 
@@ -260,7 +325,7 @@ Learn more on the [Navigator API][11] documentation.
 
 > `type: Partial<DocSearchTranslations>` | `default: docSearchTranslations` | **optional**
 
-Allow translations of any raw text present in the DocSearch button or modal components.
+Allow translations of any raw text and aria-labels present in the DocSearch button or modal components.
 
 <details><summary>docSearchTranslations</summary>
 <div>
@@ -292,15 +357,19 @@ const translations: DocSearchTranslations = {
     },
     footer: {
       selectText: 'to select',
+      selectKeyAriaLabel: 'Enter key',
       navigateText: 'to navigate',
+      navigateUpKeyAriaLabel: 'Arrow up',
+      navigateDownKeyAriaLabel: 'Arrow down',
       closeText: 'to close',
+      closeKeyAriaLabel: 'Escape key',
       searchByText: 'Search by',
     },
     noResultsScreen: {
       noResultsText: 'No results for',
       suggestedQueryText: 'Try searching for',
-      openIssueText: 'Believe this query should return results?',
-      openIssueLinkText: 'Let us know',
+      reportMissingResultsText: 'Believe this query should return results?',
+      reportMissingResultsLinkText: 'Let us know.',
     },
   },
 };
@@ -308,6 +377,49 @@ const translations: DocSearchTranslations = {
 
 </div>
 </details>
+
+## `getMissingResultsUrl`
+
+> `type: ({ query: string }) => string` | **optional**
+
+Function to return the URL of your documentation repository.
+
+```jsx
+<DocSearch
+  // ...
+  getMissingResultsUrl={({ query }) => {
+    return `https://github.com/algolia/docsearch/issues/new?title=${query}`;
+  }}
+/>
+```
+
+When provided, an informative message wrapped with your link will be displayed on no results searches. The default text can be changed using the [translations](#translations) property.
+
+<div className="uil-ta-center">
+  <img
+    src={useBaseUrl('img/assets/noResultsScreen.png')}
+    alt="No results screen with informative message"
+  />
+</div>
+
+## `resultsFooterComponent`
+
+> `type: ({ state }) => JSX.Element` | **optional**
+
+The component to display below the search results.
+
+You get access to the [current state](https://github.com/algolia/autocomplete/blob/next/packages/autocomplete-core/src/types/AutocompleteState.ts) which allows you to retrieve the number of hits returned, the query etc.
+
+[You can find a working example in this sandbox](https://codesandbox.io/s/docsearch-v3-resultsfootercomponent-wzie9y).
+
+```jsx
+<DocSearch
+  // ...
+  resultsFooterComponent={({ state }) => {
+    return <h1>{state.context.nbHits} hits found</h1>;
+  }}
+/>
+```
 
 </TabItem>
 

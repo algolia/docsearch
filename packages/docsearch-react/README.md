@@ -5,15 +5,15 @@ React package for [DocSearch](http://docsearch.algolia.com/), the best search ex
 ## Installation
 
 ```bash
-yarn add @docsearch/react@alpha
+yarn add @docsearch/react@3
 # or
-npm install @docsearch/react@alpha
+npm install @docsearch/react@3
 ```
 
 If you don’t want to use a package manager, you can use a standalone endpoint:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/react@alpha"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/react@3"></script>
 ```
 
 ## Get started
