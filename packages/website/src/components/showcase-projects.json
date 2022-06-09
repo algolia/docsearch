@@ -243,5 +243,10 @@
     "name": "Vite",
     "image": "img/logos/vite.svg",
     "href": "https://vitejs.dev/"
+  },
+  {
+    "name": "Buf",
+    "image": "img/logos/buf.png",
+    "href": "https://docs.buf.build"
   }
 ]
