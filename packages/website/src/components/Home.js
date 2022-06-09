@@ -485,8 +485,8 @@ function Home() {
                           </h5>
                           <p className="mt-2 text-base leading-6 text-description">
                             The modal experience leverages behavior of most
-                            popular Integrated Developement Environements (IDEs) or
-                            native experience on mobile. An opaque layer is
+                            popular Integrated Developement Environements (IDEs)
+                            or native experience on mobile. An opaque layer is
                             making sure we keep the context of the documentation
                             but remove all visual pollution.
                           </p>
@@ -731,9 +731,10 @@ function Home() {
                       </h4>
                       <p className="mt-2 text-base leading-6 text-description">
                         We have released this version with our best efforts on
-                        addressing accessibility issues and we are willing to make
-                        further changes. We'd like to work closely with an expert in 
-                        accessibility. Please contact us if you are interested.
+                        addressing accessibility issues and we are willing to
+                        make further changes. We'd like to work closely with an
+                        expert in accessibility. Please contact us if you are
+                        interested.
                       </p>
                     </div>
                   </div>
