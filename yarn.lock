@@ -2,17 +2,17 @@
 # yarn lockfile v1
 
 
-"@algolia/autocomplete-core@1.6.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-core/-/autocomplete-core-1.6.3.tgz#76832fffb6405ac2c87bac5a040b8a31a1cdef80"
-  integrity sha512-dqQqRt01fX3YuVFrkceHsoCnzX0bLhrrg8itJI1NM68KjrPYQPYsE+kY8EZTCM4y8VDnhqJErR73xe/ZsV+qAA==
+"@algolia/autocomplete-core@1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-core/-/autocomplete-core-1.7.0.tgz#5200eb598359e7db343dd75157fe592a558ce867"
+  integrity sha512-WPqUVw3mplavXgZjvwZ7UuOzIqkCGvgafZ6vlBxcWfJS4fSpMNA5oUyke4GeLPvAKxVtotYtbAEPPwDwpLK7ZA==
   dependencies:
-    "@algolia/autocomplete-shared" "1.6.3"
+    "@algolia/autocomplete-shared" "1.7.0"
 
-"@algolia/autocomplete-shared@1.6.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-shared/-/autocomplete-shared-1.6.3.tgz#52085ce89a755977841ed0a463aa31ce8f1dea97"
-  integrity sha512-UV46bnkTztyADFaETfzFC5ryIdGVb2zpAoYgu0tfcuYWjhg1KbLXveFffZIrGVoboqmAk1b+jMrl6iCja1i3lg==
+"@algolia/autocomplete-shared@1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-shared/-/autocomplete-shared-1.7.0.tgz#5c859f67c45bd96f1e422c580b5607a0ee849cfa"
+  integrity sha512-2m6+q3xqHSFaJuxZBExdFvz1GPyhMp5XphppnxKcnOjuPZWJysiaBDKi9ZlsLsWEXl/tqlf73sJ7xd9ggw8fvQ==
 
 "@algolia/cache-browser-local-storage@4.11.0":
   version "4.11.0"
