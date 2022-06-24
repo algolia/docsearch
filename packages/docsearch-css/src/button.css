@@ -56,8 +56,9 @@
   height: 18px;
   justify-content: center;
   margin-right: 0.4em;
-  padding-bottom: 2px;
   position: relative;
+  padding: 0px 0px 2px 0px;
+  border: 0px;
   top: -1px;
   width: 20px;
 }

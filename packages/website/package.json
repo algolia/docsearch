@@ -1,6 +1,6 @@
 {
   "name": "@docsearch/website",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "private": true,
   "homepage": "https://docsearch.algolia.com/",
   "scripts": {
@@ -17,9 +17,9 @@
   },
   "dependencies": {
     "@algolia/ui-library": "4.0.0-beta.71",
-    "@docsearch/react": "3.0.0",
-    "@docusaurus/core": "2.0.0-beta.17",
-    "@docusaurus/preset-classic": "2.0.0-beta.17",
+    "@docsearch/react": "3.1.0",
+    "@docusaurus/core": "2.0.0-beta.20",
+    "@docusaurus/preset-classic": "2.0.0-beta.20",
     "@mdx-js/react": "1.6.22",
     "clsx": "1.1.1",
     "file-loader": "6.2.0",
@@ -28,8 +28,8 @@
     "postcss-import": "14.0.2",
     "postcss-preset-env": "7.2.0",
     "prism-react-renderer": "1.2.1",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
     "tailwind-loader": "file:plugins/tailwind-loader",
     "url-loader": "4.1.1"
   },
