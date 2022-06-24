@@ -29,11 +29,11 @@ export const DocSearchButton = React.forwardRef<
     typeof ACTION_KEY_APPLE | typeof ACTION_KEY_DEFAULT | null
   >(null);
 
-  useEffect(
-    () =>
-      isAppleDevice() ? setKey(ACTION_KEY_APPLE) : setKey(ACTION_KEY_DEFAULT),
-    []
-  );
+  useEffect(() => {
+    if (typeof navigator !== 'undefined') {
+      isAppleDevice() ? setKey(ACTION_KEY_APPLE) : setKey(ACTION_KEY_DEFAULT);
+    }
+  }, []);
 
   return (
     <button
