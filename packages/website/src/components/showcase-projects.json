@@ -248,5 +248,10 @@
     "name": "Markdoc",
     "image": "img/logos/markdoc.svg",
     "href": "https://markdoc.io/"
+  },
+  {
+    "name": "Remix",
+    "image": "img/logos/remix.svg",
+    "href": "https://remix.run"
   }
 ]
