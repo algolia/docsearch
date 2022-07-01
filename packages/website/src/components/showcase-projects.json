@@ -248,5 +248,10 @@
     "name": "Markdoc",
     "image": "img/logos/markdoc.svg",
     "href": "https://markdoc.io/"
+  },
+  {
+    "name": "Flowbite",
+    "image": "img/logos/flowbite.svg",
+    "href": "https://flowbite.com/docs/getting-started/introduction/"
   }
 ]
