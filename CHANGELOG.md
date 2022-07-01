@@ -1,3 +1,11 @@
+## [3.1.1](https://github.com/algolia/docsearch/compare/v3.1.0...v3.1.1) (2022-06-30)
+
+### Bug Fixes
+
+- **js:** use outDir to avoid ambient type definition creation ([#1396](https://github.com/algolia/docsearch/issues/1396)) ([4c924bc](https://github.com/algolia/docsearch/commit/4c924bc3c19c295d24ef13ccffd58ae51a37b68f))
+- **searchbutton:** fix react production hydration error ([#1384](https://github.com/algolia/docsearch/issues/1384)) ([448192e](https://github.com/algolia/docsearch/commit/448192e07b482724e581a0181d85e871ec27befa))
+- **deps:** bump and fix autocomplete deps ([#1416](https://github.com/algolia/docsearch/issues/1416)) ([448192e](https://github.com/algolia/docsearch/commit/d7be594fc62c8ee8573dbaf5ffad3f4bb9149002))
+
 # [3.1.0](https://github.com/algolia/docsearch/compare/v3.0.0...v3.1.0) (2022-05-18)
 
 ### Bug Fixes
