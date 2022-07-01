@@ -253,5 +253,10 @@
     "name": "Remix",
     "image": "img/logos/remix.svg",
     "href": "https://remix.run/docs"
+  },
+  {
+    "name": "Flowbite",
+    "image": "img/logos/flowbite.svg",
+    "href": "https://flowbite.com/docs/getting-started/introduction/"
   }
 ]
