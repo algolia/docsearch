@@ -105,6 +105,6 @@
     "ts-jest": "28.0.2",
     "typescript": "4.7.3",
     "watch": "1.0.2",
-    "webpack": "4.44.1"
+    "webpack": "5.73.0"
   }
 }
