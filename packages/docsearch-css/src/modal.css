@@ -556,7 +556,7 @@ svg.DocSearch-Hit-Select-Icon {
 }
 
 /* Responsive */
-@media (max-width: 750px) {
+@media (max-width: var(--docsearch-breakpoint)) {
   :root {
     --docsearch-spacing: 10px;
     --docsearch-footer-height: 40px;
