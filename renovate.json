@@ -9,6 +9,5 @@
       "rangeStrategy": "replace"
     }
   ],
-  "prHourlyLimit": 20,
-  "prConcurrentLimit": 50
+  "prHourlyLimit": 20
 }
