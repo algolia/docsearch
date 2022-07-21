@@ -165,11 +165,11 @@ function ApplyForm() {
           <Input
             required={true}
             id="repoURL"
-            type="repoURL"
+            type="url"
             name="repoURL"
             aria-label="The URL of your project repository"
             value={repo}
-            placeholder="https://github.com/algolia/docsearch | https://gitlab.com/gitlab-org/gitlab"
+            placeholder="https://github.com/algolia/docsearch, https://gitlab.com/gitlab-org/gitlab, etc..."
             onChange={handleSetRepo}
           />
         </LabelText>
