@@ -332,7 +332,7 @@ export function DocSearchModal({
   }, []);
 
   React.useEffect(() => {
-    const isMobileMediaQuery = window.matchMedia('(max-width: 750px)');
+    const isMobileMediaQuery = window.matchMedia('(max-width: 768px)');
 
     if (isMobileMediaQuery.matches) {
       snippetLength.current = 5;
