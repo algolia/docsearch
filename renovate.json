@@ -1,10 +1,14 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:js-lib", "algolia"],
+  "baseBranches": ["chore/renovateBaseBranch"],
   "packageRules": [
     {
       "packagePatterns": ["^@types"],
       "depTypeList": ["devDependencies"],
       "rangeStrategy": "replace"
     }
-  ]
+  ],
+  "prHourlyLimit": 20,
+  "prConcurrentLimit": 50
 }
