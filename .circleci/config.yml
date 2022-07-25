@@ -38,12 +38,12 @@ aliases:
 defaults: &defaults
   working_directory: ~/docsearch
   docker:
-    - image: cimg/node:16.13.1
+    - image: cimg/node:16.14.2
 
 cypress: &cypress
   working_directory: ~/docsearch
   docker:
-    - image: cypress/browsers:node16.13.2-chrome100-ff98
+    - image: cypress/browsers:node16.14.0-chrome99-ff97
       environment:
         ## this enables colors in the output
         TERM: xterm
@@ -67,7 +67,6 @@ jobs:
           name: Build and Size
           command: |
             yarn run build
-            yarn run test:size
       - run:
           name: Move dist folders to workspace
           command: |
@@ -110,6 +109,19 @@ jobs:
       - run:
           name: Type checking
           command: yarn run test:types
+  test_size:
+    <<: *defaults
+    steps:
+      - checkout
+      - *attach_workspace
+      - run: *install_yarn_version
+      - restore_cache: *restore_yarn_cache
+      - run: *run_yarn_install
+      - save_cache: *save_yarn_cache
+      - run: *restore_dist_folders
+      - run:
+          name: Size checking
+          command: yarn run test:size
   test_unit:
     <<: *defaults
     steps:
@@ -159,6 +171,9 @@ workflows:
           requires:
             - build
       - test_types:
+          requires:
+            - build
+      - test_size:
           requires:
             - build
       - test_unit:
