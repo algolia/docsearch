@@ -67,7 +67,6 @@ jobs:
           name: Build and Size
           command: |
             yarn run build
-            yarn run test:size
       - run:
           name: Move dist folders to workspace
           command: |
