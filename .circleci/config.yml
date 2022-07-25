@@ -43,7 +43,7 @@ defaults: &defaults
 cypress: &cypress
   working_directory: ~/docsearch
   docker:
-    - image: cypress/browsers:node16.14.2-slim-chrome100-ff99-edge
+    - image: cypress/browsers:node16.14.0-chrome99-ff97
       environment:
         ## this enables colors in the output
         TERM: xterm
