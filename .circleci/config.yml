@@ -110,6 +110,19 @@ jobs:
       - run:
           name: Type checking
           command: yarn run test:types
+  test_size:
+    <<: *defaults
+    steps:
+      - checkout
+      - *attach_workspace
+      - run: *install_yarn_version
+      - restore_cache: *restore_yarn_cache
+      - run: *run_yarn_install
+      - save_cache: *save_yarn_cache
+      - run: *restore_dist_folders
+      - run:
+          name: Size checking
+          command: yarn run test:size
   test_unit:
     <<: *defaults
     steps:
@@ -159,6 +172,9 @@ workflows:
           requires:
             - build
       - test_types:
+          requires:
+            - build
+      - test_size:
           requires:
             - build
       - test_unit:
