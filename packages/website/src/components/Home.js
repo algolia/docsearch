@@ -8,15 +8,15 @@ import showcaseProjects from './showcase-projects.json';
 
 function Home() {
   const { withBaseUrl } = useBaseUrlUtils();
-  const { isDarkTheme } = useColorMode();
+  const { colorMode } = useColorMode();
 
   React.useEffect(() => {
-    if (isDarkTheme) {
+    if (colorMode === 'dark') {
       document.querySelector('html').classList.add('dark');
     } else {
       document.querySelector('html').classList.remove('dark');
     }
-  }, [isDarkTheme]);
+  }, [colorMode]);
 
   function Header() {
     return (
@@ -416,7 +416,9 @@ function Home() {
                   className="relative mx-auto rounded-lg shadow-lg image-rendering-crisp"
                   src={withBaseUrl(
                     `img/assets/${
-                      isDarkTheme ? 'docsearch-shadow-dark' : 'docsearch-shadow'
+                      colorMode === 'dark'
+                        ? 'docsearch-shadow-dark'
+                        : 'docsearch-shadow'
                     }.png`
                   )}
                   alt="docsearch-modal"
