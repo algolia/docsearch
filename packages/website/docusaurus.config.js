@@ -25,7 +25,7 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
             path: 'docs',
             sidebarPath: 'sidebars.js',
             editUrl:
-              'https://github.com/algolia/docsearch/edit/next/packages/website/',
+              'https://github.com/algolia/docsearch/edit/main/packages/website/',
             versions: {
               current: {
                 label: 'current',
