@@ -15,5 +15,5 @@ jobs:
           github-token: ${{ secrets.ALGOLIA_BOT_TOKEN }}
           repo-owner: algolia
           repo-name: docsearch
-          branch-base: next
+          branch-base: main
           pull-request-title: 'chore(deps): dependencies'
