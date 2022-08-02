@@ -1,3 +1,19 @@
+# [3.2.0](https://github.com/algolia/docsearch/compare/v3.1.1...v3.2.0) (2022-08-02)
+
+
+### Bug Fixes
+
+* dependencies 2022-07-25 ([#1451](https://github.com/algolia/docsearch/issues/1451)) ([2c64362](https://github.com/algolia/docsearch/commit/2c64362067376a76575b7b5131972f71c920a406))
+* dependencies 2022-08-01 ([#1471](https://github.com/algolia/docsearch/issues/1471)) ([8f67c47](https://github.com/algolia/docsearch/commit/8f67c474881c088ae5a8c1595fa844c210940140))
+* **form:** validate URL correctly ([26b0af9](https://github.com/algolia/docsearch/commit/26b0af98e01b36e5238ab8e2b1ba9d5212a1e1fe))
+
+
+### Features
+
+* **styles:** set medium breakpoint to standarized value ([#1446](https://github.com/algolia/docsearch/issues/1446)) ([8e2e90e](https://github.com/algolia/docsearch/commit/8e2e90e980b03e99ec7ae3231dbe79e44db643da))
+
+
+
 ## [3.1.1](https://github.com/algolia/docsearch/compare/v3.1.0...v3.1.1) (2022-06-30)
 
 ### Bug Fixes
