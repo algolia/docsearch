@@ -10,7 +10,7 @@ Opening an issue is very effective way to contribute because many users might al
 
 Before reporting an issue, first check that there is not an already open issue for the same topic using the [issues page](https://github.com/algolia/docsearch/issues). Don't hesitate to thumb up an issue that corresponds to the problem you have.
 
-Another element that will help us go faster at solving the issue is to provide a reproducible test case. We recommend to [use this CodeSandbox template](https://codesandbox.io/s/github/algolia/docsearch/tree/main/examples/js).
+Another element that will help us go faster at solving the issue is to provide a reproducible test case. We recommend to [use this CodeSandbox template](https://codesandbox.io/s/github/algolia/docsearch/tree/main/examples/demo).
 
 ## Code contribution
 
@@ -59,7 +59,7 @@ Some examples of valid commit messages (used as first lines):
 
 To run this project, you will need:
 
-- Node.js ≥ 12 – [nvm](https://github.com/creationix/nvm#install-script) is recommended
+- Node.js ≥ 16 – [nvm](https://github.com/creationix/nvm#install-script) is recommended
 - [Yarn](https://yarnpkg.com)
 
 ## Release
