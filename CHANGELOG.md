@@ -1,3 +1,23 @@
+# [3.2.0](https://github.com/algolia/docsearch/compare/v3.1.1...v3.2.0) (2022-08-02)
+
+### Bug Fixes
+
+- dependencies 2022-07-25 ([#1451](https://github.com/algolia/docsearch/issues/1451)) ([2c64362](https://github.com/algolia/docsearch/commit/2c64362067376a76575b7b5131972f71c920a406))
+- dependencies 2022-08-01 ([#1471](https://github.com/algolia/docsearch/issues/1471)) ([8f67c47](https://github.com/algolia/docsearch/commit/8f67c474881c088ae5a8c1595fa844c210940140))
+- **form:** validate URL correctly ([26b0af9](https://github.com/algolia/docsearch/commit/26b0af98e01b36e5238ab8e2b1ba9d5212a1e1fe))
+
+### Features
+
+- **styles:** set medium breakpoint to standarized value ([#1446](https://github.com/algolia/docsearch/issues/1446)) ([8e2e90e](https://github.com/algolia/docsearch/commit/8e2e90e980b03e99ec7ae3231dbe79e44db643da))
+
+## [3.1.1](https://github.com/algolia/docsearch/compare/v3.1.0...v3.1.1) (2022-06-30)
+
+### Bug Fixes
+
+- **js:** use outDir to avoid ambient type definition creation ([#1396](https://github.com/algolia/docsearch/issues/1396)) ([4c924bc](https://github.com/algolia/docsearch/commit/4c924bc3c19c295d24ef13ccffd58ae51a37b68f))
+- **searchbutton:** fix react production hydration error ([#1384](https://github.com/algolia/docsearch/issues/1384)) ([448192e](https://github.com/algolia/docsearch/commit/448192e07b482724e581a0181d85e871ec27befa))
+- **deps:** bump and fix autocomplete deps ([#1416](https://github.com/algolia/docsearch/issues/1416)) ([448192e](https://github.com/algolia/docsearch/commit/d7be594fc62c8ee8573dbaf5ffad3f4bb9149002))
+
 # [3.1.0](https://github.com/algolia/docsearch/compare/v3.0.0...v3.1.0) (2022-05-18)
 
 ### Bug Fixes

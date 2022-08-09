@@ -5,8 +5,8 @@
     "href": "https://getbootstrap.com/docs/5.1/getting-started/introduction/"
   },
   {
-    "name": "Material UI",
-    "image": "img/logos/material-ui.svg",
+    "name": "MUI",
+    "image": "img/logos/mui.svg",
     "href": "https://mui.com"
   },
   {
@@ -248,5 +248,15 @@
     "name": "Markdoc",
     "image": "img/logos/markdoc.svg",
     "href": "https://markdoc.io/"
+  },
+  {
+    "name": "Remix",
+    "image": "img/logos/remix.svg",
+    "href": "https://remix.run/docs"
+  },
+  {
+    "name": "Flowbite",
+    "image": "img/logos/flowbite.svg",
+    "href": "https://flowbite.com/docs/getting-started/introduction/"
   }
 ]

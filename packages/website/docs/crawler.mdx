@@ -30,11 +30,9 @@ Ultimately, it is possible to set set the [`exclusionPatterns`](https://www.algo
 
 We've deprecated our legacy infrastructure, but you can still use it to [run your own instance](/docs/legacy/run-your-own) and plug it to [DocSearch v3](/docs/DocSearch-v3)!
 
-## Migration seems to have started, but I don't have received any emails
+## How to migrate
 
-All of the indices from the [Legacy infrastructure](/docs/legacy/required-configuration) have been migrated, please search for emails from `docsearch@algolia.com`. If you were not part of the previous `index` owners, or the maintainer has changed, you can request access via [our support page](https://www.algolia.com/support/).
-
-## What do I need to do to migrate?
+> Every owners should have received a migration email from `docsearch@algolia.com` with the details. If you were not part of the previous `index` owners, or the maintainer has changed, you can request access via [our support page](https://www.algolia.com/support/).
 
 All the steps are detailed in the email you've received, but in order to use the new infrastructure you need to:
 
@@ -85,6 +83,20 @@ You should use [the dedicated web interface][2] to make any changes to your inde
 ## Why do I see two Algolia apps in my dashboard?
 
 We did not remove access to the legacy DocSearch application (`BH4D9OD16A`) to give you the time to get familiar with our new infrastructure. `BH4D9OD16A` will remain available until the migration has been completed for all the DocSearch users.
+
+## Search yield no results
+
+If your search does not yield any results, but there is no error in [your browser developer tools](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_are_browser_developer_tools), there might be an issue with your index.
+
+Make sure that:
+
+1. [Your Crawler config](/docs/record-extractor) matches your website structure
+
+We provide [config templates](/docs/templates) for many website generators, but you can also use them as a base. To debug your selectors, we recommend using [the URL tester](/docs/manage-your-crawls/#url-tester).
+
+2. Your index settings are up to date (you'll see a banner in [the search preview](/docs/manage-your-crawls/#search-preview) if not)
+
+The Crawler only applies `index settings` at index creation index, to keep the Algolia dashboard as the source of truth. If you have drastically changed your config, or moved to a website generator, we recommend your to delete your index from the Algolia dashboard before starting a new crawl.
 
 ## Links related to the migration
 
