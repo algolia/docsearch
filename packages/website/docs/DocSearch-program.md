@@ -78,6 +78,18 @@ The information of the initially applied project is used everywhere when we depl
 
 This allow us to easily scope issues when reaching out for support.
 
+## Support
+
+We do not provide Algolia support for DocSearch, but for the products that are used by the program.
+
+Please make sure to **first read the documentation (or [the Algolia one](https://www.algolia.com/doc/)) before reaching out** and take a look at [the Algolia academy](https://academy.algolia.com/trainings).
+
+For issues related to:
+
+- The DocSearch library, please report it via [GitHub issues](https://github.com/algolia/docsearch/issues).
+- The Algolia Crawler, reach out [via the support page](https://algolia.com/support).
+- The Algolia Dashboard, reach out [via the support page](https://algolia.com/support).
+
 [1]: mailto:docsearch@algolia.com
 [2]: https://www.algolia.com/
 [3]: /docs/legacy/run-your-own
