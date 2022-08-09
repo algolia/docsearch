@@ -36,6 +36,9 @@ The environment in which your application is running.
 
 This is useful if you’re using DocSearch in a different context than window.
 
+</TabItem>
+</Tabs>
+
 ## `appId`
 
 > `type: string` | **required**
@@ -72,6 +75,16 @@ The [Algolia Search Parameters][7].
 
 Receives the items from the search response, and is called before displaying them. Should return a new array with the same shape as the original array. Useful for mapping over the items to transform, and remove or reorder them.
 
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', },
+    { label: 'React', value: 'react', }
+  ]
+}>
+<TabItem value="js">
+
 ```js
 docsearch({
   // ...
@@ -83,6 +96,25 @@ docsearch({
   },
 });
 ```
+
+</TabItem>
+
+<TabItem value="react">
+
+```jsx
+<DocSearch
+  // ...
+  transformItems={(items) => {
+    return items.map((item) => ({
+      ...item,
+      content: item.content.toUpperCase(),
+    }));
+  }}
+/>
+```
+
+</TabItem>
+</Tabs>
 
 ## `hitComponent`
 
@@ -181,6 +213,16 @@ const translations: DocSearchTranslations = {
 
 Function to return the URL of your documentation repository.
 
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', },
+    { label: 'React', value: 'react', }
+  ]
+}>
+<TabItem value="js">
+
 ```js
 docsearch({
   // ...
@@ -189,6 +231,22 @@ docsearch({
   },
 });
 ```
+
+</TabItem>
+
+<TabItem value="react">
+
+```jsx
+<DocSearch
+  // ...
+  getMissingResultsUrl={({ query }) => {
+    return `https://github.com/algolia/docsearch/issues/new?title=${query}`;
+  }}
+/>
+```
+
+</TabItem>
+</Tabs>
 
 When provided, an informative message wrapped with your link will be displayed on no results searches. The default text can be changed using the [translations](#translations) property.
 
@@ -208,6 +266,16 @@ The component to display below the search results.
 You get access to the [current state](https://github.com/algolia/autocomplete/blob/next/packages/autocomplete-core/src/types/AutocompleteState.ts) which allows you to retrieve the number of hits returned, the query etc.
 
 [You can find a working example without JSX in this sandbox](https://codesandbox.io/s/docsearch-v3-resultsfootercomponent-without-jsx-jperd5).
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', },
+    { label: 'React', value: 'react', }
+  ]
+}>
+<TabItem value="js">
 
 ```js
 docsearch({
@@ -239,179 +307,6 @@ docsearch({
 
 <TabItem value="react">
 
-## `appId`
-
-> `type: string` | **required**
-
-Your Algolia application ID.
-
-## `apiKey`
-
-> `type: string` | **required**
-
-Your Algolia Search API key.
-
-## `indexName`
-
-> `type: string` | **required**
-
-Your Algolia index name.
-
-## `placeholder`
-
-> `type: string` | `default: "Search docs" | **optional**
-
-The placeholder of the input of the DocSearch pop-up modal.
-
-## `searchParameters`
-
-> `type: SearchParameters` | **optional**
-
-The [Algolia Search Parameters][7].
-
-## `transformItems`
-
-> `type: function` | `default: items => items` | **optional**
-
-Receives the items from the search response, and is called before displaying them. Should return a new array with the same shape as the original array. Useful for mapping over the items to transform, and remove or reorder them.
-
-```jsx
-<DocSearch
-  // ...
-  transformItems={(items) => {
-    return items.map((item) => ({
-      ...item,
-      content: item.content.toUpperCase(),
-    }));
-  }}
-/>
-```
-
-## `hitComponent`
-
-> `type: ({ hit, children }) => JSX.Element` | `default: Hit` | **optional**
-
-The component to display each item.
-
-See the [default implementation][8].
-
-## `transformSearchClient`
-
-> `type: function` | `default: searchClient => searchClient` | **optional**
-
-Useful for transforming the [Algolia Search Client][10], for example to [debounce search queries][9]
-
-## `disableUserPersonalization`
-
-> `type: boolean` | `default: false` | **optional**
-
-Disable saving recent searches and favorites to the local storage.
-
-## `initialQuery`
-
-> `type: string` | **optional**
-
-The search input initial query.
-
-## `navigator`
-
-> `type: Navigator` | **optional**
-
-An implementation of [Algolia Autocomplete][1]’s Navigator API to redirect the user when opening a link.
-
-Learn more on the [Navigator API][11] documentation.
-
-## `translations`
-
-> `type: Partial<DocSearchTranslations>` | `default: docSearchTranslations` | **optional**
-
-Allow translations of any raw text and aria-labels present in the DocSearch button or modal components.
-
-<details><summary>docSearchTranslations</summary>
-<div>
-
-```ts
-const translations: DocSearchTranslations = {
-  button: {
-    buttonText: 'Search',
-    buttonAriaLabel: 'Search',
-  },
-  modal: {
-    searchBox: {
-      resetButtonTitle: 'Clear the query',
-      resetButtonAriaLabel: 'Clear the query',
-      cancelButtonText: 'Cancel',
-      cancelButtonAriaLabel: 'Cancel',
-    },
-    startScreen: {
-      recentSearchesTitle: 'Recent',
-      noRecentSearchesText: 'No recent searches',
-      saveRecentSearchButtonTitle: 'Save this search',
-      removeRecentSearchButtonTitle: 'Remove this search from history',
-      favoriteSearchesTitle: 'Favorite',
-      removeFavoriteSearchButtonTitle: 'Remove this search from favorites',
-    },
-    errorScreen: {
-      titleText: 'Unable to fetch results',
-      helpText: 'You might want to check your network connection.',
-    },
-    footer: {
-      selectText: 'to select',
-      selectKeyAriaLabel: 'Enter key',
-      navigateText: 'to navigate',
-      navigateUpKeyAriaLabel: 'Arrow up',
-      navigateDownKeyAriaLabel: 'Arrow down',
-      closeText: 'to close',
-      closeKeyAriaLabel: 'Escape key',
-      searchByText: 'Search by',
-    },
-    noResultsScreen: {
-      noResultsText: 'No results for',
-      suggestedQueryText: 'Try searching for',
-      reportMissingResultsText: 'Believe this query should return results?',
-      reportMissingResultsLinkText: 'Let us know.',
-    },
-  },
-};
-```
-
-</div>
-</details>
-
-## `getMissingResultsUrl`
-
-> `type: ({ query: string }) => string` | **optional**
-
-Function to return the URL of your documentation repository.
-
-```jsx
-<DocSearch
-  // ...
-  getMissingResultsUrl={({ query }) => {
-    return `https://github.com/algolia/docsearch/issues/new?title=${query}`;
-  }}
-/>
-```
-
-When provided, an informative message wrapped with your link will be displayed on no results searches. The default text can be changed using the [translations](#translations) property.
-
-<div className="uil-ta-center">
-  <img
-    src={useBaseUrl('img/assets/noResultsScreen.png')}
-    alt="No results screen with informative message"
-  />
-</div>
-
-## `resultsFooterComponent`
-
-> `type: ({ state }) => JSX.Element` | **optional**
-
-The component to display below the search results.
-
-You get access to the [current state](https://github.com/algolia/autocomplete/blob/next/packages/autocomplete-core/src/types/AutocompleteState.ts) which allows you to retrieve the number of hits returned, the query etc.
-
-[You can find a working example in this sandbox](https://codesandbox.io/s/docsearch-v3-resultsfootercomponent-wzie9y).
-
 ```jsx
 <DocSearch
   // ...
@@ -422,7 +317,6 @@ You get access to the [current state](https://github.com/algolia/autocomplete/bl
 ```
 
 </TabItem>
-
 </Tabs>
 
 [1]: https://www.algolia.com/doc/ui-libraries/autocomplete/introduction/what-is-autocomplete/
