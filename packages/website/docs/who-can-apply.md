@@ -30,6 +30,12 @@ We're receiving dozens of requests every day, and while we strive to answer them
 
 - 🙁 If we need to render your website in the browser through JavaScript, it means that we'll have to crawl it through a much slower browser emulation. We highly recommend that you put in place server-side rendering for the useful textual content.
 
+## Process duration
+
+As stated in [the priority section](#priority), we receive a lot of requests every day. To ensure they all match [our checklist](#the-checklist), we manually review each of them, which means it can take a bit of time before you get an answer from us.
+
+The full process (from application to deployment) can take **up to two weeks**, applying multiple times or opening issues **only slows the process**, please be patient 🙏.
+
 [1]: /docs/DocSearch-v3
 [2]: /apply
 [3]: /docs/legacy/run-your-own
