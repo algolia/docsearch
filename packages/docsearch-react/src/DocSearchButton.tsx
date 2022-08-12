@@ -16,7 +16,11 @@ const ACTION_KEY_DEFAULT = 'Ctrl' as const;
 const ACTION_KEY_APPLE = '⌘' as const;
 
 function isAppleDevice() {
-  return /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
+  return /(Mac|iPhone|iPod|iPad)/i.test(
+    // `userAgentData` is not supported everywhere and still experimental
+    // so types are not provided yet.
+    (navigator as any)?.userAgentData?.platform || navigator.platform
+  );
 }
 
 export const DocSearchButton = React.forwardRef<
