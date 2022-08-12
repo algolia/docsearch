@@ -159,8 +159,11 @@ jobs:
       - save_cache: *save_yarn_cache
       - run: *restore_dist_folders
       - run:
-          name: Cypress test Actions
-          command: yarn run cy:run
+          name: Cypress test on Chrome
+          command: yarn run cy:run:chrome
+      - run:
+          name: Cypress test on Firefox
+          command: yarn run cy:run:firefox
 
 workflows:
   version: 2

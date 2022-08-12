@@ -68,6 +68,7 @@ module.exports = {
       },
       rules: {
         'jest/expect-expect': 0,
+        'jest/valid-expect': 0,
         'spaced-comment': 0,
         '@typescript-eslint/triple-slash-reference': 0,
       },
