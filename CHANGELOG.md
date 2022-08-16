@@ -1,3 +1,10 @@
+## [3.2.1](https://github.com/algolia/docsearch/compare/v3.2.0...v3.2.1) (2022-08-16)
+
+### Bug Fixes
+
+* **deps:** make react an optional peer dependency in @docsearch/react ([#1273](https://github.com/algolia/docsearch/issues/1273)) ([eb44d0c](https://github.com/algolia/docsearch/commit/eb44d0c2b72f700b81cf1390539592156b2580b6))
+* dependencies 2022-08-08 ([#1480](https://github.com/algolia/docsearch/issues/1480)) ([587ccd1](https://github.com/algolia/docsearch/commit/587ccd1cf9ba5529c8c7ded3547e21849321a8d0))
+
 # [3.2.0](https://github.com/algolia/docsearch/compare/v3.1.1...v3.2.0) (2022-08-02)
 
 ### Bug Fixes
