@@ -65,6 +65,11 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
               to: 'docs/what-is-docsearch',
               position: 'left',
             },
+            {
+              label: 'Apply',
+              to: 'apply',
+              position: 'left',
+            },
             // right
             {
               type: 'docsVersionDropdown',

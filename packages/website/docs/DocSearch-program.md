@@ -63,6 +63,31 @@ Algolia apps come with a default search API key, which also allow you to list in
 
 When your application is deployed, we provide a search **ONLY** API key, scoped to your production index, so you don't have to worry disclosing it in the frontend.
 
+## Can I have multiple projects under the same Algolia application?
+
+We recommend having a single Algolia application per project. Please [apply](/apply) if you'd like to use DocSearch in an other project of yours.
+
+### Why ?
+
+The information of the initially applied project is used everywhere when we deploy your app:
+
+- The scope of your API keys
+- The name of your Algolia application/Crawler
+- The indices we generate
+- The allowed domains of your Crawler
+
+This allow us to easily scope issues when reaching out for support.
+
+## Support
+
+Please make sure to **first read the documentation (or [the Algolia one](https://www.algolia.com/doc/)) before reaching out** and take a look at [the Algolia academy](https://academy.algolia.com/trainings).
+
+We do not provide implementation support for DocSearch, but only for the products that are used by the program:
+
+- The DocSearch library, please report it via [GitHub issues](https://github.com/algolia/docsearch/issues).
+- The Algolia Crawler, reach out [via the support page](https://algolia.com/support).
+- The Algolia Dashboard, reach out [via the support page](https://algolia.com/support).
+
 [1]: mailto:docsearch@algolia.com
 [2]: https://www.algolia.com/
 [3]: /docs/legacy/run-your-own
