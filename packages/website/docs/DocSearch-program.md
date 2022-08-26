@@ -95,7 +95,7 @@ You can also take a look at [the Algolia academy](https://academy.algolia.com/tr
 
 :::
 
-Please be informed that while Algolia does not provide support for DocSearch itself, we can support the following requests:
+Please be informed that while Algolia does not provide support for DocSearch itself, we can support requests for the following products:
 
 - The Algolia Crawler, reach out [via the support page](https://algolia.com/support).
 - The Algolia Dashboard, reach out [via the support page](https://algolia.com/support).
