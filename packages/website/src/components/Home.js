@@ -133,9 +133,8 @@ function Home() {
                 Solve docs challenges with a search engine
               </h3>
               <p className="mt-4 max-w-3xl mx-auto text-center text-xl leading-7 text-description">
-                Reducing users’ efforts to get started on your product or to
-                resolve problems is the trick to smooth the learning curve.
-                DocSearch brings relevancy to the fingers of your users.
+                Docs are only helpful when your users can find answers easily.
+                Enter DocSearch.
               </p>
             </div>
 
@@ -160,13 +159,13 @@ function Home() {
                     </div>
                     <div className="ml-4">
                       <h4 className="text-lg leading-6 font-medium">
-                        Respect users efforts
+                        Made for open-source
                       </h4>
                       <p className="mt-2 text-base leading-6 text-description">
-                        First built to fulfill our own developers' needs,
-                        DocSearch quickly evolved as a successful community
-                        project. Over the years, the project kept on addressing
-                        the complex challenge of search for the open source
+                        Initially created to fulfill our own developers' needs,
+                        DocSearch quickly evolved into a successful community
+                        project. Over the years, we've explored new ways to
+                        address the complexities of search for the open-source
                         community.
                       </p>
                     </div>
@@ -193,13 +192,13 @@ function Home() {
                     </div>
                     <div className="ml-4">
                       <h4 className="text-lg leading-6 font-medium">
-                        Speak to all users
+                        Customizable and fast
                       </h4>
                       <p className="mt-2 text-base leading-6 text-description">
-                        DocSearch understands your data, the user input, the
-                        context and sends back instantly a fine selection of
-                        your content available with less interactions than any
-                        other method.
+                        DocSearch understands how the user input fits into the
+                        context of your project and instantly presents the most
+                        relevant content with fewer interactions than any other
+                        method.
                       </p>
                     </div>
                   </div>
@@ -225,7 +224,7 @@ function Home() {
                     </div>
                     <div className="ml-4">
                       <h4 className="text-lg leading-6 font-medium">
-                        Eliminate confusion
+                        Mobile design
                       </h4>
                       <p className="mt-2 text-base leading-6 text-description">
                         With a design very close to the native experience on
@@ -249,8 +248,9 @@ function Home() {
                   How it works
                 </h2>
                 <p className="mt-4 max-w-2xl text-xl leading-7 text-gray-500 lg:mx-auto">
-                  We scrape your documentation, configure the Algolia
-                  application and send you the snippet you'll have to integrate.
+                  We scrape your documentation or technical blog, configure the
+                  Algolia application and send you the snippet you'll have to
+                  integrate. It's that simple.
                 </p>
               </div>
             </div>
@@ -280,7 +280,7 @@ function Home() {
                         >
                           Algolia Crawler
                         </InlineLink>{' '}
-                        to index every section of your documentation.
+                        to index every section of your website.
                       </p>
                     </div>
                   </div>
@@ -298,8 +298,8 @@ function Home() {
                         2. Configuration
                       </h5>
                       <p className="mt-2 text-base leading-6 text-gray-600">
-                        You don’t need to configure any settings or even have an
-                        Algolia account. We take care of this automatically.
+                        You don't need to configure any settings or even have an
+                        Algolia account. We take care of this for you!
                       </p>
                     </div>
                   </div>
@@ -318,7 +318,8 @@ function Home() {
                       </h5>
                       <p className="mt-2 text-base leading-6 text-gray-600">
                         We'll send you a small snippet to integrate DocSearch to
-                        your website!
+                        your website and an invite to your fully configured
+                        Algolia application.
                       </p>
                     </div>
                   </div>
@@ -334,12 +335,12 @@ function Home() {
             <div className="relative mt-12 lg:mt-24 lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
               <div className="relative">
                 <h4 className="text-2xl leading-8 font-extrabold tracking-tight md:text-3xl md:leading-9">
-                  Anatomy of DocSearch
+                  Overview of DocSearch
                 </h4>
                 <p className="mt-3 text-lg leading-7 text-description">
-                  Search is a conversation so we used a modal dialog to ask for
-                  information that, when provided, significantly lessen users’
-                  effort to navigate through the results.
+                  Search doesn't have to be painful — when a user searches
+                  through your docs, they'll get a frictionless modal dialog to
+                  work in.
                 </p>
 
                 <ul className="mt-10">
@@ -400,10 +401,8 @@ function Home() {
                           Hierarchical display
                         </h5>
                         <p className="mt-2 text-base leading-6 text-description">
-                          When displaying the results it's important to get a
-                          sense of the documentation structure. DocSearch split
-                          your content in small chunks and the UI is returning
-                          this information to the user
+                          DocSearch organizes the search results into chunks
+                          that reflect how your documentation is structured.
                         </p>
                       </div>
                     </div>
@@ -449,10 +448,10 @@ function Home() {
                         </div>
                         <div className="ml-4">
                           <h5 className="text-lg leading-6 font-medium">
-                            Search shortcut
+                            Inputs and shortcuts
                           </h5>
                           <p className="mt-2 text-base leading-6 text-description">
-                            It looks almost similar to a search input but it’s a
+                            It looks almost similar to a search input but it's a
                             button. When you click/touch or use the keyboard
                             shortcut, it opens a modal dropdown and focuses the
                             search input.
@@ -541,11 +540,12 @@ function Home() {
                       </div>
                       <div className="ml-4">
                         <h5 className="text-lg leading-6 font-medium text-white">
-                          Fast & Relevant
+                          Highly efficient
                         </h5>
                         <p className="mt-2 text-base leading-6 text-gray-300">
-                          Most of our search queries take take less than 20ms to
-                          be processed.
+                          Most of our search queries take less than 20ms, so
+                          Algolia can run a new search on every keystroke and
+                          instantly highlight relevant content to your users.
                         </p>
                       </div>
                     </div>
@@ -606,11 +606,12 @@ function Home() {
                       </div>
                       <div className="ml-4">
                         <h5 className="text-lg leading-6 font-medium text-white">
-                          Typo tolerant
+                          Detailed and straightforward analytics
                         </h5>
                         <p className="mt-2 text-base leading-6 text-gray-300">
-                          Deliver relevant results, with robust out-of-the-box
-                          typo tolerance.
+                          Use our analytics to keep an eye on your search
+                          performance and to make sure that your users are
+                          finding what they're searching for.
                         </p>
                       </div>
                     </div>
@@ -636,12 +637,12 @@ function Home() {
                       </div>
                       <div className="ml-4">
                         <h5 className="text-lg leading-6 font-medium text-white">
-                          Powerful analytics
+                          Typo tolerant
                         </h5>
                         <p className="mt-2 text-base leading-6 text-gray-300">
-                          Undertstand how your search performs and ensure that
-                          your users are able to find what they’re searching
-                          for.
+                          Algolia knows what your users mean to search for right
+                          out-of-the-box, so they won't be spending time
+                          correcting typos.
                         </p>
                       </div>
                     </div>
@@ -657,7 +658,7 @@ function Home() {
           <div className="max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8">
             <div className="text-center">
               <h3 className="mt-2 text-3xl leading-8 font-extrabold tracking-tight md:text-4xl md:leading-10">
-                It’s all about keyboards
+                It's all about keyboards
               </h3>
               <p className="mt-4 max-w-3xl mx-auto text-center text-xl text-description lg:mx-auto">
                 Once users become familiar with a system they will become better
