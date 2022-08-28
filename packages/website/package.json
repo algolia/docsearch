@@ -16,7 +16,7 @@
     "write-heading-ids": "docusaurus write-heading-ids"
   },
   "dependencies": {
-    "@algolia/ui-library": "4.0.0-beta.71",
+    "@algolia/ui-library": "6.0.3",
     "@docsearch/react": "3.2.1",
     "@docusaurus/core": "2.0.1",
     "@docusaurus/preset-classic": "2.0.1",
