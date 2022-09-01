@@ -1,4 +1,5 @@
 # This file list code owners for the repository, or part of it.
 # See https://help.github.com/articles/about-code-owners/
 
-* @shortcuts @francoischalifour @events-records-connection
+* @shortcuts @francoischalifour
+* @algolia/events-records-connection
