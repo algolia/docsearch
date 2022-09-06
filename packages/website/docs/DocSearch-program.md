@@ -80,13 +80,27 @@ This allow us to easily scope issues when reaching out for support.
 
 ## Support
 
-Please make sure to **first read the documentation (or [the Algolia one](https://www.algolia.com/doc/)) before reaching out** and take a look at [the Algolia academy](https://academy.algolia.com/trainings).
+:::caution
 
-We do not provide implementation support for DocSearch, but only for the products that are used by the program:
+Please make sure to **first read the documentation before reaching out**.
 
-- The DocSearch library, please report it via [GitHub issues](https://github.com/algolia/docsearch/issues).
+Here are some links to help you:
+
+- [The Algolia Crawler documentation](https://www.algolia.com/doc/tools/crawler/getting-started/overview/)
+- [The Algolia Crawler FAQ](/docs/crawler)
+- [The DocSearch FAQ](/docs/DocSearch-program)
+- [The Algolia documentation](https://www.algolia.com/doc/)
+
+You can also take a look at [the Algolia academy](https://academy.algolia.com/trainings) to understand more about Algolia.
+
+:::
+
+Please be informed that while Algolia does not provide support for DocSearch itself, we can support requests for the following products:
+
 - The Algolia Crawler, reach out [via the support page](https://algolia.com/support).
 - The Algolia Dashboard, reach out [via the support page](https://algolia.com/support).
+
+For any issue related to [the DocSearch UI library](https://github.com/algolia/docsearch), please open a [GitHub issues](https://github.com/algolia/docsearch/issues).
 
 [1]: mailto:docsearch@algolia.com
 [2]: https://www.algolia.com/
