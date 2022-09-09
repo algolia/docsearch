@@ -4,7 +4,9 @@ title: Config templates
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-To help you create the best search experience for your users, we provide config templates for multiple websites generators. If you'd like to add a new template to our list, or believe we should update an existing one, please [send us an email][1] or [open a pull request][2]
+To help you create the best search experience for your users, we provide config templates for multiple websites generators. If you'd like to add a new template to our list, or believe we should update an existing one, please [send us an email][1] or [open a pull request][2].
+
+> If you want to better understand the default parameters of the configs below, you can take a look at the [Crawler documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/).
 
 ## From the Crawler UI
 
@@ -28,6 +30,7 @@ new Crawler({
   apiKey: 'YOUR_API_KEY',
   indexPrefix: 'crawler_',
   rateLimit: 8,
+  maxDepth: 10,
   startUrls: ['https://YOUR_WEBSITE_URL'],
   renderJavaScript: false,
   sitemaps: [],
@@ -126,6 +129,7 @@ new Crawler({
   appId: 'YOUR_APP_ID',
   apiKey: 'YOUR_API_KEY',
   rateLimit: 8,
+  maxDepth: 10,
   startUrls: [
     'https://YOUR_WEBSITE_URL/docs/',
     'https://YOUR_WEBSITE_URL/',
@@ -281,6 +285,7 @@ new Crawler({
   appId: 'YOUR_APP_ID',
   apiKey: 'YOUR_API_KEY',
   rateLimit: 8,
+  maxDepth: 10,
   startUrls: ['https://YOUR_WEBSITE_URL/'],
   sitemaps: ['https://YOUR_WEBSITE_URL/sitemap.xml'],
   ignoreCanonicalTo: true,
@@ -394,6 +399,7 @@ new Crawler({
   appId: 'YOUR_APP_ID',
   apiKey: 'YOUR_API_KEY',
   rateLimit: 8,
+  maxDepth: 10,
   startUrls: ['https://YOUR_WEBSITE_URL/'],
   sitemaps: ['https://YOUR_WEBSITE_URL/sitemap.xml'],
   ignoreCanonicalTo: false,
@@ -504,6 +510,7 @@ new Crawler({
   appId: 'YOUR_APP_ID',
   apiKey: 'YOUR_API_KEY',
   rateLimit: 8,
+  maxDepth: 10,
   startUrls: ['https://YOUR_WEBSITE_URL/'],
   sitemaps: ['https://YOUR_WEBSITE_URL/sitemap.xml'],
   ignoreCanonicalTo: false,
@@ -594,6 +601,7 @@ new Crawler({
   appId: 'YOUR_APP_ID',
   apiKey: 'YOUR_API_KEY',
   rateLimit: 8,
+  maxDepth: 10,
   startUrls: ['https://YOUR_WEBSITE_URL/'],
   sitemaps: ['https://YOUR_WEBSITE_URL/sitemap.xml'],
   discoveryPatterns: ['https://YOUR_WEBSITE_URL/**'],
@@ -683,6 +691,7 @@ new Crawler({
   appId: 'YOUR_APP_ID',
   apiKey: 'YOUR_API_KEY',
   rateLimit: 8,
+  maxDepth: 10,
   startUrls: [
     'https://YOUR_WEBSITE_URL/index.html',
     'https://YOUR_WEBSITE_URL/',
