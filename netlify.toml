@@ -1,7 +1,7 @@
 [build]
   command="yarn build"
   publish="packages/website/build"
-  ignore="git diff --quiet $COMMIT_REF $CACHED_COMMIT_REF -- packages/website/"
+  ignore="git diff --quiet $COMMIT_REF $CACHED_COMMIT_REF -- packages/website/ packages/docsearch-react/"
 
 [build.environment]
   YARN_VERSION = "1.22.5"
