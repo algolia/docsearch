@@ -201,7 +201,7 @@ This parameter allow you to boost records built from the current `pathsToMatch`.
 },
 ```
 
-### Reduce the number records
+### Reduce the number of records
 
 If you encounter the `Extractors returned too many records` error when your page outputs more than 750 records. The [`aggregateContent`](#aggregatecontent) option helps you reducing the number of records at the `content` level of the extractor.
 
