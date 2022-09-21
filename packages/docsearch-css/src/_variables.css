@@ -16,6 +16,7 @@
   --docsearch-modal-background: rgb(245, 246, 247);
   --docsearch-modal-shadow: inset 1px 1px 0 0 rgba(255, 255, 255, 0.5),
     0 3px 8px 0 rgba(85, 90, 100, 1);
+  --docsearch-modal-source-height: 40px;
 
   /* searchbox */
   --docsearch-searchbox-height: 56px;
