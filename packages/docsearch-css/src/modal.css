@@ -263,7 +263,7 @@
 }
 
 .DocSearch-Hit {
-  scroll-margin-top: 40px;
+  scroll-margin-top: var(--docsearch-modal-source-height);
   border-radius: 4px;
   display: flex;
   padding-bottom: 4px;
