@@ -24,6 +24,7 @@ DocSearch is [one of our ways][1] to give back to the open source community for 
 
 You can now [apply to the program][3]
 
+
 [1]: https://opencollective.com/algolia
 [2]: /docs/who-can-apply
 [3]: /apply
