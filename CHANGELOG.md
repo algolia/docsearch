@@ -1,3 +1,14 @@
+## [3.2.2](https://github.com/algolia/docsearch/compare/v3.2.1...v3.2.2) (2022-10-20)
+
+
+### Bug Fixes
+
+* dependencies 2022-08-15 ([#1498](https://github.com/algolia/docsearch/issues/1498)) ([2f1027c](https://github.com/algolia/docsearch/commit/2f1027c9973ea6afe1d3d231672e5fb06ece7ea2))
+* dependencies 2022-08-22 ([#1509](https://github.com/algolia/docsearch/issues/1509)) ([0da9cf8](https://github.com/algolia/docsearch/commit/0da9cf8b754e3ca66d2a20c5a67ab5a4a094713a))
+* dependencies 2022-08-29 ([#1523](https://github.com/algolia/docsearch/issues/1523)) ([f1ce39e](https://github.com/algolia/docsearch/commit/f1ce39e31a44ad26bae1ad3b2b70bfcfe88189af)), closes [#1530](https://github.com/algolia/docsearch/issues/1530) [#1533](https://github.com/algolia/docsearch/issues/1533)
+
+
+
 ## [3.2.1](https://github.com/algolia/docsearch/compare/v3.2.0...v3.2.1) (2022-08-16)
 
 ### Bug Fixes
