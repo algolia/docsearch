@@ -58,6 +58,7 @@ export function DocSearch(props: DocSearchProps) {
 
   const onClose = React.useCallback(() => {
     setIsOpen(false);
+    searchButtonRef.current?.focus();
   }, [setIsOpen]);
 
   const onInput = React.useCallback(
