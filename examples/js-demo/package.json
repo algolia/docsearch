@@ -13,6 +13,6 @@
     "@docsearch/js": "3.2.1"
   },
   "devDependencies": {
-    "parcel": "2.0.0-beta.2"
+    "parcel": "2.7.0"
   }
 }
