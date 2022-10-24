@@ -15,8 +15,18 @@ describe('Start', () => {
     cy.modalIsVisibleAndFocused();
   });
 
+  it('Open modal with key shortcut on Windows/Linux when caps lock is on', () => {
+    cy.get('body').type('{ctrl}K');
+    cy.modalIsVisibleAndFocused();
+  });
+
   it('Open modal with key shortcut on macOS', () => {
     cy.get('body').type('{meta}k');
+    cy.modalIsVisibleAndFocused();
+  });
+
+  it('Open modal with key shortcut on macOS when caps lock is on', () => {
+    cy.get('body').type('{meta}K');
     cy.modalIsVisibleAndFocused();
   });
 
