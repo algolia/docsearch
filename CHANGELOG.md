@@ -1,3 +1,12 @@
+# [3.3.0](https://github.com/algolia/docsearch/compare/v3.2.2...v3.3.0) (2022-10-25)
+
+
+### Features
+
+* enable `Cmd+K` shortcut when caps lock is on ([#1590](https://github.com/algolia/docsearch/issues/1590)) ([d13ded1](https://github.com/algolia/docsearch/commit/d13ded1cbd8b3fe78ced2ac2f9d97c0fc5c806db))
+
+
+
 ## [3.2.2](https://github.com/algolia/docsearch/compare/v3.2.1...v3.2.2) (2022-10-20)
 
 
