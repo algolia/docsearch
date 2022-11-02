@@ -1,12 +1,12 @@
 [
   {
     "name": "Bootstrap",
-    "image": "img/logos/bootstrap.jpg",
-    "href": "https://getbootstrap.com/docs/5.1/getting-started/introduction/"
+    "image": "img/logos/bootstrap.svg",
+    "href": "https://getbootstrap.com/docs/5.2/getting-started/introduction/"
   },
   {
-    "name": "Material UI",
-    "image": "img/logos/material-ui.svg",
+    "name": "MUI",
+    "image": "img/logos/mui.svg",
     "href": "https://mui.com"
   },
   {

@@ -1,3 +1,42 @@
+# [3.3.0](https://github.com/algolia/docsearch/compare/v3.2.2...v3.3.0) (2022-10-25)
+
+
+### Features
+
+* enable `Cmd+K` shortcut when caps lock is on ([#1590](https://github.com/algolia/docsearch/issues/1590)) ([d13ded1](https://github.com/algolia/docsearch/commit/d13ded1cbd8b3fe78ced2ac2f9d97c0fc5c806db))
+
+
+
+## [3.2.2](https://github.com/algolia/docsearch/compare/v3.2.1...v3.2.2) (2022-10-20)
+
+
+### Bug Fixes
+
+* dependencies 2022-08-15 ([#1498](https://github.com/algolia/docsearch/issues/1498)) ([2f1027c](https://github.com/algolia/docsearch/commit/2f1027c9973ea6afe1d3d231672e5fb06ece7ea2))
+* dependencies 2022-08-22 ([#1509](https://github.com/algolia/docsearch/issues/1509)) ([0da9cf8](https://github.com/algolia/docsearch/commit/0da9cf8b754e3ca66d2a20c5a67ab5a4a094713a))
+* dependencies 2022-08-29 ([#1523](https://github.com/algolia/docsearch/issues/1523)) ([f1ce39e](https://github.com/algolia/docsearch/commit/f1ce39e31a44ad26bae1ad3b2b70bfcfe88189af)), closes [#1530](https://github.com/algolia/docsearch/issues/1530) [#1533](https://github.com/algolia/docsearch/issues/1533)
+
+
+
+## [3.2.1](https://github.com/algolia/docsearch/compare/v3.2.0...v3.2.1) (2022-08-16)
+
+### Bug Fixes
+
+* **deps:** make react an optional peer dependency in @docsearch/react ([#1273](https://github.com/algolia/docsearch/issues/1273)) ([eb44d0c](https://github.com/algolia/docsearch/commit/eb44d0c2b72f700b81cf1390539592156b2580b6))
+* dependencies 2022-08-08 ([#1480](https://github.com/algolia/docsearch/issues/1480)) ([587ccd1](https://github.com/algolia/docsearch/commit/587ccd1cf9ba5529c8c7ded3547e21849321a8d0))
+
+# [3.2.0](https://github.com/algolia/docsearch/compare/v3.1.1...v3.2.0) (2022-08-02)
+
+### Bug Fixes
+
+- dependencies 2022-07-25 ([#1451](https://github.com/algolia/docsearch/issues/1451)) ([2c64362](https://github.com/algolia/docsearch/commit/2c64362067376a76575b7b5131972f71c920a406))
+- dependencies 2022-08-01 ([#1471](https://github.com/algolia/docsearch/issues/1471)) ([8f67c47](https://github.com/algolia/docsearch/commit/8f67c474881c088ae5a8c1595fa844c210940140))
+- **form:** validate URL correctly ([26b0af9](https://github.com/algolia/docsearch/commit/26b0af98e01b36e5238ab8e2b1ba9d5212a1e1fe))
+
+### Features
+
+- **styles:** set medium breakpoint to standarized value ([#1446](https://github.com/algolia/docsearch/issues/1446)) ([8e2e90e](https://github.com/algolia/docsearch/commit/8e2e90e980b03e99ec7ae3231dbe79e44db643da))
+
 ## [3.1.1](https://github.com/algolia/docsearch/compare/v3.1.0...v3.1.1) (2022-06-30)
 
 ### Bug Fixes

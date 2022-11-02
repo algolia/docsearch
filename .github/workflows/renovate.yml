@@ -1,0 +1,19 @@
+name: Renovate
+
+on:
+  schedule:
+    - cron: '0 14 * * 5' # At 14:00 on Friday.
+  workflow_dispatch:
+
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Renovate Automatic Branch
+        uses: bodinsamuel/renovate-automatic-branch@v1
+        with:
+          github-token: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+          repo-owner: algolia
+          repo-name: docsearch
+          branch-base: main
+          pull-request-title: 'chore(deps): dependencies'

@@ -165,11 +165,11 @@ function ApplyForm() {
           <Input
             required={true}
             id="repoURL"
-            type="repoURL"
+            type="url"
             name="repoURL"
             aria-label="The URL of your project repository"
             value={repo}
-            placeholder="https://github.com/algolia/docsearch | https://gitlab.com/gitlab-org/gitlab"
+            placeholder="https://github.com/algolia/docsearch, https://gitlab.com/gitlab-org/gitlab, etc..."
             onChange={handleSetRepo}
           />
         </LabelText>
@@ -255,14 +255,13 @@ function ApplyForm() {
 
         <Text small={true} className="uil-ta-center">
           <strong>
-            Only apply if you don't have a DocSearch application yet. DocSearch
-            offers best effort support, make sure to first read the
-            documentation and the GitHub issues.
+            Only apply if you don't have a DocSearch application yet. <br />
+            For support requests, make sure to first{' '}
+            <InlineLink href="/docs/DocSearch-program#support">
+              read our policy
+            </InlineLink>
+            .
           </strong>{' '}
-          Ultimately, you can reach out via{' '}
-          <InlineLink href="https://www.algolia.com/support/">
-            our support page.
-          </InlineLink>
         </Text>
       </form>
     </Card>
