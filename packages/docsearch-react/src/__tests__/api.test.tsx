@@ -68,7 +68,6 @@ describe('api', () => {
           }}
         />
       );
-      // We can silence the potentially undefined here because we assert that they are not
       expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
       expect(
         document.querySelector('.DocSearch-Button-Placeholder')!.innerHTML
@@ -169,7 +168,6 @@ describe('api', () => {
         fireEvent.click(await screen.findByText('Search'));
       });
 
-      // We can silence the potentially undefined here because we assert that they are not
       expect(document.querySelector('.DocSearch-Cancel')!.innerHTML).toBe(
         'Annuler'
       );
@@ -295,7 +293,6 @@ describe('api', () => {
 
       expect(screen.getByText(/No results for/)).toBeInTheDocument();
 
-      // We can silence the potentially undefined here because we assert that they are not
       const link = document.querySelector('.DocSearch-Help a');
       expect(link).toBeInTheDocument();
       expect(link!.getAttribute('href')).toBe(
