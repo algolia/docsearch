@@ -11,7 +11,7 @@ function Home() {
   const { colorMode } = useColorMode();
 
   React.useEffect(() => {
-    if (colorMode === "dark") {
+    if (colorMode === 'dark') {
       document.querySelector('html').classList.add('dark');
     } else {
       document.querySelector('html').classList.remove('dark');
@@ -415,7 +415,9 @@ function Home() {
                   className="relative mx-auto rounded-lg shadow-lg image-rendering-crisp"
                   src={withBaseUrl(
                     `img/assets/${
-                      colorMode === "dark" ? 'docsearch-shadow-dark' : 'docsearch-shadow'
+                      colorMode === 'dark'
+                        ? 'docsearch-shadow-dark'
+                        : 'docsearch-shadow'
                     }.png`
                   )}
                   alt="docsearch-modal"
