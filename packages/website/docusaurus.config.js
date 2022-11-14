@@ -162,6 +162,7 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
             alt: 'Algolia',
             src: 'img/Algolia-logo-blue.svg',
             srcDark: 'img/Algolia-logo-white.svg',
+            width: 200,
           },
           copyright: 'DocSearch 2015-now • Designed and built by Algolia',
         },
