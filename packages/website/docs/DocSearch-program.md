@@ -34,21 +34,21 @@ We host the DocSearch data on Algolia's servers, with replications around the gl
 
 Depending on what you are looking for you have a few options!
 
-#### Upgrade #1: I want a specific feature, like Rules, added to my existing DocSearch application.
+### Upgrade #1: I want a specific feature, like Rules, added to my existing DocSearch application.
 
 [Reach out to us](https://algolia.com/support) and we may be able to help!
 
-#### Upgrade #2: I want to remove the Algolia logo.
+### Upgrade #2: I want to remove the Algolia logo.
 
 This would disqualify you from the free DocSearch program. We do offer an open-source
 [legacy version](https://docsearch.algolia.com/docs/legacy/run-your-own) of the DocSearch Crawler that you can use and
 host yourself or you can use our [API clients](https://www.algolia.com/doc/api-client/getting-started/install/javascript/?client=javascript) but you will need to use a new Algolia application and pay for its usage.
 
-#### Upgrade #3: Algolia is awesome, I want to use it for my whole site!
+### Upgrade #3: Algolia is awesome, I want to use it for my whole site!
 
 That's awesome! Please reach out to our [sales team](https://www.algolia.com/contactus/)
 who can help you figure out the right plan for you. Once you have your new application
-created you can simply copy and paste your DocSearch config into your new application's
+created you can simply copy and paste [your Crawler config](https://docsearch.algolia.com/docs/templates) into your new application's
 Crawler.
 
 ## Can I use DocSearch on non-doc pages?
