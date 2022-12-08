@@ -84,6 +84,10 @@ Algolia apps come with a default search API key, which also allow you to list in
 
 When your application is deployed, we provide a search **ONLY** API key, scoped to your production index, so you don't have to worry disclosing it in the frontend.
 
+## How do I rotate my API keys?
+
+Please reach out to our [support](https://algolia.com/support) team.
+
 ## Can I have multiple projects under the same Algolia application?
 
 We recommend having a single Algolia application per project. Please [apply](/apply) if you'd like to use DocSearch in an other project of yours.
