@@ -1,3 +1,12 @@
+## [3.3.1](https://github.com/algolia/docsearch/compare/v3.3.0...v3.3.1) (2022-12-27)
+
+
+### Bug Fixes
+
+* **modal:** enable outline for focus state ([#1732](https://github.com/algolia/docsearch/issues/1732)) ([f7a8bde](https://github.com/algolia/docsearch/commit/f7a8bde7af783cb15f0c83346f3699069ad50ff6))
+
+
+
 # [3.3.0](https://github.com/algolia/docsearch/compare/v3.2.2...v3.3.0) (2022-10-25)
 
 
