@@ -42,11 +42,12 @@ export interface DocSearchProps {
   initialQuery?: string;
   navigator?: AutocompleteOptions<InternalDocSearchHit>['navigator'];
   translations?: DocSearchTranslations;
-  getMissingResultsUrl?: ({ query: string }) => string;
+  getMissingResultsUrl?: ({ query }: { query: string }) => string;
 }
 
 export function DocSearch(props: DocSearchProps) {
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
+  const activeElementRef = React.useRef<Element>(document.body);
   const [isOpen, setIsOpen] = React.useState(false);
   const [initialQuery, setInitialQuery] = React.useState<string | undefined>(
     props?.initialQuery || undefined
@@ -54,9 +55,15 @@ export function DocSearch(props: DocSearchProps) {
 
   const onOpen = React.useCallback(() => {
     setIsOpen(true);
+    activeElementRef.current = document.activeElement || document.body;
   }, [setIsOpen]);
 
   const onClose = React.useCallback(() => {
+    if (activeElementRef.current) {
+      if (activeElementRef.current instanceof HTMLElement) {
+        activeElementRef.current.focus();
+      }
+    }
     setIsOpen(false);
   }, [setIsOpen]);
 
