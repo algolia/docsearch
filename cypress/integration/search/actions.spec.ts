@@ -154,8 +154,10 @@ describe('Recent and Favorites', () => {
     });
     it('Restore focus to stored document.activeElement before modal is open', () => {
       cy.get('.navbar__brand').focus();
+      cy.log(document.activeElement?.className ?? 'oops');
       cy.get('body').type('{ctrl}k');
       cy.closeModal();
+      cy.log(document.activeElement?.className ?? 'oops');
       cy.focused().should('have.class', 'navbar__brand');
     });
   });
