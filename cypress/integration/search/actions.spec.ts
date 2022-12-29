@@ -147,4 +147,16 @@ describe('Recent and Favorites', () => {
       .trigger('click');
     cy.contains('No recent searches').should('be.visible');
   });
+
+  describe('A11y', () => {
+    beforeEach(() => {
+      cy.visit(Cypress.config().baseUrl!);
+    });
+    it('Restore focus to stored document.activeElement before modal is open', () => {
+      cy.get('.navbar__brand').focus();
+      cy.get('body').type('{ctrl}k');
+      cy.closeModal();
+      cy.focused().should('have.class', 'navbar__brand');
+    });
+  });
 });
