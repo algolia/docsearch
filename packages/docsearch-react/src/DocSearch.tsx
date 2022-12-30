@@ -4,7 +4,7 @@ import type {
 } from '@algolia/autocomplete-core';
 import type { SearchOptions } from '@algolia/client-search';
 import type { SearchClient } from 'algoliasearch/lite';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 import { DocSearchButton } from './DocSearchButton';
@@ -59,13 +59,18 @@ export function DocSearch(props: DocSearchProps) {
   }, [setIsOpen]);
 
   const onClose = React.useCallback(() => {
-    if (activeElementRef.current) {
-      if (activeElementRef.current instanceof HTMLElement) {
-        activeElementRef.current.focus();
-      }
-    }
     setIsOpen(false);
   }, [setIsOpen]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      if (activeElementRef.current) {
+        if (activeElementRef.current instanceof HTMLElement) {
+          activeElementRef.current.focus();
+        }
+      }
+    }
+  }, [isOpen]);
 
   const onInput = React.useCallback(
     (event: KeyboardEvent) => {
