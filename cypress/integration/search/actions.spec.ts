@@ -3,6 +3,9 @@
 describe('Start', () => {
   beforeEach(() => {
     cy.visit(Cypress.config().baseUrl!);
+    // seems we could run into race condition
+    // if we don't wait for .DocSearch-Button-Key to render
+    cy.get('.DocSearch-Button-Key');
   });
 
   it('Open modal on search button click', () => {
