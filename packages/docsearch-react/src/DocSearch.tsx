@@ -69,6 +69,7 @@ export function DocSearch(props: DocSearchProps) {
       activeElementRef.current instanceof HTMLElement
     ) {
       activeElementRef.current.focus();
+      activeElementRef.current = null;
     }
   }, [isOpen]);
 
