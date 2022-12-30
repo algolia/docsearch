@@ -1,4 +1,4 @@
-import docsearch from '@docsearch/js/dist/esm';
+import docsearch from '@docsearch/js/dist/umd';
 
 import './app.css';
 import '@docsearch/css';
