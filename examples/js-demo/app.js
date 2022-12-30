@@ -7,5 +7,5 @@ docsearch({
   container: '#docsearch',
   indexName: 'docsearch',
   appId: 'R2IYF7ETH7',
-  apiKey: '599cec31baffa4868cae4e79f180729b'
+  apiKey: '599cec31baffa4868cae4e79f180729b',
 });
