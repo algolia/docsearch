@@ -4,7 +4,7 @@ import type {
 } from '@algolia/autocomplete-core';
 import type { SearchOptions } from '@algolia/client-search';
 import type { SearchClient } from 'algoliasearch/lite';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { createPortal } from 'react-dom';
 
 import { DocSearchButton } from './DocSearchButton';
@@ -62,7 +62,7 @@ export function DocSearch(props: DocSearchProps) {
     setIsOpen(false);
   }, [setIsOpen]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (
       !isOpen &&
       activeElementRef.current &&
