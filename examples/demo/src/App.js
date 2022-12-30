@@ -8,7 +8,7 @@ function App() {
   return (
     <div>
       <h1>DocSearch v3 - React</h1>
-      <button>A button</button>
+      <button data-testid="btn">A button</button>
       <DocSearch
         indexName="docsearch"
         appId="R2IYF7ETH7"

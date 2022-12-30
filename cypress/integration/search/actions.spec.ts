@@ -153,10 +153,10 @@ describe('Recent and Favorites', () => {
       cy.visit(Cypress.config().baseUrl!);
     });
     it('Restore focus to stored document.activeElement before modal is open', () => {
-      cy.get('.navbar__brand').focus();
+      cy.get('[data-testid="btn"]').focus();
       cy.get('body').type('{ctrl}k');
       cy.closeModal();
-      cy.focused().should('have.class', 'navbar__brand');
+      cy.focused().should('have.data', 'testid', 'btn');
     });
   });
 });
