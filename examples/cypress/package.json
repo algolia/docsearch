@@ -1,0 +1,20 @@
+{
+  "name": "@docsearch/cypress",
+  "description": "DocSearch v3 Cypress testing",
+  "version": "3.3.1",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "parcel build index.html",
+    "start": "parcel index.html --port 3000 --no-cache"
+  },
+  "dependencies": {
+    "@docsearch/css": "3.3.1",
+    "@docsearch/react": "3.3.1",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
+  },
+  "devDependencies": {
+    "parcel": "2.7.0"
+  }
+}

@@ -63,12 +63,12 @@ export function DocSearch(props: DocSearchProps) {
   }, [setIsOpen]);
 
   useEffect(() => {
-    if (!isOpen) {
-      if (activeElementRef.current) {
-        if (activeElementRef.current instanceof HTMLElement) {
-          activeElementRef.current.focus();
-        }
-      }
+    if (
+      !isOpen &&
+      activeElementRef.current &&
+      activeElementRef.current instanceof HTMLElement
+    ) {
+      activeElementRef.current.focus();
     }
   }, [isOpen]);
 
