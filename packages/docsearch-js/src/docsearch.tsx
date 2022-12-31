@@ -22,11 +22,12 @@ function useRender() {
   const [shouldRender, setShouldRender] = useState(true);
   const destroy = useCallback(() => {
     setShouldRender(false);
-  }, [shouldRender]);
+  }, []);
 
   return { shouldRender, destroy };
 }
 
+// eslint-disable-next-line react-hooks/rules-of-hooks
 export function docsearch(props: DocSearchProps) {
   const { shouldRender, destroy } = useRender();
 
