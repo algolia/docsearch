@@ -1,6 +1,10 @@
 ## [3.3.2](https://github.com/algolia/docsearch/compare/v3.3.1...v3.3.2) (2023-01-10)
 
 
+### Bug Fixes
+
+* dependencies 2023-01-02 ([#1736](https://github.com/algolia/docsearch/issues/1736)) ([c867c8b](https://github.com/algolia/docsearch/commit/c867c8b6493fec9f184b852f1405247da5173f58))
+
 
 ## [3.3.1](https://github.com/algolia/docsearch/compare/v3.3.0...v3.3.1) (2022-12-27)
 
