@@ -157,10 +157,6 @@
   display: none;
 }
 
-.DocSearch-Reset:focus {
-  outline: none;
-}
-
 .DocSearch-Reset:hover {
   color: var(--docsearch-highlight-color);
 }
