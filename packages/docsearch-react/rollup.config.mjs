@@ -1,9 +1,9 @@
 import replace from '@rollup/plugin-replace';
 
-import { plugins } from '../../rollup.base.config';
-import { getBundleBanner } from '../../scripts/getBundleBanner';
+import { plugins } from '../../rollup.base.config.mjs';
+import { getBundleBanner } from '../../scripts/getBundleBanner.mjs';
 
-import pkg from './package.json';
+import pkg from './package.json' assert { type: 'json' };
 
 export default {
   input: 'src/index.ts',

@@ -22,9 +22,9 @@
   "jsdelivr": "dist/umd/index.js",
   "scripts": {
     "build:clean": "rm -rf ./dist",
-    "build:esm": "cross-env BUILD=esm rollup --config",
+    "build:esm": "cross-env BUILD=esm rollup -c rollup.config.mjs",
     "build:types": "tsc -p ./tsconfig.declaration.json --outDir ./dist/esm",
-    "build:umd": "cross-env BUILD=umd rollup --config",
+    "build:umd": "cross-env BUILD=umd rollup -c rollup.config.mjs",
     "build": "yarn build:clean && yarn build:umd && yarn build:esm && yarn build:types",
     "on:change": "concurrently \"yarn build:esm\" \"yarn build:types\"",
     "watch": "watch \"yarn on:change\" --ignoreDirectoryPattern \"/dist/\""
