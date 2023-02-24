@@ -1,3 +1,12 @@
+## [3.3.3](https://github.com/algolia/docsearch/compare/v3.3.2...v3.3.3) (2023-02-06)
+
+
+### Bug Fixes
+
+* Correctly type `getMissingResultsUrl` query as `string` ([#1781](https://github.com/algolia/docsearch/issues/1781)) ([379f163](https://github.com/algolia/docsearch/commit/379f163a72665ab464b73a1ef92db5e154628dc5))
+
+
+
 ## [3.3.2](https://github.com/algolia/docsearch/compare/v3.3.1...v3.3.2) (2023-01-10)
 
 
