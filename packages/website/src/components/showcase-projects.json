@@ -258,5 +258,10 @@
     "name": "Flowbite",
     "image": "img/logos/flowbite.svg",
     "href": "https://flowbite.com/docs/getting-started/introduction/"
+  },
+  {
+    "name": "Fylgja",
+    "image": "img/logos/fylgja.svg",
+    "href": "https://fylgja.dev/"
   }
 ]
