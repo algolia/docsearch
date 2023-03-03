@@ -82,7 +82,7 @@ function Home() {
                           Searches per month
                         </dt>
                         <dd className="order-1 text-5xl leading-none font-extrabold text-indigo-600">
-                          +100M
+                          +120M
                         </dd>
                       </div>
                       <div className="flex flex-col border-t p-6 text-center lg:border-0 lg:border-l showcase-border">
@@ -90,7 +90,7 @@ function Home() {
                           DocSearch Live
                         </dt>
                         <dd className="order-1 text-5xl leading-none font-extrabold text-indigo-600">
-                          +4000
+                          +6000
                         </dd>
                       </div>
                     </dl>
