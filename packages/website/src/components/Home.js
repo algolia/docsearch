@@ -82,7 +82,7 @@ function Home() {
                           Searches per month
                         </dt>
                         <dd className="order-1 text-5xl leading-none font-extrabold text-indigo-600">
-                          +120M
+                          +160M
                         </dd>
                       </div>
                       <div className="flex flex-col border-t p-6 text-center lg:border-0 lg:border-l showcase-border">
@@ -90,7 +90,7 @@ function Home() {
                           DocSearch Live
                         </dt>
                         <dd className="order-1 text-5xl leading-none font-extrabold text-indigo-600">
-                          +6000
+                          +7000
                         </dd>
                       </div>
                     </dl>
@@ -159,14 +159,12 @@ function Home() {
                     </div>
                     <div className="ml-4">
                       <h4 className="text-lg leading-6 font-medium">
-                        Made for open-source
+                        Made for Developer docs
                       </h4>
                       <p className="mt-2 text-base leading-6 text-description">
-                        Initially created to fulfill our own developers' needs,
-                        DocSearch quickly evolved into a successful community
-                        project. Over the years, we've explored new ways to
-                        address the complexities of search for the open-source
-                        community.
+                       Initially created to fulfill our own documentation needs, 
+                       DocSearch eventually became a community project for open source docs. 
+                       But, now it is available for any/all kinds of developer documentation.
                       </p>
                     </div>
                   </div>
