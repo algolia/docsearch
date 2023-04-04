@@ -176,8 +176,6 @@ You can now use them to [filter your search in the frontend][16]
 
 ### Boost search results with `pageRank`
 
-_[`pageRank`](#pagerank) used to be an **integer**, it is now a **string**_
-
 This parameter allow you to boost records built from the current `pathsToMatch`. Pages with highest [`pageRank`](#pagerank) will be returned before pages with a lower [`pageRank`](#pagerank). Note that you can pass any numeric value **as a string**, including negative values:
 
 ```js
@@ -194,7 +192,7 @@ This parameter allow you to boost records built from the current `pathsToMatch`.
         lvl4: "article h5",
         lvl5: "article h6",
         content: "article p, article li",
-        pageRank: "30",
+        pageRank: 30,
       },
     });
   },
@@ -274,7 +272,7 @@ type Lvl0 = {
 
 ### `pageRank`
 
-> `type: string` | **optional**
+> `type: number` | **optional**
 
 See the [live example](#boost-search-results-with-pagerank)
 
