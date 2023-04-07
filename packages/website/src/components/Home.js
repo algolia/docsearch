@@ -162,9 +162,10 @@ function Home() {
                         Made for Developer docs
                       </h4>
                       <p className="mt-2 text-base leading-6 text-description">
-                       Initially created to fulfill our own documentation needs, 
-                       DocSearch eventually became a community project for open source docs. 
-                       But, now it is available for any/all kinds of developer documentation.
+                        Initially created to fulfill our own documentation
+                        needs, DocSearch eventually became a community project
+                        for open source docs. But, now it is available for
+                        any/all kinds of developer documentation.
                       </p>
                     </div>
                   </div>
