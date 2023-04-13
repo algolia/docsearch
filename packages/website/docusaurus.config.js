@@ -51,6 +51,12 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
           indexName: 'docsearch',
           contextualSearch: true,
         },
+        metadata: [
+          { 
+            name: 'google-site-verification', 
+            content: '23yIHmCD_xnJb_6e3s-w7M29Kydahk-d86ObMWOrvRg' 
+          }
+        ],
         navbar: {
           hideOnScroll: true,
           logo: {
