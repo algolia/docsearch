@@ -38,7 +38,7 @@ aliases:
 defaults: &defaults
   working_directory: ~/docsearch
   docker:
-    - image: cimg/node:16.19.1
+    - image: cimg/node:16.20.0
 
 cypress: &cypress
   working_directory: ~/docsearch
