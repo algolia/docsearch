@@ -54,7 +54,7 @@ recordExtractor: ({ $, helpers }) => {
     recordProps: {
       lvl0: {
         selectors: "header h1",
-      }
+      },
       lvl1: "article h2",
       lvl2: "article h3",
       lvl3: "article h4",
@@ -185,7 +185,9 @@ This parameter allow you to boost records built from the current `pathsToMatch`.
   recordExtractor: ({ $, helpers }) => {
     return helpers.docsearch({
       recordProps: {
-        lvl0: "header h1",
+        lvl0: {
+          selectors: "header h1",
+        },
         lvl1: "article h2",
         lvl2: "article h3",
         lvl3: "article h4",
@@ -210,7 +212,9 @@ If you encounter the `Extractors returned too many records` error when your page
   recordExtractor: ({ $, helpers }) => {
     return helpers.docsearch({
       recordProps: {
-        lvl0: "header h1",
+        lvl0: {
+          selectors: "header h1",
+        },
         lvl1: "article h2",
         lvl2: "article h3",
         lvl3: "article h4",
@@ -235,7 +239,9 @@ If you encounter the `Records extracted are too big` error when crawling your we
   recordExtractor: ({ $, helpers }) => {
     return helpers.docsearch({
       recordProps: {
-        lvl0: "header h1",
+        lvl0: {
+          selectors: "header h1",
+        },
         lvl1: "article h2",
         lvl2: "article h3",
         lvl3: "article h4",
