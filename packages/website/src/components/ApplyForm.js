@@ -207,7 +207,9 @@ function ApplyForm() {
               required={true}
               id="owner"
               name="owner"
-              aria-label="Confirm I am owner of the website"
+              aria-label="Confirm I am the owner of the website, or otherwise have obtained and
+              continue to maintain any required consents necessary to use
+              DocSearch on the requested domain. And I have read the checklist."
               type="checkbox"
               className="uil-mr-8"
             />
