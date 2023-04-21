@@ -22,7 +22,12 @@ function Home() {
     return (
       <Hero
         id="hero"
-        title={<DocSearchLogo width="100%" />}
+        title={<>
+          <DocSearchLogo width="100%" />
+          <span class="hero-title text-3xl leading-9 font-extrabold md:text-3xl lg:text-3xl md:leading-10 max-w-xxs inline-block">
+            Free Algolia Search For Developer Docs
+          </span>
+        </>}
         background="curves"
         cta={[
           <Button
@@ -68,7 +73,7 @@ function Home() {
                           className="order-2 mt-2 text-lg leading-6 font-medium text-description"
                           id="item-1"
                         >
-                          Free
+                          Free Service
                         </dt>
                         <dd
                           className="order-1 text-5xl leading-none font-extrabold text-indigo-600"
@@ -339,7 +344,7 @@ function Home() {
                 <p className="mt-3 text-lg leading-7 text-description">
                   Search doesn't have to be painful — when a user searches
                   through your docs, they'll get a frictionless modal dialog to
-                  work in.
+                  work in. And it's a Free Service!
                 </p>
 
                 <ul className="mt-10">
