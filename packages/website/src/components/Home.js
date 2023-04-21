@@ -22,12 +22,14 @@ function Home() {
     return (
       <Hero
         id="hero"
-        title={<>
-          <DocSearchLogo width="100%" />
-          <span class="hero-title text-3xl leading-9 font-extrabold md:text-3xl lg:text-3xl md:leading-10 max-w-xxs inline-block">
-            Free Algolia Search For Developer Docs
-          </span>
-        </>}
+        title={
+          <>
+            <DocSearchLogo width="100%" />
+            <span className="hero-title text-3xl leading-9 font-extrabold md:text-3xl lg:text-3xl md:leading-10 max-w-xxs inline-block">
+              Free Algolia Search For Developer Docs
+            </span>
+          </>
+        }
         background="curves"
         cta={[
           <Button

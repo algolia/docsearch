@@ -193,7 +193,8 @@ function ApplyForm() {
               type="checkbox"
               className="uil-mr-8"
             />
-            My website is a publicly available developer documentation or a technical blog.
+            My website is a publicly available developer documentation or a
+            technical blog.
           </LabelText>
 
           <LabelText
@@ -210,7 +211,9 @@ function ApplyForm() {
               type="checkbox"
               className="uil-mr-8"
             />
-            I am the owner of the website, or otherwise have obtained and continue to maintain any required consents necessary to use DocSearch on the requested domain. And I have{' '}
+            I am the owner of the website, or otherwise have obtained and
+            continue to maintain any required consents necessary to use
+            DocSearch on the requested domain. And I have{' '}
             <InlineLink href={withBaseUrl('docs/who-can-apply')}>
               read the checklist.
             </InlineLink>
