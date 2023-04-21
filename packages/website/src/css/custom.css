@@ -128,6 +128,18 @@ html[data-theme='dark'] #hero > div:first-child {
   opacity: 0.4;
 }
 
+/**
+  * Hero component title overrides to match other heading styles
+  */
+.hero-title {
+  color: rgb(28, 30, 33);
+  font-family: var(--ifm-heading-font-family);
+}
+
+html[data-theme='dark'] .hero-title {
+  color: rgb(227, 227, 227);
+}
+
 .docsearch-logo {
   color: #21243d;
 }
