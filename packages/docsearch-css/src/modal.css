@@ -7,6 +7,9 @@
    */
   overflow: hidden !important;
 
+}
+
+.DocSearch--active.DocSearch-fix-scrollbar {
   overflow-y: scroll !important;
   position: fixed;
   left: 0;
