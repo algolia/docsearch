@@ -318,10 +318,18 @@ export function DocSearchModal({
   useTrapFocus({ container: containerRef.current });
 
   React.useEffect(() => {
-    document.body.classList.add('DocSearch--active');
+    const hasVerticalScrollbar =
+      window.innerWidth > document.documentElement.clientWidth;
+    if (hasVerticalScrollbar) {
+      document.body.classList.add('DocSearch--active');
+      document.body.style.top = `-${initialScrollY}px`;
+    }
 
     return () => {
-      document.body.classList.remove('DocSearch--active');
+      if (hasVerticalScrollbar) {
+        document.body.classList.remove('DocSearch--active');
+        document.body.style.top = '';
+      }
 
       // IE11 doesn't support `scrollTo` so we check that the method exists
       // first.
