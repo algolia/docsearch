@@ -83,7 +83,7 @@
     "jest-watch-typeahead": "1.1.0",
     "lerna": "4.0.0",
     "postcss": "8.4.23",
-    "prettier": "2.7.1",
+    "prettier": "2.8.8",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "rollup": "1.32.1",
