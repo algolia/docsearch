@@ -24,7 +24,7 @@ interface ResultsProps<TItem extends BaseItem>
     runDeleteTransition: (cb: () => void) => void;
     runFavoriteTransition: (cb: () => void) => void;
   }) => React.ReactNode;
-  onItemClick: (item: TItem) => void;
+  onItemClick: (item: TItem, event: KeyboardEvent) => void;
   hitComponent: DocSearchProps['hitComponent'];
 }
 
@@ -104,8 +104,8 @@ function Result<TItem extends StoredDocSearchHit>({
       {...getItemProps({
         item,
         source: collection.source,
-        onClick() {
-          onItemClick(item);
+        onClick(event) {
+          onItemClick(item, event);
         },
       })}
     >

@@ -431,9 +431,11 @@ export function DocSearchModal({
             inputRef={inputRef}
             translations={screenStateTranslations}
             getMissingResultsUrl={getMissingResultsUrl}
-            onItemClick={(item) => {
+            onItemClick={(item, event) => {
               saveRecentSearch(item);
-              onClose();
+              if (!event.shiftKey && !event.ctrlKey && !event.metaKey) {
+                onClose();
+              }
             }}
           />
         </div>
