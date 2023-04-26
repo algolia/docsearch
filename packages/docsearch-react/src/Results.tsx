@@ -24,7 +24,7 @@ interface ResultsProps<TItem extends BaseItem>
     runDeleteTransition: (cb: () => void) => void;
     runFavoriteTransition: (cb: () => void) => void;
   }) => React.ReactNode;
-  onItemClick: (item: TItem, event: KeyboardEvent) => void;
+  onItemClick: (item: TItem, event: KeyboardEvent | MouseEvent) => void;
   hitComponent: DocSearchProps['hitComponent'];
 }
 

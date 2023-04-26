@@ -32,7 +32,7 @@ export interface ScreenStateProps<TItem extends BaseItem>
   state: AutocompleteState<TItem>;
   recentSearches: StoredSearchPlugin<StoredDocSearchHit>;
   favoriteSearches: StoredSearchPlugin<StoredDocSearchHit>;
-  onItemClick: (item: InternalDocSearchHit, event: KeyboardEvent) => void;
+  onItemClick: (item: InternalDocSearchHit, event: KeyboardEvent | MouseEvent) => void;
   inputRef: React.MutableRefObject<HTMLInputElement | null>;
   hitComponent: DocSearchProps['hitComponent'];
   indexName: DocSearchProps['indexName'];
