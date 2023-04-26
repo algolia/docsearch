@@ -21,6 +21,7 @@ import { useSearchClient } from './useSearchClient';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
 import { groupBy, identity, noop, removeHighlightTags } from './utils';
+import { isModifierEvent } from './utils/isModifierEvent';
 
 export type ModalTranslations = Partial<{
   searchBox: SearchBoxTranslations;
@@ -156,7 +157,7 @@ export function DocSearchModal({
                 onSelect({ item, event }) {
                   saveRecentSearch(item);
 
-                  if (!event.shiftKey && !event.ctrlKey && !event.metaKey) {
+                  if (!isModifierEvent(event)) {
                     onClose();
                   }
                 },
@@ -172,7 +173,7 @@ export function DocSearchModal({
                 onSelect({ item, event }) {
                   saveRecentSearch(item);
 
-                  if (!event.shiftKey && !event.ctrlKey && !event.metaKey) {
+                  if (!isModifierEvent(event)) {
                     onClose();
                   }
                 },
@@ -256,7 +257,7 @@ export function DocSearchModal({
                     onSelect({ item, event }) {
                       saveRecentSearch(item);
 
-                      if (!event.shiftKey && !event.ctrlKey && !event.metaKey) {
+                      if (!isModifierEvent(event)) {
                         onClose();
                       }
                     },
@@ -433,7 +434,7 @@ export function DocSearchModal({
             getMissingResultsUrl={getMissingResultsUrl}
             onItemClick={(item, event) => {
               saveRecentSearch(item);
-              if (!event.shiftKey && !event.ctrlKey && !event.metaKey) {
+              if (!isModifierEvent(event)) {
                 onClose();
               }
             }}
