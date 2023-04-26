@@ -1,3 +1,13 @@
+## [3.3.4](https://github.com/algolia/docsearch/compare/v3.3.3...v3.3.4) (2023-04-26)
+
+
+### Bug Fixes
+
+* prevent calling `onClose()` when `shiftKey`, `ctrlKey` or `metaKey` is pressed ([#1870](https://github.com/algolia/docsearch/issues/1870)) ([b9a3899](https://github.com/algolia/docsearch/commit/b9a38991e411c969459c2bac8a75f29576b46906))
+* type of lvl0 ([#1859](https://github.com/algolia/docsearch/issues/1859)) ([8f48ebb](https://github.com/algolia/docsearch/commit/8f48ebb330c01be426f06d0dea2855e4ca65834b))
+
+
+
 ## [3.3.3](https://github.com/algolia/docsearch/compare/v3.3.2...v3.3.3) (2023-02-06)
 
 
