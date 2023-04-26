@@ -20,8 +20,7 @@ import type {
 import { useSearchClient } from './useSearchClient';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
-import { groupBy, identity, noop, removeHighlightTags } from './utils';
-import { isModifierEvent } from './utils/isModifierEvent';
+import { groupBy, identity, noop, removeHighlightTags, isModifierEvent } from './utils';
 
 export type ModalTranslations = Partial<{
   searchBox: SearchBoxTranslations;
