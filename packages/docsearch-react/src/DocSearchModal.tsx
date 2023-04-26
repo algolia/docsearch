@@ -20,7 +20,13 @@ import type {
 import { useSearchClient } from './useSearchClient';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
-import { groupBy, identity, noop, removeHighlightTags } from './utils';
+import {
+  groupBy,
+  identity,
+  noop,
+  removeHighlightTags,
+  isModifierEvent,
+} from './utils';
 
 export type ModalTranslations = Partial<{
   searchBox: SearchBoxTranslations;
@@ -156,7 +162,7 @@ export function DocSearchModal({
                 onSelect({ item, event }) {
                   saveRecentSearch(item);
 
-                  if (!event.shiftKey && !event.ctrlKey && !event.metaKey) {
+                  if (!isModifierEvent(event)) {
                     onClose();
                   }
                 },
@@ -172,7 +178,7 @@ export function DocSearchModal({
                 onSelect({ item, event }) {
                   saveRecentSearch(item);
 
-                  if (!event.shiftKey && !event.ctrlKey && !event.metaKey) {
+                  if (!isModifierEvent(event)) {
                     onClose();
                   }
                 },
@@ -256,7 +262,7 @@ export function DocSearchModal({
                     onSelect({ item, event }) {
                       saveRecentSearch(item);
 
-                      if (!event.shiftKey && !event.ctrlKey && !event.metaKey) {
+                      if (!isModifierEvent(event)) {
                         onClose();
                       }
                     },
@@ -431,9 +437,11 @@ export function DocSearchModal({
             inputRef={inputRef}
             translations={screenStateTranslations}
             getMissingResultsUrl={getMissingResultsUrl}
-            onItemClick={(item) => {
+            onItemClick={(item, event) => {
               saveRecentSearch(item);
-              onClose();
+              if (!isModifierEvent(event)) {
+                onClose();
+              }
             }}
           />
         </div>
