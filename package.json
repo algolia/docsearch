@@ -67,7 +67,7 @@
     "cypress": "9.6.1",
     "dotenv": "16.0.2",
     "eslint": "8.35.0",
-    "eslint-config-algolia": "20.0.0",
+    "eslint-config-algolia": "21.0.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-cypress": "2.13.3",
     "eslint-plugin-eslint-comments": "3.2.0",
