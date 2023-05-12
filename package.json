@@ -101,7 +101,7 @@
     "stylelint-config-standard": "28.0.0",
     "stylelint-no-unsupported-browser-features": "5.0.4",
     "stylelint-order": "5.0.0",
-    "stylelint-prettier": "2.0.0",
+    "stylelint-prettier": "3.0.0",
     "ts-jest": "28.0.8",
     "typescript": "4.7.4",
     "watch": "1.0.2",
