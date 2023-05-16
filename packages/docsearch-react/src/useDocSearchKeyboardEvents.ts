@@ -39,6 +39,9 @@ export function useDocSearchKeyboardEvents({
       if (
         (event.keyCode === 27 && isOpen) ||
         // The `Cmd+K` shortcut both opens and closes the modal.
+        // We need to check for `event.key` because it can be `undefined` with
+        // Chrome's autofill feature.
+        // See https://github.com/paperjs/paper.js/issues/1398
         (event.key?.toLowerCase() === 'k' &&
           (event.metaKey || event.ctrlKey)) ||
         // The `/` shortcut opens but doesn't close the modal because it's
