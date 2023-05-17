@@ -29,6 +29,7 @@ export interface DocSearchProps {
   indexName: string;
   placeholder?: string;
   searchParameters?: SearchOptions;
+  maxResultsPerGroup?: number;
   transformItems?: (items: DocSearchHit[]) => DocSearchHit[];
   hitComponent?: (props: {
     hit: InternalDocSearchHit | StoredDocSearchHit;
