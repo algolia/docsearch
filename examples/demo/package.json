@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/react-example",
   "description": "DocSearch v3 React example",
-  "version": "3.3.4",
+  "version": "3.3.5",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -9,8 +9,8 @@
     "start": "parcel index.html"
   },
   "dependencies": {
-    "@docsearch/css": "3.3.4",
-    "@docsearch/react": "3.3.4",
+    "@docsearch/css": "3.3.5",
+    "@docsearch/react": "3.3.5",
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
   },
