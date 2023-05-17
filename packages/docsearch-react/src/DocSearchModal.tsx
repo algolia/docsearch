@@ -46,6 +46,7 @@ export function DocSearchModal({
   indexName,
   placeholder = 'Search docs',
   searchParameters,
+  maxResultsPerGroup,
   onClose = noop,
   transformItems = identity,
   hitComponent = Hit,
@@ -240,7 +241,11 @@ export function DocSearchModal({
             })
             .then(({ results }) => {
               const { hits, nbHits } = results[0];
-              const sources = groupBy(hits, (hit) => removeHighlightTags(hit));
+              const sources = groupBy(
+                hits,
+                (hit) => removeHighlightTags(hit),
+                maxResultsPerGroup
+              );
 
               // We store the `lvl0`s to display them as search suggestions
               // in the "no results" screen.
@@ -271,7 +276,11 @@ export function DocSearchModal({
                     },
                     getItems() {
                       return Object.values(
-                        groupBy(items, (item) => item.hierarchy.lvl1)
+                        groupBy(
+                          items,
+                          (item) => item.hierarchy.lvl1,
+                          maxResultsPerGroup
+                        )
                       )
                         .map(transformItems)
                         .map((groupedHits) =>
@@ -300,6 +309,7 @@ export function DocSearchModal({
     [
       indexName,
       searchParameters,
+      maxResultsPerGroup,
       searchClient,
       onClose,
       recentSearches,
