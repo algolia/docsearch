@@ -1,3 +1,12 @@
+# [3.4.0](https://github.com/algolia/docsearch/compare/v3.3.5...v3.4.0) (2023-05-24)
+
+
+### Features
+
+* implement maxResultsPerGroup prop ([#1891](https://github.com/algolia/docsearch/issues/1891)) ([f82a733](https://github.com/algolia/docsearch/commit/f82a73367a02453609454dc26d3cf2b6d901dd75))
+
+
+
 ## [3.3.5](https://github.com/algolia/docsearch/compare/v3.3.4...v3.3.5) (2023-05-17)
 
 
