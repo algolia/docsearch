@@ -319,6 +319,34 @@ docsearch({
 </TabItem>
 </Tabs>
 
+## `maxResultsPerGroup`
+
+> `type: number` | **optional**
+
+The maximum number of results to display per search group. Default is 5.
+
+[You can find a working example without JSX in this sandbox](https://codesandbox.io/s/docsearch-v3-maxresultspergroup-without-jsx-ct9m22?file=/src/index.js)
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', }
+  ]
+}>
+<TabItem value="js">
+
+```js
+docsearch({
+  // ...
+  maxResultsPerGroup: 7,
+});
+```
+
+</TabItem>
+
+</Tabs>
+
 [1]: https://www.algolia.com/doc/ui-libraries/autocomplete/introduction/what-is-autocomplete/
 [2]: https://github.com/algolia/docsearch/
 [3]: https://github.com/algolia/docsearch/tree/master
