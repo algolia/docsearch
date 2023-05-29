@@ -148,3 +148,33 @@ describe('Recent and Favorites', () => {
     cy.contains('No recent searches').should('be.visible');
   });
 });
+
+describe('Navigator', () => {
+  it(
+    'Use correct navigator to detect Apple device on chrome',
+    { browser: 'chrome' },
+    () => {
+      expect((navigator as any).userAgentData).not.be.undefined;
+      expect(navigator.platform).not.to.be.undefined;
+
+      cy.visit(Cypress.config().baseUrl!);
+
+      cy.get('body').type('{meta}k');
+      cy.modalIsVisibleAndFocused();
+    }
+  );
+
+  it(
+    'Use correct navigator to detect Apple device on non chrome browser',
+    { browser: '!chrome' },
+    () => {
+      expect((navigator as any).userAgentData).to.be.undefined;
+      expect(navigator.platform).not.to.be.undefined;
+
+      cy.visit(Cypress.config().baseUrl!);
+
+      cy.get('body').type('{meta}k');
+      cy.modalIsVisibleAndFocused();
+    }
+  );
+});

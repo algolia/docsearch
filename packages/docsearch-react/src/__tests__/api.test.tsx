@@ -34,7 +34,7 @@ function noResultSearch(_queries: any, _requestOptions?: any): Promise<any> {
 }
 
 describe('api', () => {
-  let container: HTMLDivElement;
+  let container: HTMLDivElement | null;
 
   const docSearchSelector = '.DocSearch';
 
@@ -44,8 +44,10 @@ describe('api', () => {
   });
 
   afterEach(() => {
-    document.body.removeChild(container);
-    container = null;
+    if (container) {
+      document.body.removeChild(container);
+      container = null;
+    }
   });
 
   it('renders with minimal parameters', () => {
@@ -68,10 +70,10 @@ describe('api', () => {
       );
       expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
       expect(
-        document.querySelector('.DocSearch-Button-Placeholder').innerHTML
+        document.querySelector('.DocSearch-Button-Placeholder')!.innerHTML
       ).toBe('Recherche');
       expect(
-        document.querySelector('.DocSearch-Button').getAttribute('aria-label')
+        document.querySelector('.DocSearch-Button')!.getAttribute('aria-label')
       ).toBe('Recherche');
     });
 
@@ -166,17 +168,17 @@ describe('api', () => {
         fireEvent.click(await screen.findByText('Search'));
       });
 
-      expect(document.querySelector('.DocSearch-Cancel').innerHTML).toBe(
+      expect(document.querySelector('.DocSearch-Cancel')!.innerHTML).toBe(
         'Annuler'
       );
       expect(
-        document.querySelector('.DocSearch-Cancel').getAttribute('aria-label')
+        document.querySelector('.DocSearch-Cancel')!.getAttribute('aria-label')
       ).toBe('Annuler');
       expect(
-        document.querySelector('.DocSearch-Reset').getAttribute('title')
+        document.querySelector('.DocSearch-Reset')!.getAttribute('title')
       ).toBe('Effacer');
       expect(
-        document.querySelector('.DocSearch-Reset').getAttribute('aria-label')
+        document.querySelector('.DocSearch-Reset')!.getAttribute('aria-label')
       ).toBe('Effacer');
     });
 
@@ -290,9 +292,10 @@ describe('api', () => {
       });
 
       expect(screen.getByText(/No results for/)).toBeInTheDocument();
+
       const link = document.querySelector('.DocSearch-Help a');
       expect(link).toBeInTheDocument();
-      expect(link.getAttribute('href')).toBe(
+      expect(link!.getAttribute('href')).toBe(
         'https://github.com/algolia/docsearch/issues/new?title=q'
       );
     });
