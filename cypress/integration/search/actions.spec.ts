@@ -3,6 +3,9 @@
 describe('Start', () => {
   beforeEach(() => {
     cy.visit(Cypress.config().baseUrl!);
+    // seems we could run into race condition
+    // if we don't wait for .DocSearch-Button-Key to render
+    cy.get('.DocSearch-Button-Key');
   });
 
   it('Open modal on search button click', () => {
@@ -146,5 +149,17 @@ describe('Recent and Favorites', () => {
       .find('[title="Remove this search from favorites"]')
       .trigger('click');
     cy.contains('No recent searches').should('be.visible');
+  });
+
+  describe('A11y', () => {
+    beforeEach(() => {
+      cy.visit(Cypress.config().baseUrl!);
+    });
+    it('Restore focus to stored document.activeElement before modal is open', () => {
+      cy.get('[data-testid="btn"]').focus();
+      cy.get('body').type('{ctrl}k');
+      cy.closeModal();
+      cy.focused().should('have.data', 'testid', 'btn');
+    });
   });
 });

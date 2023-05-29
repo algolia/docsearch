@@ -48,6 +48,7 @@ export interface DocSearchProps {
 
 export function DocSearch(props: DocSearchProps) {
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
+  const activeElementRef = React.useRef<Element | null>(null);
   const [isOpen, setIsOpen] = React.useState(false);
   const [initialQuery, setInitialQuery] = React.useState<string | undefined>(
     props?.initialQuery || undefined
@@ -55,11 +56,23 @@ export function DocSearch(props: DocSearchProps) {
 
   const onOpen = React.useCallback(() => {
     setIsOpen(true);
+    activeElementRef.current = document.activeElement || document.body;
   }, [setIsOpen]);
 
   const onClose = React.useCallback(() => {
     setIsOpen(false);
   }, [setIsOpen]);
+
+  React.useEffect(() => {
+    if (
+      !isOpen &&
+      activeElementRef.current &&
+      activeElementRef.current instanceof HTMLElement
+    ) {
+      activeElementRef.current.focus();
+      activeElementRef.current = null;
+    }
+  }, [isOpen]);
 
   const onInput = React.useCallback(
     (event: KeyboardEvent) => {
