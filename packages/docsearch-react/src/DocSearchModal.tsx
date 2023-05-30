@@ -58,6 +58,7 @@ export function DocSearchModal({
   initialQuery: initialQueryFromProp = '',
   translations = {},
   getMissingResultsUrl,
+  insights = false,
 }: DocSearchModalProps) {
   const {
     footer: footerTranslations,
@@ -147,10 +148,12 @@ export function DocSearchModal({
             searchSuggestions: [],
           },
         },
+        insights,
         navigator,
         onStateChange(props) {
           setState(props.state);
         },
+        // @ts-expect-error
         getSources({ query, state: sourcesState, setContext, setStatus }) {
           if (!query) {
             if (disableUserPersonalization) {
@@ -285,16 +288,18 @@ export function DocSearchModal({
                         .map(transformItems)
                         .map((groupedHits) =>
                           groupedHits.map((item) => {
+                            const parent =
+                              item.type !== 'lvl1' &&
+                              groupedHits.find(
+                                (siblingItem) =>
+                                  siblingItem.type === 'lvl1' &&
+                                  siblingItem.hierarchy.lvl1 ===
+                                    item.hierarchy.lvl1
+                              );
+
                             return {
                               ...item,
-                              __docsearch_parent:
-                                item.type !== 'lvl1' &&
-                                groupedHits.find(
-                                  (siblingItem) =>
-                                    siblingItem.type === 'lvl1' &&
-                                    siblingItem.hierarchy.lvl1 ===
-                                      item.hierarchy.lvl1
-                                ),
+                              __docsearch_parent: parent ? parent : null,
                             };
                           })
                         )
@@ -320,6 +325,7 @@ export function DocSearchModal({
       navigator,
       transformItems,
       disableUserPersonalization,
+      insights,
     ]
   );
 
