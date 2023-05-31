@@ -130,6 +130,8 @@ export function DocSearchModal({
     [favoriteSearches, recentSearches, disableUserPersonalization]
   );
 
+  const insightsActive = Boolean(insights);
+
   const autocomplete = React.useMemo(
     () =>
       createAutocomplete<
@@ -227,6 +229,7 @@ export function DocSearchModal({
                   highlightPreTag: '<mark>',
                   highlightPostTag: '</mark>',
                   hitsPerPage: 20,
+                  clickAnalytics: Boolean(insights),
                   ...searchParameters,
                 },
               },
@@ -262,6 +265,19 @@ export function DocSearchModal({
               }
 
               setContext({ nbHits });
+
+              let insightsParams = {};
+
+              if (insightsActive) {
+                insightsParams = {
+                  __autocomplete_indexName: indexName,
+                  __autocomplete_queryID: results[0].queryID,
+                  __autocomplete_algoliaCredentials: {
+                    appId,
+                    apiKey,
+                  },
+                };
+              }
 
               return Object.values<DocSearchHit[]>(sources).map(
                 (items, index) => {
@@ -300,6 +316,7 @@ export function DocSearchModal({
                             return {
                               ...item,
                               __docsearch_parent: parent ? parent : null,
+                              ...insightsParams,
                             };
                           })
                         )
@@ -326,6 +343,9 @@ export function DocSearchModal({
       transformItems,
       disableUserPersonalization,
       insights,
+      insightsActive,
+      appId,
+      apiKey,
     ]
   );
 
