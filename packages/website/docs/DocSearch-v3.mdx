@@ -229,6 +229,46 @@ docsearch({
 
 </Tabs>
 
+### Sending events
+
+You can send search events to your DocSearch index by passing in the `insights` parameter when creating your DocSearch instance.
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', },
+    { label: 'React', value: 'react', }
+  ]
+}>
+<TabItem value="js">
+
+```js
+docsearch({
+  searchParameters: {
+    facetFilters: ['language:en', 'version:1.0.0'],
+  },
+  insights,
+});
+```
+
+</TabItem>
+
+<TabItem value="react">
+
+```jsx
+<DocSearch
+  searchParameters={{
+    facetFilters: ['language:en', 'version:1.0.0'],
+  }}
+  insights
+/>
+```
+
+</TabItem>
+
+</Tabs>
+
 ## Performance optimization
 
 ### Preconnect
