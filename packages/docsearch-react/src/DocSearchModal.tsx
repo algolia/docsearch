@@ -155,7 +155,6 @@ export function DocSearchModal({
         onStateChange(props) {
           setState(props.state);
         },
-        // @ts-expect-error
         getSources({ query, state: sourcesState, setContext, setStatus }) {
           if (!query) {
             if (disableUserPersonalization) {
@@ -176,7 +175,7 @@ export function DocSearchModal({
                   return item.url;
                 },
                 getItems() {
-                  return recentSearches.getAll();
+                  return recentSearches.getAll() as InternalDocSearchHit[];
                 },
               },
               {
@@ -192,7 +191,7 @@ export function DocSearchModal({
                   return item.url;
                 },
                 getItems() {
-                  return favoriteSearches.getAll();
+                  return favoriteSearches.getAll() as InternalDocSearchHit[];
                 },
               },
             ];
@@ -304,18 +303,22 @@ export function DocSearchModal({
                         .map(transformItems)
                         .map((groupedHits) =>
                           groupedHits.map((item) => {
-                            const parent =
-                              item.type !== 'lvl1' &&
-                              groupedHits.find(
-                                (siblingItem) =>
-                                  siblingItem.type === 'lvl1' &&
-                                  siblingItem.hierarchy.lvl1 ===
-                                    item.hierarchy.lvl1
-                              );
+                            let parent: InternalDocSearchHit | null = null;
+
+                            const potentialParent = groupedHits.find(
+                              (siblingItem) =>
+                                siblingItem.type === 'lvl1' &&
+                                siblingItem.hierarchy.lvl1 ===
+                                  item.hierarchy.lvl1
+                            ) as InternalDocSearchHit;
+
+                            if (item.type !== 'lvl1' && potentialParent) {
+                              parent = potentialParent;
+                            }
 
                             return {
                               ...item,
-                              __docsearch_parent: parent ? parent : null,
+                              __docsearch_parent: parent,
                               ...insightsParams,
                             };
                           })
