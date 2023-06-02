@@ -228,7 +228,7 @@ export function DocSearchModal({
                   highlightPreTag: '<mark>',
                   highlightPostTag: '</mark>',
                   hitsPerPage: 20,
-                  clickAnalytics: Boolean(insights),
+                  clickAnalytics: insightsActive,
                   ...searchParameters,
                 },
               },
