@@ -130,8 +130,6 @@ export function DocSearchModal({
     [favoriteSearches, recentSearches, disableUserPersonalization]
   );
 
-  const insightsActive = Boolean(insights);
-
   const autocomplete = React.useMemo(
     () =>
       createAutocomplete<
@@ -196,6 +194,8 @@ export function DocSearchModal({
               },
             ];
           }
+
+          const insightsActive = Boolean(insights);
 
           return searchClient
             .search<DocSearchHit>([
@@ -346,7 +346,6 @@ export function DocSearchModal({
       transformItems,
       disableUserPersonalization,
       insights,
-      insightsActive,
       appId,
       apiKey,
     ]
