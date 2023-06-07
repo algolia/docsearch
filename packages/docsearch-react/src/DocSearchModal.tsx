@@ -310,7 +310,7 @@ export function DocSearchModal({
                                 siblingItem.type === 'lvl1' &&
                                 siblingItem.hierarchy.lvl1 ===
                                   item.hierarchy.lvl1
-                            ) as InternalDocSearchHit;
+                            ) as InternalDocSearchHit | undefined;
 
                             if (item.type !== 'lvl1' && potentialParent) {
                               parent = potentialParent;
