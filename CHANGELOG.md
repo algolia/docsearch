@@ -1,3 +1,12 @@
+# [3.5.0](https://github.com/algolia/docsearch/compare/v3.4.0...v3.5.0) (2023-06-08)
+
+
+### Features
+
+* **api:** allow insights options to be forwarded to Autocomplete ([#1904](https://github.com/algolia/docsearch/issues/1904)) ([26691a5](https://github.com/algolia/docsearch/commit/26691a5c8abfe107a6737d66d3f02c2cac50553b))
+
+
+
 # [3.4.0](https://github.com/algolia/docsearch/compare/v3.3.5...v3.4.0) (2023-05-24)
 
 
