@@ -58,6 +58,7 @@ export function DocSearchModal({
   initialQuery: initialQueryFromProp = '',
   translations = {},
   getMissingResultsUrl,
+  insights = false,
 }: DocSearchModalProps) {
   const {
     footer: footerTranslations,
@@ -147,6 +148,7 @@ export function DocSearchModal({
             searchSuggestions: [],
           },
         },
+        insights,
         navigator,
         onStateChange(props) {
           setState(props.state);
@@ -171,7 +173,7 @@ export function DocSearchModal({
                   return item.url;
                 },
                 getItems() {
-                  return recentSearches.getAll();
+                  return recentSearches.getAll() as InternalDocSearchHit[];
                 },
               },
               {
@@ -187,11 +189,13 @@ export function DocSearchModal({
                   return item.url;
                 },
                 getItems() {
-                  return favoriteSearches.getAll();
+                  return favoriteSearches.getAll() as InternalDocSearchHit[];
                 },
               },
             ];
           }
+
+          const insightsActive = Boolean(insights);
 
           return searchClient
             .search<DocSearchHit>([
@@ -224,6 +228,7 @@ export function DocSearchModal({
                   highlightPreTag: '<mark>',
                   highlightPostTag: '</mark>',
                   hitsPerPage: 20,
+                  clickAnalytics: insightsActive,
                   ...searchParameters,
                 },
               },
@@ -260,6 +265,19 @@ export function DocSearchModal({
 
               setContext({ nbHits });
 
+              let insightsParams = {};
+
+              if (insightsActive) {
+                insightsParams = {
+                  __autocomplete_indexName: indexName,
+                  __autocomplete_queryID: results[0].queryID,
+                  __autocomplete_algoliaCredentials: {
+                    appId,
+                    apiKey,
+                  },
+                };
+              }
+
               return Object.values<DocSearchHit[]>(sources).map(
                 (items, index) => {
                   return {
@@ -285,16 +303,23 @@ export function DocSearchModal({
                         .map(transformItems)
                         .map((groupedHits) =>
                           groupedHits.map((item) => {
+                            let parent: InternalDocSearchHit | null = null;
+
+                            const potentialParent = groupedHits.find(
+                              (siblingItem) =>
+                                siblingItem.type === 'lvl1' &&
+                                siblingItem.hierarchy.lvl1 ===
+                                  item.hierarchy.lvl1
+                            ) as InternalDocSearchHit | undefined;
+
+                            if (item.type !== 'lvl1' && potentialParent) {
+                              parent = potentialParent;
+                            }
+
                             return {
                               ...item,
-                              __docsearch_parent:
-                                item.type !== 'lvl1' &&
-                                groupedHits.find(
-                                  (siblingItem) =>
-                                    siblingItem.type === 'lvl1' &&
-                                    siblingItem.hierarchy.lvl1 ===
-                                      item.hierarchy.lvl1
-                                ),
+                              __docsearch_parent: parent,
+                              ...insightsParams,
                             };
                           })
                         )
@@ -320,6 +345,9 @@ export function DocSearchModal({
       navigator,
       transformItems,
       disableUserPersonalization,
+      insights,
+      appId,
+      apiKey,
     ]
   );
 

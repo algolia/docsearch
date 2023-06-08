@@ -25,6 +25,7 @@
     "cy:verify": "cypress verify",
     "lint:css": "stylelint **/src/**/*.css",
     "lint": "eslint --ext .js,.ts,.tsx .",
+    "playground:build": "yarn workspace @docsearch/react-example build",
     "playground:start": "yarn workspace @docsearch/react-example start",
     "playground-js:start": "yarn workspace @docsearch/js-example start",
     "release": "shipjs prepare",
