@@ -1,3 +1,30 @@
+# [3.5.0](https://github.com/algolia/docsearch/compare/v3.4.0...v3.5.0) (2023-06-08)
+
+
+### Features
+
+* **api:** allow insights options to be forwarded to Autocomplete ([#1904](https://github.com/algolia/docsearch/issues/1904)) ([26691a5](https://github.com/algolia/docsearch/commit/26691a5c8abfe107a6737d66d3f02c2cac50553b))
+
+
+
+# [3.4.0](https://github.com/algolia/docsearch/compare/v3.3.5...v3.4.0) (2023-05-24)
+
+
+### Features
+
+* implement maxResultsPerGroup prop ([#1891](https://github.com/algolia/docsearch/issues/1891)) ([f82a733](https://github.com/algolia/docsearch/commit/f82a73367a02453609454dc26d3cf2b6d901dd75))
+
+
+
+## [3.3.5](https://github.com/algolia/docsearch/compare/v3.3.4...v3.3.5) (2023-05-17)
+
+
+### Bug Fixes
+
+* support Chrome autofill when `event.key` is undefined ([#1888](https://github.com/algolia/docsearch/issues/1888)) ([3f15fdb](https://github.com/algolia/docsearch/commit/3f15fdb3192b654dda14c36a5780f49fe309329c)), closes [#1887](https://github.com/algolia/docsearch/issues/1887)
+
+
+
 ## [3.3.4](https://github.com/algolia/docsearch/compare/v3.3.3...v3.3.4) (2023-04-26)
 
 

@@ -85,11 +85,6 @@
     "href": "https://bootstrap-vue.js.org/docs"
   },
   {
-    "name": "GitLab",
-    "image": "img/logos/gitlab.svg",
-    "href": "https://docs.gitlab.com/"
-  },
-  {
     "name": "Moment.js",
     "image": "img/logos/momentjs.svg",
     "href": "https://momentjs.com/docs/"

@@ -46,6 +46,7 @@ export function DocSearchModal({
   indexName,
   placeholder = 'Search docs',
   searchParameters,
+  maxResultsPerGroup,
   onClose = noop,
   transformItems = identity,
   hitComponent = Hit,
@@ -57,6 +58,7 @@ export function DocSearchModal({
   initialQuery: initialQueryFromProp = '',
   translations = {},
   getMissingResultsUrl,
+  insights = false,
 }: DocSearchModalProps) {
   const {
     footer: footerTranslations,
@@ -146,6 +148,7 @@ export function DocSearchModal({
             searchSuggestions: [],
           },
         },
+        insights,
         navigator,
         onStateChange(props) {
           setState(props.state);
@@ -170,7 +173,7 @@ export function DocSearchModal({
                   return item.url;
                 },
                 getItems() {
-                  return recentSearches.getAll();
+                  return recentSearches.getAll() as InternalDocSearchHit[];
                 },
               },
               {
@@ -186,11 +189,13 @@ export function DocSearchModal({
                   return item.url;
                 },
                 getItems() {
-                  return favoriteSearches.getAll();
+                  return favoriteSearches.getAll() as InternalDocSearchHit[];
                 },
               },
             ];
           }
+
+          const insightsActive = Boolean(insights);
 
           return searchClient
             .search<DocSearchHit>([
@@ -223,6 +228,7 @@ export function DocSearchModal({
                   highlightPreTag: '<mark>',
                   highlightPostTag: '</mark>',
                   hitsPerPage: 20,
+                  clickAnalytics: insightsActive,
                   ...searchParameters,
                 },
               },
@@ -240,7 +246,11 @@ export function DocSearchModal({
             })
             .then(({ results }) => {
               const { hits, nbHits } = results[0];
-              const sources = groupBy(hits, (hit) => removeHighlightTags(hit));
+              const sources = groupBy(
+                hits,
+                (hit) => removeHighlightTags(hit),
+                maxResultsPerGroup
+              );
 
               // We store the `lvl0`s to display them as search suggestions
               // in the "no results" screen.
@@ -254,6 +264,19 @@ export function DocSearchModal({
               }
 
               setContext({ nbHits });
+
+              let insightsParams = {};
+
+              if (insightsActive) {
+                insightsParams = {
+                  __autocomplete_indexName: indexName,
+                  __autocomplete_queryID: results[0].queryID,
+                  __autocomplete_algoliaCredentials: {
+                    appId,
+                    apiKey,
+                  },
+                };
+              }
 
               return Object.values<DocSearchHit[]>(sources).map(
                 (items, index) => {
@@ -271,21 +294,32 @@ export function DocSearchModal({
                     },
                     getItems() {
                       return Object.values(
-                        groupBy(items, (item) => item.hierarchy.lvl1)
+                        groupBy(
+                          items,
+                          (item) => item.hierarchy.lvl1,
+                          maxResultsPerGroup
+                        )
                       )
                         .map(transformItems)
                         .map((groupedHits) =>
                           groupedHits.map((item) => {
+                            let parent: InternalDocSearchHit | null = null;
+
+                            const potentialParent = groupedHits.find(
+                              (siblingItem) =>
+                                siblingItem.type === 'lvl1' &&
+                                siblingItem.hierarchy.lvl1 ===
+                                  item.hierarchy.lvl1
+                            ) as InternalDocSearchHit | undefined;
+
+                            if (item.type !== 'lvl1' && potentialParent) {
+                              parent = potentialParent;
+                            }
+
                             return {
                               ...item,
-                              __docsearch_parent:
-                                item.type !== 'lvl1' &&
-                                groupedHits.find(
-                                  (siblingItem) =>
-                                    siblingItem.type === 'lvl1' &&
-                                    siblingItem.hierarchy.lvl1 ===
-                                      item.hierarchy.lvl1
-                                ),
+                              __docsearch_parent: parent,
+                              ...insightsParams,
                             };
                           })
                         )
@@ -300,6 +334,7 @@ export function DocSearchModal({
     [
       indexName,
       searchParameters,
+      maxResultsPerGroup,
       searchClient,
       onClose,
       recentSearches,
@@ -310,6 +345,9 @@ export function DocSearchModal({
       navigator,
       transformItems,
       disableUserPersonalization,
+      insights,
+      appId,
+      apiKey,
     ]
   );
 
