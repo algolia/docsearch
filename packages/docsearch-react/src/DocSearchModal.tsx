@@ -1,4 +1,3 @@
-import type { AutocompleteState } from '@algolia/autocomplete-core';
 import { createAutocomplete } from '@algolia/autocomplete-core';
 import React from 'react';
 
@@ -14,6 +13,7 @@ import { SearchBox } from './SearchBox';
 import { createStoredSearches } from './stored-searches';
 import type {
   DocSearchHit,
+  DocSearchState,
   InternalDocSearchHit,
   StoredDocSearchHit,
 } from './types';
@@ -27,6 +27,7 @@ import {
   removeHighlightTags,
   isModifierEvent,
 } from './utils';
+import { buildInsightsClickParams } from './utils/buildInsightsClickParams';
 
 export type ModalTranslations = Partial<{
   searchBox: SearchBoxTranslations;
@@ -66,7 +67,7 @@ export function DocSearchModal({
     ...screenStateTranslations
   } = translations;
   const [state, setState] = React.useState<
-    AutocompleteState<InternalDocSearchHit>
+    DocSearchState<InternalDocSearchHit>
   >({
     query: '',
     collections: [],
@@ -476,6 +477,21 @@ export function DocSearchModal({
             translations={screenStateTranslations}
             getMissingResultsUrl={getMissingResultsUrl}
             onItemClick={(item, event) => {
+              // If insights is active, send insights click event
+              if (
+                state.context.algoliaInsightsPlugin &&
+                item.__autocomplete_id
+              ) {
+                const insightsClickParams = buildInsightsClickParams(
+                  item,
+                  item.__autocomplete_id
+                );
+
+                state.context.algoliaInsightsPlugin.insights.clickedObjectIDsAfterSearch(
+                  insightsClickParams
+                );
+              }
+
               saveRecentSearch(item);
               if (!isModifierEvent(event)) {
                 onClose();

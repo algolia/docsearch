@@ -84,4 +84,5 @@ export declare type DocSearchHit = {
     appId: string;
     apiKey: string;
   };
+  __autocomplete_id?: number;
 };
