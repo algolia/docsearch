@@ -131,6 +131,23 @@ export function DocSearchModal({
     [favoriteSearches, recentSearches, disableUserPersonalization]
   );
 
+  const sendItemClickEvent = React.useCallback(
+    (item: InternalDocSearchHit) => {
+      if (!state.context.algoliaInsightsPlugin || !item.__autocomplete_id)
+        return;
+
+      const insightsClickParams = buildInsightsClickParams(
+        item,
+        item.__autocomplete_id
+      );
+
+      state.context.algoliaInsightsPlugin.insights.clickedObjectIDsAfterSearch(
+        insightsClickParams
+      );
+    },
+    [state]
+  );
+
   const autocomplete = React.useMemo(
     () =>
       createAutocomplete<
@@ -478,19 +495,7 @@ export function DocSearchModal({
             getMissingResultsUrl={getMissingResultsUrl}
             onItemClick={(item, event) => {
               // If insights is active, send insights click event
-              if (
-                state.context.algoliaInsightsPlugin &&
-                item.__autocomplete_id
-              ) {
-                const insightsClickParams = buildInsightsClickParams(
-                  item,
-                  item.__autocomplete_id
-                );
-
-                state.context.algoliaInsightsPlugin.insights.clickedObjectIDsAfterSearch(
-                  insightsClickParams
-                );
-              }
+              sendItemClickEvent(item);
 
               saveRecentSearch(item);
               if (!isModifierEvent(event)) {
