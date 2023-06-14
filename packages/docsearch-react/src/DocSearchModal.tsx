@@ -145,7 +145,7 @@ export function DocSearchModal({
         insightsClickParams
       );
     },
-    [state]
+    [state.context.algoliaInsightsPlugin]
   );
 
   const autocomplete = React.useMemo(
