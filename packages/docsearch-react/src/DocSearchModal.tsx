@@ -1,4 +1,7 @@
-import { createAutocomplete } from '@algolia/autocomplete-core';
+import {
+  type AlgoliaInsightsHit,
+  createAutocomplete,
+} from '@algolia/autocomplete-core';
 import React from 'react';
 
 import { MAX_QUERY_SIZE } from './constants';
@@ -27,7 +30,6 @@ import {
   removeHighlightTags,
   isModifierEvent,
 } from './utils';
-import { buildInsightsClickParams } from './utils/buildInsightsClickParams';
 
 export type ModalTranslations = Partial<{
   searchBox: SearchBoxTranslations;
@@ -136,10 +138,15 @@ export function DocSearchModal({
       if (!state.context.algoliaInsightsPlugin || !item.__autocomplete_id)
         return;
 
-      const insightsClickParams = buildInsightsClickParams(
-        item,
-        item.__autocomplete_id
-      );
+      const insightsItem = item as AlgoliaInsightsHit;
+
+      const insightsClickParams = {
+        eventName: 'Item Selected',
+        index: insightsItem.__autocomplete_indexName,
+        items: [insightsItem],
+        positions: [item.__autocomplete_id],
+        queryID: insightsItem.__autocomplete_queryID,
+      };
 
       state.context.algoliaInsightsPlugin.insights.clickedObjectIDsAfterSearch(
         insightsClickParams

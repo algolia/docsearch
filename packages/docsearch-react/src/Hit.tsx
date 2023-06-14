@@ -8,5 +8,9 @@ interface HitProps {
 }
 
 export function Hit({ hit, children }: HitProps) {
-  return <a href={hit.url}>{children}</a>;
+  return (
+    <a href={hit.url} onClick={(e) => e.preventDefault()}>
+      {children}
+    </a>
+  );
 }
