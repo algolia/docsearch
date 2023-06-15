@@ -1,3 +1,7 @@
+## [3.5.1](https://github.com/algolia/docsearch/compare/v3.5.0...v3.5.1) (2023-06-15)
+
+
+
 # [3.5.0](https://github.com/algolia/docsearch/compare/v3.4.0...v3.5.0) (2023-06-08)
 
 
