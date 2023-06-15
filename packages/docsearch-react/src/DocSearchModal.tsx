@@ -1,5 +1,7 @@
-import type { AutocompleteState } from '@algolia/autocomplete-core';
-import { createAutocomplete } from '@algolia/autocomplete-core';
+import {
+  type AlgoliaInsightsHit,
+  createAutocomplete,
+} from '@algolia/autocomplete-core';
 import React from 'react';
 
 import { MAX_QUERY_SIZE } from './constants';
@@ -14,6 +16,7 @@ import { SearchBox } from './SearchBox';
 import { createStoredSearches } from './stored-searches';
 import type {
   DocSearchHit,
+  DocSearchState,
   InternalDocSearchHit,
   StoredDocSearchHit,
 } from './types';
@@ -66,7 +69,7 @@ export function DocSearchModal({
     ...screenStateTranslations
   } = translations;
   const [state, setState] = React.useState<
-    AutocompleteState<InternalDocSearchHit>
+    DocSearchState<InternalDocSearchHit>
   >({
     query: '',
     collections: [],
@@ -128,6 +131,28 @@ export function DocSearchModal({
       }
     },
     [favoriteSearches, recentSearches, disableUserPersonalization]
+  );
+
+  const sendItemClickEvent = React.useCallback(
+    (item: InternalDocSearchHit) => {
+      if (!state.context.algoliaInsightsPlugin || !item.__autocomplete_id)
+        return;
+
+      const insightsItem = item as AlgoliaInsightsHit;
+
+      const insightsClickParams = {
+        eventName: 'Item Selected',
+        index: insightsItem.__autocomplete_indexName,
+        items: [insightsItem],
+        positions: [item.__autocomplete_id],
+        queryID: insightsItem.__autocomplete_queryID,
+      };
+
+      state.context.algoliaInsightsPlugin.insights.clickedObjectIDsAfterSearch(
+        insightsClickParams
+      );
+    },
+    [state.context.algoliaInsightsPlugin]
   );
 
   const autocomplete = React.useMemo(
@@ -476,6 +501,9 @@ export function DocSearchModal({
             translations={screenStateTranslations}
             getMissingResultsUrl={getMissingResultsUrl}
             onItemClick={(item, event) => {
+              // If insights is active, send insights click event
+              sendItemClickEvent(item);
+
               saveRecentSearch(item);
               if (!isModifierEvent(event)) {
                 onClose();
