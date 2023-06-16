@@ -3,7 +3,7 @@
 
 ### Features
 
-* **api:** allow click insights to be triggered when the insights property is set (["1916"](https://github.com/algolia/docsearch/issues/1916)) ([cacade4](https://github.com/algolia/docsearch/commit/cacade4c65878877c5c7433281299e3a5f9a2541))
+* **api:** support Insights on search results click ([#1916](https://github.com/algolia/docsearch/issues/1916)) ([cacade4](https://github.com/algolia/docsearch/commit/cacade4c65878877c5c7433281299e3a5f9a2541))
 
 
 # [3.5.0](https://github.com/algolia/docsearch/compare/v3.4.0...v3.5.0) (2023-06-08)
