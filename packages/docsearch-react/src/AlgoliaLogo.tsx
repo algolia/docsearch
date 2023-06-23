@@ -28,7 +28,7 @@ export function AlgoliaLogo({ translations = {} }: AlgoliaLogoProps) {
         viewBox="0 0 2196.2 500"
       >
         <defs>
-          <style>{`.cls-1,.cls-2{fill:#003dff;}.cls-2{fill-rule:evenodd;}`}</style>
+          <style>{`.cls-1,.cls-2{fill:var(--docsearch-logo-color,#003dff);}.cls-2{fill-rule:evenodd;}`}</style>
         </defs>
         <path
           className="cls-2"
