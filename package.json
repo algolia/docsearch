@@ -83,7 +83,7 @@
     "jest-environment-jsdom": "29.4.3",
     "jest-watch-typeahead": "1.1.0",
     "lerna": "4.0.0",
-    "postcss": "8.4.18",
+    "postcss": "8.4.24",
     "prettier": "2.7.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
