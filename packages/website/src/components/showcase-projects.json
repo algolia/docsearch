@@ -5,9 +5,9 @@
     "href": "https://getbootstrap.com/docs/5.2/getting-started/introduction/"
   },
   {
-    "name": "MUI",
-    "image": "img/logos/mui.svg",
-    "href": "https://mui.com"
+    "name": "Material UI",
+    "image": "img/logos/material-ui.svg",
+    "href": "https://material-ui.com/"
   },
   {
     "name": "Babel",
