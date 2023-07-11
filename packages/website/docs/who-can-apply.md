@@ -2,19 +2,21 @@
 title: Who can apply?
 ---
 
-We built DocSearch from the ground up with the idea of improving search on large technical documentations. For this reason, we are offering a free hosting version to all online technical documentations of open-source projects and technical blogs.
+**Open for all developer documentation and technical blogs.**
 
-We're always sad to have to turn down applications, but with the number of requests we receive every day, we've had to focus on fair criteria. We hope you understand.
+We built DocSearch from the ground up with the idea of improving search on large technical documentations. For this reason, we are offering a free hosting version to all online technical documentations and technical blogs.
+
+We usually turn down applications when they are not production ready or have non-technical content on the website.
 
 ## The checklist
 
-To have your request validated, we'll ask that you check all the following points.
+To have your request validated, we’ll ask that you check all the following points.
+
+- Your website must be a **technical documentation or a technical blog**.
 
 - You must be the **owner** of the website, or at least have the permissions to update its content. You'll need to [include a JavaScript snippet][1] to your frontend to implement DocSearch.
 
 - Your website must be **publicly available**. We do not host search indices for websites that are only available after authentication or are hosted on a private network.
-
-- Your website must be a **technical documentation of an open source project or a technical blog**. We do not index commercial content.
 
 - Your website must be **production ready**. We won't index empty websites nor those filled with placeholder content. Please, wait until you have written some documentation before applying. We would be happy to help you as soon as you have a steady design.
 
