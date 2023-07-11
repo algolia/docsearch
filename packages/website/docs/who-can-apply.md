@@ -12,7 +12,7 @@ We’re usually turn down applications when they are not production ready or hav
 
 To have your request validated, we’ll ask that you check all the following points.
 
-- Your website must be a technical documentation or a technical blog.
+- Your website must be a **technical documentation or a technical blog**.
 
 - You must be the **owner** of the website, or at least have the permissions to update its content. You'll need to [include a JavaScript snippet][1] to your frontend to implement DocSearch.
 
