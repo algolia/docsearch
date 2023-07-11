@@ -1,7 +1,8 @@
 ---
 title: Who can apply?
 ---
-## Open for all developer documentation and technical blogs
+
+**Open for all developer documentation and technical blogs.**
 
 We built DocSearch from the ground up with the idea of improving search on large technical documentations. For this reason, we are offering a free hosting version to all online technical documentations and technical blogs.
 
