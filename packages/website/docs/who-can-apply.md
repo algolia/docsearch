@@ -6,7 +6,7 @@ title: Who can apply?
 
 We built DocSearch from the ground up with the idea of improving search on large technical documentations. For this reason, we are offering a free hosting version to all online technical documentations and technical blogs.
 
-We’re usually turn down applications when they are not production ready or have non-technical content on the website.
+We usually turn down applications when they are not production ready or have non-technical content on the website.
 
 ## The checklist
 
