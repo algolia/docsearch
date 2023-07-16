@@ -21,7 +21,7 @@
     "@docusaurus/core": "2.4.1",
     "@docusaurus/preset-classic": "2.4.1",
     "@mdx-js/react": "^1.6.22",
-    "clsx": "^1.1.1",
+    "clsx": "^2.0.0",
     "file-loader": "6.2.0",
     "my-loaders": "file:plugins/my-loaders",
     "postcss": "8.4.25",
