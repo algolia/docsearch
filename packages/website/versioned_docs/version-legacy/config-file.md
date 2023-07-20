@@ -111,9 +111,9 @@ If one `start_urls` item has no `selectors_key` defined, the `default` set will 
 
 ### Using regular expressions
 
-The `start_urls` and `stop_urls` options also enable you to use regular expressions to express more complex patterns. This object must at least contain a `url` key targeting a reachable page.
+The `start_urls` and `stop_urls` options also enable you to use regular expressions to express more complex patterns. You can define either an array of regular expressions or an object. The object must at least contain a `url` key targeting a reachable page.
 
-You can also define a `variables` key that will be injected into your specific URL pattern. The following example makes this variable feature clearer:
+If you define your regular expression as an object, you can also define a `variables` key that will be injected into your specific URL pattern. The following example makes this variable feature clearer:
 
 ```json
 {
