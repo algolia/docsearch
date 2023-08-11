@@ -39,9 +39,9 @@
     "website:test": "yarn workspace @docsearch/website start --no-open"
   },
   "devDependencies": {
-    "@babel/cli": "7.22.6",
+    "@babel/cli": "7.22.10",
     "@babel/plugin-transform-react-jsx": "7.22.5",
-    "@babel/preset-env": "7.22.7",
+    "@babel/preset-env": "7.22.10",
     "@babel/preset-typescript": "7.22.5",
     "@rollup/plugin-json": "4.1.0",
     "@rollup/plugin-node-resolve": "7.1.1",
