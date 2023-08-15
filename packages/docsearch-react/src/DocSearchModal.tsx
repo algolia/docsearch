@@ -2,6 +2,7 @@ import {
   type AlgoliaInsightsHit,
   createAutocomplete,
 } from '@algolia/autocomplete-core';
+import type { SearchResponse } from '@algolia/client-search';
 import React from 'react';
 
 import { MAX_QUERY_SIZE } from './constants';
@@ -270,8 +271,9 @@ export function DocSearchModal({
               throw error;
             })
             .then(({ results }) => {
-              const { hits, nbHits } = results[0];
-              const sources = groupBy(
+              const firstResult = results[0] as SearchResponse<DocSearchHit>;
+              const { hits, nbHits } = firstResult;
+              const sources = groupBy<DocSearchHit>(
                 hits,
                 (hit) => removeHighlightTags(hit),
                 maxResultsPerGroup
@@ -295,7 +297,7 @@ export function DocSearchModal({
               if (insightsActive) {
                 insightsParams = {
                   __autocomplete_indexName: indexName,
-                  __autocomplete_queryID: results[0].queryID,
+                  __autocomplete_queryID: firstResult.queryID,
                   __autocomplete_algoliaCredentials: {
                     appId,
                     apiKey,
