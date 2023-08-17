@@ -1,3 +1,11 @@
+## [3.5.2](https://github.com/algolia/docsearch/compare/v3.5.1...v3.5.2) (2023-08-11)
+
+
+### Fixes
+
+* Updates `algoliasearch` package version ([cc90789](https://github.com/algolia/docsearch/commit/cc9078929032e7360fd629ed43071e698a54bab6))
+* Adds `search-insights` as options peer dependency ([cc90789](https://github.com/algolia/docsearch/commit/cc9078929032e7360fd629ed43071e698a54bab6))
+
 ## [3.5.1](https://github.com/algolia/docsearch/compare/v3.5.0...v3.5.1) (2023-06-15)
 
 
