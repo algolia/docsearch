@@ -18,6 +18,7 @@ So, if you're using one of the following tools, checkout their documentation to 
 - [Docsy][15] - [Configure Algolia DocSearch][16]
 - [dumi][17] - [algolia][18]
 - [Lotus Docs][19] - [Enabling the DocSearch Plugin][20]
+- [Sphinx](https://www.sphinx-doc.org/en/master/) - [Algolia DocSearch for Sphinx](https://sphinx-docsearch.readthedocs.io/en/latest/)
 
 If you're maintaining a similar tool and want us to add you to the list, [feel free to make a pull request](https://github.com/algolia/docsearch/edit/main/packages/website/docs/integrations.md) and [contribute to Code Exchange](https://www.algolia.com/developers/code-exchange/contribute/). We're happy to help.
 
