@@ -210,11 +210,6 @@
     "href": "https://react-bootstrap.github.io/"
   },
   {
-    "name": "Symfony",
-    "image": "img/logos/symfony.png",
-    "href": "https://symfony.com/doc/current/index.html"
-  },
-  {
     "name": "styled components",
     "image": "img/logos/styled-components.png",
     "href": "https://styled-components.com/docs"
