@@ -1075,7 +1075,7 @@
   dependencies:
     "@babel/types" "^7.22.5"
 
-"@babel/helper-module-imports@^7.0.0", "@babel/helper-module-imports@^7.12.13":
+"@babel/helper-module-imports@^7.12.13":
   version "7.12.13"
   resolved "https://registry.yarnpkg.com/@babel/helper-module-imports/-/helper-module-imports-7.12.13.tgz#ec67e4404f41750463e455cc3203f6a32e93fcb0"
   integrity sha512-NGmfvRp9Rqxy0uHSSVP+SRIW1q31a7Ji10cLBcqSDUngGentY4FRiHOFZFE1CLU5eiL0oE8reH7Tg1y99TDM/g==
@@ -1103,7 +1103,7 @@
   dependencies:
     "@babel/types" "^7.18.6"
 
-"@babel/helper-module-imports@^7.22.5":
+"@babel/helper-module-imports@^7.22.5", "@babel/helper-module-imports@^7.7.4":
   version "7.22.5"
   resolved "https://registry.yarnpkg.com/@babel/helper-module-imports/-/helper-module-imports-7.22.5.tgz#1a8f4c9f4027d23f520bd76b364d44434a72660c"
   integrity sha512-8Dl6+HD/cKifutF5qGd/8ZJi84QeAKh+CEe1sBzz8UayBBGg1dAIJrdHOcOM5b2MpzWL2yuotJTtGjETq0qjXg==
@@ -6584,6 +6584,14 @@
   version "1.0.0-next.20"
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.20.tgz#111b5db0f501aa89b05076fa31f0ea0e0c292cd3"
   integrity sha512-88p7+M0QGxKpmnkfXjS4V26AnoC/eiqZutE8GLdaI5X12NY75bXSdTY9NkmYb2Xyk1O+MmkuO6Frmsj84V6I8Q==
+
+"@rollup/plugin-babel@5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-babel/-/plugin-babel-5.0.0.tgz#2f01c9555927449c82cb13dd9e56213a358e1ce9"
+  integrity sha512-YpVnwdUeVj/fDFN75Y3CAzJTMYNcqbH05SJs551wqj+BSwLT9pS3dqJrVDPYl3eH4OrI8ueiEseX5VgUn+0HLA==
+  dependencies:
+    "@babel/helper-module-imports" "^7.7.4"
+    "@rollup/pluginutils" "^3.0.8"
 
 "@rollup/plugin-json@4.1.0":
   version "4.1.0"
@@ -20775,14 +20783,6 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
   dependencies:
     hash-base "^3.0.0"
     inherits "^2.0.1"
-
-rollup-plugin-babel@4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-babel/-/rollup-plugin-babel-4.4.0.tgz#d15bd259466a9d1accbdb2fe2fff17c52d030acb"
-  integrity sha512-Lek/TYp1+7g7I+uMfJnnSJ7YWoD58ajo6Oarhlex7lvUce+RCKRuGRSgztDO3/MF/PuGKmUL5iTHKf208UNszw==
-  dependencies:
-    "@babel/helper-module-imports" "^7.0.0"
-    rollup-pluginutils "^2.8.1"
 
 rollup-plugin-commonjs@10.1.0:
   version "10.1.0"
