@@ -63,6 +63,11 @@
   width: 20px;
 }
 
+.DocSearch-Button-Key--pressed {
+  transform: translate3d(0, 1px, 0);
+  box-shadow: var(--docsearch-key-pressed-shadow);
+}
+
 @media (max-width: 768px) {
   .DocSearch-Button-Keys,
   .DocSearch-Button-Placeholder {
