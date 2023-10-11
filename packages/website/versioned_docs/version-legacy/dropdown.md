@@ -23,7 +23,7 @@ Once your Algolia DocSearch index is ready, set up, and filled with the right da
     appId: '<YOUR_APP_ID>',
     // Replace inputSelector with a CSS selector
     // matching your search input
-    inputSelector: '<YOUR_CSS_SELECTOR>',
+    container: '<YOUR_CSS_SELECTOR>',
     // Set debug to true to inspect the dropdown
     debug: false,
   });
