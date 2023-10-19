@@ -21,6 +21,16 @@ html[data-theme='dark'] {
   --ifm-menu-color-background-active: #21243d;
 }
 
+/* DocSearch x Algolia logo */
+@media (max-width: 565px) {
+  .navbar__logo .docsearch-nav-logo {
+    width: 250px;
+    height: auto;
+    vertical-align: middle;
+  }
+}
+
+
 .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.1);
   display: block;
