@@ -63,7 +63,7 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
             alt: 'DocSearch x Algolia',
             src: 'img/docsearch-x-algolia-logo-light-mode.png',
             srcDark: 'img/docsearch-x-algolia-logo-dark-mode.png',
-            className: 'docsearch-nav-logo'
+            className: 'docsearch-nav-logo',
           },
           items: [
             // left
