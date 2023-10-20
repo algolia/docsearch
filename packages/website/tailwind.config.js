@@ -4,6 +4,9 @@ module.exports = {
   important: '#tailwind',
   theme: {
     extend: {
+      colors: {
+        algolia: '#1C52FF',
+      },
       maxWidth: {
         xxs: '18rem',
       },

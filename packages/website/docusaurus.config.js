@@ -60,9 +60,10 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
         navbar: {
           hideOnScroll: true,
           logo: {
-            alt: 'DocSearch',
-            src: 'img/docsearch-logo.svg',
-            srcDark: 'img/docsearch-logo-white.svg',
+            alt: 'DocSearch x Algolia',
+            src: 'img/docsearch-x-algolia-logo-light-mode.png',
+            srcDark: 'img/docsearch-x-algolia-logo-dark-mode.png',
+            className: 'docsearch-nav-logo',
           },
           items: [
             // left
