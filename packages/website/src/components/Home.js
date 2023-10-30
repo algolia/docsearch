@@ -78,7 +78,7 @@ function Home() {
                           Free Service
                         </dt>
                         <dd
-                          className="order-1 text-5xl leading-none font-extrabold text-indigo-600"
+                          className="order-1 text-5xl leading-none font-extrabold text-algolia"
                           aria-describedby="item-1"
                         >
                           100%
@@ -88,7 +88,7 @@ function Home() {
                         <dt className="order-2 mt-2 text-lg leading-6 font-medium text-description">
                           Searches per month
                         </dt>
-                        <dd className="order-1 text-5xl leading-none font-extrabold text-indigo-600">
+                        <dd className="order-1 text-5xl leading-none font-extrabold text-algolia">
                           +170M
                         </dd>
                       </div>
@@ -96,7 +96,7 @@ function Home() {
                         <dt className="order-2 mt-2 text-lg leading-6 font-medium text-description">
                           DocSearch Live
                         </dt>
-                        <dd className="order-1 text-5xl leading-none font-extrabold text-indigo-600">
+                        <dd className="order-1 text-5xl leading-none font-extrabold text-algolia">
                           +7000
                         </dd>
                       </div>
@@ -150,7 +150,7 @@ function Home() {
                 <li>
                   <div className="flex">
                     <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                      <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
                         <svg
                           viewBox="0 0 20 20"
                           fill="currentColor"
@@ -180,7 +180,7 @@ function Home() {
                 <li className="mt-10 lg:mt-0">
                   <div className="flex">
                     <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                      <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
                         <svg
                           fill="none"
                           viewBox="0 0 24 24"
@@ -212,7 +212,7 @@ function Home() {
                 <li className="mt-10 lg:mt-0">
                   <div className="flex">
                     <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                      <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
                         <svg
                           fill="none"
                           viewBox="0 0 24 24"
@@ -353,7 +353,7 @@ function Home() {
                   <li>
                     <div className="flex">
                       <div className="flex-shrink-0">
-                        <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                        <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
                           <svg
                             fill="none"
                             viewBox="0 0 24 24"
@@ -386,7 +386,7 @@ function Home() {
                   <li className="mt-10">
                     <div className="flex">
                       <div className="flex-shrink-0">
-                        <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                        <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
                           <svg
                             fill="none"
                             viewBox="0 0 24 24"
@@ -438,7 +438,7 @@ function Home() {
                     <li>
                       <div className="flex">
                         <div className="flex-shrink-0">
-                          <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                          <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
                             <svg
                               fill="none"
                               viewBox="0 0 24 24"
@@ -470,7 +470,7 @@ function Home() {
                     <li className="mt-10">
                       <div className="flex">
                         <div className="flex-shrink-0">
-                          <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                          <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
                             <svg
                               fill="none"
                               viewBox="0 0 24 24"
@@ -517,7 +517,7 @@ function Home() {
         </div>
 
         {/* Powered by Algolia */}
-        <div className="py-16 bg-indigo-600 overflow-hidden lg:py-24">
+        <div className="py-16 bg-algolia overflow-hidden lg:py-24">
           <div className="text-center">
             <h3 className="mt-2 text-3xl leading-8 font-extrabold text-white tracking-tight md:text-4xl md:leading-10">
               Powered by Algolia
@@ -530,7 +530,7 @@ function Home() {
                   <li className="mt-10">
                     <div className="flex">
                       <div className="flex-shrink-0">
-                        <div className="flex items-center justify-center h-12 w-12 rounded-md bg-white text-indigo-500">
+                        <div className="flex items-center justify-center h-12 w-12 rounded-md bg-white text-algolia">
                           <svg
                             fill="none"
                             viewBox="0 0 24 24"
@@ -561,7 +561,7 @@ function Home() {
                   <li className="mt-10">
                     <div className="flex">
                       <div className="flex-shrink-0">
-                        <div className="flex items-center justify-center h-12 w-12 rounded-md  bg-white text-indigo-500">
+                        <div className="flex items-center justify-center h-12 w-12 rounded-md  bg-white text-algolia">
                           <svg
                             fill="none"
                             viewBox="0 0 24 24"
@@ -596,7 +596,7 @@ function Home() {
                   <li className="mt-10">
                     <div className="flex">
                       <div className="flex-shrink-0">
-                        <div className="flex items-center justify-center h-12 w-12 rounded-md bg-white text-indigo-500">
+                        <div className="flex items-center justify-center h-12 w-12 rounded-md bg-white text-algolia">
                           <svg
                             fill="none"
                             viewBox="0 0 24 24"
@@ -627,7 +627,7 @@ function Home() {
                   <li className="mt-10">
                     <div className="flex">
                       <div className="flex-shrink-0">
-                        <div className="flex items-center justify-center h-12 w-12 rounded-md bg-white text-indigo-500">
+                        <div className="flex items-center justify-center h-12 w-12 rounded-md bg-white text-algolia">
                           <svg
                             fill="none"
                             viewBox="0 0 24 24"
@@ -687,7 +687,7 @@ function Home() {
                 <li>
                   <div className="flex">
                     <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                      <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
                         <svg
                           className="h-6 w-6"
                           fill="none"
@@ -718,7 +718,7 @@ function Home() {
                 <li className="mt-10 md:mt-0">
                   <div className="flex">
                     <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                      <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
                         <svg
                           className="h-6 w-6"
                           fill="none"

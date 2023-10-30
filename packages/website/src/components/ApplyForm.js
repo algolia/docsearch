@@ -43,6 +43,9 @@ function ApplyForm() {
     formData.forEach(function (value, key) {
       data[key] = value;
     });
+    if (!data.repoURL) {
+      data.repoURL = 'https://www.github.com/algolia/docsearch';
+    }
     const body = JSON.stringify(data);
 
     fetch(action, {
@@ -161,22 +164,18 @@ function ApplyForm() {
           key="repoURL"
           className="apply-text"
         >
-          Repository URL
+          Repository URL (Optional)
           <Input
-            required={true}
+            required={false}
             id="repoURL"
             type="url"
             name="repoURL"
-            aria-label="The URL of your project repository"
+            aria-label="(Optional) The URL of your project repository"
             value={repo}
             placeholder="https://github.com/algolia/docsearch, https://gitlab.com/gitlab-org/gitlab, etc..."
             onChange={handleSetRepo}
           />
         </LabelText>
-
-        <Text small={true} className="uil-pv-8 uil-d-block apply-text">
-          We will use this link to determine if your project is open-source.
-        </Text>
 
         <div className="uil-ph-32 uil-d-flex uil-fxd-column">
           <LabelText
