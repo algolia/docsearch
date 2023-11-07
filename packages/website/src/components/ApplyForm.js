@@ -236,10 +236,13 @@ function ApplyForm() {
             />
             I understand that this is a Free Service as described in Algolia's{' '}
             <InlineLink href="https://www.algolia.com/policies/terms/">
-             Terms of Service
-            </InlineLink>{' '}and Algolia's{' '}<InlineLink href="https://www.algolia.com/policies/free-services-terms/">
-             Special Free Services Terms
-            </InlineLink>.
+              Terms of Service
+            </InlineLink>{' '}
+            and Algolia's{' '}
+            <InlineLink href="https://www.algolia.com/policies/free-services-terms/">
+              Special Free Services Terms
+            </InlineLink>
+            .
           </LabelText>
 
           <Button
