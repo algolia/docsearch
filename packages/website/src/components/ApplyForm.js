@@ -230,15 +230,16 @@ function ApplyForm() {
               required={true}
               id="opensource"
               name="opensource"
-              aria-label="Confirm I understand that this is a Free Service as described in Algolia's Terms of Service"
+              aria-label="Confirm I understand that this is a Free Service as described in Algolia's Terms of Service and Algolia's Special Free Service Terms"
               type="checkbox"
               className="uil-mr-8"
             />
             I understand that this is a Free Service as described in Algolia's{' '}
             <InlineLink href="https://www.algolia.com/policies/terms/">
-              Terms of Service.
-            </InlineLink>
-          </LabelText>
+             Terms of Service
+            </InlineLink>{' '}and Algolia's{' '}<InlineLink href="https://www.algolia.com/policies/free-services-terms/">
+             Special Free Services Terms
+            </InlineLink>.
 
           <Button
             primary={true}
