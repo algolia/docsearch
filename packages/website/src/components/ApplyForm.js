@@ -240,6 +240,7 @@ function ApplyForm() {
             </InlineLink>{' '}and Algolia's{' '}<InlineLink href="https://www.algolia.com/policies/free-services-terms/">
              Special Free Services Terms
             </InlineLink>.
+          </LabelText>
 
           <Button
             primary={true}
