@@ -30,6 +30,13 @@ html[data-theme='dark'] {
   }
 }
 
+/* DocSearch x Algolia logo in sidebar */
+@media (min-width: 997px) {
+  .theme-doc-sidebar-container .docsearch-nav-logo {
+    height: auto;
+  }
+}
+
 
 .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.1);
