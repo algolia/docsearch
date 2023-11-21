@@ -4,4 +4,4 @@
   ignore="git diff --quiet $COMMIT_REF $CACHED_COMMIT_REF -- packages/website/ yarn.lock"
 
 [build.environment]
-  YARN_VERSION = "1.22.5"
+  YARN_VERSION = "1.22.19"
