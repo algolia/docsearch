@@ -138,12 +138,8 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
               title: 'Community',
               items: [
                 {
-                  label: 'Forum',
-                  to: 'https://discourse.algolia.com/tags/docsearch',
-                },
-                {
                   label: 'Discord',
-                  to: 'https://discord.com/invite/bRTacwYrfX',
+                  to: 'https://discord.com/invite/W7kYfh7FKQ',
                 },
               ],
             },
