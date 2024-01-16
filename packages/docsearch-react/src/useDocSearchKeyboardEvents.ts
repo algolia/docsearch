@@ -1,11 +1,15 @@
 import React from 'react';
 
+import type { DocSearchCustomShortcuts } from "./DocSearch";
+
+
 export interface UseDocSearchKeyboardEventsProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
   onInput?: (event: KeyboardEvent) => void;
   searchButtonRef?: React.RefObject<HTMLButtonElement>;
+  customShortcuts?: DocSearchCustomShortcuts[];
 }
 
 function isEditingContent(event: KeyboardEvent): boolean {
@@ -26,6 +30,7 @@ export function useDocSearchKeyboardEvents({
   onClose,
   onInput,
   searchButtonRef,
+  customShortcuts,
 }: UseDocSearchKeyboardEventsProps) {
   React.useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -36,17 +41,35 @@ export function useDocSearchKeyboardEvents({
           onOpen();
         }
       }
+
+      //Check if a custom character is pressed
+      const customKeyCharacter = customShortcuts?.find(
+        (shortcut) => shortcut.key === event.key && !shortcut.withMetaOrCtrlKey
+      );
+
+      //Check if a custom character with a meta or ctrl key is pressed
+      const customKeyCharacterWithMetaOrCtrl = customShortcuts?.find(
+        (shortcut) =>
+          shortcut.key === event.key &&
+          shortcut.withMetaOrCtrlKey &&
+          (event.metaKey || event.ctrlKey)
+      );
+
       if (
         (event.keyCode === 27 && isOpen) ||
         // The `Cmd+K` shortcut both opens and closes the modal.
         // We need to check for `event.key` because it can be `undefined` with
         // Chrome's autofill feature.
         // See https://github.com/paperjs/paper.js/issues/1398
-        (event.key?.toLowerCase() === 'k' &&
-          (event.metaKey || event.ctrlKey)) ||
+        (customShortcuts
+          ? customKeyCharacterWithMetaOrCtrl
+          : event.key?.toLowerCase() === 'k' &&
+            (event.metaKey || event.ctrlKey)) ||
         // The `/` shortcut opens but doesn't close the modal because it's
         // a character.
-        (!isEditingContent(event) && event.key === '/' && !isOpen)
+        (!isEditingContent(event) &&
+          (customShortcuts ? customKeyCharacter : event.key === '/') &&
+          !isOpen)
       ) {
         event.preventDefault();
 
@@ -73,5 +96,5 @@ export function useDocSearchKeyboardEvents({
     return () => {
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [isOpen, onOpen, onClose, onInput, searchButtonRef]);
+  }, [isOpen, onOpen, onClose, onInput, searchButtonRef, customShortcuts]);
 }

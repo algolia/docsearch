@@ -23,6 +23,11 @@ export type DocSearchTranslations = Partial<{
   modal: ModalTranslations;
 }>;
 
+export type DocSearchCustomShortcuts = {
+  key: string;
+  withMetaOrCtrlKey?: boolean;
+};
+
 export interface DocSearchProps {
   appId: string;
   apiKey: string;
@@ -41,6 +46,7 @@ export interface DocSearchProps {
   transformSearchClient?: (searchClient: SearchClient) => SearchClient;
   disableUserPersonalization?: boolean;
   initialQuery?: string;
+  customShortcuts?: DocSearchCustomShortcuts[];
   navigator?: AutocompleteOptions<InternalDocSearchHit>['navigator'];
   translations?: DocSearchTranslations;
   getMissingResultsUrl?: ({ query }: { query: string }) => string;
@@ -76,6 +82,7 @@ export function DocSearch(props: DocSearchProps) {
     onClose,
     onInput,
     searchButtonRef,
+    customShortcuts: props?.customShortcuts,
   });
 
   return (
