@@ -44,7 +44,7 @@ export const DocSearchButton = React.forwardRef<
       ref={ref}
     >
       <span className="DocSearch-Button-Container">
-        <SearchIcon aria-hidden="true" />
+        <SearchIcon />
         <span className="DocSearch-Button-Placeholder">{buttonText}</span>
       </span>
 

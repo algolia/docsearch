@@ -69,7 +69,7 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps) {
       >
         <label className="DocSearch-MagnifierLabel" {...props.getLabelProps()}>
           <SearchIcon />
-          <span className="DocSearch-VisuallyHiddenForAccessbility">
+          <span className="DocSearch-VisuallyHiddenForAccessibility">
             {searchInputLabel}
           </span>
         </label>

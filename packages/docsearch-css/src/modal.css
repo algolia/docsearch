@@ -553,7 +553,7 @@ svg.DocSearch-Hit-Select-Icon {
 
 /* Hide element accessibly, so that it is still accessible to
 assistive tech users */
-.DocSearch-VisuallyHiddenForAccessbility {
+.DocSearch-VisuallyHiddenForAccessibility {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
   height: 1px;
