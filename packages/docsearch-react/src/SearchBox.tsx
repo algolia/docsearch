@@ -16,6 +16,7 @@ export type SearchBoxTranslations = Partial<{
   resetButtonAriaLabel: string;
   cancelButtonText: string;
   cancelButtonAriaLabel: string;
+  searchInputLabel: string;
 }>;
 
 interface SearchBoxProps
@@ -39,6 +40,7 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps) {
     resetButtonAriaLabel = 'Clear the query',
     cancelButtonText = 'Cancel',
     cancelButtonAriaLabel = 'Cancel',
+    searchInputLabel = 'Search',
   } = translations;
   const { onReset } = props.getFormProps({
     inputElement: props.inputRef.current,
@@ -67,6 +69,9 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps) {
       >
         <label className="DocSearch-MagnifierLabel" {...props.getLabelProps()}>
           <SearchIcon />
+          <span className="DocSearch-VisuallyHiddenForAccessibility">
+            {searchInputLabel}
+          </span>
         </label>
 
         <div className="DocSearch-LoadingIndicator">
