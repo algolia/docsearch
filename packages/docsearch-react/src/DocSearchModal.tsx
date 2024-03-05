@@ -1,5 +1,8 @@
-import type { AutocompleteState } from '@algolia/autocomplete-core';
-import { createAutocomplete } from '@algolia/autocomplete-core';
+import {
+  type AlgoliaInsightsHit,
+  createAutocomplete,
+} from '@algolia/autocomplete-core';
+import type { SearchResponse } from '@algolia/client-search';
 import React from 'react';
 
 import { MAX_QUERY_SIZE } from './constants';
@@ -14,13 +17,20 @@ import { SearchBox } from './SearchBox';
 import { createStoredSearches } from './stored-searches';
 import type {
   DocSearchHit,
+  DocSearchState,
   InternalDocSearchHit,
   StoredDocSearchHit,
 } from './types';
 import { useSearchClient } from './useSearchClient';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
-import { groupBy, identity, noop, removeHighlightTags } from './utils';
+import {
+  groupBy,
+  identity,
+  noop,
+  removeHighlightTags,
+  isModifierEvent,
+} from './utils';
 
 export type ModalTranslations = Partial<{
   searchBox: SearchBoxTranslations;
@@ -40,6 +50,7 @@ export function DocSearchModal({
   indexName,
   placeholder = 'Search docs',
   searchParameters,
+  maxResultsPerGroup,
   onClose = noop,
   transformItems = identity,
   hitComponent = Hit,
@@ -51,6 +62,7 @@ export function DocSearchModal({
   initialQuery: initialQueryFromProp = '',
   translations = {},
   getMissingResultsUrl,
+  insights = false,
 }: DocSearchModalProps) {
   const {
     footer: footerTranslations,
@@ -58,7 +70,7 @@ export function DocSearchModal({
     ...screenStateTranslations
   } = translations;
   const [state, setState] = React.useState<
-    AutocompleteState<InternalDocSearchHit>
+    DocSearchState<InternalDocSearchHit>
   >({
     query: '',
     collections: [],
@@ -122,6 +134,28 @@ export function DocSearchModal({
     [favoriteSearches, recentSearches, disableUserPersonalization]
   );
 
+  const sendItemClickEvent = React.useCallback(
+    (item: InternalDocSearchHit) => {
+      if (!state.context.algoliaInsightsPlugin || !item.__autocomplete_id)
+        return;
+
+      const insightsItem = item as AlgoliaInsightsHit;
+
+      const insightsClickParams = {
+        eventName: 'Item Selected',
+        index: insightsItem.__autocomplete_indexName,
+        items: [insightsItem],
+        positions: [item.__autocomplete_id],
+        queryID: insightsItem.__autocomplete_queryID,
+      };
+
+      state.context.algoliaInsightsPlugin.insights.clickedObjectIDsAfterSearch(
+        insightsClickParams
+      );
+    },
+    [state.context.algoliaInsightsPlugin]
+  );
+
   const autocomplete = React.useMemo(
     () =>
       createAutocomplete<
@@ -140,6 +174,7 @@ export function DocSearchModal({
             searchSuggestions: [],
           },
         },
+        insights,
         navigator,
         onStateChange(props) {
           setState(props.state);
@@ -156,7 +191,7 @@ export function DocSearchModal({
                 onSelect({ item, event }) {
                   saveRecentSearch(item);
 
-                  if (!event.shiftKey && !event.ctrlKey && !event.metaKey) {
+                  if (!isModifierEvent(event)) {
                     onClose();
                   }
                 },
@@ -164,7 +199,7 @@ export function DocSearchModal({
                   return item.url;
                 },
                 getItems() {
-                  return recentSearches.getAll();
+                  return recentSearches.getAll() as InternalDocSearchHit[];
                 },
               },
               {
@@ -172,7 +207,7 @@ export function DocSearchModal({
                 onSelect({ item, event }) {
                   saveRecentSearch(item);
 
-                  if (!event.shiftKey && !event.ctrlKey && !event.metaKey) {
+                  if (!isModifierEvent(event)) {
                     onClose();
                   }
                 },
@@ -180,11 +215,13 @@ export function DocSearchModal({
                   return item.url;
                 },
                 getItems() {
-                  return favoriteSearches.getAll();
+                  return favoriteSearches.getAll() as InternalDocSearchHit[];
                 },
               },
             ];
           }
+
+          const insightsActive = Boolean(insights);
 
           return searchClient
             .search<DocSearchHit>([
@@ -217,6 +254,7 @@ export function DocSearchModal({
                   highlightPreTag: '<mark>',
                   highlightPostTag: '</mark>',
                   hitsPerPage: 20,
+                  clickAnalytics: insightsActive,
                   ...searchParameters,
                 },
               },
@@ -233,8 +271,13 @@ export function DocSearchModal({
               throw error;
             })
             .then(({ results }) => {
-              const { hits, nbHits } = results[0];
-              const sources = groupBy(hits, (hit) => removeHighlightTags(hit));
+              const firstResult = results[0] as SearchResponse<DocSearchHit>;
+              const { hits, nbHits } = firstResult;
+              const sources = groupBy<DocSearchHit>(
+                hits,
+                (hit) => removeHighlightTags(hit),
+                maxResultsPerGroup
+              );
 
               // We store the `lvl0`s to display them as search suggestions
               // in the "no results" screen.
@@ -249,6 +292,19 @@ export function DocSearchModal({
 
               setContext({ nbHits });
 
+              let insightsParams = {};
+
+              if (insightsActive) {
+                insightsParams = {
+                  __autocomplete_indexName: indexName,
+                  __autocomplete_queryID: firstResult.queryID,
+                  __autocomplete_algoliaCredentials: {
+                    appId,
+                    apiKey,
+                  },
+                };
+              }
+
               return Object.values<DocSearchHit[]>(sources).map(
                 (items, index) => {
                   return {
@@ -256,7 +312,7 @@ export function DocSearchModal({
                     onSelect({ item, event }) {
                       saveRecentSearch(item);
 
-                      if (!event.shiftKey && !event.ctrlKey && !event.metaKey) {
+                      if (!isModifierEvent(event)) {
                         onClose();
                       }
                     },
@@ -265,21 +321,32 @@ export function DocSearchModal({
                     },
                     getItems() {
                       return Object.values(
-                        groupBy(items, (item) => item.hierarchy.lvl1)
+                        groupBy(
+                          items,
+                          (item) => item.hierarchy.lvl1,
+                          maxResultsPerGroup
+                        )
                       )
                         .map(transformItems)
                         .map((groupedHits) =>
                           groupedHits.map((item) => {
+                            let parent: InternalDocSearchHit | null = null;
+
+                            const potentialParent = groupedHits.find(
+                              (siblingItem) =>
+                                siblingItem.type === 'lvl1' &&
+                                siblingItem.hierarchy.lvl1 ===
+                                  item.hierarchy.lvl1
+                            ) as InternalDocSearchHit | undefined;
+
+                            if (item.type !== 'lvl1' && potentialParent) {
+                              parent = potentialParent;
+                            }
+
                             return {
                               ...item,
-                              __docsearch_parent:
-                                item.type !== 'lvl1' &&
-                                groupedHits.find(
-                                  (siblingItem) =>
-                                    siblingItem.type === 'lvl1' &&
-                                    siblingItem.hierarchy.lvl1 ===
-                                      item.hierarchy.lvl1
-                                ),
+                              __docsearch_parent: parent,
+                              ...insightsParams,
                             };
                           })
                         )
@@ -294,6 +361,7 @@ export function DocSearchModal({
     [
       indexName,
       searchParameters,
+      maxResultsPerGroup,
       searchClient,
       onClose,
       recentSearches,
@@ -304,6 +372,9 @@ export function DocSearchModal({
       navigator,
       transformItems,
       disableUserPersonalization,
+      insights,
+      appId,
+      apiKey,
     ]
   );
 
@@ -431,9 +502,14 @@ export function DocSearchModal({
             inputRef={inputRef}
             translations={screenStateTranslations}
             getMissingResultsUrl={getMissingResultsUrl}
-            onItemClick={(item) => {
+            onItemClick={(item, event) => {
+              // If insights is active, send insights click event
+              sendItemClickEvent(item);
+
               saveRecentSearch(item);
-              onClose();
+              if (!isModifierEvent(event)) {
+                onClose();
+              }
             }}
           />
         </div>

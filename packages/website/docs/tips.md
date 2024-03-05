@@ -8,7 +8,7 @@ DocSearch can work with almost any website, but we've found that some site struc
 
 If you provide a sitemap in your configuration, DocSearch will use it to directly browse the pages to index. Pages are still crawled which means we extract every compliant link.
 
-We highly recommend you add a `sitemap.xml` to your website if you don't have one already. This will make the indexing faster, but will also give you more control over which page you'd like to include or not in the indexing.
+We highly recommend you add a `sitemap.xml` to your website if you don't have one already. This will not only make the indexing faster, but also provide you more control over which pages to index.
 
 Sitemaps are also considered good practice for other aspects, including SEO ([more information on sitemaps][1]).
 

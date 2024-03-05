@@ -45,7 +45,7 @@ npm install @docsearch/js@3
 
 ### Without package manager
 
-If you don't want to use a package manger, you can add the CSS to the `<head>` of your website:
+If you don't want to use a package manager, you can add the CSS to the `<head>` of your website:
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
@@ -68,7 +68,7 @@ npm install @docsearch/react@3
 
 ### Without package manager
 
-If you don't want to use a package manger, you can add the CSS to the `<head>` of your website:
+If you don't want to use a package manager, you can add the CSS to the `<head>` of your website:
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
@@ -222,6 +222,46 @@ docsearch({
   searchParameters={{
     facetFilters: ['language:en', 'version:1.0.0'],
   }}
+/>
+```
+
+</TabItem>
+
+</Tabs>
+
+### Sending events
+
+You can send search events to your DocSearch index by passing in the `insights` parameter when creating your DocSearch instance.
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', },
+    { label: 'React', value: 'react', }
+  ]
+}>
+<TabItem value="js">
+
+```js
+docsearch({
+  searchParameters: {
+    facetFilters: ['language:en', 'version:1.0.0'],
+  },
+  insights: true,
+});
+```
+
+</TabItem>
+
+<TabItem value="react">
+
+```jsx
+<DocSearch
+  searchParameters={{
+    facetFilters: ['language:en', 'version:1.0.0'],
+  }}
+  insights
 />
 ```
 

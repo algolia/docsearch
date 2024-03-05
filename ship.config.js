@@ -33,14 +33,4 @@ module.exports = {
       `export const version = '${version}';\n`
     );
   },
-  // Skip preparation if it contains only `chore` commits
-  shouldPrepare: ({ releaseType, commitNumbersPerType }) => {
-    const { fix = 0 } = commitNumbersPerType;
-
-    if (releaseType === 'patch' && fix === 0) {
-      return false;
-    }
-
-    return true;
-  },
 };

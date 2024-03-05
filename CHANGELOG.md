@@ -1,3 +1,73 @@
+## [3.5.2](https://github.com/algolia/docsearch/compare/v3.5.1...v3.5.2) (2023-08-11)
+
+
+### Fixes
+
+* Updates `algoliasearch` package version ([cc90789](https://github.com/algolia/docsearch/commit/cc9078929032e7360fd629ed43071e698a54bab6))
+* Adds `search-insights` as options peer dependency ([cc90789](https://github.com/algolia/docsearch/commit/cc9078929032e7360fd629ed43071e698a54bab6))
+
+## [3.5.1](https://github.com/algolia/docsearch/compare/v3.5.0...v3.5.1) (2023-06-15)
+
+
+### Features
+
+* **api:** support Insights on search results click ([#1916](https://github.com/algolia/docsearch/issues/1916)) ([cacade4](https://github.com/algolia/docsearch/commit/cacade4c65878877c5c7433281299e3a5f9a2541))
+
+
+# [3.5.0](https://github.com/algolia/docsearch/compare/v3.4.0...v3.5.0) (2023-06-08)
+
+
+### Features
+
+* **api:** allow insights options to be forwarded to Autocomplete ([#1904](https://github.com/algolia/docsearch/issues/1904)) ([26691a5](https://github.com/algolia/docsearch/commit/26691a5c8abfe107a6737d66d3f02c2cac50553b))
+
+
+
+# [3.4.0](https://github.com/algolia/docsearch/compare/v3.3.5...v3.4.0) (2023-05-24)
+
+
+### Features
+
+* implement maxResultsPerGroup prop ([#1891](https://github.com/algolia/docsearch/issues/1891)) ([f82a733](https://github.com/algolia/docsearch/commit/f82a73367a02453609454dc26d3cf2b6d901dd75))
+
+
+
+## [3.3.5](https://github.com/algolia/docsearch/compare/v3.3.4...v3.3.5) (2023-05-17)
+
+
+### Bug Fixes
+
+* support Chrome autofill when `event.key` is undefined ([#1888](https://github.com/algolia/docsearch/issues/1888)) ([3f15fdb](https://github.com/algolia/docsearch/commit/3f15fdb3192b654dda14c36a5780f49fe309329c)), closes [#1887](https://github.com/algolia/docsearch/issues/1887)
+
+
+
+## [3.3.4](https://github.com/algolia/docsearch/compare/v3.3.3...v3.3.4) (2023-04-26)
+
+
+### Bug Fixes
+
+* prevent calling `onClose()` when `shiftKey`, `ctrlKey` or `metaKey` is pressed ([#1870](https://github.com/algolia/docsearch/issues/1870)) ([b9a3899](https://github.com/algolia/docsearch/commit/b9a38991e411c969459c2bac8a75f29576b46906))
+* type of lvl0 ([#1859](https://github.com/algolia/docsearch/issues/1859)) ([8f48ebb](https://github.com/algolia/docsearch/commit/8f48ebb330c01be426f06d0dea2855e4ca65834b))
+
+
+
+## [3.3.3](https://github.com/algolia/docsearch/compare/v3.3.2...v3.3.3) (2023-02-06)
+
+
+### Bug Fixes
+
+* Correctly type `getMissingResultsUrl` query as `string` ([#1781](https://github.com/algolia/docsearch/issues/1781)) ([379f163](https://github.com/algolia/docsearch/commit/379f163a72665ab464b73a1ef92db5e154628dc5))
+
+
+
+## [3.3.2](https://github.com/algolia/docsearch/compare/v3.3.1...v3.3.2) (2023-01-10)
+
+
+### Bug Fixes
+
+* dependencies 2023-01-02 ([#1736](https://github.com/algolia/docsearch/issues/1736)) ([c867c8b](https://github.com/algolia/docsearch/commit/c867c8b6493fec9f184b852f1405247da5173f58))
+
+
 ## [3.3.1](https://github.com/algolia/docsearch/compare/v3.3.0...v3.3.1) (2022-12-27)
 
 

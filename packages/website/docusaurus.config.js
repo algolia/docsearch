@@ -51,12 +51,19 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
           indexName: 'docsearch',
           contextualSearch: true,
         },
+        metadata: [
+          {
+            name: 'google-site-verification',
+            content: '23yIHmCD_xnJb_6e3s-w7M29Kydahk-d86ObMWOrvRg',
+          },
+        ],
         navbar: {
           hideOnScroll: true,
           logo: {
-            alt: 'DocSearch',
-            src: 'img/docsearch-logo.svg',
-            srcDark: 'img/docsearch-logo-white.svg',
+            alt: 'DocSearch x Algolia',
+            src: 'img/docsearch-x-algolia-logo-light-mode.png',
+            srcDark: 'img/docsearch-x-algolia-logo-dark-mode.png',
+            className: 'docsearch-nav-logo',
           },
           items: [
             // left
@@ -131,12 +138,8 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
               title: 'Community',
               items: [
                 {
-                  label: 'Forum',
-                  to: 'https://discourse.algolia.com/tags/docsearch',
-                },
-                {
                   label: 'Discord',
-                  to: 'https://discord.com/invite/bRTacwYrfX',
+                  to: 'https://discord.com/invite/W7kYfh7FKQ',
                 },
               ],
             },

@@ -5,9 +5,9 @@
     "href": "https://getbootstrap.com/docs/5.2/getting-started/introduction/"
   },
   {
-    "name": "MUI",
-    "image": "img/logos/mui.svg",
-    "href": "https://mui.com"
+    "name": "Material UI",
+    "image": "img/logos/material-ui.svg",
+    "href": "https://material-ui.com/"
   },
   {
     "name": "Babel",
@@ -83,11 +83,6 @@
     "name": "BootstrapVue",
     "image": "img/logos/bootstrap-vue.svg",
     "href": "https://bootstrap-vue.js.org/docs"
-  },
-  {
-    "name": "GitLab",
-    "image": "img/logos/gitlab.svg",
-    "href": "https://docs.gitlab.com/"
   },
   {
     "name": "Moment.js",
@@ -215,11 +210,6 @@
     "href": "https://react-bootstrap.github.io/"
   },
   {
-    "name": "Symfony",
-    "image": "img/logos/symfony.png",
-    "href": "https://symfony.com/doc/current/index.html"
-  },
-  {
     "name": "styled components",
     "image": "img/logos/styled-components.png",
     "href": "https://styled-components.com/docs"
@@ -258,5 +248,10 @@
     "name": "Flowbite",
     "image": "img/logos/flowbite.svg",
     "href": "https://flowbite.com/docs/getting-started/introduction/"
+  },
+  {
+    "name": "Fylgja",
+    "image": "img/logos/fylgja.svg",
+    "href": "https://fylgja.dev/"
   }
 ]

@@ -78,4 +78,11 @@ export declare type DocSearchHit = {
     };
   };
   _distinctSeqID?: number;
+  __autocomplete_indexName?: string;
+  __autocomplete_queryID?: string;
+  __autocomplete_algoliaCredentials?: {
+    appId: string;
+    apiKey: string;
+  };
+  __autocomplete_id?: number;
 };

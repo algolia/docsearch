@@ -21,6 +21,23 @@ html[data-theme='dark'] {
   --ifm-menu-color-background-active: #21243d;
 }
 
+/* DocSearch x Algolia logo */
+@media (max-width: 565px) {
+  .navbar__logo .docsearch-nav-logo {
+    width: 22%;
+    height: auto;
+    vertical-align: middle;
+  }
+}
+
+/* DocSearch x Algolia logo in sidebar */
+@media (min-width: 997px) {
+  .theme-doc-sidebar-container .docsearch-nav-logo {
+    height: auto;
+  }
+}
+
+
 .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.1);
   display: block;
@@ -126,6 +143,18 @@ html[data-theme='dark'] #hero {
 
 html[data-theme='dark'] #hero > div:first-child {
   opacity: 0.4;
+}
+
+/**
+  * Hero component title overrides to match other heading styles
+  */
+.hero-title {
+  color: rgb(28, 30, 33);
+  font-family: var(--ifm-heading-font-family);
+}
+
+html[data-theme='dark'] .hero-title {
+  color: rgb(227, 227, 227);
 }
 
 .docsearch-logo {

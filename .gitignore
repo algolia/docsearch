@@ -15,6 +15,7 @@ dist/
 
 # IDE
 .vscode/
+.idea
 
 # Environment files
 .env

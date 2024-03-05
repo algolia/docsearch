@@ -22,7 +22,14 @@ function Home() {
     return (
       <Hero
         id="hero"
-        title={<DocSearchLogo width="100%" />}
+        title={
+          <>
+            <DocSearchLogo width="100%" />
+            <span className="hero-title text-3xl leading-9 font-extrabold md:text-3xl lg:text-3xl md:leading-10 max-w-xxs inline-block">
+              Free Algolia Search For Developer Docs
+            </span>
+          </>
+        }
         background="curves"
         cta={[
           <Button
@@ -68,10 +75,10 @@ function Home() {
                           className="order-2 mt-2 text-lg leading-6 font-medium text-description"
                           id="item-1"
                         >
-                          Free
+                          Free Service
                         </dt>
                         <dd
-                          className="order-1 text-5xl leading-none font-extrabold text-indigo-600"
+                          className="order-1 text-5xl leading-none font-extrabold text-algolia"
                           aria-describedby="item-1"
                         >
                           100%
@@ -81,16 +88,16 @@ function Home() {
                         <dt className="order-2 mt-2 text-lg leading-6 font-medium text-description">
                           Searches per month
                         </dt>
-                        <dd className="order-1 text-5xl leading-none font-extrabold text-indigo-600">
-                          +100M
+                        <dd className="order-1 text-5xl leading-none font-extrabold text-algolia">
+                          +170M
                         </dd>
                       </div>
                       <div className="flex flex-col border-t p-6 text-center lg:border-0 lg:border-l showcase-border">
                         <dt className="order-2 mt-2 text-lg leading-6 font-medium text-description">
                           DocSearch Live
                         </dt>
-                        <dd className="order-1 text-5xl leading-none font-extrabold text-indigo-600">
-                          +4000
+                        <dd className="order-1 text-5xl leading-none font-extrabold text-algolia">
+                          +7000
                         </dd>
                       </div>
                     </dl>
@@ -143,7 +150,7 @@ function Home() {
                 <li>
                   <div className="flex">
                     <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                      <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
                         <svg
                           viewBox="0 0 20 20"
                           fill="currentColor"
@@ -159,14 +166,13 @@ function Home() {
                     </div>
                     <div className="ml-4">
                       <h4 className="text-lg leading-6 font-medium">
-                        Made for open-source
+                        Made for Developer docs
                       </h4>
                       <p className="mt-2 text-base leading-6 text-description">
-                        Initially created to fulfill our own developers' needs,
-                        DocSearch quickly evolved into a successful community
-                        project. Over the years, we've explored new ways to
-                        address the complexities of search for the open-source
-                        community.
+                        Initially created to fulfill our own documentation
+                        needs, DocSearch eventually became a community project
+                        for open source docs. But, now it is available for
+                        any/all kinds of developer documentation.
                       </p>
                     </div>
                   </div>
@@ -174,7 +180,7 @@ function Home() {
                 <li className="mt-10 lg:mt-0">
                   <div className="flex">
                     <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                      <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
                         <svg
                           fill="none"
                           viewBox="0 0 24 24"
@@ -206,7 +212,7 @@ function Home() {
                 <li className="mt-10 lg:mt-0">
                   <div className="flex">
                     <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                      <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
                         <svg
                           fill="none"
                           viewBox="0 0 24 24"
@@ -340,14 +346,14 @@ function Home() {
                 <p className="mt-3 text-lg leading-7 text-description">
                   Search doesn't have to be painful — when a user searches
                   through your docs, they'll get a frictionless modal dialog to
-                  work in.
+                  work in. And it's a Free Service!
                 </p>
 
                 <ul className="mt-10">
                   <li>
                     <div className="flex">
                       <div className="flex-shrink-0">
-                        <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                        <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
                           <svg
                             fill="none"
                             viewBox="0 0 24 24"
@@ -380,7 +386,7 @@ function Home() {
                   <li className="mt-10">
                     <div className="flex">
                       <div className="flex-shrink-0">
-                        <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                        <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
                           <svg
                             fill="none"
                             viewBox="0 0 24 24"
@@ -432,7 +438,7 @@ function Home() {
                     <li>
                       <div className="flex">
                         <div className="flex-shrink-0">
-                          <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                          <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
                             <svg
                               fill="none"
                               viewBox="0 0 24 24"
@@ -464,7 +470,7 @@ function Home() {
                     <li className="mt-10">
                       <div className="flex">
                         <div className="flex-shrink-0">
-                          <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                          <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
                             <svg
                               fill="none"
                               viewBox="0 0 24 24"
@@ -511,7 +517,7 @@ function Home() {
         </div>
 
         {/* Powered by Algolia */}
-        <div className="py-16 bg-indigo-600 overflow-hidden lg:py-24">
+        <div className="py-16 bg-algolia overflow-hidden lg:py-24">
           <div className="text-center">
             <h3 className="mt-2 text-3xl leading-8 font-extrabold text-white tracking-tight md:text-4xl md:leading-10">
               Powered by Algolia
@@ -524,7 +530,7 @@ function Home() {
                   <li className="mt-10">
                     <div className="flex">
                       <div className="flex-shrink-0">
-                        <div className="flex items-center justify-center h-12 w-12 rounded-md bg-white text-indigo-500">
+                        <div className="flex items-center justify-center h-12 w-12 rounded-md bg-white text-algolia">
                           <svg
                             fill="none"
                             viewBox="0 0 24 24"
@@ -555,7 +561,7 @@ function Home() {
                   <li className="mt-10">
                     <div className="flex">
                       <div className="flex-shrink-0">
-                        <div className="flex items-center justify-center h-12 w-12 rounded-md  bg-white text-indigo-500">
+                        <div className="flex items-center justify-center h-12 w-12 rounded-md  bg-white text-algolia">
                           <svg
                             fill="none"
                             viewBox="0 0 24 24"
@@ -590,7 +596,7 @@ function Home() {
                   <li className="mt-10">
                     <div className="flex">
                       <div className="flex-shrink-0">
-                        <div className="flex items-center justify-center h-12 w-12 rounded-md bg-white text-indigo-500">
+                        <div className="flex items-center justify-center h-12 w-12 rounded-md bg-white text-algolia">
                           <svg
                             fill="none"
                             viewBox="0 0 24 24"
@@ -621,7 +627,7 @@ function Home() {
                   <li className="mt-10">
                     <div className="flex">
                       <div className="flex-shrink-0">
-                        <div className="flex items-center justify-center h-12 w-12 rounded-md bg-white text-indigo-500">
+                        <div className="flex items-center justify-center h-12 w-12 rounded-md bg-white text-algolia">
                           <svg
                             fill="none"
                             viewBox="0 0 24 24"
@@ -681,7 +687,7 @@ function Home() {
                 <li>
                   <div className="flex">
                     <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                      <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
                         <svg
                           className="h-6 w-6"
                           fill="none"
@@ -712,7 +718,7 @@ function Home() {
                 <li className="mt-10 md:mt-0">
                   <div className="flex">
                     <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                      <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
                         <svg
                           className="h-6 w-6"
                           fill="none"

@@ -29,6 +29,7 @@ export interface DocSearchProps {
   indexName: string;
   placeholder?: string;
   searchParameters?: SearchOptions;
+  maxResultsPerGroup?: number;
   transformItems?: (items: DocSearchHit[]) => DocSearchHit[];
   hitComponent?: (props: {
     hit: InternalDocSearchHit | StoredDocSearchHit;
@@ -42,7 +43,8 @@ export interface DocSearchProps {
   initialQuery?: string;
   navigator?: AutocompleteOptions<InternalDocSearchHit>['navigator'];
   translations?: DocSearchTranslations;
-  getMissingResultsUrl?: ({ query: string }) => string;
+  getMissingResultsUrl?: ({ query }: { query: string }) => string;
+  insights?: AutocompleteOptions<InternalDocSearchHit>['insights'];
 }
 
 export function DocSearch(props: DocSearchProps) {
