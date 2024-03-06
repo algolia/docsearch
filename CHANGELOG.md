@@ -1,3 +1,20 @@
+# [3.6.0](https://github.com/algolia/docsearch/compare/v3.5.2...v3.6.0) (2024-03-06)
+
+
+### Bug Fixes
+
+* add accessible label to SearchBox input ([#2193](https://github.com/algolia/docsearch/issues/2193)) ([df60b8e](https://github.com/algolia/docsearch/commit/df60b8ebe89c80ce3d00b80d94e95b6fd86edd19))
+* **docs:** sidebar logo size ([#2125](https://github.com/algolia/docsearch/issues/2125)) ([572b117](https://github.com/algolia/docsearch/commit/572b117ce6ab3f131b18e345e7e8384685a2a8e0))
+* **website:** update discord link ([#2141](https://github.com/algolia/docsearch/issues/2141)) ([874e16a](https://github.com/algolia/docsearch/commit/874e16a5d42e8657e6ab2653e9638cd2282ba408))
+
+
+### Features
+
+* add additional scss output ([#2201](https://github.com/algolia/docsearch/issues/2201)) ([fe3ac9e](https://github.com/algolia/docsearch/commit/fe3ac9e782c2bc84e39b61e3749f067c59f56129))
+* add keypress effect to DocSearchButton ([#2087](https://github.com/algolia/docsearch/issues/2087)) ([4c82640](https://github.com/algolia/docsearch/commit/4c82640022154dd32cc9d3e28a7ae2fba786da8d))
+
+
+
 ## [3.5.2](https://github.com/algolia/docsearch/compare/v3.5.1...v3.5.2) (2023-08-11)
 
 
