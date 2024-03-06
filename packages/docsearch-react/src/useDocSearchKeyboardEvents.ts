@@ -37,7 +37,7 @@ export function useDocSearchKeyboardEvents({
         }
       }
       if (
-        (event.keyCode === 27 && isOpen) ||
+        (event.key === 'Escape' && isOpen) ||
         // The `Cmd+K` shortcut both opens and closes the modal.
         // We need to check for `event.key` because it can be `undefined` with
         // Chrome's autofill feature.
