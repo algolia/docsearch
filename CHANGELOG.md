@@ -10,6 +10,7 @@
 
 ### Features
 
+* add additional scss output ([#2201](https://github.com/algolia/docsearch/issues/2201)) ([fe3ac9e](https://github.com/algolia/docsearch/commit/fe3ac9e782c2bc84e39b61e3749f067c59f56129))
 * add keypress effect to DocSearchButton ([#2087](https://github.com/algolia/docsearch/issues/2087)) ([4c82640](https://github.com/algolia/docsearch/commit/4c82640022154dd32cc9d3e28a7ae2fba786da8d))
 
 
