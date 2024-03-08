@@ -24,7 +24,7 @@
     "clsx": "^1.1.1",
     "file-loader": "6.2.0",
     "my-loaders": "file:plugins/my-loaders",
-    "postcss": "8.4.25",
+    "postcss": "8.4.31",
     "postcss-import": "15.0.0",
     "postcss-preset-env": "7.8.2",
     "prism-react-renderer": "1.2.1",
