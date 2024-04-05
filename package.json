@@ -41,7 +41,7 @@
   "devDependencies": {
     "@babel/cli": "7.24.1",
     "@babel/plugin-transform-react-jsx": "7.23.4",
-    "@babel/preset-env": "7.24.3",
+    "@babel/preset-env": "7.24.4",
     "@babel/preset-typescript": "7.24.1",
     "@rollup/plugin-json": "4.1.0",
     "@rollup/plugin-node-resolve": "7.1.1",
