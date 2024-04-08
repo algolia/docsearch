@@ -11,7 +11,7 @@ So, if you're using one of the following tools, checkout their documentation to 
 - [Docusaurus v1][1] - [How to enable search][2]
 - [Docusaurus v2][3] - [Using Algolia DocSearch][4]
 - [VuePress][5] - [Algolia Search][6]
-- [VitePress][5] - [Search][21]
+- [VitePress][21] - [Search][22]
 - [pkgdown][7] - [DocSearch indexing][8]
 - [LaRecipe][9] - [Algolia Search][10]
 - [Orchid][11] - [Algolia Search][12]
@@ -43,4 +43,5 @@ If you're maintaining a similar tool and want us to add you to the list, [feel f
 [18]: https://d.umijs.org/config#algolia
 [19]: https://lotusdocs.dev/docs/
 [20]: https://lotusdocs.dev/docs/guides/features/docsearch/#enabling-the-docsearch-plugin
-[21]: https://vitepress.dev/reference/default-theme-search#search
+[21]: https://vitepress.dev/
+[22]: https://vitepress.dev/reference/default-theme-search#search
