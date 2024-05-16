@@ -9,7 +9,7 @@ We worked with **documentation website generators** to have DocSearch directly e
 So, if you're using one of the following tools, checkout their documentation to see how to enable DocSearch on your website:
 
 - [Docusaurus v1][1] - [How to enable search][2]
-- [Docusaurus v2][3] - [Using Algolia DocSearch][4]
+- [Docusaurus v2 & v3][3] - [Using Algolia DocSearch][4]
 - [VuePress][5] - [Algolia Search][6]
 - [VitePress][21] - [Search][22]
 - [pkgdown][7] - [DocSearch indexing][8]
