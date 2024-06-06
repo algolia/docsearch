@@ -253,5 +253,10 @@
     "name": "Fylgja",
     "image": "img/logos/fylgja.svg",
     "href": "https://fylgja.dev/"
+  },
+  {
+    "name": "React-admin",
+    "image": "img/logos/react-admin.svg",
+    "href": "https://marmelab.com/react-admin/"
   }
 ]
