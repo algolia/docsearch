@@ -15,11 +15,6 @@
     "href": "https://babeljs.io/docs/en/"
   },
   {
-    "name": "GraphQL",
-    "image": "img/logos/graphql.jpg",
-    "href": "https://graphql.org/learn/"
-  },
-  {
     "name": "TypeScript",
     "image": "img/logos/typescriptlang.svg",
     "href": "https://www.typescriptlang.org/"
@@ -65,11 +60,6 @@
     "href": "https://reactjs.org/docs/getting-started.html"
   },
   {
-    "name": "jQuery",
-    "image": "img/logos/jquery.jpg",
-    "href": "https://api.jquery.com/"
-  },
-  {
     "name": "BootstrapVue",
     "image": "img/logos/bootstrap-vue.svg",
     "href": "https://bootstrap-vue.org/docs"
@@ -108,11 +98,6 @@
     "name": "Twilio",
     "image": "img/logos/twilio.png",
     "href": "https://www.twilio.com/docs"
-  },
-  {
-    "name": "Vant",
-    "image": "img/logos/vant.png",
-    "href": "https://youzan.github.io/vant/#/en-US/"
   },
   {
     "name": "webpack",
