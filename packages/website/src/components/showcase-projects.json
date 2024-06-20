@@ -45,11 +45,6 @@
     "href": "https://testing-library.com/"
   },
   {
-    "name": "Ant Design",
-    "image": "img/logos/ant-design.svg",
-    "href": "https://ant.design/docs/react/introduce"
-  },
-  {
     "name": "Homebrew",
     "image": "img/logos/homebrew.png",
     "href": "https://brew.sh/"
@@ -58,11 +53,6 @@
     "name": "Vue.js",
     "image": "img/logos/vue.svg",
     "href": "https://v3.vuejs.org/"
-  },
-  {
-    "name": "Requests",
-    "image": "img/logos/requests.png",
-    "href": "https://requests.readthedocs.io/en/master/"
   },
   {
     "name": "Discord",
@@ -82,7 +72,7 @@
   {
     "name": "BootstrapVue",
     "image": "img/logos/bootstrap-vue.svg",
-    "href": "https://bootstrap-vue.js.org/docs"
+    "href": "https://bootstrap-vue.org/docs"
   },
   {
     "name": "Moment.js",
@@ -133,11 +123,6 @@
     "name": "Gatsby",
     "image": "img/logos/gatsby.png",
     "href": "https://www.gatsbyjs.org/docs/"
-  },
-  {
-    "name": "Calico",
-    "image": "img/logos/calico.png",
-    "href": "https://docs.calicocloud.io/"
   },
   {
     "name": "Jest",
