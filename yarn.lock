@@ -13029,6 +13029,11 @@ fd-slicer@~1.1.0:
   dependencies:
     pend "~1.2.0"
 
+fdir@6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/fdir/-/fdir-6.1.1.tgz#316b58145a05223b75c8b371e80bb3bad8f1441e"
+  integrity sha512-QfKBVg453Dyn3mr0Q0O+Tkr1r79lOTAKSi9f/Ot4+qVEwxWhav2Z+SudrG9vQjM2aYRMQQZ2/Q1zdA8ACM1pDg==
+
 feed@^4.2.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/feed/-/feed-4.2.2.tgz#865783ef6ed12579e2c44bbef3c9113bc4956a7e"
@@ -13725,7 +13730,7 @@ glob@^7.0.0, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^7.2.0, glob@~7.2.0:
+glob@^7.2.0:
   version "7.2.3"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.2.3.tgz#b8df0fb802bbfa8e89bd1d938b4e16578ed44f2b"
   integrity sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==
@@ -17457,11 +17462,6 @@ mkdirp@^1.0.0, mkdirp@^1.0.3, mkdirp@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
-
-mkdirp@~3.0.0:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-3.0.1.tgz#e44e4c5607fb279c168241713cc6e0fea9adcb50"
-  integrity sha512-+NsyUUAZDmo6YVHzL/stxSu3t9YS1iljliy3BSDrXJ/dkn1KYdmtZODGGjLcc9XLgVVpH4KshHB8XmZgMhaBXg==
 
 modern-normalize@^1.1.0:
   version "1.1.0"
@@ -21362,16 +21362,15 @@ rollup-plugin-filesize@9.1.2:
     pacote "^11.2.7"
     terser "^5.6.0"
 
-rollup-plugin-license@3.4.1:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-license/-/rollup-plugin-license-3.4.1.tgz#cbe7d790b922fdfa6a4c5435ecc3d4b577f9b7dd"
-  integrity sha512-Q+Z+dcmrITllVyvTrach1y7k9cEotEDoFtP/7z6jbXcqXo8rtl1j/eTLCKAsZyxNPztgiOS3tH30FZtckmK5Eg==
+rollup-plugin-license@3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-license/-/rollup-plugin-license-3.5.0.tgz#52f0a2722e08b0318eef718ff6787b317b63551e"
+  integrity sha512-XBttY+IToHBeL/w5JiGGM9FzTW8FLlIaPjmjBT3h76f55F/TsUNDLNY0zx1MM7Ih4P8mF2H9gy46myvzLbS+GA==
   dependencies:
     commenting "~1.1.0"
-    glob "~7.2.0"
+    fdir "6.1.1"
     lodash "~4.17.21"
     magic-string "~0.30.0"
-    mkdirp "~3.0.0"
     moment "~2.30.1"
     package-name-regex "~2.0.6"
     spdx-expression-validate "~2.0.0"
