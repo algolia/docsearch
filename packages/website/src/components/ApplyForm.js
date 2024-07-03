@@ -76,6 +76,7 @@ function ApplyForm() {
     return (
       <Card className="uil-m-auto uil-ta-center apply-form">
         {state.message.startsWith('Your DocSearch') ? (
+          <>
           <Heading1 className="apply-text">URL Already Submitted!</Heading1>
           <br />
           <Text
@@ -84,6 +85,7 @@ function ApplyForm() {
           >
             {state.message}
           </Text>
+          </>
         ) : (
           <>
             <Heading1 className="apply-text">Thank You!</Heading1>
