@@ -1,25 +1,22 @@
 ---
-title: Config templates
+title: Config Templates
 ---
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-To help you create the best search experience for your users, we provide config templates for multiple websites generators. If you'd like to add a new template to our list, or believe we should update an existing one, please [send us an email][1] or [open a pull request][2].
+To help you create the best search experience for your users, we provide out-of-the-box crawler config templates for multiple websites generators. If you'd like to add a new template to our list, or believe we should update an existing one, please [let us know on Discord][1] or [open a pull request][2].
 
-> If you want to better understand the default parameters of the configs below, you can take a look at the [Crawler documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/).
+> If you want to better understand the default parameters of the configs below, take a look at the [Crawler documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/).
 
-## From the Crawler UI
+## Getting Started
 
-Templates are available when you [create a new Crawler](https://crawler.algolia.com/admin/crawlers/create). They will automatically be filled with your website URL, Algolia credentials and index name.
+Once approved for DocSearch, we will automatically create a Crawler on your behalf, include your URL, and the Algolia creditials for your appId, apiKey, and indexName. If we detected that you are using any of the predefined generators, we'll attempt to automatically assign the proper template that matches your generator. However, this is not gauranteed. If no specific generator is detected, we will apply the default template seen below.
 
-<div className="uil-ta-center">
-  <img
-    src={useBaseUrl('img/assets/new-crawler-creation.png')}
-    alt="Algolia Crawler creation page"
-  />
-</div>
+## Updating the Template
 
-## Default template
+You can manually update the crawler template by going to dashboard.algolia.com, click "Data sources", select your crawler, and go to the editor page. From there you can edit the Javascript directly. Note that you can make draft changes without saving, test the changes using the "URL Tester", and then "Save" once you're happy with your changes.
+
+## Default Template
 
 <details><summary>default.js</summary>
 <div>
@@ -119,7 +116,7 @@ new Crawler({
 </div>
 </details>
 
-## Docusaurus v1 template
+## Docusaurus v1 Template
 
 <details><summary>docusaurus-v1.js</summary>
 <div>
@@ -275,7 +272,7 @@ new Crawler({
 </div>
 </details>
 
-## Docusaurus v2 template
+## Docusaurus v2 Template
 
 <details><summary>docusaurus-v2.js</summary>
 <div>
@@ -389,7 +386,7 @@ new Crawler({
 </div>
 </details>
 
-## Docusaurus v3 template
+## Docusaurus v3 Template
 
 <details><summary>docusaurus-v3.js</summary>
 <div>
@@ -503,7 +500,7 @@ new Crawler({
 </div>
 </details>
 
-## Vuepress v1 template
+## Vuepress v1 Template
 
 <details><summary>vuepress-v1.js</summary>
 <div>
@@ -614,7 +611,7 @@ new Crawler({
 </div>
 </details>
 
-## Vuepress v2 template
+## Vuepress v2 Template
 
 <details><summary>vuepress-v2.js</summary>
 <div>
@@ -705,7 +702,7 @@ new Crawler({
 </div>
 </details>
 
-## Vitepress template
+## Vitepress Template
 
 <details><summary>vitepress.js</summary>
 <div>
@@ -795,7 +792,7 @@ new Crawler({
 </div>
 </details>
 
-## pkgdown template
+## pkgdown Template
 
 <details><summary>pkgdown.js</summary>
 <div>
@@ -958,5 +955,5 @@ new Crawler({
 </div>
 </details>
 
-[1]: mailto:docsearch@algolia.com
+[1]: https://alg.li/discord
 [2]: https://github.com/algolia/docsearch
