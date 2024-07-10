@@ -12,7 +12,7 @@ So, if you're using one of the following tools, checkout their documentation to 
 - [Docusaurus v2 & v3][3] - [Using Algolia DocSearch][4]
 - [VuePress][5] - [Algolia Search][6]
 - [VitePress][21] - [Search][22]
-- [pkgdown][7] - [DocSearch indexing][8]
+- [Starlight][7] - [Algolia Search][8]
 - [LaRecipe][9] - [Algolia Search][10]
 - [Orchid][11] - [Algolia Search][12]
 - [Smooth DOC][13] - [DocSearch][14]
@@ -28,8 +28,8 @@ If you're maintaining a similar tool and want us to add you to the list, [feel f
 [4]: https://docusaurus.io/docs/search#using-algolia-docsearch
 [5]: https://vuepress.vuejs.org/
 [6]: https://vuepress.vuejs.org/theme/default-theme-config.html#algolia-search
-[7]: https://pkgdown.r-lib.org/
-[8]: https://pkgdown.r-lib.org/articles/search.html#bootstrap-3-algolia
+[7]: https://starlight.astro.build/
+[8]: https://starlight.astro.build/guides/site-search/#algolia-docsearch
 [9]: https://larecipe.saleem.dev/docs/2.2/overview
 [10]: https://larecipe.saleem.dev/docs/2.2/search#available-engines
 [11]: https://orchid.run
