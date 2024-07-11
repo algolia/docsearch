@@ -1,25 +1,22 @@
 ---
-title: Config templates
+title: Config Templates
 ---
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-To help you create the best search experience for your users, we provide config templates for multiple websites generators. If you'd like to add a new template to our list, or believe we should update an existing one, please [send us an email][1] or [open a pull request][2].
+To help you create the best search experience for your users, we provide out-of-the-box crawler config templates for multiple websites generators. If you'd like to add a new template to our list, or believe we should update an existing one, please [let us know on Discord][1] or [open a pull request][2].
 
-> If you want to better understand the default parameters of the configs below, you can take a look at the [Crawler documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/).
+> If you want to better understand the default parameters of the configs below, take a look at the [Crawler documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/).
 
-## From the Crawler UI
+## Getting Started
 
-Templates are available when you [create a new Crawler](https://crawler.algolia.com/admin/crawlers/create). They will automatically be filled with your website URL, Algolia credentials and index name.
+Once approved for DocSearch, we will automatically create a Crawler on your behalf, include your URL, and the Algolia creditials for your appId, apiKey, and indexName. If we detected that you are using any of the predefined generators, we'll attempt to automatically assign the proper template that matches your generator. However, this is not gauranteed. If no specific generator is detected, we will apply the default template seen below.
 
-<div className="uil-ta-center">
-  <img
-    src={useBaseUrl('img/assets/new-crawler-creation.png')}
-    alt="Algolia Crawler creation page"
-  />
-</div>
+## Updating the Template
 
-## Default template
+You can manually update the crawler template by going to dashboard.algolia.com, click "Data sources", select your crawler, and go to the editor page. From there you can edit the Javascript directly. Note that you can make draft changes without saving, test the changes using the "URL Tester", and then "Save" once you're happy with your changes.
+
+## Default Template
 
 <details><summary>default.js</summary>
 <div>
@@ -119,7 +116,7 @@ new Crawler({
 </div>
 </details>
 
-## Docusaurus v1 template
+## Docusaurus v1 Template
 
 <details><summary>docusaurus-v1.js</summary>
 <div>
@@ -275,7 +272,7 @@ new Crawler({
 </div>
 </details>
 
-## Docusaurus v2 template
+## Docusaurus v2 & v3 Template
 
 <details><summary>docusaurus-v2.js</summary>
 <div>
@@ -389,9 +386,9 @@ new Crawler({
 </div>
 </details>
 
-## Docusaurus v3 template
+## Astro Starlight Template
 
-<details><summary>docusaurus-v3.js</summary>
+<details><summary>starlight.js</summary>
 <div>
 
 ```js
@@ -409,31 +406,47 @@ new Crawler({
       indexName: 'YOUR_INDEX_NAME',
       pathsToMatch: ['https://YOUR_WEBSITE_URL/**'],
       recordExtractor: ({ $, helpers }) => {
-        // priority order: deepest active sub list header -> navbar active item -> 'Documentation'
+        // Get the top level menu item
         const lvl0 =
-          $(
-            '.menu__link.menu__link--sublist.menu__link--active, .navbar__item.navbar__link--active'
-          )
-            .last()
-            .text() || 'Documentation';
+          $('details:has(a[aria-current="page"])')
+            .find("summary")
+            .find("span")
+            .text() || "Documentation";
+
+        // Get the second level menu item
+        var lvl1 = 'a[aria-current="page"] span';
+        var lvl2 = "main h1";
+        var lvl3 = "main h2";
+        var lvl4 = "main h3";
+        var lvl5 = "main h4";
+        var lvl6 = "main h5";
+
+        // If not able to get the menu item then make this generic
+        if (lvl0 === "Documentation") {
+          lvl1 = "main h1";
+          lvl2 = "main h2";
+          lvl3 = "main h3";
+          lvl4 = "main h4";
+          lvl5 = "main h5";
+          lvl6 = "main h6";
+        }
 
         return helpers.docsearch({
           recordProps: {
             lvl0: {
-              selectors: '',
+              selectors: "",
               defaultValue: lvl0,
             },
-            lvl1: ['header h1', 'article h1'],
-            lvl2: 'article h2',
-            lvl3: 'article h3',
-            lvl4: 'article h4',
-            lvl5: 'article h5, article td:first-child',
-            lvl6: 'article h6',
-            content: 'article p, article li, article td:last-child',
+            lvl1: lvl1,
+            lvl2: lvl2,
+            lvl3: lvl3,
+            lvl4: lvl4,
+            lvl5: lvl5,
+            lvl6: lvl6,
+            content: "main p, main li",
           },
           indexHeadings: true,
           aggregateContent: true,
-          recordVersion: 'v3',
         });
       },
     },
@@ -443,17 +456,12 @@ new Crawler({
       attributesForFaceting: [
         'type',
         'lang',
-        'language',
-        'version',
-        'docusaurus_tag',
       ],
       attributesToRetrieve: [
         'hierarchy',
         'content',
         'anchor',
         'url',
-        'url_without_anchor',
-        'type',
       ],
       attributesToHighlight: ['hierarchy', 'content'],
       attributesToSnippet: ['content:10'],
@@ -494,7 +502,6 @@ new Crawler({
       advancedSyntax: true,
       attributeCriteriaComputedByMinProximity: true,
       removeWordsIfNoResults: 'allOptional',
-      separatorsToIndex: '_',
     },
   },
 });
@@ -503,7 +510,7 @@ new Crawler({
 </div>
 </details>
 
-## Vuepress v1 template
+## Vuepress v1 Template
 
 <details><summary>vuepress-v1.js</summary>
 <div>
@@ -614,7 +621,7 @@ new Crawler({
 </div>
 </details>
 
-## Vuepress v2 template
+## Vuepress v2 Template
 
 <details><summary>vuepress-v2.js</summary>
 <div>
@@ -705,7 +712,7 @@ new Crawler({
 </div>
 </details>
 
-## Vitepress template
+## Vitepress Template
 
 <details><summary>vitepress.js</summary>
 <div>
@@ -795,7 +802,7 @@ new Crawler({
 </div>
 </details>
 
-## pkgdown template
+## pkgdown Template
 
 <details><summary>pkgdown.js</summary>
 <div>
@@ -958,5 +965,5 @@ new Crawler({
 </div>
 </details>
 
-[1]: mailto:docsearch@algolia.com
+[1]: https://alg.li/discord
 [2]: https://github.com/algolia/docsearch
