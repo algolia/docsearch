@@ -140,11 +140,6 @@
     "href": "https://router.vuejs.org/"
   },
   {
-    "name": "Tachiyomi",
-    "image": "img/logos/tachiyomi.svg",
-    "href": "https://tachiyomi.org/help/"
-  },
-  {
     "name": "socket.io",
     "image": "img/logos/socketio.svg",
     "href": "https://socket.io/"
