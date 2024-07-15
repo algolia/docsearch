@@ -28,7 +28,7 @@
     "build:clean-types": "rm -rf ./dist/esm/types",
     "build:types": "tsc -p ./tsconfig.declaration.json --outDir ./dist/esm/types",
     "build": "yarn build:clean && yarn build:types && rollup --config && yarn build:clean-types",
-    "on:change": "concurrently \"yarn build:esm\" \"yarn build:types\"",
+    "on:change": "yarn build",
     "watch": "watch \"yarn on:change\" --ignoreDirectoryPattern \"/dist/\""
   },
   "dependencies": {
