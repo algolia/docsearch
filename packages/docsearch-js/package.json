@@ -22,11 +22,10 @@
   "jsdelivr": "dist/umd/index.js",
   "scripts": {
     "build:clean": "rm -rf ./dist",
-    "build:esm": "cross-env BUILD=esm rollup --config",
-    "build:types": "tsc -p ./tsconfig.declaration.json --outDir ./dist/esm",
-    "build:umd": "cross-env BUILD=umd rollup --config",
-    "build": "yarn build:clean && yarn build:umd && yarn build:esm && yarn build:types",
-    "on:change": "concurrently \"yarn build:esm\" \"yarn build:types\"",
+    "build:types": "tsc -p ./tsconfig.declaration.json --outDir ./dist/esm/types",
+    "build:clean-types": "rm -rf ./dist/esm/types",
+    "build": "yarn build:clean && yarn build:types && rollup --config && yarn build:clean-types",
+    "on:change": "yarn build",
     "watch": "watch \"yarn on:change\" --ignoreDirectoryPattern \"/dist/\""
   },
   "dependencies": {
