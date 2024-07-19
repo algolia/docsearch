@@ -2,7 +2,7 @@
 title: FAQ
 ---
 
-If you're not finding the answer to your question on this website, this page will help you. If you're still unsure, don't hesitate to send [your question to us][1] directly.
+If you're not finding the answer to your question on this website, this page will help you. If you're still unsure, don't hesitate to connect with us on [Discord][1] or let our [support][19] team know.
 
 ## What data are you collecting?
 
@@ -79,7 +79,7 @@ We are pre-releasing the v3 on Docusaurus 2. It will help us to iterate faster o
 
 The `apiKey` the DocSearch team provides is [a search-only key][17] and can be safely shared publicly. You can track it in your version control system (for example Git). If you are running the scraper on your own, please make sure to create a search-only key and [do not share your Admin key][18].
 
-[1]: mailto:docsearch@algolia.com
+[1]: https://alg.li/discord
 [4]: https://www.algolia.com/doc/guides/infrastructure/servers/
 [5]: https://www.algolia.com/policies/privacy
 [6]: /docs/legacy/run-your-own
@@ -93,3 +93,4 @@ The `apiKey` the DocSearch team provides is [a search-only key][17] and can be s
 [16]: https://youtu.be/OXRjnG7SHJM
 [17]: https://www.algolia.com/doc/guides/security/api-keys/#search-only-api-key
 [18]: https://www.algolia.com/doc/guides/security/api-keys/#admin-api-key
+[19]: https://support.algolia.com/

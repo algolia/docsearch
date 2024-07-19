@@ -2,7 +2,7 @@
 title: DocSearch program
 ---
 
-If you're not finding the answer to your question on this website, this page will help you. If you're still unsure, don't hesitate to send [your question to us][1] directly.
+If you're not finding the answer to your question on this website, this page will help you. If you're still unsure, don't hesitate to connect with us on [Discord][1] or let our [support][4] team know.
 
 For questions related to the DocSearch x Algolia Crawler, please see our [Crawler FAQ](/docs/crawler).
 
@@ -68,7 +68,7 @@ Code samples are a great way for humans to understand how people use a specific 
 
 We'd love to help!
 
-If one of your favorite tool documentation websites is missing DocSearch, we encourage you to file an issue in their repository explaining how DocSearch could help. Feel free to [send us an email][1] as well, and we'll provide all the help we can.
+If one of your favorite tool documentation websites is missing DocSearch, we encourage you to file an issue in their repository explaining how DocSearch could help. Feel free to [let us know on Discord][1] as well and we'll provide all the help we can.
 
 ## How did we build this website?
 
@@ -127,6 +127,7 @@ Please be informed that while Algolia does not provide support for DocSearch its
 
 For any issue related to [the DocSearch UI library](https://github.com/algolia/docsearch), please open a [GitHub issues](https://github.com/algolia/docsearch/issues).
 
-[1]: mailto:docsearch@algolia.com
+[1]: https://alg.li/discord
 [2]: https://www.algolia.com/
 [3]: /docs/legacy/run-your-own
+[4]: https://support.algolia.com/
