@@ -17,7 +17,7 @@ If you're using one of the following tools, checkout their documentation to see 
 - [Smooth DOC][13] - [DocSearch][14]
 - [Docsy][15] - [Configure Algolia DocSearch][16]
 
-If you're maintaining a similar tool and want us to add you to the list, [get in touch with us][17]. We'd be happy to help.
+If you're maintaining a similar tool and want us to add you to the list, [get in touch with us on Discord][17]. We'd be happy to help.
 
 [1]: https://v1.docusaurus.io/
 [2]: https://v1.docusaurus.io/docs/en/search
@@ -35,4 +35,4 @@ If you're maintaining a similar tool and want us to add you to the list, [get in
 [14]: https://smooth-doc.com/docs/docsearch/
 [15]: https://www.docsy.dev/
 [16]: https://www.docsy.dev/docs/adding-content/navigation/#configure-algolia-docsearch
-[17]: mailto:docsearch@algolia.com
+[17]: https://alg.li/discord
