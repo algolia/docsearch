@@ -106,7 +106,11 @@ function Home() {
               </div>
             </div>
             <div className="mt-8 grid grid-cols-4 gap-0.5 md:grid-cols-6 lg:mt-0 lg:grid-cols-8">
-              {showcaseProjects.map(({ name, href, image }) => (
+              {showcaseProjects
+                .sort((a, b) => {
+                  return a.name.localeCompare(b.name);
+                })
+                .map(({ name, href, image }) => (
                 <div
                   key={href}
                   className="col-span-1 flex justify-center py-2 px-2 text-center"
