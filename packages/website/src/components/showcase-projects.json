@@ -1,5 +1,10 @@
 [
   {
+    "name": "Astro",
+    "image": "img/logos/astro-icon-light-gradient.svg",
+    "href": "https://astro.build/"
+  },
+  {
     "name": "Bootstrap",
     "image": "img/logos/bootstrap.svg",
     "href": "https://getbootstrap.com/docs/5.2/getting-started/introduction/"
