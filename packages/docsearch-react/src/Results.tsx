@@ -37,7 +37,10 @@ export function Results<TItem extends StoredDocSearchHit>(
 
   return (
     <section className="DocSearch-Hits">
-      <div className="DocSearch-Hit-source">{props.title}</div>
+      <div
+        className="DocSearch-Hit-source"
+        dangerouslySetInnerHTML={{ __html: props.title }}
+      />
 
       <ul {...props.getListProps()}>
         {props.collection.items.map((item, index) => {
