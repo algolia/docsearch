@@ -1,3 +1,16 @@
+## [3.6.1](https://github.com/algolia/docsearch/compare/v3.6.0...v3.6.1) (2024-07-16)
+
+
+### Bug Fixes
+
+* updating the templates page ([#2273](https://github.com/algolia/docsearch/issues/2273)) ([4aa0c2c](https://github.com/algolia/docsearch/commit/4aa0c2c67a5ba4d5d786c63cbce749d674b8ce44))
+* **apply form:** Update ApplyForm.js ([#2270](https://github.com/algolia/docsearch/issues/2270)) ([069a3de](https://github.com/algolia/docsearch/commit/069a3de0b5e94b1186315a90e5724a9a3d8b97b1))
+* **logos:** removed logos no longer using algolia ([#2261](https://github.com/algolia/docsearch/issues/2261)) ([8587f58](https://github.com/algolia/docsearch/commit/8587f58b0361699bb9ea26624052b201e69e5531))
+* **logos:** they will not be fixing the search ([#2269](https://github.com/algolia/docsearch/issues/2269)) ([cdfa993](https://github.com/algolia/docsearch/commit/cdfa993990ff8caa323719ff8205db38f2ba06fe))
+* **logos:** update URL and remove logos no longer using DocSearch ([#2260](https://github.com/algolia/docsearch/issues/2260)) ([1081660](https://github.com/algolia/docsearch/commit/108166016d91d8fcc26df15ca52c386d9334ab5d))
+
+
+
 # [3.6.0](https://github.com/algolia/docsearch/compare/v3.5.2...v3.6.0) (2024-03-06)
 
 

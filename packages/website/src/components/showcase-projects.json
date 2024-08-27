@@ -1,5 +1,10 @@
 [
   {
+    "name": "Astro",
+    "image": "img/logos/astro-icon-light-gradient.svg",
+    "href": "https://astro.build/"
+  },
+  {
     "name": "Bootstrap",
     "image": "img/logos/bootstrap.svg",
     "href": "https://getbootstrap.com/docs/5.2/getting-started/introduction/"
@@ -223,5 +228,15 @@
     "name": "React-admin",
     "image": "img/logos/react-admin.svg",
     "href": "https://marmelab.com/react-admin/"
+  },
+  {
+    "name": "ScalarDB",
+    "image": "img/logos/scalardb.svg",
+    "href": "https://scalardb.scalar-labs.com/docs/"
+  },
+  {
+    "name": "ScalarDL",
+    "image": "img/logos/scalardl.svg",
+    "href": "https://scalardl.scalar-labs.com/docs/"
   }
 ]

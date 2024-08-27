@@ -77,14 +77,14 @@ function ApplyForm() {
       <Card className="uil-m-auto uil-ta-center apply-form">
         {state.message.startsWith('Your DocSearch') ? (
           <>
-          <Heading1 className="apply-text">URL Already Submitted!</Heading1>
-          <br />
-          <Text
-            className="uil-pv-8 uil-d-block apply-text"
-            aria-label="Request has already been processed"
-          >
-            {state.message}
-          </Text>
+            <Heading1 className="apply-text">URL Already Submitted!</Heading1>
+            <br />
+            <Text
+              className="uil-pv-8 uil-d-block apply-text"
+              aria-label="Request has already been processed"
+            >
+              {state.message}
+            </Text>
           </>
         ) : (
           <>
