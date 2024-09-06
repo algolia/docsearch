@@ -80,9 +80,7 @@ The `apiKey` the DocSearch team provides is [a search-only key](https://www.algo
 
 ## Why is the email API key different in the dashboard?
 
-Algolia apps come with a default search API key, which also allow you to list indices, settings and search on **every** indices of your app.
-
-When your application is deployed, we provide a search **ONLY** API key, scoped to your production index, so you don't have to worry disclosing it in the frontend.
+Every Algolia app comes with a default "Search API Key" which can be seen in the dashboard. That key allow you to list indices, settings, and search on **every** index owned by your application. In the case of a DocSearch application, in your acceptance email we provide a search **ONLY** API key scoped to only your DocSearch index. If for any reason you need to recover the API key sent in the email, just connect with our [support](https://algolia.com/support) team.
 
 ## How do I rotate my API keys?
 
