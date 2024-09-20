@@ -67,7 +67,7 @@
     "cssnano": "4.1.10",
     "cypress": "9.6.1",
     "dotenv": "16.4.5",
-    "eslint": "8.57.0",
+    "eslint": "8.57.1",
     "eslint-config-algolia": "20.0.0",
     "eslint-config-prettier": "8.10.0",
     "eslint-plugin-cypress": "2.15.2",
