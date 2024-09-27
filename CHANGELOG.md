@@ -1,3 +1,13 @@
+## [3.6.2](https://github.com/algolia/docsearch/compare/v3.6.1...v3.6.2) (2024-09-27)
+
+
+### Bug Fixes
+
+* **email:** docsearch@algolia.com is being retired ([#2280](https://github.com/algolia/docsearch/issues/2280)) ([698c1cd](https://github.com/algolia/docsearch/commit/698c1cd8cd3848c10941dbdde01661311efd29f9))
+* **hits:** default to hierarchy lvl0 if highlights present ([#2309](https://github.com/algolia/docsearch/issues/2309)) ([5260d1e](https://github.com/algolia/docsearch/commit/5260d1e5c280468bb08a20918c7858e695d11cd8))
+
+
+
 ## [3.6.1](https://github.com/algolia/docsearch/compare/v3.6.0...v3.6.1) (2024-07-16)
 
 
