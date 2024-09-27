@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/js-example",
   "description": "DocSearch v3 Vanilla JavaScript example",
-  "version": "3.6.1",
+  "version": "3.6.2",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -9,8 +9,8 @@
     "start": "parcel index.html"
   },
   "dependencies": {
-    "@docsearch/css": "3.6.1",
-    "@docsearch/js": "3.6.1"
+    "@docsearch/css": "3.6.2",
+    "@docsearch/js": "3.6.2"
   },
   "devDependencies": {
     "parcel": "2.7.0"
