@@ -9,9 +9,9 @@ function App() {
     <div>
       <h1>DocSearch v3 - React</h1>
       <DocSearch
-        indexName="docsearch"
-        appId="R2IYF7ETH7"
-        apiKey="599cec31baffa4868cae4e79f180729b"
+        indexName="vuejs"
+        appId="ML0LEBN7FQ"
+        apiKey="21cf9df0734770a2448a9da64a700c22"
         insights
       />
     </div>
