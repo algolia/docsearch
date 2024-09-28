@@ -1,6 +1,6 @@
 import type { DocSearchProps as DocSearchComponentProps } from '@docsearch/react';
 import { DocSearch, version } from '@docsearch/react';
-import React, { render } from 'preact/compat';
+import React, { render, useCallback, useState } from 'preact/compat';
 
 function getHTMLElement(
   value: HTMLElement | string,
@@ -18,18 +18,36 @@ interface DocSearchProps extends DocSearchComponentProps {
   environment?: typeof window;
 }
 
-export function docsearch(props: DocSearchProps) {
-  render(
-    <DocSearch
-      {...props}
-      transformSearchClient={(searchClient) => {
-        searchClient.addAlgoliaAgent('docsearch.js', version);
+function useRender() {
+  const [shouldRender, setShouldRender] = useState(true);
+  const destroy = useCallback(() => {
+    setShouldRender(false);
+  }, []);
 
-        return props.transformSearchClient
-          ? props.transformSearchClient(searchClient)
-          : searchClient;
-      }}
-    />,
+  return { shouldRender, destroy };
+}
+
+// eslint-disable-next-line react-hooks/rules-of-hooks
+export function docsearch(props: DocSearchProps) {
+  const { shouldRender, destroy } = useRender();
+
+  render(
+    <>
+      {shouldRender && (
+        <DocSearch
+          {...props}
+          transformSearchClient={(searchClient) => {
+            searchClient.addAlgoliaAgent('docsearch.js', version);
+
+            return props.transformSearchClient
+              ? props.transformSearchClient(searchClient)
+              : searchClient;
+          }}
+        />
+      )}
+    </>,
     getHTMLElement(props.container, props.environment)
   );
+
+  return destroy();
 }
