@@ -13,6 +13,7 @@ export const plugins = [
   json(),
   resolve({
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+    browser: true,
   }),
   babel({
     exclude: 'node_modules/**',
