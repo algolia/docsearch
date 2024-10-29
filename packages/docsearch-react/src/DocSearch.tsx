@@ -2,8 +2,7 @@ import type {
   AutocompleteState,
   AutocompleteOptions,
 } from '@algolia/autocomplete-core';
-import type {  SearchClient, SearchQuery } from '@algolia/client-search';
-import type { LiteClient } from 'algoliasearch/lite';
+import type { SearchQuery, LiteClient } from 'algoliasearch/lite';
 import React from 'react';
 import { createPortal } from 'react-dom';
 
@@ -38,9 +37,7 @@ export interface DocSearchProps {
   resultsFooterComponent?: (props: {
     state: AutocompleteState<InternalDocSearchHit>;
   }) => JSX.Element | null;
-  transformSearchClient?: <T extends LiteClient | SearchClient>(
-    searchClient: T
-  ) => T;
+  transformSearchClient?:(searchClient: LiteClient) => LiteClient;
   disableUserPersonalization?: boolean;
   initialQuery?: string;
   navigator?: AutocompleteOptions<InternalDocSearchHit>['navigator'];

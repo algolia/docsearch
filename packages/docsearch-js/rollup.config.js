@@ -1,4 +1,3 @@
-import nodeResolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 
 import { plugins, typesConfig } from '../../rollup.base.config';
@@ -30,7 +29,6 @@ export default [
       replace({
         'process.env.NODE_ENV': JSON.stringify('production'),
       }),
-      nodeResolve({browser:true})
     ],
   },
   typesConfig,

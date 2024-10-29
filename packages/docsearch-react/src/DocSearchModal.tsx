@@ -2,7 +2,7 @@ import {
   type AlgoliaInsightsHit,
   createAutocomplete,
 } from '@algolia/autocomplete-core';
-import type { SearchResponse } from '@algolia/client-search';
+import type { SearchResponse } from 'algoliasearch/lite';
 import React from 'react';
 
 import { MAX_QUERY_SIZE } from './constants';
