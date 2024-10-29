@@ -37,7 +37,7 @@ export interface DocSearchProps {
   resultsFooterComponent?: (props: {
     state: AutocompleteState<InternalDocSearchHit>;
   }) => JSX.Element | null;
-  transformSearchClient?:(searchClient: LiteClient) => LiteClient;
+  transformSearchClient?: (searchClient: LiteClient) => LiteClient;
   disableUserPersonalization?: boolean;
   initialQuery?: string;
   navigator?: AutocompleteOptions<InternalDocSearchHit>['navigator'];
