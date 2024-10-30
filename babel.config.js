@@ -1,6 +1,6 @@
 module.exports = (api) => {
   const isTest = api.env('test');
-  const modules = isTest ? 'commonjs' : false;
+  const modules = isTest ? 'commonjs' : 'auto';
   const targets = {};
 
   if (isTest) {

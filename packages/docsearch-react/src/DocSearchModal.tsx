@@ -96,6 +96,8 @@ export function DocSearchModal({
     initialQueryFromProp || initialQueryFromSelection
   ).current;
 
+  console.log('initialQuery', initialQuery);
+
   const searchClient = useSearchClient(appId, apiKey, transformSearchClient);
   const favoriteSearches = React.useRef(
     createStoredSearches<StoredDocSearchHit>({

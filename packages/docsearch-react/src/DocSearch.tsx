@@ -60,9 +60,11 @@ export function DocSearch(props: DocSearchProps) {
     setIsOpen(true);
   }, [setIsOpen]);
 
-  const onClose = React.useCallback(() => {
+  const onClose = () => {
+    console.log('onClose');
     setIsOpen(false);
-  }, [setIsOpen]);
+    setInitialQuery(props.initialQuery);
+  };
 
   const onInput = React.useCallback(
     (event: KeyboardEvent) => {

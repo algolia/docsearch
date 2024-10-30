@@ -60,6 +60,7 @@ export function useDocSearchKeyboardEvents({
         onInput
       ) {
         if (/[a-zA-Z0-9]/.test(String.fromCharCode(event.keyCode))) {
+          console.log('onInput aaaaaaaaaa', event);
           onInput(event);
         }
       }

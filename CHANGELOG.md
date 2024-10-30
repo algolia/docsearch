@@ -1,3 +1,12 @@
+## [3.6.3](https://github.com/algolia/docsearch/compare/v3.6.2...v3.6.3) (2024-10-30)
+
+
+### Bug Fixes
+
+* upgrade algoliasearch to v5 ([#2326](https://github.com/algolia/docsearch/issues/2326)) ([93578a4](https://github.com/algolia/docsearch/commit/93578a4de0aceb49e59f4f27ed38af815c8d0dd8))
+
+
+
 ## [3.6.2](https://github.com/algolia/docsearch/compare/v3.6.1...v3.6.2) (2024-09-27)
 
 
