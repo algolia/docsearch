@@ -44,6 +44,7 @@ export function useDocSearchKeyboardEvents({
         event.preventDefault();
 
         if (isOpen) {
+          console.log('before onClose');
           onClose();
         } else if (!document.body.classList.contains('DocSearch--active')) {
           // We check that no other DocSearch modal is showing before opening
