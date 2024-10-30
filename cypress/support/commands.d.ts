@@ -15,6 +15,10 @@ declare namespace Cypress {
      */
     darkmode: () => void;
     /**
+     * Wait for the page to load.
+     */
+    waitLoad: () => void;
+    /**
      * Opens the DocSearch modal.
      */
     openModal: () => void;

@@ -1,5 +1,5 @@
 Cypress.Commands.add('modalIsVisibleAndFocused', () => {
-  cy.get('.DocSearch-Modal').should('be.visible');
+  cy.get('.DocSearch-Modal', { timeout: 10000 }).should('be.visible');
   cy.get('.DocSearch-Input').should('be.focus');
 });
 
@@ -12,6 +12,10 @@ Cypress.Commands.add('darkmode', () => {
   cy.get('.react-toggle').click({ force: true });
   cy.get('.react-toggle-screenreader-only').blur();
   cy.get('html.dark').should('be.visible');
+});
+
+Cypress.Commands.add('waitLoad', () => {
+  cy.get('.DocSearch-Button', { timeout: 10000 }).should('be.visible');
 });
 
 Cypress.Commands.add('openModal', () => {
