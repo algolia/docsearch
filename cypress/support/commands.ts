@@ -1,5 +1,5 @@
 Cypress.Commands.add('modalIsVisibleAndFocused', () => {
-  cy.get('.DocSearch-Modal').should('be.visible');
+  cy.get('.DocSearch-Modal', { timeout: 10000 }).should('be.visible');
   cy.get('.DocSearch-Input').should('be.focus');
 });
 

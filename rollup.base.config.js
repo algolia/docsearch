@@ -16,6 +16,7 @@ export const plugins = [
     browser: true,
   }),
   babel({
+    babelHelpers: 'bundled',
     exclude: 'node_modules/**',
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     rootMode: 'upward',
