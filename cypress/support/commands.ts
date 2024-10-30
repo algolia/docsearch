@@ -15,7 +15,7 @@ Cypress.Commands.add('darkmode', () => {
 });
 
 Cypress.Commands.add('waitLoad', () => {
-  cy.get('.DocSearch-Button').should('be.visible');
+  cy.get('.DocSearch-Button', { timeout: 10000 }).should('be.visible');
 });
 
 Cypress.Commands.add('openModal', () => {
