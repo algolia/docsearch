@@ -3,6 +3,7 @@
 describe('Start', () => {
   beforeEach(() => {
     cy.visit(Cypress.config().baseUrl!);
+    cy.waitLoad();
   });
 
   it('Open modal on search button click', () => {

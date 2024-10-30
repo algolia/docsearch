@@ -1,5 +1,5 @@
 [build]
-  command="yarn build"
+  command="yarn build && yarn website:build"
   publish="packages/website/build"
   ignore="git diff --quiet $COMMIT_REF $CACHED_COMMIT_REF -- packages/website/ yarn.lock"
 

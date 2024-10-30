@@ -14,6 +14,10 @@ Cypress.Commands.add('darkmode', () => {
   cy.get('html.dark').should('be.visible');
 });
 
+Cypress.Commands.add('waitLoad', () => {
+  cy.get('.DocSearch-Button').should('be.visible');
+});
+
 Cypress.Commands.add('openModal', () => {
   cy.get('.DocSearch-Button').should('be.visible').click();
   cy.modalIsVisibleAndFocused();

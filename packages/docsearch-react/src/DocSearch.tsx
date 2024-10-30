@@ -61,6 +61,7 @@ export function DocSearch(props: DocSearchProps) {
   }, [setIsOpen]);
 
   const onClose = React.useCallback(() => {
+    console.log('onClose');
     setIsOpen(false);
   }, [setIsOpen]);
 

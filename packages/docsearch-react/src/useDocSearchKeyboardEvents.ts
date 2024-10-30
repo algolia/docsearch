@@ -29,15 +29,8 @@ export function useDocSearchKeyboardEvents({
 }: UseDocSearchKeyboardEventsProps) {
   React.useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
-      function open() {
-        // We check that no other DocSearch modal is showing before opening
-        // another one.
-        if (!document.body.classList.contains('DocSearch--active')) {
-          onOpen();
-        }
-      }
       if (
-        (event.keyCode === 27 && isOpen) ||
+        (event.code === 'Escape' && isOpen) ||
         // The `Cmd+K` shortcut both opens and closes the modal.
         // We need to check for `event.key` because it can be `undefined` with
         // Chrome's autofill feature.
@@ -53,8 +46,12 @@ export function useDocSearchKeyboardEvents({
         if (isOpen) {
           onClose();
         } else if (!document.body.classList.contains('DocSearch--active')) {
-          open();
+          // We check that no other DocSearch modal is showing before opening
+          // another one.
+          onOpen();
         }
+
+        return;
       }
 
       if (
