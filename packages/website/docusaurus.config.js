@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
-const lightCodeTheme = require('prism-react-renderer/themes/github');
+const { themes } = require('prism-react-renderer');
 
 // With JSDoc @type annotations, IDEs can provide config autocompletion
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
@@ -171,8 +170,8 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
         },
         image: 'img/og_image.png',
         prism: {
-          theme: lightCodeTheme,
-          darkTheme: darkCodeTheme,
+          theme: themes.github,
+          darkTheme: themes.dracula,
         },
       }),
   }
