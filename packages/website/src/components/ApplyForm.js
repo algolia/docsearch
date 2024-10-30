@@ -271,7 +271,7 @@ function ApplyForm() {
           <strong>
             Only apply if you don't have a DocSearch application yet. <br />
             For support requests, make sure to first{' '}
-            <InlineLink href="/docs/DocSearch-program#support">
+            <InlineLink href="/docs/docsearch-program#support">
               read our policy
             </InlineLink>
             .

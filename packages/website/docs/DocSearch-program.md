@@ -8,7 +8,7 @@ For questions related to the DocSearch x Algolia Crawler, please see our [Crawle
 
 ## What do I need to install on my side?
 
-You just need to [implement DocSearch in your frontend](/docs/DocSearch-v3) with the credentials received by email when your application has been deployed.
+You just need to [implement DocSearch in your frontend](/docs/docsearch-v3) with the credentials received by email when your application has been deployed.
 
 DocSearch leverages the [Algolia Crawler](https://www.algolia.com/products/search-and-discovery/crawler/), which offers a web [interface](https://crawler.algolia.com/) to create, monitor, edit, start your Crawlers. If you have any questions regarding it, please see our [Crawler FAQ](/docs/crawler).
 
@@ -111,7 +111,7 @@ Here are some links to help you:
 
 - [The Algolia Crawler documentation](https://www.algolia.com/doc/tools/crawler/getting-started/overview/)
 - [The Algolia Crawler FAQ](/docs/crawler)
-- [The DocSearch FAQ](/docs/DocSearch-program)
+- [The DocSearch FAQ](/docs/docsearch-program)
 - [The Algolia documentation](https://www.algolia.com/doc/)
 
 You can also take a look at [the Algolia academy](https://academy.algolia.com/trainings) to understand more about Algolia.

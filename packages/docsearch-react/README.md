@@ -40,4 +40,4 @@ export default App;
 
 ## Documentation
 
-[Read documentation →](https://docsearch.algolia.com/docs/DocSearch-v3)
+[Read documentation →](https://docsearch.algolia.com/docs/docsearch-v3)

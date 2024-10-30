@@ -112,7 +112,7 @@ const { themes } = require('prism-react-renderer');
                 },
                 {
                   label: 'DocSearch v3',
-                  to: 'docs/DocSearch-v3',
+                  to: 'docs/docsearch-v3',
                 },
               ],
             },

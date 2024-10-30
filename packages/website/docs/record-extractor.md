@@ -303,7 +303,7 @@ type CustomVariable =
     };
 ```
 
-Custom variables are used to [`filter your search`](/docs/DocSearch-v3#filtering-your-search), you can define them in the [`recordProps`](#indexing-content-for-faceting)
+Custom variables are used to [`filter your search`](/docs/docsearch-v3#filtering-your-search), you can define them in the [`recordProps`](#indexing-content-for-faceting)
 
 ## `helpers.docsearch` API Reference
 
@@ -311,13 +311,13 @@ Custom variables are used to [`filter your search`](/docs/DocSearch-v3#filtering
 
 > `type: boolean` | default: `true` | **optional**
 
-[This option](#reduce-the-number-records) groups the Algolia records created at the `content` level of the selector into a single record for its matching heading.
+[This option](#reduce-the-number-of-records) groups the Algolia records created at the `content` level of the selector into a single record for its matching heading.
 
 ### `recordVersion`
 
 > `type: 'v3' | 'v2'` | default: `v2` | **optional**
 
-This option remove content from the Algolia records that are only used for [DocSearch v2](/docs/legacy/dropdown). If you are using [the latest version of DocSearch](/docs/DocSearch-v3), you can [set it to `v3`](#reduce-the-record-size).
+This option remove content from the Algolia records that are only used for [DocSearch v2](/docs/legacy/dropdown). If you are using [the latest version of DocSearch](/docs/docsearch-v3), you can [set it to `v3`](#reduce-the-record-size).
 
 ### `indexHeadings`
 
@@ -328,7 +328,7 @@ This option tells the crawler if the `headings` (`lvlX`) should be indexed.
 - When `false`, only records for the `content` level will be created.
 - When `from, to` is provided, only records for the `lvlX` to `lvlY` will be created.
 
-[1]: /docs/DocSearch-v3
+[1]: /docs/docsearch-v3
 [2]: https://github.com/algolia/docsearch/
 [3]: https://github.com/algolia/docsearch/tree/master
 [4]: /docs/legacy/dropdown
