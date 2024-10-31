@@ -1,8 +1,7 @@
-import React from 'react';
 import { DocSearch } from '@docsearch/react';
 
-import './app.css';
-import '@docsearch/css';
+import './App.css';
+import '@docsearch/css/dist/style.css';
 
 function App() {
   return (
@@ -12,7 +11,7 @@ function App() {
         indexName="vuejs"
         appId="ML0LEBN7FQ"
         apiKey="21cf9df0734770a2448a9da64a700c22"
-        insights
+        insights={true}
       />
     </div>
   );

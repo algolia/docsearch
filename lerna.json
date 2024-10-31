@@ -1,6 +1,10 @@
 {
-  "packages": ["packages/*", "examples/*"],
+  "packages": [
+    "packages/docsearch-css",
+    "packages/docsearch-js",
+    "packages/docsearch-react",
+    "examples/*"
+  ],
   "version": "3.6.2",
-  "npmClient": "yarn",
-  "useWorkspaces": true
+  "npmClient": "yarn"
 }
