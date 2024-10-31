@@ -1,3 +1,11 @@
+## <small>3.6.3 (2024-10-31)</small>
+
+* fix: upgrade algoliasearch to v5 (#2326) ([93578a4](https://github.com/algolia/docsearch/commit/93578a4)), closes [#2326](https://github.com/algolia/docsearch/issues/2326)
+* fix: use vite instead of parcel in the examples (#2329) ([d360855](https://github.com/algolia/docsearch/commit/d360855)), closes [#2329](https://github.com/algolia/docsearch/issues/2329)
+* docs(showcase): Fix logos for ScalarDB and ScalarDL in showcase (#2317) ([90f3c6a](https://github.com/algolia/docsearch/commit/90f3c6a)), closes [#2317](https://github.com/algolia/docsearch/issues/2317)
+
+
+
 ## [3.6.2](https://github.com/algolia/docsearch/compare/v3.6.1...v3.6.2) (2024-09-27)
 
 
