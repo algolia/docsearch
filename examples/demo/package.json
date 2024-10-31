@@ -16,7 +16,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.3",
-    "globals": "^15.11.0",
     "vite": "^5.4.10"
   }
 }
