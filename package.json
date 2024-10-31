@@ -3,9 +3,7 @@
   "private": true,
   "workspaces": {
     "packages": [
-      "packages/docsearch-css",
-      "packages/docsearch-js",
-      "packages/docsearch-react",
+      "packages/*",
       "examples/*"
     ],
     "nohoist": [
