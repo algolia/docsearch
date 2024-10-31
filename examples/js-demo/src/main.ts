@@ -1,7 +1,7 @@
-import docsearch from '@docsearch/js/dist/umd';
+import docsearch from '@docsearch/js';
 
 import './app.css';
-import '@docsearch/css';
+import '@docsearch/css/dist/style.css';
 
 docsearch({
   container: '#docsearch',

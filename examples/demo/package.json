@@ -4,17 +4,18 @@
   "version": "3.6.2",
   "private": true,
   "license": "MIT",
+  "type": "module",
   "scripts": {
-    "build": "parcel build index.html",
-    "start": "parcel index.html"
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@docsearch/css": "3.6.2",
-    "@docsearch/react": "3.6.2",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "@docsearch/react": "3.6.2"
   },
   "devDependencies": {
-    "parcel": "2.7.0"
+    "@vitejs/plugin-react": "^4.3.3",
+    "vite": "^5.4.10"
   }
 }
