@@ -50,7 +50,6 @@
     ]
   },
   "resolutions": {
-    "@docsearch/react": "link:../docsearch-react",
-    "algoliasearch": "^5"
+    "@docsearch/react": "link:../docsearch-react"
   }
 }
