@@ -34,9 +34,9 @@
     "test:types": "tsc --noEmit",
     "test": "jest",
     "watch": "lerna run watch --parallel --scope @docsearch/*",
-    "website:build": "cd packages/website && yarn install && yarn build",
-    "website:start": "cd packages/website && yarn install && yarn start --host 0.0.0.0",
-    "website:test": "cd packages/website && yarn install && yarn start --no-open"
+    "website:build": "yarn workspace @docsearch/website build",
+    "website:start": "yarn workspace @docsearch/website start --host 0.0.0.0",
+    "website:test": "yarn workspace @docsearch/website start --no-open"
   },
   "devDependencies": {
     "@babel/plugin-transform-react-jsx": "7.23.4",
