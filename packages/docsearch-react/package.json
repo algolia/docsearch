@@ -36,7 +36,7 @@
     "@algolia/autocomplete-core": "1.9.3",
     "@algolia/autocomplete-preset-algolia": "1.9.3",
     "@docsearch/css": "3.5.2",
-    "algoliasearch": "^4.19.1"
+    "algoliasearch": "^5.0.0"
   },
   "peerDependencies": {
     "@types/react": ">= 16.8.0 < 19.0.0",
