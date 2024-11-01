@@ -12327,12 +12327,12 @@ eslint-module-utils@^2.12.0:
   dependencies:
     debug "^3.2.7"
 
-eslint-plugin-cypress@2.15.2:
-  version "2.15.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-cypress/-/eslint-plugin-cypress-2.15.2.tgz#f22e12fad4c434edad7b298ef92bac8fa087ffa0"
-  integrity sha512-CtcFEQTDKyftpI22FVGpx8bkpKyYXBlNge6zSo0pl5/qJvBAnzaD76Vu2AsP16d6mTj478Ldn2mhgrWV+Xr0vQ==
+eslint-plugin-cypress@4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-cypress/-/eslint-plugin-cypress-4.1.0.tgz#11178fd250d437e2ec57bf24b8a9058b356f8cac"
+  integrity sha512-JhqkMY02mw74USwK9OFhectx3YSj6Co1NgWBxlGdKvlqiAp9vdEuQqt33DKGQFvvGS/NWtduuhWXWNnU29xDSg==
   dependencies:
-    globals "^13.20.0"
+    globals "^15.11.0"
 
 eslint-plugin-eslint-comments@3.2.0:
   version "3.2.0"
@@ -13757,12 +13757,10 @@ globals@^13.2.0:
   dependencies:
     type-fest "^0.20.2"
 
-globals@^13.20.0:
-  version "13.21.0"
-  resolved "https://registry.yarnpkg.com/globals/-/globals-13.21.0.tgz#163aae12f34ef502f5153cfbdd3600f36c63c571"
-  integrity sha512-ybyme3s4yy/t/3s35bewwXKOf7cvzfreG2lH0lZl0JB7I4GxRP2ghxOK/Nb9EkRXdbBXZLfq/p/0W2JUONB/Gg==
-  dependencies:
-    type-fest "^0.20.2"
+globals@^15.11.0:
+  version "15.11.0"
+  resolved "https://registry.yarnpkg.com/globals/-/globals-15.11.0.tgz#b96ed4c6998540c6fb824b24b5499216d2438d6e"
+  integrity sha512-yeyNSjdbyVaWurlwCpcA6XNBrHTMIeDdj0/hnvX/OLJ9ekOXYbLsLinH/MucQyGvNnXhidTdNhTtJaffL2sMfw==
 
 globalthis@^1.0.3:
   version "1.0.3"
