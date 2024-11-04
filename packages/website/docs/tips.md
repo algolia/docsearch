@@ -2,7 +2,7 @@
 title: Tips for a good search
 ---
 
-DocSearch can work with almost any website, but we've found that some site structures yield more relevant results or faster indexing time. In this page we'll share some tips on how you can make the most out of DocSearch.
+DocSearch can work with almost any website, but we've found that some site structures yield more relevant results or faster indexing time. On this page we'll share some tips on how to make the most out of DocSearch.
 
 ## Use a `sitemap.xml`
 
