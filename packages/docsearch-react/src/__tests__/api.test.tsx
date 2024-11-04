@@ -59,7 +59,7 @@ describe('api', () => {
       );
       expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
       expect(document.querySelector('.DocSearch-Button-Placeholder')?.innerHTML).toBe('Recherche');
-      expect(document.querySelector('.DocSearch-Button')?.getAttribute('aria-label')).toBe('Recherche');
+      expect(document.querySelector('.DocSearch-Button')?.getAttribute('aria-label')).toBe('Recherche (Ctrl+K)');
     });
 
     it('overrides the default DocSearchModal startScreen text', async () => {
