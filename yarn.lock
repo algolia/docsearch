@@ -2232,7 +2232,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docsearch/css@npm:3.6.3, @docsearch/css@workspace:packages/docsearch-css":
+"@docsearch/css@npm:3.7.0, @docsearch/css@workspace:packages/docsearch-css":
   version: 0.0.0-use.local
   resolution: "@docsearch/css@workspace:packages/docsearch-css"
   languageName: unknown
@@ -2242,17 +2242,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docsearch/js-example@workspace:examples/js-demo"
   dependencies:
-    "@docsearch/css": "npm:3.6.3"
-    "@docsearch/js": "npm:3.6.3"
+    "@docsearch/css": "npm:3.7.0"
+    "@docsearch/js": "npm:3.7.0"
     vite: "npm:^5.4.10"
   languageName: unknown
   linkType: soft
 
-"@docsearch/js@npm:3.6.3, @docsearch/js@workspace:packages/docsearch-js":
+"@docsearch/js@npm:3.7.0, @docsearch/js@workspace:packages/docsearch-js":
   version: 0.0.0-use.local
   resolution: "@docsearch/js@workspace:packages/docsearch-js"
   dependencies:
-    "@docsearch/react": "npm:3.6.3"
+    "@docsearch/react": "npm:3.7.0"
     "@rollup/plugin-replace": "npm:6.0.1"
     preact: "npm:^10.0.0"
   languageName: unknown
@@ -2320,8 +2320,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docsearch/react-example@workspace:examples/demo"
   dependencies:
-    "@docsearch/css": "npm:3.6.3"
-    "@docsearch/react": "npm:3.6.3"
+    "@docsearch/css": "npm:3.7.0"
+    "@docsearch/react": "npm:3.7.0"
     "@vitejs/plugin-react": "npm:^4.3.3"
     react: "npm:^18.0.0"
     react-dom: "npm:^18.0.0"
@@ -2329,13 +2329,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@docsearch/react@npm:3.6.3, @docsearch/react@npm:^3.5.2, @docsearch/react@workspace:packages/docsearch-react":
+"@docsearch/react@npm:3.7.0, @docsearch/react@npm:^3.5.2, @docsearch/react@workspace:packages/docsearch-react":
   version: 0.0.0-use.local
   resolution: "@docsearch/react@workspace:packages/docsearch-react"
   dependencies:
     "@algolia/autocomplete-core": "npm:1.17.6"
     "@algolia/autocomplete-preset-algolia": "npm:1.17.6"
-    "@docsearch/css": "npm:3.6.3"
+    "@docsearch/css": "npm:3.7.0"
     "@rollup/plugin-replace": "npm:6.0.1"
     "@testing-library/jest-dom": "npm:6.6.3"
     "@testing-library/react": "npm:16.0.1"
@@ -2363,7 +2363,7 @@ __metadata:
   resolution: "@docsearch/website@workspace:packages/website"
   dependencies:
     "@algolia/ui-library": "npm:5.86.0"
-    "@docsearch/react": "npm:3.6.3"
+    "@docsearch/react": "npm:3.7.0"
     "@docusaurus/core": "npm:3.6.0"
     "@docusaurus/preset-classic": "npm:3.6.0"
     "@mdx-js/react": "npm:^3.1.0"
@@ -5659,6 +5659,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@typescript-eslint/scope-manager@npm:8.13.0":
+  version: 8.13.0
+  resolution: "@typescript-eslint/scope-manager@npm:8.13.0"
+  dependencies:
+    "@typescript-eslint/types": "npm:8.13.0"
+    "@typescript-eslint/visitor-keys": "npm:8.13.0"
+  checksum: 10c0/1924b3e740e244d98f8a99740b4196d23ae3263303b387c66db94e140455a3132e603a130f3f70fc71e37f4bda5d0c0c67224ae3911908b097ef3f972c136be4
+  languageName: node
+  linkType: hard
+
 "@typescript-eslint/type-utils@npm:8.12.2":
   version: 8.12.2
   resolution: "@typescript-eslint/type-utils@npm:8.12.2"
@@ -5681,6 +5691,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@typescript-eslint/types@npm:8.13.0":
+  version: 8.13.0
+  resolution: "@typescript-eslint/types@npm:8.13.0"
+  checksum: 10c0/bd3f88b738a92b2222f388bcf831357ef8940a763c2c2eb1947767e1051dd2f8bee387020e8cf4c2309e4142353961b659abc2885e30679109a0488b0bfefc23
+  languageName: node
+  linkType: hard
+
 "@typescript-eslint/typescript-estree@npm:8.12.2":
   version: 8.12.2
   resolution: "@typescript-eslint/typescript-estree@npm:8.12.2"
@@ -5700,7 +5717,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:8.12.2, @typescript-eslint/utils@npm:^8.12.2":
+"@typescript-eslint/typescript-estree@npm:8.13.0":
+  version: 8.13.0
+  resolution: "@typescript-eslint/typescript-estree@npm:8.13.0"
+  dependencies:
+    "@typescript-eslint/types": "npm:8.13.0"
+    "@typescript-eslint/visitor-keys": "npm:8.13.0"
+    debug: "npm:^4.3.4"
+    fast-glob: "npm:^3.3.2"
+    is-glob: "npm:^4.0.3"
+    minimatch: "npm:^9.0.4"
+    semver: "npm:^7.6.0"
+    ts-api-utils: "npm:^1.3.0"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/2d45bc5ed4ac352bea927167ac28ef23bd13b6ae352ff50e85cddfdc4b06518f1dd4ae5f2495e30d6f62d247987677a4e807065d55829ba28963908a821dc96d
+  languageName: node
+  linkType: hard
+
+"@typescript-eslint/utils@npm:8.12.2":
   version: 8.12.2
   resolution: "@typescript-eslint/utils@npm:8.12.2"
   dependencies:
@@ -5714,6 +5750,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@typescript-eslint/utils@npm:^8.12.2":
+  version: 8.13.0
+  resolution: "@typescript-eslint/utils@npm:8.13.0"
+  dependencies:
+    "@eslint-community/eslint-utils": "npm:^4.4.0"
+    "@typescript-eslint/scope-manager": "npm:8.13.0"
+    "@typescript-eslint/types": "npm:8.13.0"
+    "@typescript-eslint/typescript-estree": "npm:8.13.0"
+  peerDependencies:
+    eslint: ^8.57.0 || ^9.0.0
+  checksum: 10c0/3fc5a7184a949df5f5b64f6af039a1d21ef7fe15f3d88a5d485ccbb535746d18514751143993a5aee287228151be3e326baf8f899a0a0a93368f6f20857ffa6d
+  languageName: node
+  linkType: hard
+
 "@typescript-eslint/visitor-keys@npm:8.12.2":
   version: 8.12.2
   resolution: "@typescript-eslint/visitor-keys@npm:8.12.2"
@@ -5721,6 +5771,16 @@ __metadata:
     "@typescript-eslint/types": "npm:8.12.2"
     eslint-visitor-keys: "npm:^3.4.3"
   checksum: 10c0/1f770d361bcb03ed028e5589824f6c7ba364da59fe8b982c2fed0878ad25890d80ebd6c72618ab5149317501964b7db106e20834179d4aa707a8cbffcca89d08
+  languageName: node
+  linkType: hard
+
+"@typescript-eslint/visitor-keys@npm:8.13.0":
+  version: 8.13.0
+  resolution: "@typescript-eslint/visitor-keys@npm:8.13.0"
+  dependencies:
+    "@typescript-eslint/types": "npm:8.13.0"
+    eslint-visitor-keys: "npm:^3.4.3"
+  checksum: 10c0/50b35f3cf673aaed940613f0007f7c4558a89ebef15c49824e65b6f084b700fbf01b01a4e701e24bbe651297a39678645e739acd255255f1603867a84bef0383
   languageName: node
   linkType: hard
 
@@ -9783,8 +9843,8 @@ __metadata:
   linkType: hard
 
 "es-iterator-helpers@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "es-iterator-helpers@npm:1.1.0"
+  version: 1.2.0
+  resolution: "es-iterator-helpers@npm:1.2.0"
   dependencies:
     call-bind: "npm:^1.0.7"
     define-properties: "npm:^1.2.1"
@@ -9794,13 +9854,14 @@ __metadata:
     function-bind: "npm:^1.1.2"
     get-intrinsic: "npm:^1.2.4"
     globalthis: "npm:^1.0.4"
+    gopd: "npm:^1.0.1"
     has-property-descriptors: "npm:^1.0.2"
     has-proto: "npm:^1.0.3"
     has-symbols: "npm:^1.0.3"
     internal-slot: "npm:^1.0.7"
     iterator.prototype: "npm:^1.1.3"
     safe-array-concat: "npm:^1.1.2"
-  checksum: 10c0/84d6c240c7da6e62323b336cb1497781546dab16bebdbd879ccfdf588979712d3e941d41165b6c2ffce5a03a7b929d4e6131d3124d330da1a0e2bfa1da7cd99f
+  checksum: 10c0/2bd60580dfeae353f5b80445d2808da745e97eeacdb663a8c4d99a12046873830a06d377e9d5e88fe54eece7c94319a5ce5a01220e24d71394ceca8d3ef621d7
   languageName: node
   linkType: hard
 

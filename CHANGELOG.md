@@ -1,3 +1,12 @@
+# [3.7.0](https://github.com/algolia/docsearch/compare/v3.6.3...v3.7.0) (2024-11-04)
+
+
+### Bug Fixes
+
+* **types:** export the types folder ([#2332](https://github.com/algolia/docsearch/issues/2332)) ([90ca5fa](https://github.com/algolia/docsearch/commit/90ca5fa8ed73d01d4ca22ed0de0e38652e56b5bb))
+
+
+
 ## <small>3.6.3 (2024-10-31)</small>
 
 * fix: upgrade algoliasearch to v5 (#2326) ([93578a4](https://github.com/algolia/docsearch/commit/93578a4)), closes [#2326](https://github.com/algolia/docsearch/issues/2326)
