@@ -47,7 +47,7 @@
     "@rollup/plugin-node-resolve": "11.2.1",
     "@rollup/plugin-replace": "2.3.3",
     "@testing-library/dom": "9.3.1",
-    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "14.1.2",
     "@types/jest": "^29.0.0",
     "@types/react": "^18.0.0",
