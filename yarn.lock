@@ -22,6 +22,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@algolia/autocomplete-core@npm:1.9.3":
+  version: 1.9.3
+  resolution: "@algolia/autocomplete-core@npm:1.9.3"
+  dependencies:
+    "@algolia/autocomplete-plugin-algolia-insights": "npm:1.9.3"
+    "@algolia/autocomplete-shared": "npm:1.9.3"
+  checksum: 10c0/a751b20f15c9a30b8b2d5a4f1f62fb4dbd012fb7ffec1b12308d6e7388b5a4dc83af52176634f17facb57a7727204843c5aa2f6e80efafaaf244275f44af11d9
+  languageName: node
+  linkType: hard
+
 "@algolia/autocomplete-plugin-algolia-insights@npm:1.17.6":
   version: 1.17.6
   resolution: "@algolia/autocomplete-plugin-algolia-insights@npm:1.17.6"
@@ -30,6 +40,17 @@ __metadata:
   peerDependencies:
     search-insights: ">= 1 < 3"
   checksum: 10c0/0220b38e4d4e027bebdf51554fca39dbfc853d861caef22dac21e1ba68054191bb177902e06f1cd0c3395eb5746f555d451906b46327eb1fb9ea1796bb812aac
+  languageName: node
+  linkType: hard
+
+"@algolia/autocomplete-plugin-algolia-insights@npm:1.9.3":
+  version: 1.9.3
+  resolution: "@algolia/autocomplete-plugin-algolia-insights@npm:1.9.3"
+  dependencies:
+    "@algolia/autocomplete-shared": "npm:1.9.3"
+  peerDependencies:
+    search-insights: ">= 1 < 3"
+  checksum: 10c0/574196f66fe828be1029439032376685020524d6c729dea99caef336cc7be244d2539fa91b3fe80db80efe3420c2c05063cab3534514be6c637bf1914b17a6f6
   languageName: node
   linkType: hard
 
@@ -52,6 +73,16 @@ __metadata:
     "@algolia/client-search": ">= 4.9.1 < 6"
     algoliasearch: ">= 4.9.1 < 6"
   checksum: 10c0/1489a6111ad8e083df93c0393701679af1180b4f4bbffc7170f254e755365624fbe706ec8452054f829807c12ffd89437c5e1afcdaced3b0ebfdeac52eea387c
+  languageName: node
+  linkType: hard
+
+"@algolia/autocomplete-shared@npm:1.9.3":
+  version: 1.9.3
+  resolution: "@algolia/autocomplete-shared@npm:1.9.3"
+  peerDependencies:
+    "@algolia/client-search": ">= 4.9.1 < 6"
+    algoliasearch: ">= 4.9.1 < 6"
+  checksum: 10c0/1aa926532c32be6bb5384c8c0ae51a312c9d79ed7486371218dfcb61c8ea1ed46171bdc9f9b596a266aece104a0ef76d6aac2f9a378a5a6eb4460e638d59f6ae
   languageName: node
   linkType: hard
 
@@ -2232,7 +2263,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docsearch/css@npm:3.6.3, @docsearch/css@workspace:packages/docsearch-css":
+"@docsearch/css@npm:3.6.3":
+  version: 3.6.3
+  resolution: "@docsearch/css@npm:3.6.3"
+  checksum: 10c0/f2a2b561259bc2c75ac1b02056248d4f7605db3ac2305fd8160c62a6dbbf09b87a5d1b6f8a75ad5a3d36dddee1224a06e511b4e3dbe49042b6ef6906d3ee6419
+  languageName: node
+  linkType: hard
+
+"@docsearch/css@npm:3.7.0, @docsearch/css@workspace:packages/docsearch-css":
   version: 0.0.0-use.local
   resolution: "@docsearch/css@workspace:packages/docsearch-css"
   languageName: unknown
@@ -2242,17 +2280,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docsearch/js-example@workspace:examples/js-demo"
   dependencies:
-    "@docsearch/css": "npm:3.6.3"
-    "@docsearch/js": "npm:3.6.3"
+    "@docsearch/css": "npm:3.7.0"
+    "@docsearch/js": "npm:3.7.0"
     vite: "npm:^5.4.10"
   languageName: unknown
   linkType: soft
 
-"@docsearch/js@npm:3.6.3, @docsearch/js@workspace:packages/docsearch-js":
+"@docsearch/js@npm:3.7.0, @docsearch/js@workspace:packages/docsearch-js":
   version: 0.0.0-use.local
   resolution: "@docsearch/js@workspace:packages/docsearch-js"
   dependencies:
-    "@docsearch/react": "npm:3.6.3"
+    "@docsearch/react": "npm:3.7.0"
     "@rollup/plugin-replace": "npm:6.0.1"
     preact: "npm:^10.0.0"
   languageName: unknown
@@ -2320,8 +2358,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docsearch/react-example@workspace:examples/demo"
   dependencies:
-    "@docsearch/css": "npm:3.6.3"
-    "@docsearch/react": "npm:3.6.3"
+    "@docsearch/css": "npm:3.7.0"
+    "@docsearch/react": "npm:3.7.0"
     "@vitejs/plugin-react": "npm:^4.3.3"
     react: "npm:^18.0.0"
     react-dom: "npm:^18.0.0"
@@ -2329,13 +2367,39 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@docsearch/react@npm:3.6.3, @docsearch/react@npm:^3.5.2, @docsearch/react@workspace:packages/docsearch-react":
+"@docsearch/react@npm:3.6.3":
+  version: 3.6.3
+  resolution: "@docsearch/react@npm:3.6.3"
+  dependencies:
+    "@algolia/autocomplete-core": "npm:1.9.3"
+    "@algolia/autocomplete-preset-algolia": "npm:1.17.6"
+    "@docsearch/css": "npm:3.6.3"
+    algoliasearch: "npm:^5.11.0"
+  peerDependencies:
+    "@types/react": ">= 16.8.0 < 19.0.0"
+    react: ">= 16.8.0 < 19.0.0"
+    react-dom: ">= 16.8.0 < 19.0.0"
+    search-insights: ">= 1 < 3"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+    search-insights:
+      optional: true
+  checksum: 10c0/0f93999d9bc60a3db3707639554b78b97f90fdb7f38e130ca704e4fff45ee2eab6896f001c769254914b66a57ae0cacace9eefe63a7410900cf934320f61971c
+  languageName: node
+  linkType: hard
+
+"@docsearch/react@npm:3.7.0, @docsearch/react@npm:^3.5.2, @docsearch/react@workspace:packages/docsearch-react":
   version: 0.0.0-use.local
   resolution: "@docsearch/react@workspace:packages/docsearch-react"
   dependencies:
     "@algolia/autocomplete-core": "npm:1.17.6"
     "@algolia/autocomplete-preset-algolia": "npm:1.17.6"
-    "@docsearch/css": "npm:3.6.3"
+    "@docsearch/css": "npm:3.7.0"
     "@rollup/plugin-replace": "npm:6.0.1"
     "@testing-library/jest-dom": "npm:6.6.3"
     "@testing-library/react": "npm:16.0.1"
@@ -6226,7 +6290,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"algoliasearch@npm:^5.12.0":
+"algoliasearch@npm:^5.11.0, algoliasearch@npm:^5.12.0":
   version: 5.12.0
   resolution: "algoliasearch@npm:5.12.0"
   dependencies:
