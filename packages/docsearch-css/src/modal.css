@@ -6,6 +6,16 @@
    * `style` attribute (e.g. Docusaurus).
    */
   overflow: hidden !important;
+
+}
+
+.DocSearch--active.DocSearch-fix-scrollbar {
+  overflow-y: scroll !important;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Set top from js */
 }
 
 /* Container & Modal */
