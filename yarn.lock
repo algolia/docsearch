@@ -2253,7 +2253,7 @@ __metadata:
   resolution: "@docsearch/js@workspace:packages/docsearch-js"
   dependencies:
     "@docsearch/react": "npm:3.6.3"
-    "@rollup/plugin-replace": "npm:^6.0.1"
+    "@rollup/plugin-replace": "npm:6.0.1"
     preact: "npm:^10.0.0"
   languageName: unknown
   linkType: soft
@@ -2266,7 +2266,7 @@ __metadata:
     "@babel/preset-env": "npm:7.26.0"
     "@babel/preset-typescript": "npm:7.26.0"
     "@eslint-community/eslint-plugin-eslint-comments": "npm:4.4.1"
-    "@rollup/plugin-babel": "npm:^6.0.4"
+    "@rollup/plugin-babel": "npm:6.0.4"
     "@rollup/plugin-json": "npm:6.1.0"
     "@rollup/plugin-node-resolve": "npm:15.3.0"
     "@rollup/plugin-replace": "npm:6.0.1"
@@ -2296,10 +2296,10 @@ __metadata:
     lerna: "npm:8.1.9"
     postcss: "npm:8.4.47"
     prettier: "npm:3.3.3"
-    react: "npm:^18.0.0"
-    react-dom: "npm:^18.0.0"
+    react: "npm:18.3.1"
+    react-dom: "npm:18.3.1"
     rollup: "npm:4.24.4"
-    rollup-plugin-dts: "npm:^6.1.1"
+    rollup-plugin-dts: "npm:6.1.1"
     rollup-plugin-filesize: "npm:10.0.0"
     shipjs: "npm:0.26.4"
     start-server-and-test: "npm:2.0.8"
@@ -2311,7 +2311,7 @@ __metadata:
     stylelint-prettier: "npm:5.0.2"
     typescript: "npm:5.6.3"
     typescript-eslint: "npm:8.12.2"
-    vitest: "npm:^2.1.4"
+    vitest: "npm:2.1.4"
     watch: "npm:1.0.2"
   languageName: unknown
   linkType: soft
@@ -2336,11 +2336,11 @@ __metadata:
     "@algolia/autocomplete-core": "npm:1.17.6"
     "@algolia/autocomplete-preset-algolia": "npm:1.17.6"
     "@docsearch/css": "npm:3.6.3"
-    "@rollup/plugin-replace": "npm:^6.0.1"
-    "@testing-library/jest-dom": "npm:^6.6.3"
-    "@testing-library/react": "npm:^16.0.1"
+    "@rollup/plugin-replace": "npm:6.0.1"
+    "@testing-library/jest-dom": "npm:6.6.3"
+    "@testing-library/react": "npm:16.0.1"
     algoliasearch: "npm:^5.12.0"
-    vitest: "npm:^2.1.4"
+    vitest: "npm:2.1.4"
   peerDependencies:
     "@types/react": ">= 16.8.0 < 19.0.0"
     react: ">= 16.8.0 < 19.0.0"
@@ -4320,7 +4320,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-babel@npm:^6.0.4":
+"@rollup/plugin-babel@npm:6.0.4":
   version: 6.0.4
   resolution: "@rollup/plugin-babel@npm:6.0.4"
   dependencies:
@@ -4371,7 +4371,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-replace@npm:6.0.1, @rollup/plugin-replace@npm:^6.0.1":
+"@rollup/plugin-replace@npm:6.0.1":
   version: 6.0.1
   resolution: "@rollup/plugin-replace@npm:6.0.1"
   dependencies:
@@ -4933,7 +4933,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/jest-dom@npm:^6.6.3":
+"@testing-library/jest-dom@npm:6.6.3":
   version: 6.6.3
   resolution: "@testing-library/jest-dom@npm:6.6.3"
   dependencies:
@@ -4948,7 +4948,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:^16.0.1":
+"@testing-library/react@npm:16.0.1":
   version: 16.0.1
   resolution: "@testing-library/react@npm:16.0.1"
   dependencies:
@@ -18885,6 +18885,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-dom@npm:18.3.1, react-dom@npm:^18.0.0":
+  version: 18.3.1
+  resolution: "react-dom@npm:18.3.1"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+    scheduler: "npm:^0.23.2"
+  peerDependencies:
+    react: ^18.3.1
+  checksum: 10c0/a752496c1941f958f2e8ac56239172296fcddce1365ce45222d04a1947e0cc5547df3e8447f855a81d6d39f008d7c32eab43db3712077f09e3f67c4874973e85
+  languageName: node
+  linkType: hard
+
 "react-dom@npm:^17.0.2":
   version: 17.0.2
   resolution: "react-dom@npm:17.0.2"
@@ -18895,18 +18907,6 @@ __metadata:
   peerDependencies:
     react: 17.0.2
   checksum: 10c0/51abbcb72450fe527ebf978c3bc989ba266630faaa53f47a2fae5392369729e8de62b2e4683598cbe651ea7873cd34ec7d5127e2f50bf4bfe6bd0c3ad9bddcb0
-  languageName: node
-  linkType: hard
-
-"react-dom@npm:^18.0.0":
-  version: 18.3.1
-  resolution: "react-dom@npm:18.3.1"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-    scheduler: "npm:^0.23.2"
-  peerDependencies:
-    react: ^18.3.1
-  checksum: 10c0/a752496c1941f958f2e8ac56239172296fcddce1365ce45222d04a1947e0cc5547df3e8447f855a81d6d39f008d7c32eab43db3712077f09e3f67c4874973e85
   languageName: node
   linkType: hard
 
@@ -19072,6 +19072,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react@npm:18.3.1, react@npm:^18.0.0":
+  version: 18.3.1
+  resolution: "react@npm:18.3.1"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+  checksum: 10c0/283e8c5efcf37802c9d1ce767f302dd569dd97a70d9bb8c7be79a789b9902451e0d16334b05d73299b20f048cbc3c7d288bbbde10b701fa194e2089c237dbea3
+  languageName: node
+  linkType: hard
+
 "react@npm:^17.0.2":
   version: 17.0.2
   resolution: "react@npm:17.0.2"
@@ -19079,15 +19088,6 @@ __metadata:
     loose-envify: "npm:^1.1.0"
     object-assign: "npm:^4.1.1"
   checksum: 10c0/07ae8959acf1596f0550685102fd6097d461a54a4fd46a50f88a0cd7daaa97fdd6415de1dcb4bfe0da6aa43221a6746ce380410fa848acc60f8ac41f6649c148
-  languageName: node
-  linkType: hard
-
-"react@npm:^18.0.0":
-  version: 18.3.1
-  resolution: "react@npm:18.3.1"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-  checksum: 10c0/283e8c5efcf37802c9d1ce767f302dd569dd97a70d9bb8c7be79a789b9902451e0d16334b05d73299b20f048cbc3c7d288bbbde10b701fa194e2089c237dbea3
   languageName: node
   linkType: hard
 
@@ -19793,7 +19793,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-dts@npm:^6.1.1":
+"rollup-plugin-dts@npm:6.1.1":
   version: 6.1.1
   resolution: "rollup-plugin-dts@npm:6.1.1"
   dependencies:
@@ -22636,7 +22636,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitest@npm:^2.1.4":
+"vitest@npm:2.1.4":
   version: 2.1.4
   resolution: "vitest@npm:2.1.4"
   dependencies:
