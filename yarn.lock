@@ -17234,10 +17234,10 @@ stylelint-order@5.0.0, stylelint-order@^5.0.0:
     postcss "^8.3.11"
     postcss-sorting "^7.0.1"
 
-stylelint-prettier@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/stylelint-prettier/-/stylelint-prettier-3.0.0.tgz#57028b99866ed4c3ae045ddd891bf9a77d274726"
-  integrity sha512-kIks1xw6np0zElokMT2kP6ar3S4MBoj6vUtPJuND1pFELMpZxVS/0uHPR4HDAVn0WAD3I5oF0IA3qBFxBpMkLg==
+stylelint-prettier@5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/stylelint-prettier/-/stylelint-prettier-5.0.2.tgz#82c0a813d8981fe094fca28126fc88cee22fa789"
+  integrity sha512-qJ+BN+1T2ZcKz9WIrv0x+eFGHzSUnXfXd5gL///T6XoJvr3D8/ztzz2fhtmXef7Vb8P33zBXmLTTveByr0nwBw==
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
