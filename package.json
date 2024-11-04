@@ -1,21 +1,14 @@
 {
   "name": "@docsearch/monorepo",
   "private": true,
-  "workspaces": {
-    "packages": [
-      "packages/*",
-      "examples/*"
-    ],
-    "nohoist": [
-      "**/html-minifier-terser"
-    ]
-  },
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
   "scripts": {
-    "build:clean": "lerna run build:clean --scope @docsearch/*",
-    "build:esm": "lerna run build:esm --scope @docsearch/*",
-    "build:types": "lerna run build:types --scope @docsearch/*",
-    "build:umd": "lerna run build:umd --scope @docsearch/*",
-    "build": "lerna run build --scope @docsearch/*",
+    "build:clean": "lerna run build:clean",
+    "build:types": "lerna run build:types",
+    "build": "lerna run build",
     "cy:clean": "rm -rf cypress/screenshots",
     "cy:info": "cypress info",
     "cy:run:chrome": "yarn run cy:run --browser chrome",
@@ -33,7 +26,7 @@
     "test:size": "bundlesize",
     "test:types": "tsc --noEmit",
     "test": "jest",
-    "watch": "lerna run watch --parallel --scope @docsearch/*",
+    "watch": "lerna run watch --parallel",
     "website:build": "yarn workspace @docsearch/website build",
     "website:start": "yarn workspace @docsearch/website start --host 0.0.0.0",
     "website:test": "yarn workspace @docsearch/website start --no-open"
@@ -43,10 +36,10 @@
     "@babel/preset-env": "7.23.5",
     "@babel/preset-typescript": "7.23.3",
     "@rollup/plugin-babel": "^6.0.4",
-    "@rollup/plugin-terser": "0.4.4",
     "@rollup/plugin-json": "6.1.0",
     "@rollup/plugin-node-resolve": "15.3.0",
     "@rollup/plugin-replace": "6.0.1",
+    "@rollup/plugin-terser": "0.4.4",
     "@testing-library/dom": "9.3.1",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "14.1.2",
@@ -94,5 +87,6 @@
     "ts-jest": "28.0.8",
     "typescript": "5.6.3",
     "watch": "1.0.2"
-  }
+  },
+  "packageManager": "yarn@4.5.1"
 }

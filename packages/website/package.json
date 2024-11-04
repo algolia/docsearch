@@ -23,19 +23,17 @@
     "@mdx-js/react": "^3.1.0",
     "clsx": "^1.1.1",
     "file-loader": "6.2.0",
-    "my-loaders": "file:plugins/my-loaders",
-    "postcss": "8.4.25",
-    "postcss-import": "15.0.0",
-    "postcss-preset-env": "7.8.2",
+    "postcss": "8.4.47",
+    "postcss-import": "16.1.0",
+    "postcss-preset-env": "10.0.9",
     "prism-react-renderer": "2.4.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "tailwind-loader": "file:plugins/tailwind-loader",
     "url-loader": "4.1.1"
   },
   "devDependencies": {
-    "postcss-loader": "6.2.1",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+    "postcss-loader": "8.1.1",
+    "tailwindcss": "3.4.14"
   },
   "browserslist": {
     "production": [

@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { themes } = require('prism-react-renderer');
 
+const myLoaders = require('./plugins/my-loaders');
+const tailwindLoader = require('./plugins/tailwind-loader');
+
 // With JSDoc @type annotations, IDEs can provide config autocompletion
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 (
@@ -40,7 +43,7 @@ const { themes } = require('prism-react-renderer');
         }),
       ],
     ],
-    plugins: ['my-loaders', 'tailwind-loader'],
+    plugins: [myLoaders, tailwindLoader],
     themeConfig:
       /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
       ({
