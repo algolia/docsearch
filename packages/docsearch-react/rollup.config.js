@@ -26,6 +26,7 @@ export default [
     plugins: [
       ...plugins,
       replace({
+        preventAssignment: true,
         'process.env.NODE_ENV': JSON.stringify('production'),
       }),
     ],
