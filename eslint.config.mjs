@@ -3,6 +3,7 @@ import algoliaReact from 'eslint-config-algolia/flat/react.js';
 import algoliaTypescript from 'eslint-config-algolia/flat/typescript.js';
 import cypresss from 'eslint-plugin-cypress/flat'; // eslint-disable-line import/no-unresolved
 import reactRefresh from 'eslint-plugin-react-refresh';
+import tseslint from 'typescript-eslint'; // eslint-disable-line import/no-unresolved
 
 export default [
   ...algolia,
@@ -17,8 +18,7 @@ export default [
     },
     languageOptions: {
       parserOptions: {
-        project: true,
-        tsconfigRootDir: import.meta.dirname,
+        projectService: true,
       },
     },
     settings: {
@@ -68,6 +68,10 @@ export default [
       'jsdoc/check-examples': ['off'],
     },
   },
+  {
+    files: ['**/*.js'],
+  },
+  tseslint.configs.disableTypeChecked,
   {
     files: ['cypress/**/*'],
     plugins: {

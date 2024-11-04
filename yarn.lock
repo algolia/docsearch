@@ -2637,6 +2637,7 @@ __metadata:
     stylelint-order: "npm:6.0.4"
     stylelint-prettier: "npm:5.0.2"
     typescript: "npm:5.6.3"
+    typescript-eslint: "npm:8.12.2"
     vitest: "npm:^2.1.4"
     watch: "npm:1.0.2"
   languageName: unknown
@@ -23032,6 +23033,20 @@ __metadata:
   version: 0.0.6
   resolution: "typedarray@npm:0.0.6"
   checksum: 10c0/6005cb31df50eef8b1f3c780eb71a17925f3038a100d82f9406ac2ad1de5eb59f8e6decbdc145b3a1f8e5836e17b0c0002fb698b9fe2516b8f9f9ff602d36412
+  languageName: node
+  linkType: hard
+
+"typescript-eslint@npm:8.12.2":
+  version: 8.12.2
+  resolution: "typescript-eslint@npm:8.12.2"
+  dependencies:
+    "@typescript-eslint/eslint-plugin": "npm:8.12.2"
+    "@typescript-eslint/parser": "npm:8.12.2"
+    "@typescript-eslint/utils": "npm:8.12.2"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/8a80916204da1a056fa3776d7c69d3d21b9a242d8d2bea75ca32b25d86a0c0e28711fb185605024e463b311e582f693166950d6fe0f66f0969603214e190cbcc
   languageName: node
   linkType: hard
 
