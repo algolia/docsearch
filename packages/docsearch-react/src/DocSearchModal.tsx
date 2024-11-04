@@ -2,7 +2,7 @@ import {
   type AlgoliaInsightsHit,
   createAutocomplete,
 } from '@algolia/autocomplete-core';
-import type { SearchResponse } from '@algolia/client-search';
+import type { SearchResponse } from 'algoliasearch/lite';
 import React from 'react';
 
 import { MAX_QUERY_SIZE } from './constants';
@@ -224,11 +224,11 @@ export function DocSearchModal({
           const insightsActive = Boolean(insights);
 
           return searchClient
-            .search<DocSearchHit>([
-              {
-                query,
-                indexName,
-                params: {
+            .search<DocSearchHit>({
+              requests: [
+                {
+                  query,
+                  indexName,
                   attributesToRetrieve: [
                     'hierarchy.lvl0',
                     'hierarchy.lvl1',
@@ -257,8 +257,8 @@ export function DocSearchModal({
                   clickAnalytics: insightsActive,
                   ...searchParameters,
                 },
-              },
-            ])
+              ],
+            })
             .catch((error) => {
               // The Algolia `RetryError` happens when all the servers have
               // failed, meaning that there's no chance the response comes

@@ -231,12 +231,12 @@
   },
   {
     "name": "ScalarDB",
-    "image": "img/logos/scalardb.svg",
+    "image": "img/logos/scalar.svg",
     "href": "https://scalardb.scalar-labs.com/docs/"
   },
   {
     "name": "ScalarDL",
-    "image": "img/logos/scalardl.svg",
+    "image": "img/logos/scalar.svg",
     "href": "https://scalardl.scalar-labs.com/docs/"
   }
 ]
