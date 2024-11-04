@@ -25,7 +25,7 @@
     "file-loader": "6.2.0",
     "my-loaders": "file:plugins/my-loaders",
     "postcss": "8.4.25",
-    "postcss-import": "15.0.0",
+    "postcss-import": "16.1.0",
     "postcss-preset-env": "7.8.2",
     "prism-react-renderer": "2.4.0",
     "react": "18.2.0",
