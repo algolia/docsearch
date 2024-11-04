@@ -146,6 +146,11 @@ jobs:
       - save_cache: *save_yarn_cache
       - run: *restore_dist_folders
       - run:
+          name: Setup git user
+          command: |
+            git config --global user.email "accounts+algolia-api-client-bot@algolia.com"
+            git config --global user.name "algolia-bot"
+      - run:
           name: Release if needed
           command: yarn run shipjs trigger
   test_cypress:
