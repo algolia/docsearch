@@ -12,12 +12,7 @@ function isEditingContent(event: KeyboardEvent): boolean {
   const element = event.target as HTMLElement;
   const tagName = element.tagName;
 
-  return (
-    element.isContentEditable ||
-    tagName === 'INPUT' ||
-    tagName === 'SELECT' ||
-    tagName === 'TEXTAREA'
-  );
+  return element.isContentEditable || tagName === 'INPUT' || tagName === 'SELECT' || tagName === 'TEXTAREA';
 }
 
 export function useDocSearchKeyboardEvents({
@@ -26,17 +21,16 @@ export function useDocSearchKeyboardEvents({
   onClose,
   onInput,
   searchButtonRef,
-}: UseDocSearchKeyboardEventsProps) {
+}: UseDocSearchKeyboardEventsProps): void {
   React.useEffect(() => {
-    function onKeyDown(event: KeyboardEvent) {
+    function onKeyDown(event: KeyboardEvent): void {
       if (
         (event.code === 'Escape' && isOpen) ||
         // The `Cmd+K` shortcut both opens and closes the modal.
         // We need to check for `event.key` because it can be `undefined` with
         // Chrome's autofill feature.
         // See https://github.com/paperjs/paper.js/issues/1398
-        (event.key?.toLowerCase() === 'k' &&
-          (event.metaKey || event.ctrlKey)) ||
+        (event.key?.toLowerCase() === 'k' && (event.metaKey || event.ctrlKey)) ||
         // The `/` shortcut opens but doesn't close the modal because it's
         // a character.
         (!isEditingContent(event) && event.key === '/' && !isOpen)
@@ -54,11 +48,7 @@ export function useDocSearchKeyboardEvents({
         return;
       }
 
-      if (
-        searchButtonRef &&
-        searchButtonRef.current === document.activeElement &&
-        onInput
-      ) {
+      if (searchButtonRef && searchButtonRef.current === document.activeElement && onInput) {
         if (/[a-zA-Z0-9]/.test(String.fromCharCode(event.keyCode))) {
           onInput(event);
         }
@@ -67,7 +57,7 @@ export function useDocSearchKeyboardEvents({
 
     window.addEventListener('keydown', onKeyDown);
 
-    return () => {
+    return (): void => {
       window.removeEventListener('keydown', onKeyDown);
     };
   }, [isOpen, onOpen, onClose, onInput, searchButtonRef]);

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function NoResultsIcon() {
+export function NoResultsIcon(): JSX.Element {
   return (
     <svg
       width="40"

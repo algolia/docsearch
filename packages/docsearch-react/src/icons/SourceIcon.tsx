@@ -14,7 +14,7 @@ const LvlIcon: React.FC = () => {
   );
 };
 
-export function SourceIcon(props: { type: string }) {
+export function SourceIcon(props: { type: string }): JSX.Element {
   switch (props.type) {
     case 'lvl1':
       return <LvlIcon />;
@@ -25,7 +25,7 @@ export function SourceIcon(props: { type: string }) {
   }
 }
 
-function AnchorIcon() {
+function AnchorIcon(): JSX.Element {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20">
       <path
@@ -40,7 +40,7 @@ function AnchorIcon() {
   );
 }
 
-function ContentIcon() {
+function ContentIcon(): JSX.Element {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20">
       <path

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function ControlKeyIcon() {
+export function ControlKeyIcon(): JSX.Element {
   return (
     <svg width="15" height="15" className="DocSearch-Control-Key-Icon">
       <path

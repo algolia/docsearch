@@ -1,6 +1,5 @@
-module.exports = (api) => {
+export default (api) => {
   const isTest = api.env('test');
-  const modules = isTest ? 'commonjs' : 'auto';
   const targets = {};
 
   if (isTest) {
@@ -15,7 +14,6 @@ module.exports = (api) => {
       [
         '@babel/preset-env',
         {
-          modules,
           targets,
         },
       ],

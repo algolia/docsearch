@@ -22,3 +22,8 @@ dist/
 # Cypress Video and Screenshots output
 cypress/screenshots/
 cypress/videos/
+
+**/.yarn/*
+!**/.yarn/releases
+!**/.yarn/plugins
+!**/.yarn/patches

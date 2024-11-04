@@ -32,19 +32,10 @@ function Home() {
         }
         background="curves"
         cta={[
-          <Button
-            key="get-started"
-            href={withBaseUrl('docs/what-is-docsearch')}
-          >
+          <Button key="get-started" href={withBaseUrl('docs/what-is-docsearch')}>
             Get started
           </Button>,
-          <Button
-            key="apply"
-            href={withBaseUrl('apply')}
-            background="blue"
-            color="white"
-            className="apply-button"
-          >
+          <Button key="apply" href={withBaseUrl('apply')} background="blue" color="white" className="apply-button">
             Apply
           </Button>,
         ]}
@@ -71,10 +62,7 @@ function Home() {
                   <div className="max-w-4xl mx-auto">
                     <dl className="rounded-lg shadow-xl lg:grid lg:grid-cols-3 showcase">
                       <div className="flex flex-col border-b p-6 text-center lg:border-0 showcase-border">
-                        <dt
-                          className="order-2 mt-2 text-lg leading-6 font-medium text-description"
-                          id="item-1"
-                        >
+                        <dt className="order-2 mt-2 text-lg leading-6 font-medium text-description" id="item-1">
                           Free Service
                         </dt>
                         <dd
@@ -88,17 +76,11 @@ function Home() {
                         <dt className="order-2 mt-2 text-lg leading-6 font-medium text-description">
                           Searches per month
                         </dt>
-                        <dd className="order-1 text-5xl leading-none font-extrabold text-algolia">
-                          +170M
-                        </dd>
+                        <dd className="order-1 text-5xl leading-none font-extrabold text-algolia">+170M</dd>
                       </div>
                       <div className="flex flex-col border-t p-6 text-center lg:border-0 lg:border-l showcase-border">
-                        <dt className="order-2 mt-2 text-lg leading-6 font-medium text-description">
-                          DocSearch Live
-                        </dt>
-                        <dd className="order-1 text-5xl leading-none font-extrabold text-algolia">
-                          +7000
-                        </dd>
+                        <dt className="order-2 mt-2 text-lg leading-6 font-medium text-description">DocSearch Live</dt>
+                        <dd className="order-1 text-5xl leading-none font-extrabold text-algolia">+7000</dd>
                       </div>
                     </dl>
                   </div>
@@ -111,10 +93,7 @@ function Home() {
                   return a.name.localeCompare(b.name);
                 })
                 .map(({ name, href, image }) => (
-                  <div
-                    key={href}
-                    className="col-span-1 flex justify-center py-2 px-2 text-center"
-                  >
+                  <div key={href} className="col-span-1 flex justify-center py-2 px-2 text-center">
                     <a
                       href={href}
                       rel="noreferrer"
@@ -126,9 +105,7 @@ function Home() {
                         src={withBaseUrl(image)}
                         alt={`Discover DocSearch on the ${name} documentation`}
                       />
-                      <div className="text-description uppercase text-xs py-2 font-semibold">
-                        {name}
-                      </div>
+                      <div className="text-description uppercase text-xs py-2 font-semibold">{name}</div>
                     </a>
                   </div>
                 ))}
@@ -144,8 +121,7 @@ function Home() {
                 Solve docs challenges with a search engine
               </h3>
               <p className="mt-4 max-w-3xl mx-auto text-center text-xl leading-7 text-description">
-                Docs are only helpful when your users can find answers easily.
-                Enter DocSearch.
+                Docs are only helpful when your users can find answers easily. Enter DocSearch.
               </p>
             </div>
 
@@ -155,11 +131,7 @@ function Home() {
                   <div className="flex">
                     <div className="flex-shrink-0">
                       <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
-                        <svg
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          className="search w-6 h-6"
-                        >
+                        <svg viewBox="0 0 20 20" fill="currentColor" className="search w-6 h-6">
                           <path
                             fillRule="evenodd"
                             d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
@@ -169,14 +141,11 @@ function Home() {
                       </div>
                     </div>
                     <div className="ml-4">
-                      <h4 className="text-lg leading-6 font-medium">
-                        Made for Developer docs
-                      </h4>
+                      <h4 className="text-lg leading-6 font-medium">Made for Developer docs</h4>
                       <p className="mt-2 text-base leading-6 text-description">
-                        Initially created to fulfill our own documentation
-                        needs, DocSearch eventually became a community project
-                        for open source docs. But, now it is available for
-                        any/all kinds of developer documentation.
+                        Initially created to fulfill our own documentation needs, DocSearch eventually became a
+                        community project for open source docs. But, now it is available for any/all kinds of developer
+                        documentation.
                       </p>
                     </div>
                   </div>
@@ -185,12 +154,7 @@ function Home() {
                   <div className="flex">
                     <div className="flex-shrink-0">
                       <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
-                        <svg
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="user-group w-6 h-6"
-                        >
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" className="user-group w-6 h-6">
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -201,14 +165,10 @@ function Home() {
                       </div>
                     </div>
                     <div className="ml-4">
-                      <h4 className="text-lg leading-6 font-medium">
-                        Customizable and fast
-                      </h4>
+                      <h4 className="text-lg leading-6 font-medium">Customizable and fast</h4>
                       <p className="mt-2 text-base leading-6 text-description">
-                        DocSearch understands how the user input fits into the
-                        context of your project and instantly presents the most
-                        relevant content with fewer interactions than any other
-                        method.
+                        DocSearch understands how the user input fits into the context of your project and instantly
+                        presents the most relevant content with fewer interactions than any other method.
                       </p>
                     </div>
                   </div>
@@ -217,12 +177,7 @@ function Home() {
                   <div className="flex">
                     <div className="flex-shrink-0">
                       <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
-                        <svg
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="device-mobile w-6 h-6"
-                        >
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" className="device-mobile w-6 h-6">
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -233,13 +188,10 @@ function Home() {
                       </div>
                     </div>
                     <div className="ml-4">
-                      <h4 className="text-lg leading-6 font-medium">
-                        Mobile design
-                      </h4>
+                      <h4 className="text-lg leading-6 font-medium">Mobile design</h4>
                       <p className="mt-2 text-base leading-6 text-description">
-                        With a design very close to the native experience on
-                        mobile, we leverage users acquaintance with the
-                        interaction patterns of each OS.
+                        With a design very close to the native experience on mobile, we leverage users acquaintance with
+                        the interaction patterns of each OS.
                       </p>
                     </div>
                   </div>
@@ -258,9 +210,8 @@ function Home() {
                   How it works
                 </h2>
                 <p className="mt-4 max-w-2xl text-xl leading-7 text-gray-500 lg:mx-auto">
-                  We scrape your documentation or technical blog, configure the
-                  Algolia application and send you the snippet you'll have to
-                  integrate. It's that simple.
+                  We scrape your documentation or technical blog, configure the Algolia application and send you the
+                  snippet you'll have to integrate. It's that simple.
                 </p>
               </div>
             </div>
@@ -279,9 +230,7 @@ function Home() {
                       />
                     </div>
                     <div className="mt-10 lg:mt-0 p-4">
-                      <h5 className="text-lg leading-6 font-medium text-gray-900">
-                        1. Scraping
-                      </h5>
+                      <h5 className="text-lg leading-6 font-medium text-gray-900">1. Scraping</h5>
                       <p className="mt-2 text-base leading-6 text-gray-600">
                         We leverage the{' '}
                         <InlineLink
@@ -304,12 +253,10 @@ function Home() {
                       />
                     </div>
                     <div>
-                      <h5 className="text-lg leading-6 font-medium text-gray-900">
-                        2. Configuration
-                      </h5>
+                      <h5 className="text-lg leading-6 font-medium text-gray-900">2. Configuration</h5>
                       <p className="mt-2 text-base leading-6 text-gray-600">
-                        You don't need to configure any settings or even have an
-                        Algolia account. We take care of this for you!
+                        You don't need to configure any settings or even have an Algolia account. We take care of this
+                        for you!
                       </p>
                     </div>
                   </div>
@@ -323,13 +270,10 @@ function Home() {
                       />
                     </div>
                     <div>
-                      <h5 className="text-lg leading-6 font-medium text-gray-900">
-                        3. Implementation
-                      </h5>
+                      <h5 className="text-lg leading-6 font-medium text-gray-900">3. Implementation</h5>
                       <p className="mt-2 text-base leading-6 text-gray-600">
-                        We'll send you a small snippet to integrate DocSearch to
-                        your website and an invite to your fully configured
-                        Algolia application.
+                        We'll send you a small snippet to integrate DocSearch to your website and an invite to your
+                        fully configured Algolia application.
                       </p>
                     </div>
                   </div>
@@ -348,9 +292,8 @@ function Home() {
                   Overview of DocSearch
                 </h4>
                 <p className="mt-3 text-lg leading-7 text-description">
-                  Search doesn't have to be painful — when a user searches
-                  through your docs, they'll get a frictionless modal dialog to
-                  work in. And it's a Free Service!
+                  Search doesn't have to be painful — when a user searches through your docs, they'll get a frictionless
+                  modal dialog to work in. And it's a Free Service!
                 </p>
 
                 <ul className="mt-10">
@@ -358,12 +301,7 @@ function Home() {
                     <div className="flex">
                       <div className="flex-shrink-0">
                         <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
-                          <svg
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            className="sparkles w-6 h-6"
-                          >
+                          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" className="sparkles w-6 h-6">
                             <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
@@ -374,15 +312,11 @@ function Home() {
                         </div>
                       </div>
                       <div className="ml-4">
-                        <h5 className="text-lg leading-6 font-medium">
-                          All featured search box
-                        </h5>
+                        <h5 className="text-lg leading-6 font-medium">All featured search box</h5>
                         <p className="mt-2 text-base leading-6 text-description">
-                          The conversation start here: you want to have the
-                          state-of-the-art search box to represent your voice.
-                          DocSearch comes with our extensive experience in
-                          making this search box respects all the best
-                          practices.
+                          The conversation start here: you want to have the state-of-the-art search box to represent
+                          your voice. DocSearch comes with our extensive experience in making this search box respects
+                          all the best practices.
                         </p>
                       </div>
                     </div>
@@ -391,12 +325,7 @@ function Home() {
                     <div className="flex">
                       <div className="flex-shrink-0">
                         <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
-                          <svg
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            className="menu-alt2 w-6 h-6"
-                          >
+                          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" className="menu-alt2 w-6 h-6">
                             <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
@@ -407,12 +336,10 @@ function Home() {
                         </div>
                       </div>
                       <div className="ml-4">
-                        <h5 className="text-lg leading-6 font-medium">
-                          Hierarchical display
-                        </h5>
+                        <h5 className="text-lg leading-6 font-medium">Hierarchical display</h5>
                         <p className="mt-2 text-base leading-6 text-description">
-                          DocSearch organizes the search results into chunks
-                          that reflect how your documentation is structured.
+                          DocSearch organizes the search results into chunks that reflect how your documentation is
+                          structured.
                         </p>
                       </div>
                     </div>
@@ -424,11 +351,7 @@ function Home() {
                 <img
                   className="relative mx-auto rounded-lg shadow-lg image-rendering-crisp"
                   src={withBaseUrl(
-                    `img/assets/${
-                      colorMode === 'dark'
-                        ? 'docsearch-shadow-dark'
-                        : 'docsearch-shadow'
-                    }.png`
+                    `img/assets/${colorMode === 'dark' ? 'docsearch-shadow-dark' : 'docsearch-shadow'}.png`,
                   )}
                   alt="docsearch-modal"
                 />
@@ -459,14 +382,10 @@ function Home() {
                           </div>
                         </div>
                         <div className="ml-4">
-                          <h5 className="text-lg leading-6 font-medium">
-                            Inputs and shortcuts
-                          </h5>
+                          <h5 className="text-lg leading-6 font-medium">Inputs and shortcuts</h5>
                           <p className="mt-2 text-base leading-6 text-description">
-                            It looks almost similar to a search input but it's a
-                            button. When you click/touch or use the keyboard
-                            shortcut, it opens a modal dropdown and focuses the
-                            search input.
+                            It looks almost similar to a search input but it's a button. When you click/touch or use the
+                            keyboard shortcut, it opens a modal dropdown and focuses the search input.
                           </p>
                         </div>
                       </div>
@@ -491,15 +410,11 @@ function Home() {
                           </div>
                         </div>
                         <div className="ml-4">
-                          <h5 className="text-lg leading-6 font-medium">
-                            Always sized and positioned correctly
-                          </h5>
+                          <h5 className="text-lg leading-6 font-medium">Always sized and positioned correctly</h5>
                           <p className="mt-2 text-base leading-6 text-description">
-                            The modal experience leverages behavior of most
-                            popular Integrated Developement Environements (IDEs)
-                            or native experience on mobile. An opaque layer is
-                            making sure we keep the context of the documentation
-                            but remove all visual pollution.
+                            The modal experience leverages behavior of most popular Integrated Developement
+                            Environements (IDEs) or native experience on mobile. An opaque layer is making sure we keep
+                            the context of the documentation but remove all visual pollution.
                           </p>
                         </div>
                       </div>
@@ -535,12 +450,7 @@ function Home() {
                     <div className="flex">
                       <div className="flex-shrink-0">
                         <div className="flex items-center justify-center h-12 w-12 rounded-md bg-white text-algolia">
-                          <svg
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            className="chip w-6 h-6"
-                          >
+                          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" className="chip w-6 h-6">
                             <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
@@ -551,13 +461,10 @@ function Home() {
                         </div>
                       </div>
                       <div className="ml-4">
-                        <h5 className="text-lg leading-6 font-medium text-white">
-                          Highly efficient
-                        </h5>
+                        <h5 className="text-lg leading-6 font-medium text-white">Highly efficient</h5>
                         <p className="mt-2 text-base leading-6 text-gray-300">
-                          Most of our search queries take less than 20ms, so
-                          Algolia can run a new search on every keystroke and
-                          instantly highlight relevant content to your users.
+                          Most of our search queries take less than 20ms, so Algolia can run a new search on every
+                          keystroke and instantly highlight relevant content to your users.
                         </p>
                       </div>
                     </div>
@@ -566,12 +473,7 @@ function Home() {
                     <div className="flex">
                       <div className="flex-shrink-0">
                         <div className="flex items-center justify-center h-12 w-12 rounded-md  bg-white text-algolia">
-                          <svg
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            className="chat w-6 h-6"
-                          >
+                          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" className="chat w-6 h-6">
                             <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
@@ -582,12 +484,10 @@ function Home() {
                         </div>
                       </div>
                       <div className="ml-4">
-                        <h5 className="text-lg leading-6 font-medium text-white">
-                          Search as you type
-                        </h5>
+                        <h5 className="text-lg leading-6 font-medium text-white">Search as you type</h5>
                         <p className="mt-2 text-base leading-6 text-gray-300">
-                          Instantly magnify relevant content to your users from
-                          the first keystroke, thanks to Algolia speed.
+                          Instantly magnify relevant content to your users from the first keystroke, thanks to Algolia
+                          speed.
                         </p>
                       </div>
                     </div>
@@ -601,12 +501,7 @@ function Home() {
                     <div className="flex">
                       <div className="flex-shrink-0">
                         <div className="flex items-center justify-center h-12 w-12 rounded-md bg-white text-algolia">
-                          <svg
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            className="backspace w-6 h-6"
-                          >
+                          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" className="backspace w-6 h-6">
                             <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
@@ -621,9 +516,8 @@ function Home() {
                           Detailed and straightforward analytics
                         </h5>
                         <p className="mt-2 text-base leading-6 text-gray-300">
-                          Use our analytics to keep an eye on your search
-                          performance and to make sure that your users are
-                          finding what they're searching for.
+                          Use our analytics to keep an eye on your search performance and to make sure that your users
+                          are finding what they're searching for.
                         </p>
                       </div>
                     </div>
@@ -632,12 +526,7 @@ function Home() {
                     <div className="flex">
                       <div className="flex-shrink-0">
                         <div className="flex items-center justify-center h-12 w-12 rounded-md bg-white text-algolia">
-                          <svg
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            className="chart-bar w-6 h-6"
-                          >
+                          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" className="chart-bar w-6 h-6">
                             <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
@@ -648,13 +537,10 @@ function Home() {
                         </div>
                       </div>
                       <div className="ml-4">
-                        <h5 className="text-lg leading-6 font-medium text-white">
-                          Typo tolerant
-                        </h5>
+                        <h5 className="text-lg leading-6 font-medium text-white">Typo tolerant</h5>
                         <p className="mt-2 text-base leading-6 text-gray-300">
-                          Algolia knows what your users mean to search for right
-                          out-of-the-box, so they won't be spending time
-                          correcting typos.
+                          Algolia knows what your users mean to search for right out-of-the-box, so they won't be
+                          spending time correcting typos.
                         </p>
                       </div>
                     </div>
@@ -673,9 +559,8 @@ function Home() {
                 It's all about keyboards
               </h3>
               <p className="mt-4 max-w-3xl mx-auto text-center text-xl text-description lg:mx-auto">
-                Once users become familiar with a system they will become better
-                and faster at doing what they need to. DocSearch offers
-                accelerators to experts.
+                Once users become familiar with a system they will become better and faster at doing what they need to.
+                DocSearch offers accelerators to experts.
               </p>
               <div className="pt-12 items-center justify-center flex">
                 <img
@@ -692,12 +577,7 @@ function Home() {
                   <div className="flex">
                     <div className="flex-shrink-0">
                       <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
-                        <svg
-                          className="h-6 w-6"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
+                        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -708,13 +588,10 @@ function Home() {
                       </div>
                     </div>
                     <div className="ml-4">
-                      <h4 className="text-lg leading-6 font-medium">
-                        Keyboard Shortcut & Navigation
-                      </h4>
+                      <h4 className="text-lg leading-6 font-medium">Keyboard Shortcut & Navigation</h4>
                       <p className="mt-2 text-base leading-6 text-description">
-                        We aim at keeping the experience as smooth as your
-                        interaction with an IDE, which explains the Ctrl+K (⌘+K
-                        on macOS) keyboard shortcut to open the search modal.
+                        We aim at keeping the experience as smooth as your interaction with an IDE, which explains the
+                        Ctrl+K (⌘+K on macOS) keyboard shortcut to open the search modal.
                       </p>
                     </div>
                   </div>
@@ -723,12 +600,7 @@ function Home() {
                   <div className="flex">
                     <div className="flex-shrink-0">
                       <div className="flex items-center justify-center h-12 w-12 rounded-md bg-algolia text-white">
-                        <svg
-                          className="h-6 w-6"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
+                        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -739,15 +611,11 @@ function Home() {
                       </div>
                     </div>
                     <div className="ml-4">
-                      <h4 className="text-lg leading-6 font-medium">
-                        Accessibility
-                      </h4>
+                      <h4 className="text-lg leading-6 font-medium">Accessibility</h4>
                       <p className="mt-2 text-base leading-6 text-description">
-                        We have released this version with our best efforts on
-                        addressing accessibility issues and we are willing to
-                        make further changes. We'd like to work closely with an
-                        expert in accessibility. Please contact us if you are
-                        interested.
+                        We have released this version with our best efforts on addressing accessibility issues and we
+                        are willing to make further changes. We'd like to work closely with an expert in accessibility.
+                        Please contact us if you are interested.
                       </p>
                     </div>
                   </div>

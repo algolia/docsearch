@@ -9,7 +9,7 @@
  * Create as many sidebars as you want.
  */
 
-module.exports = {
+export default {
   docs: [
     {
       type: 'category',

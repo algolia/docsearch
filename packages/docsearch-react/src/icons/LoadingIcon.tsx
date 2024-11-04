@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function LoadingIcon() {
+export function LoadingIcon(): JSX.Element {
   return (
     <svg viewBox="0 0 38 38" stroke="currentColor" strokeOpacity=".5">
       <g fill="none" fillRule="evenodd">

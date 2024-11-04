@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "@docsearch/css": "3.6.3",
-    "@docsearch/react": "3.6.3"
+    "@docsearch/react": "3.6.3",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.3",

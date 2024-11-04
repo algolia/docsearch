@@ -1,12 +1,6 @@
 version: 2.1
 
 aliases:
-  - &install_yarn_version
-    name: Install specific Yarn version
-    command: |
-      curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.22.5
-      echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
-
   - &restore_yarn_cache
     name: Restore Yarn cache
     keys:
@@ -16,11 +10,12 @@ aliases:
     name: Save Yarn cache
     key: yarn-packages-{{ checksum "yarn.lock" }}
     paths:
-      - ~/.cache/yarn
+      - .yarn/cache
+      - .yarn/unplugged
 
   - &run_yarn_install
     name: Install dependencies
-    command: yarn install --frozen-lockfile
+    command: yarn install --immutable
 
   - &restore_dist_folders
     name: Restore dist folders
@@ -59,7 +54,6 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
@@ -88,7 +82,6 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
@@ -101,7 +94,6 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
@@ -114,7 +106,6 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
@@ -127,20 +118,18 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
       - run: *restore_dist_folders
       - run:
           name: Unit tests
-          command: yarn run test --maxWorkers=4
+          command: yarn run test
   release:
     <<: *defaults
     steps:
       - checkout
       - *attach_workspace
-      - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache

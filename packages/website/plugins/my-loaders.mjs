@@ -1,4 +1,4 @@
-module.exports = function () {
+export default function () {
   return {
     name: 'loaders',
     configureWebpack() {
@@ -15,4 +15,4 @@ module.exports = function () {
       };
     },
   };
-};
+}

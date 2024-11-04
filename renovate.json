@@ -1,11 +1,20 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:js-lib", "algolia"],
-  "baseBranches": ["chore/renovateBaseBranch"],
+  "extends": [
+    "config:js-lib",
+    "github>algolia/renovate-config-algolia"
+  ],
+  "baseBranches": [
+    "chore/renovateBaseBranch"
+  ],
   "packageRules": [
     {
-      "packagePatterns": ["^@types"],
-      "depTypeList": ["devDependencies"],
+      "packagePatterns": [
+        "^@types"
+      ],
+      "depTypeList": [
+        "devDependencies"
+      ],
       "rangeStrategy": "replace"
     }
   ],

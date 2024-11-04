@@ -12,11 +12,7 @@ function ApplyPage() {
       description="The easiest way to add search to your documentation - Powered by Algolia"
     >
       <div className="uil-pb-24">
-        <Hero
-          id="hero-apply"
-          title={<DocSearchLogo width="100%" />}
-          background="curves"
-        />
+        <Hero id="hero-apply" title={<DocSearchLogo width="100%" />} background="curves" />
         <ApplyForm />
       </div>
     </Layout>

@@ -1,19 +1,22 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-module.exports = function () {
+import postcssImport from 'postcss-import';
+import postcssPresetEnv from 'postcss-preset-env';
+import tailwindcss from 'tailwindcss';
+
+export default function () {
   return {
     name: 'postcss-tailwindcss-loader',
     configurePostCss(postcssOptions) {
       postcssOptions.plugins.push(
-        require('postcss-import'),
-        require('tailwindcss'),
-        require('postcss-preset-env')({
+        postcssImport,
+        tailwindcss,
+        postcssPresetEnv({
           autoprefixer: {
             flexbox: 'no-2009',
           },
           stage: 4,
-        })
+        }),
       );
       return postcssOptions;
     },
   };
-};
+}

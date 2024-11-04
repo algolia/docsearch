@@ -1,14 +1,9 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
-const packages = [
-  'packages/docsearch-css',
-  'packages/docsearch-react',
-  'packages/docsearch-js',
-];
+const packages = ['packages/docsearch-css', 'packages/docsearch-react', 'packages/docsearch-js'];
 
-module.exports = {
+export default {
   monorepo: {
     mainVersionFile: 'lerna.json',
     // We rely on Lerna to bump our dependencies.
@@ -20,9 +15,7 @@ module.exports = {
   },
   versionUpdated({ exec, dir, version }) {
     // Update package dependencies
-    exec(
-      `yarn lerna version ${version} --exact --no-git-tag-version --no-push --yes`
-    );
+    exec(`yarn lerna version ${version} --exact --no-git-tag-version --no-push --yes`);
 
     // Ship.js reads JSON and writes with `fs.writeFileSync(JSON.stringify(json, null, 2))`
     // which causes a lint error in the `lerna.json` file.
@@ -30,7 +23,7 @@ module.exports = {
 
     fs.writeFileSync(
       path.resolve(dir, 'packages', 'docsearch-react', 'src', 'version.ts'),
-      `export const version = '${version}';\n`
+      `export const version = '${version}';\n`,
     );
   },
 };

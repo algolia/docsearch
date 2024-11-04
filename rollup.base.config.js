@@ -2,12 +2,13 @@ import { babel } from '@rollup/plugin-babel';
 import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
-import dts from 'rollup-plugin-dts';
+import terser from '@rollup/plugin-terser';
+import { dts } from 'rollup-plugin-dts';
 import filesize from 'rollup-plugin-filesize';
-import { terser } from 'rollup-plugin-terser';
 
 export const plugins = [
   replace({
+    preventAssignment: true,
     __DEV__: JSON.stringify(process.env.NODE_ENV === 'development'),
   }),
   json(),

@@ -24,12 +24,15 @@
     "build:clean": "rm -rf ./dist",
     "build:types": "tsc -p ./tsconfig.declaration.json --outDir ./dist/esm/types",
     "build:clean-types": "rm -rf ./dist/esm/types",
-    "build": "yarn build:clean && yarn build:types && rollup --config && yarn build:clean-types",
+    "build": "yarn build:clean && yarn build:types && rollup --config --bundleConfigAsCjs && yarn build:clean-types",
     "on:change": "yarn build",
     "watch": "watch \"yarn on:change\" --ignoreDirectoryPattern \"/dist/\""
   },
   "dependencies": {
     "@docsearch/react": "3.6.3",
     "preact": "^10.0.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-replace": "6.0.1"
   }
 }
