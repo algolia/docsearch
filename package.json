@@ -88,7 +88,7 @@
     "stylelint-a11y": "1.2.3",
     "stylelint-config-sass-guidelines": "9.0.1",
     "stylelint-config-standard": "28.0.0",
-    "stylelint-no-unsupported-browser-features": "5.0.4",
+    "stylelint-no-unsupported-browser-features": "8.0.2",
     "stylelint-order": "5.0.0",
     "stylelint-prettier": "3.0.0",
     "ts-jest": "28.0.8",
