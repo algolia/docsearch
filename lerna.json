@@ -1,8 +1,6 @@
 {
   "packages": [
-    "packages/docsearch-css",
-    "packages/docsearch-js",
-    "packages/docsearch-react",
+    "packages/*",
     "examples/*"
   ],
   "version": "3.7.0",
