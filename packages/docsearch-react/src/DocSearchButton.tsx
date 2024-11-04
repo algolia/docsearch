@@ -31,8 +31,19 @@ export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButt
       }
     }, []);
 
+    const [actionKeyReactsTo, actionKeyAltText, actionKeyChild] =
+      key === ACTION_KEY_DEFAULT
+        ? ([ACTION_KEY_DEFAULT, 'Ctrl', <ControlKeyIcon />] as const)
+        : (['Meta', 'Command', key] as const);
+
     return (
-      <button type="button" className="DocSearch DocSearch-Button" aria-label={buttonAriaLabel} {...props} ref={ref}>
+      <button
+        type="button"
+        className="DocSearch DocSearch-Button"
+        aria-label={`${buttonAriaLabel} (${actionKeyAltText}+K)`}
+        {...props}
+        ref={ref}
+      >
         <span className="DocSearch-Button-Container">
           <SearchIcon />
           <span className="DocSearch-Button-Placeholder">{buttonText}</span>
@@ -41,9 +52,7 @@ export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButt
         <span className="DocSearch-Button-Keys">
           {key !== null && (
             <>
-              <DocSearchButtonKey reactsToKey={key === ACTION_KEY_DEFAULT ? ACTION_KEY_DEFAULT : 'Meta'}>
-                {key === ACTION_KEY_DEFAULT ? <ControlKeyIcon /> : key}
-              </DocSearchButtonKey>
+              <DocSearchButtonKey reactsToKey={actionKeyReactsTo}>{actionKeyChild}</DocSearchButtonKey>
               <DocSearchButtonKey reactsToKey="k">K</DocSearchButtonKey>
             </>
           )}
