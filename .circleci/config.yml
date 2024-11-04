@@ -124,7 +124,7 @@ jobs:
       - run: *restore_dist_folders
       - run:
           name: Unit tests
-          command: yarn run test --maxWorkers=4
+          command: yarn run test
   release:
     <<: *defaults
     steps:
