@@ -8,8 +8,7 @@ function isLocalStorageSupported(): boolean {
     localStorage.removeItem(key);
 
     return true;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (error) {
+  } catch {
     return false;
   }
 }
