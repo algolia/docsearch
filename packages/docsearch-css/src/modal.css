@@ -551,6 +551,18 @@ svg.DocSearch-Hit-Select-Icon {
   width: 20px;
 }
 
+/* Hide element accessibly, so that it is still accessible to
+assistive tech users */
+.DocSearch-VisuallyHiddenForAccessibility {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   :root {

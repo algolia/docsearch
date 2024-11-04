@@ -1,5 +1,10 @@
 [
   {
+    "name": "Astro",
+    "image": "img/logos/astro-icon-light-gradient.svg",
+    "href": "https://astro.build/"
+  },
+  {
     "name": "Bootstrap",
     "image": "img/logos/bootstrap.svg",
     "href": "https://getbootstrap.com/docs/5.2/getting-started/introduction/"
@@ -13,11 +18,6 @@
     "name": "Babel",
     "image": "img/logos/babel.jpg",
     "href": "https://babeljs.io/docs/en/"
-  },
-  {
-    "name": "GraphQL",
-    "image": "img/logos/graphql.jpg",
-    "href": "https://graphql.org/learn/"
   },
   {
     "name": "TypeScript",
@@ -45,11 +45,6 @@
     "href": "https://testing-library.com/"
   },
   {
-    "name": "Ant Design",
-    "image": "img/logos/ant-design.svg",
-    "href": "https://ant.design/docs/react/introduce"
-  },
-  {
     "name": "Homebrew",
     "image": "img/logos/homebrew.png",
     "href": "https://brew.sh/"
@@ -60,11 +55,6 @@
     "href": "https://v3.vuejs.org/"
   },
   {
-    "name": "Requests",
-    "image": "img/logos/requests.png",
-    "href": "https://requests.readthedocs.io/en/master/"
-  },
-  {
     "name": "Discord",
     "image": "img/logos/discord.svg",
     "href": "https://discord.com/developers/docs/intro"
@@ -72,17 +62,12 @@
   {
     "name": "React",
     "image": "img/logos/react.jpg",
-    "href": "https://reactjs.org/docs/getting-started.html"
-  },
-  {
-    "name": "jQuery",
-    "image": "img/logos/jquery.jpg",
-    "href": "https://api.jquery.com/"
+    "href": "https://react.dev/"
   },
   {
     "name": "BootstrapVue",
     "image": "img/logos/bootstrap-vue.svg",
-    "href": "https://bootstrap-vue.js.org/docs"
+    "href": "https://bootstrap-vue.org/docs"
   },
   {
     "name": "Moment.js",
@@ -120,11 +105,6 @@
     "href": "https://www.twilio.com/docs"
   },
   {
-    "name": "Vant",
-    "image": "img/logos/vant.png",
-    "href": "https://youzan.github.io/vant/#/en-US/"
-  },
-  {
     "name": "webpack",
     "image": "img/logos/webpack.svg",
     "href": "https://webpack.js.org/concepts/"
@@ -133,11 +113,6 @@
     "name": "Gatsby",
     "image": "img/logos/gatsby.png",
     "href": "https://www.gatsbyjs.org/docs/"
-  },
-  {
-    "name": "Calico",
-    "image": "img/logos/calico.png",
-    "href": "https://docs.calicocloud.io/"
   },
   {
     "name": "Jest",
@@ -168,11 +143,6 @@
     "name": "vue-router",
     "image": "img/logos/vue.svg",
     "href": "https://router.vuejs.org/"
-  },
-  {
-    "name": "Tachiyomi",
-    "image": "img/logos/tachiyomi.svg",
-    "href": "https://tachiyomi.org/help/"
   },
   {
     "name": "socket.io",
@@ -253,5 +223,20 @@
     "name": "Fylgja",
     "image": "img/logos/fylgja.svg",
     "href": "https://fylgja.dev/"
+  },
+  {
+    "name": "React-admin",
+    "image": "img/logos/react-admin.svg",
+    "href": "https://marmelab.com/react-admin/"
+  },
+  {
+    "name": "ScalarDB",
+    "image": "img/logos/scalar.svg",
+    "href": "https://scalardb.scalar-labs.com/docs/"
+  },
+  {
+    "name": "ScalarDL",
+    "image": "img/logos/scalar.svg",
+    "href": "https://scalardl.scalar-labs.com/docs/"
   }
 ]

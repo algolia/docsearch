@@ -1,3 +1,51 @@
+## <small>3.6.3 (2024-10-31)</small>
+
+* fix: upgrade algoliasearch to v5 (#2326) ([93578a4](https://github.com/algolia/docsearch/commit/93578a4)), closes [#2326](https://github.com/algolia/docsearch/issues/2326)
+* fix: use vite instead of parcel in the examples (#2329) ([d360855](https://github.com/algolia/docsearch/commit/d360855)), closes [#2329](https://github.com/algolia/docsearch/issues/2329)
+* docs(showcase): Fix logos for ScalarDB and ScalarDL in showcase (#2317) ([90f3c6a](https://github.com/algolia/docsearch/commit/90f3c6a)), closes [#2317](https://github.com/algolia/docsearch/issues/2317)
+
+
+
+## [3.6.2](https://github.com/algolia/docsearch/compare/v3.6.1...v3.6.2) (2024-09-27)
+
+
+### Bug Fixes
+
+* **email:** docsearch@algolia.com is being retired ([#2280](https://github.com/algolia/docsearch/issues/2280)) ([698c1cd](https://github.com/algolia/docsearch/commit/698c1cd8cd3848c10941dbdde01661311efd29f9))
+* **hits:** default to hierarchy lvl0 if highlights present ([#2309](https://github.com/algolia/docsearch/issues/2309)) ([5260d1e](https://github.com/algolia/docsearch/commit/5260d1e5c280468bb08a20918c7858e695d11cd8))
+
+
+
+## [3.6.1](https://github.com/algolia/docsearch/compare/v3.6.0...v3.6.1) (2024-07-16)
+
+
+### Bug Fixes
+
+* updating the templates page ([#2273](https://github.com/algolia/docsearch/issues/2273)) ([4aa0c2c](https://github.com/algolia/docsearch/commit/4aa0c2c67a5ba4d5d786c63cbce749d674b8ce44))
+* **apply form:** Update ApplyForm.js ([#2270](https://github.com/algolia/docsearch/issues/2270)) ([069a3de](https://github.com/algolia/docsearch/commit/069a3de0b5e94b1186315a90e5724a9a3d8b97b1))
+* **logos:** removed logos no longer using algolia ([#2261](https://github.com/algolia/docsearch/issues/2261)) ([8587f58](https://github.com/algolia/docsearch/commit/8587f58b0361699bb9ea26624052b201e69e5531))
+* **logos:** they will not be fixing the search ([#2269](https://github.com/algolia/docsearch/issues/2269)) ([cdfa993](https://github.com/algolia/docsearch/commit/cdfa993990ff8caa323719ff8205db38f2ba06fe))
+* **logos:** update URL and remove logos no longer using DocSearch ([#2260](https://github.com/algolia/docsearch/issues/2260)) ([1081660](https://github.com/algolia/docsearch/commit/108166016d91d8fcc26df15ca52c386d9334ab5d))
+
+
+
+# [3.6.0](https://github.com/algolia/docsearch/compare/v3.5.2...v3.6.0) (2024-03-06)
+
+
+### Bug Fixes
+
+* add accessible label to SearchBox input ([#2193](https://github.com/algolia/docsearch/issues/2193)) ([df60b8e](https://github.com/algolia/docsearch/commit/df60b8ebe89c80ce3d00b80d94e95b6fd86edd19))
+* **docs:** sidebar logo size ([#2125](https://github.com/algolia/docsearch/issues/2125)) ([572b117](https://github.com/algolia/docsearch/commit/572b117ce6ab3f131b18e345e7e8384685a2a8e0))
+* **website:** update discord link ([#2141](https://github.com/algolia/docsearch/issues/2141)) ([874e16a](https://github.com/algolia/docsearch/commit/874e16a5d42e8657e6ab2653e9638cd2282ba408))
+
+
+### Features
+
+* add additional scss output ([#2201](https://github.com/algolia/docsearch/issues/2201)) ([fe3ac9e](https://github.com/algolia/docsearch/commit/fe3ac9e782c2bc84e39b61e3749f067c59f56129))
+* add keypress effect to DocSearchButton ([#2087](https://github.com/algolia/docsearch/issues/2087)) ([4c82640](https://github.com/algolia/docsearch/commit/4c82640022154dd32cc9d3e28a7ae2fba786da8d))
+
+
+
 ## [3.5.2](https://github.com/algolia/docsearch/compare/v3.5.1...v3.5.2) (2023-08-11)
 
 

@@ -77,6 +77,15 @@ async function buildStyle() {
     ].join('\n'),
     () => true
   );
+
+  fs.writeFile(
+    'dist/style.scss',
+    [
+      getBundleBanner(pkg),
+      [variablesOutput.css, buttonOutput.css, modalOutput.css].join(''),
+    ].join('\n'),
+    () => true
+  );
 }
 
 buildStyle();

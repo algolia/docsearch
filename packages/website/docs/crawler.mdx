@@ -5,14 +5,14 @@ title: DocSearch x Algolia Crawler
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-If you're not finding the answer to your question on this website, this page will help you. If you're still unsure, don't hesitate to send [your question to us][1] directly.
+If you're not finding the answer to your question on this website, this page will help you. If you're still unsure, don't hesitate to connect with us on [Discord][1] or let our [support][3] team know.
 
 You can also read our [Crawler FAQ](https://www.algolia.com/doc/tools/crawler/troubleshooting/faq), to understand how it behaves:
 
 - [One of my pages was not crawled](https://www.algolia.com/doc/tools/crawler/troubleshooting/faq/#one-of-my-pages-was-not-crawled)
 - [Why are my pages skipped?](https://www.algolia.com/doc/tools/crawler/troubleshooting/faq/#when-are-pages-skipped-or-ignored)
 
-For questions related to the DocSearch program, please see our [DocSearch program FAQ](/docs/DocSearch-program).
+For questions related to the DocSearch program, please see our [DocSearch program FAQ](/docs/docsearch-program).
 
 ## How often will you crawl my website?
 
@@ -28,11 +28,11 @@ Ultimately, it is possible to set set the [`exclusionPatterns`](https://www.algo
 
 ## Are the [`docsearch-scraper`](https://github.com/algolia/docsearch-scraper) and [`docsearch-configs`](https://github.com/algolia/docsearch-configs) repository still maintained?
 
-We've deprecated our legacy infrastructure, but you can still use it to [run your own instance](/docs/legacy/run-your-own) and plug it to [DocSearch v3](/docs/DocSearch-v3)!
+We've deprecated our legacy infrastructure, but you can still use it to [run your own instance](/docs/legacy/run-your-own) and plug it to [DocSearch v3](/docs/docsearch-v3)!
 
 ## How to migrate
 
-> Every owners should have received a migration email from `docsearch@algolia.com` with the details. If you were not part of the previous `index` owners, or the maintainer has changed, you can request access via [our support page](https://www.algolia.com/support/).
+> Every owners should have received a migration email from Algolia with the details. If you were not part of the previous `index` owners, or the maintainer has changed, you can request access via [our support page](https://www.algolia.com/support/).
 
 All the steps are detailed in the email you've received, but in order to use the new infrastructure you need to:
 
@@ -98,10 +98,19 @@ We provide [config templates](/docs/templates) for many website generators, but 
 
 The Crawler only applies `index settings` at index creation index, to keep the Algolia dashboard as the source of truth. If you have drastically changed your config, or moved to a website generator, we recommend you to delete your index from the Algolia dashboard before starting a new crawl.
 
+## Can I delete my crawler?
+
+No. Well, you can but once you do things will not work correctly. We automatically create a default crawler that is associated with your DocSearch application and deleting it with the intention of creating a new one will not work as expected.
+
+## What if I delete my DocSearch Crawler?
+
+The fastest way will be to connect with us on our [Discord](https://alg.li/discord). Alternatively, email us at the address below and we will get to it as soon as we can.
+
 ## Links related to the migration
 
 - [Docusaurus blog post](https://docusaurus.io/blog/2021/11/21/algolia-docsearch-migration)
 - [Algolia Dev chat 11-23-2021](https://www.youtube.com/watch?v=htsjpojpKtc&t=2404s)
 
-[1]: mailto:docsearch@algolia.com
+[1]: https://alg.li/discord
 [2]: https://crawler.algolia.com/
+[3]: https://support.algolia.com/

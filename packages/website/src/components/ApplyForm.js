@@ -75,18 +75,21 @@ function ApplyForm() {
   if (state.status === 'succeed' && state.message) {
     return (
       <Card className="uil-m-auto uil-ta-center apply-form">
-        <Heading1 className="apply-text">Thank you!</Heading1>
-        <br />
-
         {state.message.startsWith('Your DocSearch') ? (
-          <Text
-            className="uil-pv-8 uil-d-block apply-text"
-            aria-label="Request has already been processed"
-          >
-            {state.message}
-          </Text>
+          <>
+            <Heading1 className="apply-text">URL Already Submitted!</Heading1>
+            <br />
+            <Text
+              className="uil-pv-8 uil-d-block apply-text"
+              aria-label="Request has already been processed"
+            >
+              {state.message}
+            </Text>
+          </>
         ) : (
           <>
+            <Heading1 className="apply-text">Thank You!</Heading1>
+            <br />
             <Text
               className="uil-pv-8 uil-d-block apply-text"
               aria-label="Request will be processed"
@@ -268,7 +271,7 @@ function ApplyForm() {
           <strong>
             Only apply if you don't have a DocSearch application yet. <br />
             For support requests, make sure to first{' '}
-            <InlineLink href="/docs/DocSearch-program#support">
+            <InlineLink href="/docs/docsearch-program#support">
               read our policy
             </InlineLink>
             .

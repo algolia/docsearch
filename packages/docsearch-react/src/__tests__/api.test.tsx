@@ -34,19 +34,7 @@ function noResultSearch(_queries: any, _requestOptions?: any): Promise<any> {
 }
 
 describe('api', () => {
-  let container: HTMLDivElement;
-
   const docSearchSelector = '.DocSearch';
-
-  beforeEach(() => {
-    container = document.createElement('div');
-    document.body.appendChild(container);
-  });
-
-  afterEach(() => {
-    document.body.removeChild(container);
-    container = null;
-  });
 
   it('renders with minimal parameters', () => {
     render(<DocSearch />);
@@ -68,10 +56,10 @@ describe('api', () => {
       );
       expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
       expect(
-        document.querySelector('.DocSearch-Button-Placeholder').innerHTML
+        document.querySelector('.DocSearch-Button-Placeholder')?.innerHTML
       ).toBe('Recherche');
       expect(
-        document.querySelector('.DocSearch-Button').getAttribute('aria-label')
+        document.querySelector('.DocSearch-Button')?.getAttribute('aria-label')
       ).toBe('Recherche');
     });
 
@@ -154,30 +142,36 @@ describe('api', () => {
                 resetButtonAriaLabel: 'Effacer',
                 cancelButtonText: 'Annuler',
                 cancelButtonAriaLabel: 'Annuler',
+                searchInputLabel: 'Recherche',
               },
             },
           }}
         />
       );
 
-      expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
-
       await act(async () => {
         fireEvent.click(await screen.findByText('Search'));
       });
 
-      expect(document.querySelector('.DocSearch-Cancel').innerHTML).toBe(
+      const searchInputLabel = document.querySelector(
+        '.DocSearch-MagnifierLabel'
+      );
+
+      expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
+
+      expect(document.querySelector('.DocSearch-Cancel')?.innerHTML).toBe(
         'Annuler'
       );
       expect(
-        document.querySelector('.DocSearch-Cancel').getAttribute('aria-label')
+        document.querySelector('.DocSearch-Cancel')?.getAttribute('aria-label')
       ).toBe('Annuler');
       expect(
-        document.querySelector('.DocSearch-Reset').getAttribute('title')
+        document.querySelector('.DocSearch-Reset')?.getAttribute('title')
       ).toBe('Effacer');
       expect(
-        document.querySelector('.DocSearch-Reset').getAttribute('aria-label')
+        document.querySelector('.DocSearch-Reset')?.getAttribute('aria-label')
       ).toBe('Effacer');
+      expect(searchInputLabel?.textContent).toBe('Recherche');
     });
 
     it('overrides the default DocSearchModal footer text', async () => {
@@ -292,7 +286,7 @@ describe('api', () => {
       expect(screen.getByText(/No results for/)).toBeInTheDocument();
       const link = document.querySelector('.DocSearch-Help a');
       expect(link).toBeInTheDocument();
-      expect(link.getAttribute('href')).toBe(
+      expect(link?.getAttribute('href')).toBe(
         'https://github.com/algolia/docsearch/issues/new?title=q'
       );
     });

@@ -1,5 +1,5 @@
 {
-  "version-legacy/docs": [
+  "docs": [
     {
       "collapsed": true,
       "type": "category",
@@ -7,15 +7,15 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-legacy/dropdown"
+          "id": "dropdown"
         },
         {
           "type": "doc",
-          "id": "version-legacy/styling"
+          "id": "styling"
         },
         {
           "type": "doc",
-          "id": "version-legacy/behavior"
+          "id": "behavior"
         }
       ]
     },
@@ -26,19 +26,19 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-legacy/required-configuration"
+          "id": "required-configuration"
         },
         {
           "type": "doc",
-          "id": "version-legacy/tips"
+          "id": "tips"
         },
         {
           "type": "doc",
-          "id": "version-legacy/faq"
+          "id": "faq"
         },
         {
           "type": "doc",
-          "id": "version-legacy/integrations"
+          "id": "integrations"
         }
       ]
     },
@@ -49,19 +49,19 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-legacy/inside-the-engine"
+          "id": "inside-the-engine"
         },
         {
           "type": "doc",
-          "id": "version-legacy/config-file"
+          "id": "config-file"
         },
         {
           "type": "doc",
-          "id": "version-legacy/how-do-we-build-an-index"
+          "id": "how-do-we-build-an-index"
         },
         {
           "type": "doc",
-          "id": "version-legacy/run-your-own"
+          "id": "run-your-own"
         }
       ]
     }

@@ -2,7 +2,7 @@
 title: Migrating from DocSearch v2
 ---
 
-This page lists the differences between the [DocSearch v2](/docs/legacy/dropdown) and [DocSearch v3](/docs/DocSearch-v3) API, you can also take a look at [the exhaustive `API reference` list](/docs/api) and [the `Getting started` guide](/docs/DocSearch-v3).
+This page lists the differences between the [DocSearch v2](/docs/legacy/dropdown) and [DocSearch v3](/docs/docsearch-v3) API, you can also take a look at [the exhaustive `API reference` list](/docs/api) and [the `Getting started` guide](/docs/docsearch-v3).
 
 ```diff
 docsearch({
