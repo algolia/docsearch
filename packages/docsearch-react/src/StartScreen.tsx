@@ -14,15 +14,12 @@ export type StartScreenTranslations = Partial<{
   removeFavoriteSearchButtonTitle: string;
 }>;
 
-type StartScreenProps = Omit<
-  ScreenStateProps<InternalDocSearchHit>,
-  'translations'
-> & {
+type StartScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
   hasCollections: boolean;
   translations?: StartScreenTranslations;
 };
 
-export function StartScreen({ translations = {}, ...props }: StartScreenProps) {
+export function StartScreen({ translations = {}, ...props }: StartScreenProps): JSX.Element | null {
   const {
     recentSearchesTitle = 'Recent',
     noRecentSearchesText = 'No recent searches',
@@ -58,11 +55,7 @@ export function StartScreen({ translations = {}, ...props }: StartScreenProps) {
             <RecentIcon />
           </div>
         )}
-        renderAction={({
-          item,
-          runFavoriteTransition,
-          runDeleteTransition,
-        }) => (
+        renderAction={({ item, runFavoriteTransition, runDeleteTransition }) => (
           <>
             <div className="DocSearch-Hit-action">
               <button

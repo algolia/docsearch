@@ -1,12 +1,4 @@
-type ContentType =
-  | 'content'
-  | 'lvl0'
-  | 'lvl1'
-  | 'lvl2'
-  | 'lvl3'
-  | 'lvl4'
-  | 'lvl5'
-  | 'lvl6';
+type ContentType = 'content' | 'lvl0' | 'lvl1' | 'lvl2' | 'lvl3' | 'lvl4' | 'lvl5' | 'lvl6';
 
 interface DocSearchHitAttributeHighlightResult {
   value: string;

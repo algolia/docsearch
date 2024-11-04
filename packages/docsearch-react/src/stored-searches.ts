@@ -1,6 +1,6 @@
 import type { DocSearchHit, StoredDocSearchHit } from './types';
 
-function isLocalStorageSupported() {
+function isLocalStorageSupported(): boolean {
   const key = '__TEST_KEY__';
 
   try {
@@ -8,23 +8,25 @@ function isLocalStorageSupported() {
     localStorage.removeItem(key);
 
     return true;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return false;
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function createStorage<TItem>(key: string) {
   if (isLocalStorageSupported() === false) {
     return {
-      setItem() {},
-      getItem() {
+      setItem(): void {},
+      getItem(): TItem[] {
         return [];
       },
     };
   }
 
   return {
-    setItem(item: TItem[]) {
+    setItem(item: TItem[]): void {
       return window.localStorage.setItem(key, JSON.stringify(item));
     },
     getItem(): TItem[] {
@@ -54,13 +56,10 @@ export function createStoredSearches<TItem extends StoredDocSearchHit>({
   let items = storage.getItem().slice(0, limit);
 
   return {
-    add(item: TItem) {
-      const { _highlightResult, _snippetResult, ...hit } =
-        item as unknown as DocSearchHit;
+    add(item: TItem): void {
+      const { _highlightResult, _snippetResult, ...hit } = item as unknown as DocSearchHit;
 
-      const isQueryAlreadySaved = items.findIndex(
-        (x) => x.objectID === hit.objectID
-      );
+      const isQueryAlreadySaved = items.findIndex((x) => x.objectID === hit.objectID);
 
       if (isQueryAlreadySaved > -1) {
         items.splice(isQueryAlreadySaved, 1);
@@ -71,12 +70,12 @@ export function createStoredSearches<TItem extends StoredDocSearchHit>({
 
       storage.setItem(items);
     },
-    remove(item: TItem) {
+    remove(item: TItem): void {
       items = items.filter((x) => x.objectID !== item.objectID);
 
       storage.setItem(items);
     },
-    getAll() {
+    getAll(): TItem[] {
       return items;
     },
   };

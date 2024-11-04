@@ -11,25 +11,18 @@ export type NoResultsScreenTranslations = Partial<{
   reportMissingResultsLinkText: string;
 }>;
 
-type NoResultsScreenProps = Omit<
-  ScreenStateProps<InternalDocSearchHit>,
-  'translations'
-> & {
+type NoResultsScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
   translations?: NoResultsScreenTranslations;
 };
 
-export function NoResultsScreen({
-  translations = {},
-  ...props
-}: NoResultsScreenProps) {
+export function NoResultsScreen({ translations = {}, ...props }: NoResultsScreenProps): JSX.Element {
   const {
     noResultsText = 'No results for',
     suggestedQueryText = 'Try searching for',
     reportMissingResultsText = 'Believe this query should return results?',
     reportMissingResultsLinkText = 'Let us know.',
   } = translations;
-  const searchSuggestions: string[] | undefined = props.state.context
-    .searchSuggestions as string[];
+  const searchSuggestions: string[] | undefined = props.state.context.searchSuggestions as string[];
 
   return (
     <div className="DocSearch-NoResults">
@@ -62,7 +55,7 @@ export function NoResultsScreen({
                   </button>
                 </li>,
               ],
-              []
+              [],
             )}
           </ul>
         </div>
@@ -71,11 +64,7 @@ export function NoResultsScreen({
       {props.getMissingResultsUrl && (
         <p className="DocSearch-Help">
           {`${reportMissingResultsText} `}
-          <a
-            href={props.getMissingResultsUrl({ query: props.state.query })}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href={props.getMissingResultsUrl({ query: props.state.query })} target="_blank" rel="noopener noreferrer">
             {reportMissingResultsLinkText}
           </a>
         </p>

@@ -124,28 +124,20 @@ describe('Recent and Favorites', () => {
   });
 
   it('Recent search can be deleted', () => {
-    cy.get('#docsearch-item-0')
-      .find('[title="Remove this search from history"]')
-      .trigger('click');
+    cy.get('#docsearch-item-0').find('[title="Remove this search from history"]').trigger('click');
     cy.contains('No recent searches').should('be.visible');
   });
 
   it('Recent search can be favorited', () => {
-    cy.get('#docsearch-item-0')
-      .find('[title="Save this search"]')
-      .trigger('click');
+    cy.get('#docsearch-item-0').find('[title="Save this search"]').trigger('click');
     cy.contains('Favorite').should('be.visible');
     cy.get('#docsearch-item-0').should('be.visible');
   });
 
   it('Favorite can be deleted', () => {
-    cy.get('#docsearch-item-0')
-      .find('[title="Save this search"]')
-      .trigger('click');
+    cy.get('#docsearch-item-0').find('[title="Save this search"]').trigger('click');
     cy.contains('Favorite').should('be.visible');
-    cy.get('#docsearch-item-0')
-      .find('[title="Remove this search from favorites"]')
-      .trigger('click');
+    cy.get('#docsearch-item-0').find('[title="Remove this search from favorites"]').trigger('click');
     cy.contains('No recent searches').should('be.visible');
   });
 });

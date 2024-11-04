@@ -1,12 +1,4 @@
-import {
-  Button,
-  Card,
-  Heading1,
-  InlineLink,
-  Input,
-  LabelText,
-  Text,
-} from '@algolia/ui-library';
+import { Button, Card, Heading1, InlineLink, Input, LabelText, Text } from '@algolia/ui-library';
 import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
 import React, { useState } from 'react';
 
@@ -68,7 +60,7 @@ function ApplyForm() {
         setState({
           status: 'failed',
           message: 'Unable to submit your request.',
-        })
+        }),
       );
   };
 
@@ -79,10 +71,7 @@ function ApplyForm() {
           <>
             <Heading1 className="apply-text">URL Already Submitted!</Heading1>
             <br />
-            <Text
-              className="uil-pv-8 uil-d-block apply-text"
-              aria-label="Request has already been processed"
-            >
+            <Text className="uil-pv-8 uil-d-block apply-text" aria-label="Request has already been processed">
               {state.message}
             </Text>
           </>
@@ -90,13 +79,9 @@ function ApplyForm() {
           <>
             <Heading1 className="apply-text">Thank You!</Heading1>
             <br />
-            <Text
-              className="uil-pv-8 uil-d-block apply-text"
-              aria-label="Request will be processed"
-            >
-              {state.message} We'll get back to you at <strong>{email}</strong>{' '}
-              with the snippet you'll need to integrate into{' '}
-              <InlineLink href={url}>{url}</InlineLink>.
+            <Text className="uil-pv-8 uil-d-block apply-text" aria-label="Request will be processed">
+              {state.message} We'll get back to you at <strong>{email}</strong> with the snippet you'll need to
+              integrate into <InlineLink href={url}>{url}</InlineLink>.
             </Text>
 
             <Text aria-label="recommendations" className="apply-text">
@@ -137,12 +122,7 @@ function ApplyForm() {
           We'll scrape pages at this address and index the content on Algolia.
         </Text>
 
-        <LabelText
-          tag="label"
-          htmlFor="email"
-          key="email"
-          className="apply-text"
-        >
+        <LabelText tag="label" htmlFor="email" key="email" className="apply-text">
           Email
           <Input
             required={true}
@@ -157,16 +137,11 @@ function ApplyForm() {
         </LabelText>
 
         <Text small={true} className="uil-pv-8 uil-d-block apply-text">
-          We'll send you the snippet you'll have to integrate into your website
-          and grant access to your Algolia application.
+          We'll send you the snippet you'll have to integrate into your website and grant access to your Algolia
+          application.
         </Text>
 
-        <LabelText
-          tag="label"
-          htmlFor="repoURL"
-          key="repoURL"
-          className="apply-text"
-        >
+        <LabelText tag="label" htmlFor="repoURL" key="repoURL" className="apply-text">
           Repository URL (Optional)
           <Input
             required={false}
@@ -181,12 +156,7 @@ function ApplyForm() {
         </LabelText>
 
         <div className="uil-ph-32 uil-d-flex uil-fxd-column">
-          <LabelText
-            className="uil-pt-12 apply-text"
-            tag="label"
-            htmlFor="public"
-            key="public"
-          >
+          <LabelText className="uil-pt-12 apply-text" tag="label" htmlFor="public" key="public">
             <input
               required={true}
               id="public"
@@ -195,16 +165,10 @@ function ApplyForm() {
               type="checkbox"
               className="uil-mr-8"
             />
-            My website is a publicly available developer documentation or a
-            technical blog.
+            My website is a publicly available developer documentation or a technical blog.
           </LabelText>
 
-          <LabelText
-            className="uil-pt-12 apply-text"
-            tag="label"
-            htmlFor="owner"
-            key="owner"
-          >
+          <LabelText className="uil-pt-12 apply-text" tag="label" htmlFor="owner" key="owner">
             <input
               required={true}
               id="owner"
@@ -215,20 +179,12 @@ function ApplyForm() {
               type="checkbox"
               className="uil-mr-8"
             />
-            I am the owner of the website, or otherwise have obtained and
-            continue to maintain any required consents necessary to use
-            DocSearch on the requested domain. And I have{' '}
-            <InlineLink href={withBaseUrl('docs/who-can-apply')}>
-              read the checklist.
-            </InlineLink>
+            I am the owner of the website, or otherwise have obtained and continue to maintain any required consents
+            necessary to use DocSearch on the requested domain. And I have{' '}
+            <InlineLink href={withBaseUrl('docs/who-can-apply')}>read the checklist.</InlineLink>
           </LabelText>
 
-          <LabelText
-            className="uil-pt-12 apply-text"
-            tag="label"
-            htmlFor="opensource"
-            key="opensource"
-          >
+          <LabelText className="uil-pt-12 apply-text" tag="label" htmlFor="opensource" key="opensource">
             <input
               required={true}
               id="opensource"
@@ -238,10 +194,7 @@ function ApplyForm() {
               className="uil-mr-8"
             />
             I understand that this is a Free Service as described in Algolia's{' '}
-            <InlineLink href="https://www.algolia.com/policies/terms/">
-              Terms of Service
-            </InlineLink>{' '}
-            and Algolia's{' '}
+            <InlineLink href="https://www.algolia.com/policies/terms/">Terms of Service</InlineLink> and Algolia's{' '}
             <InlineLink href="https://www.algolia.com/policies/free-services-terms/">
               Special Free Services Terms
             </InlineLink>
@@ -262,8 +215,7 @@ function ApplyForm() {
 
         <Text small={true} className="uil-ta-center">
           <InlineLink href="https://www.algolia.com/policies/privacy/">
-            Refer to Algolia's Privacy Policy for more information on how we use
-            and protect your data
+            Refer to Algolia's Privacy Policy for more information on how we use and protect your data
           </InlineLink>
         </Text>
 
@@ -271,10 +223,7 @@ function ApplyForm() {
           <strong>
             Only apply if you don't have a DocSearch application yet. <br />
             For support requests, make sure to first{' '}
-            <InlineLink href="/docs/docsearch-program#support">
-              read our policy
-            </InlineLink>
-            .
+            <InlineLink href="/docs/docsearch-program#support">read our policy</InlineLink>.
           </strong>{' '}
         </Text>
       </form>

@@ -13,12 +13,8 @@ const pkg = require('./package.json');
 const readFile = util.promisify(fs.readFile);
 
 function getBundleBanner(_pkg) {
-  const lastCommitHash = execSync('git rev-parse --short HEAD')
-    .toString()
-    .trim();
-  const version = process.env.SHIPJS
-    ? _pkg.version
-    : `${_pkg.version} (UNRELEASED ${lastCommitHash})`;
+  const lastCommitHash = execSync('git rev-parse --short HEAD').toString().trim();
+  const version = process.env.SHIPJS ? _pkg.version : `${_pkg.version} (UNRELEASED ${lastCommitHash})`;
   const authors = '© Algolia, Inc. and contributors';
 
   return `/*! ${_pkg.name} ${version} | MIT License | ${authors} | ${_pkg.homepage} */`;
@@ -71,20 +67,14 @@ async function buildStyle() {
 
   fs.writeFile(
     'dist/style.css',
-    [
-      getBundleBanner(pkg),
-      [variablesOutput.css, buttonOutput.css, modalOutput.css].join(''),
-    ].join('\n'),
-    () => true
+    [getBundleBanner(pkg), [variablesOutput.css, buttonOutput.css, modalOutput.css].join('')].join('\n'),
+    () => true,
   );
 
   fs.writeFile(
     'dist/style.scss',
-    [
-      getBundleBanner(pkg),
-      [variablesOutput.css, buttonOutput.css, modalOutput.css].join(''),
-    ].join('\n'),
-    () => true
+    [getBundleBanner(pkg), [variablesOutput.css, buttonOutput.css, modalOutput.css].join('')].join('\n'),
+    () => true,
   );
 }
 

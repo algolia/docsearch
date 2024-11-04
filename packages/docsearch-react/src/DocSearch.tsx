@@ -1,7 +1,4 @@
-import type {
-  AutocompleteState,
-  AutocompleteOptions,
-} from '@algolia/autocomplete-core';
+import type { AutocompleteState, AutocompleteOptions } from '@algolia/autocomplete-core';
 import type { SearchClient } from 'algoliasearch';
 import type { SearchQuery, LiteClient } from 'algoliasearch/lite';
 import React from 'react';
@@ -9,11 +6,7 @@ import { createPortal } from 'react-dom';
 
 import { DocSearchButton } from './DocSearchButton';
 import { DocSearchModal } from './DocSearchModal';
-import type {
-  DocSearchHit,
-  InternalDocSearchHit,
-  StoredDocSearchHit,
-} from './types';
+import type { DocSearchHit, InternalDocSearchHit, StoredDocSearchHit } from './types';
 import { useDocSearchKeyboardEvents } from './useDocSearchKeyboardEvents';
 
 import type { ButtonTranslations, ModalTranslations } from '.';
@@ -31,16 +24,9 @@ export interface DocSearchProps {
   searchParameters?: SearchQuery;
   maxResultsPerGroup?: number;
   transformItems?: (items: DocSearchHit[]) => DocSearchHit[];
-  hitComponent?: (props: {
-    hit: InternalDocSearchHit | StoredDocSearchHit;
-    children: React.ReactNode;
-  }) => JSX.Element;
-  resultsFooterComponent?: (props: {
-    state: AutocompleteState<InternalDocSearchHit>;
-  }) => JSX.Element | null;
-  transformSearchClient?: <T extends LiteClient | SearchClient>(
-    searchClient: T
-  ) => T;
+  hitComponent?: (props: { hit: InternalDocSearchHit | StoredDocSearchHit; children: React.ReactNode }) => JSX.Element;
+  resultsFooterComponent?: (props: { state: AutocompleteState<InternalDocSearchHit> }) => JSX.Element | null;
+  transformSearchClient?: <T extends LiteClient | SearchClient>(searchClient: T) => T;
   disableUserPersonalization?: boolean;
   initialQuery?: string;
   navigator?: AutocompleteOptions<InternalDocSearchHit>['navigator'];
@@ -49,12 +35,10 @@ export interface DocSearchProps {
   insights?: AutocompleteOptions<InternalDocSearchHit>['insights'];
 }
 
-export function DocSearch(props: DocSearchProps) {
+export function DocSearch(props: DocSearchProps): JSX.Element {
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
   const [isOpen, setIsOpen] = React.useState(false);
-  const [initialQuery, setInitialQuery] = React.useState<string | undefined>(
-    props?.initialQuery || undefined
-  );
+  const [initialQuery, setInitialQuery] = React.useState<string | undefined>(props?.initialQuery || undefined);
 
   const onOpen = React.useCallback(() => {
     setIsOpen(true);
@@ -70,7 +54,7 @@ export function DocSearch(props: DocSearchProps) {
       setIsOpen(true);
       setInitialQuery(event.key);
     },
-    [setIsOpen, setInitialQuery]
+    [setIsOpen, setInitialQuery],
   );
 
   useDocSearchKeyboardEvents({
@@ -83,11 +67,7 @@ export function DocSearch(props: DocSearchProps) {
 
   return (
     <>
-      <DocSearchButton
-        ref={searchButtonRef}
-        translations={props?.translations?.button}
-        onClick={onOpen}
-      />
+      <DocSearchButton ref={searchButtonRef} translations={props?.translations?.button} onClick={onOpen} />
 
       {isOpen &&
         createPortal(
@@ -98,7 +78,7 @@ export function DocSearch(props: DocSearchProps) {
             translations={props?.translations?.modal}
             onClose={onClose}
           />,
-          document.body
+          document.body,
         )}
     </>
   );

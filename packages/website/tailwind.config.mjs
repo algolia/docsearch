@@ -1,5 +1,5 @@
-module.exports = {
-  purge: ['./src/**/*.html', './src/**/*.js', './src/**/*.tsx'],
+export default {
+  content: ['./src/**/*.html', './src/**/*.js', './src/**/*.tsx'],
   corePlugins: { preflight: false, container: false },
   important: '#tailwind',
   theme: {

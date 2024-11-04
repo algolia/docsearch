@@ -31,5 +31,8 @@
   "dependencies": {
     "@docsearch/react": "3.6.3",
     "preact": "^10.0.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-replace": "^6.0.1"
   }
 }
