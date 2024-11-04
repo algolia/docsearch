@@ -114,7 +114,7 @@ describe('Recent and Favorites', () => {
     cy.visit(Cypress.config().baseUrl!);
     cy.openModal();
     cy.typeQueryMatching();
-    cy.get('#docsearch-item-0 > a').click({ force: true }).wait(3000);
+    cy.get('#docsearch-item-0 > a').click({ force: true }).wait(1000);
     cy.openModal();
     cy.contains('Recent').should('be.visible');
   });
