@@ -59,7 +59,7 @@
     "bundlesize2": "0.0.31",
     "cssnano": "4.1.10",
     "cypress": "13.15.1",
-    "eslint": "8.55.0",
+    "eslint": "9.14.0",
     "eslint-config-algolia": "20.0.0",
     "eslint-config-prettier": "8.10.0",
     "eslint-plugin-cypress": "4.1.0",
