@@ -14,7 +14,7 @@
     "cy:run:chrome": "yarn run cy:run --browser chrome",
     "cy:run:edge": "yarn run cy:run --browser edge",
     "cy:run:firefox": "yarn run cy:run --browser firefox",
-    "cy:run": "start-server-and-test 'yarn website:test' http://localhost:3000 'cypress run --spec 'cypress/e2e/**/*' --headless'",
+    "cy:run": "start-server-and-test 'yarn website:test' http://localhost:3000 'cypress run --headless'",
     "cy:verify": "cypress verify",
     "lint:css": "stylelint **/src/**/*.css",
     "lint": "eslint --ext .js,.ts,.tsx .",
