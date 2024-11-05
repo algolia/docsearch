@@ -4,7 +4,10 @@
   "version": "3.7.0",
   "license": "MIT",
   "homepage": "https://docsearch.algolia.com",
-  "repository": "algolia/docsearch",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/algolia/docsearch.git"
+  },
   "author": {
     "name": "Algolia, Inc.",
     "url": "https://www.algolia.com"
