@@ -31,14 +31,11 @@ export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButt
       }
     }, []);
 
-    const { actionKeyReactsTo, actionKeyAltText, actionKeyChild } =
+    const [actionKeyReactsTo, actionKeyAltText, actionKeyChild] =
       key === ACTION_KEY_DEFAULT
-        ? ({
-            actionKeyReactsTo: ACTION_KEY_DEFAULT,
-            actionKeyAltText: 'Ctrl',
-            actionKeyChild: <ControlKeyIcon />,
-          } as const)
-        : ({ actionKeyReactsTo: 'Meta', actionKeyAltText: 'Command', actionKeyChild: key } as const);
+        ? // eslint-disable-next-line react/jsx-key -- false flag
+          ([ACTION_KEY_DEFAULT, 'Ctrl', <ControlKeyIcon />] as const)
+        : (['Meta', 'Command', key] as const);
 
     return (
       <button
