@@ -11,7 +11,7 @@ export default {
     packagesToPublish: packages,
   },
   publishCommand({ tag }) {
-    return `yarn publish --access public --tag ${tag}`;
+    return `npm publish --tag ${tag}`;
   },
   versionUpdated({ exec, dir, version }) {
     // Update package dependencies
