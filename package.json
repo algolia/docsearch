@@ -68,7 +68,7 @@
     "prettier": "3.3.3",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "rollup": "4.24.4",
+    "rollup": "4.25.0",
     "rollup-plugin-dts": "6.1.1",
     "rollup-plugin-filesize": "10.0.0",
     "shipjs": "0.26.4",
