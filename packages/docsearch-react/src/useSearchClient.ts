@@ -1,14 +1,14 @@
 import { liteClient } from 'algoliasearch/lite';
-import type { LiteClient } from 'algoliasearch/lite';
 import React from 'react';
 
+import type { DocSearchTransformClient } from './DocSearch';
 import { version } from './version';
 
 export function useSearchClient(
   appId: string,
   apiKey: string,
-  transformSearchClient: (searchClient: LiteClient) => LiteClient,
-): LiteClient {
+  transformSearchClient: (searchClient: DocSearchTransformClient) => DocSearchTransformClient,
+): DocSearchTransformClient {
   const searchClient = React.useMemo(() => {
     const client = liteClient(appId, apiKey);
     client.addAlgoliaAgent('docsearch', version);

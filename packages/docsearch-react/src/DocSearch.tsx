@@ -1,6 +1,5 @@
 import type { AutocompleteState, AutocompleteOptions } from '@algolia/autocomplete-core';
-import type { SearchClient } from 'algoliasearch';
-import type { SearchQuery, LiteClient } from 'algoliasearch/lite';
+import type { LiteClient, SearchForHits } from 'algoliasearch/lite';
 import React from 'react';
 import { createPortal } from 'react-dom';
 
@@ -16,17 +15,24 @@ export type DocSearchTranslations = Partial<{
   modal: ModalTranslations;
 }>;
 
+// The interface that describes the minimal implementation required for the algoliasearch client, when using the [`transformSearchClient`](https://docsearch.algolia.com/docs/api/#transformsearchclient) option.
+export type DocSearchTransformClient = {
+  search: LiteClient['search'];
+  addAlgoliaAgent: LiteClient['addAlgoliaAgent'];
+  transporter: Pick<LiteClient['transporter'], 'algoliaAgent'>;
+};
+
 export interface DocSearchProps {
   appId: string;
   apiKey: string;
   indexName: string;
   placeholder?: string;
-  searchParameters?: SearchQuery;
+  searchParameters?: SearchForHits;
   maxResultsPerGroup?: number;
   transformItems?: (items: DocSearchHit[]) => DocSearchHit[];
   hitComponent?: (props: { hit: InternalDocSearchHit | StoredDocSearchHit; children: React.ReactNode }) => JSX.Element;
   resultsFooterComponent?: (props: { state: AutocompleteState<InternalDocSearchHit> }) => JSX.Element | null;
-  transformSearchClient?: <T extends LiteClient | SearchClient>(searchClient: T) => T;
+  transformSearchClient?: (searchClient: DocSearchTransformClient) => DocSearchTransformClient;
   disableUserPersonalization?: boolean;
   initialQuery?: string;
   navigator?: AutocompleteOptions<InternalDocSearchHit>['navigator'];
