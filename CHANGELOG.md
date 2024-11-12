@@ -1,5 +1,7 @@
 # [3.8.0](https://github.com/algolia/docsearch/compare/v3.7.0...v3.8.0) (2024-11-12)
 
+This version introduces a new type [DocSearchTransformClient](https://github.com/algolia/docsearch/blob/main/packages/docsearch-react/src/DocSearch.tsx#L19) to allow the `transformSearchClient` to use either the lite client, or the full algoliasearch client.
+Users are encouraged to use the [lite client](https://www.algolia.com/doc/libraries/javascript/v5/methods/search/) (`import { liteClient } from 'algoliasearch/lite`) to reduce bundle size.
 
 ### Bug Fixes
 
