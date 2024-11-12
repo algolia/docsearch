@@ -1,3 +1,17 @@
+# [3.8.0](https://github.com/algolia/docsearch/compare/v3.7.0...v3.8.0) (2024-11-12)
+
+
+### Bug Fixes
+
+* **types:** use a minimal type for transformSearchClient ([#2348](https://github.com/algolia/docsearch/issues/2348)) ([08d9a37](https://github.com/algolia/docsearch/commit/08d9a37807a136da99ca2dd39f4cbc86ade9c5bf))
+
+
+### Features
+
+* **a11y:** add hotkeys to search input aria-label ([#2337](https://github.com/algolia/docsearch/issues/2337)) ([44aa7dc](https://github.com/algolia/docsearch/commit/44aa7dcf3831b533d9546c95a916d6acdee9d6d8))
+
+
+
 # [3.7.0](https://github.com/algolia/docsearch/compare/v3.6.3...v3.7.0) (2024-11-04)
 
 
