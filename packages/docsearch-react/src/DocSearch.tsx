@@ -15,6 +15,7 @@ export type DocSearchTranslations = Partial<{
   modal: ModalTranslations;
 }>;
 
+// The interface that describes the minimal implementation required for the algoliasearch client, when using the [`transformSearchClient`](https://docsearch.algolia.com/docs/api/#transformsearchclient) option.
 export type DocSearchTransformClient = {
   search: LiteClient['search'];
   addAlgoliaAgent: LiteClient['addAlgoliaAgent'];
