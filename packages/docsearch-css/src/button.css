@@ -57,8 +57,8 @@
   justify-content: center;
   margin-right: 0.4em;
   position: relative;
-  padding: 0px 0px 2px 0px;
-  border: 0px;
+  padding: 0 0 2px;
+  border: 0;
   top: -1px;
   width: 20px;
 }
@@ -68,7 +68,7 @@
   box-shadow: var(--docsearch-key-pressed-shadow);
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .DocSearch-Button-Keys,
   .DocSearch-Button-Placeholder {
     display: none;

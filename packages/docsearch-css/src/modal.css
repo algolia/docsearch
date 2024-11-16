@@ -545,9 +545,9 @@ svg.DocSearch-Hit-Select-Icon {
   height: 18px;
   justify-content: center;
   margin-right: 0.4em;
-  padding: 0px 0px 1px 0px;
+  padding: 0 0 1px;
   color: var(--docsearch-muted-color);
-  border: 0px;
+  border: 0;
   width: 20px;
 }
 
@@ -564,7 +564,7 @@ assistive tech users */
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   :root {
     --docsearch-spacing: 10px;
     --docsearch-footer-height: 40px;
@@ -643,6 +643,7 @@ assistive tech users */
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
