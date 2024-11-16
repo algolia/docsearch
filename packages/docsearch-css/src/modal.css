@@ -383,14 +383,14 @@ svg.DocSearch-Hit-Select-Icon {
 @media screen and (prefers-reduced-motion: reduce) {
   .DocSearch-Hit-action-button:hover,
   .DocSearch-Hit-action-button:focus {
-    background: rgb(0 0 0 / 20%);
+    background: rgba(0, 0, 0, 0.2);
     transition: none;
   }
 }
 
 .DocSearch-Hit-action-button:hover,
 .DocSearch-Hit-action-button:focus {
-  background: rgb(0 0 0 / 20%);
+  background: rgba(0, 0, 0, 0.2);
   transition: background-color 0.1s ease-in;
 }
 
@@ -443,7 +443,7 @@ svg.DocSearch-Hit-Select-Icon {
 @media screen and (prefers-reduced-motion: reduce) {
   .DocSearch-Hit-action-button:hover,
   .DocSearch-Hit-action-button:focus {
-    background: rgb(0 0 0 / 20%);
+    background: rgba(0, 0, 0, 0.2);
     transition: none;
   }
 }

@@ -94,20 +94,16 @@ html[data-theme='dark'] .text-description {
 /* apply */
 #hero-apply {
   z-index: -1;
-  background-image: linear-gradient(
-    var(--ifm-footer-background-color),
-    var(--ifm-navbar-background-color)
-  );
+  background-image: linear-gradient(var(--ifm-footer-background-color),
+      var(--ifm-navbar-background-color));
 }
 
 html[data-theme='dark'] #hero-apply {
-  background-image: linear-gradient(
-    var(--ifm-navbar-background-color),
-    var(--ifm-background-color)
-  );
+  background-image: linear-gradient(var(--ifm-navbar-background-color),
+      var(--ifm-background-color));
 }
 
-html[data-theme='dark'] #hero-apply > div:first-child {
+html[data-theme='dark'] #hero-apply>div:first-child {
   opacity: 0.4;
 }
 
@@ -117,11 +113,9 @@ html[data-theme='dark'] #hero-apply > div:first-child {
 }
 
 html[data-theme='dark'] .apply-form {
-  background-image: radial-gradient(
-    circle at 50% 0,
-    rgb(72, 76, 122),
-    rgb(35, 38, 59)
-  );
+  background-image: radial-gradient(circle at 50% 0,
+      rgb(72, 76, 122),
+      rgb(35, 38, 59));
 }
 
 .apply-text {
@@ -134,20 +128,16 @@ html[data-theme='dark'] .apply-text {
 
 /* index */
 #hero {
-  background-image: linear-gradient(
-    var(--ifm-footer-background-color),
-    var(--ifm-navbar-background-color)
-  );
+  background-image: linear-gradient(var(--ifm-footer-background-color),
+      var(--ifm-navbar-background-color));
 }
 
 html[data-theme='dark'] #hero {
-  background-image: linear-gradient(
-    var(--ifm-navbar-background-color),
-    var(--ifm-background-color)
-  );
+  background-image: linear-gradient(var(--ifm-navbar-background-color),
+      var(--ifm-background-color));
 }
 
-html[data-theme='dark'] #hero > div:first-child {
+html[data-theme='dark'] #hero>div:first-child {
   opacity: 0.4;
 }
 
