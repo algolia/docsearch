@@ -22,7 +22,7 @@
     "@docusaurus/preset-classic": "3.6.1",
     "@mdx-js/react": "^3.1.0",
     "file-loader": "6.2.0",
-    "postcss": "8.4.48",
+    "postcss": "8.4.49",
     "postcss-import": "16.1.0",
     "postcss-preset-env": "10.0.9",
     "prism-react-renderer": "2.4.0",
