@@ -37,11 +37,14 @@ export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButt
           ([ACTION_KEY_DEFAULT, 'Ctrl', <ControlKeyIcon />] as const)
         : (['Meta', 'Command', key] as const);
 
+    const shortcut = `${actionKeyAltText}+K`
+
     return (
       <button
         type="button"
         className="DocSearch DocSearch-Button"
-        aria-label={`${buttonAriaLabel} (${actionKeyAltText}+K)`}
+        aria-label={`${buttonAriaLabel} (${shortcut})`}
+        aria-keyshortcuts={shortcut}
         {...props}
         ref={ref}
       >
