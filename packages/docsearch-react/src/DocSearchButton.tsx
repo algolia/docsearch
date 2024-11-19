@@ -37,7 +37,7 @@ export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButt
           ([ACTION_KEY_DEFAULT, 'Control', <ControlKeyIcon />] as const)
         : (['Meta', 'Meta', key] as const);
 
-    const shortcut = `${actionKeyAltText}+k`
+    const shortcut = `${actionKeyAltText}+k`;
 
     return (
       <button
