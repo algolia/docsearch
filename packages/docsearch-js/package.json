@@ -6,7 +6,8 @@
   "homepage": "https://docsearch.algolia.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/algolia/docsearch.git"
+    "url": "git+https://github.com/algolia/docsearch.git",
+    "directory": "packages/docsearch-js"
   },
   "author": {
     "name": "Algolia, Inc.",
