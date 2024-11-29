@@ -84,5 +84,5 @@
     "vitest": "2.1.6",
     "watch": "1.0.2"
   },
-  "packageManager": "yarn@4.5.2"
+  "packageManager": "yarn@4.5.3"
 }
