@@ -2329,7 +2329,7 @@ __metadata:
     rollup-plugin-filesize: "npm:10.0.0"
     shipjs: "npm:0.26.4"
     start-server-and-test: "npm:2.0.8"
-    stylelint: "npm:16.10.0"
+    stylelint: "npm:16.11.0"
     stylelint-config-sass-guidelines: "npm:12.1.0"
     stylelint-config-standard: "npm:36.0.1"
     stylelint-no-unsupported-browser-features: "npm:8.0.2"
@@ -21781,7 +21781,55 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint@npm:16.10.0, stylelint@npm:^16.8.2":
+"stylelint@npm:16.11.0":
+  version: 16.11.0
+  resolution: "stylelint@npm:16.11.0"
+  dependencies:
+    "@csstools/css-parser-algorithms": "npm:^3.0.4"
+    "@csstools/css-tokenizer": "npm:^3.0.3"
+    "@csstools/media-query-list-parser": "npm:^4.0.2"
+    "@csstools/selector-specificity": "npm:^5.0.0"
+    "@dual-bundle/import-meta-resolve": "npm:^4.1.0"
+    balanced-match: "npm:^2.0.0"
+    colord: "npm:^2.9.3"
+    cosmiconfig: "npm:^9.0.0"
+    css-functions-list: "npm:^3.2.3"
+    css-tree: "npm:^3.0.1"
+    debug: "npm:^4.3.7"
+    fast-glob: "npm:^3.3.2"
+    fastest-levenshtein: "npm:^1.0.16"
+    file-entry-cache: "npm:^9.1.0"
+    global-modules: "npm:^2.0.0"
+    globby: "npm:^11.1.0"
+    globjoin: "npm:^0.1.4"
+    html-tags: "npm:^3.3.1"
+    ignore: "npm:^6.0.2"
+    imurmurhash: "npm:^0.1.4"
+    is-plain-object: "npm:^5.0.0"
+    known-css-properties: "npm:^0.35.0"
+    mathml-tag-names: "npm:^2.1.3"
+    meow: "npm:^13.2.0"
+    micromatch: "npm:^4.0.8"
+    normalize-path: "npm:^3.0.0"
+    picocolors: "npm:^1.1.1"
+    postcss: "npm:^8.4.49"
+    postcss-resolve-nested-selector: "npm:^0.1.6"
+    postcss-safe-parser: "npm:^7.0.1"
+    postcss-selector-parser: "npm:^7.0.0"
+    postcss-value-parser: "npm:^4.2.0"
+    resolve-from: "npm:^5.0.0"
+    string-width: "npm:^4.2.3"
+    supports-hyperlinks: "npm:^3.1.0"
+    svg-tags: "npm:^1.0.0"
+    table: "npm:^6.8.2"
+    write-file-atomic: "npm:^5.0.1"
+  bin:
+    stylelint: bin/stylelint.mjs
+  checksum: 10c0/65638247fb4e5eacb032e3a98412a13ad8b343d2d58e22d61b96ada72808b5b7e736c845937b3bcfde04c0bfa2120383b507e530afe876dafe824a93c337258f
+  languageName: node
+  linkType: hard
+
+"stylelint@npm:^16.8.2":
   version: 16.10.0
   resolution: "stylelint@npm:16.10.0"
   dependencies:
