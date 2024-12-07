@@ -81,7 +81,7 @@
     "stylelint-prettier": "5.0.2",
     "typescript": "5.7.2",
     "typescript-eslint": "8.16.0",
-    "vitest": "2.1.6",
+    "vitest": "2.1.8",
     "watch": "1.0.2"
   },
   "packageManager": "yarn@4.5.3"
