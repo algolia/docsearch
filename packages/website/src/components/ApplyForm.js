@@ -221,7 +221,6 @@ function ApplyForm() {
 
         <Text small={true} className="uil-ta-center">
           <strong>
-            Only apply if you don't have a DocSearch application yet. <br />
             For support requests, make sure to first{' '}
             <InlineLink href="/docs/docsearch-program#support">read our policy</InlineLink>.
           </strong>{' '}
