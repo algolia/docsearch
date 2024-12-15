@@ -2279,7 +2279,7 @@ __metadata:
   resolution: "@docsearch/js@workspace:packages/docsearch-js"
   dependencies:
     "@docsearch/react": "npm:3.8.0"
-    "@rollup/plugin-replace": "npm:6.0.1"
+    "@rollup/plugin-replace": "npm:6.0.2"
     preact: "npm:^10.0.0"
   languageName: unknown
   linkType: soft
@@ -2295,7 +2295,7 @@ __metadata:
     "@rollup/plugin-babel": "npm:6.0.4"
     "@rollup/plugin-json": "npm:6.1.0"
     "@rollup/plugin-node-resolve": "npm:15.3.1"
-    "@rollup/plugin-replace": "npm:6.0.1"
+    "@rollup/plugin-replace": "npm:6.0.2"
     "@rollup/plugin-terser": "npm:0.4.4"
     "@stylistic/eslint-plugin": "npm:2.12.1"
     "@testing-library/dom": "npm:10.4.0"
@@ -2362,7 +2362,7 @@ __metadata:
     "@algolia/autocomplete-core": "npm:1.17.8"
     "@algolia/autocomplete-preset-algolia": "npm:1.17.8"
     "@docsearch/css": "npm:3.8.0"
-    "@rollup/plugin-replace": "npm:6.0.1"
+    "@rollup/plugin-replace": "npm:6.0.2"
     "@testing-library/jest-dom": "npm:6.6.3"
     "@testing-library/react": "npm:16.1.0"
     algoliasearch: "npm:^5.14.2"
@@ -4389,9 +4389,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-replace@npm:6.0.1":
-  version: 6.0.1
-  resolution: "@rollup/plugin-replace@npm:6.0.1"
+"@rollup/plugin-replace@npm:6.0.2":
+  version: 6.0.2
+  resolution: "@rollup/plugin-replace@npm:6.0.2"
   dependencies:
     "@rollup/pluginutils": "npm:^5.0.1"
     magic-string: "npm:^0.30.3"
@@ -4400,7 +4400,7 @@ __metadata:
   peerDependenciesMeta:
     rollup:
       optional: true
-  checksum: 10c0/90b432611a68261c3756f5bd29dd6ce7007619146105944f2b150086fe2bcd73012611daa956f694e90da96c5f49afce2a7b9e5f984a8b29cefc1854e545ac97
+  checksum: 10c0/71c0dea46f560c8dff59853446d43fa0e8258139a74d2af09fce5790d0540ff3d874c8fd9962cb049577d25327262bfc97485ef90b2a0a21bf28a9d3bd8c6d44
   languageName: node
   linkType: hard
 
