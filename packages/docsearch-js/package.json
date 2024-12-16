@@ -36,6 +36,6 @@
     "preact": "^10.0.0"
   },
   "devDependencies": {
-    "@rollup/plugin-replace": "6.0.1"
+    "@rollup/plugin-replace": "6.0.2"
   }
 }
