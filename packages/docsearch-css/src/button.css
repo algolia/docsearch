@@ -68,7 +68,7 @@
   box-shadow: var(--docsearch-key-pressed-shadow);
 }
 
-@media (width <= 768px) {
+@media (max-width: 768px) {
   .DocSearch-Button-Keys,
   .DocSearch-Button-Placeholder {
     display: none;
