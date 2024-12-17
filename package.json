@@ -38,7 +38,7 @@
     "@eslint-community/eslint-plugin-eslint-comments": "4.4.1",
     "@rollup/plugin-babel": "6.0.4",
     "@rollup/plugin-json": "6.1.0",
-    "@rollup/plugin-node-resolve": "15.3.1",
+    "@rollup/plugin-node-resolve": "16.0.0",
     "@rollup/plugin-replace": "6.0.2",
     "@rollup/plugin-terser": "0.4.4",
     "@stylistic/eslint-plugin": "2.12.1",
