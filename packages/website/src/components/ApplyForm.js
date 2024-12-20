@@ -98,7 +98,7 @@ function ApplyForm() {
 
   return (
     <Card className="uil-m-auto apply-form uil-pb-24">
-      <LabelText className="uil-pt-12" tag="label" htmlFor="card" key="card">
+      <LabelText className="uil-pt-12 apply-text" tag="label" htmlFor="card" key="card">
         Note: Due to the holidays in the US, reviews of DocSearch applications will not take place from December 23 -
         December 27. Thank you for your understanding.
         <p />
