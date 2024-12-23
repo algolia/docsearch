@@ -350,6 +350,17 @@ export function DocSearchModal({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  React.useLayoutEffect(() => {
+    // Calculate the scrollbar width to compensate for removed scrollbar
+    const scrollBarWidth = window.innerWidth - document.body.clientWidth;
+    // Prevent layout shift by adding appropriate margin to the body
+    document.body.style.marginRight = `${scrollBarWidth}px`;
+
+    return (): void => {
+      document.body.style.marginRight = '0px';
+    };
+  }, []);
+
   React.useEffect(() => {
     const isMobileMediaQuery = window.matchMedia('(max-width: 768px)');
 
