@@ -2550,7 +2550,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:8.19.0"
     "@typescript-eslint/parser": "npm:8.19.0"
     babel-plugin-module-resolver: "npm:5.0.2"
-    bundlesize2: "npm:0.0.31"
+    bundlesize2: "npm:0.0.32"
     cssnano: "npm:7.0.6"
     cypress: "npm:13.17.0"
     eslint: "npm:8.57.1"
@@ -7596,9 +7596,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bundlesize2@npm:0.0.31":
-  version: 0.0.31
-  resolution: "bundlesize2@npm:0.0.31"
+"bundlesize2@npm:0.0.32":
+  version: 0.0.32
+  resolution: "bundlesize2@npm:0.0.32"
   dependencies:
     bytes: "npm:^3.1.0"
     chalk: "npm:^4.0.0"
@@ -7608,12 +7608,11 @@ __metadata:
     figures: "npm:^3.2.0"
     glob: "npm:^7.1.6"
     gzip-size: "npm:^5.1.1"
-    node-fetch: "npm:^2.6.0"
+    node-fetch: "npm:^2.6.7"
     plur: "npm:^4.0.0"
-    right-pad: "npm:^1.0.1"
   bin:
     bundlesize: index.js
-  checksum: 10c0/9d594fb927c6976bc2a00d5fdd5e36098ab2640b82ab7a0004c416463de74bbd61062c525ef73f29e21e79f79b96573ec1302e2e34d4ec4f1076251b56e0f84f
+  checksum: 10c0/062dc5269f9ee728661b42770a00fc140a1745c861ac8709dfed4c261d02eb76cc8b0a322210f0546479702ec671b1de75e50fa6277399f3bb50666827ffa618
   languageName: node
   linkType: hard
 
@@ -16513,7 +16512,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2.6.0, node-fetch@npm:^2.6.7":
+"node-fetch@npm:^2.6.7":
   version: 2.7.0
   resolution: "node-fetch@npm:2.7.0"
   dependencies:
@@ -20830,13 +20829,6 @@ __metadata:
   version: 1.4.1
   resolution: "rfdc@npm:1.4.1"
   checksum: 10c0/4614e4292356cafade0b6031527eea9bc90f2372a22c012313be1dcc69a3b90c7338158b414539be863fa95bfcb2ddcd0587be696841af4e6679d85e62c060c7
-  languageName: node
-  linkType: hard
-
-"right-pad@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "right-pad@npm:1.0.1"
-  checksum: 10c0/cf6dba689246ff895743f15d943171ef2a113e17a25ac33153cacbd52037cfcf2ae681c8a45fb454bf345ef79dbd2674b800ced3420fbc0119e01a37edf6c196
   languageName: node
   linkType: hard
 
