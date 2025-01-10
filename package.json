@@ -79,7 +79,7 @@
     "stylelint-no-unsupported-browser-features": "8.0.2",
     "stylelint-order": "6.0.4",
     "stylelint-prettier": "5.0.2",
-    "typescript": "5.7.2",
+    "typescript": "5.7.3",
     "typescript-eslint": "8.19.0",
     "vitest": "2.1.8",
     "watch": "1.0.2"
