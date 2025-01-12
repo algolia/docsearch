@@ -61,7 +61,7 @@
     "eslint-plugin-prettier": "5.2.1",
     "eslint-plugin-react": "7.37.3",
     "eslint-plugin-react-hooks": "5.1.0",
-    "eslint-plugin-react-refresh": "0.4.16",
+    "eslint-plugin-react-refresh": "0.4.18",
     "jsdom": "25.0.1",
     "lerna": "8.1.9",
     "postcss": "8.4.49",
