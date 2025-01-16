@@ -66,6 +66,12 @@
   transition-duration: 100ms;
 }
 
+@media (prefers-reduced-motion)  {
+  .DocSearch-Button-Key {
+    transition: none;
+  }
+}
+
 .DocSearch-Button-Key--pressed {
   transform: translate3d(0, 1px, 0);
   box-shadow: var(--docsearch-key-pressed-shadow);
