@@ -61,6 +61,15 @@
   border: 0;
   top: -1px;
   width: 20px;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 100ms;
+}
+
+@media (prefers-reduced-motion)  {
+  .DocSearch-Button-Key {
+    transition: none;
+  }
 }
 
 .DocSearch-Button-Key--pressed {
