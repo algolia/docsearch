@@ -2552,7 +2552,7 @@ __metadata:
     babel-plugin-module-resolver: "npm:5.0.2"
     bundlesize2: "npm:0.0.32"
     cssnano: "npm:7.0.6"
-    cypress: "npm:13.17.0"
+    cypress: "npm:14.0.0"
     eslint: "npm:8.57.1"
     eslint-config-algolia: "npm:23.2.1"
     eslint-config-prettier: "npm:9.1.0"
@@ -9489,9 +9489,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:13.17.0":
-  version: 13.17.0
-  resolution: "cypress@npm:13.17.0"
+"cypress@npm:14.0.0":
+  version: 14.0.0
+  resolution: "cypress@npm:14.0.0"
   dependencies:
     "@cypress/request": "npm:^3.0.6"
     "@cypress/xvfb": "npm:^1.2.4"
@@ -9538,7 +9538,7 @@ __metadata:
     yauzl: "npm:^2.10.0"
   bin:
     cypress: bin/cypress
-  checksum: 10c0/159ce620e32d2785082aaa1f4f30f203dcec466df4a8e80dfa299035358772fd513c35820070ba8db52e2bf58078a372ff7009068e26967f993656e7da62e221
+  checksum: 10c0/231af826d394b9a9f35200ab56e531e911f774b86b2ecb17a3183685982ac93d534e7c80cfe24ca36f74c99525025472fe28a3ccf2f246c8e67f85ecb768086b
   languageName: node
   linkType: hard
 
