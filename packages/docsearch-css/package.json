@@ -1,12 +1,13 @@
 {
   "name": "@docsearch/css",
   "description": "Styles for DocSearch.",
-  "version": "3.8.0",
+  "version": "3.8.2",
   "license": "MIT",
   "homepage": "https://docsearch.algolia.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/algolia/docsearch.git"
+    "url": "git+https://github.com/algolia/docsearch.git",
+    "directory": "packages/docsearch-css"
   },
   "author": {
     "name": "Algolia, Inc.",

@@ -1,12 +1,13 @@
 {
   "name": "@docsearch/react",
   "description": "React package for DocSearch, the best search experience for docs.",
-  "version": "3.8.0",
+  "version": "3.8.2",
   "license": "MIT",
   "homepage": "https://docsearch.algolia.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/algolia/docsearch.git"
+    "url": "git+https://github.com/algolia/docsearch.git",
+    "directory": "packages/docsearch-react"
   },
   "author": {
     "name": "Algolia, Inc.",
@@ -37,7 +38,7 @@
   "dependencies": {
     "@algolia/autocomplete-core": "1.17.9",
     "@algolia/autocomplete-preset-algolia": "1.17.9",
-    "@docsearch/css": "3.8.0",
+    "@docsearch/css": "3.8.2",
     "algoliasearch": "^5.14.2"
   },
   "devDependencies": {

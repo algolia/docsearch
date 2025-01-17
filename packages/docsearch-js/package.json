@@ -1,12 +1,13 @@
 {
   "name": "@docsearch/js",
   "description": "JavaScript package for DocSearch, the best search experience for docs.",
-  "version": "3.8.0",
+  "version": "3.8.2",
   "license": "MIT",
   "homepage": "https://docsearch.algolia.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/algolia/docsearch.git"
+    "url": "git+https://github.com/algolia/docsearch.git",
+    "directory": "packages/docsearch-js"
   },
   "author": {
     "name": "Algolia, Inc.",
@@ -32,7 +33,7 @@
     "watch": "watch \"yarn on:change\" --ignoreDirectoryPattern \"/dist/\""
   },
   "dependencies": {
-    "@docsearch/react": "3.8.0",
+    "@docsearch/react": "3.8.2",
     "preact": "^10.0.0"
   },
   "devDependencies": {

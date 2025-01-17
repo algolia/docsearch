@@ -564,7 +564,7 @@ assistive tech users */
 }
 
 /* Responsive */
-@media (width <= 768px) {
+@media (max-width: 768px) {
   :root {
     --docsearch-spacing: 10px;
     --docsearch-footer-height: 40px;

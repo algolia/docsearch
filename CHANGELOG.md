@@ -1,3 +1,21 @@
+## [3.8.2](https://github.com/algolia/docsearch/compare/v3.8.1...v3.8.2) (2024-12-17)
+
+
+### Bug Fixes
+
+* **css:** older sass supported syntax ([#2415](https://github.com/algolia/docsearch/issues/2415)) ([0658d31](https://github.com/algolia/docsearch/commit/0658d3190d022954af21ff021da42d08d4db7463))
+
+
+
+## [3.8.1](https://github.com/algolia/docsearch/compare/v3.8.0...v3.8.1) (2024-12-16)
+
+
+### Bug Fixes
+
+* use SearchParamsObject for searchParameters ([#2362](https://github.com/algolia/docsearch/issues/2362)) ([24c6b4d](https://github.com/algolia/docsearch/commit/24c6b4dbf7bd476683ddea6ba14f641dcca31895))
+
+
+
 # [3.8.0](https://github.com/algolia/docsearch/compare/v3.7.0...v3.8.0) (2024-11-12)
 
 This version introduces a new type [DocSearchTransformClient](https://github.com/algolia/docsearch/blob/main/packages/docsearch-react/src/DocSearch.tsx#L19) to allow the `transformSearchClient` to use either the lite client, or the full algoliasearch client.
