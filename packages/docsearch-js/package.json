@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/js",
   "description": "JavaScript package for DocSearch, the best search experience for docs.",
-  "version": "3.8.1",
+  "version": "3.8.2",
   "license": "MIT",
   "homepage": "https://docsearch.algolia.com",
   "repository": {
@@ -33,10 +33,10 @@
     "watch": "watch \"yarn on:change\" --ignoreDirectoryPattern \"/dist/\""
   },
   "dependencies": {
-    "@docsearch/react": "3.8.1",
+    "@docsearch/react": "3.8.2",
     "preact": "^10.0.0"
   },
   "devDependencies": {
-    "@rollup/plugin-replace": "6.0.1"
+    "@rollup/plugin-replace": "6.0.2"
   }
 }

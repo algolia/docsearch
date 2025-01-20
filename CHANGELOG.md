@@ -1,3 +1,12 @@
+## [3.8.2](https://github.com/algolia/docsearch/compare/v3.8.1...v3.8.2) (2024-12-17)
+
+
+### Bug Fixes
+
+* **css:** older sass supported syntax ([#2415](https://github.com/algolia/docsearch/issues/2415)) ([0658d31](https://github.com/algolia/docsearch/commit/0658d3190d022954af21ff021da42d08d4db7463))
+
+
+
 ## [3.8.1](https://github.com/algolia/docsearch/compare/v3.8.0...v3.8.1) (2024-12-16)
 
 

@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/react",
   "description": "React package for DocSearch, the best search experience for docs.",
-  "version": "3.8.1",
+  "version": "3.8.2",
   "license": "MIT",
   "homepage": "https://docsearch.algolia.com",
   "repository": {
@@ -36,16 +36,16 @@
     "watch": "watch \"yarn on:change\" --ignoreDirectoryPattern \"/dist/\""
   },
   "dependencies": {
-    "@algolia/autocomplete-core": "1.17.7",
-    "@algolia/autocomplete-preset-algolia": "1.17.7",
-    "@docsearch/css": "3.8.1",
+    "@algolia/autocomplete-core": "1.17.9",
+    "@algolia/autocomplete-preset-algolia": "1.17.9",
+    "@docsearch/css": "3.8.2",
     "algoliasearch": "^5.14.2"
   },
   "devDependencies": {
-    "@rollup/plugin-replace": "6.0.1",
+    "@rollup/plugin-replace": "6.0.2",
     "@testing-library/jest-dom": "6.6.3",
-    "@testing-library/react": "16.0.1",
-    "vitest": "2.1.5"
+    "@testing-library/react": "16.2.0",
+    "vitest": "3.0.2"
   },
   "peerDependencies": {
     "@types/react": ">= 16.8.0 < 19.0.0",
