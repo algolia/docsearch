@@ -9,6 +9,10 @@ describe('Start', () => {
   it('Open modal on search button click', () => {
     cy.openModal();
     cy.modalIsVisibleAndFocused();
+
+    // check that the scrollbar offset is compensated
+    cy.get('body').should('have.css', 'overflow', 'hidden');
+    cy.get('body').should('have.css', 'margin-right', '15px');
   });
 
   it('Open modal with key shortcut on Windows/Linux', () => {
