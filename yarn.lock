@@ -2089,7 +2089,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docsearch/css@npm:3.8.2, @docsearch/css@workspace:packages/docsearch-css":
+"@docsearch/css@npm:3.8.3, @docsearch/css@workspace:packages/docsearch-css":
   version: 0.0.0-use.local
   resolution: "@docsearch/css@workspace:packages/docsearch-css"
   languageName: unknown
@@ -2099,17 +2099,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docsearch/js-example@workspace:examples/js-demo"
   dependencies:
-    "@docsearch/css": "npm:3.8.2"
-    "@docsearch/js": "npm:3.8.2"
+    "@docsearch/css": "npm:3.8.3"
+    "@docsearch/js": "npm:3.8.3"
     vite: "npm:^6.0.7"
   languageName: unknown
   linkType: soft
 
-"@docsearch/js@npm:3.8.2, @docsearch/js@workspace:packages/docsearch-js":
+"@docsearch/js@npm:3.8.3, @docsearch/js@workspace:packages/docsearch-js":
   version: 0.0.0-use.local
   resolution: "@docsearch/js@workspace:packages/docsearch-js"
   dependencies:
-    "@docsearch/react": "npm:3.8.2"
+    "@docsearch/react": "npm:3.8.3"
     "@rollup/plugin-replace": "npm:6.0.2"
     preact: "npm:^10.0.0"
   languageName: unknown
@@ -2177,8 +2177,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docsearch/react-example@workspace:examples/demo"
   dependencies:
-    "@docsearch/css": "npm:3.8.2"
-    "@docsearch/react": "npm:3.8.2"
+    "@docsearch/css": "npm:3.8.3"
+    "@docsearch/react": "npm:3.8.3"
     "@vitejs/plugin-react": "npm:^4.3.4"
     react: "npm:^18.0.0"
     react-dom: "npm:^18.0.0"
@@ -2186,13 +2186,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@docsearch/react@npm:3.8.2, @docsearch/react@npm:^3.8.1, @docsearch/react@workspace:packages/docsearch-react":
+"@docsearch/react@npm:3.8.3, @docsearch/react@npm:^3.8.1, @docsearch/react@workspace:packages/docsearch-react":
   version: 0.0.0-use.local
   resolution: "@docsearch/react@workspace:packages/docsearch-react"
   dependencies:
     "@algolia/autocomplete-core": "npm:1.17.9"
     "@algolia/autocomplete-preset-algolia": "npm:1.17.9"
-    "@docsearch/css": "npm:3.8.2"
+    "@docsearch/css": "npm:3.8.3"
     "@rollup/plugin-replace": "npm:6.0.2"
     "@testing-library/jest-dom": "npm:6.6.3"
     "@testing-library/react": "npm:16.2.0"
@@ -2220,7 +2220,7 @@ __metadata:
   resolution: "@docsearch/website@workspace:packages/website"
   dependencies:
     "@algolia/ui-library": "npm:5.86.0"
-    "@docsearch/react": "npm:3.8.2"
+    "@docsearch/react": "npm:3.8.3"
     "@docusaurus/core": "npm:3.7.0"
     "@docusaurus/preset-classic": "npm:3.7.0"
     "@mdx-js/react": "npm:^3.1.0"
