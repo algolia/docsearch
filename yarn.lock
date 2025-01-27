@@ -2225,7 +2225,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:8.21.0"
     "@typescript-eslint/parser": "npm:8.21.0"
     babel-plugin-module-resolver: "npm:5.0.2"
-    bundlesize2: "npm:0.0.32"
+    bundlesize2: "npm:0.0.34"
     cssnano: "npm:7.0.6"
     cypress: "npm:13.17.0"
     eslint: "npm:8.57.1"
@@ -7261,9 +7261,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bundlesize2@npm:0.0.32":
-  version: 0.0.32
-  resolution: "bundlesize2@npm:0.0.32"
+"bundlesize2@npm:0.0.34":
+  version: 0.0.34
+  resolution: "bundlesize2@npm:0.0.34"
   dependencies:
     bytes: "npm:^3.1.0"
     chalk: "npm:^4.0.0"
@@ -7277,7 +7277,7 @@ __metadata:
     plur: "npm:^4.0.0"
   bin:
     bundlesize: index.js
-  checksum: 10c0/062dc5269f9ee728661b42770a00fc140a1745c861ac8709dfed4c261d02eb76cc8b0a322210f0546479702ec671b1de75e50fa6277399f3bb50666827ffa618
+  checksum: 10c0/c2dc82bb3b0b08e1f433f1e06cb085fbc0b8eda74f052192a233aa396cd22df0414c106d72d484240d9dd3f16b33e4507739d11e2f629636fd56a364b7e8517e
   languageName: node
   linkType: hard
 
