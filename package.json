@@ -76,7 +76,7 @@
     "stylelint": "16.14.1",
     "stylelint-config-sass-guidelines": "12.1.0",
     "stylelint-config-standard": "36.0.1",
-    "stylelint-no-unsupported-browser-features": "8.0.2",
+    "stylelint-no-unsupported-browser-features": "8.0.4",
     "stylelint-order": "6.0.4",
     "stylelint-prettier": "5.0.2",
     "typescript": "5.7.3",
