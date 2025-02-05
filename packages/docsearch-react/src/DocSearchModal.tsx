@@ -1,6 +1,6 @@
 import { type AlgoliaInsightsHit, createAutocomplete } from '@algolia/autocomplete-core';
 import type { SearchResponse } from 'algoliasearch/lite';
-import React from 'react';
+import React, { type JSX } from 'react';
 
 import { MAX_QUERY_SIZE } from './constants';
 import type { DocSearchProps } from './DocSearch';

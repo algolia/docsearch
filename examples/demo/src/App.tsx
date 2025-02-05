@@ -1,5 +1,5 @@
 import { DocSearch } from '@docsearch/react';
-
+import type { JSX } from 'react';
 import './App.css';
 import '@docsearch/css/dist/style.css';
 

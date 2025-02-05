@@ -1,5 +1,5 @@
 import { render, act, fireEvent, screen, cleanup } from '@testing-library/react';
-import React from 'react';
+import React, { type JSX } from 'react';
 import { describe, it, expect, afterEach } from 'vitest';
 
 import '@testing-library/jest-dom/vitest';

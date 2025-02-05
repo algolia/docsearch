@@ -1,4 +1,4 @@
-import { createElement } from 'react';
+import { type JSX, createElement } from 'react';
 
 import type { StoredDocSearchHit } from './types';
 

@@ -1,6 +1,5 @@
 import type { AutocompleteApi, AutocompleteState } from '@algolia/autocomplete-core';
-import type { MutableRefObject } from 'react';
-import React from 'react';
+import React, { type JSX, type RefObject } from 'react';
 
 import { MAX_QUERY_SIZE } from './constants';
 import { LoadingIcon } from './icons/LoadingIcon';
@@ -20,7 +19,7 @@ interface SearchBoxProps
   extends AutocompleteApi<InternalDocSearchHit, React.FormEvent, React.MouseEvent, React.KeyboardEvent> {
   state: AutocompleteState<InternalDocSearchHit>;
   autoFocus: boolean;
-  inputRef: MutableRefObject<HTMLInputElement | null>;
+  inputRef: RefObject<HTMLInputElement | null>;
   onClose: () => void;
   isFromSelection: boolean;
   translations?: SearchBoxTranslations;

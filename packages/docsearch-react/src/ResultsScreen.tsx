@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 
 import { SelectIcon, SourceIcon } from './icons';
 import { Results } from './Results';

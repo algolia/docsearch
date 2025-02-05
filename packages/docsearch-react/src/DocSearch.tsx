@@ -1,6 +1,6 @@
 import type { AutocompleteState, AutocompleteOptions } from '@algolia/autocomplete-core';
 import type { LiteClient, SearchParamsObject } from 'algoliasearch/lite';
-import React from 'react';
+import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
 
 import { DocSearchButton } from './DocSearchButton';
