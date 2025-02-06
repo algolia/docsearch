@@ -2089,7 +2089,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docsearch/css@npm:3.8.3, @docsearch/css@workspace:packages/docsearch-css":
+"@docsearch/css@npm:3.8.3, @docsearch/css@workspace:*, @docsearch/css@workspace:packages/docsearch-css":
   version: 0.0.0-use.local
   resolution: "@docsearch/css@workspace:packages/docsearch-css"
   languageName: unknown
@@ -2173,6 +2173,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@docsearch/react-18-example@workspace:examples/demo-react-18":
+  version: 0.0.0-use.local
+  resolution: "@docsearch/react-18-example@workspace:examples/demo-react-18"
+  dependencies:
+    "@docsearch/css": "workspace:*"
+    "@docsearch/react": "workspace:*"
+    "@vitejs/plugin-react": "npm:^4.3.4"
+    react: "npm:^18.0.0"
+    react-dom: "npm:^18.0.0"
+    vite: "npm:^6.0.7"
+  languageName: unknown
+  linkType: soft
+
 "@docsearch/react-example@workspace:examples/demo":
   version: 0.0.0-use.local
   resolution: "@docsearch/react-example@workspace:examples/demo"
@@ -2186,7 +2199,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@docsearch/react@npm:3.8.3, @docsearch/react@npm:^3.8.1, @docsearch/react@workspace:packages/docsearch-react":
+"@docsearch/react@npm:3.8.3, @docsearch/react@npm:^3.8.1, @docsearch/react@workspace:*, @docsearch/react@workspace:packages/docsearch-react":
   version: 0.0.0-use.local
   resolution: "@docsearch/react@workspace:packages/docsearch-react"
   dependencies:
