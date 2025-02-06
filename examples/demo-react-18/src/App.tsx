@@ -1,9 +1,9 @@
 import { DocSearch } from '@docsearch/react';
-import type { JSX } from 'react';
+import React from 'react';
 import './App.css';
 import '@docsearch/css/dist/style.css';
 
-function App(): JSX.Element {
+function App(): React.JSX.Element {
   return (
     <div>
       <h1>DocSearch v3 - React - 18</h1>
