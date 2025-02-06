@@ -1,5 +1,5 @@
 import type { AutocompleteApi, AutocompleteState, BaseItem } from '@algolia/autocomplete-core';
-import React from 'react';
+import React, { type JSX } from 'react';
 
 import type { DocSearchProps } from './DocSearch';
 import { Snippet } from './Snippet';

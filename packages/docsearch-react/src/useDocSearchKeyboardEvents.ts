@@ -5,7 +5,7 @@ export interface UseDocSearchKeyboardEventsProps {
   onOpen: () => void;
   onClose: () => void;
   onInput?: (event: KeyboardEvent) => void;
-  searchButtonRef?: React.RefObject<HTMLButtonElement>;
+  searchButtonRef: React.RefObject<HTMLButtonElement | null>;
 }
 
 function isEditingContent(event: KeyboardEvent): boolean {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 
 export function ResetIcon(): JSX.Element {
   return (

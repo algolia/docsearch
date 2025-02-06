@@ -1,6 +1,6 @@
 {
-  "name": "@docsearch/react-example",
-  "description": "DocSearch v3 React example",
+  "name": "@docsearch/react-18-example",
+  "description": "DocSearch v3 React 18 example",
   "version": "3.8.3",
   "private": true,
   "license": "MIT",
@@ -11,10 +11,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@docsearch/css": "3.8.3",
-    "@docsearch/react": "3.8.3",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "@docsearch/css": "workspace:*",
+    "@docsearch/react": "workspace:*",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
