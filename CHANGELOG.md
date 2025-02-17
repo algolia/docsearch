@@ -1,3 +1,12 @@
+# [3.9.0](https://github.com/algolia/docsearch/compare/v3.8.3...v3.9.0) (2025-02-17)
+
+
+### Features
+
+* **deps:** update react to 19 ([#2487](https://github.com/algolia/docsearch/issues/2487)) ([698c00c](https://github.com/algolia/docsearch/commit/698c00c95543a3e8407f05a4493890fdf2ffaf5a))
+
+
+
 ## [3.8.3](https://github.com/algolia/docsearch/compare/v3.8.2...v3.8.3) (2025-01-21)
 
 
