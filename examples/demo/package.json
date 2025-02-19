@@ -11,7 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@docsearch/css": "3.8.3",
+    "@docsearch/css": "3.9.0",
     "@docsearch/react": "3.9.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
