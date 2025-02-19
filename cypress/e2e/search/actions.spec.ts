@@ -167,7 +167,7 @@ describe('Recent and Favorites', () => {
       .then((value) => {
         const ids = value!.split(' ');
         expect(ids).to.have.length(2);
-        ids.forEach(id => cy.get(`#${id}`).should('exist'));
+        ids.forEach((id) => cy.get(`#${id}`).should('exist'));
       });
   });
 });
