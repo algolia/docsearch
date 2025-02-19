@@ -28,7 +28,7 @@ export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TI
     <section className="DocSearch-Hits">
       <div className="DocSearch-Hit-source">{props.title}</div>
 
-      <ul {...props.getListProps()}>
+      <ul {...props.getListProps({ source: props.collection.source })}>
         {props.collection.items.map((item, index) => {
           return <Result key={[props.title, item.objectID].join(':')} item={item} index={index} {...props} />;
         })}
