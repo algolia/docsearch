@@ -65,7 +65,7 @@
     "jsdom": "26.0.0",
     "lerna": "8.2.0",
     "postcss": "8.5.3",
-    "prettier": "3.5.2",
+    "prettier": "3.5.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "rollup": "4.34.9",
