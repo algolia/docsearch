@@ -111,6 +111,10 @@ describe('Search', () => {
     cy.typeQueryNotMatching();
     cy.contains('No results for').should('be.visible');
   });
+
+  it('should not refer to Recent/Favorite in aria-controls', () => {
+    cy.get('.DocSearch-Input').should('not.have.attr', 'aria-controls');
+  });
 });
 
 describe('Recent and Favorites', () => {
@@ -143,5 +147,27 @@ describe('Recent and Favorites', () => {
     cy.contains('Favorite').should('be.visible');
     cy.get('#docsearch-favoriteSearches-item-0').find('[title="Remove this search from favorites"]').trigger('click');
     cy.contains('No recent searches').should('be.visible');
+  });
+
+  it('Input controls Recent and Favorite lists', () => {
+    // Mark one result as favorite
+    cy.get('#docsearch-recentSearches-item-0').find('[title="Save this search"]').trigger('click');
+    cy.contains('Favorite').should('be.visible');
+    // Search for something else to add a new recent search
+    cy.typeQueryMatching();
+    cy.get('#docsearch-hits1-item-5 > a').click({ force: true }).wait(1000);
+
+    cy.openModal();
+    cy.contains('Recent').should('be.visible');
+    cy.contains('Favorite').should('be.visible');
+
+    // Make sure the specified elements exist
+    cy.get('.DocSearch-Input')
+      .invoke('attr', 'aria-controls')
+      .then((value) => {
+        const ids = value!.split(' ');
+        expect(ids).to.have.length(2);
+        ids.forEach((id) => cy.get(`#${id}`).should('exist'));
+      });
   });
 });
