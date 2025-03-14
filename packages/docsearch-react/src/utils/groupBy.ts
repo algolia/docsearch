@@ -1,7 +1,7 @@
 export function groupBy<TValue extends Record<string, unknown>>(
   values: TValue[],
   predicate: (value: TValue) => string,
-  maxResultsPerGroup?: number
+  maxResultsPerGroup?: number,
 ): Record<string, TValue[]> {
   return values.reduce<Record<string, TValue[]>>((acc, item) => {
     const key = predicate(item);

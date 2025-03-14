@@ -176,13 +176,19 @@ You can now use them to [filter your search in the frontend][16]
 
 ### Boost search results with `pageRank`
 
-This parameter allow you to boost records built from the current `pathsToMatch`. Pages with highest [`pageRank`](#pagerank) will be returned before pages with a lower [`pageRank`](#pagerank). Note that you can pass any numeric value **as a string**, including negative values:
+This parameter allows you to boost records using a custom ranking attribute built from the current `pathsToMatch`. Pages with highest [`pageRank`](#pagerank) will be returned before pages with a lower [`pageRank`](#pagerank). The default value is 0 and you can pass any numeric value **as a string**, including negative values.
+
+Search results are sorted by weight (desc), so you can have both boosted and non boosted results. The weight of each result will be computed for a given query based on multiple factors: match level, position, etc. and the pageRank value will be added to this final weight. The pageRank on its own may not be enough to influence the results of your query depending on how your [overall ranking is set up](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/). If changing the pageRank value doesn't influence your search results enough, even with large values, move weight.pageRank higher in the Ranking and Sorting page for your index.
+
+You can view the computed weight directly from the Algolia dashboard (dashboard.algolia.com->search->perform a search->mouse hover over the "ranking criteria" icon bottom right of each record). That will give you an idea of what pageRank value is acceptable for your case.
 
 ```js
 {
   indexName: "YOUR_INDEX_NAME",
   pathsToMatch: ["https://YOUR_WEBSITE_URL/api/**"],
-  recordExtractor: ({ $, helpers }) => {
+  recordExtractor: ({ $, helpers, url }) => {
+    const isDocPage = /\/[\w-]+\/docs\//.test(url.pathname);
+    const isBlogPage = /\/[\w-]+\/blog\//.test(url.pathname);
     return helpers.docsearch({
       recordProps: {
         lvl0: {
@@ -194,7 +200,7 @@ This parameter allow you to boost records built from the current `pathsToMatch`.
         lvl4: "article h5",
         lvl5: "article h6",
         content: "article p, article li",
-        pageRank: 30,
+        pageRank: isDocPage ? "-2000" : isBlogPage ? "-1000" : "0",
       },
     });
   },
@@ -297,7 +303,7 @@ type CustomVariable =
     };
 ```
 
-Custom variables are used to [`filter your search`](/docs/DocSearch-v3#filtering-your-search), you can define them in the [`recordProps`](#indexing-content-for-faceting)
+Custom variables are used to [`filter your search`](/docs/docsearch-v3#filtering-your-search), you can define them in the [`recordProps`](#indexing-content-for-faceting)
 
 ## `helpers.docsearch` API Reference
 
@@ -305,13 +311,13 @@ Custom variables are used to [`filter your search`](/docs/DocSearch-v3#filtering
 
 > `type: boolean` | default: `true` | **optional**
 
-[This option](#reduce-the-number-records) groups the Algolia records created at the `content` level of the selector into a single record for its matching heading.
+[This option](#reduce-the-number-of-records) groups the Algolia records created at the `content` level of the selector into a single record for its matching heading.
 
 ### `recordVersion`
 
 > `type: 'v3' | 'v2'` | default: `v2` | **optional**
 
-This option remove content from the Algolia records that are only used for [DocSearch v2](/docs/legacy/dropdown). If you are using [the latest version of DocSearch](/docs/DocSearch-v3), you can [set it to `v3`](#reduce-the-record-size).
+This option remove content from the Algolia records that are only used for [DocSearch v2](/docs/legacy/dropdown). If you are using [the latest version of DocSearch](/docs/docsearch-v3), you can [set it to `v3`](#reduce-the-record-size).
 
 ### `indexHeadings`
 
@@ -322,7 +328,7 @@ This option tells the crawler if the `headings` (`lvlX`) should be indexed.
 - When `false`, only records for the `content` level will be created.
 - When `from, to` is provided, only records for the `lvlX` to `lvlY` will be created.
 
-[1]: /docs/DocSearch-v3
+[1]: /docs/docsearch-v3
 [2]: https://github.com/algolia/docsearch/
 [3]: https://github.com/algolia/docsearch/tree/master
 [4]: /docs/legacy/dropdown

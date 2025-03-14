@@ -48,7 +48,7 @@ If you don’t want to use a package manager, you can use a standalone endpoint:
 └── dist/modal.css # CSS for the modal
 ```
 
-[1]: /docs/DocSearch-v3
+[1]: /docs/docsearch-v3
 [2]: https://github.com/algolia/docsearch/
 [3]: https://github.com/algolia/docsearch/tree/master
 [4]: /docs/legacy/dropdown

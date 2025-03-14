@@ -11,7 +11,6 @@ interface DocSearchContext extends AutocompleteContext {
   };
 }
 
-export interface DocSearchState<TItem extends BaseItem>
-  extends AutocompleteState<TItem> {
+export interface DocSearchState<TItem extends BaseItem> extends AutocompleteState<TItem> {
   context: DocSearchContext;
 }

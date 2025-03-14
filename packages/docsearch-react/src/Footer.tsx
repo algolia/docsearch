@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 
 import { AlgoliaLogo } from './AlgoliaLogo';
 
@@ -22,23 +22,17 @@ interface CommandIconProps {
   ariaLabel: string;
 }
 
-function CommandIcon(props: CommandIconProps) {
+function CommandIcon(props: CommandIconProps): JSX.Element {
   return (
     <svg width="15" height="15" aria-label={props.ariaLabel} role="img">
-      <g
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.2"
-      >
+      <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2">
         {props.children}
       </g>
     </svg>
   );
 }
 
-export function Footer({ translations = {} }: FooterProps) {
+export function Footer({ translations = {} }: FooterProps): JSX.Element {
   const {
     selectText = 'to select',
     selectKeyAriaLabel = 'Enter key',

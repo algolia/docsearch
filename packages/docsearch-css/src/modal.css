@@ -263,6 +263,7 @@
   display: flex;
   padding-bottom: 4px;
   position: relative;
+  scroll-margin-top: 40px;
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
@@ -545,9 +546,9 @@ svg.DocSearch-Hit-Select-Icon {
   height: 18px;
   justify-content: center;
   margin-right: 0.4em;
-  padding: 0px 0px 1px 0px;
+  padding: 0 0 1px;
   color: var(--docsearch-muted-color);
-  border: 0px;
+  border: 0;
   width: 20px;
 }
 
@@ -643,6 +644,7 @@ assistive tech users */
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }

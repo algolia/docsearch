@@ -5,7 +5,7 @@ sidebar_label: What is DocSearch?
 
 ## Why?
 
-We have created DocSearch because we are scratching our own itch. As developers, we spent a lot of time reading documentation, and it can be hard to find relevant information in large documentations. We're not blaming anyone here; building a good search is a challenge.
+We created DocSearch because we are scratching our own itch. As developers, we spend a lot of time reading documentation, and it can be hard to find relevant information in large documentations. We're not blaming anyone here: building good search is a challenge.
 
 It happens that we are a search company and we actually have a lot of experience building search interfaces. We wanted to use those skills to help others. That's why we created a way to automatically extract content from tech documentation and make it available to everyone from the first keystroke.
 

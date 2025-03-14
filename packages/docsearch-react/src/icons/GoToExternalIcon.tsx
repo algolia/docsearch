@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 
-export function GoToExternal() {
+export function GoToExternal(): JSX.Element {
   return (
     <svg width="20" height="20">
       <path

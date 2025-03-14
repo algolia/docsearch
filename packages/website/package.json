@@ -1,6 +1,6 @@
 {
   "name": "@docsearch/website",
-  "version": "3.6.0",
+  "version": "3.9.0",
   "private": true,
   "homepage": "https://docsearch.algolia.com/",
   "scripts": {
@@ -16,26 +16,21 @@
     "write-heading-ids": "docusaurus write-heading-ids"
   },
   "dependencies": {
-    "@algolia/ui-library": "4.0.0-beta.71",
-    "@docsearch/react": "3.6.0",
-    "@docusaurus/core": "2.4.1",
-    "@docusaurus/preset-classic": "2.4.1",
-    "@mdx-js/react": "^1.6.22",
-    "clsx": "^1.1.1",
+    "@algolia/ui-library": "5.86.0",
+    "@docsearch/react": "3.9.0",
+    "@docusaurus/core": "3.7.0",
+    "@docusaurus/preset-classic": "3.7.0",
+    "@mdx-js/react": "^3.1.0",
     "file-loader": "6.2.0",
-    "my-loaders": "file:plugins/my-loaders",
-    "postcss": "8.4.25",
-    "postcss-import": "15.0.0",
-    "postcss-preset-env": "7.8.2",
-    "prism-react-renderer": "1.2.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "tailwind-loader": "file:plugins/tailwind-loader",
-    "url-loader": "4.1.1"
+    "postcss": "8.5.1",
+    "postcss-import": "16.1.0",
+    "postcss-preset-env": "10.1.3",
+    "prism-react-renderer": "2.4.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
-    "postcss-loader": "6.2.1",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+    "tailwindcss": "3.4.17"
   },
   "browserslist": {
     "production": [

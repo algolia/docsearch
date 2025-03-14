@@ -1,21 +1,12 @@
-import type {
-  AutocompleteApi,
-  AutocompleteState,
-  BaseItem,
-} from '@algolia/autocomplete-core';
-import React from 'react';
+import type { AutocompleteApi, AutocompleteState, BaseItem } from '@algolia/autocomplete-core';
+import React, { type JSX } from 'react';
 
 import type { DocSearchProps } from './DocSearch';
 import { Snippet } from './Snippet';
 import type { InternalDocSearchHit, StoredDocSearchHit } from './types';
 
 interface ResultsProps<TItem extends BaseItem>
-  extends AutocompleteApi<
-    TItem,
-    React.FormEvent,
-    React.MouseEvent,
-    React.KeyboardEvent
-  > {
+  extends AutocompleteApi<TItem, React.FormEvent, React.MouseEvent, React.KeyboardEvent> {
   title: string;
   collection: AutocompleteState<TItem>['collections'][0];
   renderIcon: (props: { item: TItem; index: number }) => React.ReactNode;
@@ -28,9 +19,7 @@ interface ResultsProps<TItem extends BaseItem>
   hitComponent: DocSearchProps['hitComponent'];
 }
 
-export function Results<TItem extends StoredDocSearchHit>(
-  props: ResultsProps<TItem>
-) {
+export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TItem>): JSX.Element | null {
   if (!props.collection || props.collection.items.length === 0) {
     return null;
   }
@@ -39,16 +28,9 @@ export function Results<TItem extends StoredDocSearchHit>(
     <section className="DocSearch-Hits">
       <div className="DocSearch-Hit-source">{props.title}</div>
 
-      <ul {...props.getListProps()}>
+      <ul {...props.getListProps({ source: props.collection.source })}>
         {props.collection.items.map((item, index) => {
-          return (
-            <Result
-              key={[props.title, item.objectID].join(':')}
-              item={item}
-              index={index}
-              {...props}
-            />
-          );
+          return <Result key={[props.title, item.objectID].join(':')} item={item} index={index} {...props} />;
         })}
       </ul>
     </section>
@@ -69,18 +51,18 @@ function Result<TItem extends StoredDocSearchHit>({
   onItemClick,
   collection,
   hitComponent,
-}: ResultProps<TItem>) {
+}: ResultProps<TItem>): JSX.Element {
   const [isDeleting, setIsDeleting] = React.useState(false);
   const [isFavoriting, setIsFavoriting] = React.useState(false);
   const action = React.useRef<(() => void) | null>(null);
   const Hit = hitComponent!;
 
-  function runDeleteTransition(cb: () => void) {
+  function runDeleteTransition(cb: () => void): void {
     setIsDeleting(true);
     action.current = cb;
   }
 
-  function runFavoriteTransition(cb: () => void) {
+  function runFavoriteTransition(cb: () => void): void {
     setIsFavoriting(true);
     action.current = cb;
   }
@@ -89,8 +71,7 @@ function Result<TItem extends StoredDocSearchHit>({
     <li
       className={[
         'DocSearch-Hit',
-        (item as unknown as InternalDocSearchHit).__docsearch_parent &&
-          'DocSearch-Hit--Child',
+        (item as unknown as InternalDocSearchHit).__docsearch_parent && 'DocSearch-Hit--Child',
         isDeleting && 'DocSearch-Hit--deleting',
         isFavoriting && 'DocSearch-Hit--favoriting',
       ]
@@ -115,18 +96,8 @@ function Result<TItem extends StoredDocSearchHit>({
 
           {item.hierarchy[item.type] && item.type === 'lvl1' && (
             <div className="DocSearch-Hit-content-wrapper">
-              <Snippet
-                className="DocSearch-Hit-title"
-                hit={item}
-                attribute="hierarchy.lvl1"
-              />
-              {item.content && (
-                <Snippet
-                  className="DocSearch-Hit-path"
-                  hit={item}
-                  attribute="content"
-                />
-              )}
+              <Snippet className="DocSearch-Hit-title" hit={item} attribute="hierarchy.lvl1" />
+              {item.content && <Snippet className="DocSearch-Hit-path" hit={item} attribute="content" />}
             </div>
           )}
 
@@ -137,31 +108,15 @@ function Result<TItem extends StoredDocSearchHit>({
               item.type === 'lvl5' ||
               item.type === 'lvl6') && (
               <div className="DocSearch-Hit-content-wrapper">
-                <Snippet
-                  className="DocSearch-Hit-title"
-                  hit={item}
-                  attribute={`hierarchy.${item.type}`}
-                />
-                <Snippet
-                  className="DocSearch-Hit-path"
-                  hit={item}
-                  attribute="hierarchy.lvl1"
-                />
+                <Snippet className="DocSearch-Hit-title" hit={item} attribute={`hierarchy.${item.type}`} />
+                <Snippet className="DocSearch-Hit-path" hit={item} attribute="hierarchy.lvl1" />
               </div>
             )}
 
           {item.type === 'content' && (
             <div className="DocSearch-Hit-content-wrapper">
-              <Snippet
-                className="DocSearch-Hit-title"
-                hit={item}
-                attribute="content"
-              />
-              <Snippet
-                className="DocSearch-Hit-path"
-                hit={item}
-                attribute="hierarchy.lvl1"
-              />
+              <Snippet className="DocSearch-Hit-title" hit={item} attribute="content" />
+              <Snippet className="DocSearch-Hit-path" hit={item} attribute="hierarchy.lvl1" />
             </div>
           )}
 

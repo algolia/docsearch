@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 
 import { SelectIcon, SourceIcon } from './icons';
 import { Results } from './Results';
@@ -6,12 +6,9 @@ import type { ScreenStateProps } from './ScreenState';
 import type { InternalDocSearchHit } from './types';
 import { removeHighlightTags } from './utils';
 
-type ResultsScreenProps = Omit<
-  ScreenStateProps<InternalDocSearchHit>,
-  'translations'
->;
+type ResultsScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'>;
 
-export function ResultsScreen(props: ResultsScreenProps) {
+export function ResultsScreen(props: ResultsScreenProps): JSX.Element {
   return (
     <div className="DocSearch-Dropdown-Container">
       {props.state.collections.map((collection) => {
@@ -38,8 +35,7 @@ export function ResultsScreen(props: ResultsScreenProps) {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     >
-                      {item.__docsearch_parent !==
-                      collection.items[index + 1]?.__docsearch_parent ? (
+                      {item.__docsearch_parent !== collection.items[index + 1]?.__docsearch_parent ? (
                         <path d="M8 6v21M20 27H8.3" />
                       ) : (
                         <path d="M8 6v42M20 27H8.3" />

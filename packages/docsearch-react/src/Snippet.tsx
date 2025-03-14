@@ -1,4 +1,4 @@
-import { createElement } from 'react';
+import { type JSX, createElement } from 'react';
 
 import type { StoredDocSearchHit } from './types';
 
@@ -23,13 +23,11 @@ export function Snippet<TItem extends StoredDocSearchHit>({
   attribute,
   tagName = 'span',
   ...rest
-}: SnippetProps<TItem>) {
+}: SnippetProps<TItem>): JSX.Element {
   return createElement(tagName, {
     ...rest,
     dangerouslySetInnerHTML: {
-      __html:
-        getPropertyByPath(hit, `_snippetResult.${attribute}.value`) ||
-        getPropertyByPath(hit, attribute),
+      __html: getPropertyByPath(hit, `_snippetResult.${attribute}.value`) || getPropertyByPath(hit, attribute),
     },
   });
 }

@@ -1,3 +1,98 @@
+# [3.9.0](https://github.com/algolia/docsearch/compare/v3.8.3...v3.9.0) (2025-02-17)
+
+
+### Features
+
+* **deps:** update react to 19 ([#2487](https://github.com/algolia/docsearch/issues/2487)) ([698c00c](https://github.com/algolia/docsearch/commit/698c00c95543a3e8407f05a4493890fdf2ffaf5a))
+
+
+
+## [3.8.3](https://github.com/algolia/docsearch/compare/v3.8.2...v3.8.3) (2025-01-21)
+
+
+### Bug Fixes
+
+* **css:** add transition effects to pressed key buttons ([#2447](https://github.com/algolia/docsearch/issues/2447)) ([7577045](https://github.com/algolia/docsearch/commit/7577045fe81313ccd614455806f87599c55449c6))
+* **modal:** add scroll-margin-top for DocSearch-Hit ([#2434](https://github.com/algolia/docsearch/issues/2434)) ([50de4d9](https://github.com/algolia/docsearch/commit/50de4d9de075368b1ab4b26c13ceeb9def7181eb)), closes [#2433](https://github.com/algolia/docsearch/issues/2433)
+* **script:** use mjs for shipjs ([#2462](https://github.com/algolia/docsearch/issues/2462)) ([212814f](https://github.com/algolia/docsearch/commit/212814f121570ddfe5fa9129dc023231a640e9ce))
+* **ui:** compensate for scrollbar ([#2413](https://github.com/algolia/docsearch/issues/2413)) ([db8edeb](https://github.com/algolia/docsearch/commit/db8edeb818f8a788efe89b97f954308a1b1e2b32)), closes [#2378](https://github.com/algolia/docsearch/issues/2378)
+
+
+
+## [3.8.2](https://github.com/algolia/docsearch/compare/v3.8.1...v3.8.2) (2024-12-17)
+
+
+### Bug Fixes
+
+* **css:** older sass supported syntax ([#2415](https://github.com/algolia/docsearch/issues/2415)) ([0658d31](https://github.com/algolia/docsearch/commit/0658d3190d022954af21ff021da42d08d4db7463))
+
+
+
+## [3.8.1](https://github.com/algolia/docsearch/compare/v3.8.0...v3.8.1) (2024-12-16)
+
+
+### Bug Fixes
+
+* use SearchParamsObject for searchParameters ([#2362](https://github.com/algolia/docsearch/issues/2362)) ([24c6b4d](https://github.com/algolia/docsearch/commit/24c6b4dbf7bd476683ddea6ba14f641dcca31895))
+
+
+
+# [3.8.0](https://github.com/algolia/docsearch/compare/v3.7.0...v3.8.0) (2024-11-12)
+
+This version introduces a new type [DocSearchTransformClient](https://github.com/algolia/docsearch/blob/main/packages/docsearch-react/src/DocSearch.tsx#L19) to allow the `transformSearchClient` to use either the lite client, or the full algoliasearch client.
+Users are encouraged to use the [lite client](https://www.algolia.com/doc/libraries/javascript/v5/methods/search/) (`import { liteClient } from 'algoliasearch/lite`) to reduce bundle size.
+
+### Bug Fixes
+
+* **types:** use a minimal type for transformSearchClient ([#2348](https://github.com/algolia/docsearch/issues/2348)) ([08d9a37](https://github.com/algolia/docsearch/commit/08d9a37807a136da99ca2dd39f4cbc86ade9c5bf))
+
+
+### Features
+
+* **a11y:** add hotkeys to search input aria-label ([#2337](https://github.com/algolia/docsearch/issues/2337)) ([44aa7dc](https://github.com/algolia/docsearch/commit/44aa7dcf3831b533d9546c95a916d6acdee9d6d8))
+
+
+
+# [3.7.0](https://github.com/algolia/docsearch/compare/v3.6.3...v3.7.0) (2024-11-04)
+
+
+### Bug Fixes
+
+* **types:** export the types folder ([#2332](https://github.com/algolia/docsearch/issues/2332)) ([90ca5fa](https://github.com/algolia/docsearch/commit/90ca5fa8ed73d01d4ca22ed0de0e38652e56b5bb))
+
+
+
+## <small>3.6.3 (2024-10-31)</small>
+
+* fix: upgrade algoliasearch to v5 (#2326) ([93578a4](https://github.com/algolia/docsearch/commit/93578a4)), closes [#2326](https://github.com/algolia/docsearch/issues/2326)
+* fix: use vite instead of parcel in the examples (#2329) ([d360855](https://github.com/algolia/docsearch/commit/d360855)), closes [#2329](https://github.com/algolia/docsearch/issues/2329)
+* docs(showcase): Fix logos for ScalarDB and ScalarDL in showcase (#2317) ([90f3c6a](https://github.com/algolia/docsearch/commit/90f3c6a)), closes [#2317](https://github.com/algolia/docsearch/issues/2317)
+
+
+
+## [3.6.2](https://github.com/algolia/docsearch/compare/v3.6.1...v3.6.2) (2024-09-27)
+
+
+### Bug Fixes
+
+* **email:** docsearch@algolia.com is being retired ([#2280](https://github.com/algolia/docsearch/issues/2280)) ([698c1cd](https://github.com/algolia/docsearch/commit/698c1cd8cd3848c10941dbdde01661311efd29f9))
+* **hits:** default to hierarchy lvl0 if highlights present ([#2309](https://github.com/algolia/docsearch/issues/2309)) ([5260d1e](https://github.com/algolia/docsearch/commit/5260d1e5c280468bb08a20918c7858e695d11cd8))
+
+
+
+## [3.6.1](https://github.com/algolia/docsearch/compare/v3.6.0...v3.6.1) (2024-07-16)
+
+
+### Bug Fixes
+
+* updating the templates page ([#2273](https://github.com/algolia/docsearch/issues/2273)) ([4aa0c2c](https://github.com/algolia/docsearch/commit/4aa0c2c67a5ba4d5d786c63cbce749d674b8ce44))
+* **apply form:** Update ApplyForm.js ([#2270](https://github.com/algolia/docsearch/issues/2270)) ([069a3de](https://github.com/algolia/docsearch/commit/069a3de0b5e94b1186315a90e5724a9a3d8b97b1))
+* **logos:** removed logos no longer using algolia ([#2261](https://github.com/algolia/docsearch/issues/2261)) ([8587f58](https://github.com/algolia/docsearch/commit/8587f58b0361699bb9ea26624052b201e69e5531))
+* **logos:** they will not be fixing the search ([#2269](https://github.com/algolia/docsearch/issues/2269)) ([cdfa993](https://github.com/algolia/docsearch/commit/cdfa993990ff8caa323719ff8205db38f2ba06fe))
+* **logos:** update URL and remove logos no longer using DocSearch ([#2260](https://github.com/algolia/docsearch/issues/2260)) ([1081660](https://github.com/algolia/docsearch/commit/108166016d91d8fcc26df15ca52c386d9334ab5d))
+
+
+
 # [3.6.0](https://github.com/algolia/docsearch/compare/v3.5.2...v3.6.0) (2024-03-06)
 
 

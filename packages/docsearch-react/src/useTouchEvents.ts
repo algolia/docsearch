@@ -13,7 +13,7 @@ export function useTouchEvents({
   panelElement,
   formElement,
   inputElement,
-}: UseTouchEventsProps) {
+}: UseTouchEventsProps): void {
   React.useEffect(() => {
     if (!(panelElement && formElement && inputElement)) {
       return undefined;
@@ -28,7 +28,7 @@ export function useTouchEvents({
     window.addEventListener('touchstart', onTouchStart);
     window.addEventListener('touchmove', onTouchMove);
 
-    return () => {
+    return (): void => {
       window.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchmove', onTouchMove);
     };

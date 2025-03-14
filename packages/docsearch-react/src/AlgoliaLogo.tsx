@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 
 type AlgoliaLogoTranslations = Partial<{
   searchByText: string;
@@ -8,7 +8,7 @@ type AlgoliaLogoProps = {
   translations?: AlgoliaLogoTranslations;
 };
 
-export function AlgoliaLogo({ translations = {} }: AlgoliaLogoProps) {
+export function AlgoliaLogo({ translations = {} }: AlgoliaLogoProps): JSX.Element {
   const { searchByText = 'Search by' } = translations;
 
   return (
@@ -28,21 +28,13 @@ export function AlgoliaLogo({ translations = {} }: AlgoliaLogoProps) {
         viewBox="0 0 2196.2 500"
       >
         <defs>
-          <style>{`.cls-1,.cls-2{fill:#003dff;}.cls-2{fill-rule:evenodd;}`}</style>
+          <style>{'.cls-1,.cls-2{fill:#003dff;}.cls-2{fill-rule:evenodd;}'}</style>
         </defs>
         <path
           className="cls-2"
           d="M1070.38,275.3V5.91c0-3.63-3.24-6.39-6.82-5.83l-50.46,7.94c-2.87,.45-4.99,2.93-4.99,5.84l.17,273.22c0,12.92,0,92.7,95.97,95.49,3.33,.1,6.09-2.58,6.09-5.91v-40.78c0-2.96-2.19-5.51-5.12-5.84-34.85-4.01-34.85-47.57-34.85-54.72Z"
         />
-        <rect
-          className="cls-1"
-          x="1845.88"
-          y="104.73"
-          width="62.58"
-          height="277.9"
-          rx="5.9"
-          ry="5.9"
-        />
+        <rect className="cls-1" x="1845.88" y="104.73" width="62.58" height="277.9" rx="5.9" ry="5.9" />
         <path
           className="cls-2"
           d="M1851.78,71.38h50.77c3.26,0,5.9-2.64,5.9-5.9V5.9c0-3.62-3.24-6.39-6.82-5.83l-50.77,7.95c-2.87,.45-4.99,2.92-4.99,5.83v51.62c0,3.26,2.64,5.9,5.9,5.9Z"

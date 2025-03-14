@@ -9,7 +9,7 @@
  * Create as many sidebars as you want.
  */
 
-module.exports = {
+export default {
   docs: [
     {
       type: 'category',
@@ -19,7 +19,7 @@ module.exports = {
     {
       type: 'category',
       label: 'DocSearch v3',
-      items: ['DocSearch-v3', 'api', 'styling', 'migrating-from-v2'],
+      items: ['docsearch-v3', 'api', 'styling', 'migrating-from-v2'],
     },
     {
       type: 'category',
@@ -33,7 +33,7 @@ module.exports = {
         {
           type: 'category',
           label: 'FAQ',
-          items: ['crawler', 'DocSearch-program'],
+          items: ['crawler', 'docsearch-program'],
         },
         {
           type: 'doc',

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 
 import type { InternalDocSearchHit, StoredDocSearchHit } from './types';
 
@@ -7,6 +7,6 @@ interface HitProps {
   children: React.ReactNode;
 }
 
-export function Hit({ hit, children }: HitProps) {
+export function Hit({ hit, children }: HitProps): JSX.Element {
   return <a href={hit.url}>{children}</a>;
 }

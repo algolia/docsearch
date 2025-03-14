@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 
-export function ErrorIcon() {
+export function ErrorIcon(): JSX.Element {
   return (
     <svg
       width="40"

@@ -1,12 +1,6 @@
 version: 2.1
 
 aliases:
-  - &install_yarn_version
-    name: Install specific Yarn version
-    command: |
-      curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.22.5
-      echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
-
   - &restore_yarn_cache
     name: Restore Yarn cache
     keys:
@@ -16,11 +10,12 @@ aliases:
     name: Save Yarn cache
     key: yarn-packages-{{ checksum "yarn.lock" }}
     paths:
-      - ~/.cache/yarn
+      - .yarn/cache
+      - .yarn/unplugged
 
   - &run_yarn_install
     name: Install dependencies
-    command: yarn install --frozen-lockfile
+    command: yarn install --immutable
 
   - &restore_dist_folders
     name: Restore dist folders
@@ -38,12 +33,12 @@ aliases:
 defaults: &defaults
   working_directory: ~/docsearch
   docker:
-    - image: cimg/node:16.20.2
+    - image: cimg/node:18.20.3
 
 cypress: &cypress
   working_directory: ~/docsearch
   docker:
-    - image: cypress/browsers:node16.14.0-chrome99-ff97
+    - image: cypress/browsers:node-18.20.3-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1
       environment:
         ## this enables colors in the output
         TERM: xterm
@@ -59,7 +54,6 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
@@ -88,7 +82,6 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
@@ -101,7 +94,6 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
@@ -114,7 +106,6 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
@@ -127,24 +118,27 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
       - run: *restore_dist_folders
       - run:
           name: Unit tests
-          command: yarn run test --maxWorkers=4
+          command: yarn run test
   release:
     <<: *defaults
     steps:
       - checkout
       - *attach_workspace
-      - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
       - run: *restore_dist_folders
+      - run:
+          name: Setup git user
+          command: |
+            git config --global user.email "accounts+algolia-api-client-bot@algolia.com"
+            git config --global user.name "algolia-bot"
       - run:
           name: Release if needed
           command: yarn run shipjs trigger
@@ -153,7 +147,6 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache

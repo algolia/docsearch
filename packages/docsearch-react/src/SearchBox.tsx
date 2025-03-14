@@ -1,9 +1,5 @@
-import type {
-  AutocompleteApi,
-  AutocompleteState,
-} from '@algolia/autocomplete-core';
-import type { MutableRefObject } from 'react';
-import React from 'react';
+import type { AutocompleteApi, AutocompleteState } from '@algolia/autocomplete-core';
+import React, { type JSX, type RefObject } from 'react';
 
 import { MAX_QUERY_SIZE } from './constants';
 import { LoadingIcon } from './icons/LoadingIcon';
@@ -20,21 +16,16 @@ export type SearchBoxTranslations = Partial<{
 }>;
 
 interface SearchBoxProps
-  extends AutocompleteApi<
-    InternalDocSearchHit,
-    React.FormEvent,
-    React.MouseEvent,
-    React.KeyboardEvent
-  > {
+  extends AutocompleteApi<InternalDocSearchHit, React.FormEvent, React.MouseEvent, React.KeyboardEvent> {
   state: AutocompleteState<InternalDocSearchHit>;
   autoFocus: boolean;
-  inputRef: MutableRefObject<HTMLInputElement | null>;
+  inputRef: RefObject<HTMLInputElement | null>;
   onClose: () => void;
   isFromSelection: boolean;
   translations?: SearchBoxTranslations;
 }
 
-export function SearchBox({ translations = {}, ...props }: SearchBoxProps) {
+export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.Element {
   const {
     resetButtonTitle = 'Clear the query',
     resetButtonAriaLabel = 'Clear the query',
@@ -69,9 +60,7 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps) {
       >
         <label className="DocSearch-MagnifierLabel" {...props.getLabelProps()}>
           <SearchIcon />
-          <span className="DocSearch-VisuallyHiddenForAccessibility">
-            {searchInputLabel}
-          </span>
+          <span className="DocSearch-VisuallyHiddenForAccessibility">{searchInputLabel}</span>
         </label>
 
         <div className="DocSearch-LoadingIndicator">
@@ -99,12 +88,7 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps) {
         </button>
       </form>
 
-      <button
-        className="DocSearch-Cancel"
-        type="reset"
-        aria-label={cancelButtonAriaLabel}
-        onClick={props.onClose}
-      >
+      <button className="DocSearch-Cancel" type="reset" aria-label={cancelButtonAriaLabel} onClick={props.onClose}>
         {cancelButtonText}
       </button>
     </>

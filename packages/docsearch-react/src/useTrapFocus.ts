@@ -4,19 +4,19 @@ interface UseTrapFocusProps {
   container: HTMLElement | null;
 }
 
-export function useTrapFocus({ container }: UseTrapFocusProps) {
+export function useTrapFocus({ container }: UseTrapFocusProps): void {
   React.useEffect(() => {
     if (!container) {
       return undefined;
     }
 
     const focusableElements = container.querySelectorAll<HTMLElement>(
-      'a[href]:not([disabled]), button:not([disabled]), input:not([disabled])'
+      'a[href]:not([disabled]), button:not([disabled]), input:not([disabled])',
     );
     const firstElement = focusableElements[0];
     const lastElement = focusableElements[focusableElements.length - 1];
 
-    function trapFocus(event: KeyboardEvent) {
+    function trapFocus(event: KeyboardEvent): void {
       if (event.key !== 'Tab') {
         return;
       }
@@ -34,7 +34,7 @@ export function useTrapFocus({ container }: UseTrapFocusProps) {
 
     container.addEventListener('keydown', trapFocus);
 
-    return () => {
+    return (): void => {
       container.removeEventListener('keydown', trapFocus);
     };
   }, [container]);

@@ -1,40 +1,36 @@
 import replace from '@rollup/plugin-replace';
 
-import { plugins } from '../../rollup.base.config';
+import { plugins, typesConfig } from '../../rollup.base.config';
 import { getBundleBanner } from '../../scripts/getBundleBanner';
 
 import pkg from './package.json';
 
-if (!process.env.BUILD) {
-  throw new Error('The `BUILD` environment variable is required to build.');
-}
-
-const output = {
-  umd: {
-    file: 'dist/umd/index.js',
-    format: 'umd',
-    sourcemap: true,
-    name: 'docsearch',
-    banner: getBundleBanner(pkg),
+export default [
+  {
+    input: 'src/index.ts',
+    output: [
+      {
+        file: 'dist/umd/index.js',
+        format: 'umd',
+        sourcemap: true,
+        name: 'docsearch',
+        banner: getBundleBanner(pkg),
+      },
+      {
+        file: 'dist/esm/index.js',
+        format: 'es',
+        sourcemap: true,
+        banner: getBundleBanner(pkg),
+        plugins: [...plugins],
+      },
+    ],
+    plugins: [
+      ...plugins,
+      replace({
+        preventAssignment: true,
+        'process.env.NODE_ENV': JSON.stringify('production'),
+      }),
+    ],
   },
-  esm: {
-    file: 'dist/esm/index.js',
-    format: 'es',
-    sourcemap: true,
-    banner: getBundleBanner(pkg),
-  },
-};
-
-export default {
-  input: 'src/index.ts',
-  output: output[process.env.BUILD],
-  plugins:
-    process.env.BUILD === 'umd'
-      ? [
-          ...plugins,
-          replace({
-            'process.env.NODE_ENV': JSON.stringify('production'),
-          }),
-        ]
-      : plugins,
-};
+  typesConfig,
+];

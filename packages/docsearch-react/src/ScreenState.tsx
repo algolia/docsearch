@@ -1,8 +1,4 @@
-import type {
-  AutocompleteApi,
-  AutocompleteState,
-  BaseItem,
-} from '@algolia/autocomplete-core';
+import type { AutocompleteApi, AutocompleteState, BaseItem } from '@algolia/autocomplete-core';
 import React from 'react';
 
 import type { DocSearchProps } from './DocSearch';
@@ -23,19 +19,11 @@ export type ScreenStateTranslations = Partial<{
 }>;
 
 export interface ScreenStateProps<TItem extends BaseItem>
-  extends AutocompleteApi<
-    TItem,
-    React.FormEvent,
-    React.MouseEvent,
-    React.KeyboardEvent
-  > {
+  extends AutocompleteApi<TItem, React.FormEvent, React.MouseEvent, React.KeyboardEvent> {
   state: AutocompleteState<TItem>;
   recentSearches: StoredSearchPlugin<StoredDocSearchHit>;
   favoriteSearches: StoredSearchPlugin<StoredDocSearchHit>;
-  onItemClick: (
-    item: InternalDocSearchHit,
-    event: KeyboardEvent | MouseEvent
-  ) => void;
+  onItemClick: (item: InternalDocSearchHit, event: KeyboardEvent | MouseEvent) => void;
   inputRef: React.MutableRefObject<HTMLInputElement | null>;
   hitComponent: DocSearchProps['hitComponent'];
   indexName: DocSearchProps['indexName'];
@@ -51,27 +39,14 @@ export const ScreenState = React.memo(
       return <ErrorScreen translations={translations?.errorScreen} />;
     }
 
-    const hasCollections = props.state.collections.some(
-      (collection) => collection.items.length > 0
-    );
+    const hasCollections = props.state.collections.some((collection) => collection.items.length > 0);
 
     if (!props.state.query) {
-      return (
-        <StartScreen
-          {...props}
-          hasCollections={hasCollections}
-          translations={translations?.startScreen}
-        />
-      );
+      return <StartScreen {...props} hasCollections={hasCollections} translations={translations?.startScreen} />;
     }
 
     if (hasCollections === false) {
-      return (
-        <NoResultsScreen
-          {...props}
-          translations={translations?.noResultsScreen}
-        />
-      );
+      return <NoResultsScreen {...props} translations={translations?.noResultsScreen} />;
     }
 
     return <ResultsScreen {...props} />;
@@ -81,9 +56,6 @@ export const ScreenState = React.memo(
     // avoid UI flashes:
     //  - Empty screen → Results screen
     //  - NoResults screen → NoResults screen with another query
-    return (
-      nextProps.state.status === 'loading' ||
-      nextProps.state.status === 'stalled'
-    );
-  }
+    return nextProps.state.status === 'loading' || nextProps.state.status === 'stalled';
+  },
 );

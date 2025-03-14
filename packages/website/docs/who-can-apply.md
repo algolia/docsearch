@@ -38,7 +38,7 @@ As stated in [the priority section](#priority), we receive a lot of requests eve
 
 The full process (from application to deployment) can take **up to two weeks**, applying multiple times or opening issues **only slows the process**, please be patient 🙏.
 
-[1]: /docs/DocSearch-v3
+[1]: /docs/docsearch-v3
 [2]: /apply
 [3]: /docs/legacy/run-your-own
 [4]: https://www.algolia.com/doc/api-client/getting-started/install/javascript/?client=javascript

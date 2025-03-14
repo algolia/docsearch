@@ -116,7 +116,7 @@ version:["2.0.0-alpha.62" , "latest"]
 
 - Make sure your documentation content is also available without JavaScript rendering on the client-side. If you absolutely need JavaScript turned on, you need to [set `js_render: true` in your configuration][8].
 
-Any questions? [Send us an email][9].
+Any questions? Connect with us on [Discord][9] or let our [support][10] team know.
 
 [1]: /docs/legacy/how-do-we-build-an-index
 [2]: /docs/legacy/config-file#selectors
@@ -126,4 +126,5 @@ Any questions? [Send us an email][9].
 [6]: https://semver.org/
 [7]: https://www.sitemaps.org/
 [8]: /docs/legacy/config-file#js_render-optional
-[9]: mailto:DocSearch@algolia.com
+[9]: https://alg.li/discord
+[10]: https://support.algolia.com/

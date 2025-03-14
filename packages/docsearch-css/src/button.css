@@ -57,10 +57,19 @@
   justify-content: center;
   margin-right: 0.4em;
   position: relative;
-  padding: 0px 0px 2px 0px;
-  border: 0px;
+  padding: 0 0 2px;
+  border: 0;
   top: -1px;
   width: 20px;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 100ms;
+}
+
+@media (prefers-reduced-motion)  {
+  .DocSearch-Button-Key {
+    transition: none;
+  }
 }
 
 .DocSearch-Button-Key--pressed {
