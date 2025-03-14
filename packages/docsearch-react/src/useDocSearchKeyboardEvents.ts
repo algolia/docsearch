@@ -9,7 +9,7 @@ export interface UseDocSearchKeyboardEventsProps {
 }
 
 function isEditingContent(event: KeyboardEvent): boolean {
-  const element = event.target as HTMLElement;
+  const element = event.composedPath()[0] as HTMLElement;
   const tagName = element.tagName;
 
   return element.isContentEditable || tagName === 'INPUT' || tagName === 'SELECT' || tagName === 'TEXTAREA';
