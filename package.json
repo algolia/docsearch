@@ -73,7 +73,7 @@
     "rollup-plugin-filesize": "10.0.0",
     "shipjs": "0.27.0",
     "start-server-and-test": "2.0.11",
-    "stylelint": "16.16.0",
+    "stylelint": "16.17.0",
     "stylelint-config-sass-guidelines": "12.1.0",
     "stylelint-config-standard": "36.0.1",
     "stylelint-no-unsupported-browser-features": "8.0.4",
