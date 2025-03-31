@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 
 import { NoResultsIcon } from './icons';
 import type { ScreenStateProps } from './ScreenState';

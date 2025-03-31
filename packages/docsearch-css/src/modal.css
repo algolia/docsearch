@@ -263,6 +263,7 @@
   display: flex;
   padding-bottom: 4px;
   position: relative;
+  scroll-margin-top: 40px;
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
@@ -564,7 +565,7 @@ assistive tech users */
 }
 
 /* Responsive */
-@media (width <= 768px) {
+@media (max-width: 768px) {
   :root {
     --docsearch-spacing: 10px;
     --docsearch-footer-height: 40px;

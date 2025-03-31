@@ -1,3 +1,42 @@
+# [3.9.0](https://github.com/algolia/docsearch/compare/v3.8.3...v3.9.0) (2025-02-17)
+
+
+### Features
+
+* **deps:** update react to 19 ([#2487](https://github.com/algolia/docsearch/issues/2487)) ([698c00c](https://github.com/algolia/docsearch/commit/698c00c95543a3e8407f05a4493890fdf2ffaf5a))
+
+
+
+## [3.8.3](https://github.com/algolia/docsearch/compare/v3.8.2...v3.8.3) (2025-01-21)
+
+
+### Bug Fixes
+
+* **css:** add transition effects to pressed key buttons ([#2447](https://github.com/algolia/docsearch/issues/2447)) ([7577045](https://github.com/algolia/docsearch/commit/7577045fe81313ccd614455806f87599c55449c6))
+* **modal:** add scroll-margin-top for DocSearch-Hit ([#2434](https://github.com/algolia/docsearch/issues/2434)) ([50de4d9](https://github.com/algolia/docsearch/commit/50de4d9de075368b1ab4b26c13ceeb9def7181eb)), closes [#2433](https://github.com/algolia/docsearch/issues/2433)
+* **script:** use mjs for shipjs ([#2462](https://github.com/algolia/docsearch/issues/2462)) ([212814f](https://github.com/algolia/docsearch/commit/212814f121570ddfe5fa9129dc023231a640e9ce))
+* **ui:** compensate for scrollbar ([#2413](https://github.com/algolia/docsearch/issues/2413)) ([db8edeb](https://github.com/algolia/docsearch/commit/db8edeb818f8a788efe89b97f954308a1b1e2b32)), closes [#2378](https://github.com/algolia/docsearch/issues/2378)
+
+
+
+## [3.8.2](https://github.com/algolia/docsearch/compare/v3.8.1...v3.8.2) (2024-12-17)
+
+
+### Bug Fixes
+
+* **css:** older sass supported syntax ([#2415](https://github.com/algolia/docsearch/issues/2415)) ([0658d31](https://github.com/algolia/docsearch/commit/0658d3190d022954af21ff021da42d08d4db7463))
+
+
+
+## [3.8.1](https://github.com/algolia/docsearch/compare/v3.8.0...v3.8.1) (2024-12-16)
+
+
+### Bug Fixes
+
+* use SearchParamsObject for searchParameters ([#2362](https://github.com/algolia/docsearch/issues/2362)) ([24c6b4d](https://github.com/algolia/docsearch/commit/24c6b4dbf7bd476683ddea6ba14f641dcca31895))
+
+
+
 # [3.8.0](https://github.com/algolia/docsearch/compare/v3.7.0...v3.8.0) (2024-11-12)
 
 This version introduces a new type [DocSearchTransformClient](https://github.com/algolia/docsearch/blob/main/packages/docsearch-react/src/DocSearch.tsx#L19) to allow the `transformSearchClient` to use either the lite client, or the full algoliasearch client.

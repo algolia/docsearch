@@ -29,7 +29,7 @@ html[data-theme='dark'] {
 }
 
 /* DocSearch x Algolia logo */
-@media (width <=565px) {
+@media (max-width: 565px) {
   .navbar__logo .docsearch-nav-logo {
     width: 70%;
     height: auto;
@@ -38,7 +38,7 @@ html[data-theme='dark'] {
 }
 
 /* DocSearch x Algolia logo in sidebar */
-@media (width >=997px) {
+@media (min-width: 997px) {
   .theme-doc-sidebar-container .docsearch-nav-logo {
     height: auto;
   }

@@ -5,11 +5,11 @@ export interface UseDocSearchKeyboardEventsProps {
   onOpen: () => void;
   onClose: () => void;
   onInput?: (event: KeyboardEvent) => void;
-  searchButtonRef?: React.RefObject<HTMLButtonElement>;
+  searchButtonRef: React.RefObject<HTMLButtonElement | null>;
 }
 
 function isEditingContent(event: KeyboardEvent): boolean {
-  const element = event.target as HTMLElement;
+  const element = event.composedPath()[0] as HTMLElement;
   const tagName = element.tagName;
 
   return element.isContentEditable || tagName === 'INPUT' || tagName === 'SELECT' || tagName === 'TEXTAREA';

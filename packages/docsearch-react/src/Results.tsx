@@ -1,5 +1,5 @@
 import type { AutocompleteApi, AutocompleteState, BaseItem } from '@algolia/autocomplete-core';
-import React from 'react';
+import React, { type JSX } from 'react';
 
 import type { DocSearchProps } from './DocSearch';
 import { Snippet } from './Snippet';
@@ -28,7 +28,7 @@ export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TI
     <section className="DocSearch-Hits">
       <div className="DocSearch-Hit-source">{props.title}</div>
 
-      <ul {...props.getListProps()}>
+      <ul {...props.getListProps({ source: props.collection.source })}>
         {props.collection.items.map((item, index) => {
           return <Result key={[props.title, item.objectID].join(':')} item={item} index={index} {...props} />;
         })}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 
 import { RecentIcon, ResetIcon, StarIcon } from './icons';
 import { Results } from './Results';
