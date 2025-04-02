@@ -1,17 +1,21 @@
 /* Variables */
 
 :root {
-  --docsearch-primary-color: rgb(84, 104, 255);
+  --docsearch-primary-color: rgb(0, 61, 255);
+  --docsearch-subtle-color: rgb(214, 214, 231);
   --docsearch-text-color: rgb(28, 30, 33);
+  --docsearch-secondary-text-color: rgba(90, 94, 154, 1);
+  --docsearch-background-color: rgb(245, 245, 250);
   --docsearch-spacing: 12px;
   --docsearch-icon-stroke-width: 1.4;
   --docsearch-highlight-color: var(--docsearch-primary-color);
   --docsearch-muted-color: rgb(150, 159, 175);
+  --docsearch-icon-color: rgba(90, 94, 154, 1);
   --docsearch-container-background: rgba(101, 108, 133, 0.8);
-  --docsearch-logo-color: rgba(84, 104, 255);
+  --docsearch-logo-color: rgba(0, 61, 255, 1);
 
   /* modal */
-  --docsearch-modal-width: 560px;
+  --docsearch-modal-width: 800px;
   --docsearch-modal-height: 600px;
   --docsearch-modal-background: rgb(245, 246, 247);
   --docsearch-modal-shadow: inset 1px 1px 0 0 rgba(255, 255, 255, 0.5),
@@ -42,7 +46,7 @@
     inset 0 0 1px 1px #fff, 0 1px 1px 0 rgba(30, 35, 90, 0.4);
 
   /* footer */
-  --docsearch-footer-height: 44px;
+  --docsearch-footer-height: 52px;
   --docsearch-footer-background: #fff;
   --docsearch-footer-shadow: 0 -1px 0 0 rgb(224, 227, 232),
     0 -3px 6px 0 rgba(69, 98, 155, 0.12);

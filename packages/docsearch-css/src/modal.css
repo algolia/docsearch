@@ -42,7 +42,7 @@
 
 .DocSearch-Modal {
   background: var(--docsearch-modal-background);
-  border-radius: 6px;
+  border-radius: 4px;
   box-shadow: var(--docsearch-modal-shadow);
   flex-direction: column;
   margin: 60px auto auto;
@@ -208,9 +208,10 @@
 }
 
 .DocSearch-Label {
-  color: var(--docsearch-muted-color);
-  font-size: 0.75em;
+  color: var(--docsearch-secondary-text-color);
+  font-size: 0.875em;
   line-height: 1.6em;
+  font-weight: 300;
 }
 
 .DocSearch-Help {
@@ -506,8 +507,8 @@ svg.DocSearch-Hit-Select-Icon {
 .DocSearch-Footer {
   align-items: center;
   background: var(--docsearch-footer-background);
-  border-radius: 0 0 8px 8px;
-  box-shadow: var(--docsearch-footer-shadow);
+  border-top: 1px solid var(--docsearch-subtle-color);
+  border-radius: 0 0 4px 4px;
   display: flex;
   flex-direction: row-reverse;
   flex-shrink: 0;
@@ -526,6 +527,7 @@ svg.DocSearch-Hit-Select-Icon {
   list-style: none;
   margin: 0;
   padding: 0;
+  gap: 16px;
 }
 
 .DocSearch-Commands li {
@@ -533,23 +535,30 @@ svg.DocSearch-Hit-Select-Icon {
   display: flex;
 }
 
-.DocSearch-Commands li:not(:last-of-type) {
-  margin-right: 0.8em;
-}
-
 .DocSearch-Commands-Key {
   align-items: center;
-  background: var(--docsearch-key-gradient);
   border-radius: 2px;
-  box-shadow: var(--docsearch-key-shadow);
+  background-color: var(--docsearch-background-color);
   display: flex;
-  height: 18px;
+  height: 24px;
   justify-content: center;
-  margin-right: 0.4em;
-  padding: 0 0 1px;
-  color: var(--docsearch-muted-color);
+  margin-right: 4px;
+  color: var(--docsearch-icon-color);
   border: 0;
-  width: 20px;
+  width: 24px;
+}
+
+.DocSearch-Commands-Key:last-of-type {
+  margin-right: 8px;
+}
+
+.DocSearch-Escape-Key {
+  font-weight: 300;
+  font-size: 10px;
+  line-height: 16px;
+  letter-spacing: normal;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 /* Hide element accessibly, so that it is still accessible to

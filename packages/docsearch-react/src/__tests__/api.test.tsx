@@ -171,7 +171,7 @@ describe('api', () => {
                 navigateText: 'Pour naviguer',
                 navigateUpKeyAriaLabel: 'Flèche vers le haut',
                 navigateDownKeyAriaLabel: 'Flèche le bas',
-                searchByText: 'Recherche par',
+                poweredByText: 'Propulsé par',
                 selectText: 'Pour selectionner',
                 selectKeyAriaLabel: "Touche d'entrée",
               },
