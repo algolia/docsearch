@@ -1,6 +1,7 @@
 import React, { type JSX, useEffect, useState } from 'react';
 
 import { ControlKeyIcon } from './icons/ControlKeyIcon';
+import { MetaKeyIcon } from './icons/MetaKeyIcon';
 import { SearchIcon } from './icons/SearchIcon';
 
 export type ButtonTranslations = Partial<{
@@ -35,7 +36,8 @@ export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButt
       key === ACTION_KEY_DEFAULT
         ? // eslint-disable-next-line react/jsx-key -- false flag
           ([ACTION_KEY_DEFAULT, 'Ctrl', <ControlKeyIcon />] as const)
-        : (['Meta', 'Command', key] as const);
+        : // eslint-disable-next-line react/jsx-key
+          (['Meta', 'Command', <MetaKeyIcon />] as const);
 
     return (
       <button
