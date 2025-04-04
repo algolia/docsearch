@@ -1,6 +1,6 @@
 import React, { type JSX } from 'react';
 
-import { RecentIcon, ResetIcon, StarIcon } from './icons';
+import { RecentIcon, CloseIcon, StarIcon } from './icons';
 import { Results } from './Results';
 import type { ScreenStateProps } from './ScreenState';
 import type { InternalDocSearchHit } from './types';
@@ -89,7 +89,7 @@ export function StartScreen({ translations = {}, ...props }: StartScreenProps): 
                   });
                 }}
               >
-                <ResetIcon />
+                <CloseIcon />
               </button>
             </div>
           </>
@@ -120,7 +120,7 @@ export function StartScreen({ translations = {}, ...props }: StartScreenProps): 
                 });
               }}
             >
-              <ResetIcon />
+              <CloseIcon />
             </button>
           </div>
         )}

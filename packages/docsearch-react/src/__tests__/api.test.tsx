@@ -134,10 +134,10 @@ describe('api', () => {
           translations={{
             modal: {
               searchBox: {
-                resetButtonTitle: 'Effacer',
-                resetButtonAriaLabel: 'Effacer',
-                cancelButtonText: 'Annuler',
-                cancelButtonAriaLabel: 'Annuler',
+                clearButtonTitle: 'Effacer',
+                clearButtonAriaLabel: 'Effacer',
+                closeButtonText: 'Fermer',
+                closeButtonAriaLabel: 'Fermer',
                 searchInputLabel: 'Recherche',
               },
             },

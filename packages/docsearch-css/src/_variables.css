@@ -26,6 +26,8 @@
   --docsearch-searchbox-background: #fff;
   --docsearch-searchbox-focus-background: #fff;
   --docsearch-searchbox-shadow: inset 0 0 0 2px var(--docsearch-primary-color);
+  --docsearch-actions-width: 99px;
+  --docsearch-actions-height: 44px;
 
   /* hit */
   --docsearch-hit-height: 56px;

@@ -96,15 +96,30 @@
   display: none;
 }
 
+.DocSearch-Actions {
+  width: var(--docsearch-actions-width);
+  height: var(--docsearch-actions-height);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 2px;
+  gap: 16px;
+}
+
+.DocSearch-Divider {
+  height: 24px;
+  border-left: 1px solid var(--docsearch-subtle-color);
+}
+
 .DocSearch-LoadingIndicator,
 .DocSearch-MagnifierLabel,
-.DocSearch-Reset {
+.DocSearch-Close {
   margin: 0;
   padding: 0;
 }
 
 .DocSearch-MagnifierLabel,
-.DocSearch-Reset {
+.DocSearch-Close {
   align-items: center;
   color: var(--docsearch-highlight-color);
   display: flex;
@@ -127,7 +142,7 @@
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
-  .DocSearch-Reset {
+  .DocSearch-Close {
     animation: none;
     appearance: none;
     background: none;
@@ -140,7 +155,7 @@
   }
 }
 
-.DocSearch-Reset {
+.DocSearch-Close {
   animation: fade-in 0.1s ease-in forwards;
   appearance: none;
   background: none;
@@ -153,11 +168,11 @@
   stroke-width: var(--docsearch-icon-stroke-width);
 }
 
-.DocSearch-Reset[hidden] {
+.DocSearch-Close[hidden] {
   display: none;
 }
 
-.DocSearch-Reset:hover {
+.DocSearch-Close:hover {
   color: var(--docsearch-highlight-color);
 }
 
@@ -167,14 +182,29 @@
   width: 24px;
 }
 
-.DocSearch-Cancel {
-  display: none;
+.DocSearch-Clear {
+  appearance: none;
+  background: none;
+  border: 0;
+  color: var(--docsearch-highlight-color);
+  cursor: pointer;
+  flex: none;
+  font: inherit;
+  font-size: 1em;
+  font-weight: 300;
+  height: 28px;
+  margin-left: var(--docsearch-spacing);
+  outline: none;
+  overflow: hidden;
+  padding: 0;
+  user-select: none;
+  white-space: nowrap;
 }
 
 /* Modal Dropdown */
 
 .DocSearch-Dropdown {
-  max-height: calc(
+  height: calc(
     var(--docsearch-modal-height) - var(--docsearch-searchbox-height) -
       var(--docsearch-spacing) - var(--docsearch-footer-height)
   );
@@ -621,7 +651,7 @@ assistive tech users */
     );
   }
 
-  .DocSearch-Cancel {
+  .DocSearch-Clear {
     appearance: none;
     background: none;
     border: 0;
@@ -631,7 +661,7 @@ assistive tech users */
     flex: none;
     font: inherit;
     font-size: 1em;
-    font-weight: 500;
+    font-weight: 300;
     margin-left: var(--docsearch-spacing);
     outline: none;
     overflow: hidden;
