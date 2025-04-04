@@ -1,6 +1,6 @@
 import React, { type JSX } from 'react';
 
-import { RecentIcon, CloseIcon, StarIcon } from './icons';
+import { RecentIcon, CloseIcon, StarIcon, SearchIcon } from './icons';
 import { Results } from './Results';
 import type { ScreenStateProps } from './ScreenState';
 import type { InternalDocSearchHit } from './types';
@@ -22,7 +22,7 @@ type StartScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translatio
 export function StartScreen({ translations = {}, ...props }: StartScreenProps): JSX.Element | null {
   const {
     recentSearchesTitle = 'Recent',
-    noRecentSearchesText = 'No recent searches',
+    noRecentSearchesText = 'Search results will appear here',
     saveRecentSearchButtonTitle = 'Save this search',
     removeRecentSearchButtonTitle = 'Remove this search from history',
     favoriteSearchesTitle = 'Favorite',
@@ -35,6 +35,9 @@ export function StartScreen({ translations = {}, ...props }: StartScreenProps): 
 
     return (
       <div className="DocSearch-StartScreen">
+        <div className="DocSearch-StartScreen-Icon">
+          <SearchIcon size={64} color="#5a5e9a" />
+        </div>
         <p className="DocSearch-Help">{noRecentSearchesText}</p>
       </div>
     );
