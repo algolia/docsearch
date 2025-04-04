@@ -1,6 +1,6 @@
 import React, { type JSX } from 'react';
 
-import { NoResultsIcon } from './icons';
+import { NoResultsIcon, SearchIcon } from './icons';
 import type { ScreenStateProps } from './ScreenState';
 import type { InternalDocSearchHit } from './types';
 
@@ -17,7 +17,7 @@ type NoResultsScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'transl
 
 export function NoResultsScreen({ translations = {}, ...props }: NoResultsScreenProps): JSX.Element {
   const {
-    noResultsText = 'No results for',
+    noResultsText = 'No results found for',
     suggestedQueryText = 'Try searching for',
     reportMissingResultsText = 'Believe this query should return results?',
     reportMissingResultsLinkText = 'Let us know.',
@@ -52,10 +52,11 @@ export function NoResultsScreen({ translations = {}, ...props }: NoResultsScreen
                     }}
                   >
                     {search}
+                    <SearchIcon size={16} />
                   </button>
                 </li>,
               ],
-              [],
+              []
             )}
           </ul>
         </div>
