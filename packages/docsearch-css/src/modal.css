@@ -205,14 +205,15 @@
 
 .DocSearch-Dropdown {
   height: calc(
-    var(--docsearch-modal-height) - var(--docsearch-searchbox-height) - var(--docsearch-spacing) -
-      var(--docsearch-footer-height)
+    var(--docsearch-modal-height) - var(--docsearch-searchbox-height) -
+      var(--docsearch-spacing) - var(--docsearch-footer-height)
   );
   min-height: var(--docsearch-spacing);
   overflow-y: auto; /* firefox */
   overflow-y: overlay;
   padding: 0 var(--docsearch-spacing);
-  scrollbar-color: var(--docsearch-muted-color) var(--docsearch-modal-background);
+  scrollbar-color: var(--docsearch-muted-color)
+    var(--docsearch-modal-background);
   scrollbar-width: thin;
 }
 
@@ -342,7 +343,6 @@
 .DocSearch-Hit a {
   background: var(--docsearch-hit-background);
   border-radius: 4px;
-  box-shadow: var(--docsearch-hit-shadow);
   display: block;
   padding-left: var(--docsearch-spacing);
   width: 100%;
@@ -350,12 +350,12 @@
 
 .DocSearch-Hit-source {
   background: var(--docsearch-modal-background);
-  color: var(--docsearch-highlight-color);
-  font-size: 0.85em;
+  color: var(--docsearch-text-color);
+  font-size: 0.9em;
   font-weight: 600;
   line-height: 32px;
   margin: 0 -4px;
-  padding: 8px 4px 0;
+  padding: 8px 4px 4px;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -370,16 +370,17 @@
 }
 
 .DocSearch-Hit[aria-selected='true'] a {
-  background-color: var(--docsearch-highlight-color);
+  background-color: var(--docsearch-hit-highlight-color);
 }
 
-.DocSearch-Hit[aria-selected='true'] mark {
+.DocSearch-Hit mark {
+  color: var(--docsearch-highlight-color);
   text-decoration: underline;
 }
 
 .DocSearch-Hit-Container {
   align-items: center;
-  color: var(--docsearch-hit-color);
+  color: var(--docsearch-text-color);
   display: flex;
   flex-direction: row;
   height: var(--docsearch-hit-height);
@@ -387,7 +388,7 @@
 }
 
 .DocSearch-Hit-icon {
-  color: var(--docsearch-muted-color);
+  color: var(--docsearch-secondary-text-color);
   height: 20px;
   stroke-width: var(--docsearch-icon-stroke-width);
   width: 20px;
@@ -472,22 +473,24 @@ svg.DocSearch-Hit-Select-Icon {
 }
 
 .DocSearch-Hit-title {
-  font-size: 0.9em;
+  font-size: 0.8em;
 }
 
 .DocSearch-Hit-path {
   color: var(--docsearch-muted-color);
-  font-size: 0.75em;
+  font-size: 0.6em;
 }
 
 .DocSearch-Hit[aria-selected='true'] .DocSearch-Hit-title,
-.DocSearch-Hit[aria-selected='true'] mark,
 .DocSearch-Hit[aria-selected='true'] .DocSearch-Hit-text,
-.DocSearch-Hit[aria-selected='true'] .DocSearch-Hit-path,
-.DocSearch-Hit[aria-selected='true'] .DocSearch-Hit-icon,
-.DocSearch-Hit[aria-selected='true'] .DocSearch-Hit-action,
 .DocSearch-Hit[aria-selected='true'] .DocSearch-Hit-Tree {
-  color: var(--docsearch-hit-active-color) !important;
+  color: var(--docsearch-text-color) !important;
+}
+
+.DocSearch-Hit[aria-selected='true'] .DocSearch-Hit-action,
+.DocSearch-Hit[aria-selected='true'] mark,
+.DocSearch-Hit[aria-selected='true'] .DocSearch-Hit-icon {
+  color: var(--docsearch-highlight-color) !important;
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
@@ -686,8 +689,8 @@ assistive tech users */
 
   .DocSearch-Dropdown {
     max-height: calc(
-      var(--docsearch-vh, 1vh) * 100 - var(--docsearch-searchbox-height) - var(--docsearch-spacing) -
-        var(--docsearch-footer-height)
+      var(--docsearch-vh, 1vh) * 100 - var(--docsearch-searchbox-height) -
+        var(--docsearch-spacing) - var(--docsearch-footer-height)
     );
   }
 

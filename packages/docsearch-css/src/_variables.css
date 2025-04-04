@@ -33,8 +33,8 @@
   --docsearch-hit-height: 56px;
   --docsearch-hit-color: rgb(68, 73, 80);
   --docsearch-hit-active-color: #fff;
+  --docsearch-hit-highlight-color: rgba(0, 61, 255, 0.1);
   --docsearch-hit-background: #fff;
-  --docsearch-hit-shadow: 0 1px 3px 0 rgb(212, 217, 225);
 
   /* key */
   --docsearch-key-gradient: linear-gradient(
