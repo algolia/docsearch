@@ -190,7 +190,7 @@
   cursor: pointer;
   flex: none;
   font: inherit;
-  font-size: 1em;
+  font-size: 0.9em;
   font-weight: 300;
   height: 28px;
   margin-left: var(--docsearch-spacing);
@@ -470,15 +470,16 @@ svg.DocSearch-Hit-Select-Icon {
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 80%;
+  gap: 4px;
 }
 
 .DocSearch-Hit-title {
-  font-size: 0.8em;
+  font-size: 0.9em;
 }
 
 .DocSearch-Hit-path {
-  color: var(--docsearch-muted-color);
-  font-size: 0.6em;
+  color: var(--docsearch-secondary-text-color);
+  font-size: 0.7em;
 }
 
 .DocSearch-Hit[aria-selected='true'] .DocSearch-Hit-title,
@@ -512,11 +513,19 @@ svg.DocSearch-Hit-Select-Icon {
   color: var(--docsearch-secondary-text-color);
   text-align: center;
   width: 80%;
-  height: 80%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.DocSearch-NoResults,
+.DocSearch-ErrorScreen {
+  height: 80%;
+}
+
+.DocSearch-StartScreen {
+  height: 100%;
 }
 
 .DocSearch-NoResults {
@@ -692,25 +701,6 @@ assistive tech users */
       var(--docsearch-vh, 1vh) * 100 - var(--docsearch-searchbox-height) -
         var(--docsearch-spacing) - var(--docsearch-footer-height)
     );
-  }
-
-  .DocSearch-Clear {
-    appearance: none;
-    background: none;
-    border: 0;
-    color: var(--docsearch-highlight-color);
-    cursor: pointer;
-    display: inline-block;
-    flex: none;
-    font: inherit;
-    font-size: 1em;
-    font-weight: 300;
-    margin-left: var(--docsearch-spacing);
-    outline: none;
-    overflow: hidden;
-    padding: 0;
-    user-select: none;
-    white-space: nowrap;
   }
 
   .DocSearch-Commands {
