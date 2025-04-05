@@ -153,8 +153,8 @@ describe('api', () => {
 
       expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
 
-      expect(document.querySelector('.DocSearch-Clear')?.innerHTML).toBe('Fermer');
-      expect(document.querySelector('.DocSearch-Clear')?.getAttribute('aria-label')).toBe('Fermer');
+      expect(document.querySelector('.DocSearch-Clear')?.innerHTML).toBe('Effacer');
+      expect(document.querySelector('.DocSearch-Clear')?.getAttribute('aria-label')).toBe('Effacer');
       expect(document.querySelector('.DocSearch-Close')?.getAttribute('title')).toBe('Fermer');
       expect(document.querySelector('.DocSearch-Close')?.getAttribute('aria-label')).toBe('Fermer');
       expect(searchInputLabel?.textContent).toBe('Recherche');
@@ -186,7 +186,7 @@ describe('api', () => {
         fireEvent.click(await screen.findByText('Search'));
       });
 
-      expect(screen.getByText('Recherche par')).toBeInTheDocument();
+      expect(screen.getByText('Propulsé par')).toBeInTheDocument();
       expect(screen.getByText('Pour fermer')).toBeInTheDocument();
       expect(screen.getByText('Pour naviguer')).toBeInTheDocument();
       expect(screen.getByText('Pour selectionner')).toBeInTheDocument();
