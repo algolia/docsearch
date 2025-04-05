@@ -56,7 +56,7 @@ export function NoResultsScreen({ translations = {}, ...props }: NoResultsScreen
                   </button>
                 </li>,
               ],
-              []
+              [],
             )}
           </ul>
         </div>

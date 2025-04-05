@@ -255,7 +255,7 @@ describe('api', () => {
         });
       });
 
-      expect(screen.getByText(/No results for/)).toBeInTheDocument();
+      expect(screen.getByText(/No results found for/)).toBeInTheDocument();
       const link = document.querySelector('.DocSearch-Help a');
       expect(link).toBeInTheDocument();
       expect(link?.getAttribute('href')).toBe('https://github.com/algolia/docsearch/issues/new?title=q');

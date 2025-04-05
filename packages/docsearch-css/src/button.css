@@ -15,13 +15,6 @@
   user-select: none;
 }
 
-/* .DocSearch-Button:hover,
-.DocSearch-Button:active,
-.DocSearch-Button:focus {
-  color: var(--docsearch-text-color);
-  outline: none;
-} */
-
 .DocSearch-Button-Container {
   align-items: center;
   display: flex;
@@ -80,6 +73,10 @@
 }
 
 @media (max-width: 768px) {
+  .DocSearch-Button {
+    width: auto;
+  }
+
   .DocSearch-Button-Keys,
   .DocSearch-Button-Placeholder {
     display: none;
