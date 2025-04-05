@@ -170,9 +170,9 @@ describe('api', () => {
                 closeKeyAriaLabel: "Touche d'échappement",
                 navigateText: 'Pour naviguer',
                 navigateUpKeyAriaLabel: 'Flèche vers le haut',
-                navigateDownKeyAriaLabel: 'Flèche le bas',
+                navigateDownKeyAriaLabel: 'Flèche vers le bas',
                 poweredByText: 'Propulsé par',
-                selectText: 'Pour selectionner',
+                selectText: 'Pour sélectionner',
                 selectKeyAriaLabel: "Touche d'entrée",
               },
             },
@@ -186,17 +186,18 @@ describe('api', () => {
         fireEvent.click(await screen.findByText('Search'));
       });
 
-      expect(screen.getByText('Propulsé par')).toBeInTheDocument();
-      expect(screen.getByText('Pour fermer')).toBeInTheDocument();
-      expect(screen.getByText('Pour naviguer')).toBeInTheDocument();
-      expect(screen.getByText('Pour selectionner')).toBeInTheDocument();
-      expect(
-        document.querySelector('.DocSearch-Commands-Key > svg[aria-label="Touche d\'échappement"]'),
-      ).toBeInTheDocument();
+      await screen.findByText('Propulsé par');
+      await screen.findByText('Pour fermer');
+      await screen.findByText('Pour naviguer');
+      await screen.findByText('Pour sélectionner');
+
+      expect(screen.getByLabelText("Touche d'échappement")).toBeInTheDocument();
       expect(
         document.querySelector('.DocSearch-Commands-Key > svg[aria-label="Flèche vers le haut"]'),
       ).toBeInTheDocument();
-      expect(document.querySelector('.DocSearch-Commands-Key > svg[aria-label="Flèche le bas"]')).toBeInTheDocument();
+      expect(
+        document.querySelector('.DocSearch-Commands-Key > svg[aria-label="Flèche vers le bas"]'),
+      ).toBeInTheDocument();
       expect(
         document.querySelector('.DocSearch-Commands-Key > svg[aria-label="Touche d\'entrée"]'),
       ).toBeInTheDocument();
