@@ -40,7 +40,7 @@ export function Footer({ translations = {} }: FooterProps): JSX.Element {
     navigateUpKeyAriaLabel = 'Arrow up',
     navigateDownKeyAriaLabel = 'Arrow down',
     closeText = 'Close',
-    // closeKeyAriaLabel = 'Escape key',
+    closeKeyAriaLabel = 'Escape key',
     poweredByText = 'Powered by',
   } = translations;
 
@@ -78,7 +78,9 @@ export function Footer({ translations = {} }: FooterProps): JSX.Element {
           <kbd className="DocSearch-Commands-Key">
             <span className="DocSearch-Escape-Key">ESC</span>
           </kbd>
-          <span className="DocSearch-Label">{closeText}</span>
+          <span className="DocSearch-Label" aria-label={closeKeyAriaLabel}>
+            {closeText}
+          </span>
         </li>
       </ul>
     </>
