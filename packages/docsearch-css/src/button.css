@@ -49,9 +49,9 @@
 
 .DocSearch-Button-Key {
   align-items: center;
-  background: var(--docsearch-background-color);
+  background: var(--docsearch-key-background);
   border-radius: 2px;
-  color: var(--docsearch-icon-color);
+  color: var(--docsearch-key-color);
   display: flex;
   height: 24px;
   font-size: 20px;
@@ -75,7 +75,7 @@
 }
 
 .DocSearch-Button-Key--pressed {
-  transform: translate3d(0, 1px, 0);
+  transform: translateY(1px);
   box-shadow: var(--docsearch-key-pressed-shadow);
 }
 
