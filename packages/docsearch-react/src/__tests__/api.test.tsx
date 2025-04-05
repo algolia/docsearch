@@ -153,10 +153,10 @@ describe('api', () => {
 
       expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
 
-      expect(document.querySelector('.DocSearch-Cancel')?.innerHTML).toBe('Annuler');
-      expect(document.querySelector('.DocSearch-Cancel')?.getAttribute('aria-label')).toBe('Annuler');
-      expect(document.querySelector('.DocSearch-Reset')?.getAttribute('title')).toBe('Effacer');
-      expect(document.querySelector('.DocSearch-Reset')?.getAttribute('aria-label')).toBe('Effacer');
+      expect(document.querySelector('.DocSearch-Clear')?.innerHTML).toBe('Fermer');
+      expect(document.querySelector('.DocSearch-Clear')?.getAttribute('aria-label')).toBe('Fermer');
+      expect(document.querySelector('.DocSearch-Close')?.getAttribute('title')).toBe('Fermer');
+      expect(document.querySelector('.DocSearch-Close')?.getAttribute('aria-label')).toBe('Fermer');
       expect(searchInputLabel?.textContent).toBe('Recherche');
     });
 
@@ -228,7 +228,7 @@ describe('api', () => {
         });
       });
 
-      expect(screen.getByText(/No results for/)).toBeInTheDocument();
+      expect(screen.getByText(/No results found for/)).toBeInTheDocument();
       expect(document.querySelector('.DocSearch-Help a')).not.toBeInTheDocument();
     });
 
