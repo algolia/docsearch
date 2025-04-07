@@ -20,11 +20,16 @@
   display: flex;
 }
 
+.DocSearch-Button-Container svg {
+  color: var(--docsearch-highlight-color);
+}
+
 .DocSearch-Search-Icon {
+  color: var(--docsearch-highlight-color);
   stroke-width: 1.6;
 }
 
-.DocSearch-Button .DocSearch-Search-Icon {
+.DocSearch-Button {
   color: var(--docsearch-text-color);
 }
 

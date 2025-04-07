@@ -5,7 +5,7 @@ interface SearchIconProps {
   color?: string;
 }
 
-export function SearchIcon({ size = 20, color = '#003DFF' }: SearchIconProps): JSX.Element {
+export function SearchIcon({ size = 20, color = 'currentColor' }: SearchIconProps): JSX.Element {
   return (
     <svg width={size} height={size} className="DocSearch-Search-Icon" viewBox="0 0 24 24" aria-hidden="true">
       <circle cx="11" cy="11" r="8" stroke={color} fill="none" strokeWidth="1.4" />

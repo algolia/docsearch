@@ -22,7 +22,7 @@ type StartScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translatio
 export function StartScreen({ translations = {}, ...props }: StartScreenProps): JSX.Element | null {
   const {
     recentSearchesTitle = 'Recent',
-    noRecentSearchesText = 'Search results will appear here',
+    noRecentSearchesText = 'Make a search to see results',
     saveRecentSearchButtonTitle = 'Save this search',
     removeRecentSearchButtonTitle = 'Remove this search from history',
     favoriteSearchesTitle = 'Favorite',

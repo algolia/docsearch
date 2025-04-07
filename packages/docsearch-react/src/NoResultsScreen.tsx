@@ -41,6 +41,7 @@ export function NoResultsScreen({ translations = {}, ...props }: NoResultsScreen
               (acc, search) => [
                 ...acc,
                 <li key={search}>
+                  <SearchIcon size={16} />
                   <button
                     className="DocSearch-Prefill"
                     key={search}
@@ -52,7 +53,6 @@ export function NoResultsScreen({ translations = {}, ...props }: NoResultsScreen
                     }}
                   >
                     {search}
-                    <SearchIcon size={16} />
                   </button>
                 </li>,
               ],

@@ -56,6 +56,10 @@
   display: flex;
 }
 
+.DocSearch-SearchBar-Magnifier {
+  color: var(--docsearch-highlight-color);
+}
+
 .DocSearch-Form {
   align-items: center;
   background: var(--docsearch-searchbox-focus-background);
@@ -121,7 +125,7 @@
 .DocSearch-MagnifierLabel,
 .DocSearch-Close {
   align-items: center;
-  color: var(--docsearch-highlight-color);
+  color: var(--docsearch-highlight-color) !important;
   display: flex;
   justify-content: center;
 }
@@ -178,6 +182,7 @@
 
 .DocSearch-LoadingIndicator svg,
 .DocSearch-MagnifierLabel svg {
+  color: var(--docsearch-highlight-color) !important;
   height: 24px;
   width: 24px;
 }
@@ -255,7 +260,7 @@
 
 .DocSearch-Help {
   color: var(--docsearch-secondary-text-color);
-  font-size: 1em;
+  font-size: 0.8em;
   margin: 0;
   user-select: none;
   line-height: 1.5em;
@@ -479,7 +484,7 @@ svg.DocSearch-Hit-Select-Icon {
 
 .DocSearch-Hit-path {
   color: var(--docsearch-secondary-text-color);
-  font-size: 0.7em;
+  font-size: 0.75em;
 }
 
 .DocSearch-Hit[aria-selected='true'] .DocSearch-Hit-title,
@@ -529,7 +534,7 @@ svg.DocSearch-Hit-Select-Icon {
 }
 
 .DocSearch-NoResults {
-  gap: 8px;
+  gap: 24px;
 }
 
 .DocSearch-StartScreen,
@@ -560,6 +565,11 @@ svg.DocSearch-Hit-Select-Icon {
   gap: 8px;
   height: 40px;
   padding: 8px 0 0;
+}
+
+.DocSearch-NoResults-Prefill-List li {
+  display: flex;
+  align-items: center;
 }
 
 .DocSearch-Prefill {
@@ -660,7 +670,7 @@ assistive tech users */
 @media (max-width: 768px) {
   :root {
     --docsearch-spacing: 10px;
-    --docsearch-footer-height: 40px;
+    --docsearch-footer-height: 48px;
   }
 
   .DocSearch-Dropdown {
