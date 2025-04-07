@@ -206,8 +206,8 @@
   white-space: nowrap;
 }
 
-.DocSearch-Close:focus,
-.DocSearch-Clear:focus {
+.DocSearch-Close:focus-visible,
+.DocSearch-Clear:focus-visible {
   outline: 2px solid var(--docsearch-focus-color);
   outline-offset: 1px;
   border-radius: 4px;
@@ -455,13 +455,6 @@ svg.DocSearch-Hit-Select-Icon {
 .DocSearch-Hit-action-button:focus {
   background: rgba(0, 0, 0, 0.2);
   transition: background-color 0.1s ease-in;
-}
-
-@media screen and (prefers-reduced-motion: reduce) {
-  .DocSearch-Hit-action-button:hover,
-  .DocSearch-Hit-action-button:focus {
-    transition: none;
-  }
 }
 
 .DocSearch-Hit-action-button:hover path,
