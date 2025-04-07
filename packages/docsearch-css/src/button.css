@@ -45,6 +45,7 @@
   background: var(--docsearch-key-background);
   border-radius: 2px;
   color: var(--docsearch-key-color);
+  box-shadow: none !important;
   display: flex;
   height: 24px;
   font-size: 20px;
@@ -69,7 +70,7 @@
 
 .DocSearch-Button-Key--pressed {
   transform: translateY(1px);
-  box-shadow: var(--docsearch-key-pressed-shadow);
+  box-shadow: var(--docsearch-key-pressed-shadow) !important;
 }
 
 @media (max-width: 768px) {

@@ -628,6 +628,7 @@ svg.DocSearch-Hit-Select-Icon {
   color: var(--docsearch-icon-color);
   border: 0;
   width: 24px;
+  box-shadow: none !important;
 }
 
 .DocSearch-Commands-Key:last-of-type {
