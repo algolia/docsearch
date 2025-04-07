@@ -16,6 +16,7 @@
 }
 
 .DocSearch-Button-Container {
+  height: 100%;
   align-items: center;
   display: flex;
 }
@@ -34,10 +35,11 @@
 }
 
 .DocSearch-Button-Placeholder {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 300;
   padding: 0 12px 0 8px;
-  vertical-align: middle;
+  display: inline-block;
+  line-height: normal;
 }
 
 .DocSearch-Button-Keys {

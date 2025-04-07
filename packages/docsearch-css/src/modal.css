@@ -206,6 +206,13 @@
   white-space: nowrap;
 }
 
+.DocSearch-Close:focus,
+.DocSearch-Clear:focus {
+  outline: 2px solid var(--docsearch-focus-color);
+  outline-offset: 1px;
+  border-radius: 4px;
+}
+
 /* Modal Dropdown */
 
 .DocSearch-Dropdown {

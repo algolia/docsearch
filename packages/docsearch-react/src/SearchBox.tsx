@@ -78,9 +78,11 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
         <div className="DocSearch-Actions">
           <button
             className="DocSearch-Clear"
-            type="reset"
+            type="button"
             aria-label={clearButtonAriaLabel}
             hidden={!props.state.query}
+            tabIndex={props.state.query ? 0 : -1}
+            aria-hidden={!props.state.query ? 'true' : 'false'}
           >
             {clearButtonTitle}
           </button>
