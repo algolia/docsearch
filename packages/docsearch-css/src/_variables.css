@@ -8,7 +8,7 @@
   --docsearch-background-color: rgb(245, 245, 250);
   --docsearch-spacing: 12px;
   --docsearch-icon-stroke-width: 1.4;
-  --docsearch-highlight-color: var(--docsearch-primary-color);
+  --docsearch-highlight-color: rgb(0, 61, 255);
   --docsearch-muted-color: rgba(150, 152, 195, 1);
   --docsearch-muted-color-darker: rgba(120, 122, 165, 0.25);
   --docsearch-icon-color: rgba(90, 94, 154, 1);

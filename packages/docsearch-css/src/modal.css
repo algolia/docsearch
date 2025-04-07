@@ -370,7 +370,7 @@
 }
 
 .DocSearch-Hit[aria-selected='true'] a {
-  background-color: var(--docsearch-hit-highlight-color);
+  background-color: var(--docsearch-hit-highlight-color) !important;
 }
 
 .DocSearch-Hit mark {
