@@ -108,7 +108,7 @@ function ApplyForm() {
           borderRadius: '8px',
           textAlign: 'center',
           fontWeight: 'bold',
-          marginBottom: '16px'
+          marginBottom: '16px',
         }}
       >
         🚧 The DocSearch submission process is currently down for maintenance. 🚧
@@ -222,7 +222,7 @@ function ApplyForm() {
               disabled={true}
               className="uil-mt-16 uil-mb-16"
               tag="button"
-              //type="submit"
+              // type="submit"
               id="joinButton"
             >
               Join the program
