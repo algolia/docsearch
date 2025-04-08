@@ -97,6 +97,10 @@ function ApplyForm() {
   }
 
   return (
+    <>
+<div className="uil-m-auto uil-pb-24" style={{ maxWidth: '700px', backgroundColor: '#f5a623', color: 'white', padding: '12px', borderRadius: '8px', textAlign: 'center', fontWeight: 'bold', marginBottom: '16px' }}>
+  🚧 The DocSearch submission process is currently down for maintenance. 🚧
+</div>
     <Card className="uil-m-auto apply-form uil-pb-24">
       <form
         id="form-apply-docsearch"
@@ -203,10 +207,10 @@ function ApplyForm() {
 
           <Button
             primary={true}
-            disabled={state.status === 'loading'}
+            disabled={true}
             className="uil-mt-16 uil-mb-16"
             tag="button"
-            type="submit"
+            //type="submit"
             id="joinButton"
           >
             Join the program
@@ -227,6 +231,7 @@ function ApplyForm() {
         </Text>
       </form>
     </Card>
+  </>
   );
 }
 
