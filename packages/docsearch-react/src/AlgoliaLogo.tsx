@@ -1,7 +1,7 @@
 import React, { type JSX } from 'react';
 
 type AlgoliaLogoTranslations = Partial<{
-  searchByText: string;
+  poweredByText: string;
 }>;
 
 type AlgoliaLogoProps = {
@@ -9,7 +9,7 @@ type AlgoliaLogoProps = {
 };
 
 export function AlgoliaLogo({ translations = {} }: AlgoliaLogoProps): JSX.Element {
-  const { searchByText = 'Search by' } = translations;
+  const { poweredByText = 'Powered by' } = translations;
 
   return (
     <a
@@ -17,10 +17,10 @@ export function AlgoliaLogo({ translations = {} }: AlgoliaLogoProps): JSX.Elemen
       target="_blank"
       rel="noopener noreferrer"
     >
-      <span className="DocSearch-Label">{searchByText}</span>
+      <span className="DocSearch-Label">{poweredByText}</span>
       <svg
         width="77"
-        height="19"
+        height="24"
         aria-label="Algolia"
         role="img"
         id="Layer_1"

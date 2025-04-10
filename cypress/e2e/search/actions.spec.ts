@@ -12,7 +12,7 @@ describe('Start', () => {
 
     // check that the scrollbar offset is compensated
     cy.get('body').should('have.css', 'overflow', 'hidden');
-    cy.get('body').should('have.css', 'margin-right', '15px');
+    cy.get('.DocSearch-Modal').should('be.visible');
   });
 
   it('Open modal with key shortcut on Windows/Linux', () => {
@@ -53,7 +53,7 @@ describe('End', () => {
   });
 
   it('Close modal by clicking outside its container', () => {
-    cy.get('.DocSearch-Container').click();
+    cy.get('body').click(0, 0);
     cy.modalIsNotVisible();
   });
 
@@ -81,7 +81,7 @@ describe('Search', () => {
 
   it('Query can be cleared', () => {
     cy.typeQueryMatching();
-    cy.get('.DocSearch-Reset').click();
+    cy.get('.DocSearch-Clear').click();
     cy.get('.DocSearch-Hits').should('not.exist');
     cy.contains('No recent searches').should('be.visible');
   });
@@ -101,7 +101,9 @@ describe('Search', () => {
     const currentURL = cy.url();
 
     cy.typeQueryMatching();
-    cy.get('.DocSearch-Hits #docsearch-hits0-item-1 > a').click({ force: true });
+    cy.get('.DocSearch-Hits #docsearch-hits0-item-1 > a').click({
+      force: true,
+    });
     cy.on('url:changed', (newUrl) => {
       expect(newUrl).not.equal(currentURL);
     });

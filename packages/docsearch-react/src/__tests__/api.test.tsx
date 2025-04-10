@@ -134,10 +134,10 @@ describe('api', () => {
           translations={{
             modal: {
               searchBox: {
-                resetButtonTitle: 'Effacer',
-                resetButtonAriaLabel: 'Effacer',
-                cancelButtonText: 'Annuler',
-                cancelButtonAriaLabel: 'Annuler',
+                clearButtonTitle: 'Effacer',
+                clearButtonAriaLabel: 'Effacer',
+                closeButtonText: 'Fermer',
+                closeButtonAriaLabel: 'Fermer',
                 searchInputLabel: 'Recherche',
               },
             },
@@ -153,10 +153,10 @@ describe('api', () => {
 
       expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
 
-      expect(document.querySelector('.DocSearch-Cancel')?.innerHTML).toBe('Annuler');
-      expect(document.querySelector('.DocSearch-Cancel')?.getAttribute('aria-label')).toBe('Annuler');
-      expect(document.querySelector('.DocSearch-Reset')?.getAttribute('title')).toBe('Effacer');
-      expect(document.querySelector('.DocSearch-Reset')?.getAttribute('aria-label')).toBe('Effacer');
+      expect(document.querySelector('.DocSearch-Clear')?.innerHTML).toBe('Effacer');
+      expect(document.querySelector('.DocSearch-Clear')?.getAttribute('aria-label')).toBe('Effacer');
+      expect(document.querySelector('.DocSearch-Close')?.getAttribute('title')).toBe('Fermer');
+      expect(document.querySelector('.DocSearch-Close')?.getAttribute('aria-label')).toBe('Fermer');
       expect(searchInputLabel?.textContent).toBe('Recherche');
     });
 
@@ -170,9 +170,9 @@ describe('api', () => {
                 closeKeyAriaLabel: "Touche d'échappement",
                 navigateText: 'Pour naviguer',
                 navigateUpKeyAriaLabel: 'Flèche vers le haut',
-                navigateDownKeyAriaLabel: 'Flèche le bas',
-                searchByText: 'Recherche par',
-                selectText: 'Pour selectionner',
+                navigateDownKeyAriaLabel: 'Flèche vers le bas',
+                poweredByText: 'Propulsé par',
+                selectText: 'Pour sélectionner',
                 selectKeyAriaLabel: "Touche d'entrée",
               },
             },
@@ -186,17 +186,18 @@ describe('api', () => {
         fireEvent.click(await screen.findByText('Search'));
       });
 
-      expect(screen.getByText('Recherche par')).toBeInTheDocument();
-      expect(screen.getByText('Pour fermer')).toBeInTheDocument();
-      expect(screen.getByText('Pour naviguer')).toBeInTheDocument();
-      expect(screen.getByText('Pour selectionner')).toBeInTheDocument();
-      expect(
-        document.querySelector('.DocSearch-Commands-Key > svg[aria-label="Touche d\'échappement"]'),
-      ).toBeInTheDocument();
+      await screen.findByText('Propulsé par');
+      await screen.findByText('Pour fermer');
+      await screen.findByText('Pour naviguer');
+      await screen.findByText('Pour sélectionner');
+
+      expect(screen.getByLabelText("Touche d'échappement")).toBeInTheDocument();
       expect(
         document.querySelector('.DocSearch-Commands-Key > svg[aria-label="Flèche vers le haut"]'),
       ).toBeInTheDocument();
-      expect(document.querySelector('.DocSearch-Commands-Key > svg[aria-label="Flèche le bas"]')).toBeInTheDocument();
+      expect(
+        document.querySelector('.DocSearch-Commands-Key > svg[aria-label="Flèche vers le bas"]'),
+      ).toBeInTheDocument();
       expect(
         document.querySelector('.DocSearch-Commands-Key > svg[aria-label="Touche d\'entrée"]'),
       ).toBeInTheDocument();
@@ -228,7 +229,7 @@ describe('api', () => {
         });
       });
 
-      expect(screen.getByText(/No results for/)).toBeInTheDocument();
+      expect(screen.getByText(/No results found for/)).toBeInTheDocument();
       expect(document.querySelector('.DocSearch-Help a')).not.toBeInTheDocument();
     });
 
@@ -255,7 +256,7 @@ describe('api', () => {
         });
       });
 
-      expect(screen.getByText(/No results for/)).toBeInTheDocument();
+      expect(screen.getByText(/No results found for/)).toBeInTheDocument();
       const link = document.querySelector('.DocSearch-Help a');
       expect(link).toBeInTheDocument();
       expect(link?.getAttribute('href')).toBe('https://github.com/algolia/docsearch/issues/new?title=q');
