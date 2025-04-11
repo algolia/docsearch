@@ -53,7 +53,7 @@
     "cypress": "13.17.0",
     "eslint": "8.57.1",
     "eslint-config-algolia": "23.2.1",
-    "eslint-config-prettier": "10.1.1",
+    "eslint-config-prettier": "10.1.2",
     "eslint-plugin-cypress": "4.2.0",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-jsdoc": "50.6.9",
