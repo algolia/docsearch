@@ -66,7 +66,7 @@ export function DocSearchModal({
   const formElementRef = React.useRef<HTMLDivElement | null>(null);
   const dropdownRef = React.useRef<HTMLDivElement | null>(null);
   const inputRef = React.useRef<HTMLInputElement | null>(null);
-  const snippetLength = React.useRef<number>(10);
+  const snippetLength = React.useRef<number>(15);
   const initialQueryFromSelection = React.useRef(
     typeof window !== 'undefined' ? window.getSelection()!.toString().slice(0, MAX_QUERY_SIZE) : '',
   ).current;

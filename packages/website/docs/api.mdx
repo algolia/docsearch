@@ -187,14 +187,14 @@ const translations: DocSearchTranslations = {
       helpText: 'You might want to check your network connection.',
     },
     footer: {
-      selectText: 'to select',
+      selectText: 'Select',
       selectKeyAriaLabel: 'Enter key',
-      navigateText: 'to navigate',
+      navigateText: 'Navigate',
       navigateUpKeyAriaLabel: 'Arrow up',
       navigateDownKeyAriaLabel: 'Arrow down',
-      closeText: 'to close',
+      closeText: 'Close',
       closeKeyAriaLabel: 'Escape key',
-      searchByText: 'Search by',
+      poweredByText: 'Powered by',
     },
     noResultsScreen: {
       noResultsText: 'No results for',
@@ -253,10 +253,7 @@ docsearch({
 When provided, an informative message wrapped with your link will be displayed on no results searches. The default text can be changed using the [translations](#translations) property.
 
 <div className="uil-ta-center">
-  <img
-    src={useBaseUrl('img/assets/noResultsScreen.png')}
-    alt="No results screen with informative message"
-  />
+  <img src={useBaseUrl('img/assets/noResultsScreen.png')} alt="No results screen with informative message" />
 </div>
 
 ## `resultsFooterComponent`
