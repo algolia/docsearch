@@ -2111,7 +2111,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docsearch/js@workspace:packages/docsearch-js"
   dependencies:
-    "@docsearch/react": "npm:3"
+    "@docsearch/react": "npm:3.9.0"
     "@rollup/plugin-replace": "npm:6.0.2"
     nodemon: "npm:^3.1.9"
     preact: "npm:^10.0.0"
@@ -2202,7 +2202,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@docsearch/react@npm:3, @docsearch/react@npm:3.9.0, @docsearch/react@npm:^3.8.1, @docsearch/react@workspace:*, @docsearch/react@workspace:packages/docsearch-react":
+"@docsearch/react@npm:3.9.0, @docsearch/react@npm:^3.8.1, @docsearch/react@workspace:*, @docsearch/react@workspace:packages/docsearch-react":
   version: 0.0.0-use.local
   resolution: "@docsearch/react@workspace:packages/docsearch-react"
   dependencies:
