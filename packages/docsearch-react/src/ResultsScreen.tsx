@@ -1,5 +1,6 @@
 import React, { type JSX } from 'react';
 
+import { AskAISection } from './AskAiSection';
 import { SelectIcon, SourceIcon } from './icons';
 import { Results } from './Results';
 import type { ScreenStateProps } from './ScreenState';
@@ -11,6 +12,8 @@ type ResultsScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translat
 export function ResultsScreen(props: ResultsScreenProps): JSX.Element {
   return (
     <div className="DocSearch-Dropdown-Container">
+      {props.canHandleAskAi && <AskAISection query={props.state.query} onAskAiToggle={props.onAskAiToggle} />}
+
       {props.state.collections.map((collection) => {
         if (collection.items.length === 0) {
           return null;

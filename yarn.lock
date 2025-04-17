@@ -2089,6 +2089,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@docsearch/askai-example@workspace:examples/demo-askai":
+  version: 0.0.0-use.local
+  resolution: "@docsearch/askai-example@workspace:examples/demo-askai"
+  dependencies:
+    "@docsearch/css": "npm:3.9.0"
+    "@docsearch/react": "npm:3.9.0"
+    "@vitejs/plugin-react": "npm:^4.3.4"
+    react: "npm:^19.0.0"
+    react-dom: "npm:^19.0.0"
+    vite: "npm:^6.0.7"
+  languageName: unknown
+  linkType: soft
+
 "@docsearch/css@npm:3.9.0, @docsearch/css@workspace:*, @docsearch/css@workspace:packages/docsearch-css":
   version: 0.0.0-use.local
   resolution: "@docsearch/css@workspace:packages/docsearch-css"

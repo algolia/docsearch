@@ -3,6 +3,7 @@ import React, { type JSX, type RefObject } from 'react';
 
 import { MAX_QUERY_SIZE } from './constants';
 import { LoadingIcon, CloseIcon, SearchIcon } from './icons';
+import { BackIcon } from './icons/BackIcon';
 import type { InternalDocSearchHit } from './types';
 
 export type SearchBoxTranslations = Partial<{
@@ -11,6 +12,8 @@ export type SearchBoxTranslations = Partial<{
   closeButtonText: string;
   closeButtonAriaLabel: string;
   searchInputLabel: string;
+  backToKeywordSearchButtonText: string;
+  backToKeywordSearchButtonAriaLabel: string;
 }>;
 
 interface SearchBoxProps
@@ -19,6 +22,8 @@ interface SearchBoxProps
   autoFocus: boolean;
   inputRef: RefObject<HTMLInputElement | null>;
   onClose: () => void;
+  onAskAiToggle: (toggle: boolean) => void;
+  isAskAiActive: boolean;
   isFromSelection: boolean;
   translations?: SearchBoxTranslations;
 }
@@ -30,6 +35,8 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
     closeButtonText = 'Close',
     closeButtonAriaLabel = 'Close',
     searchInputLabel = 'Search',
+    backToKeywordSearchButtonText = 'Back to keyword search',
+    backToKeywordSearchButtonAriaLabel = 'Back to keyword search',
   } = translations;
   const { onReset } = props.getFormProps({
     inputElement: props.inputRef.current,
@@ -56,10 +63,23 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
         }}
         onReset={onReset}
       >
-        <label className="DocSearch-MagnifierLabel" {...props.getLabelProps()}>
-          <SearchIcon />
-          <span className="DocSearch-VisuallyHiddenForAccessibility">{searchInputLabel}</span>
-        </label>
+        {props.isAskAiActive ? (
+          <button
+            type="button"
+            tabIndex={0}
+            className="DocSearch-AskAi-Return"
+            title={backToKeywordSearchButtonText}
+            aria-label={backToKeywordSearchButtonAriaLabel}
+            onClick={() => props.onAskAiToggle(false)}
+          >
+            <BackIcon />
+          </button>
+        ) : (
+          <label className="DocSearch-MagnifierLabel" {...props.getLabelProps()}>
+            <SearchIcon />
+            <span className="DocSearch-VisuallyHiddenForAccessibility">{searchInputLabel}</span>
+          </label>
+        )}
 
         <div className="DocSearch-LoadingIndicator">
           <LoadingIcon />

@@ -26,6 +26,8 @@ export interface DocSearchProps {
   appId: string;
   apiKey: string;
   indexName: string;
+  datasourceId?: string;
+  promptId?: string;
   placeholder?: string;
   searchParameters?: SearchParamsObject;
   maxResultsPerGroup?: number;

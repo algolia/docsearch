@@ -1,6 +1,6 @@
 {
-  "name": "@docsearch/react-example",
-  "description": "DocSearch v4 React example",
+  "name": "@docsearch/askai-example",
+  "description": "DocSearch v4 AskAI example",
   "version": "3.9.0",
   "private": true,
   "license": "MIT",
