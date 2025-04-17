@@ -11,7 +11,7 @@ function App(): JSX.Element {
       <DocSearch
         indexName="beta-react"
         appId="betaHAXPMHIMMC"
-        apiKey="a7b0d142f53e8b9e6868c4fdbc4374e7"
+        apiKey="8b00405cba281a7d800ccec393e9af24"
         datasourceId="crawler_rag_beta-react-rag"
         promptId="crawler_rag_beta-react-rag"
         insights={true}
