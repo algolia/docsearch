@@ -27,6 +27,3 @@ cypress/videos/
 !**/.yarn/releases
 !**/.yarn/plugins
 !**/.yarn/patches
-
-# Temp
-examples/demo-askai
