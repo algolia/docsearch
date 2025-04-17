@@ -1,6 +1,8 @@
 import type { AutocompleteApi, AutocompleteState, BaseItem } from '@algolia/autocomplete-core';
 import React from 'react';
 
+import type { AskAiScreenTranslations } from './AskAiScreen';
+import { AskAiScreen } from './AskAiScreen';
 import type { DocSearchProps } from './DocSearch';
 import type { ErrorScreenTranslations } from './ErrorScreen';
 import { ErrorScreen } from './ErrorScreen';
@@ -16,6 +18,7 @@ export type ScreenStateTranslations = Partial<{
   errorScreen: ErrorScreenTranslations;
   startScreen: StartScreenTranslations;
   noResultsScreen: NoResultsScreenTranslations;
+  askAiScreen: AskAiScreenTranslations;
 }>;
 
 export interface ScreenStateProps<TItem extends BaseItem>
@@ -24,6 +27,9 @@ export interface ScreenStateProps<TItem extends BaseItem>
   recentSearches: StoredSearchPlugin<StoredDocSearchHit>;
   favoriteSearches: StoredSearchPlugin<StoredDocSearchHit>;
   onItemClick: (item: InternalDocSearchHit, event: KeyboardEvent | MouseEvent) => void;
+  onAskAiToggle: (toggle: boolean) => void;
+  isAskAiActive: boolean;
+  canHandleAskAi: boolean;
   inputRef: React.MutableRefObject<HTMLInputElement | null>;
   hitComponent: DocSearchProps['hitComponent'];
   indexName: DocSearchProps['indexName'];
@@ -35,7 +41,11 @@ export interface ScreenStateProps<TItem extends BaseItem>
 
 export const ScreenState = React.memo(
   ({ translations = {}, ...props }: ScreenStateProps<InternalDocSearchHit>) => {
-    if (props.state.status === 'error') {
+    if (props.isAskAiActive && props.canHandleAskAi) {
+      return <AskAiScreen translations={translations?.askAiScreen} />;
+    }
+
+    if (props.state?.status === 'error') {
       return <ErrorScreen translations={translations?.errorScreen} />;
     }
 

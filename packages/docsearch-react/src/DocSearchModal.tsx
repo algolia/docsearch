@@ -49,6 +49,8 @@ export function DocSearchModal({
   translations = {},
   getMissingResultsUrl,
   insights = false,
+  datasourceId,
+  promptId,
 }: DocSearchModalProps): JSX.Element {
   const { footer: footerTranslations, searchBox: searchBoxTranslations, ...screenStateTranslations } = translations;
   const [state, setState] = React.useState<DocSearchState<InternalDocSearchHit>>({
@@ -59,7 +61,11 @@ export function DocSearchModal({
     isOpen: false,
     activeItemId: null,
     status: 'idle',
+    isAskAiActive: false,
   });
+
+  // check if the instance is configured to handle ask ai
+  const canHandleAskAi = Boolean(datasourceId && promptId);
 
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const modalRef = React.useRef<HTMLDivElement | null>(null);
@@ -124,6 +130,13 @@ export function DocSearchModal({
     [state.context.algoliaInsightsPlugin],
   );
 
+  const toggleAskAi = (isAskAiActive: boolean): void => {
+    setState((prevState) => ({
+      ...prevState,
+      isAskAiActive,
+    }));
+  };
+
   const autocomplete = React.useMemo(
     () =>
       createAutocomplete<InternalDocSearchHit, React.FormEvent<HTMLFormElement>, React.MouseEvent, React.KeyboardEvent>(
@@ -141,7 +154,10 @@ export function DocSearchModal({
           insights,
           navigator,
           onStateChange(props) {
-            setState(props.state);
+            setState((prevState) => ({
+              ...prevState,
+              ...props.state,
+            }));
           },
           getSources({ query, state: sourcesState, setContext, setStatus }) {
             if (!query) {
@@ -441,7 +457,9 @@ export function DocSearchModal({
             inputRef={inputRef}
             isFromSelection={Boolean(initialQuery) && initialQuery === initialQueryFromSelection}
             translations={searchBoxTranslations}
+            isAskAiActive={state.isAskAiActive}
             onClose={onClose}
+            onAskAiToggle={toggleAskAi}
           />
         </header>
 
@@ -458,6 +476,9 @@ export function DocSearchModal({
             inputRef={inputRef}
             translations={screenStateTranslations}
             getMissingResultsUrl={getMissingResultsUrl}
+            isAskAiActive={state.isAskAiActive}
+            canHandleAskAi={canHandleAskAi}
+            onAskAiToggle={toggleAskAi}
             onItemClick={(item, event) => {
               // If insights is active, send insights click event
               sendItemClickEvent(item);
