@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { DocSearch } from '@docsearch/react';
 import type { JSX } from 'react';
 import './App.css';
