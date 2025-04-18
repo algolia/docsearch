@@ -115,9 +115,11 @@ Run a production crawl after testing individual URLs and confirm the updated sea
 
 ## More information
 
-[Adding metadata](https://docusaurus.io/docs/markdown-features/head-metadata)
+[Data extraction examples](https://www.algolia.com/doc/tools/crawler/extracting-data/data-extraction-examples/)
 
-Configuring [Search](https://docusaurus.io/docs/search)
+[Adding metadata to Docusaurus pages](https://docusaurus.io/docs/markdown-features/head-metadata)
+
+Configuring [Search in Docusaurus](https://docusaurus.io/docs/search)
 
 Algolia Crawler [record extractor](./record-extractor)
 
