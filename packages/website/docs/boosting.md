@@ -122,7 +122,3 @@ Run a production crawl after testing individual URLs and confirm the updated sea
 Configuring [Search in Docusaurus](https://docusaurus.io/docs/search)
 
 Algolia Crawler [record extractor](./record-extractor)
-
-
-
-
