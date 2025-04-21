@@ -34,11 +34,9 @@ This is the edit to a Docusaurus Markdown/MDX file:
 title: Page name
 ---
 
-<!-- highlight-start -->
 <head>
   <meta name="pageBoost" content="100"/>
 </head>
-<!-- highlight-end -->
 
 ## Overview
 ```
@@ -72,19 +70,17 @@ recordExtractor: ({ $, helpers }) => {
 
 ### Extract the `pageBoost` metadata
 
-Within the `recordExtractor` function, add the highlighted line to extract the `pageBoost` metadata into `const pageBoost`, with a default value of 0 if no metadata is present in the page.
+Within the `recordExtractor` function, add the `const pageBoost` line to extract the `pageBoost` metadata into `const pageBoost`, with a default value of 0 if no metadata is present in the page.
 
 ```js
 recordExtractor: ({ $, helpers }) => {
-  // highlight-start
   // Extract metadata
   const pageBoost = $("meta[name='pageBoost']").attr("content") || "0";
-  // highlight-end
 ```
 
 ### Assign the `pageRank`
 
-The`pageRank` property is of type `string | number`, add the highlighted line to the `recordProps` code. In this example it is added after `content`.
+The`pageRank` property is of type `string | number`, add the `pageRank` line to the `recordProps` code. In this example it is added after `content`.
 
 ```js
 return helpers.docsearch({
@@ -93,9 +89,7 @@ return helpers.docsearch({
     // your recordProps may populate lvl0 - lvl6 here
 
     content: "article p, article li, article td:last-child",
-    // highlight-start
     pageRank: Number(pageBoost),
-    // highlight-end
   },
 ```
 
