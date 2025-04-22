@@ -8,6 +8,7 @@ import type { ErrorScreenTranslations } from './ErrorScreen';
 import { ErrorScreen } from './ErrorScreen';
 import type { NoResultsScreenTranslations } from './NoResultsScreen';
 import { NoResultsScreen } from './NoResultsScreen';
+import type { ResultsScreenTranslations } from './ResultsScreen';
 import { ResultsScreen } from './ResultsScreen';
 import type { StartScreenTranslations } from './StartScreen';
 import { StartScreen } from './StartScreen';
@@ -18,6 +19,7 @@ export type ScreenStateTranslations = Partial<{
   errorScreen: ErrorScreenTranslations;
   startScreen: StartScreenTranslations;
   noResultsScreen: NoResultsScreenTranslations;
+  resultsScreen: ResultsScreenTranslations;
   askAiScreen: AskAiScreenTranslations;
 }>;
 
@@ -55,11 +57,19 @@ export const ScreenState = React.memo(
       return <StartScreen {...props} hasCollections={hasCollections} translations={translations?.startScreen} />;
     }
 
-    if (hasCollections === false) {
+    if (hasCollections === false && !props.canHandleAskAi) {
       return <NoResultsScreen {...props} translations={translations?.noResultsScreen} />;
     }
 
-    return <ResultsScreen {...props} />;
+    return (
+      <>
+        <ResultsScreen {...props} translations={translations?.resultsScreen} />
+        {props.canHandleAskAi && props.state.collections.length === 1 && (
+          // if there's one collection it is the ask ai action, show the no results screen
+          <NoResultsScreen {...props} translations={translations?.noResultsScreen} />
+        )}
+      </>
+    );
   },
   function areEqual(_prevProps, nextProps) {
     // We don't update the screen when Autocomplete is loading or stalled to

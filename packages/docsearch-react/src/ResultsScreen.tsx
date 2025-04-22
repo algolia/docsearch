@@ -1,19 +1,22 @@
 import React, { type JSX } from 'react';
 
-import { AskAISection } from './AskAiSection';
 import { SelectIcon, SourceIcon } from './icons';
 import { Results } from './Results';
 import type { ScreenStateProps } from './ScreenState';
 import type { InternalDocSearchHit } from './types';
 import { removeHighlightTags } from './utils';
 
-type ResultsScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'>;
+export type ResultsScreenTranslations = Partial<{
+  askAiPlaceholder: string;
+}>;
 
-export function ResultsScreen(props: ResultsScreenProps): JSX.Element {
+type ResultsScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
+  translations?: ResultsScreenTranslations;
+};
+
+export function ResultsScreen({ translations = {}, ...props }: ResultsScreenProps): JSX.Element {
   return (
     <div className="DocSearch-Dropdown-Container">
-      {props.canHandleAskAi && <AskAISection query={props.state.query} onAskAiToggle={props.onAskAiToggle} />}
-
       {props.state.collections.map((collection) => {
         if (collection.items.length === 0) {
           return null;
@@ -25,6 +28,7 @@ export function ResultsScreen(props: ResultsScreenProps): JSX.Element {
           <Results
             {...props}
             key={collection.source.sourceId}
+            translations={translations}
             title={title}
             collection={collection}
             renderIcon={({ item, index }) => (
