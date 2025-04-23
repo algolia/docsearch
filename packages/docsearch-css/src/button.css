@@ -31,6 +31,7 @@
 }
 
 .DocSearch-Back-Icon {
+  color: var(--docsearch-highlight-color);
   stroke-width: 1.6;
 }
 

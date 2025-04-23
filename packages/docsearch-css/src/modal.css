@@ -191,9 +191,14 @@
 
 .DocSearch-LoadingIndicator svg,
 .DocSearch-MagnifierLabel svg {
-  color: var(--docsearch-highlight-color);
+  color: var(--docsearch-icon-color);
   height: 24px;
   width: 24px;
+}
+
+/* highlight icon color when search input is focused */
+.DocSearch-Form:focus-within .DocSearch-MagnifierLabel svg {
+  color: var(--docsearch-highlight-color);
 }
 
 .DocSearch-Clear {
