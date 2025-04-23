@@ -4,17 +4,20 @@ import { AlgoliaLogo } from './AlgoliaLogo';
 
 export type FooterTranslations = Partial<{
   selectText: string;
+  submitQuestionText: string;
   selectKeyAriaLabel: string;
   navigateText: string;
   navigateUpKeyAriaLabel: string;
   navigateDownKeyAriaLabel: string;
   closeText: string;
+  backToSearchText: string;
   closeKeyAriaLabel: string;
   poweredByText: string;
 }>;
 
 type FooterProps = Partial<{
   translations: FooterTranslations;
+  isAskAiActive: boolean;
 }>;
 
 interface CommandIconProps {
@@ -32,14 +35,16 @@ function CommandIcon(props: CommandIconProps): JSX.Element {
   );
 }
 
-export function Footer({ translations = {} }: FooterProps): JSX.Element {
+export function Footer({ translations = {}, isAskAiActive = false }: FooterProps): JSX.Element {
   const {
     selectText = 'Select',
     selectKeyAriaLabel = 'Enter key',
+    submitQuestionText = 'Submit question',
     navigateText = 'Navigate',
     navigateUpKeyAriaLabel = 'Arrow up',
     navigateDownKeyAriaLabel = 'Arrow down',
     closeText = 'Close',
+    backToSearchText = 'Back to search',
     closeKeyAriaLabel = 'Escape key',
     poweredByText = 'Powered by',
   } = translations;
@@ -72,14 +77,14 @@ export function Footer({ translations = {} }: FooterProps): JSX.Element {
               <path d="M20 4v7a4 4 0 0 1-4 4H4" />
             </CommandIcon>
           </kbd>
-          <span className="DocSearch-Label">{selectText}</span>
+          <span className="DocSearch-Label">{isAskAiActive ? submitQuestionText : selectText}</span>
         </li>
         <li>
           <kbd className="DocSearch-Commands-Key">
             <span className="DocSearch-Escape-Key">ESC</span>
           </kbd>
           <span className="DocSearch-Label" aria-label={closeKeyAriaLabel}>
-            {closeText}
+            {isAskAiActive ? backToSearchText : closeText}
           </span>
         </li>
       </ul>

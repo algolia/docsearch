@@ -5,7 +5,7 @@ import {
   type AutocompleteState,
 } from '@algolia/autocomplete-core';
 import type { SearchResponse } from 'algoliasearch/lite';
-import React, { useCallback, type JSX } from 'react';
+import React, { type JSX } from 'react';
 
 import { MAX_QUERY_SIZE } from './constants';
 import type { DocSearchProps } from './DocSearch';
@@ -31,7 +31,10 @@ export type ModalTranslations = Partial<{
 
 export type DocSearchModalProps = DocSearchProps & {
   initialScrollY: number;
+  onAskAiToggle: (toggle: boolean) => void;
   onClose?: () => void;
+  isAskAiActive?: boolean;
+  canHandleAskAi?: boolean;
   translations?: ModalTranslations;
 };
 
@@ -258,8 +261,9 @@ export function DocSearchModal({
   translations = {},
   getMissingResultsUrl,
   insights = false,
-  datasourceId,
-  promptId,
+  onAskAiToggle,
+  isAskAiActive = false,
+  canHandleAskAi = false,
 }: DocSearchModalProps): JSX.Element {
   const { footer: footerTranslations, searchBox: searchBoxTranslations, ...screenStateTranslations } = translations;
   const [state, setState] = React.useState<DocSearchState<InternalDocSearchHit>>({
@@ -270,11 +274,8 @@ export function DocSearchModal({
     isOpen: false,
     activeItemId: null,
     status: 'idle',
-    isAskAiActive: false,
+    isAskAiActive,
   });
-
-  // check if the instance is configured to handle ask ai
-  const canHandleAskAi = Boolean(datasourceId && promptId);
 
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const modalRef = React.useRef<HTMLDivElement | null>(null);
@@ -338,10 +339,6 @@ export function DocSearchModal({
     },
     [state.context.algoliaInsightsPlugin],
   );
-
-  const toggleAskAi = useCallback((isAskAiActive: boolean): void => {
-    setState((prev) => ({ ...prev, isAskAiActive }));
-  }, []);
 
   const autocomplete = React.useMemo(
     () =>
@@ -448,7 +445,7 @@ export function DocSearchModal({
                     },
                     onSelect({ item }): void {
                       if (item.type === 'askAI') {
-                        toggleAskAi(true);
+                        onAskAiToggle(true);
                       }
                     },
                   },
@@ -480,7 +477,7 @@ export function DocSearchModal({
       favoriteSearches,
       recentSearches,
       canHandleAskAi,
-      toggleAskAi,
+      onAskAiToggle,
     ],
   );
 
@@ -599,9 +596,9 @@ export function DocSearchModal({
             inputRef={inputRef}
             isFromSelection={Boolean(initialQuery) && initialQuery === initialQueryFromSelection}
             translations={searchBoxTranslations}
-            isAskAiActive={state.isAskAiActive}
+            isAskAiActive={isAskAiActive}
             onClose={onClose}
-            onAskAiToggle={toggleAskAi}
+            onAskAiToggle={onAskAiToggle}
           />
         </header>
 
@@ -618,13 +615,13 @@ export function DocSearchModal({
             inputRef={inputRef}
             translations={screenStateTranslations}
             getMissingResultsUrl={getMissingResultsUrl}
-            isAskAiActive={state.isAskAiActive}
+            isAskAiActive={isAskAiActive}
             canHandleAskAi={canHandleAskAi}
-            onAskAiToggle={toggleAskAi}
+            onAskAiToggle={onAskAiToggle}
             onItemClick={(item, event) => {
               // if the item is askAI, do nothing
               if (item.type === 'askAI') {
-                toggleAskAi(true);
+                onAskAiToggle(true);
                 return;
               }
 
@@ -640,7 +637,7 @@ export function DocSearchModal({
         </div>
 
         <footer className="DocSearch-Footer">
-          <Footer translations={footerTranslations} />
+          <Footer translations={footerTranslations} isAskAiActive={isAskAiActive} />
         </footer>
       </div>
     </div>
