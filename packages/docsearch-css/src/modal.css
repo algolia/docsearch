@@ -259,6 +259,7 @@
 }
 
 .DocSearch-Hit {
+  scroll-margin-top: var(--docsearch-modal-source-height);
   border-radius: 4px;
   display: flex;
   padding-bottom: 4px;
@@ -302,6 +303,10 @@
 .DocSearch-Hit-source {
   background: var(--docsearch-modal-background);
   color: var(--docsearch-highlight-color);
+  height: var(--docsearch-modal-source-height);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   font-size: 0.85em;
   font-weight: 600;
   line-height: 32px;
