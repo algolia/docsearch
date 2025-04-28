@@ -30,6 +30,11 @@
   stroke-width: 1.6;
 }
 
+.DocSearch-Back-Icon {
+  color: var(--docsearch-highlight-color);
+  stroke-width: 1.6;
+}
+
 .DocSearch-Button-Placeholder {
   font-size: 1.25rem;
   font-weight: 300;

@@ -1,11 +1,14 @@
 import type { AutocompleteApi, AutocompleteState, BaseItem } from '@algolia/autocomplete-core';
 import React from 'react';
 
+import type { AskAiScreenTranslations } from './AskAiScreen';
+import { AskAiScreen } from './AskAiScreen';
 import type { DocSearchProps } from './DocSearch';
 import type { ErrorScreenTranslations } from './ErrorScreen';
 import { ErrorScreen } from './ErrorScreen';
 import type { NoResultsScreenTranslations } from './NoResultsScreen';
 import { NoResultsScreen } from './NoResultsScreen';
+import type { ResultsScreenTranslations } from './ResultsScreen';
 import { ResultsScreen } from './ResultsScreen';
 import type { StartScreenTranslations } from './StartScreen';
 import { StartScreen } from './StartScreen';
@@ -16,6 +19,8 @@ export type ScreenStateTranslations = Partial<{
   errorScreen: ErrorScreenTranslations;
   startScreen: StartScreenTranslations;
   noResultsScreen: NoResultsScreenTranslations;
+  resultsScreen: ResultsScreenTranslations;
+  askAiScreen: AskAiScreenTranslations;
 }>;
 
 export interface ScreenStateProps<TItem extends BaseItem>
@@ -24,6 +29,9 @@ export interface ScreenStateProps<TItem extends BaseItem>
   recentSearches: StoredSearchPlugin<StoredDocSearchHit>;
   favoriteSearches: StoredSearchPlugin<StoredDocSearchHit>;
   onItemClick: (item: InternalDocSearchHit, event: KeyboardEvent | MouseEvent) => void;
+  onAskAiToggle: (toggle: boolean) => void;
+  isAskAiActive: boolean;
+  canHandleAskAi: boolean;
   inputRef: React.MutableRefObject<HTMLInputElement | null>;
   hitComponent: DocSearchProps['hitComponent'];
   indexName: DocSearchProps['indexName'];
@@ -35,7 +43,11 @@ export interface ScreenStateProps<TItem extends BaseItem>
 
 export const ScreenState = React.memo(
   ({ translations = {}, ...props }: ScreenStateProps<InternalDocSearchHit>) => {
-    if (props.state.status === 'error') {
+    if (props.isAskAiActive && props.canHandleAskAi) {
+      return <AskAiScreen translations={translations?.askAiScreen} />;
+    }
+
+    if (props.state?.status === 'error') {
       return <ErrorScreen translations={translations?.errorScreen} />;
     }
 
@@ -45,11 +57,19 @@ export const ScreenState = React.memo(
       return <StartScreen {...props} hasCollections={hasCollections} translations={translations?.startScreen} />;
     }
 
-    if (hasCollections === false) {
+    if (hasCollections === false && !props.canHandleAskAi) {
       return <NoResultsScreen {...props} translations={translations?.noResultsScreen} />;
     }
 
-    return <ResultsScreen {...props} />;
+    return (
+      <>
+        <ResultsScreen {...props} translations={translations?.resultsScreen} />
+        {props.canHandleAskAi && props.state.collections.length === 1 && (
+          // if there's one collection it is the ask ai action, show the no results screen
+          <NoResultsScreen {...props} translations={translations?.noResultsScreen} />
+        )}
+      </>
+    );
   },
   function areEqual(_prevProps, nextProps) {
     // We don't update the screen when Autocomplete is loading or stalled to

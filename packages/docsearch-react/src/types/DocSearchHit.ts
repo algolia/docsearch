@@ -1,4 +1,4 @@
-type ContentType = 'content' | 'lvl0' | 'lvl1' | 'lvl2' | 'lvl3' | 'lvl4' | 'lvl5' | 'lvl6';
+type ContentType = 'askAI' | 'content' | 'lvl0' | 'lvl1' | 'lvl2' | 'lvl3' | 'lvl4' | 'lvl5' | 'lvl6';
 
 interface DocSearchHitAttributeHighlightResult {
   value: string;
@@ -37,6 +37,7 @@ interface DocSearchHitSnippetResult {
 export declare type DocSearchHit = {
   objectID: string;
   content: string | null;
+  query?: string;
   url: string;
   url_without_anchor: string;
   type: ContentType;

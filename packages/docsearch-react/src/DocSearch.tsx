@@ -26,6 +26,8 @@ export interface DocSearchProps {
   appId: string;
   apiKey: string;
   indexName: string;
+  datasourceId?: string;
+  promptId?: string;
   placeholder?: string;
   searchParameters?: SearchParamsObject;
   maxResultsPerGroup?: number;
@@ -45,6 +47,17 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
   const [isOpen, setIsOpen] = React.useState(false);
   const [initialQuery, setInitialQuery] = React.useState<string | undefined>(props?.initialQuery || undefined);
+  const [isAskAiActive, setIsAskAiActive] = React.useState(false);
+
+  // check if the instance is configured to handle ask ai
+  const canHandleAskAi = Boolean(props?.datasourceId && props?.promptId);
+
+  const onAskAiToggle = React.useCallback(
+    (askAitoggle: boolean) => {
+      setIsAskAiActive(askAitoggle);
+    },
+    [setIsAskAiActive],
+  );
 
   const onOpen = React.useCallback(() => {
     setIsOpen(true);
@@ -68,6 +81,8 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
     onOpen,
     onClose,
     onInput,
+    isAskAiActive,
+    onAskAiToggle,
     searchButtonRef,
   });
 
@@ -82,6 +97,9 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
             initialScrollY={window.scrollY}
             initialQuery={initialQuery}
             translations={props?.translations?.modal}
+            isAskAiActive={isAskAiActive}
+            canHandleAskAi={canHandleAskAi}
+            onAskAiToggle={onAskAiToggle}
             onClose={onClose}
           />,
           document.body,
