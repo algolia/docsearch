@@ -18,6 +18,7 @@ import type { SearchBoxTranslations } from './SearchBox';
 import { SearchBox } from './SearchBox';
 import { createStoredSearches } from './stored-searches';
 import type { DocSearchHit, DocSearchState, InternalDocSearchHit, StoredDocSearchHit } from './types';
+import { useGenAiClient } from './useAskAi';
 import { useSearchClient } from './useSearchClient';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
@@ -245,8 +246,10 @@ const buildQuerySources = async ({
 export function DocSearchModal({
   appId,
   apiKey,
+  dataSourceId,
+  promptId,
   indexName,
-  placeholder = 'Search docs',
+  placeholder,
   searchParameters,
   maxResultsPerGroup,
   onClose = noop,
@@ -289,6 +292,10 @@ export function DocSearchModal({
   const initialQuery = React.useRef(initialQueryFromProp || initialQueryFromSelection).current;
 
   const searchClient = useSearchClient(appId, apiKey, transformSearchClient);
+  const genAiClient = useGenAiClient(appId, apiKey, {
+    dataSourceId,
+    promptId,
+  });
   const favoriteSearches = React.useRef(
     createStoredSearches<StoredDocSearchHit>({
       key: `__DOCSEARCH_FAVORITE_SEARCHES__${indexName}`,
@@ -422,7 +429,6 @@ export function DocSearchModal({
                       const askItem: InternalDocSearchHit = {
                         type: 'askAI',
                         query,
-                        // placeholders (dummy data)
                         url_without_anchor: '',
                         objectID: `ask-ai-button`,
                         content: null,
@@ -617,6 +623,7 @@ export function DocSearchModal({
             getMissingResultsUrl={getMissingResultsUrl}
             isAskAiActive={isAskAiActive}
             canHandleAskAi={canHandleAskAi}
+            genAiClient={genAiClient}
             onAskAiToggle={onAskAiToggle}
             onItemClick={(item, event) => {
               // if the item is askAI, do nothing

@@ -11,6 +11,8 @@ export type SearchBoxTranslations = Partial<{
   clearButtonAriaLabel: string;
   closeButtonText: string;
   closeButtonAriaLabel: string;
+  placeholderText: string;
+  placeholderTextAskAi: string;
   searchInputLabel: string;
   backToKeywordSearchButtonText: string;
   backToKeywordSearchButtonAriaLabel: string;

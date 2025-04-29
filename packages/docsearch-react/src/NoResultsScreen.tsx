@@ -25,7 +25,7 @@ export function NoResultsScreen({ translations = {}, ...props }: NoResultsScreen
   const searchSuggestions: string[] | undefined = props.state.context.searchSuggestions as string[];
 
   return (
-    <div className="DocSearch-NoResults">
+    <div className={`DocSearch-NoResults ${props.canHandleAskAi ? 'DocSearch-NoResults--withAskAi' : ''}`}>
       <div className="DocSearch-Screen-Icon">
         <NoResultsIcon />
       </div>

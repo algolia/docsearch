@@ -6,6 +6,7 @@ import { AskAiScreen } from './AskAiScreen';
 import type { DocSearchProps } from './DocSearch';
 import type { ErrorScreenTranslations } from './ErrorScreen';
 import { ErrorScreen } from './ErrorScreen';
+import type { GenAiClient } from './lib/genAiClient';
 import type { NoResultsScreenTranslations } from './NoResultsScreen';
 import { NoResultsScreen } from './NoResultsScreen';
 import type { ResultsScreenTranslations } from './ResultsScreen';
@@ -36,6 +37,7 @@ export interface ScreenStateProps<TItem extends BaseItem>
   hitComponent: DocSearchProps['hitComponent'];
   indexName: DocSearchProps['indexName'];
   disableUserPersonalization: boolean;
+  genAiClient: GenAiClient | null;
   resultsFooterComponent: DocSearchProps['resultsFooterComponent'];
   translations: ScreenStateTranslations;
   getMissingResultsUrl?: DocSearchProps['getMissingResultsUrl'];
@@ -44,7 +46,7 @@ export interface ScreenStateProps<TItem extends BaseItem>
 export const ScreenState = React.memo(
   ({ translations = {}, ...props }: ScreenStateProps<InternalDocSearchHit>) => {
     if (props.isAskAiActive && props.canHandleAskAi) {
-      return <AskAiScreen translations={translations?.askAiScreen} />;
+      return <AskAiScreen {...props} translations={translations?.askAiScreen} />;
     }
 
     if (props.state?.status === 'error') {

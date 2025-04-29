@@ -552,6 +552,10 @@ svg.DocSearch-Hit-Select-Icon {
   height: 80%;
 }
 
+.DocSearch-NoResults--withAskAi {
+  height: 70%;
+}
+
 .DocSearch-StartScreen {
   height: 100%;
 }
@@ -737,6 +741,298 @@ assistive tech users */
   text-overflow: ellipsis;
 }
 
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ask ai screen specific styles */
+.DocSearch-AskAiScreen-Container {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  justify-content: flex-start;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  gap: 0;
+}
+
+.DocSearch-AskAiScreen-Header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.65em;
+  font-weight: 300;
+  padding: 1em 0.4em;
+}
+
+.DocSearch-AskAi-Disclaimer {
+  padding: 0;
+  margin: 0;
+}
+
+.DocSearch-AskAiScreen-Body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  padding: 6px;
+  overflow-y: auto;
+}
+
+.DocSearch-AskAiScreen-Response-Container {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.DocSearch-AskAiScreen-Response {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  gap: 16px;
+  font-size: 0.8em;
+  background: var(--docsearch-hit-background);
+  padding: 24px;
+  color: var(--docsearch-text-color);
+  border-radius: 4px;
+  align-self: flex-start;
+}
+
+.DocSearch-AskAiScreen-Query {
+  font-size: 1.2em;
+  font-weight: 600;
+  margin: 0;
+}
+
+.DocSearch-AskAiScreen-Answer {
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--docsearch-secondary-text-color);
+  margin: 0;
+}
+
+.DocSearch-AskAiScreen-Answer--streaming > * {
+  animation: fade-in 0.3s ease-in-out;
+}
+
+.DocSearch-AskAiScreen-Answer-Footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.DocSearch-AskAiScreen-Actions {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.DocSearch-AskAiScreen-ActionButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  padding: 4px;
+  margin: 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-radius: 4px;
+}
+
+.DocSearch-AskAiScreen-ActionButton:hover {
+  background: var(--docsearch-hit-highlight-color);
+}
+
+.DocSearch-AskAiScreen-ActionButton svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.5;
+  color: var(--docsearch-icon-color);
+}
+
+.DocSearch-AskAiScreen-CopyButton--copied {
+  background-color: var(--docsearch-success-color);
+  cursor: default;
+}
+
+.DocSearch-AskAiScreen-Error {
+  color: var(--docsearch-error-color);
+  font-size: 0.8em;
+  font-weight: 400;
+  margin: 0;
+}
+
+.DocSearch-AskAiScreen-RelatedSources {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  gap: 8px;
+}
+
+.DocSearch-AskAiScreen-RelatedSources-Title {
+  font-size: 0.7em;
+  font-weight: 400;
+  color: var(--docsearch-text-color);
+  margin: 0;
+}
+
+.DocSearch-AskAiScreen-RelatedSources-Item-Link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 6px;
+  background: var(--docsearch-hit-background);
+  border-radius: 4px;
+  color: var(--docsearch-text-color);
+  font-size: 0.75em;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.DocSearch-AskAiScreen-RelatedSources-Item-Link svg {
+  flex-shrink: 0;
+  color: var(--docsearch-icon-color);
+  stroke-width: 1.2;
+}
+
+.DocSearch-AskAiScreen-RelatedSources-Item-Link span {
+  flex: 1 1 0;
+  min-width: 0;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.DocSearch-AskAiScreen-RelatedSources-Item-Link:hover {
+  background: var(--docsearch-hit-highlight-color);
+}
+
+.DocSearch-Markdown-Content {
+  color: var(--docsearch-text-color);
+  line-height: 1.5;
+}
+
+.DocSearch-Markdown-Content p:last-child {
+  margin-bottom: 0;
+}
+
+.DocSearch-Markdown-Content p:first-child {
+  margin-top: 0;
+}
+
+.DocSearch-Markdown-Content code {
+  background-color: var(--docsearch-key-background);
+  color: var(--docsearch-text-color);
+  padding: 0.2em 0.4em;
+  margin: 0;
+  border-radius: 3px;
+  font-family: monospace;
+}
+
+.DocSearch-Markdown-Content pre {
+  background-color: var(--docsearch-key-background);
+  color: var(--docsearch-text-color);
+  padding: 1em;
+  border-radius: 3px;
+  overflow-x: auto;
+}
+
+.DocSearch-Markdown-Content pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+  margin: 0;
+  font-size: inherit;
+  border-radius: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.DocSearch-Markdown-Content h1,
+.DocSearch-Markdown-Content h2,
+.DocSearch-Markdown-Content h3,
+.DocSearch-Markdown-Content h4,
+.DocSearch-Markdown-Content h5,
+.DocSearch-Markdown-Content h6 {
+  color: var(--docsearch-text-color);
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+}
+
+.DocSearch-Markdown-Content ul,
+.DocSearch-Markdown-Content ol {
+  color: var(--docsearch-text-color);
+  margin-bottom: 1em;
+}
+
+.DocSearch-Markdown-Content li {
+  color: var(--docsearch-text-color);
+  margin-bottom: 0.25em;
+}
+
+.DocSearch-Markdown-Content a {
+  color: var(--docsearch-highlight-color);
+  text-decoration: none;
+}
+
+.DocSearch-Markdown-Content a:hover {
+  text-decoration: underline;
+}
+
+/* skeleton source styles */
+.DocSearch-AskAiScreen-SkeletonSource {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+  background: var(--docsearch-hit-background);
+  border-radius: 4px;
+  height: 32px; /* match item link height roughly */
+}
+
+.DocSearch-AskAiScreen-SkeletonSource-Icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--docsearch-muted-color);
+  opacity: 0.4;
+  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.DocSearch-AskAiScreen-SkeletonSource-Text {
+  flex: 1 1 0;
+  height: 12px;
+  background: var(--docsearch-muted-color);
+  border-radius: 4px;
+  opacity: 0.4;
+  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation-delay: 0.2s;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   :root {
@@ -796,14 +1092,17 @@ assistive tech users */
   .DocSearch-Hit-Tree {
     display: none;
   }
-}
 
-@keyframes fade-in {
-  0% {
-    opacity: 0;
+  .DocSearch-AskAiScreen-Response-Container {
+    flex-direction: column;
+    gap: 24px;
   }
 
-  100% {
-    opacity: 1;
+  .DocSearch-AskAiScreen-Response {
+    width: 100%;
+  }
+
+  .DocSearch-AskAiScreen-RelatedSources {
+    width: 100%;
   }
 }
