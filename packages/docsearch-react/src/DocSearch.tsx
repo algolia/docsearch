@@ -51,12 +51,17 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
 
   let currentPlaceholder =
     props?.translations?.modal?.searchBox?.placeholderText || props?.placeholder || 'Search docs';
-  if (isAskAiActive) {
-    currentPlaceholder = props?.translations?.modal?.searchBox?.placeholderTextAskAi || 'Ask another question...';
-  }
 
   // check if the instance is configured to handle ask ai
   const canHandleAskAi = Boolean(props?.dataSourceId && props?.promptId);
+
+  if (canHandleAskAi) {
+    currentPlaceholder = props?.translations?.modal?.searchBox?.placeholderText || 'Search docs or ask AI a question';
+  }
+
+  if (isAskAiActive) {
+    currentPlaceholder = props?.translations?.modal?.searchBox?.placeholderTextAskAi || 'Ask another question...';
+  }
 
   const onAskAiToggle = React.useCallback(
     (askAitoggle: boolean) => {

@@ -17,13 +17,13 @@ type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translatio
 
 export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): JSX.Element {
   const {
-    titleText = 'How to run a crawl?',
     disclaimerText = 'Answers are generated using artificial intelligence. This is an experimental technology, and information may occasionally be incorrect or misleading.',
     relatedSourcesText = 'Related Sources',
   } = translations;
 
   const genAiClient = props.genAiClient;
   if (!genAiClient) {
+    // @todo: add a link to the documentation
     throw new Error('You have to provide credentials to use the Ask AI feature.\nSee documentation:');
   }
 
@@ -35,7 +35,7 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
   }
 
   // determine the initial query to display
-  const displayedQuery = messages.find((m) => m.role === 'user')?.content || titleText;
+  const displayedQuery = messages.find((m) => m.role === 'user')?.content || 'No query provided';
 
   // select the content to display based on the status
   const displayedAnswer =
