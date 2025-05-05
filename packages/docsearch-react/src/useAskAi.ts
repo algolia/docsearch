@@ -1,6 +1,8 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useRef } from 'react';
 
 import { algoliaGenAiToolkit, type AskAiResponse, type GenAiClient, type GenAiClientOptions } from './lib/genAiClient';
+import type { StoredSearchPlugin } from './stored-searches';
+import type { StoredAskAiState } from './types';
 
 type LoadingStatus = 'error' | 'idle' | 'loading' | 'streaming';
 
@@ -10,18 +12,24 @@ interface Message {
   content: string;
 }
 
-interface UseAskAiState {
+export interface AskAiState {
   messages: Message[];
   currentResponse: string;
+  query: string;
   additionalFilters: string[];
   context: AskAiResponse['context'];
-  conversationID: string | null;
+  conversationId: string | null;
   loadingStatus: LoadingStatus;
   error: Error | null;
+  // optional just to make the type flexible
+  ask?: (params: AskParams) => Promise<void>;
+  reset?: () => void;
+  restoreConversation?: (conversation: StoredAskAiState) => void;
 }
 
 interface UseAskAiParams {
   genAiClient: GenAiClient;
+  conversations: StoredSearchPlugin<StoredAskAiState>;
 }
 
 interface AskParams {
@@ -29,51 +37,60 @@ interface AskParams {
   additionalFilters?: Record<string, any>;
 }
 
-interface UseAskAiReturn {
-  messages: Message[];
-  currentResponse: string;
-  additionalFilters: string[];
-  context: AskAiResponse['context'];
-  conversationID: string | null;
-  loadingStatus: LoadingStatus;
-  error: Error | null;
-  ask: (params: AskParams) => Promise<void>;
-  resetState: () => void;
-}
-
 /**
  * Hook for interacting with Algolia's Generative AI API.
  *
  * @param params - Configuration options.
  * @param params.genAiClient - The GenAI client instance.
+ * @param params.conversations - The conversations storage ref to store the AI responses.
  * @returns State and functions for interacting with the AI.
  */
-export function useAskAi({ genAiClient }: UseAskAiParams): UseAskAiReturn {
-  const initialState = useMemo<UseAskAiState>(
+export function useAskAi({ genAiClient, conversations }: UseAskAiParams): AskAiState {
+  const initialState = useMemo(
     () => ({
       messages: [],
       currentResponse: '',
+      query: '',
       additionalFilters: [],
       context: [],
-      conversationID: null,
-      loadingStatus: 'idle',
+      conversationId: null,
+      loadingStatus: 'idle' as const,
       error: null,
     }),
     [],
   );
 
-  const [state, setState] = useState<UseAskAiState>(initialState);
+  const [state, setState] = useState<Omit<AskAiState, 'ask' | 'reset'>>(initialState);
+  const didAddConversationRef = useRef(false);
 
-  // reset state
-  const resetState = useCallback(() => {
+  // reset state function
+  const reset = useCallback(() => {
     setState(initialState);
+    didAddConversationRef.current = false;
   }, [initialState]);
+
+  const restoreConversation = useCallback(
+    (conversation: StoredAskAiState) => {
+      setState(conversation.askState ?? initialState);
+      didAddConversationRef.current = true;
+    },
+    [initialState],
+  );
 
   // ask ai request
   const ask = useCallback(
     async ({ query, additionalFilters }: AskParams) => {
+      // if there's no conversationid, empty the messages
+      if (!state.conversationId) {
+        setState((prevState) => ({
+          ...prevState,
+          messages: [],
+        }));
+      }
+
       // generate a unique id for the user message
       const userMessageId = crypto.randomUUID();
+      const newConversationId = state.conversationId ?? crypto.randomUUID();
 
       // Add user message to the conversation
       setState((prevState) => ({
@@ -82,6 +99,7 @@ export function useAskAi({ genAiClient }: UseAskAiParams): UseAskAiReturn {
         currentResponse: '',
         additionalFilters: [],
         context: [],
+        query,
         loadingStatus: 'loading',
         error: null,
       }));
@@ -90,6 +108,7 @@ export function useAskAi({ genAiClient }: UseAskAiParams): UseAskAiReturn {
         await genAiClient.fetchAskAiResponse({
           query,
           additionalFilters,
+          // conversationId: newConversationId,
           onUpdate: (chunk) => {
             // update state incrementally as data streams in
             setState((prevState) => ({
@@ -97,23 +116,50 @@ export function useAskAi({ genAiClient }: UseAskAiParams): UseAskAiReturn {
               currentResponse: chunk.response,
               additionalFilters: chunk.additionalFilters,
               context: chunk.context,
-              conversationID: chunk.conversationID,
               loadingStatus: 'streaming',
             }));
           },
           onComplete: () => {
-            // generate a unique id for the assistant message
             const assistantMessageId = crypto.randomUUID();
 
-            // add the completed assistant message to the conversation
-            setState((prevState) => ({
-              ...prevState,
-              messages: [
-                ...prevState.messages,
-                { role: 'assistant', content: prevState.currentResponse, id: assistantMessageId },
-              ],
-              loadingStatus: 'idle', // stream finished successfully
-            }));
+            setState((prevState) => {
+              const newState = {
+                ...prevState,
+                messages: [
+                  ...prevState.messages,
+                  { role: 'assistant' as const, content: prevState.currentResponse, id: assistantMessageId },
+                ],
+                loadingStatus: 'idle' as const,
+                conversationId: prevState.conversationId ?? newConversationId,
+              };
+
+              if (!didAddConversationRef.current) {
+                conversations.add({
+                  query: newState.messages[0].content,
+                  objectID: newConversationId,
+
+                  // dummy content to make it a valid hit
+                  content: null,
+                  hierarchy: {
+                    lvl0: 'askAI',
+                    lvl1: newState.messages[0].content,
+                    lvl2: null,
+                    lvl3: null,
+                    lvl4: null,
+                    lvl5: null,
+                    lvl6: null,
+                  },
+                  type: 'askAI',
+                  url: '',
+                  url_without_anchor: '',
+                  anchor: '',
+                  askState: newState,
+                });
+                didAddConversationRef.current = true;
+              }
+
+              return newState;
+            });
           },
           onError: (error) => {
             // handle errors during the stream
@@ -132,13 +178,14 @@ export function useAskAi({ genAiClient }: UseAskAiParams): UseAskAiReturn {
         }));
       }
     },
-    [genAiClient],
+    [genAiClient, conversations, state],
   );
 
   return {
     ...state,
     ask,
-    resetState,
+    reset,
+    restoreConversation,
   };
 }
 

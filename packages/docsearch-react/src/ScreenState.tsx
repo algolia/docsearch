@@ -6,7 +6,6 @@ import { AskAiScreen } from './AskAiScreen';
 import type { DocSearchProps } from './DocSearch';
 import type { ErrorScreenTranslations } from './ErrorScreen';
 import { ErrorScreen } from './ErrorScreen';
-import type { GenAiClient } from './lib/genAiClient';
 import type { NoResultsScreenTranslations } from './NoResultsScreen';
 import { NoResultsScreen } from './NoResultsScreen';
 import type { ResultsScreenTranslations } from './ResultsScreen';
@@ -14,7 +13,8 @@ import { ResultsScreen } from './ResultsScreen';
 import type { StartScreenTranslations } from './StartScreen';
 import { StartScreen } from './StartScreen';
 import type { StoredSearchPlugin } from './stored-searches';
-import type { InternalDocSearchHit, StoredDocSearchHit } from './types';
+import type { InternalDocSearchHit, StoredAskAiState, StoredDocSearchHit } from './types';
+import type { AskAiState } from './useAskAi';
 
 export type ScreenStateTranslations = Partial<{
   errorScreen: ErrorScreenTranslations;
@@ -29,6 +29,7 @@ export interface ScreenStateProps<TItem extends BaseItem>
   state: AutocompleteState<TItem>;
   recentSearches: StoredSearchPlugin<StoredDocSearchHit>;
   favoriteSearches: StoredSearchPlugin<StoredDocSearchHit>;
+  conversations: StoredSearchPlugin<StoredAskAiState>;
   onItemClick: (item: InternalDocSearchHit, event: KeyboardEvent | MouseEvent) => void;
   onAskAiToggle: (toggle: boolean) => void;
   isAskAiActive: boolean;
@@ -37,7 +38,7 @@ export interface ScreenStateProps<TItem extends BaseItem>
   hitComponent: DocSearchProps['hitComponent'];
   indexName: DocSearchProps['indexName'];
   disableUserPersonalization: boolean;
-  genAiClient: GenAiClient | null;
+  askAiState?: AskAiState;
   resultsFooterComponent: DocSearchProps['resultsFooterComponent'];
   translations: ScreenStateTranslations;
   getMissingResultsUrl?: DocSearchProps['getMissingResultsUrl'];

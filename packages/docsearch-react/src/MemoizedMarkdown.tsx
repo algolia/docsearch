@@ -11,9 +11,7 @@ function parseMarkdownIntoHTMLBlocks(md: string): string[] {
   );
 }
 
-const HTMLBlock: FC<{ html: string; key: string }> = ({ html, key }) => (
-  <div dangerouslySetInnerHTML={{ __html: html }} key={key} />
-);
+const HTMLBlock: FC<{ html: string }> = ({ html }) => <div dangerouslySetInnerHTML={{ __html: html }} />;
 
 const MemoizedHTMLBlock = memo(HTMLBlock, (prev, next) => prev.html === next.html);
 MemoizedHTMLBlock.displayName = 'MemoizedHTMLBlock';

@@ -783,14 +783,13 @@ assistive tech users */
   flex-direction: column;
   gap: 24px;
   width: 100%;
-  padding: 6px;
-  overflow-y: auto;
 }
 
 .DocSearch-AskAiScreen-Response-Container {
   display: flex;
   flex-direction: row;
-  gap: 8px;
+  gap: 16px;
+  margin-bottom: 16px;
 }
 
 .DocSearch-AskAiScreen-Response {
@@ -799,6 +798,7 @@ assistive tech users */
   width: 70%;
   gap: 16px;
   font-size: 0.8em;
+  margin-bottom: 8px;
   background: var(--docsearch-hit-background);
   padding: 24px;
   color: var(--docsearch-text-color);
@@ -821,6 +821,13 @@ assistive tech users */
 
 .DocSearch-AskAiScreen-Answer--streaming > * {
   animation: fade-in 0.3s ease-in-out;
+}
+
+.DocSearch-AskAiScreen-ThinkingDots {
+  font-size: 0.7em;
+  font-weight: 400;
+  color: var(--docsearch-secondary-text-color);
+  margin: 0;
 }
 
 .DocSearch-AskAiScreen-Answer-Footer {
@@ -878,20 +885,35 @@ assistive tech users */
   display: flex;
   flex-direction: column;
   width: 30%;
-  gap: 8px;
+  gap: 4px;
 }
 
 .DocSearch-AskAiScreen-RelatedSources-Title {
   font-size: 0.7em;
   font-weight: 400;
   color: var(--docsearch-text-color);
+  padding: 6px 0;
   margin: 0;
+}
+
+.DocSearch-AskAiScreen-RelatedSources-NoResults {
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin: 0;
+  color: var(--docsearch-text-color);
+}
+
+.DocSearch-AskAiScreen-RelatedSources-Error {
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin: 0;
+  color: var(--docsearch-error-color);
 }
 
 .DocSearch-AskAiScreen-RelatedSources-Item-Link {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   padding: 12px 6px;
   background: var(--docsearch-hit-background);
   border-radius: 4px;
@@ -1026,10 +1048,10 @@ assistive tech users */
 @keyframes pulse {
   0%,
   100% {
-    opacity: 0.4;
+    opacity: 0.3;
   }
   50% {
-    opacity: 0.8;
+    opacity: 0.6;
   }
 }
 

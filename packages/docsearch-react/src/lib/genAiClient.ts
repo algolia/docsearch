@@ -43,6 +43,7 @@ export function algoliaGenAiToolkit(appId: string, apiKey: string, options: GenA
 export interface FetchAskAiResponseParams {
   query: string;
   genAiClient: GenAiClient;
+  conversationId?: string | null;
   additionalFilters?: Record<string, any>;
   onUpdate: (chunk: AskAiResponse) => void;
   onComplete?: () => void;
@@ -53,6 +54,7 @@ async function fetchAskAiResponseFunction({
   query,
   genAiClient,
   additionalFilters,
+  conversationId,
   onUpdate,
   onComplete,
   onError,
@@ -97,6 +99,7 @@ async function fetchAskAiResponseFunction({
         dataSourceId,
         promptId,
         additionalFilters,
+        conversationId,
         stream: true,
       }),
     });
