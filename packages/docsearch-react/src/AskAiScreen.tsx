@@ -3,36 +3,31 @@ import React, { type JSX, useState, useEffect } from 'react';
 import { MemoizedMarkdown } from './MemoizedMarkdown';
 import type { ScreenStateProps } from './ScreenState';
 import type { InternalDocSearchHit } from './types';
-import { useAskAi } from './useAskAi';
 
 export type AskAiScreenTranslations = Partial<{
   titleText: string;
   disclaimerText: string;
   relatedSourcesText: string;
+  thinkingText: string;
 }>;
 
 type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
   translations?: AskAiScreenTranslations;
+  conversationId?: string | null;
 };
 
-export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): JSX.Element {
+export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): JSX.Element | null {
+  if (!props.askAiState) {
+    return null;
+  }
+
   const {
     disclaimerText = 'Answers are generated using artificial intelligence. This is an experimental technology, and information may occasionally be incorrect or misleading.',
     relatedSourcesText = 'Related Sources',
+    thinkingText = 'Thinking',
   } = translations;
 
-  const genAiClient = props.genAiClient;
-  if (!genAiClient) {
-    // @todo: add a link to the documentation
-    throw new Error('You have to provide credentials to use the Ask AI feature.\nSee documentation:');
-  }
-
-  const { ask, messages, currentResponse, loadingStatus, context, error } = useAskAi({ genAiClient });
-
-  // if we have no messages and a query, and are not loading/streaming, we can use it as the initial query
-  if (messages.length === 0 && props.state.query && loadingStatus === 'idle') {
-    ask({ query: props.state.query });
-  }
+  const { messages, currentResponse, loadingStatus, context, error } = props.askAiState;
 
   // determine the initial query to display
   const displayedQuery = messages.find((m) => m.role === 'user')?.content || 'No query provided';
@@ -81,7 +76,7 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
               )}
               {loadingStatus === 'loading' && (
                 <div className="DocSearch-AskAiScreen-Streaming-Loader">
-                  <PulseLoader />
+                  <ThinkingDots thinkingText={thinkingText} />
                 </div>
               )}
             </div>
@@ -112,10 +107,40 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
                   <span>{source.title || source.url || source.objectID}</span>
                 </a>
               ))}
+            {context.length === 0 && loadingStatus === 'idle' && (
+              <p className="DocSearch-AskAiScreen-RelatedSources-NoResults">No related sources found</p>
+            )}
+            {context.length === 0 && loadingStatus === 'error' && (
+              <p className="DocSearch-AskAiScreen-RelatedSources-Error">
+                Error loading related sources. Please try again.
+              </p>
+            )}
           </div>
         </div>
       </div>
     </div>
+  );
+}
+
+function ThinkingDots({ thinkingText }: { thinkingText: string }): JSX.Element {
+  const [dots, setDots] = useState('');
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDots((prevDots) => {
+        if (prevDots === '...') return '';
+        return prevDots + '.';
+      });
+    }, 500);
+
+    return (): void => clearInterval(interval);
+  }, []);
+
+  return (
+    <p className="DocSearch-AskAiScreen-ThinkingDots">
+      {thinkingText}
+      {dots}
+    </p>
   );
 }
 
@@ -144,76 +169,6 @@ function RelatedSourceIcon(): JSX.Element {
       <line x1="4" x2="20" y1="15" y2="15" />
       <line x1="10" x2="8" y1="3" y2="21" />
       <line x1="16" x2="14" y1="3" y2="21" />
-    </svg>
-  );
-}
-
-function PulseLoader(): JSX.Element {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="0" fill="currentColor">
-        <animate
-          id="svgSpinnersPulseMultiple0"
-          fill="freeze"
-          attributeName="r"
-          begin="0;svgSpinnersPulseMultiple2.end"
-          calcMode="spline"
-          dur="1.2s"
-          keySplines=".52,.6,.25,.99"
-          values="0;11"
-        ></animate>
-        <animate
-          fill="freeze"
-          attributeName="opacity"
-          begin="0;svgSpinnersPulseMultiple2.end"
-          calcMode="spline"
-          dur="1.2s"
-          keySplines=".52,.6,.25,.99"
-          values="1;0"
-        ></animate>
-      </circle>
-      <circle cx="12" cy="12" r="0" fill="currentColor">
-        <animate
-          id="svgSpinnersPulseMultiple1"
-          fill="freeze"
-          attributeName="r"
-          begin="svgSpinnersPulseMultiple0.begin+0.2s"
-          calcMode="spline"
-          dur="1.2s"
-          keySplines=".52,.6,.25,.99"
-          values="0;11"
-        ></animate>
-        <animate
-          fill="freeze"
-          attributeName="opacity"
-          begin="svgSpinnersPulseMultiple0.begin+0.2s"
-          calcMode="spline"
-          dur="1.2s"
-          keySplines=".52,.6,.25,.99"
-          values="1;0"
-        ></animate>
-      </circle>
-      <circle cx="12" cy="12" r="0" fill="currentColor">
-        <animate
-          id="svgSpinnersPulseMultiple2"
-          fill="freeze"
-          attributeName="r"
-          begin="svgSpinnersPulseMultiple0.begin+0.4s"
-          calcMode="spline"
-          dur="1.2s"
-          keySplines=".52,.6,.25,.99"
-          values="0;11"
-        ></animate>
-        <animate
-          fill="freeze"
-          attributeName="opacity"
-          begin="svgSpinnersPulseMultiple0.begin+0.4s"
-          calcMode="spline"
-          dur="1.2s"
-          keySplines=".52,.6,.25,.99"
-          values="1;0"
-        ></animate>
-      </circle>
     </svg>
   );
 }
