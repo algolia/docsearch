@@ -120,11 +120,6 @@
     "href": "https://jestjs.io/"
   },
   {
-    "name": "Nuxt.js",
-    "image": "img/logos/nuxtjs.svg",
-    "href": "https://nuxtjs.org/"
-  },
-  {
     "name": "Expo",
     "image": "img/logos/expo.svg",
     "href": "https://docs.expo.dev/"
@@ -155,11 +150,6 @@
     "href": "https://eslint.org/"
   },
   {
-    "name": "Redux",
-    "image": "img/logos/redux.svg",
-    "href": "https://redux.js.org/"
-  },
-  {
     "name": "Sass",
     "image": "img/logos/sass.png",
     "href": "https://sass-lang.com/"
@@ -188,11 +178,6 @@
     "name": "Vue CLI",
     "image": "img/logos/vue.svg",
     "href": "https://cli.vuejs.org/"
-  },
-  {
-    "name": "Prismic",
-    "image": "img/logos/prismic.png",
-    "href": "https://prismic.io/docs"
   },
   {
     "name": "Formik",
