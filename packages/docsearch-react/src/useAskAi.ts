@@ -10,14 +10,13 @@ interface Message {
   id: string;
   role: 'assistant' | 'user';
   content: string;
+  context?: AskAiResponse['context'];
 }
 
 export interface AskAiState {
   messages: Message[];
-  currentResponse: string;
   query: string;
   additionalFilters: string[];
-  context: AskAiResponse['context'];
   conversationId: string | null;
   loadingStatus: LoadingStatus;
   error: Error | null;
@@ -49,10 +48,8 @@ export function useAskAi({ genAiClient, conversations }: UseAskAiParams): AskAiS
   const initialState = useMemo(
     () => ({
       messages: [],
-      currentResponse: '',
       query: '',
       additionalFilters: [],
-      context: [],
       conversationId: null,
       loadingStatus: 'idle' as const,
       error: null,
@@ -90,17 +87,19 @@ export function useAskAi({ genAiClient, conversations }: UseAskAiParams): AskAiS
 
       // generate a unique id for the user message
       const userMessageId = crypto.randomUUID();
+      const assistantMessageId = crypto.randomUUID();
       const newConversationId = state.conversationId ?? crypto.randomUUID();
 
-      // Add user message to the conversation
+      // add user message to the conversation
       setState((prevState) => ({
         ...prevState,
-        messages: [...prevState.messages, { role: 'user', content: query, id: userMessageId }],
-        currentResponse: '',
-        additionalFilters: [],
-        context: [],
-        query,
+        messages: [
+          ...(prevState.conversationId ? prevState.messages : []), // keep history if we have a conversationId
+          { id: userMessageId, role: 'user', content: query },
+          { id: assistantMessageId, role: 'assistant', content: '', context: [] },
+        ],
         loadingStatus: 'loading',
+        query,
         error: null,
       }));
 
@@ -110,25 +109,19 @@ export function useAskAi({ genAiClient, conversations }: UseAskAiParams): AskAiS
           additionalFilters,
           // conversationId: newConversationId,
           onUpdate: (chunk) => {
-            // update state incrementally as data streams in
             setState((prevState) => ({
               ...prevState,
-              currentResponse: chunk.response,
-              additionalFilters: chunk.additionalFilters,
-              context: chunk.context,
+              messages: prevState.messages.map((m) =>
+                m.id === assistantMessageId ? { ...m, content: chunk.response, context: chunk.context } : m,
+              ),
               loadingStatus: 'streaming',
             }));
           },
-          onComplete: () => {
-            const assistantMessageId = crypto.randomUUID();
 
+          onComplete: () => {
             setState((prevState) => {
               const newState = {
                 ...prevState,
-                messages: [
-                  ...prevState.messages,
-                  { role: 'assistant' as const, content: prevState.currentResponse, id: assistantMessageId },
-                ],
                 loadingStatus: 'idle' as const,
                 conversationId: prevState.conversationId ?? newConversationId,
               };
@@ -139,6 +132,7 @@ export function useAskAi({ genAiClient, conversations }: UseAskAiParams): AskAiS
                   objectID: newConversationId,
 
                   // dummy content to make it a valid hit
+                  // this is useful to show it among other hits
                   content: null,
                   hierarchy: {
                     lvl0: 'askAI',

@@ -339,15 +339,6 @@ export function DocSearchModal({
     conversations,
   });
 
-  const handleAskAiToggle = React.useCallback(
-    (toggle: boolean, query: string) => {
-      onAskAiToggle(toggle);
-      askAiState.ask?.({ query });
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [onAskAiToggle],
-  );
-
   const saveRecentSearch = React.useCallback(
     function saveRecentSearch(item: InternalDocSearchHit) {
       if (disableUserPersonalization) {
@@ -396,17 +387,23 @@ export function DocSearchModal({
       >
     >(undefined);
 
+  const handleAskAiToggle = React.useCallback(
+    (toggle: boolean, query: string) => {
+      onAskAiToggle(toggle);
+      // clear the query
+      if (autocompleteRef.current) {
+        autocompleteRef.current.setQuery('');
+      }
+      askAiState.ask?.({ query });
+    },
+    [onAskAiToggle, askAiState],
+  );
+
   if (!autocompleteRef.current) {
-    autocompleteRef.current = createAutocomplete<
-      InternalDocSearchHit,
-      React.FormEvent<HTMLFormElement>,
-      React.MouseEvent,
-      React.KeyboardEvent
-    >({
+    autocompleteRef.current = createAutocomplete({
       id: 'docsearch',
       // we don't want to focus on the AskAI hit by default
       defaultActiveItemId: canHandleAskAi ? 1 : 0,
-      placeholder,
       openOnFocus: true,
       initialState: {
         query: initialQuery,
@@ -608,12 +605,18 @@ export function DocSearchModal({
     };
   }, []);
 
+  // Refresh the autocomplete results when ask ai is toggled off
+  // helps return to the previous ac state and start screen
+  React.useEffect(() => {
+    if (!isAskAiActive) {
+      autocomplete.refresh();
+    }
+  }, [isAskAiActive, autocomplete]);
+
   return (
     <div
       ref={containerRef}
-      {...getRootProps({
-        'aria-expanded': true,
-      })}
+      {...getRootProps({ 'aria-expanded': true })}
       className={[
         'DocSearch',
         'DocSearch-Container',
@@ -635,6 +638,7 @@ export function DocSearchModal({
           <SearchBox
             {...autocomplete}
             state={state}
+            placeholder={placeholder || 'Search docs'}
             autoFocus={initialQuery.length === 0}
             inputRef={inputRef}
             isFromSelection={Boolean(initialQuery) && initialQuery === initialQueryFromSelection}
@@ -642,6 +646,9 @@ export function DocSearchModal({
             isAskAiActive={isAskAiActive}
             onClose={onClose}
             onAskAiToggle={onAskAiToggle}
+            onAskAgain={(query) => {
+              handleAskAiToggle(true, query);
+            }}
           />
         </header>
 

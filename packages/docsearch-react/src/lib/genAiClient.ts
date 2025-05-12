@@ -63,10 +63,7 @@ async function fetchAskAiResponseFunction({
   let finalResponse: AskAiResponse | null = null;
 
   // Helper function to process a single SSE line
-  function processSseLine(
-    line: string,
-    context: string, // 'chunk' or 'final chunk' for error messages
-  ): AskAiResponse | null {
+  function processSseLine(line: string, context: string): AskAiResponse | null {
     if (!line.startsWith('data:')) {
       return null;
     }
@@ -98,6 +95,8 @@ async function fetchAskAiResponseFunction({
         query,
         dataSourceId,
         promptId,
+        nbHits: 5,
+        useCache: false,
         additionalFilters,
         conversationId,
         stream: true,

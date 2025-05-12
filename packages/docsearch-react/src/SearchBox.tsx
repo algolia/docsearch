@@ -25,6 +25,8 @@ interface SearchBoxProps
   inputRef: RefObject<HTMLInputElement | null>;
   onClose: () => void;
   onAskAiToggle: (toggle: boolean) => void;
+  onAskAgain: (query: string) => void;
+  placeholder: string;
   isAskAiActive: boolean;
   isFromSelection: boolean;
   translations?: SearchBoxTranslations;
@@ -55,6 +57,32 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
       props.inputRef.current.select();
     }
   }, [props.isFromSelection, props.inputRef]);
+
+  const baseInputProps = props.getInputProps({
+    inputElement: props.inputRef.current!,
+    autoFocus: props.autoFocus,
+    maxLength: MAX_QUERY_SIZE,
+  });
+
+  const blockedKeys = new Set(['ArrowUp', 'ArrowDown', 'Enter']);
+  const origOnKeyDown = baseInputProps.onKeyDown;
+
+  const inputProps = {
+    ...baseInputProps,
+    onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>): void => {
+      // block these up, down, enter listeners when AskAI is active
+      if (props.isAskAiActive && blockedKeys.has(e.key)) {
+        // enter key asks another question
+        if (e.key === 'Enter' && props.state.query) {
+          props.onAskAgain(props.state.query);
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+      origOnKeyDown?.(e);
+    },
+  };
 
   return (
     <>
@@ -87,15 +115,7 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
           <LoadingIcon />
         </div>
 
-        <input
-          className="DocSearch-Input"
-          ref={props.inputRef}
-          {...props.getInputProps({
-            inputElement: props.inputRef.current!,
-            autoFocus: props.autoFocus,
-            maxLength: MAX_QUERY_SIZE,
-          })}
-        />
+        <input className="DocSearch-Input" ref={props.inputRef} {...inputProps} placeholder={props.placeholder} />
 
         <div className="DocSearch-Actions">
           <button

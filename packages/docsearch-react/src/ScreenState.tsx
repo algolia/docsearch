@@ -46,8 +46,8 @@ export interface ScreenStateProps<TItem extends BaseItem>
 
 export const ScreenState = React.memo(
   ({ translations = {}, ...props }: ScreenStateProps<InternalDocSearchHit>) => {
-    if (props.isAskAiActive && props.canHandleAskAi) {
-      return <AskAiScreen {...props} translations={translations?.askAiScreen} />;
+    if (props.isAskAiActive && props.canHandleAskAi && props.askAiState) {
+      return <AskAiScreen {...props} askAiState={props.askAiState} translations={translations?.askAiScreen} />;
     }
 
     if (props.state?.status === 'error') {

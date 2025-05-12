@@ -824,7 +824,7 @@ assistive tech users */
 }
 
 .DocSearch-AskAiScreen-ThinkingDots {
-  font-size: 0.7em;
+  font-size: 0.8em;
   font-weight: 400;
   color: var(--docsearch-secondary-text-color);
   margin: 0;

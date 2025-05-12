@@ -1,8 +1,25 @@
-import React, { type JSX, useState, useEffect } from 'react';
+import React, { type JSX, useState, useEffect, useMemo } from 'react';
 
+import { SparklesIcon } from './icons';
+import type { AskAiResponse } from './lib/genAiClient';
 import { MemoizedMarkdown } from './MemoizedMarkdown';
 import type { ScreenStateProps } from './ScreenState';
 import type { InternalDocSearchHit } from './types';
+
+interface Message {
+  id: string;
+  role: 'assistant' | 'user';
+  content: string;
+  context?: AskAiResponse['context'];
+}
+
+type LoadingStatus = 'error' | 'idle' | 'loading' | 'streaming';
+
+interface AskAiStateForScreen {
+  messages: Message[];
+  loadingStatus: LoadingStatus;
+  error: Error | null;
+}
 
 export type AskAiScreenTranslations = Partial<{
   titleText: string;
@@ -11,111 +28,223 @@ export type AskAiScreenTranslations = Partial<{
   thinkingText: string;
 }>;
 
-type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
+type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'askAiState' | 'translations'> & {
+  askAiState: AskAiStateForScreen;
   translations?: AskAiScreenTranslations;
-  conversationId?: string | null;
 };
 
-export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): JSX.Element | null {
-  if (!props.askAiState) {
+interface AskAiScreenHeaderProps {
+  disclaimerText: string;
+}
+
+interface Exchange {
+  id: string;
+  userMessage: Message;
+  assistantMessage: Message | null;
+}
+
+function AskAiScreenHeader({ disclaimerText }: AskAiScreenHeaderProps): JSX.Element {
+  return (
+    <div className="DocSearch-AskAiScreen-Header">
+      <div className="DocSearch-Screen-Icon">
+        <SparklesIcon />
+      </div>
+      <p className="DocSearch-AskAi-Disclaimer">{disclaimerText}</p>
+    </div>
+  );
+}
+
+interface AskAiExchangeCardProps {
+  exchange: Exchange;
+  isLastExchange: boolean;
+  loadingStatus: LoadingStatus;
+  error: Error | null;
+  translations: Required<AskAiScreenTranslations>;
+  globalHasHadAssistantResponse: boolean;
+}
+
+function AskAiExchangeCard({
+  exchange,
+  isLastExchange,
+  loadingStatus,
+  error,
+  translations,
+  globalHasHadAssistantResponse,
+}: AskAiExchangeCardProps): JSX.Element {
+  const { userMessage, assistantMessage } = exchange;
+
+  const showLoadingIndicator = isLastExchange && loadingStatus === 'loading';
+  const isStreaming = isLastExchange && loadingStatus === 'streaming';
+  const showError = isLastExchange && loadingStatus === 'error' && error;
+  const showActions = !isLastExchange || (isLastExchange && loadingStatus === 'idle' && Boolean(assistantMessage));
+  const contextToDisplay = assistantMessage?.context || [];
+
+  return (
+    <div className="DocSearch-AskAiScreen-Response-Container">
+      <div className="DocSearch-AskAiScreen-Response">
+        <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--user">
+          <p className="DocSearch-AskAiScreen-Query">{userMessage.content}</p>
+        </div>
+        <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--assistant">
+          <div className="DocSearch-AskAiScreen-MessageContent">
+            {showLoadingIndicator && (
+              <div className="DocSearch-AskAiScreen-Streaming-Loader">
+                <ThinkingDots thinkingText={translations.thinkingText} />
+              </div>
+            )}
+            {(isStreaming || assistantMessage?.content) && (
+              <MemoizedMarkdown
+                content={assistantMessage?.content || ''}
+                id={`ask-ai-message-${assistantMessage?.id || userMessage.id}`}
+              />
+            )}
+            {showError && <p className="DocSearch-AskAiScreen-Error">{error.message}</p>}
+          </div>
+        </div>
+        <div className="DocSearch-AskAiScreen-Answer-Footer">
+          <AskAiScreenFooterActions
+            showActions={showActions}
+            latestAssistantMessageContent={assistantMessage?.content || null}
+          />
+        </div>
+      </div>
+
+      {/* Sources for this exchange */}
+      <AskAiSourcesPanel
+        contextToDisplay={contextToDisplay}
+        loadingStatus={loadingStatus}
+        relatedSourcesText={translations.relatedSourcesText}
+        hasHadAssistantResponse={globalHasHadAssistantResponse}
+        isExchangeLoading={isLastExchange && (loadingStatus === 'loading' || loadingStatus === 'streaming')}
+      />
+    </div>
+  );
+}
+
+interface AskAiScreenFooterActionsProps {
+  showActions: boolean;
+  latestAssistantMessageContent: string | null;
+}
+
+function AskAiScreenFooterActions({
+  showActions,
+  latestAssistantMessageContent,
+}: AskAiScreenFooterActionsProps): JSX.Element | null {
+  if (!showActions || !latestAssistantMessageContent) {
     return null;
   }
+  return (
+    <div className="DocSearch-AskAiScreen-Actions">
+      <CopyButton onClick={() => navigator.clipboard.writeText(latestAssistantMessageContent)} />
+      <LikeButton />
+      <DislikeButton />
+    </div>
+  );
+}
 
+interface AskAiSourcesPanelProps {
+  contextToDisplay: AskAiResponse['context'];
+  loadingStatus: LoadingStatus;
+  relatedSourcesText: string;
+  hasHadAssistantResponse: boolean;
+  isExchangeLoading: boolean;
+}
+
+function AskAiSourcesPanel({
+  contextToDisplay,
+  loadingStatus,
+  relatedSourcesText,
+  hasHadAssistantResponse,
+  isExchangeLoading,
+}: AskAiSourcesPanelProps): JSX.Element {
+  return (
+    <div className="DocSearch-AskAiScreen-RelatedSources">
+      <p className="DocSearch-AskAiScreen-RelatedSources-Title">{relatedSourcesText}</p>
+      {contextToDisplay.length > 0 &&
+        contextToDisplay.map((source) => (
+          <a
+            key={source.objectID}
+            href={source.url || source.objectID || '#'}
+            className="DocSearch-AskAiScreen-RelatedSources-Item-Link"
+          >
+            <RelatedSourceIcon />
+            <span>{source.title || source.url || source.objectID}</span>
+          </a>
+        ))}
+      {contextToDisplay.length === 0 &&
+        loadingStatus === 'loading' &&
+        !hasHadAssistantResponse &&
+        isExchangeLoading &&
+        // eslint-disable-next-line react/no-array-index-key
+        Array.from({ length: 3 }).map((_, index) => <SkeletonSource key={index} />)}
+
+      {contextToDisplay.length === 0 &&
+        (loadingStatus === 'idle' || loadingStatus === 'streaming') &&
+        hasHadAssistantResponse &&
+        !isExchangeLoading && (
+          <p className="DocSearch-AskAiScreen-RelatedSources-NoResults">No related sources for the latest answer.</p>
+        )}
+      {contextToDisplay.length === 0 && loadingStatus === 'error' && (
+        <p className="DocSearch-AskAiScreen-RelatedSources-Error">Could not load related sources.</p>
+      )}
+    </div>
+  );
+}
+
+export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): JSX.Element | null {
   const {
     disclaimerText = 'Answers are generated using artificial intelligence. This is an experimental technology, and information may occasionally be incorrect or misleading.',
     relatedSourcesText = 'Related Sources',
     thinkingText = 'Thinking',
+    titleText = 'Ask AI',
   } = translations;
 
-  const { messages, currentResponse, loadingStatus, context, error } = props.askAiState;
+  const finalTranslations: Required<AskAiScreenTranslations> = {
+    titleText,
+    disclaimerText,
+    relatedSourcesText,
+    thinkingText,
+  };
 
-  // determine the initial query to display
-  const displayedQuery = messages.find((m) => m.role === 'user')?.content || 'No query provided';
+  const { messages, loadingStatus, error } = props.askAiState;
 
-  // select the content to display based on the status
-  const displayedAnswer =
-    loadingStatus === 'streaming' ? currentResponse : messages.find((m) => m.role === 'assistant')?.content || '';
+  // Group messages into exchanges (user + assistant pairs)
+  const exchanges: Exchange[] = useMemo(() => {
+    const grouped: Exchange[] = [];
+    for (let i = 0; i < messages.length; i++) {
+      if (messages[i].role === 'user') {
+        const userMessage = messages[i];
+        const assistantMessage = messages[i + 1]?.role === 'assistant' ? messages[i + 1] : null;
+        grouped.push({ id: userMessage.id, userMessage, assistantMessage });
+        if (assistantMessage) {
+          i++;
+        }
+      }
+    }
+    return grouped;
+  }, [messages]);
+
+  const globalHasHadAssistantResponse = messages.some((m) => m.role === 'assistant');
 
   return (
     <div className="DocSearch-AskAiScreen DocSearch-AskAiScreen-Container">
-      <div className="DocSearch-AskAiScreen-Header">
-        <div className="DocSearch-Screen-Icon">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="lucide lucide-sparkles-icon lucide-sparkles"
-          >
-            <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
-            <path d="M20 3v4" />
-            <path d="M22 5h-4" />
-            <path d="M4 17v2" />
-            <path d="M5 18H3" />
-          </svg>
-        </div>
-        <p className="DocSearch-AskAi-Disclaimer">{disclaimerText}</p>
-      </div>
+      <AskAiScreenHeader disclaimerText={disclaimerText} />
       <div className="DocSearch-AskAiScreen-Body">
-        <div className="DocSearch-AskAiScreen-Response-Container">
-          <div className="DocSearch-AskAiScreen-Response">
-            <p className="DocSearch-AskAiScreen-Query">{displayedQuery}</p>
-            {error && <p className="DocSearch-AskAiScreen-Error">{error.message}</p>}
-            <div
-              className={`DocSearch-AskAiScreen-Answer ${
-                loadingStatus === 'streaming' ? 'DocSearch-AskAiScreen-Answer--streaming' : ''
-              }`}
-            >
-              {(loadingStatus === 'streaming' || loadingStatus === 'idle') && (
-                <MemoizedMarkdown content={displayedAnswer} id="ask-ai-answer" />
-              )}
-              {loadingStatus === 'loading' && (
-                <div className="DocSearch-AskAiScreen-Streaming-Loader">
-                  <ThinkingDots thinkingText={thinkingText} />
-                </div>
-              )}
-            </div>
-            <div className="DocSearch-AskAiScreen-Answer-Footer">
-              {loadingStatus === 'idle' && displayedAnswer.length > 0 && (
-                <div className="DocSearch-AskAiScreen-Actions">
-                  <CopyButton onClick={() => navigator.clipboard.writeText(displayedAnswer)} />
-                  <LikeButton />
-                  <DislikeButton />
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="DocSearch-AskAiScreen-RelatedSources">
-            <p className="DocSearch-AskAiScreen-RelatedSources-Title">{relatedSourcesText}</p>
-            {context.length === 0 &&
-              loadingStatus === 'loading' &&
-              // eslint-disable-next-line react/no-array-index-key
-              Array.from({ length: 3 }).map((_, index) => <SkeletonSource key={index} />)}
-            {context.length > 0 &&
-              context.map((source) => (
-                <a
-                  key={source.objectID}
-                  href={source.url || source.objectID || '#'}
-                  className="DocSearch-AskAiScreen-RelatedSources-Item-Link"
-                >
-                  <RelatedSourceIcon />
-                  <span>{source.title || source.url || source.objectID}</span>
-                </a>
-              ))}
-            {context.length === 0 && loadingStatus === 'idle' && (
-              <p className="DocSearch-AskAiScreen-RelatedSources-NoResults">No related sources found</p>
-            )}
-            {context.length === 0 && loadingStatus === 'error' && (
-              <p className="DocSearch-AskAiScreen-RelatedSources-Error">
-                Error loading related sources. Please try again.
-              </p>
-            )}
-          </div>
+        <div className="DocSearch-AskAiScreen-ExchangesList">
+          {exchanges
+            .slice()
+            .reverse()
+            .map((exchange, index) => (
+              <AskAiExchangeCard
+                key={exchange.id}
+                exchange={exchange}
+                isLastExchange={index === 0}
+                loadingStatus={loadingStatus}
+                error={error}
+                translations={finalTranslations}
+                globalHasHadAssistantResponse={globalHasHadAssistantResponse}
+              />
+            ))}
         </div>
       </div>
     </div>
