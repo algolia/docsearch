@@ -39,7 +39,8 @@
     "@algolia/autocomplete-core": "1.18.1",
     "@algolia/autocomplete-preset-algolia": "1.18.1",
     "@docsearch/css": "3.9.0",
-    "algoliasearch": "^5.14.2"
+    "algoliasearch": "^5.14.2",
+    "marked": "^15.0.11"
   },
   "devDependencies": {
     "@rollup/plugin-replace": "6.0.2",

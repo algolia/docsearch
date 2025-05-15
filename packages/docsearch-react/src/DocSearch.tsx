@@ -26,7 +26,7 @@ export interface DocSearchProps {
   appId: string;
   apiKey: string;
   indexName: string;
-  datasourceId?: string;
+  dataSourceId?: string;
   promptId?: string;
   placeholder?: string;
   searchParameters?: SearchParamsObject;
@@ -49,8 +49,19 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
   const [initialQuery, setInitialQuery] = React.useState<string | undefined>(props?.initialQuery || undefined);
   const [isAskAiActive, setIsAskAiActive] = React.useState(false);
 
+  let currentPlaceholder =
+    props?.translations?.modal?.searchBox?.placeholderText || props?.placeholder || 'Search docs';
+
   // check if the instance is configured to handle ask ai
-  const canHandleAskAi = Boolean(props?.datasourceId && props?.promptId);
+  const canHandleAskAi = Boolean(props?.dataSourceId && props?.promptId);
+
+  if (canHandleAskAi) {
+    currentPlaceholder = props?.translations?.modal?.searchBox?.placeholderText || 'Search docs or ask AI a question';
+  }
+
+  if (isAskAiActive) {
+    currentPlaceholder = props?.translations?.modal?.searchBox?.placeholderTextAskAi || 'Ask another question...';
+  }
 
   const onAskAiToggle = React.useCallback(
     (askAitoggle: boolean) => {
@@ -94,6 +105,7 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
         createPortal(
           <DocSearchModal
             {...props}
+            placeholder={currentPlaceholder}
             initialScrollY={window.scrollY}
             initialQuery={initialQuery}
             translations={props?.translations?.modal}

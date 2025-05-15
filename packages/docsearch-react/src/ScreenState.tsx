@@ -13,7 +13,8 @@ import { ResultsScreen } from './ResultsScreen';
 import type { StartScreenTranslations } from './StartScreen';
 import { StartScreen } from './StartScreen';
 import type { StoredSearchPlugin } from './stored-searches';
-import type { InternalDocSearchHit, StoredDocSearchHit } from './types';
+import type { InternalDocSearchHit, StoredAskAiState, StoredDocSearchHit } from './types';
+import type { AskAiState } from './useAskAi';
 
 export type ScreenStateTranslations = Partial<{
   errorScreen: ErrorScreenTranslations;
@@ -28,6 +29,7 @@ export interface ScreenStateProps<TItem extends BaseItem>
   state: AutocompleteState<TItem>;
   recentSearches: StoredSearchPlugin<StoredDocSearchHit>;
   favoriteSearches: StoredSearchPlugin<StoredDocSearchHit>;
+  conversations: StoredSearchPlugin<StoredAskAiState>;
   onItemClick: (item: InternalDocSearchHit, event: KeyboardEvent | MouseEvent) => void;
   onAskAiToggle: (toggle: boolean) => void;
   isAskAiActive: boolean;
@@ -36,6 +38,7 @@ export interface ScreenStateProps<TItem extends BaseItem>
   hitComponent: DocSearchProps['hitComponent'];
   indexName: DocSearchProps['indexName'];
   disableUserPersonalization: boolean;
+  askAiState?: AskAiState;
   resultsFooterComponent: DocSearchProps['resultsFooterComponent'];
   translations: ScreenStateTranslations;
   getMissingResultsUrl?: DocSearchProps['getMissingResultsUrl'];
@@ -43,8 +46,8 @@ export interface ScreenStateProps<TItem extends BaseItem>
 
 export const ScreenState = React.memo(
   ({ translations = {}, ...props }: ScreenStateProps<InternalDocSearchHit>) => {
-    if (props.isAskAiActive && props.canHandleAskAi) {
-      return <AskAiScreen translations={translations?.askAiScreen} />;
+    if (props.isAskAiActive && props.canHandleAskAi && props.askAiState) {
+      return <AskAiScreen {...props} askAiState={props.askAiState} translations={translations?.askAiScreen} />;
     }
 
     if (props.state?.status === 'error') {
