@@ -12,8 +12,8 @@ function App(): JSX.Element {
         indexName="beta-react"
         appId="betaHAXPMHIMMC"
         apiKey="8b00405cba281a7d800ccec393e9af24"
-        dataSourceId="crawler_rag_beta-react-rag"
-        promptId="crawler_rag_beta-react-rag"
+        dataSourceId="crawler-beta-react-rag"
+        promptId="crawler-betaHAXPMHIMMC-TDE"
         insights={true}
       />
     </div>

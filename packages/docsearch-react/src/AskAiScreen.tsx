@@ -10,6 +10,7 @@ interface Message {
   id: string;
   role: 'assistant' | 'user';
   content: string;
+  urls?: Array<{ url: string; title?: string }>;
   context?: AskAiResponse['context'];
 }
 
@@ -77,7 +78,7 @@ function AskAiExchangeCard({
   const isStreaming = isLastExchange && loadingStatus === 'streaming';
   const showError = isLastExchange && loadingStatus === 'error' && error;
   const showActions = !isLastExchange || (isLastExchange && loadingStatus === 'idle' && Boolean(assistantMessage));
-  const contextToDisplay = assistantMessage?.context || [];
+  const urlsToDisplay = assistantMessage?.urls || [];
 
   return (
     <div className="DocSearch-AskAiScreen-Response-Container">
@@ -110,13 +111,20 @@ function AskAiExchangeCard({
       </div>
 
       {/* Sources for this exchange */}
-      <AskAiSourcesPanel
-        contextToDisplay={contextToDisplay}
-        loadingStatus={loadingStatus}
-        relatedSourcesText={translations.relatedSourcesText}
-        hasHadAssistantResponse={globalHasHadAssistantResponse}
-        isExchangeLoading={isLastExchange && (loadingStatus === 'loading' || loadingStatus === 'streaming')}
-      />
+      {urlsToDisplay.length > 0 ||
+      (urlsToDisplay.length === 0 &&
+        loadingStatus === 'loading' &&
+        !globalHasHadAssistantResponse &&
+        isLastExchange &&
+        (loadingStatus === 'loading' || loadingStatus === 'streaming')) ? (
+        <AskAiSourcesPanel
+          urlsToDisplay={urlsToDisplay}
+          loadingStatus={loadingStatus}
+          relatedSourcesText={translations.relatedSourcesText}
+          hasHadAssistantResponse={globalHasHadAssistantResponse}
+          isExchangeLoading={isLastExchange && (loadingStatus === 'loading' || loadingStatus === 'streaming')}
+        />
+      ) : null}
     </div>
   );
 }
@@ -143,7 +151,7 @@ function AskAiScreenFooterActions({
 }
 
 interface AskAiSourcesPanelProps {
-  contextToDisplay: AskAiResponse['context'];
+  urlsToDisplay: Array<{ url: string; title?: string }>;
   loadingStatus: LoadingStatus;
   relatedSourcesText: string;
   hasHadAssistantResponse: boolean;
@@ -151,7 +159,7 @@ interface AskAiSourcesPanelProps {
 }
 
 function AskAiSourcesPanel({
-  contextToDisplay,
+  urlsToDisplay,
   loadingStatus,
   relatedSourcesText,
   hasHadAssistantResponse,
@@ -160,32 +168,36 @@ function AskAiSourcesPanel({
   return (
     <div className="DocSearch-AskAiScreen-RelatedSources">
       <p className="DocSearch-AskAiScreen-RelatedSources-Title">{relatedSourcesText}</p>
-      {contextToDisplay.length > 0 &&
-        contextToDisplay.map((source) => (
-          <a
-            key={source.objectID}
-            href={source.url || source.objectID || '#'}
-            className="DocSearch-AskAiScreen-RelatedSources-Item-Link"
-          >
-            <RelatedSourceIcon />
-            <span>{source.title || source.url || source.objectID}</span>
-          </a>
-        ))}
-      {contextToDisplay.length === 0 &&
+      <div className="DocSearch-AskAiScreen-RelatedSources-List">
+        {urlsToDisplay.length > 0 &&
+          urlsToDisplay.map((link) => (
+            <a
+              key={link.url}
+              href={link.url}
+              className="DocSearch-AskAiScreen-RelatedSources-Item-Link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <RelatedSourceIcon />
+              <span>{link.title || link.url}</span>
+            </a>
+          ))}
+      </div>
+      {urlsToDisplay.length === 0 &&
         loadingStatus === 'loading' &&
         !hasHadAssistantResponse &&
         isExchangeLoading &&
         // eslint-disable-next-line react/no-array-index-key
         Array.from({ length: 3 }).map((_, index) => <SkeletonSource key={index} />)}
 
-      {contextToDisplay.length === 0 &&
+      {urlsToDisplay.length === 0 &&
         (loadingStatus === 'idle' || loadingStatus === 'streaming') &&
         hasHadAssistantResponse &&
         !isExchangeLoading && (
-          <p className="DocSearch-AskAiScreen-RelatedSources-NoResults">No related sources for the latest answer.</p>
+          <p className="DocSearch-AskAiScreen-RelatedSources-NoResults">no related sources for the latest answer.</p>
         )}
-      {contextToDisplay.length === 0 && loadingStatus === 'error' && (
-        <p className="DocSearch-AskAiScreen-RelatedSources-Error">Could not load related sources.</p>
+      {urlsToDisplay.length === 0 && loadingStatus === 'error' && (
+        <p className="DocSearch-AskAiScreen-RelatedSources-Error">could not load related sources.</p>
       )}
     </div>
   );

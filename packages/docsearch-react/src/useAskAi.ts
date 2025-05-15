@@ -11,6 +11,7 @@ interface Message {
   role: 'assistant' | 'user';
   content: string;
   context?: AskAiResponse['context'];
+  urls?: Array<{ url: string; title?: string }>;
 }
 
 export interface AskAiState {
@@ -96,7 +97,7 @@ export function useAskAi({ genAiClient, conversations }: UseAskAiParams): AskAiS
         messages: [
           ...(prevState.conversationId ? prevState.messages : []), // keep history if we have a conversationId
           { id: userMessageId, role: 'user', content: query },
-          { id: assistantMessageId, role: 'assistant', content: '', context: [] },
+          { id: assistantMessageId, role: 'assistant', content: '', context: [], urls: [] },
         ],
         loadingStatus: 'loading',
         query,
@@ -112,7 +113,14 @@ export function useAskAi({ genAiClient, conversations }: UseAskAiParams): AskAiS
             setState((prevState) => ({
               ...prevState,
               messages: prevState.messages.map((m) =>
-                m.id === assistantMessageId ? { ...m, content: chunk.response, context: chunk.context } : m,
+                m.id === assistantMessageId
+                  ? {
+                      ...m,
+                      content: chunk.response,
+                      context: chunk.context,
+                      urls: extractLinksFromText(chunk.response),
+                    }
+                  : m,
               ),
               loadingStatus: 'streaming',
             }));
@@ -214,4 +222,38 @@ export function useGenAiClient(
   }, [appId, apiKey, options, transformGenAiClient]);
 
   return genAiClient;
+}
+
+// utility to extract links (markdown and bare urls) from a string
+function extractLinksFromText(text: string): Array<{ url: string; title?: string }> {
+  // match [title](url) and bare urls
+  const markdownLinkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
+  const urlRegex = /https?:\/\/[^\s)]+/g;
+  const links: Array<{ url: string; title?: string }> = [];
+  const seen = new Set<string>();
+
+  // extract markdown links first
+  let match;
+  while ((match = markdownLinkRegex.exec(text)) !== null) {
+    let url = match[2];
+    const title = match[1];
+    // trim trailing punctuation
+    url = url.replace(/[).,;!?]+$/, '');
+    if (!seen.has(url)) {
+      links.push({ url, title });
+      seen.add(url);
+    }
+  }
+
+  // extract bare urls
+  while ((match = urlRegex.exec(text)) !== null) {
+    let url = match[0];
+    url = url.replace(/[).,;!?]+$/, '');
+    if (!seen.has(url)) {
+      links.push({ url });
+      seen.add(url);
+    }
+  }
+
+  return links;
 }
