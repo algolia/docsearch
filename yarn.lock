@@ -2534,7 +2534,7 @@ __metadata:
     rollup-plugin-dts: "npm:6.2.1"
     rollup-plugin-filesize: "npm:10.0.0"
     shipjs: "npm:0.27.0"
-    start-server-and-test: "npm:2.0.11"
+    start-server-and-test: "npm:2.0.12"
     stylelint: "npm:16.19.1"
     stylelint-config-sass-guidelines: "npm:12.1.0"
     stylelint-config-standard: "npm:36.0.1"
@@ -9680,7 +9680,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:4.4.0, debug@npm:^4.0.0, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.3, debug@npm:^4.3.4, debug@npm:^4.3.6, debug@npm:^4.3.7, debug@npm:^4.4.0":
+"debug@npm:4, debug@npm:^4.0.0, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.3, debug@npm:^4.3.4, debug@npm:^4.3.6, debug@npm:^4.3.7, debug@npm:^4.4.0":
   version: 4.4.0
   resolution: "debug@npm:4.4.0"
   dependencies:
@@ -9689,6 +9689,18 @@ __metadata:
     supports-color:
       optional: true
   checksum: 10c0/db94f1a182bf886f57b4755f85b3a74c39b5114b9377b7ab375dc2cfa3454f09490cc6c30f829df3fc8042bc8b8995f6567ce5cd96f3bc3688bd24027197d9de
+  languageName: node
+  linkType: hard
+
+"debug@npm:4.4.1":
+  version: 4.4.1
+  resolution: "debug@npm:4.4.1"
+  dependencies:
+    ms: "npm:^2.1.3"
+  peerDependenciesMeta:
+    supports-color:
+      optional: true
+  checksum: 10c0/d2b44bc1afd912b49bb7ebb0d50a860dc93a4dd7d946e8de94abc957bb63726b7dd5aa48c18c2386c379ec024c46692e15ed3ed97d481729f929201e671fcd55
   languageName: node
   linkType: hard
 
@@ -22121,14 +22133,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"start-server-and-test@npm:2.0.11":
-  version: 2.0.11
-  resolution: "start-server-and-test@npm:2.0.11"
+"start-server-and-test@npm:2.0.12":
+  version: 2.0.12
+  resolution: "start-server-and-test@npm:2.0.12"
   dependencies:
     arg: "npm:^5.0.2"
     bluebird: "npm:3.7.2"
     check-more-types: "npm:2.24.0"
-    debug: "npm:4.4.0"
+    debug: "npm:4.4.1"
     execa: "npm:5.1.1"
     lazy-ass: "npm:1.6.0"
     ps-tree: "npm:1.2.0"
@@ -22137,7 +22149,7 @@ __metadata:
     server-test: src/bin/start.js
     start-server-and-test: src/bin/start.js
     start-test: src/bin/start.js
-  checksum: 10c0/d85ada5f31f43503134e3d190a9deeae01fcbd4489226610a40527f6dd23ebb0081305aa1880dfeadd93c56a167b5bbae86ec1e538209502e5f848516744ccab
+  checksum: 10c0/152c8952c3dc66b2aaa6c4ee75ed9390351e6b39cc22896d50c19e1ee129e73fb4967802237aa2f849e6b59ddb0543831ec02e9b876d62bb139e85aecdb9c114
   languageName: node
   linkType: hard
 
