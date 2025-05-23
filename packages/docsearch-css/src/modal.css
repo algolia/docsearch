@@ -570,6 +570,12 @@ assistive tech users */
     --docsearch-spacing: 10px;
     --docsearch-footer-height: 40px;
   }
+  /* Prevent body scroll on modal-open for mobile */
+  /* https://stackoverflow.com/a/24727206/6276948 */
+  body:has(.DocSearch-Container) {
+    overflow: hidden;
+    position: fixed;
+  }
 
   .DocSearch-Dropdown {
     height: 100%;
