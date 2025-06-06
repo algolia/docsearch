@@ -1,7 +1,7 @@
 import { Button, Card, Heading1, InlineLink, Input, LabelText, Text } from '@algolia/ui-library';
 import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
 import React, { useState, useRef } from 'react';
-import ReCAPTCHA from 'react-google-recaptcha';
+import { ReCAPTCHA } from 'react-google-recaptcha';
 
 function ApplyForm() {
   const { withBaseUrl } = useBaseUrlUtils();
