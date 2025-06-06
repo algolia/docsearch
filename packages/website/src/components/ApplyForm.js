@@ -52,6 +52,9 @@ function ApplyForm() {
       if (!data.repoURL) {
         data.repoURL = 'https://www.github.com/algolia/docsearch';
       }
+
+      data['g-recaptcha-response'] = recaptchaValue;
+
       const body = JSON.stringify(data);
 
       const response = await fetch(action, {
