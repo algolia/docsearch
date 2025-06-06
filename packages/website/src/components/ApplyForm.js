@@ -29,7 +29,7 @@ function ApplyForm() {
     }
 
     // Check if reCAPTCHA is completed
-    const recaptchaValue = recaptchaRef.current.getValue();
+    const recaptchaValue = recaptchaRef.current?.getValue?.();
     if (!recaptchaValue) {
       setState({
         status: 'failed',
@@ -62,16 +62,18 @@ function ApplyForm() {
       const { success, message } = await response.json();
 
       if (!success) {
-        return setState({
+        recaptchaRef.current?.reset();
+        setState({
           status: 'failed',
           message: 'Unable to submit your request.',
         });
       }
 
       // Reset reCAPTCHA after successful submission
-      recaptchaRef.current.reset();
-      return setState({ status: 'succeed', message });
-    } catch (error) {
+      recaptchaRef.current?.reset();
+      setState({ status: 'succeed', message });
+    } catch {
+      recaptchaRef.current?.reset();
       setState({
         status: 'failed',
         message: 'Unable to submit your request.',
@@ -216,12 +218,10 @@ function ApplyForm() {
             .
           </LabelText>
 
-          <div className="uil-mt-16 uil-mb-16">
-            <ReCAPTCHA
-              ref={recaptchaRef}
-              sitekey="6LeE9VcrAAAAAJ-MxCRdgKI0lxJIJs2PIVWlw-0z"
-              theme="light"
-            />
+          <div className="uil-mt-16 uil-mb-16 uil-d-flex uil-jc-center uil-ai-center">
+            <div style={{ display: 'inline-block' }}>
+              <ReCAPTCHA ref={recaptchaRef} sitekey="6LeE9VcrAAAAAJ-MxCRdgKI0lxJIJs2PIVWlw-0z" theme="light" />
+            </div>
           </div>
 
           <Button
