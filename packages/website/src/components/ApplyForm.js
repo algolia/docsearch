@@ -1,6 +1,7 @@
 import { Button, Card, Heading1, InlineLink, Input, LabelText, Text } from '@algolia/ui-library';
 import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { ReCAPTCHA } from 'react-google-recaptcha';
 
 function ApplyForm() {
   const { withBaseUrl } = useBaseUrlUtils();
@@ -8,6 +9,7 @@ function ApplyForm() {
   const [url, setUrl] = useState('');
   const [email, setEmail] = useState('');
   const [repo, setRepo] = useState('');
+  const recaptchaRef = useRef(null);
 
   const handleSetUrl = (event) => {
     setUrl(event.target.value);
@@ -18,50 +20,68 @@ function ApplyForm() {
   const handleSetRepo = (event) => {
     setRepo(event.target.value);
   };
-  const onSubmit = (event) => {
+
+  const onSubmit = async (event) => {
     event.preventDefault();
 
     if (state.status === 'loading') {
       return;
     }
 
+    // Check if reCAPTCHA is completed
+    const recaptchaValue = recaptchaRef.current?.getValue?.();
+    if (!recaptchaValue) {
+      setState({
+        status: 'failed',
+        message: 'Please complete the reCAPTCHA verification.',
+      });
+      return;
+    }
+
     setState({ status: 'loading' });
 
-    const applyForm = event.target;
-    const method = applyForm.getAttribute('method');
-    const action = applyForm.getAttribute('action');
-    const formData = new FormData(applyForm);
-    const data = {};
-    formData.forEach(function (value, key) {
-      data[key] = value;
-    });
-    if (!data.repoURL) {
-      data.repoURL = 'https://www.github.com/algolia/docsearch';
-    }
-    const body = JSON.stringify(data);
+    try {
+      const applyForm = event.target;
+      const method = applyForm.getAttribute('method');
+      const action = applyForm.getAttribute('action');
+      const formData = new FormData(applyForm);
+      const data = {};
+      formData.forEach(function (value, key) {
+        data[key] = value;
+      });
+      if (!data.repoURL) {
+        data.repoURL = 'https://www.github.com/algolia/docsearch';
+      }
 
-    fetch(action, {
-      method,
-      headers: { 'Content-Type': 'application/json' },
-      body,
-    })
-      .then((response) => response.json())
-      .then(({ success, message }) => {
-        if (!success) {
-          return setState({
-            status: 'failed',
-            message: 'Unable to submit your request.',
-          });
-        }
+      data['g-recaptcha-response'] = recaptchaValue;
 
-        return setState({ status: 'succeed', message });
-      })
-      .catch(() =>
+      const body = JSON.stringify(data);
+
+      const response = await fetch(action, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body,
+      });
+      const { success, message } = await response.json();
+
+      if (!success) {
+        recaptchaRef.current?.reset();
         setState({
           status: 'failed',
           message: 'Unable to submit your request.',
-        }),
-      );
+        });
+      }
+
+      // Reset reCAPTCHA after successful submission
+      recaptchaRef.current?.reset();
+      setState({ status: 'succeed', message });
+    } catch {
+      recaptchaRef.current?.reset();
+      setState({
+        status: 'failed',
+        message: 'Unable to submit your request.',
+      });
+    }
   };
 
   if (state.status === 'succeed' && state.message) {
@@ -200,6 +220,12 @@ function ApplyForm() {
             </InlineLink>
             .
           </LabelText>
+
+          <div className="uil-mt-16 uil-mb-16 uil-d-flex uil-jc-center uil-ai-center">
+            <div style={{ display: 'inline-block' }}>
+              <ReCAPTCHA ref={recaptchaRef} sitekey="6LeE9VcrAAAAAJ-MxCRdgKI0lxJIJs2PIVWlw-0z" theme="light" />
+            </div>
+          </div>
 
           <Button
             primary={true}
