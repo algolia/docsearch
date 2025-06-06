@@ -1,7 +1,7 @@
 import { Button, Card, Heading1, InlineLink, Input, LabelText, Text } from '@algolia/ui-library';
 import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
 import React, { useState, useRef } from 'react';
-import { ReCAPTCHA } from 'react-google-recaptcha';
+import ReCaptcha from 'react-google-recaptcha';
 
 function ApplyForm() {
   const { withBaseUrl } = useBaseUrlUtils();
@@ -223,7 +223,7 @@ function ApplyForm() {
 
           <div className="uil-mt-16 uil-mb-16 uil-d-flex uil-jc-center uil-ai-center">
             <div style={{ display: 'inline-block' }}>
-              <ReCAPTCHA ref={recaptchaRef} sitekey="6LeE9VcrAAAAAJ-MxCRdgKI0lxJIJs2PIVWlw-0z" theme="light" />
+              <ReCaptcha ref={recaptchaRef} sitekey="6LeE9VcrAAAAAJ-MxCRdgKI0lxJIJs2PIVWlw-0z" theme="light" />
             </div>
           </div>
 
