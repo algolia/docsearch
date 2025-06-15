@@ -2375,7 +2375,7 @@ __metadata:
     eslint-config-prettier: "npm:10.1.5"
     eslint-plugin-cypress: "npm:4.3.0"
     eslint-plugin-import: "npm:2.31.0"
-    eslint-plugin-jsdoc: "npm:50.8.0"
+    eslint-plugin-jsdoc: "npm:51.0.1"
     eslint-plugin-jsx-a11y: "npm:6.10.2"
     eslint-plugin-prettier: "npm:5.4.1"
     eslint-plugin-react: "npm:7.37.5"
@@ -7127,10 +7127,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"are-docs-informative@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "are-docs-informative@npm:0.0.2"
-  checksum: 10c0/f0326981bd699c372d268b526b170a28f2e1aec2cf99d7de0686083528427ecdf6ae41fef5d9988e224a5616298af747ad8a76e7306b0a7c97cc085a99636d60
+"are-docs-informative@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "are-docs-informative@npm:0.1.1"
+  checksum: 10c0/03f4ad46f872e8f25fd7d8f3826a926fa13c060372c48797d0fb5ed755dd13111a654eb7f080479aa60e7bef16f0d59ff3c8839de5f28735386086fd4a8b3cf5
   languageName: node
   linkType: hard
 
@@ -11117,12 +11117,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:50.8.0":
-  version: 50.8.0
-  resolution: "eslint-plugin-jsdoc@npm:50.8.0"
+"eslint-plugin-jsdoc@npm:51.0.1":
+  version: 51.0.1
+  resolution: "eslint-plugin-jsdoc@npm:51.0.1"
   dependencies:
     "@es-joy/jsdoccomment": "npm:~0.50.2"
-    are-docs-informative: "npm:^0.0.2"
+    are-docs-informative: "npm:^0.1.1"
     comment-parser: "npm:1.4.1"
     debug: "npm:^4.4.1"
     escape-string-regexp: "npm:^4.0.0"
@@ -11133,7 +11133,7 @@ __metadata:
     spdx-expression-parse: "npm:^4.0.0"
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
-  checksum: 10c0/8829eb841666e897ddce2677e8288fcdc231bab73add93236e14f2fc7f5d494f5809ac7fc1f809c64817abe532e9a7f4a6aa2eeac303c518d4f70f22ef13642c
+  checksum: 10c0/ac1517239fd26a8222916b52bfb0e803dc132415a416f9138ac179aab005cf5446ee06c8537313cfcd099e0e2c4ee8db96ef985657bb961bb0f5675b90f50c1a
   languageName: node
   linkType: hard
 
