@@ -23,17 +23,32 @@ export type DocSearchTransformClient = {
 };
 
 export type DocSearchAskAi = {
-  indexName: string;
-  apiKey: string;
-  appId: string;
-  promptId?: string | null;
+  /**
+   * The index name to use for the ask AI feature. Your assistant will search this index for relevant documents.
+   * If not provided, the index name will be used.
+   */
+  indexName?: string;
+  /**
+   * The API key to use for the ask AI feature. Your assistant will use this API key to search the index.
+   * If not provided, the API key will be used.
+   */
+  apiKey?: string;
+  /**
+   * The app ID to use for the ask AI feature. Your assistant will use this app ID to search the index.
+   * If not provided, the app ID will be used.
+   */
+  appId?: string;
+  /**
+   * The assistant ID to use for the ask AI feature.
+   */
+  assistantId: string | null;
 };
 
 export interface DocSearchProps {
   appId: string;
   apiKey: string;
   indexName: string;
-  askAi?: DocSearchAskAi | boolean;
+  askAi?: DocSearchAskAi | string;
   placeholder?: string;
   searchParameters?: SearchParamsObject;
   maxResultsPerGroup?: number;
@@ -60,6 +75,7 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
 
   // check if the instance is configured to handle ask ai
   const canHandleAskAi = Boolean(props?.askAi);
+  const askAiConfigurationId = typeof props?.askAi === 'string' ? props?.askAi : props?.askAi?.assistantId || null;
 
   if (canHandleAskAi) {
     currentPlaceholder = props?.translations?.modal?.searchBox?.placeholderText || 'Search docs or ask AI a question';
@@ -117,6 +133,7 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
             translations={props?.translations?.modal}
             isAskAiActive={isAskAiActive}
             canHandleAskAi={canHandleAskAi}
+            askAiConfigurationId={askAiConfigurationId}
             onAskAiToggle={onAskAiToggle}
             onClose={onClose}
           />,

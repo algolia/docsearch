@@ -12,7 +12,7 @@ function App(): JSX.Element {
         indexName="beta-react"
         appId="betaHAXPMHIMMC"
         apiKey="8b00405cba281a7d800ccec393e9af24"
-        askAi={true}
+        askAi="askai-react-demo"
         insights={true}
       />
     </div>

@@ -38,6 +38,7 @@ export type DocSearchModalProps = DocSearchProps & {
   onClose?: () => void;
   isAskAiActive?: boolean;
   canHandleAskAi?: boolean;
+  askAiConfigurationId: string | null;
   translations?: ModalTranslations;
 };
 
@@ -279,6 +280,7 @@ export function DocSearchModal({
   onAskAiToggle,
   isAskAiActive = false,
   canHandleAskAi = false,
+  askAiConfigurationId,
 }: DocSearchModalProps): JSX.Element {
   const { footer: footerTranslations, searchBox: searchBoxTranslations, ...screenStateTranslations } = translations;
   const [state, setState] = React.useState<DocSearchState<InternalDocSearchHit>>({
