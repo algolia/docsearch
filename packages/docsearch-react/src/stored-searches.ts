@@ -54,14 +54,11 @@ export function createStoredConversations<TItem extends StoredAskAiState>({
 
   return {
     add(item: TItem): void {
-      const { askState } = item;
+      const { objectID, messages } = item;
 
       // check if this query is already saved
-      // @todo: this is a bit of a hack, we should be able to use
-      //  conversationId to identify.
       const isQueryAlreadySaved = items.findIndex(
-        (x) =>
-          x.objectID === askState?.conversationId || x.askState?.messages[0].content === askState?.messages[0].content,
+        (x) => x.objectID === objectID || x.messages?.[0]?.content === messages?.[0]?.content,
       );
 
       if (isQueryAlreadySaved > -1) {

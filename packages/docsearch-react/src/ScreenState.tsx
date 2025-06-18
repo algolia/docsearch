@@ -1,3 +1,4 @@
+import type { UseChatHelpers } from '@ai-sdk/react';
 import type { AutocompleteApi, AutocompleteState, BaseItem } from '@algolia/autocomplete-core';
 import React from 'react';
 
@@ -14,7 +15,6 @@ import type { StartScreenTranslations } from './StartScreen';
 import { StartScreen } from './StartScreen';
 import type { StoredSearchPlugin } from './stored-searches';
 import type { InternalDocSearchHit, StoredAskAiState, StoredDocSearchHit } from './types';
-import type { AskAiState } from './useAskAi';
 
 export type ScreenStateTranslations = Partial<{
   errorScreen: ErrorScreenTranslations;
@@ -37,8 +37,9 @@ export interface ScreenStateProps<TItem extends BaseItem>
   inputRef: React.MutableRefObject<HTMLInputElement | null>;
   hitComponent: DocSearchProps['hitComponent'];
   indexName: DocSearchProps['indexName'];
+  messages: UseChatHelpers['messages'];
+  status: UseChatHelpers['status'];
   disableUserPersonalization: boolean;
-  askAiState?: AskAiState;
   resultsFooterComponent: DocSearchProps['resultsFooterComponent'];
   translations: ScreenStateTranslations;
   getMissingResultsUrl?: DocSearchProps['getMissingResultsUrl'];
@@ -46,8 +47,15 @@ export interface ScreenStateProps<TItem extends BaseItem>
 
 export const ScreenState = React.memo(
   ({ translations = {}, ...props }: ScreenStateProps<InternalDocSearchHit>) => {
-    if (props.isAskAiActive && props.canHandleAskAi && props.askAiState) {
-      return <AskAiScreen {...props} askAiState={props.askAiState} translations={translations?.askAiScreen} />;
+    if (props.isAskAiActive && props.canHandleAskAi) {
+      return (
+        <AskAiScreen
+          {...props}
+          messages={props.messages}
+          status={props.status}
+          translations={translations?.askAiScreen}
+        />
+      );
     }
 
     if (props.state?.status === 'error') {

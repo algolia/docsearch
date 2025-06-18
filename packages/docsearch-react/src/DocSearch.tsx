@@ -22,12 +22,18 @@ export type DocSearchTransformClient = {
   transporter: Pick<LiteClient['transporter'], 'algoliaAgent'>;
 };
 
+export type DocSearchAskAi = {
+  indexName: string;
+  apiKey: string;
+  appId: string;
+  promptId?: string | null;
+};
+
 export interface DocSearchProps {
   appId: string;
   apiKey: string;
   indexName: string;
-  dataSourceId?: string;
-  promptId?: string;
+  askAi?: DocSearchAskAi | boolean;
   placeholder?: string;
   searchParameters?: SearchParamsObject;
   maxResultsPerGroup?: number;
@@ -53,7 +59,7 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
     props?.translations?.modal?.searchBox?.placeholderText || props?.placeholder || 'Search docs';
 
   // check if the instance is configured to handle ask ai
-  const canHandleAskAi = Boolean(props?.dataSourceId && props?.promptId);
+  const canHandleAskAi = Boolean(props?.askAi);
 
   if (canHandleAskAi) {
     currentPlaceholder = props?.translations?.modal?.searchBox?.placeholderText || 'Search docs or ask AI a question';

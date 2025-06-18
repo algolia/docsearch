@@ -770,7 +770,7 @@ assistive tech users */
   gap: 12px;
   font-size: 0.65em;
   font-weight: 300;
-  padding: 1em 0.4em;
+  padding: 1em 0;
 }
 
 .DocSearch-AskAi-Disclaimer {
@@ -806,7 +806,7 @@ assistive tech users */
 }
 
 .DocSearch-AskAiScreen-Query {
-  font-size: 1.2em;
+  font-size: 1.5em;
   font-weight: 600;
   margin: 0;
 }
@@ -892,13 +892,13 @@ assistive tech users */
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
-  gap: 4px;
+  gap: 12px;
 }
 
 .DocSearch-AskAiScreen-RelatedSources-Title {
   font-size: 0.7em;
   font-weight: 400;
-  color: var(--docsearch-text-color);
+  color: var(--docsearch-secondary-color);
   padding: 6px 0;
   margin: 0;
 }
@@ -921,7 +921,7 @@ assistive tech users */
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 12px 6px;
+  padding: 12px 8px;
   background: var(--docsearch-hit-background);
   border-radius: 4px;
   color: var(--docsearch-text-color);
@@ -947,6 +947,7 @@ assistive tech users */
 
 .DocSearch-AskAiScreen-ExchangesList {
   gap: 24px;
+  margin: 8px 0;
   display: flex;
   flex-direction: column;
 }
@@ -957,7 +958,13 @@ assistive tech users */
 
 .DocSearch-Markdown-Content {
   color: var(--docsearch-text-color);
-  line-height: 1.5;
+  line-height: 1.6;
+  font-size: 1em;
+  letter-spacing: -0.011em;
+}
+
+.DocSearch-Markdown-Content p {
+  margin: 1.2em 0;
 }
 
 .DocSearch-Markdown-Content p:last-child {
@@ -974,15 +981,25 @@ assistive tech users */
   padding: 0.2em 0.4em;
   margin: 0;
   border-radius: 3px;
-  font-family: monospace;
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    SF Mono,
+    Menlo,
+    Consolas,
+    Liberation Mono,
+    monospace;
+  font-size: 0.9em;
+  letter-spacing: normal;
 }
 
 .DocSearch-Markdown-Content pre {
   background-color: var(--docsearch-key-background);
   color: var(--docsearch-text-color);
-  padding: 1em;
-  border-radius: 3px;
+  padding: 1.2em;
+  border-radius: 6px;
   overflow-x: auto;
+  margin: 1.5em 0;
 }
 
 .DocSearch-Markdown-Content pre code {
@@ -990,10 +1007,11 @@ assistive tech users */
   color: inherit;
   padding: 0;
   margin: 0;
-  font-size: inherit;
+  font-size: 0.8em;
   border-radius: 0;
   white-space: pre-wrap;
   word-wrap: break-word;
+  line-height: 1.5;
 }
 
 .DocSearch-Markdown-Content h1,
@@ -1003,59 +1021,163 @@ assistive tech users */
 .DocSearch-Markdown-Content h5,
 .DocSearch-Markdown-Content h6 {
   color: var(--docsearch-text-color);
-  margin-top: 1em;
-  margin-bottom: 0.5em;
+  margin: 2em 0 1em;
   font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.DocSearch-Markdown-Content h1 {
+  font-size: 1.5em;
+}
+
+.DocSearch-Markdown-Content h2 {
+  font-size: 1.3em;
+}
+
+.DocSearch-Markdown-Content h3 {
+  font-size: 1.1em;
+}
+
+.DocSearch-Markdown-Content h4 {
+  font-size: 1em;
+}
+
+.DocSearch-Markdown-Content h5,
+.DocSearch-Markdown-Content h6 {
+  font-size: 1em;
 }
 
 .DocSearch-Markdown-Content ul,
 .DocSearch-Markdown-Content ol {
   color: var(--docsearch-text-color);
-  margin-bottom: 1em;
+  margin: 1.2em 0;
+  padding-left: 1.5em;
+}
+
+.DocSearch-Markdown-Content ul {
+  list-style-type: disc;
+}
+
+.DocSearch-Markdown-Content ol {
+  list-style-type: decimal;
 }
 
 .DocSearch-Markdown-Content li {
   color: var(--docsearch-text-color);
-  margin-bottom: 0.25em;
+  margin: 0.5em 0;
+  padding-left: 0.3em;
+  line-height: 1.6;
+}
+
+.DocSearch-Markdown-Content li > ul,
+.DocSearch-Markdown-Content li > ol {
+  margin: 0.5em;
 }
 
 .DocSearch-Markdown-Content a {
   color: var(--docsearch-highlight-color);
   text-decoration: none;
+  transition: all 0.2s ease;
 }
 
 .DocSearch-Markdown-Content a:hover {
   text-decoration: underline;
+  opacity: 0.9;
 }
 
-/* skeleton source styles */
-.DocSearch-AskAiScreen-SkeletonSource {
+.DocSearch-Markdown-Content blockquote {
+  border-left: 4px solid var(--docsearch-hit-highlight-color);
+  margin: 1.5em 0;
+  padding: 0.5em 0 0.5em 1em;
+  color: var(--docsearch-secondary-text-color);
+  font-style: italic;
+}
+
+.DocSearch-Markdown-Content hr {
+  border: none;
+  border-top: 1px solid var(--docsearch-subtle-color);
+  margin: 2em 0;
+}
+
+.DocSearch-Markdown-Content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+}
+
+.DocSearch-Markdown-Content th,
+.DocSearch-Markdown-Content td {
+  padding: 0.75em;
+  border: 1px solid var(--docsearch-subtle-color);
+  text-align: left;
+}
+
+.DocSearch-Markdown-Content th {
+  background-color: var(--docsearch-hit-background);
+  font-weight: 600;
+}
+
+.DocSearch-AskAiScreen-MessageContent-Tool {
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 6px;
-  background: var(--docsearch-hit-background);
-  border-radius: 4px;
-  height: 32px; /* match item link height roughly */
+  font-size: 0.9em;
+  padding: 1em 0;
+  color: var(--docsearch-secondary-text-color);
 }
 
-.DocSearch-AskAiScreen-SkeletonSource-Icon {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--docsearch-muted-color);
-  opacity: 0.4;
-  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.DocSearch-AskAiScreen-SkeletonSource-Text {
-  flex: 1 1 0;
+.DocSearch-AskAiScreen-SmallerLoadingIcon {
+  width: 12px;
   height: 12px;
-  background: var(--docsearch-muted-color);
-  border-radius: 4px;
-  opacity: 0.4;
-  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  animation-delay: 0.2s;
+}
+
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 40%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0.1) 60%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  animation: shimmer 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -120%;
+  }
+  100% {
+    left: 120%;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.DocSearch-Markdown-Content > div {
+  opacity: 0;
+  animation: fadeIn 0.4s ease-out forwards;
 }
 
 @keyframes pulse {

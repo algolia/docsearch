@@ -1,3 +1,5 @@
+import type { Message } from '@ai-sdk/react';
+import { useChat } from '@ai-sdk/react';
 import {
   type AutocompleteSource,
   type AlgoliaInsightsHit,
@@ -7,7 +9,7 @@ import {
 import type { SearchResponse } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 
-import { MAX_QUERY_SIZE } from './constants';
+import { ASK_AI_API_URL, MAX_QUERY_SIZE } from './constants';
 import type { DocSearchProps } from './DocSearch';
 import type { FooterTranslations } from './Footer';
 import { Footer } from './Footer';
@@ -18,12 +20,11 @@ import type { SearchBoxTranslations } from './SearchBox';
 import { SearchBox } from './SearchBox';
 import { createStoredConversations, createStoredSearches } from './stored-searches';
 import type { DocSearchHit, DocSearchState, InternalDocSearchHit, StoredAskAiState, StoredDocSearchHit } from './types';
-import type { AskAiState } from './useAskAi';
-import { useAskAi, useGenAiClient } from './useAskAi';
 import { useSearchClient } from './useSearchClient';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
 import { groupBy, identity, noop, removeHighlightTags, isModifierEvent } from './utils';
+import { buildDummyAskAiHit } from './utils/ai';
 
 export type ModalTranslations = Partial<{
   searchBox: SearchBoxTranslations;
@@ -64,7 +65,7 @@ const buildNoQuerySources = ({
     return [];
   }
 
-  const sources: Array<AutocompleteSource<InternalDocSearchHit & { askState?: StoredAskAiState }>> = [
+  const sources: Array<AutocompleteSource<InternalDocSearchHit>> = [
     {
       sourceId: 'recentSearches',
       onSelect({ item, event }): void {
@@ -258,10 +259,9 @@ const buildQuerySources = async ({
 export function DocSearchModal({
   appId,
   apiKey,
-  dataSourceId,
-  promptId,
   indexName,
   placeholder,
+  askAi,
   searchParameters,
   maxResultsPerGroup,
   onClose = noop,
@@ -301,16 +301,6 @@ export function DocSearchModal({
     typeof window !== 'undefined' ? window.getSelection()!.toString().slice(0, MAX_QUERY_SIZE) : '',
   ).current;
   const initialQuery = React.useRef(initialQueryFromProp || initialQueryFromSelection).current;
-
-  const searchClient = useSearchClient(appId, apiKey, transformSearchClient);
-  const genAiClient = useGenAiClient(appId, apiKey, {
-    dataSourceId,
-    promptId,
-  });
-  if (!genAiClient && canHandleAskAi) {
-    throw new Error('Something went wrong while initializing the Ask AI feature.');
-  }
-
   // storage
   const conversations = React.useRef(
     createStoredConversations<StoredAskAiState>({
@@ -333,11 +323,29 @@ export function DocSearchModal({
     }),
   ).current;
 
-  // askAI
-  const askAiState = useAskAi({
-    genAiClient: genAiClient!,
-    conversations,
+  const searchClient = useSearchClient(appId, apiKey, transformSearchClient);
+
+  const askAiConfig = typeof askAi === 'object' ? askAi : null;
+
+  const { messages, append, status, setMessages } = useChat({
+    api: ASK_AI_API_URL,
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Algolia-API-Key': askAiConfig?.apiKey || apiKey,
+      'X-Algolia-Application-Id': askAiConfig?.appId || appId,
+      'X-Algolia-Index-Name': askAiConfig?.indexName || indexName,
+      'X-Documentation-Name': 'Documentation',
+    },
   });
+
+  const prevStatus = React.useRef(status);
+  React.useEffect(() => {
+    // if we just transitioned from "streaming" → "ready", persist
+    if (prevStatus.current === 'streaming' && status === 'ready') {
+      conversations.add(buildDummyAskAiHit(messages[0].content, messages));
+    }
+    prevStatus.current = status;
+  }, [status, messages, conversations]);
 
   const saveRecentSearch = React.useCallback(
     function saveRecentSearch(item: InternalDocSearchHit) {
@@ -388,22 +396,25 @@ export function DocSearchModal({
     >(undefined);
 
   const handleAskAiToggle = React.useCallback(
-    (toggle: boolean, query: string) => {
+    async (toggle: boolean, query: string) => {
       onAskAiToggle(toggle);
+      await append({
+        role: 'user',
+        content: query,
+      });
+
       // clear the query
       if (autocompleteRef.current) {
         autocompleteRef.current.setQuery('');
       }
-      askAiState.ask?.({ query });
     },
-    [onAskAiToggle, askAiState],
+    [onAskAiToggle, append],
   );
 
   if (!autocompleteRef.current) {
     autocompleteRef.current = createAutocomplete({
       id: 'docsearch',
-      // we don't want to focus on the AskAI hit by default
-      defaultActiveItemId: canHandleAskAi ? 1 : 0,
+      defaultActiveItemId: 0,
       openOnFocus: true,
       initialState: {
         query: initialQuery,
@@ -431,7 +442,7 @@ export function DocSearchModal({
             canHandleAskAi,
           });
 
-          const recentConversationSource: Array<AutocompleteSource<InternalDocSearchHit & { askState?: AskAiState }>> =
+          const recentConversationSource: Array<AutocompleteSource<InternalDocSearchHit & { messages?: Message[] }>> =
             canHandleAskAi
               ? [
                   {
@@ -440,8 +451,9 @@ export function DocSearchModal({
                       return conversations.getAll() as unknown as InternalDocSearchHit[];
                     },
                     onSelect({ item }): void {
-                      if (item.askState) {
-                        handleAskAiToggle(true, item.askState.query);
+                      if (item.messages) {
+                        setMessages(item.messages as any);
+                        onAskAiToggle(true);
                       }
                     },
                   },
@@ -610,8 +622,9 @@ export function DocSearchModal({
   React.useEffect(() => {
     if (!isAskAiActive) {
       autocomplete.refresh();
+      setMessages([]);
     }
-  }, [isAskAiActive, autocomplete]);
+  }, [isAskAiActive, autocomplete, setMessages]);
 
   return (
     <div
@@ -668,12 +681,19 @@ export function DocSearchModal({
             getMissingResultsUrl={getMissingResultsUrl}
             isAskAiActive={isAskAiActive}
             canHandleAskAi={canHandleAskAi}
-            askAiState={askAiState}
+            messages={messages}
+            status={status}
             onAskAiToggle={onAskAiToggle}
             onItemClick={(item, event) => {
               // if the item is askAI toggle the screen
               if (item.type === 'askAI' && item.query) {
-                handleAskAiToggle(true, item.query);
+                // if the item is askAI and the anchor is stored
+                if (item.anchor === 'stored' && 'messages' in item) {
+                  setMessages(item.messages as any);
+                  onAskAiToggle(true);
+                } else {
+                  handleAskAiToggle(true, item.query);
+                }
                 event.preventDefault();
                 return;
               }
