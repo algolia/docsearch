@@ -13,6 +13,8 @@ export type SearchBoxTranslations = Partial<{
   closeButtonAriaLabel: string;
   placeholderText: string;
   placeholderTextAskAi: string;
+  enterKeyHint: string;
+  enterKeyHintAskAi: string;
   searchInputLabel: string;
   backToKeywordSearchButtonText: string;
   backToKeywordSearchButtonAriaLabel: string;
@@ -66,9 +68,18 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
 
   const blockedKeys = new Set(['ArrowUp', 'ArrowDown', 'Enter']);
   const origOnKeyDown = baseInputProps.onKeyDown;
+  const origOnChange = baseInputProps.onChange;
 
+  /**
+   * We need to block the default behavior of the input when AskAI is active.
+   * This is because the input is used to ask another question when the user presses enter.
+   *
+   * Learn more on default autocomplete behavior:
+   * https://github.com/algolia/autocomplete/blob/next/packages/autocomplete-core/src/getDefaultProps.ts.
+   */
   const inputProps = {
     ...baseInputProps,
+    enterKeyHint: props.isAskAiActive ? ('enter' as const) : ('search' as const),
     onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>): void => {
       // block these up, down, enter listeners when AskAI is active
       if (props.isAskAiActive && blockedKeys.has(e.key)) {
@@ -81,6 +92,18 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
         return;
       }
       origOnKeyDown?.(e);
+    },
+    onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
+      if (props.isAskAiActive) {
+        props.setQuery(e.currentTarget.value);
+        // block search when AskAI is active
+        // we don't want to trigger the search when the user types
+        // we already know they are asking a question
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+      origOnChange?.(e);
     },
   };
 

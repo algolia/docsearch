@@ -75,7 +75,6 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
 
   // check if the instance is configured to handle ask ai
   const canHandleAskAi = Boolean(props?.askAi);
-  const askAiConfigurationId = typeof props?.askAi === 'string' ? props?.askAi : props?.askAi?.assistantId || null;
 
   if (canHandleAskAi) {
     currentPlaceholder = props?.translations?.modal?.searchBox?.placeholderText || 'Search docs or ask AI a question';
@@ -133,7 +132,6 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
             translations={props?.translations?.modal}
             isAskAiActive={isAskAiActive}
             canHandleAskAi={canHandleAskAi}
-            askAiConfigurationId={askAiConfigurationId}
             onAskAiToggle={onAskAiToggle}
             onClose={onClose}
           />,

@@ -770,7 +770,7 @@ assistive tech users */
   gap: 12px;
   font-size: 0.65em;
   font-weight: 300;
-  padding: 1em 0;
+  padding: 0 0 2em 0;
 }
 
 .DocSearch-AskAi-Disclaimer {
@@ -788,7 +788,6 @@ assistive tech users */
 .DocSearch-AskAiScreen-Response-Container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 16px;
 }
 
 .DocSearch-AskAiScreen-Response {

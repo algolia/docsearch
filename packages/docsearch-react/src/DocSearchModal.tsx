@@ -38,7 +38,6 @@ export type DocSearchModalProps = DocSearchProps & {
   onClose?: () => void;
   isAskAiActive?: boolean;
   canHandleAskAi?: boolean;
-  askAiConfigurationId: string | null;
   translations?: ModalTranslations;
 };
 
@@ -280,7 +279,6 @@ export function DocSearchModal({
   onAskAiToggle,
   isAskAiActive = false,
   canHandleAskAi = false,
-  askAiConfigurationId,
 }: DocSearchModalProps): JSX.Element {
   const { footer: footerTranslations, searchBox: searchBoxTranslations, ...screenStateTranslations } = translations;
   const [state, setState] = React.useState<DocSearchState<InternalDocSearchHit>>({
@@ -328,6 +326,7 @@ export function DocSearchModal({
   const searchClient = useSearchClient(appId, apiKey, transformSearchClient);
 
   const askAiConfig = typeof askAi === 'object' ? askAi : null;
+  const askAiConfigurationId = typeof askAi === 'string' ? askAi : askAiConfig?.assistantId || null;
 
   const { messages, append, status, setMessages } = useChat({
     api: ASK_AI_API_URL,
@@ -336,6 +335,7 @@ export function DocSearchModal({
       'X-Algolia-API-Key': askAiConfig?.apiKey || apiKey,
       'X-Algolia-Application-Id': askAiConfig?.appId || appId,
       'X-Algolia-Index-Name': askAiConfig?.indexName || indexName,
+      'X-Algolia-Assistant-Id': askAiConfigurationId || '',
       'X-Documentation-Name': 'Documentation',
     },
   });
@@ -430,10 +430,6 @@ export function DocSearchModal({
         setState(props.state);
       },
       getSources({ query, state: sourcesState, setContext, setStatus }) {
-        if (isAskAiActive) {
-          // when Ask AI screen is active, don't render any autocomplete sources
-          return [];
-        }
         if (!query) {
           const noQuerySources = buildNoQuerySources({
             recentSearches,
