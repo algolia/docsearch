@@ -16,7 +16,6 @@ export default [
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
-          zod: 'Zod',
         },
         file: 'dist/umd/index.js',
         format: 'umd',
