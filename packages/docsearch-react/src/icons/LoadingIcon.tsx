@@ -1,8 +1,8 @@
 import React, { type JSX } from 'react';
 
-export function LoadingIcon(): JSX.Element {
+export function LoadingIcon({ className }: { className?: string }): JSX.Element {
   return (
-    <svg viewBox="0 0 38 38" stroke="currentColor" strokeOpacity=".5">
+    <svg viewBox="0 0 38 38" className={className} stroke="currentColor" strokeOpacity=".5">
       <g fill="none" fillRule="evenodd">
         <g transform="translate(1 1)" strokeWidth="2">
           <circle strokeOpacity=".3" cx="18" cy="18" r="18" />

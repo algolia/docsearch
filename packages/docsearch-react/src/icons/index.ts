@@ -1,5 +1,6 @@
 export * from './GoToExternalIcon';
 export * from './LoadingIcon';
+export * from './SparklesIcon';
 export * from './RecentIcon';
 export * from './CloseIcon';
 export * from './SearchIcon';
