@@ -848,6 +848,7 @@ assistive tech users */
   align-items: center;
   justify-content: center;
   border: none;
+  width: 24px;
   background: none;
   padding: 4px;
   margin: 0;

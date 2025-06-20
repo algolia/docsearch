@@ -1,5 +1,4 @@
 import commonjs from '@rollup/plugin-commonjs';
-import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 
 import { plugins, typesConfig } from '../../rollup.base.config';
@@ -10,7 +9,7 @@ import pkg from './package.json';
 export default [
   {
     input: 'src/index.ts',
-    external: ['react', 'react-dom', 'zod'],
+    external: ['react', 'react-dom'],
     output: [
       {
         globals: {
@@ -26,7 +25,6 @@ export default [
       { dir: 'dist/esm', format: 'es' },
     ],
     plugins: [
-      resolve(),
       commonjs(),
       ...plugins,
       replace({
