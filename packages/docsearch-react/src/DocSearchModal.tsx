@@ -328,7 +328,15 @@ export function DocSearchModal({
   const askAiConfig = typeof askAi === 'object' ? askAi : null;
   const askAiConfigurationId = typeof askAi === 'string' ? askAi : askAiConfig?.assistantId || null;
 
-  const { messages, append, status, setMessages } = useChat({
+  const [askAiStreamError, setAskAiStreamError] = React.useState<Error | null>(null);
+
+  const {
+    messages,
+    append,
+    status,
+    setMessages,
+    error: askAiFetchError,
+  } = useChat({
     api: ASK_AI_API_URL,
     headers: {
       'Content-Type': 'application/json',
@@ -337,6 +345,9 @@ export function DocSearchModal({
       'X-Algolia-Index-Name': askAiConfig?.indexName || indexName,
       'X-Algolia-Assistant-Id': askAiConfigurationId || '',
       'X-Documentation-Name': 'Documentation',
+    },
+    onError(streamError) {
+      setAskAiStreamError(streamError);
     },
   });
 
@@ -680,6 +691,8 @@ export function DocSearchModal({
             isAskAiActive={isAskAiActive}
             canHandleAskAi={canHandleAskAi}
             messages={messages}
+            askAiStreamError={askAiStreamError}
+            askAiFetchError={askAiFetchError}
             status={status}
             onAskAiToggle={onAskAiToggle}
             onItemClick={(item, event) => {

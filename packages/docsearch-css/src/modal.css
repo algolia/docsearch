@@ -874,10 +874,10 @@ assistive tech users */
 }
 
 .DocSearch-AskAiScreen-Error {
+  padding: var(--docsearch-spacing);
   color: var(--docsearch-error-color);
   font-size: 0.8em;
   font-weight: 400;
-  margin: 0;
 }
 
 .DocSearch-AskAiScreen-RelatedSources {

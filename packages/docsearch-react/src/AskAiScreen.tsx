@@ -24,6 +24,8 @@ export type AskAiScreenTranslations = Partial<{
 type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
   messages: UseChatHelpers['messages'];
   status: UseChatHelpers['status'];
+  askAiStreamError: Error | null;
+  askAiFetchError: Error | undefined;
   translations?: AskAiScreenTranslations;
 };
 
@@ -250,6 +252,11 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
   return (
     <div className="DocSearch-AskAiScreen DocSearch-AskAiScreen-Container">
       <div className="DocSearch-AskAiScreen-Body">
+        {props.askAiStreamError && (
+          <div className="DocSearch-AskAiScreen-Error">
+            <p>{props.askAiStreamError.message}</p>
+          </div>
+        )}
         <div className="DocSearch-AskAiScreen-ExchangesList">
           {exchanges
             .slice()

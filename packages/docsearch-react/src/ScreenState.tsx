@@ -39,6 +39,8 @@ export interface ScreenStateProps<TItem extends BaseItem>
   indexName: DocSearchProps['indexName'];
   messages: UseChatHelpers['messages'];
   status: UseChatHelpers['status'];
+  askAiStreamError: Error | null;
+  askAiFetchError: Error | undefined;
   disableUserPersonalization: boolean;
   resultsFooterComponent: DocSearchProps['resultsFooterComponent'];
   translations: ScreenStateTranslations;
@@ -53,6 +55,8 @@ export const ScreenState = React.memo(
           {...props}
           messages={props.messages}
           status={props.status}
+          askAiStreamError={props.askAiStreamError}
+          askAiFetchError={props.askAiFetchError}
           translations={translations?.askAiScreen}
         />
       );
