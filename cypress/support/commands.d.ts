@@ -38,5 +38,13 @@ declare namespace Cypress {
      * Types a query that returns no results.
      */
     typeQueryNotMatching: () => void;
+    /**
+     * Returns to the keyword search screen.
+     */
+    returnToSearch: () => void;
+    /**
+     * Navigates to the Ask AI screen.
+     */
+    goToAskAi: () => void;
   }
 }

@@ -39,3 +39,12 @@ Cypress.Commands.add('typeQueryMatching', () => {
 Cypress.Commands.add('typeQueryNotMatching', () => {
   cy.search('zzz');
 });
+
+Cypress.Commands.add('returnToSearch', () => {
+  cy.get('.DocSearch-Input').type('{esc}');
+});
+
+Cypress.Commands.add('goToAskAi', () => {
+  cy.typeQueryMatching();
+  cy.get('#docsearch-AskAi-Section').click();
+});
