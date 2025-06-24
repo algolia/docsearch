@@ -763,17 +763,21 @@ assistive tech users */
   gap: 0;
 }
 
-.DocSearch-AskAiScreen-Header {
+.DocSearch-AskAiScreen-Disclaimer {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 12px;
   font-size: 0.65em;
   font-weight: 300;
-  padding: 0 0 2em 0;
+  padding: 1em 0;
 }
 
-.DocSearch-AskAi-Disclaimer {
+.DocSearch-AskAiScreen-Disclaimer-Icon {
+  color: var(--docsearch-icon-color);
+}
+
+.DocSearch-AskAiScreen-Disclaimer-Text {
   padding: 0;
   margin: 0;
 }
@@ -815,10 +819,6 @@ assistive tech users */
   font-weight: 400;
   color: var(--docsearch-secondary-text-color);
   margin: 0;
-}
-
-.DocSearch-AskAiScreen-Answer--streaming > * {
-  animation: fade-in 0.3s ease-in-out;
 }
 
 .DocSearch-AskAiScreen-ThinkingDots {
@@ -960,7 +960,11 @@ assistive tech users */
   color: var(--docsearch-text-color);
   line-height: 1.6;
   font-size: 1em;
-  letter-spacing: -0.011em;
+  word-wrap: break-word;
+}
+
+.DocSearch-Markdown-Content--streaming {
+  animation: fade-in 0.3s ease-in-out both;
 }
 
 .DocSearch-Markdown-Content p {
@@ -978,7 +982,7 @@ assistive tech users */
 .DocSearch-Markdown-Content code {
   background-color: var(--docsearch-key-background);
   color: var(--docsearch-text-color);
-  padding: 0.2em 0.4em;
+  padding: 0.2em 0;
   margin: 0;
   border-radius: 3px;
   font-family:
@@ -1021,7 +1025,7 @@ assistive tech users */
 .DocSearch-Markdown-Content h5,
 .DocSearch-Markdown-Content h6 {
   color: var(--docsearch-text-color);
-  margin: 2em 0 1em;
+  margin: 1em 0 1em;
   font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.3;
@@ -1032,20 +1036,20 @@ assistive tech users */
 }
 
 .DocSearch-Markdown-Content h2 {
-  font-size: 1.3em;
+  font-size: 1.2em;
 }
 
 .DocSearch-Markdown-Content h3 {
-  font-size: 1.1em;
+  font-size: 1em;
 }
 
 .DocSearch-Markdown-Content h4 {
-  font-size: 1em;
+  font-size: 0.9em;
 }
 
 .DocSearch-Markdown-Content h5,
 .DocSearch-Markdown-Content h6 {
-  font-size: 1em;
+  font-size: 0.8em;
 }
 
 .DocSearch-Markdown-Content ul,
@@ -1073,6 +1077,10 @@ assistive tech users */
 .DocSearch-Markdown-Content li > ul,
 .DocSearch-Markdown-Content li > ol {
   margin: 0.5em;
+}
+
+.DocSearch-Markdown-Content li::marker {
+  color: var(--docsearch-muted-color);
 }
 
 .DocSearch-Markdown-Content a {
@@ -1118,13 +1126,49 @@ assistive tech users */
   font-weight: 600;
 }
 
-.DocSearch-AskAiScreen-MessageContent-Tool {
+.DocSearch-AskAiScreen-MessageContent-Reasoning {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 0.9em;
+  font-size: 0.8em;
+  color: var(--docsearch-muted-color);
+}
+
+.DocSearch-AskAiScreen-MessageContent-Tool {
+  display: flex;
+  align-items: center;
+  font-size: 1em;
   padding: 1em 0;
-  color: var(--docsearch-secondary-text-color);
+  width: 100%;
+  color: var(--docsearch-muted-color);
+}
+
+.DocSearch-AskAiScreen-MessageContent-Tool-Query {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  all: unset;
+  border: 1px solid transparent;
+  color: var(--docsearch-muted-color);
+  border-radius: 4px;
+  padding: 0.1em 0.2em;
+  margin: 0 0.2em;
+  transition: border-color 0.2s ease;
+}
+
+.DocSearch-AskAiScreen-MessageContent-Tool-Query svg {
+  color: var(--docsearch-muted-color);
+}
+
+.DocSearch-AskAiScreen-MessageContent-Tool-Query:hover {
+  border-color: var(--docsearch-highlight-color);
+  color: var(--docsearch-highlight-color);
+  background-color: var(--docsearch-hit-highlight-color);
+  cursor: pointer;
+}
+
+.DocSearch-AskAiScreen-MessageContent-Tool-Query:hover svg {
+  color: var(--docsearch-highlight-color);
 }
 
 .DocSearch-AskAiScreen-SmallerLoadingIcon {
@@ -1173,11 +1217,6 @@ assistive tech users */
   to {
     opacity: 1;
   }
-}
-
-.DocSearch-Markdown-Content > div {
-  opacity: 0;
-  animation: fadeIn 0.4s ease-out forwards;
 }
 
 @keyframes pulse {
@@ -1261,4 +1300,51 @@ assistive tech users */
   .DocSearch-AskAiScreen-RelatedSources {
     width: 100%;
   }
+}
+
+/* code snippet wrapper */
+.DocSearch-CodeSnippet {
+  position: relative;
+}
+
+.DocSearch-CodeSnippet-CopyButton {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--docsearch-key-background);
+  color: var(--docsearch-text-color);
+  border: none;
+  padding: 0.2em 0.6em;
+  font-size: 0.75em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.DocSearch-CodeSnippet-CopyButton:hover {
+  opacity: 0.8;
+}
+
+.DocSearch-CodeSnippet-CopyButton:active {
+  opacity: 0.6;
+}
+
+.DocSearch-CodeSnippet-CopyButton svg {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+}
+
+.DocSearch-CodeSnippet-CheckIcon {
+  display: none;
+}
+
+.DocSearch-CodeSnippet-CopyButton--copied .DocSearch-CodeSnippet-CopyIcon {
+  display: none;
+}
+
+.DocSearch-CodeSnippet-CopyButton--copied .DocSearch-CodeSnippet-CheckIcon {
+  display: inline-block;
 }

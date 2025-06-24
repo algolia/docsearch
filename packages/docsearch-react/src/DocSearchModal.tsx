@@ -398,9 +398,9 @@ export function DocSearchModal({
     >(undefined);
 
   const handleAskAiToggle = React.useCallback(
-    async (toggle: boolean, query: string) => {
+    (toggle: boolean, query: string) => {
       onAskAiToggle(toggle);
-      await append({
+      append({
         role: 'user',
         content: query,
       });

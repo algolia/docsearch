@@ -8,10 +8,17 @@ import type { InternalDocSearchHit } from './types';
 import { extractLinksFromText } from './utils/ai';
 
 export type AskAiScreenTranslations = Partial<{
+  // Title texts
   titleText: string;
   disclaimerText: string;
   relatedSourcesText: string;
   thinkingText: string;
+  copyButtonText: string;
+  copyButtonCopiedText: string;
+  // Tool call texts
+  preToolCallText: string;
+  duringToolCallText: string;
+  afterToolCallText: string;
 }>;
 
 type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
@@ -32,11 +39,11 @@ interface Exchange {
 
 function AskAiScreenHeader({ disclaimerText }: AskAiScreenHeaderProps): JSX.Element {
   return (
-    <div className="DocSearch-AskAiScreen-Header">
-      <div className="DocSearch-Screen-Icon">
+    <div className="DocSearch-AskAiScreen-Disclaimer">
+      <div className="DocSearch-AskAiScreen-Disclaimer-Icon">
         <SparklesIcon />
       </div>
-      <p className="DocSearch-AskAi-Disclaimer">{disclaimerText}</p>
+      <p className="DocSearch-AskAiScreen-Disclaimer-Text">{disclaimerText}</p>
     </div>
   );
 }
@@ -45,6 +52,7 @@ interface AskAiExchangeCardProps {
   exchange: Exchange;
   isLastExchange: boolean;
   loadingStatus: UseChatHelpers['status'];
+  onSearchQueryClick: (query: string) => void;
   translations: AskAiScreenTranslations;
 }
 
@@ -52,6 +60,7 @@ function AskAiExchangeCard({
   exchange,
   isLastExchange,
   loadingStatus,
+  onSearchQueryClick,
   translations,
 }: AskAiExchangeCardProps): JSX.Element {
   const { userMessage, assistantMessage } = exchange;
@@ -71,12 +80,23 @@ function AskAiExchangeCard({
             {Array.isArray(assistantMessage?.parts)
               ? assistantMessage.parts.map((part, idx) => {
                   const index = idx;
+
+                  if (part.type === 'reasoning' && assistantMessage.parts.length === 1) {
+                    return (
+                      <div key={index} className="DocSearch-AskAiScreen-MessageContent-Reasoning shimmer">
+                        <span className="italic">Thinking...</span>
+                      </div>
+                    );
+                  }
+
                   if (part.type === 'text') {
                     return (
                       <MemoizedMarkdown
                         key={index}
                         content={part.text}
-                        id={`ask-ai-message-${assistantMessage?.id}-${idx}`}
+                        copyButtonText={translations.copyButtonText || 'Copy'}
+                        copyButtonCopiedText={translations.copyButtonCopiedText || 'Copied!'}
+                        isStreaming={loadingStatus === 'streaming'}
                       />
                     );
                   }
@@ -91,30 +111,39 @@ function AskAiExchangeCard({
                               className="DocSearch-AskAiScreen-MessageContent-Tool Tool--PartialCall shimmer"
                             >
                               <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-                              <span>Searching through the docs...</span>
+                              <span>{translations.preToolCallText || 'Searching through the docs...'}</span>
                             </div>
                           );
                         case 'call':
                           return (
                             <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Call shimmer">
                               <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-                              <span>Searching through the docs for "{toolInvocation.args?.query || ''}" ...</span>
+                              <span>
+                                {`${translations.duringToolCallText || 'Searching through the docs for '} "${toolInvocation.args?.query || ''}" ...`}
+                              </span>
                             </div>
                           );
                         case 'result':
                           return (
                             <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Result">
-                              <SearchIcon size={16} />
-                              <span>Looked through the docs for "{toolInvocation.args?.query || ''}"</span>
+                              <span>{`${translations.afterToolCallText || 'Looked through the docs for'}`}</span>
+                              <button
+                                type="button"
+                                className="DocSearch-AskAiScreen-MessageContent-Tool-Query"
+                                onClick={() => onSearchQueryClick(toolInvocation.args?.query || '')}
+                              >
+                                &quot;{toolInvocation.args?.query || ''}&quot;
+                                <SearchIcon size={16} />
+                              </button>
                             </div>
                           );
                         default:
                           return null;
                       }
                     }
-                    // fallback for unknown tool
+                    // fallback for unknown tool, should never happen in theory. :shrug:
                     return (
-                      <span key={index} className="text-sm italic">
+                      <span key={index} className="text-sm italic shimmer">
                         Thinking...
                       </span>
                     );
@@ -213,6 +242,11 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
     return grouped;
   }, [messages]);
 
+  const handleSearchQueryClick = (query: string): void => {
+    props.onAskAiToggle(false);
+    props.setQuery(query);
+  };
+
   return (
     <div className="DocSearch-AskAiScreen DocSearch-AskAiScreen-Container">
       <div className="DocSearch-AskAiScreen-Body">
@@ -227,6 +261,7 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
                 isLastExchange={index === 0}
                 loadingStatus={props.status}
                 translations={translations}
+                onSearchQueryClick={handleSearchQueryClick}
               />
             ))}
         </div>
