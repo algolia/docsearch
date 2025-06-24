@@ -98,7 +98,10 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
   const onClose = React.useCallback(() => {
     setIsOpen(false);
     setInitialQuery(props?.initialQuery);
-  }, [setIsOpen, props.initialQuery]);
+    if (isAskAiActive) {
+      setIsAskAiActive(false);
+    }
+  }, [setIsOpen, props.initialQuery, isAskAiActive, setIsAskAiActive]);
 
   const onInput = React.useCallback(
     (event: KeyboardEvent) => {
