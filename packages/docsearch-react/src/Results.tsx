@@ -80,36 +80,37 @@ function Result<TItem extends StoredDocSearchHit>({
   collection,
   hitComponent,
 }: ResultProps<TItem>): JSX.Element {
-  const [isDeleting, setIsDeleting] = React.useState(false);
-  const [isFavoriting, setIsFavoriting] = React.useState(false);
-  const action = React.useRef<(() => void) | null>(null);
+  const [status, setStatus] = React.useState<'deleting' | 'favoriting' | 'idle'>('idle');
+
+  const actionRef = React.useRef<(() => void) | null>(null);
   const Hit = hitComponent!;
 
-  function runDeleteTransition(cb: () => void): void {
-    setIsDeleting(true);
-    action.current = cb;
-  }
+  const runDeleteTransition = (cb: () => void): void => {
+    setStatus('deleting');
+    actionRef.current = cb;
+  };
 
-  function runFavoriteTransition(cb: () => void): void {
-    setIsFavoriting(true);
-    action.current = cb;
-  }
+  const runFavoriteTransition = (cb: () => void): void => {
+    setStatus('favoriting');
+    actionRef.current = cb;
+  };
+
+  const handleAnimEnd = (): void => {
+    actionRef.current?.();
+    actionRef.current = null;
+  };
 
   return (
     <li
       className={[
         'DocSearch-Hit',
         (item as unknown as InternalDocSearchHit).__docsearch_parent && 'DocSearch-Hit--Child',
-        isDeleting && 'DocSearch-Hit--deleting',
-        isFavoriting && 'DocSearch-Hit--favoriting',
+        status === 'favoriting' && 'DocSearch-Hit--favoriting',
+        status === 'deleting' && 'DocSearch-Hit--deleting',
       ]
         .filter(Boolean)
         .join(' ')}
-      onTransitionEnd={() => {
-        if (action.current) {
-          action.current();
-        }
-      }}
+      onAnimationEnd={handleAnimEnd}
       {...getItemProps({
         item,
         source: collection.source,

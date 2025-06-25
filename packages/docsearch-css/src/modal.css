@@ -346,28 +346,74 @@
   margin-top: 4px;
 }
 
-@media screen and (prefers-reduced-motion: reduce) {
+@keyframes hit-exit {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 4rem;
+  }
+  60% {
+    opacity: 0;
+    transform: translateY(-6px);
+  } /* fade & lift */
+  100% {
+    opacity: 0;
+    transform: translateY(-6px);
+    max-height: 0;
+    margin: 0;
+  }
+}
+
+/* a11y */
+@media (prefers-reduced-motion: reduce) {
+  .DocSearch-Hit--favoriting,
   .DocSearch-Hit--deleting {
-    transition: none;
+    animation: none;
   }
 }
 
-.DocSearch-Hit--deleting {
-  opacity: 0;
-  transition: all 250ms linear;
-}
-
-@media screen and (prefers-reduced-motion: reduce) {
-  .DocSearch-Hit--favoriting {
-    transition: none;
-  }
-}
-
+/* ───────────── FAVORITE -> EXIT ───────────── */
 .DocSearch-Hit--favoriting {
-  transform: scale(0);
-  transform-origin: top center;
-  transition: all 250ms linear;
-  transition-delay: 250ms;
+  animation: favOut var(--fav-out-dur) var(--ease-smooth) forwards;
+  transform-origin: center;
+}
+
+@keyframes favOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: none;
+  }
+  30% {
+    transform: scale(1.01);
+    box-shadow: var(--shadow-pop);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.6);
+    box-shadow: none;
+    max-height: 0;
+    margin: 0;
+  }
+}
+
+/* ───────────── DELETE (✕) ───────────── */
+.DocSearch-Hit--deleting {
+  animation: hitExit var(--del-dur) var(--ease-fast) forwards;
+}
+
+@keyframes hitExit {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 4rem;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-6px);
+    max-height: 0;
+    margin: 0;
+  }
 }
 
 .DocSearch-Hit a,
