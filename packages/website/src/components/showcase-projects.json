@@ -120,13 +120,8 @@
     "href": "https://jestjs.io/"
   },
   {
-    "name": "Nuxt.js",
-    "image": "img/logos/nuxtjs.svg",
-    "href": "https://nuxtjs.org/"
-  },
-  {
     "name": "Expo",
-    "image": "img/logos/expo.svg",
+    "image": "img/logos/expo.jpeg",
     "href": "https://docs.expo.dev/"
   },
   {
@@ -153,11 +148,6 @@
     "name": "ESLint",
     "image": "img/logos/eslint.svg",
     "href": "https://eslint.org/"
-  },
-  {
-    "name": "Redux",
-    "image": "img/logos/redux.svg",
-    "href": "https://redux.js.org/"
   },
   {
     "name": "Sass",
@@ -188,11 +178,6 @@
     "name": "Vue CLI",
     "image": "img/logos/vue.svg",
     "href": "https://cli.vuejs.org/"
-  },
-  {
-    "name": "Prismic",
-    "image": "img/logos/prismic.png",
-    "href": "https://prismic.io/docs"
   },
   {
     "name": "Formik",
@@ -238,5 +223,45 @@
     "name": "ScalarDL",
     "image": "img/logos/scalar.svg",
     "href": "https://scalardl.scalar-labs.com/docs/"
+  },
+  {
+    "name": "Cheerio",
+    "image": "img/logos/cheerio.svg",
+    "href": "https://cheerio.js.org/"
+  },
+  {
+    "name": "Snap Developers",
+    "image": "img/logos/snap.png",
+    "href": "https://developers.snap.com/"
+  },
+  {
+    "name": "Angular",
+    "image": "img/logos/angular.png",
+    "href": "https://angular.dev/"
+  },
+  {
+    "name": "VitePress",
+    "image": "img/logos/vitepress.svg",
+    "href": "https://vitepress.dev/"
+  },
+  {
+    "name": "Hugo",
+    "image": "img/logos/hugo.png",
+    "href": "https://gohugo.io/"
+  },
+  {
+    "name": "Backstage",
+    "image": "img/logos/backstage.jpeg",
+    "href": "https://backstage.io/"
+  },
+  {
+    "name": "Ethereum",
+    "image": "img/logos/ethereum.png",
+    "href": "https://ethereum.org/"
+  },
+  {
+    "name": "Atlas Cern",
+    "image": "img/logos/cern_logo.jpeg",
+    "href": "https://opendata.atlas.cern/"
   }
 ]

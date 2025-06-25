@@ -791,6 +791,114 @@ new Crawler({
 </div>
 </details>
 
+## Rspress Template
+
+<details>
+<summary>rspress.js</summary>
+<div>
+
+```js
+new Crawler({
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_API_KEY',
+  rateLimit: 8,
+  maxDepth: 10,
+  startUrls: ['https://YOUR_WEBSITE_URL/'],
+  sitemaps: ['https://YOUR_WEBSITE_URL/sitemap-index.xml'],
+  ignoreCanonicalTo: true,
+  discoveryPatterns: ['https://YOUR_WEBSITE_URL/**'],
+  actions: [
+    {
+      indexName: 'YOUR_INDEX_NAME',
+      pathsToMatch: ['https://YOUR_WEBSITE_URL/**'],
+      recordExtractor: ({ $, helpers }) => {
+        const lvl0 =
+          $(".rspress-nav-menu-item.rspress-nav-menu-item-active")
+            .first()
+            .text() || "Documentation";
+
+        return helpers.docsearch({
+          recordProps: {
+            lvl0: {
+              selectors: "",
+              defaultValue: lvl0,
+            },
+            lvl1: ".rspress-doc h1",
+            lvl2: ".rspress-doc h2",
+            lvl3: ".rspress-doc h3",
+            lvl4: ".rspress-doc h4",
+            lvl5: ".rspress-doc h5",
+            lvl6: ".rspress-doc pre > code", // if you want to search code blocks, add this line
+            content: ".rspress-doc p, .rspress-doc li",
+          },
+          indexHeadings: true,
+          aggregateContent: true,
+          recordVersion: "v3",
+        });
+      },
+    },
+  ],
+  initialIndexSettings: {
+    YOUR_INDEX_NAME: {
+      attributesForFaceting: [
+        'type',
+        'lang',
+      ],
+      attributesToRetrieve: [
+        'hierarchy',
+        'content',
+        'anchor',
+        'url',
+        'url_without_anchor',
+        'type',
+      ],
+      attributesToHighlight: ['hierarchy', 'content'],
+      attributesToSnippet: ['content:10'],
+      camelCaseAttributes: ['hierarchy', 'content'],
+      searchableAttributes: [
+        'unordered(hierarchy.lvl0)',
+        'unordered(hierarchy.lvl1)',
+        'unordered(hierarchy.lvl2)',
+        'unordered(hierarchy.lvl3)',
+        'unordered(hierarchy.lvl4)',
+        'unordered(hierarchy.lvl5)',
+        'unordered(hierarchy.lvl6)',
+        'content',
+      ],
+      distinct: true,
+      attributeForDistinct: 'url',
+      customRanking: [
+        'desc(weight.pageRank)',
+        'desc(weight.level)',
+        'asc(weight.position)',
+      ],
+      ranking: [
+        'words',
+        'filters',
+        'typo',
+        'attribute',
+        'proximity',
+        'exact',
+        'custom',
+      ],
+      highlightPreTag: '<span class="algolia-docsearch-suggestion--highlight">',
+      highlightPostTag: '</span>',
+      minWordSizefor1Typo: 3,
+      minWordSizefor2Typos: 7,
+      allowTyposOnNumericTokens: false,
+      minProximity: 1,
+      ignorePlurals: true,
+      advancedSyntax: true,
+      attributeCriteriaComputedByMinProximity: true,
+      removeWordsIfNoResults: 'allOptional',
+    },
+  },
+});
+```
+
+</div>
+</details>
+
 ## pkgdown Template
 
 <details>
