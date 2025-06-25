@@ -2,6 +2,7 @@ import type { AutocompleteApi, AutocompleteState, BaseItem } from '@algolia/auto
 import React, { type JSX } from 'react';
 
 import type { DocSearchProps } from './DocSearch';
+import { SparklesIcon } from './icons/SparklesIcon';
 import { Snippet } from './Snippet';
 import type { InternalDocSearchHit, StoredDocSearchHit } from './types';
 
@@ -32,7 +33,20 @@ export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TI
     return (
       <section className="DocSearch-AskAi-Section">
         <ul {...props.getListProps({ source: props.collection.source })}>
-          <AskAiResult item={props.collection.items[0]} translations={props.translations} {...props} />
+          <AskAiButton item={props.collection.items[0]} translations={props.translations} {...props} />
+        </ul>
+      </section>
+    );
+  }
+
+  if (props.collection.source.sourceId === 'recentConversations') {
+    return (
+      <section className="DocSearch-Hits">
+        <div className="DocSearch-Hit-source">{props.title}</div>
+        <ul {...props.getListProps({ source: props.collection.source })}>
+          {props.collection.items.map((item, index) => {
+            return <Result key={[props.title, item.objectID].join(':')} item={item} index={index} {...props} />;
+          })}
         </ul>
       </section>
     );
@@ -66,36 +80,37 @@ function Result<TItem extends StoredDocSearchHit>({
   collection,
   hitComponent,
 }: ResultProps<TItem>): JSX.Element {
-  const [isDeleting, setIsDeleting] = React.useState(false);
-  const [isFavoriting, setIsFavoriting] = React.useState(false);
-  const action = React.useRef<(() => void) | null>(null);
+  const [status, setStatus] = React.useState<'deleting' | 'favoriting' | 'idle'>('idle');
+
+  const actionRef = React.useRef<(() => void) | null>(null);
   const Hit = hitComponent!;
 
-  function runDeleteTransition(cb: () => void): void {
-    setIsDeleting(true);
-    action.current = cb;
-  }
+  const runDeleteTransition = (cb: () => void): void => {
+    setStatus('deleting');
+    actionRef.current = cb;
+  };
 
-  function runFavoriteTransition(cb: () => void): void {
-    setIsFavoriting(true);
-    action.current = cb;
-  }
+  const runFavoriteTransition = (cb: () => void): void => {
+    setStatus('favoriting');
+    actionRef.current = cb;
+  };
+
+  const handleAnimEnd = (): void => {
+    actionRef.current?.();
+    actionRef.current = null;
+  };
 
   return (
     <li
       className={[
         'DocSearch-Hit',
         (item as unknown as InternalDocSearchHit).__docsearch_parent && 'DocSearch-Hit--Child',
-        isDeleting && 'DocSearch-Hit--deleting',
-        isFavoriting && 'DocSearch-Hit--favoriting',
+        status === 'favoriting' && 'DocSearch-Hit--favoriting',
+        status === 'deleting' && 'DocSearch-Hit--deleting',
       ]
         .filter(Boolean)
         .join(' ')}
-      onTransitionEnd={() => {
-        if (action.current) {
-          action.current();
-        }
-      }}
+      onAnimationEnd={handleAnimEnd}
       {...getItemProps({
         item,
         source: collection.source,
@@ -112,6 +127,12 @@ function Result<TItem extends StoredDocSearchHit>({
             <div className="DocSearch-Hit-content-wrapper">
               <Snippet className="DocSearch-Hit-title" hit={item} attribute="hierarchy.lvl1" />
               {item.content && <Snippet className="DocSearch-Hit-path" hit={item} attribute="content" />}
+            </div>
+          )}
+
+          {item.type === 'askAI' && (
+            <div className="DocSearch-Hit-content-wrapper">
+              <Snippet className="DocSearch-Hit-title" hit={item} attribute="hierarchy.lvl1" />
             </div>
           )}
 
@@ -141,40 +162,19 @@ function Result<TItem extends StoredDocSearchHit>({
   );
 }
 
-interface AskAiResultProps<TItem extends BaseItem> extends ResultsProps<TItem> {
+interface AskAiButtonProps<TItem extends BaseItem> extends ResultsProps<TItem> {
   item: TItem;
   translations?: ResultsTranslations;
 }
 
-function AskAiResult<TItem extends StoredDocSearchHit>({
+function AskAiButton<TItem extends StoredDocSearchHit>({
   item,
   getItemProps,
   onItemClick,
   translations,
   collection,
-}: AskAiResultProps<TItem>): JSX.Element {
+}: AskAiButtonProps<TItem>): JSX.Element {
   const { askAiPlaceholder = 'Ask AI: ' } = translations || {};
-
-  const icon = (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="lucide lucide-sparkles-icon lucide-sparkles"
-    >
-      <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
-      <path d="M20 3v4" />
-      <path d="M22 5h-4" />
-      <path d="M4 17v2" />
-      <path d="M5 18H3" />
-    </svg>
-  );
 
   return (
     <li
@@ -189,7 +189,9 @@ function AskAiResult<TItem extends StoredDocSearchHit>({
     >
       <div className="DocSearch-Hit--AskAI">
         <div className="DocSearch-Hit-AskAIButton DocSearch-Hit-Container">
-          <div className=" DocSearch-Hit-AskAIButton-icon DocSearch-Hit-icon">{icon}</div>
+          <div className=" DocSearch-Hit-AskAIButton-icon DocSearch-Hit-icon">
+            <SparklesIcon />
+          </div>
           <div className="DocSearch-Hit-AskAIButton-title">
             <span className="DocSearch-Hit-AskAIButton-title-highlight">{askAiPlaceholder}</span>
             <span className="DocSearch-Hit-AskAIButton-title-query">"{item.query || ''}"</span>

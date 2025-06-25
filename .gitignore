@@ -27,3 +27,5 @@ cypress/videos/
 !**/.yarn/releases
 !**/.yarn/plugins
 !**/.yarn/patches
+
+rollup.config-*.cjs

@@ -1,6 +1,6 @@
 import React, { type JSX } from 'react';
 
-import { RecentIcon, CloseIcon, StarIcon, SearchIcon } from './icons';
+import { RecentIcon, CloseIcon, StarIcon, SearchIcon, SparklesIcon } from './icons';
 import { Results } from './Results';
 import type { ScreenStateProps } from './ScreenState';
 import type { InternalDocSearchHit } from './types';
@@ -12,6 +12,8 @@ export type StartScreenTranslations = Partial<{
   removeRecentSearchButtonTitle: string;
   favoriteSearchesTitle: string;
   removeFavoriteSearchButtonTitle: string;
+  recentConversationsTitle: string;
+  removeRecentConversationButtonTitle: string;
 }>;
 
 type StartScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
@@ -22,12 +24,15 @@ type StartScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translatio
 export function StartScreen({ translations = {}, ...props }: StartScreenProps): JSX.Element | null {
   const {
     recentSearchesTitle = 'Recent',
-    noRecentSearchesText = 'Make a search to see results',
+    noRecentSearchesText = 'Search results will appear here',
     saveRecentSearchButtonTitle = 'Save this search',
     removeRecentSearchButtonTitle = 'Remove this search from history',
     favoriteSearchesTitle = 'Favorite',
     removeFavoriteSearchButtonTitle = 'Remove this search from favorites',
+    recentConversationsTitle = 'Recently asked',
+    removeRecentConversationButtonTitle = 'Remove this conversation from history',
   } = translations;
+
   if (props.state.status === 'idle' && props.hasCollections === false) {
     if (props.disableUserPersonalization) {
       return null;
@@ -119,6 +124,36 @@ export function StartScreen({ translations = {}, ...props }: StartScreenProps): 
                 event.stopPropagation();
                 runDeleteTransition(() => {
                   props.favoriteSearches.remove(item);
+                  props.refresh();
+                });
+              }}
+            >
+              <CloseIcon />
+            </button>
+          </div>
+        )}
+      />
+
+      <Results
+        {...props}
+        title={recentConversationsTitle}
+        collection={props.state.collections[2]}
+        renderIcon={() => (
+          <div className="DocSearch-Hit-icon">
+            <SparklesIcon />
+          </div>
+        )}
+        renderAction={({ item, runDeleteTransition }) => (
+          <div className="DocSearch-Hit-action">
+            <button
+              className="DocSearch-Hit-action-button"
+              title={removeRecentConversationButtonTitle}
+              type="submit"
+              onClick={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                runDeleteTransition(() => {
+                  props.conversations.remove(item);
                   props.refresh();
                 });
               }}

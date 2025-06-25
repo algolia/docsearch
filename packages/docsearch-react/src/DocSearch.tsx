@@ -22,12 +22,33 @@ export type DocSearchTransformClient = {
   transporter: Pick<LiteClient['transporter'], 'algoliaAgent'>;
 };
 
+export type DocSearchAskAi = {
+  /**
+   * The index name to use for the ask AI feature. Your assistant will search this index for relevant documents.
+   * If not provided, the index name will be used.
+   */
+  indexName?: string;
+  /**
+   * The API key to use for the ask AI feature. Your assistant will use this API key to search the index.
+   * If not provided, the API key will be used.
+   */
+  apiKey?: string;
+  /**
+   * The app ID to use for the ask AI feature. Your assistant will use this app ID to search the index.
+   * If not provided, the app ID will be used.
+   */
+  appId?: string;
+  /**
+   * The assistant ID to use for the ask AI feature.
+   */
+  assistantId: string | null;
+};
+
 export interface DocSearchProps {
   appId: string;
   apiKey: string;
   indexName: string;
-  datasourceId?: string;
-  promptId?: string;
+  askAi?: DocSearchAskAi | string;
   placeholder?: string;
   searchParameters?: SearchParamsObject;
   maxResultsPerGroup?: number;
@@ -49,8 +70,19 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
   const [initialQuery, setInitialQuery] = React.useState<string | undefined>(props?.initialQuery || undefined);
   const [isAskAiActive, setIsAskAiActive] = React.useState(false);
 
+  let currentPlaceholder =
+    props?.translations?.modal?.searchBox?.placeholderText || props?.placeholder || 'Search docs';
+
   // check if the instance is configured to handle ask ai
-  const canHandleAskAi = Boolean(props?.datasourceId && props?.promptId);
+  const canHandleAskAi = Boolean(props?.askAi);
+
+  if (canHandleAskAi) {
+    currentPlaceholder = props?.translations?.modal?.searchBox?.placeholderText || 'Search docs or ask AI a question';
+  }
+
+  if (isAskAiActive) {
+    currentPlaceholder = props?.translations?.modal?.searchBox?.placeholderTextAskAi || 'Ask another question...';
+  }
 
   const onAskAiToggle = React.useCallback(
     (askAitoggle: boolean) => {
@@ -66,7 +98,10 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
   const onClose = React.useCallback(() => {
     setIsOpen(false);
     setInitialQuery(props?.initialQuery);
-  }, [setIsOpen, props.initialQuery]);
+    if (isAskAiActive) {
+      setIsAskAiActive(false);
+    }
+  }, [setIsOpen, props.initialQuery, isAskAiActive, setIsAskAiActive]);
 
   const onInput = React.useCallback(
     (event: KeyboardEvent) => {
@@ -94,6 +129,7 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
         createPortal(
           <DocSearchModal
             {...props}
+            placeholder={currentPlaceholder}
             initialScrollY={window.scrollY}
             initialQuery={initialQuery}
             translations={props?.translations?.modal}
