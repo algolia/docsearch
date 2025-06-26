@@ -35,7 +35,13 @@ function Home() {
           <Button key="get-started" href={withBaseUrl('docs/what-is-docsearch')}>
             Get started
           </Button>,
-          <Button key="apply" href={withBaseUrl('apply')} background="blue" color="white" className="apply-button">
+          <Button
+            key="apply"
+            href={'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch'}
+            background="blue"
+            color="white"
+            className="apply-button"
+          >
             Apply
           </Button>,
         ]}
