@@ -1,6 +1,6 @@
 import type { AutocompleteState, AutocompleteOptions } from '@algolia/autocomplete-core';
 import type { LiteClient, SearchParamsObject } from 'algoliasearch/lite';
-import React, { type JSX } from 'react';
+import React, { useEffect, type JSX } from 'react';
 import { createPortal } from 'react-dom';
 
 import { DocSearchButton } from './DocSearchButton';
@@ -9,6 +9,8 @@ import type { DocSearchHit, InternalDocSearchHit, StoredDocSearchHit } from './t
 import { useDocSearchKeyboardEvents } from './useDocSearchKeyboardEvents';
 
 import type { ButtonTranslations, ModalTranslations } from '.';
+
+export type DoSearchTheme = 'dark' | 'light';
 
 export type DocSearchTranslations = Partial<{
   button: ButtonTranslations;
@@ -29,6 +31,7 @@ export interface DocSearchProps {
   placeholder?: string;
   searchParameters?: SearchParamsObject;
   maxResultsPerGroup?: number;
+  theme?: DoSearchTheme;
   transformItems?: (items: DocSearchHit[]) => DocSearchHit[];
   hitComponent?: (props: { hit: InternalDocSearchHit | StoredDocSearchHit; children: React.ReactNode }) => JSX.Element;
   resultsFooterComponent?: (props: { state: AutocompleteState<InternalDocSearchHit> }) => JSX.Element | null;
@@ -62,6 +65,20 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
     },
     [setIsOpen, setInitialQuery],
   );
+
+  useEffect(() => {
+    if (props.theme) {
+      const previousTheme = document.documentElement.dataset.theme;
+      if (props.theme !== previousTheme) {
+        document.documentElement.dataset.theme = props.theme;
+        return (): void => {
+          if (previousTheme === undefined) delete document.documentElement.dataset.theme;
+          else document.documentElement.dataset.theme = previousTheme;
+        };
+      }
+    }
+    return undefined;
+  }, [isOpen, props.theme]);
 
   useDocSearchKeyboardEvents({
     isOpen,
