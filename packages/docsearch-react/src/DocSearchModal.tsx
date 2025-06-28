@@ -12,6 +12,7 @@ import { ScreenState } from './ScreenState';
 import type { SearchBoxTranslations } from './SearchBox';
 import { SearchBox } from './SearchBox';
 import { createStoredSearches } from './stored-searches';
+import { ThemWrapper } from './ThemWrapper';
 import type { DocSearchHit, DocSearchState, InternalDocSearchHit, StoredDocSearchHit } from './types';
 import { useSearchClient } from './useSearchClient';
 import { useTouchEvents } from './useTouchEvents';
@@ -37,6 +38,7 @@ export function DocSearchModal({
   placeholder = 'Search docs',
   searchParameters,
   maxResultsPerGroup,
+  theme,
   onClose = noop,
   transformItems = identity,
   hitComponent = Hit,
@@ -411,69 +413,71 @@ export function DocSearchModal({
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      {...getRootProps({
-        'aria-expanded': true,
-      })}
-      className={[
-        'DocSearch',
-        'DocSearch-Container',
-        state.status === 'stalled' && 'DocSearch-Container--Stalled',
-        state.status === 'error' && 'DocSearch-Container--Errored',
-      ]
-        .filter(Boolean)
-        .join(' ')}
-      role="button"
-      tabIndex={0}
-      onMouseDown={(event) => {
-        if (event.target === event.currentTarget) {
-          onClose();
-        }
-      }}
-    >
-      <div className="DocSearch-Modal" ref={modalRef}>
-        <header className="DocSearch-SearchBar" ref={formElementRef}>
-          <SearchBox
-            {...autocomplete}
-            state={state}
-            autoFocus={initialQuery.length === 0}
-            inputRef={inputRef}
-            isFromSelection={Boolean(initialQuery) && initialQuery === initialQueryFromSelection}
-            translations={searchBoxTranslations}
-            onClose={onClose}
-          />
-        </header>
+    <ThemWrapper theme={theme}>
+      <div
+        ref={containerRef}
+        {...getRootProps({
+          'aria-expanded': true,
+        })}
+        className={[
+          'DocSearch',
+          'DocSearch-Container',
+          state.status === 'stalled' && 'DocSearch-Container--Stalled',
+          state.status === 'error' && 'DocSearch-Container--Errored',
+        ]
+          .filter(Boolean)
+          .join(' ')}
+        role="button"
+        tabIndex={0}
+        onMouseDown={(event) => {
+          if (event.target === event.currentTarget) {
+            onClose();
+          }
+        }}
+      >
+        <div className="DocSearch-Modal" ref={modalRef}>
+          <header className="DocSearch-SearchBar" ref={formElementRef}>
+            <SearchBox
+              {...autocomplete}
+              state={state}
+              autoFocus={initialQuery.length === 0}
+              inputRef={inputRef}
+              isFromSelection={Boolean(initialQuery) && initialQuery === initialQueryFromSelection}
+              translations={searchBoxTranslations}
+              onClose={onClose}
+            />
+          </header>
 
-        <div className="DocSearch-Dropdown" ref={dropdownRef}>
-          <ScreenState
-            {...autocomplete}
-            indexName={indexName}
-            state={state}
-            hitComponent={hitComponent}
-            resultsFooterComponent={resultsFooterComponent}
-            disableUserPersonalization={disableUserPersonalization}
-            recentSearches={recentSearches}
-            favoriteSearches={favoriteSearches}
-            inputRef={inputRef}
-            translations={screenStateTranslations}
-            getMissingResultsUrl={getMissingResultsUrl}
-            onItemClick={(item, event) => {
-              // If insights is active, send insights click event
-              sendItemClickEvent(item);
+          <div className="DocSearch-Dropdown" ref={dropdownRef}>
+            <ScreenState
+              {...autocomplete}
+              indexName={indexName}
+              state={state}
+              hitComponent={hitComponent}
+              resultsFooterComponent={resultsFooterComponent}
+              disableUserPersonalization={disableUserPersonalization}
+              recentSearches={recentSearches}
+              favoriteSearches={favoriteSearches}
+              inputRef={inputRef}
+              translations={screenStateTranslations}
+              getMissingResultsUrl={getMissingResultsUrl}
+              onItemClick={(item, event) => {
+                // If insights is active, send insights click event
+                sendItemClickEvent(item);
 
-              saveRecentSearch(item);
-              if (!isModifierEvent(event)) {
-                onClose();
-              }
-            }}
-          />
+                saveRecentSearch(item);
+                if (!isModifierEvent(event)) {
+                  onClose();
+                }
+              }}
+            />
+          </div>
+
+          <footer className="DocSearch-Footer">
+            <Footer translations={footerTranslations} />
+          </footer>
         </div>
-
-        <footer className="DocSearch-Footer">
-          <Footer translations={footerTranslations} />
-        </footer>
       </div>
-    </div>
+    </ThemWrapper>
   );
 }

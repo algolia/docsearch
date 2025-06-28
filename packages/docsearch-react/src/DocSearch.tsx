@@ -1,16 +1,16 @@
 import type { AutocompleteState, AutocompleteOptions } from '@algolia/autocomplete-core';
 import type { LiteClient, SearchParamsObject } from 'algoliasearch/lite';
-import React, { useEffect, type JSX } from 'react';
+import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
 
 import { DocSearchButton } from './DocSearchButton';
 import { DocSearchModal } from './DocSearchModal';
+import type { ThemeProps } from './ThemWrapper';
+import { ThemWrapper } from './ThemWrapper';
 import type { DocSearchHit, InternalDocSearchHit, StoredDocSearchHit } from './types';
 import { useDocSearchKeyboardEvents } from './useDocSearchKeyboardEvents';
 
 import type { ButtonTranslations, ModalTranslations } from '.';
-
-export type DoSearchTheme = 'dark' | 'light';
 
 export type DocSearchTranslations = Partial<{
   button: ButtonTranslations;
@@ -24,14 +24,13 @@ export type DocSearchTransformClient = {
   transporter: Pick<LiteClient['transporter'], 'algoliaAgent'>;
 };
 
-export interface DocSearchProps {
+export type DocSearchProps = ThemeProps & {
   appId: string;
   apiKey: string;
   indexName: string;
   placeholder?: string;
   searchParameters?: SearchParamsObject;
   maxResultsPerGroup?: number;
-  theme?: DoSearchTheme;
   transformItems?: (items: DocSearchHit[]) => DocSearchHit[];
   hitComponent?: (props: { hit: InternalDocSearchHit | StoredDocSearchHit; children: React.ReactNode }) => JSX.Element;
   resultsFooterComponent?: (props: { state: AutocompleteState<InternalDocSearchHit> }) => JSX.Element | null;
@@ -42,9 +41,9 @@ export interface DocSearchProps {
   translations?: DocSearchTranslations;
   getMissingResultsUrl?: ({ query }: { query: string }) => string;
   insights?: AutocompleteOptions<InternalDocSearchHit>['insights'];
-}
+};
 
-export function DocSearch(props: DocSearchProps): JSX.Element {
+export function DocSearch({ theme, ...props }: DocSearchProps): JSX.Element {
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
   const [isOpen, setIsOpen] = React.useState(false);
   const [initialQuery, setInitialQuery] = React.useState<string | undefined>(props?.initialQuery || undefined);
@@ -66,20 +65,6 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
     [setIsOpen, setInitialQuery],
   );
 
-  useEffect(() => {
-    if (props.theme) {
-      const previousTheme = document.documentElement.dataset.theme;
-      if (props.theme !== previousTheme) {
-        document.documentElement.dataset.theme = props.theme;
-        return (): void => {
-          if (previousTheme === undefined) delete document.documentElement.dataset.theme;
-          else document.documentElement.dataset.theme = previousTheme;
-        };
-      }
-    }
-    return undefined;
-  }, [isOpen, props.theme]);
-
   useDocSearchKeyboardEvents({
     isOpen,
     onOpen,
@@ -89,7 +74,7 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
   });
 
   return (
-    <>
+    <ThemWrapper theme={theme}>
       <DocSearchButton ref={searchButtonRef} translations={props?.translations?.button} onClick={onOpen} />
 
       {isOpen &&
@@ -103,6 +88,6 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
           />,
           document.body,
         )}
-    </>
+    </ThemWrapper>
   );
 }

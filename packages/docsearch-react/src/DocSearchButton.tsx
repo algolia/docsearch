@@ -2,15 +2,17 @@ import React, { type JSX, useEffect, useState } from 'react';
 
 import { ControlKeyIcon } from './icons/ControlKeyIcon';
 import { SearchIcon } from './icons/SearchIcon';
+import { ThemWrapper, type ThemeProps } from './ThemWrapper';
 
 export type ButtonTranslations = Partial<{
   buttonText: string;
   buttonAriaLabel: string;
 }>;
 
-export type DocSearchButtonProps = React.ComponentProps<'button'> & {
-  translations?: ButtonTranslations;
-};
+export type DocSearchButtonProps = React.ComponentProps<'button'> &
+  ThemeProps & {
+    translations?: ButtonTranslations;
+  };
 
 const ACTION_KEY_DEFAULT = 'Ctrl' as const;
 const ACTION_KEY_APPLE = '⌘' as const;
@@ -20,7 +22,7 @@ function isAppleDevice(): boolean {
 }
 
 export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButtonProps>(
-  ({ translations = {}, ...props }, ref) => {
+  ({ translations = {}, theme, ...props }, ref) => {
     const { buttonText = 'Search', buttonAriaLabel = 'Search' } = translations;
 
     const [key, setKey] = useState<typeof ACTION_KEY_APPLE | typeof ACTION_KEY_DEFAULT | null>(null);
@@ -40,28 +42,30 @@ export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButt
     const shortcut = `${actionKeyAltText}+k`;
 
     return (
-      <button
-        type="button"
-        className="DocSearch DocSearch-Button"
-        aria-label={`${buttonAriaLabel} (${shortcut})`}
-        aria-keyshortcuts={shortcut}
-        {...props}
-        ref={ref}
-      >
-        <span className="DocSearch-Button-Container">
-          <SearchIcon />
-          <span className="DocSearch-Button-Placeholder">{buttonText}</span>
-        </span>
+      <ThemWrapper theme={theme}>
+        <button
+          type="button"
+          className="DocSearch DocSearch-Button"
+          aria-label={`${buttonAriaLabel} (${shortcut})`}
+          aria-keyshortcuts={shortcut}
+          {...props}
+          ref={ref}
+        >
+          <span className="DocSearch-Button-Container">
+            <SearchIcon />
+            <span className="DocSearch-Button-Placeholder">{buttonText}</span>
+          </span>
 
-        <span className="DocSearch-Button-Keys">
-          {key !== null && (
-            <>
-              <DocSearchButtonKey reactsToKey={actionKeyReactsTo}>{actionKeyChild}</DocSearchButtonKey>
-              <DocSearchButtonKey reactsToKey="k">K</DocSearchButtonKey>
-            </>
-          )}
-        </span>
-      </button>
+          <span className="DocSearch-Button-Keys">
+            {key !== null && (
+              <>
+                <DocSearchButtonKey reactsToKey={actionKeyReactsTo}>{actionKeyChild}</DocSearchButtonKey>
+                <DocSearchButtonKey reactsToKey="k">K</DocSearchButtonKey>
+              </>
+            )}
+          </span>
+        </button>
+      </ThemWrapper>
     );
   },
 );
