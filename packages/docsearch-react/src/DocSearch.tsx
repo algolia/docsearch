@@ -5,6 +5,8 @@ import { createPortal } from 'react-dom';
 
 import { DocSearchButton } from './DocSearchButton';
 import { DocSearchModal } from './DocSearchModal';
+import type { ThemeProps } from './ThemWrapper';
+import { ThemWrapper } from './ThemWrapper';
 import type { DocSearchHit, InternalDocSearchHit, StoredDocSearchHit } from './types';
 import { useDocSearchKeyboardEvents } from './useDocSearchKeyboardEvents';
 
@@ -22,7 +24,7 @@ export type DocSearchTransformClient = {
   transporter: Pick<LiteClient['transporter'], 'algoliaAgent'>;
 };
 
-export interface DocSearchProps {
+export type DocSearchProps = ThemeProps & {
   appId: string;
   apiKey: string;
   indexName: string;
@@ -39,9 +41,9 @@ export interface DocSearchProps {
   translations?: DocSearchTranslations;
   getMissingResultsUrl?: ({ query }: { query: string }) => string;
   insights?: AutocompleteOptions<InternalDocSearchHit>['insights'];
-}
+};
 
-export function DocSearch(props: DocSearchProps): JSX.Element {
+export function DocSearch({ theme, ...props }: DocSearchProps): JSX.Element {
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
   const [isOpen, setIsOpen] = React.useState(false);
   const [initialQuery, setInitialQuery] = React.useState<string | undefined>(props?.initialQuery || undefined);
@@ -72,7 +74,7 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
   });
 
   return (
-    <>
+    <ThemWrapper theme={theme}>
       <DocSearchButton ref={searchButtonRef} translations={props?.translations?.button} onClick={onOpen} />
 
       {isOpen &&
@@ -86,6 +88,6 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
           />,
           document.body,
         )}
-    </>
+    </ThemWrapper>
   );
 }
