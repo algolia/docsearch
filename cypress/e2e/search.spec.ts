@@ -1,4 +1,4 @@
-/// <reference path="../../support/commands.d.ts" />
+/// <reference path="../support/commands.d.ts" />
 
 describe('Start', () => {
   beforeEach(() => {
@@ -114,7 +114,7 @@ describe('Search', () => {
     cy.contains('No results for').should('be.visible');
   });
 
-  it('should not refer to Recent/Favorite in aria-controls', () => {
+  it('Should not refer to Recent/Favorite in aria-controls', () => {
     cy.get('.DocSearch-Input').should('not.have.attr', 'aria-controls');
   });
 });
@@ -165,6 +165,7 @@ describe('Recent and Favorites', () => {
 
     // Make sure the specified elements exist
     cy.get('.DocSearch-Input')
+      .click()
       .invoke('attr', 'aria-controls')
       .then((value) => {
         const ids = value!.split(' ');

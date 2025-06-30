@@ -1,3 +1,4 @@
+import type { UseChatHelpers } from '@ai-sdk/react';
 import type { AutocompleteApi, AutocompleteState, BaseItem } from '@algolia/autocomplete-core';
 import React from 'react';
 
@@ -13,7 +14,7 @@ import { ResultsScreen } from './ResultsScreen';
 import type { StartScreenTranslations } from './StartScreen';
 import { StartScreen } from './StartScreen';
 import type { StoredSearchPlugin } from './stored-searches';
-import type { InternalDocSearchHit, StoredDocSearchHit } from './types';
+import type { InternalDocSearchHit, StoredAskAiState, StoredDocSearchHit } from './types';
 
 export type ScreenStateTranslations = Partial<{
   errorScreen: ErrorScreenTranslations;
@@ -28,6 +29,7 @@ export interface ScreenStateProps<TItem extends BaseItem>
   state: AutocompleteState<TItem>;
   recentSearches: StoredSearchPlugin<StoredDocSearchHit>;
   favoriteSearches: StoredSearchPlugin<StoredDocSearchHit>;
+  conversations: StoredSearchPlugin<StoredAskAiState>;
   onItemClick: (item: InternalDocSearchHit, event: KeyboardEvent | MouseEvent) => void;
   onAskAiToggle: (toggle: boolean) => void;
   isAskAiActive: boolean;
@@ -35,6 +37,10 @@ export interface ScreenStateProps<TItem extends BaseItem>
   inputRef: React.MutableRefObject<HTMLInputElement | null>;
   hitComponent: DocSearchProps['hitComponent'];
   indexName: DocSearchProps['indexName'];
+  messages: UseChatHelpers['messages'];
+  status: UseChatHelpers['status'];
+  askAiStreamError: Error | null;
+  askAiFetchError: Error | undefined;
   disableUserPersonalization: boolean;
   resultsFooterComponent: DocSearchProps['resultsFooterComponent'];
   translations: ScreenStateTranslations;
@@ -44,7 +50,16 @@ export interface ScreenStateProps<TItem extends BaseItem>
 export const ScreenState = React.memo(
   ({ translations = {}, ...props }: ScreenStateProps<InternalDocSearchHit>) => {
     if (props.isAskAiActive && props.canHandleAskAi) {
-      return <AskAiScreen translations={translations?.askAiScreen} />;
+      return (
+        <AskAiScreen
+          {...props}
+          messages={props.messages}
+          status={props.status}
+          askAiStreamError={props.askAiStreamError}
+          askAiFetchError={props.askAiFetchError}
+          translations={translations?.askAiScreen}
+        />
+      );
     }
 
     if (props.state?.status === 'error') {

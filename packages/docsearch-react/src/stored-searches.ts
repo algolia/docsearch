@@ -1,40 +1,5 @@
-import type { DocSearchHit, StoredDocSearchHit } from './types';
-
-function isLocalStorageSupported(): boolean {
-  const key = '__TEST_KEY__';
-
-  try {
-    localStorage.setItem(key, '');
-    localStorage.removeItem(key);
-
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-function createStorage<TItem>(key: string) {
-  if (isLocalStorageSupported() === false) {
-    return {
-      setItem(): void {},
-      getItem(): TItem[] {
-        return [];
-      },
-    };
-  }
-
-  return {
-    setItem(item: TItem[]): void {
-      return window.localStorage.setItem(key, JSON.stringify(item));
-    },
-    getItem(): TItem[] {
-      const item = window.localStorage.getItem(key);
-
-      return item ? JSON.parse(item) : [];
-    },
-  };
-}
+import type { DocSearchHit, StoredAskAiState, StoredDocSearchHit } from './types';
+import { createStorage } from './utils/storage';
 
 type CreateStoredSearchesOptions = {
   key: string;
@@ -76,6 +41,42 @@ export function createStoredSearches<TItem extends StoredDocSearchHit>({
     },
     getAll(): TItem[] {
       return items;
+    },
+  };
+}
+
+export function createStoredConversations<TItem extends StoredAskAiState>({
+  key,
+  limit = 5,
+}: CreateStoredSearchesOptions): StoredSearchPlugin<TItem> {
+  const storage = createStorage<TItem>(key);
+  let items = storage.getItem().slice(0, limit);
+
+  return {
+    add(item: TItem): void {
+      const { objectID, messages } = item;
+
+      // check if this query is already saved
+      const isQueryAlreadySaved = items.findIndex(
+        (x) => x.objectID === objectID || x.messages?.[0]?.content === messages?.[0]?.content,
+      );
+
+      if (isQueryAlreadySaved > -1) {
+        items[isQueryAlreadySaved] = item;
+      } else {
+        items.unshift(item);
+        items = items.slice(0, limit);
+      }
+
+      storage.setItem(items);
+    },
+    getAll(): TItem[] {
+      return items;
+    },
+    remove(item: TItem): void {
+      items = items.filter((x) => x.objectID !== item.objectID);
+
+      storage.setItem(items);
     },
   };
 }

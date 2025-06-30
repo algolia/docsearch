@@ -3,7 +3,9 @@
 :root {
   --docsearch-primary-color: rgb(0, 61, 255);
   --docsearch-subtle-color: rgb(214, 214, 231);
-  --docsearch-text-color: rgba(35, 38, 59, 1);
+  --docsearch-text-color: #36395a;
+  --docsearch-error-color: #ef5350;
+  --docsearch-success-color: #e8f5e9;
   --docsearch-secondary-text-color: rgba(90, 94, 154, 1);
   --docsearch-background-color: rgb(245, 245, 250);
   --docsearch-spacing: 12px;
@@ -46,6 +48,14 @@
   --docsearch-footer-background: #fff;
   --docsearch-footer-shadow: 0 -1px 0 0 rgb(224, 227, 232),
     0 -3px 6px 0 rgba(69, 98, 155, 0.12);
+
+  /* animations */
+  --fav-out-dur: 160ms;
+  --del-dur: 150ms;
+
+  --ease-smooth: cubic-bezier(0.25, 0.8, 0.4, 1);
+  --ease-fast: cubic-bezier(0.45, 0.15, 0.6, 0.9);
+  --shadow-pop: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 /* Darkmode */
@@ -54,6 +64,8 @@ html[data-theme='dark'] {
   --docsearch-text-color: rgba(196, 199, 220, 1);
   --docsearch-secondary-text-color: rgba(182, 183, 213, 1);
   --docsearch-subtle-color: rgba(33, 33, 57, 1);
+  --docsearch-error-color: #ef5350;
+  --docsearch-success-color: rgba(67, 160, 71, 0.2);
   --docsearch-highlight-color: rgba(69, 122, 255, 1);
   --docsearch-focus-color: rgb(154, 200, 255);
   --docsearch-background-color: rgba(54, 57, 90, 1);

@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
 
 import { plugins, typesConfig } from '../../rollup.base.config';
@@ -24,6 +26,7 @@ export default [
       { dir: 'dist/esm', format: 'es' },
     ],
     plugins: [
+      commonjs(),
       ...plugins,
       replace({
         preventAssignment: true,
