@@ -29,7 +29,7 @@ export function StartScreen({ translations = {}, ...props }: StartScreenProps): 
     removeRecentSearchButtonTitle = 'Remove this search from history',
     favoriteSearchesTitle = 'Favorite',
     removeFavoriteSearchButtonTitle = 'Remove this search from favorites',
-    recentConversationsTitle = 'Recently asked',
+    recentConversationsTitle = 'Recent conversations',
     removeRecentConversationButtonTitle = 'Remove this conversation from history',
   } = translations;
 

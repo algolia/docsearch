@@ -1394,3 +1394,8 @@ assistive tech users */
 .DocSearch-CodeSnippet-CopyButton--copied .DocSearch-CodeSnippet-CheckIcon {
   display: inline-block;
 }
+
+/* hide copy button while streaming markdown */
+.DocSearch-Markdown-Content--streaming .DocSearch-CodeSnippet-CopyButton {
+  display: none;
+}
