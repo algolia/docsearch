@@ -194,7 +194,7 @@ function AskAiButton<TItem extends StoredDocSearchHit>({
           </div>
           <div className="DocSearch-Hit-AskAIButton-title">
             <span className="DocSearch-Hit-AskAIButton-title-highlight">{askAiPlaceholder}</span>
-            <span className="DocSearch-Hit-AskAIButton-title-query">"{item.query || ''}"</span>
+            <mark className="DocSearch-Hit-AskAIButton-title-query">{item.query || ''}</mark>
           </div>
         </div>
       </div>

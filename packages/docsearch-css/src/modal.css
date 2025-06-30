@@ -17,6 +17,8 @@
 
 .DocSearch-Container {
   background-color: var(--docsearch-container-background);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
   height: 100vh;
   left: 0;
   position: fixed;
@@ -455,6 +457,7 @@
 .DocSearch-Hit mark {
   color: var(--docsearch-highlight-color);
   text-decoration: underline;
+  text-underline-offset: 0.3em;
 }
 
 .DocSearch-Hit-Container {
@@ -533,7 +536,7 @@ svg.DocSearch-Hit-Select-Icon {
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  font-weight: 500;
+  font-weight: 400;
   justify-content: center;
   line-height: 1.2em;
   margin: 0 8px;
@@ -767,13 +770,12 @@ assistive tech users */
 .DocSearch-Hit-AskAIButton-title {
   display: flex;
   flex: 1 1 auto;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.2em;
   overflow-x: hidden;
   position: relative;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-weight: 500;
   width: 80%;
   gap: 4px;
   color: var(--docsearch-hit-color);
@@ -781,8 +783,8 @@ assistive tech users */
 
 .DocSearch-Hit-AskAIButton-title-query {
   white-space: nowrap;
-  font-weight: 400;
   overflow: hidden;
+  background: none;
   margin-left: 4px;
   text-overflow: ellipsis;
 }

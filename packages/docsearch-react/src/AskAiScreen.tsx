@@ -15,6 +15,10 @@ export type AskAiScreenTranslations = Partial<{
   thinkingText: string;
   copyButtonText: string;
   copyButtonCopiedText: string;
+  // Feedback buttons
+  copyButtonTitle: string;
+  likeButtonTitle: string;
+  dislikeButtonTitle: string;
   // Tool call texts
   preToolCallText: string;
   duringToolCallText: string;
@@ -160,6 +164,7 @@ function AskAiExchangeCard({
           <AskAiScreenFooterActions
             showActions={showActions}
             latestAssistantMessageContent={assistantMessage?.content || null}
+            translations={translations}
           />
         </div>
       </div>
@@ -175,20 +180,25 @@ function AskAiExchangeCard({
 interface AskAiScreenFooterActionsProps {
   showActions: boolean;
   latestAssistantMessageContent: string | null;
+  translations: AskAiScreenTranslations;
 }
 
 function AskAiScreenFooterActions({
   showActions,
   latestAssistantMessageContent,
+  translations,
 }: AskAiScreenFooterActionsProps): JSX.Element | null {
   if (!showActions || !latestAssistantMessageContent) {
     return null;
   }
   return (
     <div className="DocSearch-AskAiScreen-Actions">
-      <CopyButton onClick={() => navigator.clipboard.writeText(latestAssistantMessageContent)} />
-      <LikeButton />
-      <DislikeButton />
+      <CopyButton
+        translations={translations}
+        onClick={() => navigator.clipboard.writeText(latestAssistantMessageContent)}
+      />
+      <LikeButton title={translations.likeButtonTitle || 'Like'} />
+      <DislikeButton title={translations.dislikeButtonTitle || 'Dislike'} />
     </div>
   );
 }
@@ -298,7 +308,15 @@ function RelatedSourceIcon(): JSX.Element {
   );
 }
 
-function CopyButton({ onClick }: { onClick: () => void }): JSX.Element {
+function CopyButton({
+  onClick,
+  translations,
+}: {
+  onClick: () => void;
+  translations: AskAiScreenTranslations;
+}): JSX.Element {
+  const { copyButtonTitle = 'Copy', copyButtonCopiedText = 'Copied!' } = translations;
+
   const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
@@ -323,6 +341,7 @@ function CopyButton({ onClick }: { onClick: () => void }): JSX.Element {
         isCopied ? 'DocSearch-AskAiScreen-CopyButton--copied' : ''
       }`}
       disabled={isCopied} // disable button briefly after copy
+      title={isCopied ? copyButtonCopiedText : copyButtonTitle}
       onClick={handleClick}
     >
       {isCopied ? (
@@ -361,10 +380,10 @@ function CopyButton({ onClick }: { onClick: () => void }): JSX.Element {
   );
 }
 
-function LikeButton(): JSX.Element {
+function LikeButton({ title }: { title: string }): JSX.Element {
   // @todo: implement like button
   return (
-    <button type="button" className="DocSearch-AskAiScreen-ActionButton DocSearch-AskAiScreen-LikeButton">
+    <button type="button" className="DocSearch-AskAiScreen-ActionButton DocSearch-AskAiScreen-LikeButton" title={title}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -384,10 +403,14 @@ function LikeButton(): JSX.Element {
   );
 }
 
-function DislikeButton(): JSX.Element {
+function DislikeButton({ title }: { title: string }): JSX.Element {
   // @todo: implement dislike button
   return (
-    <button type="button" className="DocSearch-AskAiScreen-ActionButton DocSearch-AskAiScreen-DislikeButton">
+    <button
+      type="button"
+      className="DocSearch-AskAiScreen-ActionButton DocSearch-AskAiScreen-DislikeButton"
+      title={title}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
