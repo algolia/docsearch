@@ -1,7 +1,7 @@
 import type { UseChatHelpers } from '@ai-sdk/react';
 import React, { type JSX, useState, useEffect, useMemo } from 'react';
 
-import { SparklesIcon, LoadingIcon, SearchIcon } from './icons';
+import { AlertIcon, LoadingIcon, SearchIcon } from './icons';
 import { MemoizedMarkdown } from './MemoizedMarkdown';
 import type { ScreenStateProps } from './ScreenState';
 import type { InternalDocSearchHit } from './types';
@@ -44,14 +44,7 @@ interface Exchange {
 }
 
 function AskAiScreenHeader({ disclaimerText }: AskAiScreenHeaderProps): JSX.Element {
-  return (
-    <div className="DocSearch-AskAiScreen-Disclaimer">
-      <div className="DocSearch-AskAiScreen-Disclaimer-Icon">
-        <SparklesIcon />
-      </div>
-      <p className="DocSearch-AskAiScreen-Disclaimer-Text">{disclaimerText}</p>
-    </div>
-  );
+  return <p className="DocSearch-AskAiScreen-Disclaimer">{disclaimerText}</p>;
 }
 
 interface AskAiExchangeCardProps {
@@ -125,21 +118,21 @@ function AskAiExchangeCard({
                             <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Call shimmer">
                               <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
                               <span>
-                                {`${translations.duringToolCallText || 'Searching through the docs for '} "${toolInvocation.args?.query || ''}" ...`}
+                                {`${translations.duringToolCallText || 'Searching documentation for '} "${toolInvocation.args?.query || ''}" ...`}
                               </span>
                             </div>
                           );
                         case 'result':
                           return (
                             <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Result">
-                              <span>{`${translations.afterToolCallText || 'Looked through the docs for'}`}</span>
+                              <SearchIcon size={18} />
+                              <span>{`${translations.afterToolCallText || 'Searched documentation for'}`}</span>
                               <button
                                 type="button"
                                 className="DocSearch-AskAiScreen-MessageContent-Tool-Query"
                                 onClick={() => onSearchQueryClick(toolInvocation.args?.query || '')}
                               >
                                 &quot;{toolInvocation.args?.query || ''}&quot;
-                                <SearchIcon size={16} />
                               </button>
                             </div>
                           );
@@ -232,9 +225,7 @@ function AskAiSourcesPanel({ urlsToDisplay, relatedSourcesText }: AskAiSourcesPa
 }
 
 export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): JSX.Element | null {
-  const {
-    disclaimerText = 'Answers are generated using artificial intelligence. This is an experimental technology, and information may occasionally be incorrect or misleading.',
-  } = translations;
+  const { disclaimerText = 'Answers are generated with AI which can make mistakes. Verify responses.' } = translations;
 
   const { messages } = props;
 
@@ -261,9 +252,11 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
 
   return (
     <div className="DocSearch-AskAiScreen DocSearch-AskAiScreen-Container">
+      <AskAiScreenHeader disclaimerText={disclaimerText} />
       <div className="DocSearch-AskAiScreen-Body">
         {props.askAiStreamError && (
           <div className="DocSearch-AskAiScreen-Error">
+            <AlertIcon />
             <p>{props.askAiStreamError.message}</p>
           </div>
         )}
@@ -283,7 +276,6 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
             ))}
         </div>
       </div>
-      <AskAiScreenHeader disclaimerText={disclaimerText} />
     </div>
   );
 }

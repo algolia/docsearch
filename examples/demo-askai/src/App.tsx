@@ -9,10 +9,10 @@ function App(): JSX.Element {
     <div>
       <h1>DocSearch v4 - AskAI</h1>
       <DocSearch
-        indexName="beta-react"
+        indexName="tailwindcss"
         appId="betaHAXPMHIMMC"
         apiKey="8b00405cba281a7d800ccec393e9af24"
-        askAi="askai-react-demo"
+        askAi="aHnEb7mOlt6A"
         insights={true}
       />
     </div>

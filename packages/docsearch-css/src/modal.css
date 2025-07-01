@@ -601,16 +601,17 @@ svg.DocSearch-Hit-Select-Icon {
   height: 80%;
 }
 
-.DocSearch-NoResults--withAskAi {
-  height: 70%;
-}
-
 .DocSearch-StartScreen {
   height: 100%;
 }
 
 .DocSearch-NoResults {
   gap: 24px;
+}
+
+.DocSearch-NoResults--withAskAi {
+  height: 60%;
+  gap: 0;
 }
 
 .DocSearch-StartScreen,
@@ -639,9 +640,15 @@ svg.DocSearch-Hit-Select-Icon {
 .DocSearch-NoResults-Prefill-List ul {
   display: flex;
   flex-direction: column;
-  gap: 8px;
   height: 40px;
-  padding: 8px 0 0;
+}
+
+div.DocSearch-NoResults.DocSearch-NoResults--withAskAi
+  > div.DocSearch-NoResults-Prefill-List
+  > ul {
+  height: 0;
+  gap: 1em;
+  flex-direction: row;
 }
 
 .DocSearch-NoResults-Prefill-List li {
@@ -813,21 +820,12 @@ assistive tech users */
 
 .DocSearch-AskAiScreen-Disclaimer {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 12px;
-  font-size: 0.65em;
+  font-size: 0.6em;
   font-weight: 300;
-  padding: 1em 0;
-}
-
-.DocSearch-AskAiScreen-Disclaimer-Icon {
-  color: var(--docsearch-icon-color);
-}
-
-.DocSearch-AskAiScreen-Disclaimer-Text {
-  padding: 0;
+  padding: 1.5em 0 0.5em 0;
+  text-align: left;
   margin: 0;
+  align-self: flex-start;
 }
 
 .DocSearch-AskAiScreen-Body {
@@ -923,8 +921,14 @@ assistive tech users */
 
 .DocSearch-AskAiScreen-Error {
   padding: var(--docsearch-spacing);
+  display: flex;
+  align-items: center;
+  gap: 8px;
   color: var(--docsearch-error-color);
+  background-color: rgb(239 83 80 / 0.1);
+  border-radius: 4px;
   font-size: 0.8em;
+  margin-top: 1em;
   font-weight: 400;
 }
 
@@ -1185,10 +1189,14 @@ assistive tech users */
 .DocSearch-AskAiScreen-MessageContent-Tool {
   display: flex;
   align-items: center;
-  font-size: 1em;
   padding: 1em 0;
   width: 100%;
   color: var(--docsearch-muted-color);
+}
+
+.DocSearch-AskAiScreen-MessageContent-Tool > svg {
+  color: var(--docsearch-icon-color);
+  margin-right: 8px;
 }
 
 .DocSearch-AskAiScreen-MessageContent-Tool-Query {
@@ -1196,12 +1204,10 @@ assistive tech users */
   align-items: center;
   gap: 4px;
   all: unset;
-  border: 1px solid transparent;
   color: var(--docsearch-muted-color);
-  border-radius: 4px;
-  padding: 0.1em 0.2em;
+  padding: 0.1em;
   margin: 0 0.2em;
-  transition: border-color 0.2s ease;
+  transition: box-shadow 0.2s ease;
 }
 
 .DocSearch-AskAiScreen-MessageContent-Tool-Query svg {
@@ -1209,9 +1215,8 @@ assistive tech users */
 }
 
 .DocSearch-AskAiScreen-MessageContent-Tool-Query:hover {
-  border-color: var(--docsearch-highlight-color);
+  box-shadow: 0 1px 0 0 var(--docsearch-highlight-color);
   color: var(--docsearch-highlight-color);
-  background-color: var(--docsearch-hit-highlight-color);
   cursor: pointer;
 }
 
