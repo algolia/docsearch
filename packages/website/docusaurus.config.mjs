@@ -3,6 +3,8 @@ import { themes } from 'prism-react-renderer';
 import myLoaders from './plugins/my-loaders.mjs';
 import tailwindLoader from './plugins/tailwind-loader.mjs';
 
+const SIGNUP_LINK = 'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch';
+
 // With JSDoc @type annotations, IDEs can provide config autocompletion
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 export default {
@@ -72,7 +74,7 @@ export default {
           },
           {
             label: 'Apply',
-            to: 'apply',
+            to: SIGNUP_LINK,
             position: 'left',
           },
           // right
@@ -120,7 +122,7 @@ export default {
             items: [
               {
                 label: 'Apply',
-                to: 'apply',
+                to: SIGNUP_LINK,
               },
               {
                 label: 'Issues',
