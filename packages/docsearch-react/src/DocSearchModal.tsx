@@ -9,6 +9,7 @@ import {
 import type { SearchResponse } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 
+import { getValidToken } from './askai';
 import { ASK_AI_API_URL, MAX_QUERY_SIZE, USE_ASK_AI_TOKEN } from './constants';
 import type { DocSearchProps } from './DocSearch';
 import type { FooterTranslations } from './Footer';
@@ -19,7 +20,6 @@ import { ScreenState } from './ScreenState';
 import type { SearchBoxTranslations } from './SearchBox';
 import { SearchBox } from './SearchBox';
 import { createStoredConversations, createStoredSearches } from './stored-searches';
-import { getValidToken } from './token';
 import type { DocSearchHit, DocSearchState, InternalDocSearchHit, StoredAskAiState, StoredDocSearchHit } from './types';
 import { useSearchClient } from './useSearchClient';
 import { useTouchEvents } from './useTouchEvents';
@@ -345,9 +345,9 @@ export function DocSearchModal({
       }
 
       if (!askAiConfigurationId) {
-        throw new Error('Ask AI configuration ID is required');
+        throw new Error('Ask AI assistant ID is required');
       }
-      const token = await getValidToken({ configId: askAiConfigurationId });
+      const token = await getValidToken({ assistantId: askAiConfigurationId });
       const headers = new Headers(init.headers);
       headers.set('authorization', `TOKEN ${token}`);
 
