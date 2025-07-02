@@ -26,7 +26,7 @@ You can now [apply to the program][3]
 
 [1]: https://opencollective.com/algolia
 [2]: /docs/who-can-apply
-[3]: /apply
+[3]: https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch
 [4]: https://www.algolia.com/products/search-and-discovery/crawler/
 [5]: https://crawler.algolia.com/
 [6]: https://www.algolia.com/doc/ui-libraries/autocomplete/introduction/what-is-autocomplete/
