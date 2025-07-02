@@ -56,6 +56,13 @@
   --ease-smooth: cubic-bezier(0.25, 0.8, 0.4, 1);
   --ease-fast: cubic-bezier(0.45, 0.15, 0.6, 0.9);
   --shadow-pop: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shimmer-bg: linear-gradient(
+    90deg,
+    rgb(224, 227, 232) 0%,
+    var(--docsearch-muted-color) 20%,
+    var(--docsearch-muted-color) 60%,
+    rgb(224, 227, 232) 95%
+  );
 }
 
 /* Darkmode */
@@ -87,4 +94,11 @@ html[data-theme='dark'] {
     0 -4px 8px 0 rgba(0, 0, 0, 0.2);
   --docsearch-logo-color: rgb(255, 255, 255);
   --docsearch-muted-color: rgb(127, 132, 151);
+  --shimmer-bg: linear-gradient(
+    90deg,
+    rgb(224, 227, 232) 0%,
+    var(--docsearch-muted-color) 20%,
+    var(--docsearch-muted-color) 60%,
+    rgb(224, 227, 232) 95%
+  );
 }

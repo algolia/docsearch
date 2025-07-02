@@ -49,6 +49,7 @@ function AskAiScreenHeader({ disclaimerText }: AskAiScreenHeaderProps): JSX.Elem
 
 interface AskAiExchangeCardProps {
   exchange: Exchange;
+  askAiStreamError: Error | null;
   isLastExchange: boolean;
   loadingStatus: UseChatHelpers['status'];
   onSearchQueryClick: (query: string) => void;
@@ -57,6 +58,7 @@ interface AskAiExchangeCardProps {
 
 function AskAiExchangeCard({
   exchange,
+  askAiStreamError,
   isLastExchange,
   loadingStatus,
   onSearchQueryClick,
@@ -76,7 +78,18 @@ function AskAiExchangeCard({
         </div>
         <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--assistant">
           <div className="DocSearch-AskAiScreen-MessageContent">
-            {Array.isArray(assistantMessage?.parts)
+            {loadingStatus === 'error' && askAiStreamError && isLastExchange && (
+              <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error">
+                <AlertIcon />
+                <p>{askAiStreamError.message}</p>
+              </div>
+            )}
+            {loadingStatus === 'submitted' && (
+              <div className="DocSearch-AskAiScreen-MessageContent-Reasoning">
+                <span className="italic shimmer">{translations.thinkingText || 'Thinking...'}</span>
+              </div>
+            )}
+            {loadingStatus !== 'submitted' && Array.isArray(assistantMessage?.parts)
               ? assistantMessage.parts.map((part, idx) => {
                   const index = idx;
 
@@ -143,7 +156,7 @@ function AskAiExchangeCard({
                     // fallback for unknown tool, should never happen in theory. :shrug:
                     return (
                       <span key={index} className="text-sm italic shimmer">
-                        Thinking...
+                        {translations.thinkingText || 'Thinking...'}
                       </span>
                     );
                   }
@@ -254,12 +267,6 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
     <div className="DocSearch-AskAiScreen DocSearch-AskAiScreen-Container">
       <AskAiScreenHeader disclaimerText={disclaimerText} />
       <div className="DocSearch-AskAiScreen-Body">
-        {props.askAiStreamError && (
-          <div className="DocSearch-AskAiScreen-Error">
-            <AlertIcon />
-            <p>{props.askAiStreamError.message}</p>
-          </div>
-        )}
         <div className="DocSearch-AskAiScreen-ExchangesList">
           {exchanges
             .slice()
@@ -268,6 +275,7 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
               <AskAiExchangeCard
                 key={exchange.id}
                 exchange={exchange}
+                askAiStreamError={props.askAiStreamError}
                 isLastExchange={index === 0}
                 loadingStatus={props.status}
                 translations={translations}

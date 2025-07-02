@@ -923,13 +923,22 @@ assistive tech users */
   padding: var(--docsearch-spacing);
   display: flex;
   align-items: center;
+  padding: 1em;
   gap: 8px;
   color: var(--docsearch-error-color);
   background-color: rgb(239 83 80 / 0.1);
   border-radius: 4px;
-  font-size: 0.8em;
-  margin-top: 1em;
+  font-size: 1em;
   font-weight: 400;
+}
+
+.DocSearch-AskAiScreen-Error svg {
+  width: 16px;
+  height: 16px;
+}
+
+.DocSearch-AskAiScreen-Error p {
+  margin: 0;
 }
 
 .DocSearch-AskAiScreen-RelatedSources {
@@ -1182,7 +1191,7 @@ assistive tech users */
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 0.8em;
+  font-size: 1em;
   color: var(--docsearch-muted-color);
 }
 
@@ -1192,6 +1201,10 @@ assistive tech users */
   padding: 1em 0;
   width: 100%;
   color: var(--docsearch-muted-color);
+}
+
+.DocSearch-AskAiScreen-MessageContent-Tool.Tool--Result:first-child {
+  padding-top: 0;
 }
 
 .DocSearch-AskAiScreen-MessageContent-Tool > svg {
@@ -1230,36 +1243,23 @@ assistive tech users */
 }
 
 .shimmer {
-  position: relative;
-  overflow: hidden;
-}
-
-.shimmer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -120%;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.1) 40%,
-    rgba(255, 255, 255, 0.8) 50%,
-    rgba(255, 255, 255, 0.1) 60%,
-    transparent 100%
-  );
-  transform: skewX(-20deg);
-  animation: shimmer 6s ease-in-out infinite;
+  background: var(--shimmer-bg);
+  background-size: 200% auto;
+  background-clip: text;
+  display: flex;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: shimmerText 2.5s linear infinite;
   pointer-events: none;
 }
 
-@keyframes shimmer {
+@keyframes shimmerText {
   0% {
-    left: -120%;
+    background-position: 200% 0;
   }
   100% {
-    left: 120%;
+    background-position: -200% 0;
   }
 }
 
