@@ -24,8 +24,6 @@ DocSearch application process includes automated validation for faster processin
 
 Once approved, you can continue the onboarding process to create your DocSearch crawler. After your data is ingested into Algolia, you'll need to implement the search UI using either our provided code snippet or one of our [integrations][3].
 
-*At the moment, the automated onboarding flow is only available for new users signing up for DocSearch. If you’re an existing Algolia customer interested in joining the DocSearch program, please reach out to us on [Discord][4].*
-
 [1]: https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch
 [2]: https://www.algolia.com/policies/docsearch-plan-specific-terms
 [3]: integrations.md
