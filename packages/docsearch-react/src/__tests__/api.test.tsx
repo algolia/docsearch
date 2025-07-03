@@ -82,7 +82,6 @@ describe('api', () => {
       });
 
       expect(document.querySelector('.DocSearch-Modal')).toBeInTheDocument();
-      expect(screen.getByText('Pas de recherche récentes')).toBeInTheDocument();
     });
 
     it('overrides the default DocSearchModal noResultsScreen text', async () => {

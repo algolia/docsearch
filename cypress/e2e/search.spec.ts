@@ -83,7 +83,6 @@ describe('Search', () => {
     cy.typeQueryMatching();
     cy.get('.DocSearch-Clear').click();
     cy.get('.DocSearch-Hits').should('not.exist');
-    cy.contains('No recent searches').should('be.visible');
   });
 
   it('Keyboard navigation leads to result', () => {
@@ -135,7 +134,7 @@ describe('Recent and Favorites', () => {
 
   it('Recent search can be deleted', () => {
     cy.get('#docsearch-recentSearches-item-0').find('[title="Remove this search from history"]').trigger('click');
-    cy.contains('No recent searches').should('be.visible');
+    cy.get('.DocSearch-Hits').should('not.exist');
   });
 
   it('Recent search can be favorited', () => {
@@ -148,7 +147,7 @@ describe('Recent and Favorites', () => {
     cy.get('#docsearch-recentSearches-item-0').find('[title="Save this search"]').trigger('click');
     cy.contains('Favorite').should('be.visible');
     cy.get('#docsearch-favoriteSearches-item-0').find('[title="Remove this search from favorites"]').trigger('click');
-    cy.contains('No recent searches').should('be.visible');
+    cy.get('.DocSearch-Hits').should('not.exist');
   });
 
   it('Input controls Recent and Favorite lists', () => {

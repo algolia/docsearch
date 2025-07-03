@@ -21,10 +21,19 @@ const baseProps = {
 } as any;
 
 describe('AskAiScreen', () => {
-  it('displays stream errors', () => {
+  it('displays stream errors in the latest exchange', () => {
+    const messages = [{ id: '1', role: 'user', content: 'hello' } as any];
+
     const { getByText } = render(
-      <AskAiScreen {...baseProps} askAiStreamError={new Error('oh no')} askAiFetchError={undefined} />,
+      <AskAiScreen
+        {...baseProps}
+        messages={messages}
+        status="error"
+        askAiStreamError={new Error('oh no')}
+        askAiFetchError={undefined}
+      />,
     );
+
     expect(getByText('oh no')).toBeInTheDocument();
   });
 });
