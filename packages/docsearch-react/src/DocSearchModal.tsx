@@ -9,7 +9,7 @@ import {
 import type { SearchResponse } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 
-import { getValidToken } from './askai';
+import { getValidToken, postFeedback } from './askai';
 import { ASK_AI_API_URL, MAX_QUERY_SIZE, USE_ASK_AI_TOKEN } from './constants';
 import type { DocSearchProps } from './DocSearch';
 import type { FooterTranslations } from './Footer';
@@ -438,6 +438,22 @@ export function DocSearchModal({
     [onAskAiToggle, append],
   );
 
+  // feedback handler
+  const handleFeedbackSubmit = React.useCallback(
+    async (messageId: string, thumbs: 0 | 1): Promise<void> => {
+      if (!askAiConfigurationId || !appId) return;
+      const res = await postFeedback({
+        assistantId: askAiConfigurationId,
+        thumbs,
+        messageId,
+        appId,
+      });
+      if (res.status !== 200) throw new Error('Failed, try again later');
+      conversations.addFeedback?.(messageId, thumbs === 1 ? 'like' : 'dislike');
+    },
+    [askAiConfigurationId, appId, conversations],
+  );
+
   if (!autocompleteRef.current) {
     autocompleteRef.current = createAutocomplete({
       id: 'docsearch',
@@ -743,6 +759,7 @@ export function DocSearchModal({
                   onClose();
                 }
               }}
+              onFeedback={handleFeedbackSubmit}
             />
           </div>
         )}

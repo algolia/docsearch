@@ -886,6 +886,7 @@ assistive tech users */
   display: flex;
   flex-direction: row;
   gap: 12px;
+  align-items: center;
   margin-left: auto;
 }
 
@@ -939,6 +940,17 @@ assistive tech users */
 
 .DocSearch-AskAiScreen-Error p {
   margin: 0;
+}
+
+.DocSearch-AskAiScreen-FeedbackText {
+  font-size: 0.7em;
+  font-weight: 400;
+  color: var(--docsearch-muted-color);
+}
+
+/* fade in animation when feedback has been given */
+.DocSearch-AskAiScreen-FeedbackText--visible {
+  animation: fade-in 0.3s ease-in forwards;
 }
 
 .DocSearch-AskAiScreen-RelatedSources {
@@ -1238,8 +1250,8 @@ assistive tech users */
 }
 
 .DocSearch-AskAiScreen-SmallerLoadingIcon {
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
 }
 
 .shimmer {

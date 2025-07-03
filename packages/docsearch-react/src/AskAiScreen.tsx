@@ -4,7 +4,8 @@ import React, { type JSX, useState, useEffect, useMemo } from 'react';
 import { AlertIcon, LoadingIcon, SearchIcon } from './icons';
 import { MemoizedMarkdown } from './MemoizedMarkdown';
 import type { ScreenStateProps } from './ScreenState';
-import type { InternalDocSearchHit } from './types';
+import type { StoredSearchPlugin } from './stored-searches';
+import type { InternalDocSearchHit, StoredAskAiState } from './types';
 import { extractLinksFromText } from './utils/ai';
 
 export type AskAiScreenTranslations = Partial<{
@@ -19,6 +20,7 @@ export type AskAiScreenTranslations = Partial<{
   copyButtonTitle: string;
   likeButtonTitle: string;
   dislikeButtonTitle: string;
+  thanksForFeedbackText: string;
   // Tool call texts
   preToolCallText: string;
   duringToolCallText: string;
@@ -54,6 +56,8 @@ interface AskAiExchangeCardProps {
   loadingStatus: UseChatHelpers['status'];
   onSearchQueryClick: (query: string) => void;
   translations: AskAiScreenTranslations;
+  conversations: StoredSearchPlugin<StoredAskAiState>;
+  onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
 }
 
 function AskAiExchangeCard({
@@ -63,6 +67,8 @@ function AskAiExchangeCard({
   loadingStatus,
   onSearchQueryClick,
   translations,
+  conversations,
+  onFeedback,
 }: AskAiExchangeCardProps): JSX.Element {
   const { userMessage, assistantMessage } = exchange;
 
@@ -84,12 +90,12 @@ function AskAiExchangeCard({
                 <p>{askAiStreamError.message}</p>
               </div>
             )}
-            {loadingStatus === 'submitted' && (
+            {loadingStatus === 'submitted' && isLastExchange && (
               <div className="DocSearch-AskAiScreen-MessageContent-Reasoning">
                 <span className="italic shimmer">{translations.thinkingText || 'Thinking...'}</span>
               </div>
             )}
-            {loadingStatus !== 'submitted' && Array.isArray(assistantMessage?.parts)
+            {Array.isArray(assistantMessage?.parts)
               ? assistantMessage.parts.map((part, idx) => {
                   const index = idx;
 
@@ -168,9 +174,12 @@ function AskAiExchangeCard({
         </div>
         <div className="DocSearch-AskAiScreen-Answer-Footer">
           <AskAiScreenFooterActions
+            id={assistantMessage?.id || exchange.id}
             showActions={showActions}
             latestAssistantMessageContent={assistantMessage?.content || null}
             translations={translations}
+            conversations={conversations}
+            onFeedback={onFeedback}
           />
         </div>
       </div>
@@ -184,27 +193,81 @@ function AskAiExchangeCard({
 }
 
 interface AskAiScreenFooterActionsProps {
+  id: string;
   showActions: boolean;
   latestAssistantMessageContent: string | null;
   translations: AskAiScreenTranslations;
+  conversations: StoredSearchPlugin<StoredAskAiState>;
+  onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
 }
 
 function AskAiScreenFooterActions({
+  id,
   showActions,
   latestAssistantMessageContent,
   translations,
+  conversations,
+  onFeedback,
 }: AskAiScreenFooterActionsProps): JSX.Element | null {
+  // local state for feedback, initialised from stored conversations
+  const initialFeedback = React.useMemo(() => {
+    const message = conversations.getOne?.(id);
+    return message?.feedback ?? null;
+  }, [conversations, id]);
+
+  const [feedback, setFeedback] = React.useState<'dislike' | 'like' | null>(initialFeedback);
+  const [saving, setSaving] = React.useState(false);
+  const [savingError, setSavingError] = React.useState<Error | null>(null);
+
+  const handleFeedback = async (value: 'dislike' | 'like'): Promise<void> => {
+    if (saving) return;
+    setSavingError(null);
+    setSaving(true);
+    try {
+      await onFeedback?.(id, value === 'like' ? 1 : 0);
+      setFeedback(value);
+    } catch (error) {
+      setSavingError(error as Error);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const {
+    likeButtonTitle = 'Like',
+    dislikeButtonTitle = 'Dislike',
+    thanksForFeedbackText = 'Thanks for your feedback!',
+  } = translations;
+
   if (!showActions || !latestAssistantMessageContent) {
     return null;
   }
+
   return (
     <div className="DocSearch-AskAiScreen-Actions">
+      {feedback === null ? (
+        <>
+          {saving ? (
+            <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
+          ) : (
+            <>
+              <LikeButton title={likeButtonTitle} onClick={() => handleFeedback('like')} />
+              <DislikeButton title={dislikeButtonTitle} onClick={() => handleFeedback('dislike')} />
+            </>
+          )}
+          {savingError && (
+            <p className="DocSearch-AskAiScreen-FeedbackText">{savingError.message || 'An error occured'}</p>
+          )}
+        </>
+      ) : (
+        <p className="DocSearch-AskAiScreen-FeedbackText DocSearch-AskAiScreen-FeedbackText--visible">
+          {thanksForFeedbackText}
+        </p>
+      )}
       <CopyButton
         translations={translations}
         onClick={() => navigator.clipboard.writeText(latestAssistantMessageContent)}
       />
-      <LikeButton title={translations.likeButtonTitle || 'Like'} />
-      <DislikeButton title={translations.dislikeButtonTitle || 'Dislike'} />
     </div>
   );
 }
@@ -279,7 +342,9 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
                 isLastExchange={index === 0}
                 loadingStatus={props.status}
                 translations={translations}
+                conversations={props.conversations}
                 onSearchQueryClick={handleSearchQueryClick}
+                onFeedback={props.onFeedback}
               />
             ))}
         </div>
@@ -380,10 +445,15 @@ function CopyButton({
   );
 }
 
-function LikeButton({ title }: { title: string }): JSX.Element {
+function LikeButton({ title, onClick }: { title: string; onClick: () => void }): JSX.Element {
   // @todo: implement like button
   return (
-    <button type="button" className="DocSearch-AskAiScreen-ActionButton DocSearch-AskAiScreen-LikeButton" title={title}>
+    <button
+      type="button"
+      className="DocSearch-AskAiScreen-ActionButton DocSearch-AskAiScreen-LikeButton"
+      title={title}
+      onClick={onClick}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -403,13 +473,14 @@ function LikeButton({ title }: { title: string }): JSX.Element {
   );
 }
 
-function DislikeButton({ title }: { title: string }): JSX.Element {
+function DislikeButton({ title, onClick }: { title: string; onClick: () => void }): JSX.Element {
   // @todo: implement dislike button
   return (
     <button
       type="button"
       className="DocSearch-AskAiScreen-ActionButton DocSearch-AskAiScreen-DislikeButton"
       title={title}
+      onClick={onClick}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

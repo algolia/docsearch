@@ -53,21 +53,14 @@ export const postFeedback = async ({
   thumbs,
   messageId,
   appId,
-  indexName,
-  apiKey,
 }: {
   assistantId: string;
   thumbs: 0 | 1;
   messageId: string;
   appId: string;
-  indexName: string;
-  apiKey: string;
 }): Promise<Response> => {
   const headers = new Headers();
   headers.set('x-algolia-assistant-id', assistantId);
-  headers.set('x-algolia-app-id', appId);
-  headers.set('x-algolia-index-name', indexName);
-  headers.set('x-algolia-api-key', apiKey);
   headers.set('content-type', 'application/json');
 
   if (USE_ASK_AI_TOKEN) {
