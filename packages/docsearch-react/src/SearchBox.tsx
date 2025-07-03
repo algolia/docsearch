@@ -1,8 +1,9 @@
+import type { UseChatHelpers } from '@ai-sdk/react';
 import type { AutocompleteApi, AutocompleteState } from '@algolia/autocomplete-core';
 import React, { type JSX, type RefObject } from 'react';
 
 import { MAX_QUERY_SIZE } from './constants';
-import { LoadingIcon, CloseIcon, SearchIcon } from './icons';
+import { LoadingIcon, CloseIcon, SearchIcon, SparklesIcon } from './icons';
 import { BackIcon } from './icons/BackIcon';
 import type { InternalDocSearchHit } from './types';
 
@@ -30,6 +31,7 @@ interface SearchBoxProps
   onAskAgain: (query: string) => void;
   placeholder: string;
   isAskAiActive: boolean;
+  askAiStatus: UseChatHelpers['status'];
   isFromSelection: boolean;
   translations?: SearchBoxTranslations;
 }
@@ -69,6 +71,15 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
   const blockedKeys = new Set(['ArrowUp', 'ArrowDown', 'Enter']);
   const origOnKeyDown = baseInputProps.onKeyDown;
   const origOnChange = baseInputProps.onChange;
+  const isAskAiStreaming = props.askAiStatus === 'streaming' || props.askAiStatus === 'submitted';
+  const isKeywordSearchLoading = props.state.status === 'stalled';
+
+  // when returning to another status than streaming or submitted, we focus on the input
+  React.useEffect(() => {
+    if (props.askAiStatus !== 'streaming' && props.askAiStatus !== 'submitted' && props.inputRef.current) {
+      props.inputRef.current.focus();
+    }
+  }, [props.askAiStatus, props.inputRef]);
 
   /**
    * We need to block the default behavior of the input when AskAI is active.
@@ -84,7 +95,7 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
       // block these up, down, enter listeners when AskAI is active
       if (props.isAskAiActive && blockedKeys.has(e.key)) {
         // enter key asks another question
-        if (e.key === 'Enter' && props.state.query) {
+        if (e.key === 'Enter' && !isAskAiStreaming && props.state.query) {
           props.onAskAgain(props.state.query);
         }
         e.preventDefault();
@@ -105,6 +116,7 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
       }
       origOnChange?.(e);
     },
+    disabled: isAskAiStreaming,
   };
 
   return (
@@ -117,30 +129,43 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
         onReset={onReset}
       >
         {props.isAskAiActive ? (
-          <button
-            type="button"
-            tabIndex={0}
-            className="DocSearch-AskAi-Return"
-            title={backToKeywordSearchButtonText}
-            aria-label={backToKeywordSearchButtonAriaLabel}
-            onClick={() => props.onAskAiToggle(false)}
-          >
-            <BackIcon />
-          </button>
+          <>
+            <button
+              type="button"
+              tabIndex={0}
+              className="DocSearch-AskAi-Return"
+              title={backToKeywordSearchButtonText}
+              aria-label={backToKeywordSearchButtonAriaLabel}
+              onClick={() => props.onAskAiToggle(false)}
+            >
+              <BackIcon />
+            </button>
+          </>
         ) : (
-          <label className="DocSearch-MagnifierLabel" {...props.getLabelProps()}>
-            <SearchIcon />
-            <span className="DocSearch-VisuallyHiddenForAccessibility">{searchInputLabel}</span>
-          </label>
+          <>
+            {isKeywordSearchLoading && (
+              <div className="DocSearch-LoadingIndicator">
+                <LoadingIcon />
+              </div>
+            )}
+            {!isKeywordSearchLoading && (
+              <label className="DocSearch-MagnifierLabel" {...props.getLabelProps()}>
+                <SearchIcon />
+                <span className="DocSearch-VisuallyHiddenForAccessibility">{searchInputLabel}</span>
+              </label>
+            )}
+          </>
         )}
-
-        <div className="DocSearch-LoadingIndicator">
-          <LoadingIcon />
-        </div>
 
         <input className="DocSearch-Input" ref={props.inputRef} {...inputProps} placeholder={props.placeholder} />
 
         <div className="DocSearch-Actions">
+          {isAskAiStreaming && (
+            <div className="DocSearch-StreamingIndicator">
+              <SparklesIcon />
+            </div>
+          )}
+
           <button
             className="DocSearch-Clear"
             type="reset"

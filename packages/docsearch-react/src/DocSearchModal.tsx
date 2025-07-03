@@ -703,6 +703,7 @@ export function DocSearchModal({
             isFromSelection={Boolean(initialQuery) && initialQuery === initialQueryFromSelection}
             translations={searchBoxTranslations}
             isAskAiActive={isAskAiActive}
+            askAiStatus={status}
             onClose={onClose}
             onAskAiToggle={onAskAiToggle}
             onAskAgain={(query) => {

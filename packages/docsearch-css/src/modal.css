@@ -138,15 +138,14 @@
   justify-content: center;
 }
 
-.DocSearch-Container--Stalled .DocSearch-MagnifierLabel {
-  display: none;
-}
-
 .DocSearch-LoadingIndicator {
-  display: none;
+  align-items: center;
+  color: var(--docsearch-highlight-color);
+  display: flex;
+  justify-content: center;
 }
 
-.DocSearch-Container--Stalled .DocSearch-LoadingIndicator {
+.DocSearch-StreamingIndicator {
   align-items: center;
   color: var(--docsearch-highlight-color);
   display: flex;
