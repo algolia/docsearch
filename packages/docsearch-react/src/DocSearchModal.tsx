@@ -430,6 +430,10 @@ export function DocSearchModal({
         content: query,
       });
 
+      if (dropdownRef.current) {
+        dropdownRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
       // clear the query
       if (autocompleteRef.current) {
         autocompleteRef.current.setQuery('');
@@ -616,10 +620,10 @@ export function DocSearchModal({
   }, []);
 
   React.useEffect(() => {
-    if (dropdownRef.current) {
+    if (dropdownRef.current && !isAskAiActive) {
       dropdownRef.current.scrollTop = 0;
     }
-  }, [state.query]);
+  }, [state.query, isAskAiActive]);
 
   // We don't focus the input when there's an initial query (i.e. Selection
   // Search) because users rather want to see the results directly, without the
