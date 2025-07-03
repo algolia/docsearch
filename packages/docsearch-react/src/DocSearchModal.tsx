@@ -12,12 +12,12 @@ import { ScreenState } from './ScreenState';
 import type { SearchBoxTranslations } from './SearchBox';
 import { SearchBox } from './SearchBox';
 import { createStoredSearches } from './stored-searches';
-import { ThemWrapper } from './ThemWrapper';
+import { ThemeWrapper } from './ThemeWrapper';
 import type { DocSearchHit, DocSearchState, InternalDocSearchHit, StoredDocSearchHit } from './types';
 import { useSearchClient } from './useSearchClient';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
-import { groupBy, identity, noop, removeHighlightTags, isModifierEvent } from './utils';
+import { groupBy, identity, isModifierEvent, noop, removeHighlightTags } from './utils';
 
 export type ModalTranslations = Partial<{
   searchBox: SearchBoxTranslations;
@@ -413,7 +413,7 @@ export function DocSearchModal({
   }, []);
 
   return (
-    <ThemWrapper theme={theme}>
+    <ThemeWrapper theme={theme}>
       <div
         ref={containerRef}
         {...getRootProps({
@@ -478,6 +478,6 @@ export function DocSearchModal({
           </footer>
         </div>
       </div>
-    </ThemWrapper>
+    </ThemeWrapper>
   );
 }

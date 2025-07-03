@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
 import type { PropsWithChildren } from 'react';
+import React, { useEffect } from 'react';
 
-import type { DoSearchTheme } from './types';
+import type { DocSearchTheme } from './types';
 
 export type ThemeProps = {
-  theme?: DoSearchTheme;
+  theme?: DocSearchTheme;
 };
 
-type ThemWrapperProps = PropsWithChildren & ThemeProps;
+type ThemeWrapperProps = PropsWithChildren & ThemeProps;
 
-export const ThemWrapper: React.FC<ThemWrapperProps> = ({ theme, children }) => {
+export const ThemeWrapper: React.FC<ThemeWrapperProps> = ({ theme, children }) => {
   useEffect(() => {
     if (theme) {
       const previousTheme = document.documentElement.dataset.theme;

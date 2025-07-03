@@ -1,12 +1,12 @@
-import type { AutocompleteState, AutocompleteOptions } from '@algolia/autocomplete-core';
+import type { AutocompleteOptions, AutocompleteState } from '@algolia/autocomplete-core';
 import type { LiteClient, SearchParamsObject } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
 
 import { DocSearchButton } from './DocSearchButton';
 import { DocSearchModal } from './DocSearchModal';
-import type { ThemeProps } from './ThemWrapper';
-import { ThemWrapper } from './ThemWrapper';
+import type { ThemeProps } from './ThemeWrapper';
+import { ThemeWrapper } from './ThemeWrapper';
 import type { DocSearchHit, InternalDocSearchHit, StoredDocSearchHit } from './types';
 import { useDocSearchKeyboardEvents } from './useDocSearchKeyboardEvents';
 
@@ -74,7 +74,7 @@ export function DocSearch({ theme, ...props }: DocSearchProps): JSX.Element {
   });
 
   return (
-    <ThemWrapper theme={theme}>
+    <ThemeWrapper theme={theme}>
       <DocSearchButton ref={searchButtonRef} translations={props?.translations?.button} onClick={onOpen} />
 
       {isOpen &&
@@ -88,6 +88,6 @@ export function DocSearch({ theme, ...props }: DocSearchProps): JSX.Element {
           />,
           document.body,
         )}
-    </ThemWrapper>
+    </ThemeWrapper>
   );
 }

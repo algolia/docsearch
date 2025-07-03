@@ -1,8 +1,8 @@
-import React, { type JSX, useEffect, useState } from 'react';
+import React, { useEffect, useState, type JSX } from 'react';
 
 import { ControlKeyIcon } from './icons/ControlKeyIcon';
 import { SearchIcon } from './icons/SearchIcon';
-import { ThemWrapper, type ThemeProps } from './ThemWrapper';
+import { ThemeWrapper, type ThemeProps } from './ThemeWrapper';
 
 export type ButtonTranslations = Partial<{
   buttonText: string;
@@ -42,7 +42,7 @@ export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButt
     const shortcut = `${actionKeyAltText}+k`;
 
     return (
-      <ThemWrapper theme={theme}>
+      <ThemeWrapper theme={theme}>
         <button
           type="button"
           className="DocSearch DocSearch-Button"
@@ -65,7 +65,7 @@ export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButt
             )}
           </span>
         </button>
-      </ThemWrapper>
+      </ThemeWrapper>
     );
   },
 );
