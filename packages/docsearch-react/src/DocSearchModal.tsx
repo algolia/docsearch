@@ -668,10 +668,7 @@ export function DocSearchModal({
   // hide the dropdown on idle and no collections
   let showDocsearchDropdown = true;
   const hasCollections = state.collections.some((collection) => collection.items.length > 0);
-  if (state.status === 'idle' && hasCollections === false) {
-    showDocsearchDropdown = false;
-  }
-  if (hasCollections === false) {
+  if (state.status === 'idle' && hasCollections === false && state.query.length === 0) {
     showDocsearchDropdown = false;
   }
 
