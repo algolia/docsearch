@@ -14,6 +14,7 @@ export type SearchBoxTranslations = Partial<{
   closeButtonAriaLabel: string;
   placeholderText: string;
   placeholderTextAskAi: string;
+  placeholderTextAskAiStreaming: string;
   enterKeyHint: string;
   enterKeyHintAskAi: string;
   searchInputLabel: string;
@@ -45,6 +46,7 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
     searchInputLabel = 'Search',
     backToKeywordSearchButtonText = 'Back to keyword search',
     backToKeywordSearchButtonAriaLabel = 'Back to keyword search',
+    placeholderTextAskAiStreaming = 'Answering...',
   } = translations;
   const { onReset } = props.getFormProps({
     inputElement: props.inputRef.current,
@@ -157,7 +159,12 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
           </>
         )}
 
-        <input className="DocSearch-Input" ref={props.inputRef} {...inputProps} placeholder={props.placeholder} />
+        <input
+          className="DocSearch-Input"
+          ref={props.inputRef}
+          {...inputProps}
+          placeholder={isAskAiStreaming ? placeholderTextAskAiStreaming : props.placeholder}
+        />
 
         <div className="DocSearch-Actions">
           {isAskAiStreaming && (
