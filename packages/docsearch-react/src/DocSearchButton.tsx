@@ -2,17 +2,18 @@ import React, { useEffect, useState, type JSX } from 'react';
 
 import { ControlKeyIcon } from './icons/ControlKeyIcon';
 import { SearchIcon } from './icons/SearchIcon';
-import { ThemeWrapper, type ThemeProps } from './ThemeWrapper';
+import type { DocSearchTheme } from './types';
+import { useTheme } from './useTheme';
 
 export type ButtonTranslations = Partial<{
   buttonText: string;
   buttonAriaLabel: string;
 }>;
 
-export type DocSearchButtonProps = React.ComponentProps<'button'> &
-  ThemeProps & {
-    translations?: ButtonTranslations;
-  };
+export type DocSearchButtonProps = React.ComponentProps<'button'> & {
+  theme?: DocSearchTheme;
+  translations?: ButtonTranslations;
+};
 
 const ACTION_KEY_DEFAULT = 'Ctrl' as const;
 const ACTION_KEY_APPLE = '⌘' as const;
@@ -26,7 +27,7 @@ export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButt
     const { buttonText = 'Search', buttonAriaLabel = 'Search' } = translations;
 
     const [key, setKey] = useState<typeof ACTION_KEY_APPLE | typeof ACTION_KEY_DEFAULT | null>(null);
-
+    useTheme({ theme });
     useEffect(() => {
       if (typeof navigator !== 'undefined') {
         isAppleDevice() ? setKey(ACTION_KEY_APPLE) : setKey(ACTION_KEY_DEFAULT);
@@ -42,30 +43,28 @@ export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButt
     const shortcut = `${actionKeyAltText}+k`;
 
     return (
-      <ThemeWrapper theme={theme}>
-        <button
-          type="button"
-          className="DocSearch DocSearch-Button"
-          aria-label={`${buttonAriaLabel} (${shortcut})`}
-          aria-keyshortcuts={shortcut}
-          {...props}
-          ref={ref}
-        >
-          <span className="DocSearch-Button-Container">
-            <SearchIcon />
-            <span className="DocSearch-Button-Placeholder">{buttonText}</span>
-          </span>
+      <button
+        type="button"
+        className="DocSearch DocSearch-Button"
+        aria-label={`${buttonAriaLabel} (${shortcut})`}
+        aria-keyshortcuts={shortcut}
+        {...props}
+        ref={ref}
+      >
+        <span className="DocSearch-Button-Container">
+          <SearchIcon />
+          <span className="DocSearch-Button-Placeholder">{buttonText}</span>
+        </span>
 
-          <span className="DocSearch-Button-Keys">
-            {key !== null && (
-              <>
-                <DocSearchButtonKey reactsToKey={actionKeyReactsTo}>{actionKeyChild}</DocSearchButtonKey>
-                <DocSearchButtonKey reactsToKey="k">K</DocSearchButtonKey>
-              </>
-            )}
-          </span>
-        </button>
-      </ThemeWrapper>
+        <span className="DocSearch-Button-Keys">
+          {key !== null && (
+            <>
+              <DocSearchButtonKey reactsToKey={actionKeyReactsTo}>{actionKeyChild}</DocSearchButtonKey>
+              <DocSearchButtonKey reactsToKey="k">K</DocSearchButtonKey>
+            </>
+          )}
+        </span>
+      </button>
     );
   },
 );

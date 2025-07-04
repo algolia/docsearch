@@ -1,15 +1,12 @@
-import type { PropsWithChildren } from 'react';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import type { DocSearchTheme } from './types';
 
-export type ThemeProps = {
+export interface UseThemeProps {
   theme?: DocSearchTheme;
-};
+}
 
-type ThemeWrapperProps = PropsWithChildren & ThemeProps;
-
-export const ThemeWrapper: React.FC<ThemeWrapperProps> = ({ theme, children }) => {
+export const useTheme = ({ theme }: UseThemeProps): void => {
   useEffect(() => {
     if (theme) {
       const previousTheme = document.documentElement.dataset.theme;
@@ -23,6 +20,4 @@ export const ThemeWrapper: React.FC<ThemeWrapperProps> = ({ theme, children }) =
     }
     return undefined;
   }, [theme]);
-
-  return <>{children}</>;
 };

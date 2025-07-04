@@ -5,10 +5,9 @@ import { createPortal } from 'react-dom';
 
 import { DocSearchButton } from './DocSearchButton';
 import { DocSearchModal } from './DocSearchModal';
-import type { ThemeProps } from './ThemeWrapper';
-import { ThemeWrapper } from './ThemeWrapper';
-import type { DocSearchHit, InternalDocSearchHit, StoredDocSearchHit } from './types';
+import type { DocSearchHit, DocSearchTheme, InternalDocSearchHit, StoredDocSearchHit } from './types';
 import { useDocSearchKeyboardEvents } from './useDocSearchKeyboardEvents';
+import { useTheme } from './useTheme';
 
 import type { ButtonTranslations, ModalTranslations } from '.';
 
@@ -24,10 +23,11 @@ export type DocSearchTransformClient = {
   transporter: Pick<LiteClient['transporter'], 'algoliaAgent'>;
 };
 
-export type DocSearchProps = ThemeProps & {
+export type DocSearchProps = {
   appId: string;
   apiKey: string;
   indexName: string;
+  theme?: DocSearchTheme;
   placeholder?: string;
   searchParameters?: SearchParamsObject;
   maxResultsPerGroup?: number;
@@ -72,9 +72,10 @@ export function DocSearch({ theme, ...props }: DocSearchProps): JSX.Element {
     onInput,
     searchButtonRef,
   });
+  useTheme({ theme });
 
   return (
-    <ThemeWrapper theme={theme}>
+    <>
       <DocSearchButton ref={searchButtonRef} translations={props?.translations?.button} onClick={onOpen} />
 
       {isOpen &&
@@ -88,6 +89,6 @@ export function DocSearch({ theme, ...props }: DocSearchProps): JSX.Element {
           />,
           document.body,
         )}
-    </ThemeWrapper>
+    </>
   );
 }
