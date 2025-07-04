@@ -8,7 +8,7 @@ export function SparklesIcon(): JSX.Element {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.5"
+      strokeWidth="1.3"
       strokeLinecap="round"
       strokeLinejoin="round"
       className="DocSearch-Hit-icon-sparkles"
