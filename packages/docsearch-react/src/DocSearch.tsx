@@ -23,7 +23,7 @@ export type DocSearchTransformClient = {
   transporter: Pick<LiteClient['transporter'], 'algoliaAgent'>;
 };
 
-export type DocSearchProps = {
+export interface DocSearchProps {
   appId: string;
   apiKey: string;
   indexName: string;
@@ -41,7 +41,7 @@ export type DocSearchProps = {
   translations?: DocSearchTranslations;
   getMissingResultsUrl?: ({ query }: { query: string }) => string;
   insights?: AutocompleteOptions<InternalDocSearchHit>['insights'];
-};
+}
 
 export function DocSearch({ theme, ...props }: DocSearchProps): JSX.Element {
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
