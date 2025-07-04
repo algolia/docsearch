@@ -452,7 +452,7 @@ export function DocSearchModal({
         messageId,
         appId,
       });
-      if (res.status !== 200) throw new Error('Failed, try again later');
+      if (res.status >= 300) throw new Error('Failed, try again later');
       conversations.addFeedback?.(messageId, thumbs === 1 ? 'like' : 'dislike');
     },
     [askAiConfigurationId, appId, conversations],
