@@ -32,9 +32,9 @@
     "website:test": "yarn workspace @docsearch/website start --no-open"
   },
   "devDependencies": {
-    "@babel/plugin-transform-react-jsx": "7.25.9",
-    "@babel/preset-env": "7.26.7",
-    "@babel/preset-typescript": "7.26.0",
+    "@babel/plugin-transform-react-jsx": "7.27.1",
+    "@babel/preset-env": "7.28.0",
+    "@babel/preset-typescript": "7.27.1",
     "@eslint-community/eslint-plugin-eslint-comments": "4.5.0",
     "@rollup/plugin-babel": "6.0.4",
     "@rollup/plugin-json": "6.1.0",
