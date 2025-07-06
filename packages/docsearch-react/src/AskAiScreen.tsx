@@ -1,12 +1,14 @@
 import type { UseChatHelpers } from '@ai-sdk/react';
 import React, { type JSX, useState, useEffect, useMemo } from 'react';
 
+import { AggregatedSearchBlock } from './AggregatedSearchBlock';
 import { AlertIcon, LoadingIcon, SearchIcon } from './icons';
 import { MemoizedMarkdown } from './MemoizedMarkdown';
 import type { ScreenStateProps } from './ScreenState';
 import type { StoredSearchPlugin } from './stored-searches';
 import type { InternalDocSearchHit, StoredAskAiState } from './types';
 import { extractLinksFromText } from './utils/ai';
+import { groupConsecutiveToolResults } from './utils/groupConsecutiveToolResults';
 
 export type AskAiScreenTranslations = Partial<{
   // Title texts
@@ -25,6 +27,23 @@ export type AskAiScreenTranslations = Partial<{
   preToolCallText: string;
   duringToolCallText: string;
   afterToolCallText: string;
+  /**
+   * Build the full jsx element for the aggregated search block.
+   * If provided, completely overrides the default english renderer.
+   */
+  aggregatedToolCallNode?: (queries: string[], onSearchQueryClick: (query: string) => void) => React.ReactNode;
+
+  /**
+   * Generate the list connective parts only (backwards compatibility).
+   * Receives full list of queries and should return translation parts for before/after/separators.
+   * Example: (qs) => ({ before: 'searched for ', separator: ', ', lastSeparator: ' and ', after: '' }).
+   */
+  aggregatedToolCallText?: (queries: string[]) => {
+    before?: string;
+    separator?: string;
+    lastSeparator?: string;
+    after?: string;
+  };
 }>;
 
 type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
@@ -74,7 +93,14 @@ function AskAiExchangeCard({
 
   const showActions = !isLastExchange || (isLastExchange && loadingStatus === 'ready' && Boolean(assistantMessage));
 
-  const urlsToDisplay = extractLinksFromText(assistantMessage?.content || '');
+  const urlsToDisplay = React.useMemo(() => extractLinksFromText(assistantMessage?.content || ''), [assistantMessage]);
+
+  const displayParts = React.useMemo(() => {
+    if (!Array.isArray(assistantMessage?.parts)) {
+      return assistantMessage?.content ? [assistantMessage.content] : [];
+    }
+    return groupConsecutiveToolResults(assistantMessage.parts);
+  }, [assistantMessage]);
 
   return (
     <div className="DocSearch-AskAiScreen-Response-Container">
@@ -92,17 +118,41 @@ function AskAiExchangeCard({
             )}
             {loadingStatus === 'submitted' && isLastExchange && (
               <div className="DocSearch-AskAiScreen-MessageContent-Reasoning">
-                <span className="italic shimmer">{translations.thinkingText || 'Thinking...'}</span>
+                <span className="shimmer">{translations.thinkingText || 'Thinking...'}</span>
               </div>
             )}
-            {Array.isArray(assistantMessage?.parts)
-              ? assistantMessage.parts.map((part, idx) => {
+            {Array.isArray(displayParts)
+              ? displayParts.map((part, idx) => {
                   const index = idx;
 
-                  if (part.type === 'reasoning' && assistantMessage.parts.length === 1) {
+                  if (typeof part === 'string') {
+                    return (
+                      <MemoizedMarkdown
+                        key={index}
+                        content={part}
+                        copyButtonText={translations.copyButtonText || 'Copy'}
+                        copyButtonCopiedText={translations.copyButtonCopiedText || 'Copied!'}
+                        isStreaming={loadingStatus === 'streaming'}
+                      />
+                    );
+                  }
+
+                  // aggregated tool call rendering
+                  if (part && (part as any).type === 'aggregated-tool-call') {
+                    return (
+                      <AggregatedSearchBlock
+                        key={index}
+                        queries={(part as any).queries}
+                        translations={translations}
+                        onSearchQueryClick={onSearchQueryClick}
+                      />
+                    );
+                  }
+
+                  if (part.type === 'reasoning' && assistantMessage?.parts?.length === 1) {
                     return (
                       <div key={index} className="DocSearch-AskAiScreen-MessageContent-Reasoning shimmer">
-                        <span className="italic">Thinking...</span>
+                        <span className="shimmer">Reasoning...</span>
                       </div>
                     );
                   }
@@ -145,14 +195,24 @@ function AskAiExchangeCard({
                           return (
                             <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Result">
                               <SearchIcon size={18} />
-                              <span>{`${translations.afterToolCallText || 'Searched documentation for'}`}</span>
-                              <button
-                                type="button"
-                                className="DocSearch-AskAiScreen-MessageContent-Tool-Query"
-                                onClick={() => onSearchQueryClick(toolInvocation.args?.query || '')}
-                              >
-                                &quot;{toolInvocation.args?.query || ''}&quot;
-                              </button>
+                              <span>
+                                {`${translations.afterToolCallText || 'Searched documentation for'}`}{' '}
+                                <span
+                                  role="button"
+                                  tabIndex={0}
+                                  className="DocSearch-AskAiScreen-MessageContent-Tool-Query"
+                                  onKeyDown={(e) => {
+                                    if (e.key === 'Enter' || e.key === ' ') {
+                                      e.preventDefault();
+                                      onSearchQueryClick(toolInvocation.args?.query || '');
+                                    }
+                                  }}
+                                  onClick={() => onSearchQueryClick(toolInvocation.args?.query || '')}
+                                >
+                                  {' '}
+                                  &quot;{toolInvocation.args?.query || ''}&quot;
+                                </span>
+                              </span>
                             </div>
                           );
                         default:
