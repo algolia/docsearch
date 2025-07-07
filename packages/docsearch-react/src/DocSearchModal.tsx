@@ -431,7 +431,7 @@ export function DocSearchModal({
       });
 
       if (dropdownRef.current) {
-        dropdownRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+        (dropdownRef.current as HTMLElement).scrollTo({ top: 0, behavior: 'smooth' });
       }
 
       // clear the query

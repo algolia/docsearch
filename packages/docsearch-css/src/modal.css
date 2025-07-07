@@ -997,7 +997,7 @@ assistive tech users */
   border-radius: 4px;
   color: var(--docsearch-text-color);
   font-size: 0.75em;
-  max-width: 30%;
+  max-width: 70%;
   text-decoration: none;
   transition: background-color 0.2s ease;
 }
@@ -1220,6 +1220,7 @@ assistive tech users */
 .DocSearch-AskAiScreen-MessageContent-Tool > svg {
   color: var(--docsearch-icon-color);
   margin-right: 8px;
+  margin-top: 3px;
 }
 
 .DocSearch-AskAiScreen-MessageContent-Tool-Query {
