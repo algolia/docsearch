@@ -187,7 +187,7 @@ function AskAiExchangeCard({
                             <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Call shimmer">
                               <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
                               <span>
-                                {`${translations.duringToolCallText || 'Searching documentation for '} "${toolInvocation.args?.query || ''}" ...`}
+                                {`${translations.duringToolCallText || 'Searching for '} "${toolInvocation.args?.query || ''}" ...`}
                               </span>
                             </div>
                           );
@@ -196,7 +196,7 @@ function AskAiExchangeCard({
                             <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Result">
                               <SearchIcon size={18} />
                               <span>
-                                {`${translations.afterToolCallText || 'Searched documentation for'}`}{' '}
+                                {`${translations.afterToolCallText || 'Searched for'}`}{' '}
                                 <span
                                   role="button"
                                   tabIndex={0}
