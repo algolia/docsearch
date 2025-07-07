@@ -234,7 +234,7 @@ function AskAiExchangeCard({
         </div>
         <div className="DocSearch-AskAiScreen-Answer-Footer">
           <AskAiScreenFooterActions
-            id={assistantMessage?.id || exchange.id}
+            id={userMessage?.id || exchange.id}
             showActions={showActions}
             latestAssistantMessageContent={assistantMessage?.content || null}
             translations={translations}
