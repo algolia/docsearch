@@ -24,7 +24,7 @@ import type { DocSearchHit, DocSearchState, InternalDocSearchHit, StoredAskAiSta
 import { useSearchClient } from './useSearchClient';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
-import { groupBy, identity, noop, removeHighlightTags, isModifierEvent } from './utils';
+import { groupBy, identity, noop, removeHighlightTags, isModifierEvent, scrollTo as scrollToUtils } from './utils';
 import { buildDummyAskAiHit } from './utils/ai';
 
 export type ModalTranslations = Partial<{
@@ -431,7 +431,14 @@ export function DocSearchModal({
       });
 
       if (dropdownRef.current) {
-        (dropdownRef.current as HTMLElement).scrollTo({ top: 0, behavior: 'smooth' });
+        // some test environments (like jsdom) don't implement element.scrollTo
+        const el = dropdownRef.current;
+        if (typeof (el as any).scrollTo === 'function') {
+          el.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          // fallback for environments without scrollTo support
+          el.scrollTop = 0;
+        }
       }
 
       // clear the query
@@ -621,7 +628,7 @@ export function DocSearchModal({
 
   React.useEffect(() => {
     if (dropdownRef.current && !isAskAiActive) {
-      dropdownRef.current.scrollTop = 0;
+      scrollToUtils(dropdownRef.current);
     }
   }, [state.query, isAskAiActive]);
 
