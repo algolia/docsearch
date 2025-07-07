@@ -1209,6 +1209,7 @@ assistive tech users */
 .DocSearch-AskAiScreen-MessageContent-Tool {
   display: flex;
   padding: 1em 0;
+  align-items: center;
   width: 100%;
   color: var(--docsearch-muted-color);
 }
@@ -1220,7 +1221,6 @@ assistive tech users */
 .DocSearch-AskAiScreen-MessageContent-Tool > svg {
   color: var(--docsearch-icon-color);
   margin-right: 8px;
-  margin-top: 3px;
 }
 
 .DocSearch-AskAiScreen-MessageContent-Tool-Query {

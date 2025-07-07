@@ -179,7 +179,7 @@ function AskAiExchangeCard({
                               className="DocSearch-AskAiScreen-MessageContent-Tool Tool--PartialCall shimmer"
                             >
                               <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-                              <span>{translations.preToolCallText || 'Searching through the docs...'}</span>
+                              <span>{translations.preToolCallText || 'Searching...'}</span>
                             </div>
                           );
                         case 'call':

@@ -339,6 +339,7 @@ export function DocSearchModal({
     error: askAiFetchError,
   } = useChat({
     api: ASK_AI_API_URL,
+    sendExtraMessageFields: true,
     fetch: async (input, init) => {
       if (!USE_ASK_AI_TOKEN) {
         return fetch(input, init);
