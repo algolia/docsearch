@@ -15,6 +15,12 @@ export default {
   projectName: 'DocSearch',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'throw',
+  future: {
+    v4: {
+      removeLegacyPostBuildHeadAttribute: true,
+      useCssCascadeLayers: true,
+    },
+  },
   presets: [
     [
       '@docusaurus/preset-classic',
@@ -46,6 +52,7 @@ export default {
       algolia: {
         appId: 'R2IYF7ETH7',
         apiKey: '599cec31baffa4868cae4e79f180729b',
+        askAi: 'askAIDemo',
         indexName: 'docsearch',
         contextualSearch: true,
       },
@@ -92,10 +99,6 @@ export default {
         disableSwitch: false,
         respectPrefersColorScheme: true,
       },
-      announcementBar: {
-        content:
-          '⭐️ If you like DocSearch, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/algolia/docsearch">GitHub</a>! ⭐️',
-      },
       footer: {
         links: [
           {
@@ -112,6 +115,10 @@ export default {
               {
                 label: 'DocSearch v3',
                 to: 'docs/docsearch-v3',
+              },
+              {
+                label: 'DocSearch v4 - Beta',
+                to: 'docs/docsearch-v4',
               },
             ],
           },

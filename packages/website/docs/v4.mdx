@@ -1,0 +1,312 @@
+---
+title: Getting Started with v4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+:::warning
+
+DocSearch v4 is currently in beta. While it's suitable for production scenarios, expect potential improvements and minor issues. Use at your discretion.
+
+:::
+
+## Introduction
+
+DocSearch v4 provides a significant upgrade over previous versions, offering enhanced accessibility, responsiveness, and an improved search experience for your documentation. Built on [Algolia Autocomplete][1], DocSearch v4 ensures a seamless integration trusted by leading documentation sites worldwide.
+
+## Installation
+
+DocSearch packages are available on the [npm registry][10].
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', },
+    { label: 'React', value: 'react', }
+  ]
+}>
+<TabItem value="js">
+
+```bash
+yarn add @docsearch/js@4
+# or with npm
+npm install @docsearch/js@4
+```
+
+### Without package manager
+
+Include CSS in your website's `<head>`
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@4" />
+```
+
+And the JavaScript at the end of your `<body>`:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@4"></script>
+```
+
+</TabItem>
+<TabItem value="react">
+
+```bash
+yarn add @docsearch/react@4
+# or
+npm install @docsearch/react@4
+```
+
+### Without package manager
+
+Include CSS in your website's `<head>`:
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@4" />
+```
+
+And the JavaScript at the end of your `<body>`:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/react@4"></script>
+```
+
+</TabItem>
+
+</Tabs>
+
+### Optimize first query performance
+
+Enhance your users' first search experience by using `preconnect`, see [Performance optimization](#preconnect) below
+
+## Implementation
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', },
+    { label: 'React', value: 'react', }
+  ]
+}>
+<TabItem value="js">
+
+DocSearch requires a dedicated container in your HTML
+
+```html
+<div id="docsearch"></div>
+```
+
+Initialize DocSearch by passing your container:
+
+```js app.js
+import docsearch from '@docsearch/js';
+
+import '@docsearch/css';
+
+docsearch({
+  container: '#docsearch',
+  appId: 'YOUR_APP_ID',
+  indexName: 'YOUR_INDEX_NAME',
+  apiKey: 'YOUR_SEARCH_API_KEY',
+});
+```
+
+DocSearch generates an accessible, fully-functional search input for you automatically.
+
+</TabItem>
+
+<TabItem value="react">
+
+Integrating DocSearch into your React app is straightforward:
+
+```jsx App.js
+import { DocSearch } from '@docsearch/react';
+
+import '@docsearch/css';
+
+function App() {
+  return (
+    <DocSearch
+      appId="YOUR_APP_ID"
+      indexName="YOUR_INDEX_NAME"
+      apiKey="YOUR_SEARCH_API_KEY"
+    />
+  );
+}
+
+export default App;
+```
+
+DocSearch generates a fully accessible search input out-of-the-box.
+
+</TabItem>
+
+</Tabs>
+
+### Quick Testing (without credentials)
+
+If you'd like to test DocSearch immediately without your own credentials, use our demo configuration:
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', },
+    { label: 'React', value: 'react', }
+  ]
+}>
+<TabItem value="js">
+
+```js
+docsearch({
+  appId: 'PMZUYBQDAK',
+  apiKey: '24b09689d5b4223813d9b8e48563c8f6',
+  indexName: 'docsearch',
+  askAi: 'askAIDemo',
+});
+```
+
+</TabItem>
+
+<TabItem value="react">
+
+```jsx
+<DocSearch
+  appId="PMZUYBQDAK"
+  apiKey="24b09689d5b4223813d9b8e48563c8f6"
+  indexName="docsearch"
+  askAi="askAIDemo"
+/>
+```
+
+</TabItem>
+
+</Tabs>
+
+Or use our new dedicated [DocSearch Playground](https://community.algolia.com/docsearch-playground/)
+
+### Using DocSearch with AskAI
+
+DocSearch v4 introduces support for AskAI, Algolia’s advanced, AI-powered search capability. AskAI enhances the user experience by providing contextually relevant and intelligent responses directly from your documentation
+
+To enable AskAI, add your Algolia Assistant ID to your DocSearch configuration:
+
+```js
+docsearch({
+  appId: 'YOUR_APP_ID',
+  indexName: 'YOUR_INDEX_NAME',
+  apiKey: 'YOUR_SEARCH_API_KEY',
+  askAi: 'YOUR_ALGOLIA_ASSISTANT_ID',
+});
+```
+
+### Filtering search results
+
+If your website uses [DocSearch meta tags][13] or if you've added [custom variables to your config][14], you'll be able to use the [`facetFilters`][16] option to scope your search results to a [`facet`][15]
+
+This is useful to limit the scope of the search to one language or one version.
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', },
+    { label: 'React', value: 'react', }
+  ]
+}>
+<TabItem value="js">
+
+```js
+docsearch({
+  searchParameters: {
+    facetFilters: ['language:en', 'version:1.0.0'],
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="react">
+
+```jsx
+<DocSearch
+  searchParameters={{
+    facetFilters: ['language:en', 'version:1.0.0'],
+  }}
+/>
+```
+
+</TabItem>
+
+</Tabs>
+
+### Sending events
+
+You can send search events to your DocSearch index by passing in the `insights` parameter when creating your DocSearch instance.
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', },
+    { label: 'React', value: 'react', }
+  ]
+}>
+<TabItem value="js">
+
+```js
+docsearch({
+  searchParameters: {
+    facetFilters: ['language:en', 'version:1.0.0'],
+  },
+  insights: true,
+});
+```
+
+</TabItem>
+
+<TabItem value="react">
+
+```jsx
+<DocSearch
+  searchParameters={{
+    facetFilters: ['language:en', 'version:1.0.0'],
+  }}
+  insights
+/>
+```
+
+</TabItem>
+
+</Tabs>
+
+## Performance optimization
+
+### Preconnect
+
+Improve the loading speed of your initial search request by adding this snippet into your website's `<head>` section:
+
+```html
+<link rel="preconnect" href="https://YOUR_APP_ID-dsn.algolia.net" crossorigin />
+```
+
+This helps the browser establish a quick connection with Algolia, enhancing user experience, especially on mobile devices.
+
+[1]: https://www.algolia.com/doc/ui-libraries/autocomplete/introduction/what-is-autocomplete/
+[2]: https://github.com/algolia/docsearch/
+[3]: https://github.com/algolia/docsearch/tree/master
+[4]: /docs/legacy/dropdown
+[5]: /docs/integrations
+[6]: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors
+[7]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement
+[8]: https://codesandbox.io/s/docsearch-js-v3-playground-z9oxj
+[9]: https://codesandbox.io/s/docsearch-react-v3-playground-619yg
+[10]: https://www.npmjs.com/
+[11]: /docs/api#container
+[12]: /docs/api
+[13]: /docs/required-configuration#introduce-global-information-as-meta-tags
+[14]: /docs/record-extractor#indexing-content-for-faceting
+[16]: https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/#facetfilters
+[15]: https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/

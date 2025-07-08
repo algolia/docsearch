@@ -1,0 +1,101 @@
+---
+title: Prompting
+---
+
+> **Why this page?**
+> A well-crafted prompt turns raw language-model horsepower into accurate, on-brand answers.
+> This guide distills the best practices from OpenAI, Anthropic, and our own experience running **Ask AI** at scale. It explains *how* prompts are used in DocSearch v4, then shows you *how* to write your own.
+
+## 1. How prompting works in Ask AI
+
+1. **Base system prompt (hidden)** - Every Ask AI request starts with a proprietary system prompt that enforces safety, retrieval and tone.
+2. **Your *complementary* system prompt** - A short set of extra instructions you provide (e.g., "Answer like a Kubernetes SRE. Prefer concise bullet points.").
+3. **The user question** - What your visitor types in the chat box.
+4. **Context passages** - Relevant chunks from your Algolia index, automatically inserted.
+
+Only **step 2** is in your hands; the rest is handled by Ask AI. Think of your prompt as a *policy overlay* rather than a full rewrite.
+
+---
+
+## 2. Principles of effective prompts
+
+| Goal                  | What to do                                                 | Why it helps                                                    |
+| --------------------- | ---------------------------------------------------------- | --------------------------------------------------------------- |
+| **Be explicit**       | State role, style and constraints in the first sentence.   | LLMs obey the earliest, clearest instruction.                   |
+| **Ground in context** | Add product names, audience level, or domain jargon.       | Reduces hallucinations and keeps answers on-brand.              |
+| **Set format**        | "Answer in Markdown with H2 headings and a summary table." (we handled this for you) | Ensures consistent rendering in your site theme.                |
+| **Show, don't tell**  | Give one or two short exemplars of the desired output.     | Few-shot examples outperform general adjectives.                |
+| **Limit scope**       | "If you're unsure, say **I don't know**."                  | Encourages honesty over speculation.                            |
+| **Iterate & test**    | Look at the feedback, tweak, re-run.                       | Prompting is an empirical craft - small wording changes matter. |
+
+> **Tip - keep it brief**
+> Excessively long prompts push relevant document chunks out of the context window and slow responses.
+
+---
+
+## 3. Prompt patterns that work
+
+### **Style transfer**
+
+```text
+You are a senior React maintainer. Explain concepts in the style of React docs: concise intro ➜ "Example" ➜ "Gotchas".
+```
+
+### **Persona + audience**
+
+```text
+Act as a cloud-native Solutions Architect.
+Audience: junior DevOps engineers migrating to Kubernetes.
+Goal: explain trade-offs in plain English, no jargon.
+```
+
+### **Multi-step reasoning**
+
+```text
+FIRST think step-by-step about possible causes.
+THEN output only the final answer in bullet points.
+```
+
+---
+
+## 4. Common pitfalls
+
+| Anti-pattern                                   | What happens                          | Fix                                    |
+| ---------------------------------------------- | ------------------------------------- | -------------------------------------- |
+| **Vagueness** - "Explain this."                | Generic or rambling answers.          | Specify role, topic, length.           |
+| **Prompt stuffing** - 1 000-word instructions. | Context window overflow; higher cost. | Trim to the essentials.                |
+| **Conflicting rules**                          | Model picks one at random.            | Merge rules or order them by priority. |
+
+---
+
+## 5. Security & compliance
+
+* Never paste secrets, PII or internal URLs into your prompt.
+* Do not use company policies or other sensitive information in your prompt.
+* Review a few generated answers for policy compliance while testing.
+
+---
+
+## 6. Learn more
+
+* **OpenAI - Best practices for prompt engineering** ([help.openai.com][1])
+* **OpenAI Cookbook - GPT-4.1 Prompting Guide** ([cookbook.openai.com][2])
+* **Anthropic - Prompt engineering overview for Claude** ([docs.anthropic.com][3])
+
+These resources include concrete templates, example libraries and advanced techniques like chain-of-thought prompting.
+
+---
+
+### Quick checklist
+
+* [ ] Role and audience defined
+* [ ] Desired format specified
+* [ ] Examples included (≤ 2)
+* [ ] Scope limits & fallback language added
+* [ ] Tested against real user questions
+
+Happy prompting — and remember: iterate, observe, refine!
+
+[1]: https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-the-openai-api?utm_source=chatgpt.com "Best practices for prompt engineering with the OpenAI API"
+[2]: https://cookbook.openai.com/examples/gpt4-1_prompting_guide?utm_source=chatgpt.com "GPT-4.1 Prompting Guide | OpenAI Cookbook"
+[3]: https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview?utm_source=chatgpt.com "Prompt engineering overview - Anthropic"
