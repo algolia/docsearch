@@ -118,7 +118,7 @@ export default {
               },
               {
                 label: 'DocSearch v4 - Beta',
-                to: 'docs/docsearch-v4',
+                to: 'docs/v4',
               },
             ],
           },
