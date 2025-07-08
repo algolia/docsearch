@@ -8,7 +8,7 @@ DocSearch v4 is currently in beta. While it's suitable for production scenarios,
 
 :::
 
-This guide provides detailed information on migrating from [DocSearch v3](/docs/docsearch-v3) to [DocSearch v4](/docs/docsearch/v4), highlighting key differences and new configuration options. For a comprehensive overview, refer to the [API reference](/docs/v4/api) and [Getting Started Guide](/docs/docsearch/v4).
+This guide provides detailed information on migrating from [DocSearch v3](/docs/docsearch-v3) to [DocSearch v4](/docs/v4), highlighting key differences and new configuration options. For a comprehensive overview, refer to the [API reference](/docs/v4/api) and [Getting Started Guide](/docs/v4).
 
 ## If You're Using Algolia Keyword Search Only
 
@@ -69,7 +69,7 @@ DocSearch v4 provides a clear migration path:
 * Ensure domain whitelist and assistant settings are properly configured via your Algolia Dashboard.
 * Review your indexed content and analytics periodically to optimize AskAI responses and performance.
 
-For full details on endpoint security, caching strategies, and infrastructure, see the dedicated [Security and Infrastructure](/docs/docsearch-v4/security-infrastructure) documentation.
+For full details on endpoint security, caching strategies, and infrastructure, see the dedicated [Security and Infrastructure](https://algolia.com/doc/) documentation.
 
 ## Support and Resources
 
