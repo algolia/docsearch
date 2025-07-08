@@ -23,11 +23,11 @@ function isAppleDevice(): boolean {
 }
 
 export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButtonProps>(
-  ({ translations = {}, theme, ...props }, ref) => {
+  ({ translations = {}, ...props }, ref) => {
     const { buttonText = 'Search', buttonAriaLabel = 'Search' } = translations;
 
     const [key, setKey] = useState<typeof ACTION_KEY_APPLE | typeof ACTION_KEY_DEFAULT | null>(null);
-    useTheme({ theme });
+    useTheme({ theme: props.theme });
     useEffect(() => {
       if (typeof navigator !== 'undefined') {
         isAppleDevice() ? setKey(ACTION_KEY_APPLE) : setKey(ACTION_KEY_DEFAULT);

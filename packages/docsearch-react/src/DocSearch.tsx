@@ -43,7 +43,7 @@ export interface DocSearchProps {
   insights?: AutocompleteOptions<InternalDocSearchHit>['insights'];
 }
 
-export function DocSearch({ theme, ...props }: DocSearchProps): JSX.Element {
+export function DocSearch({ ...props }: DocSearchProps): JSX.Element {
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
   const [isOpen, setIsOpen] = React.useState(false);
   const [initialQuery, setInitialQuery] = React.useState<string | undefined>(props?.initialQuery || undefined);
@@ -72,7 +72,7 @@ export function DocSearch({ theme, ...props }: DocSearchProps): JSX.Element {
     onInput,
     searchButtonRef,
   });
-  useTheme({ theme });
+  useTheme({ theme: props.theme });
 
   return (
     <>
