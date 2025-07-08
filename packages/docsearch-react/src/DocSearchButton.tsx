@@ -1,7 +1,9 @@
-import React, { type JSX, useEffect, useState } from 'react';
+import React, { useEffect, useState, type JSX } from 'react';
 
 import { ControlKeyIcon } from './icons/ControlKeyIcon';
 import { SearchIcon } from './icons/SearchIcon';
+import type { DocSearchTheme } from './types';
+import { useTheme } from './useTheme';
 
 export type ButtonTranslations = Partial<{
   buttonText: string;
@@ -9,6 +11,7 @@ export type ButtonTranslations = Partial<{
 }>;
 
 export type DocSearchButtonProps = React.ComponentProps<'button'> & {
+  theme?: DocSearchTheme;
   translations?: ButtonTranslations;
 };
 
@@ -24,7 +27,7 @@ export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButt
     const { buttonText = 'Search', buttonAriaLabel = 'Search' } = translations;
 
     const [key, setKey] = useState<typeof ACTION_KEY_APPLE | typeof ACTION_KEY_DEFAULT | null>(null);
-
+    useTheme({ theme: props.theme });
     useEffect(() => {
       if (typeof navigator !== 'undefined') {
         isAppleDevice() ? setKey(ACTION_KEY_APPLE) : setKey(ACTION_KEY_DEFAULT);

@@ -261,4 +261,16 @@ describe('api', () => {
       expect(link?.getAttribute('href')).toBe('https://github.com/algolia/docsearch/issues/new?title=q');
     });
   });
+
+  describe('Theme', () => {
+    const html = document.documentElement;
+    it('light theme', () => {
+      render(<DocSearch theme="light" />);
+      expect(html.getAttribute('data-theme')).toBe('light');
+    });
+    it('dark theme', () => {
+      render(<DocSearch theme="dark" />);
+      expect(html.getAttribute('data-theme')).toBe('dark');
+    });
+  });
 });
