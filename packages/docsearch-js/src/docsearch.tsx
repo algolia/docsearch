@@ -1,6 +1,6 @@
 import type { DocSearchProps as DocSearchComponentProps } from '@docsearch/react';
 import { DocSearch, version } from '@docsearch/react';
-import React, { render } from 'preact/compat';
+import React, { render, unmountComponentAtNode } from 'preact/compat';
 
 function getHTMLElement(value: HTMLElement | string, environment: DocSearchProps['environment'] = window): HTMLElement {
   if (typeof value === 'string') {
@@ -15,7 +15,8 @@ interface DocSearchProps extends DocSearchComponentProps {
   environment?: typeof window;
 }
 
-export function docsearch(props: DocSearchProps): void {
+export function docsearch(props: DocSearchProps): () => void {
+  const containerElement = getHTMLElement(props.container, props.environment);
   render(
     <DocSearch
       {...props}
@@ -25,6 +26,9 @@ export function docsearch(props: DocSearchProps): void {
         return props.transformSearchClient ? props.transformSearchClient(searchClient) : searchClient;
       }}
     />,
-    getHTMLElement(props.container, props.environment),
+    containerElement,
   );
+  return () => {
+    unmountComponentAtNode(containerElement);
+  };
 }
