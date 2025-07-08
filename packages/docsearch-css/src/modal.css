@@ -17,6 +17,8 @@
 
 .DocSearch-Container {
   background-color: var(--docsearch-container-background);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
   height: 100vh;
   left: 0;
   position: fixed;
@@ -136,15 +138,14 @@
   justify-content: center;
 }
 
-.DocSearch-Container--Stalled .DocSearch-MagnifierLabel {
-  display: none;
-}
-
 .DocSearch-LoadingIndicator {
-  display: none;
+  align-items: center;
+  color: var(--docsearch-highlight-color);
+  display: flex;
+  justify-content: center;
 }
 
-.DocSearch-Container--Stalled .DocSearch-LoadingIndicator {
+.DocSearch-StreamingIndicator {
   align-items: center;
   color: var(--docsearch-highlight-color);
   display: flex;
@@ -455,6 +456,7 @@
 .DocSearch-Hit mark {
   color: var(--docsearch-highlight-color);
   text-decoration: underline;
+  text-underline-offset: 0.3em;
 }
 
 .DocSearch-Hit-Container {
@@ -533,7 +535,7 @@ svg.DocSearch-Hit-Select-Icon {
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  font-weight: 500;
+  font-weight: 400;
   justify-content: center;
   line-height: 1.2em;
   margin: 0 8px;
@@ -598,16 +600,16 @@ svg.DocSearch-Hit-Select-Icon {
   height: 80%;
 }
 
-.DocSearch-NoResults--withAskAi {
-  height: 70%;
-}
-
 .DocSearch-StartScreen {
   height: 100%;
 }
 
 .DocSearch-NoResults {
   gap: 24px;
+}
+
+.DocSearch-NoResults--withAskAi {
+  height: 60%;
 }
 
 .DocSearch-StartScreen,
@@ -636,9 +638,15 @@ svg.DocSearch-Hit-Select-Icon {
 .DocSearch-NoResults-Prefill-List ul {
   display: flex;
   flex-direction: column;
-  gap: 8px;
   height: 40px;
-  padding: 8px 0 0;
+}
+
+div.DocSearch-NoResults.DocSearch-NoResults--withAskAi
+  > div.DocSearch-NoResults-Prefill-List
+  > ul {
+  height: 0;
+  gap: 1em;
+  flex-direction: row;
 }
 
 .DocSearch-NoResults-Prefill-List li {
@@ -767,13 +775,12 @@ assistive tech users */
 .DocSearch-Hit-AskAIButton-title {
   display: flex;
   flex: 1 1 auto;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.2em;
   overflow-x: hidden;
   position: relative;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-weight: 500;
   width: 80%;
   gap: 4px;
   color: var(--docsearch-hit-color);
@@ -781,8 +788,8 @@ assistive tech users */
 
 .DocSearch-Hit-AskAIButton-title-query {
   white-space: nowrap;
-  font-weight: 400;
   overflow: hidden;
+  background: none;
   margin-left: 4px;
   text-overflow: ellipsis;
 }
@@ -811,21 +818,12 @@ assistive tech users */
 
 .DocSearch-AskAiScreen-Disclaimer {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 12px;
-  font-size: 0.65em;
+  font-size: 0.6em;
   font-weight: 300;
-  padding: 1em 0;
-}
-
-.DocSearch-AskAiScreen-Disclaimer-Icon {
-  color: var(--docsearch-icon-color);
-}
-
-.DocSearch-AskAiScreen-Disclaimer-Text {
-  padding: 0;
+  padding: 1.5em 0 0.5em 0;
+  text-align: left;
   margin: 0;
+  align-self: flex-start;
 }
 
 .DocSearch-AskAiScreen-Body {
@@ -886,6 +884,7 @@ assistive tech users */
   display: flex;
   flex-direction: row;
   gap: 12px;
+  align-items: center;
   margin-left: auto;
 }
 
@@ -921,9 +920,35 @@ assistive tech users */
 
 .DocSearch-AskAiScreen-Error {
   padding: var(--docsearch-spacing);
+  display: flex;
+  align-items: center;
+  padding: 1em;
+  gap: 8px;
   color: var(--docsearch-error-color);
-  font-size: 0.8em;
+  background-color: rgb(239 83 80 / 0.1);
+  border-radius: 4px;
+  font-size: 1em;
   font-weight: 400;
+}
+
+.DocSearch-AskAiScreen-Error svg {
+  width: 16px;
+  height: 16px;
+}
+
+.DocSearch-AskAiScreen-Error p {
+  margin: 0;
+}
+
+.DocSearch-AskAiScreen-FeedbackText {
+  font-size: 0.7em;
+  font-weight: 400;
+  color: var(--docsearch-muted-color);
+}
+
+/* fade in animation when feedback has been given */
+.DocSearch-AskAiScreen-FeedbackText--visible {
+  animation: fade-in 0.3s ease-in forwards;
 }
 
 .DocSearch-AskAiScreen-RelatedSources {
@@ -972,6 +997,7 @@ assistive tech users */
   border-radius: 4px;
   color: var(--docsearch-text-color);
   font-size: 0.75em;
+  max-width: 70%;
   text-decoration: none;
   transition: background-color 0.2s ease;
 }
@@ -1176,30 +1202,30 @@ assistive tech users */
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 0.8em;
+  font-size: 1em;
   color: var(--docsearch-muted-color);
 }
 
 .DocSearch-AskAiScreen-MessageContent-Tool {
   display: flex;
-  align-items: center;
-  font-size: 1em;
   padding: 1em 0;
+  align-items: center;
   width: 100%;
   color: var(--docsearch-muted-color);
 }
 
+.DocSearch-AskAiScreen-MessageContent-Tool.Tool--Result:first-child {
+  padding-top: 0;
+}
+
+.DocSearch-AskAiScreen-MessageContent-Tool > svg {
+  color: var(--docsearch-icon-color);
+  margin-right: 8px;
+}
+
 .DocSearch-AskAiScreen-MessageContent-Tool-Query {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  all: unset;
-  border: 1px solid transparent;
   color: var(--docsearch-muted-color);
-  border-radius: 4px;
-  padding: 0.1em 0.2em;
-  margin: 0 0.2em;
-  transition: border-color 0.2s ease;
+  transition: box-shadow 0.2s ease;
 }
 
 .DocSearch-AskAiScreen-MessageContent-Tool-Query svg {
@@ -1207,9 +1233,8 @@ assistive tech users */
 }
 
 .DocSearch-AskAiScreen-MessageContent-Tool-Query:hover {
-  border-color: var(--docsearch-highlight-color);
+  box-shadow: 0 1px 0 0 var(--docsearch-highlight-color);
   color: var(--docsearch-highlight-color);
-  background-color: var(--docsearch-hit-highlight-color);
   cursor: pointer;
 }
 
@@ -1218,41 +1243,28 @@ assistive tech users */
 }
 
 .DocSearch-AskAiScreen-SmallerLoadingIcon {
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
 }
 
 .shimmer {
-  position: relative;
-  overflow: hidden;
-}
-
-.shimmer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -120%;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.1) 40%,
-    rgba(255, 255, 255, 0.8) 50%,
-    rgba(255, 255, 255, 0.1) 60%,
-    transparent 100%
-  );
-  transform: skewX(-20deg);
-  animation: shimmer 6s ease-in-out infinite;
+  background: var(--shimmer-bg);
+  background-size: 200% auto;
+  background-clip: text;
+  display: flex;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: shimmerText 2.5s linear infinite;
   pointer-events: none;
 }
 
-@keyframes shimmer {
+@keyframes shimmerText {
   0% {
-    left: -120%;
+    background-position: 200% 0;
   }
   100% {
-    left: 120%;
+    background-position: -200% 0;
   }
 }
 

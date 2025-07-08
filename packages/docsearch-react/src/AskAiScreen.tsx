@@ -1,11 +1,14 @@
 import type { UseChatHelpers } from '@ai-sdk/react';
 import React, { type JSX, useState, useEffect, useMemo } from 'react';
 
-import { SparklesIcon, LoadingIcon, SearchIcon } from './icons';
+import { AggregatedSearchBlock } from './AggregatedSearchBlock';
+import { AlertIcon, LoadingIcon, SearchIcon } from './icons';
 import { MemoizedMarkdown } from './MemoizedMarkdown';
 import type { ScreenStateProps } from './ScreenState';
-import type { InternalDocSearchHit } from './types';
+import type { StoredSearchPlugin } from './stored-searches';
+import type { InternalDocSearchHit, StoredAskAiState } from './types';
 import { extractLinksFromText } from './utils/ai';
+import { groupConsecutiveToolResults } from './utils/groupConsecutiveToolResults';
 
 export type AskAiScreenTranslations = Partial<{
   // Title texts
@@ -15,10 +18,32 @@ export type AskAiScreenTranslations = Partial<{
   thinkingText: string;
   copyButtonText: string;
   copyButtonCopiedText: string;
+  // Feedback buttons
+  copyButtonTitle: string;
+  likeButtonTitle: string;
+  dislikeButtonTitle: string;
+  thanksForFeedbackText: string;
   // Tool call texts
   preToolCallText: string;
   duringToolCallText: string;
   afterToolCallText: string;
+  /**
+   * Build the full jsx element for the aggregated search block.
+   * If provided, completely overrides the default english renderer.
+   */
+  aggregatedToolCallNode?: (queries: string[], onSearchQueryClick: (query: string) => void) => React.ReactNode;
+
+  /**
+   * Generate the list connective parts only (backwards compatibility).
+   * Receives full list of queries and should return translation parts for before/after/separators.
+   * Example: (qs) => ({ before: 'searched for ', separator: ', ', lastSeparator: ' and ', after: '' }).
+   */
+  aggregatedToolCallText?: (queries: string[]) => {
+    before?: string;
+    separator?: string;
+    lastSeparator?: string;
+    after?: string;
+  };
 }>;
 
 type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
@@ -40,36 +65,42 @@ interface Exchange {
 }
 
 function AskAiScreenHeader({ disclaimerText }: AskAiScreenHeaderProps): JSX.Element {
-  return (
-    <div className="DocSearch-AskAiScreen-Disclaimer">
-      <div className="DocSearch-AskAiScreen-Disclaimer-Icon">
-        <SparklesIcon />
-      </div>
-      <p className="DocSearch-AskAiScreen-Disclaimer-Text">{disclaimerText}</p>
-    </div>
-  );
+  return <p className="DocSearch-AskAiScreen-Disclaimer">{disclaimerText}</p>;
 }
 
 interface AskAiExchangeCardProps {
   exchange: Exchange;
+  askAiStreamError: Error | null;
   isLastExchange: boolean;
   loadingStatus: UseChatHelpers['status'];
   onSearchQueryClick: (query: string) => void;
   translations: AskAiScreenTranslations;
+  conversations: StoredSearchPlugin<StoredAskAiState>;
+  onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
 }
 
 function AskAiExchangeCard({
   exchange,
+  askAiStreamError,
   isLastExchange,
   loadingStatus,
   onSearchQueryClick,
   translations,
+  conversations,
+  onFeedback,
 }: AskAiExchangeCardProps): JSX.Element {
   const { userMessage, assistantMessage } = exchange;
 
   const showActions = !isLastExchange || (isLastExchange && loadingStatus === 'ready' && Boolean(assistantMessage));
 
-  const urlsToDisplay = extractLinksFromText(assistantMessage?.content || '');
+  const urlsToDisplay = React.useMemo(() => extractLinksFromText(assistantMessage?.content || ''), [assistantMessage]);
+
+  const displayParts = React.useMemo(() => {
+    if (!Array.isArray(assistantMessage?.parts)) {
+      return assistantMessage?.content ? [assistantMessage.content] : [];
+    }
+    return groupConsecutiveToolResults(assistantMessage.parts);
+  }, [assistantMessage]);
 
   return (
     <div className="DocSearch-AskAiScreen-Response-Container">
@@ -79,14 +110,49 @@ function AskAiExchangeCard({
         </div>
         <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--assistant">
           <div className="DocSearch-AskAiScreen-MessageContent">
-            {Array.isArray(assistantMessage?.parts)
-              ? assistantMessage.parts.map((part, idx) => {
+            {loadingStatus === 'error' && askAiStreamError && isLastExchange && (
+              <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error">
+                <AlertIcon />
+                <p>{askAiStreamError.message}</p>
+              </div>
+            )}
+            {loadingStatus === 'submitted' && isLastExchange && (
+              <div className="DocSearch-AskAiScreen-MessageContent-Reasoning">
+                <span className="shimmer">{translations.thinkingText || 'Thinking...'}</span>
+              </div>
+            )}
+            {Array.isArray(displayParts)
+              ? displayParts.map((part, idx) => {
                   const index = idx;
 
-                  if (part.type === 'reasoning' && assistantMessage.parts.length === 1) {
+                  if (typeof part === 'string') {
+                    return (
+                      <MemoizedMarkdown
+                        key={index}
+                        content={part}
+                        copyButtonText={translations.copyButtonText || 'Copy'}
+                        copyButtonCopiedText={translations.copyButtonCopiedText || 'Copied!'}
+                        isStreaming={loadingStatus === 'streaming'}
+                      />
+                    );
+                  }
+
+                  // aggregated tool call rendering
+                  if (part && (part as any).type === 'aggregated-tool-call') {
+                    return (
+                      <AggregatedSearchBlock
+                        key={index}
+                        queries={(part as any).queries}
+                        translations={translations}
+                        onSearchQueryClick={onSearchQueryClick}
+                      />
+                    );
+                  }
+
+                  if (part.type === 'reasoning' && assistantMessage?.parts?.length === 1) {
                     return (
                       <div key={index} className="DocSearch-AskAiScreen-MessageContent-Reasoning shimmer">
-                        <span className="italic">Thinking...</span>
+                        <span className="shimmer">Reasoning...</span>
                       </div>
                     );
                   }
@@ -113,7 +179,7 @@ function AskAiExchangeCard({
                               className="DocSearch-AskAiScreen-MessageContent-Tool Tool--PartialCall shimmer"
                             >
                               <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-                              <span>{translations.preToolCallText || 'Searching through the docs...'}</span>
+                              <span>{translations.preToolCallText || 'Searching...'}</span>
                             </div>
                           );
                         case 'call':
@@ -121,22 +187,32 @@ function AskAiExchangeCard({
                             <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Call shimmer">
                               <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
                               <span>
-                                {`${translations.duringToolCallText || 'Searching through the docs for '} "${toolInvocation.args?.query || ''}" ...`}
+                                {`${translations.duringToolCallText || 'Searching for '} "${toolInvocation.args?.query || ''}" ...`}
                               </span>
                             </div>
                           );
                         case 'result':
                           return (
                             <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Result">
-                              <span>{`${translations.afterToolCallText || 'Looked through the docs for'}`}</span>
-                              <button
-                                type="button"
-                                className="DocSearch-AskAiScreen-MessageContent-Tool-Query"
-                                onClick={() => onSearchQueryClick(toolInvocation.args?.query || '')}
-                              >
-                                &quot;{toolInvocation.args?.query || ''}&quot;
-                                <SearchIcon size={16} />
-                              </button>
+                              <SearchIcon size={18} />
+                              <span>
+                                {`${translations.afterToolCallText || 'Searched for'}`}{' '}
+                                <span
+                                  role="button"
+                                  tabIndex={0}
+                                  className="DocSearch-AskAiScreen-MessageContent-Tool-Query"
+                                  onKeyDown={(e) => {
+                                    if (e.key === 'Enter' || e.key === ' ') {
+                                      e.preventDefault();
+                                      onSearchQueryClick(toolInvocation.args?.query || '');
+                                    }
+                                  }}
+                                  onClick={() => onSearchQueryClick(toolInvocation.args?.query || '')}
+                                >
+                                  {' '}
+                                  &quot;{toolInvocation.args?.query || ''}&quot;
+                                </span>
+                              </span>
                             </div>
                           );
                         default:
@@ -146,7 +222,7 @@ function AskAiExchangeCard({
                     // fallback for unknown tool, should never happen in theory. :shrug:
                     return (
                       <span key={index} className="text-sm italic shimmer">
-                        Thinking...
+                        {translations.thinkingText || 'Thinking...'}
                       </span>
                     );
                   }
@@ -158,8 +234,12 @@ function AskAiExchangeCard({
         </div>
         <div className="DocSearch-AskAiScreen-Answer-Footer">
           <AskAiScreenFooterActions
+            id={userMessage?.id || exchange.id}
             showActions={showActions}
             latestAssistantMessageContent={assistantMessage?.content || null}
+            translations={translations}
+            conversations={conversations}
+            onFeedback={onFeedback}
           />
         </div>
       </div>
@@ -173,22 +253,81 @@ function AskAiExchangeCard({
 }
 
 interface AskAiScreenFooterActionsProps {
+  id: string;
   showActions: boolean;
   latestAssistantMessageContent: string | null;
+  translations: AskAiScreenTranslations;
+  conversations: StoredSearchPlugin<StoredAskAiState>;
+  onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
 }
 
 function AskAiScreenFooterActions({
+  id,
   showActions,
   latestAssistantMessageContent,
+  translations,
+  conversations,
+  onFeedback,
 }: AskAiScreenFooterActionsProps): JSX.Element | null {
+  // local state for feedback, initialised from stored conversations
+  const initialFeedback = React.useMemo(() => {
+    const message = conversations.getOne?.(id);
+    return message?.feedback ?? null;
+  }, [conversations, id]);
+
+  const [feedback, setFeedback] = React.useState<'dislike' | 'like' | null>(initialFeedback);
+  const [saving, setSaving] = React.useState(false);
+  const [savingError, setSavingError] = React.useState<Error | null>(null);
+
+  const handleFeedback = async (value: 'dislike' | 'like'): Promise<void> => {
+    if (saving) return;
+    setSavingError(null);
+    setSaving(true);
+    try {
+      await onFeedback?.(id, value === 'like' ? 1 : 0);
+      setFeedback(value);
+    } catch (error) {
+      setSavingError(error as Error);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const {
+    likeButtonTitle = 'Like',
+    dislikeButtonTitle = 'Dislike',
+    thanksForFeedbackText = 'Thanks for your feedback!',
+  } = translations;
+
   if (!showActions || !latestAssistantMessageContent) {
     return null;
   }
+
   return (
     <div className="DocSearch-AskAiScreen-Actions">
-      <CopyButton onClick={() => navigator.clipboard.writeText(latestAssistantMessageContent)} />
-      <LikeButton />
-      <DislikeButton />
+      {feedback === null ? (
+        <>
+          {saving ? (
+            <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
+          ) : (
+            <>
+              <LikeButton title={likeButtonTitle} onClick={() => handleFeedback('like')} />
+              <DislikeButton title={dislikeButtonTitle} onClick={() => handleFeedback('dislike')} />
+            </>
+          )}
+          {savingError && (
+            <p className="DocSearch-AskAiScreen-FeedbackText">{savingError.message || 'An error occured'}</p>
+          )}
+        </>
+      ) : (
+        <p className="DocSearch-AskAiScreen-FeedbackText DocSearch-AskAiScreen-FeedbackText--visible">
+          {thanksForFeedbackText}
+        </p>
+      )}
+      <CopyButton
+        translations={translations}
+        onClick={() => navigator.clipboard.writeText(latestAssistantMessageContent)}
+      />
     </div>
   );
 }
@@ -222,9 +361,7 @@ function AskAiSourcesPanel({ urlsToDisplay, relatedSourcesText }: AskAiSourcesPa
 }
 
 export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): JSX.Element | null {
-  const {
-    disclaimerText = 'Answers are generated using artificial intelligence. This is an experimental technology, and information may occasionally be incorrect or misleading.',
-  } = translations;
+  const { disclaimerText = 'Answers are generated with AI which can make mistakes. Verify responses.' } = translations;
 
   const { messages } = props;
 
@@ -251,12 +388,8 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
 
   return (
     <div className="DocSearch-AskAiScreen DocSearch-AskAiScreen-Container">
+      <AskAiScreenHeader disclaimerText={disclaimerText} />
       <div className="DocSearch-AskAiScreen-Body">
-        {props.askAiStreamError && (
-          <div className="DocSearch-AskAiScreen-Error">
-            <p>{props.askAiStreamError.message}</p>
-          </div>
-        )}
         <div className="DocSearch-AskAiScreen-ExchangesList">
           {exchanges
             .slice()
@@ -265,15 +398,17 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
               <AskAiExchangeCard
                 key={exchange.id}
                 exchange={exchange}
+                askAiStreamError={props.askAiStreamError}
                 isLastExchange={index === 0}
                 loadingStatus={props.status}
                 translations={translations}
+                conversations={props.conversations}
                 onSearchQueryClick={handleSearchQueryClick}
+                onFeedback={props.onFeedback}
               />
             ))}
         </div>
       </div>
-      <AskAiScreenHeader disclaimerText={disclaimerText} />
     </div>
   );
 }
@@ -298,7 +433,15 @@ function RelatedSourceIcon(): JSX.Element {
   );
 }
 
-function CopyButton({ onClick }: { onClick: () => void }): JSX.Element {
+function CopyButton({
+  onClick,
+  translations,
+}: {
+  onClick: () => void;
+  translations: AskAiScreenTranslations;
+}): JSX.Element {
+  const { copyButtonTitle = 'Copy', copyButtonCopiedText = 'Copied!' } = translations;
+
   const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
@@ -323,6 +466,7 @@ function CopyButton({ onClick }: { onClick: () => void }): JSX.Element {
         isCopied ? 'DocSearch-AskAiScreen-CopyButton--copied' : ''
       }`}
       disabled={isCopied} // disable button briefly after copy
+      title={isCopied ? copyButtonCopiedText : copyButtonTitle}
       onClick={handleClick}
     >
       {isCopied ? (
@@ -361,10 +505,15 @@ function CopyButton({ onClick }: { onClick: () => void }): JSX.Element {
   );
 }
 
-function LikeButton(): JSX.Element {
+function LikeButton({ title, onClick }: { title: string; onClick: () => void }): JSX.Element {
   // @todo: implement like button
   return (
-    <button type="button" className="DocSearch-AskAiScreen-ActionButton DocSearch-AskAiScreen-LikeButton">
+    <button
+      type="button"
+      className="DocSearch-AskAiScreen-ActionButton DocSearch-AskAiScreen-LikeButton"
+      title={title}
+      onClick={onClick}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -384,10 +533,15 @@ function LikeButton(): JSX.Element {
   );
 }
 
-function DislikeButton(): JSX.Element {
+function DislikeButton({ title, onClick }: { title: string; onClick: () => void }): JSX.Element {
   // @todo: implement dislike button
   return (
-    <button type="button" className="DocSearch-AskAiScreen-ActionButton DocSearch-AskAiScreen-DislikeButton">
+    <button
+      type="button"
+      className="DocSearch-AskAiScreen-ActionButton DocSearch-AskAiScreen-DislikeButton"
+      title={title}
+      onClick={onClick}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"

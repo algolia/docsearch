@@ -1,6 +1,6 @@
 import React, { type JSX } from 'react';
 
-import { RecentIcon, CloseIcon, StarIcon, SearchIcon, SparklesIcon } from './icons';
+import { RecentIcon, CloseIcon, StarIcon, SparklesIcon } from './icons';
 import { Results } from './Results';
 import type { ScreenStateProps } from './ScreenState';
 import type { InternalDocSearchHit } from './types';
@@ -24,7 +24,6 @@ type StartScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translatio
 export function StartScreen({ translations = {}, ...props }: StartScreenProps): JSX.Element | null {
   const {
     recentSearchesTitle = 'Recent',
-    noRecentSearchesText = 'Search results will appear here',
     saveRecentSearchButtonTitle = 'Save this search',
     removeRecentSearchButtonTitle = 'Remove this search from history',
     favoriteSearchesTitle = 'Favorite',
@@ -32,25 +31,6 @@ export function StartScreen({ translations = {}, ...props }: StartScreenProps): 
     recentConversationsTitle = 'Recent conversations',
     removeRecentConversationButtonTitle = 'Remove this conversation from history',
   } = translations;
-
-  if (props.state.status === 'idle' && props.hasCollections === false) {
-    if (props.disableUserPersonalization) {
-      return null;
-    }
-
-    return (
-      <div className="DocSearch-StartScreen">
-        <div className="DocSearch-StartScreen-Icon">
-          <SearchIcon size={64} color="#5a5e9a" />
-        </div>
-        <p className="DocSearch-Help">{noRecentSearchesText}</p>
-      </div>
-    );
-  }
-
-  if (props.hasCollections === false) {
-    return null;
-  }
 
   return (
     <div className="DocSearch-Dropdown-Container">

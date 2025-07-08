@@ -9,7 +9,8 @@ import {
 import type { SearchResponse } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 
-import { ASK_AI_API_URL, MAX_QUERY_SIZE } from './constants';
+import { getValidToken, postFeedback } from './askai';
+import { ASK_AI_API_URL, MAX_QUERY_SIZE, USE_ASK_AI_TOKEN } from './constants';
 import type { DocSearchProps } from './DocSearch';
 import type { FooterTranslations } from './Footer';
 import { Footer } from './Footer';
@@ -23,7 +24,7 @@ import type { DocSearchHit, DocSearchState, InternalDocSearchHit, StoredAskAiSta
 import { useSearchClient } from './useSearchClient';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
-import { groupBy, identity, noop, removeHighlightTags, isModifierEvent } from './utils';
+import { groupBy, identity, noop, removeHighlightTags, isModifierEvent, scrollTo as scrollToUtils } from './utils';
 import { buildDummyAskAiHit } from './utils/ai';
 
 export type ModalTranslations = Partial<{
@@ -338,13 +339,27 @@ export function DocSearchModal({
     error: askAiFetchError,
   } = useChat({
     api: ASK_AI_API_URL,
+    sendExtraMessageFields: true,
+    fetch: async (input, init) => {
+      if (!USE_ASK_AI_TOKEN) {
+        return fetch(input, init);
+      }
+
+      if (!askAiConfigurationId) {
+        throw new Error('Ask AI assistant ID is required');
+      }
+      const token = await getValidToken({ assistantId: askAiConfigurationId });
+      const headers = new Headers(init.headers);
+      headers.set('authorization', `TOKEN ${token}`);
+
+      return fetch(input, { ...init, headers });
+    },
     headers: {
       'Content-Type': 'application/json',
       'X-Algolia-API-Key': askAiConfig?.apiKey || apiKey,
       'X-Algolia-Application-Id': askAiConfig?.appId || appId,
       'X-Algolia-Index-Name': askAiConfig?.indexName || indexName,
       'X-Algolia-Assistant-Id': askAiConfigurationId || '',
-      'X-Documentation-Name': 'Documentation',
     },
     onError(streamError) {
       setAskAiStreamError(streamError);
@@ -416,12 +431,39 @@ export function DocSearchModal({
         content: query,
       });
 
+      if (dropdownRef.current) {
+        // some test environments (like jsdom) don't implement element.scrollTo
+        const el = dropdownRef.current;
+        if (typeof (el as any).scrollTo === 'function') {
+          el.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          // fallback for environments without scrollTo support
+          el.scrollTop = 0;
+        }
+      }
+
       // clear the query
       if (autocompleteRef.current) {
         autocompleteRef.current.setQuery('');
       }
     },
     [onAskAiToggle, append],
+  );
+
+  // feedback handler
+  const handleFeedbackSubmit = React.useCallback(
+    async (messageId: string, thumbs: 0 | 1): Promise<void> => {
+      if (!askAiConfigurationId || !appId) return;
+      const res = await postFeedback({
+        assistantId: askAiConfigurationId,
+        thumbs,
+        messageId,
+        appId,
+      });
+      if (res.status >= 300) throw new Error('Failed, try again later');
+      conversations.addFeedback?.(messageId, thumbs === 1 ? 'like' : 'dislike');
+    },
+    [askAiConfigurationId, appId, conversations],
   );
 
   if (!autocompleteRef.current) {
@@ -586,10 +628,10 @@ export function DocSearchModal({
   }, []);
 
   React.useEffect(() => {
-    if (dropdownRef.current) {
-      dropdownRef.current.scrollTop = 0;
+    if (dropdownRef.current && !isAskAiActive) {
+      scrollToUtils(dropdownRef.current);
     }
-  }, [state.query]);
+  }, [state.query, isAskAiActive]);
 
   // We don't focus the input when there's an initial query (i.e. Selection
   // Search) because users rather want to see the results directly, without the
@@ -635,6 +677,13 @@ export function DocSearchModal({
     }
   }, [isAskAiActive, autocomplete, setMessages]);
 
+  // hide the dropdown on idle and no collections
+  let showDocsearchDropdown = true;
+  const hasCollections = state.collections.some((collection) => collection.items.length > 0);
+  if (state.status === 'idle' && hasCollections === false && state.query.length === 0) {
+    showDocsearchDropdown = false;
+  }
+
   return (
     <div
       ref={containerRef}
@@ -666,6 +715,7 @@ export function DocSearchModal({
             isFromSelection={Boolean(initialQuery) && initialQuery === initialQueryFromSelection}
             translations={searchBoxTranslations}
             isAskAiActive={isAskAiActive}
+            askAiStatus={status}
             onClose={onClose}
             onAskAiToggle={onAskAiToggle}
             onAskAgain={(query) => {
@@ -674,52 +724,55 @@ export function DocSearchModal({
           />
         </header>
 
-        <div className="DocSearch-Dropdown" ref={dropdownRef}>
-          <ScreenState
-            {...autocomplete}
-            indexName={indexName}
-            state={state}
-            hitComponent={hitComponent}
-            resultsFooterComponent={resultsFooterComponent}
-            disableUserPersonalization={disableUserPersonalization}
-            recentSearches={recentSearches}
-            favoriteSearches={favoriteSearches}
-            conversations={conversations}
-            inputRef={inputRef}
-            translations={screenStateTranslations}
-            getMissingResultsUrl={getMissingResultsUrl}
-            isAskAiActive={isAskAiActive}
-            canHandleAskAi={canHandleAskAi}
-            messages={messages}
-            askAiStreamError={askAiStreamError}
-            askAiFetchError={askAiFetchError}
-            status={status}
-            onAskAiToggle={onAskAiToggle}
-            onItemClick={(item, event) => {
-              // if the item is askAI toggle the screen
-              if (item.type === 'askAI' && item.query) {
-                // if the item is askAI and the anchor is stored
-                if (item.anchor === 'stored' && 'messages' in item) {
-                  setMessages(item.messages as any);
-                  onAskAiToggle(true);
-                } else {
-                  handleAskAiToggle(true, item.query);
+        {showDocsearchDropdown && (
+          <div className="DocSearch-Dropdown" ref={dropdownRef}>
+            <ScreenState
+              {...autocomplete}
+              indexName={indexName}
+              state={state}
+              hitComponent={hitComponent}
+              resultsFooterComponent={resultsFooterComponent}
+              disableUserPersonalization={disableUserPersonalization}
+              recentSearches={recentSearches}
+              favoriteSearches={favoriteSearches}
+              conversations={conversations}
+              inputRef={inputRef}
+              translations={screenStateTranslations}
+              getMissingResultsUrl={getMissingResultsUrl}
+              isAskAiActive={isAskAiActive}
+              canHandleAskAi={canHandleAskAi}
+              messages={messages}
+              askAiStreamError={askAiStreamError}
+              askAiFetchError={askAiFetchError}
+              status={status}
+              hasCollections={hasCollections}
+              onAskAiToggle={onAskAiToggle}
+              onItemClick={(item, event) => {
+                // if the item is askAI toggle the screen
+                if (item.type === 'askAI' && item.query) {
+                  // if the item is askAI and the anchor is stored
+                  if (item.anchor === 'stored' && 'messages' in item) {
+                    setMessages(item.messages as any);
+                    onAskAiToggle(true);
+                  } else {
+                    handleAskAiToggle(true, item.query);
+                  }
+                  event.preventDefault();
+                  return;
                 }
-                event.preventDefault();
-                return;
-              }
 
-              // If insights is active, send insights click event
-              sendItemClickEvent(item);
+                // If insights is active, send insights click event
+                sendItemClickEvent(item);
 
-              saveRecentSearch(item);
-              if (!isModifierEvent(event)) {
-                onClose();
-              }
-            }}
-          />
-        </div>
-
+                saveRecentSearch(item);
+                if (!isModifierEvent(event)) {
+                  onClose();
+                }
+              }}
+              onFeedback={handleFeedbackSubmit}
+            />
+          </div>
+        )}
         <footer className="DocSearch-Footer">
           <Footer translations={footerTranslations} isAskAiActive={isAskAiActive} />
         </footer>

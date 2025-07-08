@@ -36,7 +36,8 @@ export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButt
       key === ACTION_KEY_DEFAULT
         ? // eslint-disable-next-line react/jsx-key -- false flag
           ([ACTION_KEY_DEFAULT, 'Control', <ControlKeyIcon />] as const)
-        : (['Meta', 'Meta', key] as const);
+        : // eslint-disable-next-line react/jsx-key -- false flag
+          (['Meta', 'Meta', <MetaKeyIcon />] as const);
 
     const shortcut = `${actionKeyAltText}+k`;
 

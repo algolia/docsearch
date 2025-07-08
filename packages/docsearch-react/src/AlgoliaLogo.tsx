@@ -19,7 +19,7 @@ export function AlgoliaLogo({ translations = {} }: AlgoliaLogoProps): JSX.Elemen
     >
       <span className="DocSearch-Label">{poweredByText}</span>
       <svg
-        width="77"
+        width="80"
         height="24"
         aria-label="Algolia"
         role="img"

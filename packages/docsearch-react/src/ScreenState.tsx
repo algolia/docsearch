@@ -45,6 +45,8 @@ export interface ScreenStateProps<TItem extends BaseItem>
   resultsFooterComponent: DocSearchProps['resultsFooterComponent'];
   translations: ScreenStateTranslations;
   getMissingResultsUrl?: DocSearchProps['getMissingResultsUrl'];
+  hasCollections: boolean;
+  onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
 }
 
 export const ScreenState = React.memo(
@@ -66,13 +68,11 @@ export const ScreenState = React.memo(
       return <ErrorScreen translations={translations?.errorScreen} />;
     }
 
-    const hasCollections = props.state.collections.some((collection) => collection.items.length > 0);
-
     if (!props.state.query) {
-      return <StartScreen {...props} hasCollections={hasCollections} translations={translations?.startScreen} />;
+      return <StartScreen {...props} hasCollections={props.hasCollections} translations={translations?.startScreen} />;
     }
 
-    if (hasCollections === false && !props.canHandleAskAi) {
+    if (!props.hasCollections && !props.canHandleAskAi) {
       return <NoResultsScreen {...props} translations={translations?.noResultsScreen} />;
     }
 

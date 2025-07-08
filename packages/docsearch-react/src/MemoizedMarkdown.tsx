@@ -31,6 +31,14 @@ renderer.code = ({ text, lang = '', escaped }: Tokens.Code): string => {
   `;
 };
 
+// ensure all markdown links open in a new tab with rel noopener for security
+renderer.link = ({ href, title, text }: Tokens.Link): string => {
+  const titleAttr = title ? ` title="${escapeHtml(title)}"` : '';
+  const hrefAttr = href ? escapeHtml(href) : '';
+  const textEscaped = escapeHtml(text);
+  return `<a href="${hrefAttr}"${titleAttr} target="_blank" rel="noopener noreferrer">${textEscaped}</a>`;
+};
+
 export const MemoizedMarkdown = memo(
   ({
     content,
