@@ -458,7 +458,7 @@ export function DocSearchModal({
   // feedback handler
   const handleFeedbackSubmit = React.useCallback(
     async (messageId: string, thumbs: 0 | 1): Promise<void> => {
-      if (!askAiConfigurationId || !appId || disableUserPersonalization) return;
+      if (!askAiConfigurationId || !appId) return;
       const res = await postFeedback({
         assistantId: askAiConfigurationId,
         thumbs,
@@ -468,7 +468,7 @@ export function DocSearchModal({
       if (res.status >= 300) throw new Error('Failed, try again later');
       conversations.addFeedback?.(messageId, thumbs === 1 ? 'like' : 'dislike');
     },
-    [askAiConfigurationId, appId, conversations, disableUserPersonalization],
+    [askAiConfigurationId, appId, conversations],
   );
 
   if (!autocompleteRef.current) {
@@ -689,7 +689,7 @@ export function DocSearchModal({
   // hide the dropdown on idle and no collections
   let showDocsearchDropdown = true;
   const hasCollections = state.collections.some((collection) => collection.items.length > 0);
-  if (state.status === 'idle' && hasCollections === false && state.query.length === 0) {
+  if (state.status === 'idle' && hasCollections === false && state.query.length === 0 && !isAskAiActive) {
     showDocsearchDropdown = false;
   }
 

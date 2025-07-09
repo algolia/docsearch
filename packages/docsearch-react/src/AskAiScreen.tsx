@@ -96,9 +96,9 @@ function AskAiExchangeCard({
 
   const displayParts = React.useMemo(() => {
     if (!Array.isArray(assistantMessage?.parts)) {
-      return assistantMessage?.content ? [assistantMessage.content] : [];
+      return assistantMessage?.content ? [assistantMessage?.content] : [];
     }
-    return groupConsecutiveToolResults(assistantMessage.parts);
+    return groupConsecutiveToolResults(assistantMessage?.parts || []);
   }, [assistantMessage]);
 
   return (
