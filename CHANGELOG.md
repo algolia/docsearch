@@ -1,3 +1,7 @@
+# [4.0.0-beta.1](https://github.com/algolia/docsearch/compare/v4.0.0-beta.0...v4.0.0-beta.1) (2025-07-09)
+
+
+
 # [4.0.0-beta.0](https://github.com/algolia/docsearch/compare/v3.9.0...v4.0.0-beta.0) (2025-07-09)
 
 
