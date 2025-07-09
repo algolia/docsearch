@@ -22,6 +22,7 @@ import { SearchBox } from './SearchBox';
 import { createStoredConversations, createStoredSearches } from './stored-searches';
 import type { DocSearchHit, DocSearchState, InternalDocSearchHit, StoredAskAiState, StoredDocSearchHit } from './types';
 import { useSearchClient } from './useSearchClient';
+import { useTheme } from './useTheme';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
 import { groupBy, identity, noop, removeHighlightTags, isModifierEvent, scrollTo as scrollToUtils } from './utils';
@@ -265,6 +266,7 @@ export function DocSearchModal({
   askAi,
   searchParameters,
   maxResultsPerGroup,
+  theme,
   onClose = noop,
   transformItems = identity,
   hitComponent = Hit,
@@ -593,6 +595,7 @@ export function DocSearchModal({
     inputElement: inputRef.current,
   });
   useTrapFocus({ container: containerRef.current });
+  useTheme({ theme });
 
   React.useEffect(() => {
     document.body.classList.add('DocSearch--active');

@@ -5,3 +5,9 @@
 
 [build.environment]
   YARN_VERSION = "1.22.5"
+
+[[redirects]]
+  from = "/apply/"
+  to = "https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch"
+  status = 301
+  force = true

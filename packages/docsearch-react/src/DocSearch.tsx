@@ -1,12 +1,13 @@
-import type { AutocompleteState, AutocompleteOptions } from '@algolia/autocomplete-core';
+import type { AutocompleteOptions, AutocompleteState } from '@algolia/autocomplete-core';
 import type { LiteClient, SearchParamsObject } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
 
 import { DocSearchButton } from './DocSearchButton';
 import { DocSearchModal } from './DocSearchModal';
-import type { DocSearchHit, InternalDocSearchHit, StoredDocSearchHit } from './types';
+import type { DocSearchHit, DocSearchTheme, InternalDocSearchHit, StoredDocSearchHit } from './types';
 import { useDocSearchKeyboardEvents } from './useDocSearchKeyboardEvents';
+import { useTheme } from './useTheme';
 
 import type { ButtonTranslations, ModalTranslations } from '.';
 
@@ -49,6 +50,7 @@ export interface DocSearchProps {
   apiKey: string;
   indexName: string;
   askAi?: DocSearchAskAi | string;
+  theme?: DocSearchTheme;
   placeholder?: string;
   searchParameters?: SearchParamsObject;
   maxResultsPerGroup?: number;
@@ -64,7 +66,7 @@ export interface DocSearchProps {
   insights?: AutocompleteOptions<InternalDocSearchHit>['insights'];
 }
 
-export function DocSearch(props: DocSearchProps): JSX.Element {
+export function DocSearch({ ...props }: DocSearchProps): JSX.Element {
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
   const [isOpen, setIsOpen] = React.useState(false);
   const [initialQuery, setInitialQuery] = React.useState<string | undefined>(props?.initialQuery || undefined);
@@ -120,6 +122,7 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
     onAskAiToggle,
     searchButtonRef,
   });
+  useTheme({ theme: props.theme });
 
   return (
     <>
