@@ -370,12 +370,15 @@ export function DocSearchModal({
 
   const prevStatus = React.useRef(status);
   React.useEffect(() => {
+    if (disableUserPersonalization) {
+      return;
+    }
     // if we just transitioned from "streaming" → "ready", persist
     if (prevStatus.current === 'streaming' && status === 'ready') {
       conversations.add(buildDummyAskAiHit(messages[0].content, messages));
     }
     prevStatus.current = status;
-  }, [status, messages, conversations]);
+  }, [status, messages, conversations, disableUserPersonalization]);
 
   const saveRecentSearch = React.useCallback(
     function saveRecentSearch(item: InternalDocSearchHit) {
@@ -455,7 +458,7 @@ export function DocSearchModal({
   // feedback handler
   const handleFeedbackSubmit = React.useCallback(
     async (messageId: string, thumbs: 0 | 1): Promise<void> => {
-      if (!askAiConfigurationId || !appId) return;
+      if (!askAiConfigurationId || !appId || disableUserPersonalization) return;
       const res = await postFeedback({
         assistantId: askAiConfigurationId,
         thumbs,
@@ -465,7 +468,7 @@ export function DocSearchModal({
       if (res.status >= 300) throw new Error('Failed, try again later');
       conversations.addFeedback?.(messageId, thumbs === 1 ? 'like' : 'dislike');
     },
-    [askAiConfigurationId, appId, conversations],
+    [askAiConfigurationId, appId, conversations, disableUserPersonalization],
   );
 
   if (!autocompleteRef.current) {
@@ -501,6 +504,9 @@ export function DocSearchModal({
                   {
                     sourceId: 'recentConversations',
                     getItems(): InternalDocSearchHit[] {
+                      if (disableUserPersonalization) {
+                        return [];
+                      }
                       return conversations.getAll() as unknown as InternalDocSearchHit[];
                     },
                     onSelect({ item }): void {

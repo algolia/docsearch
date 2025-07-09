@@ -18,8 +18,18 @@ export default {
     },
     {
       type: 'category',
+      label: 'DocSearch v4 - Beta',
+      items: ['v4', 'v4/api', 'v4/migrating-from-v3'],
+    },
+    {
+      type: 'category',
       label: 'DocSearch v3',
       items: ['docsearch-v3', 'api', 'styling', 'migrating-from-v2'],
+    },
+    {
+      type: 'category',
+      label: 'Algolia AskAI - Beta',
+      items: ['v4/askai', 'v4/askai-prompts', 'v4/askai-whitelisted-domains'],
     },
     {
       type: 'category',

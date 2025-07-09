@@ -1,0 +1,120 @@
+---
+title: Get started with AskAI
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+## Overview
+
+AskAI is a conversational AI product that transforms your technical content—like support articles, developer docs, and blogs—into an intelligent, on-site chatbot experience. Built on top of Algolia Search, AskAI combines the precision of structured search with the flexibility of generative AI to deliver fast, context-aware support answers directly from your existing content.
+
+## Why you should use AskAI
+
+- **Empower Users with Instant Support**: Let users get accurate, conversational answers from your tech docs, blogs, and support content—without digging through pages.
+- **Reduce Ticket Volume**: Deflect repetitive support queries by resolving them through automated, intelligent chat experiences.
+- **Built on Algolia**: Leverage the speed and relevance of your Algolia-powered search index as a trusted foundation for AI responses.
+- **Simple to Deploy**: Integrate AskAI into your site with minimal setup and no need to retrain models or manually tag data.
+- **Always Up to Date**: AskAI syncs with your search content, ensuring responses evolve alongside your documentation.
+- **Scalable & Customizable**: Whether for internal support or customer-facing portals, tailor the experience to your brand and scale it as your content grows.
+- **Flexible LLM Choice (BYOLLM)**: Integrate with the language model that fits your needs—OpenAI, Anthropic, Mistral, or others.
+
+To get started with AskAI on your site, begin by creating and configuring your Ask AI assistant—including its model, prompt, and allowed domains where Ask AI should run.
+
+1. Go to **Data Sources > Ask AI**.
+2. Click **"Create Your Assistant"** to start setting up your Ask AI service.
+3. Follow the prompts to configure your setup.
+
+<img
+  src={useBaseUrl('img/assets/askai-1-overview.png')}
+  alt="How it works"
+/>
+
+### Add the domains where Ask AI should run (Required)
+
+Define where Ask AI is allowed to run. Add all domains and subdomains where your assistants should be active. You can add exact domains or use wildcard patterns to cover multiple subdomains at once.
+Only the domains or patterns you add here will be whitelisted, if a site or pattern isn't listed Ask AI won't work there. You can add multiple entries now or come back later to add more.
+
+Examples:
+
+* www.example.com
+* help.example.com
+* \*.example.com
+
+**Note:** You can add more domains at any time after the initial setup.
+Go to Data Sources \> Ask AI \> click on “Add Domain" button.
+
+<img
+  src={useBaseUrl('img/assets/askai-2-add-domains.png')}
+  alt="How it works"
+/>
+
+### Configure model and settings
+
+Set up the core components of your assistant, including the language model, authentication, and usage controls.
+
+* **Choose your LLM provider**: Select a supported provider, such as OpenAI or Anthropic. You'll need to have an account with them and access to an API key.
+* **Select a model**: Pick a specific model from your chosen provider. Newer models typically offer better performance, with faster and more accurate responses.
+* **Enter your API key**: Provide the API key from your provider to authenticate requests. This connects your assistant to the selected model.
+* **Set usage limits**: Define a maximum token limit to control the length of responses and manage costs. Tokens represent small pieces of text (e.g., words or characters).
+* **Name your configuration**: Give your assistant configuration a unique name for easy reference. We'll suggest a default name, but you can change it anytime.
+
+<img
+  src={useBaseUrl('img/assets/askai-3-model.png')}
+  alt="How it works"
+/>
+
+### **Define Assistant Behaviour**
+
+Now it's time to set up the **system prompt**—this tells the LLM how it should respond using your content. The system prompt shapes your assistant's tone, style, and behavior.
+
+AskAI provides **three default prompt templates** to help you get started. You can:
+
+* **Use a pre-built prompt**: Quickly launch with a default configuration.
+* **Customize an existing prompt**: Adjust the wording to better fit your tone or use case.
+* **Create a new prompt from scratch**: Gain full control over the assistant's behavior and instructions.
+
+Choose the option that best matches your support experience. No matter which option you select, be sure to **name your prompt**—this makes it easy to manage and reuse later.
+
+Create new prompt using a pre-built template:
+
+<img
+  src={useBaseUrl('img/assets/askai-4-prompts.png')}
+  alt="How it works"
+/>
+
+Or from scratch:
+
+<img
+  src={useBaseUrl('img/assets/askai-5-prompt-scratch.png')}
+  alt="How it works"
+/>
+
+
+**Note:** Prompts can be reused for any assistants you create in the future. Once you've created a custom prompt, you'll be able to select it again by choosing the **“Use existing prompt"** option in this view.
+
+| Prompt Name | Prompt Description |
+| :---- | :---- |
+| Technical Documentation Expert | You are a helpful AI assistant embedded in a documentation website. Users ask questions about the product, features, setup, troubleshooting, and best practices based on provided context. Answer accurately and concisely using only the provided context. Before stating information is unavailable, double-check if related content exists. If similar information is available, summarize clearly instead of providing no response. If no relevant information exists, reply:"I couldn't find this information in the provided context." Always include relevant URLs when available. Avoid responses outside the provided context. |
+| Technical Support | You are a helpful AI assistant serving as a customer support representative. Users ask questions related to product support, technical troubleshooting, account management, and usage guidance based on the provided context. Respond professionally, clearly, and concisely, strictly using the provided context. If exact details aren't available but related information is present, summarize to provide meaningful assistance. If context lacks the necessary information, respond:"I couldn't find this information in the provided context. Please contact our support team for further assistance." Include relevant URLs or contact details when applicable. Do not provide answers beyond the context provided. |
+| Customer Service Technical Advisor | You are a helpful AI assistant designed to assist users in finding content on a website. Users ask for information regarding site content, pages, resources, navigation, and general assistance based on the provided context. Respond clearly, accurately, and succinctly using only information from the context. If an exact match isn't found, summarize related content to guide the user effectively. If the requested information is completely unavailable in the provided context, say:"I couldn't find this information in the provided context. Try refining your search or browsing our website for more details. |
+
+### **Manage Assistants, Prompts and Domains**
+
+Now that you've created your first assistant and prompt, you can review and manage them from this screen.
+
+* To create a new assistant, click the “Add Assistant" button.
+* To create a new prompt, click the “Add Prompt" button.
+* To add a new allowed domain, click “Add Domain" button
+* To edit or delete an existing assistant, prompt or domain, click the “⋯" (more options) icon on the right side of the corresponding row
+
+This view gives you a centralized place to organize, reuse, and fine-tune your assistant configurations over time.
+
+<img
+  src={useBaseUrl('img/assets/askai-6-full-setup.png')}
+  alt="How it works"
+/>
+
+## Next steps
+
+- [Prompting with AskAI](/docs/v4/askai-prompts)
+- [AskAI Whitelisted Domains](/docs/v4/askai-whitelisted-domains)
