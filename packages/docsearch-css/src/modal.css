@@ -24,7 +24,7 @@
   position: fixed;
   top: 0;
   width: 100vw;
-  z-index: 200;
+  z-index: 400;
 }
 
 .DocSearch-Container a {
