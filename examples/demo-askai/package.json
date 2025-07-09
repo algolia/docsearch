@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/askai-example",
   "description": "DocSearch v4 AskAI example",
-  "version": "4.0.0-beta.0",
+  "version": "4.0.0-beta.1",
   "private": true,
   "license": "MIT",
   "type": "module",
@@ -11,8 +11,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@docsearch/css": "4.0.0-beta.0",
-    "@docsearch/react": "4.0.0-beta.0",
+    "@docsearch/css": "4.0.0-beta.1",
+    "@docsearch/react": "4.0.0-beta.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
