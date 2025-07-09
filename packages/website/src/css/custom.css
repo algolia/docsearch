@@ -25,6 +25,10 @@ html[data-theme='dark'] {
   --ifm-announcement-bar-background-color: var(--ifm-color-primary);
 }
 
+html {
+  font-family: 'Inter', sans-serif;
+}
+
 /* override to fix some logo placement issues due to flex auto */
 .navbar__logo {
   flex: 0 0 100%;

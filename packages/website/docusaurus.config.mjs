@@ -51,7 +51,7 @@ export default {
     ({
       algolia: {
         appId: 'PMZUYBQDAK',
-        apiKey: '599cec31baffa4868cae4e79f180729b',
+        apiKey: '24b09689d5b4223813d9b8e48563c8f6',
         askAi: 'askAIDemo',
         indexName: 'docsearch',
         contextualSearch: true,
