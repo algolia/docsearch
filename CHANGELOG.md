@@ -1,3 +1,29 @@
+# [4.0.0-beta.0](https://github.com/algolia/docsearch/compare/v3.9.0...v4.0.0-beta.0) (2025-07-09)
+
+
+### Bug Fixes
+
+* `<input>` in ShadowDOM will open docsearch ([#2212](https://github.com/algolia/docsearch/issues/2212)) ([ec35171](https://github.com/algolia/docsearch/commit/ec351710b134c57bdbcad39e009dae8516f6e571))
+* **a11y:** have unique ids for favorite/recent lists ([#2485](https://github.com/algolia/docsearch/issues/2485)) ([c591f00](https://github.com/algolia/docsearch/commit/c591f004423a9ead953409f3d4a89643fa84b994))
+* recaptcha import ([#2621](https://github.com/algolia/docsearch/issues/2621)) ([ba5bdd8](https://github.com/algolia/docsearch/commit/ba5bdd8a84544b1f92e0d9a88eb12620ce573528))
+* size and background scroll fixes ([#2603](https://github.com/algolia/docsearch/issues/2603)) ([fe03b8e](https://github.com/algolia/docsearch/commit/fe03b8e04e71b328837bb6f0461a0ca0949cf171))
+* **v4:** ask ai updates ([#2654](https://github.com/algolia/docsearch/issues/2654)) ([a64e762](https://github.com/algolia/docsearch/commit/a64e7626cc57330a9998b46e3116da196b693a5d))
+
+
+### Features
+
+* **a11y:** add `aria-keyshortcuts` to search button ([#2365](https://github.com/algolia/docsearch/issues/2365)) ([b68a792](https://github.com/algolia/docsearch/commit/b68a79261e139385cdaf3d0321f25428aa90b242))
+* add theme prop ([#2651](https://github.com/algolia/docsearch/issues/2651)) ([85568ce](https://github.com/algolia/docsearch/commit/85568ce0952007f94e0649d752c25e1c61c36d99))
+* **apply:** Update rest of apply links ([#2655](https://github.com/algolia/docsearch/issues/2655)) ([29fde53](https://github.com/algolia/docsearch/commit/29fde5332033d2766d7648332aeb9a92656dccf5))
+* **onboarding:** Docsearch new sign up page ([#2606](https://github.com/algolia/docsearch/issues/2606)) ([2874789](https://github.com/algolia/docsearch/commit/2874789fad17d3cc8020a8c69109f61408b41460))
+* **onboarding:** Docsearch who can apply updated page ([#2607](https://github.com/algolia/docsearch/issues/2607)) ([161dcdc](https://github.com/algolia/docsearch/commit/161dcdca00e2c578a7a6831335849fe5479737c2))
+* **v4:** add new UI ([#2555](https://github.com/algolia/docsearch/issues/2555)) ([6a160ae](https://github.com/algolia/docsearch/commit/6a160aecf6cb8cd67782dc77ef2f2deb95d7277d))
+* **v4:** ask-ai foundations :sparkles: ([#2574](https://github.com/algolia/docsearch/issues/2574)) ([5ab4d3d](https://github.com/algolia/docsearch/commit/5ab4d3d215242857c4dc0a99d05a1c978852ac4e))
+* **v4:** docsearch askAI context ([#2587](https://github.com/algolia/docsearch/issues/2587)) ([d8bddd1](https://github.com/algolia/docsearch/commit/d8bddd119682d03d17505bc1f85161e57f318d9c))
+* **v4:** update beta documentation ([#2659](https://github.com/algolia/docsearch/issues/2659)) ([e3c0005](https://github.com/algolia/docsearch/commit/e3c0005e471d3c2a05095d5f9d5903573785fa19))
+
+
+
 # [3.9.0](https://github.com/algolia/docsearch/compare/v3.8.3...v3.9.0) (2025-02-17)
 
 
