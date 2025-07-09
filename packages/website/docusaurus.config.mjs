@@ -15,6 +15,12 @@ export default {
   projectName: 'DocSearch',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'throw',
+  future: {
+    v4: {
+      removeLegacyPostBuildHeadAttribute: true,
+      useCssCascadeLayers: true,
+    },
+  },
   presets: [
     [
       '@docusaurus/preset-classic',
@@ -44,8 +50,9 @@ export default {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       algolia: {
-        appId: 'R2IYF7ETH7',
-        apiKey: '599cec31baffa4868cae4e79f180729b',
+        appId: 'PMZUYBQDAK',
+        apiKey: '24b09689d5b4223813d9b8e48563c8f6',
+        askAi: 'askAIDemo',
         indexName: 'docsearch',
         contextualSearch: true,
       },
@@ -87,14 +94,15 @@ export default {
           },
         ],
       },
+      announcementBar: {
+        id: 'announcement-bar',
+        content:
+          '🚀 Ask AI Private Beta Now Open! Turn your docs site search into an AI-powered assistant – faster answers, fewer tickets, better self-serve. <a target="_blank" rel="noopener noreferrer" href="https://docs.google.com/forms/d/e/1FAIpQLSer6eQmamqV0VC8Gc6CxN4wQgBF1OQR2s1i3XG6i1oXWTOkGg/viewform?usp=dialog">Get early access</a>',
+      },
       colorMode: {
         defaultMode: 'light',
         disableSwitch: false,
         respectPrefersColorScheme: true,
-      },
-      announcementBar: {
-        content:
-          '⭐️ If you like DocSearch, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/algolia/docsearch">GitHub</a>! ⭐️',
       },
       footer: {
         links: [
@@ -112,6 +120,10 @@ export default {
               {
                 label: 'DocSearch v3',
                 to: 'docs/docsearch-v3',
+              },
+              {
+                label: 'DocSearch v4 - Beta',
+                to: 'docs/v4',
               },
             ],
           },

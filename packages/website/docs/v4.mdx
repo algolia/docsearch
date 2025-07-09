@@ -1,31 +1,23 @@
 ---
-title: Getting Started
+title: Getting Started with v4
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-:::info
+:::warning
 
-The following content is for **[DocSearch v3][2]**. If you are using **[DocSearch v2][3]**, see the **[legacy][4]** documentation.
+DocSearch v4 is currently in beta. While it's suitable for production scenarios, expect potential improvements and minor issues. Use at your discretion.
 
 :::
 
 ## Introduction
 
-DocSearch v3 is built on top of the latest version of [Algolia Autocomplete][1], which provides better accessibility, increased responsiveness, themability, a better built-in design, and customizability under low-network conditions.
-
-This version has been rewritten in React, and now exposes React components. The vanilla JavaScript version is based on the React version with an alias to Preact.
-
-### Stable version
-
-With the recent release of the stable version of [Algolia Autocomplete][1], and the huge adoption of DocSearch v3, we will start working on a stable release!
-
-Thanks to all the Alpha testers, and to [all the integrations][5] who already support it!
+DocSearch v4 provides a significant upgrade over previous versions, offering enhanced accessibility, responsiveness, and an improved search experience for your documentation. Built on [Algolia Autocomplete][1], DocSearch v4 ensures a seamless integration trusted by leading documentation sites worldwide.
 
 ## Installation
 
-DocSearch packages are available on the [npm][10] registry.
+DocSearch packages are available on the [npm registry][10].
 
 <Tabs
   groupId="language"
@@ -38,55 +30,55 @@ DocSearch packages are available on the [npm][10] registry.
 <TabItem value="js">
 
 ```bash
-yarn add @docsearch/js@3
-# or
-npm install @docsearch/js@3
+yarn add @docsearch/js@4
+# or with npm
+npm install @docsearch/js@4
 ```
 
 ### Without package manager
 
-If you don't want to use a package manager, you can add the CSS to the `<head>` of your website:
+Include CSS in your website's `<head>`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@4" />
 ```
 
 And the JavaScript at the end of your `<body>`:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@4"></script>
 ```
 
 </TabItem>
 <TabItem value="react">
 
 ```bash
-yarn add @docsearch/react@3
+yarn add @docsearch/react@4
 # or
-npm install @docsearch/react@3
+npm install @docsearch/react@4
 ```
 
 ### Without package manager
 
-If you don't want to use a package manager, you can add the CSS to the `<head>` of your website:
+Include CSS in your website's `<head>`:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@4" />
 ```
 
 And the JavaScript at the end of your `<body>`:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/react@3"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/react@4"></script>
 ```
 
 </TabItem>
 
 </Tabs>
 
-### Improve first query speed
+### Optimize first query performance
 
-You can hint the browser to improve the speed of the first query by adding a `preconnect`, see [#preconnect](#preconnect)
+Enhance your users' first search experience by using `preconnect`, see [Performance optimization](#preconnect) below
 
 ## Implementation
 
@@ -100,15 +92,13 @@ You can hint the browser to improve the speed of the first query by adding a `pr
 }>
 <TabItem value="js">
 
-To get started, you need a [`container`][11] for your DocSearch component to go in. If you don’t have one already, you can insert one into your markup:
+DocSearch requires a dedicated container in your HTML
 
 ```html
 <div id="docsearch"></div>
 ```
 
-Then, insert DocSearch into it by calling the [`docsearch`][12] function and providing the container. It can be a [CSS selector][6] or an [Element][7].
-
-Make sure to provide a [`container`][11] (for example, a `div`), not an `input`. DocSearch generates a fully accessible search box for you.
+Initialize DocSearch by passing your container:
 
 ```js app.js
 import docsearch from '@docsearch/js';
@@ -123,11 +113,13 @@ docsearch({
 });
 ```
 
+DocSearch generates an accessible, fully-functional search input for you automatically.
+
 </TabItem>
 
 <TabItem value="react">
 
-DocSearch generates a fully accessible search box for you.
+Integrating DocSearch into your React app is straightforward:
 
 ```jsx App.js
 import { DocSearch } from '@docsearch/react';
@@ -147,13 +139,15 @@ function App() {
 export default App;
 ```
 
+DocSearch generates a fully accessible search input out-of-the-box.
+
 </TabItem>
 
 </Tabs>
 
-### Testing
+### Quick Testing (without credentials)
 
-If you're eager to test DocSearch v3 and can't wait to receive your credentials, you can use ours!
+If you'd like to test DocSearch immediately without your own credentials, use our demo configuration:
 
 <Tabs
   groupId="language"
@@ -170,6 +164,7 @@ docsearch({
   appId: 'PMZUYBQDAK',
   apiKey: '24b09689d5b4223813d9b8e48563c8f6',
   indexName: 'docsearch',
+  askAi: 'askAIDemo',
 });
 ```
 
@@ -182,6 +177,7 @@ docsearch({
   appId="PMZUYBQDAK"
   apiKey="24b09689d5b4223813d9b8e48563c8f6"
   indexName="docsearch"
+  askAi="askAIDemo"
 />
 ```
 
@@ -189,9 +185,26 @@ docsearch({
 
 </Tabs>
 
-### Filtering your search
+Or use our new dedicated [DocSearch Playground](https://community.algolia.com/docsearch-playground/)
 
-If your website supports [DocSearch meta tags][13] or if you've added [custom variables to your config][14], you'll be able to use the [`facetFilters`][16] option to scope your search results to a [`facet`][15]
+### Using DocSearch with AskAI
+
+DocSearch v4 introduces support for AskAI, Algolia’s advanced, AI-powered search capability. AskAI enhances the user experience by providing contextually relevant and intelligent responses directly from your documentation
+
+To enable AskAI, add your Algolia Assistant ID to your DocSearch configuration:
+
+```js
+docsearch({
+  appId: 'YOUR_APP_ID',
+  indexName: 'YOUR_INDEX_NAME',
+  apiKey: 'YOUR_SEARCH_API_KEY',
+  askAi: 'YOUR_ALGOLIA_ASSISTANT_ID',
+});
+```
+
+### Filtering search results
+
+If your website uses [DocSearch meta tags][13] or if you've added [custom variables to your config][14], you'll be able to use the [`facetFilters`][16] option to scope your search results to a [`facet`][15]
 
 This is useful to limit the scope of the search to one language or one version.
 
@@ -273,11 +286,13 @@ docsearch({
 
 ### Preconnect
 
-By adding this snippet to the `head` of your website, you can hint the browser that the website will load data from Algolia, and allows it to preconnect to the DocSearch cluster. It makes the first query faster, especially on mobile.
+Improve the loading speed of your initial search request by adding this snippet into your website's `<head>` section:
 
 ```html
 <link rel="preconnect" href="https://YOUR_APP_ID-dsn.algolia.net" crossorigin />
 ```
+
+This helps the browser establish a quick connection with Algolia, enhancing user experience, especially on mobile devices.
 
 [1]: https://www.algolia.com/doc/ui-libraries/autocomplete/introduction/what-is-autocomplete/
 [2]: https://github.com/algolia/docsearch/

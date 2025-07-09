@@ -11,8 +11,7 @@ import { extractLinksFromText } from './utils/ai';
 import { groupConsecutiveToolResults } from './utils/groupConsecutiveToolResults';
 
 export type AskAiScreenTranslations = Partial<{
-  // Title texts
-  titleText: string;
+  // Misc texts
   disclaimerText: string;
   relatedSourcesText: string;
   thinkingText: string;
