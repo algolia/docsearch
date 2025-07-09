@@ -50,7 +50,7 @@ export default {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       algolia: {
-        appId: 'R2IYF7ETH7',
+        appId: 'PMZUYBQDAK',
         apiKey: '599cec31baffa4868cae4e79f180729b',
         askAi: 'askAIDemo',
         indexName: 'docsearch',
@@ -93,6 +93,11 @@ export default {
             className: 'header-github-link',
           },
         ],
+      },
+      announcementBar: {
+        id: 'announcement-bar',
+        content:
+          '🚀 Ask AI Private Beta Now Open! Turn your docs site search into an AI-powered assistant – faster answers, fewer tickets, better self-serve. <a target="_blank" rel="noopener noreferrer" href="https://docs.google.com/forms/d/e/1FAIpQLSer6eQmamqV0VC8Gc6CxN4wQgBF1OQR2s1i3XG6i1oXWTOkGg/viewform?usp=dialog">Get early access</a>',
       },
       colorMode: {
         defaultMode: 'light',
