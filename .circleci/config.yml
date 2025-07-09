@@ -180,4 +180,8 @@ workflows:
             - build
           filters:
             branches:
-              only: main
+              only:
+                - main
+                - /v[0-9]+/
+
+
