@@ -4,7 +4,10 @@ title: Styling
 
 :::info
 
-The following content is for **[DocSearch v3][2]**. If you are using **[DocSearch v2][3]**, see the **[legacy][4]** documentation.
+The following content is for **[DocSearch v3][2]**. 
+If you are using **[DocSearch v2][3]**, see the **[legacy][4]** documentation.
+
+If you are looking for **DocSearch v4**, see the documentation **[here][5]**.
 
 :::
 
@@ -52,3 +55,4 @@ If you don’t want to use a package manager, you can use a standalone endpoint:
 [2]: https://github.com/algolia/docsearch/
 [3]: https://github.com/algolia/docsearch/tree/master
 [4]: /docs/legacy/dropdown
+[5]: /docs/v4
