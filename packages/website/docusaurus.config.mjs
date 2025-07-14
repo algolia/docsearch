@@ -24,7 +24,7 @@ export default {
   future: {
     v4: {
       removeLegacyPostBuildHeadAttribute: true,
-      useCssCascadeLayers: true,
+      useCssCascadeLayers: false,
     },
   },
   presets: [
