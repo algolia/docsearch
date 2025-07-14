@@ -24,7 +24,7 @@ function Home() {
 
   function Header() {
     return (
-      <div className="mt-20 md:h-[100svh] snap-start">
+      <div className="mt-20 mb-10 snap-start">
         <Spotlight className="-top-40 left-0 md:-top-20 md:left-60 z-[10]" fill="white" />
         <div className="flex flex-col items-center rounded-md p-10 pb-0">
           <div className="text-center font-[Sora] text-black dark:text-white">
@@ -46,7 +46,7 @@ function Home() {
           </div>
           <div className="w-full">
             <video
-              className="bg-blue-100 w-full h-full rounded-md"
+              className="bg-blue-100 w-4xl mx-auto h-auto rounded-md"
               loop={true}
               muted={true}
               playsInline={true}
