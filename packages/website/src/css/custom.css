@@ -1,7 +1,9 @@
 /* fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sora:wght@100..800&display=swap');
-@import url('fragments.css');
-@import url('tailwindcss/tailwind.css');
+@import 'tailwindcss';
+@import './fragments.css';
+
+@custom-variant dark (&:is([data-theme="dark"] *));
 
 :root {
   --ifm-font-size-base: 16px;
@@ -11,6 +13,38 @@
   --ifm-footer-background-color: var(--grey-100);
   --ifm-menu-color-background-active: var(--ifm-color-emphasis-200);
   --ifm-announcement-bar-background-color: #21243d;
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
 }
 
 html[data-theme='dark'] {
@@ -23,6 +57,102 @@ html[data-theme='dark'] {
   --ifm-navbar-background-color: #21243d;
   --ifm-menu-color-background-active: #21243d;
   --ifm-announcement-bar-background-color: var(--ifm-color-primary);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
+}
+
+@theme inline {
+  /* Configure your theme variables here */
+  --font-display: 'Inter', 'sans-serif';
+  --font-title: 'Sora', 'sans-serif';
+  --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
+  --color-primary-500: oklch(0.84 0.18 117.33);
+  --spacing: 0.25rem;
+  --color-background: var(--ifm-background-color);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 
 html {
@@ -32,16 +162,20 @@ html {
 /* override to fix some logo placement issues due to flex auto */
 .navbar__logo {
   flex: 0 0 100%;
-  height: 1.5rem;
+  height: 2.2rem;
   margin-right: 1rem;
 }
 
 /* DocSearch x Algolia logo */
 @media (max-width: 565px) {
   .navbar__logo .docsearch-nav-logo {
-    width: 15em;
+    width: 10em;
     height: auto;
     vertical-align: middle;
+  }
+
+  .theme-announcement-bar {
+    display: none !important;
   }
 }
 
@@ -71,24 +205,25 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   transform: skewY(6deg);
 }
 
+/* hide on mobile */
 .theme-announcement-bar {
   z-index: 100;
-  height: 3rem;
-  font-size: 1.1rem;
-  font-family: 'Sora', sans-serif;
-  font-weight: 400;
+  height: 3rem !important;
+  font-size: 1.1rem !important;
+  font-family: 'Sora', sans-serif !important;
+  font-weight: 400 !important;
   line-height: 1.5;
-  padding: 0.5rem 1rem;
-  background-color: var(--ifm-announcement-bar-background-color);
-  color: #fff;
+  padding: 0.5rem 1rem !important;
+  background-color: var(--ifm-announcement-bar-background-color) !important;
+  color: #fff !important;
 }
 
 .theme-announcement-bar a {
-  text-decoration: none;
+  text-decoration: none !important;
   border-radius: 0.5rem;
   margin-left: 0.5rem;
-  background-color: #fff;
-  color: #21243d;
+  background-color: #fff !important;
+  color: #21243d !important;
   padding: 0.2rem 0.5rem;
   border-radius: 0.5rem;
   transition: all 0.2s ease-in-out;
@@ -128,7 +263,7 @@ html[data-theme='dark'] .text-description {
 }
 
 .navbar--fixed-top {
-  z-index: 5;
+  z-index: 20;
 }
 
 /* apply */
@@ -273,4 +408,199 @@ html[data-theme='dark'] .header-github-link::before {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.grain-gradient-bg {
+  position: relative;
+  overflow: hidden;
+
+  /* light theme: vibrant brand gradient */
+  background: linear-gradient(
+    135deg,
+    #5468ff 0%,
+    /* lighten brand colour */ color-mix(in srgb, #5468ff 70%, white) 50%,
+    /* soft highlight */ color-mix(in srgb, #5468ff 30%, white) 100%
+  );
+}
+
+.grain-gradient-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='contrast' values='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.8'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 150px 150px;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  opacity: 0.75;
+  z-index: 1;
+}
+
+[data-theme='dark'] .grain-gradient-bg {
+  /* dark theme: deeper brand gradient */
+  background: linear-gradient(
+    135deg,
+    /* deep base */ color-mix(in srgb, #5468ff 80%, black) 0%,
+    /* mid tone */ color-mix(in srgb, #5468ff 60%, black) 50%,
+    /* highlight */ #5468ff 100%
+  );
+}
+
+[data-theme='dark'] .grain-gradient-bg::before {
+  mix-blend-mode: difference;
+  opacity: 0.8;
+}
+
+.grain-gradient-bg > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* -- Layout container ---------------------------------------------------- */
+
+.keypad {
+  position: relative;
+  width: clamp(280px, 35vw, 400px); /* responsive */
+  aspect-ratio: 400 / 310; /* matches artwork */
+  display: flex;
+  place-items: center;
+  transform-style: preserve-3d;
+}
+
+/* -- Base plate ---------------------------------------------------------- */
+
+.keypad__base {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.keypad__base img {
+  width: 100%;
+  display: block;
+}
+
+/* -- Shared key styles --------------------------------------------------- */
+
+.key {
+  --travel: 20; /* how far key travels when “pressed” */
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: default;
+  position: absolute;
+  transform-style: preserve-3d;
+  outline: none;
+  --hue: 0;
+  --saturate: 1;
+  --bright: 1;
+}
+
+.key__mask,
+.key__content {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+}
+
+.key__content {
+  transition: translate 0.12s ease-out;
+}
+
+.key__text {
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 300;
+  position: absolute;
+  top: 24%;
+  left: 32%;
+  translate: -14% -8%;
+  width: 100%;
+  height: 70%;
+  font-size: 2.2rem;
+  z-index: 5;
+  color: hsl(0 0% 94%);
+  text-align: left;
+  transform: rotateX(36deg) rotateY(45deg) rotateX(-90deg);
+  pointer-events: none;
+  mix-blend-mode: normal;
+}
+
+.key__text--search {
+  left: 24%;
+  top: 20%;
+  translate: -25% -8%;
+}
+
+.key img {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  translate: -50% 1%;
+  filter: hue-rotate(calc(var(--hue) * 1deg)) saturate (var(--saturate))
+    brightness(var(--bright));
+}
+
+/* -- Individual key footprints ------------------------------------------ */
+
+/* Small single key */
+.keypad__single {
+  width: 40.5%;
+  height: 46%;
+  bottom: 36%;
+  left: 54%;
+  clip-path: polygon(
+    0 0,
+    54% 0,
+    89% 24%,
+    100% 70%,
+    54% 100%,
+    46% 100%,
+    0 69%,
+    12% 23%,
+    47% 0%
+  );
+  mask: url(https://assets.codepen.io/605876/keypad-single.png?format=auto&quality=100)
+    50% 50% / 100% 100%;
+}
+
+/* Same single key, shifted up/left */
+.keypad__single--left {
+  left: 29.3%;
+  bottom: 54.2%;
+}
+
+.keypad__single .key__text {
+  font-size: 2rem;
+}
+
+/* Double-width (bottom) key */
+.keypad__double {
+  width: 64%;
+  height: 65%;
+  left: 6%;
+  bottom: 17.85%;
+  clip-path: polygon(
+    34% 0,
+    93% 44%,
+    101% 78%,
+    71% 100%,
+    66% 100%,
+    0 52%,
+    0 44%,
+    7% 17%,
+    30% 0
+  );
+  mask: url(https://assets.codepen.io/605876/keypad-double.png?format=auto&quality=100)
+    50% 50% / 100% 100%;
+}
+
+/* -- Optional “press” effect -------------------------------------------- */
+
+/* Add `data-pressed="true"` in JS if you want a visual down-state */
+.key[data-pressed='true'] .key__content,
+.key:active .key__content {
+  translate: 0 calc(var(--travel) * 1%);
 }

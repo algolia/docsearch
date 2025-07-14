@@ -14,17 +14,12 @@ export default {
     {
       type: 'category',
       label: 'Introduction',
-      items: ['what-is-docsearch', 'who-can-apply', 'migrating-from-legacy'],
+      items: ['what-is-docsearch', 'who-can-apply'],
     },
     {
       type: 'category',
       label: 'DocSearch v4 - Beta',
-      items: ['v4', 'v4/api', 'v4/migrating-from-v3'],
-    },
-    {
-      type: 'category',
-      label: 'DocSearch v3',
-      items: ['docsearch-v3', 'api', 'styling', 'migrating-from-v2'],
+      items: ['docsearch', 'api', 'migrating-from-v3'],
     },
     {
       type: 'category',
@@ -59,6 +54,11 @@ export default {
       type: 'category',
       label: 'Under the hood',
       items: ['how-does-it-work', 'required-configuration'],
+    },
+    {
+      type: 'category',
+      label: 'Miscellaneous',
+      items: ['migrating-from-legacy'],
     },
   ],
 };

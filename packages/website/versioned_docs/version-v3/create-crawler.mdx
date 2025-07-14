@@ -1,0 +1,78 @@
+---
+title: Create a New Crawler
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+# Create a New Crawler
+
+:::info
+New DocSearch apps created after **July 2nd, 2024** can now use the Algolia Crawler UI to set up and manage their crawls. This guide walks you through the process of adding your domain, verifying ownership, creating a crawler, and running your first test crawl. You can find the new Crawler UI at [dashboard.algolia.com/crawler](https://dashboard.algolia.com/crawler).
+
+If you signed up before July 2nd, 2024, you can still use the Crawler UI, but creating and managing a Crawler is more streamlined for users who joined after that date.
+
+Learn more about the [New Crawler UI/UX features](./crawler-configuration-visual).
+:::
+
+## Add domains
+
+1. Sign in to the [Algolia dashboard](https://dashboard.algolia.com/crawler).
+2. In the left sidebar, select **Data sources**.
+3. Select **Crawler**:
+   - Click **Add your domain** and enter the domains or subdomains you want to crawl (e.g., `example.com`, `www.example.com`).
+   - If you’ve already added a domain, click the **Domains** tab.
+4. Click **Add domain**.
+
+<div className="uil-ta-center">
+  <img
+    src={useBaseUrl('img/assets/docsearch-domains.png')}
+    alt="DocSearch Domains Management"
+  />
+</div>
+
+> **Note:** You must verify your domain within a 7-day grace period after adding it. Additionally, your domain must be approved for use by the DocSearch team before you can proceed with crawling.
+
+## Verify your domain
+
+You must verify ownership of each domain you want to crawl. The default method is email verification, but you can also use a meta tag, HTML file, robots.txt, or DNS record.
+
+### Meta tag
+1. In the **Meta tag** tab, click **Copy** to copy the verification tag.
+2. Add the tag to your site's `<head>` section.
+3. Publish your site and click **Verify now** in the Crawler dashboard.
+
+### HTML file
+1. In the **HTML file** tab, click **Copy** to copy the verification file content.
+2. Save it as a new HTML file and upload it to your web server.
+3. Add the file’s URL in the dashboard and click **Verify now**.
+
+### robots.txt
+1. In the **Robots.txt** tab, click **Copy** to copy the verification code.
+2. Paste it into your site's `robots.txt` file.
+3. Publish and click **Verify now**.
+
+### DNS
+1. In the **DNS** tab, copy the provided DNS TXT record.
+2. Add it to your DNS provider’s settings.
+3. Click **Verify now** after the record propagates (may take up to 72 hours).
+
+## Create a new crawler
+
+Once your domain is verified and approved by our DocSearch team:
+1. Go to the **Crawler** page in the dashboard.
+2. Click **New Crawler** and fill in:
+   - **Crawler name** (descriptive)
+   - **App ID** (your Algolia application ID)
+   - **Start URL** (usually your home page)
+   - **Crawler template** (choose a template or default)
+3. Click **Create** to finish and run a test crawl.
+
+## Run the test crawl
+
+The initial crawl will visit up to 100 URLs to test access and extraction. You can monitor progress in the **Overview** page. After completion, review the extracted records in the Algolia dashboard.
+
+## Next steps
+
+- Edit your crawler configuration for scheduled crawls, inclusion/exclusion rules, and extraction settings.
+- Use the Crawler’s suggestions for further optimization.
+- For more details, see the [official Algolia documentation](https://www.algolia.com/doc/tools/crawler/getting-started/create-crawler/). 
