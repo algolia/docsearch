@@ -111,7 +111,7 @@ function Home() {
   const videoChapters = [
     { label: 'Keyword', time: 9 },
     { label: 'Ask AI', time: 37 },
-    { label: 'Feedback & Conversations', time: 62 },
+    { label: 'Conversations', time: 65 },
     { label: 'Dark Mode', time: 103 },
   ];
 
