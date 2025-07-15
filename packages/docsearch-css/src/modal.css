@@ -268,7 +268,7 @@
   color: var(--docsearch-secondary-text-color);
   font-size: 0.875em;
   line-height: 1.6em;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .DocSearch-NoResults-Help {
@@ -631,7 +631,7 @@ svg.DocSearch-Hit-Select-Icon {
 .DocSearch-NoResults-Prefill-List {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 16px;
   text-align: center;
 }
 
@@ -944,6 +944,7 @@ assistive tech users */
   font-size: 0.7em;
   font-weight: 400;
   color: var(--docsearch-muted-color);
+  margin: 0;
 }
 
 /* fade in animation when feedback has been given */

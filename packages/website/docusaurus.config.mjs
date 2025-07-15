@@ -5,8 +5,12 @@ import tailwindLoader from './plugins/tailwind-loader.mjs';
 
 const SIGNUP_LINK = 'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch';
 
+const currentDate = new Date();
+const currentYear = currentDate.getFullYear();
+
+// @ts-check
 // With JSDoc @type annotations, IDEs can provide config autocompletion
-/** @type {import('@docusaurus/types').DocusaurusConfig} */
+/** @type {import('@docusaurus/types').Config} */
 export default {
   title: 'DocSearch by Algolia',
   tagline: 'The best search experience for docs, integrated in minutes, for free.',
@@ -20,7 +24,7 @@ export default {
   future: {
     v4: {
       removeLegacyPostBuildHeadAttribute: true,
-      useCssCascadeLayers: true,
+      useCssCascadeLayers: false,
     },
   },
   presets: [
@@ -34,7 +38,13 @@ export default {
           editUrl: 'https://github.com/algolia/docsearch/edit/main/packages/website/',
           versions: {
             current: {
-              label: 'current',
+              label: 'Beta (v4.x)',
+            },
+            v3: {
+              label: 'Stable (v3.x)',
+            },
+            legacy: {
+              label: 'Legacy',
             },
           },
           lastVersion: 'current',
@@ -75,8 +85,13 @@ export default {
         items: [
           // left
           {
-            label: 'Docs',
+            label: 'Documentation',
             to: 'docs/what-is-docsearch',
+            position: 'left',
+          },
+          {
+            label: 'Playground',
+            to: 'https://community.algolia.com/docsearch-playground/',
             position: 'left',
           },
           {
@@ -104,7 +119,7 @@ export default {
       colorMode: {
         defaultMode: 'light',
         disableSwitch: false,
-        respectPrefersColorScheme: true,
+        respectPrefersColorScheme: false,
       },
       footer: {
         links: [
@@ -121,11 +136,11 @@ export default {
               },
               {
                 label: 'DocSearch v3',
-                to: 'docs/docsearch-v3',
+                to: 'docs/v3/docsearch',
               },
               {
                 label: 'DocSearch v4 - Beta',
-                to: 'docs/v4',
+                to: 'docs/docsearch',
               },
             ],
           },
@@ -175,11 +190,11 @@ export default {
         ],
         logo: {
           alt: 'Algolia',
-          src: 'img/Algolia-logo-blue.svg',
-          srcDark: 'img/Algolia-logo-white.svg',
+          src: 'img/docsearch-x-algolia-logo-light-mode.png',
+          srcDark: 'img/docsearch-x-algolia-logo-dark-mode.png',
           width: 200,
         },
-        copyright: 'DocSearch 2015-now • Designed and built by Algolia',
+        copyright: `DocSearch 2015-${currentYear} – Built with 💙 by Algolia`,
       },
       image: 'img/og_image.png',
       prism: {

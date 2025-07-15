@@ -4,10 +4,7 @@ title: Styling
 
 :::info
 
-The following content is for **[DocSearch v3][2]**. 
-If you are using **[DocSearch v2][3]**, see the **[legacy][4]** documentation.
-
-If you are looking for **DocSearch v4**, see the documentation **[here][5]**.
+The following content is for **[DocSearch v3][2]**. If you are using **[DocSearch v2][3]**, see the **[legacy][4]** documentation.
 
 :::
 
@@ -30,15 +27,15 @@ This package is a dependency of [`@docsearch/js`][1] and [`@docsearch/react`][1]
 ## Installation
 
 ```bash
-yarn add @docsearch/css@3
+yarn add @docsearch/css@beta
 # or
-npm install @docsearch/css@3
+npm install @docsearch/css@beta
 ```
 
 If you don’t want to use a package manager, you can use a standalone endpoint:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@beta" />
 ```
 
 ## Files
@@ -51,8 +48,7 @@ If you don’t want to use a package manager, you can use a standalone endpoint:
 └── dist/modal.css # CSS for the modal
 ```
 
-[1]: /docs/docsearch-v3
+[1]: /docs/v3/docsearch
 [2]: https://github.com/algolia/docsearch/
 [3]: https://github.com/algolia/docsearch/tree/master
 [4]: /docs/legacy/dropdown
-[5]: /docs/v4

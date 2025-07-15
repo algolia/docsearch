@@ -6,12 +6,9 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-:::info
+:::warning
 
-The following content is for **[DocSearch v3][2]**. 
-If you are using **[DocSearch v2][3]**, see the **[legacy][4]** documentation.
-
-If you are looking for **DocSearch v4**, see the documentation **[here][12]**.
+DocSearch v4 is currently in beta. While it's suitable for production scenarios, expect potential improvements and minor issues. Use at your discretion.
 
 :::
 
@@ -64,7 +61,74 @@ Your Algolia index name.
 
 > `type: string` | `default: "Search docs"` | **optional**
 
-The placeholder of the input of the DocSearch pop-up modal.
+The placeholder of the input of the DocSearch pop-up modal. Note: If you add a placeholder it will replace the dynamic placeholder based on askAi, It would be better to edit [translations](#translations)
+
+## `askAi`
+
+> `type: AskAiObject` | `string` | **optional**
+
+Your Algolia Assistant ID.
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', },
+    { label: 'React', value: 'react', }
+  ]
+}>
+<TabItem value="js">
+
+```js
+docsearch({
+  // ...
+  askAi: 'YOUR_ALGOLIA_ASSISTANT_ID',
+  // ...
+});
+```
+
+or
+
+```js
+docsearch({
+  // ...
+  askAi: {
+    indexName: 'ANOTHER_INDEX_NAME',
+    apiKey: 'ANOTHER_SEARCH_API_KEY',
+    appId: 'ANOTHER_APP_ID',
+    assistantId: 'YOUR_ALGOLIA_ASSISTANT_ID',
+  },
+  // ...
+});
+```
+
+</TabItem>
+
+<TabItem value="react">
+
+```jsx
+<DocSearch
+  // ...
+  askAi="YOUR_ALGOLIA_ASSISTANT_ID"
+/>
+```
+
+in case you want to use different credentials for askAi
+
+```jsx
+<DocSearch
+  // ...
+  askAi={{
+    indexName: 'ANOTHER_INDEX_NAME',
+    apiKey: 'ANOTHER_SEARCH_API_KEY',
+    appId: 'ANOTHER_APP_ID',
+    assistantId: 'YOUR_ALGOLIA_ASSISTANT_ID',
+  }}
+/>
+```
+
+</TabItem>
+</Tabs>
 
 ## `searchParameters`
 
@@ -171,11 +235,20 @@ const translations: DocSearchTranslations = {
   },
   modal: {
     searchBox: {
-      resetButtonTitle: 'Clear the query',
-      resetButtonAriaLabel: 'Clear the query',
-      cancelButtonText: 'Cancel',
-      cancelButtonAriaLabel: 'Cancel',
+      clearButtonTitle: 'Clear',
+      clearButtonAriaLabel: 'Clear the query',
+      closeButtonText: 'Close',
+      closeButtonAriaLabel: 'Close',
+      placeholderText: undefined, // fallback: 'Search docs' or 'Search docs or ask AI a question'
+      placeholderTextAskAi: undefined, // fallback: 'Ask another question...'
+      placeholderTextAskAiStreaming: 'Answering...',
+      // can only be one of the following
+      // https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/enterkeyhint#value
+      enterKeyHint: 'search',
+      enterKeyHintAskAi: 'enter',
       searchInputLabel: 'Search',
+      backToKeywordSearchButtonText: 'Back to keyword search',
+      backToKeywordSearchButtonAriaLabel: 'Back to keyword search',
     },
     startScreen: {
       recentSearchesTitle: 'Recent',
@@ -184,26 +257,52 @@ const translations: DocSearchTranslations = {
       removeRecentSearchButtonTitle: 'Remove this search from history',
       favoriteSearchesTitle: 'Favorite',
       removeFavoriteSearchButtonTitle: 'Remove this search from favorites',
+      recentConversationsTitle: 'Recent conversations',
+      removeRecentConversationButtonTitle:
+        'Remove this conversation from history',
     },
     errorScreen: {
       titleText: 'Unable to fetch results',
       helpText: 'You might want to check your network connection.',
     },
+    noResultsScreen: {
+      noResultsText: 'No results found for',
+      suggestedQueryText: 'Try searching for',
+      reportMissingResultsText: 'Believe this query should return results?',
+      reportMissingResultsLinkText: 'Let us know.',
+    },
+    resultsScreen: {
+      askAiPlaceholder: 'Ask AI: ',
+    },
+    askAiScreen: {
+      disclaimerText:
+        'Answers are generated with AI which can make mistakes. Verify responses.',
+      relatedSourcesText: 'Related sources',
+      thinkingText: 'Thinking...',
+      copyButtonText: 'Copy',
+      copyButtonCopiedText: 'Copied!',
+      copyButtonTitle: 'Copy',
+      likeButtonTitle: 'Like',
+      dislikeButtonTitle: 'Dislike',
+      thanksForFeedbackText: 'Thanks for your feedback!',
+      preToolCallText: 'Searching...',
+      duringToolCallText: 'Searching for ',
+      afterToolCallText: 'Searched for',
+      // If provided, these override the default rendering of aggregated tool calls:
+      aggregatedToolCallNode: undefined, // (queries: string[], onSearchQueryClick: (query: string) => void) => React.ReactNode
+      aggregatedToolCallText: undefined, // (queries: string[]) => { before?: string; separator?: string; lastSeparator?: string; after?: string }
+    },
     footer: {
       selectText: 'Select',
+      submitQuestionText: 'Submit question',
       selectKeyAriaLabel: 'Enter key',
       navigateText: 'Navigate',
       navigateUpKeyAriaLabel: 'Arrow up',
       navigateDownKeyAriaLabel: 'Arrow down',
       closeText: 'Close',
+      backToSearchText: 'Back to search',
       closeKeyAriaLabel: 'Escape key',
       poweredByText: 'Powered by',
-    },
-    noResultsScreen: {
-      noResultsText: 'No results for',
-      suggestedQueryText: 'Try searching for',
-      reportMissingResultsText: 'Believe this query should return results?',
-      reportMissingResultsLinkText: 'Let us know.',
     },
   },
 };
@@ -256,7 +355,10 @@ docsearch({
 When provided, an informative message wrapped with your link will be displayed on no results searches. The default text can be changed using the [translations](#translations) property.
 
 <div className="uil-ta-center">
-  <img src={useBaseUrl('img/assets/noResultsScreen.png')} alt="No results screen with informative message" />
+  <img
+    src={useBaseUrl('img/assets/noResultsScreen.png')}
+    alt="No results screen with informative message"
+  />
 </div>
 
 ## `resultsFooterComponent`
@@ -349,30 +451,6 @@ docsearch({
 
 </Tabs>
 
-## `theme`
-
-> `type: DocSearchTheme` | `default: "light"` | **optional**
-
-Theme for DocSearch. Can be either `light` or `dark`.
-
-<Tabs
-  groupId="language"
-  defaultValue="js"
-  values={[
-    { label: 'JavaScript', value: 'js', }
-  ]
-}>
-<TabItem value="js">
-
-```js
-docsearch({
-  // ...
-  theme: 'light',
-});
-```
-</TabItem>
-</Tabs>
-
 [1]: https://www.algolia.com/doc/ui-libraries/autocomplete/introduction/what-is-autocomplete/
 [2]: https://github.com/algolia/docsearch/
 [3]: https://github.com/algolia/docsearch/tree/master
@@ -384,4 +462,3 @@ docsearch({
 [9]: https://codesandbox.io/s/docsearch-v3-debounced-search-gnx87
 [10]: https://www.algolia.com/doc/api-client/getting-started/what-is-the-api-client/javascript/?client=javascript
 [11]: https://www.algolia.com/doc/ui-libraries/autocomplete/core-concepts/keyboard-navigation/
-[12]: /docs/v4

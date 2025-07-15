@@ -1,0 +1,54 @@
+{
+  "docs": [
+    {
+      "type": "category",
+      "label": "Introduction",
+      "items": ["what-is-docsearch", "who-can-apply"]
+    },
+    {
+      "type": "category",
+      "label": "DocSearch v3",
+      "items": ["docsearch", "api", "styling", "migrating-from-v2"]
+    },
+    {
+      "type": "category",
+      "label": "Algolia Crawler",
+      "items": [
+        "create-crawler",
+        "record-extractor",
+        "templates",
+        "crawler-configuration-visual",
+        "manage-your-crawls"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Requirements, tips, FAQ",
+      "items": [
+        {
+          "type": "category",
+          "label": "FAQ",
+          "items": ["crawler", "docsearch-program"]
+        },
+        {
+          "type": "doc",
+          "id": "tips"
+        },
+        {
+          "type": "doc",
+          "id": "integrations"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Under the hood",
+      "items": ["how-does-it-work", "required-configuration"]
+    },
+    {
+      "type": "category",
+      "label": "Miscellaneous",
+      "items": ["migrating-from-legacy"]
+    }
+  ]
+}
