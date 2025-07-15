@@ -707,3 +707,42 @@ html[data-theme='dark'] .shimmer-effect {
 .footer {
   @apply bg-neutral-100 dark:bg-zinc-800 py-16 rounded-2xl ring-1 ring-neutral-200 dark:ring-neutral-700 ring-offset-3 dark:ring-offset-neutral-900;
 }
+
+/* Make the DocSearch search bar button prominent */
+.DocSearch-Button {
+  box-shadow: 0 0 0 4px #60a5fa33, 0 2px 8px 0 #60a5fa55;
+  border: 2px solid #3c4fe0 !important;
+  background: #fff !important;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  position: relative;
+  z-index: 10;
+}
+
+.DocSearch-Button:focus,
+.DocSearch-Button:hover {
+  box-shadow: 0 0 0 8px #60a5fa55, 0 4px 16px 0 #3c4fe099;
+  border-color: #2563eb !important;
+}
+
+/* Optional: Add a 'New!' badge */
+.DocSearch-Button::after {
+  content: 'New!';
+  position: absolute;
+  top: -1.5em;
+  right: 0.5em;
+  background: #2563eb;
+  color: #fff;
+  font-size: 0.7em;
+  padding: 0.2em 0.6em;
+  border-radius: 1em;
+  box-shadow: 0 2px 8px #2563eb33;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  z-index: 20;
+  animation: search-badge-glow 2s infinite;
+}
+
+@keyframes search-badge-glow {
+  0%, 100% { box-shadow: 0 2px 8px #2563eb33; }
+  50% { box-shadow: 0 2px 16px #60a5fa88; }
+}
