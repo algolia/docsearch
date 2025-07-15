@@ -18,7 +18,7 @@ export default {
     },
     {
       type: 'category',
-      label: 'DocSearch v4 - Beta',
+      label: 'DocSearch v4',
       items: ['docsearch', 'api', 'migrating-from-v3'],
     },
     {

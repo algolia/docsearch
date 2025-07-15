@@ -2,7 +2,6 @@ import { useColorMode } from '@docusaurus/theme-common';
 import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
 import React from 'react';
 
-import { BoxesCore } from './ui/background-boxes';
 import { Button, PrimaryButton } from './ui/button';
 import { FeaturesBento } from './ui/features-bento';
 import { FlipWords } from './ui/flip-words';
@@ -140,7 +139,6 @@ function Home() {
 
   return (
     <>
-      <BoxesCore className="z-[1]" />
       <div id="tailwind" className="container snap-y z-[10] snap-proximity">
         <Header />
         <Description />
