@@ -77,9 +77,9 @@ export default {
       navbar: {
         hideOnScroll: true,
         logo: {
-          alt: 'DocSearch 10th Anniversary',
-          src: 'img/docsearch10-dark.svg',
-          srcDark: 'img/docsearch10-light.svg',
+          alt: 'DocSearch x Algolia',
+          src: 'img/docsearch-x-algolia-logo-light-mode.png',
+          srcDark: 'img/docsearch-x-algolia-logo-dark-mode.png',
           className: 'docsearch-nav-logo',
         },
         items: [
@@ -190,8 +190,8 @@ export default {
         ],
         logo: {
           alt: 'Algolia',
-          src: 'img/Algolia-logo-blue.svg',
-          srcDark: 'img/Algolia-logo-white.svg',
+          src: 'img/docsearch-x-algolia-logo-light-mode.png',
+          srcDark: 'img/docsearch-x-algolia-logo-dark-mode.png',
           width: 200,
         },
         copyright: `DocSearch 2015-${currentYear} – Built with 💙 by Algolia`,

@@ -227,20 +227,21 @@ html {
 /* override to fix some logo placement issues due to flex auto */
 .navbar__logo {
   flex: 0 0 100%;
-  height: 2.2rem;
+  height: 1.5rem;
   margin-right: 1rem;
 }
 
 /* DocSearch x Algolia logo */
 @media (max-width: 565px) {
   .navbar__logo .docsearch-nav-logo {
-    width: 10em;
+    width: 15em;
     height: auto;
     vertical-align: middle;
   }
 
   .theme-announcement-bar {
-    display: none !important;
+    font-size: 0.95rem !important;
+    padding: 0.5rem 0.5rem !important;
   }
 }
 
@@ -273,7 +274,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 /* hide on mobile */
 .theme-announcement-bar {
   z-index: 100;
-  height: 3rem !important;
+  min-height: 3rem !important;
   font-size: 1.1rem !important;
   font-family: 'Sora', sans-serif !important;
   font-weight: 400 !important;
@@ -281,9 +282,14 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   padding: 0.5rem 1rem !important;
   background-color: var(--ifm-announcement-bar-background-color) !important;
   color: #fff !important;
+  white-space: normal !important;      /* Allow text to wrap */
+  word-break: normal !important;   /* Break long words if needed */
+  text-align: center;
 }
 
 .theme-announcement-bar a {
+  display: inline-block;
+  white-space: nowrap;
   text-decoration: none !important;
   border-radius: 0.5rem;
   margin-left: 0.5rem;
@@ -672,3 +678,28 @@ html[data-theme='dark'] .header-github-link::before {
 
 /* fragments */
 @import 'tailwindcss';
+
+.shimmer-effect {
+  background: linear-gradient(90deg, #1e2b8f 25%, #3c4fe0 50%, #1e2b8f 75%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 2s infinite linear;
+}
+
+html[data-theme='light'] .shimmer-effect {
+  background: linear-gradient(90deg, #3c4fe0 25%, #60a5fa 50%, #3c4fe0 75%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 2s infinite linear;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
