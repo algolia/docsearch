@@ -24,31 +24,36 @@ function VideoPlayer({ chapters }) {
   return (
     <div className="w-full">
       <video
+        loop={true}
+        muted={true}
+        playsInline={true}
+        autoPlay={true}
         ref={videoRef}
         className="bg-blue-100 w-4xl mx-auto h-auto rounded-md"
-        loop
-        muted
-        playsInline
-        autoPlay
         preload="auto"
         poster="/img/resources/hero-video-poster.png"
-        onTimeUpdate={e => setCurrentTime(e.target.currentTime)}
-        onLoadedMetadata={e => setDuration(e.target.duration)}
+        onTimeUpdate={(e) => setCurrentTime(e.target.currentTime)}
+        onLoadedMetadata={(e) => setDuration(e.target.duration)}
       >
         <source src="/img/resources/askai720p.mp4" type="video/mp4" />
         <track kind="captions" />
       </video>
       {/* Video chapter controls below video */}
       <div className="relative w-full max-w-2xl mx-auto mt-4">
-                {/* Time labels */}
-                <div className="flex justify-between text-xs text-slate-500 mt-8">
+        {/* Time labels */}
+        <div className="flex justify-between text-xs text-slate-500 mt-8">
           <span>{formatTime(currentTime)}</span>
           <span>{formatTime(duration)}</span>
         </div>
         {/* Progress bar */}
         <div
           className="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden relative cursor-pointer"
-          onClick={e => {
+          role="slider"
+          tabIndex={0}
+          aria-valuenow={currentTime}
+          aria-valuemin={0}
+          aria-valuemax={duration}
+          onClick={(e) => {
             const bar = e.currentTarget;
             const rect = bar.getBoundingClientRect();
             const x = e.clientX - rect.left;
@@ -85,14 +90,15 @@ function VideoPlayer({ chapters }) {
               />
               {/* Button */}
               <button
-                className="px-3 py-0.5 rounded bg-blue-600 text-white text-xs font-semibold shadow hover:bg-blue-800 transition max-w-[120px] min-w-[60px] whitespace-normal break-words text-center"                style={{ minWidth: 0 }}
+                className="px-3 py-0.5 rounded bg-blue-600 text-white text-xs font-semibold shadow hover:bg-blue-800 transition max-w-[120px] min-w-[60px] whitespace-normal break-words text-center"
+                style={{ minWidth: 0 }}
+                type="button"
+                title={chapter.label}
                 onClick={() => {
                   if (videoRef.current) {
                     videoRef.current.currentTime = chapter.time;
                   }
                 }}
-                type="button"
-                title={chapter.label}
               >
                 {chapter.label}
               </button>
@@ -130,9 +136,15 @@ function Home() {
         <div className="flex flex-col items-center rounded-md p-10 pb-0">
           <div className="text-center font-[Sora] text-black dark:text-white">
             <div className="flex items-center justify-center mb-2">
-              <span role="img" aria-label="sparkles" className="mr-2 animate-pulse">✨</span>
-              <span className="text-blue-600 font-semibold text-lg md:text-xl shimmer-effect">Celebrating 10 Years of DocSearch</span>
-              <span role="img" aria-label="sparkles" className="ml-2 animate-pulse">✨</span>
+              <span role="img" aria-label="sparkles" className="mr-2 animate-pulse">
+                ✨
+              </span>
+              <span className="text-blue-600 font-semibold text-lg md:text-xl shimmer-effect">
+                Celebrating 10 Years of DocSearch
+              </span>
+              <span role="img" aria-label="sparkles" className="ml-2 animate-pulse">
+                ✨
+              </span>
             </div>
             <p className="text-center text-4xl font-bold bg-gradient-to-tl from-neutral-900 to-neutral-600 md:text-8xl dark:bg-gradient-to-b dark:from-neutral-50 dark:to-neutral-400 bg-clip-text text-transparent">
               Search Made For Documentation
@@ -211,7 +223,7 @@ function Home() {
                 <Keyboard />
                 <br />
                 <br />
-                <p className="text-3xl text-black dark:text-white font-bold leading-9 font-[Sora] md:text-4xl md:leading-10">
+                <div className="text-3xl text-black dark:text-white font-bold leading-9 font-[Sora] md:text-4xl md:leading-10">
                   Build{' '}
                   <FlipWords
                     className="text-blue-600"
@@ -219,7 +231,7 @@ function Home() {
                   />{' '}
                   <br />
                   with DocSearch
-                </p>
+                </div>
                 <PrimaryButton key="apply" href={'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch'}>
                   Apply Now
                 </PrimaryButton>
