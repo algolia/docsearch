@@ -139,7 +139,7 @@ function Home() {
               <span role="img" aria-label="sparkles" className="mr-2 animate-pulse">
                 ✨
               </span>
-              <span className="text-blue-600 font-semibold text-lg md:text-xl shimmer-effect">
+              <span className="text-blue-600 font-semibold text-lg md:text-xl shimmer-effect mb-2">
                 Celebrating 10 Years of DocSearch
               </span>
               <span role="img" aria-label="sparkles" className="ml-2 animate-pulse">
@@ -155,11 +155,9 @@ function Home() {
             </p>
           </div>
           <div className="flex my-12 gap-8">
-            <Button key="get-started" href={withBaseUrl('docs/what-is-docsearch')}>
-              Get started
-            </Button>
-            <PrimaryButton key="apply" href={'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch'}>
-              Apply
+            <Button href={withBaseUrl('docs/what-is-docsearch')}>Get started</Button>
+            <PrimaryButton href={'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch'}>
+              Sign up
             </PrimaryButton>
           </div>
           <VideoPlayer chapters={videoChapters} />
@@ -223,7 +221,7 @@ function Home() {
                 <Keyboard />
                 <br />
                 <br />
-                <div className="text-3xl text-black dark:text-white font-bold leading-9 font-[Sora] md:text-4xl md:leading-10">
+                <div className="text-3xl mb-4 text-black dark:text-white font-bold leading-9 font-[Sora] md:text-4xl md:leading-10">
                   Build{' '}
                   <FlipWords
                     className="text-blue-600"
@@ -233,7 +231,7 @@ function Home() {
                   with DocSearch
                 </div>
                 <PrimaryButton key="apply" href={'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch'}>
-                  Apply Now
+                  Sign up for free
                 </PrimaryButton>
               </div>
             </div>
