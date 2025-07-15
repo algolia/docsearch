@@ -944,6 +944,7 @@ assistive tech users */
   font-size: 0.7em;
   font-weight: 400;
   color: var(--docsearch-muted-color);
+  margin: 0;
 }
 
 /* fade in animation when feedback has been given */

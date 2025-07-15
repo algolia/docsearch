@@ -85,8 +85,13 @@ export default {
         items: [
           // left
           {
-            label: 'Docs',
+            label: 'Documentation',
             to: 'docs/what-is-docsearch',
+            position: 'left',
+          },
+          {
+            label: 'Playground',
+            to: 'https://community.algolia.com/docsearch-playground/',
             position: 'left',
           },
           {
