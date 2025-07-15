@@ -1,6 +1,6 @@
 import { useColorMode } from '@docusaurus/theme-common';
 import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 
 import { Button, PrimaryButton } from './ui/button';
 import { FeaturesBento } from './ui/features-bento';
@@ -9,9 +9,111 @@ import Keyboard from './ui/keyboard';
 import { Logos } from './ui/logos';
 import { Spotlight } from './ui/spotlight';
 
+function formatTime(sec) {
+  if (!sec || isNaN(sec)) return '0:00';
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60);
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
+function VideoPlayer({ chapters }) {
+  const videoRef = useRef(null);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(1);
+
+  return (
+    <div className="w-full">
+      <video
+        ref={videoRef}
+        className="bg-blue-100 w-4xl mx-auto h-auto rounded-md"
+        loop
+        muted
+        playsInline
+        autoPlay
+        preload="auto"
+        poster="/img/resources/hero-video-poster.png"
+        onTimeUpdate={e => setCurrentTime(e.target.currentTime)}
+        onLoadedMetadata={e => setDuration(e.target.duration)}
+      >
+        <source src="/img/resources/askai720p.mp4" type="video/mp4" />
+        <track kind="captions" />
+      </video>
+      {/* Video chapter controls below video */}
+      <div className="relative w-full max-w-2xl mx-auto mt-4">
+                {/* Time labels */}
+                <div className="flex justify-between text-xs text-slate-500 mt-8">
+          <span>{formatTime(currentTime)}</span>
+          <span>{formatTime(duration)}</span>
+        </div>
+        {/* Progress bar */}
+        <div
+          className="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden relative cursor-pointer"
+          onClick={e => {
+            const bar = e.currentTarget;
+            const rect = bar.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const percent = x / rect.width;
+            if (videoRef.current && duration) {
+              videoRef.current.currentTime = percent * duration;
+            }
+          }}
+        >
+          <div
+            className="h-2 bg-blue-500 transition-all absolute top-0 left-0 rounded-full pointer-events-none"
+            style={{ width: `${(currentTime / duration) * 100}%` }}
+          />
+          {/* Chapter markers... */}
+        </div>
+        {/* Chapter buttons below the bar */}
+        <div className="absolute left-0 w-full" style={{ top: '1.5rem' }}>
+          {chapters.map((chapter) => (
+            <div
+              key={chapter.label}
+              className="absolute flex flex-col items-center"
+              style={{ left: `${(chapter.time / duration) * 100}%`, transform: 'translateX(-50%)' }}
+            >
+              {/* Arrow/triangle */}
+              <div
+                style={{
+                  width: 0,
+                  height: 0,
+                  borderLeft: '8px solid transparent',
+                  borderRight: '8px solid transparent',
+                  borderBottom: '8px solid #2563eb', // blue-600
+                  marginBottom: '-2px',
+                }}
+              />
+              {/* Button */}
+              <button
+                className="px-3 py-0.5 rounded bg-blue-600 text-white text-xs font-semibold shadow hover:bg-blue-800 transition max-w-[120px] min-w-[60px] whitespace-normal break-words text-center"                style={{ minWidth: 0 }}
+                onClick={() => {
+                  if (videoRef.current) {
+                    videoRef.current.currentTime = chapter.time;
+                  }
+                }}
+                type="button"
+                title={chapter.label}
+              >
+                {chapter.label}
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Home() {
   const { withBaseUrl } = useBaseUrlUtils();
   const { colorMode } = useColorMode();
+
+  const videoChapters = [
+    { label: 'Keyword', time: 9 },
+    { label: 'Ask AI', time: 37 },
+    { label: 'Feedback & Conversations', time: 67 },
+    { label: 'Dark Mode', time: 103 },
+  ];
 
   React.useEffect(() => {
     if (colorMode === 'dark') {
@@ -48,20 +150,7 @@ function Home() {
               Apply
             </PrimaryButton>
           </div>
-          <div className="w-full">
-            <video
-              className="bg-blue-100 w-4xl mx-auto h-auto rounded-md"
-              loop={true}
-              muted={true}
-              playsInline={true}
-              autoPlay={true}
-              preload="auto"
-              poster="/img/resources/hero-video-poster.png"
-            >
-              <source src="/img/resources/askai720p.mp4" type="video/mp4" />
-              <track kind="captions" />
-            </video>
-          </div>
+          <VideoPlayer chapters={videoChapters} />
         </div>
       </div>
     );

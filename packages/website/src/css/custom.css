@@ -679,15 +679,15 @@ html[data-theme='dark'] .header-github-link::before {
 /* fragments */
 @import 'tailwindcss';
 
-.shimmer-effect {
-  background: linear-gradient(90deg, #1e2b8f 25%, #3c4fe0 50%, #1e2b8f 75%);
+html[data-theme='light'] .shimmer-effect {
+  background: linear-gradient(90deg, #3c4fe0 25%, #60a5fa 50%, #3c4fe0 75%);
   background-size: 200% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shimmer 2s infinite linear;
 }
 
-html[data-theme='light'] .shimmer-effect {
+html[data-theme='dark'] .shimmer-effect {
   background: linear-gradient(90deg, #3c4fe0 25%, #60a5fa 50%, #3c4fe0 75%);
   background-size: 200% 100%;
   -webkit-background-clip: text;
