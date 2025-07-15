@@ -282,8 +282,8 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   padding: 0.5rem 1rem !important;
   background-color: var(--ifm-announcement-bar-background-color) !important;
   color: #fff !important;
-  white-space: normal !important;      /* Allow text to wrap */
-  word-break: normal !important;   /* Break long words if needed */
+  white-space: normal !important; /* Allow text to wrap */
+  word-break: normal !important; /* Break long words if needed */
   text-align: center;
 }
 
@@ -702,4 +702,8 @@ html[data-theme='dark'] .shimmer-effect {
   100% {
     background-position: -200% 0;
   }
+}
+
+.footer {
+  @apply bg-neutral-100 dark:bg-zinc-800 py-16 rounded-2xl ring-1 ring-neutral-200 dark:ring-neutral-700 ring-offset-3 dark:ring-offset-neutral-900;
 }
