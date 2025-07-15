@@ -710,7 +710,12 @@ html[data-theme='dark'] .shimmer-effect {
 
 /* Make the DocSearch search bar button prominent */
 .DocSearch-Button {
-  box-shadow: 0 0 0 4px #60a5fa33, 0 2px 8px 0 #60a5fa55;
+  box-shadow:
+    0 0 0 3px #60a5fa22,           /* soft blue glow, less spread */
+    0 2px 8px 0 #60a5fa33,          /* subtle blue shadow, less opacity */
+    0 4px 16px 0 #3c4fe033,         /* deeper blue shadow, less blur */
+    0 0 8px 2px #2563eb11,          /* faint outer blue, very subtle */
+    0 1.5px 6px 0 #00000011;        /* subtle dark shadow for depth */
   border: 2px solid #3c4fe0 !important;
   background: #fff !important;
   transition: box-shadow 0.2s, border-color 0.2s;
@@ -720,26 +725,12 @@ html[data-theme='dark'] .shimmer-effect {
 
 .DocSearch-Button:focus,
 .DocSearch-Button:hover {
-  box-shadow: 0 0 0 8px #60a5fa55, 0 4px 16px 0 #3c4fe099;
+  box-shadow:
+    0 0 0 6px #60a5fa33,
+    0 4px 20px 0 #3c4fe055,
+    0 0 12px 4px #2563eb22,
+    0 2px 8px 0 #00000022;
   border-color: #2563eb !important;
-}
-
-/* Optional: Add a 'New!' badge */
-.DocSearch-Button::after {
-  content: 'New!';
-  position: absolute;
-  top: -1.5em;
-  right: 0.5em;
-  background: #2563eb;
-  color: #fff;
-  font-size: 0.7em;
-  padding: 0.2em 0.6em;
-  border-radius: 1em;
-  box-shadow: 0 2px 8px #2563eb33;
-  font-weight: bold;
-  letter-spacing: 0.05em;
-  z-index: 20;
-  animation: search-badge-glow 2s infinite;
 }
 
 @keyframes search-badge-glow {

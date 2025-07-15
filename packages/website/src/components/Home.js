@@ -114,6 +114,10 @@ function Home() {
   const { withBaseUrl } = useBaseUrlUtils();
   const { colorMode } = useColorMode();
 
+  // Platform detection for command/ctrl label
+  const isWindows = typeof navigator !== 'undefined' && /Win/i.test(navigator.platform);
+  const commandLabel = isWindows ? 'Ctrl' : '⌘';
+
   const videoChapters = [
     { label: 'Keyword', time: 9 },
     { label: 'Ask AI', time: 37 },
@@ -155,7 +159,7 @@ function Home() {
             </p>
           </div>
           <div className="flex my-12 gap-8">
-            <Button href={withBaseUrl('docs/what-is-docsearch')}>Get started</Button>
+            <Button href={withBaseUrl('docs/what-is-docsearch')}>Find out more</Button>
             <PrimaryButton href={'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch'}>
               Sign up
             </PrimaryButton>
@@ -218,6 +222,16 @@ function Home() {
           <div className="relative max-w-xl mx-auto px-4 md:px-6 lg:px-8 lg:max-w-screen-xl">
             <div className="max-w-screen-xl mx-auto mb-16 px-4 md:px-6 lg:px-8">
               <div className="max-w-4xl mx-auto text-center flex flex-col items-center gap-4">
+                <div className="mb-4 text-center">
+                  <span className="inline-block px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-200 font-semibold text-sm shadow">
+                    Over 10 years of  
+                    <span className="mx-1">
+                      <span className="inline-block px-1 py-0.5 bg-white dark:bg-blue-800 border rounded text-xs font-mono align-middle">{commandLabel}</span>
+                      <span className="inline-block px-1 py-0.5 bg-white dark:bg-blue-800 border rounded text-xs font-mono align-middle">K</span>
+                    </span>
+                    - the OG search shortcut, still going strong
+                  </span>
+                </div>
                 <Keyboard />
                 <br />
                 <br />

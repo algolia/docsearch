@@ -95,7 +95,7 @@ export default {
             position: 'left',
           },
           {
-            label: 'Apply',
+            label: 'Sign up',
             to: SIGNUP_LINK,
             position: 'left',
           },
