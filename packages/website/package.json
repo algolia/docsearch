@@ -18,8 +18,8 @@
   "dependencies": {
     "@docsearch/css": "4.0.0-beta.1",
     "@docsearch/react": "4.0.0-beta.1",
-    "@docusaurus/core": "3.8.1",
-    "@docusaurus/preset-classic": "3.8.1",
+    "@docusaurus/core": "file:tmp-tarballs/docusaurus-core-3.8.1.tgz",
+    "@docusaurus/preset-classic": "file:tmp-tarballs/docusaurus-preset-classic-3.8.1.tgz",
     "@mdx-js/react": "^3.1.0",
     "@tabler/icons-react": "^3.34.0",
     "class-variance-authority": "^0.7.1",
