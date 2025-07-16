@@ -2326,8 +2326,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docsearch/askai-example@workspace:examples/demo-askai"
   dependencies:
-    "@docsearch/css": "npm:4.0.0-beta.1"
-    "@docsearch/react": "npm:4.0.0-beta.1"
+    "@docsearch/css": "workspace:*"
+    "@docsearch/react": "workspace:*"
     "@vitejs/plugin-react": "npm:^4.3.4"
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
@@ -2483,7 +2483,6 @@ __metadata:
   dependencies:
     "@ai-sdk/react": "npm:^1.2.12"
     "@algolia/autocomplete-core": "npm:1.19.2"
-    "@algolia/autocomplete-preset-algolia": "npm:1.19.2"
     "@docsearch/css": "npm:4.0.0-beta.1"
     "@rollup/plugin-replace": "npm:6.0.2"
     "@testing-library/jest-dom": "npm:6.6.3"

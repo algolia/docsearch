@@ -38,7 +38,6 @@
   "dependencies": {
     "@ai-sdk/react": "^1.2.12",
     "@algolia/autocomplete-core": "1.19.2",
-    "@algolia/autocomplete-preset-algolia": "1.19.2",
     "@docsearch/css": "4.0.0-beta.1",
     "algoliasearch": "^5.28.0",
     "marked": "^15.0.12"
