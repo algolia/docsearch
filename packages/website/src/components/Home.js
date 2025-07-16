@@ -5,7 +5,7 @@ import React, { useRef, useState } from 'react';
 import { Button, PrimaryButton } from './ui/button';
 import { FeaturesBento } from './ui/features-bento';
 import { FlipWords } from './ui/flip-words';
-import Keyboard, { isAppleDevice } from './ui/keyboard';
+import Keyboard from './ui/keyboard';
 import { Logos } from './ui/logos';
 import { Spotlight } from './ui/spotlight';
 
@@ -113,9 +113,6 @@ function VideoPlayer({ chapters }) {
 function Home() {
   const { withBaseUrl } = useBaseUrlUtils();
   const { colorMode } = useColorMode();
-
-  // Platform detection for command/ctrl label
-  const commandLabel = isAppleDevice() ? '⌘' : 'Ctrl';
 
   const videoChapters = [
     { label: 'Keyword', time: 9 },
@@ -226,7 +223,7 @@ function Home() {
                     Over 10 years of
                     <span className="mx-1">
                       <kbd className="inline-block px-1 py-0.5 mx-1 bg-white dark:bg-blue-800 border rounded text-base md:text-lg font-mono align-middle">
-                        {commandLabel}
+                        {/(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) ? '⌘' : 'Ctrl'}
                       </kbd>
                       <kbd className="inline-block px-1 py-0.5 bg-white dark:bg-blue-800 border rounded text-base md:text-lg font-mono align-middle">
                         K

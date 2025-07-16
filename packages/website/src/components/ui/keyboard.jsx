@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-export function isAppleDevice() {
-  return /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
-}
-
 export default function Keyboard() {
+  function isAppleDevice() {
+    return /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
+  }
+
   /* ---------- audio --------------------------------------------------- */
   const clickRef = useRef(null);
 
