@@ -34,6 +34,11 @@ declare namespace Cypress {
      * Types a query that returns results.
      */
     typeQueryMatching: () => void;
+
+    /**
+     * Clears the search input.
+     */
+    clearSearch: () => void;
     /**
      * Types a query that returns no results.
      */

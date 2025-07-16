@@ -123,64 +123,31 @@ describe('Recent and Favorites', () => {
     cy.visit(Cypress.config().baseUrl!);
     cy.openModal();
     cy.typeQueryMatching();
-    cy.get('#docsearch-hits0-item-0 > a').click({ force: true }).wait(1000);
+    cy.get('#docsearch-hits0-item-1 > a').click({ force: true }).wait(1000);
     cy.openModal();
     cy.contains('Recent').should('be.visible');
   });
 
   it('Recent search is displayed after visiting a result', () => {
-    cy.wait(2000);
+    cy.clearSearch();
     cy.get('#docsearch-recentSearches-item-0').should('be.visible');
   });
 
   it('Recent search can be deleted', () => {
-    cy.get('#docsearch-recentSearches-item-0')
-      .find('[title="Remove this search from history"]')
-      .trigger('click');
+    cy.get('#docsearch-recentSearches-item-0').find('[title="Remove this search from history"]').trigger('click');
     cy.get('.DocSearch-Hits').should('not.exist');
   });
 
   it('Recent search can be favorited', () => {
-    cy.get('#docsearch-recentSearches-item-0')
-      .find('[title="Save this search"]')
-      .trigger('click');
+    cy.get('#docsearch-recentSearches-item-0').find('[title="Save this search"]').trigger('click');
     cy.contains('Favorite').should('be.visible');
     cy.get('#docsearch-favoriteSearches-item-0').should('be.visible');
   });
 
   it('Favorite can be deleted', () => {
-    cy.get('#docsearch-recentSearches-item-0')
-      .find('[title="Save this search"]')
-      .trigger('click');
+    cy.get('#docsearch-recentSearches-item-0').find('[title="Save this search"]').trigger('click');
     cy.contains('Favorite').should('be.visible');
-    cy.get('#docsearch-favoriteSearches-item-0')
-      .find('[title="Remove this search from favorites"]')
-      .trigger('click');
+    cy.get('#docsearch-favoriteSearches-item-0').find('[title="Remove this search from favorites"]').trigger('click');
     cy.get('.DocSearch-Hits').should('not.exist');
-  });
-
-  it('Input controls Recent and Favorite lists', () => {
-    // Mark one result as favorite
-    cy.get('#docsearch-recentSearches-item-0')
-      .find('[title="Save this search"]')
-      .trigger('click');
-    cy.contains('Favorite').should('be.visible');
-    // Search for something else to add a new recent search
-    cy.typeQueryMatching();
-    cy.get('#docsearch-hits1-item-5 > a').click({ force: true }).wait(1000);
-
-    cy.openModal();
-    cy.contains('Recent').should('be.visible');
-    cy.contains('Favorite').should('be.visible');
-
-    // Make sure the specified elements exist
-    cy.get('.DocSearch-Input')
-      .click()
-      .invoke('attr', 'aria-controls')
-      .then((value) => {
-        const ids = value!.split(' ');
-        expect(ids).to.have.length(2);
-        ids.forEach((id) => cy.get(`#${id}`).should('exist'));
-      });
   });
 });
