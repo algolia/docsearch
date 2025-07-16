@@ -5,7 +5,7 @@ import React, { useRef, useState } from 'react';
 import { Button, PrimaryButton } from './ui/button';
 import { FeaturesBento } from './ui/features-bento';
 import { FlipWords } from './ui/flip-words';
-import Keyboard from './ui/keyboard';
+import Keyboard, { isAppleDevice } from './ui/keyboard';
 import { Logos } from './ui/logos';
 import { Spotlight } from './ui/spotlight';
 
@@ -115,8 +115,7 @@ function Home() {
   const { colorMode } = useColorMode();
 
   // Platform detection for command/ctrl label
-  const isWindows = typeof navigator !== 'undefined' && /Win/i.test(navigator.platform);
-  const commandLabel = isWindows ? 'Ctrl' : '⌘';
+  const commandLabel = isAppleDevice() ? '⌘' : 'Ctrl';
 
   const videoChapters = [
     { label: 'Keyword', time: 9 },
@@ -223,11 +222,15 @@ function Home() {
             <div className="max-w-screen-xl mx-auto mb-16 px-4 md:px-6 lg:px-8">
               <div className="max-w-4xl mx-auto text-center flex flex-col items-center gap-4">
                 <div className="mb-12 text-center">
-                  <span className="inline-block px-4 py-2 rounded-full bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-200 font-semibold text-lg md:text-lg shadow">
-                    Over 10 years of  
+                  <span className="inline-block px-4 py-2 rounded-full bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-200 font-semibold text-lg">
+                    Over 10 years of
                     <span className="mx-1">
-                      <span className="inline-block px-1 py-0.5 bg-white dark:bg-blue-800 border rounded text-base md:text-lg font-mono align-middle">{commandLabel}</span>
-                      <span className="inline-block px-1 py-0.5 bg-white dark:bg-blue-800 border rounded text-base md:text-lg font-mono align-middle">K</span>
+                      <kbd className="inline-block px-1 py-0.5 mx-1 bg-white dark:bg-blue-800 border rounded text-base md:text-lg font-mono align-middle">
+                        {commandLabel}
+                      </kbd>
+                      <kbd className="inline-block px-1 py-0.5 bg-white dark:bg-blue-800 border rounded text-base md:text-lg font-mono align-middle">
+                        K
+                      </kbd>
                     </span>
                     – the OG search shortcut, still going strong
                   </span>

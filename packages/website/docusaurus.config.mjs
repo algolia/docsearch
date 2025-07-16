@@ -68,6 +68,16 @@ export default {
         askAi: 'askAIDemo',
         indexName: 'docsearch',
         contextualSearch: true,
+        translations: {
+          button: {
+            buttonText: 'Go on, give it a search...',
+          },
+          modal: {
+            footer: {
+              poweredByText: 'Powered by',
+            },
+          },
+        },
       },
       metadata: [
         {

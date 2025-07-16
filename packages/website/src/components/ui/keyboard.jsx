@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+export function isAppleDevice() {
+  return /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
+}
+
 export default function Keyboard() {
   /* ---------- audio --------------------------------------------------- */
   const clickRef = useRef(null);
@@ -7,16 +11,16 @@ export default function Keyboard() {
   const playClick = () => {
     if (clickRef.current) {
       clickRef.current.currentTime = 0; // rewind so rapid taps always sound
+      clickRef.current.volume = 0.1; // play at lower volume (10% of full volume)
       clickRef.current.play().catch(() => {}); // ignore autoplay blocks
     }
   };
 
   /* ---------- key map / state ----------------------------------------- */
   // Detect if the user is on Windows to adapt the modifier key label / mapping
-  const isWindows = typeof navigator !== 'undefined' && /Win/i.test(navigator.platform);
 
-  const commandLabel = isWindows ? 'Ctrl' : '⌘';
-  const commandKeyCodes = isWindows ? ['Control'] : ['Meta'];
+  const commandLabel = isAppleDevice() ? '⌘' : 'Ctrl';
+  const commandKeyCodes = isAppleDevice() ? ['Meta'] : ['Control'];
 
   const keySpec = [
     {
