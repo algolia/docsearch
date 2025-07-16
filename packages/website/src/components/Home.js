@@ -223,7 +223,9 @@ function Home() {
                     Over 10 years of
                     <span className="mx-1">
                       <kbd className="inline-block px-1 py-0.5 mx-1 bg-white dark:bg-blue-800 border rounded text-base md:text-lg font-mono align-middle">
-                        {/(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) ? '⌘' : 'Ctrl'}
+                        {typeof navigator !== 'undefined' && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)
+                          ? '⌘'
+                          : 'Ctrl'}
                       </kbd>
                       <kbd className="inline-block px-1 py-0.5 bg-white dark:bg-blue-800 border rounded text-base md:text-lg font-mono align-middle">
                         K

@@ -2,7 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 
 export default function Keyboard() {
   function isAppleDevice() {
-    return /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
+    if (typeof navigator !== 'undefined') {
+      return /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
+    }
+    return false;
   }
 
   /* ---------- audio --------------------------------------------------- */
