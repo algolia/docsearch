@@ -62,6 +62,7 @@ export default {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       algolia: {
+        placeholder: 'Search or ask AI',
         appId: 'PMZUYBQDAK',
         apiKey: '24b09689d5b4223813d9b8e48563c8f6',
         askAi: 'askAIDemo',

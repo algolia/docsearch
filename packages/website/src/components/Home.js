@@ -222,20 +222,18 @@ function Home() {
           <div className="relative max-w-xl mx-auto px-4 md:px-6 lg:px-8 lg:max-w-screen-xl">
             <div className="max-w-screen-xl mx-auto mb-16 px-4 md:px-6 lg:px-8">
               <div className="max-w-4xl mx-auto text-center flex flex-col items-center gap-4">
-                <div className="mb-4 text-center">
-                  <span className="inline-block px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-200 font-semibold text-sm shadow">
+                <div className="mb-12 text-center">
+                  <span className="inline-block px-4 py-2 rounded-full bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-200 font-semibold text-lg md:text-lg shadow">
                     Over 10 years of  
                     <span className="mx-1">
-                      <span className="inline-block px-1 py-0.5 bg-white dark:bg-blue-800 border rounded text-xs font-mono align-middle">{commandLabel}</span>
-                      <span className="inline-block px-1 py-0.5 bg-white dark:bg-blue-800 border rounded text-xs font-mono align-middle">K</span>
+                      <span className="inline-block px-1 py-0.5 bg-white dark:bg-blue-800 border rounded text-base md:text-lg font-mono align-middle">{commandLabel}</span>
+                      <span className="inline-block px-1 py-0.5 bg-white dark:bg-blue-800 border rounded text-base md:text-lg font-mono align-middle">K</span>
                     </span>
-                    - the OG search shortcut, still going strong
+                    – the OG search shortcut, still going strong
                   </span>
                 </div>
                 <Keyboard />
-                <br />
-                <br />
-                <div className="text-3xl mb-4 text-black dark:text-white font-bold leading-9 font-[Sora] md:text-4xl md:leading-10">
+                <div className="text-3xl mb-4 mt-12 text-black dark:text-white font-bold leading-9 font-[Sora] md:text-4xl md:leading-10">
                   Build{' '}
                   <FlipWords
                     className="text-blue-600"
