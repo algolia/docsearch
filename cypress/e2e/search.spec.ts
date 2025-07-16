@@ -110,7 +110,7 @@ describe('Search', () => {
 
   it("No results are displayed if query doesn't match", () => {
     cy.typeQueryNotMatching();
-    cy.contains('No results for').should('be.visible');
+    cy.contains('No results found for').should('be.visible');
   });
 
   it('Should not refer to Recent/Favorite in aria-controls', () => {
@@ -129,30 +129,41 @@ describe('Recent and Favorites', () => {
   });
 
   it('Recent search is displayed after visiting a result', () => {
+    cy.wait(2000);
     cy.get('#docsearch-recentSearches-item-0').should('be.visible');
   });
 
   it('Recent search can be deleted', () => {
-    cy.get('#docsearch-recentSearches-item-0').find('[title="Remove this search from history"]').trigger('click');
+    cy.get('#docsearch-recentSearches-item-0')
+      .find('[title="Remove this search from history"]')
+      .trigger('click');
     cy.get('.DocSearch-Hits').should('not.exist');
   });
 
   it('Recent search can be favorited', () => {
-    cy.get('#docsearch-recentSearches-item-0').find('[title="Save this search"]').trigger('click');
+    cy.get('#docsearch-recentSearches-item-0')
+      .find('[title="Save this search"]')
+      .trigger('click');
     cy.contains('Favorite').should('be.visible');
     cy.get('#docsearch-favoriteSearches-item-0').should('be.visible');
   });
 
   it('Favorite can be deleted', () => {
-    cy.get('#docsearch-recentSearches-item-0').find('[title="Save this search"]').trigger('click');
+    cy.get('#docsearch-recentSearches-item-0')
+      .find('[title="Save this search"]')
+      .trigger('click');
     cy.contains('Favorite').should('be.visible');
-    cy.get('#docsearch-favoriteSearches-item-0').find('[title="Remove this search from favorites"]').trigger('click');
+    cy.get('#docsearch-favoriteSearches-item-0')
+      .find('[title="Remove this search from favorites"]')
+      .trigger('click');
     cy.get('.DocSearch-Hits').should('not.exist');
   });
 
   it('Input controls Recent and Favorite lists', () => {
     // Mark one result as favorite
-    cy.get('#docsearch-recentSearches-item-0').find('[title="Save this search"]').trigger('click');
+    cy.get('#docsearch-recentSearches-item-0')
+      .find('[title="Save this search"]')
+      .trigger('click');
     cy.contains('Favorite').should('be.visible');
     // Search for something else to add a new recent search
     cy.typeQueryMatching();
