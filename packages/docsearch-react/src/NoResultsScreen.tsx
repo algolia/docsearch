@@ -36,11 +36,11 @@ export function NoResultsScreen({ translations = {}, ...props }: NoResultsScreen
       {searchSuggestions && searchSuggestions.length > 0 && (
         <div className="DocSearch-NoResults-Prefill-List">
           <p className="DocSearch-Help">{suggestedQueryText}:</p>
-          <ul>
+          <div className="DocSearch-NoResults-Prefill-List-Items">
             {searchSuggestions.slice(0, 3).reduce<React.ReactNode[]>(
               (acc, search) => [
                 ...acc,
-                <li key={search}>
+                <p key={search}>
                   <SearchIcon size={16} />
                   <button
                     className="DocSearch-Prefill"
@@ -54,11 +54,11 @@ export function NoResultsScreen({ translations = {}, ...props }: NoResultsScreen
                   >
                     {search}
                   </button>
-                </li>,
+                </p>,
               ],
               [],
             )}
-          </ul>
+          </div>
         </div>
       )}
 

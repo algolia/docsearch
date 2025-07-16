@@ -168,9 +168,9 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
 
         <div className="DocSearch-Actions">
           {isAskAiStreaming && (
-            <div className="DocSearch-StreamingIndicator">
+            <button type="button" className="DocSearch-StreamingIndicator" onClick={() => props.onAskAiToggle(true)}>
               <SparklesIcon />
-            </div>
+            </button>
           )}
 
           <button
@@ -184,7 +184,7 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
             {clearButtonTitle}
           </button>
 
-          <div className="DocSearch-Divider" />
+          {(isAskAiStreaming || props.state.query) && <div className="DocSearch-Divider" />}
 
           <button
             type="button"
