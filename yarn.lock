@@ -86,18 +86,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@algolia/autocomplete-preset-algolia@npm:1.19.2":
-  version: 1.19.2
-  resolution: "@algolia/autocomplete-preset-algolia@npm:1.19.2"
-  dependencies:
-    "@algolia/autocomplete-shared": "npm:1.19.2"
-  peerDependencies:
-    "@algolia/client-search": ">= 4.9.1 < 6"
-    algoliasearch: ">= 4.9.1 < 6"
-  checksum: 10c0/6155d822da953a876d5f0142e017ff291a4dcb34f3a2541f72174e1829a757122052646f0c01ded547f821f8e87faf145577b0bcdc2364160cc681d8115092f3
-  languageName: node
-  linkType: hard
-
 "@algolia/autocomplete-shared@npm:1.19.2":
   version: 1.19.2
   resolution: "@algolia/autocomplete-shared@npm:1.19.2"
@@ -2335,13 +2323,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@docsearch/css@npm:4.0.0-beta.1":
-  version: 4.0.0-beta.1
-  resolution: "@docsearch/css@npm:4.0.0-beta.1"
-  checksum: 10c0/a2ea60978d323de6465fd89b524ed3212508e4a739cf05f29b5186b8467c17e07047c9e68a82e898133f903e43bdad222e3900f1f09793e4f3eda460cc22c06a
-  languageName: node
-  linkType: hard
-
 "@docsearch/css@npm:4.0.0-beta.2, @docsearch/css@workspace:*, @docsearch/css@workspace:packages/docsearch-css":
   version: 0.0.0-use.local
   resolution: "@docsearch/css@workspace:packages/docsearch-css"
@@ -2456,7 +2437,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@docsearch/react@npm:4.0.0-beta.2, @docsearch/react@workspace:*, @docsearch/react@workspace:packages/docsearch-react":
+"@docsearch/react@npm:4.0.0-beta.2, @docsearch/react@npm:^4.0.0-beta, @docsearch/react@workspace:*, @docsearch/react@workspace:packages/docsearch-react":
   version: 0.0.0-use.local
   resolution: "@docsearch/react@workspace:packages/docsearch-react"
   dependencies:
@@ -2487,34 +2468,6 @@ __metadata:
       optional: true
   languageName: unknown
   linkType: soft
-
-"@docsearch/react@npm:beta":
-  version: 4.0.0-beta.1
-  resolution: "@docsearch/react@npm:4.0.0-beta.1"
-  dependencies:
-    "@ai-sdk/react": "npm:^1.2.12"
-    "@algolia/autocomplete-core": "npm:1.19.2"
-    "@algolia/autocomplete-preset-algolia": "npm:1.19.2"
-    "@docsearch/css": "npm:4.0.0-beta.1"
-    algoliasearch: "npm:^5.28.0"
-    marked: "npm:^15.0.12"
-  peerDependencies:
-    "@types/react": ">= 16.8.0 < 20.0.0"
-    react: ">= 16.8.0 < 20.0.0"
-    react-dom: ">= 16.8.0 < 20.0.0"
-    search-insights: ">= 1 < 3"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-    react:
-      optional: true
-    react-dom:
-      optional: true
-    search-insights:
-      optional: true
-  checksum: 10c0/f068d11f23493f15ba86145ef46748cb5c1a184c24700b0f80b32faf622607e70eb697fb361d32c52e1c5ac813cf07e60ca50b7784524c3dcd68ba3326d80982
-  languageName: node
-  linkType: hard
 
 "@docsearch/website@workspace:packages/website":
   version: 0.0.0-use.local
@@ -3081,9 +3034,9 @@ __metadata:
 
 "@docusaurus/theme-search-algolia@file:packages/website/tmp-tarballs/docusaurus-theme-search-algolia-3.8.1.tgz::locator=%40docsearch%2Fmonorepo%40workspace%3A.":
   version: 3.8.1
-  resolution: "@docusaurus/theme-search-algolia@file:packages/website/tmp-tarballs/docusaurus-theme-search-algolia-3.8.1.tgz#packages/website/tmp-tarballs/docusaurus-theme-search-algolia-3.8.1.tgz::hash=6f52e2&locator=%40docsearch%2Fmonorepo%40workspace%3A."
+  resolution: "@docusaurus/theme-search-algolia@file:packages/website/tmp-tarballs/docusaurus-theme-search-algolia-3.8.1.tgz#packages/website/tmp-tarballs/docusaurus-theme-search-algolia-3.8.1.tgz::hash=25af8e&locator=%40docsearch%2Fmonorepo%40workspace%3A."
   dependencies:
-    "@docsearch/react": "npm:beta"
+    "@docsearch/react": "npm:^4.0.0-beta"
     "@docusaurus/core": "npm:3.8.1"
     "@docusaurus/logger": "npm:3.8.1"
     "@docusaurus/plugin-content-docs": "npm:3.8.1"
@@ -3102,7 +3055,7 @@ __metadata:
   peerDependencies:
     react: ^18.0.0 || ^19.0.0
     react-dom: ^18.0.0 || ^19.0.0
-  checksum: 10c0/dd8bdc217107ecd84e949f9b2c3d6c15925edc53540622df34d433d0a8b916d570ef9efcc312691dce3e2dc749df7dac0b5092a2403676c08c6ccf4848b666fa
+  checksum: 10c0/6c914cb858cdd191f054d4f73c9a7d30a643a3387a8a4ef93b954c31e52e339bb73607bb86c9db6a908bd1e075513907f1c964793b5582162f61c242e801c94e
   languageName: node
   linkType: hard
 
