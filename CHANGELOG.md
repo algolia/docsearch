@@ -1,3 +1,24 @@
+# [4.0.0-beta.2](https://github.com/algolia/docsearch/compare/v4.0.0-beta.1...v4.0.0-beta.2) (2025-07-16)
+
+
+### Bug Fixes
+
+* add a section on models ([c3c5691](https://github.com/algolia/docsearch/commit/c3c5691cf6186f21a28984ab697b70d72e75b124))
+* Add more styling ([505c214](https://github.com/algolia/docsearch/commit/505c2147da072d7307b02d05e833ad910a6ea44c))
+* beta in readme ([b1dad74](https://github.com/algolia/docsearch/commit/b1dad744f4dc9fb84ff1b4101e4a54bd200ec28a))
+* polishing v4 ([#2667](https://github.com/algolia/docsearch/issues/2667)) ([2fe7b1d](https://github.com/algolia/docsearch/commit/2fe7b1d0d753954ee9a4ffbeade8fbc8ba5d4cc9))
+* update to `<package>[@beta](https://github.com/beta)` ([0cebaa6](https://github.com/algolia/docsearch/commit/0cebaa67491557c4f8d803b1f22c38cd13106168))
+
+
+### Features
+
+* add glow around the search bar and copy above the keyboard ([11716ac](https://github.com/algolia/docsearch/commit/11716ac88225b749b075f08b03aaf9b8608a248f))
+* added glow around the search bar and a little copy above the keyboard ([7942f3f](https://github.com/algolia/docsearch/commit/7942f3f5e914e87a12e6f85348f920891d52491e))
+* **docsearch-website:** Updated docs ([#2662](https://github.com/algolia/docsearch/issues/2662)) ([1b09a56](https://github.com/algolia/docsearch/commit/1b09a569f6cd9ffedaaf3d4965fbc8667053d4f0))
+* **v4:** update the landing page ([#2665](https://github.com/algolia/docsearch/issues/2665)) ([3861789](https://github.com/algolia/docsearch/commit/386178966e497fc1dd2a07b46582c2577ee0e229))
+
+
+
 # [4.0.0-beta.1](https://github.com/algolia/docsearch/compare/v4.0.0-beta.0...v4.0.0-beta.1) (2025-07-09)
 
 

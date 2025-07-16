@@ -2335,7 +2335,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@docsearch/css@npm:4.0.0-beta.1, @docsearch/css@workspace:*, @docsearch/css@workspace:packages/docsearch-css":
+"@docsearch/css@npm:4.0.0-beta.1":
+  version: 4.0.0-beta.1
+  resolution: "@docsearch/css@npm:4.0.0-beta.1"
+  checksum: 10c0/a2ea60978d323de6465fd89b524ed3212508e4a739cf05f29b5186b8467c17e07047c9e68a82e898133f903e43bdad222e3900f1f09793e4f3eda460cc22c06a
+  languageName: node
+  linkType: hard
+
+"@docsearch/css@npm:4.0.0-beta.2, @docsearch/css@workspace:*, @docsearch/css@workspace:packages/docsearch-css":
   version: 0.0.0-use.local
   resolution: "@docsearch/css@workspace:packages/docsearch-css"
   dependencies:
@@ -2347,17 +2354,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docsearch/js-example@workspace:examples/js-demo"
   dependencies:
-    "@docsearch/css": "npm:4.0.0-beta.1"
-    "@docsearch/js": "npm:4.0.0-beta.1"
+    "@docsearch/css": "npm:4.0.0-beta.2"
+    "@docsearch/js": "npm:4.0.0-beta.2"
     vite: "npm:^6.0.7"
   languageName: unknown
   linkType: soft
 
-"@docsearch/js@npm:4.0.0-beta.1, @docsearch/js@workspace:packages/docsearch-js":
+"@docsearch/js@npm:4.0.0-beta.2, @docsearch/js@workspace:packages/docsearch-js":
   version: 0.0.0-use.local
   resolution: "@docsearch/js@workspace:packages/docsearch-js"
   dependencies:
-    "@docsearch/react": "npm:4.0.0-beta.1"
+    "@docsearch/react": "npm:4.0.0-beta.2"
     "@rollup/plugin-replace": "npm:6.0.2"
     nodemon: "npm:^3.1.9"
     preact: "npm:^10.0.0"
@@ -2440,8 +2447,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docsearch/react-example@workspace:examples/demo"
   dependencies:
-    "@docsearch/css": "npm:4.0.0-beta.1"
-    "@docsearch/react": "npm:4.0.0-beta.1"
+    "@docsearch/css": "npm:4.0.0-beta.2"
+    "@docsearch/react": "npm:4.0.0-beta.2"
     "@vitejs/plugin-react": "npm:^4.3.4"
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
@@ -2449,7 +2456,39 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@docsearch/react@npm:4.0.0-beta.1, @docsearch/react@npm:beta":
+"@docsearch/react@npm:4.0.0-beta.2, @docsearch/react@workspace:*, @docsearch/react@workspace:packages/docsearch-react":
+  version: 0.0.0-use.local
+  resolution: "@docsearch/react@workspace:packages/docsearch-react"
+  dependencies:
+    "@ai-sdk/react": "npm:^1.2.12"
+    "@algolia/autocomplete-core": "npm:1.19.2"
+    "@docsearch/css": "npm:4.0.0-beta.2"
+    "@rollup/plugin-replace": "npm:6.0.2"
+    "@testing-library/jest-dom": "npm:6.6.3"
+    "@testing-library/react": "npm:16.2.0"
+    algoliasearch: "npm:^5.28.0"
+    marked: "npm:^15.0.12"
+    nodemon: "npm:^3.1.0"
+    vitest: "npm:3.0.2"
+    zod: "npm:^3.25.67"
+  peerDependencies:
+    "@types/react": ">= 16.8.0 < 20.0.0"
+    react: ">= 16.8.0 < 20.0.0"
+    react-dom: ">= 16.8.0 < 20.0.0"
+    search-insights: ">= 1 < 3"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+    search-insights:
+      optional: true
+  languageName: unknown
+  linkType: soft
+
+"@docsearch/react@npm:beta":
   version: 4.0.0-beta.1
   resolution: "@docsearch/react@npm:4.0.0-beta.1"
   dependencies:
@@ -2477,44 +2516,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docsearch/react@workspace:*, @docsearch/react@workspace:packages/docsearch-react":
-  version: 0.0.0-use.local
-  resolution: "@docsearch/react@workspace:packages/docsearch-react"
-  dependencies:
-    "@ai-sdk/react": "npm:^1.2.12"
-    "@algolia/autocomplete-core": "npm:1.19.2"
-    "@docsearch/css": "npm:4.0.0-beta.1"
-    "@rollup/plugin-replace": "npm:6.0.2"
-    "@testing-library/jest-dom": "npm:6.6.3"
-    "@testing-library/react": "npm:16.2.0"
-    algoliasearch: "npm:^5.28.0"
-    marked: "npm:^15.0.12"
-    nodemon: "npm:^3.1.0"
-    vitest: "npm:3.0.2"
-    zod: "npm:^3.25.67"
-  peerDependencies:
-    "@types/react": ">= 16.8.0 < 20.0.0"
-    react: ">= 16.8.0 < 20.0.0"
-    react-dom: ">= 16.8.0 < 20.0.0"
-    search-insights: ">= 1 < 3"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-    react:
-      optional: true
-    react-dom:
-      optional: true
-    search-insights:
-      optional: true
-  languageName: unknown
-  linkType: soft
-
 "@docsearch/website@workspace:packages/website":
   version: 0.0.0-use.local
   resolution: "@docsearch/website@workspace:packages/website"
   dependencies:
-    "@docsearch/css": "npm:4.0.0-beta.1"
-    "@docsearch/react": "npm:4.0.0-beta.1"
+    "@docsearch/css": "npm:4.0.0-beta.2"
+    "@docsearch/react": "npm:4.0.0-beta.2"
     "@docusaurus/core": "file:tmp-tarballs/docusaurus-core-3.8.1.tgz"
     "@docusaurus/module-type-aliases": "npm:^3.8.1"
     "@docusaurus/preset-classic": "file:tmp-tarballs/docusaurus-preset-classic-3.8.1.tgz"
