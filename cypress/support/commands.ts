@@ -40,6 +40,10 @@ Cypress.Commands.add('typeQueryNotMatching', () => {
   cy.search('zzz');
 });
 
+Cypress.Commands.add('clearSearch', () => {
+  cy.get('.DocSearch-Input').clear();
+});
+
 Cypress.Commands.add('returnToSearch', () => {
   cy.get('.DocSearch-Input').type('{esc}');
 });

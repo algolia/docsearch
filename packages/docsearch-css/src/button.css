@@ -6,8 +6,8 @@
   color: var(--docsearch-muted-color);
   cursor: pointer;
   display: flex;
-  font-weight: 300;
-  width: 286px;
+  all: unset;
+  width: 320px;
   height: 36px;
   justify-content: space-between;
   margin: 0 0 0 16px;
@@ -22,7 +22,7 @@
 }
 
 .DocSearch-Button-Container svg {
-  color: var(--docsearch-highlight-color);
+  color: var(--docsearch-muted-color);
 }
 
 .DocSearch-Search-Icon {
@@ -36,9 +36,9 @@
 }
 
 .DocSearch-Button-Placeholder {
-  font-size: 1.25rem;
-  font-weight: 300;
+  font-size: 1rem;
   padding: 0 12px 0 8px;
+  color: var(--docsearch-muted-color);
   display: inline-block;
   line-height: normal;
 }
@@ -51,19 +51,25 @@
 .DocSearch-Button-Key {
   align-items: center;
   background: var(--docsearch-key-background);
-  border-radius: 2px;
   color: var(--docsearch-key-color);
   box-shadow: none !important;
   display: flex;
-  height: 24px;
-  font-size: 20px;
+  height: 20px;
+  width: 20px;
   justify-content: center;
   position: relative;
   border: 0;
-  width: 24px;
+  font-size: 14px;
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 100ms;
+  border: 1px solid
+    color-mix(in srgb, var(--docsearch-subtle-color) 20%, transparent);
+  border-radius: 4px;
+}
+
+.DocSearch-Button-Key--ctrl {
+  width: 33px;
 }
 
 .DocSearch-Button-Key:first-child {

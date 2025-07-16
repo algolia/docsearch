@@ -2,6 +2,7 @@
 
 :root {
   --docsearch-primary-color: rgb(0, 61, 255);
+  --docsearch-soft-primary-color: rgba(0, 61, 255, 0.1);
   --docsearch-subtle-color: rgb(214, 214, 231);
   --docsearch-text-color: #36395a;
   --docsearch-error-color: #ef5350;
@@ -17,18 +18,20 @@
   --docsearch-icon-color: rgba(90, 94, 154, 1);
   --docsearch-container-background: rgba(101, 108, 133, 0.8);
   --docsearch-logo-color: rgba(0, 61, 255, 1);
+  --docsearch-border-radius: 4px;
 
   /* modal */
   --docsearch-modal-width: 800px;
   --docsearch-modal-height: 600px;
   --docsearch-modal-background: rgb(245, 246, 247);
-  --docsearch-modal-shadow: inset 1px 1px 0 0 rgba(255, 255, 255, 0.5),
-    0 3px 8px 0 rgba(85, 90, 100, 1);
+  --docsearch-modal-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px,
+    rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,
+    rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
 
   /* searchbox */
   --docsearch-searchbox-height: 56px;
-  --docsearch-searchbox-background: #fff;
-  --docsearch-searchbox-focus-background: #fff;
+  --docsearch-searchbox-background: #ffffffa6;
+  --docsearch-searchbox-focus-background: #ffffffa6;
   --docsearch-actions-width: 99px;
   --docsearch-actions-height: 44px;
 
@@ -45,7 +48,7 @@
 
   /* footer */
   --docsearch-footer-height: 52px;
-  --docsearch-footer-background: #fff;
+  --docsearch-footer-background: #ffffffa6;
   --docsearch-footer-shadow: 0 -1px 0 0 rgb(224, 227, 232),
     0 -3px 6px 0 rgba(69, 98, 155, 0.12);
 
@@ -81,15 +84,15 @@ html[data-theme='dark'] {
   --docsearch-modal-background: rgb(21, 23, 42);
   --docsearch-modal-shadow: inset 1px 1px 0 0 rgb(44, 46, 64),
     0 3px 8px 0 rgb(0, 3, 9);
-  --docsearch-searchbox-background: rgb(9, 10, 17);
-  --docsearch-searchbox-focus-background: #000;
+  --docsearch-searchbox-background: #000000a6;
+  --docsearch-searchbox-focus-background: #000000a6;
   --docsearch-hit-color: rgb(190, 195, 201);
   --docsearch-hit-shadow: none;
   --docsearch-hit-background: rgb(9, 10, 17);
   --docsearch-key-background: rgba(54, 57, 90, 1);
   --docsearch-key-color: rgba(182, 183, 213, 1);
   --docsearch-key-pressed-shadow: inset 0 2px 4px rgba(12, 13, 20, 0.4);
-  --docsearch-footer-background: rgba(13, 13, 13, 1);
+  --docsearch-footer-background: #000000a6;
   --docsearch-footer-shadow: inset 0 1px 0 0 rgba(73, 76, 106, 0.5),
     0 -4px 8px 0 rgba(0, 0, 0, 0.2);
   --docsearch-logo-color: rgb(255, 255, 255);
