@@ -5,15 +5,15 @@ Style package for [DocSearch](http://docsearch.algolia.com/), the best search ex
 ## Installation
 
 ```bash
-yarn add @docsearch/css@3
+yarn add @docsearch/css@beta
 # or
-npm install @docsearch/css@3
+npm install @docsearch/css@beta
 ```
 
 If you don’t want to use a package manager, you can use a standalone endpoint:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/css@3"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/css@beta"></script>
 ```
 
 ## Get started

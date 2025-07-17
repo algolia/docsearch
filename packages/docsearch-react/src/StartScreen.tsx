@@ -1,6 +1,6 @@
 import React, { type JSX } from 'react';
 
-import { RecentIcon, ResetIcon, StarIcon } from './icons';
+import { RecentIcon, CloseIcon, StarIcon, SparklesIcon } from './icons';
 import { Results } from './Results';
 import type { ScreenStateProps } from './ScreenState';
 import type { InternalDocSearchHit } from './types';
@@ -12,6 +12,8 @@ export type StartScreenTranslations = Partial<{
   removeRecentSearchButtonTitle: string;
   favoriteSearchesTitle: string;
   removeFavoriteSearchButtonTitle: string;
+  recentConversationsTitle: string;
+  removeRecentConversationButtonTitle: string;
 }>;
 
 type StartScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
@@ -22,27 +24,13 @@ type StartScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translatio
 export function StartScreen({ translations = {}, ...props }: StartScreenProps): JSX.Element | null {
   const {
     recentSearchesTitle = 'Recent',
-    noRecentSearchesText = 'No recent searches',
     saveRecentSearchButtonTitle = 'Save this search',
     removeRecentSearchButtonTitle = 'Remove this search from history',
     favoriteSearchesTitle = 'Favorite',
     removeFavoriteSearchButtonTitle = 'Remove this search from favorites',
+    recentConversationsTitle = 'Recent conversations',
+    removeRecentConversationButtonTitle = 'Remove this conversation from history',
   } = translations;
-  if (props.state.status === 'idle' && props.hasCollections === false) {
-    if (props.disableUserPersonalization) {
-      return null;
-    }
-
-    return (
-      <div className="DocSearch-StartScreen">
-        <p className="DocSearch-Help">{noRecentSearchesText}</p>
-      </div>
-    );
-  }
-
-  if (props.hasCollections === false) {
-    return null;
-  }
 
   return (
     <div className="DocSearch-Dropdown-Container">
@@ -89,7 +77,7 @@ export function StartScreen({ translations = {}, ...props }: StartScreenProps): 
                   });
                 }}
               >
-                <ResetIcon />
+                <CloseIcon />
               </button>
             </div>
           </>
@@ -120,7 +108,37 @@ export function StartScreen({ translations = {}, ...props }: StartScreenProps): 
                 });
               }}
             >
-              <ResetIcon />
+              <CloseIcon />
+            </button>
+          </div>
+        )}
+      />
+
+      <Results
+        {...props}
+        title={recentConversationsTitle}
+        collection={props.state.collections[2]}
+        renderIcon={() => (
+          <div className="DocSearch-Hit-icon">
+            <SparklesIcon />
+          </div>
+        )}
+        renderAction={({ item, runDeleteTransition }) => (
+          <div className="DocSearch-Hit-action">
+            <button
+              className="DocSearch-Hit-action-button"
+              title={removeRecentConversationButtonTitle}
+              type="submit"
+              onClick={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                runDeleteTransition(() => {
+                  props.conversations.remove(item);
+                  props.refresh();
+                });
+              }}
+            >
+              <CloseIcon />
             </button>
           </div>
         )}

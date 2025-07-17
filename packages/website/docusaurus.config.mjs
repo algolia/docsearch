@@ -5,8 +5,12 @@ import tailwindLoader from './plugins/tailwind-loader.mjs';
 
 const SIGNUP_LINK = 'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch';
 
+const currentDate = new Date();
+const currentYear = currentDate.getFullYear();
+
+// @ts-check
 // With JSDoc @type annotations, IDEs can provide config autocompletion
-/** @type {import('@docusaurus/types').DocusaurusConfig} */
+/** @type {import('@docusaurus/types').Config} */
 export default {
   title: 'DocSearch by Algolia',
   tagline: 'The best search experience for docs, integrated in minutes, for free.',
@@ -17,6 +21,12 @@ export default {
   projectName: 'DocSearch',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'throw',
+  future: {
+    v4: {
+      removeLegacyPostBuildHeadAttribute: true,
+      useCssCascadeLayers: false,
+    },
+  },
   presets: [
     [
       '@docusaurus/preset-classic',
@@ -28,7 +38,13 @@ export default {
           editUrl: 'https://github.com/algolia/docsearch/edit/main/packages/website/',
           versions: {
             current: {
-              label: 'current',
+              label: 'Beta (v4.x)',
+            },
+            v3: {
+              label: 'Stable (v3.x)',
+            },
+            legacy: {
+              label: 'Legacy',
             },
           },
           lastVersion: 'current',
@@ -46,10 +62,22 @@ export default {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       algolia: {
-        appId: 'R2IYF7ETH7',
-        apiKey: '599cec31baffa4868cae4e79f180729b',
+        placeholder: 'Search or ask AI',
+        appId: 'PMZUYBQDAK',
+        apiKey: '24b09689d5b4223813d9b8e48563c8f6',
+        askAi: 'askAIDemo',
         indexName: 'docsearch',
         contextualSearch: true,
+        translations: {
+          button: {
+            buttonText: 'Go on, give it a search...',
+          },
+          modal: {
+            footer: {
+              poweredByText: 'Powered by',
+            },
+          },
+        },
       },
       metadata: [
         {
@@ -68,12 +96,17 @@ export default {
         items: [
           // left
           {
-            label: 'Docs',
+            label: 'Documentation',
             to: 'docs/what-is-docsearch',
             position: 'left',
           },
           {
-            label: 'Apply',
+            label: 'Playground',
+            to: 'https://community.algolia.com/docsearch-playground/',
+            position: 'left',
+          },
+          {
+            label: 'Sign up',
             to: SIGNUP_LINK,
             position: 'left',
           },
@@ -89,14 +122,15 @@ export default {
           },
         ],
       },
+      announcementBar: {
+        id: 'announcement-bar',
+        content:
+          '🚀 Ask AI Private Beta Now Open! Turn your docs site search into an AI-powered assistant – faster answers, fewer tickets, better self-serve. <a target="_blank" rel="noopener noreferrer" href="https://docs.google.com/forms/d/e/1FAIpQLSer6eQmamqV0VC8Gc6CxN4wQgBF1OQR2s1i3XG6i1oXWTOkGg/viewform?usp=dialog">Get early access</a>',
+      },
       colorMode: {
         defaultMode: 'light',
         disableSwitch: false,
-        respectPrefersColorScheme: true,
-      },
-      announcementBar: {
-        content:
-          '⭐️ If you like DocSearch, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/algolia/docsearch">GitHub</a>! ⭐️',
+        respectPrefersColorScheme: false,
       },
       footer: {
         links: [
@@ -113,7 +147,11 @@ export default {
               },
               {
                 label: 'DocSearch v3',
-                to: 'docs/docsearch-v3',
+                to: 'docs/v3/docsearch',
+              },
+              {
+                label: 'DocSearch v4 - Beta',
+                to: 'docs/docsearch',
               },
             ],
           },
@@ -163,11 +201,11 @@ export default {
         ],
         logo: {
           alt: 'Algolia',
-          src: 'img/Algolia-logo-blue.svg',
-          srcDark: 'img/Algolia-logo-white.svg',
+          src: 'img/docsearch-x-algolia-logo-light-mode.png',
+          srcDark: 'img/docsearch-x-algolia-logo-dark-mode.png',
           width: 200,
         },
-        copyright: 'DocSearch 2015-now • Designed and built by Algolia',
+        copyright: `DocSearch 2015-${currentYear} – Built with 💙 by Algolia`,
       },
       image: 'img/og_image.png',
       prism: {

@@ -20,6 +20,7 @@
     "lint": "eslint .",
     "playground:build": "yarn workspace @docsearch/react-example build",
     "playground:start": "yarn workspace @docsearch/react-example dev --host",
+    "playground-askai:start": "yarn workspace @docsearch/askai-example dev --host",
     "playground-js:start": "yarn workspace @docsearch/js-example dev --host",
     "release": "shipjs prepare",
     "start": "yarn run watch",
@@ -31,14 +32,20 @@
     "website:start": "yarn workspace @docsearch/website start --host 0.0.0.0",
     "website:test": "yarn workspace @docsearch/website start --no-open"
   },
+  "resolutions": {
+    "@docusaurus/utils": "file:packages/website/tmp-tarballs/docusaurus-utils-3.8.1.tgz",
+    "@docusaurus/theme-search-algolia": "file:packages/website/tmp-tarballs/docusaurus-theme-search-algolia-3.8.1.tgz",
+    "@docusaurus/theme-translations": "file:packages/website/tmp-tarballs/docusaurus-theme-translations-3.8.1.tgz"
+  },
   "devDependencies": {
     "@babel/plugin-transform-react-jsx": "7.25.9",
     "@babel/preset-env": "7.26.0",
     "@babel/preset-typescript": "7.26.0",
     "@eslint-community/eslint-plugin-eslint-comments": "4.4.1",
     "@rollup/plugin-babel": "6.0.4",
+    "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-json": "6.1.0",
-    "@rollup/plugin-node-resolve": "16.0.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-replace": "6.0.2",
     "@rollup/plugin-terser": "0.4.4",
     "@stylistic/eslint-plugin": "2.13.0",

@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/react-example",
-  "description": "DocSearch v3 React example",
-  "version": "3.9.0",
+  "description": "DocSearch v4 React example",
+  "version": "4.0.0-beta.2",
   "private": true,
   "license": "MIT",
   "type": "module",
@@ -11,8 +11,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@docsearch/css": "3.9.0",
-    "@docsearch/react": "3.9.0",
+    "@docsearch/css": "4.0.0-beta.2",
+    "@docsearch/react": "4.0.0-beta.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

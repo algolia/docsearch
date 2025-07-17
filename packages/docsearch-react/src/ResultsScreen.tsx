@@ -6,9 +6,15 @@ import type { ScreenStateProps } from './ScreenState';
 import type { InternalDocSearchHit } from './types';
 import { removeHighlightTags } from './utils';
 
-type ResultsScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'>;
+export type ResultsScreenTranslations = Partial<{
+  askAiPlaceholder: string;
+}>;
 
-export function ResultsScreen(props: ResultsScreenProps): JSX.Element {
+type ResultsScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
+  translations?: ResultsScreenTranslations;
+};
+
+export function ResultsScreen({ translations = {}, ...props }: ResultsScreenProps): JSX.Element {
   return (
     <div className="DocSearch-Dropdown-Container">
       {props.state.collections.map((collection) => {
@@ -22,6 +28,7 @@ export function ResultsScreen(props: ResultsScreenProps): JSX.Element {
           <Results
             {...props}
             key={collection.source.sourceId}
+            translations={translations}
             title={title}
             collection={collection}
             renderIcon={({ item, index }) => (
