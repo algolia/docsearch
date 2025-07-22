@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/askai-example",
   "description": "DocSearch v4 AskAI example",
-  "version": "4.0.0-beta.2",
+  "version": "4.0.0-beta.3",
   "private": true,
   "license": "MIT",
   "type": "module",

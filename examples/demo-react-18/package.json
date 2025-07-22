@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/react-18-example",
   "description": "DocSearch v3 React 18 example",
-  "version": "4.0.0-beta.2",
+  "version": "4.0.0-beta.3",
   "private": true,
   "license": "MIT",
   "type": "module",

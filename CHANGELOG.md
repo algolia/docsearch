@@ -1,3 +1,13 @@
+# [4.0.0-beta.3](https://github.com/algolia/docsearch/compare/v3.9.0...v4.0.0-beta.3) (2025-07-22)
+
+
+### Features
+
+* **askai:** add facet filtering ([#2676](https://github.com/algolia/docsearch/issues/2676)) ([55e3eb3](https://github.com/algolia/docsearch/commit/55e3eb301c551323737c902f674382907a4da421))
+* **v4:** release v4 ([#2555](https://github.com/algolia/docsearch/issues/2555)) ([#2666](https://github.com/algolia/docsearch/issues/2666)) ([19c1ef9](https://github.com/algolia/docsearch/commit/19c1ef91928b6f64c1da48c727a4c5f91d6de1a4)), closes [#2574](https://github.com/algolia/docsearch/issues/2574) [#2587](https://github.com/algolia/docsearch/issues/2587) [#2654](https://github.com/algolia/docsearch/issues/2654) [#2659](https://github.com/algolia/docsearch/issues/2659) [#2660](https://github.com/algolia/docsearch/issues/2660) [#2661](https://github.com/algolia/docsearch/issues/2661) [#2662](https://github.com/algolia/docsearch/issues/2662) [#2665](https://github.com/algolia/docsearch/issues/2665) [#2667](https://github.com/algolia/docsearch/issues/2667) [#2668](https://github.com/algolia/docsearch/issues/2668)
+
+
+
 # [4.0.0-beta.2](https://github.com/algolia/docsearch/compare/v4.0.0-beta.1...v4.0.0-beta.2) (2025-07-16)
 
 
