@@ -306,12 +306,10 @@ You can send search events to your DocSearch index by passing in the `insights` 
 }>
 <TabItem value="js">
 
-```js
+```diff
 docsearch({
-  searchParameters: {
-    facetFilters: ['language:en', 'version:1.0.0'],
-  },
-  insights: true,
+   // other options
++  insights: true,
 });
 ```
 
@@ -319,12 +317,10 @@ docsearch({
 
 <TabItem value="react">
 
-```jsx
+```diff
 <DocSearch
-  searchParameters={{
-    facetFilters: ['language:en', 'version:1.0.0'],
-  }}
-  insights
+  // other options
++  insights={true}
 />
 ```
 
