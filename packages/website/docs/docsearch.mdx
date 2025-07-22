@@ -274,10 +274,6 @@ docsearch({
 </TabItem>
 
 <TabItem value="react">
-```js
-
-```
-
 ```jsx
 <DocSearch
   askAi={{
@@ -291,6 +287,10 @@ docsearch({
 </TabItem>
 
 </Tabs>
+
+:::tip
+You can use `facetFilters: ['type:content']` to ensure AskAI only uses records where the `type` attribute is `content` (i.e., only records that actually have content). This is useful if your index contains records for navigation, metadata, or other non-content types.
+:::
 
 ### Sending events
 
