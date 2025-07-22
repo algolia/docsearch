@@ -8,6 +8,26 @@ import pkg from './package.json';
 export default [
   {
     input: 'src/index.ts',
+    external: ['@docsearch/react'],
+    output: [
+      {
+        file: 'dist/esm/index.js',
+        format: 'es',
+        sourcemap: true,
+        banner: getBundleBanner(pkg),
+        plugins: [...plugins],
+      },
+    ],
+    plugins: [
+      ...plugins,
+      replace({
+        preventAssignment: true,
+        'process.env.NODE_ENV': JSON.stringify('production'),
+      }),
+    ],
+  },
+  {
+    input: 'src/index.ts',
     output: [
       {
         file: 'dist/umd/index.js',
@@ -15,13 +35,6 @@ export default [
         sourcemap: true,
         name: 'docsearch',
         banner: getBundleBanner(pkg),
-      },
-      {
-        file: 'dist/esm/index.js',
-        format: 'es',
-        sourcemap: true,
-        banner: getBundleBanner(pkg),
-        plugins: [...plugins],
       },
     ],
     plugins: [
