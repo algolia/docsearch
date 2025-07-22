@@ -330,6 +330,7 @@ export function DocSearchModal({
 
   const askAiConfig = typeof askAi === 'object' ? askAi : null;
   const askAiConfigurationId = typeof askAi === 'string' ? askAi : askAiConfig?.assistantId || null;
+  const askAiSearchParameters = askAiConfig?.searchParameters;
 
   const [askAiStreamError, setAskAiStreamError] = React.useState<Error | null>(null);
 
@@ -363,6 +364,7 @@ export function DocSearchModal({
       'X-Algolia-Index-Name': askAiConfig?.indexName || indexName,
       'X-Algolia-Assistant-Id': askAiConfigurationId || '',
     },
+    body: askAiSearchParameters ? { searchParameters: askAiSearchParameters } : {},
     onError(streamError) {
       setAskAiStreamError(streamError);
     },

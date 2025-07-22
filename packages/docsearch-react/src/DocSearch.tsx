@@ -43,6 +43,12 @@ export type DocSearchAskAi = {
    * The assistant ID to use for the ask AI feature.
    */
   assistantId: string | null;
+  /**
+   * The search parameters to use for the ask AI feature.
+   */
+  searchParameters?: {
+    facetFilters?: SearchParamsObject['facetFilters'];
+  };
 };
 
 export interface DocSearchProps {

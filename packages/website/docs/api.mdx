@@ -87,7 +87,7 @@ docsearch({
 });
 ```
 
-or
+or if you want to use different credentials for askAi and add search parameters
 
 ```js
 docsearch({
@@ -97,6 +97,9 @@ docsearch({
     apiKey: 'ANOTHER_SEARCH_API_KEY',
     appId: 'ANOTHER_APP_ID',
     assistantId: 'YOUR_ALGOLIA_ASSISTANT_ID',
+    searchParameters: {
+      facetFilters: ['language:en'],
+    },
   },
   // ...
 });

@@ -204,6 +204,8 @@ docsearch({
 
 ### Filtering search results
 
+#### Keyword search
+
 If your website uses [DocSearch meta tags][13] or if you've added [custom variables to your config][14], you'll be able to use the [`facetFilters`][16] option to scope your search results to a [`facet`][15]
 
 This is useful to limit the scope of the search to one language or one version.
@@ -242,6 +244,54 @@ docsearch({
 
 </Tabs>
 
+#### AskAI
+
+Filtering also applies when using AskAI. This is useful to limit the scope of the LLM's search to only relevant results.
+
+:::info
+We recommend using the `facetFilters` option when using AskAI with multiple languages or any multi-faceted index.
+:::
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', },
+    { label: 'React', value: 'react', }
+  ]
+}>
+<TabItem value="js">
+```js
+docsearch({
+  askAi: {
+    assistantId: 'YOUR_ALGOLIA_ASSISTANT_ID',
+    searchParameters: {
+      facetFilters: ['language:en', 'version:1.0.0'],
+    },
+  },
+});
+```
+</TabItem>
+
+<TabItem value="react">
+```js
+
+```
+
+```jsx
+<DocSearch
+  askAi={{
+    assistantId: 'YOUR_ALGOLIA_ASSISTANT_ID',
+    searchParameters: {
+      facetFilters: ['language:en', 'version:1.0.0'],
+    },
+  }}
+/>
+```
+</TabItem>
+
+</Tabs>
+
 ### Sending events
 
 You can send search events to your DocSearch index by passing in the `insights` parameter when creating your DocSearch instance.
@@ -256,12 +306,10 @@ You can send search events to your DocSearch index by passing in the `insights` 
 }>
 <TabItem value="js">
 
-```js
+```diff
 docsearch({
-  searchParameters: {
-    facetFilters: ['language:en', 'version:1.0.0'],
-  },
-  insights: true,
+   // other options
++  insights: true,
 });
 ```
 
@@ -269,12 +317,10 @@ docsearch({
 
 <TabItem value="react">
 
-```jsx
+```diff
 <DocSearch
-  searchParameters={{
-    facetFilters: ['language:en', 'version:1.0.0'],
-  }}
-  insights
+  // other options
++  insights={true}
 />
 ```
 

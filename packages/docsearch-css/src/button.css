@@ -10,7 +10,6 @@
   width: 320px;
   height: 36px;
   justify-content: space-between;
-  margin: 0 0 0 16px;
   padding: 0 8px;
   user-select: none;
 }
@@ -54,8 +53,8 @@
   color: var(--docsearch-key-color);
   box-shadow: none !important;
   display: flex;
-  height: 20px;
-  width: 20px;
+  height: 24px;
+  width: 24px;
   justify-content: center;
   position: relative;
   border: 0;
