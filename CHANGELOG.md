@@ -1,3 +1,12 @@
+# [4.0.0-beta.4](https://github.com/algolia/docsearch/compare/v4.0.0-beta.3...v4.0.0-beta.4) (2025-07-22)
+
+
+### Bug Fixes
+
+* revert to internal package ([#2678](https://github.com/algolia/docsearch/issues/2678)) ([414cdfe](https://github.com/algolia/docsearch/commit/414cdfeac47a46a3d222aee6e66d4a4f76a8289d))
+
+
+
 # [4.0.0-beta.3](https://github.com/algolia/docsearch/compare/v3.9.0...v4.0.0-beta.3) (2025-07-22)
 
 
