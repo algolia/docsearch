@@ -2,17 +2,17 @@
 title: Improving Answer Quality with Markdown Indexing
 ---
 
-## Overview
-
 To deliver more accurate, context-rich answers at scale, AskAI benefits from cleanly structured content. One of the most effective ways to achieve this is by using a Markdown-based indexing helper in your Algolia Crawler configuration. This setup ensures AskAI can access well-formed, content-focused records—especially important for larger documentation sites where metadata, navigation elements, or layout artifacts might otherwise dilute the quality of generative responses.
 
 :::info
-These steps are especially valuable for larger documentation websites using the Algolia Crawler and DocSearch-generated indices, ensuring AskAI can deliver accurate, context-rich answers at scale. For custom or smaller sites, you can also manually create and upload a markdown index to use with AskAI.
+These steps are especially valuable for large-scale sites using DocSearch-generated indices, but also apply to custom or smaller setups: you can manually create and upload a Markdown-based index tailored to AskAI.
 
 **Note:** For more integration examples (Docusaurus, VitePress, Astro/Starlight, and generic setups), see the section at the bottom of this page.
 :::
 
-This guide explains how to set up your Crawler config to index markdown files for AskAI.
+## Overview 
+To maximize the quality of AskAI responses, configure your Crawler to create a dedicated index for Markdown content. This approach enables AskAI to work with structured, chunked records sourced from your documentation, support content, or any Markdown-based material—resulting in significantly more relevant and precise answers.
+The steps below walk through how to set up your Crawler to index Markdown files specifically for AskAI.
 
 ---
 
