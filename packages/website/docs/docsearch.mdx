@@ -189,9 +189,12 @@ Or use our new dedicated [DocSearch Playground](https://community.algolia.com/do
 
 ### Using DocSearch with AskAI
 
-DocSearch v4 introduces support for AskAI, Algolia’s advanced, AI-powered search capability. AskAI enhances the user experience by providing contextually relevant and intelligent responses directly from your documentation
+DocSearch v4 introduces support for AskAI, Algolia’s advanced, AI-powered search capability. AskAI enhances the user experience by providing contextually relevant and intelligent responses directly from your documentation.
 
-To enable AskAI, add your Algolia Assistant ID to your DocSearch configuration:
+To enable AskAI, you can add your Algolia Assistant ID as a string, or use an object for more advanced configuration (such as specifying a different index, credentials, or search parameters):
+
+<Tabs groupId="askai-format" defaultValue="string" values={[{ label: 'String', value: 'string' }, { label: 'Object', value: 'object' }]}> 
+<TabItem value="string">
 
 ```js
 docsearch({
@@ -201,6 +204,32 @@ docsearch({
   askAi: 'YOUR_ALGOLIA_ASSISTANT_ID',
 });
 ```
+
+</TabItem>
+<TabItem value="object">
+
+```js
+docsearch({
+  appId: 'YOUR_APP_ID',
+  indexName: 'YOUR_INDEX_NAME',
+  apiKey: 'YOUR_SEARCH_API_KEY',
+  askAi: {
+    indexName: 'YOUR_MARKDOWN_INDEX', // Optional: use a different index for AskAI
+    apiKey: 'YOUR_SEARCH_API_KEY',     // Optional: use a different API key for AskAI
+    appId: 'YOUR_APP_ID',              // Optional: use a different App ID for AskAI
+    assistantId: 'YOUR_ALGOLIA_ASSISTANT_ID',
+    searchParameters: {
+      facetFilters: ['language:en', 'version:1.0.0'], // Optional: filter AskAI context
+    },
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+- Use the string form for a simple setup.
+- Use the object form to customize which index, credentials, or filters AskAI uses.
 
 ### Filtering search results
 
