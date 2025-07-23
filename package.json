@@ -33,9 +33,9 @@
     "website:test": "yarn workspace @docsearch/website start --no-open"
   },
   "resolutions": {
-    "@docusaurus/utils": "file:packages/website/tmp-tarballs/docusaurus-utils-3.8.1.tgz",
-    "@docusaurus/theme-search-algolia": "file:packages/website/tmp-tarballs/docusaurus-theme-search-algolia-3.8.1.tgz",
-    "@docusaurus/theme-translations": "file:packages/website/tmp-tarballs/docusaurus-theme-translations-3.8.1.tgz"
+    "@docusaurus/utils": "https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-utils-3.8.1.tgz",
+    "@docusaurus/theme-search-algolia": "https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-theme-search-algolia-3.8.1.tgz",
+    "@docusaurus/theme-translations": "https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-theme-translations-3.8.1.tgz"
   },
   "devDependencies": {
     "@babel/plugin-transform-react-jsx": "7.25.9",
