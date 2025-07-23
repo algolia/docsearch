@@ -2,17 +2,8 @@
 title: Bring Your Own LLM
 ---
 
-AskAI currently supports a Bring Your Own LLM (BYOLLM) model selection, allowing you to connect your preferred provider. Supported models include:
+import { ProvidersTable } from '../../src/components/ProvidersTable'
 
-| Provider | Models |
-| :---- | :---- |
-| **Anthropic** | Claude 4 Opus, Claude 4 Sonnet, Claude 3.7 Sonnet, Claude 3.5 Sonnet, Claude 3.5 Sonnet, Claude 3.5 Haiku, Claude 3 Opus, Claude 3 Sonnet, Claude 3 Haiku |
-| **Cerebras** | Llama 3.1 8B, Llama 3.3 70B |
-| **DeepSeek** | DeepSeek Chat |
-| **Google Generative AI** | Gemini 2.5 Pro Preview, Gemini 2.5 Flash Preview, Gemini 2.5 Pro Experimental, Gemini 2.0 Flash, Gemini 1.5 Pro, Gemini 1.5 Pro Latest, Gemini 1.5 Flash, Gemini 1.5 Flash Latest, Gemini 1.5 Flash 8B, Gemini 1.5 Flash 8B Latest |
-| **Groq** | Llama 4 Scout 17B, DeepSeek R1 Distill, Llama 70B, Llama 3.3 70B Versatile, Llama 3.1 8B, Instant, Mistral Saba 24B, Qwen QWQ 32B, Mixtral 8x7B, Gemma 2 9B |
-| **Mistral AI** | Pixtral Large, Mistral Large, Mistral Small, Pixtral 12B |
-| **OpenAI** | GPT-4.1, GPT-4.1 Mini, GPT-4.1 Nano, GPT-4o, GPT-4o Mini, GPT-4 Turbo, GPT-4, GPT-3.5 Turbo, O1, O3 Mini, O3 O4 Mini |
-| **xAI Grok** | Grok 3, Grok 3 Fast, Grok 3 Mini, Grok 3 Mini Fast, Grok 2 1212, Grok Beta |
+AskAI currently supports a Bring Your Own LLM (BYOLLM) model selection, allowing you to connect your preferred provider.
 
-You provide your own API key, giving you full control over usage, costs, and LLM behavior.
+<ProvidersTable />
