@@ -2437,7 +2437,34 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@docsearch/react@npm:4.0.0-beta.4, @docsearch/react@workspace:*, @docsearch/react@workspace:packages/docsearch-react":
+"@docsearch/react@npm:4.0.0-beta.4, @docsearch/react@npm:beta":
+  version: 4.0.0-beta.4
+  resolution: "@docsearch/react@npm:4.0.0-beta.4"
+  dependencies:
+    "@ai-sdk/react": "npm:^1.2.12"
+    "@algolia/autocomplete-core": "npm:1.19.2"
+    "@docsearch/css": "npm:4.0.0-beta.4"
+    algoliasearch: "npm:^5.28.0"
+    marked: "npm:^15.0.12"
+  peerDependencies:
+    "@types/react": ">= 16.8.0 < 20.0.0"
+    react: ">= 16.8.0 < 20.0.0"
+    react-dom: ">= 16.8.0 < 20.0.0"
+    search-insights: ">= 1 < 3"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+    search-insights:
+      optional: true
+  checksum: 10c0/fbb6f75e8afb03f894dd5231e19ea03d24d3600dff8268daf0b0e16e28f042569d3843b2e5c6d57a47f80c6d71ba5936aba6650f68f7faf84610150bf3789b32
+  languageName: node
+  linkType: hard
+
+"@docsearch/react@workspace:*, @docsearch/react@workspace:packages/docsearch-react":
   version: 0.0.0-use.local
   resolution: "@docsearch/react@workspace:packages/docsearch-react"
   dependencies:
@@ -2469,42 +2496,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@docsearch/react@npm:beta":
-  version: 4.0.0-beta.4
-  resolution: "@docsearch/react@npm:4.0.0-beta.4"
-  dependencies:
-    "@ai-sdk/react": "npm:^1.2.12"
-    "@algolia/autocomplete-core": "npm:1.19.2"
-    "@docsearch/css": "npm:4.0.0-beta.4"
-    algoliasearch: "npm:^5.28.0"
-    marked: "npm:^15.0.12"
-  peerDependencies:
-    "@types/react": ">= 16.8.0 < 20.0.0"
-    react: ">= 16.8.0 < 20.0.0"
-    react-dom: ">= 16.8.0 < 20.0.0"
-    search-insights: ">= 1 < 3"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-    react:
-      optional: true
-    react-dom:
-      optional: true
-    search-insights:
-      optional: true
-  checksum: 10c0/fbb6f75e8afb03f894dd5231e19ea03d24d3600dff8268daf0b0e16e28f042569d3843b2e5c6d57a47f80c6d71ba5936aba6650f68f7faf84610150bf3789b32
-  languageName: node
-  linkType: hard
-
 "@docsearch/website@workspace:packages/website":
   version: 0.0.0-use.local
   resolution: "@docsearch/website@workspace:packages/website"
   dependencies:
     "@docsearch/css": "npm:4.0.0-beta.4"
     "@docsearch/react": "npm:4.0.0-beta.4"
-    "@docusaurus/core": "file:tarballs/docusaurus-core-3.8.1.tgz"
+    "@docusaurus/core": "https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-core-3.8.1.tgz"
     "@docusaurus/module-type-aliases": "npm:^3.8.1"
-    "@docusaurus/preset-classic": "file:tarballs/docusaurus-preset-classic-3.8.1.tgz"
+    "@docusaurus/preset-classic": "https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-preset-classic-3.8.1.tgz"
     "@docusaurus/tsconfig": "npm:^3.8.1"
     "@docusaurus/types": "npm:^3.8.1"
     "@mdx-js/react": "npm:^3.1.0"
@@ -2592,9 +2592,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/core@file:tarballs/docusaurus-core-3.8.1.tgz::locator=%40docsearch%2Fwebsite%40workspace%3Apackages%2Fwebsite":
+"@docusaurus/core@https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-core-3.8.1.tgz":
   version: 3.8.1
-  resolution: "@docusaurus/core@file:tarballs/docusaurus-core-3.8.1.tgz#tarballs/docusaurus-core-3.8.1.tgz::hash=dc71ff&locator=%40docsearch%2Fwebsite%40workspace%3Apackages%2Fwebsite"
+  resolution: "@docusaurus/core@https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-core-3.8.1.tgz"
   dependencies:
     "@docusaurus/babel": "npm:3.8.1"
     "@docusaurus/bundler": "npm:3.8.1"
@@ -2972,9 +2972,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/preset-classic@file:tarballs/docusaurus-preset-classic-3.8.1.tgz::locator=%40docsearch%2Fwebsite%40workspace%3Apackages%2Fwebsite":
+"@docusaurus/preset-classic@https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-preset-classic-3.8.1.tgz":
   version: 3.8.1
-  resolution: "@docusaurus/preset-classic@file:tarballs/docusaurus-preset-classic-3.8.1.tgz#tarballs/docusaurus-preset-classic-3.8.1.tgz::hash=c3c1ae&locator=%40docsearch%2Fwebsite%40workspace%3Apackages%2Fwebsite"
+  resolution: "@docusaurus/preset-classic@https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-preset-classic-3.8.1.tgz"
   dependencies:
     "@docusaurus/core": "npm:3.8.1"
     "@docusaurus/plugin-content-blog": "npm:3.8.1"
@@ -3059,9 +3059,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/theme-search-algolia@file:packages/website/tarballs/docusaurus-theme-search-algolia-3.8.1.tgz::locator=%40docsearch%2Fmonorepo%40workspace%3A.":
+"@docusaurus/theme-search-algolia@https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-theme-search-algolia-3.8.1.tgz":
   version: 3.8.1
-  resolution: "@docusaurus/theme-search-algolia@file:packages/website/tarballs/docusaurus-theme-search-algolia-3.8.1.tgz#packages/website/tarballs/docusaurus-theme-search-algolia-3.8.1.tgz::hash=3363cd&locator=%40docsearch%2Fmonorepo%40workspace%3A."
+  resolution: "@docusaurus/theme-search-algolia@https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-theme-search-algolia-3.8.1.tgz"
   dependencies:
     "@docsearch/react": "npm:beta"
     "@docusaurus/core": "npm:3.8.1"
@@ -3086,9 +3086,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/theme-translations@file:packages/website/tarballs/docusaurus-theme-translations-3.8.1.tgz::locator=%40docsearch%2Fmonorepo%40workspace%3A.":
+"@docusaurus/theme-translations@https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-theme-translations-3.8.1.tgz":
   version: 3.8.1
-  resolution: "@docusaurus/theme-translations@file:packages/website/tarballs/docusaurus-theme-translations-3.8.1.tgz#packages/website/tarballs/docusaurus-theme-translations-3.8.1.tgz::hash=20a163&locator=%40docsearch%2Fmonorepo%40workspace%3A."
+  resolution: "@docusaurus/theme-translations@https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-theme-translations-3.8.1.tgz"
   dependencies:
     fs-extra: "npm:^11.1.1"
     tslib: "npm:^2.6.0"
@@ -3149,9 +3149,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/utils@file:packages/website/tarballs/docusaurus-utils-3.8.1.tgz::locator=%40docsearch%2Fmonorepo%40workspace%3A.":
+"@docusaurus/utils@https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-utils-3.8.1.tgz":
   version: 3.8.1
-  resolution: "@docusaurus/utils@file:packages/website/tarballs/docusaurus-utils-3.8.1.tgz#packages/website/tarballs/docusaurus-utils-3.8.1.tgz::hash=2f9c0d&locator=%40docsearch%2Fmonorepo%40workspace%3A."
+  resolution: "@docusaurus/utils@https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-utils-3.8.1.tgz"
   dependencies:
     "@docusaurus/logger": "npm:3.8.1"
     "@docusaurus/types": "npm:3.8.1"
