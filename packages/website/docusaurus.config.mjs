@@ -65,7 +65,10 @@ export default {
         placeholder: 'Search or ask AI',
         appId: 'PMZUYBQDAK',
         apiKey: '24b09689d5b4223813d9b8e48563c8f6',
-        askAi: 'askAIDemo',
+        askAi: {
+          indexName: 'docsearch-markdown',
+          assistantId: 'askAIDemo',
+        },
         indexName: 'docsearch',
         contextualSearch: true,
         translations: {
