@@ -2,7 +2,11 @@
 title: Enhancing AskAI Accuracy with Markdown Indexing
 ---
 
-> **Note:** For more integration examples (Docusaurus, VitePress, Astro/Starlight, and generic setups), see the section at the bottom of this page.
+:::info
+This guide is primarily for users of the Algolia Crawler, especially those with DocSearch-generated indices. If you are not using the Crawler or DocSearch, AskAI may yield even higher accuracy results. You can also manually create and upload a markdown index to use with AskAI.
+
+**Note:** For more integration examples (Docusaurus, VitePress, Astro/Starlight, and generic setups), see the section at the bottom of this page.
+:::
 
 ## Overview
 
@@ -32,6 +36,7 @@ This guide explains how to set up your Crawler config to index markdown files fo
         lang: language, // Add more attributes as needed
       },
       maxRecordBytes: 100000, // Higher = fewer, larger records. Lower = more, smaller records.
+      // Note: Increasing this value may increase the token count for LLMs, which can affect context size and cost.
       orderingAttributeName: "part",
     });
   },
@@ -85,7 +90,8 @@ docsearch({
 
 - **Use clear, consistent titles in your markdown files** for better searchability.
 - **Test your index** with AskAI to ensure relevant answers are returned.
-- **Adjust `maxRecordBytes`** if you notice answers are too broad or too fragmented.
+- **Adjust `maxRecordBytes`** if you notice answers are too broad or too fragmented. 
+  - **Note:** Increasing `maxRecordBytes` may increase the token count for LLMs, which can affect the size of the context window and the cost of each AskAI response.
 - **Keep your markdown well-structured** (use headings, lists, etc.) for optimal chunking.
 - **Add attributes** like `lang`, `version`, or `tags` to your records and `attributesForFaceting` if you want to filter or facet in your search UI or AskAI.
 
@@ -140,6 +146,7 @@ import TabItem from '@theme/TabItem';
         lang: language
       },
       maxRecordBytes: 100000, // Higher = fewer, larger records. Lower = more, smaller records.
+      // Note: Increasing this value may increase the token count for LLMs, which can affect context size and cost.
       orderingAttributeName: "part",
     });
   },
@@ -192,6 +199,7 @@ import TabItem from '@theme/TabItem';
           .filter(Boolean),
       },
       maxRecordBytes: 100000, // Higher = fewer, larger records. Lower = more, smaller records.
+      // Note: Increasing this value may increase the token count for LLMs, which can affect context size and cost.
       orderingAttributeName: "part",
     });
   },
@@ -234,6 +242,7 @@ import TabItem from '@theme/TabItem';
         lang: language, // Required for VitePress
       },
       maxRecordBytes: 100000, // Higher = fewer, larger records. Lower = more, smaller records.
+      // Note: Increasing this value may increase the token count for LLMs, which can affect context size and cost.
       orderingAttributeName: "part",
     });
   },
@@ -276,6 +285,7 @@ import TabItem from '@theme/TabItem';
         lang: language, // Required for Astro/StarLight
       },
       maxRecordBytes: 100000, // Higher = fewer, larger records. Lower = more, smaller records.
+      // Note: Increasing this value may increase the token count for LLMs, which can affect context size and cost.
       orderingAttributeName: "part",
     });
   },
