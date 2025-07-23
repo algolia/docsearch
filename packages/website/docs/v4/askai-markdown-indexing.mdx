@@ -16,7 +16,7 @@ The steps below walk through how to set up your Crawler to index Markdown files 
 
 ---
 
-## Step 1: Add Index Settings
+## Step 1: Update your existing DocSearch Crawler configuration
 
 - In your Crawler config, add the following to your `actions: [ ... ]` array:
 
@@ -60,7 +60,7 @@ The steps below walk through how to set up your Crawler to index Markdown files 
 
 ---
 
-## Step 2: Publish and Run Your Crawler
+## Step 2: Run the DocSearch crawler to create a new Ask AI optimized index
 
 After updating your Crawler configuration:
 
@@ -73,7 +73,7 @@ The Crawler will process your content using the markdown extraction helper and p
 
 ---
 
-## Step 3: Integrate with DocSearch and AskAI
+## Step 3: Integrate your new index with Ask AI
 
 Once your Crawler and index are configured, set up your frontend to use both your main keyword index and your markdown index for AskAI. Here’s how you might configure DocSearch to use your main keyword index for search and your markdown index for AskAI:
 
