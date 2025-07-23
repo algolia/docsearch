@@ -1,0 +1,300 @@
+---
+title: Enhancing AskAI Accuracy with Markdown Indexing
+---
+
+> **Note:** For more integration examples (Docusaurus, VitePress, Astro/Starlight, and generic setups), see the section at the bottom of this page.
+
+## Overview
+
+To maximize the accuracy of AskAI, you can create a dedicated index for your markdown content using the Algolia Crawler. This approach allows AskAI to access well-structured, chunked records from your documentation, support articles, or any markdown-based content, resulting in more relevant and precise answers.
+
+This guide explains how to set up your Crawler config to index markdown files for AskAI.
+
+---
+
+## Step 1: Add Index Settings
+
+- In your Crawler config, add the following to your `actions: [ ... ]` array:
+
+```js
+// actions: [ ...,
+{
+  indexName: "my-markdown-index",
+  pathsToMatch: ["https://example.com/docs/**"],
+  recordExtractor: ({ $, url, helpers }) => {
+    // Extract language or other attributes as needed. Optional
+    const language = $("html").attr("lang") || "en";
+
+    return helpers.splitTextIntoRecords({
+      text: helpers.markdown("main"), // Change "main" to match your content tag (e.g., "main", "article", etc.)
+      baseRecord: {
+        objectID: url,
+        lang: language, // Add more attributes as needed
+      },
+      maxRecordBytes: 100000, // Higher = fewer, larger records. Lower = more, smaller records.
+      orderingAttributeName: "part",
+    });
+  },
+},
+// ...],
+```
+
+- Then, add the following to your `initialIndexSettings: { ... }` object:
+
+```js
+// initialIndexSettings: { ...,
+"my-markdown-index": {
+  attributesForFaceting: ["lang"], // Add more if you extract more attributes
+  ignorePlurals: true,
+  minProximity: 4,
+  removeStopWords: true,
+  searchableAttributes: ["unordered(title)", "unordered(text)"],
+},
+// ...},
+```
+
+---
+
+## Step 2: Integrate with DocSearch and AskAI
+
+Once your Crawler and index are configured, set up your frontend to use both your main keyword index and your markdown index for AskAI. Here’s how you might configure DocSearch to use your main keyword index for search and your markdown index for AskAI:
+
+```js
+docsearch({
+  indexName: 'YOUR_INDEX_NAME', // Main DocSearch keyword index
+  apiKey: 'YOUR_SEARCH_API_KEY',
+  appId: 'YOUR_APP_ID',
+  askAi: {
+    indexName: 'YOUR_INDEX_NAME-markdown', // Markdown index for AskAI
+    apiKey: 'YOUR_SEARCH_API_KEY', // (or a different key if needed)
+    appId: 'YOUR_APP_ID',
+    assistantId: 'YOUR_ALGOLIA_ASSISTANT_ID',
+  },
+});
+```
+
+- `indexName`: Your main DocSearch index for keyword search.
+- `askAi.indexName`: The markdown index you created for AskAI context.
+- `assistantId`: The ID of your configured AskAI assistant.
+
+> **Tip:** Keep both indexes updated as your documentation evolves to ensure the best search and AI answer quality.
+
+---
+
+## Best Practices & Tips
+
+- **Use clear, consistent titles in your markdown files** for better searchability.
+- **Test your index** with AskAI to ensure relevant answers are returned.
+- **Adjust `maxRecordBytes`** if you notice answers are too broad or too fragmented.
+- **Keep your markdown well-structured** (use headings, lists, etc.) for optimal chunking.
+- **Add attributes** like `lang`, `version`, or `tags` to your records and `attributesForFaceting` if you want to filter or facet in your search UI or AskAI.
+
+---
+
+## FAQ
+
+**Q: Why use a separate markdown index?**
+A: It allows AskAI to access content in a format optimized for LLMs, improving answer quality.
+
+**Q: Can I use this with other content types?**
+A: Yes, but markdown is especially well-suited for chunking and context extraction.
+
+**Q: What if I have very large markdown files?**
+A: Lower the `maxRecordBytes` value to split content into smaller, more focused records.
+
+---
+
+For more details, see the [AskAI documentation](./askai.mdx) or contact support if you need help configuring your Crawler. 
+
+---
+
+## Facet Extraction Examples by Integration
+
+Below are example configurations for extracting facets (like language, version, tags) and setting up your markdown index for different documentation platforms. Select your integration:
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs groupId="integration">
+
+<TabItem value="generic" label="Non-DocSearch (Generic)">
+
+**Generic Example:**
+
+```js
+// In your Crawler config:
+
+// actions: [ ...,
+{
+  indexName: "my-markdown-index",
+  pathsToMatch: ["https://example.com/**"],
+  recordExtractor: ({ $, url, helpers }) => {
+    // Customize selectors or meta extraction as needed. Optional
+    const language = $("html").attr("lang") || "en";
+
+    return helpers.splitTextIntoRecords({
+      text: helpers.markdown("main"), // Change "main" to match your content tag (e.g., "main", "article", etc.)
+      baseRecord: {
+        objectID: url,
+        // Add more optional attributes to the record
+        lang: language
+      },
+      maxRecordBytes: 100000, // Higher = fewer, larger records. Lower = more, smaller records.
+      orderingAttributeName: "part",
+    });
+  },
+},
+// ...],
+
+// initialIndexSettings: { ...,
+"my-markdown-index": {
+  attributesForFaceting: ["lang"], // Recommended if you add more attributes outside of objectID
+  ignorePlurals: true,
+  minProximity: 4,
+  removeStopWords: true,
+  searchableAttributes: ["unordered(title)", "unordered(text)"],
+},
+// ...},
+```
+
+</TabItem>
+
+<TabItem value="docusaurus" label="Docusaurus">
+
+**Docusaurus Example:**
+
+```js
+// In your Crawler config:
+
+// actions: [ ...,
+{
+  indexName: "my-markdown-index",
+  pathsToMatch: ["https://example.com/docs/**"],
+  recordExtractor: ({ $, url, helpers }) => {
+    // Extract meta tag values. These are required for Docusaurus
+    const language =
+      $('meta[name="docsearch:language"]').attr("content") || "en";
+    const version =
+      $('meta[name="docsearch:version"]').attr("content") || "latest";
+    const docusaurus_tag =
+      $('meta[name="docsearch:docusaurus_tag"]').attr("content") || "";
+
+    return helpers.splitTextIntoRecords({
+      text: helpers.markdown("main"), // Change "main" to match your content tag (e.g., "main", "article", etc.)
+      baseRecord: {
+        objectID: url,
+        lang: language, // Required for Docusaurus
+        language, // Required for Docusaurus
+        version: version.split(","), // in case there are multiple versions. Required for Docusaurus
+        docusaurus_tag: docusaurus_tag // Required for Docusaurus
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter(Boolean),
+      },
+      maxRecordBytes: 100000, // Higher = fewer, larger records. Lower = more, smaller records.
+      orderingAttributeName: "part",
+    });
+  },
+},
+// ...],
+
+// initialIndexSettings: { ...,
+"my-markdown-index": {
+  attributesForFaceting: ["lang", "language", "version", "docusaurus_tag"], // Required for Docusaurus
+  ignorePlurals: true,
+  minProximity: 4,
+  removeStopWords: true,
+  searchableAttributes: ["unordered(title)", "unordered(text)"],
+},
+// ...},
+```
+
+</TabItem>
+
+<TabItem value="vitepress" label="VitePress">
+
+**VitePress Example:**
+
+```js
+// In your Crawler config:
+
+// actions: [ ...,
+{
+  indexName: "my-markdown-index",
+  pathsToMatch: ["https://example.com/docs/**"],
+  recordExtractor: ({ $, url, helpers }) => {
+    // Extract meta tag values. These are required for VitePress
+    const language = $("html").attr("lang") || "en";
+
+
+    return helpers.splitTextIntoRecords({
+      text: helpers.markdown("main"), // Change "main" to match your content tag (e.g., "main", "article", etc.)
+      baseRecord: {
+        objectID: url,
+        lang: language, // Required for VitePress
+      },
+      maxRecordBytes: 100000, // Higher = fewer, larger records. Lower = more, smaller records.
+      orderingAttributeName: "part",
+    });
+  },
+},
+// ...],
+
+// initialIndexSettings: { ...,
+"my-markdown-index": {
+  attributesForFaceting: ["lang"], // Required for VitePress
+  ignorePlurals: true,
+  minProximity: 4,
+  removeStopWords: true,
+  searchableAttributes: ["unordered(title)", "unordered(text)"],
+},
+// ...},
+```
+
+</TabItem>
+
+<TabItem value="astro" label="Astro / Starlight">
+
+**Astro / Starlight Example:**
+
+```js
+// In your Crawler config:
+
+// actions: [ ...,
+{
+  indexName: "my-markdown-index",
+  pathsToMatch: ["https://example.com/docs/**"],
+  recordExtractor: ({ $, url, helpers }) => {
+    // Extract meta tag values. These are required for Astro/StarLight
+    const language = $("html").attr("lang") || "en";
+
+
+    return helpers.splitTextIntoRecords({
+      text: helpers.markdown("main"), // Change "main" to match your content tag (e.g., "main", "article", etc.)
+      baseRecord: {
+        objectID: url,
+        lang: language, // Required for Astro/StarLight
+      },
+      maxRecordBytes: 100000, // Higher = fewer, larger records. Lower = more, smaller records.
+      orderingAttributeName: "part",
+    });
+  },
+},
+// ...],
+
+// initialIndexSettings: { ...,
+"my-markdown-index": {
+  attributesForFaceting: ["lang"], // Required for Astro/StarLight
+  ignorePlurals: true,
+  minProximity: 4,
+  removeStopWords: true,
+  searchableAttributes: ["unordered(title)", "unordered(text)"],
+},
+// ...},
+```
+
+</TabItem>
+
+</Tabs>
+
+Each example shows how to extract common facets and configure your markdown index for AskAI. Adjust selectors and meta tag names as needed for your site. 
