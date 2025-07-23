@@ -1,16 +1,16 @@
 ---
-title: Enhancing AskAI Accuracy with Markdown Indexing
+title: Improving Answer Quality with Markdown Indexing
 ---
+
+## Overview
+
+To deliver more accurate, context-rich answers at scale, AskAI benefits from cleanly structured content. One of the most effective ways to achieve this is by using a Markdown-based indexing helper in your Algolia Crawler configuration. This setup ensures AskAI can access well-formed, content-focused records—especially important for larger documentation sites where metadata, navigation elements, or layout artifacts might otherwise dilute the quality of generative responses.
 
 :::info
 These steps are especially valuable for larger documentation websites using the Algolia Crawler and DocSearch-generated indices, ensuring AskAI can deliver accurate, context-rich answers at scale. For custom or smaller sites, you can also manually create and upload a markdown index to use with AskAI.
 
 **Note:** For more integration examples (Docusaurus, VitePress, Astro/Starlight, and generic setups), see the section at the bottom of this page.
 :::
-
-## Overview
-
-To maximize the accuracy of AskAI, you can create a dedicated index for your markdown content using the Algolia Crawler. This approach allows AskAI to access well-structured, chunked records from your documentation, support articles, or any markdown-based content, resulting in more relevant and precise answers.
 
 This guide explains how to set up your Crawler config to index markdown files for AskAI.
 
@@ -60,7 +60,20 @@ This guide explains how to set up your Crawler config to index markdown files fo
 
 ---
 
-## Step 2: Integrate with DocSearch and AskAI
+## Step 2: Publish and Run Your Crawler
+
+After updating your Crawler configuration:
+
+1. **Publish your configuration** in the Algolia Crawler dashboard to save and activate it.
+2. **Run the Crawler** to index your markdown content and create the new index.
+
+The Crawler will process your content using the markdown extraction helper and populate your new index with clean, structured records optimized for AskAI.
+
+> **Tip:** Monitor the crawl progress in your dashboard to ensure all pages are processed correctly. You can view the indexed records in your Algolia index to verify the structure and content.
+
+---
+
+## Step 3: Integrate with DocSearch and AskAI
 
 Once your Crawler and index are configured, set up your frontend to use both your main keyword index and your markdown index for AskAI. Here’s how you might configure DocSearch to use your main keyword index for search and your markdown index for AskAI:
 
@@ -114,9 +127,9 @@ For more details, see the [AskAI documentation](./askai.mdx) or contact support 
 
 ---
 
-## Facet Extraction Examples by Integration
+## Crawler Configuration Examples by Integration
 
-Below are example configurations for extracting facets (like language, version, tags) and setting up your markdown index for different documentation platforms. Select your integration:
+Below are example configurations for setting up your markdown index with different documentation platforms. Each shows how to extract facets (like language, version, tags) and configure the Crawler for your specific integration:
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
