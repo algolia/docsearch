@@ -52,7 +52,7 @@ export default {
           showLastUpdateTime: true,
         },
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: './src/css/custom.css',
         },
       }),
     ],
@@ -208,7 +208,7 @@ export default {
           srcDark: 'img/docsearch-x-algolia-logo-dark-mode.png',
           width: 200,
         },
-        copyright: `DocSearch 2015-${currentYear} – Built with 💙 by Algolia`,
+        copyright: `2015-${currentYear} – Built with 💙 by Algolia`,
       },
       image: 'img/og_image.png',
       prism: {

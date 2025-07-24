@@ -217,6 +217,17 @@ html[data-theme='dark'] {
   * {
     @apply border-border outline-ring/50;
   }
+  article ul {
+    list-style-type: disc;
+  }
+
+  article ol {
+    list-style-type: decimal;
+  }
+
+  article li {
+    margin-bottom: 0.5rem;
+  }
   body {
     @apply bg-background text-foreground;
   }

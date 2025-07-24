@@ -22,14 +22,14 @@ function VideoPlayer({ chapters }) {
   const [duration, setDuration] = useState(1);
 
   return (
-    <div className="w-full">
+    <div>
       <video
         loop={true}
         muted={true}
         playsInline={true}
         autoPlay={true}
         ref={videoRef}
-        className="bg-blue-100 w-4xl mx-auto h-auto rounded-md"
+        className="bg-blue-100 w-full md:w-4xl mx-auto h-auto rounded-md"
         preload="auto"
         poster="/img/resources/hero-video-poster.png"
         onTimeUpdate={(e) => setCurrentTime(e.target.currentTime)}
@@ -257,7 +257,7 @@ function Home() {
 
   return (
     <>
-      <div id="tailwind" className="container snap-y z-[10] snap-proximity">
+      <div className="container snap-y z-[10] snap-proximity">
         <Header />
         <Description />
       </div>

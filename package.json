@@ -30,6 +30,7 @@
     "watch": "lerna run watch --parallel",
     "website:build": "yarn workspace @docsearch/website build",
     "website:start": "yarn workspace @docsearch/website start --host 0.0.0.0",
+    "website:serve": "yarn workspace @docsearch/website serve --host 0.0.0.0",
     "website:test": "yarn workspace @docsearch/website start --no-open"
   },
   "resolutions": {
