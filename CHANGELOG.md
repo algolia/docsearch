@@ -1,3 +1,21 @@
+# [4.0.0-beta.5](https://github.com/algolia/docsearch/compare/v4.0.0-beta.4...v4.0.0-beta.5) (2025-07-24)
+
+
+### Bug Fixes
+
+* **js:** make `@docsearch/react` devDep ([9967436](https://github.com/algolia/docsearch/commit/9967436993da24cf5340c03c1681350d7bb787c2))
+* update doc ([a9b3d89](https://github.com/algolia/docsearch/commit/a9b3d893f6571da936c986d3e9b701650ab30ac9))
+* update website package version ([1c5070b](https://github.com/algolia/docsearch/commit/1c5070b2063810428afe30cb4b9504f3e4b75138))
+* upload tarballs ([9a6f1a0](https://github.com/algolia/docsearch/commit/9a6f1a0cfa33a35970691e25e82914f551d649ca))
+
+
+### Features
+
+* **docs:** added tips for facetFilters ([#2680](https://github.com/algolia/docsearch/issues/2680)) ([4210e3b](https://github.com/algolia/docsearch/commit/4210e3b503676206ee9dc22d0f6606e0119ef878))
+* **docs:** Enhance AskAI with markdown indexes ([#2683](https://github.com/algolia/docsearch/issues/2683)) ([4bcdedf](https://github.com/algolia/docsearch/commit/4bcdedf8f10694dc114fe3c6706190e2310c2c2e))
+
+
+
 # [4.0.0-beta.4](https://github.com/algolia/docsearch/compare/v4.0.0-beta.3...v4.0.0-beta.4) (2025-07-22)
 
 
