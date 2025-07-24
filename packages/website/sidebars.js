@@ -24,7 +24,13 @@ export default {
     {
       type: 'category',
       label: 'Algolia AskAI - Beta',
-      items: ['v4/askai', 'v4/askai-prompts', 'v4/askai-whitelisted-domains', 'v4/askai-models'],
+      items: [
+        'v4/askai',
+        'v4/askai-prompts',
+        'v4/askai-whitelisted-domains',
+        'v4/askai-models',
+        'v4/askai-markdown-indexing',
+      ],
     },
     {
       type: 'category',

@@ -478,7 +478,6 @@ html[data-theme='dark'] .header-github-link::before {
 
 #tailwind ol,
 #tailwind ul {
-  list-style: none;
   margin: 0;
   padding: 0;
 }
