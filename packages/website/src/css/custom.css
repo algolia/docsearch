@@ -11,6 +11,7 @@
   --ifm-footer-background-color: var(--grey-100);
   --ifm-menu-color-background-active: var(--ifm-color-emphasis-200);
   --ifm-announcement-bar-background-color: #21243d;
+  --background: var(--ifm-background-color);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -122,6 +123,7 @@ html[data-theme='dark'] {
   --ifm-navbar-background-color: #21243d;
   --ifm-menu-color-background-active: #21243d;
   --ifm-announcement-bar-background-color: var(--ifm-color-primary);
+  --background: var(--ifm-background-color);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.145 0 0);
   --card-foreground: oklch(0.985 0 0);
@@ -744,4 +746,18 @@ html[data-theme='dark'] .shimmer-effect {
   50% {
     box-shadow: 0 2px 16px #60a5fa88;
   }
+}
+
+.providers-table {
+  width: 100%;
+  display: table;
+  position: relative;
+  border-collapse: collapse;
+}
+
+.providers-table th {
+  position: sticky;
+  top: 0;
+  text-align: left;
+  background-color: var(--ifm-background-color);
 }
