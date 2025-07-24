@@ -26,14 +26,18 @@ The steps below walk through how to set up your Crawler to index Markdown files 
   indexName: "my-markdown-index",
   pathsToMatch: ["https://example.com/docs/**"],
   recordExtractor: ({ $, url, helpers }) => {
+    const text = helpers.markdown("main"); // Change "main" to match your content tag (e.g., "main", "article", etc.)
+    if (text === "") return [];
+
     // Extract language or other attributes as needed. Optional
     const language = $("html").attr("lang") || "en";
 
     return helpers.splitTextIntoRecords({
-      text: helpers.markdown("main"), // Change "main" to match your content tag (e.g., "main", "article", etc.)
+      text,
       baseRecord: {
         url,
         objectID: url,
+        title: $("head > title").text(),
         lang: language, // Add more attributes as needed
       },
       maxRecordBytes: 100000, // Higher = fewer, larger records. Lower = more, smaller records.
@@ -53,8 +57,9 @@ The steps below walk through how to set up your Crawler to index Markdown files 
   attributesForFaceting: ["lang"], // Add more if you extract more attributes
   ignorePlurals: true,
   minProximity: 4,
-  removeStopWords: true,
+  removeStopWords: false,
   searchableAttributes: ["unordered(title)", "unordered(text)"],
+  removeWordsIfNoResults: "allOptional" // This will help if the LLM finds no results. A graceful fallback.
 },
 // ...},
 ```
@@ -149,14 +154,18 @@ import TabItem from '@theme/TabItem';
   indexName: "my-markdown-index",
   pathsToMatch: ["https://example.com/**"],
   recordExtractor: ({ $, url, helpers }) => {
+    const text = helpers.markdown("main"); // Change "main" to match your content tag (e.g., "main", "article", etc.)
+    if (text === "") return [];
+
     // Customize selectors or meta extraction as needed. Optional
     const language = $("html").attr("lang") || "en";
 
     return helpers.splitTextIntoRecords({
-      text: helpers.markdown("main"), // Change "main" to match your content tag (e.g., "main", "article", etc.)
+      text,
       baseRecord: {
         url,
         objectID: url,
+        title: $("head > title").text(),
         // Add more optional attributes to the record
         lang: language
       },
@@ -173,8 +182,9 @@ import TabItem from '@theme/TabItem';
   attributesForFaceting: ["lang"], // Recommended if you add more attributes outside of objectID
   ignorePlurals: true,
   minProximity: 4,
-  removeStopWords: true,
+  removeStopWords: false,
   searchableAttributes: ["unordered(title)", "unordered(text)"],
+  removeWordsIfNoResults: "allOptional" // This will help if the LLM finds no results. A graceful fallback.
 },
 // ...},
 ```
@@ -193,6 +203,9 @@ import TabItem from '@theme/TabItem';
   indexName: "my-markdown-index",
   pathsToMatch: ["https://example.com/docs/**"],
   recordExtractor: ({ $, url, helpers }) => {
+    const text = helpers.markdown("main"); // Change "main" to match your content tag (e.g., "main", "article", etc.)
+    if (text === "") return [];
+
     // Extract meta tag values. These are required for Docusaurus
     const language =
       $('meta[name="docsearch:language"]').attr("content") || "en";
@@ -202,10 +215,11 @@ import TabItem from '@theme/TabItem';
       $('meta[name="docsearch:docusaurus_tag"]').attr("content") || "";
 
     return helpers.splitTextIntoRecords({
-      text: helpers.markdown("main"), // Change "main" to match your content tag (e.g., "main", "article", etc.)
+      text,
       baseRecord: {
         url,
         objectID: url,
+        title: $("head > title").text(),
         lang: language, // Required for Docusaurus
         language, // Required for Docusaurus
         version: version.split(","), // in case there are multiple versions. Required for Docusaurus
@@ -227,8 +241,9 @@ import TabItem from '@theme/TabItem';
   attributesForFaceting: ["lang", "language", "version", "docusaurus_tag"], // Required for Docusaurus
   ignorePlurals: true,
   minProximity: 4,
-  removeStopWords: true,
+  removeStopWords: false,
   searchableAttributes: ["unordered(title)", "unordered(text)"],
+  removeWordsIfNoResults: "allOptional" // This will help if the LLM finds no results. A graceful fallback.
 },
 // ...},
 ```
@@ -247,14 +262,18 @@ import TabItem from '@theme/TabItem';
   indexName: "my-markdown-index",
   pathsToMatch: ["https://example.com/docs/**"],
   recordExtractor: ({ $, url, helpers }) => {
+    const text = helpers.markdown("main"); // Change "main" to match your content tag (e.g., "main", "article", etc.)
+    if (text === "") return [];
+
     // Extract meta tag values. These are required for VitePress
     const language = $("html").attr("lang") || "en";
 
 
     return helpers.splitTextIntoRecords({
-      text: helpers.markdown("main"), // Change "main" to match your content tag (e.g., "main", "article", etc.)
+      text,
       baseRecord: {
         url,
+        title: $("head > title").text(),
         objectID: url,
         lang: language, // Required for VitePress
       },
@@ -271,8 +290,9 @@ import TabItem from '@theme/TabItem';
   attributesForFaceting: ["lang"], // Required for VitePress
   ignorePlurals: true,
   minProximity: 4,
-  removeStopWords: true,
+  removeStopWords: false,
   searchableAttributes: ["unordered(title)", "unordered(text)"],
+  removeWordsIfNoResults: "allOptional" // This will help if the LLM finds no results. A graceful fallback.
 },
 // ...},
 ```
@@ -291,14 +311,18 @@ import TabItem from '@theme/TabItem';
   indexName: "my-markdown-index",
   pathsToMatch: ["https://example.com/docs/**"],
   recordExtractor: ({ $, url, helpers }) => {
+    const text = helpers.markdown("main"); // Change "main" to match your content tag (e.g., "main", "article", etc.)
+    if (text === "") return [];
+
     // Extract meta tag values. These are required for Astro/StarLight
     const language = $("html").attr("lang") || "en";
 
 
     return helpers.splitTextIntoRecords({
-      text: helpers.markdown("main"), // Change "main" to match your content tag (e.g., "main", "article", etc.)
+      text,
       baseRecord: {
         url,
+        title: $("head > title").text(),
         objectID: url,
         lang: language, // Required for Astro/StarLight
       },
@@ -315,8 +339,9 @@ import TabItem from '@theme/TabItem';
   attributesForFaceting: ["lang"], // Required for Astro/StarLight
   ignorePlurals: true,
   minProximity: 4,
-  removeStopWords: true,
+  removeStopWords: false,
   searchableAttributes: ["unordered(title)", "unordered(text)"],
+  removeWordsIfNoResults: "allOptional" // This will help if the LLM finds no results. A graceful fallback.
 },
 // ...},
 ```
