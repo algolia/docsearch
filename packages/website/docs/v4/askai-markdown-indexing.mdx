@@ -81,7 +81,19 @@ The Crawler will process your content using the markdown extraction helper and p
 
 ## Step 3: Integrate your new index with Ask AI
 
-Once your Crawler and index are configured, set up your frontend to use both your main keyword index and your markdown index for AskAI. Here’s how you might configure DocSearch to use your main keyword index for search and your markdown index for AskAI:
+Once your Crawler has created your optimized index, you can integrate it with Ask AI in two ways: using DocSearch (recommended for most users) or building a custom integration using the Ask AI API.
+
+<Tabs groupId="integration-type" defaultValue="docsearch" values={[{ label: 'DocSearch Integration', value: 'docsearch' }, { label: 'Custom API Integration', value: 'custom' }]}>
+
+<TabItem value="docsearch">
+
+### Using DocSearch
+
+Configure DocSearch to use both your main keyword index and your markdown index for Ask AI:
+
+<Tabs groupId="language" defaultValue="js" values={[{ label: 'JavaScript', value: 'js' }, { label: 'React', value: 'react' }]}>
+
+<TabItem value="js">
 
 ```js
 docsearch({
@@ -89,17 +101,192 @@ docsearch({
   apiKey: 'YOUR_SEARCH_API_KEY',
   appId: 'YOUR_APP_ID',
   askAi: {
-    indexName: 'YOUR_INDEX_NAME-markdown', // Markdown index for AskAI
+    indexName: 'YOUR_INDEX_NAME-markdown', // Markdown index for Ask AI
     apiKey: 'YOUR_SEARCH_API_KEY', // (or a different key if needed)
     appId: 'YOUR_APP_ID',
     assistantId: 'YOUR_ALGOLIA_ASSISTANT_ID',
+    searchParameters: {
+      facetFilters: ['language:en'], // Optional: filter to specific language/version
+    },
   },
 });
 ```
 
+</TabItem>
+
+<TabItem value="react">
+
+```jsx
+<DocSearch
+  indexName="YOUR_INDEX_NAME" // Main DocSearch keyword index
+  apiKey="YOUR_SEARCH_API_KEY"
+  appId="YOUR_APP_ID"
+  askAi={{
+    indexName: 'YOUR_INDEX_NAME-markdown', // Markdown index for Ask AI
+    apiKey: 'YOUR_SEARCH_API_KEY',
+    appId: 'YOUR_APP_ID',
+    assistantId: 'YOUR_ALGOLIA_ASSISTANT_ID',
+    searchParameters: {
+      facetFilters: ['language:en'], // Optional: filter to specific language/version
+    },
+  }}
+/>
+```
+
+</TabItem>
+
+</Tabs>
+
 - `indexName`: Your main DocSearch index for keyword search.
-- `askAi.indexName`: The markdown index you created for AskAI context.
-- `assistantId`: The ID of your configured AskAI assistant.
+- `askAi.indexName`: The markdown index you created for Ask AI context.
+- `assistantId`: The ID of your configured Ask AI assistant.
+- `searchParameters.facetFilters`: Optional filters to limit Ask AI context (useful for multi-language sites).
+
+</TabItem>
+
+<TabItem value="custom">
+
+### Custom API Integration
+
+:::info
+We highly recommend using the DocSearch package for most use cases. Custom implementations using the Ask AI API directly are not fully supported to the same extent as the DocSearch package, and may require additional development effort for features like error handling, authentication, and UI components.
+:::
+
+Build your own chat interface using the Ask AI API. This gives you full control over the user experience and allows for advanced customizations.
+
+```js
+class CustomAskAI {
+  constructor({ appId, apiKey, indexName, assistantId }) {
+    this.appId = appId;
+    this.apiKey = apiKey;
+    this.indexName = indexName; // Your markdown index
+    this.assistantId = assistantId;
+    this.baseUrl = 'https://askai.algolia.com';
+  }
+
+  async getToken() {
+    const response = await fetch(`${this.baseUrl}/chat/token`, {
+      method: 'POST',
+      headers: {
+        'X-Algolia-Assistant-Id': this.assistantId,
+      },
+    });
+    const data = await response.json();
+    return data.token;
+  }
+
+  async sendMessage(conversationId, messages, searchParameters = {}) {
+    const token = await this.getToken();
+    
+    const response = await fetch(`${this.baseUrl}/chat`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Algolia-Application-Id': this.appId,
+        'X-Algolia-API-Key': this.apiKey,
+        'X-Algolia-Index-Name': this.indexName, // Use your markdown index
+        'X-Algolia-Assistant-Id': this.assistantId,
+        'Authorization': token,
+      },
+      body: JSON.stringify({
+        id: conversationId,
+        messages,
+        ...(Object.keys(searchParameters).length > 0 && { searchParameters }),
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    // Handle streaming response
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    
+    return {
+      async *[Symbol.asyncIterator]() {
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            
+            const chunk = decoder.decode(value, { stream: true });
+            if (chunk.trim()) {
+              yield chunk;
+            }
+          }
+        } finally {
+          reader.releaseLock();
+        }
+      }
+    };
+  }
+}
+
+// Usage
+const askAI = new CustomAskAI({
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_API_KEY',
+  indexName: 'YOUR_INDEX_NAME-markdown', // Your markdown index
+  assistantId: 'YOUR_ASSISTANT_ID',
+});
+
+// Send a message with facet filters for your markdown index
+const stream = await askAI.sendMessage('conversation-1', [
+  {
+    role: 'user',
+    content: 'How do I configure my API?',
+    id: 'msg-1',
+  },
+], {
+  facetFilters: ['language:en', 'type:content'] // Filter to relevant content
+});
+
+// Handle streaming response
+for await (const chunk of stream) {
+  console.log(chunk); // Handle each chunk of the response
+}
+```
+
+**Benefits of custom integration:**
+- Full control over UI/UX
+- Custom authentication and session management
+- Advanced filtering and search parameters for your markdown index
+- Integration with existing chat systems
+- Custom analytics and monitoring
+
+> **📚 Learn More:** For complete API documentation, authentication details, advanced examples, and more integration patterns, see the [Ask AI API Reference](/docs/v4/askai-api).
+
+**Using Facet Filters with Your Markdown Index:**
+
+Since your markdown index includes attributes like `lang`, `version`, and `docusaurus_tag`, you can filter Ask AI's context precisely:
+
+```js
+// Example: Filter to English documentation only
+const searchParameters = {
+  facetFilters: ['lang:en']
+};
+
+// Example: Filter to specific version and content type
+const searchParameters = {
+  facetFilters: ['lang:en', 'version:latest', 'type:content']
+};
+
+// Example: Use OR logic for multiple tags (from your integration examples)
+const searchParameters = {
+  facetFilters: [
+    'lang:en',
+    [
+      'docusaurus_tag:default',
+      'docusaurus_tag:docs-default-current'
+    ]
+  ]
+};
+```
+
+</TabItem>
+
+</Tabs>
 
 > **Tip:** Keep both indexes updated as your documentation evolves to ensure the best search and AI answer quality.
 
