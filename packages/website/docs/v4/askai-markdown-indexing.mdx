@@ -10,7 +10,7 @@ These steps are especially valuable for large-scale sites using DocSearch-genera
 **Note:** For more integration examples (Docusaurus, VitePress, Astro/Starlight, and generic setups), see the section at the bottom of this page.
 :::
 
-## Overview 
+## Overview
 To maximize the quality of AskAI responses, configure your Crawler to create a dedicated index for Markdown content. This approach enables AskAI to work with structured, chunked records sourced from your documentation, support content, or any Markdown-based material—resulting in significantly more relevant and precise answers.
 The steps below walk through how to set up your Crawler to index Markdown files specifically for AskAI.
 
@@ -32,6 +32,7 @@ The steps below walk through how to set up your Crawler to index Markdown files 
     return helpers.splitTextIntoRecords({
       text: helpers.markdown("main"), // Change "main" to match your content tag (e.g., "main", "article", etc.)
       baseRecord: {
+        url,
         objectID: url,
         lang: language, // Add more attributes as needed
       },
@@ -103,7 +104,7 @@ docsearch({
 
 - **Use clear, consistent titles in your markdown files** for better searchability.
 - **Test your index** with AskAI to ensure relevant answers are returned.
-- **Adjust `maxRecordBytes`** if you notice answers are too broad or too fragmented. 
+- **Adjust `maxRecordBytes`** if you notice answers are too broad or too fragmented.
   - **Note:** Increasing `maxRecordBytes` may increase the token count for LLMs, which can affect the size of the context window and the cost of each AskAI response.
 - **Keep your markdown well-structured** (use headings, lists, etc.) for optimal chunking.
 - **Add attributes** like `lang`, `version`, or `tags` to your records and `attributesForFaceting` if you want to filter or facet in your search UI or AskAI.
@@ -123,7 +124,7 @@ A: Lower the `maxRecordBytes` value to split content into smaller, more focused 
 
 ---
 
-For more details, see the [AskAI documentation](./askai.mdx) or contact support if you need help configuring your Crawler. 
+For more details, see the [AskAI documentation](./askai.mdx) or contact support if you need help configuring your Crawler.
 
 ---
 
@@ -154,6 +155,7 @@ import TabItem from '@theme/TabItem';
     return helpers.splitTextIntoRecords({
       text: helpers.markdown("main"), // Change "main" to match your content tag (e.g., "main", "article", etc.)
       baseRecord: {
+        url,
         objectID: url,
         // Add more optional attributes to the record
         lang: language
@@ -202,6 +204,7 @@ import TabItem from '@theme/TabItem';
     return helpers.splitTextIntoRecords({
       text: helpers.markdown("main"), // Change "main" to match your content tag (e.g., "main", "article", etc.)
       baseRecord: {
+        url,
         objectID: url,
         lang: language, // Required for Docusaurus
         language, // Required for Docusaurus
@@ -251,6 +254,7 @@ import TabItem from '@theme/TabItem';
     return helpers.splitTextIntoRecords({
       text: helpers.markdown("main"), // Change "main" to match your content tag (e.g., "main", "article", etc.)
       baseRecord: {
+        url,
         objectID: url,
         lang: language, // Required for VitePress
       },
@@ -294,6 +298,7 @@ import TabItem from '@theme/TabItem';
     return helpers.splitTextIntoRecords({
       text: helpers.markdown("main"), // Change "main" to match your content tag (e.g., "main", "article", etc.)
       baseRecord: {
+        url,
         objectID: url,
         lang: language, // Required for Astro/StarLight
       },
@@ -320,4 +325,4 @@ import TabItem from '@theme/TabItem';
 
 </Tabs>
 
-> Each example shows how to extract common facets and configure your markdown index for AskAI. Adjust selectors and meta tag names as needed for your site. 
+> Each example shows how to extract common facets and configure your markdown index for AskAI. Adjust selectors and meta tag names as needed for your site.
