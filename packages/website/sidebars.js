@@ -26,6 +26,7 @@ export default {
       label: 'Algolia AskAI - Beta',
       items: [
         'v4/askai',
+        'v4/askai-api',
         'v4/askai-prompts',
         'v4/askai-whitelisted-domains',
         'v4/askai-models',
