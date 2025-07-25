@@ -9,9 +9,9 @@ function App(): JSX.Element {
     <div>
       <h1>DocSearch v4 - AskAI</h1>
       <DocSearch
-        indexName="docsearch"
-        appId="PMZUYBQDAK"
-        apiKey="24b09689d5b4223813d9b8e48563c8f6"
+        indexName="INDEX_NAME"
+        appId="APP_ID"
+        apiKey="KEY"
         askAi={{
           assistantId: 'askAIDemo',
           searchParameters: {
@@ -19,6 +19,25 @@ function App(): JSX.Element {
           },
         }}
         insights={true}
+        fieldMapping={{
+          content: 'body_safe',
+          url: (record) => `/help/articles/${record.objectID}`,
+          hierarchy: {
+            lvl0: 'category.title',          // Uses dot notation - simpler
+            lvl1: 'section.title',           // Access nested properties directly
+            lvl2: 'title'
+          },
+          metadata: {
+            locale: 'locale.locale',         // "en-gb"
+            language: 'locale.name',         // "British English"
+            fullPath: 'section.full_path',   // "In-store FAQs > Technical advice and support"
+            voteSum: 'vote_sum',
+            promoted: 'promoted'
+          }
+        }}
+        recordMapperConfig={{
+          maxContentLength: 180
+        }}
       />
     </div>
   );

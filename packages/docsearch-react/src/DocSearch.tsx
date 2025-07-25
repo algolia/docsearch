@@ -8,6 +8,8 @@ import { DocSearchModal } from './DocSearchModal';
 import type { DocSearchHit, DocSearchTheme, InternalDocSearchHit, StoredDocSearchHit } from './types';
 import { useDocSearchKeyboardEvents } from './useDocSearchKeyboardEvents';
 import { useTheme } from './useTheme';
+import type { FieldMapping, RecordMapperConfig } from './utils/recordMapper';
+import { validateFieldMapping } from './utils/recordMapper';
 
 import type { ButtonTranslations, ModalTranslations } from '.';
 
@@ -70,9 +72,27 @@ export interface DocSearchProps {
   translations?: DocSearchTranslations;
   getMissingResultsUrl?: ({ query }: { query: string }) => string;
   insights?: AutocompleteOptions<InternalDocSearchHit>['insights'];
+  
+  // Field mapping for custom record schemas
+  fieldMapping?: FieldMapping;
+  recordMapperConfig?: RecordMapperConfig;
 }
 
-export function DocSearch({ ...props }: DocSearchProps): JSX.Element {
+export function DocSearch({
+  fieldMapping,
+  recordMapperConfig,
+  ...props
+}: DocSearchProps): JSX.Element {
+  // Validate field mapping on mount
+  React.useEffect(() => {
+    if (fieldMapping) {
+      const errors = validateFieldMapping(fieldMapping);
+      if (errors.length > 0) {
+        console.error('DocSearch field mapping validation errors:', errors);
+      }
+    }
+  }, [fieldMapping]);
+
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
   const [isOpen, setIsOpen] = React.useState(false);
   const [initialQuery, setInitialQuery] = React.useState<string | undefined>(props?.initialQuery || undefined);
@@ -138,6 +158,8 @@ export function DocSearch({ ...props }: DocSearchProps): JSX.Element {
         createPortal(
           <DocSearchModal
             {...props}
+            fieldMapping={fieldMapping}
+            recordMapperConfig={recordMapperConfig}
             placeholder={currentPlaceholder}
             initialScrollY={window.scrollY}
             initialQuery={initialQuery}

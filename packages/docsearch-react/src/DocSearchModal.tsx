@@ -27,6 +27,8 @@ import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
 import { groupBy, identity, noop, removeHighlightTags, isModifierEvent, scrollTo as scrollToUtils } from './utils';
 import { buildDummyAskAiHit } from './utils/ai';
+import type { FieldMapping, RecordMapperConfig } from './utils/recordMapper';
+import { mapRecordToDocSearchHit } from './utils/recordMapper';
 
 export type ModalTranslations = Partial<{
   searchBox: SearchBoxTranslations;
@@ -103,6 +105,97 @@ const buildNoQuerySources = ({
   return sources;
 };
 
+// Helper function to generate attributesToRetrieve based on field mapping
+function generateAttributesToRetrieve(fieldMapping?: FieldMapping): string[] {
+  if (!fieldMapping) {
+    // Default DocSearch attributes
+    return [
+      'hierarchy.lvl0',
+      'hierarchy.lvl1',
+      'hierarchy.lvl2',
+      'hierarchy.lvl3',
+      'hierarchy.lvl4',
+      'hierarchy.lvl5',
+      'hierarchy.lvl6',
+      'content',
+      'type',
+      'url',
+    ];
+  }
+
+  const attributes = new Set<string>();
+  
+  // Add mapped fields
+  if (fieldMapping.content) {
+    attributes.add(typeof fieldMapping.content === 'string' ? fieldMapping.content : 'content');
+  } else {
+    attributes.add('content');
+  }
+  
+  if (fieldMapping.url) {
+    attributes.add(typeof fieldMapping.url === 'string' ? fieldMapping.url : 'url');
+  } else {
+    attributes.add('url');
+  }
+  
+  if (fieldMapping.type) {
+    attributes.add(typeof fieldMapping.type === 'string' ? fieldMapping.type : 'type');
+  } else {
+    attributes.add('type');
+  }
+
+  // Add hierarchy fields
+  if (fieldMapping.hierarchy) {
+    Object.values(fieldMapping.hierarchy).forEach(field => {
+      if (field && typeof field === 'string') {
+        attributes.add(field);
+      }
+    });
+  }
+
+  // Add metadata fields if any
+  if (fieldMapping.metadata) {
+    Object.values(fieldMapping.metadata).forEach(field => {
+      if (field && typeof field === 'string') {
+        attributes.add(field);
+      }
+    });
+  }
+
+  // Always include these for compatibility
+  attributes.add('objectID');
+  attributes.add('title'); // fallback for hierarchy
+  
+  return Array.from(attributes);
+}
+
+// Helper function to transform search results
+function transformSearchResults(
+  results: any[],
+  fieldMapping?: FieldMapping,
+  recordMapperConfig?: RecordMapperConfig
+): any[] {
+  if (!fieldMapping) {
+    // No mapping needed, return as-is (existing behavior)
+    return results;
+  }
+
+  const config = {
+    fieldMapping,
+    ...recordMapperConfig,
+  };
+
+  return results.map(result => {
+    // If result is already in DocSearch format, return as-is
+    if (result.hierarchy && result._highlightResult) {
+      return result;
+    }
+
+    // Transform custom record to DocSearch format
+    return mapRecordToDocSearchHit(result, config);
+  });
+}
+
 type BuildQuerySourcesState = Pick<AutocompleteState<InternalDocSearchHit>, 'context'>;
 
 /**
@@ -125,6 +218,8 @@ const buildQuerySources = async ({
   transformItems = identity,
   saveRecentSearch,
   onClose,
+  fieldMapping,
+  recordMapperConfig,
 }: {
   query: string;
   state: BuildQuerySourcesState;
@@ -141,27 +236,20 @@ const buildQuerySources = async ({
   transformItems?: DocSearchProps['transformItems'];
   saveRecentSearch: (item: InternalDocSearchHit) => void;
   onClose: () => void;
+  fieldMapping?: FieldMapping;
+  recordMapperConfig?: RecordMapperConfig;
 }): Promise<Array<AutocompleteSource<InternalDocSearchHit>>> => {
   const insightsActive = insights;
 
   try {
+    const attributesToRetrieve = generateAttributesToRetrieve(fieldMapping);
+    
     const { results } = await searchClient.search<DocSearchHit>({
       requests: [
         {
           query,
           indexName,
-          attributesToRetrieve: [
-            'hierarchy.lvl0',
-            'hierarchy.lvl1',
-            'hierarchy.lvl2',
-            'hierarchy.lvl3',
-            'hierarchy.lvl4',
-            'hierarchy.lvl5',
-            'hierarchy.lvl6',
-            'content',
-            'type',
-            'url',
-          ],
+          attributesToRetrieve,
           attributesToSnippet: [
             `hierarchy.lvl1:${snippetLength.current}`,
             `hierarchy.lvl2:${snippetLength.current}`,
@@ -182,8 +270,18 @@ const buildQuerySources = async ({
     });
 
     const firstResult = results[0] as SearchResponse<DocSearchHit>;
-    const { hits, nbHits } = firstResult;
-    const sources = groupBy<DocSearchHit>(hits, (hit) => removeHighlightTags(hit), maxResultsPerGroup);
+    let { hits } = firstResult;
+    const { nbHits } = firstResult;
+
+    // Transform hits if field mapping is provided
+    if (fieldMapping) {
+      hits = transformSearchResults(hits, fieldMapping, recordMapperConfig) as any;
+    }
+
+    // Apply user's transformItems
+    hits = transformItems(hits as DocSearchHit[]) as any;
+
+    const sources = groupBy<DocSearchHit>(hits as DocSearchHit[], (hit) => removeHighlightTags(hit), maxResultsPerGroup);
 
     // We store the `lvl0`s to display them as search suggestions
     // in the "no results" screen.
@@ -282,6 +380,8 @@ export function DocSearchModal({
   onAskAiToggle,
   isAskAiActive = false,
   canHandleAskAi = false,
+  fieldMapping,
+  recordMapperConfig,
 }: DocSearchModalProps): JSX.Element {
   const { footer: footerTranslations, searchBox: searchBoxTranslations, ...screenStateTranslations } = translations;
   const [state, setState] = React.useState<DocSearchState<InternalDocSearchHit>>({
@@ -542,6 +642,8 @@ export function DocSearchModal({
           transformItems,
           saveRecentSearch,
           onClose,
+          fieldMapping,
+          recordMapperConfig,
         });
 
         // AskAI source
