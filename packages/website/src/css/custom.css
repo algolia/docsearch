@@ -720,15 +720,6 @@ html[data-theme='dark'] .shimmer-effect {
   @apply bg-neutral-100 dark:bg-zinc-800 py-16 rounded-2xl ring-1 ring-neutral-200 dark:ring-neutral-700 ring-offset-3 dark:ring-offset-neutral-900;
 }
 
-/* Make the DocSearch search bar button prominent - desktop only */
-@media (min-width: 769px) {
-  .DocSearch-Button {
-    position: relative;
-    width: 400px !important;
-    z-index: 10;
-  }
-}
-
 .DocSearch-Button:focus,
 .DocSearch-Button:hover {
   box-shadow:
