@@ -2310,19 +2310,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docsearch/askai-example@workspace:examples/demo-askai":
-  version: 0.0.0-use.local
-  resolution: "@docsearch/askai-example@workspace:examples/demo-askai"
-  dependencies:
-    "@docsearch/css": "workspace:*"
-    "@docsearch/react": "workspace:*"
-    "@vitejs/plugin-react": "npm:^4.3.4"
-    react: "npm:^19.0.0"
-    react-dom: "npm:^19.0.0"
-    vite: "npm:^6.0.7"
-  languageName: unknown
-  linkType: soft
-
 "@docsearch/css@npm:4.0.0-beta.4":
   version: 4.0.0-beta.4
   resolution: "@docsearch/css@npm:4.0.0-beta.4"
@@ -2338,9 +2325,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@docsearch/js-example@workspace:examples/js-demo":
+"@docsearch/js-example@workspace:examples/demo-js":
   version: 0.0.0-use.local
-  resolution: "@docsearch/js-example@workspace:examples/js-demo"
+  resolution: "@docsearch/js-example@workspace:examples/demo-js"
   dependencies:
     "@docsearch/css": "npm:4.0.0-beta.5"
     "@docsearch/js": "npm:4.0.0-beta.5"
@@ -2431,12 +2418,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@docsearch/react-example@workspace:examples/demo":
+"@docsearch/react-example@workspace:examples/demo-react":
   version: 0.0.0-use.local
-  resolution: "@docsearch/react-example@workspace:examples/demo"
+  resolution: "@docsearch/react-example@workspace:examples/demo-react"
   dependencies:
-    "@docsearch/css": "npm:4.0.0-beta.5"
-    "@docsearch/react": "npm:4.0.0-beta.5"
+    "@docsearch/css": "workspace:*"
+    "@docsearch/react": "workspace:*"
     "@vitejs/plugin-react": "npm:^4.3.4"
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
