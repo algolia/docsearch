@@ -2405,19 +2405,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@docsearch/react-18-example@workspace:examples/demo-react-18":
-  version: 0.0.0-use.local
-  resolution: "@docsearch/react-18-example@workspace:examples/demo-react-18"
-  dependencies:
-    "@docsearch/css": "workspace:*"
-    "@docsearch/react": "workspace:*"
-    "@vitejs/plugin-react": "npm:^4.3.4"
-    react: "npm:^18.0.0"
-    react-dom: "npm:^18.0.0"
-    vite: "npm:^6.0.7"
-  languageName: unknown
-  linkType: soft
-
 "@docsearch/react-example@workspace:examples/demo-react":
   version: 0.0.0-use.local
   resolution: "@docsearch/react-example@workspace:examples/demo-react"
