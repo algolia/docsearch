@@ -70,6 +70,18 @@ export interface DocSearchProps {
   translations?: DocSearchTranslations;
   getMissingResultsUrl?: ({ query }: { query: string }) => string;
   insights?: AutocompleteOptions<InternalDocSearchHit>['insights'];
+  /**
+   * Limit of how many recent searches that should be saved/displayed.
+   *
+   * @default 7
+   */
+  recentSearchesLimit?: number;
+  /**
+   * Limit of how many recent searches that should be saved/displayed when there are favorited searches.
+   *
+   * @default 4
+   */
+  recentSearchesWithFavoritesLimit?: number;
 }
 
 export function DocSearch({ ...props }: DocSearchProps): JSX.Element {

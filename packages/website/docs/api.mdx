@@ -458,6 +458,84 @@ docsearch({
 
 </Tabs>
 
+## `recentSearchesLimit`
+
+> `type: number` | `default: 7` | **optional**
+
+The maximum number of recent searches that are stored for the user. Default is 7.
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js' },
+    { label: 'React', value: 'react' }
+  ]}
+>
+<TabItem value="js">
+
+```js
+docsearch({
+  // ...
+  recentSearchesLimit: 12
+  // ...
+});
+```
+
+</TabItem>
+
+<TabItem value="react">
+
+```jsx
+<DocSearch
+  // ...
+  recentSearchesLimit={12}
+  // ...
+/>
+```
+
+</TabItem>
+</Tabs>
+
+## `recentSearchesWithFavoritesLimit`
+
+> `type: number` | `default: 4` | **optional**
+
+The maximum number of recent searches that are stored when the user has favorited searches. Default is 4.
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js' },
+    { label: 'React', value: 'react' }
+  ]}
+>
+<TabItem value="js">
+
+```js
+docsearch({
+  // ...
+  recentSearchesWithFavoritesLimit: 5
+  // ...
+});
+```
+
+</TabItem>
+
+<TabItem value="react">
+
+```jsx
+<DocSearch
+  // ...
+  recentSearchesWithFavoritesLimit={5}
+  // ...
+/>
+```
+
+</TabItem>
+</Tabs>
+
 [1]: https://www.algolia.com/doc/ui-libraries/autocomplete/introduction/what-is-autocomplete/
 [2]: https://github.com/algolia/docsearch/
 [3]: https://github.com/algolia/docsearch/tree/master
