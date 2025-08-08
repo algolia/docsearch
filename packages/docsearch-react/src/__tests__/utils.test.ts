@@ -21,6 +21,30 @@ describe('utils', () => {
       const text = 'Check https://algolia.com, https://algolia.com!';
       expect(extractLinksFromText(text)).toEqual([{ url: 'https://algolia.com' }]);
     });
+
+    it('does not return links from within code snippets', () => {
+      const text = `
+See [Example Docs](https://example.com/docs)
+
+This is also ignored \`https://ignored.com\`
+
+\`\`\`js
+  const DOCS_LINK = 'https://algolia.com/doc'
+\`\`\`
+
+https://docsearch.algolia.com
+
+https://docsearch.algolia.com/configuration?version=beta
+`;
+
+      const output = extractLinksFromText(text);
+
+      expect(output).toEqual([
+        { url: 'https://example.com/docs', title: 'Example Docs' },
+        { url: 'https://docsearch.algolia.com' },
+        { url: 'https://docsearch.algolia.com/configuration?version=beta' },
+      ]);
+    });
   });
 
   describe('createObjectStorage', () => {

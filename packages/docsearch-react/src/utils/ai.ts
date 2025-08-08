@@ -2,34 +2,49 @@ import type { Message } from '@ai-sdk/react';
 
 import type { StoredAskAiState } from '../types';
 
+type ExtractedLink = {
+  url: string;
+  title?: string;
+};
+
 // utility to extract links (markdown and bare urls) from a string
-export function extractLinksFromText(text: string): Array<{ url: string; title?: string }> {
-  // match [title](url) and bare urls
-  const markdownLinkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
-  const urlRegex = /https?:\/\/[^\s)]+/g;
-  const links: Array<{ url: string; title?: string }> = [];
+export function extractLinksFromText(text: string): ExtractedLink[] {
+  const markdownLinkRegex = /\[([^\]]*)\]\(([^)]+)\)/g;
+  const plainLinkRegex = /(?<!\]\()https?:\/\/[^\s<>"{}|\\^`[\]]+/g;
+  const links: ExtractedLink[] = [];
+  // Used to dedupe multiple urls
   const seen = new Set<string>();
 
-  // extract markdown links first
-  let match;
-  while ((match = markdownLinkRegex.exec(text)) !== null) {
-    let url = match[2];
-    const title = match[1];
-    // trim trailing punctuation
-    url = url.replace(/[).,;!?]+$/, '');
+  // Strip out all code blocks e.g. ```
+  const textWithoutCodeBlocks = text.replace(/```[\s\S]*?```/g, '');
+
+  // Strip out all inline code blocks e.g. `
+  const cleanText = textWithoutCodeBlocks.replace(/`[^`]*`/g, '');
+
+  // Get all markdown based links e.g. []()
+  const markdownMatches = cleanText.matchAll(markdownLinkRegex);
+
+  // Parses the title and url from the found links
+  for (const match of markdownMatches) {
+    const title = match[1].trim();
+    const url = match[2];
+
     if (!seen.has(url)) {
-      links.push({ url, title });
       seen.add(url);
+      links.push({ url, title: title || undefined });
     }
   }
 
-  // extract bare urls
-  while ((match = urlRegex.exec(text)) !== null) {
-    let url = match[0];
-    url = url.replace(/[).,;!?]+$/, '');
-    if (!seen.has(url)) {
-      links.push({ url });
-      seen.add(url);
+  // Get all "plain" links e.g. https://algolia.com/doc
+  const plainUrls = cleanText.matchAll(plainLinkRegex);
+
+  for (const match of plainUrls) {
+    // Strip any extra punctuation
+    const cleanUrl = match[0].replace(/[.,;:!?]+$/, '');
+
+    if (!seen.has(cleanUrl)) {
+      seen.add(cleanUrl);
+      links.push({ url: cleanUrl });
     }
   }
 
