@@ -1,0 +1,212 @@
+---
+id: examples
+title: Examples and extensions
+description: live demos showing how to use and extend docsearch beyond documentation-only use cases.
+---
+
+import { DocSearch } from '@docsearch/react';
+import '@docsearch/css/dist/style.css';
+
+> These examples are interactive. click a button to open the modal and try a query.
+
+## Basic keyword search
+
+Use the default experience with your index credentials. this works great for typical docs, blogs, and any site with a docsearch-compliant index.
+
+```jsx
+<DocSearch
+  appId="PMZUYBQDAK"
+  apiKey="24b09689d5b4223813d9b8e48563c8f6"
+  indexName="docsearch"
+  insights={true}
+  translations={{ button: { buttonText: 'keyword search (demo)' } }}
+/>
+```
+
+<DocSearch
+  appId="PMZUYBQDAK"
+  apiKey="24b09689d5b4223813d9b8e48563c8f6"
+  indexName="docsearch"
+  insights={true}
+  translations={{ button: { buttonText: 'keyword search (demo)' } }}
+/>
+
+---
+
+## Ask AI: ai-assisted answers
+
+Add algolia askai to get synthesized answers grounded in your indexed content. you can scope the llm context using `searchParameters`.
+
+```jsx
+<DocSearch
+  appId="PMZUYBQDAK"
+  apiKey="24b09689d5b4223813d9b8e48563c8f6"
+  indexName="docsearch"
+  askAi={{
+    assistantId: 'askAIDemo',
+    searchParameters: {
+      facetFilters: ['language:en'],
+    },
+  }}
+  insights={true}
+  translations={{ button: { buttonText: 'search with askai (demo)' } }}
+/>
+```
+
+<DocSearch
+  appId="PMZUYBQDAK"
+  apiKey="24b09689d5b4223813d9b8e48563c8f6"
+  indexName="docsearch"
+  askAi={{
+    assistantId: 'askAIDemo',
+    searchParameters: {
+      facetFilters: ['language:en'],
+    },
+  }}
+  insights={true}
+  translations={{ button: { buttonText: 'search with askai (demo)' } }}
+/>
+
+---
+
+## Custom hit rendering (`hitComponent`)
+
+Replace the default hit markup to match your brand and layout. below is a minimal example of a custom component.
+
+```jsx
+function CustomHit({ hit }) {
+  // render a compact, branded hit card
+  return (
+    <a href={hit.url} style={{ display: 'block', padding: '12px 16px', textDecoration: 'none' }}>
+      <div style={{ display: 'flex', gap: 12 }}>
+        <div style={{ width: 40, height: 40, backgroundColor: '#e3f2fd', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, color: '#1976d2' }}>
+          {hit.type?.toUpperCase?.() || 'DOC'}
+        </div>
+        <div style={{ minWidth: 0 }}>
+          <div style={{ fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{hit.hierarchy?.lvl1 || 'untitled'}</div>
+          {hit.hierarchy?.lvl2 && <div style={{ color: '#666', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{hit.hierarchy.lvl2}</div>}
+          {hit.content && <div style={{ color: '#888', marginTop: 4 }}>{hit.content}</div>}
+        </div>
+      </div>
+    </a>
+  );
+}
+
+<DocSearch
+  appId="PMZUYBQDAK"
+  apiKey="24b09689d5b4223813d9b8e48563c8f6"
+  indexName="docsearch"
+  hitComponent={CustomHit}
+  insights={true}
+  translations={{ button: { buttonText: 'custom hits (demo)' } }}
+/>
+```
+
+<DocSearch
+  appId="PMZUYBQDAK"
+  apiKey="24b09689d5b4223813d9b8e48563c8f6"
+  indexName="docsearch"
+  hitComponent={({ hit }) => {
+  // render a compact, branded hit card
+  return (
+    <a href={hit.url} style={{ display: 'block', padding: '12px 16px', textDecoration: 'none' }}>
+      <div style={{ display: 'flex', gap: 12 }}>
+        <div style={{ width: 40, height: 40, backgroundColor: '#e3f2fd', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, color: '#1976d2' }}>
+          {hit.type?.toUpperCase?.() || 'DOC'}
+        </div>
+        <div style={{ minWidth: 0 }}>
+          <div style={{ fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{hit.hierarchy?.lvl1 || 'untitled'}</div>
+          {hit.hierarchy?.lvl2 && <div style={{ color: '#666', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{hit.hierarchy.lvl2}</div>}
+          {hit.content && <div style={{ color: '#888', marginTop: 4 }}>{hit.content}</div>}
+        </div>
+      </div>
+    </a>
+  );
+}}
+  insights={true}
+  translations={{ button: { buttonText: 'custom hits (demo)' } }}
+/>
+
+---
+
+## Bring-your-own-data shape with `transformItems`
+
+Docsearch is not limited to docsearch-like records. use `transformItems` to adapt any record shape into the internal structure docsearch expects. this lets you build search for apps, help centers, changelogs, or any custom content.
+
+the snippet below maps a non-standard record to the internal format. try it live:
+
+```jsx
+<DocSearch
+  appId="PMZUYBQDAK"
+  apiKey="24b09689d5b4223813d9b8e48563c8f6"
+  indexName="crawler_doc"
+  askAi={{ assistantId: 'askAIDemo' }}
+  searchParameters={{
+    attributesToRetrieve: ['*'],
+    attributesToSnippet: ['*'],
+    hitsPerPage: 20,
+  }}
+  transformItems={(items) =>
+    items.map((item) => ({
+      objectID: item.objectID,
+      content: item.content ?? '',
+      url: item.domain + item.path,
+      hierarchy: {
+        lvl0: (item.breadcrumb || []).join(' > ') ?? '',
+        lvl1: item.h1 ?? '',
+        lvl2: item.h2 ?? '',
+        lvl3: null,
+        lvl4: null,
+        lvl5: null,
+        lvl6: null,
+      },
+      url_without_anchor: item.domain + item.path,
+      type: 'content',
+      anchor: null,
+      _highlightResult: item._highlightResult,
+      _snippetResult: item._snippetResult,
+    }))
+  }
+  insights={true}
+  translations={{ button: { buttonText: 'transform items (demo)' } }}
+/>
+```
+
+<DocSearch
+  appId="PMZUYBQDAK"
+  apiKey="24b09689d5b4223813d9b8e48563c8f6"
+  indexName="crawler_doc"
+  askAi={{ assistantId: 'askAIDemo' }}
+  searchParameters={{ attributesToRetrieve: ['*'], attributesToSnippet: ['*'], hitsPerPage: 20 }}
+  transformItems={(items) =>
+    items.map((item) => ({
+      objectID: item.objectID,
+      content: item.content ?? '',
+      url: item.domain + item.path,
+      hierarchy: {
+        lvl0: (item.breadcrumb || []).join(' > ') ?? '',
+        lvl1: item.h1 ?? '',
+        lvl2: item.h2 ?? '',
+        lvl3: null,
+        lvl4: null,
+        lvl5: null,
+        lvl6: null,
+      },
+      url_without_anchor: item.domain + item.path,
+      type: 'content',
+      anchor: null,
+      _highlightResult: item._highlightResult,
+      _snippetResult: item._snippetResult,
+    }))
+  }
+  insights={true}
+  translations={{ button: { buttonText: 'transform items (demo)' } }}
+/>
+
+---
+
+## Tips
+
+- **Instrumentation**: enable `insights` to send usage analytics and iterate on relevance.
+- **AskAI scoping**: use `facetFilters` to keep ai answers strictly within your desired corpus (language, product, version, etc.).
+- **Customization**: use `hitComponent`, `transformItems`, and `translations` to make docsearch feel native to any product surface.
