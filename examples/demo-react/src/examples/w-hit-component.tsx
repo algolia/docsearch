@@ -102,7 +102,7 @@ function CustomHit({ hit }: { hit: any }): JSX.Element {
               gap: '8px',
             }}
           >
-            <span>{new URL(hit.url).hostname}</span>
+            <span>{hit.url}</span>
             {hit.type && <span style={{ textTransform: 'capitalize' }}>{hit.type}</span>}
           </div>
         </div>

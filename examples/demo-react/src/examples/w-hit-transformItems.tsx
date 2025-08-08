@@ -38,7 +38,7 @@ export default function WTransformItems(): JSX.Element {
         return items.map((item: any) => ({
           objectID: item.objectID,
           content: item.content ?? '',
-          url: item.domain + item.path,
+          url: new URL(item.domain + item.path).toString(),
           hierarchy: {
             lvl0: item.breadcrumb.join(' > ') ?? '',
             lvl1: item.h1 ?? '',
@@ -48,7 +48,7 @@ export default function WTransformItems(): JSX.Element {
             lvl5: null,
             lvl6: null,
           },
-          url_without_anchor: item.domain + item.path,
+          url_without_anchor: new URL(item.domain + item.path).toString(),
           type: 'content' as const,
           anchor: null,
           _highlightResult: item._highlightResult,
