@@ -282,6 +282,8 @@ export function DocSearchModal({
   onAskAiToggle,
   isAskAiActive = false,
   canHandleAskAi = false,
+  recentSearchesLimit = 7,
+  recentSearchesWithFavoritesLimit = 4,
 }: DocSearchModalProps): JSX.Element {
   const { footer: footerTranslations, searchBox: searchBoxTranslations, ...screenStateTranslations } = translations;
   const [state, setState] = React.useState<DocSearchState<InternalDocSearchHit>>({
@@ -320,9 +322,7 @@ export function DocSearchModal({
   const recentSearches = React.useRef(
     createStoredSearches<StoredDocSearchHit>({
       key: `__DOCSEARCH_RECENT_SEARCHES__${indexName}`,
-      // We display 7 recent searches and there's no favorites, but only
-      // 4 when there are favorites.
-      limit: favoriteSearches.getAll().length === 0 ? 7 : 4,
+      limit: favoriteSearches.getAll().length === 0 ? recentSearchesLimit : recentSearchesWithFavoritesLimit,
     }),
   ).current;
 
@@ -523,7 +523,9 @@ export function DocSearchModal({
           return [...noQuerySources, ...recentConversationSource];
         }
 
-        const querySourcesState: BuildQuerySourcesState = { context: sourcesState.context };
+        const querySourcesState: BuildQuerySourcesState = {
+          context: sourcesState.context,
+        };
 
         // Algolia sources
         const algoliaSourcesPromise = buildQuerySources({
