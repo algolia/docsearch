@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/js-example",
   "description": "DocSearch v3 Vanilla JavaScript example",
-  "version": "4.0.0-beta.5",
+  "version": "4.0.0-beta.6",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -10,8 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@docsearch/css": "4.0.0-beta.5",
-    "@docsearch/js": "4.0.0-beta.5"
+    "@docsearch/css": "4.0.0-beta.6",
+    "@docsearch/js": "4.0.0-beta.6"
   },
   "devDependencies": {
     "vite": "^6.0.7"

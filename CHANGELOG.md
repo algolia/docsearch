@@ -1,3 +1,23 @@
+# [4.0.0-beta.6](https://github.com/algolia/docsearch/compare/v4.0.0-beta.5...v4.0.0-beta.6) (2025-08-08)
+
+
+### Bug Fixes
+
+* cater for `transformItems` to use DS with custom indices ([#2705](https://github.com/algolia/docsearch/issues/2705)) ([3478262](https://github.com/algolia/docsearch/commit/3478262b3e6970e9bf2e63c7a656a4c801b42059))
+* **docs:** better crawler config for markdown ([5690471](https://github.com/algolia/docsearch/commit/5690471c2ad22e8b9df5dd5177d8f2d25671e84a))
+* revert css change ([175a7d6](https://github.com/algolia/docsearch/commit/175a7d6bf48f13b4bb9bb2fc983b8b9e5189de09))
+* tailwind styles ([0fd05af](https://github.com/algolia/docsearch/commit/0fd05af65917ed9d29b2b9dc6f4832bc8dc05c9f))
+
+
+### Features
+
+* Add recent searches limit param ([#2704](https://github.com/algolia/docsearch/issues/2704)) ([95af410](https://github.com/algolia/docsearch/commit/95af410f8202ee704b9187d8a4e6d1e15eae2e37))
+* **askai:** Add providers table to docs ([#2684](https://github.com/algolia/docsearch/issues/2684)) ([942c1ca](https://github.com/algolia/docsearch/commit/942c1ca353f90b196748e2ffeda551a13be8421b))
+* **askai:** pubic beta launch ([5626830](https://github.com/algolia/docsearch/commit/5626830883e60232924e85ab94270b1136e4678d))
+* **docs:** api documentation and better examples ([#2686](https://github.com/algolia/docsearch/issues/2686)) ([920e392](https://github.com/algolia/docsearch/commit/920e3926b7812e29dad635243c0bbfb144de28e6))
+
+
+
 # [4.0.0-beta.5](https://github.com/algolia/docsearch/compare/v4.0.0-beta.4...v4.0.0-beta.5) (2025-07-24)
 
 
