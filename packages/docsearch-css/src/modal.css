@@ -68,9 +68,14 @@
   border-bottom: 1px solid var(--docsearch-subtle-color);
   border-radius: 4px 4px 0 0;
   display: flex;
-  height: var(--docsearch-searchbox-height);
+  min-height: var(--docsearch-searchbox-initial-height);
+  height: var(
+    --docsearch-searchbox-height,
+    var(--docsearch-searchbox-initial-height)
+  );
   margin: 0;
-  padding: var(--docsearch-spacing) 16px;
+  padding-block: var(--docsearch-spacing);
+  padding-inline: 16px;
   position: relative;
   width: 100%;
 }
@@ -86,8 +91,12 @@
   font-weight: 300;
   height: 100%;
   outline: none;
-  padding: 0 0 0 8px;
+  padding-block-start: 4px;
+  padding-inline-start: 8px;
   width: 80%;
+  line-height: 1.4;
+  resize: none;
+  overflow-y: hidden; /* js toggles to auto when exceeding max */
 }
 
 .DocSearch-Input::placeholder {
@@ -113,7 +122,7 @@
 }
 
 .DocSearch-Divider {
-  height: 56px;
+  height: var(--docsearch-searchbox-height);
   border-left: 1px solid var(--docsearch-subtle-color);
 }
 
@@ -232,8 +241,8 @@
 
 .DocSearch-Dropdown {
   height: calc(
-    var(--docsearch-modal-height) - var(--docsearch-searchbox-height) -
-      var(--docsearch-spacing) - var(--docsearch-footer-height)
+    var(--docsearch-modal-height) - var(--docsearch-spacing) -
+      var(--docsearch-footer-height)
   );
   min-height: var(--docsearch-spacing);
   overflow-y: auto; /* firefox */
@@ -850,6 +859,7 @@ assistive tech users */
 
 .DocSearch-AskAiScreen-Query {
   font-size: 1.5em;
+  line-break: anywhere;
   font-weight: 600;
   margin: 0;
 }
@@ -1306,7 +1316,7 @@ assistive tech users */
   }
 
   .DocSearch-Dropdown {
-    height: 100%;
+    flex: 1 1 auto;
   }
 
   .DocSearch-Container {
@@ -1337,10 +1347,7 @@ assistive tech users */
   }
 
   .DocSearch-Dropdown {
-    max-height: calc(
-      var(--docsearch-vh, 1vh) * 100 - var(--docsearch-searchbox-height) -
-        var(--docsearch-spacing) - var(--docsearch-footer-height)
-    );
+    max-height: none;
   }
 
   .DocSearch-Commands {
