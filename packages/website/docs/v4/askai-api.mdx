@@ -68,7 +68,7 @@ Start or continue a chat with the AI assistant. **The response is streamed in re
 - `X-Algolia-API-Key`: Your Algolia API key
 - `X-Algolia-Index-Name`: Algolia index to use
 - `X-Algolia-Assistant-Id`: Ask AI assistant configuration ID
-- `Authorization`: Token `token_here` (get from `/chat/token`)
+- `Authorization`: TOKEN `token_here` (get from `/chat/token`)
 
 **Request Body:**
 ```json
@@ -188,7 +188,7 @@ Submit thumbs up/down feedback for a chat message.
 
 **Headers:**
 - `X-Algolia-Assistant-Id`: Your Ask AI assistant configuration ID
-- `Authorization`: Token `token_here`
+- `Authorization`: TOKEN `token_here`
 
 **Request Body:**
 ```json
@@ -259,7 +259,7 @@ class AskAIChat {
         'X-Algolia-API-Key': this.apiKey,
         'X-Algolia-Index-Name': this.indexName,
         'X-Algolia-Assistant-Id': this.assistantId,
-        'Authorization': token,
+        'Authorization': `TOKEN ${token}`,
       },
       body: JSON.stringify({
         id: conversationId,
@@ -304,7 +304,7 @@ class AskAIChat {
       headers: {
         'Content-Type': 'application/json',
         'X-Algolia-Assistant-Id': this.assistantId,
-        'Authorization': token,
+        'Authorization': `TOKEN ${token}`,
       },
       body: JSON.stringify({
         appId: this.appId,
@@ -397,7 +397,7 @@ function AskAIChat({ appId, apiKey, indexName, assistantId }) {
           'X-Algolia-API-Key': apiKey,
           'X-Algolia-Index-Name': indexName,
           'X-Algolia-Assistant-Id': assistantId,
-          'Authorization': token,
+          'Authorization': `TOKEN ${token}`,
         },
         body: JSON.stringify({
           id: 'conversation-1',
@@ -617,7 +617,7 @@ export default async function handler(req: Request) {
       'X-Algolia-API-Key': process.env.ALGOLIA_API_KEY!,
       'X-Algolia-Index-Name': process.env.ALGOLIA_INDEX_NAME!,
       'X-Algolia-Assistant-Id': assistantId,
-      'Authorization': token,
+      'Authorization': `TOKEN ${token}`,
       'Content-Type': 'application/json',
     };
 
