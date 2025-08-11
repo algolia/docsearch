@@ -150,7 +150,7 @@ const buildQuerySources = async ({
         {
           query,
           indexName,
-          attributesToRetrieve: [
+          attributesToRetrieve: searchParameters?.attributesToRetrieve ?? [
             'hierarchy.lvl0',
             'hierarchy.lvl1',
             'hierarchy.lvl2',
@@ -162,7 +162,7 @@ const buildQuerySources = async ({
             'type',
             'url',
           ],
-          attributesToSnippet: [
+          attributesToSnippet: searchParameters?.attributesToSnippet ?? [
             `hierarchy.lvl1:${snippetLength.current}`,
             `hierarchy.lvl2:${snippetLength.current}`,
             `hierarchy.lvl3:${snippetLength.current}`,
@@ -171,11 +171,11 @@ const buildQuerySources = async ({
             `hierarchy.lvl6:${snippetLength.current}`,
             `content:${snippetLength.current}`,
           ],
-          snippetEllipsisText: '…',
-          highlightPreTag: '<mark>',
-          highlightPostTag: '</mark>',
-          hitsPerPage: 20,
-          clickAnalytics: insightsActive,
+          snippetEllipsisText: searchParameters?.snippetEllipsisText ?? '…',
+          highlightPreTag: searchParameters?.highlightPreTag ?? '<mark>',
+          highlightPostTag: searchParameters?.highlightPostTag ?? '</mark>',
+          hitsPerPage: searchParameters?.hitsPerPage ?? 20,
+          clickAnalytics: searchParameters?.clickAnalytics ?? insightsActive,
           ...searchParameters,
         },
       ],
@@ -183,7 +183,8 @@ const buildQuerySources = async ({
 
     const firstResult = results[0] as SearchResponse<DocSearchHit>;
     const { hits, nbHits } = firstResult;
-    const sources = groupBy<DocSearchHit>(hits, (hit) => removeHighlightTags(hit), maxResultsPerGroup);
+    const transformedHits = transformItems(hits);
+    const sources = groupBy<DocSearchHit>(transformedHits, (hit) => removeHighlightTags(hit), maxResultsPerGroup);
 
     // We store the `lvl0`s to display them as search suggestions
     // in the "no results" screen.
@@ -222,7 +223,6 @@ const buildQuerySources = async ({
         },
         getItems(): InternalDocSearchHit[] {
           return Object.values(groupBy(items, (item) => item.hierarchy.lvl1, maxResultsPerGroup))
-            .map(transformItems)
             .map((groupedHits) =>
               groupedHits.map((item) => {
                 let parent: InternalDocSearchHit | null = null;
@@ -282,6 +282,8 @@ export function DocSearchModal({
   onAskAiToggle,
   isAskAiActive = false,
   canHandleAskAi = false,
+  recentSearchesLimit = 7,
+  recentSearchesWithFavoritesLimit = 4,
 }: DocSearchModalProps): JSX.Element {
   const { footer: footerTranslations, searchBox: searchBoxTranslations, ...screenStateTranslations } = translations;
   const [state, setState] = React.useState<DocSearchState<InternalDocSearchHit>>({
@@ -320,9 +322,7 @@ export function DocSearchModal({
   const recentSearches = React.useRef(
     createStoredSearches<StoredDocSearchHit>({
       key: `__DOCSEARCH_RECENT_SEARCHES__${indexName}`,
-      // We display 7 recent searches and there's no favorites, but only
-      // 4 when there are favorites.
-      limit: favoriteSearches.getAll().length === 0 ? 7 : 4,
+      limit: favoriteSearches.getAll().length === 0 ? recentSearchesLimit : recentSearchesWithFavoritesLimit,
     }),
   ).current;
 
@@ -523,7 +523,9 @@ export function DocSearchModal({
           return [...noQuerySources, ...recentConversationSource];
         }
 
-        const querySourcesState: BuildQuerySourcesState = { context: sourcesState.context };
+        const querySourcesState: BuildQuerySourcesState = {
+          context: sourcesState.context,
+        };
 
         // Algolia sources
         const algoliaSourcesPromise = buildQuerySources({
