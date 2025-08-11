@@ -2,10 +2,15 @@
  * Checks if local storage is available and usable.
  */
 export function isLocalStorageSupported(): boolean {
+  // guard against ssr and browsers where localstorage is disabled
+  if (typeof window === 'undefined' || !('localStorage' in window)) {
+    return false;
+  }
+
   const key = '__TEST_KEY__';
   try {
-    localStorage.setItem(key, '');
-    localStorage.removeItem(key);
+    window.localStorage.setItem(key, '');
+    window.localStorage.removeItem(key);
     return true;
   } catch {
     return false;
@@ -38,7 +43,15 @@ export function createStorage<TItem>(key: string) {
     },
     getItem(): TItem[] {
       const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : [];
+      if (item === null) return [];
+      try {
+        const parsed = JSON.parse(item);
+        return Array.isArray(parsed) ? (parsed as TItem[]) : [];
+      } catch {
+        // clear corrupted data and return empty list
+        window.localStorage.removeItem(key);
+        return [];
+      }
     },
   };
 }
