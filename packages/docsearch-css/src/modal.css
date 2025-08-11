@@ -1211,7 +1211,7 @@ assistive tech users */
   color: var(--docsearch-muted-color);
 }
 
-.DocSearch-AskAiScreen-MessageContent-Tool.Tool--Result:first-child {
+.DocSearch-AskAiScreen-MessageContent-Tool.Tool--Result {
   padding-top: 0;
 }
 

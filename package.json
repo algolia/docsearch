@@ -20,7 +20,6 @@
     "lint": "eslint .",
     "playground:build": "yarn workspace @docsearch/react-example build",
     "playground:start": "yarn workspace @docsearch/react-example dev --host",
-    "playground-askai:start": "yarn workspace @docsearch/askai-example dev --host",
     "playground-js:start": "yarn workspace @docsearch/js-example dev --host",
     "release": "shipjs prepare",
     "start": "yarn run watch",

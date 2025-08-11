@@ -2310,19 +2310,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docsearch/askai-example@workspace:examples/demo-askai":
-  version: 0.0.0-use.local
-  resolution: "@docsearch/askai-example@workspace:examples/demo-askai"
-  dependencies:
-    "@docsearch/css": "workspace:*"
-    "@docsearch/react": "workspace:*"
-    "@vitejs/plugin-react": "npm:^4.3.4"
-    react: "npm:^19.0.0"
-    react-dom: "npm:^19.0.0"
-    vite: "npm:^6.0.7"
-  languageName: unknown
-  linkType: soft
-
 "@docsearch/css@npm:4.0.0-beta.4":
   version: 4.0.0-beta.4
   resolution: "@docsearch/css@npm:4.0.0-beta.4"
@@ -2330,7 +2317,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docsearch/css@npm:4.0.0-beta.5, @docsearch/css@workspace:*, @docsearch/css@workspace:packages/docsearch-css":
+"@docsearch/css@npm:4.0.0-beta.6, @docsearch/css@workspace:*, @docsearch/css@workspace:packages/docsearch-css":
   version: 0.0.0-use.local
   resolution: "@docsearch/css@workspace:packages/docsearch-css"
   dependencies:
@@ -2338,21 +2325,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@docsearch/js-example@workspace:examples/js-demo":
+"@docsearch/js-example@workspace:examples/demo-js":
   version: 0.0.0-use.local
-  resolution: "@docsearch/js-example@workspace:examples/js-demo"
+  resolution: "@docsearch/js-example@workspace:examples/demo-js"
   dependencies:
-    "@docsearch/css": "npm:4.0.0-beta.5"
-    "@docsearch/js": "npm:4.0.0-beta.5"
+    "@docsearch/css": "npm:4.0.0-beta.6"
+    "@docsearch/js": "npm:4.0.0-beta.6"
     vite: "npm:^6.0.7"
   languageName: unknown
   linkType: soft
 
-"@docsearch/js@npm:4.0.0-beta.5, @docsearch/js@workspace:packages/docsearch-js":
+"@docsearch/js@npm:4.0.0-beta.6, @docsearch/js@workspace:packages/docsearch-js":
   version: 0.0.0-use.local
   resolution: "@docsearch/js@workspace:packages/docsearch-js"
   dependencies:
-    "@docsearch/react": "npm:4.0.0-beta.5"
+    "@docsearch/react": "npm:4.0.0-beta.6"
     "@rollup/plugin-replace": "npm:6.0.2"
     nodemon: "npm:^3.1.9"
     preact: "npm:^10.0.0"
@@ -2418,25 +2405,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@docsearch/react-18-example@workspace:examples/demo-react-18":
+"@docsearch/react-example@workspace:examples/demo-react":
   version: 0.0.0-use.local
-  resolution: "@docsearch/react-18-example@workspace:examples/demo-react-18"
+  resolution: "@docsearch/react-example@workspace:examples/demo-react"
   dependencies:
     "@docsearch/css": "workspace:*"
     "@docsearch/react": "workspace:*"
-    "@vitejs/plugin-react": "npm:^4.3.4"
-    react: "npm:^18.0.0"
-    react-dom: "npm:^18.0.0"
-    vite: "npm:^6.0.7"
-  languageName: unknown
-  linkType: soft
-
-"@docsearch/react-example@workspace:examples/demo":
-  version: 0.0.0-use.local
-  resolution: "@docsearch/react-example@workspace:examples/demo"
-  dependencies:
-    "@docsearch/css": "npm:4.0.0-beta.5"
-    "@docsearch/react": "npm:4.0.0-beta.5"
     "@vitejs/plugin-react": "npm:^4.3.4"
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
@@ -2444,13 +2418,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@docsearch/react@npm:4.0.0-beta.5, @docsearch/react@workspace:*, @docsearch/react@workspace:packages/docsearch-react":
+"@docsearch/react@npm:4.0.0-beta.6, @docsearch/react@workspace:*, @docsearch/react@workspace:packages/docsearch-react":
   version: 0.0.0-use.local
   resolution: "@docsearch/react@workspace:packages/docsearch-react"
   dependencies:
     "@ai-sdk/react": "npm:^1.2.12"
     "@algolia/autocomplete-core": "npm:1.19.2"
-    "@docsearch/css": "npm:4.0.0-beta.5"
+    "@docsearch/css": "npm:4.0.0-beta.6"
     "@rollup/plugin-replace": "npm:6.0.2"
     "@testing-library/jest-dom": "npm:6.6.3"
     "@testing-library/react": "npm:16.2.0"
@@ -2507,8 +2481,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docsearch/website@workspace:packages/website"
   dependencies:
-    "@docsearch/css": "npm:4.0.0-beta.5"
-    "@docsearch/react": "npm:4.0.0-beta.5"
+    "@docsearch/css": "npm:4.0.0-beta.6"
+    "@docsearch/react": "npm:4.0.0-beta.6"
     "@docusaurus/core": "https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-core-3.8.1.tgz"
     "@docusaurus/module-type-aliases": "npm:^3.8.1"
     "@docusaurus/preset-classic": "https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-preset-classic-3.8.1.tgz"
