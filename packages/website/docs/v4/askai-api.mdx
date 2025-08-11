@@ -10,7 +10,7 @@ The Ask AI API enables developers to build custom chat interfaces powered by Alg
 **Key capabilities:**
 - Real-time streaming responses for better user experience
 - Advanced facet filtering to control AI context
-- HMAC token authentication for secure API access
+- Authorization token authentication for secure API access
 - Full compatibility with popular frameworks like Next.js and Vercel AI SDK
 
 :::warning
@@ -34,9 +34,9 @@ All endpoints allow cross-origin requests (CORS) from browser-based apps.
 
 ## Authentication
 
-Ask AI uses HMAC tokens for authentication. Tokens expire after 5 minutes, so you'll need to request a new one before each chat request.
+Ask AI uses authorization tokens for authentication. Tokens expire after 5 minutes, so you'll need to request a new one before each chat request.
 
-### Get an HMAC Token
+### Get a Token
 
 **POST** `/chat/token`
 
@@ -49,7 +49,7 @@ Ask AI uses HMAC tokens for authentication. Tokens expire after 5 minutes, so yo
 ```json
 {
   "success": true,
-  "token": "HMAC_TOKEN"
+  "token": "TOKEN"
 }
 ```
 
@@ -68,7 +68,7 @@ Start or continue a chat with the AI assistant. **The response is streamed in re
 - `X-Algolia-API-Key`: Your Algolia API key
 - `X-Algolia-Index-Name`: Algolia index to use
 - `X-Algolia-Assistant-Id`: Ask AI assistant configuration ID
-- `Authorization`: HMAC token (get from `/chat/token`)
+- `Authorization`: Token `token_here` (get from `/chat/token`)
 
 **Request Body:**
 ```json
@@ -188,7 +188,7 @@ Submit thumbs up/down feedback for a chat message.
 
 **Headers:**
 - `X-Algolia-Assistant-Id`: Your Ask AI assistant configuration ID
-- `Authorization`: HMAC token
+- `Authorization`: Token `token_here`
 
 **Request Body:**
 ```json
@@ -717,7 +717,7 @@ All error responses follow this format:
 
 Common error scenarios:
 - **Invalid assistant ID**: Configuration doesn't exist
-- **Expired token**: Request a new HMAC token
+- **Expired token**: Request a new authorization token
 - **Rate limiting**: Too many requests
 - **Invalid index**: Index name doesn't exist or isn't accessible
 
@@ -725,7 +725,7 @@ Common error scenarios:
 
 ## Best Practices
 
-1. **Token Management**: Always request a fresh HMAC token before chat requests
+1. **Token Management**: Always request a fresh token before chat requests
 2. **Error Handling**: Implement retry logic for network failures
 3. **Streaming**: Handle server-sent events properly for real-time responses
 4. **Feedback**: Implement thumbs up/down for continuous improvement
