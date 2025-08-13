@@ -2343,6 +2343,7 @@ __metadata:
     "@rollup/plugin-replace": "npm:6.0.2"
     nodemon: "npm:^3.1.9"
     preact: "npm:^10.0.0"
+    rollup-plugin-dts: "npm:^6.2.1"
   languageName: unknown
   linkType: soft
 
@@ -2431,6 +2432,7 @@ __metadata:
     algoliasearch: "npm:^5.28.0"
     marked: "npm:^15.0.12"
     nodemon: "npm:^3.1.0"
+    rollup-plugin-dts: "npm:^6.2.1"
     vitest: "npm:3.0.2"
     zod: "npm:^3.25.67"
   peerDependencies:
@@ -22577,6 +22579,22 @@ __metadata:
     "@babel/code-frame":
       optional: true
   checksum: 10c0/2b042198ff00fb10c9c70087bbac9013f748dc34be0dbfcca82c6353884ead1467b4a8a37bafe9a8b9356479d43715c7cbc591eeb8e4112c583452431c1cb0a0
+  languageName: node
+  linkType: hard
+
+"rollup-plugin-dts@npm:^6.2.1":
+  version: 6.2.1
+  resolution: "rollup-plugin-dts@npm:6.2.1"
+  dependencies:
+    "@babel/code-frame": "npm:^7.26.2"
+    magic-string: "npm:^0.30.17"
+  peerDependencies:
+    rollup: ^3.29.4 || ^4
+    typescript: ^4.5 || ^5.0
+  dependenciesMeta:
+    "@babel/code-frame":
+      optional: true
+  checksum: 10c0/f21c8726470851a40e6ca68ae580261cee8bc6275775291b9c0fdf93b868ed54f12b11c8c0dddce2c14f5691d6032b6647d094835ab9b6789226efa60e1aa71e
   languageName: node
   linkType: hard
 

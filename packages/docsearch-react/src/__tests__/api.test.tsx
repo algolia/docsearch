@@ -305,6 +305,40 @@ describe('api', () => {
     });
   });
 
+  describe('portalContainer', () => {
+    it('renders the modal inside document.body by default', async () => {
+      render(<DocSearch />);
+
+      await act(async () => {
+        fireEvent.click(await screen.findByText('Search'));
+      });
+
+      const portal = document.querySelector('.DocSearch-Container');
+
+      expect(portal).toBeInTheDocument();
+      expect(portal?.parentElement).toBe(document.body);
+    });
+
+    it('renders the modal inside the provided portal container', async () => {
+      const container = document.createElement('div');
+      document.body.appendChild(container);
+
+      render(<DocSearch portalContainer={container} />);
+
+      await act(async () => {
+        fireEvent.click(await screen.findByText('Search'));
+      });
+
+      const portal = container.querySelector('.DocSearch-Container');
+
+      expect(portal).toBeInTheDocument();
+      expect(portal?.parentElement).toBe(container);
+
+      // clean up manually created container
+      container.remove();
+    });
+  });
+
   describe('Theme', () => {
     const html = document.documentElement;
     it('light theme', () => {
