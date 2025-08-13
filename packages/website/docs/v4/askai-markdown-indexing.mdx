@@ -5,18 +5,74 @@ title: Improving Answer Quality with Markdown Indexing
 To deliver more accurate, context-rich answers at scale, AskAI benefits from cleanly structured content. One of the most effective ways to achieve this is by using a Markdown-based indexing helper in your Algolia Crawler configuration. This setup ensures AskAI can access well-formed, content-focused records—especially important for larger documentation sites where metadata, navigation elements, or layout artifacts might otherwise dilute the quality of generative responses.
 
 :::info
-These steps are especially valuable for large-scale sites using DocSearch-generated indices, but also apply to custom or smaller setups: you can manually create and upload a Markdown-based index tailored to AskAI.
+Setting up markdown indexing can be automated through the Crawler UI for most use cases. For advanced customization or understanding the underlying configuration, manual setup options are also available.
 
 **Note:** For more integration examples (Docusaurus, VitePress, Astro/Starlight, and generic setups), see the section at the bottom of this page.
 :::
 
 ## Overview
 To maximize the quality of AskAI responses, configure your Crawler to create a dedicated index for Markdown content. This approach enables AskAI to work with structured, chunked records sourced from your documentation, support content, or any Markdown-based material—resulting in significantly more relevant and precise answers.
-The steps below walk through how to set up your Crawler to index Markdown files specifically for AskAI.
+
+You can set up markdown indexing in two ways:
+1. **Automated Setup (Recommended)**: Use the Crawler UI to automatically create and configure your markdown index
+2. **Manual Configuration**: Manually configure your Crawler for advanced customization needs
 
 ---
 
-## Step 1: Update your existing DocSearch Crawler configuration
+## Automated Markdown Indexing Setup (Recommended)
+
+The easiest way to set up markdown indexing is through the Crawler UI, which automatically creates and configures an optimized markdown index for AskAI.
+
+### Step 1: Access Markdown Indexing in Crawler Configuration
+
+1. Navigate to your Crawler dashboard
+2. Go to **Configuration** → **Markdown for LLMs** tab
+3. You'll see the Markdown Indexing section where you can create a dedicated markdown index
+
+![Crawler Configuration - Markdown for LLMs](/img/assets/askai-ready.png)
+
+### Step 2: Add a New Markdown Index
+
+1. Click **"+ Add Index"** to create a new markdown index
+2. Fill in the required fields:
+   - **Index Name**: Enter a descriptive name (e.g., `my-docs-markdown`)
+   - **Content Tag**: Specify the HTML content selector (typically `main`)
+   - **Template**: Choose the template that matches your documentation framework:
+     - **Docusaurus** - For Docusaurus sites
+     - **VitePress** - For VitePress sites  
+     - **Astro/Starlight** - For Astro/Starlight sites
+     - **Non-DocSearch (Generic)** - For custom sites or other frameworks
+
+![Add Markdown Index Dialog](/img/assets/askai-md.png)
+
+3. Click **"Add Index"** to create the index
+
+The Crawler will automatically configure the optimal settings for your chosen template, including:
+- Proper record extraction and chunking
+- Framework-specific metadata extraction (language, version, tags)
+- Optimized index settings for AskAI
+
+### Step 3: Run the Crawler
+
+Once your markdown index is configured:
+
+1. Click **"Start Crawling"** to begin indexing your content
+2. Monitor the crawl progress in the dashboard
+3. Your new markdown index will be populated with clean, structured records optimized for AskAI
+
+![Crawler Status](/img/assets/askai-crawling.png)
+
+### Step 4: Integrate with AskAI
+
+After crawling completes, configure DocSearch to use your new markdown index for AskAI responses. See the [Integration section](#integrate-your-new-index-with-ask-ai) below for detailed setup instructions.
+
+---
+
+## Manual Configuration (Advanced)
+
+For users who need advanced customization or want to understand the underlying configuration, you can manually set up markdown indexing by modifying your Crawler configuration directly.
+
+### Step 1: Update your existing DocSearch Crawler configuration
 
 - In your Crawler config, add the following to your `actions: [ ... ]` array:
 
@@ -66,7 +122,7 @@ The steps below walk through how to set up your Crawler to index Markdown files 
 
 ---
 
-## Step 2: Run the DocSearch crawler to create a new Ask AI optimized index
+### Step 2: Run the DocSearch crawler to create a new Ask AI optimized index
 
 After updating your Crawler configuration:
 
@@ -79,7 +135,7 @@ The Crawler will process your content using the markdown extraction helper and p
 
 ---
 
-## Step 3: Integrate your new index with Ask AI
+## Integrate your new index with Ask AI
 
 Once your Crawler has created your optimized index, you can integrate it with Ask AI in two ways: using DocSearch (recommended for most users) or building a custom integration using the Ask AI API.
 
