@@ -49,6 +49,32 @@ function cleanupDocSearchStorage(): void {
 }
 
 /**
+ * Safely sets an item in localStorage with quota exceeded error handling.
+ *
+ * @param key - The localStorage key.
+ * @param value - The value to store (will be JSON.stringified).
+ */
+function safeSetLocalStorageItem(key: string, value: any): void {
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    // Handle quota exceeded error by clearing old data and retrying
+    if (error instanceof DOMException && error.name === 'QuotaExceededError') {
+      try {
+        // First, try comprehensive cleanup of DocSearch storage
+        cleanupDocSearchStorage();
+        // Retry with original data
+        window.localStorage.setItem(key, JSON.stringify(value));
+      } catch {
+        // If still failing, silently fail to prevent crashes
+      }
+    } else {
+      // For other localStorage errors, silently fail to prevent crashes
+    }
+  }
+}
+
+/**
  * Proactively manages localStorage quota by cleaning up when usage is high
  * Should be called periodically to prevent quota exceeded errors.
  */
@@ -107,23 +133,7 @@ export function createStorage<TItem>(key: string) {
 
   return {
     setItem(item: TItem[]): void {
-      try {
-        window.localStorage.setItem(key, JSON.stringify(item));
-      } catch (error) {
-        // Handle quota exceeded error by clearing old data and retrying
-        if (error instanceof DOMException && error.name === 'QuotaExceededError') {
-          try {
-            // First, try comprehensive cleanup of DocSearch storage
-            cleanupDocSearchStorage();
-            // Retry with original data
-            window.localStorage.setItem(key, JSON.stringify(item));
-          } catch {
-              // If still failing, silently fail to prevent crashes
-          }
-        } else {
-          // For other localStorage errors, silently fail to prevent crashes
-        }
-      }
+      safeSetLocalStorageItem(key, item);
     },
     getItem(): TItem[] {
       const item = window.localStorage.getItem(key);
@@ -166,23 +176,7 @@ export function createObjectStorage<TItem>(key: string) {
       if (item === null) {
         window.localStorage.removeItem(key);
       } else {
-        try {
-          window.localStorage.setItem(key, JSON.stringify(item));
-        } catch (error) {
-          // Handle quota exceeded error
-          if (error instanceof DOMException && error.name === 'QuotaExceededError') {
-            try {
-              // First, try comprehensive cleanup of DocSearch storage
-              cleanupDocSearchStorage();
-              // Retry the operation
-              window.localStorage.setItem(key, JSON.stringify(item));
-            } catch {
-              // If still failing, silently fail to prevent crashes
-            }
-          } else {
-            // For other localStorage errors, silently fail to prevent crashes
-          }
-        }
+        safeSetLocalStorageItem(key, item);
       }
     },
     getItem(): TItem | null {
