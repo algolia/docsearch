@@ -122,7 +122,7 @@
 }
 
 .DocSearch-Divider {
-  height: var(--docsearch-searchbox-height);
+  height: 16px;
   border-left: 1px solid var(--docsearch-subtle-color);
 }
 
@@ -1316,7 +1316,7 @@ assistive tech users */
   }
 
   .DocSearch-Dropdown {
-    flex: 1 1 auto;
+    height: 100%;
   }
 
   .DocSearch-Container {

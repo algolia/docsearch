@@ -6,7 +6,6 @@ import { MAX_QUERY_SIZE } from './constants';
 import { LoadingIcon, CloseIcon, SearchIcon, SparklesIcon } from './icons';
 import { BackIcon } from './icons/BackIcon';
 import type { InternalDocSearchHit } from './types';
-import { useAutoResizingTextarea } from './useAutoResizingTextarea';
 
 export type SearchBoxTranslations = Partial<{
   clearButtonTitle: string;
@@ -53,25 +52,17 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
     inputElement: props.inputRef.current,
   });
 
-  // refs for the active textarea input
-  const textareaRef = React.useRef<HTMLTextAreaElement | null>(null);
-  const activeInputRef = textareaRef;
-
-  const recomputeTextarea = useAutoResizingTextarea(textareaRef, {
-    maxRows: 5,
-    cssVarName: '--docsearch-searchbox-height',
-    // reset css var to initial height whenever the query is empty
-    shouldResetOnMount: !props.state.query,
-  });
-
-  // merged focus/select effects
   React.useEffect(() => {
-    const el = activeInputRef.current;
-    if (!el) return;
-    if (props.autoFocus) el.focus();
-    if (props.isFromSelection) el.select();
-    if (props.askAiStatus !== 'streaming' && props.askAiStatus !== 'submitted') el.focus();
-  }, [props.autoFocus, props.isFromSelection, props.askAiStatus, activeInputRef]);
+    if (props.autoFocus && props.inputRef.current) {
+      props.inputRef.current.focus();
+    }
+  }, [props.autoFocus, props.inputRef]);
+
+  React.useEffect(() => {
+    if (props.isFromSelection && props.inputRef.current) {
+      props.inputRef.current.select();
+    }
+  }, [props.isFromSelection, props.inputRef]);
 
   const baseInputProps = props.getInputProps({
     inputElement: props.inputRef.current!,
@@ -85,14 +76,12 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
   const isAskAiStreaming = props.askAiStatus === 'streaming' || props.askAiStatus === 'submitted';
   const isKeywordSearchLoading = props.state.status === 'stalled';
 
-  // recompute when mode or query changes, use layout effect to avoid flicker
-  React.useLayoutEffect(() => {
-    recomputeTextarea();
-  }, [props.isAskAiActive, props.state.query, recomputeTextarea]);
-
-  const formRef = React.useRef<HTMLFormElement | null>(null);
-
-  // noop placeholder to keep formRef if needed later
+  // when returning to another status than streaming or submitted, we focus on the input
+  React.useEffect(() => {
+    if (props.askAiStatus !== 'streaming' && props.askAiStatus !== 'submitted' && props.inputRef.current) {
+      props.inputRef.current.focus();
+    }
+  }, [props.askAiStatus, props.inputRef]);
 
   /**
    * We need to block the default behavior of the input when AskAI is active.
@@ -101,15 +90,12 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
    * Learn more on default autocomplete behavior:
    * https://github.com/algolia/autocomplete/blob/next/packages/autocomplete-core/src/getDefaultProps.ts.
    */
-  const onKeyDown: React.TextareaHTMLAttributes<HTMLTextAreaElement>['onKeyDown'] = (e) => {
-    // block these up, down, enter listeners when askai is active
-    if (props.isAskAiActive) {
-      // allow shift + enter to insert a newline in the textarea
-      if (e.key === 'Enter' && e.shiftKey) {
-        return;
-      }
-
-      if (blockedKeys.has(e.key)) {
+  const inputProps = {
+    ...baseInputProps,
+    enterKeyHint: props.isAskAiActive ? ('enter' as const) : ('search' as const),
+    onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>): void => {
+      // block these up, down, enter listeners when AskAI is active
+      if (props.isAskAiActive && blockedKeys.has(e.key)) {
         // enter key asks another question
         if (e.key === 'Enter' && !isAskAiStreaming && props.state.query) {
           props.onAskAgain(props.state.query);
@@ -118,31 +104,20 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
         e.stopPropagation();
         return;
       }
-    }
-    // delegate to autocomplete input handler
-    origOnKeyDown?.(e as unknown as React.KeyboardEvent<HTMLInputElement>);
-  };
-
-  const onChange: React.TextareaHTMLAttributes<HTMLTextAreaElement>['onChange'] = (e) => {
-    if (props.isAskAiActive) {
-      props.setQuery(e.currentTarget.value);
-      // block search when askai is active
-      // we don't want to trigger the search when the user types
-      // we already know they are asking a question
-      e.preventDefault();
-      e.stopPropagation();
-      recomputeTextarea();
-      return;
-    }
-    origOnChange?.(e as unknown as React.ChangeEvent<HTMLInputElement>);
-    recomputeTextarea();
-  };
-
-  const inputProps = {
-    ...baseInputProps,
-    enterKeyHint: props.isAskAiActive ? ('enter' as const) : ('search' as const),
-    onKeyDown,
-    onChange,
+      origOnKeyDown?.(e);
+    },
+    onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
+      if (props.isAskAiActive) {
+        props.setQuery(e.currentTarget.value);
+        // block search when AskAI is active
+        // we don't want to trigger the search when the user types
+        // we already know they are asking a question
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+      origOnChange?.(e);
+    },
     disabled: isAskAiStreaming,
   };
 
@@ -150,7 +125,6 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
     <>
       <form
         className="DocSearch-Form"
-        ref={formRef}
         onSubmit={(event) => {
           event.preventDefault();
         }}
@@ -184,11 +158,11 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
             )}
           </>
         )}
-        <textarea
+
+        <input
           className="DocSearch-Input"
-          ref={textareaRef}
-          rows={1}
-          {...(inputProps as unknown as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
+          ref={props.inputRef}
+          {...inputProps}
           placeholder={isAskAiStreaming ? placeholderTextAskAiStreaming : props.placeholder}
         />
 
