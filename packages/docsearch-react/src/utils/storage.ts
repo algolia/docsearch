@@ -118,13 +118,7 @@ export function createStorage<TItem>(key: string) {
             // Retry with original data
             window.localStorage.setItem(key, JSON.stringify(item));
           } catch {
-            try {
-              // If still failing, try with reduced dataset
-              const reducedItem = item.slice(0, Math.floor(item.length / 2));
-              window.localStorage.setItem(key, JSON.stringify(reducedItem));
-            } catch {
               // If still failing, silently fail to prevent crashes
-            }
           }
         } else {
           // For other localStorage errors, silently fail to prevent crashes
