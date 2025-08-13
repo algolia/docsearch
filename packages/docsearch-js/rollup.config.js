@@ -1,6 +1,7 @@
 import replace from '@rollup/plugin-replace';
+import { dts } from 'rollup-plugin-dts';
 
-import { plugins, typesConfig } from '../../rollup.base.config';
+import { plugins } from '../../rollup.base.config';
 import { getBundleBanner } from '../../scripts/getBundleBanner';
 
 import pkg from './package.json';
@@ -14,7 +15,6 @@ export default [
         format: 'es',
         sourcemap: true,
         banner: getBundleBanner(pkg),
-        plugins: [...plugins],
       },
     ],
     plugins: [
@@ -44,5 +44,14 @@ export default [
       }),
     ],
   },
-  typesConfig,
+  {
+    input: 'dist/esm/types/index.d.ts',
+    output: [{ file: 'dist/esm/index.d.ts', format: 'es' }],
+    external: (id) => /^(react|react-dom|@types\/react|@ai-sdk\/react)/.test(id),
+    plugins: [
+      dts({
+        respectExternal: true,
+      }),
+    ],
+  },
 ];

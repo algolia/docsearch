@@ -52,32 +52,90 @@ export type DocSearchAskAi = {
 };
 
 export interface DocSearchProps {
+  /**
+   * Algolia application id used by the search client.
+   */
   appId: string;
+  /**
+   * Public api key with search permissions for the index.
+   */
   apiKey: string;
+  /**
+   * Name of the algolia index to query.
+   */
   indexName: string;
+  /**
+   * Configuration or assistant id to enable ask ai mode. Pass a string assistant id or a full config object.
+   */
   askAi?: DocSearchAskAi | string;
+  /**
+   * Theme overrides applied to the modal and related components.
+   */
   theme?: DocSearchTheme;
+  /**
+   * Placeholder text for the search input.
+   */
   placeholder?: string;
+  /**
+   * Additional algolia search parameters to merge into each query.
+   */
   searchParameters?: SearchParamsObject;
+  /**
+   * Maximum number of hits to display per source/group.
+   */
   maxResultsPerGroup?: number;
+  /**
+   * Hook to post-process hits before rendering.
+   */
   transformItems?: (items: DocSearchHit[]) => DocSearchHit[];
+  /**
+   * Custom component to render an individual hit.
+   */
   hitComponent?: (props: { hit: InternalDocSearchHit | StoredDocSearchHit; children: React.ReactNode }) => JSX.Element;
+  /**
+   * Custom component rendered at the bottom of the results panel.
+   */
   resultsFooterComponent?: (props: { state: AutocompleteState<InternalDocSearchHit> }) => JSX.Element | null;
+  /**
+   * Hook to wrap or modify the algolia search client.
+   */
   transformSearchClient?: (searchClient: DocSearchTransformClient) => DocSearchTransformClient;
+  /**
+   * Disable storage and usage of recent and favorite searches.
+   */
   disableUserPersonalization?: boolean;
+  /**
+   * Query string to prefill when opening the modal.
+   */
   initialQuery?: string;
+  /**
+   * Custom navigator for controlling link navigation.
+   */
   navigator?: AutocompleteOptions<InternalDocSearchHit>['navigator'];
+  /**
+   * Localized strings for the button and modal ui.
+   */
   translations?: DocSearchTranslations;
+  /**
+   * Builds a url to report missing results for a given query.
+   */
   getMissingResultsUrl?: ({ query }: { query: string }) => string;
+  /**
+   * Insights client integration options to send analytics events.
+   */
   insights?: AutocompleteOptions<InternalDocSearchHit>['insights'];
   /**
-   * Limit of how many recent searches that should be saved/displayed.
+   * The container element where the modal should be portaled to. Defaults to document.body.
+   */
+  portalContainer?: DocumentFragment | Element;
+  /**
+   * Limit of how many recent searches should be saved/displayed..
    *
    * @default 7
    */
   recentSearchesLimit?: number;
   /**
-   * Limit of how many recent searches that should be saved/displayed when there are favorited searches.
+   * Limit of how many recent searches should be saved/displayed when there are favorited searches..
    *
    * @default 4
    */
@@ -159,7 +217,7 @@ export function DocSearch({ ...props }: DocSearchProps): JSX.Element {
             onAskAiToggle={onAskAiToggle}
             onClose={onClose}
           />,
-          document.body,
+          props.portalContainer ?? document.body,
         )}
     </>
   );

@@ -536,6 +536,58 @@ docsearch({
 </TabItem>
 </Tabs>
 
+## `portalContainer` (React-only)
+
+> `type: Element | DocumentFragment` | `default: document.body` | **optional**
+
+The element where the DocSearch modal will be portaled. Use this when you need the overlay to render in a custom DOM node—for example when working inside a shadow root, a specific layout container, or a modal manager. When omitted, the modal portals to `document.body`.
+
+:::warning
+
+This prop only exists in `@docsearch/react`. If you are using **`@docsearch/js`**, use the [`container`](#container) option instead—the value you pass there is both the **mount point** of the search button *and* the portal target for the modal.
+
+:::
+
+<Tabs
+  groupId="language"
+  defaultValue="react"
+  values={[{ label: 'React', value: 'react' }, { label: 'JavaScript', value: 'js' }]}
+>
+<TabItem value="react">
+
+```jsx
+// assume you have a dedicated modal root in your html
+<div id="modal-root" />
+
+const portalEl = document.getElementById('modal-root');
+
+<DocSearch
+  appId="YOUR_APP_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  indexName="YOUR_INDEX_NAME"
+  // render the modal inside #modal-root instead of document.body
+  portalContainer={portalEl}
+/>;
+```
+
+</TabItem>
+
+<TabItem value="js">
+
+```js
+docsearch({
+  // the element that will **contain the button** and **host the modal portal**
+  container: '#modal-root',
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_SEARCH_API_KEY',
+  indexName: 'YOUR_INDEX_NAME',
+});
+```
+
+</TabItem>
+</Tabs>
+
+
 [1]: https://www.algolia.com/doc/ui-libraries/autocomplete/introduction/what-is-autocomplete/
 [2]: https://github.com/algolia/docsearch/
 [3]: https://github.com/algolia/docsearch/tree/master
