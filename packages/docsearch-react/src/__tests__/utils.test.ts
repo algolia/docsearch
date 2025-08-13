@@ -1,7 +1,13 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 
 import { extractLinksFromText } from '../utils/ai';
-import { createObjectStorage, createStorage, isLocalStorageSupported, getLocalStorageSize, manageLocalStorageQuota } from '../utils/storage';
+import {
+  createObjectStorage,
+  createStorage,
+  isLocalStorageSupported,
+  getLocalStorageSize,
+  manageLocalStorageQuota,
+} from '../utils/storage';
 
 describe('utils', () => {
   describe('extractLinksFromText', () => {
@@ -75,12 +81,12 @@ https://docsearch.algolia.com/configuration?version=beta
 
   describe('localStorage quota handling', () => {
     const testKey = '__TEST_QUOTA_STORAGE__';
-    
+
     beforeEach(() => {
       // Clean up any test data
       localStorage.removeItem(testKey);
       // Clean up any DocSearch keys that might exist
-      Object.keys(localStorage).forEach(key => {
+      Object.keys(localStorage).forEach((key) => {
         if (key.includes('__DOCSEARCH_')) {
           localStorage.removeItem(key);
         }
@@ -95,15 +101,15 @@ https://docsearch.algolia.com/configuration?version=beta
 
     it('createStorage handles quota exceeded errors gracefully', () => {
       const storage = createStorage<{ data: string }>(testKey);
-      
+
       // Create a large dataset that might cause quota issues
       const largeArray = Array.from({ length: 1000 }, (_, i) => ({ data: `test-data-${i}`.repeat(100) }));
-      
+
       // This should not throw an error even if quota is exceeded
       expect(() => {
         storage.setItem(largeArray);
       }).not.toThrow();
-      
+
       // Should be able to retrieve data (might be reduced if quota was exceeded)
       const retrieved = storage.getItem();
       expect(Array.isArray(retrieved)).toBe(true);
@@ -111,10 +117,10 @@ https://docsearch.algolia.com/configuration?version=beta
 
     it('createObjectStorage handles quota exceeded errors gracefully', () => {
       const storage = createObjectStorage<{ data: string }>(testKey);
-      
+
       // Create a large object that might cause quota issues
       const largeObject = { data: 'x'.repeat(1000000) }; // 1MB string
-      
+
       // This should not throw an error even if quota is exceeded
       expect(() => {
         storage.setItem(largeObject);
@@ -125,7 +131,7 @@ https://docsearch.algolia.com/configuration?version=beta
       // Add some DocSearch data to localStorage
       localStorage.setItem('__DOCSEARCH_TEST_1__', JSON.stringify({ test: 'data1' }));
       localStorage.setItem('__DOCSEARCH_TEST_2__', JSON.stringify({ test: 'data2' }));
-      
+
       // This should not throw an error
       expect(() => {
         manageLocalStorageQuota();
@@ -135,17 +141,20 @@ https://docsearch.algolia.com/configuration?version=beta
     it('storage functions work correctly with normal data', () => {
       const arrayStorage = createStorage<{ id: number; name: string }>(testKey + '_array');
       const objectStorage = createObjectStorage<{ count: number }>(testKey + '_object');
-      
+
       // Test array storage
-      const testArray = [{ id: 1, name: 'test1' }, { id: 2, name: 'test2' }];
+      const testArray = [
+        { id: 1, name: 'test1' },
+        { id: 2, name: 'test2' },
+      ];
       arrayStorage.setItem(testArray);
       expect(arrayStorage.getItem()).toEqual(testArray);
-      
+
       // Test object storage
       const testObject = { count: 42 };
       objectStorage.setItem(testObject);
       expect(objectStorage.getItem()).toEqual(testObject);
-      
+
       // Test null handling
       objectStorage.setItem(null);
       expect(objectStorage.getItem()).toBeNull();

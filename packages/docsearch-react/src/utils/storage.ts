@@ -1,11 +1,11 @@
 /**
- * Estimates the size of localStorage usage in bytes
+ * Estimates the size of localStorage usage in bytes.
  */
 export function getLocalStorageSize(): number {
   if (typeof window === 'undefined' || !window.localStorage) {
     return 0;
   }
-  
+
   let total = 0;
   for (const key in window.localStorage) {
     if (window.localStorage.hasOwnProperty(key)) {
@@ -17,7 +17,7 @@ export function getLocalStorageSize(): number {
 
 /**
  * Attempts to free up localStorage space by removing DocSearch-related items
- * starting with the oldest/largest ones
+ * starting with the oldest/largest ones.
  */
 function cleanupDocSearchStorage(): void {
   if (typeof window === 'undefined' || !window.localStorage) {
@@ -25,7 +25,7 @@ function cleanupDocSearchStorage(): void {
   }
 
   const docSearchKeys: Array<{ key: string; size: number }> = [];
-  
+
   // Find all DocSearch-related keys and their sizes
   for (const key in window.localStorage) {
     if (key.includes('__DOCSEARCH_')) {
@@ -33,24 +33,24 @@ function cleanupDocSearchStorage(): void {
       docSearchKeys.push({ key, size: value.length + key.length });
     }
   }
-  
+
   // Sort by size (largest first) to remove the most impactful items
   docSearchKeys.sort((a, b) => b.size - a.size);
-  
+
   // Remove up to half of the DocSearch items, starting with the largest
   const itemsToRemove = Math.ceil(docSearchKeys.length / 2);
   for (let i = 0; i < itemsToRemove && i < docSearchKeys.length; i++) {
     try {
       window.localStorage.removeItem(docSearchKeys[i].key);
-    } catch (error) {
-      console.warn('Failed to remove localStorage item during cleanup:', error);
+    } catch {
+      // Silently ignore cleanup errors to prevent crashes
     }
   }
 }
 
 /**
  * Proactively manages localStorage quota by cleaning up when usage is high
- * Should be called periodically to prevent quota exceeded errors
+ * Should be called periodically to prevent quota exceeded errors.
  */
 export function manageLocalStorageQuota(): void {
   if (typeof window === 'undefined' || !window.localStorage) {
@@ -60,7 +60,7 @@ export function manageLocalStorageQuota(): void {
   const currentSize = getLocalStorageSize();
   // Typical localStorage limit is 5-10MB, start cleanup at 4MB to be safe
   const CLEANUP_THRESHOLD = 4 * 1024 * 1024; // 4MB
-  
+
   if (currentSize > CLEANUP_THRESHOLD) {
     cleanupDocSearchStorage();
   }
@@ -103,7 +103,7 @@ export function createStorage<TItem>(key: string) {
   return {
     setItem(item: TItem[]): void {
       try {
-        return window.localStorage.setItem(key, JSON.stringify(item));
+        window.localStorage.setItem(key, JSON.stringify(item));
       } catch (error) {
         // Handle quota exceeded error by clearing old data and retrying
         if (error instanceof DOMException && error.name === 'QuotaExceededError') {
@@ -112,19 +112,17 @@ export function createStorage<TItem>(key: string) {
             cleanupDocSearchStorage();
             // Retry with original data
             window.localStorage.setItem(key, JSON.stringify(item));
-          } catch (retryError) {
+          } catch {
             try {
               // If still failing, try with reduced dataset
               const reducedItem = item.slice(0, Math.floor(item.length / 2));
               window.localStorage.setItem(key, JSON.stringify(reducedItem));
-            } catch (finalError) {
+            } catch {
               // If still failing, silently fail to prevent crashes
-              console.warn('localStorage quota exceeded and all cleanup attempts failed:', finalError);
             }
           }
         } else {
           // For other localStorage errors, silently fail to prevent crashes
-          console.warn('localStorage setItem failed:', error);
         }
       }
     },
@@ -171,13 +169,11 @@ export function createObjectStorage<TItem>(key: string) {
               cleanupDocSearchStorage();
               // Retry the operation
               window.localStorage.setItem(key, JSON.stringify(item));
-            } catch (retryError) {
+            } catch {
               // If still failing, silently fail to prevent crashes
-              console.warn('localStorage quota exceeded and cleanup failed:', retryError);
             }
           } else {
             // For other localStorage errors, silently fail to prevent crashes
-            console.warn('localStorage setItem failed:', error);
           }
         }
       }

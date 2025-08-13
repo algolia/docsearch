@@ -26,8 +26,8 @@ import { useTheme } from './useTheme';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
 import { groupBy, identity, noop, removeHighlightTags, isModifierEvent, scrollTo as scrollToUtils } from './utils';
-import { manageLocalStorageQuota } from './utils/storage';
 import { buildDummyAskAiHit } from './utils/ai';
+import { manageLocalStorageQuota } from './utils/storage';
 
 export type ModalTranslations = Partial<{
   searchBox: SearchBoxTranslations;
