@@ -26,6 +26,7 @@ import { useTheme } from './useTheme';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
 import { groupBy, identity, noop, removeHighlightTags, isModifierEvent, scrollTo as scrollToUtils } from './utils';
+import { manageLocalStorageQuota } from './utils/storage';
 import { buildDummyAskAiHit } from './utils/ai';
 
 export type ModalTranslations = Partial<{
@@ -619,6 +620,11 @@ export function DocSearchModal({
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Proactively manage localStorage quota to prevent crashes
+  React.useEffect(() => {
+    manageLocalStorageQuota();
   }, []);
 
   React.useLayoutEffect(() => {
