@@ -30,6 +30,7 @@
 
   /* searchbox */
   --docsearch-searchbox-height: 56px;
+  --docsearch-searchbox-initial-height: 56px;
   --docsearch-searchbox-background: #ffffffa6;
   --docsearch-searchbox-focus-background: #ffffffa6;
   --docsearch-actions-width: 99px;

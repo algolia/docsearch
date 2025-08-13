@@ -1,8 +1,9 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
+import { dts } from 'rollup-plugin-dts';
 
-import { plugins, typesConfig } from '../../rollup.base.config';
+import { plugins } from '../../rollup.base.config';
 import { getBundleBanner } from '../../scripts/getBundleBanner';
 
 import pkg from './package.json';
@@ -34,5 +35,9 @@ export default [
       }),
     ],
   },
-  typesConfig,
+  {
+    input: 'dist/esm/types/index.d.ts',
+    output: [{ file: 'dist/esm/index.d.ts', format: 'es' }],
+    plugins: [dts()],
+  },
 ];
