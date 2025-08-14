@@ -1,3 +1,14 @@
+# [4.0.0-beta.7](https://github.com/algolia/docsearch/compare/v4.0.0-beta.6...v4.0.0-beta.7) (2025-08-14)
+
+
+### Features
+
+* a11y and ux tweaks ([#2712](https://github.com/algolia/docsearch/issues/2712)) ([d5c9c52](https://github.com/algolia/docsearch/commit/d5c9c527d7cd887ebce407163ad58ca302736be0))
+* **askai:** Dont display links from code blocks in sources ([#2709](https://github.com/algolia/docsearch/issues/2709)) ([2e4c114](https://github.com/algolia/docsearch/commit/2e4c11459e5edbe820a638b506f5ebfb57f66c09))
+* **docsearch:** added documentation for crawler automated markdown configuration ([#2714](https://github.com/algolia/docsearch/issues/2714)) ([69983f9](https://github.com/algolia/docsearch/commit/69983f95848ab79e5ac3ffff73c01f849a5637db))
+
+
+
 # [4.0.0-beta.6](https://github.com/algolia/docsearch/compare/v4.0.0-beta.5...v4.0.0-beta.6) (2025-08-08)
 
 
