@@ -47,6 +47,7 @@
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.2.0",
     "nodemon": "^3.1.0",
+    "rollup-plugin-dts": "^6.2.1",
     "vitest": "3.0.2",
     "zod": "^3.25.67"
   },
