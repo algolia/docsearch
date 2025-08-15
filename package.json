@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-react-jsx": "7.27.1",
-    "@babel/preset-env": "7.28.0",
+    "@babel/preset-env": "7.28.3",
     "@babel/preset-typescript": "7.27.1",
     "@eslint-community/eslint-plugin-eslint-comments": "4.5.0",
     "@rollup/plugin-babel": "6.0.4",
