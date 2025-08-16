@@ -3474,7 +3474,7 @@ __metadata:
     react: "npm:^18.0.0"
     react-dom: "npm:^18.0.0"
     rollup: "npm:4.46.2"
-    rollup-plugin-dts: "npm:6.2.1"
+    rollup-plugin-dts: "npm:6.2.3"
     rollup-plugin-filesize: "npm:10.0.0"
     shipjs: "npm:0.27.0"
     start-server-and-test: "npm:2.0.13"
@@ -22476,11 +22476,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-dts@npm:6.2.1":
-  version: 6.2.1
-  resolution: "rollup-plugin-dts@npm:6.2.1"
+"rollup-plugin-dts@npm:6.2.3":
+  version: 6.2.3
+  resolution: "rollup-plugin-dts@npm:6.2.3"
   dependencies:
-    "@babel/code-frame": "npm:^7.26.2"
+    "@babel/code-frame": "npm:^7.27.1"
     magic-string: "npm:^0.30.17"
   peerDependencies:
     rollup: ^3.29.4 || ^4
@@ -22488,7 +22488,7 @@ __metadata:
   dependenciesMeta:
     "@babel/code-frame":
       optional: true
-  checksum: 10c0/f21c8726470851a40e6ca68ae580261cee8bc6275775291b9c0fdf93b868ed54f12b11c8c0dddce2c14f5691d6032b6647d094835ab9b6789226efa60e1aa71e
+  checksum: 10c0/41cebbd0efcfcafbd35159d03d52531d6cc56f02b4fc99f56b6e552efdb6acf3228854520a1a12c879f90cdd60668edc115a73a8c822e4b4b62d267333f8f160
   languageName: node
   linkType: hard
 
