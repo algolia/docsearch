@@ -31,6 +31,7 @@ export default {
         'v4/askai-whitelisted-domains',
         'v4/askai-models',
         'v4/askai-markdown-indexing',
+        'v4/askai-errors',
       ],
     },
     {
