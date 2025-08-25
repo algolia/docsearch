@@ -927,7 +927,7 @@ assistive tech users */
 .DocSearch-AskAiScreen-Error {
   padding: var(--docsearch-spacing);
   display: flex;
-  align-items: center;
+  align-items: baseline;
   padding: 1em;
   gap: 8px;
   color: var(--docsearch-error-color);
@@ -940,10 +940,15 @@ assistive tech users */
 .DocSearch-AskAiScreen-Error svg {
   width: 16px;
   height: 16px;
+  flex-shrink: 0;
 }
 
 .DocSearch-AskAiScreen-Error p {
   margin: 0;
+}
+
+.DocSearch-AskAiScreen-Error .DocSearch-Markdown-Content {
+  color: var(--docsearch-error-color);
 }
 
 .DocSearch-AskAiScreen-FeedbackText {
