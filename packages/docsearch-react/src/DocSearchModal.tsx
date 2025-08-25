@@ -317,7 +317,7 @@ export function DocSearchModal({
   // storage
   const conversations = React.useRef(
     createStoredConversations<StoredAskAiState>({
-      key: `__DOCSEARCH_ASKAI_CONVERSATIONS__${indexName}`,
+      key: `__DOCSEARCH_ASKAI_CONVERSATIONS__${askAiConfig?.indexName}`,
       limit: 10,
     }),
   ).current;
