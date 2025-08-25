@@ -46,6 +46,7 @@
   background: var(--docsearch-modal-background);
   border-radius: 4px;
   box-shadow: var(--docsearch-modal-shadow);
+  display: flex;
   flex-direction: column;
   margin: 60px auto auto;
   max-width: var(--docsearch-modal-width);
@@ -1332,7 +1333,7 @@ assistive tech users */
   .DocSearch-Footer {
     border-radius: 0;
     bottom: 0;
-    position: absolute;
+    position: initial;
   }
 
   .DocSearch-Hit-content-wrapper {
