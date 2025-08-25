@@ -114,7 +114,7 @@ Search parameters allow you to control how Ask AI searches your index:
   "id": "conversation-1",
   "messages": [
     {
-      "role": "user", 
+      "role": "user",
       "content": "How do I configure the API?",
       "id": "msg-1"
     }
@@ -122,7 +122,7 @@ Search parameters allow you to control how Ask AI searches your index:
   "searchParameters": {
     "facetFilters": [
       "language:en",
-      "version:latest", 
+      "version:latest",
       "type:content"
     ]
   }
@@ -158,7 +158,7 @@ This example filters to:
 - **Multiple tags**: `[["tag:api", "tag:tutorial"]]` for OR logic
 - **Categories with fallbacks**: `[["category:advanced", "category:intermediate"]]`
 
-**Response:** 
+**Response:**
 - **Content-Type:** `text/event-stream`
 - **Format:** Server-sent events with incremental AI response chunks
 - **Benefits:** Real-time response display, better user experience, lower perceived latency
@@ -173,7 +173,7 @@ const decoder = new TextDecoder();
 while (true) {
   const { done, value } = await reader.read();
   if (done) break;
-  
+
   const chunk = decoder.decode(value);
   // Display chunk immediately in your UI
   console.log('Received chunk:', chunk);
@@ -250,7 +250,7 @@ class AskAIChat {
 
   async sendMessage(conversationId, messages, searchParameters = {}) {
     const token = await this.getToken();
-    
+
     const response = await fetch(`${this.baseUrl}/chat`, {
       method: 'POST',
       headers: {
@@ -277,12 +277,12 @@ class AskAIChat {
       async *[Symbol.asyncIterator]() {
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
-        
+
         try {
           while (true) {
             const { done, value } = await reader.read();
             if (done) break;
-            
+
             // Decode and yield each chunk as it arrives
             const chunk = decoder.decode(value, { stream: true });
             if (chunk.trim()) {
@@ -298,7 +298,7 @@ class AskAIChat {
 
   async submitFeedback(messageId, thumbs) {
     const token = await this.getToken();
-    
+
     const response = await fetch(`${this.baseUrl}/chat/feedback`, {
       method: 'POST',
       headers: {
@@ -428,15 +428,15 @@ function AskAIChat({ appId, apiKey, indexName, assistantId }) {
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-        
+
         // Decode chunk and add to message
         const chunk = decoder.decode(value, { stream: true });
         if (chunk.trim()) {
           assistantMessage += chunk;
-          
+
           // Update UI with streaming content immediately
-          setMessages(prev => prev.map(msg => 
-            msg.id === assistantMessageId 
+          setMessages(prev => prev.map(msg =>
+            msg.id === assistantMessageId
               ? { ...msg, content: assistantMessage }
               : msg
           ));
@@ -470,7 +470,7 @@ function AskAIChat({ appId, apiKey, indexName, assistantId }) {
       <div className="messages">
         {messages.map((message) => (
           <div key={message.id} className={`message ${message.role}`}>
-            <strong>{message.role}:</strong> 
+            <strong>{message.role}:</strong>
             <span className={isStreaming && message.role === 'assistant' && message === messages[messages.length - 1] ? 'streaming' : ''}>
               {message.content}
               {isStreaming && message.role === 'assistant' && message === messages[messages.length - 1] && (
@@ -480,20 +480,20 @@ function AskAIChat({ appId, apiKey, indexName, assistantId }) {
           </div>
         ))}
       </div>
-      
+
       <form onSubmit={(e) => {
         e.preventDefault();
         if (isLoading) return;
-        
+
         const input = e.target.elements.message;
         if (input.value.trim()) {
           sendMessage(input.value);
           input.value = '';
         }
       }}>
-        <input 
-          name="message" 
-          type="text" 
+        <input
+          name="message"
+          type="text"
           placeholder="Ask a question..."
           disabled={isLoading}
         />
@@ -594,7 +594,7 @@ async function getToken(assistantId: string, origin: string) {
       'Origin': origin,
     },
   });
-  
+
   const tokenData = await tokenRes.json();
   if (!tokenData.success) {
     throw new Error(tokenData.message || 'Failed to get token');
@@ -607,7 +607,7 @@ export default async function handler(req: Request) {
     const body = await req.json();
     const assistantId = process.env.ALGOLIA_ASSISTANT_ID!;
     const origin = req.headers.get('origin') || '';
-    
+
     // Fetch a new token before each chat call
     const token = await getToken(assistantId, origin);
 
@@ -637,7 +637,7 @@ export default async function handler(req: Request) {
   } catch (error) {
     console.error('Chat API error:', error);
     return new Response(
-      JSON.stringify({ error: 'Internal server error' }), 
+      JSON.stringify({ error: 'Internal server error' }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
   }
@@ -721,6 +721,8 @@ Common error scenarios:
 - **Rate limiting**: Too many requests
 - **Invalid index**: Index name doesn't exist or isn't accessible
 
+> Please view our full [Error Reference](/docs/v4/askai-errors.mdx) for more detailed information
+
 ---
 
 ## Best Practices
@@ -731,4 +733,4 @@ Common error scenarios:
 4. **Feedback**: Implement thumbs up/down for continuous improvement
 5. **CORS**: Ensure your domain is whitelisted in your Ask AI configuration
 
-For more information, see the [Ask AI documentation](/docs/v4/askai.mdx). 
+For more information, see the [Ask AI documentation](/docs/v4/askai.mdx).
