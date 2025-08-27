@@ -112,7 +112,12 @@ function AskAiExchangeCard({
             {loadingStatus === 'error' && askAiStreamError && isLastExchange && (
               <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error">
                 <AlertIcon />
-                <p>{askAiStreamError.message}</p>
+                <MemoizedMarkdown
+                  content={askAiStreamError.message}
+                  copyButtonText=""
+                  copyButtonCopiedText=""
+                  isStreaming={false}
+                />
               </div>
             )}
             {loadingStatus === 'submitted' && isLastExchange && (
