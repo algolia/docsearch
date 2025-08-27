@@ -307,10 +307,17 @@ export function DocSearchModal({
     typeof window !== 'undefined' ? window.getSelection()!.toString().slice(0, MAX_QUERY_SIZE) : '',
   ).current;
   const initialQuery = React.useRef(initialQueryFromProp || initialQueryFromSelection).current;
+
+  const searchClient = useSearchClient(appId, apiKey, transformSearchClient);
+
+  const askAiConfig = typeof askAi === 'object' ? askAi : null;
+  const askAiConfigurationId = typeof askAi === 'string' ? askAi : askAiConfig?.assistantId || null;
+  const askAiSearchParameters = askAiConfig?.searchParameters;
+
   // storage
   const conversations = React.useRef(
     createStoredConversations<StoredAskAiState>({
-      key: `__DOCSEARCH_ASKAI_CONVERSATIONS__${indexName}`,
+      key: `__DOCSEARCH_ASKAI_CONVERSATIONS__${askAiConfig?.indexName || indexName}`,
       limit: 10,
     }),
   ).current;
@@ -326,12 +333,6 @@ export function DocSearchModal({
       limit: favoriteSearches.getAll().length === 0 ? recentSearchesLimit : recentSearchesWithFavoritesLimit,
     }),
   ).current;
-
-  const searchClient = useSearchClient(appId, apiKey, transformSearchClient);
-
-  const askAiConfig = typeof askAi === 'object' ? askAi : null;
-  const askAiConfigurationId = typeof askAi === 'string' ? askAi : askAiConfig?.assistantId || null;
-  const askAiSearchParameters = askAiConfig?.searchParameters;
 
   const [askAiStreamError, setAskAiStreamError] = React.useState<Error | null>(null);
 
