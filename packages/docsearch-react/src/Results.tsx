@@ -2,12 +2,17 @@ import type { AutocompleteApi, AutocompleteState, BaseItem } from '@algolia/auto
 import React, { type JSX } from 'react';
 
 import type { DocSearchProps } from './DocSearch';
+import { SparklesIcon } from './icons/SparklesIcon';
 import { Snippet } from './Snippet';
 import type { InternalDocSearchHit, StoredDocSearchHit } from './types';
 
+export type ResultsTranslations = Partial<{
+  askAiPlaceholder: string;
+}>;
 interface ResultsProps<TItem extends BaseItem>
   extends AutocompleteApi<TItem, React.FormEvent, React.MouseEvent, React.KeyboardEvent> {
   title: string;
+  translations?: ResultsTranslations;
   collection: AutocompleteState<TItem>['collections'][0];
   renderIcon: (props: { item: TItem; index: number }) => React.ReactNode;
   renderAction: (props: {
@@ -22,6 +27,29 @@ interface ResultsProps<TItem extends BaseItem>
 export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TItem>): JSX.Element | null {
   if (!props.collection || props.collection.items.length === 0) {
     return null;
+  }
+
+  if (props.collection.source.sourceId === 'askAI') {
+    return (
+      <section className="DocSearch-AskAi-Section">
+        <ul {...props.getListProps({ source: props.collection.source })}>
+          <AskAiButton item={props.collection.items[0]} translations={props.translations} {...props} />
+        </ul>
+      </section>
+    );
+  }
+
+  if (props.collection.source.sourceId === 'recentConversations') {
+    return (
+      <section className="DocSearch-Hits">
+        <div className="DocSearch-Hit-source">{props.title}</div>
+        <ul {...props.getListProps({ source: props.collection.source })}>
+          {props.collection.items.map((item, index) => {
+            return <Result key={[props.title, item.objectID].join(':')} item={item} index={index} {...props} />;
+          })}
+        </ul>
+      </section>
+    );
   }
 
   return (
@@ -52,36 +80,37 @@ function Result<TItem extends StoredDocSearchHit>({
   collection,
   hitComponent,
 }: ResultProps<TItem>): JSX.Element {
-  const [isDeleting, setIsDeleting] = React.useState(false);
-  const [isFavoriting, setIsFavoriting] = React.useState(false);
-  const action = React.useRef<(() => void) | null>(null);
+  const [status, setStatus] = React.useState<'deleting' | 'favoriting' | 'idle'>('idle');
+
+  const actionRef = React.useRef<(() => void) | null>(null);
   const Hit = hitComponent!;
 
-  function runDeleteTransition(cb: () => void): void {
-    setIsDeleting(true);
-    action.current = cb;
-  }
+  const runDeleteTransition = (cb: () => void): void => {
+    setStatus('deleting');
+    actionRef.current = cb;
+  };
 
-  function runFavoriteTransition(cb: () => void): void {
-    setIsFavoriting(true);
-    action.current = cb;
-  }
+  const runFavoriteTransition = (cb: () => void): void => {
+    setStatus('favoriting');
+    actionRef.current = cb;
+  };
+
+  const handleAnimEnd = (): void => {
+    actionRef.current?.();
+    actionRef.current = null;
+  };
 
   return (
     <li
       className={[
         'DocSearch-Hit',
         (item as unknown as InternalDocSearchHit).__docsearch_parent && 'DocSearch-Hit--Child',
-        isDeleting && 'DocSearch-Hit--deleting',
-        isFavoriting && 'DocSearch-Hit--favoriting',
+        status === 'favoriting' && 'DocSearch-Hit--favoriting',
+        status === 'deleting' && 'DocSearch-Hit--deleting',
       ]
         .filter(Boolean)
         .join(' ')}
-      onTransitionEnd={() => {
-        if (action.current) {
-          action.current();
-        }
-      }}
+      onAnimationEnd={handleAnimEnd}
       {...getItemProps({
         item,
         source: collection.source,
@@ -98,6 +127,12 @@ function Result<TItem extends StoredDocSearchHit>({
             <div className="DocSearch-Hit-content-wrapper">
               <Snippet className="DocSearch-Hit-title" hit={item} attribute="hierarchy.lvl1" />
               {item.content && <Snippet className="DocSearch-Hit-path" hit={item} attribute="content" />}
+            </div>
+          )}
+
+          {item.type === 'askAI' && (
+            <div className="DocSearch-Hit-content-wrapper">
+              <Snippet className="DocSearch-Hit-title" hit={item} attribute="hierarchy.lvl1" />
             </div>
           )}
 
@@ -123,6 +158,46 @@ function Result<TItem extends StoredDocSearchHit>({
           {renderAction({ item, runDeleteTransition, runFavoriteTransition })}
         </div>
       </Hit>
+    </li>
+  );
+}
+
+interface AskAiButtonProps<TItem extends BaseItem> extends ResultsProps<TItem> {
+  item: TItem;
+  translations?: ResultsTranslations;
+}
+
+function AskAiButton<TItem extends StoredDocSearchHit>({
+  item,
+  getItemProps,
+  onItemClick,
+  translations,
+  collection,
+}: AskAiButtonProps<TItem>): JSX.Element {
+  const { askAiPlaceholder = 'Ask AI: ' } = translations || {};
+
+  return (
+    <li
+      className="DocSearch-Hit"
+      {...getItemProps({
+        item,
+        source: collection.source,
+        onClick(event) {
+          onItemClick(item, event);
+        },
+      })}
+    >
+      <div className="DocSearch-Hit--AskAI">
+        <div className="DocSearch-Hit-AskAIButton DocSearch-Hit-Container">
+          <div className=" DocSearch-Hit-AskAIButton-icon DocSearch-Hit-icon">
+            <SparklesIcon />
+          </div>
+          <div className="DocSearch-Hit-AskAIButton-title">
+            <span className="DocSearch-Hit-AskAIButton-title-highlight">{askAiPlaceholder}</span>
+            <mark className="DocSearch-Hit-AskAIButton-title-query">{item.query || ''}</mark>
+          </div>
+        </div>
+      </div>
     </li>
   );
 }

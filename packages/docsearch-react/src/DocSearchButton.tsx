@@ -1,7 +1,9 @@
-import React, { type JSX, useEffect, useState } from 'react';
+import React, { useEffect, useState, type JSX } from 'react';
 
-import { ControlKeyIcon } from './icons/ControlKeyIcon';
+import { ControlKeyIcon, KKeyIcon, MetaKeyIcon } from './icons/MetaKeysIcon';
 import { SearchIcon } from './icons/SearchIcon';
+import type { DocSearchTheme } from './types';
+import { useTheme } from './useTheme';
 
 export type ButtonTranslations = Partial<{
   buttonText: string;
@@ -9,6 +11,7 @@ export type ButtonTranslations = Partial<{
 }>;
 
 export type DocSearchButtonProps = React.ComponentProps<'button'> & {
+  theme?: DocSearchTheme;
   translations?: ButtonTranslations;
 };
 
@@ -24,7 +27,7 @@ export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButt
     const { buttonText = 'Search', buttonAriaLabel = 'Search' } = translations;
 
     const [key, setKey] = useState<typeof ACTION_KEY_APPLE | typeof ACTION_KEY_DEFAULT | null>(null);
-
+    useTheme({ theme: props.theme });
     useEffect(() => {
       if (typeof navigator !== 'undefined') {
         isAppleDevice() ? setKey(ACTION_KEY_APPLE) : setKey(ACTION_KEY_DEFAULT);
@@ -35,10 +38,10 @@ export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButt
       key === ACTION_KEY_DEFAULT
         ? // eslint-disable-next-line react/jsx-key -- false flag
           ([ACTION_KEY_DEFAULT, 'Control', <ControlKeyIcon />] as const)
-        : (['Meta', 'Meta', key] as const);
+        : // eslint-disable-next-line react/jsx-key -- false flag
+          (['Meta', 'Meta', <MetaKeyIcon />] as const);
 
     const shortcut = `${actionKeyAltText}+k`;
-
     return (
       <button
         type="button"
@@ -57,7 +60,9 @@ export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButt
           {key !== null && (
             <>
               <DocSearchButtonKey reactsToKey={actionKeyReactsTo}>{actionKeyChild}</DocSearchButtonKey>
-              <DocSearchButtonKey reactsToKey="k">K</DocSearchButtonKey>
+              <DocSearchButtonKey reactsToKey="k">
+                <KKeyIcon />
+              </DocSearchButtonKey>
             </>
           )}
         </span>
@@ -106,7 +111,13 @@ function DocSearchButtonKey({ reactsToKey, children }: React.PropsWithChildren<D
   }, [reactsToKey]);
 
   return (
-    <kbd className={isKeyDown ? 'DocSearch-Button-Key DocSearch-Button-Key--pressed' : 'DocSearch-Button-Key'}>
+    <kbd
+      className={
+        isKeyDown
+          ? 'DocSearch-Button-Key DocSearch-Button-Key--pressed'
+          : 'DocSearch-Button-Key' + (reactsToKey === 'Ctrl' ? ' DocSearch-Button-Key--ctrl' : '')
+      }
+    >
       {children}
     </kbd>
   );

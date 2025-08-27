@@ -38,8 +38,8 @@ If you're eager to test DocSearch but don't have any credentials of your own yet
 
 ```javascript
 docsearch({
-  appId: 'R2IYF7ETH7',
-  apiKey: '599cec31baffa4868cae4e79f180729b',
+  appId: 'PMZUYBQDAK',
+  apiKey: '24b09689d5b4223813d9b8e48563c8f6',
   indexName: 'docsearch',
 });
 ```

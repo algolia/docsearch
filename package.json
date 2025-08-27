@@ -29,7 +29,13 @@
     "watch": "lerna run watch --parallel",
     "website:build": "yarn workspace @docsearch/website build",
     "website:start": "yarn workspace @docsearch/website start --host 0.0.0.0",
+    "website:serve": "yarn workspace @docsearch/website serve --host 0.0.0.0",
     "website:test": "yarn workspace @docsearch/website start --no-open"
+  },
+  "resolutions": {
+    "@docusaurus/utils": "https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-utils-3.8.1.tgz",
+    "@docusaurus/theme-search-algolia": "https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-theme-search-algolia-3.8.1.tgz",
+    "@docusaurus/theme-translations": "https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-theme-translations-3.8.1.tgz"
   },
   "devDependencies": {
     "@babel/plugin-transform-react-jsx": "7.25.9",
@@ -37,8 +43,9 @@
     "@babel/preset-typescript": "7.26.0",
     "@eslint-community/eslint-plugin-eslint-comments": "4.4.1",
     "@rollup/plugin-babel": "6.0.4",
+    "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-json": "6.1.0",
-    "@rollup/plugin-node-resolve": "16.0.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-replace": "6.0.2",
     "@rollup/plugin-terser": "0.4.4",
     "@stylistic/eslint-plugin": "2.13.0",
@@ -69,7 +76,6 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "rollup": "4.31.0",
-    "rollup-plugin-dts": "6.1.1",
     "rollup-plugin-filesize": "10.0.0",
     "shipjs": "0.27.0",
     "start-server-and-test": "2.0.10",

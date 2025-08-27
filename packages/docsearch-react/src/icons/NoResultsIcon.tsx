@@ -3,16 +3,20 @@ import React, { type JSX } from 'react';
 export function NoResultsIcon(): JSX.Element {
   return (
     <svg
-      width="40"
-      height="40"
-      viewBox="0 0 20 20"
+      xmlns="http://www.w3.org/2000/svg"
+      width="64"
+      height="64"
+      viewBox="0 0 24 24"
       fill="none"
-      fillRule="evenodd"
-      stroke="currentColor"
+      stroke="#5a5e9a"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="M15.5 4.8c2 3 1.7 7-1 9.7h0l4.3 4.3-4.3-4.3a7.8 7.8 0 01-9.8 1m-2.2-2.2A7.8 7.8 0 0113.2 2.4M2 18L18 2"></path>
+      <path d="m13.5 8.5-5 5" />
+      <path d="m8.5 8.5 5 5" />
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.3-4.3" />
     </svg>
   );
 }

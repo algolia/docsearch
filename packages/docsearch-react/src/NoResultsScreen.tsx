@@ -1,6 +1,6 @@
 import React, { type JSX } from 'react';
 
-import { NoResultsIcon } from './icons';
+import { NoResultsIcon, SearchIcon } from './icons';
 import type { ScreenStateProps } from './ScreenState';
 import type { InternalDocSearchHit } from './types';
 
@@ -17,7 +17,7 @@ type NoResultsScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'transl
 
 export function NoResultsScreen({ translations = {}, ...props }: NoResultsScreenProps): JSX.Element {
   const {
-    noResultsText = 'No results for',
+    noResultsText = 'No results found for',
     suggestedQueryText = 'Try searching for',
     reportMissingResultsText = 'Believe this query should return results?',
     reportMissingResultsLinkText = 'Let us know.',
@@ -25,7 +25,7 @@ export function NoResultsScreen({ translations = {}, ...props }: NoResultsScreen
   const searchSuggestions: string[] | undefined = props.state.context.searchSuggestions as string[];
 
   return (
-    <div className="DocSearch-NoResults">
+    <div className={`DocSearch-NoResults ${props.canHandleAskAi ? 'DocSearch-NoResults--withAskAi' : ''}`}>
       <div className="DocSearch-Screen-Icon">
         <NoResultsIcon />
       </div>
@@ -36,11 +36,12 @@ export function NoResultsScreen({ translations = {}, ...props }: NoResultsScreen
       {searchSuggestions && searchSuggestions.length > 0 && (
         <div className="DocSearch-NoResults-Prefill-List">
           <p className="DocSearch-Help">{suggestedQueryText}:</p>
-          <ul>
+          <div className="DocSearch-NoResults-Prefill-List-Items">
             {searchSuggestions.slice(0, 3).reduce<React.ReactNode[]>(
               (acc, search) => [
                 ...acc,
-                <li key={search}>
+                <p key={search}>
+                  <SearchIcon size={16} />
                   <button
                     className="DocSearch-Prefill"
                     key={search}
@@ -53,11 +54,11 @@ export function NoResultsScreen({ translations = {}, ...props }: NoResultsScreen
                   >
                     {search}
                   </button>
-                </li>,
+                </p>,
               ],
               [],
             )}
-          </ul>
+          </div>
         </div>
       )}
 

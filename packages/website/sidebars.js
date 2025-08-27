@@ -14,17 +14,29 @@ export default {
     {
       type: 'category',
       label: 'Introduction',
-      items: ['what-is-docsearch', 'who-can-apply', 'migrating-from-legacy'],
+      items: ['what-is-docsearch', 'who-can-apply'],
     },
     {
       type: 'category',
-      label: 'DocSearch v3',
-      items: ['docsearch-v3', 'api', 'styling', 'migrating-from-v2'],
+      label: 'DocSearch v4',
+      items: ['docsearch', 'api', 'examples', 'migrating-from-v3'],
+    },
+    {
+      type: 'category',
+      label: 'Algolia AskAI - Beta',
+      items: [
+        'v4/askai',
+        'v4/askai-api',
+        'v4/askai-prompts',
+        'v4/askai-whitelisted-domains',
+        'v4/askai-models',
+        'v4/askai-markdown-indexing',
+      ],
     },
     {
       type: 'category',
       label: 'Algolia Crawler',
-      items: ['record-extractor', 'templates', 'manage-your-crawls'],
+      items: ['create-crawler', 'record-extractor', 'templates', 'crawler-configuration-visual', 'manage-your-crawls'],
     },
     {
       type: 'category',
@@ -49,6 +61,11 @@ export default {
       type: 'category',
       label: 'Under the hood',
       items: ['how-does-it-work', 'required-configuration'],
+    },
+    {
+      type: 'category',
+      label: 'Miscellaneous',
+      items: ['migrating-from-legacy'],
     },
   ],
 };

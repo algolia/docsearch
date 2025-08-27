@@ -1,3 +1,122 @@
+# [4.0.0-beta.7](https://github.com/algolia/docsearch/compare/v4.0.0-beta.6...v4.0.0-beta.7) (2025-08-14)
+
+
+### Features
+
+* a11y and ux tweaks ([#2712](https://github.com/algolia/docsearch/issues/2712)) ([d5c9c52](https://github.com/algolia/docsearch/commit/d5c9c527d7cd887ebce407163ad58ca302736be0))
+* **askai:** Dont display links from code blocks in sources ([#2709](https://github.com/algolia/docsearch/issues/2709)) ([2e4c114](https://github.com/algolia/docsearch/commit/2e4c11459e5edbe820a638b506f5ebfb57f66c09))
+* **docsearch:** added documentation for crawler automated markdown configuration ([#2714](https://github.com/algolia/docsearch/issues/2714)) ([69983f9](https://github.com/algolia/docsearch/commit/69983f95848ab79e5ac3ffff73c01f849a5637db))
+
+
+
+# [4.0.0-beta.6](https://github.com/algolia/docsearch/compare/v4.0.0-beta.5...v4.0.0-beta.6) (2025-08-08)
+
+
+### Bug Fixes
+
+* cater for `transformItems` to use DS with custom indices ([#2705](https://github.com/algolia/docsearch/issues/2705)) ([3478262](https://github.com/algolia/docsearch/commit/3478262b3e6970e9bf2e63c7a656a4c801b42059))
+* **docs:** better crawler config for markdown ([5690471](https://github.com/algolia/docsearch/commit/5690471c2ad22e8b9df5dd5177d8f2d25671e84a))
+* revert css change ([175a7d6](https://github.com/algolia/docsearch/commit/175a7d6bf48f13b4bb9bb2fc983b8b9e5189de09))
+* tailwind styles ([0fd05af](https://github.com/algolia/docsearch/commit/0fd05af65917ed9d29b2b9dc6f4832bc8dc05c9f))
+
+
+### Features
+
+* Add recent searches limit param ([#2704](https://github.com/algolia/docsearch/issues/2704)) ([95af410](https://github.com/algolia/docsearch/commit/95af410f8202ee704b9187d8a4e6d1e15eae2e37))
+* **askai:** Add providers table to docs ([#2684](https://github.com/algolia/docsearch/issues/2684)) ([942c1ca](https://github.com/algolia/docsearch/commit/942c1ca353f90b196748e2ffeda551a13be8421b))
+* **askai:** pubic beta launch ([5626830](https://github.com/algolia/docsearch/commit/5626830883e60232924e85ab94270b1136e4678d))
+* **docs:** api documentation and better examples ([#2686](https://github.com/algolia/docsearch/issues/2686)) ([920e392](https://github.com/algolia/docsearch/commit/920e3926b7812e29dad635243c0bbfb144de28e6))
+
+
+
+# [4.0.0-beta.5](https://github.com/algolia/docsearch/compare/v4.0.0-beta.4...v4.0.0-beta.5) (2025-07-24)
+
+
+### Bug Fixes
+
+* **js:** make `@docsearch/react` devDep ([9967436](https://github.com/algolia/docsearch/commit/9967436993da24cf5340c03c1681350d7bb787c2))
+* update doc ([a9b3d89](https://github.com/algolia/docsearch/commit/a9b3d893f6571da936c986d3e9b701650ab30ac9))
+* update website package version ([1c5070b](https://github.com/algolia/docsearch/commit/1c5070b2063810428afe30cb4b9504f3e4b75138))
+* upload tarballs ([9a6f1a0](https://github.com/algolia/docsearch/commit/9a6f1a0cfa33a35970691e25e82914f551d649ca))
+
+
+### Features
+
+* **docs:** added tips for facetFilters ([#2680](https://github.com/algolia/docsearch/issues/2680)) ([4210e3b](https://github.com/algolia/docsearch/commit/4210e3b503676206ee9dc22d0f6606e0119ef878))
+* **docs:** Enhance AskAI with markdown indexes ([#2683](https://github.com/algolia/docsearch/issues/2683)) ([4bcdedf](https://github.com/algolia/docsearch/commit/4bcdedf8f10694dc114fe3c6706190e2310c2c2e))
+
+
+
+# [4.0.0-beta.4](https://github.com/algolia/docsearch/compare/v4.0.0-beta.3...v4.0.0-beta.4) (2025-07-22)
+
+
+### Bug Fixes
+
+* revert to internal package ([#2678](https://github.com/algolia/docsearch/issues/2678)) ([414cdfe](https://github.com/algolia/docsearch/commit/414cdfeac47a46a3d222aee6e66d4a4f76a8289d))
+
+
+
+# [4.0.0-beta.3](https://github.com/algolia/docsearch/compare/v3.9.0...v4.0.0-beta.3) (2025-07-22)
+
+
+### Features
+
+* **askai:** add facet filtering ([#2676](https://github.com/algolia/docsearch/issues/2676)) ([55e3eb3](https://github.com/algolia/docsearch/commit/55e3eb301c551323737c902f674382907a4da421))
+* **v4:** release v4 ([#2555](https://github.com/algolia/docsearch/issues/2555)) ([#2666](https://github.com/algolia/docsearch/issues/2666)) ([19c1ef9](https://github.com/algolia/docsearch/commit/19c1ef91928b6f64c1da48c727a4c5f91d6de1a4)), closes [#2574](https://github.com/algolia/docsearch/issues/2574) [#2587](https://github.com/algolia/docsearch/issues/2587) [#2654](https://github.com/algolia/docsearch/issues/2654) [#2659](https://github.com/algolia/docsearch/issues/2659) [#2660](https://github.com/algolia/docsearch/issues/2660) [#2661](https://github.com/algolia/docsearch/issues/2661) [#2662](https://github.com/algolia/docsearch/issues/2662) [#2665](https://github.com/algolia/docsearch/issues/2665) [#2667](https://github.com/algolia/docsearch/issues/2667) [#2668](https://github.com/algolia/docsearch/issues/2668)
+
+
+
+# [4.0.0-beta.2](https://github.com/algolia/docsearch/compare/v4.0.0-beta.1...v4.0.0-beta.2) (2025-07-16)
+
+
+### Bug Fixes
+
+* add a section on models ([c3c5691](https://github.com/algolia/docsearch/commit/c3c5691cf6186f21a28984ab697b70d72e75b124))
+* Add more styling ([505c214](https://github.com/algolia/docsearch/commit/505c2147da072d7307b02d05e833ad910a6ea44c))
+* beta in readme ([b1dad74](https://github.com/algolia/docsearch/commit/b1dad744f4dc9fb84ff1b4101e4a54bd200ec28a))
+* polishing v4 ([#2667](https://github.com/algolia/docsearch/issues/2667)) ([2fe7b1d](https://github.com/algolia/docsearch/commit/2fe7b1d0d753954ee9a4ffbeade8fbc8ba5d4cc9))
+* update to `<package>[@beta](https://github.com/beta)` ([0cebaa6](https://github.com/algolia/docsearch/commit/0cebaa67491557c4f8d803b1f22c38cd13106168))
+
+
+### Features
+
+* add glow around the search bar and copy above the keyboard ([11716ac](https://github.com/algolia/docsearch/commit/11716ac88225b749b075f08b03aaf9b8608a248f))
+* added glow around the search bar and a little copy above the keyboard ([7942f3f](https://github.com/algolia/docsearch/commit/7942f3f5e914e87a12e6f85348f920891d52491e))
+* **docsearch-website:** Updated docs ([#2662](https://github.com/algolia/docsearch/issues/2662)) ([1b09a56](https://github.com/algolia/docsearch/commit/1b09a569f6cd9ffedaaf3d4965fbc8667053d4f0))
+* **v4:** update the landing page ([#2665](https://github.com/algolia/docsearch/issues/2665)) ([3861789](https://github.com/algolia/docsearch/commit/386178966e497fc1dd2a07b46582c2577ee0e229))
+
+
+
+# [4.0.0-beta.1](https://github.com/algolia/docsearch/compare/v4.0.0-beta.0...v4.0.0-beta.1) (2025-07-09)
+
+
+
+# [4.0.0-beta.0](https://github.com/algolia/docsearch/compare/v3.9.0...v4.0.0-beta.0) (2025-07-09)
+
+
+### Bug Fixes
+
+* `<input>` in ShadowDOM will open docsearch ([#2212](https://github.com/algolia/docsearch/issues/2212)) ([ec35171](https://github.com/algolia/docsearch/commit/ec351710b134c57bdbcad39e009dae8516f6e571))
+* **a11y:** have unique ids for favorite/recent lists ([#2485](https://github.com/algolia/docsearch/issues/2485)) ([c591f00](https://github.com/algolia/docsearch/commit/c591f004423a9ead953409f3d4a89643fa84b994))
+* recaptcha import ([#2621](https://github.com/algolia/docsearch/issues/2621)) ([ba5bdd8](https://github.com/algolia/docsearch/commit/ba5bdd8a84544b1f92e0d9a88eb12620ce573528))
+* size and background scroll fixes ([#2603](https://github.com/algolia/docsearch/issues/2603)) ([fe03b8e](https://github.com/algolia/docsearch/commit/fe03b8e04e71b328837bb6f0461a0ca0949cf171))
+* **v4:** ask ai updates ([#2654](https://github.com/algolia/docsearch/issues/2654)) ([a64e762](https://github.com/algolia/docsearch/commit/a64e7626cc57330a9998b46e3116da196b693a5d))
+
+
+### Features
+
+* **a11y:** add `aria-keyshortcuts` to search button ([#2365](https://github.com/algolia/docsearch/issues/2365)) ([b68a792](https://github.com/algolia/docsearch/commit/b68a79261e139385cdaf3d0321f25428aa90b242))
+* add theme prop ([#2651](https://github.com/algolia/docsearch/issues/2651)) ([85568ce](https://github.com/algolia/docsearch/commit/85568ce0952007f94e0649d752c25e1c61c36d99))
+* **apply:** Update rest of apply links ([#2655](https://github.com/algolia/docsearch/issues/2655)) ([29fde53](https://github.com/algolia/docsearch/commit/29fde5332033d2766d7648332aeb9a92656dccf5))
+* **onboarding:** Docsearch new sign up page ([#2606](https://github.com/algolia/docsearch/issues/2606)) ([2874789](https://github.com/algolia/docsearch/commit/2874789fad17d3cc8020a8c69109f61408b41460))
+* **onboarding:** Docsearch who can apply updated page ([#2607](https://github.com/algolia/docsearch/issues/2607)) ([161dcdc](https://github.com/algolia/docsearch/commit/161dcdca00e2c578a7a6831335849fe5479737c2))
+* **v4:** add new UI ([#2555](https://github.com/algolia/docsearch/issues/2555)) ([6a160ae](https://github.com/algolia/docsearch/commit/6a160aecf6cb8cd67782dc77ef2f2deb95d7277d))
+* **v4:** ask-ai foundations :sparkles: ([#2574](https://github.com/algolia/docsearch/issues/2574)) ([5ab4d3d](https://github.com/algolia/docsearch/commit/5ab4d3d215242857c4dc0a99d05a1c978852ac4e))
+* **v4:** docsearch askAI context ([#2587](https://github.com/algolia/docsearch/issues/2587)) ([d8bddd1](https://github.com/algolia/docsearch/commit/d8bddd119682d03d17505bc1f85161e57f318d9c))
+* **v4:** update beta documentation ([#2659](https://github.com/algolia/docsearch/issues/2659)) ([e3c0005](https://github.com/algolia/docsearch/commit/e3c0005e471d3c2a05095d5f9d5903573785fa19))
+
+
+
 # [3.9.0](https://github.com/algolia/docsearch/compare/v3.8.3...v3.9.0) (2025-02-17)
 
 
