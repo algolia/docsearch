@@ -384,6 +384,22 @@ export function DocSearchModal({
     prevStatus.current = status;
   }, [status, messages, conversations, disableUserPersonalization]);
 
+  const createSyntheticParent = React.useCallback(function createSyntheticParent(
+    item: InternalDocSearchHit,
+  ): InternalDocSearchHit {
+    // Find the deepest non-null hierarchy level
+    const hierarchy = item.hierarchy;
+    const levels = ['lvl6', 'lvl5', 'lvl4', 'lvl3', 'lvl2', 'lvl1', 'lvl0'] as const;
+
+    const deepestLevel = levels.find((level) => hierarchy[level]);
+
+    return {
+      ...item,
+      type: deepestLevel || 'lvl0', // Use the deepest available level as type
+      content: null, // Clear content since this represents a section, not specific content
+    };
+  }, []);
+
   const saveRecentSearch = React.useCallback(
     function saveRecentSearch(item: InternalDocSearchHit) {
       if (disableUserPersonalization) {
@@ -391,14 +407,15 @@ export function DocSearchModal({
       }
 
       // We don't store `content` record, but their parent if available.
-      const search = item.type === 'content' ? item.__docsearch_parent : item;
+      // If no parent exists, create a synthetic parent from the hierarchy.
+      const search = item.type === 'content' ? item.__docsearch_parent || createSyntheticParent(item) : item;
 
       // We save the recent search only if it's not favorited.
       if (search && favoriteSearches.getAll().findIndex((x) => x.objectID === search.objectID) === -1) {
         recentSearches.add(search);
       }
     },
-    [favoriteSearches, recentSearches, disableUserPersonalization],
+    [favoriteSearches, recentSearches, disableUserPersonalization, createSyntheticParent],
   );
 
   const sendItemClickEvent = React.useCallback(
