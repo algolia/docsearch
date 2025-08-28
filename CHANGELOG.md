@@ -1,3 +1,21 @@
+# [4.0.0-beta.8](https://github.com/algolia/docsearch/compare/v4.0.0-beta.7...v4.0.0-beta.8) (2025-08-28)
+
+
+### Bug Fixes
+
+* **docsearch-js:** provide unmounting function ([#2602](https://github.com/algolia/docsearch/issues/2602)) ([ba1573f](https://github.com/algolia/docsearch/commit/ba1573f2a124a9db8942875d02ce6091ce3fc85b))
+* **docsearch:** use correct index name for Ask AI localStorage keys ([#2733](https://github.com/algolia/docsearch/issues/2733)) ([e2fe65e](https://github.com/algolia/docsearch/commit/e2fe65e739a5222042441b849270b63d177affb2))
+* document open in new tab ([#2737](https://github.com/algolia/docsearch/issues/2737)) ([d26e13d](https://github.com/algolia/docsearch/commit/d26e13de289662560aadf892c7af0c686a6922ee))
+* ensure content items are saved to recent searches ([#2738](https://github.com/algolia/docsearch/issues/2738)) ([e8ba175](https://github.com/algolia/docsearch/commit/e8ba175868822888f3dc9bf7da46623d560a4353))
+* modal layout issues with footer positioning ([#2734](https://github.com/algolia/docsearch/issues/2734)) ([4d042d6](https://github.com/algolia/docsearch/commit/4d042d68a3f1512c342cae4726cda361044e7211))
+
+
+### Features
+
+* **docs:** Add Ask AI error documentation ([#2726](https://github.com/algolia/docsearch/issues/2726)) ([f065790](https://github.com/algolia/docsearch/commit/f065790ce6796c46aa23593fa65667423c9f6bd7))
+
+
+
 # [4.0.0-beta.7](https://github.com/algolia/docsearch/compare/v4.0.0-beta.6...v4.0.0-beta.7) (2025-08-14)
 
 
