@@ -129,6 +129,64 @@ function CustomHit({ hit }) {
 
 ---
 
+## Opening links in new tabs
+
+By default, DocSearch opens search result links in the current window. If you want results to open in new tabs, you need to use both a custom `hitComponent` and the `navigator` prop to handle both click and keyboard navigation consistently.
+
+```jsx
+// Custom hit component with target="_blank"
+function HitWithNewTab({ hit, children }) {
+  return (
+    <a href={hit.url} target="_blank" rel="noopener noreferrer">
+      {children}
+    </a>
+  );
+}
+
+// Navigator configuration to handle keyboard navigation
+const newTabNavigator = {
+  navigate: ({ itemUrl }) => window.open(itemUrl, '_blank'),
+  navigateNewTab: ({ itemUrl }) => window.open(itemUrl, '_blank'),
+  navigateNewWindow: ({ itemUrl }) => window.open(itemUrl, '_blank'),
+};
+
+<DocSearch
+  appId="PMZUYBQDAK"
+  apiKey="24b09689d5b4223813d9b8e48563c8f6"
+  indexName="docsearch"
+  hitComponent={HitWithNewTab}
+  navigator={newTabNavigator}
+  insights={true}
+  translations={{ button: { buttonText: 'open in new tabs (demo)' } }}
+/>
+```
+
+<DocSearch
+  appId="PMZUYBQDAK"
+  apiKey="24b09689d5b4223813d9b8e48563c8f6"
+  indexName="docsearch"
+  hitComponent={({ hit, children }) => (
+    <a href={hit.url} target="_blank" rel="noopener noreferrer">
+      {children}
+    </a>
+  )}
+  navigator={{
+    navigate: ({ itemUrl }) => window.open(itemUrl, '_blank'),
+    navigateNewTab: ({ itemUrl }) => window.open(itemUrl, '_blank'),
+    navigateNewWindow: ({ itemUrl }) => window.open(itemUrl, '_blank'),
+  }}
+  insights={true}
+  translations={{ button: { buttonText: 'open in new tabs (demo)' } }}
+/>
+
+<br></br>
+
+:::warning
+**Note**: Using only `hitComponent` with `target="_blank"` will work for mouse clicks, but keyboard navigation (arrows + Enter) requires the `navigator` prop to consistently open links in new tabs.
+:::
+
+---
+
 ## Bring-your-own-data shape with `transformItems`
 
 Docsearch is not limited to docsearch-like records. use `transformItems` to adapt any record shape into the internal structure docsearch expects. this lets you build search for apps, help centers, changelogs, or any custom content.
