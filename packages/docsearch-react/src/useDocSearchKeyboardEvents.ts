@@ -1,11 +1,15 @@
 import React from 'react';
 
+import { getKeyboardShortcuts } from './constants/keyboardShortcuts';
+import type { KeyboardShortcuts } from './types';
+
 export interface UseDocSearchKeyboardEventsProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
   onInput?: (event: KeyboardEvent) => void;
   searchButtonRef: React.RefObject<HTMLButtonElement | null>;
+  keyboardShortcuts?: KeyboardShortcuts;
 }
 
 function isEditingContent(event: KeyboardEvent): boolean {
@@ -21,19 +25,26 @@ export function useDocSearchKeyboardEvents({
   onClose,
   onInput,
   searchButtonRef,
+  keyboardShortcuts,
 }: UseDocSearchKeyboardEventsProps): void {
+  const resolvedShortcuts = getKeyboardShortcuts(keyboardShortcuts);
+
   React.useEffect(() => {
     function onKeyDown(event: KeyboardEvent): void {
+      const isCmdK =
+        resolvedShortcuts['Ctrl/Cmd+K'] && event.key?.toLowerCase() === 'k' && (event.metaKey || event.ctrlKey);
+      const isSlash = resolvedShortcuts['/'] && event.key === '/';
+
       if (
         (event.code === 'Escape' && isOpen) ||
         // The `Cmd+K` shortcut both opens and closes the modal.
         // We need to check for `event.key` because it can be `undefined` with
         // Chrome's autofill feature.
         // See https://github.com/paperjs/paper.js/issues/1398
-        (event.key?.toLowerCase() === 'k' && (event.metaKey || event.ctrlKey)) ||
+        isCmdK ||
         // The `/` shortcut opens but doesn't close the modal because it's
         // a character.
-        (!isEditingContent(event) && event.key === '/' && !isOpen)
+        (!isEditingContent(event) && isSlash && !isOpen)
       ) {
         event.preventDefault();
 
@@ -60,5 +71,5 @@ export function useDocSearchKeyboardEvents({
     return (): void => {
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [isOpen, onOpen, onClose, onInput, searchButtonRef]);
+  }, [isOpen, onOpen, onClose, onInput, searchButtonRef, resolvedShortcuts]);
 }
