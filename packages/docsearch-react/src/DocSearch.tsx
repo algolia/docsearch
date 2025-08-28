@@ -51,6 +51,11 @@ export type DocSearchAskAi = {
   };
 };
 
+export interface DocSearchIndex {
+  name: string;
+  searchParameters?: SearchParamsObject;
+}
+
 export interface DocSearchProps {
   /**
    * Algolia application id used by the search client.
@@ -62,8 +67,16 @@ export interface DocSearchProps {
   apiKey: string;
   /**
    * Name of the algolia index to query.
+   *
+   * @deprecated `indexName` will be removed in a future version. Please use `indices` property going forward.
    */
-  indexName: string;
+  indexName?: string;
+  /**
+   * List of indices and _optional_ searchParameters to be used for search.
+   *
+   * @see {@link https://docsearch.algolia.com/docs/api#indices}
+   */
+  indices?: Array<DocSearchIndex | string>;
   /**
    * Configuration or assistant id to enable ask ai mode. Pass a string assistant id or a full config object.
    */
@@ -78,6 +91,8 @@ export interface DocSearchProps {
   placeholder?: string;
   /**
    * Additional algolia search parameters to merge into each query.
+   *
+   * @deprecated `searchParameters` will be removed in a future version. Please use `indices` property going forward.
    */
   searchParameters?: SearchParamsObject;
   /**
@@ -142,7 +157,7 @@ export interface DocSearchProps {
   recentSearchesWithFavoritesLimit?: number;
 }
 
-export function DocSearch({ ...props }: DocSearchProps): JSX.Element {
+export function DocSearch({ indexName, searchParameters, indices = [], ...props }: DocSearchProps): JSX.Element {
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
   const [isOpen, setIsOpen] = React.useState(false);
   const [initialQuery, setInitialQuery] = React.useState<string | undefined>(props?.initialQuery || undefined);
@@ -200,6 +215,26 @@ export function DocSearch({ ...props }: DocSearchProps): JSX.Element {
   });
   useTheme({ theme: props.theme });
 
+  // Format the `indexes` to be used until `indexName` and `searchParameters` props are fully removed.
+  const indexes: DocSearchIndex[] = [];
+
+  if (indexName && indexName !== '') {
+    indexes.push({
+      name: indexName,
+      searchParameters,
+    });
+  }
+
+  if (indices.length > 0) {
+    indices.forEach((index) => {
+      indexes.push(typeof index === 'string' ? { name: index } : index);
+    });
+  }
+
+  if (indexes.length < 1) {
+    throw new Error('Must supply either `indexName` or `indices` for DocSearch to work');
+  }
+
   return (
     <>
       <DocSearchButton ref={searchButtonRef} translations={props?.translations?.button} onClick={onOpen} />
@@ -214,6 +249,7 @@ export function DocSearch({ ...props }: DocSearchProps): JSX.Element {
             translations={props?.translations?.modal}
             isAskAiActive={isAskAiActive}
             canHandleAskAi={canHandleAskAi}
+            indexes={indexes}
             onAskAiToggle={onAskAiToggle}
             onClose={onClose}
           />,
