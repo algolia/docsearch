@@ -72,7 +72,9 @@ export interface DocSearchProps {
    */
   indexName?: string;
   /**
-   * List of indices to be used for search.
+   * List of indices and _optional_ searchParameters to be used for search.
+   *
+   * @see {@link https://docsearch.algolia.com/docs/api#indices}
    */
   indices?: Array<DocSearchIndex | string>;
   /**
