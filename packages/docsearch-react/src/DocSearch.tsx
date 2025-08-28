@@ -5,7 +5,13 @@ import { createPortal } from 'react-dom';
 
 import { DocSearchButton } from './DocSearchButton';
 import { DocSearchModal } from './DocSearchModal';
-import type { DocSearchHit, DocSearchTheme, InternalDocSearchHit, StoredDocSearchHit } from './types';
+import type {
+  DocSearchHit,
+  DocSearchTheme,
+  InternalDocSearchHit,
+  KeyboardShortcuts,
+  StoredDocSearchHit,
+} from './types';
 import { useDocSearchKeyboardEvents } from './useDocSearchKeyboardEvents';
 import { useTheme } from './useTheme';
 
@@ -41,6 +47,7 @@ export interface DocSearchProps {
   translations?: DocSearchTranslations;
   getMissingResultsUrl?: ({ query }: { query: string }) => string;
   insights?: AutocompleteOptions<InternalDocSearchHit>['insights'];
+  keyboardShortcuts?: KeyboardShortcuts;
 }
 
 export function DocSearch({ ...props }: DocSearchProps): JSX.Element {
@@ -71,12 +78,18 @@ export function DocSearch({ ...props }: DocSearchProps): JSX.Element {
     onClose,
     onInput,
     searchButtonRef,
+    keyboardShortcuts: props.keyboardShortcuts,
   });
   useTheme({ theme: props.theme });
 
   return (
     <>
-      <DocSearchButton ref={searchButtonRef} translations={props?.translations?.button} onClick={onOpen} />
+      <DocSearchButton
+        ref={searchButtonRef}
+        translations={props?.translations?.button}
+        keyboardShortcuts={props.keyboardShortcuts}
+        onClick={onOpen}
+      />
 
       {isOpen &&
         createPortal(
