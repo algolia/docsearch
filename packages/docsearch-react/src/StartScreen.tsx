@@ -33,7 +33,7 @@ export function StartScreen({ translations = {}, ...props }: StartScreenProps): 
   } = translations;
 
   return (
-    <div className="DocSearch-Dropdown-Container">
+    <div className="DocSearch-Dropdown-Container DocSearch-Dropdown-Container--Start-Screen">
       <Results
         {...props}
         title={recentSearchesTitle}
