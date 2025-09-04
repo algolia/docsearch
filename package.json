@@ -23,6 +23,7 @@
     "playground-js:start": "yarn workspace @docsearch/js-example dev --host",
     "release": "shipjs prepare",
     "start": "yarn run watch",
+    "dev": "yarn start & yarn playground:start",
     "test:size": "bundlesize",
     "test:types": "tsc --noEmit",
     "test": "vitest",

@@ -51,11 +51,105 @@ Your Algolia application ID.
 
 Your Algolia Search API key.
 
+## `indices`
+
+> `type: Array<string | DocSearchIndex>`
+
+The list of indices and their _optional_ `searchParameters` to be used for keyword search.
+
+[Algolia Search Parameters][7]
+
+:::tip
+
+The ordering matters in the list, as results are ordered based on `indices` order.
+
+:::
+
+> While `indexName` is in deprecation, it is required to pass either `indices` or `indexName`. Not passing either will result in an `Error` being thrown.
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', },
+    { label: 'React', value: 'react', }
+  ]
+}>
+<TabItem value="js">
+
+```js
+docsearch({
+  // ...
+  indices: ['YOUR_ALGOLIA_INDEX'],
+  // ...
+});
+```
+
+in case you want to use custom `searchParameters` for the index
+
+```js
+docsearch({
+  // ...
+  indices: [
+    {
+      name: 'YOUR_ALGOLIA_INDEX',
+      searchParameters: {
+        facetFilters: ['language:en'],
+        // ...
+      }
+    }
+  ],
+  // ...
+});
+```
+
+</TabItem>
+
+<TabItem value="react">
+
+```jsx
+<DocSearch
+  // ...
+  indices={['YOUR_ALGOLIA_INDEX']}
+  // ...
+/>
+```
+
+in case you want to use custom `searchParameters` for the index
+
+
+```jsx
+<DocSearch
+  // ...
+  indices={[
+    {
+      name: 'YOUR_ALGOLIA_INDEX',
+      searchParameters: {
+        facetFilters: ['language:en'],
+        // ...
+      }
+    }
+  ]}
+  // ...
+/>
+```
+
+</TabItem>
+</Tabs>
+
 ## `indexName`
 
-> `type: string` | **required**
+> `type: string` | **deprecated**
+
+:::warning[Deprecation warning]
+
+`indexName` is currently being planned for deprecation. The new recommended property to use is `indices`.
+
+:::
 
 Your Algolia index name.
+
+> While `indexName` is in deprecation, it is required to pass either `indices` or `indexName`. Not passing either will result in an `Error` being thrown.
 
 ## `placeholder`
 
@@ -139,7 +233,13 @@ You can use `facetFilters: ['type:content']` to ensure AskAI only uses records w
 
 ## `searchParameters`
 
-> `type: SearchParameters` | **optional**
+> `type: SearchParameters` | **optional** | **deprecated**
+
+:::warning[Deprecation warning]
+
+`searchParameters` is currently being planned for deprecation. The new recommended property to use is `indices`.
+
+:::
 
 The [Algolia Search Parameters][7].
 
