@@ -1,8 +1,9 @@
 import React, { useEffect, useState, type JSX } from 'react';
 
+import { getKeyboardShortcuts } from './constants/keyboardShortcuts';
 import { ControlKeyIcon } from './icons/ControlKeyIcon';
 import { SearchIcon } from './icons/SearchIcon';
-import type { DocSearchTheme } from './types';
+import type { DocSearchTheme, KeyboardShortcuts } from './types';
 import { useTheme } from './useTheme';
 
 export type ButtonTranslations = Partial<{
@@ -13,6 +14,7 @@ export type ButtonTranslations = Partial<{
 export type DocSearchButtonProps = React.ComponentProps<'button'> & {
   theme?: DocSearchTheme;
   translations?: ButtonTranslations;
+  keyboardShortcuts?: KeyboardShortcuts;
 };
 
 const ACTION_KEY_DEFAULT = 'Ctrl' as const;
@@ -23,8 +25,9 @@ function isAppleDevice(): boolean {
 }
 
 export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButtonProps>(
-  ({ translations = {}, ...props }, ref) => {
+  ({ translations = {}, keyboardShortcuts, ...props }, ref) => {
     const { buttonText = 'Search', buttonAriaLabel = 'Search' } = translations;
+    const resolvedShortcuts = getKeyboardShortcuts(keyboardShortcuts);
 
     const [key, setKey] = useState<typeof ACTION_KEY_APPLE | typeof ACTION_KEY_DEFAULT | null>(null);
     useTheme({ theme: props.theme });
@@ -40,14 +43,15 @@ export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButt
           ([ACTION_KEY_DEFAULT, 'Control', <ControlKeyIcon />] as const)
         : (['Meta', 'Meta', key] as const);
 
+    const isCtrlCmdKEnabled = resolvedShortcuts['Ctrl/Cmd+K'];
     const shortcut = `${actionKeyAltText}+k`;
 
     return (
       <button
         type="button"
         className="DocSearch DocSearch-Button"
-        aria-label={`${buttonAriaLabel} (${shortcut})`}
-        aria-keyshortcuts={shortcut}
+        aria-label={isCtrlCmdKEnabled ? `${buttonAriaLabel} (${shortcut})` : buttonAriaLabel}
+        aria-keyshortcuts={isCtrlCmdKEnabled ? shortcut : undefined}
         {...props}
         ref={ref}
       >
@@ -57,7 +61,7 @@ export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButt
         </span>
 
         <span className="DocSearch-Button-Keys">
-          {key !== null && (
+          {key !== null && isCtrlCmdKEnabled && (
             <>
               <DocSearchButtonKey reactsToKey={actionKeyReactsTo}>{actionKeyChild}</DocSearchButtonKey>
               <DocSearchButtonKey reactsToKey="k">K</DocSearchButtonKey>
