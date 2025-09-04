@@ -11,7 +11,7 @@ import React, { type JSX } from 'react';
 
 import { getValidToken, postFeedback } from './askai';
 import { ASK_AI_API_URL, MAX_QUERY_SIZE, USE_ASK_AI_TOKEN } from './constants';
-import type { DocSearchProps } from './DocSearch';
+import type { DocSearchIndex, DocSearchProps } from './DocSearch';
 import type { FooterTranslations } from './Footer';
 import { Footer } from './Footer';
 import { Hit } from './Hit';
@@ -42,6 +42,7 @@ export type DocSearchModalProps = DocSearchProps & {
   isAskAiActive?: boolean;
   canHandleAskAi?: boolean;
   translations?: ModalTranslations;
+  indexes: DocSearchIndex[];
 };
 
 /**
@@ -116,8 +117,7 @@ const buildQuerySources = async ({
   setContext,
   setStatus,
   searchClient,
-  indexName,
-  searchParameters,
+  indexes: indices,
   snippetLength,
   insights,
   appId,
@@ -132,8 +132,7 @@ const buildQuerySources = async ({
   setContext: (context: Partial<DocSearchState<InternalDocSearchHit>['context']>) => void;
   setStatus: (status: DocSearchState<InternalDocSearchHit>['status']) => void;
   searchClient: ReturnType<typeof useSearchClient>;
-  indexName: string;
-  searchParameters: DocSearchProps['searchParameters'];
+  indexes: DocSearchIndex[];
   snippetLength: React.MutableRefObject<number>;
   insights: boolean;
   appId?: string;
@@ -147,11 +146,14 @@ const buildQuerySources = async ({
 
   try {
     const { results } = await searchClient.search<DocSearchHit>({
-      requests: [
-        {
+      requests: indices.map((index) => {
+        const indexName = typeof index === 'string' ? index : index.name;
+        const searchParams = typeof index === 'string' ? {} : index.searchParameters;
+
+        return {
           query,
           indexName,
-          attributesToRetrieve: searchParameters?.attributesToRetrieve ?? [
+          attributesToRetrieve: searchParams?.attributesToRetrieve ?? [
             'hierarchy.lvl0',
             'hierarchy.lvl1',
             'hierarchy.lvl2',
@@ -163,7 +165,7 @@ const buildQuerySources = async ({
             'type',
             'url',
           ],
-          attributesToSnippet: searchParameters?.attributesToSnippet ?? [
+          attributesToSnippet: searchParams?.attributesToSnippet ?? [
             `hierarchy.lvl1:${snippetLength.current}`,
             `hierarchy.lvl2:${snippetLength.current}`,
             `hierarchy.lvl3:${snippetLength.current}`,
@@ -172,80 +174,90 @@ const buildQuerySources = async ({
             `hierarchy.lvl6:${snippetLength.current}`,
             `content:${snippetLength.current}`,
           ],
-          snippetEllipsisText: searchParameters?.snippetEllipsisText ?? '…',
-          highlightPreTag: searchParameters?.highlightPreTag ?? '<mark>',
-          highlightPostTag: searchParameters?.highlightPostTag ?? '</mark>',
-          hitsPerPage: searchParameters?.hitsPerPage ?? 20,
-          clickAnalytics: searchParameters?.clickAnalytics ?? insightsActive,
-          ...searchParameters,
-        },
-      ],
+          snippetEllipsisText: searchParams?.snippetEllipsisText ?? '…',
+          highlightPreTag: searchParams?.highlightPreTag ?? '<mark>',
+          highlightPostTag: searchParams?.highlightPostTag ?? '</mark>',
+          hitsPerPage: searchParams?.hitsPerPage ?? 20,
+          clickAnalytics: searchParams?.clickAnalytics ?? insightsActive,
+          ...(searchParams ?? {}),
+        };
+      }),
     });
 
-    const firstResult = results[0] as SearchResponse<DocSearchHit>;
-    const { hits, nbHits } = firstResult;
-    const transformedHits = transformItems(hits);
-    const sources = groupBy<DocSearchHit>(transformedHits, (hit) => removeHighlightTags(hit), maxResultsPerGroup);
+    return results.flatMap((res) => {
+      const result = res as SearchResponse<DocSearchHit>;
+      const { hits, nbHits } = result;
+      const transformedHits = transformItems(hits);
+      const sources = groupBy<DocSearchHit>(transformedHits, (hit) => removeHighlightTags(hit), maxResultsPerGroup);
 
-    // We store the `lvl0`s to display them as search suggestions
-    // in the "no results" screen.
-    if ((sourcesState.context.searchSuggestions as any[]).length < Object.keys(sources).length) {
-      setContext({
-        searchSuggestions: Object.keys(sources),
+      // We store the `lvl0`s to display them as search suggestions
+      // in the "no results" screen.
+      if ((sourcesState.context.searchSuggestions as any[]).length < Object.keys(sources).length) {
+        setContext({
+          searchSuggestions: {
+            ...(sourcesState.context.searchSuggestions ?? []),
+            ...Object.keys(sources),
+          },
+        });
+      }
+
+      if (nbHits) {
+        const currentNbHits = sourcesState.context.nbHits as number | undefined;
+        setContext({
+          nbHits: (currentNbHits ?? 0) + nbHits,
+        });
+      }
+
+      let insightsParams = {};
+
+      if (insightsActive) {
+        insightsParams = {
+          __autocomplete_indexName: result.index,
+          __autocomplete_queryID: result.queryID,
+          __autocomplete_algoliaCredentials: {
+            appId,
+            apiKey,
+          },
+        };
+      }
+
+      return Object.values<DocSearchHit[]>(sources).map((items, index) => {
+        return {
+          sourceId: `hits_${result.index}_${index}`,
+          onSelect({ item, event }): void {
+            saveRecentSearch(item);
+            if (!isModifierEvent(event)) {
+              onClose();
+            }
+          },
+          getItemUrl({ item }): string {
+            return item.url;
+          },
+          getItems(): InternalDocSearchHit[] {
+            return Object.values(groupBy(items, (item) => item.hierarchy.lvl1, maxResultsPerGroup))
+              .map((groupedHits) =>
+                groupedHits.map((item) => {
+                  let parent: InternalDocSearchHit | null = null;
+
+                  const potentialParent = groupedHits.find(
+                    (siblingItem) => siblingItem.type === 'lvl1' && siblingItem.hierarchy.lvl1 === item.hierarchy.lvl1,
+                  ) as InternalDocSearchHit | undefined;
+
+                  if (item.type !== 'lvl1' && potentialParent) {
+                    parent = potentialParent;
+                  }
+
+                  return {
+                    ...item,
+                    __docsearch_parent: parent,
+                    ...insightsParams,
+                  };
+                }),
+              )
+              .flat();
+          },
+        };
       });
-    }
-
-    setContext({ nbHits });
-
-    let insightsParams = {};
-
-    if (insightsActive) {
-      insightsParams = {
-        __autocomplete_indexName: indexName,
-        __autocomplete_queryID: firstResult.queryID,
-        __autocomplete_algoliaCredentials: {
-          appId,
-          apiKey,
-        },
-      };
-    }
-
-    return Object.values<DocSearchHit[]>(sources).map((items, index) => {
-      return {
-        sourceId: `hits${index}`,
-        onSelect({ item, event }): void {
-          saveRecentSearch(item);
-          if (!isModifierEvent(event)) {
-            onClose();
-          }
-        },
-        getItemUrl({ item }): string {
-          return item.url;
-        },
-        getItems(): InternalDocSearchHit[] {
-          return Object.values(groupBy(items, (item) => item.hierarchy.lvl1, maxResultsPerGroup))
-            .map((groupedHits) =>
-              groupedHits.map((item) => {
-                let parent: InternalDocSearchHit | null = null;
-
-                const potentialParent = groupedHits.find(
-                  (siblingItem) => siblingItem.type === 'lvl1' && siblingItem.hierarchy.lvl1 === item.hierarchy.lvl1,
-                ) as InternalDocSearchHit | undefined;
-
-                if (item.type !== 'lvl1' && potentialParent) {
-                  parent = potentialParent;
-                }
-
-                return {
-                  ...item,
-                  __docsearch_parent: parent,
-                  ...insightsParams,
-                };
-              }),
-            )
-            .flat();
-        },
-      };
     });
   } catch (error) {
     // The Algolia `RetryError` happens when all the servers have
@@ -262,10 +274,8 @@ const buildQuerySources = async ({
 export function DocSearchModal({
   appId,
   apiKey,
-  indexName,
   placeholder,
   askAi,
-  searchParameters,
   maxResultsPerGroup,
   theme,
   onClose = noop,
@@ -285,6 +295,7 @@ export function DocSearchModal({
   canHandleAskAi = false,
   recentSearchesLimit = 7,
   recentSearchesWithFavoritesLimit = 4,
+  indexes,
 }: DocSearchModalProps): JSX.Element {
   const { footer: footerTranslations, searchBox: searchBoxTranslations, ...screenStateTranslations } = translations;
   const [state, setState] = React.useState<DocSearchState<InternalDocSearchHit>>({
@@ -314,22 +325,24 @@ export function DocSearchModal({
   const askAiConfigurationId = typeof askAi === 'string' ? askAi : askAiConfig?.assistantId || null;
   const askAiSearchParameters = askAiConfig?.searchParameters;
 
+  const defaultIndexName = indexes[0].name;
+
   // storage
   const conversations = React.useRef(
     createStoredConversations<StoredAskAiState>({
-      key: `__DOCSEARCH_ASKAI_CONVERSATIONS__${askAiConfig?.indexName || indexName}`,
+      key: `__DOCSEARCH_ASKAI_CONVERSATIONS__${askAiConfig?.indexName || defaultIndexName}`,
       limit: 10,
     }),
   ).current;
   const favoriteSearches = React.useRef(
     createStoredSearches<StoredDocSearchHit>({
-      key: `__DOCSEARCH_FAVORITE_SEARCHES__${indexName}`,
+      key: `__DOCSEARCH_FAVORITE_SEARCHES__${defaultIndexName}`,
       limit: 10,
     }),
   ).current;
   const recentSearches = React.useRef(
     createStoredSearches<StoredDocSearchHit>({
-      key: `__DOCSEARCH_RECENT_SEARCHES__${indexName}`,
+      key: `__DOCSEARCH_RECENT_SEARCHES__${defaultIndexName}`,
       limit: favoriteSearches.getAll().length === 0 ? recentSearchesLimit : recentSearchesWithFavoritesLimit,
     }),
   ).current;
@@ -363,7 +376,7 @@ export function DocSearchModal({
       'Content-Type': 'application/json',
       'X-Algolia-API-Key': askAiConfig?.apiKey || apiKey,
       'X-Algolia-Application-Id': askAiConfig?.appId || appId,
-      'X-Algolia-Index-Name': askAiConfig?.indexName || indexName,
+      'X-Algolia-Index-Name': askAiConfig?.indexName || defaultIndexName,
       'X-Algolia-Assistant-Id': askAiConfigurationId || '',
     },
     body: askAiSearchParameters ? { searchParameters: askAiSearchParameters } : {},
@@ -546,15 +559,13 @@ export function DocSearchModal({
           context: sourcesState.context,
         };
 
-        // Algolia sources
         const algoliaSourcesPromise = buildQuerySources({
           query,
           state: querySourcesState,
           setContext,
           setStatus,
           searchClient,
-          indexName,
-          searchParameters,
+          indexes,
           snippetLength,
           insights: Boolean(insights),
           appId,
@@ -604,7 +615,6 @@ export function DocSearchModal({
               },
             ]
           : [];
-
         // Combine Algolia results (once resolved) with the Ask AI source
         return algoliaSourcesPromise.then((algoliaSources) => {
           return [...askAiSource, ...algoliaSources];
@@ -765,7 +775,7 @@ export function DocSearchModal({
           <div className="DocSearch-Dropdown" ref={dropdownRef}>
             <ScreenState
               {...autocomplete}
-              indexName={indexName}
+              indexName={defaultIndexName}
               state={state}
               hitComponent={hitComponent}
               resultsFooterComponent={resultsFooterComponent}
