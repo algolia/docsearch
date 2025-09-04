@@ -7,6 +7,7 @@ import { MemoizedMarkdown } from './MemoizedMarkdown';
 import type { ScreenStateProps } from './ScreenState';
 import type { StoredSearchPlugin } from './stored-searches';
 import type { InternalDocSearchHit, StoredAskAiState } from './types';
+import type { AIMessage } from './types/AskiAi';
 import { extractLinksFromText } from './utils/ai';
 import { groupConsecutiveToolResults } from './utils/groupConsecutiveToolResults';
 
@@ -46,8 +47,8 @@ export type AskAiScreenTranslations = Partial<{
 }>;
 
 type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
-  messages: UseChatHelpers['messages'];
-  status: UseChatHelpers['status'];
+  messages: UseChatHelpers<AIMessage>['messages'];
+  status: UseChatHelpers<AIMessage>['status'];
   askAiStreamError: Error | null;
   askAiFetchError: Error | undefined;
   translations?: AskAiScreenTranslations;
@@ -59,8 +60,8 @@ interface AskAiScreenHeaderProps {
 
 interface Exchange {
   id: string;
-  userMessage: UseChatHelpers['messages'][number];
-  assistantMessage: UseChatHelpers['messages'][number] | null;
+  userMessage: UseChatHelpers<AIMessage>['messages'][number];
+  assistantMessage: UseChatHelpers<AIMessage>['messages'][number] | null;
 }
 
 function AskAiScreenHeader({ disclaimerText }: AskAiScreenHeaderProps): JSX.Element {
@@ -71,7 +72,7 @@ interface AskAiExchangeCardProps {
   exchange: Exchange;
   askAiStreamError: Error | null;
   isLastExchange: boolean;
-  loadingStatus: UseChatHelpers['status'];
+  loadingStatus: UseChatHelpers<AIMessage>['status'];
   onSearchQueryClick: (query: string) => void;
   translations: AskAiScreenTranslations;
   conversations: StoredSearchPlugin<StoredAskAiState>;
@@ -92,12 +93,15 @@ function AskAiExchangeCard({
 
   const showActions = !isLastExchange || (isLastExchange && loadingStatus === 'ready' && Boolean(assistantMessage));
 
-  const urlsToDisplay = React.useMemo(() => extractLinksFromText(assistantMessage?.content || ''), [assistantMessage]);
+  const assistantContent = useMemo(
+    () => assistantMessage?.parts.find((part) => part.type === 'text'),
+    [assistantMessage],
+  );
+  const userContent = useMemo(() => userMessage.parts.find((part) => part.type === 'text'), [userMessage]);
+
+  const urlsToDisplay = React.useMemo(() => extractLinksFromText(assistantContent?.text || ''), [assistantContent]);
 
   const displayParts = React.useMemo(() => {
-    if (!Array.isArray(assistantMessage?.parts)) {
-      return assistantMessage?.content ? [assistantMessage?.content] : [];
-    }
     return groupConsecutiveToolResults(assistantMessage?.parts || []);
   }, [assistantMessage]);
 
@@ -105,7 +109,7 @@ function AskAiExchangeCard({
     <div className="DocSearch-AskAiScreen-Response-Container">
       <div className="DocSearch-AskAiScreen-Response">
         <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--user">
-          <p className="DocSearch-AskAiScreen-Query">{userMessage.content}</p>
+          <p className="DocSearch-AskAiScreen-Query">{userContent?.text ?? ''}</p>
         </div>
         <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--assistant">
           <div className="DocSearch-AskAiScreen-MessageContent">
@@ -142,7 +146,7 @@ function AskAiExchangeCard({
                   }
 
                   // aggregated tool call rendering
-                  if (part && (part as any).type === 'aggregated-tool-call') {
+                  if (part.type === 'aggregated-tool-call') {
                     return (
                       <AggregatedSearchBlock
                         key={index}
@@ -172,75 +176,70 @@ function AskAiExchangeCard({
                       />
                     );
                   }
-                  if (part.type === 'tool-invocation') {
-                    const { toolInvocation } = part;
-                    if (toolInvocation.toolName === 'searchIndex') {
-                      switch (toolInvocation.state) {
-                        case 'partial-call':
-                          return (
-                            <div
-                              key={index}
-                              className="DocSearch-AskAiScreen-MessageContent-Tool Tool--PartialCall shimmer"
-                            >
-                              <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-                              <span>{translations.preToolCallText || 'Searching...'}</span>
-                            </div>
-                          );
-                        case 'call':
-                          return (
-                            <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Call shimmer">
-                              <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-                              <span>
-                                {`${translations.duringToolCallText || 'Searching for '} "${toolInvocation.args?.query || ''}" ...`}
+                  if (part.type === 'tool-searchIndex') {
+                    switch (part.state) {
+                      case 'input-streaming':
+                        return (
+                          <div
+                            key={index}
+                            className="DocSearch-AskAiScreen-MessageContent-Tool Tool--PartialCall shimmer"
+                          >
+                            <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
+                            <span>{translations.preToolCallText || 'Searching...'}</span>
+                          </div>
+                        );
+                      case 'input-available':
+                        return (
+                          <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Call shimmer">
+                            <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
+                            <span>
+                              {`${translations.duringToolCallText || 'Searching for '} "${part.input || ''}" ...`}
+                            </span>
+                          </div>
+                        );
+                      case 'output-available':
+                        return (
+                          <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Result">
+                            <SearchIcon size={18} />
+                            <span>
+                              {`${translations.afterToolCallText || 'Searched for'}`}{' '}
+                              <span
+                                role="button"
+                                tabIndex={0}
+                                className="DocSearch-AskAiScreen-MessageContent-Tool-Query"
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter' || e.key === ' ') {
+                                    e.preventDefault();
+                                    onSearchQueryClick(part.output.args?.query || '');
+                                  }
+                                }}
+                                onClick={() => onSearchQueryClick(part.output.args?.query || '')}
+                              >
+                                {' '}
+                                &quot;{part.output.args?.query || ''}&quot;
                               </span>
-                            </div>
-                          );
-                        case 'result':
-                          return (
-                            <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Result">
-                              <SearchIcon size={18} />
-                              <span>
-                                {`${translations.afterToolCallText || 'Searched for'}`}{' '}
-                                <span
-                                  role="button"
-                                  tabIndex={0}
-                                  className="DocSearch-AskAiScreen-MessageContent-Tool-Query"
-                                  onKeyDown={(e) => {
-                                    if (e.key === 'Enter' || e.key === ' ') {
-                                      e.preventDefault();
-                                      onSearchQueryClick(toolInvocation.args?.query || '');
-                                    }
-                                  }}
-                                  onClick={() => onSearchQueryClick(toolInvocation.args?.query || '')}
-                                >
-                                  {' '}
-                                  &quot;{toolInvocation.args?.query || ''}&quot;
-                                </span>
-                              </span>
-                            </div>
-                          );
-                        default:
-                          return null;
-                      }
+                            </span>
+                          </div>
+                        );
+                      default:
+                        return null;
                     }
-                    // fallback for unknown tool, should never happen in theory. :shrug:
-                    return (
-                      <span key={index} className="text-sm italic shimmer">
-                        {translations.thinkingText || 'Thinking...'}
-                      </span>
-                    );
                   }
                   // fallback for unknown part type
-                  return null;
+                  return (
+                    <span key={index} className="text-sm italic shimmer">
+                      {translations.thinkingText || 'Thinking...'}
+                    </span>
+                  );
                 })
-              : assistantMessage?.content}
+              : assistantContent?.text}
           </div>
         </div>
         <div className="DocSearch-AskAiScreen-Answer-Footer">
           <AskAiScreenFooterActions
             id={userMessage?.id || exchange.id}
             showActions={showActions}
-            latestAssistantMessageContent={assistantMessage?.content || null}
+            latestAssistantMessageContent={assistantContent?.text || null}
             translations={translations}
             conversations={conversations}
             onFeedback={onFeedback}

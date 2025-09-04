@@ -15,6 +15,7 @@ import type { StartScreenTranslations } from './StartScreen';
 import { StartScreen } from './StartScreen';
 import type { StoredSearchPlugin } from './stored-searches';
 import type { InternalDocSearchHit, StoredAskAiState, StoredDocSearchHit } from './types';
+import type { AIMessage } from './types/AskiAi';
 
 export type ScreenStateTranslations = Partial<{
   errorScreen: ErrorScreenTranslations;
@@ -37,8 +38,8 @@ export interface ScreenStateProps<TItem extends BaseItem>
   inputRef: React.MutableRefObject<HTMLInputElement | null>;
   hitComponent: DocSearchProps['hitComponent'];
   indexName: DocSearchProps['indexName'];
-  messages: UseChatHelpers['messages'];
-  status: UseChatHelpers['status'];
+  messages: UseChatHelpers<AIMessage>['messages'];
+  status: UseChatHelpers<AIMessage>['status'];
   askAiStreamError: Error | null;
   askAiFetchError: Error | undefined;
   disableUserPersonalization: boolean;

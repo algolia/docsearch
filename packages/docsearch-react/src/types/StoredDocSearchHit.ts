@@ -1,10 +1,9 @@
-import type { Message } from '@ai-sdk/react';
-
+import type { AIMessage } from './AskiAi';
 import type { DocSearchHit } from './DocSearchHit';
 
 export type StoredDocSearchHit = Omit<DocSearchHit, '_highlightResult' | '_snippetResult'>;
 
-export type StoredAskAiMessage = Message & {
+export type StoredAskAiMessage = AIMessage & {
   /** Optional user feedback on this assistant message. */
   feedback?: 'dislike' | 'like';
 };
