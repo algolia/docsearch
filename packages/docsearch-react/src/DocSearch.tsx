@@ -5,7 +5,13 @@ import { createPortal } from 'react-dom';
 
 import { DocSearchButton } from './DocSearchButton';
 import { DocSearchModal } from './DocSearchModal';
-import type { DocSearchHit, DocSearchTheme, InternalDocSearchHit, StoredDocSearchHit } from './types';
+import type {
+  DocSearchHit,
+  DocSearchTheme,
+  InternalDocSearchHit,
+  KeyboardShortcuts,
+  StoredDocSearchHit,
+} from './types';
 import { useDocSearchKeyboardEvents } from './useDocSearchKeyboardEvents';
 import { useTheme } from './useTheme';
 
@@ -155,6 +161,10 @@ export interface DocSearchProps {
    * @default 4
    */
   recentSearchesWithFavoritesLimit?: number;
+  /**
+   * Configuration for keyboard shortcuts. Allows enabling/disabling specific shortcuts.
+   */
+  keyboardShortcuts?: KeyboardShortcuts;
 }
 
 export function DocSearch({ indexName, searchParameters, indices = [], ...props }: DocSearchProps): JSX.Element {
@@ -212,6 +222,7 @@ export function DocSearch({ indexName, searchParameters, indices = [], ...props 
     isAskAiActive,
     onAskAiToggle,
     searchButtonRef,
+    keyboardShortcuts: props.keyboardShortcuts,
   });
   useTheme({ theme: props.theme });
 
@@ -237,7 +248,12 @@ export function DocSearch({ indexName, searchParameters, indices = [], ...props 
 
   return (
     <>
-      <DocSearchButton ref={searchButtonRef} translations={props?.translations?.button} onClick={onOpen} />
+      <DocSearchButton
+        ref={searchButtonRef}
+        translations={props?.translations?.button}
+        keyboardShortcuts={props.keyboardShortcuts}
+        onClick={onOpen}
+      />
 
       {isOpen &&
         createPortal(

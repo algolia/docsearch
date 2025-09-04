@@ -468,6 +468,97 @@ When provided, an informative message wrapped with your link will be displayed o
   />
 </div>
 
+## `keyboardShortcuts`
+
+> `type: KeyboardShortcuts` | **optional**
+
+Configuration for keyboard shortcuts that trigger the search modal.
+
+### Default behavior:
+- `Ctrl/Cmd+K` - Opens and closes the search modal
+- `/` - Opens the search modal (doesn't close)
+
+### Interface:
+```typescript
+interface KeyboardShortcuts {
+  'Ctrl/Cmd+K'?: boolean; // default: true
+  '/'?: boolean;           // default: true
+}
+```
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', },
+    { label: 'React', value: 'react', }
+  ]
+}>
+<TabItem value="js">
+
+```js
+// Default - all shortcuts enabled
+docsearch({
+  // ...
+});
+
+// Disable slash shortcut
+docsearch({
+  // ...
+  keyboardShortcuts: { '/': false }
+});
+
+// Disable Ctrl/Cmd+K shortcut (also hides button hint)
+docsearch({
+  // ...
+  keyboardShortcuts: { 'Ctrl/Cmd+K': false }
+});
+
+// Disable all keyboard shortcuts
+docsearch({
+  // ...
+  keyboardShortcuts: { 'Ctrl/Cmd+K': false, '/': false }
+});
+```
+
+</TabItem>
+
+<TabItem value="react">
+
+```jsx
+{/* Default - all shortcuts enabled */}
+<DocSearch
+  // ...
+/>
+
+{/* Disable slash shortcut */}
+<DocSearch
+  // ...
+  keyboardShortcuts={{ '/': false }}
+/>
+
+{/* Disable Ctrl/Cmd+K shortcut (also hides button hint) */}
+<DocSearch
+  // ...
+  keyboardShortcuts={{ 'Ctrl/Cmd+K': false }}
+/>
+
+{/* Disable all keyboard shortcuts */}
+<DocSearch
+  // ...
+  keyboardShortcuts={{ 'Ctrl/Cmd+K': false, '/': false }}
+/>
+```
+
+</TabItem>
+</Tabs>
+
+:::info Keyboard Shortcut Behavior
+- **Ctrl/Cmd+K**: Toggle shortcut that both opens and closes the modal
+- **/**: Character shortcut that only opens the modal (prevents interference with search typing)
+- **Escape**: Always works to close the modal regardless of configuration
+:::
+
 ## `resultsFooterComponent`
 
 > `type: ({ state }) => JSX.Element` | **optional**
