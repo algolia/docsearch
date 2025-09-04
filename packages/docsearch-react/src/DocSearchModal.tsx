@@ -379,6 +379,7 @@ export function DocSearchModal({
           'X-Algolia-Application-Id': askAiConfig?.appId || appId,
           'X-Algolia-Index-Name': askAiConfig?.indexName || defaultIndexName,
           'X-Algolia-Assistant-Id': askAiConfigurationId || '',
+          'X-AI-SDK-Version': 'v5',
         };
       },
       // headers: {

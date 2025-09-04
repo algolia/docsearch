@@ -8,7 +8,7 @@ import type { ScreenStateProps } from './ScreenState';
 import type { StoredSearchPlugin } from './stored-searches';
 import type { InternalDocSearchHit, StoredAskAiState } from './types';
 import type { AIMessage } from './types/AskiAi';
-import { extractLinksFromText } from './utils/ai';
+import { extractLinksFromText, getMessageContent } from './utils/ai';
 import { groupConsecutiveToolResults } from './utils/groupConsecutiveToolResults';
 
 export type AskAiScreenTranslations = Partial<{
@@ -47,7 +47,7 @@ export type AskAiScreenTranslations = Partial<{
 }>;
 
 type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
-  messages: UseChatHelpers<AIMessage>['messages'];
+  messages: AIMessage[];
   status: UseChatHelpers<AIMessage>['status'];
   askAiStreamError: Error | null;
   askAiFetchError: Error | undefined;
@@ -60,8 +60,8 @@ interface AskAiScreenHeaderProps {
 
 interface Exchange {
   id: string;
-  userMessage: UseChatHelpers<AIMessage>['messages'][number];
-  assistantMessage: UseChatHelpers<AIMessage>['messages'][number] | null;
+  userMessage: AIMessage;
+  assistantMessage: AIMessage | null;
 }
 
 function AskAiScreenHeader({ disclaimerText }: AskAiScreenHeaderProps): JSX.Element {
@@ -93,11 +93,8 @@ function AskAiExchangeCard({
 
   const showActions = !isLastExchange || (isLastExchange && loadingStatus === 'ready' && Boolean(assistantMessage));
 
-  const assistantContent = useMemo(
-    () => assistantMessage?.parts.find((part) => part.type === 'text'),
-    [assistantMessage],
-  );
-  const userContent = useMemo(() => userMessage.parts.find((part) => part.type === 'text'), [userMessage]);
+  const assistantContent = useMemo(() => getMessageContent(assistantMessage), [assistantMessage]);
+  const userContent = useMemo(() => getMessageContent(userMessage), [userMessage]);
 
   const urlsToDisplay = React.useMemo(() => extractLinksFromText(assistantContent?.text || ''), [assistantContent]);
 

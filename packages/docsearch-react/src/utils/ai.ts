@@ -1,3 +1,5 @@
+import type { TextUIPart } from 'ai';
+
 import type { StoredAskAiState } from '../types';
 import type { AIMessage } from '../types/AskiAi';
 
@@ -75,3 +77,6 @@ export const buildDummyAskAiHit = (query: string, messages: AIMessage[]): Stored
     url_without_anchor: '',
   };
 };
+
+export const getMessageContent = (message: AIMessage | null): TextUIPart | undefined =>
+  message?.parts.find((part) => part.type === 'text');
