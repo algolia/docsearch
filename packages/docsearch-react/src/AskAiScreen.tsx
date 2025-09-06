@@ -1,5 +1,5 @@
 import type { UseChatHelpers } from '@ai-sdk/react';
-import React, { type JSX, useState, useEffect, useMemo } from 'react';
+import React, { type JSX, useMemo, useState, useEffect } from 'react';
 
 import { AggregatedSearchBlock } from './AggregatedSearchBlock';
 import { AlertIcon, LoadingIcon, SearchIcon } from './icons';
@@ -99,7 +99,9 @@ function AskAiExchangeCard({
   const urlsToDisplay = React.useMemo(() => extractLinksFromText(assistantContent?.text || ''), [assistantContent]);
 
   const displayParts = React.useMemo(() => {
-    return groupConsecutiveToolResults(assistantMessage?.parts || []);
+    return groupConsecutiveToolResults(assistantMessage?.parts || []).filter((p) =>
+      ['tool-searchIndex', 'text', 'aggregated-tool-call', 'reasoning'].includes(p.type),
+    );
   }, [assistantMessage]);
 
   return (
@@ -126,110 +128,105 @@ function AskAiExchangeCard({
                 <span className="shimmer">{translations.thinkingText || 'Thinking...'}</span>
               </div>
             )}
-            {Array.isArray(displayParts)
-              ? displayParts.map((part, idx) => {
-                  const index = idx;
+            {displayParts.map((part, idx) => {
+              const index = idx;
 
-                  if (typeof part === 'string') {
-                    return (
-                      <MemoizedMarkdown
-                        key={index}
-                        content={part}
-                        copyButtonText={translations.copyButtonText || 'Copy'}
-                        copyButtonCopiedText={translations.copyButtonCopiedText || 'Copied!'}
-                        isStreaming={loadingStatus === 'streaming'}
-                      />
-                    );
-                  }
+              if (typeof part === 'string') {
+                return (
+                  <MemoizedMarkdown
+                    key={index}
+                    content={part}
+                    copyButtonText={translations.copyButtonText || 'Copy'}
+                    copyButtonCopiedText={translations.copyButtonCopiedText || 'Copied!'}
+                    isStreaming={loadingStatus === 'streaming'}
+                  />
+                );
+              }
 
-                  // aggregated tool call rendering
-                  if (part.type === 'aggregated-tool-call') {
-                    return (
-                      <AggregatedSearchBlock
-                        key={index}
-                        queries={(part as any).queries}
-                        translations={translations}
-                        onSearchQueryClick={onSearchQueryClick}
-                      />
-                    );
-                  }
+              // aggregated tool call rendering
+              if (part.type === 'aggregated-tool-call') {
+                return (
+                  <AggregatedSearchBlock
+                    key={index}
+                    queries={part.queries}
+                    translations={translations}
+                    onSearchQueryClick={onSearchQueryClick}
+                  />
+                );
+              }
 
-                  if (part.type === 'reasoning' && assistantMessage?.parts?.length === 1) {
+              if (part.type === 'reasoning' && assistantMessage?.parts?.length === 1) {
+                return (
+                  <div key={index} className="DocSearch-AskAiScreen-MessageContent-Reasoning shimmer">
+                    <span className="shimmer">Reasoning...</span>
+                  </div>
+                );
+              }
+
+              if (part.type === 'text') {
+                return (
+                  <MemoizedMarkdown
+                    key={index}
+                    content={part.text}
+                    copyButtonText={translations.copyButtonText || 'Copy'}
+                    copyButtonCopiedText={translations.copyButtonCopiedText || 'Copied!'}
+                    isStreaming={loadingStatus === 'streaming'}
+                  />
+                );
+              }
+              if (part.type === 'tool-searchIndex') {
+                switch (part.state) {
+                  case 'input-streaming':
                     return (
-                      <div key={index} className="DocSearch-AskAiScreen-MessageContent-Reasoning shimmer">
-                        <span className="shimmer">Reasoning...</span>
+                      <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--PartialCall shimmer">
+                        <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
+                        <span>{translations.preToolCallText || 'Searching...'}</span>
                       </div>
                     );
-                  }
-
-                  if (part.type === 'text') {
+                  case 'input-available':
                     return (
-                      <MemoizedMarkdown
-                        key={index}
-                        content={part.text}
-                        copyButtonText={translations.copyButtonText || 'Copy'}
-                        copyButtonCopiedText={translations.copyButtonCopiedText || 'Copied!'}
-                        isStreaming={loadingStatus === 'streaming'}
-                      />
+                      <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Call shimmer">
+                        <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
+                        <span>
+                          {`${translations.duringToolCallText || 'Searching for '} "${part.input || ''}" ...`}
+                        </span>
+                      </div>
                     );
-                  }
-                  if (part.type === 'tool-searchIndex') {
-                    switch (part.state) {
-                      case 'input-streaming':
-                        return (
-                          <div
-                            key={index}
-                            className="DocSearch-AskAiScreen-MessageContent-Tool Tool--PartialCall shimmer"
+                  case 'output-available':
+                    return (
+                      <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Result">
+                        <SearchIcon size={18} />
+                        <span>
+                          {`${translations.afterToolCallText || 'Searched for'}`}{' '}
+                          <span
+                            role="button"
+                            tabIndex={0}
+                            className="DocSearch-AskAiScreen-MessageContent-Tool-Query"
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                onSearchQueryClick(part.output.args?.query || '');
+                              }
+                            }}
+                            onClick={() => onSearchQueryClick(part.output.args?.query || '')}
                           >
-                            <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-                            <span>{translations.preToolCallText || 'Searching...'}</span>
-                          </div>
-                        );
-                      case 'input-available':
-                        return (
-                          <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Call shimmer">
-                            <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-                            <span>
-                              {`${translations.duringToolCallText || 'Searching for '} "${part.input || ''}" ...`}
-                            </span>
-                          </div>
-                        );
-                      case 'output-available':
-                        return (
-                          <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Result">
-                            <SearchIcon size={18} />
-                            <span>
-                              {`${translations.afterToolCallText || 'Searched for'}`}{' '}
-                              <span
-                                role="button"
-                                tabIndex={0}
-                                className="DocSearch-AskAiScreen-MessageContent-Tool-Query"
-                                onKeyDown={(e) => {
-                                  if (e.key === 'Enter' || e.key === ' ') {
-                                    e.preventDefault();
-                                    onSearchQueryClick(part.output.args?.query || '');
-                                  }
-                                }}
-                                onClick={() => onSearchQueryClick(part.output.args?.query || '')}
-                              >
-                                {' '}
-                                &quot;{part.output.args?.query || ''}&quot;
-                              </span>
-                            </span>
-                          </div>
-                        );
-                      default:
-                        return null;
-                    }
-                  }
-                  // fallback for unknown part type
-                  return (
-                    <span key={index} className="text-sm italic shimmer">
-                      {translations.thinkingText || 'Thinking...'}
-                    </span>
-                  );
-                })
-              : assistantContent?.text}
+                            {' '}
+                            &quot;{part.output.args?.query || ''}&quot;
+                          </span>
+                        </span>
+                      </div>
+                    );
+                  default:
+                    return null;
+                }
+              }
+              // fallback for unknown part type
+              return (
+                <span key={index} className="text-sm italic shimmer">
+                  {translations.thinkingText || 'Thinking...'}
+                </span>
+              );
+            })}
           </div>
         </div>
         <div className="DocSearch-AskAiScreen-Answer-Footer">

@@ -10,6 +10,10 @@ type ExtractedLink = {
 
 // utility to extract links (markdown and bare urls) from a string
 export function extractLinksFromText(text: string): ExtractedLink[] {
+  if (text.length === 0) {
+    return [];
+  }
+
   const markdownLinkRegex = /\[([^\]]*)\]\(([^)]+)\)/g;
   const plainLinkRegex = /(?<!\]\()https?:\/\/[^\s<>"{}|\\^`[\]]+/g;
   const links: ExtractedLink[] = [];

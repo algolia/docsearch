@@ -4,7 +4,7 @@ import type { UIDataTypes, UIMessagePart } from 'ai';
 export interface SearchIndexTool {
   input: string;
   output: {
-    args: {
+    args?: {
       query: string;
     };
   };

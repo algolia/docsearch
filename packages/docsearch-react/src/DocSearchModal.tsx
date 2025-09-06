@@ -5,7 +5,7 @@ import {
   createAutocomplete,
   type AutocompleteState,
 } from '@algolia/autocomplete-core';
-import { DefaultChatTransport } from 'ai';
+import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls } from 'ai';
 import type { SearchResponse } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 
@@ -357,6 +357,7 @@ export function DocSearchModal({
     setMessages,
     error: askAiFetchError,
   } = useChat<AIMessage>({
+    sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
     transport: new DefaultChatTransport({
       api: ASK_AI_API_URL,
       headers: async (): Promise<Record<string, string>> => {
@@ -374,7 +375,7 @@ export function DocSearchModal({
 
         return {
           ...(token ? { authorization: `TOKEN ${token}` } : {}),
-          'Content-Type': 'application/json',
+          // 'Content-Type': 'application/json',
           'X-Algolia-API-Key': askAiConfig?.apiKey || apiKey,
           'X-Algolia-Application-Id': askAiConfig?.appId || appId,
           'X-Algolia-Index-Name': askAiConfig?.indexName || defaultIndexName,
@@ -382,9 +383,6 @@ export function DocSearchModal({
           'X-AI-SDK-Version': 'v5',
         };
       },
-      // headers: {
-
-      // },
       body: askAiSearchParameters ? { searchParameters: askAiSearchParameters } : {},
     }),
     onError(streamError) {
