@@ -6,6 +6,7 @@ import { MAX_QUERY_SIZE } from './constants';
 import { LoadingIcon, CloseIcon, SearchIcon, SparklesIcon } from './icons';
 import { BackIcon } from './icons/BackIcon';
 import type { InternalDocSearchHit } from './types';
+import type { AIMessage } from './types/AskiAi';
 
 export type SearchBoxTranslations = Partial<{
   clearButtonTitle: string;
@@ -32,7 +33,7 @@ interface SearchBoxProps
   onAskAgain: (query: string) => void;
   placeholder: string;
   isAskAiActive: boolean;
-  askAiStatus: UseChatHelpers['status'];
+  askAiStatus: UseChatHelpers<AIMessage>['status'];
   isFromSelection: boolean;
   translations?: SearchBoxTranslations;
 }

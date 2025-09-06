@@ -1,6 +1,7 @@
-import type { Message } from '@ai-sdk/react';
+import type { TextUIPart } from 'ai';
 
 import type { StoredAskAiState } from '../types';
+import type { AIMessage } from '../types/AskiAi';
 
 type ExtractedLink = {
   url: string;
@@ -9,6 +10,10 @@ type ExtractedLink = {
 
 // utility to extract links (markdown and bare urls) from a string
 export function extractLinksFromText(text: string): ExtractedLink[] {
+  if (text.length === 0) {
+    return [];
+  }
+
   const markdownLinkRegex = /\[([^\]]*)\]\(([^)]+)\)/g;
   const plainLinkRegex = /(?<!\]\()https?:\/\/[^\s<>"{}|\\^`[\]]+/g;
   const links: ExtractedLink[] = [];
@@ -51,25 +56,31 @@ export function extractLinksFromText(text: string): ExtractedLink[] {
   return links;
 }
 
-export const buildDummyAskAiHit = (query: string, messages: Message[]): StoredAskAiState => ({
-  query,
-  objectID: messages[0].content,
-  messages,
-  type: 'askAI',
-  anchor: 'stored',
+export const buildDummyAskAiHit = (query: string, messages: AIMessage[]): StoredAskAiState => {
+  const textPart = messages[0].parts.find((part) => part.type === 'text');
 
-  // dummy content to make it a valid hit
-  // this is useful to show it among other hits
-  content: null,
-  hierarchy: {
-    lvl0: 'askAI',
-    lvl1: messages[0].content, // use first message as hit name
-    lvl2: null,
-    lvl3: null,
-    lvl4: null,
-    lvl5: null,
-    lvl6: null,
-  },
-  url: '',
-  url_without_anchor: '',
-});
+  return {
+    query,
+    objectID: textPart?.text ?? '',
+    messages,
+    type: 'askAI',
+    anchor: 'stored',
+    // dummy content to make it a valid hit
+    // this is useful to show it among other hits
+    content: null,
+    hierarchy: {
+      lvl0: 'askAI',
+      lvl1: textPart?.text ?? '', // use first message as hit name
+      lvl2: null,
+      lvl3: null,
+      lvl4: null,
+      lvl5: null,
+      lvl6: null,
+    },
+    url: '',
+    url_without_anchor: '',
+  };
+};
+
+export const getMessageContent = (message: AIMessage | null): TextUIPart | undefined =>
+  message?.parts.find((part) => part.type === 'text');
