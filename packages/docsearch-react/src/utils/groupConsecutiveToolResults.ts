@@ -22,7 +22,7 @@ export function groupConsecutiveToolResults(parts: AIMessagePart[]): Array<Aggre
       while (j < parts.length) {
         const candidate = parts[j];
         if (candidate.type === 'tool-searchIndex' && candidate.state === 'output-available') {
-          const q = (candidate.output.args?.query ?? '').trim();
+          const q = (candidate.output?.query ?? '').trim();
 
           // eslint-disable-next-line max-depth
           if (q && q.length > 0) {

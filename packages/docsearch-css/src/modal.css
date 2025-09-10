@@ -782,7 +782,6 @@ assistive tech users */
   display: flex;
   flex: 1 1 auto;
   font-weight: 400;
-  line-height: 1.2em;
   overflow-x: hidden;
   position: relative;
   text-overflow: ellipsis;
@@ -798,6 +797,7 @@ assistive tech users */
   background: none;
   margin-left: 4px;
   text-overflow: ellipsis;
+  text-decoration: none !important;
 }
 
 @keyframes fade-in {

@@ -99,10 +99,13 @@ function AskAiExchangeCard({
   const urlsToDisplay = React.useMemo(() => extractLinksFromText(assistantContent?.text || ''), [assistantContent]);
 
   const displayParts = React.useMemo(() => {
-    return groupConsecutiveToolResults(assistantMessage?.parts || []).filter((p) =>
-      ['tool-searchIndex', 'text', 'aggregated-tool-call', 'reasoning'].includes(p.type),
-    );
+    return groupConsecutiveToolResults(assistantMessage?.parts || []);
   }, [assistantMessage]);
+
+  const isThinking =
+    ['submitted', 'streaming'].includes(loadingStatus) &&
+    isLastExchange &&
+    !displayParts.some((part) => part.type !== 'step-start');
 
   return (
     <div className="DocSearch-AskAiScreen-Response-Container">
@@ -123,7 +126,7 @@ function AskAiExchangeCard({
                 />
               </div>
             )}
-            {loadingStatus === 'submitted' && isLastExchange && (
+            {isThinking && (
               <div className="DocSearch-AskAiScreen-MessageContent-Reasoning">
                 <span className="shimmer">{translations.thinkingText || 'Thinking...'}</span>
               </div>
@@ -143,7 +146,6 @@ function AskAiExchangeCard({
                 );
               }
 
-              // aggregated tool call rendering
               if (part.type === 'aggregated-tool-call') {
                 return (
                   <AggregatedSearchBlock
@@ -155,6 +157,7 @@ function AskAiExchangeCard({
                 );
               }
 
+              // aggregated tool call rendering
               if (part.type === 'reasoning' && assistantMessage?.parts?.length === 1) {
                 return (
                   <div key={index} className="DocSearch-AskAiScreen-MessageContent-Reasoning shimmer">
@@ -170,7 +173,7 @@ function AskAiExchangeCard({
                     content={part.text}
                     copyButtonText={translations.copyButtonText || 'Copy'}
                     copyButtonCopiedText={translations.copyButtonCopiedText || 'Copied!'}
-                    isStreaming={loadingStatus === 'streaming'}
+                    isStreaming={part.state === 'streaming'}
                   />
                 );
               }
@@ -205,27 +208,23 @@ function AskAiExchangeCard({
                             onKeyDown={(e) => {
                               if (e.key === 'Enter' || e.key === ' ') {
                                 e.preventDefault();
-                                onSearchQueryClick(part.output.args?.query || '');
+                                onSearchQueryClick(part.output.query || '');
                               }
                             }}
-                            onClick={() => onSearchQueryClick(part.output.args?.query || '')}
+                            onClick={() => onSearchQueryClick(part.output.query || '')}
                           >
                             {' '}
-                            &quot;{part.output.args?.query || ''}&quot;
+                            &quot;{part.output.query || ''}&quot;
                           </span>
                         </span>
                       </div>
                     );
                   default:
-                    return null;
+                    break;
                 }
               }
               // fallback for unknown part type
-              return (
-                <span key={index} className="text-sm italic shimmer">
-                  {translations.thinkingText || 'Thinking...'}
-                </span>
-              );
+              return null;
             })}
           </div>
         </div>
