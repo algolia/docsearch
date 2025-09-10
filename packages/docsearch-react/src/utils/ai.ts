@@ -9,49 +9,60 @@ type ExtractedLink = {
 };
 
 // utility to extract links (markdown and bare urls) from a string
-export function extractLinksFromText(text: string): ExtractedLink[] {
-  if (text.length === 0) {
-    return [];
-  }
-
-  const markdownLinkRegex = /\[([^\]]*)\]\(([^)]+)\)/g;
-  const plainLinkRegex = /(?<!\]\()https?:\/\/[^\s<>"{}|\\^`[\]]+/g;
+export function extractLinksFromMessage(message: AIMessage | null): ExtractedLink[] {
   const links: ExtractedLink[] = [];
   // Used to dedupe multiple urls
   const seen = new Set<string>();
 
-  // Strip out all code blocks e.g. ```
-  const textWithoutCodeBlocks = text.replace(/```[\s\S]*?```/g, '');
-
-  // Strip out all inline code blocks e.g. `
-  const cleanText = textWithoutCodeBlocks.replace(/`[^`]*`/g, '');
-
-  // Get all markdown based links e.g. []()
-  const markdownMatches = cleanText.matchAll(markdownLinkRegex);
-
-  // Parses the title and url from the found links
-  for (const match of markdownMatches) {
-    const title = match[1].trim();
-    const url = match[2];
-
-    if (!seen.has(url)) {
-      seen.add(url);
-      links.push({ url, title: title || undefined });
-    }
+  if (!message) {
+    return [];
   }
 
-  // Get all "plain" links e.g. https://algolia.com/doc
-  const plainUrls = cleanText.matchAll(plainLinkRegex);
-
-  for (const match of plainUrls) {
-    // Strip any extra punctuation
-    const cleanUrl = match[0].replace(/[.,;:!?]+$/, '');
-
-    if (!seen.has(cleanUrl)) {
-      seen.add(cleanUrl);
-      links.push({ url: cleanUrl });
+  message.parts.forEach((part) => {
+    if (part.type !== 'text') {
+      return;
     }
-  }
+
+    if (part.text.length === 0) {
+      return;
+    }
+
+    const markdownLinkRegex = /\[([^\]]*)\]\(([^)]+)\)/g;
+    const plainLinkRegex = /(?<!\]\()https?:\/\/[^\s<>"{}|\\^`[\]]+/g;
+
+    // Strip out all code blocks e.g. ```
+    const textWithoutCodeBlocks = part.text.replace(/```[\s\S]*?```/g, '');
+
+    // Strip out all inline code blocks e.g. `
+    const cleanText = textWithoutCodeBlocks.replace(/`[^`]*`/g, '');
+
+    // Get all markdown based links e.g. []()
+    const markdownMatches = cleanText.matchAll(markdownLinkRegex);
+
+    // Parses the title and url from the found links
+    for (const match of markdownMatches) {
+      const title = match[1].trim();
+      const url = match[2];
+
+      if (!seen.has(url)) {
+        seen.add(url);
+        links.push({ url, title: title || undefined });
+      }
+    }
+
+    // Get all "plain" links e.g. https://algolia.com/doc
+    const plainUrls = cleanText.matchAll(plainLinkRegex);
+
+    for (const match of plainUrls) {
+      // Strip any extra punctuation
+      const cleanUrl = match[0].replace(/[.,;:!?]+$/, '');
+
+      if (!seen.has(cleanUrl)) {
+        seen.add(cleanUrl);
+        links.push({ url: cleanUrl });
+      }
+    }
+  });
 
   return links;
 }

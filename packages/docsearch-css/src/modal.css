@@ -938,7 +938,14 @@ assistive tech users */
   font-weight: 400;
 }
 
-.DocSearch-AskAiScreen-Error svg {
+.DocSearch-AskAiScreen-MessageContent {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
+}
+
+.DocSearch-AskAiScreen-Error svg,
+.DocSearch-AskAiScreen-MessageContent-Tool svg {
   width: 16px;
   height: 16px;
   flex-shrink: 0;
@@ -1219,10 +1226,13 @@ assistive tech users */
   color: var(--docsearch-muted-color);
 }
 
+.DocSearch-AskAiScreen-MessageContent-Reasoning svg {
+  color: var(--docsearch-icon-color);
+}
+
 .DocSearch-AskAiScreen-MessageContent-Tool {
   display: flex;
-  padding: 1em 0;
-  align-items: center;
+  align-items: baseline;
   width: 100%;
   color: var(--docsearch-muted-color);
 }

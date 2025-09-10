@@ -8,7 +8,7 @@ import type { ScreenStateProps } from './ScreenState';
 import type { StoredSearchPlugin } from './stored-searches';
 import type { InternalDocSearchHit, StoredAskAiState } from './types';
 import type { AIMessage } from './types/AskiAi';
-import { extractLinksFromText, getMessageContent } from './utils/ai';
+import { extractLinksFromMessage, getMessageContent } from './utils/ai';
 import { groupConsecutiveToolResults } from './utils/groupConsecutiveToolResults';
 
 export type AskAiScreenTranslations = Partial<{
@@ -96,7 +96,7 @@ function AskAiExchangeCard({
   const assistantContent = useMemo(() => getMessageContent(assistantMessage), [assistantMessage]);
   const userContent = useMemo(() => getMessageContent(userMessage), [userMessage]);
 
-  const urlsToDisplay = React.useMemo(() => extractLinksFromText(assistantContent?.text || ''), [assistantContent]);
+  const urlsToDisplay = React.useMemo(() => extractLinksFromMessage(assistantMessage), [assistantMessage]);
 
   const displayParts = React.useMemo(() => {
     return groupConsecutiveToolResults(assistantMessage?.parts || []);
@@ -157,10 +157,10 @@ function AskAiExchangeCard({
                 );
               }
 
-              // aggregated tool call rendering
-              if (part.type === 'reasoning' && assistantMessage?.parts?.length === 1) {
+              if (part.type === 'reasoning' && part.state === 'streaming') {
                 return (
                   <div key={index} className="DocSearch-AskAiScreen-MessageContent-Reasoning shimmer">
+                    <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
                     <span className="shimmer">Reasoning...</span>
                   </div>
                 );
@@ -198,7 +198,7 @@ function AskAiExchangeCard({
                   case 'output-available':
                     return (
                       <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Result">
-                        <SearchIcon size={18} />
+                        <SearchIcon />
                         <span>
                           {`${translations.afterToolCallText || 'Searched for'}`}{' '}
                           <span
