@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 
-import { extractLinksFromText } from '../utils/ai';
+import type { AIMessage } from '../types/AskiAi';
+import { extractLinksFromMessage } from '../utils/ai';
 import {
   createObjectStorage,
   createStorage,
@@ -12,12 +13,32 @@ import {
 describe('utils', () => {
   describe('extractLinksFromText', () => {
     it('returns an empty array when no links are present', () => {
-      expect(extractLinksFromText('hello world')).toEqual([]);
+      const message: AIMessage = {
+        id: '123',
+        role: 'assistant',
+        parts: [
+          {
+            type: 'text',
+            text: 'hello world',
+          },
+        ],
+      };
+      expect(extractLinksFromMessage(message)).toEqual([]);
     });
 
     it('extracts markdown and bare URLs', () => {
       const text = 'See [DocSearch](https://docsearch.algolia.com) and https://example.com/docs.';
-      expect(extractLinksFromText(text)).toEqual([
+      const message: AIMessage = {
+        id: '123',
+        role: 'assistant',
+        parts: [
+          {
+            type: 'text',
+            text,
+          },
+        ],
+      };
+      expect(extractLinksFromMessage(message)).toEqual([
         { url: 'https://docsearch.algolia.com', title: 'DocSearch' },
         { url: 'https://example.com/docs' },
       ]);
@@ -25,31 +46,81 @@ describe('utils', () => {
 
     it('deduplicates repeated links and trims punctuation', () => {
       const text = 'Check https://algolia.com, https://algolia.com!';
-      expect(extractLinksFromText(text)).toEqual([{ url: 'https://algolia.com' }]);
+      const message: AIMessage = {
+        id: '123',
+        role: 'assistant',
+        parts: [
+          {
+            type: 'text',
+            text,
+          },
+        ],
+      };
+      expect(extractLinksFromMessage(message)).toEqual([{ url: 'https://algolia.com' }]);
     });
 
     it('does not return links from within code snippets', () => {
       const text = `
-See [Example Docs](https://example.com/docs)
+  See [Example Docs](https://example.com/docs)
 
-This is also ignored \`https://ignored.com\`
+  This is also ignored \`https://ignored.com\`
 
-\`\`\`js
-  const DOCS_LINK = 'https://algolia.com/doc'
-\`\`\`
+  \`\`\`js
+    const DOCS_LINK = 'https://algolia.com/doc'
+  \`\`\`
 
-https://docsearch.algolia.com
+  https://docsearch.algolia.com
 
-https://docsearch.algolia.com/configuration?version=beta
-`;
+  https://docsearch.algolia.com/configuration?version=beta
+  `;
+      const message: AIMessage = {
+        id: '123',
+        role: 'assistant',
+        parts: [
+          {
+            type: 'text',
+            text,
+          },
+        ],
+      };
 
-      const output = extractLinksFromText(text);
+      const output = extractLinksFromMessage(message);
 
       expect(output).toEqual([
         { url: 'https://example.com/docs', title: 'Example Docs' },
         { url: 'https://docsearch.algolia.com' },
         { url: 'https://docsearch.algolia.com/configuration?version=beta' },
       ]);
+    });
+
+    it('ignores parts that arent text', () => {
+      const text = 'See [DocSearch](https://docsearch.algolia.com)';
+      const message: AIMessage = {
+        id: '123',
+        role: 'assistant',
+        parts: [
+          {
+            type: 'reasoning',
+            state: 'done',
+            text: 'Need to search using the [Algolia](https://algolia.com) searchIndex tool',
+          },
+          {
+            type: 'tool-searchIndex',
+            input: 'What is DocSearch',
+            state: 'output-available',
+            output: {
+              query: 'DocSearch',
+            },
+            toolCallId: 'searchIndex-testing',
+          },
+          {
+            type: 'text',
+            text,
+          },
+        ],
+      };
+
+      expect(extractLinksFromMessage(message)).toEqual([{ url: 'https://docsearch.algolia.com', title: 'DocSearch' }]);
     });
   });
 
@@ -103,7 +174,9 @@ https://docsearch.algolia.com/configuration?version=beta
       const storage = createStorage<{ data: string }>(testKey);
 
       // Create a large dataset that might cause quota issues
-      const largeArray = Array.from({ length: 1000 }, (_, i) => ({ data: `test-data-${i}`.repeat(100) }));
+      const largeArray = Array.from({ length: 1000 }, (_, i) => ({
+        data: `test-data-${i}`.repeat(100),
+      }));
 
       // This should not throw an error even if quota is exceeded
       expect(() => {

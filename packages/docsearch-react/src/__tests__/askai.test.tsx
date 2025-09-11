@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react';
+import type { UIMessage } from 'ai';
 import React from 'react';
 import { describe, it, expect } from 'vitest';
 import '@testing-library/jest-dom/vitest';
@@ -22,7 +23,18 @@ const baseProps = {
 
 describe('AskAiScreen', () => {
   it('displays stream errors in the latest exchange', () => {
-    const messages = [{ id: '1', role: 'user', content: 'hello' } as any];
+    const messages: UIMessage[] = [
+      {
+        id: '1',
+        role: 'user',
+        parts: [
+          {
+            type: 'text',
+            text: 'hello',
+          },
+        ],
+      },
+    ];
 
     const { getByText } = render(
       <AskAiScreen

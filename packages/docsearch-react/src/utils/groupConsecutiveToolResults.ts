@@ -1,3 +1,5 @@
+import type { AIMessagePart } from '../types/AskiAi';
+
 export interface AggregatedToolCallPart {
   type: 'aggregated-tool-call';
   queries: string[];
@@ -7,30 +9,23 @@ export interface AggregatedToolCallPart {
  * Groups consecutive `searchIndex` tool invocation result parts together.
  * Empty or falsy queries are ignored.
  */
-export function groupConsecutiveToolResults<T extends { type: string }>(parts: T[]): Array<AggregatedToolCallPart | T> {
-  const aggregatedParts: Array<AggregatedToolCallPart | T> = [];
+export function groupConsecutiveToolResults(parts: AIMessagePart[]): Array<AggregatedToolCallPart | AIMessagePart> {
+  const aggregatedParts: Array<AggregatedToolCallPart | AIMessagePart> = [];
 
   for (let i = 0; i < parts.length; i++) {
-    const part: any = parts[i];
+    const part = parts[i];
 
-    if (
-      part?.type === 'tool-invocation' &&
-      part.toolInvocation?.toolName === 'searchIndex' &&
-      part.toolInvocation?.state === 'result'
-    ) {
+    if (part.type === 'tool-searchIndex' && part.state === 'output-available') {
       // build list of consecutive result queries
       const queries: string[] = [];
       let j = i;
       while (j < parts.length) {
-        const candidate: any = parts[j];
-        if (
-          candidate?.type === 'tool-invocation' &&
-          candidate.toolInvocation?.toolName === 'searchIndex' &&
-          candidate.toolInvocation?.state === 'result'
-        ) {
-          const q = (candidate.toolInvocation?.args?.query || '').trim();
+        const candidate = parts[j];
+        if (candidate.type === 'tool-searchIndex' && candidate.state === 'output-available') {
+          const q = (candidate.output?.query ?? '').trim();
+
           // eslint-disable-next-line max-depth
-          if (q) {
+          if (q && q.length > 0) {
             queries.push(q);
           }
           j++;
