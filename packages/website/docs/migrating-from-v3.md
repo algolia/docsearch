@@ -2,12 +2,6 @@
 title: Migrating from v3 to v4
 ---
 
-:::warning
-
-DocSearch v4 is currently in beta. While it's suitable for production scenarios, expect potential improvements and minor issues. Use at your discretion.
-
-:::
-
 This guide provides detailed information on migrating from [DocSearch v3](/docs/v3/docsearch) to [DocSearch v4](/docs/docsearch), highlighting key differences and new configuration options. For a comprehensive overview, refer to the [API reference](/docs/api) and [Getting Started Guide](/docs/docsearch).
 
 ## If You're Using Algolia Keyword Search Only

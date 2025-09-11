@@ -27,15 +27,15 @@ This package is a dependency of [`@docsearch/js`][1] and [`@docsearch/react`][1]
 ## Installation
 
 ```bash
-yarn add @docsearch/css@beta
+yarn add @docsearch/css@4
 # or
-npm install @docsearch/css@beta
+npm install @docsearch/css@4
 ```
 
 If you don’t want to use a package manager, you can use a standalone endpoint:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@beta" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@4" />
 ```
 
 ## Files

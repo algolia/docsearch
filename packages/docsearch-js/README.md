@@ -5,9 +5,9 @@ JavaScript package for [DocSearch](http://docsearch.algolia.com/), the best sear
 ## Installation
 
 ```sh
-yarn add @docsearch/js@beta
+yarn add @docsearch/js@4
 # or
-npm install @docsearch/js@beta
+npm install @docsearch/js@4
 ```
 
 ## Get started
@@ -15,7 +15,7 @@ npm install @docsearch/js@beta
 If you don’t want to use a package manager, you can use a standalone endpoint:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@beta"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@4"></script>
 ```
 
 To get started, you need a [`container`](https://docsearch.algolia.com/docs/api#container) for your DocSearch component to go in. If you don’t have one already, you can insert one into your markup:

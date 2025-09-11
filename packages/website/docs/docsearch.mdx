@@ -5,12 +5,6 @@ title: Getting Started with v4
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-:::warning
-
-DocSearch v4 is currently in beta. While it's suitable for production scenarios, expect potential improvements and minor issues. Use at your discretion.
-
-:::
-
 ## Introduction
 
 DocSearch v4 provides a significant upgrade over previous versions, offering enhanced accessibility, responsiveness, and an improved search experience for your documentation. Built on [Algolia Autocomplete][1], DocSearch v4 ensures a seamless integration trusted by leading documentation sites worldwide.
@@ -30,9 +24,9 @@ DocSearch packages are available on the [npm registry][10].
 <TabItem value="js">
 
 ```bash
-yarn add @docsearch/js@beta
+yarn add @docsearch/js@4
 # or with npm
-npm install @docsearch/js@beta
+npm install @docsearch/js@4
 ```
 
 ### Without package manager
@@ -40,22 +34,22 @@ npm install @docsearch/js@beta
 Include CSS in your website's `<head>`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@beta" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@4" />
 ```
 
 And the JavaScript at the end of your `<body>`:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@beta"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@4"></script>
 ```
 
 </TabItem>
 <TabItem value="react">
 
 ```bash
-yarn add @docsearch/react@beta
+yarn add @docsearch/react@4
 # or
-npm install @docsearch/react@beta
+npm install @docsearch/react@4
 ```
 
 ### Without package manager
@@ -63,13 +57,13 @@ npm install @docsearch/react@beta
 Include CSS in your website's `<head>`:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@beta" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@4" />
 ```
 
 And the JavaScript at the end of your `<body>`:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/react@beta"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/react@4"></script>
 ```
 
 </TabItem>
@@ -193,7 +187,7 @@ DocSearch v4 introduces support for AskAI, Algolia’s advanced, AI-powered sear
 
 To enable AskAI, you can add your Algolia Assistant ID as a string, or use an object for more advanced configuration (such as specifying a different index, credentials, or search parameters):
 
-<Tabs groupId="askai-format" defaultValue="string" values={[{ label: 'String', value: 'string' }, { label: 'Object', value: 'object' }]}> 
+<Tabs groupId="askai-format" defaultValue="string" values={[{ label: 'String', value: 'string' }, { label: 'Object', value: 'object' }]}>
 <TabItem value="string">
 
 ```js

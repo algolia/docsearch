@@ -23,7 +23,7 @@ export default {
     },
     {
       type: 'category',
-      label: 'Algolia AskAI - Beta',
+      label: 'Algolia AskAI',
       items: [
         'v4/askai',
         'v4/askai-api',
