@@ -800,6 +800,10 @@ assistive tech users */
   text-decoration: none !important;
 }
 
+.DocSearch-Hit-AskAIButton-title mark {
+  text-decoration: none;
+}
+
 @keyframes fade-in {
   0% {
     opacity: 0;
