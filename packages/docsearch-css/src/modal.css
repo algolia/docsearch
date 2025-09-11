@@ -797,7 +797,10 @@ assistive tech users */
   background: none;
   margin-left: 4px;
   text-overflow: ellipsis;
-  text-decoration: none !important;
+}
+
+.DocSearch-Hit-AskAIButton-title mark {
+  text-decoration: none;
 }
 
 @keyframes fade-in {
