@@ -1,3 +1,20 @@
+# [4.0.0](https://github.com/algolia/docsearch/compare/v4.0.0-beta.8...v4.0.0) (2025-09-15)
+
+
+### Bug Fixes
+
+* add gif ([2f7bd27](https://github.com/algolia/docsearch/commit/2f7bd2748ca95b51331786c0c24e893c1a245409))
+* docs ([f74199f](https://github.com/algolia/docsearch/commit/f74199f492b5ae4fdb9fa37adffbfca0e2222b83))
+* update readme ([441cef0](https://github.com/algolia/docsearch/commit/441cef0356ec842ce9b1e43e540fca1cb12b7c4d))
+
+
+### Features
+
+* **askai:** ai-sdk v5 ([#2746](https://github.com/algolia/docsearch/issues/2746)) ([df20e6c](https://github.com/algolia/docsearch/commit/df20e6c791815c7f3f69fe197aa7111b3a194f0b))
+* **v4:** Add support for multi-index search ([#2736](https://github.com/algolia/docsearch/issues/2736)) ([905e26d](https://github.com/algolia/docsearch/commit/905e26d693c60c1acc6b8b93fa152dbb660a63c0))
+
+
+
 # [4.0.0-beta.8](https://github.com/algolia/docsearch/compare/v4.0.0-beta.7...v4.0.0-beta.8) (2025-08-28)
 
 
