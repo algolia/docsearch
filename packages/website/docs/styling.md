@@ -4,19 +4,13 @@ title: Styling
 
 :::info
 
-The following content is for **[DocSearch v3][2]**. If you are using **[DocSearch v2][3]**, see the **[legacy][4]** documentation.
-
-:::
-
-:::caution
-
-This documentation is in progress.
+The following content is for **[DocSearch v4][2]**. If you are using **[DocSearch v3][3]**, see the **[legacy][4]** documentation.
 
 :::
 
 ## Introduction
 
-DocSearch v3 comes with a theme package called `@docsearch/css`, which offers a sleek out of the box theme!
+DocSearch v4 comes with a theme package called `@docsearch/css`, which offers a sleek out of the box theme!
 
 :::note
 
@@ -48,7 +42,7 @@ If you don’t want to use a package manager, you can use a standalone endpoint:
 └── dist/modal.css # CSS for the modal
 ```
 
-[1]: /docs/v3/docsearch
+[1]: /docs/docsearch
 [2]: https://github.com/algolia/docsearch/
 [3]: https://github.com/algolia/docsearch/tree/master
-[4]: /docs/legacy/dropdown
+[4]: /docs/v3/docsearch

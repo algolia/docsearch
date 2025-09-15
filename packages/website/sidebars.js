@@ -19,7 +19,7 @@ export default {
     {
       type: 'category',
       label: 'DocSearch v4',
-      items: ['docsearch', 'api', 'examples', 'migrating-from-v3'],
+      items: ['docsearch', 'styling', 'api', 'examples', 'migrating-from-v3'],
     },
     {
       type: 'category',
