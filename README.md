@@ -22,11 +22,9 @@ DocSearch crawls your documentation, pushes the content to an Algolia index and 
 
 ## Preview
 
-![Screencast](.github/screencast.gif)
-
-| Light | Dark |
-| --- | --- |
-| ![Light preview](.github/preview-light.png) | ![Dark preview](.github/preview-dark.png) |
+<video loop="true" muted="true" playsInline="true" autoPlay="true" preload="auto">
+  <source src="packages/website/static/img/resources/askai720p.mp4" type="video/mp4" />
+</video>
 
 ## Usage
 
@@ -37,15 +35,15 @@ DocSearch crawls your documentation, pushes the content to an Algolia index and 
 #### Installation
 
 ```sh
-yarn add @docsearch/js@beta
+yarn add @docsearch/js@4
 # or
-npm install @docsearch/js@beta
+npm install @docsearch/js@4
 ```
 
 If you don’t want to use a package manager, you can use a standalone endpoint:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@beta"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@4"></script>
 ```
 
 #### Get started
@@ -78,15 +76,15 @@ docsearch({
 #### Installation
 
 ```bash
-yarn add @docsearch/react@beta
+yarn add @docsearch/react@4
 # or
-npm install @docsearch/react@beta
+npm install @docsearch/react@4
 ```
 
 If you don’t want to use a package manager, you can use a standalone endpoint:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/react@beta"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/react@4"></script>
 ```
 
 #### Get started
@@ -102,8 +100,8 @@ function App() {
   return (
     <DocSearch
       appId="YOUR_APP_ID"
-      indexName="YOUR_INDEX_NAME"
       apiKey="YOUR_SEARCH_API_KEY"
+      indices=["YOUR_ALGOLIA_INDEX"]
     />
   );
 }
