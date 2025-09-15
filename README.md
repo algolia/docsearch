@@ -22,9 +22,7 @@ DocSearch crawls your documentation, pushes the content to an Algolia index and 
 
 ## Preview
 
-<video loop="true" muted="true" playsInline="true" autoPlay="true" preload="auto">
-  <source src="packages/website/static/img/resources/askai720p.mp4" type="video/mp4" />
-</video>
+![Ask AI demo](packages/website/static/img/resources/askai_demo.gif)
 
 ## Usage
 
