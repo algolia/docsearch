@@ -14,9 +14,9 @@ There was an issue validating the auth token for the request.
 
 ### FORBIDDEN
 
-Access to a resources is not available or not allowed for the requester.
+Access to a resource is not available or not allowed for the requester.
 
-> **Solution:** Make sure that your domain is [white listed](/docs/v4/askai-whitelisted-domains) and that you are using the correct `assistantId`.
+> **Solution:** Make sure that your domain is [whitelisted](/docs/v4/askai-whitelisted-domains) and that you are using the correct `assistantId`.
 
 ### BAD_INPUT
 
@@ -24,9 +24,9 @@ The request included data that could either not be used to find a resource, or t
 
 ### TOO_MANY_ATTEMPTS
 
-There have been too many requets made within a designated window. The requests are being rate limitted.
+There have been too many requests made within a designated window. The requests are being rate limited.
 
-> **Solution:** Wait a bit of time for the rate limit window to pass and then try again.
+> **Solution:** Wait for the rate limit window to pass and then try again.
 
 ## Ask AI chat errors
 
@@ -34,31 +34,31 @@ There have been too many requets made within a designated window. The requests a
 
 ### AI_STREAM_ERROR
 
-A general case error that occured while from communicating with the upstream provider. This could include stream procesing issues, data corruption, issues with the provider itself and so on.
+A general case error that occurred while communicating with the upstream provider. This could include stream processing issues, data corruption, or issues with the provider itself.
 
 ### AI_API_CALL
 
 There was an issue specifically with communicating with the upstream provider.
 
-> **Solution:** Check the provider's API status pages(s) to see if they are experiencing any ongoing issues.
+> **Solution:** Check the provider's API status page(s) to see if they are experiencing any ongoing issues.
 
 ### AI_INVALID_API_KEY
 
 The upstream provider reported that there was an issue with the supplied API key.
 
-> **Solution:** Make sure to double check that you are using the correct API key for your assistant; and that it has the correct permissions.
+> **Solution:** Make sure to double-check that you are using the correct API key for your assistant; and that it has the correct permissions.
 
 ### AI_INSUFFICIENT_BALANCE
 
-The upstream provider could not process the chat request to due a billing issue.
+The upstream provider could not process the chat request due to a billing issue.
 
-> **Solution:** You will need to log into to your provider's dashboard to remedy this issue.
+> **Solution:** You will need to log in to your provider’s dashboard to remedy this issue.
 
 ### AI_NO_TOOL
 
 Ask AI could not call a specific tool.
 
-> **Solution:** Be sure to not ask for any specific tool calls within your custom prompt. Ask AI has specific tools it uses to give the best results.
+> **Solution:** Be sure not to ask for any specific tool calls within your custom prompt. Ask AI has specific tools it uses to give the best results.
 
 ### AI_RETRY
 
