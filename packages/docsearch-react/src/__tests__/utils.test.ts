@@ -106,10 +106,13 @@ describe('utils', () => {
           },
           {
             type: 'tool-searchIndex',
-            input: 'What is DocSearch',
+            input: {
+              query: 'What is DocSearch',
+            },
             state: 'output-available',
             output: {
               query: 'DocSearch',
+              hits: [],
             },
             toolCallId: 'searchIndex-testing',
           },

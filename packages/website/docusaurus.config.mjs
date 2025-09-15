@@ -38,13 +38,13 @@ export default {
           editUrl: 'https://github.com/algolia/docsearch/edit/main/packages/website/',
           versions: {
             current: {
-              label: 'Beta (v4.x)',
+              label: 'Stable (v4.x)',
             },
             v3: {
-              label: 'Stable (v3.x)',
+              label: 'Legacy (v3.x)',
             },
             legacy: {
-              label: 'Legacy',
+              label: 'Legacy (v1.x - v2.x)',
             },
           },
           lastVersion: 'current',
@@ -128,7 +128,7 @@ export default {
       announcementBar: {
         id: 'announcement-bar',
         content:
-          '🚀 Ask AI now in Public Beta! Turn your docs site search into an AI-powered assistant – faster answers, fewer tickets, better self-serve. <a target="_blank" rel="noopener noreferrer" href="https://dashboard.algolia.com/ask-ai">Get Started Now</a>',
+          '🚀 Use AskAI Now! Turn your docs site search into an AI-powered assistant – faster answers, fewer tickets, better self-serve. <a target="_blank" rel="noopener noreferrer" href="https://dashboard.algolia.com/ask-ai">Get Started Now</a>',
       },
       colorMode: {
         defaultMode: 'light',

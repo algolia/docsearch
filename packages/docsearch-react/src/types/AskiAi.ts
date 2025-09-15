@@ -2,9 +2,12 @@ import type { UIMessage } from '@ai-sdk/react';
 import type { UIDataTypes, UIMessagePart } from 'ai';
 
 export interface SearchIndexTool {
-  input: string;
-  output: {
+  input: {
     query: string;
+  };
+  output: {
+    query?: string;
+    hits?: any[];
   };
 }
 
