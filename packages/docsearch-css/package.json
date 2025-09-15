@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/css",
   "description": "Styles for DocSearch.",
-  "version": "4.0.0-beta.8",
+  "version": "4.0.0",
   "license": "MIT",
   "homepage": "https://docsearch.algolia.com",
   "repository": {
