@@ -41,7 +41,8 @@
     "@docsearch/css": "4.0.0",
     "ai": "^5.0.30",
     "algoliasearch": "^5.28.0",
-    "marked": "^15.0.12"
+    "marked": "^15.0.12",
+    "zod": "^4.1.8"
   },
   "devDependencies": {
     "@rollup/plugin-replace": "6.0.2",
@@ -49,8 +50,7 @@
     "@testing-library/react": "16.2.0",
     "nodemon": "^3.1.0",
     "rollup-plugin-dts": "^6.2.1",
-    "vitest": "3.0.2",
-    "zod": "^3.25.67"
+    "vitest": "3.0.2"
   },
   "peerDependencies": {
     "@types/react": ">= 16.8.0 < 20.0.0",
