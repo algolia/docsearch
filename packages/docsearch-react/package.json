@@ -20,6 +20,11 @@
     "button.js",
     "modal.js"
   ],
+  "exports": {
+    ".": "./dist/esm/index.js",
+    "./button": "./dist/esm/DocSearchButton.js",
+    "./modal": "./dist/esm/DocSearchModal.js"
+  },
   "source": "src/index.ts",
   "types": "dist/esm/index.d.ts",
   "module": "dist/esm/index.js",

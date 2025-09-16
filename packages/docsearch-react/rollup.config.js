@@ -36,8 +36,70 @@ export default [
     ],
   },
   {
+    input: 'src/DocSearchButton.tsx',
+    external: ['react', 'react-dom'],
+    output: [
+      {
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+        },
+        file: 'dist/umd/DocSearchButton.js',
+        format: 'umd',
+        sourcemap: true,
+        name: pkg.name,
+        banner: getBundleBanner(pkg),
+      },
+      { dir: 'dist/esm', format: 'es' },
+    ],
+    plugins: [
+      commonjs(),
+      ...plugins,
+      replace({
+        preventAssignment: true,
+        'process.env.NODE_ENV': JSON.stringify('production'),
+      }),
+    ],
+  },
+  {
+    input: 'src/DocSearchModal.tsx',
+    external: ['react', 'react-dom'],
+    output: [
+      {
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+        },
+        file: 'dist/umd/DocSearchModal.js',
+        format: 'umd',
+        sourcemap: true,
+        name: pkg.name,
+        banner: getBundleBanner(pkg),
+      },
+      { dir: 'dist/esm', format: 'es' },
+    ],
+    plugins: [
+      commonjs(),
+      ...plugins,
+      replace({
+        preventAssignment: true,
+        'process.env.NODE_ENV': JSON.stringify('production'),
+      }),
+    ],
+  },
+  {
     input: 'dist/esm/types/index.d.ts',
     output: [{ file: 'dist/esm/index.d.ts', format: 'es' }],
+    plugins: [dts()],
+  },
+  {
+    input: 'dist/esm/types/DocSearchModal.d.ts',
+    output: [{ file: 'dist/esm/DocSearchModal.d.ts', format: 'es' }],
+    plugins: [dts()],
+  },
+  {
+    input: 'dist/esm/types/DocSearchButton.d.ts',
+    output: [{ file: 'dist/esm/DocSearchButton.d.ts', format: 'es' }],
     plugins: [dts()],
   },
 ];

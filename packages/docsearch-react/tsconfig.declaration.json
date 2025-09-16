@@ -1,3 +1,7 @@
 {
   "extends": "../../tsconfig.declaration",
+  "include": [
+    "./src/DocSearchButton.tsx",
+    "./src/DocSearchModal.tsx"
+  ]
 }
