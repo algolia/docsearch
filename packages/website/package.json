@@ -1,6 +1,6 @@
 {
   "name": "@docsearch/website",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "private": true,
   "homepage": "https://docsearch.algolia.com/",
   "scripts": {
@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@docsearch/css": "4.0.0",
-    "@docsearch/react": "4.0.0",
+    "@docsearch/react": "4.0.1",
     "@docusaurus/core": "https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-core-3.8.1.tgz",
     "@docusaurus/preset-classic": "https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-preset-classic-3.8.1.tgz",
     "@mdx-js/react": "^3.1.0",
