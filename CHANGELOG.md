@@ -1,3 +1,13 @@
+## [4.0.1](https://github.com/algolia/docsearch/compare/v4.0.0...v4.0.1) (2025-09-16)
+
+
+### Bug Fixes
+
+* **deps:** Adds zod to dependency list ([#2759](https://github.com/algolia/docsearch/issues/2759)) ([4011294](https://github.com/algolia/docsearch/commit/40112944e8a7018568b50cddaf694312f26e167c))
+* **modal:** Fixes issue with index typings on DocSearchModal ([#2760](https://github.com/algolia/docsearch/issues/2760)) ([55934d8](https://github.com/algolia/docsearch/commit/55934d8f9804959e7ae8e2407fc306552dbadfbc))
+
+
+
 # [4.0.0](https://github.com/algolia/docsearch/compare/v4.0.0-beta.8...v4.0.0) (2025-09-15)
 
 

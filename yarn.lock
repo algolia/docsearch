@@ -2382,16 +2382,16 @@ __metadata:
   resolution: "@docsearch/js-example@workspace:examples/demo-js"
   dependencies:
     "@docsearch/css": "npm:4.0.0"
-    "@docsearch/js": "npm:4.0.0"
+    "@docsearch/js": "npm:4.0.1"
     vite: "npm:^6.0.7"
   languageName: unknown
   linkType: soft
 
-"@docsearch/js@npm:4.0.0, @docsearch/js@workspace:packages/docsearch-js":
+"@docsearch/js@npm:4.0.1, @docsearch/js@workspace:packages/docsearch-js":
   version: 0.0.0-use.local
   resolution: "@docsearch/js@workspace:packages/docsearch-js"
   dependencies:
-    "@docsearch/react": "npm:4.0.0"
+    "@docsearch/react": "npm:4.0.1"
     "@rollup/plugin-replace": "npm:6.0.2"
     nodemon: "npm:^3.1.9"
     preact: "npm:^10.0.0"
@@ -2470,7 +2470,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@docsearch/react@npm:4.0.0, @docsearch/react@workspace:*, @docsearch/react@workspace:packages/docsearch-react":
+"@docsearch/react@npm:4.0.1, @docsearch/react@workspace:*, @docsearch/react@workspace:packages/docsearch-react":
   version: 0.0.0-use.local
   resolution: "@docsearch/react@workspace:packages/docsearch-react"
   dependencies:
@@ -2536,7 +2536,7 @@ __metadata:
   resolution: "@docsearch/website@workspace:packages/website"
   dependencies:
     "@docsearch/css": "npm:4.0.0"
-    "@docsearch/react": "npm:4.0.0"
+    "@docsearch/react": "npm:4.0.1"
     "@docusaurus/core": "https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-core-3.8.1.tgz"
     "@docusaurus/module-type-aliases": "npm:^3.8.1"
     "@docusaurus/preset-classic": "https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-preset-classic-3.8.1.tgz"
