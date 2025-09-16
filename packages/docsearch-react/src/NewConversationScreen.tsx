@@ -1,3 +1,4 @@
+import type { Hit } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 
 export type NewConversationTranslations = Partial<{
@@ -5,9 +6,7 @@ export type NewConversationTranslations = Partial<{
   newConversationDescription: string;
 }>;
 
-type SuggestedQuestion = {
-  text: string;
-};
+type SuggestedQuestion = Hit<{ question: string }>;
 
 interface NewConversationProps {
   suggestedQuestions?: SuggestedQuestion[];
@@ -15,18 +14,9 @@ interface NewConversationProps {
   translations?: NewConversationTranslations;
 }
 
-const testSuggestedQuestions = [
-  {
-    text: 'What is Astro?',
-  },
-  {
-    text: 'How can I deploy my Astro site?',
-  },
-];
-
 export function NewConversationScreen({
   translations = {},
-  suggestedQuestions = testSuggestedQuestions,
+  suggestedQuestions = [],
   selectSuggestedQuestion,
 }: NewConversationProps): JSX.Element {
   const {
@@ -40,14 +30,14 @@ export function NewConversationScreen({
       <p className="DocSearch-NewConversationScreen-Description">{newConversationDescription}</p>
 
       <div className="DocSearch-NewConversationScreen-SuggestedQuestions">
-        {suggestedQuestions.map((question, idx) => (
+        {suggestedQuestions.map((question) => (
           <button
-            key={idx}
+            key={question.objectID}
             type="button"
             className="DocSearch-NewConversationScreen-SuggestedQuestion"
-            onClick={() => selectSuggestedQuestion(question.text)}
+            onClick={() => selectSuggestedQuestion(question.question)}
           >
-            {question.text}
+            {question.question}
           </button>
         ))}
       </div>
