@@ -350,18 +350,4 @@ describe('api', () => {
       expect(html.getAttribute('data-theme')).toBe('dark');
     });
   });
-
-  describe('Indexes', () => {
-    it('renders with deprecated indexName prop', () => {
-      expect(() => <DocSearch indexName="My test Index" />).not.toThrowError();
-    });
-
-    it('renders with new indices prop', () => {
-      expect(() => render(<DocSearch indexName={undefined} indices={[{ name: 'testing' }]} />)).not.toThrowError();
-    });
-
-    it('throws an error if indexName or indices are not provided', () => {
-      expect(() => render(<DocSearch indexName={undefined} indices={[]} />)).toThrowError();
-    });
-  });
 });

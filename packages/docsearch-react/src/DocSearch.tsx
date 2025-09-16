@@ -167,7 +167,7 @@ export interface DocSearchProps {
   keyboardShortcuts?: KeyboardShortcuts;
 }
 
-export function DocSearch({ indexName, searchParameters, indices = [], ...props }: DocSearchProps): JSX.Element {
+export function DocSearch(props: DocSearchProps): JSX.Element {
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
   const [isOpen, setIsOpen] = React.useState(false);
   const [initialQuery, setInitialQuery] = React.useState<string | undefined>(props?.initialQuery || undefined);
@@ -226,26 +226,6 @@ export function DocSearch({ indexName, searchParameters, indices = [], ...props 
   });
   useTheme({ theme: props.theme });
 
-  // Format the `indexes` to be used until `indexName` and `searchParameters` props are fully removed.
-  const indexes: DocSearchIndex[] = [];
-
-  if (indexName && indexName !== '') {
-    indexes.push({
-      name: indexName,
-      searchParameters,
-    });
-  }
-
-  if (indices.length > 0) {
-    indices.forEach((index) => {
-      indexes.push(typeof index === 'string' ? { name: index } : index);
-    });
-  }
-
-  if (indexes.length < 1) {
-    throw new Error('Must supply either `indexName` or `indices` for DocSearch to work');
-  }
-
   return (
     <>
       <DocSearchButton
@@ -265,7 +245,6 @@ export function DocSearch({ indexName, searchParameters, indices = [], ...props 
             translations={props?.translations?.modal}
             isAskAiActive={isAskAiActive}
             canHandleAskAi={canHandleAskAi}
-            indexes={indexes}
             onAskAiToggle={onAskAiToggle}
             onClose={onClose}
           />,

@@ -43,7 +43,6 @@ export type DocSearchModalProps = DocSearchProps & {
   isAskAiActive?: boolean;
   canHandleAskAi?: boolean;
   translations?: ModalTranslations;
-  indexes: DocSearchIndex[];
 };
 
 /**
@@ -296,7 +295,9 @@ export function DocSearchModal({
   canHandleAskAi = false,
   recentSearchesLimit = 7,
   recentSearchesWithFavoritesLimit = 4,
-  indexes,
+  indices = [],
+  indexName,
+  searchParameters,
 }: DocSearchModalProps): JSX.Element {
   const { footer: footerTranslations, searchBox: searchBoxTranslations, ...screenStateTranslations } = translations;
   const [state, setState] = React.useState<DocSearchState<InternalDocSearchHit>>({
@@ -325,6 +326,26 @@ export function DocSearchModal({
   const askAiConfig = typeof askAi === 'object' ? askAi : null;
   const askAiConfigurationId = typeof askAi === 'string' ? askAi : askAiConfig?.assistantId || null;
   const askAiSearchParameters = askAiConfig?.searchParameters;
+
+  // Format the `indexes` to be used until `indexName` and `searchParameters` props are fully removed.
+  const indexes: DocSearchIndex[] = [];
+
+  if (indexName && indexName !== '') {
+    indexes.push({
+      name: indexName,
+      searchParameters,
+    });
+  }
+
+  if (indices.length > 0) {
+    indices.forEach((index) => {
+      indexes.push(typeof index === 'string' ? { name: index } : index);
+    });
+  }
+
+  if (indexes.length < 1) {
+    throw new Error('Must supply either `indexName` or `indices` for DocSearch to work');
+  }
 
   const defaultIndexName = indexes[0].name;
 
