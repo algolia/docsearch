@@ -91,8 +91,6 @@ function AskAiExchangeCard({
 }: AskAiExchangeCardProps): JSX.Element {
   const { userMessage, assistantMessage } = exchange;
 
-  const showActions = !isLastExchange || (isLastExchange && loadingStatus === 'ready' && Boolean(assistantMessage));
-
   const assistantContent = useMemo(() => getMessageContent(assistantMessage), [assistantMessage]);
   const userContent = useMemo(() => getMessageContent(userMessage), [userMessage]);
 
@@ -101,6 +99,11 @@ function AskAiExchangeCard({
   const displayParts = React.useMemo(() => {
     return groupConsecutiveToolResults(assistantMessage?.parts || []);
   }, [assistantMessage]);
+
+  const wasStopped = userMessage.metadata?.stopped || assistantMessage?.metadata?.stopped;
+
+  const showActions =
+    !wasStopped && (!isLastExchange || (isLastExchange && loadingStatus === 'ready' && Boolean(assistantMessage)));
 
   const isThinking =
     ['submitted', 'streaming'].includes(loadingStatus) &&
@@ -228,6 +231,8 @@ function AskAiExchangeCard({
               return null;
             })}
           </div>
+
+          {wasStopped && <p className="DocSearck-AskAiScreen-MessageContent-Stopped">You stopped this response</p>}
         </div>
         <div className="DocSearch-AskAiScreen-Answer-Footer">
           <AskAiScreenFooterActions

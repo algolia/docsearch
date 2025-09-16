@@ -15,7 +15,7 @@ import type { StartScreenTranslations } from './StartScreen';
 import { StartScreen } from './StartScreen';
 import type { StoredSearchPlugin } from './stored-searches';
 import type { InternalDocSearchHit, StoredAskAiState, StoredDocSearchHit } from './types';
-import type { AIMessage } from './types/AskiAi';
+import type { AIMessage, AskAiState } from './types/AskiAi';
 
 export type ScreenStateTranslations = Partial<{
   errorScreen: ErrorScreenTranslations;
@@ -48,6 +48,7 @@ export interface ScreenStateProps<TItem extends BaseItem>
   getMissingResultsUrl?: DocSearchProps['getMissingResultsUrl'];
   hasCollections: boolean;
   onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
+  askAiState: AskAiState;
 }
 
 export const ScreenState = React.memo(

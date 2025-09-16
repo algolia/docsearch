@@ -1,6 +1,8 @@
 import type { UIMessage } from '@ai-sdk/react';
 import type { UIDataTypes, UIMessagePart } from 'ai';
 
+export type AskAiState = 'conversation' | 'initial' | 'new-conversation';
+
 export interface SearchIndexTool {
   input: {
     query: string;
@@ -12,7 +14,7 @@ export interface SearchIndexTool {
 }
 
 export type AIMessage = UIMessage<
-  unknown,
+  { stopped?: boolean },
   UIDataTypes,
   {
     searchIndex: SearchIndexTool;

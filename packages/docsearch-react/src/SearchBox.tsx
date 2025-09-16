@@ -3,10 +3,19 @@ import type { AutocompleteApi, AutocompleteState } from '@algolia/autocomplete-c
 import React, { type JSX, type RefObject } from 'react';
 
 import { MAX_QUERY_SIZE } from './constants';
-import { LoadingIcon, CloseIcon, SearchIcon, SparklesIcon } from './icons';
+import { Dropdown } from './Dropdown';
+import {
+  LoadingIcon,
+  CloseIcon,
+  SearchIcon,
+  StopIcon,
+  MoreVerticalIcon,
+  NewConversationIcon,
+  ConversationHistoryIcon,
+} from './icons';
 import { BackIcon } from './icons/BackIcon';
 import type { InternalDocSearchHit } from './types';
-import type { AIMessage } from './types/AskiAi';
+import type { AIMessage, AskAiState } from './types/AskiAi';
 
 export type SearchBoxTranslations = Partial<{
   clearButtonTitle: string;
@@ -21,6 +30,7 @@ export type SearchBoxTranslations = Partial<{
   searchInputLabel: string;
   backToKeywordSearchButtonText: string;
   backToKeywordSearchButtonAriaLabel: string;
+  newConversationPlaceholder: string;
 }>;
 
 interface SearchBoxProps
@@ -31,11 +41,14 @@ interface SearchBoxProps
   onClose: () => void;
   onAskAiToggle: (toggle: boolean) => void;
   onAskAgain: (query: string) => void;
+  onStopAskAiStreaming: () => Promise<void>;
   placeholder: string;
   isAskAiActive: boolean;
   askAiStatus: UseChatHelpers<AIMessage>['status'];
   isFromSelection: boolean;
   translations?: SearchBoxTranslations;
+  askAiState: AskAiState;
+  onNewConversation: () => void;
 }
 
 export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.Element {
@@ -48,6 +61,7 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
     backToKeywordSearchButtonText = 'Back to keyword search',
     backToKeywordSearchButtonAriaLabel = 'Back to keyword search',
     placeholderTextAskAiStreaming = 'Answering...',
+    newConversationPlaceholder = 'Ask a question',
   } = translations;
   const { onReset } = props.getFormProps({
     inputElement: props.inputRef.current,
@@ -76,6 +90,7 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
   const origOnChange = baseInputProps.onChange;
   const isAskAiStreaming = props.askAiStatus === 'streaming' || props.askAiStatus === 'submitted';
   const isKeywordSearchLoading = props.state.status === 'stalled';
+  const searchPlaceholder = props.askAiState === 'new-conversation' ? newConversationPlaceholder : props.placeholder;
 
   // when returning to another status than streaming or submitted, we focus on the input
   React.useEffect(() => {
@@ -136,7 +151,7 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
             <button
               type="button"
               tabIndex={0}
-              className="DocSearch-AskAi-Return"
+              className="DocSearch-Action DocSearch-AskAi-Return"
               title={backToKeywordSearchButtonText}
               aria-label={backToKeywordSearchButtonAriaLabel}
               onClick={() => props.onAskAiToggle(false)}
@@ -160,20 +175,13 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
           </>
         )}
 
-        <input
-          className="DocSearch-Input"
-          ref={props.inputRef}
-          {...inputProps}
-          placeholder={isAskAiStreaming ? placeholderTextAskAiStreaming : props.placeholder}
-        />
+        {isAskAiStreaming ? (
+          <span className="DocSearch-AskAiStreamingPlaceholder shimmer">{placeholderTextAskAiStreaming}</span>
+        ) : (
+          <input className="DocSearch-Input" ref={props.inputRef} {...inputProps} placeholder={searchPlaceholder} />
+        )}
 
         <div className="DocSearch-Actions">
-          {isAskAiStreaming && (
-            <button type="button" className="DocSearch-StreamingIndicator" onClick={() => props.onAskAiToggle(true)}>
-              <SparklesIcon />
-            </button>
-          )}
-
           <button
             className="DocSearch-Clear"
             type="reset"
@@ -185,12 +193,48 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
             {clearButtonTitle}
           </button>
 
-          {(isAskAiStreaming || props.state.query) && <div className="DocSearch-Divider" />}
+          {props.state.query && <div className="DocSearch-Divider" />}
+
+          {isAskAiStreaming && (
+            <>
+              <button
+                type="button"
+                className="DocSearch-Action DocSearch-StopStreaming"
+                onClick={props.onStopAskAiStreaming}
+              >
+                <StopIcon />
+              </button>
+
+              <div className="DocSearch-Divider" />
+            </>
+          )}
+
+          {props.isAskAiActive && (
+            <>
+              <Dropdown>
+                <Dropdown.Button className="DocSearch-Action">
+                  <MoreVerticalIcon />
+                </Dropdown.Button>
+                <Dropdown.Content>
+                  <Dropdown.Item onClick={props.onNewConversation}>
+                    <NewConversationIcon />
+                    Start a new conversation
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <ConversationHistoryIcon />
+                    Conversation history
+                  </Dropdown.Item>
+                </Dropdown.Content>
+              </Dropdown>
+
+              <div className="DocSearch-Divider" />
+            </>
+          )}
 
           <button
             type="button"
             title={closeButtonText}
-            className="DocSearch-Close"
+            className="DocSearch-Action DocSearch-Close"
             aria-label={closeButtonAriaLabel}
             onClick={props.onClose}
           >

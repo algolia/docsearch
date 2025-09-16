@@ -5,14 +5,11 @@ import type { JSX } from 'react';
 export default function BasicAskAI(): JSX.Element {
   return (
     <DocSearch
-      indexName="docsearch"
-      appId="PMZUYBQDAK"
-      apiKey="24b09689d5b4223813d9b8e48563c8f6"
+      indexName="astro"
+      appId="betaHAXPMHIMMC"
+      apiKey="54278a5cb95f7a5902363c97b029a4b2"
       askAi={{
-        assistantId: 'askAIDemo',
-        searchParameters: {
-          facetFilters: ['language:en'],
-        },
+        assistantId: 'Z03Eno3oLaXI',
       }}
       insights={true}
       translations={{ button: { buttonText: 'Search with AskAI' } }}
