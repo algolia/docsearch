@@ -1,6 +1,6 @@
 {
-  "name": "@docsearch/react-example",
-  "description": "DocSearch v4 React example",
+  "name": "@docsearch/composable-example",
+  "description": "DocSearch Composable example",
   "version": "4.0.0",
   "private": true,
   "license": "MIT",
@@ -13,7 +13,6 @@
   "dependencies": {
     "@docsearch/core": "1.0.0",
     "@docsearch/css": "workspace:*",
-    "@docsearch/react": "workspace:*",
     "@docsearch/sidepanel": "1.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

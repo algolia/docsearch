@@ -1,0 +1,65 @@
+{
+  "name": "@docsearch/sidepanel",
+  "description": "DocSearch sidepanel",
+  "version": "1.0.0",
+  "license": "MIT",
+  "homepage": "https://docsearch.algolia.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/algolia/docsearch.git",
+    "directory": "packages/docsearch-sidepanel"
+  },
+  "author": {
+    "name": "Algolia, Inc.",
+    "url": "https://www.algolia.com"
+  },
+  "sideEffects": false,
+  "files": [
+    "dist/",
+    "style/"
+  ],
+  "source": "src/index.ts",
+  "types": "dist/esm/index.d.ts",
+  "module": "dist/esm/index.js",
+  "main": "dist/umd/index.js",
+  "umd:main": "dist/umd/index.js",
+  "unpkg": "dist/umd/index.js",
+  "jsdelivr": "dist/umd/index.js",
+  "scripts": {
+    "build:clean": "rm -rf ./dist",
+    "build:clean-types": "rm -rf ./dist/esm/types",
+    "build:types": "tsc -p ./tsconfig.declaration.json --outDir ./dist/esm/types",
+    "build": "yarn build:clean && yarn build:types && rollup --config --bundleConfigAsCjs && yarn build:clean-types",
+    "on:change": "yarn build",
+    "watch": "nodemon --watch src --ext ts,tsx,js,jsx,json --ignore dist/ --ignore node_modules/ --verbose --delay 250ms --exec \"yarn on:change\""
+  },
+  "dependencies": {
+    "@docsearch/css": "4.0.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-replace": "6.0.2",
+    "@testing-library/jest-dom": "6.6.3",
+    "@testing-library/react": "16.2.0",
+    "nodemon": "^3.1.0",
+    "rollup-plugin-dts": "^6.2.1",
+    "vitest": "3.0.2",
+    "zod": "^3.25.67"
+  },
+  "peerDependencies": {
+    "@docsearch/core": "1.0.0",
+    "@types/react": ">= 16.8.0 < 20.0.0",
+    "react": ">= 16.8.0 < 20.0.0",
+    "react-dom": ">= 16.8.0 < 20.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
+  }
+}

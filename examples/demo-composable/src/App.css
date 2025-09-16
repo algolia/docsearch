@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap');
+
+/* reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'TikTok Sans', 'sans-serif';
+  min-height: 100vh;
+  background: radial-gradient(125% 125% at 50% 90%, #fff 40%, #7c3aed 100%);
+  color: #333;
+  line-height: 1.6;
+}
+
+/* container styles */
+.app-container {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* header styles */
+.app-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.app-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: black;
+  margin-bottom: 0;
+}
+
+.app-subtitle {
+  font-size: 1rem;
+  color: black;
+  color: #666;
+  font-weight: 400;
+}
+
+main {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 8px;
+}
+
+/* demo section styles */
+.demo-section {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.section-description {
+  text-align: center;
+  color: #666;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  margin-top: -1rem;
+  opacity: 0.8;
+}
+
+.ai-powered {
+  text-decoration: underline;
+  text-decoration-color: #f2e8ff;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+}
+
+/* search component wrapper */
+.search-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60px;
+  gap: 1em;
+}
+
+/* divider styles */
+.divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+  margin: 0;
+}
+
+/* responsive design */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 1rem;
+  }
+
+  .app-title {
+    font-size: 2.5rem;
+  }
+
+  .demo-section {
+    padding: 1.5rem;
+  }
+  .section-description {
+    font-size: 0.8rem;
+  }
+}
+
+/* docsearch button customization */
+.DocSearch-Button {
+  margin: 0 !important;
+  background: #f7fafc !important;
+  border: 2px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  padding: 12px 16px !important;
+  font-size: 16px !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+}
+
+.DocSearch-Button:hover {
+  border-color: #667eea !important;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15) !important;
+  transform: translateY(-1px) !important;
+}
+
+.DocSearch-Button-Placeholder {
+  color: #718096 !important;
+}
+
+/* add subtle animations */
+.demo-section {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.demo-section:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.demo-section:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

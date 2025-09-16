@@ -1,0 +1,42 @@
+{
+  "name": "@docsearch/core-js",
+  "description": "JavaScript package for DocSearch core, the best search experience for docs.",
+  "version": "1.0.0",
+  "license": "MIT",
+  "homepage": "https://docsearch.algolia.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/algolia/docsearch.git",
+    "directory": "packages/docsearch-core-js"
+  },
+  "author": {
+    "name": "Algolia, Inc.",
+    "url": "https://www.algolia.com"
+  },
+  "sideEffects": false,
+  "files": [
+    "dist/"
+  ],
+  "source": "src/index.ts",
+  "types": "dist/esm/index.d.ts",
+  "module": "dist/esm/index.js",
+  "main": "dist/umd/index.js",
+  "umd:main": "dist/umd/index.js",
+  "unpkg": "dist/umd/index.js",
+  "jsdelivr": "dist/umd/index.js",
+  "scripts": {
+    "build:clean": "rm -rf ./dist",
+    "build:types": "tsc -p ./tsconfig.declaration.json --outDir ./dist/esm/types",
+    "build:clean-types": "rm -rf ./dist/esm/types",
+    "build": "yarn build:clean && yarn build:types && rollup --config --bundleConfigAsCjs && yarn build:clean-types",
+    "on:change": "yarn build",
+    "watch": "nodemon --watch src --exec \"yarn on:change\" --ignore dist/ --ext ts,tsx"
+  },
+  "devDependencies": {
+    "@docsearch/core": "workspace:*",
+    "@rollup/plugin-replace": "6.0.2",
+    "nodemon": "^3.1.9",
+    "preact": "^10.0.0",
+    "rollup-plugin-dts": "^6.2.1"
+  }
+}

@@ -21,6 +21,7 @@
     "playground:build": "yarn workspace @docsearch/react-example build",
     "playground:start": "yarn workspace @docsearch/react-example dev --host",
     "playground-js:start": "yarn workspace @docsearch/js-example dev --host",
+    "playground-composable:start": "yarn workspace @docsearch/composable-example dev --host",
     "release": "shipjs prepare",
     "start": "yarn run watch",
     "dev": "yarn start & yarn playground:start",
