@@ -4,9 +4,12 @@ import React from 'react';
 
 import type { AskAiScreenTranslations } from './AskAiScreen';
 import { AskAiScreen } from './AskAiScreen';
+import { ConversationHistoryScreen } from './ConversationHistoryScreen';
 import type { DocSearchProps } from './DocSearch';
 import type { ErrorScreenTranslations } from './ErrorScreen';
 import { ErrorScreen } from './ErrorScreen';
+import type { NewConversationTranslations } from './NewConversationScreen';
+import { NewConversationScreen } from './NewConversationScreen';
 import type { NoResultsScreenTranslations } from './NoResultsScreen';
 import { NoResultsScreen } from './NoResultsScreen';
 import type { ResultsScreenTranslations } from './ResultsScreen';
@@ -23,6 +26,7 @@ export type ScreenStateTranslations = Partial<{
   noResultsScreen: NoResultsScreenTranslations;
   resultsScreen: ResultsScreenTranslations;
   askAiScreen: AskAiScreenTranslations;
+  newConversation: NewConversationTranslations;
 }>;
 
 export interface ScreenStateProps<TItem extends BaseItem>
@@ -49,10 +53,26 @@ export interface ScreenStateProps<TItem extends BaseItem>
   hasCollections: boolean;
   onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
   askAiState: AskAiState;
+  selectAskAiQuestion: (toggle: boolean, query: string) => void;
 }
 
 export const ScreenState = React.memo(
   ({ translations = {}, ...props }: ScreenStateProps<InternalDocSearchHit>) => {
+    if (props.canHandleAskAi && props.askAiState === 'conversation-history') {
+      return <ConversationHistoryScreen {...props} />;
+    }
+
+    if (props.canHandleAskAi && props.askAiState === 'new-conversation') {
+      return (
+        <NewConversationScreen
+          translations={translations?.newConversation}
+          selectSuggestedQuestion={(query: string) => {
+            props.selectAskAiQuestion(true, query);
+          }}
+        />
+      );
+    }
+
     if (props.isAskAiActive && props.canHandleAskAi) {
       return (
         <AskAiScreen

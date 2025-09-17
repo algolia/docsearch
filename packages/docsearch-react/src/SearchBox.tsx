@@ -3,7 +3,6 @@ import type { AutocompleteApi, AutocompleteState } from '@algolia/autocomplete-c
 import React, { type JSX, type RefObject } from 'react';
 
 import { MAX_QUERY_SIZE } from './constants';
-import { Dropdown } from './Dropdown';
 import {
   LoadingIcon,
   CloseIcon,
@@ -14,6 +13,8 @@ import {
   ConversationHistoryIcon,
 } from './icons';
 import { BackIcon } from './icons/BackIcon';
+import { Menu } from './Menu';
+import { ModalHeading } from './ModalHeading';
 import type { InternalDocSearchHit } from './types';
 import type { AIMessage, AskAiState } from './types/AskiAi';
 
@@ -31,6 +32,7 @@ export type SearchBoxTranslations = Partial<{
   backToKeywordSearchButtonText: string;
   backToKeywordSearchButtonAriaLabel: string;
   newConversationPlaceholder: string;
+  conversationHistoryTitle: string;
 }>;
 
 interface SearchBoxProps
@@ -49,9 +51,10 @@ interface SearchBoxProps
   translations?: SearchBoxTranslations;
   askAiState: AskAiState;
   onNewConversation: () => void;
+  onViewConversationHistory: () => void;
 }
 
-export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.Element {
+export function SearchBox({ translations = {}, askAiState, onAskAiToggle, ...props }: SearchBoxProps): JSX.Element {
   const {
     clearButtonTitle = 'Clear',
     clearButtonAriaLabel = 'Clear the query',
@@ -62,6 +65,7 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
     backToKeywordSearchButtonAriaLabel = 'Back to keyword search',
     placeholderTextAskAiStreaming = 'Answering...',
     newConversationPlaceholder = 'Ask a question',
+    conversationHistoryTitle = 'My conversation history',
   } = translations;
   const { onReset } = props.getFormProps({
     inputElement: props.inputRef.current,
@@ -79,6 +83,16 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
     }
   }, [props.isFromSelection, props.inputRef]);
 
+  const hasRecentConversations = React.useMemo(() => {
+    const askAiSource = props.state.collections[2];
+
+    if (!askAiSource) {
+      return false;
+    }
+
+    return askAiSource.items.length > 0;
+  }, [props.state.collections]);
+
   const baseInputProps = props.getInputProps({
     inputElement: props.inputRef.current!,
     autoFocus: props.autoFocus,
@@ -90,7 +104,22 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
   const origOnChange = baseInputProps.onChange;
   const isAskAiStreaming = props.askAiStatus === 'streaming' || props.askAiStatus === 'submitted';
   const isKeywordSearchLoading = props.state.status === 'stalled';
-  const searchPlaceholder = props.askAiState === 'new-conversation' ? newConversationPlaceholder : props.placeholder;
+  const renderMoreOptions = props.isAskAiActive && askAiState !== 'conversation-history';
+  let searchPlaceholder = props.placeholder;
+
+  if (askAiState === 'new-conversation') {
+    searchPlaceholder = newConversationPlaceholder;
+  }
+
+  let heading: string | null = null;
+
+  if (isAskAiStreaming) {
+    heading = placeholderTextAskAiStreaming;
+  }
+
+  if (askAiState === 'conversation-history') {
+    heading = conversationHistoryTitle;
+  }
 
   // when returning to another status than streaming or submitted, we focus on the input
   React.useEffect(() => {
@@ -137,6 +166,15 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
     disabled: isAskAiStreaming,
   };
 
+  const handleAskAiBackClick = React.useCallback((): void => {
+    if (askAiState === 'conversation-history') {
+      onAskAiToggle(true);
+      return;
+    }
+
+    onAskAiToggle(false);
+  }, [askAiState, onAskAiToggle]);
+
   return (
     <>
       <form
@@ -154,7 +192,7 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
               className="DocSearch-Action DocSearch-AskAi-Return"
               title={backToKeywordSearchButtonText}
               aria-label={backToKeywordSearchButtonAriaLabel}
-              onClick={() => props.onAskAiToggle(false)}
+              onClick={handleAskAiBackClick}
             >
               <BackIcon />
             </button>
@@ -175,11 +213,15 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
           </>
         )}
 
-        {isAskAiStreaming ? (
-          <span className="DocSearch-AskAiStreamingPlaceholder shimmer">{placeholderTextAskAiStreaming}</span>
-        ) : (
-          <input className="DocSearch-Input" ref={props.inputRef} {...inputProps} placeholder={searchPlaceholder} />
-        )}
+        {heading && <ModalHeading heading={heading} shimmer={isAskAiStreaming} />}
+
+        <input
+          className="DocSearch-Input"
+          ref={props.inputRef}
+          {...inputProps}
+          placeholder={searchPlaceholder}
+          hidden={Boolean(heading)}
+        />
 
         <div className="DocSearch-Actions">
           <button
@@ -209,23 +251,25 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
             </>
           )}
 
-          {props.isAskAiActive && (
+          {renderMoreOptions && (
             <>
-              <Dropdown>
-                <Dropdown.Button className="DocSearch-Action">
+              <Menu>
+                <Menu.Trigger className="DocSearch-Action">
                   <MoreVerticalIcon />
-                </Dropdown.Button>
-                <Dropdown.Content>
-                  <Dropdown.Item onClick={props.onNewConversation}>
+                </Menu.Trigger>
+                <Menu.Content>
+                  <Menu.Item onClick={props.onNewConversation}>
                     <NewConversationIcon />
                     Start a new conversation
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <ConversationHistoryIcon />
-                    Conversation history
-                  </Dropdown.Item>
-                </Dropdown.Content>
-              </Dropdown>
+                  </Menu.Item>
+                  {hasRecentConversations && (
+                    <Menu.Item onClick={props.onViewConversationHistory}>
+                      <ConversationHistoryIcon />
+                      Conversation history
+                    </Menu.Item>
+                  )}
+                </Menu.Content>
+              </Menu>
 
               <div className="DocSearch-Divider" />
             </>

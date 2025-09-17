@@ -16,7 +16,6 @@ import type { FooterTranslations } from './Footer';
 import { Footer } from './Footer';
 import { Hit } from './Hit';
 import type { NewConversationTranslations } from './NewConversationScreen';
-import { NewConversationScreen } from './NewConversationScreen';
 import type { ScreenStateTranslations } from './ScreenState';
 import { ScreenState } from './ScreenState';
 import type { SearchBoxTranslations } from './SearchBox';
@@ -787,16 +786,14 @@ export function DocSearchModal({
     setAskAiState('new-conversation');
   };
 
+  const handleViewConversationHistory = (): void => {
+    setAskAiState('conversation-history');
+  };
+
   // hide the dropdown on idle and no collections
   let showDocsearchDropdown = true;
   const hasCollections = state.collections.some((collection) => collection.items.length > 0);
-  if (
-    askAiState !== 'new-conversation' &&
-    state.status === 'idle' &&
-    hasCollections === false &&
-    state.query.length === 0 &&
-    !isAskAiActive
-  ) {
+  if (state.status === 'idle' && hasCollections === false && state.query.length === 0 && !isAskAiActive) {
     showDocsearchDropdown = false;
   }
 
@@ -840,67 +837,59 @@ export function DocSearchModal({
             }}
             onStopAskAiStreaming={onStopAskAiStreaming}
             onNewConversation={handleNewConversation}
+            onViewConversationHistory={handleViewConversationHistory}
           />
         </header>
 
         {showDocsearchDropdown && (
           <div className="DocSearch-Dropdown" ref={dropdownRef}>
-            {canHandleAskAi && askAiState === 'new-conversation' ? (
-              <NewConversationScreen
-                translations={translations?.newConversation}
-                selectSuggestedQuestion={(query: string) => {
-                  setAskAiState('conversation');
-                  handleAskAiToggle(true, query);
-                }}
-              />
-            ) : (
-              <ScreenState
-                {...autocomplete}
-                indexName={defaultIndexName}
-                state={state}
-                hitComponent={hitComponent}
-                resultsFooterComponent={resultsFooterComponent}
-                disableUserPersonalization={disableUserPersonalization}
-                recentSearches={recentSearches}
-                favoriteSearches={favoriteSearches}
-                conversations={conversations}
-                inputRef={inputRef}
-                translations={screenStateTranslations}
-                getMissingResultsUrl={getMissingResultsUrl}
-                isAskAiActive={isAskAiActive}
-                canHandleAskAi={canHandleAskAi}
-                messages={messages}
-                askAiStreamError={askAiStreamError}
-                askAiFetchError={askAiFetchError}
-                status={status}
-                hasCollections={hasCollections}
-                askAiState={askAiState}
-                onAskAiToggle={onAskAiToggle}
-                onItemClick={(item, event) => {
-                  // if the item is askAI toggle the screen
-                  if (item.type === 'askAI' && item.query) {
-                    // if the item is askAI and the anchor is stored
-                    if (item.anchor === 'stored' && 'messages' in item) {
-                      setMessages(item.messages as any);
-                      onAskAiToggle(true);
-                    } else {
-                      handleAskAiToggle(true, item.query);
-                    }
-                    event.preventDefault();
-                    return;
+            <ScreenState
+              {...autocomplete}
+              indexName={defaultIndexName}
+              state={state}
+              hitComponent={hitComponent}
+              resultsFooterComponent={resultsFooterComponent}
+              disableUserPersonalization={disableUserPersonalization}
+              recentSearches={recentSearches}
+              favoriteSearches={favoriteSearches}
+              conversations={conversations}
+              inputRef={inputRef}
+              translations={screenStateTranslations}
+              getMissingResultsUrl={getMissingResultsUrl}
+              isAskAiActive={isAskAiActive}
+              canHandleAskAi={canHandleAskAi}
+              messages={messages}
+              askAiStreamError={askAiStreamError}
+              askAiFetchError={askAiFetchError}
+              status={status}
+              hasCollections={hasCollections}
+              askAiState={askAiState}
+              selectAskAiQuestion={handleAskAiToggle}
+              onAskAiToggle={onAskAiToggle}
+              onItemClick={(item, event) => {
+                // if the item is askAI toggle the screen
+                if (item.type === 'askAI' && item.query) {
+                  // if the item is askAI and the anchor is stored
+                  if (item.anchor === 'stored' && 'messages' in item) {
+                    setMessages(item.messages as any);
+                    onAskAiToggle(true);
+                  } else {
+                    handleAskAiToggle(true, item.query);
                   }
+                  event.preventDefault();
+                  return;
+                }
 
-                  // If insights is active, send insights click event
-                  sendItemClickEvent(item);
+                // If insights is active, send insights click event
+                sendItemClickEvent(item);
 
-                  saveRecentSearch(item);
-                  if (!isModifierEvent(event)) {
-                    onClose();
-                  }
-                }}
-                onFeedback={handleFeedbackSubmit}
-              />
-            )}
+                saveRecentSearch(item);
+                if (!isModifierEvent(event)) {
+                  onClose();
+                }
+              }}
+              onFeedback={handleFeedbackSubmit}
+            />
           </div>
         )}
         <footer className="DocSearch-Footer">
