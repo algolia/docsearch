@@ -244,28 +244,6 @@
   border-radius: 4px;
 }
 
-.DocSearch-ConversationActions {
-  position: relative;
-}
-
-.DocSearch-ConversationActions > summary {
-  list-style: none;
-}
-
-.DocSearch-ConversationActions > ul {
-  display: none;
-  position: absolute;
-  top: 100%;
-  right:0;
-  background-color: white;
-  border: 1px solid var(--docsearch-text-color);
-  padding: 0.5em;
-}
-
-.DocSearch-ConversationActions[open] > ul {
-  display: block;
-}
-
 /* Modal Dropdown */
 
 .DocSearch-Dropdown {
