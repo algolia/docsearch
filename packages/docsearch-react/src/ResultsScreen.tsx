@@ -8,6 +8,7 @@ import { removeHighlightTags } from './utils';
 
 export type ResultsScreenTranslations = Partial<{
   askAiPlaceholder: string;
+  noResultsAskAiPlaceholder: string;
 }>;
 
 type ResultsScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {

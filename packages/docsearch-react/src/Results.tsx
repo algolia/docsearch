@@ -8,6 +8,7 @@ import type { InternalDocSearchHit, StoredDocSearchHit } from './types';
 
 export type ResultsTranslations = Partial<{
   askAiPlaceholder: string;
+  noResultsAskAiPlaceholder: string;
 }>;
 interface ResultsProps<TItem extends BaseItem>
   extends AutocompleteApi<TItem, React.FormEvent, React.MouseEvent, React.KeyboardEvent> {
@@ -22,6 +23,7 @@ interface ResultsProps<TItem extends BaseItem>
   }) => React.ReactNode;
   onItemClick: (item: TItem, event: KeyboardEvent | MouseEvent) => void;
   hitComponent: DocSearchProps['hitComponent'];
+  state: AutocompleteState<TItem>;
 }
 
 export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TItem>): JSX.Element | null {
@@ -165,6 +167,7 @@ function Result<TItem extends StoredDocSearchHit>({
 interface AskAiButtonProps<TItem extends BaseItem> extends ResultsProps<TItem> {
   item: TItem;
   translations?: ResultsTranslations;
+  state: AutocompleteState<TItem>;
 }
 
 function AskAiButton<TItem extends StoredDocSearchHit>({
@@ -173,8 +176,13 @@ function AskAiButton<TItem extends StoredDocSearchHit>({
   onItemClick,
   translations,
   collection,
+  ...props
 }: AskAiButtonProps<TItem>): JSX.Element {
-  const { askAiPlaceholder = 'Ask AI: ' } = translations || {};
+  const { askAiPlaceholder = 'Ask AI: ', noResultsAskAiPlaceholder = "Didn't find it in the docs? Ask AI to help: " } =
+    translations || {};
+  const noKeywordResults = props.state.collections.length === 1;
+
+  const placeholder = noKeywordResults ? noResultsAskAiPlaceholder : askAiPlaceholder;
 
   return (
     <li
@@ -193,7 +201,7 @@ function AskAiButton<TItem extends StoredDocSearchHit>({
             <SparklesIcon />
           </div>
           <div className="DocSearch-Hit-AskAIButton-title">
-            <span className="DocSearch-Hit-AskAIButton-title-highlight">{askAiPlaceholder}</span>
+            <span className="DocSearch-Hit-AskAIButton-title-highlight">{placeholder}</span>
             <mark className="DocSearch-Hit-AskAIButton-title-query">{item.query || ''}</mark>
           </div>
         </div>

@@ -295,13 +295,13 @@ describe('api', () => {
       });
 
       await act(async () => {
-        fireEvent.click(await screen.findByText(/Ask AI:/));
+        fireEvent.click(await screen.findByText(/Ask AI to help:/));
       });
 
       expect(document.querySelector('.DocSearch-AskAiScreen')).toBeInTheDocument();
 
       // could be "Answering..." or "Ask another question..."
-      expect(screen.getByPlaceholderText('Answering...')).toBeInTheDocument();
+      expect(screen.getByText('Answering...')).toBeInTheDocument();
     });
   });
 
