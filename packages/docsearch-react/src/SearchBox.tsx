@@ -33,6 +33,8 @@ export type SearchBoxTranslations = Partial<{
   backToKeywordSearchButtonAriaLabel: string;
   newConversationPlaceholder: string;
   conversationHistoryTitle: string;
+  startNewConversationText: string;
+  viewConversationHistoryText: string;
 }>;
 
 interface SearchBoxProps
@@ -66,6 +68,8 @@ export function SearchBox({ translations = {}, askAiState, onAskAiToggle, ...pro
     placeholderTextAskAiStreaming = 'Answering...',
     newConversationPlaceholder = 'Ask a question',
     conversationHistoryTitle = 'My conversation history',
+    startNewConversationText = 'Start a new conversation',
+    viewConversationHistoryText = 'Conversation history',
   } = translations;
   const { onReset } = props.getFormProps({
     inputElement: props.inputRef.current,
@@ -260,12 +264,12 @@ export function SearchBox({ translations = {}, askAiState, onAskAiToggle, ...pro
                 <Menu.Content>
                   <Menu.Item onClick={props.onNewConversation}>
                     <NewConversationIcon />
-                    Start a new conversation
+                    {startNewConversationText}
                   </Menu.Item>
                   {hasRecentConversations && (
                     <Menu.Item onClick={props.onViewConversationHistory}>
                       <ConversationHistoryIcon />
-                      Conversation history
+                      {viewConversationHistoryText}
                     </Menu.Item>
                   )}
                 </Menu.Content>
