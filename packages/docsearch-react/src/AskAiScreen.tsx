@@ -44,6 +44,10 @@ export type AskAiScreenTranslations = Partial<{
     lastSeparator?: string;
     after?: string;
   };
+  /**
+   * Message that's shown when user has stopped the streaming of a message.
+   */
+  stoppedStreamingText: string;
 }>;
 
 type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
@@ -90,6 +94,8 @@ function AskAiExchangeCard({
   onFeedback,
 }: AskAiExchangeCardProps): JSX.Element {
   const { userMessage, assistantMessage } = exchange;
+
+  const { stoppedStreamingText = 'You stopped this response' } = translations;
 
   const assistantContent = useMemo(() => getMessageContent(assistantMessage), [assistantMessage]);
   const userContent = useMemo(() => getMessageContent(userMessage), [userMessage]);
@@ -232,7 +238,7 @@ function AskAiExchangeCard({
             })}
           </div>
 
-          {wasStopped && <p className="DocSearck-AskAiScreen-MessageContent-Stopped">You stopped this response</p>}
+          {wasStopped && <p className="DocSearck-AskAiScreen-MessageContent-Stopped">{stoppedStreamingText}</p>}
         </div>
         <div className="DocSearch-AskAiScreen-Answer-Footer">
           <AskAiScreenFooterActions
