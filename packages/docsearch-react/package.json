@@ -1,5 +1,5 @@
 {
-  "name": "@docsearch/react",
+  "name": "@slorber/docsearch-react",
   "description": "React package for DocSearch, the best search experience for docs.",
   "version": "4.0.1",
   "license": "MIT",
