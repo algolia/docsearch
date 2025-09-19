@@ -33,11 +33,6 @@
     "website:serve": "yarn workspace @docsearch/website serve --host 0.0.0.0",
     "website:test": "yarn workspace @docsearch/website start --no-open"
   },
-  "resolutions": {
-    "@docusaurus/utils": "https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-utils-3.8.1.tgz",
-    "@docusaurus/theme-search-algolia": "https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-theme-search-algolia-3.8.1.tgz",
-    "@docusaurus/theme-translations": "https://github.com/algolia/docsearch/releases/download/v4.0.0-beta.4/docusaurus-theme-translations-3.8.1.tgz"
-  },
   "devDependencies": {
     "@babel/plugin-transform-react-jsx": "7.25.9",
     "@babel/preset-env": "7.26.0",
@@ -90,6 +85,9 @@
     "typescript-eslint": "8.20.0",
     "vitest": "3.0.2",
     "watch": "1.0.2"
+  },
+  "resolutions": {
+    "@docsearch/react": "^4.0.1"
   },
   "packageManager": "yarn@4.6.0"
 }
