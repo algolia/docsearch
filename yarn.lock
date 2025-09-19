@@ -2423,7 +2423,7 @@ __metadata:
     "@testing-library/react": "npm:16.2.0"
     ai: "npm:^5.0.30"
     algoliasearch: "npm:^5.28.0"
-    marked: "npm:^15.0.12"
+    marked: "npm:^16.3.0"
     nodemon: "npm:^3.1.0"
     rollup-plugin-dts: "npm:^6.2.1"
     vitest: "npm:3.0.2"
@@ -17245,12 +17245,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:^15.0.12":
-  version: 15.0.12
-  resolution: "marked@npm:15.0.12"
+"marked@npm:^16.3.0":
+  version: 16.3.0
+  resolution: "marked@npm:16.3.0"
   bin:
     marked: bin/marked.js
-  checksum: 10c0/e09da211544b787ecfb25fed07af206060bf7cd6d9de6cb123f15c496a57f83b7aabea93340aaa94dae9c94e097ae129377cad6310abc16009590972e85f4212
+  checksum: 10c0/5a3d7da93d7692014c8764c31dc741fa6ee16d8573788a3b28d041c440e79177c46d786ad7c1fc2b3f5e301d6db32e22da45efd4c00ddbc31caf87bd8e9a673b
   languageName: node
   linkType: hard
 
