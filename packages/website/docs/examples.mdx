@@ -35,7 +35,7 @@ Use the default experience with your index credentials. this works great for typ
 
 ## Ask AI: ai-assisted answers
 
-Add algolia askai to get synthesized answers grounded in your indexed content. you can scope the llm context using `searchParameters`.
+Add algolia askai to get synthesized answers grounded in your indexed content. you can scope the llm context using `searchParameters` like `facetFilters`, `filters`, `attributesToRetrieve`, `attributesToSnippet`, `restrictSearchableAttributes`, and `distinct`.
 
 ```jsx
 <DocSearch
@@ -45,17 +45,7 @@ Add algolia askai to get synthesized answers grounded in your indexed content. y
   askAi={{
     assistantId: 'askAIDemo',
     searchParameters: {
-      facetFilters: ['language:en', 'type:content'],
-      attributesToRetrieve: ['title', 'content', 'url'],
-      attributesToSnippet: ['content:20'],
-      snippetEllipsisText: '...',
-      highlightPreTag: '<mark>',
-      highlightPostTag: '</mark>',
-      clickAnalytics: true,
-      filters: 'type:content',
-      distinct: true,
-      analytics: true,
-      enablePersonalization: true,
+      facetFilters: ['language:en'],
     },
   }}
   insights={true}
@@ -356,5 +346,5 @@ the snippet below maps a non-standard record to the internal format. try it live
 ## Tips
 
 - **Instrumentation**: enable `insights` to send usage analytics and iterate on relevance.
-- **AskAI scoping**: use `facetFilters` to keep ai answers strictly within your desired corpus (language, product, version, etc.).
+- **AskAI scoping**: use `facetFilters`, `filters`, `attributesToRetrieve`, `attributesToSnippet`, `restrictSearchableAttributes`, and `distinct` to control ai context and improve answer quality.
 - **Customization**: use `hitComponent`, `transformItems`, and `translations` to make docsearch feel native to any product surface.
