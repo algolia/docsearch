@@ -102,13 +102,12 @@ Start or continue a chat with the AI assistant. **The response is streamed in re
   - `createdAt` (string, optional): ISO timestamp
   - `parts` (array, optional): Message parts (used by Vercel AI SDK)
 - `searchParameters` (object, optional): Search configuration
-  - Search parameters for AskAI:
-    - `facetFilters` (array, optional): Filter by language, version, type
-    - `filters` (string, optional): Apply complex filtering rules
-    - `attributesToRetrieve` (array, optional): Control which attributes are retrieved
-    - `attributesToSnippet` (array, optional): Control snippet length for context
-    - `restrictSearchableAttributes` (array, optional): Limit search to specific fields
-    - `distinct` (boolean, optional): Remove duplicate results
+  - `facetFilters` (array, optional): Filter by language, version, type
+  - `filters` (string, optional): Apply complex filtering rules
+  - `attributesToRetrieve` (array, optional): Control which attributes are retrieved
+  - `attributesToSnippet` (array, optional): Control snippet length for context
+  - `restrictSearchableAttributes` (array, optional): Limit search to specific fields
+  - `distinct` (boolean, optional): Remove duplicate results
 
 **Using Search Parameters:**
 
@@ -125,21 +124,12 @@ Search parameters allow you to control how Ask AI searches your index:
     }
   ],
   "searchParameters": {
-    "facetFilters": ["language:en", "version:latest", "type:content"],
+    "facetFilters": ["language:en", "version:latest"],
+    "filters": "type:content AND language:en",
     "attributesToRetrieve": ["title", "content", "url"],
     "attributesToSnippet": ["content:20"],
-    "snippetEllipsisText": "...",
-    "highlightPreTag": "<mark>",
-    "highlightPostTag": "</mark>",
-    "clickAnalytics": true,
-    "analytics": true,
-    "filters": "type:content AND language:en",
-    "numericFilters": ["score>0.5"],
-    "tagFilters": ["important"],
-    "distinct": true,
-    "getRankingInfo": true,
-    "enablePersonalization": true,
-    "userToken": "user123"
+    "restrictSearchableAttributes": ["title", "content"],
+    "distinct": true
   }
 }
 ```
@@ -284,19 +274,7 @@ class AskAIChat {
       body: JSON.stringify({
         id: conversationId,
         messages,
-        searchParameters: {
-          // Filtering parameters
-          facetFilters: ['language:en', 'type:content'],
-          filters: 'type:content AND language:en',
-
-          // Content control parameters
-          attributesToRetrieve: ['title', 'content', 'url'],
-          attributesToSnippet: ['content:20'],
-          restrictSearchableAttributes: ['title', 'content'],
-
-          // Deduplication
-          distinct: true,
-        },
+        ...(Object.keys(searchParameters).length > 0 && { searchParameters }),
       }),
     });
 
