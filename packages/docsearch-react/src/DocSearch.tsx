@@ -1,4 +1,7 @@
-import type { AutocompleteOptions, AutocompleteState } from '@algolia/autocomplete-core';
+import type {
+  AutocompleteOptions,
+  AutocompleteState,
+} from '@algolia/autocomplete-core';
 import type { LiteClient, SearchParamsObject } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
@@ -29,6 +32,16 @@ export type DocSearchTransformClient = {
   transporter: Pick<LiteClient['transporter'], 'algoliaAgent'>;
 };
 
+// Define the specific search parameters allowed for AskAI
+export type AskAiSearchParameters = {
+  facetFilters?: string[];
+  filters?: string;
+  attributesToRetrieve?: string[];
+  attributesToSnippet?: string[];
+  restrictSearchableAttributes?: string[];
+  distinct?: boolean;
+};
+
 export type DocSearchAskAi = {
   /**
    * The index name to use for the ask AI feature. Your assistant will search this index for relevant documents.
@@ -52,9 +65,7 @@ export type DocSearchAskAi = {
   /**
    * The search parameters to use for the ask AI feature.
    */
-  searchParameters?: {
-    facetFilters?: SearchParamsObject['facetFilters'];
-  };
+  searchParameters?: AskAiSearchParameters;
 };
 
 export interface DocSearchIndex {
@@ -112,15 +123,22 @@ export interface DocSearchProps {
   /**
    * Custom component to render an individual hit.
    */
-  hitComponent?: (props: { hit: InternalDocSearchHit | StoredDocSearchHit; children: React.ReactNode }) => JSX.Element;
+  hitComponent?: (props: {
+    hit: InternalDocSearchHit | StoredDocSearchHit;
+    children: React.ReactNode;
+  }) => JSX.Element;
   /**
    * Custom component rendered at the bottom of the results panel.
    */
-  resultsFooterComponent?: (props: { state: AutocompleteState<InternalDocSearchHit> }) => JSX.Element | null;
+  resultsFooterComponent?: (props: {
+    state: AutocompleteState<InternalDocSearchHit>;
+  }) => JSX.Element | null;
   /**
    * Hook to wrap or modify the algolia search client.
    */
-  transformSearchClient?: (searchClient: DocSearchTransformClient) => DocSearchTransformClient;
+  transformSearchClient?: (
+    searchClient: DocSearchTransformClient
+  ) => DocSearchTransformClient;
   /**
    * Disable storage and usage of recent and favorite searches.
    */
@@ -170,28 +188,36 @@ export interface DocSearchProps {
 export function DocSearch(props: DocSearchProps): JSX.Element {
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
   const [isOpen, setIsOpen] = React.useState(false);
-  const [initialQuery, setInitialQuery] = React.useState<string | undefined>(props?.initialQuery || undefined);
+  const [initialQuery, setInitialQuery] = React.useState<string | undefined>(
+    props?.initialQuery || undefined
+  );
   const [isAskAiActive, setIsAskAiActive] = React.useState(false);
 
   let currentPlaceholder =
-    props?.translations?.modal?.searchBox?.placeholderText || props?.placeholder || 'Search docs';
+    props?.translations?.modal?.searchBox?.placeholderText ||
+    props?.placeholder ||
+    'Search docs';
 
   // check if the instance is configured to handle ask ai
   const canHandleAskAi = Boolean(props?.askAi);
 
   if (canHandleAskAi) {
-    currentPlaceholder = props?.translations?.modal?.searchBox?.placeholderText || 'Search docs or ask AI a question';
+    currentPlaceholder =
+      props?.translations?.modal?.searchBox?.placeholderText ||
+      'Search docs or ask AI a question';
   }
 
   if (isAskAiActive) {
-    currentPlaceholder = props?.translations?.modal?.searchBox?.placeholderTextAskAi || 'Ask another question...';
+    currentPlaceholder =
+      props?.translations?.modal?.searchBox?.placeholderTextAskAi ||
+      'Ask another question...';
   }
 
   const onAskAiToggle = React.useCallback(
     (askAitoggle: boolean) => {
       setIsAskAiActive(askAitoggle);
     },
-    [setIsAskAiActive],
+    [setIsAskAiActive]
   );
 
   const onOpen = React.useCallback(() => {
@@ -211,7 +237,7 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
       setIsOpen(true);
       setInitialQuery(event.key);
     },
-    [setIsOpen, setInitialQuery],
+    [setIsOpen, setInitialQuery]
   );
 
   useDocSearchKeyboardEvents({
@@ -248,7 +274,7 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
             onAskAiToggle={onAskAiToggle}
             onClose={onClose}
           />,
-          props.portalContainer ?? document.body,
+          props.portalContainer ?? document.body
         )}
     </>
   );
