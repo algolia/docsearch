@@ -33,12 +33,12 @@ aliases:
 defaults: &defaults
   working_directory: ~/docsearch
   docker:
-    - image: cimg/node:18.20.3
+    - image: cimg/node:22.15.0
 
 cypress: &cypress
   working_directory: ~/docsearch
   docker:
-    - image: cypress/browsers:node-18.20.3-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1
+    - image: cypress/browsers:node-22.15.0-chrome-136.0.7103.113-1-ff-138.0.3-edge-136.0.3240.64-1
       environment:
         ## this enables colors in the output
         TERM: xterm
