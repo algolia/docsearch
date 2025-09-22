@@ -16,10 +16,22 @@
   "sideEffects": false,
   "files": [
     "dist/",
-    "style/",
     "button.js",
-    "modal.js"
+    "modal.js",
+    "useTheme.js",
+    "useDocSearchKeyboardEvents.js",
+    "version.js",
+    "style/"
   ],
+  "exports": {
+    ".": "./dist/esm/index.js",
+    "./button": "./dist/esm/DocSearchButton.js",
+    "./modal": "./dist/esm/DocSearchModal.js",
+    "./style": "./style/index.js",
+    "./useDocSearchKeyboardEvents": "./dist/esm/useDocSearchKeyboardEvents.js",
+    "./useTheme": "./dist/esm/useTheme.js",
+    "./version": "./dist/esm/version.js"
+  },
   "source": "src/index.ts",
   "types": "dist/esm/index.d.ts",
   "module": "dist/esm/index.js",
