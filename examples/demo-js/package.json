@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@docsearch/css": "4.0.1",
+    "@docsearch/css": "4.1.0",
     "@docsearch/js": "4.1.0"
   },
   "devDependencies": {
