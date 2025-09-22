@@ -20,7 +20,11 @@ export default {
   organizationName: 'Algolia',
   projectName: 'DocSearch',
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'throw',
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'throw',
+    },
+  },
   future: {
     v4: {
       removeLegacyPostBuildHeadAttribute: true,
@@ -65,11 +69,13 @@ export default {
         placeholder: 'Search or ask AI',
         appId: 'PMZUYBQDAK',
         apiKey: '24b09689d5b4223813d9b8e48563c8f6',
+        indexName: 'docsearch',
         askAi: {
           indexName: 'docsearch-markdown',
           assistantId: 'askAIDemo',
+          apiKey: '24b09689d5b4223813d9b8e48563c8f6',
+          appId: 'PMZUYBQDAK',
         },
-        indexName: 'docsearch',
         contextualSearch: true,
         translations: {
           button: {

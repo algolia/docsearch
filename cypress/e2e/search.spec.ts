@@ -100,7 +100,7 @@ describe('Search', () => {
     const currentURL = cy.url();
 
     cy.typeQueryMatching();
-    cy.get('.DocSearch-Hits #docsearch-hits0-item-1 > a').click({
+    cy.get('#docsearch-hits_docsearch_0-item-1 > a').click({
       force: true,
     });
     cy.on('url:changed', (newUrl) => {
@@ -123,7 +123,7 @@ describe('Recent and Favorites', () => {
     cy.visit(Cypress.config().baseUrl!);
     cy.openModal();
     cy.typeQueryMatching();
-    cy.get('#docsearch-hits0-item-1 > a').click({ force: true }).wait(1000);
+    cy.get('#docsearch-hits_docsearch_0-item-1 > a').click({ force: true }).wait(1000);
     cy.openModal();
     cy.contains('Recent').should('be.visible');
   });
