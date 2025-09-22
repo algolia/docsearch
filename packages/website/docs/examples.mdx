@@ -35,7 +35,7 @@ Use the default experience with your index credentials. this works great for typ
 
 ## Ask AI: ai-assisted answers
 
-Add algolia askai to get synthesized answers grounded in your indexed content. you can scope the llm context using `searchParameters` like `facetFilters`, `filters`, `attributesToRetrieve`, `attributesToSnippet`, `restrictSearchableAttributes`, and `distinct`.
+Add algolia askai to get synthesized answers grounded in your indexed content. you can scope the llm context using `searchParameters` like `facetFilters`, `filters`, `attributesToRetrieve`,`restrictSearchableAttributes`, and `distinct`.
 
 ```jsx
 <DocSearch
@@ -346,5 +346,5 @@ the snippet below maps a non-standard record to the internal format. try it live
 ## Tips
 
 - **Instrumentation**: enable `insights` to send usage analytics and iterate on relevance.
-- **AskAI scoping**: use `facetFilters`, `filters`, `attributesToRetrieve`, `attributesToSnippet`, `restrictSearchableAttributes`, and `distinct` to control ai context and improve answer quality.
+- **AskAI scoping**: use `facetFilters`, `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct` to control ai context and improve answer quality.
 - **Customization**: use `hitComponent`, `transformItems`, and `translations` to make docsearch feel native to any product surface.

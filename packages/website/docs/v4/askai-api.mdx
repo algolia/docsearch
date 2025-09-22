@@ -105,7 +105,6 @@ Start or continue a chat with the AI assistant. **The response is streamed in re
   - `facetFilters` (array, optional): Filter by language, version, type
   - `filters` (string, optional): Apply complex filtering rules
   - `attributesToRetrieve` (array, optional): Control which attributes are retrieved
-  - `attributesToSnippet` (array, optional): Control snippet length for context
   - `restrictSearchableAttributes` (array, optional): Limit search to specific fields
   - `distinct` (boolean, optional): Remove duplicate results
 
@@ -127,7 +126,6 @@ Search parameters allow you to control how Ask AI searches your index:
     "facetFilters": ["language:en", "version:latest"],
     "filters": "type:content AND language:en",
     "attributesToRetrieve": ["title", "content", "url"],
-    "attributesToSnippet": ["content:20"],
     "restrictSearchableAttributes": ["title", "content"],
     "distinct": true
   }

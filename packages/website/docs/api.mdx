@@ -191,7 +191,6 @@ docsearch({
 
       // Content control parameters
       attributesToRetrieve: ['title', 'content', 'url'],
-      attributesToSnippet: ['content:20'],
       restrictSearchableAttributes: ['title', 'content'],
 
       // Deduplication
@@ -230,7 +229,6 @@ in case you want to use different credentials for askAi
 
       // Content control parameters
       attributesToRetrieve: ['title', 'content', 'url'],
-      attributesToSnippet: ['content:20'],
       restrictSearchableAttributes: ['title', 'content'],
 
       // Deduplication
@@ -248,7 +246,6 @@ in case you want to use different credentials for askAi
 - **Filtering**: `facetFilters: ['type:content']` - Filter by language, version, or content type
 - **Complex filtering**: `filters: 'type:content AND language:en'` - Apply complex filtering rules
 - **Content control**: `attributesToRetrieve: ['title', 'content', 'url']` - Control which attributes are retrieved
-- **Snippet control**: `attributesToSnippet: ['content:20']` - Control snippet length for context
 - **Search scope**: `restrictSearchableAttributes: ['title', 'content']` - Limit search to specific fields
 - **Deduplication**: `distinct: true` - Remove duplicate results
 
