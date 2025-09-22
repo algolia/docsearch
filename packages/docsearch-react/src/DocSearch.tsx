@@ -4,7 +4,7 @@ import type { LiteClient, SearchParamsObject } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 
 import { DocSearchButton } from './DocSearchButton';
-import { DocSearchModalPortal } from './DocSearchModalPortal';
+import { DocSearchModalPortal } from './DocSearchModal';
 import type {
   DocSearchHit,
   DocSearchTheme,
