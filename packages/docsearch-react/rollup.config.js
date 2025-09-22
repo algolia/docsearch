@@ -34,34 +34,36 @@ function sourceOutput(fileName) {
   ];
 }
 
+const externalPackages = ['react', 'react-dom', '@docsearch/core'];
+
 export default [
   {
     input: 'src/index.ts',
-    external: ['react', 'react-dom'],
+    external: externalPackages,
     output: sourceOutput('index.js'),
     plugins: sourcePlugins,
   },
   {
     input: 'src/DocSearchButton.tsx',
-    external: ['react', 'react-dom'],
+    external: externalPackages,
     output: sourceOutput('DocsearchButton.js'),
     plugins: sourcePlugins,
   },
   {
     input: 'src/DocSearchModal.tsx',
-    external: ['react', 'react-dom'],
+    external: externalPackages,
     output: sourceOutput('DocSearchModal.js'),
     plugins: sourcePlugins,
   },
   {
     input: 'src/useDocSearchKeyboardEvents.ts',
-    external: ['react', 'react-dom'],
+    external: externalPackages,
     output: sourceOutput('useDocSearchKeyboardEvents.js'),
     plugins: sourcePlugins,
   },
   {
     input: 'src/useTheme.tsx',
-    external: ['react', 'react-dom'],
+    external: externalPackages,
     output: sourceOutput('useTheme.js'),
     plugins: sourcePlugins,
   },

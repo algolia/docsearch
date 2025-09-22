@@ -16,6 +16,7 @@
     "write-heading-ids": "docusaurus write-heading-ids"
   },
   "dependencies": {
+    "@docsearch/core": "^1.0.0",
     "@docsearch/css": "^4.0.1",
     "@docsearch/react": "^4.0.1",
     "@docusaurus/core": "3.8.1-canary-6397",
