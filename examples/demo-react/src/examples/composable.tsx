@@ -39,7 +39,7 @@ function Contents(): JSX.Element {
 
   return (
     <>
-      <DocSearchButton ref={searchButtonRef} translations={{ buttonText: 'Keyword search' }} onClick={onOpen} />
+      <DocSearchButton ref={searchButtonRef} translations={{ buttonText: 'Composable API' }} onClick={onOpen} />
       {isOpen &&
         createPortal(
           <DocSearchModal
