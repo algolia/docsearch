@@ -8,6 +8,7 @@ export type StoredAskAiMessage = AIMessage & {
   feedback?: 'dislike' | 'like';
 };
 
-export type StoredAskAiState = Omit<DocSearchHit, '_highlightResult' | '_snippetResult'> & {
+export type StoredAskAiState = StoredDocSearchHit & {
+  stopped?: boolean;
   messages?: StoredAskAiMessage[];
 };

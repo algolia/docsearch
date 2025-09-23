@@ -376,6 +376,10 @@ const translations: DocSearchTranslations = {
       searchInputLabel: 'Search',
       backToKeywordSearchButtonText: 'Back to keyword search',
       backToKeywordSearchButtonAriaLabel: 'Back to keyword search',
+      newConversationPlaceholder: 'Ask a question',
+      conversationHistoryTitle: 'My conversation history',
+      startNewConversationText: 'Start a new conversation',
+      viewConversationHistoryText: 'Conversation history'
     },
     startScreen: {
       recentSearchesTitle: 'Recent',
@@ -400,6 +404,7 @@ const translations: DocSearchTranslations = {
     },
     resultsScreen: {
       askAiPlaceholder: 'Ask AI: ',
+      noResultsAskAiPlaceholder: 'Didn't find it in the docs? Ask AI to help: ',
     },
     askAiScreen: {
       disclaimerText:
@@ -418,6 +423,8 @@ const translations: DocSearchTranslations = {
       // If provided, these override the default rendering of aggregated tool calls:
       aggregatedToolCallNode: undefined, // (queries: string[], onSearchQueryClick: (query: string) => void) => React.ReactNode
       aggregatedToolCallText: undefined, // (queries: string[]) => { before?: string; separator?: string; lastSeparator?: string; after?: string }
+      // Text to show when user has stopped streaming a message
+      stoppedStreamingText: 'You stopped this response',
     },
     footer: {
       selectText: 'Select',
@@ -431,6 +438,10 @@ const translations: DocSearchTranslations = {
       closeKeyAriaLabel: 'Escape key',
       poweredByText: 'Powered by',
     },
+    newConversation: {
+      newConversationTitle: 'How can I help you today?',
+      newConversationDescription: 'I search through your documentation to help you find setup guides, feature details and troubleshooting tips, fast.'
+    }
   },
 };
 ```
