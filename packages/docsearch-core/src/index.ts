@@ -1,1 +1,3 @@
-export { useDocSearch, DocSearch } from './DocSearch';
+export * from './DocSearch';
+export * from './useTheme';
+export * from './useDocSearchKeyboardEvents';
