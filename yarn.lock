@@ -2325,7 +2325,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docsearch/core@npm:^1.0.0, @docsearch/core@workspace:*, @docsearch/core@workspace:packages/docsearch-core":
+"@docsearch/core@workspace:*, @docsearch/core@workspace:packages/docsearch-core":
   version: 0.0.0-use.local
   resolution: "@docsearch/core@workspace:packages/docsearch-core"
   dependencies:
@@ -2490,7 +2490,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docsearch/website@workspace:packages/website"
   dependencies:
-    "@docsearch/core": "npm:^1.0.0"
     "@docsearch/css": "npm:^4.0.1"
     "@docsearch/react": "npm:^4.0.1"
     "@docusaurus/core": "npm:3.8.1-canary-6397"

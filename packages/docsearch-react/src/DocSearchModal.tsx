@@ -5,11 +5,9 @@ import {
   createAutocomplete,
   type AutocompleteState,
 } from '@algolia/autocomplete-core';
-import { useDocSearch } from '@docsearch/core';
 import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls } from 'ai';
 import type { SearchResponse } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
-import { createPortal } from 'react-dom';
 
 import { getValidToken, postFeedback } from './askai';
 import { ASK_AI_API_URL, MAX_QUERY_SIZE, USE_ASK_AI_TOKEN } from './constants';
@@ -272,16 +270,6 @@ const buildQuerySources = async ({
     throw error;
   }
 };
-
-export function DocSearchModalPortal(props: DocSearchModalProps): React.ReactPortal | null {
-  const { docsearchState } = useDocSearch();
-
-  if (docsearchState === 'modal-open') {
-    return createPortal(<DocSearchModal {...props} />, props.portalContainer ?? document.body);
-  }
-
-  return null;
-}
 
 export function DocSearchModal({
   appId,

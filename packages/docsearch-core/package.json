@@ -16,7 +16,7 @@
   "sideEffects": false,
   "files": [
     "dist/",
-    "docsearch.js"
+    "index.js"
   ],
   "exports": {
     ".": "./dist/esm/index.js"

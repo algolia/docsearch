@@ -2,9 +2,10 @@ import type { AutocompleteOptions, AutocompleteState } from '@algolia/autocomple
 import { DocSearch as DocSearchProvider, useDocSearch } from '@docsearch/core';
 import type { LiteClient, SearchParamsObject } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
+import { createPortal } from 'react-dom';
 
 import { DocSearchButton } from './DocSearchButton';
-import { DocSearchModalPortal } from './DocSearchModal';
+import { DocSearchModal } from './DocSearchModal';
 import type {
   DocSearchHit,
   DocSearchTheme,
@@ -245,16 +246,21 @@ export function DocSearchInner(props: DocSearchProps): JSX.Element {
         onClick={onOpen}
       />
 
-      <DocSearchModalPortal
-        {...props}
-        placeholder={currentPlaceholder}
-        initialScrollY={window.scrollY}
-        initialQuery={initialQuery}
-        translations={props?.translations?.modal}
-        isAskAiActive={isAskAiActive}
-        canHandleAskAi={canHandleAskAi}
-        onAskAiToggle={onAskAiToggle}
-      />
+      {isOpen &&
+        createPortal(
+          <DocSearchModal
+            {...props}
+            placeholder={currentPlaceholder}
+            initialScrollY={window.scrollY}
+            initialQuery={initialQuery}
+            translations={props?.translations?.modal}
+            isAskAiActive={isAskAiActive}
+            canHandleAskAi={canHandleAskAi}
+            onAskAiToggle={onAskAiToggle}
+            onClose={onClose}
+          />,
+          props.portalContainer ?? document.body,
+        )}
     </>
   );
 }
