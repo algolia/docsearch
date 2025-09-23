@@ -2325,7 +2325,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docsearch/core@npm:^1.0.0, @docsearch/core@workspace:*, @docsearch/core@workspace:packages/docsearch-core":
+"@docsearch/core@workspace:*, @docsearch/core@workspace:packages/docsearch-core":
   version: 0.0.0-use.local
   resolution: "@docsearch/core@workspace:packages/docsearch-core"
   dependencies:
@@ -2457,7 +2457,7 @@ __metadata:
   dependencies:
     "@ai-sdk/react": "npm:^2.0.30"
     "@algolia/autocomplete-core": "npm:1.19.2"
-    "@docsearch/core": "npm:^1.0.0"
+    "@docsearch/core": "workspace:*"
     "@docsearch/css": "npm:4.0.1"
     "@rollup/plugin-replace": "npm:6.0.2"
     "@testing-library/jest-dom": "npm:6.6.3"
