@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/modal",
   "description": "DocSearch modal package for keyword search and Ask AI.",
-  "version": "4.0.1",
+  "version": "1.0.0",
   "license": "MIT",
   "homepage": "https://docsearch.algolia.com",
   "repository": {
