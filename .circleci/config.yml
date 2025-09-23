@@ -69,10 +69,12 @@ jobs:
             mkdir -p /tmp/workspace/packages/docsearch-react/dist
             mkdir -p /tmp/workspace/packages/docsearch-js/dist
             mkdir -p /tmp/workspace/packages/docsearch-css/dist
+            mkdir -p /tmp/workspace/packages/docsearch-core/dist
 
             cp -R packages/docsearch-react/dist /tmp/workspace/packages/docsearch-react
             cp -R packages/docsearch-js/dist /tmp/workspace/packages/docsearch-js
             cp -R packages/docsearch-css/dist /tmp/workspace/packages/docsearch-css
+            cp -R packages/docsearch-core/dist /tmp/workspace/packages/docsearch-core
       - persist_to_workspace:
           root: *workspace_root
           paths:
