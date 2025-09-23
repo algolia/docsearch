@@ -44,6 +44,10 @@ export type AskAiScreenTranslations = Partial<{
     lastSeparator?: string;
     after?: string;
   };
+  /**
+   * Message that's shown when user has stopped the streaming of a message.
+   */
+  stoppedStreamingText: string;
 }>;
 
 type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
@@ -91,7 +95,7 @@ function AskAiExchangeCard({
 }: AskAiExchangeCardProps): JSX.Element {
   const { userMessage, assistantMessage } = exchange;
 
-  const showActions = !isLastExchange || (isLastExchange && loadingStatus === 'ready' && Boolean(assistantMessage));
+  const { stoppedStreamingText = 'You stopped this response' } = translations;
 
   const assistantContent = useMemo(() => getMessageContent(assistantMessage), [assistantMessage]);
   const userContent = useMemo(() => getMessageContent(userMessage), [userMessage]);
@@ -101,6 +105,11 @@ function AskAiExchangeCard({
   const displayParts = React.useMemo(() => {
     return groupConsecutiveToolResults(assistantMessage?.parts || []);
   }, [assistantMessage]);
+
+  const wasStopped = userMessage.metadata?.stopped || assistantMessage?.metadata?.stopped;
+
+  const showActions =
+    !wasStopped && (!isLastExchange || (isLastExchange && loadingStatus === 'ready' && Boolean(assistantMessage)));
 
   const isThinking =
     ['submitted', 'streaming'].includes(loadingStatus) &&
@@ -228,6 +237,8 @@ function AskAiExchangeCard({
               return null;
             })}
           </div>
+
+          {wasStopped && <p className="DocSearck-AskAiScreen-MessageContent-Stopped">{stoppedStreamingText}</p>}
         </div>
         <div className="DocSearch-AskAiScreen-Answer-Footer">
           <AskAiScreenFooterActions
