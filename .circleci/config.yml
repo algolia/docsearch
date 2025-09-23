@@ -25,10 +25,12 @@ aliases:
       mkdir -p packages/docsearch-react/dist
       mkdir -p packages/docsearch-js/dist
       mkdir -p packages/docsearch-css/dist
+      mkdir -p packages/docsearch-core/dist
 
       cp -R /tmp/workspace/packages/docsearch-react/dist packages/docsearch-react
       cp -R /tmp/workspace/packages/docsearch-js/dist packages/docsearch-js
       cp -R /tmp/workspace/packages/docsearch-css/dist packages/docsearch-css
+      cp -R /tmp/workspace/packages/docsearch-core/dist packages/docsearch-core
 
 defaults: &defaults
   working_directory: ~/docsearch
