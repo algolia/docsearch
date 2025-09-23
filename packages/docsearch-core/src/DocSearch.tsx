@@ -2,6 +2,8 @@ import type { JSX } from 'react';
 import React from 'react';
 
 import { useDocSearchKeyboardEvents } from './useDocSearchKeyboardEvents';
+import { useKeyboardShortcuts } from './useKeyboardShortcuts';
+import type { KeyboardShortcuts } from './useKeyboardShortcuts.ts';
 import type { DocSearchTheme } from './useTheme';
 import { useTheme } from './useTheme';
 
@@ -15,24 +17,27 @@ interface IDocSearchContext {
   setDocsearchState: (newState: DocSearchState) => void;
   searchButtonRef: React.RefObject<HTMLButtonElement | null>;
   initialQuery?: string;
+  keyboardShortcuts: Required<KeyboardShortcuts>;
 }
 
-interface DocSearchProps {
+export interface DocSearchProps {
   appId: string;
   apiKey: string;
   indexName?: string;
   children: JSX.Element | JSX.Element[];
   theme?: DocSearchTheme;
   initialQuery?: string;
+  keyboardShortcuts?: KeyboardShortcuts;
 }
 
-export const DocSearchContext = React.createContext<IDocSearchContext | undefined>(undefined);
+const DocSearchContext = React.createContext<IDocSearchContext | undefined>(undefined);
 
 export function DocSearch({ appId, apiKey, indexName, children, theme, ...props }: DocSearchProps): JSX.Element {
   const [docsearchState, setDocsearchState] = React.useState<DocSearchState>('ready');
   const [initialQuery, setInitialQuery] = React.useState<string | undefined>(props.initialQuery || undefined);
   const [askAiActive, setAskAiActive] = React.useState(false);
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
+  const keyboardShortcuts = useKeyboardShortcuts(props.keyboardShortcuts);
 
   const onOpen = (): void => {
     setDocsearchState('modal-open');
@@ -71,9 +76,10 @@ export function DocSearch({ appId, apiKey, indexName, children, theme, ...props 
     onInput,
     isAskAiActive: askAiActive,
     searchButtonRef,
+    keyboardShortcuts,
   });
 
-  const value = React.useMemo(
+  const value: IDocSearchContext = React.useMemo(
     () => ({
       docsearchState,
       setDocsearchState,
@@ -82,8 +88,9 @@ export function DocSearch({ appId, apiKey, indexName, children, theme, ...props 
       indexName,
       searchButtonRef,
       initialQuery,
+      keyboardShortcuts,
     }),
-    [docsearchState, apiKey, appId, indexName, searchButtonRef, initialQuery],
+    [docsearchState, apiKey, appId, indexName, searchButtonRef, initialQuery, keyboardShortcuts],
   );
 
   return <DocSearchContext.Provider value={value}>{children}</DocSearchContext.Provider>;

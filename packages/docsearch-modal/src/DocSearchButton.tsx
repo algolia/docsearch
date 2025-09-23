@@ -23,11 +23,9 @@ function isAppleDevice(): boolean {
   return /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
 }
 
-// TODO: Check keyboard shortcuts (getKeyboardShortcuts)
-
 export function DocSearchButton({ translations = {}, ...props }: DocSearchButtonProps): JSX.Element {
   const { buttonText = 'Search', buttonAriaLabel = 'Search' } = translations;
-  const { setDocsearchState, searchButtonRef } = useDocSearch();
+  const { setDocsearchState, searchButtonRef, keyboardShortcuts } = useDocSearch();
   const [key, setKey] = React.useState<ActionKey | null>(null);
 
   React.useEffect(() => {
@@ -47,14 +45,15 @@ export function DocSearchButton({ translations = {}, ...props }: DocSearchButton
       : // eslint-disable-next-line react/jsx-key -- false flag
         (['Meta', 'Meta', <MetaKeyIcon />] as const);
 
+  const isCtrlCmdKEnabled = keyboardShortcuts['Ctrl/Cmd+K'];
   const shortcut = `${actionKeyAltText}+k`;
 
   return (
     <button
       type="button"
       className="DocSearch DocSearch-Button"
-      aria-label={buttonAriaLabel}
-      aria-keyshortcuts={shortcut}
+      aria-label={isCtrlCmdKEnabled ? `${buttonAriaLabel} (${shortcut})` : `${buttonAriaLabel}`}
+      aria-keyshortcuts={isCtrlCmdKEnabled ? shortcut : undefined}
       onClick={handleOpen}
       {...props}
       ref={searchButtonRef}
@@ -65,7 +64,7 @@ export function DocSearchButton({ translations = {}, ...props }: DocSearchButton
       </span>
 
       <span className="DocSearch-Button-Keys">
-        {key !== null && (
+        {key !== null && isCtrlCmdKEnabled && (
           <>
             <DocSearchButtonKey reactsToKey={actionKeyReactsTo}>{actionKeyChild}</DocSearchButtonKey>
             <DocSearchButtonKey reactsToKey="k">

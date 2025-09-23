@@ -1,5 +1,7 @@
 import React from 'react';
 
+import type { KeyboardShortcuts } from './useKeyboardShortcuts';
+
 export interface UseDocSearchKeyboardEventsProps {
   isOpen: boolean;
   onOpen: () => void;
@@ -8,7 +10,7 @@ export interface UseDocSearchKeyboardEventsProps {
   searchButtonRef: React.RefObject<HTMLButtonElement | null>;
   isAskAiActive: boolean;
   onAskAiToggle: (toggle: boolean) => void;
-  // keyboardShortcuts?: KeyboardShortcuts;
+  keyboardShortcuts: KeyboardShortcuts;
 }
 
 function isEditingContent(event: KeyboardEvent): boolean {
@@ -26,8 +28,8 @@ export function useDocSearchKeyboardEvents({
   onOpen,
   onInput,
   searchButtonRef,
+  keyboardShortcuts,
 }: UseDocSearchKeyboardEventsProps): void {
-  // TODO: Get keyboard shortcuts (getKeyboardShortcuts)
   React.useEffect(() => {
     function onKeyDown(event: KeyboardEvent): void {
       if (isOpen && event.code === 'Escape' && isAskAiActive) {
@@ -35,8 +37,9 @@ export function useDocSearchKeyboardEvents({
         return;
       }
 
-      const isCmdK = event.key?.toLowerCase() === 'k' && (event.metaKey || event.ctrlKey);
-      const isSlash = event.key === '/';
+      const isCmdK =
+        keyboardShortcuts['Ctrl/Cmd+K'] && event.key?.toLowerCase() === 'k' && (event.metaKey || event.ctrlKey);
+      const isSlash = keyboardShortcuts['/'] && event.key === '/';
 
       if ((event.code === 'Escape' && isOpen) || isCmdK || (!isEditingContent(event) && isSlash && !isOpen)) {
         event.preventDefault();
@@ -62,5 +65,5 @@ export function useDocSearchKeyboardEvents({
     return (): void => {
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [isOpen, isAskAiActive, searchButtonRef, onOpen, onClose, onInput, onAskAiToggle]);
+  }, [isOpen, isAskAiActive, searchButtonRef, keyboardShortcuts, onOpen, onClose, onInput, onAskAiToggle]);
 }
