@@ -8,15 +8,13 @@ import TabItem from '@theme/TabItem';
 The Ask AI API enables developers to build custom chat interfaces powered by Algolia's AI assistant. Use these endpoints to create tailored conversational experiences that search your Algolia index and generate contextual responses using your own LLM provider.
 
 **Key capabilities:**
+
 - Real-time streaming responses for better user experience
 - Advanced facet filtering to control AI context
 - Authorization token authentication for secure API access
 - Full compatibility with popular frameworks like Next.js and Vercel AI SDK
 
-
-:::info
-This API documentation is primarily for developers building custom Ask AI integrations. If you're using the DocSearch package, you typically won't need this information since DocSearch handles the Ask AI API integration automatically. For standard DocSearch usage, see the [DocSearch documentation](/docs/docsearch) instead.
-:::
+:::info This API documentation is primarily for developers building custom Ask AI integrations. If you're using the DocSearch package, you typically won't need this information since DocSearch handles the Ask AI API integration automatically. For standard DocSearch usage, see the [DocSearch documentation](/docs/docsearch) instead. :::
 
 ## Overview
 
@@ -37,11 +35,13 @@ Ask AI uses authorization tokens for authentication. Tokens expire after 5 minut
 **POST** `/chat/token`
 
 **Headers:**
+
 - `X-Algolia-Assistant-Id`: Your Ask AI assistant configuration ID
 - `Origin` (optional): Request origin for CORS validation
 - `Referer` (optional): Full URL of the requesting page
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -60,6 +60,7 @@ Ask AI uses authorization tokens for authentication. Tokens expire after 5 minut
 Start or continue a chat with the AI assistant. **The response is streamed in real-time** using [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events), allowing you to display the AI's response as it's being generated.
 
 **Headers:**
+
 - `X-Algolia-Application-Id`: Your Algolia application ID
 - `X-Algolia-API-Key`: Your Algolia API key
 - `X-Algolia-Index-Name`: Algolia index to use
@@ -67,6 +68,7 @@ Start or continue a chat with the AI assistant. **The response is streamed in re
 - `Authorization`: TOKEN `token_here` (get from `/chat/token`)
 
 **Request Body:**
+
 ```json
 {
   "id": "your-conversation-id",
@@ -91,6 +93,7 @@ Start or continue a chat with the AI assistant. **The response is streamed in re
 ```
 
 **Request Body Parameters:**
+
 - `id` (string, required): Unique conversation identifier
 - `messages` (array, required): Array of conversation messages
   - `role` (string): "user" or "assistant"
@@ -99,7 +102,11 @@ Start or continue a chat with the AI assistant. **The response is streamed in re
   - `createdAt` (string, optional): ISO timestamp
   - `parts` (array, optional): Message parts (used by Vercel AI SDK)
 - `searchParameters` (object, optional): Search configuration
-  - `facetFilters` (array, optional): Filter the context used by Ask AI
+  - `facetFilters` (array, optional): Filter by language, version, type
+  - `filters` (string, optional): Apply complex filtering rules
+  - `attributesToRetrieve` (array, optional): Control which attributes are retrieved
+  - `restrictSearchableAttributes` (array, optional): Limit search to specific fields
+  - `distinct` (boolean, optional): Remove duplicate results
 
 **Using Search Parameters:**
 
@@ -116,11 +123,11 @@ Search parameters allow you to control how Ask AI searches your index:
     }
   ],
   "searchParameters": {
-    "facetFilters": [
-      "language:en",
-      "version:latest",
-      "type:content"
-    ]
+    "facetFilters": ["language:en", "version:latest"],
+    "filters": "type:content AND language:en",
+    "attributesToRetrieve": ["title", "content", "url"],
+    "restrictSearchableAttributes": ["title", "content"],
+    "distinct": true
   }
 }
 ```
@@ -134,20 +141,19 @@ You can use nested arrays for OR logic within facet filters:
   "searchParameters": {
     "facetFilters": [
       "language:en",
-      [
-        "docusaurus_tag:default",
-        "docusaurus_tag:docs-default-current"
-      ]
+      ["docusaurus_tag:default", "docusaurus_tag:docs-default-current"]
     ]
   }
 }
 ```
 
 This example filters to:
+
 - `language:en` **AND**
 - (`docusaurus_tag:default` **OR** `docusaurus_tag:docs-default-current`)
 
 **Common Use Cases:**
+
 - **Multi-language sites**: `["language:en"]`
 - **Versioned documentation**: `["version:latest"]` or `["version:v2.0"]`
 - **Content types**: `["type:content"]` to exclude navigation/metadata
@@ -155,6 +161,7 @@ This example filters to:
 - **Categories with fallbacks**: `[["category:advanced", "category:intermediate"]]`
 
 **Response:**
+
 - **Content-Type:** `text/event-stream`
 - **Format:** Server-sent events with incremental AI response chunks
 - **Benefits:** Real-time response display, better user experience, lower perceived latency
@@ -162,7 +169,9 @@ This example filters to:
 **Handling Streaming Responses:**
 
 ```js
-const response = await fetch('/chat', { /* ... */ });
+const response = await fetch('/chat', {
+  /* ... */
+});
 const reader = response.body.getReader();
 const decoder = new TextDecoder();
 
@@ -183,10 +192,12 @@ while (true) {
 Submit thumbs up/down feedback for a chat message.
 
 **Headers:**
+
 - `X-Algolia-Assistant-Id`: Your Ask AI assistant configuration ID
 - `Authorization`: TOKEN `token_here`
 
 **Request Body:**
+
 ```json
 {
   "appId": "YOUR_APP_ID",
@@ -198,6 +209,7 @@ Submit thumbs up/down feedback for a chat message.
 - `thumbs`: 1 for positive feedback, 0 for negative
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -255,7 +267,7 @@ class AskAIChat {
         'X-Algolia-API-Key': this.apiKey,
         'X-Algolia-Index-Name': this.indexName,
         'X-Algolia-Assistant-Id': this.assistantId,
-        'Authorization': `TOKEN ${token}`,
+        Authorization: `TOKEN ${token}`,
       },
       body: JSON.stringify({
         id: conversationId,
@@ -288,7 +300,7 @@ class AskAIChat {
         } finally {
           reader.releaseLock();
         }
-      }
+      },
     };
   }
 
@@ -300,7 +312,7 @@ class AskAIChat {
       headers: {
         'Content-Type': 'application/json',
         'X-Algolia-Assistant-Id': this.assistantId,
-        'Authorization': `TOKEN ${token}`,
+        Authorization: `TOKEN ${token}`,
       },
       body: JSON.stringify({
         appId: this.appId,
@@ -322,15 +334,19 @@ const chat = new AskAIChat({
 });
 
 // Send message and handle streaming response
-const stream = await chat.sendMessage('conversation-1', [
+const stream = await chat.sendMessage(
+  'conversation-1',
+  [
+    {
+      role: 'user',
+      content: 'What is Algolia?',
+      id: 'msg-1',
+    },
+  ],
   {
-    role: 'user',
-    content: 'What is Algolia?',
-    id: 'msg-1',
-  },
-], {
-  facetFilters: ['language:en', 'type:content']
-}); // Add search parameters
+    facetFilters: ['language:en', 'type:content'],
+  }
+); // Add search parameters
 
 // Display response as it streams in real-time
 let fullResponse = '';
@@ -368,92 +384,103 @@ function AskAIChat({ appId, apiKey, indexName, assistantId }) {
     return data.token;
   }, [assistantId]);
 
-  const sendMessage = useCallback(async (content) => {
-    const newMessage = {
-      role: 'user',
-      content,
-      id: `msg-${Date.now()}`,
-    };
+  const sendMessage = useCallback(
+    async (content) => {
+      const newMessage = {
+        role: 'user',
+        content,
+        id: `msg-${Date.now()}`,
+      };
 
-    setMessages(prev => [...prev, newMessage]);
-    setIsLoading(true);
-    setIsStreaming(true);
+      setMessages((prev) => [...prev, newMessage]);
+      setIsLoading(true);
+      setIsStreaming(true);
 
-    // Create abort controller for cancellation
-    abortControllerRef.current = new AbortController();
+      // Create abort controller for cancellation
+      abortControllerRef.current = new AbortController();
 
-    try {
-      const token = await getToken();
-      const response = await fetch(`${baseUrl}/chat`, {
-        method: 'POST',
-        signal: abortControllerRef.current.signal,
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Algolia-Application-Id': appId,
-          'X-Algolia-API-Key': apiKey,
-          'X-Algolia-Index-Name': indexName,
-          'X-Algolia-Assistant-Id': assistantId,
-          'Authorization': `TOKEN ${token}`,
-        },
-        body: JSON.stringify({
-          id: 'conversation-1',
-          messages: [...messages, newMessage],
-          searchParameters: {
-            facetFilters: ['language:en', 'type:content']
+      try {
+        const token = await getToken();
+        const response = await fetch(`${baseUrl}/chat`, {
+          method: 'POST',
+          signal: abortControllerRef.current.signal,
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Algolia-Application-Id': appId,
+            'X-Algolia-API-Key': apiKey,
+            'X-Algolia-Index-Name': indexName,
+            'X-Algolia-Assistant-Id': assistantId,
+            Authorization: `TOKEN ${token}`,
           },
-        }),
-      });
+          body: JSON.stringify({
+            id: 'conversation-1',
+            messages: [...messages, newMessage],
+            searchParameters: {
+              facetFilters: ['language:en', 'type:content'],
+            },
+          }),
+        });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      // Handle streaming response in real-time
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let assistantMessage = '';
-      let assistantMessageId = `assistant-${Date.now()}`;
-
-      // Add initial empty assistant message
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: '',
-        id: assistantMessageId
-      }]);
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        // Decode chunk and add to message
-        const chunk = decoder.decode(value, { stream: true });
-        if (chunk.trim()) {
-          assistantMessage += chunk;
-
-          // Update UI with streaming content immediately
-          setMessages(prev => prev.map(msg =>
-            msg.id === assistantMessageId
-              ? { ...msg, content: assistantMessage }
-              : msg
-          ));
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
+
+        // Handle streaming response in real-time
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let assistantMessage = '';
+        let assistantMessageId = `assistant-${Date.now()}`;
+
+        // Add initial empty assistant message
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'assistant',
+            content: '',
+            id: assistantMessageId,
+          },
+        ]);
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          // Decode chunk and add to message
+          const chunk = decoder.decode(value, { stream: true });
+          if (chunk.trim()) {
+            assistantMessage += chunk;
+
+            // Update UI with streaming content immediately
+            setMessages((prev) =>
+              prev.map((msg) =>
+                msg.id === assistantMessageId
+                  ? { ...msg, content: assistantMessage }
+                  : msg
+              )
+            );
+          }
+        }
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          console.error('Streaming error:', error);
+          // Add error message to chat
+          setMessages((prev) => [
+            ...prev,
+            {
+              role: 'assistant',
+              content: 'Sorry, there was an error processing your request.',
+              id: `error-${Date.now()}`,
+            },
+          ]);
+        }
+      } finally {
+        setIsLoading(false);
+        setIsStreaming(false);
+        abortControllerRef.current = null;
       }
-    } catch (error) {
-      if (error.name !== 'AbortError') {
-        console.error('Streaming error:', error);
-        // Add error message to chat
-        setMessages(prev => [...prev, {
-          role: 'assistant',
-          content: 'Sorry, there was an error processing your request.',
-          id: `error-${Date.now()}`
-        }]);
-      }
-    } finally {
-      setIsLoading(false);
-      setIsStreaming(false);
-      abortControllerRef.current = null;
-    }
-  }, [messages, appId, apiKey, indexName, assistantId, getToken]);
+    },
+    [messages, appId, apiKey, indexName, assistantId, getToken]
+  );
 
   const cancelStream = useCallback(() => {
     if (abortControllerRef.current) {
@@ -467,26 +494,38 @@ function AskAIChat({ appId, apiKey, indexName, assistantId }) {
         {messages.map((message) => (
           <div key={message.id} className={`message ${message.role}`}>
             <strong>{message.role}:</strong>
-            <span className={isStreaming && message.role === 'assistant' && message === messages[messages.length - 1] ? 'streaming' : ''}>
+            <span
+              className={
+                isStreaming &&
+                message.role === 'assistant' &&
+                message === messages[messages.length - 1]
+                  ? 'streaming'
+                  : ''
+              }
+            >
               {message.content}
-              {isStreaming && message.role === 'assistant' && message === messages[messages.length - 1] && (
-                <span className="cursor">▊</span>
-              )}
+              {isStreaming &&
+                message.role === 'assistant' &&
+                message === messages[messages.length - 1] && (
+                  <span className="cursor">▊</span>
+                )}
             </span>
           </div>
         ))}
       </div>
 
-      <form onSubmit={(e) => {
-        e.preventDefault();
-        if (isLoading) return;
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (isLoading) return;
 
-        const input = e.target.elements.message;
-        if (input.value.trim()) {
-          sendMessage(input.value);
-          input.value = '';
-        }
-      }}>
+          const input = e.target.elements.message;
+          if (input.value.trim()) {
+            sendMessage(input.value);
+            input.value = '';
+          }
+        }}
+      >
         <input
           name="message"
           type="text"
@@ -511,12 +550,23 @@ function AskAIChat({ appId, apiKey, indexName, assistantId }) {
           animation: blink 1s infinite;
         }
         @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.7; }
+          0%,
+          100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.7;
+          }
         }
         @keyframes blink {
-          0%, 50% { opacity: 1; }
-          51%, 100% { opacity: 0; }
+          0%,
+          50% {
+            opacity: 1;
+          }
+          51%,
+          100% {
+            opacity: 0;
+          }
         }
       `}</style>
     </div>
@@ -552,7 +602,7 @@ function ChatComponent() {
 
   return (
     <div>
-      {messages.map(m => (
+      {messages.map((m) => (
         <div key={m.id}>
           {m.role === 'user' ? 'User: ' : 'AI: '}
           {m.content}
@@ -587,7 +637,7 @@ async function getToken(assistantId: string, origin: string) {
     method: 'POST',
     headers: {
       'X-Algolia-Assistant-Id': assistantId,
-      'Origin': origin,
+      Origin: origin,
     },
   });
 
@@ -613,7 +663,7 @@ export default async function handler(req: Request) {
       'X-Algolia-API-Key': process.env.ALGOLIA_API_KEY!,
       'X-Algolia-Index-Name': process.env.ALGOLIA_INDEX_NAME!,
       'X-Algolia-Assistant-Id': assistantId,
-      'Authorization': `TOKEN ${token}`,
+      Authorization: `TOKEN ${token}`,
       'Content-Type': 'application/json',
     };
 
@@ -632,15 +682,16 @@ export default async function handler(req: Request) {
     return new StreamingTextResponse(response.body);
   } catch (error) {
     console.error('Chat API error:', error);
-    return new Response(
-      JSON.stringify({ error: 'Internal server error' }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: 'Internal server error' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 }
 ```
 
 **Environment Variables (.env.local):**
+
 ```env
 ALGOLIA_APP_ID=your_app_id
 ALGOLIA_API_KEY=your_api_key
@@ -654,19 +705,20 @@ ALGOLIA_ASSISTANT_ID=your_assistant_id
 import { useChat } from 'ai/react';
 
 function ChatComponent() {
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
-    api: '/api/chat', // Use your Next.js API route
-    body: {
-      searchParameters: {
-        facetFilters: ['language:en', 'type:content']
+  const { messages, input, handleInputChange, handleSubmit, isLoading } =
+    useChat({
+      api: '/api/chat', // Use your Next.js API route
+      body: {
+        searchParameters: {
+          facetFilters: ['language:en', 'type:content'],
+        },
       },
-    },
-  });
+    });
 
   return (
     <div className="chat-container">
       <div className="messages">
-        {messages.map(m => (
+        {messages.map((m) => (
           <div key={m.id} className={`message ${m.role}`}>
             <strong>{m.role === 'user' ? 'You' : 'AI'}:</strong>
             <div>{m.content}</div>
@@ -692,6 +744,7 @@ function ChatComponent() {
 ```
 
 **Benefits of the proxy approach:**
+
 - **Security**: API keys stay on the server
 - **Token management**: Automatic token refresh
 - **Error handling**: Centralized error management
@@ -712,6 +765,7 @@ All error responses follow this format:
 ```
 
 Common error scenarios:
+
 - **Invalid assistant ID**: Configuration doesn't exist
 - **Expired token**: Request a new authorization token
 - **Rate limiting**: Too many requests

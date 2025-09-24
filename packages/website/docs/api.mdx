@@ -90,8 +90,8 @@ docsearch({
       searchParameters: {
         facetFilters: ['language:en'],
         // ...
-      }
-    }
+      },
+    },
   ],
   // ...
 });
@@ -111,7 +111,6 @@ docsearch({
 
 in case you want to use custom `searchParameters` for the index
 
-
 ```jsx
 <DocSearch
   // ...
@@ -121,8 +120,8 @@ in case you want to use custom `searchParameters` for the index
       searchParameters: {
         facetFilters: ['language:en'],
         // ...
-      }
-    }
+      },
+    },
   ]}
   // ...
 />
@@ -186,7 +185,16 @@ docsearch({
     appId: 'ANOTHER_APP_ID',
     assistantId: 'YOUR_ALGOLIA_ASSISTANT_ID',
     searchParameters: {
-      facetFilters: ['language:en'],
+      // Filtering parameters
+      facetFilters: ['language:en', 'version:latest'],
+      filters: 'type:content AND language:en',
+
+      // Content control parameters
+      attributesToRetrieve: ['title', 'content', 'url'],
+      restrictSearchableAttributes: ['title', 'content'],
+
+      // Deduplication
+      distinct: true,
     },
   },
   // ...
@@ -214,6 +222,18 @@ in case you want to use different credentials for askAi
     apiKey: 'ANOTHER_SEARCH_API_KEY',
     appId: 'ANOTHER_APP_ID',
     assistantId: 'YOUR_ALGOLIA_ASSISTANT_ID',
+    searchParameters: {
+      // Filtering parameters
+      facetFilters: ['language:en', 'version:latest'],
+      filters: 'type:content AND language:en',
+
+      // Content control parameters
+      attributesToRetrieve: ['title', 'content', 'url'],
+      restrictSearchableAttributes: ['title', 'content'],
+
+      // Deduplication
+      distinct: true,
+    },
   }}
 />
 ```
@@ -221,9 +241,15 @@ in case you want to use different credentials for askAi
 </TabItem>
 </Tabs>
 
-:::tip
-You can use `facetFilters: ['type:content']` to ensure AskAI only uses records where the `type` attribute is `content` (i.e., only records that actually have content). This is useful if your index contains records for navigation, metadata, or other non-content types.
-:::
+:::tip AskAI supports these essential search parameters for optimal performance:
+
+- **Filtering**: `facetFilters: ['type:content']` - Filter by language, version, or content type
+- **Complex filtering**: `filters: 'type:content AND language:en'` - Apply complex filtering rules
+- **Content control**: `attributesToRetrieve: ['title', 'content', 'url']` - Control which attributes are retrieved
+- **Search scope**: `restrictSearchableAttributes: ['title', 'content']` - Limit search to specific fields
+- **Deduplication**: `distinct: true` - Remove duplicate results
+
+These parameters provide the essential functionality for AskAI while keeping the API simple and focused. :::
 
 ## `searchParameters`
 
@@ -480,14 +506,16 @@ When provided, an informative message wrapped with your link will be displayed o
 Configuration for keyboard shortcuts that trigger the search modal.
 
 ### Default behavior:
+
 - `Ctrl/Cmd+K` - Opens and closes the search modal
 - `/` - Opens the search modal (doesn't close)
 
 ### Interface:
+
 ```typescript
 interface KeyboardShortcuts {
   'Ctrl/Cmd+K'?: boolean; // default: true
-  '/'?: boolean;           // default: true
+  '/'?: boolean; // default: true
 }
 ```
 
@@ -510,19 +538,19 @@ docsearch({
 // Disable slash shortcut
 docsearch({
   // ...
-  keyboardShortcuts: { '/': false }
+  keyboardShortcuts: { '/': false },
 });
 
 // Disable Ctrl/Cmd+K shortcut (also hides button hint)
 docsearch({
   // ...
-  keyboardShortcuts: { 'Ctrl/Cmd+K': false }
+  keyboardShortcuts: { 'Ctrl/Cmd+K': false },
 });
 
 // Disable all keyboard shortcuts
 docsearch({
   // ...
-  keyboardShortcuts: { 'Ctrl/Cmd+K': false, '/': false }
+  keyboardShortcuts: { 'Ctrl/Cmd+K': false, '/': false },
 });
 ```
 
@@ -531,38 +559,46 @@ docsearch({
 <TabItem value="react">
 
 ```jsx
-{/* Default - all shortcuts enabled */}
+{
+  /* Default - all shortcuts enabled */
+}
 <DocSearch
-  // ...
-/>
+// ...
+/>;
 
-{/* Disable slash shortcut */}
+{
+  /* Disable slash shortcut */
+}
 <DocSearch
   // ...
   keyboardShortcuts={{ '/': false }}
-/>
+/>;
 
-{/* Disable Ctrl/Cmd+K shortcut (also hides button hint) */}
+{
+  /* Disable Ctrl/Cmd+K shortcut (also hides button hint) */
+}
 <DocSearch
   // ...
   keyboardShortcuts={{ 'Ctrl/Cmd+K': false }}
-/>
+/>;
 
-{/* Disable all keyboard shortcuts */}
+{
+  /* Disable all keyboard shortcuts */
+}
 <DocSearch
   // ...
   keyboardShortcuts={{ 'Ctrl/Cmd+K': false, '/': false }}
-/>
+/>;
 ```
 
 </TabItem>
 </Tabs>
 
 :::info Keyboard Shortcut Behavior
+
 - **Ctrl/Cmd+K**: Toggle shortcut that both opens and closes the modal
 - **/**: Character shortcut that only opens the modal (prevents interference with search typing)
-- **Escape**: Always works to close the modal regardless of configuration
-:::
+- **Escape**: Always works to close the modal regardless of configuration :::
 
 ## `resultsFooterComponent`
 
@@ -673,7 +709,7 @@ The maximum number of recent searches that are stored for the user. Default is 7
 ```js
 docsearch({
   // ...
-  recentSearchesLimit: 12
+  recentSearchesLimit: 12,
   // ...
 });
 ```
@@ -712,7 +748,7 @@ The maximum number of recent searches that are stored when the user has favorite
 ```js
 docsearch({
   // ...
-  recentSearchesWithFavoritesLimit: 5
+  recentSearchesWithFavoritesLimit: 5,
   // ...
 });
 ```
@@ -740,7 +776,7 @@ The element where the DocSearch modal will be portaled. Use this when you need t
 
 :::warning
 
-This prop only exists in `@docsearch/react`. If you are using **`@docsearch/js`**, use the [`container`](#container) option instead—the value you pass there is both the **mount point** of the search button *and* the portal target for the modal.
+This prop only exists in `@docsearch/react`. If you are using **`@docsearch/js`**, use the [`container`](#container) option instead—the value you pass there is both the **mount point** of the search button _and_ the portal target for the modal.
 
 :::
 
@@ -753,7 +789,7 @@ This prop only exists in `@docsearch/react`. If you are using **`@docsearch/js`*
 
 ```jsx
 // assume you have a dedicated modal root in your html
-<div id="modal-root" />
+<div id="modal-root" />;
 
 const portalEl = document.getElementById('modal-root');
 
@@ -782,7 +818,6 @@ docsearch({
 
 </TabItem>
 </Tabs>
-
 
 [1]: https://www.algolia.com/doc/ui-libraries/autocomplete/introduction/what-is-autocomplete/
 [2]: https://github.com/algolia/docsearch/
