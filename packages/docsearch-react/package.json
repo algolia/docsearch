@@ -52,6 +52,7 @@
     "@algolia/autocomplete-core": "1.19.2",
     "@docsearch/core": "^1.0.0",
     "@docsearch/css": "4.0.1",
+    "@docsearch/modal": "^1.0.0",
     "ai": "^5.0.30",
     "algoliasearch": "^5.28.0",
     "marked": "^16.3.0",

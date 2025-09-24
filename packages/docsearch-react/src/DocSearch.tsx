@@ -1,10 +1,10 @@
 import type { AutocompleteOptions, AutocompleteState } from '@algolia/autocomplete-core';
 import { DocSearch as DocSearchProvider, useDocSearch } from '@docsearch/core';
+import { DocSearchButton } from '@docsearch/modal/button';
 import type { LiteClient, SearchParamsObject } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
 
-import { DocSearchButton } from './DocSearchButton';
 import { DocSearchModal } from './DocSearchModal';
 import type {
   DocSearchHit,
@@ -13,8 +13,6 @@ import type {
   KeyboardShortcuts,
   StoredDocSearchHit,
 } from './types';
-import { useDocSearchKeyboardEvents } from './useDocSearchKeyboardEvents';
-import { useTheme } from './useTheme';
 
 import type { ButtonTranslations, ModalTranslations } from '.';
 
@@ -171,6 +169,7 @@ export interface DocSearchProps {
 export function DocSearch(props: DocSearchProps): JSX.Element {
   return (
     <DocSearchProvider {...props}>
+      <DocSearchButton translations={props.translations?.button} />
       <DocSearchInner {...props} />
     </DocSearchProvider>
   );
@@ -178,7 +177,6 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
 
 export function DocSearchInner(props: DocSearchProps): JSX.Element {
   const { setDocsearchState, docsearchState } = useDocSearch();
-  const searchButtonRef = React.useRef<HTMLButtonElement>(null);
   const [initialQuery, setInitialQuery] = React.useState<string | undefined>(props?.initialQuery || undefined);
   const [isAskAiActive, setIsAskAiActive] = React.useState(false);
 
@@ -205,10 +203,6 @@ export function DocSearchInner(props: DocSearchProps): JSX.Element {
     [setIsAskAiActive],
   );
 
-  const onOpen = React.useCallback(() => {
-    setDocsearchState('modal-open');
-  }, [setDocsearchState]);
-
   const onClose = React.useCallback(() => {
     setDocsearchState('ready');
     setInitialQuery(props?.initialQuery);
@@ -217,35 +211,8 @@ export function DocSearchInner(props: DocSearchProps): JSX.Element {
     }
   }, [props.initialQuery, isAskAiActive, setIsAskAiActive, setDocsearchState]);
 
-  const onInput = React.useCallback(
-    (event: KeyboardEvent) => {
-      setDocsearchState('modal-open');
-      setInitialQuery(event.key);
-    },
-    [setDocsearchState, setInitialQuery],
-  );
-
-  useDocSearchKeyboardEvents({
-    isOpen,
-    onOpen,
-    onClose,
-    onInput,
-    isAskAiActive,
-    onAskAiToggle,
-    searchButtonRef,
-    keyboardShortcuts: props.keyboardShortcuts,
-  });
-  useTheme({ theme: props.theme });
-
   return (
     <>
-      <DocSearchButton
-        ref={searchButtonRef}
-        translations={props?.translations?.button}
-        keyboardShortcuts={props.keyboardShortcuts}
-        onClick={onOpen}
-      />
-
       {isOpen &&
         createPortal(
           <DocSearchModal

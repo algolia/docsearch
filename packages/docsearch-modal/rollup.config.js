@@ -37,20 +37,14 @@ function sourceOutput(fileName) {
 export default [
   {
     input: 'src/index.ts',
-    external: ['react', 'react-dom'],
+    external: ['react', 'react-dom', '@docsearch/core'],
     output: sourceOutput('index.js'),
     plugins: sourcePlugins,
   },
   {
-    input: 'src/useTheme.ts',
-    external: ['react', 'react-dom'],
-    output: sourceOutput('useTheme.js'),
-    plugins: sourcePlugins,
-  },
-  {
-    input: 'src/useDocSearchKeyboardEvents.ts',
-    external: ['react', 'react-dom'],
-    output: sourceOutput('useDocSearchKeyboardEvents.js'),
+    input: 'src/DocSearchButton.tsx',
+    external: ['react', 'react-dom', '@docsearch/core'],
+    output: sourceOutput('DocSearchButton.js'),
     plugins: sourcePlugins,
   },
   {
@@ -59,13 +53,8 @@ export default [
     plugins: [dts()],
   },
   {
-    input: 'dist/esm/types/useTheme.d.ts',
-    output: [{ file: 'dist/esm/useTheme.d.ts', format: 'es' }],
-    plugins: [dts()],
-  },
-  {
-    input: 'dist/esm/types/useDocSearchKeyboardEvents.d.ts',
-    output: [{ file: 'dist/esm/useDocSearchKeyboardEvents.d.ts', format: 'es' }],
+    input: 'dist/esm/types/DocSearchButton.d.ts',
+    output: [{ file: 'dist/esm/DocSearchButton.d.ts', format: 'es' }],
     plugins: [dts()],
   },
 ];
