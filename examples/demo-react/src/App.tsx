@@ -64,7 +64,6 @@ function App(): JSX.Element {
               <Composable />
             </div>
           </section>
-
           <section className="demo-section">
             <p className="section-description">dynamically imported modal</p>
             <div className="search-wrapper">
