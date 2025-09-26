@@ -8,6 +8,7 @@ import '@docsearch/css/dist/style.css';
 import Basic from './examples/basic';
 import BasicAskAI from './examples/basic-askai';
 import Composable from './examples/composable';
+import DynamicImportModal from './examples/dynamic-import-modal';
 import MultiIndex from './examples/multi-index';
 import WHitComponent from './examples/w-hit-component';
 import WTransformItems from './examples/w-hit-transformItems';
@@ -61,6 +62,13 @@ function App(): JSX.Element {
             <p className="section-description">composable</p>
             <div className="search-wrapper">
               <Composable />
+            </div>
+          </section>
+
+          <section className="demo-section">
+            <p className="section-description">dynamically imported modal</p>
+            <div className="search-wrapper">
+              <DynamicImportModal />
             </div>
           </section>
         </main>

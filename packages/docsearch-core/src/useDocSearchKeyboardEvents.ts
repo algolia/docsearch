@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type { KeyboardShortcuts } from './useKeyboardShortcuts';
+import { DEFAULT_KEYBOARD_SHORTCUTS, type KeyboardShortcuts } from './useKeyboardShortcuts';
 
 export interface UseDocSearchKeyboardEventsProps {
   isOpen: boolean;
@@ -10,7 +10,7 @@ export interface UseDocSearchKeyboardEventsProps {
   searchButtonRef: React.RefObject<HTMLButtonElement | null>;
   isAskAiActive: boolean;
   onAskAiToggle: (toggle: boolean) => void;
-  keyboardShortcuts: KeyboardShortcuts;
+  keyboardShortcuts?: KeyboardShortcuts;
 }
 
 function isEditingContent(event: KeyboardEvent): boolean {
@@ -28,7 +28,7 @@ export function useDocSearchKeyboardEvents({
   onOpen,
   onInput,
   searchButtonRef,
-  keyboardShortcuts,
+  keyboardShortcuts = DEFAULT_KEYBOARD_SHORTCUTS,
 }: UseDocSearchKeyboardEventsProps): void {
   React.useEffect(() => {
     function onKeyDown(event: KeyboardEvent): void {
