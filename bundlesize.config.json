@@ -11,6 +11,14 @@
     {
       "path": "packages/docsearch-js/dist/umd/index.js",
       "maxSize": "123 kB"
+    },
+    {
+      "path": "packages/docsearch-core/dist/umd/index.js",
+      "maxSize": "3 kB"
+    },
+    {
+      "path": "packages/docsearch-modal/dist/umd/index.js",
+      "maxSize": "110 kB"
     }
   ]
 }
