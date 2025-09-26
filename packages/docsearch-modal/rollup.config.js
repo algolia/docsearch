@@ -34,29 +34,25 @@ function sourceOutput(fileName) {
   ];
 }
 
+const externals = ['react', 'react-dom', '@docsearch/core'];
+
 export default [
   {
     input: 'src/index.ts',
-    external: ['react', 'react-dom'],
+    external: externals,
     output: sourceOutput('index.js'),
     plugins: sourcePlugins,
   },
   {
-    input: 'src/useTheme.ts',
-    external: ['react', 'react-dom'],
-    output: sourceOutput('useTheme.js'),
+    input: 'src/DocSearchButton.tsx',
+    external: externals,
+    output: sourceOutput('DocSearchButton.js'),
     plugins: sourcePlugins,
   },
   {
-    input: 'src/useDocSearchKeyboardEvents.ts',
-    external: ['react', 'react-dom'],
-    output: sourceOutput('useDocSearchKeyboardEvents.js'),
-    plugins: sourcePlugins,
-  },
-  {
-    input: 'src/useKeyboardShortcuts.ts',
-    external: ['react', 'react-dom'],
-    output: sourceOutput('useKeyboardShortcuts.js'),
+    input: 'src/DocSearchModal.tsx',
+    external: externals,
+    output: sourceOutput('DocSearchModal.js'),
     plugins: sourcePlugins,
   },
   {
@@ -65,18 +61,13 @@ export default [
     plugins: [dts()],
   },
   {
-    input: 'dist/esm/types/useTheme.d.ts',
-    output: [{ file: 'dist/esm/useTheme.d.ts', format: 'es' }],
+    input: 'dist/esm/types/DocSearchButton.d.ts',
+    output: [{ file: 'dist/esm/DocSearchButton.d.ts', format: 'es' }],
     plugins: [dts()],
   },
   {
-    input: 'dist/esm/types/useDocSearchKeyboardEvents.d.ts',
-    output: [{ file: 'dist/esm/useDocSearchKeyboardEvents.d.ts', format: 'es' }],
-    plugins: [dts()],
-  },
-  {
-    input: 'dist/esm/types/useKeyboardShortcuts.d.ts',
-    output: [{ file: 'dist/esm/useKeyboardShortcuts.d.ts', format: 'es' }],
+    input: 'dist/esm/types/DocSearchModal.d.ts',
+    output: [{ file: 'dist/esm/DocSearchModal.d.ts', format: 'es' }],
     plugins: [dts()],
   },
 ];

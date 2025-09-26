@@ -1,6 +1,6 @@
 {
-  "name": "@docsearch/core",
-  "description": "Core package logic for DocSearch",
+  "name": "@docsearch/modal",
+  "description": "DocSearch modal package for keyword search and Ask AI.",
   "version": "1.0.0",
   "license": "MIT",
   "homepage": "https://docsearch.algolia.com",
@@ -16,16 +16,14 @@
   "sideEffects": false,
   "files": [
     "dist/",
+    "button.js",
     "index.js",
-    "useTheme.js",
-    "useDocSearchKeyboardEvents.js",
-    "useKeyboardShortcuts.js"
+    "modal.js"
   ],
   "exports": {
     ".": "./dist/esm/index.js",
-    "./useTheme": "./dist/esm/useTheme.js",
-    "./useDocSearchKeyboardEvents": "./dist/esm/useDocSearchKeyboardEvents.js",
-    "./useKeyboardShortcuts": "./dist/esm/useKeyboardShortcuts.js"
+    "./button": "./dist/esm/DocSearchButton.js",
+    "./modal": "./dist/esm/DocSearchModal.js"
   },
   "source": "src/index.ts",
   "types": "dist/esm/index.d.ts",
@@ -42,6 +40,9 @@
     "on:change": "yarn build",
     "watch": "nodemon --watch src --ext ts,tsx,js,jsx,json --ignore dist/ --ignore node_modules/ --verbose --delay 250ms --exec \"yarn on:change\""
   },
+  "dependencies": {
+    "@docsearch/react": "^4.0.1"
+  },
   "devDependencies": {
     "@rollup/plugin-replace": "6.0.2",
     "@testing-library/jest-dom": "6.6.3",
@@ -51,6 +52,7 @@
     "vitest": "3.0.2"
   },
   "peerDependencies": {
+    "@docsearch/core": ">= 1.0.0",
     "@types/react": ">= 16.8.0 < 20.0.0",
     "react": ">= 16.8.0 < 20.0.0",
     "react-dom": ">= 16.8.0 < 20.0.0"
