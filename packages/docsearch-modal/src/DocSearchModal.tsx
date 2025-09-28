@@ -8,7 +8,7 @@ import { createPortal } from 'react-dom';
 export type DocSearchModalProps = Omit<ModalProps, 'initialScrollY' | 'onAskAiToggle'>;
 
 export function DocSearchModal(props: DocSearchModalProps): JSX.Element | null {
-  const { isModalActive, onAskAiToggle, closeModal, isAskAiActive } = useDocSearch();
+  const { isModalActive, onAskAiToggle, closeModal, isAskAiActive, initialQuery } = useDocSearch();
 
   return isModalActive
     ? createPortal(
@@ -16,6 +16,7 @@ export function DocSearchModal(props: DocSearchModalProps): JSX.Element | null {
           {...props}
           initialScrollY={window.scrollY}
           isAskAiActive={isAskAiActive}
+          initialQuery={props.initialQuery ?? initialQuery}
           onAskAiToggle={onAskAiToggle}
           onClose={closeModal}
         />,
