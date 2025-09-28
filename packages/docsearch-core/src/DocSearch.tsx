@@ -23,7 +23,7 @@ export interface DocSearchContext {
 }
 
 export interface DocSearchProps {
-  children: Array<JSX.Element | null> | JSX.Element | null;
+  children: Array<JSX.Element | null> | JSX.Element | React.ReactNode | null;
   theme?: DocSearchTheme;
   initialQuery?: string;
   keyboardShortcuts?: KeyboardShortcuts;
