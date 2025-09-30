@@ -32,12 +32,23 @@ export default {
         'v4/askai-models',
         'v4/askai-markdown-indexing',
         'v4/askai-errors',
+        {
+          type: 'link',
+          label: 'Full Documentation',
+          href: 'https://www.algolia.com/doc/guides/algolia-ai/askai',
+        },
       ],
     },
     {
       type: 'category',
       label: 'Algolia Crawler',
-      items: ['create-crawler', 'record-extractor', 'templates', 'crawler-configuration-visual', 'manage-your-crawls'],
+      items: [
+        'create-crawler',
+        'record-extractor',
+        'templates',
+        'crawler-configuration-visual',
+        'manage-your-crawls',
+      ],
     },
     {
       type: 'category',
