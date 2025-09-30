@@ -13,6 +13,7 @@ The Ask AI API enables developers to build custom chat interfaces powered by Alg
 - Advanced facet filtering to control AI context
 - Authorization token authentication for secure API access
 - Full compatibility with popular frameworks like Next.js and Vercel AI SDK
+- **Dual SDK support**: Choose between v4 (legacy) and v5 (recommended) response formats
 
 :::info This API documentation is primarily for developers building custom Ask AI integrations. If you're using the DocSearch package, you typically won't need this information since DocSearch handles the Ask AI API integration automatically. For standard DocSearch usage, see the [DocSearch documentation](/docs/docsearch) instead. :::
 
@@ -23,6 +24,35 @@ The Algolia Ask AI API provides endpoints for integrating with an Algolia Ask AI
 **Base URL:** `https://askai.algolia.com`
 
 All endpoints allow cross-origin requests (CORS) from browser-based apps.
+
+---
+
+## SDK Version Support
+
+The Ask AI API supports two response formats to accommodate different integration needs:
+
+### Version 5 (Recommended)
+
+- **Enhanced streaming format** with improved real-time response handling
+- **Better error handling** and status reporting
+- **Optimized for modern AI SDKs** like Vercel AI SDK
+- **Future-proof** with ongoing improvements and features
+
+### Version 4 (Legacy)
+
+- **Legacy streaming format** for backward compatibility
+- **Maintained for existing integrations** that haven't migrated yet
+- **Will be deprecated** in future releases
+
+### Requesting SDK Versions
+
+Specify your preferred SDK version using the `X-AI-SDK-Version` header:
+
+```http
+X-AI-SDK-Version: v5
+```
+
+If no version is specified, the API defaults to **v4** for backward compatibility.
 
 ---
 
@@ -66,6 +96,7 @@ Start or continue a chat with the AI assistant. **The response is streamed in re
 - `X-Algolia-Index-Name`: Algolia index to use
 - `X-Algolia-Assistant-Id`: Ask AI assistant configuration ID
 - `Authorization`: TOKEN `token_here` (get from `/chat/token`)
+- `X-AI-SDK-Version`: `v4` or `v5` (optional, defaults to v4)
 
 **Request Body:**
 
@@ -107,58 +138,6 @@ Start or continue a chat with the AI assistant. **The response is streamed in re
   - `attributesToRetrieve` (array, optional): Control which attributes are retrieved
   - `restrictSearchableAttributes` (array, optional): Limit search to specific fields
   - `distinct` (boolean, optional): Remove duplicate results
-
-**Using Search Parameters:**
-
-Search parameters allow you to control how Ask AI searches your index:
-
-```json
-{
-  "id": "conversation-1",
-  "messages": [
-    {
-      "role": "user",
-      "content": "How do I configure the API?",
-      "id": "msg-1"
-    }
-  ],
-  "searchParameters": {
-    "facetFilters": ["language:en", "version:latest"],
-    "filters": "type:content AND language:en",
-    "attributesToRetrieve": ["title", "content", "url"],
-    "restrictSearchableAttributes": ["title", "content"],
-    "distinct": true
-  }
-}
-```
-
-**Advanced Facet Filtering with OR Logic:**
-
-You can use nested arrays for OR logic within facet filters:
-
-```json
-{
-  "searchParameters": {
-    "facetFilters": [
-      "language:en",
-      ["docusaurus_tag:default", "docusaurus_tag:docs-default-current"]
-    ]
-  }
-}
-```
-
-This example filters to:
-
-- `language:en` **AND**
-- (`docusaurus_tag:default` **OR** `docusaurus_tag:docs-default-current`)
-
-**Common Use Cases:**
-
-- **Multi-language sites**: `["language:en"]`
-- **Versioned documentation**: `["version:latest"]` or `["version:v2.0"]`
-- **Content types**: `["type:content"]` to exclude navigation/metadata
-- **Multiple tags**: `[["tag:api", "tag:tutorial"]]` for OR logic
-- **Categories with fallbacks**: `[["category:advanced", "category:intermediate"]]`
 
 **Response:**
 
@@ -224,6 +203,60 @@ Submit thumbs up/down feedback for a chat message.
 Check the operational status of the Ask AI service.
 
 **Response:** `OK` (text/plain)
+
+---
+
+## Using Search Parameters
+
+Search parameters allow you to control how Ask AI searches your index:
+
+```json
+{
+  "id": "conversation-1",
+  "messages": [
+    {
+      "role": "user",
+      "content": "How do I configure the API?",
+      "id": "msg-1"
+    }
+  ],
+  "searchParameters": {
+    "facetFilters": ["language:en", "version:latest"],
+    "filters": "type:content AND language:en",
+    "attributesToRetrieve": ["title", "content", "url"],
+    "restrictSearchableAttributes": ["title", "content"],
+    "distinct": true
+  }
+}
+```
+
+**Advanced Facet Filtering with OR Logic:**
+
+You can use nested arrays for OR logic within facet filters:
+
+```json
+{
+  "searchParameters": {
+    "facetFilters": [
+      "language:en",
+      ["docusaurus_tag:default", "docusaurus_tag:docs-default-current"]
+    ]
+  }
+}
+```
+
+This example filters to:
+
+- `language:en` **AND**
+- (`docusaurus_tag:default` **OR** `docusaurus_tag:docs-default-current`)
+
+**Common Use Cases:**
+
+- **Multi-language sites**: `["language:en"]`
+- **Versioned documentation**: `["version:latest"]` or `["version:v2.0"]`
+- **Content types**: `["type:content"]` to exclude navigation/metadata
+- **Multiple tags**: `[["tag:api", "tag:tutorial"]]` for OR logic
+- **Categories with fallbacks**: `[["category:advanced", "category:intermediate"]]`
 
 ---
 
