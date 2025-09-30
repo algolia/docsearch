@@ -627,7 +627,7 @@ export function DocSearchModal({
           onClose,
         });
 
-        // AskAI source
+        // Ask AI source
         const askAiSource: Array<AutocompleteSource<InternalDocSearchHit>> = canHandleAskAi
           ? [
               {

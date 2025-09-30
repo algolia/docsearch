@@ -133,7 +133,7 @@ export function SearchBox({ translations = {}, askAiState, onAskAiToggle, ...pro
   }, [props.askAiStatus, props.inputRef]);
 
   /**
-   * We need to block the default behavior of the input when AskAI is active.
+   * We need to block the default behavior of the input when Ask AI is active.
    * This is because the input is used to ask another question when the user presses enter.
    *
    * Learn more on default autocomplete behavior:
@@ -143,7 +143,7 @@ export function SearchBox({ translations = {}, askAiState, onAskAiToggle, ...pro
     ...baseInputProps,
     enterKeyHint: props.isAskAiActive ? ('enter' as const) : ('search' as const),
     onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>): void => {
-      // block these up, down, enter listeners when AskAI is active
+      // block these up, down, enter listeners when Ask AI is active
       if (props.isAskAiActive && blockedKeys.has(e.key)) {
         // enter key asks another question
         if (e.key === 'Enter' && !isAskAiStreaming && props.state.query) {
@@ -158,7 +158,7 @@ export function SearchBox({ translations = {}, askAiState, onAskAiToggle, ...pro
     onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
       if (props.isAskAiActive) {
         props.setQuery(e.currentTarget.value);
-        // block search when AskAI is active
+        // block search when Ask AI is active
         // we don't want to trigger the search when the user types
         // we already know they are asking a question
         e.preventDefault();
