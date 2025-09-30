@@ -1,10 +1,10 @@
 import type { AutocompleteOptions, AutocompleteState } from '@algolia/autocomplete-core';
 import { DocSearch as DocSearchProvider, useDocSearch } from '@docsearch/core';
+import { DocSearchButton } from '@docsearch/modal/button';
 import type { LiteClient, SearchParamsObject } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
 
-import { DocSearchButton } from './DocSearchButton';
 import { DocSearchModal } from './DocSearchModal';
 import type {
   DocSearchHit,
@@ -169,6 +169,7 @@ export interface DocSearchProps {
 export function DocSearch(props: DocSearchProps): JSX.Element {
   return (
     <DocSearchProvider {...props}>
+      <DocSearchButton translations={props.translations?.button} />
       <DocSearchInner {...props} />
     </DocSearchProvider>
   );
