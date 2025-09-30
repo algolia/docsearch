@@ -42,13 +42,7 @@ export default {
     {
       type: 'category',
       label: 'Algolia Crawler',
-      items: [
-        'create-crawler',
-        'record-extractor',
-        'templates',
-        'crawler-configuration-visual',
-        'manage-your-crawls',
-      ],
+      items: ['create-crawler', 'record-extractor', 'templates', 'crawler-configuration-visual', 'manage-your-crawls'],
     },
     {
       type: 'category',
