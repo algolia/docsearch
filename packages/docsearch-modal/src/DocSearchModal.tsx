@@ -18,13 +18,12 @@ export function DocSearchModal(props: DocSearchModalProps): JSX.Element | null {
     () => ({
       ...props,
       isAskAiActive,
-      isModalActive,
       initialQuery: props.initialQuery ?? initialQuery,
       initialScrollY: initialScroll,
       onAskAiToggle,
       onClose: closeModal,
     }),
-    [props, isAskAiActive, isModalActive, initialQuery, initialScroll, onAskAiToggle, closeModal],
+    [props, isAskAiActive, initialQuery, initialScroll, onAskAiToggle, closeModal],
   );
 
   return isModalActive ? createPortal(<Modal {...modalProps} />, containerElement) : null;
