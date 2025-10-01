@@ -10,17 +10,22 @@ export type DocSearchModalProps = Omit<ModalProps, 'initialScrollY' | 'isAskAiAc
 export function DocSearchModal(props: DocSearchModalProps): JSX.Element | null {
   const { isModalActive, onAskAiToggle, closeModal, isAskAiActive, initialQuery } = useDocSearch();
 
-  return isModalActive
-    ? createPortal(
-        <Modal
-          {...props}
-          initialScrollY={window.scrollY}
-          isAskAiActive={isAskAiActive}
-          initialQuery={props.initialQuery ?? initialQuery}
-          onAskAiToggle={onAskAiToggle}
-          onClose={closeModal}
-        />,
-        props.portalContainer ?? document.body,
-      )
-    : null;
+  const containerElement = React.useMemo(() => props.portalContainer ?? document.body, [props.portalContainer]);
+
+  const initialScroll = React.useMemo(() => window.scrollY, []);
+
+  const modalProps = React.useMemo(
+    () => ({
+      ...props,
+      isAskAiActive,
+      isModalActive,
+      initialQuery: props.initialQuery ?? initialQuery,
+      initialScrollY: initialScroll,
+      onAskAiToggle,
+      onClose: closeModal,
+    }),
+    [props, isAskAiActive, isModalActive, initialQuery, initialScroll, onAskAiToggle, closeModal],
+  );
+
+  return isModalActive ? createPortal(<Modal {...modalProps} />, containerElement) : null;
 }
