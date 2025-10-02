@@ -7,60 +7,60 @@ import type { KeyboardShortcuts } from './useKeyboardShortcuts.ts';
 import type { DocSearchTheme } from './useTheme';
 import { useTheme } from './useTheme';
 
-type DocSearchState = 'modal-open' | 'ready';
+export type DocSearchState = 'modal-askai' | 'modal-search' | 'ready';
 
-interface IDocSearchContext {
-  apiKey: string;
-  appId: string;
-  indexName?: string;
+export interface DocSearchContext {
   docsearchState: DocSearchState;
   setDocsearchState: (newState: DocSearchState) => void;
   searchButtonRef: React.RefObject<HTMLButtonElement | null>;
-  initialQuery?: string;
+  initialQuery: string;
   keyboardShortcuts: Required<KeyboardShortcuts>;
+  openModal: () => void;
+  closeModal: () => void;
+  isAskAiActive: boolean;
+  isModalActive: boolean;
+  onAskAiToggle: (active: boolean) => void;
 }
 
 export interface DocSearchProps {
-  appId: string;
-  apiKey: string;
-  indexName?: string;
-  children: JSX.Element | JSX.Element[];
+  children: Array<JSX.Element | null> | JSX.Element | React.ReactNode | null;
   theme?: DocSearchTheme;
   initialQuery?: string;
   keyboardShortcuts?: KeyboardShortcuts;
 }
 
-const DocSearchContext = React.createContext<IDocSearchContext | undefined>(undefined);
+const Context = React.createContext<DocSearchContext | undefined>(undefined);
+Context.displayName = 'DocSearchContext';
 
-export function DocSearch({ appId, apiKey, indexName, children, theme, ...props }: DocSearchProps): JSX.Element {
+export function DocSearch({ children, theme, ...props }: DocSearchProps): JSX.Element {
   const [docsearchState, setDocsearchState] = React.useState<DocSearchState>('ready');
-  const [initialQuery, setInitialQuery] = React.useState<string | undefined>(props.initialQuery || undefined);
-  const [askAiActive, setAskAiActive] = React.useState(false);
+  const [initialQuery, setInitialQuery] = React.useState<string>(props.initialQuery || '');
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
   const keyboardShortcuts = useKeyboardShortcuts(props.keyboardShortcuts);
 
-  const onOpen = (): void => {
-    setDocsearchState('modal-open');
-  };
+  const isModalActive = ['modal-search', 'modal-askai'].includes(docsearchState);
+  const isAskAiActive = docsearchState === 'modal-askai';
 
-  const onClose = React.useCallback((): void => {
+  const openModal = React.useCallback((): void => {
+    setDocsearchState('modal-search');
+  }, []);
+
+  const closeModal = React.useCallback((): void => {
     setDocsearchState('ready');
-    setInitialQuery(props.initialQuery);
-    if (askAiActive) {
-      setAskAiActive(false);
-    }
-  }, [askAiActive, setAskAiActive, setDocsearchState, props.initialQuery]);
+    searchButtonRef.current?.focus();
+    setInitialQuery(props.initialQuery ?? '');
+  }, [setDocsearchState, props.initialQuery]);
 
   const onAskAiToggle = React.useCallback(
     (active: boolean): void => {
-      setAskAiActive(active);
+      setDocsearchState(active ? 'modal-askai' : 'modal-search');
     },
-    [setAskAiActive],
+    [setDocsearchState],
   );
 
   const onInput = React.useCallback(
     (event: KeyboardEvent): void => {
-      setDocsearchState('modal-open');
+      setDocsearchState('modal-search');
       setInitialQuery(event.key);
     },
     [setDocsearchState, setInitialQuery],
@@ -69,35 +69,48 @@ export function DocSearch({ appId, apiKey, indexName, children, theme, ...props 
   useTheme({ theme });
 
   useDocSearchKeyboardEvents({
-    isOpen: docsearchState === 'modal-open',
-    onOpen,
-    onClose,
+    isOpen: isModalActive,
+    onOpen: openModal,
+    onClose: closeModal,
     onAskAiToggle,
     onInput,
-    isAskAiActive: askAiActive,
+    isAskAiActive,
     searchButtonRef,
     keyboardShortcuts,
   });
 
-  const value: IDocSearchContext = React.useMemo(
+  const value: DocSearchContext = React.useMemo(
     () => ({
       docsearchState,
       setDocsearchState,
-      apiKey,
-      appId,
-      indexName,
       searchButtonRef,
       initialQuery,
       keyboardShortcuts,
+      openModal,
+      closeModal,
+      isAskAiActive,
+      isModalActive,
+      onAskAiToggle,
     }),
-    [docsearchState, apiKey, appId, indexName, searchButtonRef, initialQuery, keyboardShortcuts],
+    [
+      docsearchState,
+      searchButtonRef,
+      initialQuery,
+      keyboardShortcuts,
+      openModal,
+      closeModal,
+      isAskAiActive,
+      isModalActive,
+      onAskAiToggle,
+    ],
   );
 
-  return <DocSearchContext.Provider value={value}>{children}</DocSearchContext.Provider>;
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 }
+DocSearch.displayName = 'DocSearch';
 
-export function useDocSearch(): IDocSearchContext {
-  const ctx = React.useContext(DocSearchContext);
+export function useDocSearch(): DocSearchContext {
+  const ctx = React.useContext(Context);
 
   if (ctx === undefined) {
     throw new Error('`useDocSearch` must be used within the `DocSearch` provider');

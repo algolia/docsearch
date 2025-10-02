@@ -18,12 +18,14 @@
     "dist/",
     "index.js",
     "useTheme.js",
-    "useDocSearchKeyboardEvents.js"
+    "useDocSearchKeyboardEvents.js",
+    "useKeyboardShortcuts.js"
   ],
   "exports": {
     ".": "./dist/esm/index.js",
     "./useTheme": "./dist/esm/useTheme.js",
-    "./useDocSearchKeyboardEvents": "./dist/esm/useDocSearchKeyboardEvents.js"
+    "./useDocSearchKeyboardEvents": "./dist/esm/useDocSearchKeyboardEvents.js",
+    "./useKeyboardShortcuts": "./dist/esm/useKeyboardShortcuts.js"
   },
   "source": "src/index.ts",
   "types": "dist/esm/index.d.ts",

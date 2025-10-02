@@ -1,10 +1,10 @@
 import type { AutocompleteOptions, AutocompleteState } from '@algolia/autocomplete-core';
 import { DocSearch as DocSearchProvider, useDocSearch } from '@docsearch/core';
-import { DocSearchButton } from '@docsearch/modal/button';
 import type { LiteClient, SearchParamsObject } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
 
+import { DocSearchButton } from './DocSearchButton';
 import { DocSearchModal } from './DocSearchModal';
 import type {
   DocSearchHit,
@@ -169,62 +169,41 @@ export interface DocSearchProps {
 export function DocSearch(props: DocSearchProps): JSX.Element {
   return (
     <DocSearchProvider {...props}>
-      <DocSearchButton translations={props.translations?.button} />
       <DocSearchInner {...props} />
     </DocSearchProvider>
   );
 }
 
 export function DocSearchInner(props: DocSearchProps): JSX.Element {
-  const { setDocsearchState, docsearchState } = useDocSearch();
-  const [initialQuery, setInitialQuery] = React.useState<string | undefined>(props?.initialQuery || undefined);
-  const [isAskAiActive, setIsAskAiActive] = React.useState(false);
-
-  const isOpen = docsearchState === 'modal-open';
-
-  let currentPlaceholder =
-    props?.translations?.modal?.searchBox?.placeholderText || props?.placeholder || 'Search docs';
-
-  // check if the instance is configured to handle ask ai
-  const canHandleAskAi = Boolean(props?.askAi);
-
-  if (canHandleAskAi) {
-    currentPlaceholder = props?.translations?.modal?.searchBox?.placeholderText || 'Search docs or ask AI a question';
-  }
-
-  if (isAskAiActive) {
-    currentPlaceholder = props?.translations?.modal?.searchBox?.placeholderTextAskAi || 'Ask another question...';
-  }
-
-  const onAskAiToggle = React.useCallback(
-    (askAitoggle: boolean) => {
-      setIsAskAiActive(askAitoggle);
-    },
-    [setIsAskAiActive],
-  );
-
-  const onClose = React.useCallback(() => {
-    setDocsearchState('ready');
-    setInitialQuery(props?.initialQuery);
-    if (isAskAiActive) {
-      setIsAskAiActive(false);
-    }
-  }, [props.initialQuery, isAskAiActive, setIsAskAiActive, setDocsearchState]);
+  const {
+    searchButtonRef,
+    keyboardShortcuts,
+    isModalActive,
+    isAskAiActive,
+    initialQuery,
+    onAskAiToggle,
+    openModal,
+    closeModal,
+  } = useDocSearch();
 
   return (
     <>
-      {isOpen &&
+      <DocSearchButton
+        keyboardShortcuts={keyboardShortcuts}
+        ref={searchButtonRef}
+        translations={props.translations?.button}
+        onClick={openModal}
+      />
+      {isModalActive &&
         createPortal(
           <DocSearchModal
             {...props}
-            placeholder={currentPlaceholder}
             initialScrollY={window.scrollY}
             initialQuery={initialQuery}
             translations={props?.translations?.modal}
             isAskAiActive={isAskAiActive}
-            canHandleAskAi={canHandleAskAi}
             onAskAiToggle={onAskAiToggle}
-            onClose={onClose}
+            onClose={closeModal}
           />,
           props.portalContainer ?? document.body,
         )}

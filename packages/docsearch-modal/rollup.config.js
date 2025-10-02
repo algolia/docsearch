@@ -34,17 +34,25 @@ function sourceOutput(fileName) {
   ];
 }
 
+const externals = ['react', 'react-dom', '@docsearch/core'];
+
 export default [
   {
     input: 'src/index.ts',
-    external: ['react', 'react-dom', '@docsearch/core'],
+    external: externals,
     output: sourceOutput('index.js'),
     plugins: sourcePlugins,
   },
   {
     input: 'src/DocSearchButton.tsx',
-    external: ['react', 'react-dom', '@docsearch/core'],
+    external: externals,
     output: sourceOutput('DocSearchButton.js'),
+    plugins: sourcePlugins,
+  },
+  {
+    input: 'src/DocSearchModal.tsx',
+    external: externals,
+    output: sourceOutput('DocSearchModal.js'),
     plugins: sourcePlugins,
   },
   {
@@ -55,6 +63,11 @@ export default [
   {
     input: 'dist/esm/types/DocSearchButton.d.ts',
     output: [{ file: 'dist/esm/DocSearchButton.d.ts', format: 'es' }],
+    plugins: [dts()],
+  },
+  {
+    input: 'dist/esm/types/DocSearchModal.d.ts',
+    output: [{ file: 'dist/esm/DocSearchModal.d.ts', format: 'es' }],
     plugins: [dts()],
   },
 ];
