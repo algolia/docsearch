@@ -52,11 +52,18 @@ interface SearchBoxProps
   isFromSelection: boolean;
   translations?: SearchBoxTranslations;
   askAiState: AskAiState;
+  setAskAiState: (state: AskAiState) => void;
   onNewConversation: () => void;
   onViewConversationHistory: () => void;
 }
 
-export function SearchBox({ translations = {}, askAiState, onAskAiToggle, ...props }: SearchBoxProps): JSX.Element {
+export function SearchBox({
+  translations = {},
+  askAiState,
+  onAskAiToggle,
+  setAskAiState,
+  ...props
+}: SearchBoxProps): JSX.Element {
   const {
     clearButtonTitle = 'Clear',
     clearButtonAriaLabel = 'Clear the query',
@@ -173,11 +180,12 @@ export function SearchBox({ translations = {}, askAiState, onAskAiToggle, ...pro
   const handleAskAiBackClick = React.useCallback((): void => {
     if (askAiState === 'conversation-history') {
       onAskAiToggle(true);
+      setAskAiState('initial');
       return;
     }
 
     onAskAiToggle(false);
-  }, [askAiState, onAskAiToggle]);
+  }, [askAiState, onAskAiToggle, setAskAiState]);
 
   return (
     <>
