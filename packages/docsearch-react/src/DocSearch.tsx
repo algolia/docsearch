@@ -12,7 +12,6 @@ import type {
   KeyboardShortcuts,
   StoredDocSearchHit,
 } from './types';
-import type { AskAiState } from './types/AskiAi';
 import { useDocSearchKeyboardEvents } from './useDocSearchKeyboardEvents';
 import { useTheme } from './useTheme';
 
@@ -179,8 +178,7 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
   const [isOpen, setIsOpen] = React.useState(false);
   const [initialQuery, setInitialQuery] = React.useState<string | undefined>(props?.initialQuery || undefined);
-  const [askAiState, setAskAiState] = React.useState<AskAiState>('initial');
-  const isAskAiActive = askAiState !== 'initial';
+  const [isAskAiActive, setIsAskAiActive] = React.useState(false);
 
   let currentPlaceholder =
     props?.translations?.modal?.searchBox?.placeholderText || props?.placeholder || 'Search docs';
@@ -198,9 +196,9 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
 
   const onAskAiToggle = React.useCallback(
     (askAitoggle: boolean) => {
-      setAskAiState(askAitoggle ? 'conversation' : 'initial');
+      setIsAskAiActive(askAitoggle);
     },
-    [setAskAiState],
+    [setIsAskAiActive],
   );
 
   const onOpen = React.useCallback(() => {
@@ -211,9 +209,9 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
     setIsOpen(false);
     setInitialQuery(props?.initialQuery);
     if (isAskAiActive) {
-      setAskAiState('initial');
+      setIsAskAiActive(false);
     }
-  }, [setIsOpen, props.initialQuery, isAskAiActive, setAskAiState]);
+  }, [setIsOpen, props.initialQuery, isAskAiActive, setIsAskAiActive]);
 
   const onInput = React.useCallback(
     (event: KeyboardEvent) => {
@@ -254,8 +252,6 @@ export function DocSearch(props: DocSearchProps): JSX.Element {
             translations={props?.translations?.modal}
             isAskAiActive={isAskAiActive}
             canHandleAskAi={canHandleAskAi}
-            askAiState={askAiState}
-            setAskAiState={setAskAiState}
             onAskAiToggle={onAskAiToggle}
             onClose={onClose}
           />,

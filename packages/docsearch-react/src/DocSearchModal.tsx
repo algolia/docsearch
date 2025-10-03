@@ -45,8 +45,6 @@ export type DocSearchModalProps = DocSearchProps & {
   isAskAiActive?: boolean;
   canHandleAskAi?: boolean;
   translations?: ModalTranslations;
-  askAiState: AskAiState;
-  setAskAiState: (state: AskAiState) => void;
 };
 
 /**
@@ -302,8 +300,6 @@ export function DocSearchModal({
   indices = [],
   indexName,
   searchParameters,
-  askAiState,
-  setAskAiState,
 }: DocSearchModalProps): JSX.Element {
   const { footer: footerTranslations, searchBox: searchBoxTranslations, ...screenStateTranslations } = translations;
   const [state, setState] = React.useState<DocSearchState<InternalDocSearchHit>>({
@@ -332,6 +328,7 @@ export function DocSearchModal({
   const askAiConfig = typeof askAi === 'object' ? askAi : null;
   const askAiConfigurationId = typeof askAi === 'string' ? askAi : askAiConfig?.assistantId || null;
   const askAiSearchParameters = askAiConfig?.searchParameters;
+  const [askAiState, setAskAiState] = React.useState<AskAiState>('initial');
 
   // Format the `indexes` to be used until `indexName` and `searchParameters` props are fully removed.
   const indexes: DocSearchIndex[] = [];
@@ -507,7 +504,7 @@ export function DocSearchModal({
       >
     >(undefined);
 
-  const handleAskAiToggle = React.useCallback(
+  const handleSelectAskAiQuestion = React.useCallback(
     (toggle: boolean, query: string) => {
       onAskAiToggle(toggle);
       setStoppedStream(false);
@@ -660,7 +657,7 @@ export function DocSearchModal({
                 },
                 onSelect({ item }): void {
                   if (item.type === 'askAI' && item.query) {
-                    handleAskAiToggle(true, item.query);
+                    handleSelectAskAiQuestion(true, item.query);
                   }
                 },
               },
@@ -775,6 +772,11 @@ export function DocSearchModal({
     }
   }, [isAskAiActive, autocomplete, setMessages]);
 
+  // Track external state in order to manage internal askAiState
+  React.useEffect(() => {
+    setAskAiState('initial');
+  }, [isAskAiActive, setAskAiState]);
+
   const onStopAskAiStreaming = async (): Promise<void> => {
     setStoppedStream(true);
 
@@ -830,10 +832,11 @@ export function DocSearchModal({
             isAskAiActive={isAskAiActive}
             askAiStatus={status}
             askAiState={askAiState}
+            setAskAiState={setAskAiState}
             onClose={onClose}
             onAskAiToggle={onAskAiToggle}
             onAskAgain={(query) => {
-              handleAskAiToggle(true, query);
+              handleSelectAskAiQuestion(true, query);
             }}
             onStopAskAiStreaming={onStopAskAiStreaming}
             onNewConversation={handleNewConversation}
@@ -864,7 +867,7 @@ export function DocSearchModal({
               status={status}
               hasCollections={hasCollections}
               askAiState={askAiState}
-              selectAskAiQuestion={handleAskAiToggle}
+              selectAskAiQuestion={handleSelectAskAiQuestion}
               onAskAiToggle={onAskAiToggle}
               onItemClick={(item, event) => {
                 // if the item is askAI toggle the screen
@@ -874,8 +877,9 @@ export function DocSearchModal({
                     setMessages(item.messages as any);
                     onAskAiToggle(true);
                   } else {
-                    handleAskAiToggle(true, item.query);
+                    handleSelectAskAiQuestion(true, item.query);
                   }
+                  setAskAiState('initial');
                   event.preventDefault();
                   return;
                 }

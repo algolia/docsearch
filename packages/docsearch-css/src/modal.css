@@ -1436,7 +1436,7 @@ assistive tech users */
   padding: 8px 0;
   flex-direction: column;
   border-radius: var(--docsearch-border-radius);
-  background-color: var(--docsearch-modal-background);
+  background-color: var(--docsearch-dropdown-menu-background);
   box-shadow: 0px 0px 0px 1px #21243D0D, 0px 8px 16px -4px #21243D40;
   min-width: 195px;
   top: calc(100% + 12px);
@@ -1461,5 +1461,5 @@ assistive tech users */
 }
 
 .DocSearch-Menu-item:hover {
-  background-color: var(--docsearch-hit-background);
+  background-color: var(--docsearch-dropdown-menu-item-hover-background);
 }
