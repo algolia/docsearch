@@ -43,7 +43,7 @@ export function StartScreen({ translations = {}, ...props }: StartScreenProps): 
             <RecentIcon />
           </div>
         )}
-        renderAction={({ item, runFavoriteTransition, runDeleteTransition }) => (
+        renderAction={({ item }) => (
           <>
             <div className="DocSearch-Hit-action">
               <button
@@ -53,11 +53,9 @@ export function StartScreen({ translations = {}, ...props }: StartScreenProps): 
                 onClick={(event) => {
                   event.preventDefault();
                   event.stopPropagation();
-                  runFavoriteTransition(() => {
-                    props.favoriteSearches.add(item);
-                    props.recentSearches.remove(item);
-                    props.refresh();
-                  });
+                  props.favoriteSearches.add(item);
+                  props.recentSearches.remove(item);
+                  props.refresh();
                 }}
               >
                 <StarIcon />
@@ -71,10 +69,8 @@ export function StartScreen({ translations = {}, ...props }: StartScreenProps): 
                 onClick={(event) => {
                   event.preventDefault();
                   event.stopPropagation();
-                  runDeleteTransition(() => {
-                    props.recentSearches.remove(item);
-                    props.refresh();
-                  });
+                  props.recentSearches.remove(item);
+                  props.refresh();
                 }}
               >
                 <CloseIcon />
@@ -93,7 +89,7 @@ export function StartScreen({ translations = {}, ...props }: StartScreenProps): 
             <StarIcon />
           </div>
         )}
-        renderAction={({ item, runDeleteTransition }) => (
+        renderAction={({ item }) => (
           <div className="DocSearch-Hit-action">
             <button
               className="DocSearch-Hit-action-button"
@@ -102,10 +98,8 @@ export function StartScreen({ translations = {}, ...props }: StartScreenProps): 
               onClick={(event) => {
                 event.preventDefault();
                 event.stopPropagation();
-                runDeleteTransition(() => {
-                  props.favoriteSearches.remove(item);
-                  props.refresh();
-                });
+                props.favoriteSearches.remove(item);
+                props.refresh();
               }}
             >
               <CloseIcon />
@@ -123,7 +117,7 @@ export function StartScreen({ translations = {}, ...props }: StartScreenProps): 
             <SparklesIcon />
           </div>
         )}
-        renderAction={({ item, runDeleteTransition }) => (
+        renderAction={({ item }) => (
           <div className="DocSearch-Hit-action">
             <button
               className="DocSearch-Hit-action-button"
@@ -132,10 +126,8 @@ export function StartScreen({ translations = {}, ...props }: StartScreenProps): 
               onClick={(event) => {
                 event.preventDefault();
                 event.stopPropagation();
-                runDeleteTransition(() => {
-                  props.conversations.remove(item);
-                  props.refresh();
-                });
+                props.conversations.remove(item);
+                props.refresh();
               }}
             >
               <CloseIcon />
