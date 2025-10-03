@@ -16,11 +16,7 @@ interface ResultsProps<TItem extends BaseItem>
   translations?: ResultsTranslations;
   collection: AutocompleteState<TItem>['collections'][0];
   renderIcon: (props: { item: TItem; index: number }) => React.ReactNode;
-  renderAction: (props: {
-    item: TItem;
-    runDeleteTransition: (cb: () => void) => void;
-    runFavoriteTransition: (cb: () => void) => void;
-  }) => React.ReactNode;
+  renderAction: (props: { item: TItem }) => React.ReactNode;
   onItemClick: (item: TItem, event: KeyboardEvent | MouseEvent) => void;
   hitComponent: DocSearchProps['hitComponent'];
   state: AutocompleteState<TItem>;
@@ -82,37 +78,15 @@ function Result<TItem extends StoredDocSearchHit>({
   collection,
   hitComponent,
 }: ResultProps<TItem>): JSX.Element {
-  const [status, setStatus] = React.useState<'deleting' | 'favoriting' | 'idle'>('idle');
-
-  const actionRef = React.useRef<(() => void) | null>(null);
   const Hit = hitComponent!;
-
-  const runDeleteTransition = (cb: () => void): void => {
-    setStatus('deleting');
-    actionRef.current = cb;
-  };
-
-  const runFavoriteTransition = (cb: () => void): void => {
-    setStatus('favoriting');
-    actionRef.current = cb;
-  };
-
-  const handleAnimEnd = (): void => {
-    actionRef.current?.();
-    actionRef.current = null;
-  };
-
   return (
     <li
       className={[
         'DocSearch-Hit',
         (item as unknown as InternalDocSearchHit).__docsearch_parent && 'DocSearch-Hit--Child',
-        status === 'favoriting' && 'DocSearch-Hit--favoriting',
-        status === 'deleting' && 'DocSearch-Hit--deleting',
       ]
         .filter(Boolean)
         .join(' ')}
-      onAnimationEnd={handleAnimEnd}
       {...getItemProps({
         item,
         source: collection.source,
@@ -157,7 +131,7 @@ function Result<TItem extends StoredDocSearchHit>({
             </div>
           )}
 
-          {renderAction({ item, runDeleteTransition, runFavoriteTransition })}
+          {renderAction({ item })}
         </div>
       </Hit>
     </li>
