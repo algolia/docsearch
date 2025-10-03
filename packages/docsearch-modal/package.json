@@ -41,7 +41,7 @@
     "watch": "nodemon --watch src --ext ts,tsx,js,jsx,json --ignore dist/ --ignore node_modules/ --verbose --delay 250ms --exec \"yarn on:change\""
   },
   "dependencies": {
-    "@docsearch/react": "^4.0.1"
+    "@docsearch/react": "4.1.0"
   },
   "devDependencies": {
     "@rollup/plugin-replace": "6.0.2",
