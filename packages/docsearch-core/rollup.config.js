@@ -34,42 +34,29 @@ function sourceOutput(fileName) {
   ];
 }
 
-const externalPackages = ['react', 'react-dom', '@docsearch/core'];
-
 export default [
   {
     input: 'src/index.ts',
-    external: externalPackages,
+    external: ['react', 'react-dom'],
     output: sourceOutput('index.js'),
     plugins: sourcePlugins,
   },
   {
-    input: 'src/DocSearchButton.tsx',
-    external: externalPackages,
-    output: sourceOutput('DocsearchButton.js'),
-    plugins: sourcePlugins,
-  },
-  {
-    input: 'src/DocSearchModal.tsx',
-    external: externalPackages,
-    output: sourceOutput('DocSearchModal.js'),
-    plugins: sourcePlugins,
-  },
-  {
-    input: 'src/useDocSearchKeyboardEvents.ts',
-    external: externalPackages,
-    output: sourceOutput('useDocSearchKeyboardEvents.js'),
-    plugins: sourcePlugins,
-  },
-  {
-    input: 'src/useTheme.tsx',
-    external: externalPackages,
+    input: 'src/useTheme.ts',
+    external: ['react', 'react-dom'],
     output: sourceOutput('useTheme.js'),
     plugins: sourcePlugins,
   },
   {
-    input: 'src/version.ts',
-    output: sourceOutput('version.js'),
+    input: 'src/useDocSearchKeyboardEvents.ts',
+    external: ['react', 'react-dom'],
+    output: sourceOutput('useDocSearchKeyboardEvents.js'),
+    plugins: sourcePlugins,
+  },
+  {
+    input: 'src/useKeyboardShortcuts.ts',
+    external: ['react', 'react-dom'],
+    output: sourceOutput('useKeyboardShortcuts.js'),
     plugins: sourcePlugins,
   },
   {
@@ -78,13 +65,8 @@ export default [
     plugins: [dts()],
   },
   {
-    input: 'dist/esm/types/DocSearchModal.d.ts',
-    output: [{ file: 'dist/esm/DocSearchModal.d.ts', format: 'es' }],
-    plugins: [dts()],
-  },
-  {
-    input: 'dist/esm/types/DocSearchButton.d.ts',
-    output: [{ file: 'dist/esm/DocSearchButton.d.ts', format: 'es' }],
+    input: 'dist/esm/types/useTheme.d.ts',
+    output: [{ file: 'dist/esm/useTheme.d.ts', format: 'es' }],
     plugins: [dts()],
   },
   {
@@ -93,13 +75,8 @@ export default [
     plugins: [dts()],
   },
   {
-    input: 'dist/esm/types/useTheme.d.ts',
-    output: [{ file: 'dist/esm/useTheme.d.ts', format: 'es' }],
-    plugins: [dts()],
-  },
-  {
-    input: 'dist/esm/types/version.d.ts',
-    output: [{ file: 'dist/esm/version.d.ts', format: 'es' }],
+    input: 'dist/esm/types/useKeyboardShortcuts.d.ts',
+    output: [{ file: 'dist/esm/useKeyboardShortcuts.d.ts', format: 'es' }],
     plugins: [dts()],
   },
 ];
