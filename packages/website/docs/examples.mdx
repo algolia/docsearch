@@ -35,7 +35,7 @@ Use the default experience with your index credentials. this works great for typ
 
 ## Ask AI: ai-assisted answers
 
-Add algolia askai to get synthesized answers grounded in your indexed content. you can scope the llm context using `searchParameters`.
+Add algolia askai to get synthesized answers grounded in your indexed content. you can scope the llm context using `searchParameters` like `facetFilters`, `filters`, `attributesToRetrieve`,`restrictSearchableAttributes`, and `distinct`.
 
 ```jsx
 <DocSearch
@@ -77,15 +77,52 @@ Replace the default hit markup to match your brand and layout. below is a minima
 function CustomHit({ hit }) {
   // render a compact, branded hit card
   return (
-    <a href={hit.url} style={{ display: 'block', padding: '12px 16px', textDecoration: 'none' }}>
+    <a
+      href={hit.url}
+      style={{ display: 'block', padding: '12px 16px', textDecoration: 'none' }}
+    >
       <div style={{ display: 'flex', gap: 12 }}>
-        <div style={{ width: 40, height: 40, backgroundColor: '#e3f2fd', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, color: '#1976d2' }}>
+        <div
+          style={{
+            width: 40,
+            height: 40,
+            backgroundColor: '#e3f2fd',
+            borderRadius: 6,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontWeight: 600,
+            color: '#1976d2',
+          }}
+        >
           {hit.type?.toUpperCase?.() || 'DOC'}
         </div>
         <div style={{ minWidth: 0 }}>
-          <div style={{ fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{hit.hierarchy?.lvl1 || 'untitled'}</div>
-          {hit.hierarchy?.lvl2 && <div style={{ color: '#666', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{hit.hierarchy.lvl2}</div>}
-          {hit.content && <div style={{ color: '#888', marginTop: 4 }}>{hit.content}</div>}
+          <div
+            style={{
+              fontWeight: 600,
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {hit.hierarchy?.lvl1 || 'untitled'}
+          </div>
+          {hit.hierarchy?.lvl2 && (
+            <div
+              style={{
+                color: '#666',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {hit.hierarchy.lvl2}
+            </div>
+          )}
+          {hit.content && (
+            <div style={{ color: '#888', marginTop: 4 }}>{hit.content}</div>
+          )}
         </div>
       </div>
     </a>
@@ -99,7 +136,7 @@ function CustomHit({ hit }) {
   hitComponent={CustomHit}
   insights={true}
   translations={{ button: { buttonText: 'custom hits (demo)' } }}
-/>
+/>;
 ```
 
 <DocSearch
@@ -107,22 +144,63 @@ function CustomHit({ hit }) {
   apiKey="24b09689d5b4223813d9b8e48563c8f6"
   indexName="docsearch"
   hitComponent={({ hit }) => {
-  // render a compact, branded hit card
-  return (
-    <a href={hit.url} style={{ display: 'block', padding: '12px 16px', textDecoration: 'none' }}>
-      <div style={{ display: 'flex', gap: 12 }}>
-        <div style={{ width: 40, height: 40, backgroundColor: '#e3f2fd', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, color: '#1976d2' }}>
-          {hit.type?.toUpperCase?.() || 'DOC'}
+    // render a compact, branded hit card
+    return (
+      <a
+        href={hit.url}
+        style={{
+          display: 'block',
+          padding: '12px 16px',
+          textDecoration: 'none',
+        }}
+      >
+        <div style={{ display: 'flex', gap: 12 }}>
+          <div
+            style={{
+              width: 40,
+              height: 40,
+              backgroundColor: '#e3f2fd',
+              borderRadius: 6,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontWeight: 600,
+              color: '#1976d2',
+            }}
+          >
+            {hit.type?.toUpperCase?.() || 'DOC'}
+          </div>
+          <div style={{ minWidth: 0 }}>
+            <div
+              style={{
+                fontWeight: 600,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {hit.hierarchy?.lvl1 || 'untitled'}
+            </div>
+            {hit.hierarchy?.lvl2 && (
+              <div
+                style={{
+                  color: '#666',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {hit.hierarchy.lvl2}
+              </div>
+            )}
+            {hit.content && (
+              <div style={{ color: '#888', marginTop: 4 }}>{hit.content}</div>
+            )}
+          </div>
         </div>
-        <div style={{ minWidth: 0 }}>
-          <div style={{ fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{hit.hierarchy?.lvl1 || 'untitled'}</div>
-          {hit.hierarchy?.lvl2 && <div style={{ color: '#666', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{hit.hierarchy.lvl2}</div>}
-          {hit.content && <div style={{ color: '#888', marginTop: 4 }}>{hit.content}</div>}
-        </div>
-      </div>
-    </a>
-  );
-}}
+      </a>
+    );
+  }}
   insights={true}
   translations={{ button: { buttonText: 'custom hits (demo)' } }}
 />
@@ -158,7 +236,7 @@ const newTabNavigator = {
   navigator={newTabNavigator}
   insights={true}
   translations={{ button: { buttonText: 'open in new tabs (demo)' } }}
-/>
+/>;
 ```
 
 <DocSearch
@@ -181,8 +259,8 @@ const newTabNavigator = {
 
 <br></br>
 
-:::warning
-**Note**: Using only `hitComponent` with `target="_blank"` will work for mouse clicks, but keyboard navigation (arrows + Enter) requires the `navigator` prop to consistently open links in new tabs.
+:::warning 
+**Note**: Using only `hitComponent` with `target="_blank"` will work for mouse clicks, but keyboard navigation (arrows + Enter) requires the `navigator` prop to consistently open links in new tabs. 
 :::
 
 ---
@@ -235,7 +313,11 @@ the snippet below maps a non-standard record to the internal format. try it live
   apiKey="24b09689d5b4223813d9b8e48563c8f6"
   indexName="crawler_doc"
   askAi={{ assistantId: 'askAIDemo' }}
-  searchParameters={{ attributesToRetrieve: ['*'], attributesToSnippet: ['*'], hitsPerPage: 20 }}
+  searchParameters={{
+    attributesToRetrieve: ['*'],
+    attributesToSnippet: ['*'],
+    hitsPerPage: 20,
+  }}
   transformItems={(items) =>
     items.map((item) => ({
       objectID: item.objectID,
@@ -266,5 +348,5 @@ the snippet below maps a non-standard record to the internal format. try it live
 ## Tips
 
 - **Instrumentation**: enable `insights` to send usage analytics and iterate on relevance.
-- **AskAI scoping**: use `facetFilters` to keep ai answers strictly within your desired corpus (language, product, version, etc.).
+- **AskAI scoping**: use `facetFilters`, `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct` to control ai context and improve answer quality.
 - **Customization**: use `hitComponent`, `transformItems`, and `translations` to make docsearch feel native to any product surface.

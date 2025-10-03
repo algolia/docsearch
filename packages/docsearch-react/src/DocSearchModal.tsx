@@ -16,13 +16,14 @@ import type { DocSearchIndex, DocSearchProps } from './DocSearch';
 import type { FooterTranslations } from './Footer';
 import { Footer } from './Footer';
 import { Hit } from './Hit';
+import type { NewConversationTranslations } from './NewConversationScreen';
 import type { ScreenStateTranslations } from './ScreenState';
 import { ScreenState } from './ScreenState';
 import type { SearchBoxTranslations } from './SearchBox';
 import { SearchBox } from './SearchBox';
 import { createStoredConversations, createStoredSearches } from './stored-searches';
 import type { DocSearchHit, DocSearchState, InternalDocSearchHit, StoredAskAiState, StoredDocSearchHit } from './types';
-import type { AIMessage } from './types/AskiAi';
+import type { AIMessage, AskAiState } from './types/AskiAi';
 import { useSearchClient } from './useSearchClient';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
@@ -32,6 +33,7 @@ import { manageLocalStorageQuota } from './utils/storage';
 
 export type ModalTranslations = Partial<{
   searchBox: SearchBoxTranslations;
+  newConversation: NewConversationTranslations;
   footer: FooterTranslations;
 }> &
   ScreenStateTranslations;
@@ -338,6 +340,7 @@ export function DocSearchModal({
   const askAiConfig = typeof askAi === 'object' ? askAi : null;
   const askAiConfigurationId = typeof askAi === 'string' ? askAi : askAiConfig?.assistantId || null;
   const askAiSearchParameters = askAiConfig?.searchParameters;
+  const [askAiState, setAskAiState] = React.useState<AskAiState>('initial');
 
   // Format the `indexes` to be used until `indexName` and `searchParameters` props are fully removed.
   const indexes: DocSearchIndex[] = [];
@@ -382,6 +385,7 @@ export function DocSearchModal({
   ).current;
 
   const [askAiStreamError, setAskAiStreamError] = React.useState<Error | null>(null);
+  const [stoppedStream, setStoppedStream] = React.useState(false);
 
   const {
     messages,
@@ -389,6 +393,7 @@ export function DocSearchModal({
     status,
     setMessages,
     error: askAiFetchError,
+    stop: stopAskAiStreaming,
   } = useChat<AIMessage>({
     sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
     transport: new DefaultChatTransport({
@@ -430,6 +435,13 @@ export function DocSearchModal({
     }
     // if we just transitioned from "streaming" → "ready", persist
     if (prevStatus.current === 'streaming' && status === 'ready') {
+      // if we stopped the stream, store it on the most recent message
+      if (stoppedStream && messages.at(-1)) {
+        messages.at(-1)!.metadata = {
+          stopped: true,
+        };
+      }
+
       for (const part of messages[0].parts) {
         if (part.type === 'text') {
           conversations.add(buildDummyAskAiHit(part.text, messages));
@@ -437,7 +449,7 @@ export function DocSearchModal({
       }
     }
     prevStatus.current = status;
-  }, [status, messages, conversations, disableUserPersonalization]);
+  }, [status, messages, conversations, disableUserPersonalization, stoppedStream]);
 
   const createSyntheticParent = React.useCallback(function createSyntheticParent(
     item: InternalDocSearchHit,
@@ -504,9 +516,10 @@ export function DocSearchModal({
       >
     >(undefined);
 
-  const handleAskAiToggle = React.useCallback(
+  const handleSelectAskAiQuestion = React.useCallback(
     (toggle: boolean, query: string) => {
       onAskAiToggle(toggle);
+      setStoppedStream(false);
       sendMessage({
         role: 'user',
         parts: [
@@ -656,7 +669,7 @@ export function DocSearchModal({
                 },
                 onSelect({ item }): void {
                   if (item.type === 'askAI' && item.query) {
-                    handleAskAiToggle(true, item.query);
+                    handleSelectAskAiQuestion(true, item.query);
                   }
                 },
               },
@@ -771,6 +784,26 @@ export function DocSearchModal({
     }
   }, [isAskAiActive, autocomplete, setMessages]);
 
+  // Track external state in order to manage internal askAiState
+  React.useEffect(() => {
+    setAskAiState('initial');
+  }, [isAskAiActive, setAskAiState]);
+
+  const onStopAskAiStreaming = async (): Promise<void> => {
+    setStoppedStream(true);
+
+    await stopAskAiStreaming();
+  };
+
+  const handleNewConversation = (): void => {
+    setMessages([]);
+    setAskAiState('new-conversation');
+  };
+
+  const handleViewConversationHistory = (): void => {
+    setAskAiState('conversation-history');
+  };
+
   // hide the dropdown on idle and no collections
   let showDocsearchDropdown = true;
   const hasCollections = state.collections.some((collection) => collection.items.length > 0);
@@ -810,11 +843,16 @@ export function DocSearchModal({
             translations={searchBoxTranslations}
             isAskAiActive={isAskAiActive}
             askAiStatus={status}
+            askAiState={askAiState}
+            setAskAiState={setAskAiState}
             onClose={onClose}
             onAskAiToggle={onAskAiToggle}
             onAskAgain={(query) => {
-              handleAskAiToggle(true, query);
+              handleSelectAskAiQuestion(true, query);
             }}
+            onStopAskAiStreaming={onStopAskAiStreaming}
+            onNewConversation={handleNewConversation}
+            onViewConversationHistory={handleViewConversationHistory}
           />
         </header>
 
@@ -840,6 +878,8 @@ export function DocSearchModal({
               askAiFetchError={askAiFetchError}
               status={status}
               hasCollections={hasCollections}
+              askAiState={askAiState}
+              selectAskAiQuestion={handleSelectAskAiQuestion}
               onAskAiToggle={onAskAiToggle}
               onItemClick={(item, event) => {
                 // if the item is askAI toggle the screen
@@ -849,8 +889,9 @@ export function DocSearchModal({
                     setMessages(item.messages as any);
                     onAskAiToggle(true);
                   } else {
-                    handleAskAiToggle(true, item.query);
+                    handleSelectAskAiQuestion(true, item.query);
                   }
+                  setAskAiState('initial');
                   event.preventDefault();
                   return;
                 }

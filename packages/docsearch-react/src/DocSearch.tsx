@@ -28,6 +28,15 @@ export type DocSearchTransformClient = {
   transporter: Pick<LiteClient['transporter'], 'algoliaAgent'>;
 };
 
+// Define the specific search parameters allowed for AskAI
+export type AskAiSearchParameters = {
+  facetFilters?: string[];
+  filters?: string;
+  attributesToRetrieve?: string[];
+  restrictSearchableAttributes?: string[];
+  distinct?: boolean;
+};
+
 export type DocSearchAskAi = {
   /**
    * The index name to use for the ask AI feature. Your assistant will search this index for relevant documents.
@@ -51,9 +60,7 @@ export type DocSearchAskAi = {
   /**
    * The search parameters to use for the ask AI feature.
    */
-  searchParameters?: {
-    facetFilters?: SearchParamsObject['facetFilters'];
-  };
+  searchParameters?: AskAiSearchParameters;
 };
 
 export interface DocSearchIndex {

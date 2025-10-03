@@ -3,10 +3,20 @@ import type { AutocompleteApi, AutocompleteState } from '@algolia/autocomplete-c
 import React, { type JSX, type RefObject } from 'react';
 
 import { MAX_QUERY_SIZE } from './constants';
-import { LoadingIcon, CloseIcon, SearchIcon, SparklesIcon } from './icons';
+import {
+  LoadingIcon,
+  CloseIcon,
+  SearchIcon,
+  StopIcon,
+  MoreVerticalIcon,
+  NewConversationIcon,
+  ConversationHistoryIcon,
+} from './icons';
 import { BackIcon } from './icons/BackIcon';
+import { Menu } from './Menu';
+import { ModalHeading } from './ModalHeading';
 import type { InternalDocSearchHit } from './types';
-import type { AIMessage } from './types/AskiAi';
+import type { AIMessage, AskAiState } from './types/AskiAi';
 
 export type SearchBoxTranslations = Partial<{
   clearButtonTitle: string;
@@ -21,6 +31,10 @@ export type SearchBoxTranslations = Partial<{
   searchInputLabel: string;
   backToKeywordSearchButtonText: string;
   backToKeywordSearchButtonAriaLabel: string;
+  newConversationPlaceholder: string;
+  conversationHistoryTitle: string;
+  startNewConversationText: string;
+  viewConversationHistoryText: string;
 }>;
 
 interface SearchBoxProps
@@ -31,14 +45,25 @@ interface SearchBoxProps
   onClose: () => void;
   onAskAiToggle: (toggle: boolean) => void;
   onAskAgain: (query: string) => void;
+  onStopAskAiStreaming: () => Promise<void>;
   placeholder: string;
   isAskAiActive: boolean;
   askAiStatus: UseChatHelpers<AIMessage>['status'];
   isFromSelection: boolean;
   translations?: SearchBoxTranslations;
+  askAiState: AskAiState;
+  setAskAiState: (state: AskAiState) => void;
+  onNewConversation: () => void;
+  onViewConversationHistory: () => void;
 }
 
-export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.Element {
+export function SearchBox({
+  translations = {},
+  askAiState,
+  onAskAiToggle,
+  setAskAiState,
+  ...props
+}: SearchBoxProps): JSX.Element {
   const {
     clearButtonTitle = 'Clear',
     clearButtonAriaLabel = 'Clear the query',
@@ -48,6 +73,10 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
     backToKeywordSearchButtonText = 'Back to keyword search',
     backToKeywordSearchButtonAriaLabel = 'Back to keyword search',
     placeholderTextAskAiStreaming = 'Answering...',
+    newConversationPlaceholder = 'Ask a question',
+    conversationHistoryTitle = 'My conversation history',
+    startNewConversationText = 'Start a new conversation',
+    viewConversationHistoryText = 'Conversation history',
   } = translations;
   const { onReset } = props.getFormProps({
     inputElement: props.inputRef.current,
@@ -65,6 +94,16 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
     }
   }, [props.isFromSelection, props.inputRef]);
 
+  const hasRecentConversations = React.useMemo(() => {
+    const askAiSource = props.state.collections[2];
+
+    if (!askAiSource) {
+      return false;
+    }
+
+    return askAiSource.items.length > 0;
+  }, [props.state.collections]);
+
   const baseInputProps = props.getInputProps({
     inputElement: props.inputRef.current!,
     autoFocus: props.autoFocus,
@@ -76,6 +115,22 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
   const origOnChange = baseInputProps.onChange;
   const isAskAiStreaming = props.askAiStatus === 'streaming' || props.askAiStatus === 'submitted';
   const isKeywordSearchLoading = props.state.status === 'stalled';
+  const renderMoreOptions = props.isAskAiActive && askAiState !== 'conversation-history';
+  let searchPlaceholder = props.placeholder;
+
+  if (askAiState === 'new-conversation') {
+    searchPlaceholder = newConversationPlaceholder;
+  }
+
+  let heading: string | null = null;
+
+  if (isAskAiStreaming) {
+    heading = placeholderTextAskAiStreaming;
+  }
+
+  if (askAiState === 'conversation-history') {
+    heading = conversationHistoryTitle;
+  }
 
   // when returning to another status than streaming or submitted, we focus on the input
   React.useEffect(() => {
@@ -122,6 +177,16 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
     disabled: isAskAiStreaming,
   };
 
+  const handleAskAiBackClick = React.useCallback((): void => {
+    if (askAiState === 'conversation-history') {
+      onAskAiToggle(true);
+      setAskAiState('initial');
+      return;
+    }
+
+    onAskAiToggle(false);
+  }, [askAiState, onAskAiToggle, setAskAiState]);
+
   return (
     <>
       <form
@@ -136,10 +201,10 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
             <button
               type="button"
               tabIndex={0}
-              className="DocSearch-AskAi-Return"
+              className="DocSearch-Action DocSearch-AskAi-Return"
               title={backToKeywordSearchButtonText}
               aria-label={backToKeywordSearchButtonAriaLabel}
-              onClick={() => props.onAskAiToggle(false)}
+              onClick={handleAskAiBackClick}
             >
               <BackIcon />
             </button>
@@ -160,20 +225,17 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
           </>
         )}
 
+        {heading && <ModalHeading heading={heading} shimmer={isAskAiStreaming} />}
+
         <input
           className="DocSearch-Input"
           ref={props.inputRef}
           {...inputProps}
-          placeholder={isAskAiStreaming ? placeholderTextAskAiStreaming : props.placeholder}
+          placeholder={searchPlaceholder}
+          hidden={Boolean(heading)}
         />
 
         <div className="DocSearch-Actions">
-          {isAskAiStreaming && (
-            <button type="button" className="DocSearch-StreamingIndicator" onClick={() => props.onAskAiToggle(true)}>
-              <SparklesIcon />
-            </button>
-          )}
-
           <button
             className="DocSearch-Clear"
             type="reset"
@@ -185,12 +247,50 @@ export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.
             {clearButtonTitle}
           </button>
 
-          {(isAskAiStreaming || props.state.query) && <div className="DocSearch-Divider" />}
+          {props.state.query && <div className="DocSearch-Divider" />}
+
+          {isAskAiStreaming && (
+            <>
+              <button
+                type="button"
+                className="DocSearch-Action DocSearch-StopStreaming"
+                onClick={props.onStopAskAiStreaming}
+              >
+                <StopIcon />
+              </button>
+
+              <div className="DocSearch-Divider" />
+            </>
+          )}
+
+          {renderMoreOptions && (
+            <>
+              <Menu>
+                <Menu.Trigger className="DocSearch-Action">
+                  <MoreVerticalIcon />
+                </Menu.Trigger>
+                <Menu.Content>
+                  <Menu.Item onClick={props.onNewConversation}>
+                    <NewConversationIcon />
+                    {startNewConversationText}
+                  </Menu.Item>
+                  {hasRecentConversations && (
+                    <Menu.Item onClick={props.onViewConversationHistory}>
+                      <ConversationHistoryIcon />
+                      {viewConversationHistoryText}
+                    </Menu.Item>
+                  )}
+                </Menu.Content>
+              </Menu>
+
+              <div className="DocSearch-Divider" />
+            </>
+          )}
 
           <button
             type="button"
             title={closeButtonText}
-            className="DocSearch-Close"
+            className="DocSearch-Action DocSearch-Close"
             aria-label={closeButtonAriaLabel}
             onClick={props.onClose}
           >

@@ -12,6 +12,7 @@ export type StoredSearchPlugin<TItem> = {
   getAll: () => TItem[];
   addFeedback?: (messageId: string, feedback: 'dislike' | 'like') => void;
   getOne?: (messageId: string) => StoredAskAiMessage | undefined;
+  getConversation?: (messageId: string) => TItem | undefined;
 };
 
 export function createStoredSearches<TItem extends StoredDocSearchHit>({
@@ -93,6 +94,13 @@ export function createStoredConversations<TItem extends StoredAskAiState>({
       items = items.filter((x) => x.objectID !== item.objectID);
 
       storage.setItem(items);
+    },
+    getConversation(messageId: string): TItem | undefined {
+      const conv = items.find((c) => c.messages?.some((m) => m.id === messageId));
+
+      if (!conv || !conv.messages) return undefined;
+
+      return conv;
     },
   };
 }

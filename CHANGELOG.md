@@ -1,3 +1,17 @@
+# [4.1.0](https://github.com/algolia/docsearch/compare/v4.0.1...v4.1.0) (2025-09-22)
+
+
+### Bug Fixes
+
+* add docsearch 4 to website ([#2767](https://github.com/algolia/docsearch/issues/2767)) ([9a908b8](https://github.com/algolia/docsearch/commit/9a908b89b08972f7eb30fdce3435e7adff8fbdfa))
+
+
+### Features
+
+* Split docsearch-react package exports ([#2764](https://github.com/algolia/docsearch/issues/2764)) ([b15f302](https://github.com/algolia/docsearch/commit/b15f302ee3c262e79c3bba92a936cd8163fe406d))
+
+
+
 ## [4.0.1](https://github.com/algolia/docsearch/compare/v4.0.0...v4.0.1) (2025-09-16)
 
 
