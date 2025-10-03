@@ -15,7 +15,7 @@ export default function BasicAskAI(): JSX.Element {
         },
       }}
       insights={true}
-      translations={{ button: { buttonText: 'Search with AskAI' } }}
+      translations={{ button: { buttonText: 'Search with Ask AI' } }}
     />
   );
 }

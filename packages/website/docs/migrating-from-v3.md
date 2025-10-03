@@ -22,11 +22,11 @@ We refreshed a few translations keys to make their purpose much clearer:
 
 Find the full list of translations in the [API documentation](/docs/api#translations)
 
-## Integrating AskAI with DocSearch v4
+## Integrating Ask AI with DocSearch v4
 
 ### Basic Integration
 
-DocSearch v4 introduces seamless support for Algolia's AskAI feature. To enable AI-powered search, add the `askAi` parameter with your Algolia Assistant ID to your existing DocSearch configuration:
+DocSearch v4 introduces seamless support for Algolia's Ask AI feature. To enable AI-powered search, add the `askAi` parameter with your Algolia Assistant ID to your existing DocSearch configuration:
 
 ```javascript
 docsearch({
@@ -37,11 +37,11 @@ docsearch({
 });
 ```
 
-Replace `YOUR_ALGOLIA_ASSISTANT_ID` with the ID provided from your Algolia Dashboard under the AskAI section.
+Replace `YOUR_ALGOLIA_ASSISTANT_ID` with the ID provided from your Algolia Dashboard under the Ask AI section.
 
 ### Advanced Integration (Using a Separate Index)
 
-If you prefer to utilize AskAI with a separate configuration from your main DocSearch setup (for instance, using different API credentials or index), you can do so by providing an object to the `askAi` parameter:
+If you prefer to utilize Ask AI with a separate configuration from your main DocSearch setup (for instance, using different API credentials or index), you can do so by providing an object to the `askAi` parameter:
 
 ```javascript
 docsearch({
@@ -59,7 +59,7 @@ docsearch({
 
 Ensure each field (`indexName`, `apiKey`, `appId`, and `assistantId`) within the `askAi` object is correctly configured for the Algolia index and assistant you wish to use.
 
-## Features in v4 with AskAI
+## Features in v4 with Ask AI
 
 * **BYO-LLM (Bring Your Own LLM) Support**: You can integrate custom AI models by providing your own LLM keys and configurations.
 * **Improved Security**: Short-lived tokens and domain verification enhance security, reducing unauthorized access.
@@ -75,13 +75,13 @@ DocSearch v4 provides a clear migration path:
 
 * Update your DocSearch configuration with the new `askAi` settings as required.
 * Ensure domain whitelist and assistant settings are properly configured via your Algolia Dashboard.
-* Review your indexed content and analytics periodically to optimize AskAI responses and performance.
+* Review your indexed content and analytics periodically to optimize Ask AI responses and performance.
 
 For full details on endpoint security, caching strategies, and infrastructure, see the dedicated [Security and Infrastructure](https://algolia.com/doc/) documentation.
 
 ## Support and Resources
 
-* **AskAI documentation**: Learn everything about Algolia AskAI ([Documentation](/#)).
+* **Ask AI documentation**: Learn everything about Algolia Ask AI ([Documentation](/#)).
 * **DocSearch Playground**: Interactive environment to test DocSearch configurations ([Docsearch Playground](https://community.algolia.com/docsearch-playground/)).
 * **Community & Support**: Reach out through the [Algolia Discord](https://alg.li/discord).
 

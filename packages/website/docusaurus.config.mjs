@@ -134,7 +134,7 @@ export default {
       announcementBar: {
         id: 'announcement-bar',
         content:
-          '🚀 Get AskAI now! Turn your docs site search into an AI-powered assistant – faster answers, fewer tickets, better self-serve. <a target="_blank" rel="noopener noreferrer" href="https://dashboard.algolia.com/ask-ai">Get Started Now</a>',
+          '🚀 Get Ask AI now! Turn your docs site search into an AI-powered assistant – faster answers, fewer tickets, better self-serve. <a target="_blank" rel="noopener noreferrer" href="https://dashboard.algolia.com/ask-ai">Get Started Now</a>',
       },
       colorMode: {
         defaultMode: 'light',
