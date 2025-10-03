@@ -25,9 +25,12 @@ interface ResultsProps<TItem extends BaseItem>
 export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TItem>): JSX.Element | null {
   // The collection title, decoded to handle encoded HTML entities
   const decodedTitle = React.useMemo(() => {
-    const virtualTextarea = document.createElement('textarea');
-    virtualTextarea.innerHTML = props.title;
-    return virtualTextarea.value;
+    return props.title
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#039;/g, "'");
   }, [props.title]);
 
   if (!props.collection || props.collection.items.length === 0) {
