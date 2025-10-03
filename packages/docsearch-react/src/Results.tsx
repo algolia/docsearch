@@ -23,6 +23,13 @@ interface ResultsProps<TItem extends BaseItem>
 }
 
 export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TItem>): JSX.Element | null {
+  // The collection title, decoded to handle encoded HTML entities
+  const decodedTitle = React.useMemo(() => {
+    const virtualTextarea = document.createElement('textarea');
+    virtualTextarea.innerHTML = props.title;
+    return virtualTextarea.value;
+  }, [props.title]);
+
   if (!props.collection || props.collection.items.length === 0) {
     return null;
   }
@@ -40,7 +47,7 @@ export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TI
   if (props.collection.source.sourceId === 'recentConversations') {
     return (
       <section className="DocSearch-Hits">
-        <div className="DocSearch-Hit-source">{props.title}</div>
+        <div className="DocSearch-Hit-source">{decodedTitle}</div>
         <ul {...props.getListProps({ source: props.collection.source })}>
           {props.collection.items.map((item, index) => {
             return <Result key={[props.title, item.objectID].join(':')} item={item} index={index} {...props} />;
@@ -52,7 +59,7 @@ export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TI
 
   return (
     <section className="DocSearch-Hits">
-      <div className="DocSearch-Hit-source">{props.title}</div>
+      <div className="DocSearch-Hit-source">{decodedTitle}</div>
 
       <ul {...props.getListProps({ source: props.collection.source })}>
         {props.collection.items.map((item, index) => {
