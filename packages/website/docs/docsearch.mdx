@@ -181,11 +181,11 @@ docsearch({
 
 Or use our new dedicated [DocSearch Playground](https://community.algolia.com/docsearch-playground/)
 
-### Using DocSearch with AskAI
+### Using DocSearch with Ask AI
 
-DocSearch v4 introduces support for AskAI, Algolia’s advanced, AI-powered search capability. AskAI enhances the user experience by providing contextually relevant and intelligent responses directly from your documentation.
+DocSearch v4 introduces support for Ask AI, Algolia's advanced, AI-powered search capability. Ask AI enhances the user experience by providing contextually relevant and intelligent responses directly from your documentation.
 
-To enable AskAI, you can add your Algolia Assistant ID as a string, or use an object for more advanced configuration (such as specifying a different index, credentials, or search parameters):
+To enable Ask AI, you can add your Algolia Assistant ID as a string, or use an object for more advanced configuration (such as specifying a different index, credentials, or search parameters):
 
 <Tabs groupId="askai-format" defaultValue="string" values={[{ label: 'String', value: 'string' }, { label: 'Object', value: 'object' }]}>
 <TabItem value="string">
@@ -208,12 +208,12 @@ docsearch({
   indexName: 'YOUR_INDEX_NAME',
   apiKey: 'YOUR_SEARCH_API_KEY',
   askAi: {
-    indexName: 'YOUR_MARKDOWN_INDEX', // Optional: use a different index for AskAI
-    apiKey: 'YOUR_SEARCH_API_KEY',     // Optional: use a different API key for AskAI
-    appId: 'YOUR_APP_ID',              // Optional: use a different App ID for AskAI
+    indexName: 'YOUR_MARKDOWN_INDEX', // Optional: use a different index for Ask AI
+    apiKey: 'YOUR_SEARCH_API_KEY',     // Optional: use a different API key for Ask AI
+    appId: 'YOUR_APP_ID',              // Optional: use a different App ID for Ask AI
     assistantId: 'YOUR_ALGOLIA_ASSISTANT_ID',
     searchParameters: {
-      facetFilters: ['language:en', 'version:1.0.0'], // Optional: filter AskAI context
+      facetFilters: ['language:en', 'version:1.0.0'], // Optional: filter Ask AI context
     },
   },
 });
@@ -223,7 +223,7 @@ docsearch({
 </Tabs>
 
 - Use the string form for a simple setup.
-- Use the object form to customize which index, credentials, or filters AskAI uses.
+- Use the object form to customize which index, credentials, or filters Ask AI uses.
 
 ### Filtering search results
 
@@ -267,12 +267,12 @@ docsearch({
 
 </Tabs>
 
-#### AskAI
+#### Ask AI
 
-Filtering also applies when using AskAI. This is useful to limit the scope of the LLM's search to only relevant results.
+Filtering also applies when using Ask AI. This is useful to limit the scope of the LLM's search to only relevant results.
 
 :::info
-We recommend using the `facetFilters` option when using AskAI with multiple languages or any multi-faceted index.
+We recommend using the `facetFilters` option when using Ask AI with multiple languages or any multi-faceted index.
 :::
 
 <Tabs
@@ -312,7 +312,7 @@ docsearch({
 </Tabs>
 
 :::tip
-You can use `facetFilters: ['type:content']` to ensure AskAI only uses records where the `type` attribute is `content` (i.e., only records that actually have content). This is useful if your index contains records for navigation, metadata, or other non-content types.
+You can use `facetFilters: ['type:content']` to ensure Ask AI only uses records where the `type` attribute is `content` (i.e., only records that actually have content). This is useful if your index contains records for navigation, metadata, or other non-content types.
 :::
 
 ### Sending events

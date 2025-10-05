@@ -29,7 +29,7 @@ export type DocSearchTransformClient = {
   transporter: Pick<LiteClient['transporter'], 'algoliaAgent'>;
 };
 
-// Define the specific search parameters allowed for AskAI
+// Define the specific search parameters allowed for Ask AI
 export type AskAiSearchParameters = {
   facetFilters?: string[];
   filters?: string;
