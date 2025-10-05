@@ -363,76 +363,6 @@
   margin-top: 4px;
 }
 
-@keyframes hit-exit {
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-    max-height: 4rem;
-  }
-  60% {
-    opacity: 0;
-    transform: translateY(-6px);
-  } /* fade & lift */
-  100% {
-    opacity: 0;
-    transform: translateY(-6px);
-    max-height: 0;
-    margin: 0;
-  }
-}
-
-/* a11y */
-@media (prefers-reduced-motion: reduce) {
-  .DocSearch-Hit--favoriting,
-  .DocSearch-Hit--deleting {
-    animation: none;
-  }
-}
-
-/* ───────────── FAVORITE -> EXIT ───────────── */
-.DocSearch-Hit--favoriting {
-  animation: favOut var(--fav-out-dur) var(--ease-smooth) forwards;
-  transform-origin: center;
-}
-
-@keyframes favOut {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-    box-shadow: none;
-  }
-  30% {
-    transform: scale(1.01);
-    box-shadow: var(--shadow-pop);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0.6);
-    box-shadow: none;
-    max-height: 0;
-    margin: 0;
-  }
-}
-
-/* ───────────── DELETE (✕) ───────────── */
-.DocSearch-Hit--deleting {
-  animation: hitExit var(--del-dur) var(--ease-fast) forwards;
-}
-
-@keyframes hitExit {
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-    max-height: 4rem;
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-6px);
-    max-height: 0;
-    margin: 0;
-  }
-}
-
 .DocSearch-Hit a,
 .DocSearch-Hit--AskAI {
   background: var(--docsearch-hit-background);
@@ -1506,7 +1436,7 @@ assistive tech users */
   padding: 8px 0;
   flex-direction: column;
   border-radius: var(--docsearch-border-radius);
-  background-color: #fff;
+  background-color: var(--docsearch-dropdown-menu-background);
   box-shadow: 0px 0px 0px 1px #21243D0D, 0px 8px 16px -4px #21243D40;
   min-width: 195px;
   top: calc(100% + 12px);
@@ -1531,5 +1461,5 @@ assistive tech users */
 }
 
 .DocSearch-Menu-item:hover {
-  background-color: #F5F5FA;
+  background-color: var(--docsearch-dropdown-menu-item-hover-background);
 }

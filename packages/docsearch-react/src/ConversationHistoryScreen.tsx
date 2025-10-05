@@ -33,7 +33,7 @@ export function ConversationHistoryScreen({ onAskAiToggle, ...props }: Conversat
             <SparklesIcon />
           </div>
         )}
-        renderAction={({ item, runDeleteTransition }) => (
+        renderAction={({ item }) => (
           <div className="DocSearch-Hit-action">
             <button
               type="button"
@@ -41,11 +41,8 @@ export function ConversationHistoryScreen({ onAskAiToggle, ...props }: Conversat
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-
-                runDeleteTransition(() => {
-                  props.conversations.remove(item);
-                  props.refresh();
-                });
+                props.conversations.remove(item);
+                props.refresh();
               }}
             >
               <CloseIcon />
