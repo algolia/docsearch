@@ -23,7 +23,7 @@ export default {
     },
     {
       type: 'category',
-      label: 'Algolia AskAI',
+      label: 'Algolia Ask AI',
       items: [
         'v4/askai',
         'v4/askai-api',
@@ -32,6 +32,11 @@ export default {
         'v4/askai-models',
         'v4/askai-markdown-indexing',
         'v4/askai-errors',
+        {
+          type: 'link',
+          label: 'Full Documentation',
+          href: 'https://www.algolia.com/doc/guides/algolia-ai/askai',
+        },
       ],
     },
     {

@@ -31,7 +31,7 @@ function App(): JSX.Element {
           </section>
 
           <section className="demo-section">
-            <p className="section-description">search with askai integration</p>
+            <p className="section-description">search with ask ai integration</p>
             <div className="search-wrapper">
               <BasicAskAI />
             </div>

@@ -247,7 +247,8 @@
 /* Modal Dropdown */
 
 .DocSearch-Dropdown {
-  height: calc(
+  height: var(--docsearch-modal-variable-height);
+  max-height: calc(
     var(--docsearch-modal-height) - var(--docsearch-spacing) -
       var(--docsearch-footer-height)
   );
@@ -703,7 +704,7 @@ assistive tech users */
   gap: 8px;
 }
 
-/* AskAI Button */
+/* Ask AI Button */
 
 .DocSearch-Hit-AskAIButton {
   color: var(--docsearch-text-color);
@@ -791,7 +792,7 @@ assistive tech users */
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 16px;
+  gap: 1em;
   font-size: 0.8em;
   margin-bottom: 8px;
   background: var(--docsearch-hit-background);
@@ -802,8 +803,9 @@ assistive tech users */
 }
 
 .DocSearch-AskAiScreen-Query {
-  font-size: 1.5em;
-  line-break: anywhere;
+  font-size: 1.25em;
+  line-break: loose;
+  line-height: 1.4;
   font-weight: 600;
   margin: 0;
 }
@@ -994,7 +996,7 @@ assistive tech users */
 .DocSearch-Markdown-Content {
   color: var(--docsearch-text-color);
   line-height: 1.6;
-  font-size: 1em;
+  font-size: 0.9355em;
   word-wrap: break-word;
 }
 
@@ -1003,7 +1005,7 @@ assistive tech users */
 }
 
 .DocSearch-Markdown-Content p {
-  margin: 1.2em 0;
+  margin: 1em 0;
 }
 
 .DocSearch-Markdown-Content p:last-child {
@@ -1104,7 +1106,7 @@ assistive tech users */
 
 .DocSearch-Markdown-Content li {
   color: var(--docsearch-text-color);
-  margin: 0.5em 0;
+  margin: 0.8em 0;
   padding-left: 0.3em;
   line-height: 1.6;
 }
@@ -1140,7 +1142,7 @@ assistive tech users */
 .DocSearch-Markdown-Content hr {
   border: none;
   border-top: 1px solid var(--docsearch-subtle-color);
-  margin: 2em 0;
+  margin: 1em 0;
 }
 
 .DocSearch-Markdown-Content table {
@@ -1175,9 +1177,10 @@ assistive tech users */
 
 .DocSearch-AskAiScreen-MessageContent-Tool {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   width: 100%;
   color: var(--docsearch-muted-color);
+  line-height: 1.2;
 }
 
 .DocSearch-AskAiScreen-MessageContent-Tool.Tool--Result {

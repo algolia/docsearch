@@ -2,7 +2,7 @@
 title: Improving Answer Quality with Markdown Indexing
 ---
 
-To deliver more accurate, context-rich answers at scale, AskAI benefits from cleanly structured content. One of the most effective ways to achieve this is by using a Markdown-based indexing helper in your Algolia Crawler configuration. This setup ensures AskAI can access well-formed, content-focused records—especially important for larger documentation sites where metadata, navigation elements, or layout artifacts might otherwise dilute the quality of generative responses.
+To deliver more accurate, context-rich answers at scale, Ask AI benefits from cleanly structured content. One of the most effective ways to achieve this is by using a Markdown-based indexing helper in your Algolia Crawler configuration. This setup ensures Ask AI can access well-formed, content-focused records—especially important for larger documentation sites where metadata, navigation elements, or layout artifacts might otherwise dilute the quality of generative responses.
 
 :::info
 Setting up markdown indexing can be automated through the Crawler UI for most use cases. For advanced customization or understanding the underlying configuration, manual setup options are also available.
@@ -11,7 +11,7 @@ Setting up markdown indexing can be automated through the Crawler UI for most us
 :::
 
 ## Overview
-To maximize the quality of AskAI responses, configure your Crawler to create a dedicated index for Markdown content. This approach enables AskAI to work with structured, chunked records sourced from your documentation, support content, or any Markdown-based material—resulting in significantly more relevant and precise answers.
+To maximize the quality of Ask AI responses, configure your Crawler to create a dedicated index for Markdown content. This approach enables Ask AI to work with structured, chunked records sourced from your documentation, support content, or any Markdown-based material—resulting in significantly more relevant and precise answers.
 
 You can set up markdown indexing in two ways:
 1. **Automated Setup (Recommended)**: Use the Crawler UI to automatically create and configure your markdown index
@@ -21,7 +21,7 @@ You can set up markdown indexing in two ways:
 
 ## Automated Markdown Indexing Setup (Recommended)
 
-The easiest way to set up markdown indexing is through the Crawler UI, which automatically creates and configures an optimized markdown index for AskAI.
+The easiest way to set up markdown indexing is through the Crawler UI, which automatically creates and configures an optimized markdown index for Ask AI.
 
 ### Step 1: Access Markdown Indexing in Crawler Configuration
 
@@ -50,7 +50,7 @@ The easiest way to set up markdown indexing is through the Crawler UI, which aut
 The Crawler will automatically configure the optimal settings for your chosen template, including:
 - Proper record extraction and chunking
 - Framework-specific metadata extraction (language, version, tags)
-- Optimized index settings for AskAI
+- Optimized index settings for Ask AI
 
 ### Step 3: Run the Crawler
 
@@ -58,13 +58,13 @@ Once your markdown index is configured:
 
 1. Click **"Start Crawling"** to begin indexing your content
 2. Monitor the crawl progress in the dashboard
-3. Your new markdown index will be populated with clean, structured records optimized for AskAI
+3. Your new markdown index will be populated with clean, structured records optimized for Ask AI
 
 ![Crawler Status](/img/assets/askai-crawling.png)
 
-### Step 4: Integrate with AskAI
+### Step 4: Integrate with Ask AI
 
-After crawling completes, configure DocSearch to use your new markdown index for AskAI responses. See the [Integration section](#integrate-your-new-index-with-ask-ai) below for detailed setup instructions.
+After crawling completes, configure DocSearch to use your new markdown index for Ask AI responses. See the [Integration section](#integrate-your-new-index-with-ask-ai) below for detailed setup instructions.
 
 ---
 
@@ -129,7 +129,7 @@ After updating your Crawler configuration:
 1. **Publish your configuration** in the Algolia Crawler dashboard to save and activate it.
 2. **Run the Crawler** to index your markdown content and create the new index.
 
-The Crawler will process your content using the markdown extraction helper and populate your new index with clean, structured records optimized for AskAI.
+The Crawler will process your content using the markdown extraction helper and populate your new index with clean, structured records optimized for Ask AI.
 
 > **Tip:** Monitor the crawl progress in your dashboard to ensure all pages are processed correctly. You can view the indexed records in your Algolia index to verify the structure and content.
 
@@ -351,18 +351,18 @@ const searchParameters = {
 ## Best Practices & Tips
 
 - **Use clear, consistent titles in your markdown files** for better searchability.
-- **Test your index** with AskAI to ensure relevant answers are returned.
+- **Test your index** with Ask AI to ensure relevant answers are returned.
 - **Adjust `maxRecordBytes`** if you notice answers are too broad or too fragmented.
-  - **Note:** Increasing `maxRecordBytes` may increase the token count for LLMs, which can affect the size of the context window and the cost of each AskAI response.
+  - **Note:** Increasing `maxRecordBytes` may increase the token count for LLMs, which can affect the size of the context window and the cost of each Ask AI response.
 - **Keep your markdown well-structured** (use headings, lists, etc.) for optimal chunking.
-- **Add attributes** like `lang`, `version`, or `tags` to your records and `attributesForFaceting` if you want to filter or facet in your search UI or AskAI.
+- **Add attributes** like `lang`, `version`, or `tags` to your records and `attributesForFaceting` if you want to filter or facet in your search UI or Ask AI.
 
 ---
 
 ## FAQ
 
 **Q: Why use a separate markdown index?**
-A: It allows AskAI to access content in a format optimized for LLMs, improving answer quality.
+A: It allows Ask AI to access content in a format optimized for LLMs, improving answer quality.
 
 **Q: Can I use this with other content types?**
 A: Yes, but markdown is especially well-suited for chunking and context extraction.
@@ -372,7 +372,7 @@ A: Lower the `maxRecordBytes` value to split content into smaller, more focused 
 
 ---
 
-For more details, see the [AskAI documentation](./askai.mdx) or contact support if you need help configuring your Crawler.
+For more details, see the [Ask AI documentation](./askai.mdx) or contact support if you need help configuring your Crawler.
 
 ---
 
@@ -593,4 +593,4 @@ import TabItem from '@theme/TabItem';
 
 </Tabs>
 
-> Each example shows how to extract common facets and configure your markdown index for AskAI. Adjust selectors and meta tag names as needed for your site.
+> Each example shows how to extract common facets and configure your markdown index for Ask AI. Adjust selectors and meta tag names as needed for your site.
