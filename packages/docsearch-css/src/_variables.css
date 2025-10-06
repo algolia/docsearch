@@ -23,6 +23,7 @@
   /* modal */
   --docsearch-modal-width: 800px;
   --docsearch-modal-height: 600px;
+  --docsearch-modal-variable-height: 60dvh;
   --docsearch-modal-background: rgb(245, 246, 247);
   --docsearch-modal-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px,
     rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,

@@ -506,6 +506,12 @@ export function DocSearchModal({
 
   const handleSelectAskAiQuestion = React.useCallback(
     (toggle: boolean, query: string) => {
+      if (toggle && askAiState === 'new-conversation') {
+        // We're starting a new conversation, clear out current messages
+        setMessages([]);
+        setAskAiState('initial');
+      }
+
       onAskAiToggle(toggle);
       setStoppedStream(false);
       sendMessage({
@@ -534,7 +540,7 @@ export function DocSearchModal({
         autocompleteRef.current.setQuery('');
       }
     },
-    [onAskAiToggle, sendMessage],
+    [onAskAiToggle, sendMessage, askAiState, setAskAiState, setMessages],
   );
 
   // feedback handler
@@ -784,7 +790,6 @@ export function DocSearchModal({
   };
 
   const handleNewConversation = (): void => {
-    setMessages([]);
     setAskAiState('new-conversation');
   };
 
