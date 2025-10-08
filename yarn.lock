@@ -2310,7 +2310,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docsearch/css@npm:4.1.0, @docsearch/css@npm:^4.1.0, @docsearch/css@workspace:*, @docsearch/css@workspace:packages/docsearch-css":
+"@docsearch/css@npm:4.2.0, @docsearch/css@workspace:*, @docsearch/css@workspace:packages/docsearch-css":
   version: 0.0.0-use.local
   resolution: "@docsearch/css@workspace:packages/docsearch-css"
   dependencies:
@@ -2322,17 +2322,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docsearch/js-example@workspace:examples/demo-js"
   dependencies:
-    "@docsearch/css": "npm:4.1.0"
-    "@docsearch/js": "npm:4.1.0"
+    "@docsearch/css": "npm:4.2.0"
+    "@docsearch/js": "npm:4.2.0"
     vite: "npm:^6.0.7"
   languageName: unknown
   linkType: soft
 
-"@docsearch/js@npm:4.1.0, @docsearch/js@workspace:packages/docsearch-js":
+"@docsearch/js@npm:4.2.0, @docsearch/js@workspace:packages/docsearch-js":
   version: 0.0.0-use.local
   resolution: "@docsearch/js@workspace:packages/docsearch-js"
   dependencies:
-    "@docsearch/react": "npm:4.1.0"
+    "@docsearch/react": "npm:4.2.0"
     "@rollup/plugin-replace": "npm:6.0.2"
     nodemon: "npm:^3.1.9"
     preact: "npm:^10.0.0"
@@ -2417,7 +2417,7 @@ __metadata:
   dependencies:
     "@ai-sdk/react": "npm:^2.0.30"
     "@algolia/autocomplete-core": "npm:1.19.2"
-    "@docsearch/css": "npm:4.1.0"
+    "@docsearch/css": "npm:4.2.0"
     "@rollup/plugin-replace": "npm:6.0.2"
     "@testing-library/jest-dom": "npm:6.6.3"
     "@testing-library/react": "npm:16.2.0"
@@ -2449,8 +2449,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docsearch/website@workspace:packages/website"
   dependencies:
-    "@docsearch/css": "npm:^4.1.0"
-    "@docsearch/react": "npm:4.1.0"
+    "@docsearch/css": "npm:4.2.0"
+    "@docsearch/react": "npm:4.2.0"
     "@docusaurus/core": "npm:3.8.1-canary-6397"
     "@docusaurus/module-type-aliases": "npm:3.8.1-canary-6397"
     "@docusaurus/preset-classic": "npm:3.8.1-canary-6397"
