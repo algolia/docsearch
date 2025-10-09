@@ -1,3 +1,23 @@
+# [4.2.0](https://github.com/algolia/docsearch/compare/v4.1.0...v4.2.0) (2025-10-06)
+
+
+### Bug Fixes
+
+* **askai:** Fixes issue with askai state being outside DocSearchModal ([#2778](https://github.com/algolia/docsearch/issues/2778)) ([5d8943b](https://github.com/algolia/docsearch/commit/5d8943b5c6d84410b1ff9ad5604646609c6c9e63))
+* remove hit favorite and hit deletion animations ([#2777](https://github.com/algolia/docsearch/issues/2777)) ([cd9e6fb](https://github.com/algolia/docsearch/commit/cd9e6fb3fb2eb4a618c7037983ad9a563d96cf5b))
+* typo ([1ff1198](https://github.com/algolia/docsearch/commit/1ff1198da31e0ee39ddfe61168f9ac3d86beb164))
+
+
+### Features
+
+* curate AskAI search parameters ([#2768](https://github.com/algolia/docsearch/issues/2768)) ([d8ad7f6](https://github.com/algolia/docsearch/commit/d8ad7f6d5f4ba1784cf9fdd2f25cbd58cc27015d))
+* dark theme support for Menu ([#2776](https://github.com/algolia/docsearch/issues/2776)) ([01517d9](https://github.com/algolia/docsearch/commit/01517d94dec49ac2533425c70d9a02ab3fc70a8d))
+* Modal and AskAI UX tweaks ([#2765](https://github.com/algolia/docsearch/issues/2765)) ([0267f55](https://github.com/algolia/docsearch/commit/0267f554532a754a776f8125d16949ba2d4ff327))
+* Modal UI/UX fixes and updates ([#2780](https://github.com/algolia/docsearch/issues/2780)) ([a3ab7a8](https://github.com/algolia/docsearch/commit/a3ab7a8176fd9ec32e879237b887dce8a138a7cc))
+* update Ask AI docs ([#2775](https://github.com/algolia/docsearch/issues/2775)) ([9986cbf](https://github.com/algolia/docsearch/commit/9986cbf4266e1fecb44ee3658d556c9315852540))
+
+
+
 # [4.1.0](https://github.com/algolia/docsearch/compare/v4.0.1...v4.1.0) (2025-09-22)
 
 
