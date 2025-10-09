@@ -11,7 +11,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@docsearch/core": "workspace:*",
     "@docsearch/css": "workspace:*",
+    "@docsearch/modal": "workspace:*",
     "@docsearch/react": "workspace:*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

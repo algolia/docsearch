@@ -25,10 +25,14 @@ aliases:
       mkdir -p packages/docsearch-react/dist
       mkdir -p packages/docsearch-js/dist
       mkdir -p packages/docsearch-css/dist
+      mkdir -p packages/docsearch-core/dist
+      mkdir -p packages/docsearch-modal/dist
 
       cp -R /tmp/workspace/packages/docsearch-react/dist packages/docsearch-react
       cp -R /tmp/workspace/packages/docsearch-js/dist packages/docsearch-js
       cp -R /tmp/workspace/packages/docsearch-css/dist packages/docsearch-css
+      cp -R /tmp/workspace/packages/docsearch-core/dist packages/docsearch-core
+      cp -R /tmp/workspace/packages/docsearch-modal/dist packages/docsearch-modal
 
 defaults: &defaults
   working_directory: ~/docsearch
@@ -69,10 +73,14 @@ jobs:
             mkdir -p /tmp/workspace/packages/docsearch-react/dist
             mkdir -p /tmp/workspace/packages/docsearch-js/dist
             mkdir -p /tmp/workspace/packages/docsearch-css/dist
+            mkdir -p /tmp/workspace/packages/docsearch-core/dist
+            mkdir -p /tmp/workspace/packages/docsearch-modal/dist
 
             cp -R packages/docsearch-react/dist /tmp/workspace/packages/docsearch-react
             cp -R packages/docsearch-js/dist /tmp/workspace/packages/docsearch-js
             cp -R packages/docsearch-css/dist /tmp/workspace/packages/docsearch-css
+            cp -R packages/docsearch-core/dist /tmp/workspace/packages/docsearch-core
+            cp -R packages/docsearch-modal/dist /tmp/workspace/packages/docsearch-modal
       - persist_to_workspace:
           root: *workspace_root
           paths:
