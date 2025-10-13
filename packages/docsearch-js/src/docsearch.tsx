@@ -7,10 +7,7 @@ type DocSearchProps = DocSearchComponentProps & {
   environment?: typeof window;
 };
 
-function getHTMLElement(
-  value: HTMLElement | string,
-  environment: DocSearchProps['environment'] = window
-): HTMLElement {
+function getHTMLElement(value: HTMLElement | string, environment: DocSearchProps['environment'] = window): HTMLElement {
   if (typeof value === 'string') {
     return environment.document.querySelector<HTMLElement>(value)!;
   }
@@ -22,15 +19,8 @@ function isValidElementLike(v: any): boolean {
   return (React as any).isValidElement?.(v) ?? false;
 }
 
-function isPlainLikeElement(
-  obj: any
-): obj is { type: any; props?: any; key?: any } {
-  return (
-    !!obj &&
-    typeof obj === 'object' &&
-    'type' in obj &&
-    !isValidElementLike(obj)
-  );
+function isPlainLikeElement(obj: any): obj is { type: any; props?: any; key?: any } {
+  return Boolean(obj) && typeof obj === 'object' && 'type' in obj && !isValidElementLike(obj);
 }
 
 function createJSXFromObject(obj: any): React.JSX.Element | null {
@@ -41,15 +31,13 @@ function createJSXFromObject(obj: any): React.JSX.Element | null {
 
   let processedChildren = children;
   if (Array.isArray(children)) {
-    processedChildren = children.map((child) =>
-      isPlainLikeElement(child) ? createJSXFromObject(child) : child
-    );
+    processedChildren = children.map((child) => (isPlainLikeElement(child) ? createJSXFromObject(child) : child));
   } else if (isPlainLikeElement(children)) {
     processedChildren = createJSXFromObject(children);
   }
 
   const { children: _omit, ...rest } = props;
-  const elementProps = key != null ? { key, ...rest } : rest;
+  const elementProps = key !== null ? { key, ...rest } : rest;
 
   return (React as any).createElement(type, elementProps, processedChildren);
 }
@@ -60,7 +48,7 @@ export function docsearch(props: DocSearchProps): () => void {
   const transformedProps: DocSearchComponentProps = {
     ...props,
     resultsFooterComponent: props.resultsFooterComponent
-      ? (componentProps: any) => {
+      ? (componentProps: any): React.JSX.Element | null => {
           const out = props.resultsFooterComponent!(componentProps);
           if (isValidElementLike(out)) return out;
           const maybe = createJSXFromObject(out);
@@ -71,9 +59,7 @@ export function docsearch(props: DocSearchProps): () => void {
       if (searchClient?.addAlgoliaAgent) {
         searchClient.addAlgoliaAgent('docsearch.js', version);
       }
-      return props.transformSearchClient
-        ? props.transformSearchClient(searchClient)
-        : searchClient;
+      return props.transformSearchClient ? props.transformSearchClient(searchClient) : searchClient;
     },
   };
 
