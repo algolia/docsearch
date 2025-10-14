@@ -33,7 +33,7 @@
     "watch": "nodemon --watch src --exec \"yarn on:change\" --ignore dist/ --ext ts,tsx"
   },
   "dependencies": {
-    "htm": "^3.1.1"
+    "htm": "3.1.1"
   },
   "devDependencies": {
     "@docsearch/react": "4.2.0",
