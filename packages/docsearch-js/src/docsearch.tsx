@@ -1,75 +1,208 @@
 import type { DocSearchProps as DocSearchComponentProps } from '@docsearch/react';
-import { DocSearch, version } from '@docsearch/react';
+import { DocSearch, version as docSearchVersion } from '@docsearch/react';
 import htm from 'htm';
-import React, { render } from 'preact/compat';
+import { createElement, render, isValidElement } from 'preact/compat';
 
-type DocSearchProps = DocSearchComponentProps & {
+/**
+ * Public props for the tiny wrapper.
+ * - `container` can be a selector or an element.
+ * - `environment` can be provided for testing or non window environments.
+ */
+export type DocSearchProps = DocSearchComponentProps & {
   container: HTMLElement | string;
   environment?: typeof window;
 };
 
-function getHTMLElement(value: HTMLElement | string, environment: DocSearchProps['environment'] = window): HTMLElement {
+/** Utility, find the active environment or fall back to globalThis. */
+function getEnv(env?: typeof window): typeof window | undefined {
+  // In SSR there is no window, so guard the access.
+  if (env) return env;
+  if (typeof window !== 'undefined') return window;
+  return undefined;
+}
+
+/** Resolve an HTMLElement from either a selector or a direct reference. */
+function getHTMLElement(
+  value: HTMLElement | string,
+  environment?: DocSearchProps['environment']
+): HTMLElement {
+  const env = getEnv(environment);
+
   if (typeof value === 'string') {
-    return environment.document.querySelector<HTMLElement>(value)!;
+    if (!env) {
+      throw new Error(
+        'Cannot resolve a selector without a browser environment.'
+      );
+    }
+    const el = env.document.querySelector<HTMLElement>(value);
+    if (!el) {
+      throw new Error(
+        `Container selector did not match any element: "${value}"`
+      );
+    }
+    return el;
   }
 
   return value;
 }
 
-// Create htm function bound to React.createElement
-const html = htm.bind((React as any).createElement) as any;
+// Create `html` function bound to Preact's createElement.
+const html = htm.bind(createElement) as any;
 
-// Template function support
-function createTemplateFunction(originalFunction: any): (props: any, helpers?: any) => any {
-  return (props: any, helpers: any = {}) => {
-    // Pass html helper to the function
-    const result = originalFunction(props, { html, ...helpers });
+/**
+ * Lightweight HTML sanitizer for template strings that return raw markup.
+ * This uses DOM parsing and an allow list instead of regex replacements.
+ * Note, for mission critical security you should use a proven sanitizer like DOMPurify.
+ */
+function sanitizeHtml(htmlString: string, environment?: typeof window): string {
+  const env = getEnv(environment);
+  if (!env) {
+    // No DOM, return the original string. Caller should avoid dangerouslySetInnerHTML on the server.
+    return '';
+  }
 
-    // If it's already a React element, return as-is
-    if ((React as any).isValidElement?.(result)) {
+  const parser = new env.DOMParser();
+  const doc = parser.parseFromString(htmlString, 'text/html');
+
+  const ALLOWED_TAGS = new Set([
+    'a',
+    'abbr',
+    'b',
+    'blockquote',
+    'br',
+    'code',
+    'div',
+    'em',
+    'i',
+    'kbd',
+    'li',
+    'ol',
+    'p',
+    'pre',
+    's',
+    'span',
+    'strong',
+    'sub',
+    'sup',
+    'u',
+    'ul',
+  ]);
+  const ALLOWED_ATTRS = new Set(['href', 'title', 'target', 'rel']);
+
+  // Remove disallowed elements and attributes.
+  const treeWalker = doc.createTreeWalker(
+    doc.body,
+    env.NodeFilter.SHOW_ELEMENT
+  );
+  const toRemove: Element[] = [];
+
+  // First pass, collect and clean.
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const node = treeWalker.nextNode() as Element | null;
+    if (!node) break;
+
+    if (!ALLOWED_TAGS.has(node.tagName.toLowerCase())) {
+      toRemove.push(node);
+    } else {
+      // Remove dangerous attributes.
+      for (const attr of Array.from(node.attributes)) {
+        const name = attr.name.toLowerCase();
+        const value = attr.value;
+
+        if (!ALLOWED_ATTRS.has(name)) {
+          node.removeAttribute(attr.name);
+        } else if (
+          name === 'href' &&
+          /^(javascript|vbscript|data):/i.test(value)
+        ) {
+          // Disallow javascript like protocols in href.
+          node.removeAttribute(attr.name);
+        }
+      }
+    }
+  }
+
+  // Second pass, remove nodes that were flagged.
+  for (const el of toRemove) {
+    el.remove();
+  }
+
+  return doc.body.innerHTML;
+}
+
+/** Types for template helpers injected into DocSearch templates. */
+export type TemplateHelpers = {
+  html: typeof html;
+  [key: string]: unknown;
+};
+
+/**
+ * Wrap a user provided template which can return:
+ *  - a Preact element, used as is
+ *  - a string, treated as HTML and sanitized, then injected
+ *  - a component function, which is invoked with the same props.
+ */
+function createTemplateFunction<P extends Record<string, unknown>, R = any>(
+  original: ((props: P, helpers?: TemplateHelpers) => R) | undefined,
+  environment?: typeof window
+): ((props: P) => any) | undefined {
+  if (!original) return undefined;
+
+  return (props: P) => {
+    const result = (original as any)(props, { html });
+
+    if (isValidElement(result)) {
       return result;
     }
 
-    // If it's a string (HTML), create a React element with dangerouslySetInnerHTML
     if (typeof result === 'string') {
-      return (React as any).createElement('div', {
-        dangerouslySetInnerHTML: { __html: result },
+      const safe = sanitizeHtml(result, environment);
+      // Use a wrapper div to insert sanitized HTML.
+      return createElement('div', {
+        dangerouslySetInnerHTML: { __html: safe },
       });
     }
 
-    // If it's a function, call it (for JSX components)
     if (typeof result === 'function') {
-      return result(props);
+      return (result as any)(props);
     }
 
-    // Fallback: return as-is
     return result;
   };
 }
 
+/**
+ * Mount DocSearch into the given container and return a cleanup function.
+ */
 export function docsearch(props: DocSearchProps): () => void {
-  const containerElement = getHTMLElement(props.container, props.environment);
+  const containerEl = getHTMLElement(props.container, props.environment);
 
-  const transformedProps: DocSearchComponentProps = {
+  const transformedProps = {
     ...props,
-    // Apply template function support to component props
-    hitComponent: props.hitComponent ? createTemplateFunction(props.hitComponent) : undefined,
-    resultsFooterComponent: props.resultsFooterComponent
-      ? createTemplateFunction(props.resultsFooterComponent)
-      : undefined,
-    transformSearchClient: (searchClient: any) => {
+    // Template function support with sanitization and `html` helper.
+    hitComponent: createTemplateFunction(
+      props.hitComponent as any,
+      props.environment
+    ),
+    resultsFooterComponent: createTemplateFunction(
+      props.resultsFooterComponent as any,
+      props.environment
+    ),
+    transformSearchClient: (searchClient: any): any => {
       if (searchClient?.addAlgoliaAgent) {
-        searchClient.addAlgoliaAgent('docsearch.js', version);
+        searchClient.addAlgoliaAgent('docsearch.js', docSearchVersion);
       }
-      return props.transformSearchClient ? props.transformSearchClient(searchClient) : searchClient;
+      return props.transformSearchClient
+        ? props.transformSearchClient(searchClient)
+        : searchClient;
     },
-  };
+  } satisfies DocSearchComponentProps;
 
-  render(<DocSearch {...(transformedProps as any)} />, containerElement);
+  render(createElement(DocSearch as any, transformedProps as any), containerEl);
 
+  // Return an idempotent cleanup to unmount the component.
   return () => {
-    render(null as any, containerElement);
+    render(null as any, containerEl);
   };
 }
-
-export type { DocSearchProps };
