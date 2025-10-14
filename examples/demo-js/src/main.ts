@@ -1,4 +1,6 @@
-import docsearch from '@docsearch/js';
+import type { AutocompleteState } from '@algolia/autocomplete-core';
+import docsearch, { type TemplateHelpers } from '@docsearch/js';
+import type { InternalDocSearchHit } from '@docsearch/react';
 
 import './app.css';
 import '@docsearch/css/dist/style.css';
@@ -8,7 +10,12 @@ docsearch({
   indexName: 'docsearch',
   appId: 'PMZUYBQDAK',
   apiKey: '24b09689d5b4223813d9b8e48563c8f6',
-  resultsFooterComponent: (({ state }: any, { html }: any) => {
+  resultsFooterComponent: ({
+    state,
+    html,
+  }: TemplateHelpers & {
+    state: AutocompleteState<InternalDocSearchHit>;
+  }) => {
     // Using HTML strings with html helper
     return html`
       <div class="DocSearch-HitsFooter">
@@ -17,5 +24,5 @@ docsearch({
         </a>
       </div>
     `;
-  }) as any,
+  },
 });

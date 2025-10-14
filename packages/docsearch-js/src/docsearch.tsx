@@ -1,7 +1,8 @@
 import type { DocSearchProps as DocSearchComponentProps } from '@docsearch/react';
 import { DocSearch, version as docSearchVersion } from '@docsearch/react';
 import htm from 'htm';
-import { createElement, render, isValidElement } from 'preact/compat';
+import type { JSX } from 'preact';
+import { createElement, render, isValidElement, unmountComponentAtNode } from 'preact/compat';
 
 export type DocSearchProps = DocSearchComponentProps & {
   container: HTMLElement | string;
@@ -17,28 +18,28 @@ function getHTMLElement(value: HTMLElement | string, env: typeof window | undefi
 }
 
 // Tiny `html` helper bound to Preact createElement
-const html = htm.bind(createElement) as unknown as (strings: TemplateStringsArray, ...values: unknown[]) => any;
+const html = htm.bind(createElement) as unknown as (strings: TemplateStringsArray, ...values: unknown[]) => JSX.Element;
 
 export type TemplateHelpers = Record<string, unknown> & { html: typeof html };
 
-function createTemplateFunction<P extends Record<string, unknown>, R = any>(
+function createTemplateFunction<P extends Record<string, unknown>, R = JSX.Element | string | (() => JSX.Element)>(
   original: ((props: P, helpers?: TemplateHelpers) => R) | undefined,
-): ((props: P) => any) | undefined {
+): ((props: P) => JSX.Element) | undefined {
   if (!original) return undefined;
   return (props: P) => {
-    const out = (original as any)(props, { html });
+    const out = original(props, { html });
 
     // Element, return as is
     if (isValidElement(out)) return out;
 
     // Component function, call with same props
-    if (typeof out === 'function') return (out as any)(props);
+    if (typeof out === 'function') return out(props);
 
     // String, render as plain text to avoid XSS
     if (typeof out === 'string') return createElement('span', null, out);
 
     // Fallback
-    return out;
+    return out as JSX.Element;
   };
 }
 
@@ -48,8 +49,8 @@ export function docsearch(allProps: DocSearchProps): () => void {
 
   const props = {
     ...rest,
-    hitComponent: createTemplateFunction(hitComponent as any),
-    resultsFooterComponent: createTemplateFunction(resultsFooterComponent as any),
+    hitComponent: createTemplateFunction(hitComponent),
+    resultsFooterComponent: createTemplateFunction(resultsFooterComponent),
     transformSearchClient: (searchClient: any): any => {
       if (searchClient?.addAlgoliaAgent) {
         searchClient.addAlgoliaAgent('docsearch.js', docSearchVersion);
@@ -58,9 +59,9 @@ export function docsearch(allProps: DocSearchProps): () => void {
     },
   } satisfies DocSearchComponentProps;
 
-  render(createElement(DocSearch as any, props as any), containerEl);
+  render(createElement(DocSearch, props), containerEl);
 
   return () => {
-    render(null as any, containerEl);
+    unmountComponentAtNode(containerEl);
   };
 }

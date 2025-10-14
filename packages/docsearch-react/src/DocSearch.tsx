@@ -1,4 +1,4 @@
-import type { AutocompleteOptions } from '@algolia/autocomplete-core';
+import type { AutocompleteOptions, AutocompleteState } from '@algolia/autocomplete-core';
 import type { LiteClient, SearchParamsObject } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
@@ -7,7 +7,6 @@ import { DocSearchButton } from './DocSearchButton';
 import { DocSearchModal } from './DocSearchModal';
 import type {
   DocSearchHit,
-  DocSearchState,
   DocSearchTheme,
   InternalDocSearchHit,
   KeyboardShortcuts,
@@ -142,7 +141,7 @@ export interface DocSearchProps {
    */
   resultsFooterComponent?: (
     props: {
-      state: DocSearchState<InternalDocSearchHit>;
+      state: AutocompleteState<InternalDocSearchHit>;
     },
     helpers?: {
       html: (template: TemplateStringsArray, ...values: any[]) => any;
