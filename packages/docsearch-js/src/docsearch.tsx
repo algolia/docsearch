@@ -1,5 +1,6 @@
 import type { DocSearchProps as DocSearchComponentProps } from '@docsearch/react';
 import { DocSearch, version } from '@docsearch/react';
+import htm from 'htm';
 import React, { render } from 'preact/compat';
 
 type DocSearchProps = DocSearchComponentProps & {
@@ -15,31 +16,35 @@ function getHTMLElement(value: HTMLElement | string, environment: DocSearchProps
   return value;
 }
 
-function isValidElementLike(v: any): boolean {
-  return (React as any).isValidElement?.(v) ?? false;
-}
+// Create htm function bound to React.createElement
+const html = htm.bind((React as any).createElement) as any;
 
-function isPlainLikeElement(obj: any): obj is { type: any; props?: any; key?: any } {
-  return Boolean(obj) && typeof obj === 'object' && 'type' in obj && !isValidElementLike(obj);
-}
+// Template function support
+function createTemplateFunction(originalFunction: any): (props: any, helpers?: any) => any {
+  return (props: any, helpers: any = {}) => {
+    // Pass html helper to the function
+    const result = originalFunction(props, { html, ...helpers });
 
-function createJSXFromObject(obj: any): React.JSX.Element | null {
-  if (!isPlainLikeElement(obj)) return null;
+    // If it's already a React element, return as-is
+    if ((React as any).isValidElement?.(result)) {
+      return result;
+    }
 
-  const { type, props = {}, key } = obj;
-  const children = props.children;
+    // If it's a string (HTML), create a React element with dangerouslySetInnerHTML
+    if (typeof result === 'string') {
+      return (React as any).createElement('div', {
+        dangerouslySetInnerHTML: { __html: result },
+      });
+    }
 
-  let processedChildren = children;
-  if (Array.isArray(children)) {
-    processedChildren = children.map((child) => (isPlainLikeElement(child) ? createJSXFromObject(child) : child));
-  } else if (isPlainLikeElement(children)) {
-    processedChildren = createJSXFromObject(children);
-  }
+    // If it's a function, call it (for JSX components)
+    if (typeof result === 'function') {
+      return result(props);
+    }
 
-  const { children: _omit, ...rest } = props;
-  const elementProps = key !== null ? { key, ...rest } : rest;
-
-  return (React as any).createElement(type, elementProps, processedChildren);
+    // Fallback: return as-is
+    return result;
+  };
 }
 
 export function docsearch(props: DocSearchProps): () => void {
@@ -47,13 +52,10 @@ export function docsearch(props: DocSearchProps): () => void {
 
   const transformedProps: DocSearchComponentProps = {
     ...props,
+    // Apply template function support to component props
+    hitComponent: props.hitComponent ? createTemplateFunction(props.hitComponent) : undefined,
     resultsFooterComponent: props.resultsFooterComponent
-      ? (componentProps: any): React.JSX.Element | null => {
-          const out = props.resultsFooterComponent!(componentProps);
-          if (isValidElementLike(out)) return out;
-          const maybe = createJSXFromObject(out);
-          return maybe ?? out;
-        }
+      ? createTemplateFunction(props.resultsFooterComponent)
       : undefined,
     transformSearchClient: (searchClient: any) => {
       if (searchClient?.addAlgoliaAgent) {

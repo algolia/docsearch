@@ -1,4 +1,4 @@
-import type { AutocompleteOptions, AutocompleteState } from '@algolia/autocomplete-core';
+import type { AutocompleteOptions } from '@algolia/autocomplete-core';
 import type { LiteClient, SearchParamsObject } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
@@ -7,6 +7,7 @@ import { DocSearchButton } from './DocSearchButton';
 import { DocSearchModal } from './DocSearchModal';
 import type {
   DocSearchHit,
+  DocSearchState,
   DocSearchTheme,
   InternalDocSearchHit,
   KeyboardShortcuts,
@@ -118,12 +119,35 @@ export interface DocSearchProps {
   transformItems?: (items: DocSearchHit[]) => DocSearchHit[];
   /**
    * Custom component to render an individual hit.
+   * Supports template patterns:
+   * - HTML strings with html helper: (props, { html }) => html`<div>...</div>`
+   * - JSX templates: (props) => <div>...</div>
+   * - Function-based templates: (props) => string | JSX.Element | Function.
    */
-  hitComponent?: (props: { hit: InternalDocSearchHit | StoredDocSearchHit; children: React.ReactNode }) => JSX.Element;
+  hitComponent?: (
+    props: {
+      hit: InternalDocSearchHit | StoredDocSearchHit;
+      children: React.ReactNode;
+    },
+    helpers?: {
+      html: (template: TemplateStringsArray, ...values: any[]) => any;
+    },
+  ) => JSX.Element;
   /**
    * Custom component rendered at the bottom of the results panel.
+   * Supports template patterns:
+   * - HTML strings with html helper: (props, { html }) => html`<div>...</div>`
+   * - JSX templates: (props) => <div>...</div>
+   * - Function-based templates: (props) => string | JSX.Element | Function.
    */
-  resultsFooterComponent?: (props: { state: AutocompleteState<InternalDocSearchHit> }) => JSX.Element | null;
+  resultsFooterComponent?: (
+    props: {
+      state: DocSearchState<InternalDocSearchHit>;
+    },
+    helpers?: {
+      html: (template: TemplateStringsArray, ...values: any[]) => any;
+    },
+  ) => JSX.Element | null;
   /**
    * Hook to wrap or modify the algolia search client.
    */

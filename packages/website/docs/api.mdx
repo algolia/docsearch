@@ -606,13 +606,15 @@ docsearch({
 
 ## `resultsFooterComponent`
 
-> `type: ({ state }) => JSX.Element` | **optional**
+> `type: ({ state }, { html }) => JSX.Element | string | Function` | **optional**
 
-The component to display below the search results.
+The component to display below the search results. Supports template patterns:
+
+- **HTML strings with html helper** (recommended for JS CDN): `(props, { html }) => html\`<div>...</div>\``
+- **JSX templates** (for React/Preact): `(props) => <div>...</div>`
+- **Function-based templates**: `(props) => string | JSX.Element | Function`
 
 You get access to the [current state](https://github.com/algolia/autocomplete/blob/next/packages/autocomplete-core/src/types/AutocompleteState.ts) which allows you to retrieve the number of hits returned, the query etc.
-
-[You can find a working example without JSX in this sandbox](https://codesandbox.io/s/docsearch-v3-resultsfootercomponent-without-jsx-jperd5).
 
 <Tabs
   groupId="language"
@@ -627,25 +629,15 @@ You get access to the [current state](https://github.com/algolia/autocomplete/bl
 ```js
 docsearch({
   // ...
-  resultsFooterComponent({ state }) {
-    return {
-      // The HTML `tag`
-      type: 'a',
-      ref: undefined,
-      constructor: undefined,
-      key: state.query,
-      // Its props
-      props: {
-        href: 'https://docsearch.algolia.com/apply',
-        target: '_blank',
-        onClick: (event) => {
-          console.log(event);
-        },
-        // Raw text rendered in the HTML element
-        children: `${state.context.nbHits} hits found!`,
-      },
-      __v: null,
-    };
+  resultsFooterComponent({ state }, { html }) {
+    // Using HTML strings with html helper
+    return html`
+      <div class="DocSearch-HitsFooter">
+        <a href="https://docsearch.algolia.com/apply" target="_blank">
+          See all ${state.context.nbHits} results
+        </a>
+      </div>
+    `;
   },
 });
 ```
@@ -658,7 +650,14 @@ docsearch({
 <DocSearch
   // ...
   resultsFooterComponent={({ state }) => {
-    return <h1>{state.context.nbHits} hits found</h1>;
+    // Using JSX templates
+    return (
+      <div className="DocSearch-HitsFooter">
+        <a href="https://docsearch.algolia.com/apply" target="_blank">
+          See all {state.context.nbHits} results
+        </a>
+      </div>
+    );
   }}
 />
 ```
