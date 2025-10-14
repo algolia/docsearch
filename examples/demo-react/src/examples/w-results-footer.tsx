@@ -4,19 +4,11 @@ import { DocSearch } from '@docsearch/react';
 import type { InternalDocSearchHit } from '@docsearch/react';
 import type { JSX } from 'react';
 
-function ResultsFooterComponent({
-  state,
-}: {
-  state: AutocompleteState<InternalDocSearchHit>;
-}): JSX.Element {
+function ResultsFooterComponent({ state }: { state: AutocompleteState<InternalDocSearchHit> }): JSX.Element {
   // Using JSX templates
   return (
     <div className="DocSearch-HitsFooter">
-      <a
-        href="https://docsearch.algolia.com/apply"
-        target="_blank"
-        rel="noreferrer"
-      >
+      <a href="https://docsearch.algolia.com/apply" target="_blank" rel="noreferrer">
         See all {String(state.context?.nbHits || 0)} results
       </a>
     </div>
