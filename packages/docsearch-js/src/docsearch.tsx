@@ -44,7 +44,7 @@ function createTemplateFunction<P extends Record<string, unknown>, R = any>(
 
 export function docsearch(allProps: DocSearchProps): () => void {
   const { container, environment, transformSearchClient, hitComponent, resultsFooterComponent, ...rest } = allProps;
-  const containerEl = getHTMLElement(container, environment);
+  const containerEl = getHTMLElement(container, environment || (typeof window !== 'undefined' ? window : undefined));
 
   const props = {
     ...rest,
