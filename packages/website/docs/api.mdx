@@ -314,11 +314,64 @@ docsearch({
 
 ## `hitComponent`
 
-> `type: ({ hit, children }) => JSX.Element` | `default: Hit` | **optional**
+> `type: ({ hit, children }, { html }) => JSX.Element | string | Function` | `default: Hit` | **optional**
 
-The component to display each item.
+The component to display each item. Supports template patterns:
+
+- **HTML strings with html helper** (recommended for JS CDN): `({ hit, children }, { html }) => html...`
+- **JSX templates** (for React/Preact): `({ hit, children }) => <div>...</div>`
+- **Function-based templates**: `(props) => string | JSX.Element | Function`
+
+You get access to the `hit` object which contains all the data for the search result, and `children` which is the default rendered content.
 
 See the [default implementation][8].
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', },
+    { label: 'React', value: 'react', }
+  ]
+}>
+<TabItem value="js">
+
+```js
+docsearch({
+  // ...
+  hitComponent({ hit, children }, { html }) {
+    // Using HTML strings with html helper
+    return html`
+      <a href="${hit.url}" class="custom-hit-class">
+        <div class="hit-icon">🔍</div>
+        <div class="hit-content">${children}</div>
+      </a>
+    `;
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="react">
+
+```jsx
+<DocSearch
+  // ...
+  hitComponent={({ hit, children }) => {
+    // Using JSX templates
+    return (
+      <a href={hit.url} className="custom-hit-class">
+        <div className="hit-icon">🔍</div>
+        <div className="hit-content">{children}</div>
+      </a>
+    );
+  }}
+/>
+```
+
+</TabItem>
+</Tabs>
 
 ## `transformSearchClient`
 
@@ -606,13 +659,15 @@ docsearch({
 
 ## `resultsFooterComponent`
 
-> `type: ({ state }) => JSX.Element` | **optional**
+> `type: ({ state }, { html }) => JSX.Element | string | Function` | **optional**
 
-The component to display below the search results.
+The component to display below the search results. Supports template patterns:
+
+- **HTML strings with html helper** (recommended for JS CDN): `({ state }, { html }) => html...`
+- **JSX templates** (for React/Preact): `({ state }) => <div>...</div>`
+- **Function-based templates**: `(props) => string | JSX.Element | Function`
 
 You get access to the [current state](https://github.com/algolia/autocomplete/blob/next/packages/autocomplete-core/src/types/AutocompleteState.ts) which allows you to retrieve the number of hits returned, the query etc.
-
-[You can find a working example without JSX in this sandbox](https://codesandbox.io/s/docsearch-v3-resultsfootercomponent-without-jsx-jperd5).
 
 <Tabs
   groupId="language"
@@ -627,25 +682,15 @@ You get access to the [current state](https://github.com/algolia/autocomplete/bl
 ```js
 docsearch({
   // ...
-  resultsFooterComponent({ state }) {
-    return {
-      // The HTML `tag`
-      type: 'a',
-      ref: undefined,
-      constructor: undefined,
-      key: state.query,
-      // Its props
-      props: {
-        href: 'https://docsearch.algolia.com/apply',
-        target: '_blank',
-        onClick: (event) => {
-          console.log(event);
-        },
-        // Raw text rendered in the HTML element
-        children: `${state.context.nbHits} hits found!`,
-      },
-      __v: null,
-    };
+  resultsFooterComponent({ state }, { html }) {
+    // Using HTML strings with html helper
+    return html`
+      <div class="DocSearch-HitsFooter">
+        <a href="https://docsearch.algolia.com/apply" target="_blank">
+          See all ${state.context.nbHits} results
+        </a>
+      </div>
+    `;
   },
 });
 ```
@@ -658,7 +703,14 @@ docsearch({
 <DocSearch
   // ...
   resultsFooterComponent={({ state }) => {
-    return <h1>{state.context.nbHits} hits found</h1>;
+    // Using JSX templates
+    return (
+      <div className="DocSearch-HitsFooter">
+        <a href="https://docsearch.algolia.com/apply" target="_blank">
+          See all {state.context.nbHits} results
+        </a>
+      </div>
+    );
   }}
 />
 ```

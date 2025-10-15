@@ -118,12 +118,35 @@ export interface DocSearchProps {
   transformItems?: (items: DocSearchHit[]) => DocSearchHit[];
   /**
    * Custom component to render an individual hit.
+   * Supports template patterns:
+   * - HTML strings with html helper: (props, { html }) => html`<div>...</div>`
+   * - JSX templates: (props) => <div>...</div>
+   * - Function-based templates: (props) => string | JSX.Element | Function.
    */
-  hitComponent?: (props: { hit: InternalDocSearchHit | StoredDocSearchHit; children: React.ReactNode }) => JSX.Element;
+  hitComponent?: (
+    props: {
+      hit: InternalDocSearchHit | StoredDocSearchHit;
+      children: React.ReactNode;
+    },
+    helpers?: {
+      html: (template: TemplateStringsArray, ...values: any[]) => any;
+    },
+  ) => JSX.Element;
   /**
    * Custom component rendered at the bottom of the results panel.
+   * Supports template patterns:
+   * - HTML strings with html helper: (props, { html }) => html`<div>...</div>`
+   * - JSX templates: (props) => <div>...</div>
+   * - Function-based templates: (props) => string | JSX.Element | Function.
    */
-  resultsFooterComponent?: (props: { state: AutocompleteState<InternalDocSearchHit> }) => JSX.Element | null;
+  resultsFooterComponent?: (
+    props: {
+      state: AutocompleteState<InternalDocSearchHit>;
+    },
+    helpers?: {
+      html: (template: TemplateStringsArray, ...values: any[]) => any;
+    },
+  ) => JSX.Element | null;
   /**
    * Hook to wrap or modify the algolia search client.
    */
