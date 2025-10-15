@@ -314,11 +314,64 @@ docsearch({
 
 ## `hitComponent`
 
-> `type: ({ hit, children }) => JSX.Element` | `default: Hit` | **optional**
+> `type: ({ hit, children }, { html }) => JSX.Element | string | Function` | `default: Hit` | **optional**
 
-The component to display each item.
+The component to display each item. Supports template patterns:
+
+- **HTML strings with html helper** (recommended for JS CDN): `(props, { html }) => html\`<div>...</div>\``
+- **JSX templates** (for React/Preact): `(props) => <div>...</div>`
+- **Function-based templates**: `(props) => string | JSX.Element | Function`
+
+You get access to the `hit` object which contains all the data for the search result, and `children` which is the default rendered content.
 
 See the [default implementation][8].
+
+<Tabs
+  groupId="language"
+  defaultValue="js"
+  values={[
+    { label: 'JavaScript', value: 'js', },
+    { label: 'React', value: 'react', }
+  ]
+}>
+<TabItem value="js">
+
+```js
+docsearch({
+  // ...
+  hitComponent({ hit, children }, { html }) {
+    // Using HTML strings with html helper
+    return html`
+      <a href="${hit.url}" class="custom-hit-class">
+        <div class="hit-icon">🔍</div>
+        <div class="hit-content">${children}</div>
+      </a>
+    `;
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="react">
+
+```jsx
+<DocSearch
+  // ...
+  hitComponent={({ hit, children }) => {
+    // Using JSX templates
+    return (
+      <a href={hit.url} className="custom-hit-class">
+        <div className="hit-icon">🔍</div>
+        <div className="hit-content">{children}</div>
+      </a>
+    );
+  }}
+/>
+```
+
+</TabItem>
+</Tabs>
 
 ## `transformSearchClient`
 
