@@ -318,8 +318,8 @@ docsearch({
 
 The component to display each item. Supports template patterns:
 
-- **HTML strings with html helper** (recommended for JS CDN): `(props, { html }) => html\`<div>...</div>\``
-- **JSX templates** (for React/Preact): `(props) => <div>...</div>`
+- **HTML strings with html helper** (recommended for JS CDN): `({ hit, children }, { html }) => html...`
+- **JSX templates** (for React/Preact): `({ hit, children }) => <div>...</div>`
 - **Function-based templates**: `(props) => string | JSX.Element | Function`
 
 You get access to the `hit` object which contains all the data for the search result, and `children` which is the default rendered content.
@@ -663,8 +663,8 @@ docsearch({
 
 The component to display below the search results. Supports template patterns:
 
-- **HTML strings with html helper** (recommended for JS CDN): `(props, { html }) => html\`<div>...</div>\``
-- **JSX templates** (for React/Preact): `(props) => <div>...</div>`
+- **HTML strings with html helper** (recommended for JS CDN): `({ state }, { html }) => html...`
+- **JSX templates** (for React/Preact): `({ state }) => <div>...</div>`
 - **Function-based templates**: `(props) => string | JSX.Element | Function`
 
 You get access to the [current state](https://github.com/algolia/autocomplete/blob/next/packages/autocomplete-core/src/types/AutocompleteState.ts) which allows you to retrieve the number of hits returned, the query etc.
