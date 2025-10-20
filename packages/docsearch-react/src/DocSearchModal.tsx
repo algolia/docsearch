@@ -5,6 +5,7 @@ import {
   createAutocomplete,
   type AutocompleteState,
 } from '@algolia/autocomplete-core';
+import type { ChatRequestOptions } from 'ai';
 import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls } from 'ai';
 import type { SearchResponse } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
@@ -21,9 +22,17 @@ import { ScreenState } from './ScreenState';
 import type { SearchBoxTranslations } from './SearchBox';
 import { SearchBox } from './SearchBox';
 import { createStoredConversations, createStoredSearches } from './stored-searches';
-import type { DocSearchHit, DocSearchState, InternalDocSearchHit, StoredAskAiState, StoredDocSearchHit } from './types';
+import type {
+  DocSearchHit,
+  DocSearchState,
+  InternalDocSearchHit,
+  StoredAskAiState,
+  StoredDocSearchHit,
+  SuggestedQuestionHit,
+} from './types';
 import type { AIMessage, AskAiState } from './types/AskiAi';
 import { useSearchClient } from './useSearchClient';
+import { useSuggestedQuestions } from './useSuggestedQuestions';
 import { useTheme } from './useTheme';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
@@ -329,6 +338,11 @@ export function DocSearchModal({
   const askAiConfigurationId = typeof askAi === 'string' ? askAi : askAiConfig?.assistantId || null;
   const askAiSearchParameters = askAiConfig?.searchParameters;
   const [askAiState, setAskAiState] = React.useState<AskAiState>('initial');
+  const suggestedQuestions = useSuggestedQuestions({
+    assistantId: askAiConfigurationId,
+    searchClient,
+    suggestedQuestionsEnabled: askAiConfig?.suggestedQuestions,
+  });
 
   // Format the `indexes` to be used until `indexName` and `searchParameters` props are fully removed.
   const indexes: DocSearchIndex[] = [];
@@ -505,24 +519,35 @@ export function DocSearchModal({
     >(undefined);
 
   const handleSelectAskAiQuestion = React.useCallback(
-    (toggle: boolean, query: string) => {
+    (toggle: boolean, query: string, suggestedQuestion: SuggestedQuestionHit | undefined = undefined) => {
       if (toggle && askAiState === 'new-conversation') {
         // We're starting a new conversation, clear out current messages
         setMessages([]);
         setAskAiState('initial');
       }
 
+      const messageOptions: ChatRequestOptions = {};
+
+      if (suggestedQuestion) {
+        messageOptions.body = {
+          suggestedQuestionId: suggestedQuestion.objectID,
+        };
+      }
+
       onAskAiToggle(toggle);
       setStoppedStream(false);
-      sendMessage({
-        role: 'user',
-        parts: [
-          {
-            type: 'text',
-            text: query,
-          },
-        ],
-      });
+      sendMessage(
+        {
+          role: 'user',
+          parts: [
+            {
+              type: 'text',
+              text: query,
+            },
+          ],
+        },
+        messageOptions,
+      );
 
       if (dropdownRef.current) {
         // some test environments (like jsdom) don't implement element.scrollTo
@@ -797,6 +822,10 @@ export function DocSearchModal({
     setAskAiState('conversation-history');
   };
 
+  const selectSuggestedQuestion = (suggestedQuestion: SuggestedQuestionHit): void => {
+    handleSelectAskAiQuestion(true, suggestedQuestion.question, suggestedQuestion);
+  };
+
   // hide the dropdown on idle and no collections
   let showDocsearchDropdown = true;
   const hasCollections = state.collections.some((collection) => collection.items.length > 0);
@@ -873,6 +902,8 @@ export function DocSearchModal({
               hasCollections={hasCollections}
               askAiState={askAiState}
               selectAskAiQuestion={handleSelectAskAiQuestion}
+              suggestedQuestions={suggestedQuestions}
+              selectSuggestedQuestion={selectSuggestedQuestion}
               onAskAiToggle={onAskAiToggle}
               onItemClick={(item, event) => {
                 // if the item is askAI toggle the screen

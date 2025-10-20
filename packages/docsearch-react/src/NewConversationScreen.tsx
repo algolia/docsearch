@@ -1,16 +1,15 @@
-import type { Hit } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
+
+import type { SuggestedQuestionHit } from './types';
 
 export type NewConversationTranslations = Partial<{
   newConversationTitle: string;
   newConversationDescription: string;
 }>;
 
-type SuggestedQuestion = Hit<{ question: string }>;
-
 interface NewConversationProps {
-  suggestedQuestions?: SuggestedQuestion[];
-  selectSuggestedQuestion: (query: string) => void;
+  suggestedQuestions?: SuggestedQuestionHit[];
+  selectSuggestedQuestion: (question: SuggestedQuestionHit) => void;
   translations?: NewConversationTranslations;
 }
 
@@ -35,7 +34,7 @@ export function NewConversationScreen({
             key={question.objectID}
             type="button"
             className="DocSearch-NewConversationScreen-SuggestedQuestion"
-            onClick={() => selectSuggestedQuestion(question.question)}
+            onClick={() => selectSuggestedQuestion(question)}
           >
             {question.question}
           </button>
