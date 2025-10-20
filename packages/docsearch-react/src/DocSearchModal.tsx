@@ -5,6 +5,7 @@ import {
   createAutocomplete,
   type AutocompleteState,
 } from '@algolia/autocomplete-core';
+import { useTheme } from '@docsearch/core/useTheme';
 import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls } from 'ai';
 import type { SearchResponse } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
@@ -24,7 +25,6 @@ import { createStoredConversations, createStoredSearches } from './stored-search
 import type { DocSearchHit, DocSearchState, InternalDocSearchHit, StoredAskAiState, StoredDocSearchHit } from './types';
 import type { AIMessage, AskAiState } from './types/AskiAi';
 import { useSearchClient } from './useSearchClient';
-import { useTheme } from './useTheme';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
 import { groupBy, identity, noop, removeHighlightTags, isModifierEvent, scrollTo as scrollToUtils } from './utils';
@@ -276,7 +276,6 @@ const buildQuerySources = async ({
 export function DocSearchModal({
   appId,
   apiKey,
-  placeholder,
   askAi,
   maxResultsPerGroup,
   theme,
@@ -294,12 +293,12 @@ export function DocSearchModal({
   insights = false,
   onAskAiToggle,
   isAskAiActive = false,
-  canHandleAskAi = false,
   recentSearchesLimit = 7,
   recentSearchesWithFavoritesLimit = 4,
   indices = [],
   indexName,
   searchParameters,
+  ...props
 }: DocSearchModalProps): JSX.Element {
   const { footer: footerTranslations, searchBox: searchBoxTranslations, ...screenStateTranslations } = translations;
   const [state, setState] = React.useState<DocSearchState<InternalDocSearchHit>>({
@@ -311,6 +310,19 @@ export function DocSearchModal({
     activeItemId: null,
     status: 'idle',
   });
+
+  // check if the instance is configured to handle ask ai
+  const canHandleAskAi = Boolean(askAi);
+
+  let placeholder = translations?.searchBox?.placeholderText || props.placeholder || 'Search docs';
+
+  if (canHandleAskAi) {
+    placeholder = translations?.searchBox?.placeholderText || 'Search docs or ask AI a question';
+  }
+
+  if (isAskAiActive) {
+    placeholder = translations?.searchBox?.placeholderTextAskAi || 'Ask another question...';
+  }
 
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const modalRef = React.useRef<HTMLDivElement | null>(null);
@@ -572,8 +584,8 @@ export function DocSearchModal({
       },
       insights: Boolean(insights),
       navigator,
-      onStateChange(props) {
-        setState(props.state);
+      onStateChange(changes) {
+        setState(changes.state);
       },
       getSources({ query, state: sourcesState, setContext, setStatus }) {
         if (!query) {
