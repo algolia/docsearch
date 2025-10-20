@@ -12,6 +12,7 @@ import DynamicImportModal from './examples/dynamic-import-modal';
 import MultiIndex from './examples/multi-index';
 import WHitComponent from './examples/w-hit-component';
 import WTransformItems from './examples/w-hit-transformItems';
+import WResultsFooter from './examples/w-results-footer';
 
 function App(): JSX.Element {
   return (
@@ -64,10 +65,18 @@ function App(): JSX.Element {
               <Composable />
             </div>
           </section>
+          
           <section className="demo-section">
             <p className="section-description">dynamically imported modal</p>
             <div className="search-wrapper">
               <DynamicImportModal />
+            </div>
+          </section>
+          
+          <section className="demo-section">
+            <p className="section-description">results footer component</p>
+            <div className="search-wrapper">
+              <WResultsFooter />
             </div>
           </section>
         </main>

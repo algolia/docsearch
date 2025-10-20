@@ -2373,6 +2373,7 @@ __metadata:
   dependencies:
     "@docsearch/react": "npm:4.2.0"
     "@rollup/plugin-replace": "npm:6.0.2"
+    htm: "npm:3.1.1"
     nodemon: "npm:^3.1.9"
     preact: "npm:^10.0.0"
     rollup-plugin-dts: "npm:^6.2.1"
@@ -14684,6 +14685,13 @@ __metadata:
     readable-stream: "npm:^2.0.1"
     wbuf: "npm:^1.1.0"
   checksum: 10c0/55b9e824430bab82a19d079cb6e33042d7d0640325678c9917fcc020c61d8a08ca671b6c942c7f0aae9bb6e4b67ffb50734a72f9e21d66407c3138c1983b70f0
+  languageName: node
+  linkType: hard
+
+"htm@npm:3.1.1":
+  version: 3.1.1
+  resolution: "htm@npm:3.1.1"
+  checksum: 10c0/0de4c8fff2b8e76c162235ae80dbf93ca5eef1575bd50596a06ce9bebf1a6da5efc467417c53034a9ffa2ab9ecff819cbec041dc9087894b2b900ad4de26c7e7
   languageName: node
   linkType: hard
 

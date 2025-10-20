@@ -32,6 +32,9 @@
     "on:change": "yarn build",
     "watch": "nodemon --watch src --exec \"yarn on:change\" --ignore dist/ --ext ts,tsx"
   },
+  "dependencies": {
+    "htm": "3.1.1"
+  },
   "devDependencies": {
     "@docsearch/react": "4.2.0",
     "@rollup/plugin-replace": "6.0.2",
