@@ -26,7 +26,6 @@ export const useSuggestedQuestions = ({
             indexName: SUGGESTED_QUETIONS_INDEX_NAME,
             filters: `state:published AND assistantId:${assistantId}`,
             hitsPerPage: 3,
-            attributesToRetrieve: ['question', 'order'],
           },
         ],
       });
