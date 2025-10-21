@@ -1,10 +1,10 @@
+import { useTheme } from '@docsearch/core/useTheme';
 import React, { useEffect, useState, type JSX } from 'react';
 
 import { getKeyboardShortcuts } from './constants/keyboardShortcuts';
 import { ControlKeyIcon, KKeyIcon, MetaKeyIcon } from './icons/MetaKeysIcon';
 import { SearchIcon } from './icons/SearchIcon';
 import type { DocSearchTheme, KeyboardShortcuts } from './types';
-import { useTheme } from './useTheme';
 
 export type ButtonTranslations = Partial<{
   buttonText: string;

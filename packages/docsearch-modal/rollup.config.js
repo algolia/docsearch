@@ -34,42 +34,25 @@ function sourceOutput(fileName) {
   ];
 }
 
-const externalPackages = ['react', 'react-dom', '@docsearch/core'];
+const externals = ['react', 'react-dom', '@docsearch/core'];
 
 export default [
   {
     input: 'src/index.ts',
-    external: externalPackages,
+    external: externals,
     output: sourceOutput('index.js'),
     plugins: sourcePlugins,
   },
   {
     input: 'src/DocSearchButton.tsx',
-    external: externalPackages,
-    output: sourceOutput('DocsearchButton.js'),
+    external: externals,
+    output: sourceOutput('DocSearchButton.js'),
     plugins: sourcePlugins,
   },
   {
     input: 'src/DocSearchModal.tsx',
-    external: externalPackages,
+    external: externals,
     output: sourceOutput('DocSearchModal.js'),
-    plugins: sourcePlugins,
-  },
-  {
-    input: 'src/useDocSearchKeyboardEvents.ts',
-    external: externalPackages,
-    output: sourceOutput('useDocSearchKeyboardEvents.js'),
-    plugins: sourcePlugins,
-  },
-  {
-    input: 'src/useTheme.tsx',
-    external: externalPackages,
-    output: sourceOutput('useTheme.js'),
-    plugins: sourcePlugins,
-  },
-  {
-    input: 'src/version.ts',
-    output: sourceOutput('version.js'),
     plugins: sourcePlugins,
   },
   {
@@ -78,28 +61,13 @@ export default [
     plugins: [dts()],
   },
   {
-    input: 'dist/esm/types/DocSearchModal.d.ts',
-    output: [{ file: 'dist/esm/DocSearchModal.d.ts', format: 'es' }],
-    plugins: [dts()],
-  },
-  {
     input: 'dist/esm/types/DocSearchButton.d.ts',
     output: [{ file: 'dist/esm/DocSearchButton.d.ts', format: 'es' }],
     plugins: [dts()],
   },
   {
-    input: 'dist/esm/types/useDocSearchKeyboardEvents.d.ts',
-    output: [{ file: 'dist/esm/useDocSearchKeyboardEvents.d.ts', format: 'es' }],
-    plugins: [dts()],
-  },
-  {
-    input: 'dist/esm/types/useTheme.d.ts',
-    output: [{ file: 'dist/esm/useTheme.d.ts', format: 'es' }],
-    plugins: [dts()],
-  },
-  {
-    input: 'dist/esm/types/version.d.ts',
-    output: [{ file: 'dist/esm/version.d.ts', format: 'es' }],
+    input: 'dist/esm/types/DocSearchModal.d.ts',
+    output: [{ file: 'dist/esm/DocSearchModal.d.ts', format: 'es' }],
     plugins: [dts()],
   },
 ];
