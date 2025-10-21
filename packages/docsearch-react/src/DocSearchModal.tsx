@@ -5,8 +5,8 @@ import {
   createAutocomplete,
   type AutocompleteState,
 } from '@algolia/autocomplete-core';
-import type { ChatRequestOptions } from 'ai';
 import { useTheme } from '@docsearch/core/useTheme';
+import type { ChatRequestOptions } from 'ai';
 import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls } from 'ai';
 import type { SearchResponse } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
@@ -34,7 +34,6 @@ import type {
 import type { AIMessage, AskAiState } from './types/AskiAi';
 import { useSearchClient } from './useSearchClient';
 import { useSuggestedQuestions } from './useSuggestedQuestions';
-import { useTheme } from './useTheme';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
 import { groupBy, identity, noop, removeHighlightTags, isModifierEvent, scrollTo as scrollToUtils } from './utils';
