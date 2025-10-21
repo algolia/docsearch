@@ -215,6 +215,7 @@ docsearch({
     searchParameters: {
       facetFilters: ['language:en', 'version:1.0.0'], // Optional: filter Ask AI context
     },
+    suggestedQuestions: true // Optional: enable loading suggested questions on the Ask AI new conversation screen
   },
 });
 ```
@@ -224,6 +225,7 @@ docsearch({
 
 - Use the string form for a simple setup.
 - Use the object form to customize which index, credentials, or filters Ask AI uses.
+- The suggested questions feature is controlled on the [Dashboard](https://dashboard.algolia.com) in the Ask AI section.
 
 ### Filtering search results
 
