@@ -82,19 +82,30 @@ For users who need advanced customization or want to understand the underlying c
   indexName: "my-markdown-index",
   pathsToMatch: ["https://example.com/docs/**"],
   recordExtractor: ({ $, url, helpers }) => {
-    const text = helpers.markdown("main"); // Change "main" to match your content tag (e.g., "main", "article", etc.)
+    // Target only the main content, excluding navigation
+    const text = helpers.markdown(
+      "main > *:not(nav):not(header):not(.breadcrumb)",
+    );
+
     if (text === "") return [];
 
-    // Extract language or other attributes as needed. Optional
     const language = $("html").attr("lang") || "en";
+
+    // Extract cleaner title (without " - Algolia" suffix)
+    const rawTitle = $("head > title").text();
+    const title = rawTitle.replace(/ - Algolia$/, "");
+
+    // Get the main heading for better searchability
+    const h1 = $("main h1").first().text();
 
     return helpers.splitTextIntoRecords({
       text,
       baseRecord: {
         url,
         objectID: url,
-        title: $("head > title").text(),
-        lang: language, // Add more attributes as needed
+        title: title || h1,
+        heading: h1, // Add main heading as separate field
+        lang: language,
       },
       maxRecordBytes: 100000, // Higher = fewer, larger records. Lower = more, smaller records.
       // Note: Increasing this value may increase the token count for LLMs, which can affect context size and cost.
@@ -110,12 +121,15 @@ For users who need advanced customization or want to understand the underlying c
 ```js
 // initialIndexSettings: { ...,
 "my-markdown-index": {
-  attributesForFaceting: ["lang"], // Add more if you extract more attributes
+  attributesForFaceting: ["lang"],
   ignorePlurals: true,
-  minProximity: 4,
+  minProximity: 1,
   removeStopWords: false,
-  searchableAttributes: ["unordered(title)", "unordered(text)"],
-  removeWordsIfNoResults: "allOptional" // This will help if the LLM finds no results. A graceful fallback.
+  searchableAttributes: ["title", "heading", "unordered(text)"],
+  removeWordsIfNoResults: "lastWords",
+  attributesToHighlight: ["title", "text"],
+  typoTolerance: false,
+  advancedSyntax: false,
 },
 // ...},
 ```
@@ -397,20 +411,30 @@ import TabItem from '@theme/TabItem';
   indexName: "my-markdown-index",
   pathsToMatch: ["https://example.com/**"],
   recordExtractor: ({ $, url, helpers }) => {
-    const text = helpers.markdown("main"); // Change "main" to match your content tag (e.g., "main", "article", etc.)
+    // Target only the main content, excluding navigation
+    const text = helpers.markdown(
+      "main > *:not(nav):not(header):not(.breadcrumb)",
+    );
+
     if (text === "") return [];
 
-    // Customize selectors or meta extraction as needed. Optional
     const language = $("html").attr("lang") || "en";
+
+    // Extract cleaner title (without " - Algolia" suffix)
+    const rawTitle = $("head > title").text();
+    const title = rawTitle.replace(/ - Algolia$/, "");
+
+    // Get the main heading for better searchability
+    const h1 = $("main h1").first().text();
 
     return helpers.splitTextIntoRecords({
       text,
       baseRecord: {
         url,
         objectID: url,
-        title: $("head > title").text(),
-        // Add more optional attributes to the record
-        lang: language
+        title: title || h1,
+        heading: h1, // Add main heading as separate field
+        lang: language,
       },
       maxRecordBytes: 100000, // Higher = fewer, larger records. Lower = more, smaller records.
       // Note: Increasing this value may increase the token count for LLMs, which can affect context size and cost.
@@ -424,10 +448,13 @@ import TabItem from '@theme/TabItem';
 "my-markdown-index": {
   attributesForFaceting: ["lang"], // Recommended if you add more attributes outside of objectID
   ignorePlurals: true,
-  minProximity: 4,
+  minProximity: 1,
   removeStopWords: false,
-  searchableAttributes: ["unordered(title)", "unordered(text)"],
-  removeWordsIfNoResults: "allOptional" // This will help if the LLM finds no results. A graceful fallback.
+  searchableAttributes: ["title", "heading", "unordered(text)"],
+  removeWordsIfNoResults: "lastWords",
+  attributesToHighlight: ["title", "text"],
+  typoTolerance: false,
+  advancedSyntax: false,
 },
 // ...},
 ```
@@ -446,7 +473,11 @@ import TabItem from '@theme/TabItem';
   indexName: "my-markdown-index",
   pathsToMatch: ["https://example.com/docs/**"],
   recordExtractor: ({ $, url, helpers }) => {
-    const text = helpers.markdown("main"); // Change "main" to match your content tag (e.g., "main", "article", etc.)
+    // Target only the main content, excluding navigation
+    const text = helpers.markdown(
+      "main > *:not(nav):not(header):not(.breadcrumb)",
+    );
+
     if (text === "") return [];
 
     // Extract meta tag values. These are required for Docusaurus
@@ -457,12 +488,20 @@ import TabItem from '@theme/TabItem';
     const docusaurus_tag =
       $('meta[name="docsearch:docusaurus_tag"]').attr("content") || "";
 
+    // Extract cleaner title (without " - Algolia" suffix)
+    const rawTitle = $("head > title").text();
+    const title = rawTitle.replace(/ - Algolia$/, "");
+
+    // Get the main heading for better searchability
+    const h1 = $("main h1").first().text();
+
     return helpers.splitTextIntoRecords({
       text,
       baseRecord: {
         url,
         objectID: url,
-        title: $("head > title").text(),
+        title: title || h1,
+        heading: h1, // Add main heading as separate field
         lang: language, // Required for Docusaurus
         language, // Required for Docusaurus
         version: version.split(","), // in case there are multiple versions. Required for Docusaurus
@@ -483,10 +522,13 @@ import TabItem from '@theme/TabItem';
 "my-markdown-index": {
   attributesForFaceting: ["lang", "language", "version", "docusaurus_tag"], // Required for Docusaurus
   ignorePlurals: true,
-  minProximity: 4,
+  minProximity: 1,
   removeStopWords: false,
-  searchableAttributes: ["unordered(title)", "unordered(text)"],
-  removeWordsIfNoResults: "allOptional" // This will help if the LLM finds no results. A graceful fallback.
+  searchableAttributes: ["title", "heading", "unordered(text)"],
+  removeWordsIfNoResults: "lastWords",
+  attributesToHighlight: ["title", "text"],
+  typoTolerance: false,
+  advancedSyntax: false,
 },
 // ...},
 ```
@@ -505,19 +547,29 @@ import TabItem from '@theme/TabItem';
   indexName: "my-markdown-index",
   pathsToMatch: ["https://example.com/docs/**"],
   recordExtractor: ({ $, url, helpers }) => {
-    const text = helpers.markdown("main"); // Change "main" to match your content tag (e.g., "main", "article", etc.)
+    // Target only the main content, excluding navigation
+    const text = helpers.markdown(
+      "main > *:not(nav):not(header):not(.breadcrumb)",
+    );
+
     if (text === "") return [];
 
-    // Extract meta tag values. These are required for VitePress
     const language = $("html").attr("lang") || "en";
 
+    // Extract cleaner title (without " - Algolia" suffix)
+    const rawTitle = $("head > title").text();
+    const title = rawTitle.replace(/ - Algolia$/, "");
+
+    // Get the main heading for better searchability
+    const h1 = $("main h1").first().text();
 
     return helpers.splitTextIntoRecords({
       text,
       baseRecord: {
         url,
-        title: $("head > title").text(),
         objectID: url,
+        title: title || h1,
+        heading: h1, // Add main heading as separate field
         lang: language, // Required for VitePress
       },
       maxRecordBytes: 100000, // Higher = fewer, larger records. Lower = more, smaller records.
@@ -532,10 +584,13 @@ import TabItem from '@theme/TabItem';
 "my-markdown-index": {
   attributesForFaceting: ["lang"], // Required for VitePress
   ignorePlurals: true,
-  minProximity: 4,
+  minProximity: 1,
   removeStopWords: false,
-  searchableAttributes: ["unordered(title)", "unordered(text)"],
-  removeWordsIfNoResults: "allOptional" // This will help if the LLM finds no results. A graceful fallback.
+  searchableAttributes: ["title", "heading", "unordered(text)"],
+  removeWordsIfNoResults: "lastWords",
+  attributesToHighlight: ["title", "text"],
+  typoTolerance: false,
+  advancedSyntax: false,
 },
 // ...},
 ```
@@ -554,19 +609,29 @@ import TabItem from '@theme/TabItem';
   indexName: "my-markdown-index",
   pathsToMatch: ["https://example.com/docs/**"],
   recordExtractor: ({ $, url, helpers }) => {
-    const text = helpers.markdown("main"); // Change "main" to match your content tag (e.g., "main", "article", etc.)
+    // Target only the main content, excluding navigation
+    const text = helpers.markdown(
+      "main > *:not(nav):not(header):not(.breadcrumb)",
+    );
+
     if (text === "") return [];
 
-    // Extract meta tag values. These are required for Astro/StarLight
     const language = $("html").attr("lang") || "en";
 
+    // Extract cleaner title (without " - Algolia" suffix)
+    const rawTitle = $("head > title").text();
+    const title = rawTitle.replace(/ - Algolia$/, "");
+
+    // Get the main heading for better searchability
+    const h1 = $("main h1").first().text();
 
     return helpers.splitTextIntoRecords({
       text,
       baseRecord: {
         url,
-        title: $("head > title").text(),
         objectID: url,
+        title: title || h1,
+        heading: h1, // Add main heading as separate field
         lang: language, // Required for Astro/StarLight
       },
       maxRecordBytes: 100000, // Higher = fewer, larger records. Lower = more, smaller records.
@@ -581,10 +646,13 @@ import TabItem from '@theme/TabItem';
 "my-markdown-index": {
   attributesForFaceting: ["lang"], // Required for Astro/StarLight
   ignorePlurals: true,
-  minProximity: 4,
+  minProximity: 1,
   removeStopWords: false,
-  searchableAttributes: ["unordered(title)", "unordered(text)"],
-  removeWordsIfNoResults: "allOptional" // This will help if the LLM finds no results. A graceful fallback.
+  searchableAttributes: ["title", "heading", "unordered(text)"],
+  removeWordsIfNoResults: "lastWords",
+  attributesToHighlight: ["title", "text"],
+  typoTolerance: false,
+  advancedSyntax: false,
 },
 // ...},
 ```
