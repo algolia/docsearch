@@ -1426,6 +1426,7 @@ assistive tech users */
   justify-content: center;
   background-color: #fff;
   color: var(--docsearch-text-color);
+  cursor: pointer;
 }
 
 .DocSearch-Menu {
