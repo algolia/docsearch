@@ -61,6 +61,12 @@ export type DocSearchAskAi = {
    * The search parameters to use for the ask AI feature.
    */
   searchParameters?: AskAiSearchParameters;
+  /**
+   * Enables displaying suggested questions on Ask AI's new conversation screen.
+   *
+   * @default false
+   */
+  suggestedQuestions?: boolean;
 };
 
 export interface DocSearchIndex {

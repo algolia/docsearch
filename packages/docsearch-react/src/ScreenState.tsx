@@ -17,7 +17,7 @@ import { ResultsScreen } from './ResultsScreen';
 import type { StartScreenTranslations } from './StartScreen';
 import { StartScreen } from './StartScreen';
 import type { StoredSearchPlugin } from './stored-searches';
-import type { InternalDocSearchHit, StoredAskAiState, StoredDocSearchHit } from './types';
+import type { InternalDocSearchHit, StoredAskAiState, StoredDocSearchHit, SuggestedQuestionHit } from './types';
 import type { AIMessage, AskAiState } from './types/AskiAi';
 
 export type ScreenStateTranslations = Partial<{
@@ -54,6 +54,8 @@ export interface ScreenStateProps<TItem extends BaseItem>
   onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
   askAiState: AskAiState;
   selectAskAiQuestion: (toggle: boolean, query: string) => void;
+  suggestedQuestions: SuggestedQuestionHit[];
+  selectSuggestedQuestion: (question: SuggestedQuestionHit) => void;
 }
 
 export const ScreenState = React.memo(
@@ -66,9 +68,8 @@ export const ScreenState = React.memo(
       return (
         <NewConversationScreen
           translations={translations?.newConversation}
-          selectSuggestedQuestion={(query: string) => {
-            props.selectAskAiQuestion(true, query);
-          }}
+          selectSuggestedQuestion={props.selectSuggestedQuestion}
+          suggestedQuestions={props.suggestedQuestions}
         />
       );
     }

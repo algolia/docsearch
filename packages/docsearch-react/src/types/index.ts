@@ -4,3 +4,4 @@ export * from './DocSearchTheme';
 export * from './InternalDocSearchHit';
 export * from './KeyboardShortcuts';
 export * from './StoredDocSearchHit';
+export * from './SuggestedQuestions';
