@@ -1,9 +1,11 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { version } from '@docsearch/react';
+import { DocSearchSidepanel } from '@docsearch/react/sidepanel';
 import type { JSX } from 'react';
 
 import './App.css';
 import '@docsearch/css/dist/style.css';
+import '@docsearch/css/dist/sidepanel.css';
 
 import Basic from './examples/basic';
 import BasicAskAI from './examples/basic-askai';
@@ -81,6 +83,13 @@ function App(): JSX.Element {
           </section>
         </main>
       </div>
+
+      <DocSearchSidepanel
+        appId="betaDCVKGIDYYD"
+        indexName="React Docs"
+        searchApiKey="a53774491e2a0b9d92ea6da719cf46b2"
+        assistantId="O7o81mRwDQ3d"
+      />
     </div>
   );
 }
