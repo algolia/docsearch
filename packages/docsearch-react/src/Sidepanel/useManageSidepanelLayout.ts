@@ -1,9 +1,10 @@
 import { useLayoutEffect, useRef } from 'react';
 
-import type { PanelVariant } from './Sidepanel';
+import type { PanelSide, PanelVariant } from './Sidepanel';
 
 type UseManageSidepanelLayoutProps = {
   variant: PanelVariant;
+  side: PanelSide;
   selectors: string;
   isOpen: boolean;
   expectedWidth: string;
@@ -14,6 +15,7 @@ export function useManageSidepanelLayout({
   selectors,
   isOpen,
   expectedWidth,
+  side,
 }: UseManageSidepanelLayoutProps): void {
   const targetRef = useRef<HTMLElement | null>(null);
   const lastSelectorRef = useRef<string | null>(null);
@@ -23,7 +25,11 @@ export function useManageSidepanelLayout({
 
     if (lastSelectorRef.current !== selectors) {
       if (targetRef.current) {
-        targetRef.current.style.marginRight = '';
+        if (side === 'left') {
+          targetRef.current.style.marginLeft = '';
+        } else {
+          targetRef.current.style.marginRight = '';
+        }
         targetRef.current.style.transition = '';
       }
 
@@ -33,22 +39,32 @@ export function useManageSidepanelLayout({
       lastSelectorRef.current = selectors;
 
       if (targetRef.current) {
-        targetRef.current.style.transition = 'margin-right 280ms cubic-bezier(0.22, 1, 0.36, 1)';
+        targetRef.current.style.transition = `margin-${side} 280ms cubic-bezier(0.22, 1, 0.36, 1)`;
       }
     }
 
     const target = targetRef.current;
     if (!target) return;
 
-    target.style.marginRight = isOpen ? expectedWidth : '0px';
-  }, [isOpen, expectedWidth, variant, selectors]);
+    const offset = isOpen ? expectedWidth : '0px';
+
+    if (side === 'left') {
+      target.style.marginLeft = offset;
+    } else {
+      target.style.marginRight = offset;
+    }
+  }, [isOpen, expectedWidth, variant, selectors, side]);
 
   useLayoutEffect(() => {
     return (): void => {
       if (targetRef.current) {
-        targetRef.current.style.marginRight = '';
+        if (side === 'left') {
+          targetRef.current.style.marginLeft = '';
+        } else {
+          targetRef.current.style.marginRight = '';
+        }
         targetRef.current.style.transition = '';
       }
     };
-  }, []);
+  }, [side]);
 }

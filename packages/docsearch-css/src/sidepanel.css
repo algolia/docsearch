@@ -75,24 +75,48 @@
 
 .DocSearch-Sidepanel-Container.floating {
   top: 1rem;
-  right: 1rem;
   bottom: 1rem;
   border-radius: 1rem;
-  transform: translateX(calc(100% + 2rem));
 }
 
 .DocSearch-Sidepanel-Container.inline {
   top: 0;
-  right: 0;
   bottom: 0;
+}
+
+.DocSearch-Sidepanel-Container.floating.side-right {
+  right: 1rem;
+  transform: translateX(calc(100% + 2rem));
+}
+
+.DocSearch-Sidepanel-Container.floating.side-left {
+  transform: translateX(calc(-100% - 2rem));
+  left: 1rem;
+}
+
+.DocSearch-Sidepanel-Container.inline.side-right {
+  right: 0;
   border-top-left-radius: 1rem;
   border-bottom-left-radius: 1rem;
   transform: translateX(100%);
 }
 
-.DocSearch-Sidepanel-Container.floating.is-open,
-.DocSearch-Sidepanel-Container.inline.is-open {
+.DocSearch-Sidepanel-Container.inline.side-left {
+  transform: translateX(-100%);
+  left: 0;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+
+.DocSearch-Sidepanel-Container.is-open {
   opacity: 1;
+}
+
+.DocSearch-Sidepanel-Container.side-right.is-open {
+  transform: none;
+}
+
+.DocSearch-Sidepanel-Container.side-left.is-open {
   transform: none;
 }
 
@@ -157,7 +181,7 @@
   /* firefox */
   overflow-y: overlay;
   scrollbar-color: var(--docsearch-sidepanel-scrollbar-color) var(--docsearch-sidepanel-scrollbar-bg);
-  scrollbar-width: thin;
+  scrollbar-width: none;
 }
 
 .DocSearch-Sidepanel-Prompt {
@@ -371,4 +395,32 @@
   font-size: 0.75rem;
   color: var(--docsearch-sidepanel-text-muted);
   margin-bottom: 1rem;
+}
+
+.DocSearch-Sidepanel .DocSearch-AskAiScreen-Response {
+  padding: 1rem;
+  font-size: 0.95em;
+}
+
+.DocSearch-Sidepanel .DocSearch-AskAiScreen-Query {
+  font-size: 1.25rem;
+}
+
+.DocSearch-Sidepanel .DocSearch-Markdown-Content {
+  font-size: 0.95em;
+}
+
+.DocSearch-Sidepanel .DocSearch-Markdown-Content h1,
+.DocSearch-Sidepanel .DocSearch-Markdown-Content h2,
+.DocSearch-Sidepanel .DocSearch-Markdown-Content h3,
+.DocSearch-Sidepanel .DocSearch-Markdown-Content h4,
+.DocSearch-Sidepanel .DocSearch-Markdown-Content h5,
+.DocSearch-Sidepanel .DocSearch-Markdown-Content h6 {
+  margin: 0.5em 0;
+}
+
+.DocSearch-Sidepanel .DocSearch-AskAiScreen-MessageContent-Tool-Query:hover {
+  cursor: unset;
+  box-shadow: none;
+  color: var(--docsearch-muted-color);
 }

@@ -45,6 +45,7 @@ export type SidepanelTranslations = Partial<{
 }>;
 
 export type PanelVariant = 'floating' | 'inline';
+export type PanelSide = 'left' | 'right';
 
 export type SidepanelProps = {
   /**
@@ -56,6 +57,12 @@ export type SidepanelProps = {
    * @default 'inline'
    */
   variant?: PanelVariant;
+  /**
+   * Side of the page which the panel will originate from.
+   *
+   * @default 'right'
+   */
+  side?: PanelSide;
   /**
    * The selector of the element to push when Sidepanel opens with `inline` variant.
    *
@@ -121,6 +128,7 @@ export const Sidepanel = ({
   suggestedQuestions: suggestedQuestionsEnabled = false,
   translations = {},
   keyboardShortcuts,
+  side = 'right',
 }: Props): JSX.Element => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [sidepanelState, setSidepanelState] = React.useState<SidepanelState>('new-conversation');
@@ -153,6 +161,7 @@ export const Sidepanel = ({
     conversations,
     messages,
     sendFeedback,
+    askAiStreamError,
   } = useAskAi({
     appId,
     indexName,
@@ -215,6 +224,7 @@ export const Sidepanel = ({
     expectedWidth,
     selectors,
     isOpen,
+    side,
   });
 
   useSidepanelKeyboardEvents({
@@ -244,7 +254,7 @@ export const Sidepanel = ({
 
   return (
     <div
-      className={`DocSearch-Sidepanel-Container ${variant}${isOpen ? ' is-open' : ''}${isExpanded ? ' is-expanded' : ''}`}
+      className={`DocSearch-Sidepanel-Container ${variant} side-${side}${isOpen ? ' is-open' : ''}${isExpanded ? ' is-expanded' : ''}`}
       style={{ width: expectedWidth }}
       role="dialog"
       tabIndex={-1}
@@ -273,6 +283,7 @@ export const Sidepanel = ({
               conversations={conversations}
               handleFeedback={sendFeedback}
               translations={translations.conversationScreen}
+              streamError={askAiStreamError}
             />
           )}
           {sidepanelState === 'conversation-history' && (

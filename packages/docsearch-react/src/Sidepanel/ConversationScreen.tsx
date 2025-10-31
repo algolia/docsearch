@@ -3,18 +3,17 @@ import type { JSX } from 'react';
 import React, { memo, useMemo } from 'react';
 
 import { AskAiScreenFooterActions, AskAiSourcesPanel, type Exchange } from '../AskAiScreen';
-import { LoadingIcon, SearchIcon } from '../icons';
+import { AlertIcon, LoadingIcon, SearchIcon } from '../icons';
 import { MemoizedMarkdown } from '../MemoizedMarkdown';
 import type { StoredSearchPlugin } from '../stored-searches';
 import type { StoredAskAiState } from '../types';
 import type { AIMessage } from '../types/AskiAi';
 import { extractLinksFromMessage, getMessageContent } from '../utils/ai';
+import { groupConsecutiveToolResults } from '../utils/groupConsecutiveToolResults';
+
+import { AggregatedSearchBlock } from './AggregatedSearchBlock';
 
 export type ConversationScreenTranslations = Partial<{
-  /**
-   * Disclaimer text shown at the top of a conversation.
-   */
-  conversationDisclaimerText: string;
   /**
    * Text shown while assistant is reasoning.
    */
@@ -24,9 +23,17 @@ export type ConversationScreenTranslations = Partial<{
    */
   thinkingText: string;
   /**
+   * Text shown while assistant is preparing tool call.
+   */
+  preToolCallText: string;
+  /**
    * Text shown while assistant is performing search tool call.
    */
   searchingText: string;
+  /**
+   * Text shown while assistant is finished performing tool call.
+   */
+  toolCallResultText: string;
   /**
    * Text shown describing related sources.
    */
@@ -35,6 +42,26 @@ export type ConversationScreenTranslations = Partial<{
    * Message that's shown when user has stopped the streaming of a message.
    */
   stoppedStreamingText: string;
+  /**
+   * Text shown for copy button on code snippets.
+   **/
+  copyButtonText: string;
+  /**
+   * Message shown after clicking copy.
+   **/
+  copyButtonCopiedText: string;
+  /**
+   * Title for thumbs up feedback icon.
+   **/
+  likeButtonTitle: string;
+  /**
+   * Title for thumbs down feedback icon.
+   **/
+  dislikeButtonTitle: string;
+  /**
+   * Message displayed after feedback action.
+   **/
+  thanksForFeedbackText: string;
 }>;
 
 export type ConversationScreenProps = {
@@ -43,6 +70,7 @@ export type ConversationScreenProps = {
   translations?: ConversationScreenTranslations;
   status: UseChatHelpers<AIMessage>['status'];
   handleFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
+  streamError: Error | null;
 };
 
 const ConversationExchange = ({
@@ -52,6 +80,7 @@ const ConversationExchange = ({
   conversations,
   onFeedback,
   status,
+  streamError,
 }: {
   exchange: Exchange;
   isLastExchange: boolean;
@@ -59,6 +88,7 @@ const ConversationExchange = ({
   conversations: ConversationScreenProps['conversations'];
   translations?: ConversationScreenTranslations;
   onFeedback?: ConversationScreenProps['handleFeedback'];
+  streamError: ConversationScreenProps['streamError'];
 }): JSX.Element => {
   const { userMessage, assistantMessage } = exchange;
 
@@ -68,12 +98,16 @@ const ConversationExchange = ({
     searchingText = 'Searching...',
     relatedSourcesText = 'Related sources',
     stoppedStreamingText = 'You stopped this response',
+    preToolCallText = 'Searching...',
+    toolCallResultText = 'Searched for',
+    copyButtonText = 'Copy',
+    copyButtonCopiedText = 'Copied!',
   } = translations;
 
   const assistantContent = useMemo(() => getMessageContent(assistantMessage), [assistantMessage]);
   const userContent = useMemo(() => getMessageContent(userMessage), [userMessage]);
 
-  const assistantParts = useMemo(() => assistantMessage?.parts ?? [], [assistantMessage]);
+  const assistantParts = useMemo(() => groupConsecutiveToolResults(assistantMessage?.parts || []), [assistantMessage]);
   const urlsToDisplay = React.useMemo(() => extractLinksFromMessage(assistantMessage), [assistantMessage]);
 
   const wasStopped = userMessage.metadata?.stopped || assistantMessage?.metadata?.stopped;
@@ -89,6 +123,18 @@ const ConversationExchange = ({
         </div>
         <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--assistant">
           <div className="DocSearch-AskAiScreen-MessageContent">
+            {status === 'error' && streamError && isLastExchange && (
+              <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error">
+                <AlertIcon />
+                <MemoizedMarkdown
+                  content={streamError.message}
+                  copyButtonText=""
+                  copyButtonCopiedText=""
+                  isStreaming={false}
+                />
+              </div>
+            )}
+
             {assistantParts.map((part, idx) => {
               const index = idx;
 
@@ -99,6 +145,10 @@ const ConversationExchange = ({
                     <span className="shimmer">{reasoningText}</span>
                   </div>
                 );
+              }
+
+              if (part.type === 'aggregated-tool-call') {
+                return <AggregatedSearchBlock key={index} queries={part.queries} />;
               }
 
               if (part.type === 'tool-searchIndex') {
@@ -114,7 +164,9 @@ const ConversationExchange = ({
                     return (
                       <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Call shimmer">
                         <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-                        <span>Searching for {`"${part.input.query || ''}" ...`}</span>
+                        <span>
+                          {preToolCallText} {`"${part.input.query || ''}" ...`}
+                        </span>
                       </div>
                     );
                   case 'output-available':
@@ -122,8 +174,8 @@ const ConversationExchange = ({
                       <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Result">
                         <SearchIcon />
                         <span>
-                          Search for
-                          <span role="button" tabIndex={0} className="DocSearch-AskAiScreen-MessageContent-Tool-Query">
+                          {toolCallResultText}{' '}
+                          <span className="DocSearch-AskAiScreen-MessageContent-Tool-Query">
                             {' '}
                             &quot;{part.output.query || ''}&quot;
                           </span>{' '}
@@ -141,8 +193,8 @@ const ConversationExchange = ({
                   <MemoizedMarkdown
                     key={index}
                     content={part}
-                    copyButtonText={'Copy'}
-                    copyButtonCopiedText={'Copied!'}
+                    copyButtonText={copyButtonText}
+                    copyButtonCopiedText={copyButtonCopiedText}
                     isStreaming={false}
                   />
                 );
@@ -153,8 +205,8 @@ const ConversationExchange = ({
                   <MemoizedMarkdown
                     key={index}
                     content={part.text}
-                    copyButtonText={'Copy'}
-                    copyButtonCopiedText={'Copied!'}
+                    copyButtonText={copyButtonText}
+                    copyButtonCopiedText={copyButtonCopiedText}
                     isStreaming={part.state === 'streaming'}
                   />
                 );
@@ -163,7 +215,7 @@ const ConversationExchange = ({
               return null;
             })}
 
-            {isThinking && (
+            {isThinking && isLastExchange && assistantParts.length === 0 && (
               <div className="DocSearch-AskAiScreen-MessageContent-Reasoning">
                 <span className="shimmer">{thinkingText}</span>
               </div>
@@ -193,14 +245,9 @@ const ConversationExchange = ({
 };
 
 export const ConversationScreen = memo(
-  ({ exchanges, translations = {}, conversations, status, handleFeedback }: ConversationScreenProps): JSX.Element => {
-    const { conversationDisclaimerText = 'Answers are generated with AI which can make mistakes. Verify responses.' } =
-      translations;
-
+  ({ exchanges, translations = {}, handleFeedback, ...props }: ConversationScreenProps): JSX.Element => {
     return (
       <div className="DocSearch-Sidepanel-ConversationScreen">
-        <p className="DocSearch-Sidepanel-ConversationScreen--disclaimer">{conversationDisclaimerText}</p>
-
         {exchanges
           .slice()
           .reverse()
@@ -210,9 +257,8 @@ export const ConversationScreen = memo(
               exchange={exchange}
               translations={translations}
               isLastExchange={idx === 0}
-              conversations={conversations}
-              status={status}
               onFeedback={handleFeedback}
+              {...props}
             />
           ))}
       </div>
