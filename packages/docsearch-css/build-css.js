@@ -49,6 +49,11 @@ build({
   output: 'dist/modal.css',
   banner: getBundleBanner({ ...pkg, name: `${pkg.name} Modal` }),
 });
+build({
+  input: 'src/sidepanel.css',
+  output: 'dist/sidepanel.css',
+  banner: getBundleBanner({ ...pkg, name: `${pkg.name} Sidepanel` }),
+});
 
 async function buildStyle() {
   const variablesCss = await readFile('src/_variables.css');

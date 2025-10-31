@@ -1,17 +1,28 @@
-export interface KeyboardShortcuts {
+export interface DocSearchModalShortcuts {
   /**
-   * Enable/disable the Ctrl/Cmd+K shortcut to toggle the search modal.
+   * Enable/disable the Ctrl/Cmd+K shortcut to toggle the DocSearch modal.
    *
    * @default true
    */
   'Ctrl/Cmd+K'?: boolean;
   /**
-   * Enable/disable the / shortcut to open the search modal.
+   * Enable/disable the / shortcut to open the DocSearch modal.
    *
    * @default true
    */
   '/'?: boolean;
 }
+
+export interface SidepanelShortcuts {
+  /**
+   * Enable/disable the Ctrl/Cmd+I shortcut to toggle the DocSearch sidepanel.
+   *
+   * @default true
+   */
+  'Ctrl/Cmd+I'?: boolean;
+}
+
+export type KeyboardShortcuts = DocSearchModalShortcuts & SidepanelShortcuts;
 
 /**
  * Default keyboard shortcuts configuration for DocSearch.
@@ -21,6 +32,7 @@ export interface KeyboardShortcuts {
 export const DEFAULT_KEYBOARD_SHORTCUTS: Required<KeyboardShortcuts> = {
   'Ctrl/Cmd+K': true,
   '/': true,
+  'Ctrl/Cmd+I': true,
 } as const;
 
 /**
