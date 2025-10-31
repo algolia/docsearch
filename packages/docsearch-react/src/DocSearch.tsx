@@ -1,18 +1,13 @@
 import type { AutocompleteOptions, AutocompleteState } from '@algolia/autocomplete-core';
 import { DocSearch as DocSearchProvider, useDocSearch } from '@docsearch/core';
+import type { DocSearchModalShortcuts } from '@docsearch/core';
 import type { LiteClient, SearchParamsObject } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
 
 import { DocSearchButton } from './DocSearchButton';
 import { DocSearchModal } from './DocSearchModal';
-import type {
-  DocSearchHit,
-  DocSearchTheme,
-  InternalDocSearchHit,
-  KeyboardShortcuts,
-  StoredDocSearchHit,
-} from './types';
+import type { DocSearchHit, DocSearchTheme, InternalDocSearchHit, StoredDocSearchHit } from './types';
 
 import type { ButtonTranslations, ModalTranslations } from '.';
 
@@ -198,8 +193,10 @@ export interface DocSearchProps {
   recentSearchesWithFavoritesLimit?: number;
   /**
    * Configuration for keyboard shortcuts. Allows enabling/disabling specific shortcuts.
+   *
+   * @default `{ 'Ctrl/Cmd+K': true, '/': true }`
    */
-  keyboardShortcuts?: KeyboardShortcuts;
+  keyboardShortcuts?: DocSearchModalShortcuts;
 }
 
 export function DocSearch(props: DocSearchProps): JSX.Element {
