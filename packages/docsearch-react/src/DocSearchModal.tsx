@@ -52,7 +52,6 @@ export type DocSearchModalProps = DocSearchProps & {
   onAskAiToggle: (toggle: boolean) => void;
   onClose?: () => void;
   isAskAiActive?: boolean;
-  canHandleAskAi?: boolean;
   translations?: ModalTranslations;
 };
 

@@ -3,9 +3,9 @@ import { DocSearchButton as Button, type DocSearchButtonProps as ButtonProps } f
 import type { JSX } from 'react';
 import React from 'react';
 
-export type DocSearchButtonProps = Omit<ButtonProps, 'keyboardShortcuts'>;
+export type DocSearchButtonProps = Omit<ButtonProps, 'keyboardShortcuts' | 'theme'>;
 
-export function DocSearchButton(props: DocSearchButtonProps): JSX.Element {
+export function DocSearchButton({ onClick, ...props }: DocSearchButtonProps): JSX.Element {
   const { searchButtonRef, keyboardShortcuts, openModal } = useDocSearch();
 
   return (
@@ -13,8 +13,8 @@ export function DocSearchButton(props: DocSearchButtonProps): JSX.Element {
       ref={searchButtonRef}
       keyboardShortcuts={keyboardShortcuts}
       onClick={(evt) => {
-        if (props.onClick) {
-          props.onClick(evt);
+        if (onClick) {
+          onClick(evt);
         }
         openModal();
       }}

@@ -99,7 +99,6 @@ function DocSearch(): JSX.Element {
             initialScrollY={window.scrollY}
             initialQuery={initialQuery}
             isAskAiActive={isAskAiActive}
-            canHandleAskAi={true}
             onClose={closeModal}
             onAskAiToggle={toggleAskAi}
           />,
