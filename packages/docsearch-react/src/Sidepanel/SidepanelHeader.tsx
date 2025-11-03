@@ -85,10 +85,14 @@ export const SidepanelHeader = React.memo(
               </Menu.Content>
             </Menu>
           )}
-          <button type="button" className="DocSearch-Action" onClick={onToggleExpanded}>
+          <button
+            type="button"
+            className="DocSearch-Action DocSearch-Sidepanel-Action-expand"
+            onClick={onToggleExpanded}
+          >
             <ExpandIcon />
           </button>
-          <button type="button" className="DocSearch-Action" onClick={onClose}>
+          <button type="button" className="DocSearch-Action DocSearch-Sidepanel-Action-close" onClick={onClose}>
             <CloseIcon />
           </button>
         </div>

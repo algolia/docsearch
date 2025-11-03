@@ -85,10 +85,10 @@ function App(): JSX.Element {
       </div>
 
       <DocSearchSidepanel
-        appId="betaDCVKGIDYYD"
-        indexName="React Docs"
-        searchApiKey="a53774491e2a0b9d92ea6da719cf46b2"
-        assistantId="O7o81mRwDQ3d"
+        assistantId="askAIDemo"
+        indexName="docsearch"
+        appId="PMZUYBQDAK"
+        searchApiKey="24b09689d5b4223813d9b8e48563c8f6"
       />
     </div>
   );

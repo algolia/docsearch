@@ -255,7 +255,11 @@ export const Sidepanel = ({
   return (
     <div
       className={`DocSearch-Sidepanel-Container ${variant} side-${side}${isOpen ? ' is-open' : ''}${isExpanded ? ' is-expanded' : ''}`}
-      style={{ width: expectedWidth }}
+      style={
+        {
+          '--sp-width': expectedWidth,
+        } as React.CSSProperties
+      }
       role="dialog"
       tabIndex={-1}
     >
