@@ -1,6 +1,6 @@
 {
   "name": "@docsearch/website",
-  "version": "4.3.0",
+  "version": "4.3.1",
   "private": true,
   "homepage": "https://docsearch.algolia.com/",
   "scripts": {
@@ -16,8 +16,8 @@
     "write-heading-ids": "docusaurus write-heading-ids"
   },
   "dependencies": {
-    "@docsearch/css": "4.3.0",
-    "@docsearch/react": "4.3.0",
+    "@docsearch/css": "4.3.1",
+    "@docsearch/react": "4.3.1",
     "@docusaurus/core": "3.8.1-canary-6397",
     "@docusaurus/preset-classic": "3.8.1-canary-6397",
     "@mdx-js/react": "^3.1.0",

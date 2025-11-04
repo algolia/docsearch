@@ -1,3 +1,12 @@
+## [4.3.1](https://github.com/algolia/docsearch/compare/v4.3.0...v4.3.1) (2025-11-04)
+
+
+### Bug Fixes
+
+* **npm:** Publish new packages with public access ([#2795](https://github.com/algolia/docsearch/issues/2795)) ([2d045b5](https://github.com/algolia/docsearch/commit/2d045b59f29df9300e466b4701c3378022895e4a))
+
+
+
 # [4.3.0](https://github.com/algolia/docsearch/compare/v4.2.0...v4.3.0) (2025-11-04)
 
 
