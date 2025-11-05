@@ -1,5 +1,5 @@
 import type { UseChatHelpers } from '@ai-sdk/react';
-import React from 'react';
+import React, { useMemo } from 'react';
 import type { JSX } from 'react';
 
 import type { Exchange } from '../AskAiScreen';
@@ -23,6 +23,8 @@ export type PromptFormTranslations = Partial<{
    * Disclaimer text displayed beneath the prompt form.
    **/
   promptDisclaimerText: string;
+  promptLabelText: string;
+  promptAriaLabelText: string;
 }>;
 
 type Props = {
@@ -44,6 +46,8 @@ export const PromptForm = React.memo(
       promptAnsweringText = 'Answering...',
       promptAskAnotherQuestionText = 'Ask another question',
       promptDisclaimerText = 'Answers are generated with AI which can make mistakes.',
+      promptLabelText = 'Press Enter to send, or Shift and Enter for new line.',
+      promptAriaLabelText = 'Prompt input',
     } = translations;
 
     const handleSend = (): void => {
@@ -54,6 +58,7 @@ export const PromptForm = React.memo(
       onSend(prompt);
 
       setUserPrompt('');
+      // TODO: Focus a different element to reset mobile view
       requestAnimationFrame(() => promptRef.current?.focus());
     };
 
@@ -64,6 +69,13 @@ export const PromptForm = React.memo(
         handleSend();
       }
     };
+
+    // Calculate new lines in prompt to determine the input's height
+    const promptNewLines = useMemo(() => {
+      if (userPrompt === '') return 1;
+
+      return (userPrompt.match(/\n/gm) || []).length + 1;
+    }, [userPrompt]);
 
     let promptPlaceholder = promptPlaceholderText;
 
@@ -89,9 +101,20 @@ export const PromptForm = React.memo(
             className="DocSearch-Sidepanel-Prompt--textarea"
             aria-disabled={isStreaming}
             value={userPrompt}
+            aria-label={promptAriaLabelText}
+            aria-labelledby="prompt-label"
+            autoComplete="off"
+            style={
+              {
+                '--prompt-new-lines': promptNewLines,
+              } as React.CSSProperties
+            }
             onKeyDown={handleKeyDown}
             onChange={(e) => setUserPrompt(e.target.value)}
           />
+          <span id="prompt-label" className="sr-only">
+            {promptLabelText}
+          </span>
           <div className="DocSearch-Sidepanel-Prompt--actions">
             {status === 'streaming' && (
               <button type="button" className="DocSearch-Sidepanel-Prompt--stop" onClick={onStopStreaming}>

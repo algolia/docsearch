@@ -248,6 +248,10 @@ export const ConversationScreen = memo(
   ({ exchanges, translations = {}, handleFeedback, ...props }: ConversationScreenProps): JSX.Element => {
     return (
       <div className="DocSearch-Sidepanel-ConversationScreen">
+        <p className="DocSearch-Sidepanel-ConversationScreen-disclaimer">
+          Answers are generated with AI which can make mistakes. Verify responses.
+        </p>
+
         {exchanges
           .slice()
           .reverse()

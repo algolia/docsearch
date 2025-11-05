@@ -29,7 +29,7 @@
   height: 3.25rem;
   bottom: 1rem;
   right: 1rem;
-  z-index: 900;
+  z-index: 380;
   background-color: var(--docsearch-sidepanel-accent);
   color: var(--docsearch-sidepanel-white);
 }
@@ -93,7 +93,7 @@
   left: 0;
   border-radius: 0;
   transform: translateX(100%);
-  height: 100dvh;
+  height: 100svh;
 
   &.is-open {
     transform: none;
@@ -126,6 +126,7 @@
   }
 
   .DocSearch-Sidepanel-Container.floating.side-right {
+    left: unset;
     right: 1rem;
     transform: translateX(calc(100% + 2rem));
   }
@@ -136,6 +137,7 @@
   }
 
   .DocSearch-Sidepanel-Container.inline.side-right {
+    left: unset;
     right: 0;
     border-top-left-radius: 1rem;
     border-bottom-left-radius: 1rem;
@@ -170,6 +172,7 @@
   overflow: hidden;
   box-sizing: border-box;
   height: 100%;
+  position: relative;
 }
 
 .DocSearch-Sidepanel * {
@@ -184,36 +187,60 @@
   background-color: var(--docsearch-sidepanel-white);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   padding: 0.2rem 1rem;
   border-bottom: 1px solid var(--docsearch-sidepanel-border);
   height: 3.5rem;
   color: var(--docsearch-sidepanel-text-base);
+  position: relative;
+  justify-content: center;
+}
+
+.DocSearch-Sidepanel-Header--left,
+.DocSearch-Sidepanel-Header--right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: absolute;
 }
 
 .DocSearch-Sidepanel-Header--left {
+  left: 1rem;
+}
+
+.DocSearch-Sidepanel-Header--right {
+  right: 1rem;
+}
+
+@media screen and (min-width: 769px) {
+  .DocSearch-Sidepanel-Header {
+    justify-content: flex-start;
+  }
+
+  .DocSearch-Sidepanel-Header--left {
+    display: none;
+  }
+}
+
+.DocSearch-Sidepanel-Header--center {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.DocSearch-Sidepanel-Header--left svg {
+.DocSearch-Sidepanel-Header--center svg {
   height: 1.25rem;
   width: 1.25rem;
   color: var(--docsearch-sidepanel-accent);
 }
 
-.DocSearch-Sidepanel-Header--right {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
+.DocSearch-Sidepanel-Action-menu,
 .DocSearch-Sidepanel-Action-expand {
   display: none;
 }
 
 @media screen and (min-width: 769px) {
+  .DocSearch-Sidepanel-Action-menu,
   .DocSearch-Sidepanel-Action-expand {
     display: flex;
   }
@@ -247,31 +274,70 @@
 }
 
 .DocSearch-Sidepanel-Prompt--form {
+  --prompt-form-padding: 0.75rem;
   border: 1px solid #777AAF;
-  padding: 0.75rem;
+  padding: var(--prompt-form-padding);
   border-radius: 0.25rem;
   display: flex;
   flex-direction: column;
+  position: relative;
   gap: 0.5rem;
 }
 
+.DocSearch-Sidepanel-Prompt--form {
+  display: inline-grid;
+  vertical-align: top;
+  align-items: center;
+  position: relative;
+}
+
 .DocSearch-Sidepanel-Prompt--textarea {
+  --height-growth-factor: 1.5rem;
   border: none;
   width: 100%;
   resize: none;
   color: var(--docsearch-sidepanel-text-base);
   outline: none;
+  background: none;
+  appearance: none;
+  font-size: 1rem;
+  line-height: var(--height-growth-factor);
+  padding-right: 0.75em;
+  min-height: var(--height-growth-factor);
+  height: calc(var(--height-growth-factor) * var(--prompt-new-lines));
 
   &::placeholder {
     color: #9698C3;
   }
 }
 
+@media screen and (min-width: 769px) {
+  .DocSearch-Sidepanel-Prompt--textarea {
+    min-height: calc(var(--height-growth-factor) * 2);
+  }
+}
+
 .DocSearch-Sidepanel-Prompt--actions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  position: absolute;
+  right: var(--prompt-form-padding);
+  bottom: var(--prompt-form-padding);
   height: 1.5rem;
+}
+
+@media screen and (min-width: 769px) {
+  .DocSearch-Sidepanel-Prompt--form {
+    gap: 0.5rem;
+  }
+
+  .DocSearch-Sidepanel-Prompt--textarea {
+    padding-right: 0;
+  }
+
+  .DocSearch-Sidepanel-Prompt--actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
 }
 
 .DocSearch-Sidepanel-Prompt--stop,
@@ -323,9 +389,16 @@
 }
 
 .DocSearch-Sidepanel-Prompt--disclaimer {
-  font-size: 0.75rem;
-  color: var(--docsearch-sidepanel-text-muted);
-  text-align: center;
+  display: none;
+}
+
+@media screen and (min-width: 769px) {
+  .DocSearch-Sidepanel-Prompt--disclaimer {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--docsearch-sidepanel-text-muted);
+    text-align: center;
+  }
 }
 
 .DocSearch-Sidepanel-Footer {
@@ -348,20 +421,6 @@
 
 .DocSearch-Sidepanel-NewConversationScreen {
   padding-top: 3.5rem;
-}
-
-.DocSearch-Sidepanel-NewConversationScreen p {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  color: var(--docsearch-sidepanel-text-muted);
-  margin-top: 1rem;
-  margin-bottom: 1.5rem;
-  font-weight: 400;
-  max-width: 35ch;
-}
-
-.DocSearch-Sidepanel-Container.is-expanded .DocSearch-Sidepanel-NewConversationScreen p {
-  max-width: 50ch;
 }
 
 .DocSearch-Sidepanel-List {
@@ -438,15 +497,29 @@
 }
 
 .DocSearch-Sidepanel-ConversationScreen {
-  padding: 1rem 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
 }
 
-.DocSearch-Sidepanel-ConversationScreen--disclaimer {
+@media screen and (min-width: 769px) {
+  .DocSearch-Sidepanel-ConversationScreen {
+    padding: 1rem 0;
+  }
+}
+
+.DocSearch-Sidepanel-ConversationScreen-disclaimer {
   font-size: 0.75rem;
+  line-height: 1rem;
   color: var(--docsearch-sidepanel-text-muted);
-  margin-bottom: 1rem;
+  margin: 1rem 0;
+  font-weight: 400;
+}
+
+@media screen and (min-width: 769px) {
+  .DocSearch-Sidepanel-ConversationScreen-disclaimer {
+    display: none;
+  }
 }
 
 .DocSearch-Sidepanel .DocSearch-AskAiScreen-Response {
@@ -479,4 +552,16 @@
 
 @media (max-width: 768px) {
   .DocSearch-Sidepanel-Container {}
+}
+
+.sr-only {
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  position: absolute;
+  overflow: hidden;
 }

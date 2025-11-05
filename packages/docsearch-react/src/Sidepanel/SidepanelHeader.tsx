@@ -5,7 +5,9 @@ import type { Exchange } from '../AskAiScreen';
 import {
   CloseIcon,
   ConversationHistoryIcon,
+  EditIcon,
   ExpandIcon,
+  FolderIcon,
   MoreVerticalIcon,
   NewConversationIcon,
   SparklesIcon,
@@ -39,9 +41,25 @@ export const SidepanelHeader = React.memo(
       header = 'My conversation history';
     }
 
+    const goToConversationHistory = (): void => {
+      setSidepanelState('conversation-history');
+    };
+
     return (
       <header className="DocSearch-Sidepanel-Header">
         <div className="DocSearch-Sidepanel-Header--left">
+          <button type="button" className="DocSearch-Action" onClick={onNewConversation}>
+            <EditIcon />
+          </button>
+
+          <div className="DocSearch-Divider" />
+
+          <button type="button" className="DocSearch-Action" onClick={goToConversationHistory}>
+            <FolderIcon />
+          </button>
+        </div>
+        <div className="DocSearch-Sidepanel-Header--center">
+          {/* TODO: Remove the arrow button for mobile? */}
           {sidepanelState === 'conversation-history' ? (
             <button
               type="button"
@@ -64,7 +82,7 @@ export const SidepanelHeader = React.memo(
         <div className="DocSearch-Sidepanel-Header--right">
           {sidepanelState !== 'conversation-history' && (
             <Menu>
-              <Menu.Trigger className="DocSearch-Action">
+              <Menu.Trigger className="DocSearch-Action DocSearch-Sidepanel-Action-menu">
                 <MoreVerticalIcon />
               </Menu.Trigger>
               <Menu.Content>
@@ -74,11 +92,7 @@ export const SidepanelHeader = React.memo(
                     Start a new conversation
                   </Menu.Item>
                 )}
-                <Menu.Item
-                  onClick={() => {
-                    setSidepanelState('conversation-history');
-                  }}
-                >
+                <Menu.Item onClick={goToConversationHistory}>
                   <ConversationHistoryIcon />
                   Conversation history
                 </Menu.Item>
