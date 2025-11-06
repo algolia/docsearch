@@ -33,7 +33,7 @@ export const NewConversationScreen = ({
   return (
     <div className="DocSearch-Sidepanel-NewConversationScreen">
       <h4 className="DocSearch-Sidepanel-Screen--title">{titleText}</h4>
-      <p>{introductionText}</p>
+      <p className="DocSearch-Sidepanel-Screen--introduction">{introductionText}</p>
 
       <div className="DocSearch-Sidepanel-List">
         {suggestedQuestions.map((q) => (

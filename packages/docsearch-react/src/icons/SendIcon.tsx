@@ -3,13 +3,19 @@ import React from 'react';
 
 export const SendIcon = (): JSX.Element => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11" fill="none">
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M4.81311 0.146447C5.00838 -0.0488155 5.32496 -0.0488155 5.52022 0.146447L10.1869 4.81311C10.3821 5.00838 10.3821 5.32496 10.1869 5.52022C9.99162 5.71548 9.67504 5.71548 9.47978 5.52022L5.66667 1.70711V9.83333C5.66667 10.1095 5.44281 10.3333 5.16667 10.3333C4.89052 10.3333 4.66667 10.1095 4.66667 9.83333V1.70711L0.853553 5.52022C0.658291 5.71548 0.341709 5.71548 0.146447 5.52022C-0.0488155 5.32496 -0.0488155 5.00838 0.146447 4.81311L4.81311 0.146447Z"
-        fill="currentColor"
-      />
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m5 12 7-7 7 7" />
+      <path d="M12 19V5" />
     </svg>
   );
 };

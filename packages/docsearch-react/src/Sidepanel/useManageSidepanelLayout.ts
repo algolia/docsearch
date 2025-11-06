@@ -1,6 +1,8 @@
 import { useLayoutEffect, useRef } from 'react';
 
-import type { PanelSide, PanelVariant } from './Sidepanel';
+import { useIsMobile } from '../useIsMobile';
+
+import type { PanelSide, PanelVariant } from './types';
 
 type UseManageSidepanelLayoutProps = {
   variant: PanelVariant;
@@ -19,9 +21,10 @@ export function useManageSidepanelLayout({
 }: UseManageSidepanelLayoutProps): void {
   const targetRef = useRef<HTMLElement | null>(null);
   const lastSelectorRef = useRef<string | null>(null);
+  const isMobile = useIsMobile();
 
   useLayoutEffect(() => {
-    if (variant === 'floating') return;
+    if (variant === 'floating' || isMobile) return;
 
     if (lastSelectorRef.current !== selectors) {
       if (targetRef.current) {
@@ -53,7 +56,7 @@ export function useManageSidepanelLayout({
     } else {
       target.style.marginRight = offset;
     }
-  }, [isOpen, expectedWidth, variant, selectors, side]);
+  }, [isOpen, expectedWidth, variant, selectors, side, isMobile]);
 
   useLayoutEffect(() => {
     return (): void => {

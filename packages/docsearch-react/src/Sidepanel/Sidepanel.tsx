@@ -16,16 +16,18 @@ import { ConversationScreen } from './ConversationScreen';
 import type { NewConversationScreenTranslations } from './NewConversationScreen';
 import { NewConversationScreen } from './NewConversationScreen';
 import { PromptForm, type PromptFormTranslations } from './PromptForm';
+import type { HeaderTranslations } from './SidepanelHeader';
 import { SidepanelHeader } from './SidepanelHeader';
+import type { PanelSide, PanelVariant, SidepanelState } from './types';
 import { useManageSidepanelLayout } from './useManageSidepanelLayout';
 import { useSidepanelKeyboardEvents } from './useSidepanelKeyboardEvents';
-
-const BASE_WIDTH = 360;
-const EXPANDED_WIDTH = 580;
-
-type SidepanelState = 'conversation-history' | 'conversation' | 'new-conversation';
+import { useSidepanelWidth } from './useSidepanelWidth';
 
 export type SidepanelTranslations = Partial<{
+  /**
+   * Translation texts for the Sidepanel header.
+   **/
+  header: HeaderTranslations;
   /**
    * Translation texts for the prompt form.
    **/
@@ -43,9 +45,6 @@ export type SidepanelTranslations = Partial<{
    **/
   logo: AlgoliaLogoTranslations;
 }>;
-
-export type PanelVariant = 'floating' | 'inline';
-export type PanelSide = 'left' | 'right';
 
 export type SidepanelProps = {
   /**
@@ -133,16 +132,15 @@ export const Sidepanel = ({
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [sidepanelState, setSidepanelState] = React.useState<SidepanelState>('new-conversation');
   const [stoppedStreaming, setStoppedStreaming] = React.useState(false);
+  const sidepanelContainerRef = React.useRef<HTMLDivElement>(null);
+  const promptInputRef = React.useRef<HTMLTextAreaElement>(null);
 
-  const baseWidth = React.useMemo(() => {
-    return typeof width === 'number' ? `${width}px` : (width ?? `${BASE_WIDTH}px`);
-  }, [width]);
+  const expectedWidth = useSidepanelWidth({
+    isExpanded,
+    width,
+    expandedWidth,
+  });
 
-  const resolvedExpandedWidth = React.useMemo(() => {
-    return typeof expandedWidth === 'number' ? `${expandedWidth}px` : (expandedWidth ?? `${EXPANDED_WIDTH}px`);
-  }, [expandedWidth]);
-
-  const expectedWidth = isExpanded ? resolvedExpandedWidth : baseWidth;
   const selectors = React.useMemo(() => pushSelector ?? '#root, main, .app, body', [pushSelector]);
 
   const toggleIsExpanded = useCallback((): void => {
@@ -252,6 +250,29 @@ export const Sidepanel = ({
     prevStatus.current = status;
   }, [conversations, status, messages, stoppedStreaming]);
 
+  React.useEffect(() => {
+    function setFullViewportHeight(): void {
+      if (sidepanelContainerRef.current) {
+        const vh = window.innerHeight * 0.01;
+        sidepanelContainerRef.current.style.setProperty('--sp-vh', `${vh}px`);
+      }
+    }
+
+    setFullViewportHeight();
+
+    window.addEventListener('resize', setFullViewportHeight);
+
+    return (): void => {
+      window.removeEventListener('resize', setFullViewportHeight);
+    };
+  }, []);
+
+  React.useEffect(() => {
+    if (isOpen) {
+      promptInputRef.current?.focus();
+    }
+  }, [isOpen]);
+
   return (
     <div
       className={`DocSearch-Sidepanel-Container ${variant} side-${side}${isOpen ? ' is-open' : ''}${isExpanded ? ' is-expanded' : ''}`}
@@ -262,8 +283,9 @@ export const Sidepanel = ({
       }
       role="dialog"
       tabIndex={-1}
+      ref={sidepanelContainerRef}
     >
-      <aside id="docsearch-sidepanel" className="DocSearch-Sidepanel">
+      <aside id="docsearch-sidepanel" className={`DocSearch-Sidepanel ${sidepanelState}`}>
         <SidepanelHeader
           sidepanelState={sidepanelState}
           exchanges={exchanges}
@@ -295,9 +317,9 @@ export const Sidepanel = ({
           )}
         </div>
         <PromptForm
+          ref={promptInputRef}
           exchanges={exchanges}
           isStreaming={isStreaming}
-          status={status}
           translations={translations.promptForm}
           onSend={handleSend}
           onStopStreaming={handleStopStreaming}

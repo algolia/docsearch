@@ -1,10 +1,10 @@
-import type { UseChatHelpers } from '@ai-sdk/react';
-import React, { useMemo } from 'react';
+import React from 'react';
 import type { JSX } from 'react';
 
 import type { Exchange } from '../AskAiScreen';
 import { SendIcon, StopIcon } from '../icons';
-import type { AIMessage } from '../types/AskiAi';
+import { useIsMobile } from '../useIsMobile';
+import { scrollTo } from '../utils';
 
 export type PromptFormTranslations = Partial<{
   /**
@@ -30,16 +30,21 @@ export type PromptFormTranslations = Partial<{
 type Props = {
   exchanges: Exchange[];
   isStreaming: boolean;
-  status: UseChatHelpers<AIMessage>['status'];
   translations?: PromptFormTranslations;
   onSend: (prompt: string) => void;
   onStopStreaming: () => void;
 };
 
-export const PromptForm = React.memo(
-  ({ exchanges, isStreaming, status, translations = {}, onSend, onStopStreaming }: Props): JSX.Element => {
+const MAX_PROMPT_ROWS = 8;
+
+export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
+  ({ exchanges, isStreaming, translations = {}, onSend, onStopStreaming }, ref): JSX.Element => {
+    const isMobile = useIsMobile();
     const [userPrompt, setUserPrompt] = React.useState('');
-    const promptRef = React.useRef<HTMLTextAreaElement | null>(null);
+    const promptContainerRef = React.useRef<HTMLDivElement>(null);
+    const promptRef = React.useRef<HTMLTextAreaElement>(null);
+
+    React.useImperativeHandle(ref, () => promptRef.current as HTMLTextAreaElement);
 
     const {
       promptPlaceholderText = 'Ask a question',
@@ -50,6 +55,26 @@ export const PromptForm = React.memo(
       promptAriaLabelText = 'Prompt input',
     } = translations;
 
+    const managePromptHeight = (): void => {
+      if (!promptRef.current) return;
+
+      const textArea = promptRef.current;
+      const styles = getComputedStyle(textArea);
+
+      const lineHeight = parseFloat(styles.lineHeight);
+      const paddingTop = parseFloat(styles.paddingTop);
+      const paddingBottom = parseFloat(styles.paddingBottom);
+      const padding = paddingTop + paddingBottom;
+
+      textArea.style.height = 'auto';
+
+      const fullHeight = textArea.scrollHeight;
+      const maxHeight = MAX_PROMPT_ROWS * lineHeight + padding;
+
+      textArea.style.overflowY = fullHeight > maxHeight ? 'auto' : 'hidden';
+      textArea.style.height = `${Math.min(fullHeight, maxHeight)}px`;
+    };
+
     const handleSend = (): void => {
       const prompt = userPrompt.trim();
 
@@ -58,8 +83,16 @@ export const PromptForm = React.memo(
       onSend(prompt);
 
       setUserPrompt('');
-      // TODO: Focus a different element to reset mobile view
-      requestAnimationFrame(() => promptRef.current?.focus());
+
+      requestAnimationFrame(() => {
+        if (promptContainerRef.current) {
+          scrollTo(promptContainerRef.current);
+        }
+
+        promptRef.current?.focus();
+
+        managePromptHeight();
+      });
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
@@ -70,12 +103,9 @@ export const PromptForm = React.memo(
       }
     };
 
-    // Calculate new lines in prompt to determine the input's height
-    const promptNewLines = useMemo(() => {
-      if (userPrompt === '') return 1;
-
-      return (userPrompt.match(/\n/gm) || []).length + 1;
-    }, [userPrompt]);
+    React.useLayoutEffect(() => {
+      managePromptHeight();
+    }, [isMobile]);
 
     let promptPlaceholder = promptPlaceholderText;
 
@@ -86,7 +116,7 @@ export const PromptForm = React.memo(
     }
 
     return (
-      <div className="DocSearch-Sidepanel-Prompt">
+      <div className="DocSearch-Sidepanel-Prompt" ref={promptContainerRef}>
         <form
           className="DocSearch-Sidepanel-Prompt--form"
           onSubmit={(e) => {
@@ -104,19 +134,17 @@ export const PromptForm = React.memo(
             aria-label={promptAriaLabelText}
             aria-labelledby="prompt-label"
             autoComplete="off"
-            style={
-              {
-                '--prompt-new-lines': promptNewLines,
-              } as React.CSSProperties
-            }
+            translate="no"
+            rows={isMobile ? 1 : 2}
             onKeyDown={handleKeyDown}
+            onInput={managePromptHeight}
             onChange={(e) => setUserPrompt(e.target.value)}
           />
           <span id="prompt-label" className="sr-only">
             {promptLabelText}
           </span>
           <div className="DocSearch-Sidepanel-Prompt--actions">
-            {status === 'streaming' && (
+            {isStreaming && (
               <button type="button" className="DocSearch-Sidepanel-Prompt--stop" onClick={onStopStreaming}>
                 <StopIcon />
               </button>
