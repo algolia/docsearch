@@ -1,27 +1,27 @@
 :root {
-  --docsearch-sidepanel-background: #F5F5FA;
+  /* Theme colors */
+  /* Pulls variables from ./_variables.css at build */
+  --docsearch-sidepanel-background: var(--docsearch-modal-background);
+  --docsearch-sidepanel-background-dark: var(--docsearch-searchbox-background);
   --docsearch-sidepanel-white: #fff;
-  --docsearch-sidepanel-accent: #003DFF;
-  --docsearch-sidepanel-accent-dark: #022EB9;
-  --docsearch-sidepanel-accent-muted: #BBD1FF;
-  --docsearch-sidepanel-border: #D6D6E7;
-  --docsearch-sidepanel-text-base: #23263B;
-  --docsearch-sidepanel-text-muted: #5A5E9A;
-  --docsearch-sidepanel-scrollbar-color: rgba(150, 152, 195, 1);
-  --docsearch-sidepanel-scrollbar-bg: rgb(245, 246, 247);
+  --docsearch-sidepanel-primary: var(--docsearch-primary-color);
+  --docsearch-sidepanel-primary-dark: rgba(2, 46, 185, 1);
+  --docsearch-sidepanel-primary-disabled: rgba(187, 209, 255, 1);
+  --docsearch-sidepanel-accent: var(--docsearch-highlight-color);
+  --docsearch-sidepanel-accent-muted: rgba(187, 209, 255, 1);
+  --docsearch-sidepanel-border: var(--docsearch-subtle-color);
+  --docsearch-sidepanel-text-base: rgba(35, 38, 59, 1);
+  --docsearch-sidepanel-text-muted: var(--docsearch-secondary-text-color);
+  --docsearch-sidepanel-scrollbar-color: var(--docsearch-muted-color);
+  --docsearch-sidepanel-scrollbar-bg: var(--docsearch-modal-background);
+  --docsearch-sidepanel-hit-background: var(--docsearch-hit-background);
+  --docsearch-sidepanel-hit-color: var(--docsearch-hit-color);
+  --docsearch-sidepanel-hit-highlight-color: var(--docsearch-hit-highlight-color);
 }
 
 html[data-theme='dark'] {
-  --docsearch-sidepanel-background: rgb(21, 23, 42);
-  --docsearch-sidepanel-white: #fff;
-  --docsearch-sidepanel-accent: #003DFF;
-  --docsearch-sidepanel-accent-dark: #022EB9;
-  --docsearch-sidepanel-accent-muted: #BBD1FF;
-  --docsearch-sidepanel-border: var(--docsearch-subtle-color);
-  --docsearch-sidepanel-text-base: #23263B;
-  --docsearch-sidepanel-text-muted: #5A5E9A;
-  --docsearch-sidepanel-scrollbar-color: rgba(150, 152, 195, 1);
-  --docsearch-sidepanel-scrollbar-bg: rgb(245, 246, 247);
+  --docsearch-sidepanel-text-base: var(--docsearch-text-color);
+  --docsearch-sidepanel-primary-disabled: rgba(1, 45, 186, 0.60);
 }
 
 .DocSearch-SidepanelButton {
@@ -34,7 +34,7 @@ html[data-theme='dark'] {
 }
 
 .DocSearch-SidepanelButton.floating {
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   justify-content: center;
   position: fixed;
   padding: 0.5rem;
@@ -43,42 +43,61 @@ html[data-theme='dark'] {
   bottom: 1rem;
   right: 1rem;
   z-index: 380;
-  background-color: var(--docsearch-sidepanel-accent);
+  background-color: var(--docsearch-sidepanel-primary);
   color: var(--docsearch-sidepanel-white);
+}
+
+.DocSearch-SidepanelButton.floating:hover,
+.DocSearch-SidepanelButton.floating:focus {
+  background-color: var(--docsearch-sidepanel-primary-dark);
+}
+
+.DocSearch-SidepanelButton.floating svg {
+  width: 1.375rem;
+  height: 1.375rem;
+  stroke-width: 1.4;
 }
 
 @media screen and (min-width: 769px) {
   .DocSearch-SidepanelButton.floating {
+    border-radius: 1rem;
     width: 4rem;
     height: 4rem;
   }
-}
 
-.DocSearch-SidepanelButton.floating:hover {
-  background-color: var(--docsearch-sidepanel-accent-dark);
-}
-
-.DocSearch-SidepanelButton.floating svg {
-  width: 2em;
-  height: 2em;
+  .DocSearch-SidepanelButton.floating svg {
+    width: 2rem;
+    height: 2rem;
+  }
 }
 
 .DocSearch-SidepanelButton.inline {
+  display: inline-flex;
+  align-items: center;
   border-radius: 0.5rem;
-  padding: 0.5rem;
+  padding: 0 0.75rem;
   gap: 0.5em;
   border: 1px solid var(--docsearch-sidepanel-border);
   color: var(--docsearch-sidepanel-text-base);
-  background-color: var(--docsearch-sidepanel-white);
+  background-color: var(--docsearch-sidepanel-background);
+  height: 2.25rem;
+  user-select: none;
+  font-size: 1rem;
+  all: unset;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  line-height: normal;
 }
 
 .DocSearch-SidepanelButton.inline:hover {
-  background-color: var(--docsearch-sidepanel-background);
+  background-color: rgba(4, 4, 8, 1);
+  border-color: var(--docsearch-sidepanel-accent);
 }
 
 .DocSearch-SidepanelButton.inline svg {
-  width: 1.25em;
-  height: 1.25em;
+  width: 1.25rem;
+  height: 1.25rem;
   color: var(--docsearch-sidepanel-accent);
 }
 
@@ -201,8 +220,12 @@ html[data-theme='dark'] {
   text-decoration: none;
 }
 
+.DocSearch-Sidepanel svg {
+  stroke-width: 1.4;
+}
+
 .DocSearch-Sidepanel-Header {
-  background-color: var(--docsearch-searchbox-focus-background);
+  background-color: var(--docsearch-sidepanel-background-dark);
   display: flex;
   align-items: center;
   padding: 0.2rem 1rem;
@@ -275,7 +298,7 @@ html[data-theme='dark'] {
   display: block;
   height: 1.25rem;
   width: 1.25rem;
-  color: var(--docsearch-sidepanel-accent);
+  color: var(--docsearch-sidepanel-primary);
 }
 
 @media screen and (min-width: 769px) {
@@ -300,11 +323,25 @@ html[data-theme='dark'] {
   scrollbar-width: thin;
 }
 
+.DocSearch-Sidepanel-Content::-webkit-scrollbar {
+  width: 12px;
+}
+
+.DocSearch-Sidepanel-Content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.DocSearch-Sidepanel-Content::-webkit-scrollbar-thumb {
+  background-color: var(--docsearch-muted-color);
+  border: 3px solid var(--docsearch-modal-background);
+  border-radius: 20px;
+}
+
 .DocSearch-Sidepanel-Prompt {
   border-top: 1px solid var(--docsearch-sidepanel-border);
   padding: 1rem;
   padding-bottom: 0;
-  background-color: var(--docsearch-sidepanel-white);
+  background-color: var(--docsearch-sidepanel-background-dark);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -322,7 +359,7 @@ html[data-theme='dark'] {
 }
 
 .DocSearch-Sidepanel-Prompt--form:focus-within {
-  border-color: var(--docsearch-sidepanel-accent);
+  border-color: var(--docsearch-sidepanel-primary);
 }
 
 .DocSearch-Sidepanel-Prompt--textarea {
@@ -343,7 +380,8 @@ html[data-theme='dark'] {
 }
 
 .DocSearch-Sidepanel-Prompt--textarea::placeholder {
-  color: #9698C3;
+  color: var(--docsearch-muted-color);
+  opacity: 1;
 }
 
 .DocSearch-Sidepanel-Prompt--actions {
@@ -362,6 +400,14 @@ html[data-theme='dark'] {
   justify-content: center;
   border-radius: 0.25rem;
   cursor: pointer;
+  transition: all 150ms ease-in-out;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .DocSearch-Sidepanel-Prompt--stop,
+  .DocSearch-Sidepanel-Prompt--submit {
+    transition: none;
+  }
 }
 
 .DocSearch-Sidepanel-Prompt--stop {
@@ -370,8 +416,16 @@ html[data-theme='dark'] {
   color: var(--docsearch-sidepanel-text-muted);
 }
 
+html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop {
+  background-color: var(--docsearch-sidepanel-background);
+}
+
 .DocSearch-Sidepanel-Prompt--stop:hover {
   background-color: var(--docsearch-sidepanel-background);
+}
+
+html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
+  background-color: var(--docsearch-sidepanel-background-dark);
 }
 
 .DocSearch-Sidepanel-Prompt--stop svg {
@@ -380,18 +434,18 @@ html[data-theme='dark'] {
 }
 
 .DocSearch-Sidepanel-Prompt--submit {
-  background-color: var(--docsearch-sidepanel-accent);
+  background-color: var(--docsearch-sidepanel-primary);
   border: none;
   color: var(--docsearch-sidepanel-white);
 }
 
 .DocSearch-Sidepanel-Prompt--submit:hover {
-  background-color: var(--docsearch-sidepanel-accent-dark);
+  background-color: var(--docsearch-sidepanel-primary-dark);
 }
 
 .DocSearch-Sidepanel-Prompt--submit:disabled,
 .DocSearch-Sidepanel-Prompt--submit[aria-disabled='true'] {
-  background-color: var(--docsearch-sidepanel-accent-muted);
+  background-color: var(--docsearch-sidepanel-primary-disabled);
   user-select: none;
   cursor: not-allowed;
 }
@@ -417,7 +471,7 @@ html[data-theme='dark'] {
 .DocSearch-Sidepanel-Footer {
   display: flex;
   justify-content: flex-end;
-  background-color: var(--docsearch-searchbox-focus-background);
+  background-color: var(--docsearch-sidepanel-background-dark);
   padding: 0.75rem 1rem 1rem 1rem;
 }
 
@@ -441,6 +495,7 @@ html[data-theme='dark'] {
   color: var(--docsearch-sidepanel-text-muted);
   line-height: 1.25rem;
   margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
 @media screen and (min-width: 769px) {
@@ -466,7 +521,8 @@ html[data-theme='dark'] {
   display: flex;
   position: relative;
   scroll-margin-top: 2.5rem;
-  background-color: var(--docsearch-sidepanel-white);
+  background-color: var(--docsearch-hit-background);
+  color: var(--docsearch-sidepanel-text-base);
   padding: 0 0.75rem;
   width: 100%;
   margin-bottom: 0.25rem;
@@ -509,7 +565,7 @@ html[data-theme='dark'] {
 }
 
 .DocSearch-Sidepanel-SuggestedQuestion {
-  background-color: var(--docsearch-sidepanel-white);
+  background-color: var(--docsearch-sidepanel-background-dark);
   border: 1px solid var(--docsearch-sidepanel-border);
   border-radius: 0.25rem;
   height: 2.5rem;
@@ -520,6 +576,7 @@ html[data-theme='dark'] {
   font-size: 0.875rem;
   line-height: 1.25rem;
   color: var(--docsearch-sidepanel-text-base);
+  cursor: pointer;
 }
 
 .DocSearch-Sidepanel-ConversationScreen {
@@ -558,7 +615,8 @@ html[data-theme='dark'] {
 }
 
 .DocSearch-Sidepanel .DocSearch-Markdown-Content {
-  font-size: 0.95em;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .DocSearch-Sidepanel .DocSearch-Markdown-Content h1,
@@ -576,8 +634,20 @@ html[data-theme='dark'] {
   color: var(--docsearch-muted-color);
 }
 
+.DocSearch-Sidepanel .DocSearch-AskAiScreen-Actions {
+  margin-left: 0;
+}
+
+.DocSearch-Sidepanel .DocSearch-AskAiScreen-CopyButton {
+  order: -1;
+}
+
 .DocSearch-Sidepanel .DocSearch-AskAiScreen-RelatedSources {
   padding-bottom: 1rem;
+}
+
+.DocSearch-Sidepanel .DocSearch-Menu-content {
+  right: -4rem;
 }
 
 .sr-only {

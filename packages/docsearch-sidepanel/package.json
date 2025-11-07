@@ -13,17 +13,22 @@
     "name": "Algolia, Inc.",
     "url": "https://www.algolia.com"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "sideEffects": false,
   "files": [
     "dist/",
     "index.js",
     "button.js",
-    "sidepanel.js"
+    "sidepanel.js",
+    "style/"
   ],
   "exports": {
     ".": "./dist/esm/index.js",
     "./button": "./dist/esm/SidepanelButton.js",
-    "./sidepanel": "./dist/esm/Sidepanel.js"
+    "./sidepanel": "./dist/esm/Sidepanel.js",
+    "./style": "./style/index.js"
   },
   "source": "src/index.ts",
   "types": "dist/esm/index.d.ts",
@@ -41,6 +46,7 @@
     "watch": "nodemon --watch src --ext ts,tsx,js,jsx,json --ignore dist/ --ignore node_modules/ --verbose --delay 250ms --exec \"yarn on:change\""
   },
   "dependencies": {
+    "@docsearch/css": "4.2.0",
     "@docsearch/react": "4.2.0"
   },
   "devDependencies": {

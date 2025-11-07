@@ -71,10 +71,11 @@ export const SidepanelButton = ({
       type="button"
       aria-label={isCtrlCmdIEnabled ? `${buttonAriaLabel} (${shortcut})` : buttonAriaLabel}
       aria-keyshortcuts={isCtrlCmdIEnabled ? shortcut : undefined}
+      {...(variant === 'floating' ? { tabIndex: -1 } : {})}
       {...props}
     >
-      {variant !== 'floating' && buttonText}
       <SparklesIcon />
+      {variant !== 'floating' && buttonText}
     </button>
   );
 };

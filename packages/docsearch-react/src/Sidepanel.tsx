@@ -16,7 +16,7 @@ export type DocSearchSidepanelProps = {
   /**
    * Public api key with search permissions for the index.
    */
-  searchApiKey: string;
+  apiKey: string;
   /**
    * Algolia application id used by the search client.
    */
@@ -29,12 +29,6 @@ export type DocSearchSidepanelProps = {
    * The search parameters to use for the ask AI feature.
    */
   searchParameters?: AskAiSearchParameters;
-  /**
-   * Whether to have the Sidepanel open by default or not.
-   *
-   * @default false
-   **/
-  defaultOpen?: boolean;
   /**
    * Configuration for keyboard shortcuts. Allows enabling/disabling specific shortcuts.
    *
@@ -66,7 +60,6 @@ export function DocSearchSidepanel({ keyboardShortcuts, theme, ...props }: DocSe
 }
 
 function DocSearchSidepanelComp({
-  defaultOpen = false,
   button: buttonProps = {},
   panel: { portalContainer, ...panelProps } = {},
   ...rootProps
@@ -84,12 +77,6 @@ function DocSearchSidepanelComp({
   const handleOpen = (): void => {
     setDocsearchState('sidepanel');
   };
-
-  React.useEffect(() => {
-    if (defaultOpen && docsearchState !== 'sidepanel') {
-      setDocsearchState('sidepanel');
-    }
-  }, [defaultOpen, docsearchState, setDocsearchState]);
 
   const containerElement = React.useMemo(() => portalContainer ?? document.body, [portalContainer]);
 

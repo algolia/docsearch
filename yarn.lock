@@ -2519,6 +2519,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docsearch/sidepanel@workspace:packages/docsearch-sidepanel"
   dependencies:
+    "@docsearch/css": "npm:4.2.0"
     "@docsearch/react": "npm:4.2.0"
     "@rollup/plugin-replace": "npm:6.0.2"
     "@testing-library/jest-dom": "npm:6.6.3"

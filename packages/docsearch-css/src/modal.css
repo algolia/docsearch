@@ -934,7 +934,7 @@ assistive tech users */
 .DocSearch-AskAiScreen-RelatedSources-Title {
   font-size: 0.7em;
   font-weight: 400;
-  color: var(--docsearch-secondary-color);
+  color: var(--docsearch-secondary-text-color);
   padding: 6px 0;
   margin: 0;
 }

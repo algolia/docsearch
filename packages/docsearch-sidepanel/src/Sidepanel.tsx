@@ -4,7 +4,8 @@ import React from 'react';
 import type { JSX } from 'react';
 import { createPortal } from 'react-dom';
 
-export type SidepanelProps = DocSearchSidepanelProps['panel'] & Omit<DocSearchSidepanelProps, 'button' | 'panel'>;
+export type SidepanelProps = DocSearchSidepanelProps['panel'] &
+  Omit<DocSearchSidepanelProps, 'button' | 'panel' | 'theme'>;
 
 export function Sidepanel({ portalContainer, ...props }: SidepanelProps): JSX.Element {
   const { docsearchState, setDocsearchState, keyboardShortcuts } = useDocSearch();

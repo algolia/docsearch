@@ -16,6 +16,7 @@ import { ConversationScreen } from './ConversationScreen';
 import type { NewConversationScreenTranslations } from './NewConversationScreen';
 import { NewConversationScreen } from './NewConversationScreen';
 import { PromptForm, type PromptFormTranslations } from './PromptForm';
+import { setSidepanelSearchClient } from './setSidepanelSearchClient';
 import type { HeaderTranslations } from './SidepanelHeader';
 import { SidepanelHeader } from './SidepanelHeader';
 import type { PanelSide, PanelVariant, SidepanelState } from './types';
@@ -116,7 +117,7 @@ export const Sidepanel = ({
   onOpen,
   onClose,
   assistantId,
-  searchApiKey,
+  apiKey,
   appId,
   indexName,
   variant = 'inline',
@@ -147,7 +148,7 @@ export const Sidepanel = ({
     setIsExpanded(!isExpanded);
   }, [isExpanded]);
 
-  const searchClient = useSearchClient(appId, searchApiKey, (client) => client);
+  const searchClient = useSearchClient(appId, apiKey, setSidepanelSearchClient);
 
   const {
     status,
@@ -164,7 +165,7 @@ export const Sidepanel = ({
     appId,
     indexName,
     assistantId,
-    apiKey: searchApiKey,
+    apiKey,
     searchParameters,
   });
 
@@ -267,11 +268,11 @@ export const Sidepanel = ({
     };
   }, []);
 
-  React.useEffect(() => {
-    if (isOpen) {
-      promptInputRef.current?.focus();
-    }
-  }, [isOpen]);
+  // eslint-disable-next-line no-warning-comments
+  // FIX: Renable autofocus on open once mobile focus issue is solved
+  // React.useEffect(() => {
+  //   promptInputRef.current?.focus();
+  // }, [isOpen]);
 
   return (
     <div
