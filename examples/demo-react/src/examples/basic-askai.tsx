@@ -13,6 +13,7 @@ export default function BasicAskAI(): JSX.Element {
         searchParameters: {
           facetFilters: ['language:en'],
         },
+        suggestedQuestions: true,
       }}
       insights={true}
       translations={{ button: { buttonText: 'Search with Ask AI' } }}
