@@ -1419,12 +1419,12 @@ assistive tech users */
 .DocSearch-NewConversationScreen-SuggestedQuestion {
   border-radius: var(--docsearch-border-radius);
   padding: 12px;
-  border: 1px solid #D6D6E7;
+  border: 1px solid var(--docsearch-subtle-color);
   height: 40px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #fff;
+  background-color: var(--docsearch-searchbox-background);
   color: var(--docsearch-text-color);
   cursor: pointer;
 }
