@@ -1,3 +1,12 @@
+## [4.3.2](https://github.com/algolia/docsearch/compare/v4.3.1...v4.3.2) (2025-11-10)
+
+
+### Bug Fixes
+
+* **suggested-questions:** Fixes Suggested Questions on dark theme ([#2797](https://github.com/algolia/docsearch/issues/2797)) ([d9c4220](https://github.com/algolia/docsearch/commit/d9c42204572141a042ea93abf6d4aa73571c1354))
+
+
+
 ## [4.3.1](https://github.com/algolia/docsearch/compare/v4.3.0...v4.3.1) (2025-11-04)
 
 
