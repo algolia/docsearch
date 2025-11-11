@@ -2,12 +2,23 @@ import type { JSX } from 'react';
 import React from 'react';
 
 import { useDocSearchKeyboardEvents } from './useDocSearchKeyboardEvents';
+import { useIsMobile } from './useIsMobile';
 import { useKeyboardShortcuts } from './useKeyboardShortcuts';
 import type { KeyboardShortcuts } from './useKeyboardShortcuts.ts';
 import type { DocSearchTheme } from './useTheme';
 import { useTheme } from './useTheme';
 
 export type DocSearchState = 'modal-askai' | 'modal-search' | 'ready' | 'sidepanel';
+
+export type View = 'modal' | 'sidepanel' | (Record<string, unknown> & string);
+
+export type InitialAskAiMessage = {
+  query: string;
+  messageId?: string;
+  suggestedQuestionId?: string;
+};
+
+export type OnAskAiToggle = (active: boolean, initialMessage?: InitialAskAiMessage) => void;
 
 export interface DocSearchContext {
   docsearchState: DocSearchState;
@@ -19,7 +30,9 @@ export interface DocSearchContext {
   closeModal: () => void;
   isAskAiActive: boolean;
   isModalActive: boolean;
-  onAskAiToggle: (active: boolean) => void;
+  onAskAiToggle: OnAskAiToggle;
+  initialAskAiMessage: InitialAskAiMessage | undefined;
+  registerView: (view: View) => void;
 }
 
 export interface DocSearchProps {
@@ -37,6 +50,9 @@ export function DocSearch({ children, theme, ...props }: DocSearchProps): JSX.El
   const [initialQuery, setInitialQuery] = React.useState<string>(props.initialQuery || '');
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
   const keyboardShortcuts = useKeyboardShortcuts(props.keyboardShortcuts);
+  const [initialAskAiMessage, setInitialAskAiMessage] = React.useState<InitialAskAiMessage>();
+  const registeredViewsRef = React.useRef(new Set<View>());
+  const isMobile = useIsMobile();
 
   const isModalActive = ['modal-search', 'modal-askai'].includes(docsearchState);
   const isAskAiActive = docsearchState === 'modal-askai';
@@ -51,11 +67,18 @@ export function DocSearch({ children, theme, ...props }: DocSearchProps): JSX.El
     setInitialQuery(props.initialQuery ?? '');
   }, [setDocsearchState, props.initialQuery]);
 
-  const onAskAiToggle = React.useCallback(
-    (active: boolean): void => {
+  const onAskAiToggle: OnAskAiToggle = React.useCallback(
+    (active, initialMessage) => {
+      // Don't use hybrid mode on mobile
+      if (!isMobile && active && registeredViewsRef.current.has('sidepanel')) {
+        setInitialAskAiMessage(initialMessage);
+        setDocsearchState('sidepanel');
+        return;
+      }
+
       setDocsearchState(active ? 'modal-askai' : 'modal-search');
     },
-    [setDocsearchState],
+    [setDocsearchState, isMobile],
   );
 
   const onInput = React.useCallback(
@@ -65,6 +88,12 @@ export function DocSearch({ children, theme, ...props }: DocSearchProps): JSX.El
     },
     [setDocsearchState, setInitialQuery],
   );
+
+  const registerView = React.useCallback((view: View): void => {
+    if (registeredViewsRef.current.has(view)) return;
+
+    registeredViewsRef.current.add(view);
+  }, []);
 
   useTheme({ theme });
 
@@ -91,6 +120,8 @@ export function DocSearch({ children, theme, ...props }: DocSearchProps): JSX.El
       isAskAiActive,
       isModalActive,
       onAskAiToggle,
+      initialAskAiMessage,
+      registerView,
     }),
     [
       docsearchState,
@@ -102,6 +133,8 @@ export function DocSearch({ children, theme, ...props }: DocSearchProps): JSX.El
       isAskAiActive,
       isModalActive,
       onAskAiToggle,
+      initialAskAiMessage,
+      registerView,
     ],
   );
 

@@ -27,7 +27,7 @@ type UseAskAiReturn = {
   status: UseChat['status'];
   sendMessage: UseChat['sendMessage'];
   setMessages: UseChat['setMessages'];
-  stopAskAiStreaming: UseChat['stop'];
+  stopAskAiStreaming: () => Promise<void>;
   askAiStreamError: Error | null;
   askAiFetchError?: Error;
   isStreaming: boolean;
@@ -40,6 +40,7 @@ type UseAskAi = (params: UseAskAiParams) => UseAskAiReturn;
 
 export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, searchParameters }) => {
   const [askAiStreamError, setAskAiStreamError] = useState<Error | null>(null);
+  const abortControllerRef = useRef(new AbortController());
 
   const askAiTransport = useMemo(
     () =>
@@ -55,6 +56,7 @@ export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, sear
           if (USE_ASK_AI_TOKEN) {
             token = await getValidToken({
               assistantId,
+              abortSignal: abortControllerRef.current.signal,
             });
           }
 
@@ -96,6 +98,7 @@ export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, sear
         thumbs,
         messageId,
         appId,
+        abortSignal: abortControllerRef.current.signal,
       });
 
       if (res.status >= 300) throw new Error('Failed, try again later.');
@@ -103,6 +106,11 @@ export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, sear
     },
     [assistantId, appId, conversations],
   );
+
+  const onStopStreaming = async (): Promise<void> => {
+    abortControllerRef.current.abort();
+    await stop();
+  };
 
   const exchanges = useMemo(() => {
     const grouped: Exchange[] = [];
@@ -129,7 +137,7 @@ export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, sear
     status,
     setMessages,
     askAiFetchError: error,
-    stopAskAiStreaming: stop,
+    stopAskAiStreaming: onStopStreaming,
     askAiStreamError,
     isStreaming,
     exchanges,

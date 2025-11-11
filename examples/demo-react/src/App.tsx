@@ -1,6 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { version } from '@docsearch/react';
-import { DocSearchSidepanel } from '@docsearch/react/sidepanel';
 import type { JSX } from 'react';
 
 import './App.css';
@@ -11,6 +10,7 @@ import Basic from './examples/basic';
 import BasicAskAI from './examples/basic-askai';
 import Composable from './examples/composable';
 import DynamicImportModal from './examples/dynamic-import-modal';
+import BasicHybrid from './examples/hybrid';
 import MultiIndex from './examples/multi-index';
 import WHitComponent from './examples/w-hit-component';
 import WTransformItems from './examples/w-hit-transformItems';
@@ -81,18 +81,15 @@ function App(): JSX.Element {
               <WResultsFooter />
             </div>
           </section>
+
+          <section className="demo-section">
+            <p className="section-description">sidepanel hybrid</p>
+            <div className="search-wrapper">
+              <BasicHybrid />
+            </div>
+          </section>
         </main>
       </div>
-
-      <DocSearchSidepanel
-        assistantId="askAIDemo"
-        indexName="docsearch"
-        appId="PMZUYBQDAK"
-        apiKey="24b09689d5b4223813d9b8e48563c8f6"
-        panel={{
-          suggestedQuestions: true,
-        }}
-      />
     </div>
   );
 }

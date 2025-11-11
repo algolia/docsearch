@@ -1,4 +1,4 @@
-import type { SidepanelShortcuts } from '@docsearch/core';
+import type { SidepanelShortcuts, InitialAskAiMessage } from '@docsearch/core';
 import React, { useCallback } from 'react';
 import type { JSX } from 'react';
 
@@ -110,6 +110,7 @@ type Props = Omit<DocSearchSidepanelProps, 'button' | 'panel'> &
     isOpen?: boolean;
     onOpen: () => void;
     onClose: () => void;
+    initialMessage?: InitialAskAiMessage;
   };
 
 export const Sidepanel = ({
@@ -129,6 +130,7 @@ export const Sidepanel = ({
   translations = {},
   keyboardShortcuts,
   side = 'right',
+  initialMessage,
 }: Props): JSX.Element => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [sidepanelState, setSidepanelState] = React.useState<SidepanelState>('new-conversation');
@@ -208,15 +210,18 @@ export const Sidepanel = ({
     stopAskAiStreaming();
   };
 
-  const handleSelectConversation = (conversation: StoredAskAiState): void => {
-    if (conversation.messages) {
-      setMessages(conversation.messages);
-    } else if (conversation.query) {
-      sendMessage({ text: conversation.query });
-    }
+  const handleSelectConversation = React.useCallback(
+    (conversation: StoredAskAiState): void => {
+      if (conversation.messages) {
+        setMessages(conversation.messages);
+      } else if (conversation.query) {
+        sendMessage({ text: conversation.query });
+      }
 
-    setSidepanelState('conversation');
-  };
+      setSidepanelState('conversation');
+    },
+    [sendMessage, setMessages],
+  );
 
   useManageSidepanelLayout({
     variant,
@@ -267,6 +272,35 @@ export const Sidepanel = ({
       window.removeEventListener('resize', setFullViewportHeight);
     };
   }, []);
+
+  React.useEffect(() => {
+    if (!initialMessage) return;
+
+    let selectedConversation: StoredAskAiState | undefined;
+
+    if (initialMessage.messageId) {
+      selectedConversation = conversations.getConversation?.(initialMessage.messageId);
+    }
+
+    if (selectedConversation) {
+      handleSelectConversation(selectedConversation);
+    } else {
+      setMessages([]);
+      sendMessage(
+        {
+          text: initialMessage.query,
+        },
+        initialMessage.suggestedQuestionId
+          ? {
+              body: {
+                suggestedQuestionId: initialMessage.suggestedQuestionId,
+              },
+            }
+          : {},
+      );
+      setSidepanelState('conversation');
+    }
+  }, [initialMessage, sendMessage, conversations, handleSelectConversation, setMessages]);
 
   // eslint-disable-next-line no-warning-comments
   // FIX: Renable autofocus on open once mobile focus issue is solved
