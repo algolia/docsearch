@@ -1,13 +1,8 @@
-[build]
-  command="yarn build && yarn website:build"
-  publish="packages/website/build"
-  ignore="git diff --quiet $COMMIT_REF $CACHED_COMMIT_REF -- packages/website/ yarn.lock"
-
 [build.environment]
-  YARN_VERSION = "1.22.5"
+YARN_VERSION = "1.22.5"
 
 [[redirects]]
-  from = "/apply/"
-  to = "https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch"
-  status = 301
-  force = true
+from = "/apply/"
+to = "https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch"
+status = 301
+force = true
