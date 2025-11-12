@@ -7,6 +7,7 @@ const packages = [
   'packages/docsearch-js',
   'packages/docsearch-core',
   'packages/docsearch-modal',
+  'packages/docsearch-sidepanel',
 ];
 
 export default {
