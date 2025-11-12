@@ -4,7 +4,6 @@ import type { JSX } from 'react';
 import type { Exchange } from '../AskAiScreen';
 import { SendIcon, StopIcon } from '../icons';
 import { useIsMobile } from '../useIsMobile';
-import { scrollTo } from '../utils';
 
 export type PromptFormTranslations = Partial<{
   /**
@@ -41,7 +40,6 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
   ({ exchanges, isStreaming, translations = {}, onSend, onStopStreaming }, ref): JSX.Element => {
     const isMobile = useIsMobile();
     const [userPrompt, setUserPrompt] = React.useState('');
-    const promptContainerRef = React.useRef<HTMLDivElement>(null);
     const promptRef = React.useRef<HTMLTextAreaElement>(null);
 
     React.useImperativeHandle(ref, () => promptRef.current as HTMLTextAreaElement);
@@ -85,10 +83,6 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
       setUserPrompt('');
 
       requestAnimationFrame(() => {
-        if (promptContainerRef.current) {
-          scrollTo(promptContainerRef.current);
-        }
-
         promptRef.current?.focus();
 
         managePromptHeight();
@@ -116,7 +110,7 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
     }
 
     return (
-      <div className="DocSearch-Sidepanel-Prompt" ref={promptContainerRef}>
+      <div className="DocSearch-Sidepanel-Prompt">
         <form
           className="DocSearch-Sidepanel-Prompt--form"
           onSubmit={(e) => {
