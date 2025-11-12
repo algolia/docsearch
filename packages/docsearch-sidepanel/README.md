@@ -10,11 +10,11 @@ yarn add @docsearch/core@4 @docsearch/sidepanel@4 @docsearch/css@4
 npm install @docsearch/core@4 @docsearch/sidepanel@4 @docsearch/css@4
 ```
 
-<!-- If you don’t want to use a package manager, you can use a standalone endpoint: -->
+If you don’t want to use a package manager, you can use a standalone endpoint:
 
-<!-- ```html -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/@docsearch/react@4"></script> -->
-<!-- ``` -->
+```html
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/sidepanel-js"></script>
+```
 
 ## Get started
 
