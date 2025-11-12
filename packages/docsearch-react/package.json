@@ -21,6 +21,7 @@
     "useTheme.js",
     "useDocSearchKeyboardEvents.js",
     "version.js",
+    "sidepanel.js",
     "style/"
   ],
   "exports": {
@@ -30,7 +31,8 @@
     "./style": "./style/index.js",
     "./useDocSearchKeyboardEvents": "./dist/esm/useDocSearchKeyboardEvents.js",
     "./useTheme": "./dist/esm/useTheme.js",
-    "./version": "./dist/esm/version.js"
+    "./version": "./dist/esm/version.js",
+    "./sidepanel": "./dist/esm/Sidepanel.js"
   },
   "source": "src/index.ts",
   "types": "dist/esm/index.d.ts",
