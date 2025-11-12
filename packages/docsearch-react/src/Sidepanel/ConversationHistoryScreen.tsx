@@ -47,6 +47,7 @@ export const ConversationHistoryScreen = ({
                 <button
                   className="DocSearch-Hit-action-button"
                   type="button"
+                  title="Remove conversation from history"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();

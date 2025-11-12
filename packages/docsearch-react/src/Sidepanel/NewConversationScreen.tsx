@@ -41,6 +41,7 @@ export const NewConversationScreen = ({
             key={q.objectID}
             type="button"
             className="DocSearch-Sidepanel-SuggestedQuestion"
+            title="View conversation"
             onClick={() => {
               onSelectQuestion(q);
             }}

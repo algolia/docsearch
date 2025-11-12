@@ -145,14 +145,20 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
           </span>
           <div className="DocSearch-Sidepanel-Prompt--actions">
             {isStreaming && (
-              <button type="button" className="DocSearch-Sidepanel-Prompt--stop" onClick={onStopStreaming}>
+              <button
+                type="button"
+                title="Stop streaming"
+                className="DocSearch-Sidepanel-Prompt--stop"
+                onClick={onStopStreaming}
+              >
                 <StopIcon />
               </button>
             )}
             {!isStreaming && (
               <button
                 type="submit"
-                aria-label="Chat"
+                aria-label="Send question"
+                title="Send question"
                 className="DocSearch-Sidepanel-Prompt--submit"
                 aria-disabled={userPrompt === ''}
               >
