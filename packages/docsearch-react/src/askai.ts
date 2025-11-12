@@ -24,8 +24,14 @@ const isExpired = (token?: string | null): boolean => {
 let inflight: Promise<string> | null = null;
 
 // call /token once, cache the promise while it’s running
-// eslint-disable-next-line require-await
-export const getValidToken = async ({ assistantId }: { assistantId: string }): Promise<string> => {
+export const getValidToken = async ({
+  assistantId,
+  abortSignal,
+}: {
+  assistantId: string;
+  abortSignal: AbortSignal;
+  // eslint-disable-next-line require-await
+}): Promise<string> => {
   const cached = sessionStorage.getItem(TOKEN_KEY);
   if (!isExpired(cached)) return cached!;
 
@@ -36,6 +42,7 @@ export const getValidToken = async ({ assistantId }: { assistantId: string }): P
         'x-algolia-assistant-id': assistantId,
         'content-type': 'application/json',
       },
+      signal: abortSignal,
     })
       .then((r) => r.json())
       .then(({ token }) => {
@@ -53,18 +60,20 @@ export const postFeedback = async ({
   thumbs,
   messageId,
   appId,
+  abortSignal,
 }: {
   assistantId: string;
   thumbs: 0 | 1;
   messageId: string;
   appId: string;
+  abortSignal: AbortSignal;
 }): Promise<Response> => {
   const headers = new Headers();
   headers.set('x-algolia-assistant-id', assistantId);
   headers.set('content-type', 'application/json');
 
   if (USE_ASK_AI_TOKEN) {
-    const token = await getValidToken({ assistantId });
+    const token = await getValidToken({ assistantId, abortSignal });
     headers.set('authorization', `TOKEN ${token}`);
   }
 

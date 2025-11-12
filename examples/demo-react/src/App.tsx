@@ -4,11 +4,13 @@ import type { JSX } from 'react';
 
 import './App.css';
 import '@docsearch/css/dist/style.css';
+import '@docsearch/css/dist/sidepanel.css';
 
 import Basic from './examples/basic';
 import BasicAskAI from './examples/basic-askai';
 import Composable from './examples/composable';
 import DynamicImportModal from './examples/dynamic-import-modal';
+import BasicHybrid from './examples/hybrid';
 import MultiIndex from './examples/multi-index';
 import WHitComponent from './examples/w-hit-component';
 import WTransformItems from './examples/w-hit-transformItems';
@@ -77,6 +79,13 @@ function App(): JSX.Element {
             <p className="section-description">results footer component</p>
             <div className="search-wrapper">
               <WResultsFooter />
+            </div>
+          </section>
+
+          <section className="demo-section">
+            <p className="section-description">sidepanel hybrid</p>
+            <div className="search-wrapper">
+              <BasicHybrid />
             </div>
           </section>
         </main>

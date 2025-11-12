@@ -15,6 +15,7 @@
     "@docsearch/css": "workspace:*",
     "@docsearch/modal": "workspace:*",
     "@docsearch/react": "workspace:*",
+    "@docsearch/sidepanel": "workspace:*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

@@ -11,11 +11,15 @@ export type DocSearchModalProps = Omit<
 >;
 
 export function DocSearchModal(props: DocSearchModalProps): JSX.Element | null {
-  const { isModalActive, onAskAiToggle, closeModal, isAskAiActive, initialQuery } = useDocSearch();
+  const { isModalActive, onAskAiToggle, closeModal, isAskAiActive, initialQuery, registerView } = useDocSearch();
 
   const containerElement = React.useMemo(() => props.portalContainer ?? document.body, [props.portalContainer]);
 
   const initialScroll = React.useMemo(() => window.scrollY, []);
+
+  React.useEffect(() => {
+    registerView('modal');
+  }, [registerView]);
 
   const modalProps = React.useMemo(
     () => ({

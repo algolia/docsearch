@@ -1,18 +1,16 @@
-import { useChat } from '@ai-sdk/react';
 import {
   type AutocompleteSource,
   type AlgoliaInsightsHit,
   createAutocomplete,
   type AutocompleteState,
 } from '@algolia/autocomplete-core';
+import type { OnAskAiToggle } from '@docsearch/core';
 import { useTheme } from '@docsearch/core/useTheme';
 import type { ChatRequestOptions } from 'ai';
-import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls } from 'ai';
 import type { SearchResponse } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 
-import { getValidToken, postFeedback } from './askai';
-import { ASK_AI_API_URL, MAX_QUERY_SIZE, USE_ASK_AI_TOKEN } from './constants';
+import { MAX_QUERY_SIZE } from './constants';
 import type { DocSearchIndex, DocSearchProps } from './DocSearch';
 import type { FooterTranslations } from './Footer';
 import { Footer } from './Footer';
@@ -27,11 +25,13 @@ import type {
   DocSearchHit,
   DocSearchState,
   InternalDocSearchHit,
+  StoredAskAiMessage,
   StoredAskAiState,
   StoredDocSearchHit,
   SuggestedQuestionHit,
 } from './types';
 import type { AIMessage, AskAiState } from './types/AskiAi';
+import { useAskAi } from './useAskAi';
 import { useSearchClient } from './useSearchClient';
 import { useSuggestedQuestions } from './useSuggestedQuestions';
 import { useTouchEvents } from './useTouchEvents';
@@ -49,7 +49,7 @@ export type ModalTranslations = Partial<{
 
 export type DocSearchModalProps = DocSearchProps & {
   initialScrollY: number;
-  onAskAiToggle: (toggle: boolean) => void;
+  onAskAiToggle: OnAskAiToggle;
   onClose?: () => void;
   isAskAiActive?: boolean;
   translations?: ModalTranslations;
@@ -397,48 +397,23 @@ export function DocSearchModal({
     }),
   ).current;
 
-  const [askAiStreamError, setAskAiStreamError] = React.useState<Error | null>(null);
   const [stoppedStream, setStoppedStream] = React.useState(false);
 
   const {
     messages,
-    sendMessage,
     status,
     setMessages,
-    error: askAiFetchError,
-    stop: stopAskAiStreaming,
-  } = useChat<AIMessage>({
-    sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
-    transport: new DefaultChatTransport({
-      api: ASK_AI_API_URL,
-      headers: async (): Promise<Record<string, string>> => {
-        if (!askAiConfigurationId) {
-          throw new Error('Ask AI assistant ID is required');
-        }
-
-        let token: string | null = null;
-
-        if (USE_ASK_AI_TOKEN) {
-          token = await getValidToken({
-            assistantId: askAiConfigurationId,
-          });
-        }
-
-        return {
-          ...(token ? { authorization: `TOKEN ${token}` } : {}),
-          // 'Content-Type': 'application/json',
-          'X-Algolia-API-Key': askAiConfig?.apiKey || apiKey,
-          'X-Algolia-Application-Id': askAiConfig?.appId || appId,
-          'X-Algolia-Index-Name': askAiConfig?.indexName || defaultIndexName,
-          'X-Algolia-Assistant-Id': askAiConfigurationId || '',
-          'X-AI-SDK-Version': 'v5',
-        };
-      },
-      body: askAiSearchParameters ? { searchParameters: askAiSearchParameters } : {},
-    }),
-    onError(streamError) {
-      setAskAiStreamError(streamError);
-    },
+    sendMessage,
+    stopAskAiStreaming,
+    askAiFetchError,
+    askAiStreamError,
+    sendFeedback,
+  } = useAskAi({
+    assistantId: askAiConfigurationId,
+    apiKey: askAiConfig?.apiKey || apiKey,
+    appId: askAiConfig?.appId || appId,
+    indexName: askAiConfig?.indexName || defaultIndexName,
+    searchParameters: askAiSearchParameters,
   });
 
   const prevStatus = React.useRef(status);
@@ -545,7 +520,10 @@ export function DocSearchModal({
         };
       }
 
-      onAskAiToggle(toggle);
+      onAskAiToggle(toggle, {
+        query,
+        suggestedQuestionId: suggestedQuestion?.objectID,
+      });
       setStoppedStream(false);
       sendMessage(
         {
@@ -583,16 +561,9 @@ export function DocSearchModal({
   const handleFeedbackSubmit = React.useCallback(
     async (messageId: string, thumbs: 0 | 1): Promise<void> => {
       if (!askAiConfigurationId || !appId) return;
-      const res = await postFeedback({
-        assistantId: askAiConfigurationId,
-        thumbs,
-        messageId,
-        appId,
-      });
-      if (res.status >= 300) throw new Error('Failed, try again later');
-      conversations.addFeedback?.(messageId, thumbs === 1 ? 'like' : 'dislike');
+      await sendFeedback(messageId, thumbs);
     },
-    [askAiConfigurationId, appId, conversations],
+    [askAiConfigurationId, appId, sendFeedback],
   );
 
   if (!autocompleteRef.current) {
@@ -814,6 +785,15 @@ export function DocSearchModal({
     }
   }, [isAskAiActive, autocomplete, setMessages]);
 
+  // Stop streaming if we are unmounting the modal
+  React.useEffect(() => {
+    return (): void => {
+      if (canHandleAskAi) {
+        stopAskAiStreaming();
+      }
+    };
+  }, [status, stopAskAiStreaming, canHandleAskAi]);
+
   // Track external state in order to manage internal askAiState
   React.useEffect(() => {
     setAskAiState('initial');
@@ -922,7 +902,10 @@ export function DocSearchModal({
                   // if the item is askAI and the anchor is stored
                   if (item.anchor === 'stored' && 'messages' in item) {
                     setMessages(item.messages as any);
-                    onAskAiToggle(true);
+                    onAskAiToggle(true, {
+                      query: item.query,
+                      messageId: (item.messages as StoredAskAiMessage[])[0].id,
+                    });
                   } else {
                     handleSelectAskAiQuestion(true, item.query);
                   }
