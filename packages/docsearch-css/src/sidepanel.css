@@ -1,0 +1,663 @@
+:root {
+  /* Theme colors */
+  /* Pulls variables from ./_variables.css at build */
+  --docsearch-sidepanel-background: var(--docsearch-modal-background);
+  --docsearch-sidepanel-background-dark: var(--docsearch-searchbox-background);
+  --docsearch-sidepanel-white: #fff;
+  --docsearch-sidepanel-primary: var(--docsearch-primary-color);
+  --docsearch-sidepanel-primary-dark: rgba(2, 46, 185, 1);
+  --docsearch-sidepanel-primary-disabled: rgba(187, 209, 255, 1);
+  --docsearch-sidepanel-accent: var(--docsearch-highlight-color);
+  --docsearch-sidepanel-accent-muted: rgba(187, 209, 255, 1);
+  --docsearch-sidepanel-border: var(--docsearch-subtle-color);
+  --docsearch-sidepanel-text-base: rgba(35, 38, 59, 1);
+  --docsearch-sidepanel-text-muted: var(--docsearch-secondary-text-color);
+  --docsearch-sidepanel-scrollbar-color: var(--docsearch-muted-color);
+  --docsearch-sidepanel-scrollbar-bg: var(--docsearch-modal-background);
+  --docsearch-sidepanel-hit-background: var(--docsearch-hit-background);
+  --docsearch-sidepanel-hit-color: var(--docsearch-hit-color);
+  --docsearch-sidepanel-hit-highlight-color: var(--docsearch-hit-highlight-color);
+}
+
+html[data-theme='dark'] {
+  --docsearch-sidepanel-text-base: var(--docsearch-text-color);
+  --docsearch-sidepanel-primary-disabled: rgba(1, 45, 186, 0.60);
+}
+
+.DocSearch-SidepanelButton {
+  align-items: center;
+  cursor: pointer;
+  display: inline-flex;
+  user-select: none;
+  border: none;
+  transition: all 150ms ease-in-out;
+}
+
+.DocSearch-SidepanelButton.floating {
+  border-radius: 0.5rem;
+  justify-content: center;
+  position: fixed;
+  padding: 0.5rem;
+  width: 3.25rem;
+  height: 3.25rem;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 380;
+  background-color: var(--docsearch-sidepanel-primary);
+  color: var(--docsearch-sidepanel-white);
+}
+
+.DocSearch-SidepanelButton.floating:hover,
+.DocSearch-SidepanelButton.floating:focus {
+  background-color: var(--docsearch-sidepanel-primary-dark);
+}
+
+.DocSearch-SidepanelButton.floating svg {
+  width: 1.375rem;
+  height: 1.375rem;
+  stroke-width: 1.4;
+}
+
+@media screen and (min-width: 769px) {
+  .DocSearch-SidepanelButton.floating {
+    border-radius: 1rem;
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .DocSearch-SidepanelButton.floating svg {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.DocSearch-SidepanelButton.inline {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 0.5rem;
+  padding: 0 0.75rem;
+  gap: 0.5em;
+  border: 1px solid var(--docsearch-sidepanel-border);
+  color: var(--docsearch-sidepanel-text-base);
+  background-color: var(--docsearch-sidepanel-background);
+  height: 2.25rem;
+  user-select: none;
+  font-size: 1rem;
+  all: unset;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  line-height: normal;
+}
+
+.DocSearch-SidepanelButton.inline:hover {
+  background-color: rgba(4, 4, 8, 1);
+  border-color: var(--docsearch-sidepanel-accent);
+}
+
+.DocSearch-SidepanelButton.inline svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--docsearch-sidepanel-accent);
+}
+
+.DocSearch-Sidepanel-Container {
+  position: fixed;
+  min-width: 0px;
+  will-change: transform, width, opacity;
+  overflow: hidden;
+  box-shadow: 0px 0px 0px 1px rgba(35, 38, 59, 0.05), 0px 4px 8px -2px rgba(35, 38, 59, 0.25);
+  opacity: 0;
+  z-index: 999;
+  width: 100svw;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .DocSearch-Sidepanel-Container {
+    transition: none;
+  }
+}
+
+.DocSearch-Sidepanel-Container.inline,
+.DocSearch-Sidepanel-Container.floating {
+  top: 0;
+  right: 0;
+  left: 0;
+  border-radius: 0;
+  transform: translateX(100%);
+  height: calc(var(--sp-vh) * 100);
+  height: 100dvh;
+}
+
+.DocSearch-Sidepanel-Container.inline.is-open,
+.DocSearch-Sidepanel-Container.floating.is-open {
+  transform: none;
+  opacity: 1;
+}
+
+@media screen and (max-width: 768px) {
+  html:has(.DocSearch-Sidepanel-Container.is-open),
+  body:has(.DocSearch-Sidepanel-Container.is-open) {
+    overflow: hidden;
+    position: fixed;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .DocSearch-Sidepanel-Container {
+    width: var(--sp-width);
+    transition: all 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .DocSearch-Sidepanel-Container.floating {
+    top: 1rem;
+    bottom: 1rem;
+    border-radius: 1rem;
+    height: calc(calc(var(--sp-vh) * 100) - 2rem);
+    height: calc(100dvh - 2rem);
+  }
+
+  .DocSearch-Sidepanel-Container.inline {
+    top: 0;
+    bottom: 0;
+  }
+
+  .DocSearch-Sidepanel-Container.floating.side-right {
+    left: unset;
+    right: 1rem;
+    transform: translateX(calc(100% + 2rem));
+  }
+
+  .DocSearch-Sidepanel-Container.floating.side-left {
+    transform: translateX(calc(-100% - 2rem));
+    left: 1rem;
+  }
+
+  .DocSearch-Sidepanel-Container.inline.side-right {
+    left: unset;
+    right: 0;
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    transform: translateX(100%);
+  }
+
+  .DocSearch-Sidepanel-Container.inline.side-left {
+    transform: translateX(-100%);
+    left: 0;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+  }
+}
+
+.DocSearch-Sidepanel-Container.is-open {
+  opacity: 1;
+}
+
+.DocSearch-Sidepanel-Container.side-right.is-open {
+  transform: none;
+}
+
+.DocSearch-Sidepanel-Container.side-left.is-open {
+  transform: none;
+}
+
+.DocSearch-Sidepanel {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--docsearch-sidepanel-background);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  overflow: hidden;
+  box-sizing: border-box;
+  height: 100%;
+  position: relative;
+}
+
+.DocSearch-Sidepanel * {
+  box-sizing: border-box;
+}
+
+.DocSearch-Sidepanel a {
+  text-decoration: none;
+}
+
+.DocSearch-Sidepanel svg {
+  stroke-width: 1.4;
+}
+
+.DocSearch-Sidepanel-Header {
+  background-color: var(--docsearch-sidepanel-background-dark);
+  display: flex;
+  align-items: center;
+  padding: 0.2rem 1rem;
+  border-bottom: 1px solid var(--docsearch-sidepanel-border);
+  height: 3.5rem;
+  color: var(--docsearch-sidepanel-text-base);
+  position: relative;
+  justify-content: center;
+}
+
+.DocSearch-Sidepanel-Header--left,
+.DocSearch-Sidepanel-Header--right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: absolute;
+}
+
+.DocSearch-Sidepanel-Header--left {
+  left: 1rem;
+}
+
+.DocSearch-Sidepanel-Header--right {
+  right: 1rem;
+}
+
+@media screen and (min-width: 769px) {
+  .DocSearch-Sidepanel-Header {
+    justify-content: flex-start;
+  }
+
+  .DocSearch-Sidepanel-Header--left {
+    display: none;
+  }
+}
+
+.DocSearch-Sidepanel-Header--center {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.DocSearch-Sidepanel-Action-menu,
+.DocSearch-Sidepanel-Action-expand {
+  display: none;
+}
+
+@media screen and (min-width: 769px) {
+  .DocSearch-Sidepanel-Action-menu,
+  .DocSearch-Sidepanel-Action-expand {
+    display: flex;
+  }
+}
+
+.DocSearch-Action.DocSearch-Sidepanel-Action-back {
+  display: none;
+}
+
+.DocSearch-Sidepanel.conversation-history .DocSearch-Action.DocSearch-Sidepanel-Action-back.mobile {
+  display: inline-flex;
+}
+
+@media screen and (min-width: 769px) {
+  .DocSearch-Sidepanel.conversation-history .DocSearch-Sidepanel-Action-back {
+    display: inline-flex;
+  }
+}
+
+.DocSearch-Sidepanel-Header-TitleIcon {
+  display: block;
+  height: 1.25rem;
+  width: 1.25rem;
+  color: var(--docsearch-sidepanel-primary);
+}
+
+@media screen and (min-width: 769px) {
+  .DocSearch-Sidepanel.conversation-history .DocSearch-Sidepanel-Header-TitleIcon {
+    display: none;
+  }
+}
+
+.DocSearch-Sidepanel-Title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  color: var(--docsearch-sidepanel-text-base);
+}
+
+.DocSearch-Sidepanel-Content {
+  flex: 1;
+  padding: 0 1rem;
+  overflow-y: auto;
+  overflow-y: overlay;
+  scrollbar-color: var(--docsearch-sidepanel-scrollbar-color) var(--docsearch-sidepanel-scrollbar-bg);
+  scrollbar-width: thin;
+}
+
+.DocSearch-Sidepanel-Content::-webkit-scrollbar {
+  width: 12px;
+}
+
+.DocSearch-Sidepanel-Content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.DocSearch-Sidepanel-Content::-webkit-scrollbar-thumb {
+  background-color: var(--docsearch-muted-color);
+  border: 3px solid var(--docsearch-modal-background);
+  border-radius: 20px;
+}
+
+.DocSearch-Sidepanel-Prompt {
+  border-top: 1px solid var(--docsearch-sidepanel-border);
+  padding: 1rem;
+  padding-bottom: 0;
+  background-color: var(--docsearch-sidepanel-background-dark);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.DocSearch-Sidepanel-Prompt--form {
+  --prompt-form-padding: 0.75rem;
+  border: 1px solid #777AAF;
+  padding: var(--prompt-form-padding);
+  border-radius: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 0.5rem;
+}
+
+.DocSearch-Sidepanel-Prompt--form:focus-within {
+  border-color: var(--docsearch-sidepanel-primary);
+}
+
+.DocSearch-Sidepanel-Prompt--textarea {
+  border: none;
+  width: 100%;
+  resize: none;
+  color: var(--docsearch-sidepanel-text-base);
+  outline: none;
+  background: none;
+  appearance: none;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  padding-right: 1.75rem;
+  min-height: 1.5rem;
+  height: 1.5rem;
+  overflow: hidden;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.DocSearch-Sidepanel-Prompt--textarea::placeholder {
+  color: var(--docsearch-muted-color);
+  opacity: 1;
+}
+
+.DocSearch-Sidepanel-Prompt--actions {
+  position: absolute;
+  right: var(--prompt-form-padding);
+  bottom: var(--prompt-form-padding);
+  height: 1.5rem;
+}
+
+.DocSearch-Sidepanel-Prompt--stop,
+.DocSearch-Sidepanel-Prompt--submit {
+  display: inline-flex;
+  width: 1.5rem;
+  height: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .DocSearch-Sidepanel-Prompt--stop,
+  .DocSearch-Sidepanel-Prompt--submit {
+    transition: none;
+  }
+}
+
+.DocSearch-Sidepanel-Prompt--stop {
+  background-color: var(--docsearch-sidepanel-white);
+  border: 1px solid var(--docsearch-sidepanel-border);
+  color: var(--docsearch-sidepanel-text-muted);
+}
+
+html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop {
+  background-color: var(--docsearch-sidepanel-background);
+}
+
+.DocSearch-Sidepanel-Prompt--stop:hover {
+  background-color: var(--docsearch-sidepanel-background);
+}
+
+html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
+  background-color: var(--docsearch-sidepanel-background-dark);
+}
+
+.DocSearch-Sidepanel-Prompt--stop svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+.DocSearch-Sidepanel-Prompt--submit {
+  background-color: var(--docsearch-sidepanel-primary);
+  border: none;
+  color: var(--docsearch-sidepanel-white);
+}
+
+.DocSearch-Sidepanel-Prompt--submit:hover {
+  background-color: var(--docsearch-sidepanel-primary-dark);
+}
+
+.DocSearch-Sidepanel-Prompt--submit:disabled,
+.DocSearch-Sidepanel-Prompt--submit[aria-disabled='true'] {
+  background-color: var(--docsearch-sidepanel-primary-disabled);
+  user-select: none;
+  cursor: not-allowed;
+}
+
+.DocSearch-Sidepanel-Prompt--submit svg {
+  height: 1.25em;
+  width: 1.25em;
+}
+
+.DocSearch-Sidepanel-Prompt--disclaimer {
+  display: none;
+}
+
+@media screen and (min-width: 769px) {
+  .DocSearch-Sidepanel-Prompt--disclaimer {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--docsearch-sidepanel-text-muted);
+    text-align: center;
+  }
+}
+
+.DocSearch-Sidepanel-Footer {
+  display: flex;
+  justify-content: flex-end;
+  background-color: var(--docsearch-sidepanel-background-dark);
+  padding: 0.75rem 1rem 1rem 1rem;
+}
+
+.DocSearch-Sidepanel--powered-by {
+  align-self: flex-end;
+}
+
+.DocSearch-Sidepanel-Screen--title {
+  font-size: 1.625rem;
+  font-weight: 600;
+  line-height: 2rem;
+  color: var(--docsearch-sidepanel-text-base);
+}
+
+.DocSearch-Sidepanel-NewConversationScreen {
+  padding-top: 3.5rem;
+}
+
+.DocSearch-Sidepanel-Screen--introduction {
+  font-size: 0.875rem;
+  color: var(--docsearch-sidepanel-text-muted);
+  line-height: 1.25rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media screen and (min-width: 769px) {
+  .DocSearch-Sidepanel-Screen--introduction {
+    max-width: 50ch;
+  }
+}
+
+.DocSearch-Sidepanel-List {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.DocSearch-Sidepanel-ConversationHistoryScreen {
+  padding-top: 1rem;
+}
+
+.DocSearch-Sidepanel-RecentConversation {
+  border-radius: 0.25rem;
+  display: flex;
+  position: relative;
+  scroll-margin-top: 2.5rem;
+  background-color: var(--docsearch-hit-background);
+  color: var(--docsearch-sidepanel-text-base);
+  padding: 0 0.75rem;
+  width: 100%;
+  margin-bottom: 0.25rem;
+  cursor: pointer;
+}
+
+.DocSearch-Sidepanel-RecentConversation:hover {
+  background-color: var(--docsearch-hit-highlight-color);
+}
+
+.DocSearch-Sidepanel-RecentConversation:hover .DocSearch-Sidepanel-RecentConversation-icon,
+.DocSearch-Sidepanel-RecentConversation:hover .DocSearch-Hit-action {
+  color: var(--docsearch-sidepanel-accent);
+}
+
+.DocSearch-Sidepanel-RecentConversation-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: 3.5rem;
+  width: 100%;
+}
+
+.DocSearch-Sidepanel-RecentConversation-icon {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.DocSearch-Sidepanel-RecentConversation-content {
+  margin: 0 0.5rem;
+  overflow-x: hidden;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.DocSearch-Sidepanel-RecentConversation-title {
+  font-size: 0.9em;
+}
+
+.DocSearch-Sidepanel-SuggestedQuestion {
+  background-color: var(--docsearch-sidepanel-background-dark);
+  border: 1px solid var(--docsearch-sidepanel-border);
+  border-radius: 0.25rem;
+  height: 2.5rem;
+  padding: 0 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--docsearch-sidepanel-text-base);
+  cursor: pointer;
+}
+
+.DocSearch-Sidepanel-ConversationScreen {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 769px) {
+  .DocSearch-Sidepanel-ConversationScreen {
+    padding: 1rem 0;
+  }
+}
+
+.DocSearch-Sidepanel-ConversationScreen-disclaimer {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: var(--docsearch-sidepanel-text-muted);
+  margin: 1rem 0;
+  font-weight: 400;
+}
+
+@media screen and (min-width: 769px) {
+  .DocSearch-Sidepanel-ConversationScreen-disclaimer {
+    display: none;
+  }
+}
+
+.DocSearch-Sidepanel .DocSearch-AskAiScreen-Response {
+  padding: 1rem;
+  font-size: 0.95em;
+}
+
+.DocSearch-Sidepanel .DocSearch-AskAiScreen-Query {
+  font-size: 1.25rem;
+}
+
+.DocSearch-Sidepanel .DocSearch-Markdown-Content {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.DocSearch-Sidepanel .DocSearch-Markdown-Content h1,
+.DocSearch-Sidepanel .DocSearch-Markdown-Content h2,
+.DocSearch-Sidepanel .DocSearch-Markdown-Content h3,
+.DocSearch-Sidepanel .DocSearch-Markdown-Content h4,
+.DocSearch-Sidepanel .DocSearch-Markdown-Content h5,
+.DocSearch-Sidepanel .DocSearch-Markdown-Content h6 {
+  margin: 0.5em 0;
+}
+
+.DocSearch-Sidepanel .DocSearch-AskAiScreen-MessageContent-Tool-Query:hover {
+  cursor: unset;
+  box-shadow: none;
+  color: var(--docsearch-muted-color);
+}
+
+.DocSearch-Sidepanel .DocSearch-AskAiScreen-Actions {
+  margin-left: 0;
+}
+
+.DocSearch-Sidepanel .DocSearch-AskAiScreen-CopyButton {
+  order: -1;
+}
+
+.DocSearch-Sidepanel .DocSearch-AskAiScreen-RelatedSources {
+  padding-bottom: 1rem;
+}
+
+.DocSearch-Sidepanel .DocSearch-Menu-content {
+  right: -4rem;
+}
+
+.sr-only {
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  position: absolute;
+  overflow: hidden;
+}

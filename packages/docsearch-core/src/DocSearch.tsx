@@ -7,7 +7,7 @@ import type { KeyboardShortcuts } from './useKeyboardShortcuts.ts';
 import type { DocSearchTheme } from './useTheme';
 import { useTheme } from './useTheme';
 
-export type DocSearchState = 'modal-askai' | 'modal-search' | 'ready';
+export type DocSearchState = 'modal-askai' | 'modal-search' | 'ready' | 'sidepanel';
 
 export interface DocSearchContext {
   docsearchState: DocSearchState;
