@@ -1,6 +1,6 @@
 import React, { type JSX } from 'react';
 
-type AlgoliaLogoTranslations = Partial<{
+export type AlgoliaLogoTranslations = Partial<{
   poweredByText: string;
 }>;
 

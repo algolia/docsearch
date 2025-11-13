@@ -74,7 +74,7 @@ interface AskAiScreenHeaderProps {
   disclaimerText: string;
 }
 
-interface Exchange {
+export interface Exchange {
   id: string;
   userMessage: AIMessage;
   assistantMessage: AIMessage | null;
@@ -286,7 +286,7 @@ interface AskAiScreenFooterActionsProps {
   onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
 }
 
-function AskAiScreenFooterActions({
+export function AskAiScreenFooterActions({
   id,
   showActions,
   latestAssistantMessageContent,
@@ -362,7 +362,7 @@ interface AskAiSourcesPanelProps {
   relatedSourcesText?: string;
 }
 
-function AskAiSourcesPanel({ urlsToDisplay, relatedSourcesText }: AskAiSourcesPanelProps): JSX.Element {
+export function AskAiSourcesPanel({ urlsToDisplay, relatedSourcesText }: AskAiSourcesPanelProps): JSX.Element {
   return (
     <div className="DocSearch-AskAiScreen-RelatedSources">
       <p className="DocSearch-AskAiScreen-RelatedSources-Title">{relatedSourcesText || 'Related sources'}</p>

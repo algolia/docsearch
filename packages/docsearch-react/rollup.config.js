@@ -73,6 +73,12 @@ export default [
     plugins: sourcePlugins,
   },
   {
+    input: 'src/Sidepanel.tsx',
+    external: externalPackages,
+    output: sourceOutput('Sidepanel.js'),
+    plugins: sourcePlugins,
+  },
+  {
     input: 'dist/esm/types/index.d.ts',
     output: [{ file: 'dist/esm/index.d.ts', format: 'es' }],
     plugins: [dts()],
@@ -100,6 +106,11 @@ export default [
   {
     input: 'dist/esm/types/version.d.ts',
     output: [{ file: 'dist/esm/version.d.ts', format: 'es' }],
+    plugins: [dts()],
+  },
+  {
+    input: 'dist/esm/types/Sidepanel.d.ts',
+    output: [{ file: 'dist/esm/Sidepanel.d.ts', format: 'es' }],
     plugins: [dts()],
   },
 ];

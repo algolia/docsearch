@@ -1,4 +1,3 @@
-import { useChat } from '@ai-sdk/react';
 import {
   type AutocompleteSource,
   type AlgoliaInsightsHit,
@@ -7,12 +6,11 @@ import {
 } from '@algolia/autocomplete-core';
 import { useTheme } from '@docsearch/core/useTheme';
 import type { ChatRequestOptions } from 'ai';
-import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls } from 'ai';
 import type { SearchResponse } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 
-import { getValidToken, postFeedback } from './askai';
-import { ASK_AI_API_URL, MAX_QUERY_SIZE, USE_ASK_AI_TOKEN } from './constants';
+import { postFeedback } from './askai';
+import { MAX_QUERY_SIZE } from './constants';
 import type { DocSearchIndex, DocSearchProps } from './DocSearch';
 import type { FooterTranslations } from './Footer';
 import { Footer } from './Footer';
@@ -32,6 +30,7 @@ import type {
   SuggestedQuestionHit,
 } from './types';
 import type { AIMessage, AskAiState } from './types/AskiAi';
+import { useAskAi } from './useAskAi';
 import { useSearchClient } from './useSearchClient';
 import { useSuggestedQuestions } from './useSuggestedQuestions';
 import { useTouchEvents } from './useTouchEvents';
@@ -399,41 +398,12 @@ export function DocSearchModal({
 
   const [stoppedStream, setStoppedStream] = React.useState(false);
 
-  const {
-    messages,
-    sendMessage,
-    status,
-    setMessages,
-    error: askAiError,
-    stop: stopAskAiStreaming,
-  } = useChat<AIMessage>({
-    sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
-    transport: new DefaultChatTransport({
-      api: ASK_AI_API_URL,
-      headers: async (): Promise<Record<string, string>> => {
-        if (!askAiConfigurationId) {
-          throw new Error('Ask AI assistant ID is required');
-        }
-
-        let token: string | null = null;
-
-        if (USE_ASK_AI_TOKEN) {
-          token = await getValidToken({
-            assistantId: askAiConfigurationId,
-          });
-        }
-
-        return {
-          ...(token ? { authorization: `TOKEN ${token}` } : {}),
-          'X-Algolia-API-Key': askAiConfig?.apiKey || apiKey,
-          'X-Algolia-Application-Id': askAiConfig?.appId || appId,
-          'X-Algolia-Index-Name': askAiConfig?.indexName || defaultIndexName,
-          'X-Algolia-Assistant-Id': askAiConfigurationId || '',
-          'X-AI-SDK-Version': 'v5',
-        };
-      },
-      body: askAiSearchParameters ? { searchParameters: askAiSearchParameters } : {},
-    }),
+  const { messages, status, setMessages, sendMessage, stopAskAiStreaming, askAiError } = useAskAi({
+    assistantId: askAiConfigurationId,
+    apiKey: askAiConfig?.apiKey || apiKey,
+    appId: askAiConfig?.appId || appId,
+    indexName: askAiConfig?.indexName || defaultIndexName,
+    searchParameters: askAiSearchParameters,
   });
 
   const prevStatus = React.useRef(status);

@@ -2472,6 +2472,7 @@ __metadata:
     "@docsearch/css": "workspace:*"
     "@docsearch/modal": "workspace:*"
     "@docsearch/react": "workspace:*"
+    "@docsearch/sidepanel": "workspace:*"
     "@vitejs/plugin-react": "npm:^4.3.4"
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
@@ -2510,6 +2511,33 @@ __metadata:
     react-dom:
       optional: true
     search-insights:
+      optional: true
+  languageName: unknown
+  linkType: soft
+
+"@docsearch/sidepanel@workspace:*, @docsearch/sidepanel@workspace:packages/docsearch-sidepanel":
+  version: 0.0.0-use.local
+  resolution: "@docsearch/sidepanel@workspace:packages/docsearch-sidepanel"
+  dependencies:
+    "@docsearch/css": "npm:4.3.2"
+    "@docsearch/react": "npm:4.3.2"
+    "@rollup/plugin-replace": "npm:6.0.2"
+    "@testing-library/jest-dom": "npm:6.6.3"
+    "@testing-library/react": "npm:16.2.0"
+    nodemon: "npm:^3.1.0"
+    rollup-plugin-dts: "npm:^6.2.1"
+    vitest: "npm:3.0.2"
+  peerDependencies:
+    "@docsearch/core": ">= 4.3.0"
+    "@types/react": ">= 16.8.0 < 20.0.0"
+    react: ">= 16.8.0 < 20.0.0"
+    react-dom: ">= 16.8.0 < 20.0.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    react:
+      optional: true
+    react-dom:
       optional: true
   languageName: unknown
   linkType: soft
