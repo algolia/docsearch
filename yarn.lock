@@ -2541,8 +2541,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docsearch/sidepanel@workspace:packages/docsearch-sidepanel"
   dependencies:
-    "@docsearch/css": "npm:4.2.0"
-    "@docsearch/react": "npm:4.2.0"
+    "@docsearch/css": "npm:4.3.2"
+    "@docsearch/react": "npm:4.3.2"
     "@rollup/plugin-replace": "npm:6.0.2"
     "@testing-library/jest-dom": "npm:6.6.3"
     "@testing-library/react": "npm:16.2.0"
@@ -2550,7 +2550,7 @@ __metadata:
     rollup-plugin-dts: "npm:^6.2.1"
     vitest: "npm:3.0.2"
   peerDependencies:
-    "@docsearch/core": ">= 1.0.0"
+    "@docsearch/core": ">= 4.3.0"
     "@types/react": ">= 16.8.0 < 20.0.0"
     react: ">= 16.8.0 < 20.0.0"
     react-dom: ">= 16.8.0 < 20.0.0"

@@ -54,7 +54,7 @@ export type SidepanelProps = {
    * - `inline` pushes page content when opened
    * - `floating` is positioned above all other content on page.
    *
-   * @default 'inline'
+   * @default 'floating'
    */
   variant?: PanelVariant;
   /**
@@ -120,7 +120,7 @@ export const Sidepanel = ({
   apiKey,
   appId,
   indexName,
-  variant = 'inline',
+  variant = 'floating',
   searchParameters,
   pushSelector,
   width,
