@@ -33,6 +33,7 @@ export interface DocSearchContext {
   onAskAiToggle: OnAskAiToggle;
   initialAskAiMessage: InitialAskAiMessage | undefined;
   registerView: (view: View) => void;
+  isHybridModeSupported: boolean;
 }
 
 export interface DocSearchProps {
@@ -51,11 +52,12 @@ export function DocSearch({ children, theme, ...props }: DocSearchProps): JSX.El
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
   const keyboardShortcuts = useKeyboardShortcuts(props.keyboardShortcuts);
   const [initialAskAiMessage, setInitialAskAiMessage] = React.useState<InitialAskAiMessage>();
-  const registeredViewsRef = React.useRef(new Set<View>());
+  const [registeredViews, setRegisteredViews] = React.useState(new Set<View>());
   const isMobile = useIsMobile();
 
   const isModalActive = ['modal-search', 'modal-askai'].includes(docsearchState);
   const isAskAiActive = docsearchState === 'modal-askai';
+  const isHybridModeSupported = registeredViews.has('sidepanel');
 
   const openModal = React.useCallback((): void => {
     setDocsearchState('modal-search');
@@ -70,7 +72,7 @@ export function DocSearch({ children, theme, ...props }: DocSearchProps): JSX.El
   const onAskAiToggle: OnAskAiToggle = React.useCallback(
     (active, initialMessage) => {
       // Don't use hybrid mode on mobile
-      if (!isMobile && active && registeredViewsRef.current.has('sidepanel')) {
+      if (!isMobile && active && isHybridModeSupported) {
         setInitialAskAiMessage(initialMessage);
         setDocsearchState('sidepanel');
         return;
@@ -78,7 +80,7 @@ export function DocSearch({ children, theme, ...props }: DocSearchProps): JSX.El
 
       setDocsearchState(active ? 'modal-askai' : 'modal-search');
     },
-    [setDocsearchState, isMobile],
+    [setDocsearchState, isMobile, isHybridModeSupported],
   );
 
   const onInput = React.useCallback(
@@ -89,11 +91,14 @@ export function DocSearch({ children, theme, ...props }: DocSearchProps): JSX.El
     [setDocsearchState, setInitialQuery],
   );
 
-  const registerView = React.useCallback((view: View): void => {
-    if (registeredViewsRef.current.has(view)) return;
+  const registerView = React.useCallback(
+    (view: View): void => {
+      if (registeredViews.has(view)) return;
 
-    registeredViewsRef.current.add(view);
-  }, []);
+      setRegisteredViews((prev) => prev.add(view));
+    },
+    [registeredViews],
+  );
 
   useTheme({ theme });
 
@@ -122,6 +127,7 @@ export function DocSearch({ children, theme, ...props }: DocSearchProps): JSX.El
       onAskAiToggle,
       initialAskAiMessage,
       registerView,
+      isHybridModeSupported,
     }),
     [
       docsearchState,
@@ -135,6 +141,7 @@ export function DocSearch({ children, theme, ...props }: DocSearchProps): JSX.El
       onAskAiToggle,
       initialAskAiMessage,
       registerView,
+      isHybridModeSupported,
     ],
   );
 

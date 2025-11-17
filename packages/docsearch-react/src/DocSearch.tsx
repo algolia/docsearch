@@ -217,12 +217,7 @@ export function DocSearchInner(props: DocSearchProps): JSX.Element {
     onAskAiToggle,
     openModal,
     closeModal,
-    registerView,
   } = useDocSearch();
-
-  React.useEffect(() => {
-    registerView('modal');
-  }, [registerView]);
 
   return (
     <>

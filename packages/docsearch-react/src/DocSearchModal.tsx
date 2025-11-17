@@ -53,6 +53,7 @@ export type DocSearchModalProps = DocSearchProps & {
   onClose?: () => void;
   isAskAiActive?: boolean;
   translations?: ModalTranslations;
+  isHybridModeSupported?: boolean;
 };
 
 /**
@@ -306,6 +307,7 @@ export function DocSearchModal({
   indices = [],
   indexName,
   searchParameters,
+  isHybridModeSupported = false,
   ...props
 }: DocSearchModalProps): JSX.Element {
   const { footer: footerTranslations, searchBox: searchBoxTranslations, ...screenStateTranslations } = translations;
@@ -512,6 +514,17 @@ export function DocSearchModal({
         setAskAiState('initial');
       }
 
+      onAskAiToggle(toggle, {
+        query,
+        suggestedQuestionId: suggestedQuestion?.objectID,
+      });
+
+      // If we're in hybrid mode, we don't need to send the message,
+      // it will be handled by the Sidepanel.
+      if (isHybridModeSupported) return;
+
+      setStoppedStream(false);
+
       const messageOptions: ChatRequestOptions = {};
 
       if (suggestedQuestion) {
@@ -520,11 +533,6 @@ export function DocSearchModal({
         };
       }
 
-      onAskAiToggle(toggle, {
-        query,
-        suggestedQuestionId: suggestedQuestion?.objectID,
-      });
-      setStoppedStream(false);
       sendMessage(
         {
           role: 'user',
@@ -554,7 +562,7 @@ export function DocSearchModal({
         autocompleteRef.current.setQuery('');
       }
     },
-    [onAskAiToggle, sendMessage, askAiState, setAskAiState, setMessages],
+    [onAskAiToggle, sendMessage, askAiState, setAskAiState, setMessages, isHybridModeSupported],
   );
 
   // feedback handler
@@ -784,15 +792,6 @@ export function DocSearchModal({
       setMessages([]);
     }
   }, [isAskAiActive, autocomplete, setMessages]);
-
-  // Stop streaming if we are unmounting the modal
-  React.useEffect(() => {
-    return (): void => {
-      if (canHandleAskAi) {
-        stopAskAiStreaming();
-      }
-    };
-  }, [status, stopAskAiStreaming, canHandleAskAi]);
 
   // Track external state in order to manage internal askAiState
   React.useEffect(() => {
