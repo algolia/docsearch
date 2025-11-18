@@ -2384,6 +2384,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docsearch/modal@workspace:packages/docsearch-modal"
   dependencies:
+    "@docsearch/core": "npm:4.3.1"
     "@docsearch/react": "npm:4.3.2"
     "@rollup/plugin-replace": "npm:6.0.2"
     "@testing-library/jest-dom": "npm:6.6.3"
@@ -2392,7 +2393,6 @@ __metadata:
     rollup-plugin-dts: "npm:^6.2.1"
     vitest: "npm:3.0.2"
   peerDependencies:
-    "@docsearch/core": ">= 4.2.0"
     "@types/react": ">= 16.8.0 < 20.0.0"
     react: ">= 16.8.0 < 20.0.0"
     react-dom: ">= 16.8.0 < 20.0.0"
@@ -2519,6 +2519,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docsearch/sidepanel@workspace:packages/docsearch-sidepanel"
   dependencies:
+    "@docsearch/core": "npm:4.3.1"
     "@docsearch/css": "npm:4.3.2"
     "@docsearch/react": "npm:4.3.2"
     "@rollup/plugin-replace": "npm:6.0.2"
@@ -2528,7 +2529,6 @@ __metadata:
     rollup-plugin-dts: "npm:^6.2.1"
     vitest: "npm:3.0.2"
   peerDependencies:
-    "@docsearch/core": ">= 4.3.0"
     "@types/react": ">= 16.8.0 < 20.0.0"
     react: ">= 16.8.0 < 20.0.0"
     react-dom: ">= 16.8.0 < 20.0.0"
