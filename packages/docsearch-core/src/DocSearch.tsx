@@ -52,7 +52,7 @@ export function DocSearch({ children, theme, ...props }: DocSearchProps): JSX.El
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
   const keyboardShortcuts = useKeyboardShortcuts(props.keyboardShortcuts);
   const [initialAskAiMessage, setInitialAskAiMessage] = React.useState<InitialAskAiMessage>();
-  const [registeredViews, setRegisteredViews] = React.useState(new Set<View>());
+  const [registeredViews, setRegisteredViews] = React.useState(() => new Set<View>());
   const isMobile = useIsMobile();
 
   const isModalActive = ['modal-search', 'modal-askai'].includes(docsearchState);
@@ -95,7 +95,11 @@ export function DocSearch({ children, theme, ...props }: DocSearchProps): JSX.El
     (view: View): void => {
       if (registeredViews.has(view)) return;
 
-      setRegisteredViews((prev) => prev.add(view));
+      setRegisteredViews((prev) => {
+        const newViews = new Set(prev);
+        newViews.add(view);
+        return newViews;
+      });
     },
     [registeredViews],
   );
