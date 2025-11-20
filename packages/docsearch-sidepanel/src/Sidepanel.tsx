@@ -8,7 +8,7 @@ export type SidepanelProps = DocSearchSidepanelProps['panel'] &
   Omit<DocSearchSidepanelProps, 'button' | 'panel' | 'theme'>;
 
 export function Sidepanel({ portalContainer, ...props }: SidepanelProps): JSX.Element {
-  const { docsearchState, setDocsearchState, keyboardShortcuts } = useDocSearch();
+  const { docsearchState, setDocsearchState, keyboardShortcuts, registerView, initialAskAiMessage } = useDocSearch();
 
   const handleOpen = React.useCallback((): void => {
     setDocsearchState('sidepanel');
@@ -20,15 +20,20 @@ export function Sidepanel({ portalContainer, ...props }: SidepanelProps): JSX.El
 
   const containerElement = React.useMemo(() => portalContainer ?? document.body, [portalContainer]);
 
+  React.useEffect(() => {
+    registerView('sidepanel');
+  }, [registerView]);
+
   const sidepanelProps = React.useMemo(
     () => ({
       isOpen: docsearchState === 'sidepanel',
       onOpen: handleOpen,
       onClose: handleClose,
       keyboardShortcuts,
+      initialMessage: initialAskAiMessage,
       ...props,
     }),
-    [docsearchState, handleOpen, handleClose, props, keyboardShortcuts],
+    [docsearchState, handleOpen, handleClose, props, keyboardShortcuts, initialAskAiMessage],
   );
 
   return createPortal(<SidepanelComp {...sidepanelProps} />, containerElement);

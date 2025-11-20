@@ -4,12 +4,12 @@ import {
   createAutocomplete,
   type AutocompleteState,
 } from '@algolia/autocomplete-core';
+import type { OnAskAiToggle } from '@docsearch/core';
 import { useTheme } from '@docsearch/core/useTheme';
 import type { ChatRequestOptions } from 'ai';
 import type { SearchResponse } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 
-import { postFeedback } from './askai';
 import { MAX_QUERY_SIZE } from './constants';
 import type { DocSearchIndex, DocSearchProps } from './DocSearch';
 import type { FooterTranslations } from './Footer';
@@ -25,6 +25,7 @@ import type {
   DocSearchHit,
   DocSearchState,
   InternalDocSearchHit,
+  StoredAskAiMessage,
   StoredAskAiState,
   StoredDocSearchHit,
   SuggestedQuestionHit,
@@ -48,10 +49,11 @@ export type ModalTranslations = Partial<{
 
 export type DocSearchModalProps = DocSearchProps & {
   initialScrollY: number;
-  onAskAiToggle: (toggle: boolean) => void;
+  onAskAiToggle: OnAskAiToggle;
   onClose?: () => void;
   isAskAiActive?: boolean;
   translations?: ModalTranslations;
+  isHybridModeSupported?: boolean;
 };
 
 /**
@@ -305,6 +307,7 @@ export function DocSearchModal({
   indices = [],
   indexName,
   searchParameters,
+  isHybridModeSupported = false,
   ...props
 }: DocSearchModalProps): JSX.Element {
   const { footer: footerTranslations, searchBox: searchBoxTranslations, ...screenStateTranslations } = translations;
@@ -398,7 +401,7 @@ export function DocSearchModal({
 
   const [stoppedStream, setStoppedStream] = React.useState(false);
 
-  const { messages, status, setMessages, sendMessage, stopAskAiStreaming, askAiError } = useAskAi({
+  const { messages, status, setMessages, sendMessage, stopAskAiStreaming, askAiError, sendFeedback } = useAskAi({
     assistantId: askAiConfigurationId,
     apiKey: askAiConfig?.apiKey || apiKey,
     appId: askAiConfig?.appId || appId,
@@ -505,6 +508,17 @@ export function DocSearchModal({
         setAskAiState('initial');
       }
 
+      onAskAiToggle(toggle, {
+        query,
+        suggestedQuestionId: suggestedQuestion?.objectID,
+      });
+
+      // If we're in hybrid mode, we don't need to send the message,
+      // it will be handled by the Sidepanel.
+      if (isHybridModeSupported) return;
+
+      setStoppedStream(false);
+
       const messageOptions: ChatRequestOptions = {};
 
       if (suggestedQuestion) {
@@ -513,8 +527,6 @@ export function DocSearchModal({
         };
       }
 
-      onAskAiToggle(toggle);
-      setStoppedStream(false);
       sendMessage(
         {
           role: 'user',
@@ -544,23 +556,16 @@ export function DocSearchModal({
         autocompleteRef.current.setQuery('');
       }
     },
-    [onAskAiToggle, sendMessage, askAiState, setAskAiState],
+    [onAskAiToggle, sendMessage, askAiState, setAskAiState, isHybridModeSupported],
   );
 
   // feedback handler
   const handleFeedbackSubmit = React.useCallback(
     async (messageId: string, thumbs: 0 | 1): Promise<void> => {
       if (!askAiConfigurationId || !appId) return;
-      const res = await postFeedback({
-        assistantId: askAiConfigurationId,
-        thumbs,
-        messageId,
-        appId,
-      });
-      if (res.status >= 300) throw new Error('Failed, try again later');
-      conversations.addFeedback?.(messageId, thumbs === 1 ? 'like' : 'dislike');
+      await sendFeedback(messageId, thumbs);
     },
-    [askAiConfigurationId, appId, conversations],
+    [askAiConfigurationId, appId, sendFeedback],
   );
 
   if (!autocompleteRef.current) {
@@ -893,7 +898,10 @@ export function DocSearchModal({
                   // if the item is askAI and the anchor is stored
                   if (item.anchor === 'stored' && 'messages' in item) {
                     setMessages(item.messages as any);
-                    onAskAiToggle(true);
+                    onAskAiToggle(true, {
+                      query: item.query,
+                      messageId: (item.messages as StoredAskAiMessage[])[0].id,
+                    });
                   } else {
                     handleSelectAskAiQuestion(true, item.query);
                   }

@@ -38,6 +38,8 @@ type UseAskAiReturn = {
 type UseAskAi = (params: UseAskAiParams) => UseAskAiReturn;
 
 export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, searchParameters }) => {
+  const abortControllerRef = useRef(new AbortController());
+
   const askAiTransport = useMemo(
     () =>
       new DefaultChatTransport({
@@ -52,6 +54,7 @@ export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, sear
           if (USE_ASK_AI_TOKEN) {
             token = await getValidToken({
               assistantId,
+              abortSignal: abortControllerRef.current.signal,
             });
           }
 
@@ -90,6 +93,7 @@ export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, sear
         thumbs,
         messageId,
         appId,
+        abortSignal: abortControllerRef.current.signal,
       });
 
       if (res.status >= 300) throw new Error('Failed, try again later.');
@@ -97,6 +101,11 @@ export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, sear
     },
     [assistantId, appId, conversations],
   );
+
+  const onStopStreaming = async (): Promise<void> => {
+    abortControllerRef.current.abort();
+    await stop();
+  };
 
   const exchanges = useMemo(() => {
     const grouped: Exchange[] = [];
@@ -123,7 +132,7 @@ export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, sear
     status,
     setMessages,
     askAiError: error,
-    stopAskAiStreaming: stop,
+    stopAskAiStreaming: onStopStreaming,
     isStreaming,
     exchanges,
     conversations,
