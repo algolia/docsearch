@@ -397,7 +397,6 @@ export function DocSearchModal({
     }),
   ).current;
 
-  const [askAiStreamError, setAskAiStreamError] = React.useState<Error | null>(null);
   const [stoppedStream, setStoppedStream] = React.useState(false);
 
   const {
@@ -405,7 +404,7 @@ export function DocSearchModal({
     sendMessage,
     status,
     setMessages,
-    error: askAiFetchError,
+    error: askAiError,
     stop: stopAskAiStreaming,
   } = useChat<AIMessage>({
     sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
@@ -426,7 +425,6 @@ export function DocSearchModal({
 
         return {
           ...(token ? { authorization: `TOKEN ${token}` } : {}),
-          // 'Content-Type': 'application/json',
           'X-Algolia-API-Key': askAiConfig?.apiKey || apiKey,
           'X-Algolia-Application-Id': askAiConfig?.appId || appId,
           'X-Algolia-Index-Name': askAiConfig?.indexName || defaultIndexName,
@@ -436,9 +434,6 @@ export function DocSearchModal({
       },
       body: askAiSearchParameters ? { searchParameters: askAiSearchParameters } : {},
     }),
-    onError(streamError) {
-      setAskAiStreamError(streamError);
-    },
   });
 
   const prevStatus = React.useRef(status);
@@ -907,8 +902,7 @@ export function DocSearchModal({
               isAskAiActive={isAskAiActive}
               canHandleAskAi={canHandleAskAi}
               messages={messages}
-              askAiStreamError={askAiStreamError}
-              askAiFetchError={askAiFetchError}
+              askAiError={askAiError}
               status={status}
               hasCollections={hasCollections}
               askAiState={askAiState}

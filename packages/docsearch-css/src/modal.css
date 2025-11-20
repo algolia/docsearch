@@ -870,10 +870,14 @@ assistive tech users */
   cursor: default;
 }
 
+.DocSearch-AskAiScreen-MessageContent {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
+}
+
 .DocSearch-AskAiScreen-Error {
   padding: var(--docsearch-spacing);
-  display: flex;
-  align-items: baseline;
   padding: 1em;
   gap: 8px;
   color: var(--docsearch-error-color);
@@ -881,12 +885,11 @@ assistive tech users */
   border-radius: 4px;
   font-size: 1em;
   font-weight: 400;
+  flex-direction: row;
 }
 
-.DocSearch-AskAiScreen-MessageContent {
-  display: flex;
-  flex-direction: column;
-  row-gap: 1em;
+.DocSearch-AskAiScreen-Error svg {
+  margin-top: 0.25rem;
 }
 
 .DocSearch-AskAiScreen-Error svg,
@@ -898,6 +901,17 @@ assistive tech users */
 
 .DocSearch-AskAiScreen-Error p {
   margin: 0;
+}
+
+.DocSearch-AskAiScreen-Error-Content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0%;
+}
+
+.DocSearch-AskAiScreen-Error-Title {
+  font-weight: 700;
+  margin-bottom: 4px;
 }
 
 .DocSearch-AskAiScreen-Error .DocSearch-Markdown-Content {
