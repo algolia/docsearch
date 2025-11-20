@@ -48,13 +48,16 @@ export type AskAiScreenTranslations = Partial<{
    * Message that's shown when user has stopped the streaming of a message.
    */
   stoppedStreamingText: string;
+  /**
+   * Error title shown if there is an error while chatting.
+   */
+  errorTitleText: string;
 }>;
 
 type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
   messages: AIMessage[];
   status: UseChatHelpers<AIMessage>['status'];
-  askAiStreamError: Error | null;
-  askAiFetchError: Error | undefined;
+  askAiError?: Error;
   translations?: AskAiScreenTranslations;
 };
 
@@ -74,7 +77,7 @@ function AskAiScreenHeader({ disclaimerText }: AskAiScreenHeaderProps): JSX.Elem
 
 interface AskAiExchangeCardProps {
   exchange: Exchange;
-  askAiStreamError: Error | null;
+  askAiError?: Error;
   isLastExchange: boolean;
   loadingStatus: UseChatHelpers<AIMessage>['status'];
   onSearchQueryClick: (query: string) => void;
@@ -85,7 +88,7 @@ interface AskAiExchangeCardProps {
 
 function AskAiExchangeCard({
   exchange,
-  askAiStreamError,
+  askAiError,
   isLastExchange,
   loadingStatus,
   onSearchQueryClick,
@@ -95,7 +98,7 @@ function AskAiExchangeCard({
 }: AskAiExchangeCardProps): JSX.Element {
   const { userMessage, assistantMessage } = exchange;
 
-  const { stoppedStreamingText = 'You stopped this response' } = translations;
+  const { stoppedStreamingText = 'You stopped this response', errorTitleText = 'Chat error' } = translations;
 
   const assistantContent = useMemo(() => getMessageContent(assistantMessage), [assistantMessage]);
   const userContent = useMemo(() => getMessageContent(userMessage), [userMessage]);
@@ -124,15 +127,18 @@ function AskAiExchangeCard({
         </div>
         <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--assistant">
           <div className="DocSearch-AskAiScreen-MessageContent">
-            {loadingStatus === 'error' && askAiStreamError && isLastExchange && (
+            {loadingStatus === 'error' && askAiError && isLastExchange && (
               <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error">
                 <AlertIcon />
-                <MemoizedMarkdown
-                  content={askAiStreamError.message}
-                  copyButtonText=""
-                  copyButtonCopiedText=""
-                  isStreaming={false}
-                />
+                <div className="DocSearch-AskAiScreen-Error-Content">
+                  <h4 className="DocSearch-AskAiScreen-Error-Title">{errorTitleText}</h4>
+                  <MemoizedMarkdown
+                    content={askAiError.message}
+                    copyButtonText=""
+                    copyButtonCopiedText=""
+                    isStreaming={false}
+                  />
+                </div>
               </div>
             )}
             {isThinking && (
@@ -406,7 +412,7 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
               <AskAiExchangeCard
                 key={exchange.id}
                 exchange={exchange}
-                askAiStreamError={props.askAiStreamError}
+                askAiError={props.askAiError}
                 isLastExchange={index === 0}
                 loadingStatus={props.status}
                 translations={translations}
