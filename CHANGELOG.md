@@ -1,3 +1,40 @@
+## [4.3.2](https://github.com/algolia/docsearch/compare/v4.3.1...v4.3.2) (2025-11-10)
+
+
+### Bug Fixes
+
+* **suggested-questions:** Fixes Suggested Questions on dark theme ([#2797](https://github.com/algolia/docsearch/issues/2797)) ([d9c4220](https://github.com/algolia/docsearch/commit/d9c42204572141a042ea93abf6d4aa73571c1354))
+
+
+
+## [4.3.1](https://github.com/algolia/docsearch/compare/v4.3.0...v4.3.1) (2025-11-04)
+
+
+### Bug Fixes
+
+* **npm:** Publish new packages with public access ([#2795](https://github.com/algolia/docsearch/issues/2795)) ([2d045b5](https://github.com/algolia/docsearch/commit/2d045b59f29df9300e466b4701c3378022895e4a))
+
+
+
+# [4.3.0](https://github.com/algolia/docsearch/compare/v4.2.0...v4.3.0) (2025-11-04)
+
+
+### Bug Fixes
+
+* **docsearch-js:** resultsFooterComponent not working in JS CDN version ([#2786](https://github.com/algolia/docsearch/issues/2786)) ([5381e76](https://github.com/algolia/docsearch/commit/5381e76126d6111039407d5aea06f8710917515f))
+* **website:** Fix API Reference docs page formatting ([#2783](https://github.com/algolia/docsearch/issues/2783)) ([8980d47](https://github.com/algolia/docsearch/commit/8980d47dbc7981e34fa3c15a7ce4ba42ed795eed))
+* **website:** updated askai markdown documentation ([#2788](https://github.com/algolia/docsearch/issues/2788)) ([f7be2a6](https://github.com/algolia/docsearch/commit/f7be2a65fcfaadf8ea192c0d4ef796a6635ee30d))
+
+
+### Features
+
+* Composable API packages versions ([#2789](https://github.com/algolia/docsearch/issues/2789)) ([b91e309](https://github.com/algolia/docsearch/commit/b91e3099c63090003ddc656e40ac356dc6c64efa))
+* **composable-api:** Document Composable API ([#2793](https://github.com/algolia/docsearch/issues/2793)) ([e5ae33f](https://github.com/algolia/docsearch/commit/e5ae33fe905703cb7211c73cc22c98cd48e33285))
+* **composable-api:** Introduce new Composable API ([#2779](https://github.com/algolia/docsearch/issues/2779)) ([5e9bdfe](https://github.com/algolia/docsearch/commit/5e9bdfed70fe9d3a93583836fff62e52e387b25f)), closes [#2771](https://github.com/algolia/docsearch/issues/2771) [#2772](https://github.com/algolia/docsearch/issues/2772) [#2774](https://github.com/algolia/docsearch/issues/2774)
+* **suggested-questions:** Add suggested questions ([#2787](https://github.com/algolia/docsearch/issues/2787)) ([2b4779a](https://github.com/algolia/docsearch/commit/2b4779ad06d6a132e82e0e43540550e580c6b498))
+
+
+
 # [4.2.0](https://github.com/algolia/docsearch/compare/v4.1.0...v4.2.0) (2025-10-06)
 
 

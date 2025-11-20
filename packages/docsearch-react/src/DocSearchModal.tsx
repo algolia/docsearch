@@ -52,7 +52,6 @@ export type DocSearchModalProps = DocSearchProps & {
   onAskAiToggle: (toggle: boolean) => void;
   onClose?: () => void;
   isAskAiActive?: boolean;
-  canHandleAskAi?: boolean;
   translations?: ModalTranslations;
 };
 
@@ -750,10 +749,10 @@ export function DocSearchModal({
     // Calculate the scrollbar width to compensate for removed scrollbar
     const scrollBarWidth = window.innerWidth - document.body.clientWidth;
     // Prevent layout shift by adding appropriate margin to the body
-    document.body.style.marginRight = `${scrollBarWidth}px`;
+    document.body.style.marginInlineEnd = `${scrollBarWidth}px`;
 
     return (): void => {
-      document.body.style.marginRight = '0px';
+      document.body.style.marginInlineEnd = '0px';
     };
   }, []);
 

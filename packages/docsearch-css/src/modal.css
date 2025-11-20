@@ -20,9 +20,9 @@
   -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
   height: 100vh;
-  left: 0;
+  inset-inline-start: 0;
   position: fixed;
-  top: 0;
+  inset-block-start: 0;
   width: 100vw;
   z-index: 400;
 }
@@ -66,7 +66,7 @@
 .DocSearch-Form {
   align-items: center;
   background: var(--docsearch-searchbox-focus-background);
-  border-bottom: 1px solid var(--docsearch-subtle-color);
+  border-block-end: 1px solid var(--docsearch-subtle-color);
   border-radius: 4px 4px 0 0;
   display: flex;
   min-height: var(--docsearch-searchbox-initial-height);
@@ -125,7 +125,7 @@
 
 .DocSearch-Divider {
   height: 16px;
-  border-left: 1px solid var(--docsearch-subtle-color);
+  border-inline-start: 1px solid var(--docsearch-subtle-color);
 }
 
 .DocSearch-Action {
@@ -174,7 +174,7 @@
     border-radius: 50%;
     color: var(--docsearch-icon-color);
     cursor: pointer;
-    right: 0;
+    inset-inline-end: 0;
     stroke-width: var(--docsearch-icon-stroke-width);
   }
 }
@@ -189,7 +189,7 @@
   color: var(--docsearch-icon-color);
   cursor: pointer;
   padding: 2px;
-  right: 0;
+  inset-inline-end: 0;
   stroke-width: var(--docsearch-icon-stroke-width);
 }
 
@@ -229,7 +229,7 @@
   font-size: 0.9em;
   font-weight: 300;
   height: 28px;
-  margin-left: var(--docsearch-spacing);
+  margin-inline-start: var(--docsearch-spacing);
   outline: none;
   overflow: hidden;
   padding: 0;
@@ -324,13 +324,13 @@
 
 .DocSearch-Logo svg {
   color: var(--docsearch-logo-color);
-  margin-left: 8px;
+  margin-inline-start: 8px;
 }
 
 /* Hit */
 
 .DocSearch-Hits:last-of-type {
-  margin-bottom: 24px;
+  margin-block-end: 24px;
 }
 
 .DocSearch-Hits mark {
@@ -343,25 +343,25 @@
   display: flex;
   font-size: 0.85em;
   justify-content: center;
-  margin-bottom: var(--docsearch-spacing);
+  margin-block-end: var(--docsearch-spacing);
   padding: var(--docsearch-spacing);
 }
 
 .DocSearch-HitsFooter a {
-  border-bottom: 1px solid;
+  border-block-end: 1px solid;
   color: inherit;
 }
 
 .DocSearch-Hit {
   border-radius: 4px;
   display: flex;
-  padding-bottom: 4px;
+  padding-block-end: 4px;
   position: relative;
-  scroll-margin-top: 40px;
+  scroll-margin-block-start: 40px;
 }
 
 .DocSearch-Hit:first-of-type {
-  margin-top: 4px;
+  margin-block-start: 4px;
 }
 
 .DocSearch-Hit a,
@@ -369,7 +369,7 @@
   background: var(--docsearch-hit-background);
   border-radius: 4px;
   display: block;
-  padding-left: var(--docsearch-spacing);
+  padding-inline-start: var(--docsearch-spacing);
   width: 100%;
   cursor: pointer;
 }
@@ -383,7 +383,7 @@
   margin: 0 -4px;
   padding: 8px 4px 4px;
   position: sticky;
-  top: 0;
+  inset-block-start: 0;
   z-index: 10;
 }
 
@@ -442,7 +442,7 @@
 }
 
 .DocSearch-Hit-action + .DocSearch-Hit-action {
-  margin-left: 6px;
+  margin-inline-start: 6px;
 }
 
 .DocSearch-Hit-action-button {
@@ -557,12 +557,12 @@ svg.DocSearch-Hit-Select-Icon {
 
 .DocSearch-NoResults {
   gap: 0.8em;
-  margin-top: 2em;
+  margin-block-start: 2em;
 }
 
 .DocSearch-NoResults--withAskAi {
   justify-content: flex-start;
-  margin-top: 0;
+  margin-block-start: 0;
 }
 
 .DocSearch-StartScreen,
@@ -595,7 +595,7 @@ svg.DocSearch-Hit-Select-Icon {
 }
 
 .DocSearch-NoResults-Prefill-List-Items p {
-  text-align: left;
+  text-align: start;
   align-items: center;
   display: flex;
   margin: 0;
@@ -628,7 +628,7 @@ svg.DocSearch-Hit-Select-Icon {
 .DocSearch-Footer {
   align-items: center;
   background: var(--docsearch-footer-background);
-  border-top: 1px solid var(--docsearch-subtle-color);
+  border-block-start: 1px solid var(--docsearch-subtle-color);
   border-radius: 0 0 4px 4px;
   display: flex;
   flex-direction: row-reverse;
@@ -663,7 +663,7 @@ svg.DocSearch-Hit-Select-Icon {
   display: flex;
   height: 24px;
   justify-content: center;
-  margin-right: 4px;
+  margin-inline-end: 4px;
   color: var(--docsearch-icon-color);
   border: 0;
   width: 24px;
@@ -671,7 +671,7 @@ svg.DocSearch-Hit-Select-Icon {
 }
 
 .DocSearch-Commands-Key:last-of-type {
-  margin-right: 8px;
+  margin-inline-end: 8px;
 }
 
 .DocSearch-Escape-Key {
@@ -715,7 +715,7 @@ assistive tech users */
 
 .DocSearch-Hit-AskAIButton-icon {
   color: var(--docsearch-icon-color);
-  margin-right: 12px;
+  margin-inline-end: 12px;
   flex-shrink: 0;
 }
 
@@ -736,7 +736,7 @@ assistive tech users */
   white-space: nowrap;
   overflow: hidden;
   background: none;
-  margin-left: 4px;
+  margin-inline-start: 4px;
   text-overflow: ellipsis;
 }
 
@@ -758,7 +758,7 @@ assistive tech users */
 .DocSearch-AskAiScreen-Container {
   display: flex;
   flex-direction: column;
-  text-align: left;
+  text-align: start;
   justify-content: flex-start;
   padding: 0;
   width: 100%;
@@ -770,8 +770,9 @@ assistive tech users */
   display: flex;
   font-size: 0.6em;
   font-weight: 300;
-  padding: 1.5em 0 0.5em 0;
-  text-align: left;
+  padding-block: 1.5em 0.5em;
+  padding-inline: 0;
+  text-align: start;
   margin: 0;
   align-self: flex-start;
 }
@@ -794,7 +795,7 @@ assistive tech users */
   width: 100%;
   gap: 1em;
   font-size: 0.8em;
-  margin-bottom: 8px;
+  margin-block-end: 8px;
   background: var(--docsearch-hit-background);
   padding: 24px;
   color: var(--docsearch-text-color);
@@ -837,7 +838,7 @@ assistive tech users */
   flex-direction: row;
   gap: 12px;
   align-items: center;
-  margin-left: auto;
+  margin-inline-start: auto;
 }
 
 .DocSearch-AskAiScreen-ActionButton {
@@ -1009,11 +1010,11 @@ assistive tech users */
 }
 
 .DocSearch-Markdown-Content p:last-child {
-  margin-bottom: 0;
+  margin-block-end: 0;
 }
 
 .DocSearch-Markdown-Content p:first-child {
-  margin-top: 0;
+  margin-block-start: 0;
 }
 
 .DocSearch-Markdown-Content code {
@@ -1093,7 +1094,7 @@ assistive tech users */
 .DocSearch-Markdown-Content ol {
   color: var(--docsearch-text-color);
   margin: 1.2em 0;
-  padding-left: 1.5em;
+  padding-inline-start: 1.5em;
 }
 
 .DocSearch-Markdown-Content ul {
@@ -1107,7 +1108,7 @@ assistive tech users */
 .DocSearch-Markdown-Content li {
   color: var(--docsearch-text-color);
   margin: 0.8em 0;
-  padding-left: 0.3em;
+  padding-inline-start: 0.3em;
   line-height: 1.6;
 }
 
@@ -1132,16 +1133,17 @@ assistive tech users */
 }
 
 .DocSearch-Markdown-Content blockquote {
-  border-left: 4px solid var(--docsearch-hit-highlight-color);
+  border-inline-start: 4px solid var(--docsearch-hit-highlight-color);
   margin: 1.5em 0;
-  padding: 0.5em 0 0.5em 1em;
+  padding-block: 0.5em;
+  padding-inline: 1em 0;
   color: var(--docsearch-secondary-text-color);
   font-style: italic;
 }
 
 .DocSearch-Markdown-Content hr {
   border: none;
-  border-top: 1px solid var(--docsearch-subtle-color);
+  border-block-start: 1px solid var(--docsearch-subtle-color);
   margin: 1em 0;
 }
 
@@ -1155,7 +1157,7 @@ assistive tech users */
 .DocSearch-Markdown-Content td {
   padding: 0.75em;
   border: 1px solid var(--docsearch-subtle-color);
-  text-align: left;
+  text-align: start;
 }
 
 .DocSearch-Markdown-Content th {
@@ -1184,12 +1186,12 @@ assistive tech users */
 }
 
 .DocSearch-AskAiScreen-MessageContent-Tool.Tool--Result {
-  padding-top: 0;
+  padding-block-start: 0;
 }
 
 .DocSearch-AskAiScreen-MessageContent-Tool > svg {
   color: var(--docsearch-icon-color);
-  margin-right: 8px;
+  margin-inline-end: 8px;
 }
 
 .DocSearch-AskAiScreen-MessageContent-Tool-Query {
@@ -1214,7 +1216,7 @@ assistive tech users */
 .DocSearck-AskAiScreen-MessageContent-Stopped {
   color: var(--docsearch-muted-color);
   font-style: italic;
-  margin-top: 1em;
+  margin-block-start: 1em;
 }
 
 .DocSearch-AskAiScreen-SmallerLoadingIcon {
@@ -1274,7 +1276,7 @@ assistive tech users */
   }
 
   .DocSearch-Hit-AskAIButton-icon {
-    margin-right: 8px;
+    margin-inline-end: 8px;
   }
   /* Prevent body scroll on modal-open for mobile */
   /* https://stackoverflow.com/a/24727206/6276948 */
@@ -1294,7 +1296,7 @@ assistive tech users */
 
   .DocSearch-Footer {
     border-radius: 0;
-    bottom: 0;
+    inset-block-end: 0;
     position: initial;
   }
 
@@ -1346,8 +1348,8 @@ assistive tech users */
 
 .DocSearch-CodeSnippet-CopyButton {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  inset-block-start: 8px;
+  inset-inline-end: 8px;
   background: var(--docsearch-key-background);
   color: var(--docsearch-text-color);
   border: none;
@@ -1371,7 +1373,7 @@ assistive tech users */
 .DocSearch-CodeSnippet-CopyButton svg {
   width: 16px;
   height: 16px;
-  margin-right: 4px;
+  margin-inline-end: 4px;
 }
 
 .DocSearch-CodeSnippet-CheckIcon {
@@ -1400,7 +1402,7 @@ assistive tech users */
   font-weight: 600;
   font-size: 26px;
   color: var(--docsearch-text-color);
-  margin-bottom: 0.15em;
+  margin-block-end: 0.15em;
 }
 
 .DocSearch-NewConversationScreen-Description {
@@ -1413,18 +1415,18 @@ assistive tech users */
   flex-direction: column;
   gap: var(--docsearch-spacing);
   align-items: start;
-  margin-top: 1.5em;
+  margin-block-start: 1.5em;
 }
 
 .DocSearch-NewConversationScreen-SuggestedQuestion {
   border-radius: var(--docsearch-border-radius);
   padding: 12px;
-  border: 1px solid #D6D6E7;
+  border: 1px solid var(--docsearch-subtle-color);
   height: 40px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #fff;
+  background-color: var(--docsearch-searchbox-background);
   color: var(--docsearch-text-color);
   cursor: pointer;
 }
@@ -1436,14 +1438,14 @@ assistive tech users */
 .DocSearch-Menu-content {
   display: none;
   position: absolute;
-  right: 0;
+  inset-inline-end: 0;
   padding: 8px 0;
   flex-direction: column;
   border-radius: var(--docsearch-border-radius);
   background-color: var(--docsearch-dropdown-menu-background);
   box-shadow: 0px 0px 0px 1px #21243D0D, 0px 8px 16px -4px #21243D40;
   min-width: 195px;
-  top: calc(100% + 12px);
+  inset-block-start: calc(100% + 12px);
   z-index: 422;
 }
 

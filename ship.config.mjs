@@ -1,7 +1,13 @@
 import fs from 'fs';
 import path from 'path';
 
-const packages = ['packages/docsearch-css', 'packages/docsearch-react', 'packages/docsearch-js'];
+const packages = [
+  'packages/docsearch-css',
+  'packages/docsearch-react',
+  'packages/docsearch-js',
+  'packages/docsearch-core',
+  'packages/docsearch-modal',
+];
 
 export default {
   monorepo: {
@@ -11,7 +17,7 @@ export default {
     packagesToPublish: packages,
   },
   publishCommand({ tag }) {
-    return `npm publish --tag ${tag}`;
+    return `npm publish --tag ${tag} --access public`;
   },
   versionUpdated({ exec, dir, version }) {
     // Update package dependencies

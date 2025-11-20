@@ -35,7 +35,8 @@
 
 .DocSearch-Button-Placeholder {
   font-size: 1rem;
-  padding: 0 12px 0 8px;
+  padding-block: 0;
+  padding-inline: 8px 12px;
   color: var(--docsearch-muted-color);
   display: inline-block;
   line-height: normal;
@@ -71,7 +72,7 @@
 }
 
 .DocSearch-Button-Key:first-child {
-  margin-right: 0.4em;
+  margin-inline-end: 0.4em;
 }
 
 @media (prefers-reduced-motion) {
