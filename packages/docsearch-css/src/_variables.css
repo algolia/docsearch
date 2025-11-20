@@ -109,5 +109,6 @@ html[data-theme='dark'] {
     var(--docsearch-muted-color) 60%,
     rgb(224, 227, 232) 95%
   );
-  --docsearch-dropdown-menu-item-hover-background: #10121e;
+  --docsearch-dropdown-menu-background: var(--docsearch-hit-background);
+  --docsearch-dropdown-menu-item-hover-background: var(--docsearch-modal-background);
 }
