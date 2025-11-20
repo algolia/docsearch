@@ -226,7 +226,7 @@ html[data-theme='dark'] {
   }
 
   article li {
-    margin-bottom: 0.5rem;
+    margin-block-end: 0.5rem;
   }
   body {
     @apply bg-background text-foreground;
@@ -241,7 +241,7 @@ html {
 .navbar__logo {
   flex: 0 0 100%;
   height: 1.5rem;
-  margin-right: 1rem;
+  margin-inline-end: 1rem;
 }
 
 /* DocSearch x Algolia logo */
@@ -305,7 +305,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   white-space: nowrap;
   text-decoration: none !important;
   border-radius: 0.5rem;
-  margin-left: 0.5rem;
+  margin-inline-start: 0.5rem;
   background-color: #fff !important;
   color: #21243d !important;
   padding: 0.2rem 0.5rem;
@@ -554,7 +554,7 @@ html[data-theme='dark'] .header-github-link::before {
 
 .keypad__base {
   position: absolute;
-  bottom: 0;
+  inset-block-end: 0;
   width: 100%;
 }
 
@@ -596,31 +596,31 @@ html[data-theme='dark'] .header-github-link::before {
   -moz-osx-font-smoothing: grayscale;
   font-weight: 300;
   position: absolute;
-  top: 24%;
-  left: 32%;
+  inset-block-start: 24%;
+  inset-inline-start: 32%;
   translate: -14% -8%;
   width: 100%;
   height: 70%;
   font-size: 2.2rem;
   z-index: 5;
   color: hsl(0 0% 94%);
-  text-align: left;
+  text-align: start;
   transform: rotateX(36deg) rotateY(45deg) rotateX(-90deg);
   pointer-events: none;
   mix-blend-mode: normal;
 }
 
 .key__text--search {
-  left: 24%;
-  top: 20%;
+  inset-inline-start: 24%;
+  inset-block-start: 20%;
   translate: -25% -8%;
 }
 
 .key img {
   width: 100%;
   position: absolute;
-  top: 0;
-  left: 50%;
+  inset-block-start: 0;
+  inset-inline-start: 50%;
   translate: -50% 1%;
   filter: hue-rotate(calc(var(--hue) * 1deg)) saturate(var(--saturate))
     brightness(var(--bright));
@@ -632,8 +632,8 @@ html[data-theme='dark'] .header-github-link::before {
 .keypad__single {
   width: 40.5%;
   height: 46%;
-  bottom: 36%;
-  left: 54%;
+  inset-block-end: 36%;
+  inset-inline-start: 54%;
   clip-path: polygon(
     0 0,
     54% 0,
@@ -651,8 +651,8 @@ html[data-theme='dark'] .header-github-link::before {
 
 /* Same single key, shifted up/left */
 .keypad__single--left {
-  left: 29.3%;
-  bottom: 54.2%;
+  inset-inline-start: 29.3%;
+  inset-block-end: 54.2%;
 }
 
 .keypad__single .key__text {
@@ -663,8 +663,8 @@ html[data-theme='dark'] .header-github-link::before {
 .keypad__double {
   width: 64%;
   height: 65%;
-  left: 6%;
-  bottom: 17.85%;
+  inset-inline-start: 6%;
+  inset-block-end: 17.85%;
   clip-path: polygon(
     34% 0,
     93% 44%,
@@ -748,7 +748,7 @@ html[data-theme='dark'] .shimmer-effect {
 
 .providers-table th {
   position: sticky;
-  top: 0;
-  text-align: left;
+  inset-block-start: 0;
+  text-align: start;
   background-color: var(--ifm-background-color);
 }
