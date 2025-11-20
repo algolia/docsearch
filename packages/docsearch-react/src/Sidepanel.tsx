@@ -64,7 +64,7 @@ function DocSearchSidepanelComp({
   panel: { portalContainer, ...panelProps } = {},
   ...rootProps
 }: DocSearchSidepanelProps): JSX.Element {
-  const { docsearchState, setDocsearchState, keyboardShortcuts } = useDocSearch();
+  const { docsearchState, setDocsearchState, keyboardShortcuts, registerView } = useDocSearch();
 
   const toggleSidepanelState = React.useCallback(() => {
     setDocsearchState(docsearchState === 'sidepanel' ? 'ready' : 'sidepanel');
@@ -79,6 +79,10 @@ function DocSearchSidepanelComp({
   };
 
   const containerElement = React.useMemo(() => portalContainer ?? document.body, [portalContainer]);
+
+  React.useEffect(() => {
+    registerView('sidepanel');
+  }, [registerView]);
 
   const ButtonComp = React.useMemo(
     () => <SidepanelButton keyboardShortcuts={keyboardShortcuts} onClick={toggleSidepanelState} {...buttonProps} />,
