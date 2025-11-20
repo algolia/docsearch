@@ -82,10 +82,10 @@ function VideoPlayer({ chapters }) {
                 style={{
                   width: 0,
                   height: 0,
-                  borderLeft: '8px solid transparent',
-                  borderRight: '8px solid transparent',
-                  borderBottom: '8px solid #2563eb', // blue-600
-                  marginBottom: '-2px',
+                  borderInlineStart: '8px solid transparent',
+                  borderInlineEnd: '8px solid transparent',
+                  borderBlockEnd: '8px solid #2563eb', // blue-600
+                  marginBlockEnd: '-2px',
                 }}
               />
               {/* Button */}
