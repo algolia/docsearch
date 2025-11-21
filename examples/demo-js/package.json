@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "@docsearch/css": "4.3.2",
-    "@docsearch/js": "4.3.2"
+    "@docsearch/js": "4.3.2",
+    "@docsearch/sidepanel-js": "4.3.2"
   },
   "devDependencies": {
     "vite": "^6.0.7"
