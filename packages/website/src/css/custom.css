@@ -313,7 +313,8 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   transition: all 0.2s ease-in-out;
 }
 
-.theme-announcement-bar a:hover {
+.theme-announcement-bar a:hover,
+.theme-announcement-bar a:focus-visible {
   background-color: var(--ifm-color-primary);
   color: #fff;
 }
@@ -430,12 +431,14 @@ html[data-theme='dark'] .docsearch-logo {
   color: #fff;
 }
 
-.apply-button:hover {
+.apply-button:hover,
+.apply-button:focus-visible {
   color: #fff;
 }
 
 /* GitHub */
-.header-github-link:hover {
+.header-github-link:hover,
+.header-github-link:focus-visible {
   opacity: 0.6;
 }
 

@@ -201,7 +201,9 @@
 }
 
 .DocSearch-Action:hover,
-.DocSearch-AskAi-Return:hover {
+.DocSearch-Action:focus-visible,
+.DocSearch-AskAi-Return:hover,
+.DocSearch-AskAi-Return:focus-visible {
   color: var(--docsearch-highlight-color);
   background: var(--docsearch-soft-primary-color);
 }
@@ -1126,7 +1128,8 @@ assistive tech users */
   transition: all 0.2s ease;
 }
 
-.DocSearch-Markdown-Content a:hover {
+.DocSearch-Markdown-Content a:hover,
+.DocSearch-Markdown-Content a:focus-visible {
   text-decoration: underline;
   opacity: 0.9;
 }
