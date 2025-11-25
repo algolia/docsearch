@@ -441,7 +441,7 @@ function RelatedSourceIcon(): JSX.Element {
   );
 }
 
-function CopyButton({
+export function CopyButton({
   onClick,
   translations,
 }: {
@@ -513,8 +513,7 @@ function CopyButton({
   );
 }
 
-function LikeButton({ title, onClick }: { title: string; onClick: () => void }): JSX.Element {
-  // @todo: implement like button
+export function LikeButton({ title, onClick }: { title: string; onClick: () => void }): JSX.Element {
   return (
     <button
       type="button"
@@ -541,8 +540,7 @@ function LikeButton({ title, onClick }: { title: string; onClick: () => void }):
   );
 }
 
-function DislikeButton({ title, onClick }: { title: string; onClick: () => void }): JSX.Element {
-  // @todo: implement dislike button
+export function DislikeButton({ title, onClick }: { title: string; onClick: () => void }): JSX.Element {
   return (
     <button
       type="button"
