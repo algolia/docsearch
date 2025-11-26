@@ -38,7 +38,12 @@ export const getValidToken = async ({ assistantId }: { assistantId: string }): P
       },
     })
       .then((r) => r.json())
-      .then(({ token }) => {
+      .then(({ token, success, message }) => {
+        // If request was unsuccessful, throw an error to prevent calling `/chat` without a token
+        if (!success && message) {
+          throw new Error(message);
+        }
+
         sessionStorage.setItem(TOKEN_KEY, token);
         return token;
       })
