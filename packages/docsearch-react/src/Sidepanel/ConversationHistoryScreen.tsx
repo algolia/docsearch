@@ -26,38 +26,41 @@ export const ConversationHistoryScreen = ({
     <div className="DocSearch-Sidepanel-ConversationHistoryScreen">
       <ul>
         {items.map((item) => (
-          <li
-            role="button"
-            key={item.objectID}
-            className="DocSearch-Sidepanel-RecentConversation"
-            onClick={() => {
-              selectConversation(item);
-            }}
-          >
-            <div className="DocSearch-Sidepanel-RecentConversation-container">
-              <div className="DocSearch-Sidepanel-RecentConversation-icon">
-                <RecentIcon />
-              </div>
+          <li key={item.objectID} className="DocSearch-Sidepanel-RecentConversation">
+            <a
+              href={item.url}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
 
-              <div className="DocSearch-Sidepanel-RecentConversation-content">
-                <span className="DocSearch-Sidepanel-RecentConversation-title">{item.hierarchy.lvl1}</span>
-              </div>
+                selectConversation(item);
+              }}
+            >
+              <div className="DocSearch-Sidepanel-RecentConversation-container">
+                <div className="DocSearch-Sidepanel-RecentConversation-icon">
+                  <RecentIcon />
+                </div>
 
-              <div className="DocSearch-Hit-action">
-                <button
-                  className="DocSearch-Hit-action-button"
-                  type="button"
-                  title="Remove conversation from history"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleRemoveConversation(item);
-                  }}
-                >
-                  <CloseIcon />
-                </button>
+                <div className="DocSearch-Sidepanel-RecentConversation-content">
+                  <span className="DocSearch-Sidepanel-RecentConversation-title">{item.hierarchy.lvl1}</span>
+                </div>
+
+                <div className="DocSearch-Hit-action">
+                  <button
+                    className="DocSearch-Hit-action-button"
+                    type="button"
+                    title="Remove conversation from history"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handleRemoveConversation(item);
+                    }}
+                  >
+                    <CloseIcon />
+                  </button>
+                </div>
               </div>
-            </div>
+            </a>
           </li>
         ))}
       </ul>

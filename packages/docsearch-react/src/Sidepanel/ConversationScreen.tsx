@@ -2,7 +2,7 @@ import type { UseChatHelpers } from '@ai-sdk/react';
 import type { JSX } from 'react';
 import React, { memo, useMemo } from 'react';
 
-import { AskAiScreenFooterActions, AskAiSourcesPanel, type Exchange } from '../AskAiScreen';
+import { AskAiSourcesPanel, type Exchange } from '../AskAiScreen';
 import { AlertIcon, LoadingIcon, SearchIcon } from '../icons';
 import { MemoizedMarkdown } from '../MemoizedMarkdown';
 import type { StoredSearchPlugin } from '../stored-searches';
@@ -12,6 +12,7 @@ import { extractLinksFromMessage, getMessageContent } from '../utils/ai';
 import { groupConsecutiveToolResults } from '../utils/groupConsecutiveToolResults';
 
 import { AggregatedSearchBlock } from './AggregatedSearchBlock';
+import { ConversationActions } from './ConversationActions';
 
 export type ConversationScreenTranslations = Partial<{
   /**
@@ -234,7 +235,7 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
           </div>
 
           <div className="DocSearch-AskAiScreen-Answer-Footer">
-            <AskAiScreenFooterActions
+            <ConversationActions
               id={userMessage?.id || exchange.id}
               showActions={showActions}
               latestAssistantMessageContent={assistantContent?.text || null}
