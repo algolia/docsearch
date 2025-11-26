@@ -498,12 +498,6 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
   margin-bottom: 1.5rem;
 }
 
-@media screen and (min-width: 769px) {
-  .DocSearch-Sidepanel-Screen--introduction {
-    max-width: 50ch;
-  }
-}
-
 .DocSearch-Sidepanel-List {
   list-style-type: none;
   display: flex;
@@ -523,16 +517,25 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
   scroll-margin-top: 2.5rem;
   background-color: var(--docsearch-hit-background);
   color: var(--docsearch-sidepanel-text-base);
-  padding: 0 0.75rem;
+  padding: 0;
   width: 100%;
   margin-bottom: 0.25rem;
   cursor: pointer;
 }
 
-.DocSearch-Sidepanel-RecentConversation:hover {
+.DocSearch-Sidepanel-RecentConversation a {
+  width: 100%;
+  display: block;
+  padding: 0 0.75rem;
+}
+
+.DocSearch-Sidepanel-RecentConversation:hover,
+.DocSearch-Sidepanel-RecentConversation:focus-within {
   background-color: var(--docsearch-hit-highlight-color);
 }
 
+.DocSearch-Sidepanel-RecentConversation:focus-within .DocSearch-Sidepanel-RecentConversation-icon,
+.DocSearch-Sidepanel-RecentConversation:focus-within .DocSearch-Hit-action,
 .DocSearch-Sidepanel-RecentConversation:hover .DocSearch-Sidepanel-RecentConversation-icon,
 .DocSearch-Sidepanel-RecentConversation:hover .DocSearch-Hit-action {
   color: var(--docsearch-sidepanel-accent);
@@ -544,6 +547,7 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
   flex-direction: row;
   height: 3.5rem;
   width: 100%;
+  color: var(--docsearch-text-color);
 }
 
 .DocSearch-Sidepanel-RecentConversation-icon {

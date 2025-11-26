@@ -63,6 +63,7 @@ type SidepanelHeaderProps = {
   onToggleExpanded: () => void;
   onClose: () => void;
   translations?: HeaderTranslations;
+  hasConversations: boolean;
 };
 
 export const SidepanelHeader = React.memo(
@@ -74,6 +75,7 @@ export const SidepanelHeader = React.memo(
     onToggleExpanded,
     onClose,
     translations = {},
+    hasConversations,
   }: SidepanelHeaderProps): JSX.Element => {
     const {
       title = 'Ask AI',
@@ -95,6 +97,8 @@ export const SidepanelHeader = React.memo(
         setSidepanelState('new-conversation');
       }
     }, [exchanges, setSidepanelState]);
+
+    const newConversationDisabled = sidepanelState === 'new-conversation' && exchanges.length < 1;
 
     let header = title;
 
@@ -140,14 +144,18 @@ export const SidepanelHeader = React.memo(
                 <MoreVerticalIcon />
               </Menu.Trigger>
               <Menu.Content>
-                <Menu.Item onClick={onNewConversation}>
-                  <NewConversationIcon />
-                  {newConversationText}
-                </Menu.Item>
-                <Menu.Item onClick={goToConversationHistory}>
-                  <ConversationHistoryIcon />
-                  {viewConversationHistoryText}
-                </Menu.Item>
+                {!newConversationDisabled && (
+                  <Menu.Item onClick={onNewConversation}>
+                    <NewConversationIcon />
+                    {newConversationText}
+                  </Menu.Item>
+                )}
+                {hasConversations && (
+                  <Menu.Item onClick={goToConversationHistory}>
+                    <ConversationHistoryIcon />
+                    {viewConversationHistoryText}
+                  </Menu.Item>
+                )}
               </Menu.Content>
             </Menu>
           )}

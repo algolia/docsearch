@@ -325,6 +325,7 @@ export const Sidepanel = ({
           sidepanelState={sidepanelState}
           exchanges={exchanges}
           setSidepanelState={setSidepanelState}
+          hasConversations={conversations.getAll().length > 0}
           onNewConversation={handleStartNewConversation}
           onToggleExpanded={toggleIsExpanded}
           onClose={onClose}
