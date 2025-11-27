@@ -165,20 +165,6 @@
   justify-content: center;
 }
 
-@media screen and (prefers-reduced-motion: reduce) {
-  .DocSearch-Action {
-    animation: none;
-    appearance: none;
-    background: none;
-    border: 0;
-    border-radius: 50%;
-    color: var(--docsearch-icon-color);
-    cursor: pointer;
-    inset-inline-end: 0;
-    stroke-width: var(--docsearch-icon-stroke-width);
-  }
-}
-
 .DocSearch-Action,
 .DocSearch-AskAi-Return {
   animation: fade-in 0.1s ease-in forwards;
@@ -191,6 +177,13 @@
   padding: 2px;
   inset-inline-end: 0;
   stroke-width: var(--docsearch-icon-stroke-width);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .DocSearch-Action,
+  .DocSearch-AskAi-Return {
+    animation-duration: 0;
+  }
 }
 
 .DocSearch-Close[hidden],
@@ -463,11 +456,10 @@ svg.DocSearch-Hit-Select-Icon {
   display: block;
 }
 
-@media screen and (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {
   .DocSearch-Hit-action-button:hover,
   .DocSearch-Hit-action-button:focus {
-    background: rgba(0, 0, 0, 0.2);
-    transition: none;
+    transition-duration: 0;
   }
 }
 
@@ -517,14 +509,6 @@ svg.DocSearch-Hit-Select-Icon {
 .DocSearch-Hit[aria-selected='true'] mark,
 .DocSearch-Hit[aria-selected='true'] .DocSearch-Hit-icon {
   color: var(--docsearch-highlight-color);
-}
-
-@media screen and (prefers-reduced-motion: reduce) {
-  .DocSearch-Hit-action-button:hover,
-  .DocSearch-Hit-action-button:focus {
-    background: rgba(0, 0, 0, 0.2);
-    transition: none;
-  }
 }
 
 /* No Results - Start Screen - Error Screen */
@@ -855,6 +839,12 @@ assistive tech users */
   border-radius: 4px;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .DocSearch-AskAiScreen-ActionButton {
+    transition-duration: 0;
+  }
+}
+
 .DocSearch-AskAiScreen-ActionButton:hover {
   background: var(--docsearch-hit-highlight-color);
 }
@@ -931,6 +921,12 @@ assistive tech users */
   animation: fade-in 0.3s ease-in forwards;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .DocSearch-AskAiScreen-FeedbackText--visible {
+    animation-duration: 0;
+  }
+}
+
 .DocSearch-AskAiScreen-RelatedSources {
   display: flex;
   flex-direction: column;
@@ -982,6 +978,12 @@ assistive tech users */
   transition: background-color 0.2s ease;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .DocSearch-AskAiScreen-RelatedSources-Item-Link {
+    transition-duration: 0;
+  }
+}
+
 .DocSearch-AskAiScreen-RelatedSources-Item-Link svg {
   flex-shrink: 0;
   color: var(--docsearch-icon-color);
@@ -1017,6 +1019,12 @@ assistive tech users */
 
 .DocSearch-Markdown-Content--streaming {
   animation: fade-in 0.3s ease-in-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .DocSearch-Markdown-Content--streaming {
+    animation-duration: 0;
+  }
 }
 
 .DocSearch-Markdown-Content p {
@@ -1141,6 +1149,12 @@ assistive tech users */
   transition: all 0.2s ease;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .DocSearch-Markdown-Content a {
+    transition-duration: 0;
+  }
+}
+
 .DocSearch-Markdown-Content a:hover {
   text-decoration: underline;
   opacity: 0.9;
@@ -1213,6 +1227,12 @@ assistive tech users */
   transition: box-shadow 0.2s ease;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .DocSearch-AskAiScreen-MessageContent-Tool-Query {
+    transition-duration: 0;
+  }
+}
+
 .DocSearch-AskAiScreen-MessageContent-Tool-Query svg {
   color: var(--docsearch-muted-color);
 }
@@ -1248,6 +1268,12 @@ assistive tech users */
   -webkit-text-fill-color: transparent;
   animation: shimmerText 2.5s linear infinite;
   pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmer {
+    animation-duration: 0;
+  }
 }
 
 @keyframes shimmerText {
@@ -1374,6 +1400,12 @@ assistive tech users */
   transition: opacity 0.2s ease;
   display: flex;
   align-items: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .DocSearch-CodeSnippet-CopyButton {
+    transition-duration: 0;
+  }
 }
 
 .DocSearch-CodeSnippet-CopyButton:hover {

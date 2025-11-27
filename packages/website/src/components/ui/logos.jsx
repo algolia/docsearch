@@ -49,7 +49,7 @@ export const Logos = () => {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-gray-400/7 dark:bg-xenon-900 p-6 sm:p-10 flex flex-col items-center justify-center transition-all duration-200 cursor-pointer inset-shadow-none hover:inset-shadow-sm hover:bg-blue-400/40 !no-underline"
+              className="bg-gray-400/7 dark:bg-xenon-900 p-6 sm:p-10 flex flex-col items-center justify-center transition-all duration-200 motion-reduce:duration-0 cursor-pointer inset-shadow-none hover:inset-shadow-sm hover:bg-blue-400/40 !no-underline"
             >
               <img alt={alt} src={src} width={width} height={48} className="max-h-12 w-full object-contain" />
               <span className="mt-4 text-sm font-medium text-zinc-400 dark:text-slate-200 !no-underline">{alt}</span>

@@ -67,18 +67,18 @@
   border-radius: 4px;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .DocSearch-Button-Key {
+    transition-duration: 0;
+  }
+}
+
 .DocSearch-Button-Key--ctrl {
   width: 33px;
 }
 
 .DocSearch-Button-Key:first-child {
   margin-inline-end: 0.4em;
-}
-
-@media (prefers-reduced-motion) {
-  .DocSearch-Button-Key {
-    transition: none;
-  }
 }
 
 .DocSearch-Button-Key--pressed {

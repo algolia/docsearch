@@ -125,6 +125,12 @@ main {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .DocSearch-Button {
+    transition-duration: 0;
+  }
+}
+
 .DocSearch-Button:hover {
   border-color: #667eea !important;
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15) !important;
@@ -146,6 +152,20 @@ main {
 
 .demo-section:nth-child(3) {
   animation-delay: 0.2s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .demo-section {
+    animation-duration: 0;
+  }
+
+  .demo-section:nth-child(2) {
+    animation-delay: 0;
+  }
+
+  .demo-section:nth-child(3) {
+    animation-delay: 0;
+  }
 }
 
 @keyframes fadeInUp {
