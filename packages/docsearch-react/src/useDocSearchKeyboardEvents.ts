@@ -37,6 +37,7 @@ export function useDocSearchKeyboardEvents({
     function onKeyDown(event: KeyboardEvent): void {
       if (isOpen && event.code === 'Escape' && isAskAiActive) {
         onAskAiToggle(false);
+        onClose();
         return;
       }
 
