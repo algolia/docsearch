@@ -2,9 +2,49 @@
 title: Advanced use cases
 ---
 
+import Tabs from  '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 ## Introduction
 
-This guide will cover some advanced implementations/use cases for the Sidepanel.
+This guide will cover some advanced implementations/use cases for the Sidepanel. The examples below assume you're using the Sidepanel React package,
+available from `@docsearch/sidepanel`. The `@docsearch/sidepanel` package can be installed as follows:
+
+<Tabs>
+<TabItem value="npm">
+
+```bash
+npm install @docsearch/sidepanel
+```
+
+</TabItem>
+
+<TabItem value="yarn">
+
+```bash
+yarn add @docsearch/sidepanel
+```
+
+</TabItem>
+
+<TabItem value="pnpm">
+
+```bash
+pnpm add @docsearch/sidepanel
+```
+
+</TabItem>
+
+<TabItem value="bun">
+
+```bash
+bun add @docsearch/sidepanel
+```
+
+</TabItem>
+</Tabs>
+
+> Or using your package manager of choice
 
 ## Complex implementation
 
@@ -48,7 +88,7 @@ function App() {
 
 ## Dynamic importing
 
-Sidepanel is built in a way that allows for dynamic importing of it's components to help aid in bundle size. Below is a brief example of how to do so:
+Sidepanel is built in a way that allows for dynamic importing of its components to help reduce bundle size. Below is a brief example of how to do so:
 
 ```tsx
 import { DocSearch } from '@docsearch/core';
@@ -79,7 +119,7 @@ export default function DynamicSidepanel() {
 
   return (
     <DocSearch>
-      <SidepanelButton onClick={loadModal} />
+      <SidepanelButton onClick={loadSidepanel} />
       {sidepanelLoaded && Sidepanel && (
         <Sidepanel
           indexName="YOUR_INDEX_NAME"
@@ -95,6 +135,10 @@ export default function DynamicSidepanel() {
 
 ## Hybrid Mode
 
-If you are looking to use Hybrid Mode along with the DocSearch Modal experience, we have a guide just for [Hybrid Mode][1].
+Hybrid Mode allows you to combine the Sidepanel and the original DocSearch Modal in one integrated experience.
+
+You can trigger the Modal for search and the Sidepanel for AI-powered assistance.
+
+Learn more in the [Hybrid Mode guide][1].
 
 [1]: /docs/sidepanel/hybrid
