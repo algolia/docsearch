@@ -1,0 +1,57 @@
+---
+title: Hybrid Mode
+---
+
+:::info
+Currently Hybrid Mode is only available when using the React usage approach.
+:::
+
+## Introduction
+
+Sidepanel can live in tandem with the DocSearch Modal experience through what's called "Hybrid Mode". Within this "Hybrid Mode", when triggering an Ask AI
+based action inside of the DocSearch Modal, the experience will shift to use the Sidepanel instead.
+
+## Set up
+
+To set up the Hybrid Mode experience, you will need the following:
+
+- [DocSearch Modal][1] packages installed
+- [Sidepanel][2] packages installed
+
+Once everything is installed, you can setup Hybrid Mode as such:
+
+```tsx
+import { DocSearch } from '@docsearch/core';
+import { DocSearchButton, DocSearchModal } from '@docsearch/modal';
+import { SidepanelButton, Sidepanel } from '@docsearch/sidepanel';
+
+import '@docsearch/css/dist/style.css';
+import '@docsearch/css/dist/sidepanel.css';
+
+function HybridMode() {
+  return (
+    <DocSearch>
+      <DocSearchButton />
+      <DocSearchModal
+        indexName="YOU_INDEX_NAME"
+        appId="YOUR_APP_ID"
+        apiKey="YOUR_SEARCH_API_KEY"
+        askAi="YOUR_ASSISTANT_ID" // Or configuration object
+      />
+
+      <SidepanelButton />
+      <Sidepanel
+        indexName="YOUR_INDEX_NAME"
+        appId="YOUR_APP_ID"
+        apiKey="YOUR_SEARCH_API_KEY"
+        assistantId="YOUR_ASSISTANT_ID"
+      />
+    </DocSearch>
+  );
+}
+```
+
+There is no manual opt-in for Hybrid Mode to work. The components themselves are smart enough to detect when one another is being used and will enable Hybrid Mode automatically.
+
+[1]: /docs/docsearch#installation
+[2]: /docs/sidepanel/getting-started#installation

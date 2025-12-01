@@ -1,0 +1,100 @@
+---
+title: Advanced use cases
+---
+
+## Introduction
+
+This guide will cover some advanced implementations/use cases for the Sidepanel.
+
+## Complex implementation
+
+Below is an example of a more complex implementation with `searchParameters`, a different `variant`, and some translations.
+
+```tsx
+import { DocSearch } from '@docsearch/core';
+import { SidepanelButton, Sidepanel } from '@docsearch/sidepanel'
+
+function App() {
+  return (
+    <DocSearch>
+      <SidepanelButton
+        translations={{
+          buttonAriaLabel: 'Open Ask AI Sidepanel',
+        }}
+      />
+      <Sidepanel
+        indexName="YOUR_INDEX_NAME"
+        appId="YOUR_APP_ID"
+        apiKey="YOUR_SEARCH_API_KEY"
+        assistantId="YOUR_ASSISTANT_ID"
+        variant="inline"
+        searchParameters={{
+          facetFilters: ['language:en'],
+          distinct: false,
+        }}
+        translations={{
+          header: {
+            title: 'Ask our assistant',
+          },
+          promptForm: {
+            promptPlaceholderText: 'e.g. How do I migrate my DB?',
+          },
+        }}
+      />
+    </DocSearch>
+  );
+}
+```
+
+## Dynamic importing
+
+Sidepanel is built in a way that allows for dynamic importing of it's components to help aid in bundle size. Below is a brief example of how to do so:
+
+```tsx
+import { DocSearch } from '@docsearch/core';
+import { SidepanelButton } from '@docsearch/sidepanel/button';
+import type { Sidepanel as SidepanelType} from '@docsearch/sidepanel/sidepanel';
+import { useState } from 'react';
+
+let Sidepanel: typeof SidepanelType | null = null;
+
+async function importSidepanelIfNeeded() {
+  if (Sidepanel) {
+    return;
+  }
+
+  const { Sidepanel: Panel } = await import('@docsearch/sidepanel/sidepanel');
+
+  Sidepanel = Panel;
+}
+
+export default function DynamicSidepanel() {
+  const [sidepanelLoaded, setSidepanelLoaded] = useState(false);
+
+  const loadSidepanel = () => {
+    importSidepanelIfNeeded().then(() => {
+      setSidepanelLoaded(true);
+    });
+  };
+
+  return (
+    <DocSearch>
+      <SidepanelButton onClick={loadModal} />
+      {sidepanelLoaded && Sidepanel && (
+        <Sidepanel
+          indexName="YOUR_INDEX_NAME"
+          appId="YOUR_APP_ID"
+          apiKey="YOUR_SEARCH_API_KEY"
+          assistantId="YOUR_ASSISTANT_ID"
+        />
+      )}
+    </DocSearch>
+  );
+}
+```
+
+## Hybrid Mode
+
+If you are looking to use Hybrid Mode along with the DocSearch Modal experience, we have a guide just for [Hybrid Mode][1].
+
+[1]: /docs/sidepanel/hybrid
