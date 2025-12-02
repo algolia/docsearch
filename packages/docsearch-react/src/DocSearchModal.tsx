@@ -467,32 +467,17 @@ export function DocSearchModal({
     prevStatus.current = status;
   }, [status, messages, conversations, disableUserPersonalization, stoppedStream]);
 
-  // Monitor for thread depth errors and track when they occur
+  // Monitor for thread depth errors (AI-217)
   React.useEffect(() => {
-    if (status === 'error' && askAiError) {
-      const errorWithCode = askAiError as Error & { code?: string };
-      const isThreadDepthError =
-        errorWithCode.code === 'AI-217' ||
-        askAiError.message?.includes('AI-217') ||
-        askAiError.message?.includes('thread depth') ||
-        askAiError.message?.includes('Thread depth');
-
-      if (isThreadDepthError) {
-        // Only record the error if we have at least one assistant message
-        // This prevents recording OLD errors when starting a new conversation
-        const hasAssistantMessage = messages.some((msg) => msg.role === 'assistant');
-
-        if (hasAssistantMessage) {
-          // Record the message count when this error occurred
-          setThreadDepthErrorAtMessageCount(messages.length);
-        }
-      }
-    } else if (status === 'streaming' || status === 'ready') {
-      // Clear the error when we successfully get a response
-      // This handles the case where we start a new conversation after an error
-      if (threadDepthErrorAtMessageCount !== null && messages.length < threadDepthErrorAtMessageCount) {
-        setThreadDepthErrorAtMessageCount(null);
-      }
+    const err = askAiError as Error & { code?: string };
+    if (status === 'error' && (err?.code === 'AI-217' || askAiError?.message?.includes('AI-217'))) {
+      messages.some((m) => m.role === 'assistant') && setThreadDepthErrorAtMessageCount(messages.length);
+    } else if (
+      status !== 'error' &&
+      threadDepthErrorAtMessageCount &&
+      messages.length < threadDepthErrorAtMessageCount
+    ) {
+      setThreadDepthErrorAtMessageCount(null);
     }
   }, [status, askAiError, messages, threadDepthErrorAtMessageCount]);
 
@@ -874,6 +859,14 @@ export function DocSearchModal({
     handleSelectAskAiQuestion(true, suggestedQuestion.question, suggestedQuestion);
   };
 
+  // Check if we should show the thread depth error banner
+  const showThreadDepthError =
+    isAskAiActive &&
+    askAiState !== 'new-conversation' &&
+    threadDepthErrorAtMessageCount !== null &&
+    messages.length >= threadDepthErrorAtMessageCount &&
+    messages.some((m) => m.role === 'assistant');
+
   // hide the dropdown on idle and no collections
   let showDocsearchDropdown = true;
   const hasCollections = state.collections.some((collection) => collection.items.length > 0);
@@ -916,11 +909,7 @@ export function DocSearchModal({
             askAiError={askAiError}
             askAiState={askAiState}
             setAskAiState={setAskAiState}
-            isThreadDepthError={
-              askAiState !== 'new-conversation' &&
-              threadDepthErrorAtMessageCount !== null &&
-              messages.length >= threadDepthErrorAtMessageCount
-            }
+            isThreadDepthError={showThreadDepthError}
             onClose={onClose}
             onAskAiToggle={onAskAiToggle}
             onAskAgain={(query) => {
@@ -932,24 +921,20 @@ export function DocSearchModal({
           />
         </header>
 
-        {/* Thread Depth Error Banner - shown below input when AI-217 error occurs */}
-        {isAskAiActive &&
-          askAiState !== 'new-conversation' &&
-          threadDepthErrorAtMessageCount !== null &&
-          messages.length >= threadDepthErrorAtMessageCount &&
-          messages.some((msg) => msg.role === 'assistant') && (
-            <div className="DocSearch-ThreadDepthError-Banner">
-              <div className="DocSearch-ThreadDepthError-Content">
-                <div className="DocSearch-ThreadDepthError-Message">
-                  This conversation is now closed to keep responses accurate.{' '}
-                  <button type="button" className="DocSearch-ThreadDepthError-Link" onClick={handleNewConversation}>
-                    Start a new conversation
-                  </button>{' '}
-                  to continue.
-                </div>
+        {/* Thread Depth Error Banner */}
+        {showThreadDepthError && (
+          <div className="DocSearch-ThreadDepthError-Banner">
+            <div className="DocSearch-ThreadDepthError-Content">
+              <div className="DocSearch-ThreadDepthError-Message">
+                This conversation is now closed to keep responses accurate.{' '}
+                <button type="button" className="DocSearch-ThreadDepthError-Link" onClick={handleNewConversation}>
+                  Start a new conversation
+                </button>{' '}
+                to continue.
               </div>
             </div>
-          )}
+          </div>
+        )}
 
         {showDocsearchDropdown && (
           <div className="DocSearch-Dropdown" ref={dropdownRef}>
