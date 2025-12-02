@@ -919,6 +919,58 @@ assistive tech users */
   color: var(--docsearch-error-color);
 }
 
+.DocSearch-ThreadDepthError-Banner {
+  background-color: #ffe6e9;
+  border: 1px solid #febdc5;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 12px 12px 0 12px;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.DocSearch-ThreadDepthError-Content {
+  display: flex;
+  align-items: flex-start;
+  max-width: 100%;
+}
+
+.DocSearch-ThreadDepthError-Message {
+  flex: 1;
+  font-size: 0.8em;
+}
+
+.DocSearch-ThreadDepthError-Link {
+  color: #0066cc;
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: color 0.2s ease;
+  display: inline;
+}
+
+.DocSearch-ThreadDepthError-Link:hover {
+  color: rgb(185 28 28);
+}
+
+.DocSearch-ThreadDepthError-Link:active {
+  color: rgb(153 27 27);
+}
+
 .DocSearch-AskAiScreen-FeedbackText {
   font-size: 0.7em;
   font-weight: 400;
@@ -1457,7 +1509,9 @@ assistive tech users */
   flex-direction: column;
   border-radius: var(--docsearch-border-radius);
   background-color: var(--docsearch-dropdown-menu-background);
-  box-shadow: 0px 0px 0px 1px #21243D0D, 0px 8px 16px -4px #21243D40;
+  box-shadow:
+    0px 0px 0px 1px #21243d0d,
+    0px 8px 16px -4px #21243d40;
   min-width: 195px;
   inset-block-start: calc(100% + 12px);
   z-index: 422;

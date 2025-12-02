@@ -63,3 +63,9 @@ Ask AI could not call a specific tool.
 ### AI_RETRY
 
 There were too many failed attempts at communicating with the upstream provider. This could be an issue on the provider's end, an issue with the supplied API key or an underlying network issue causing these retries.
+
+### AI-217 - Thread Depth Exceeded {#ai-217}
+
+The conversation has reached its maximum depth limit and can no longer accept follow-up questions.
+
+> **Solution**: Start a new conversation to continue. The conversation depth limit is configured per assistant to maintain response accuracy and prevent conversation drift.
