@@ -469,14 +469,20 @@ export function DocSearchModal({
 
   // Monitor for thread depth errors (AI-217)
   React.useEffect(() => {
-    const err = askAiError as Error & { code?: string };
-    if (status === 'error' && (err?.code === 'AI-217' || askAiError?.message?.includes('AI-217'))) {
-      messages.some((m) => m.role === 'assistant') && setThreadDepthErrorAtMessageCount(messages.length);
-    } else if (
-      status !== 'error' &&
-      threadDepthErrorAtMessageCount &&
-      messages.length < threadDepthErrorAtMessageCount
-    ) {
+    const error = askAiError as (Error & { code?: string }) | null;
+    const isThreadDepthError = status === 'error' && (error?.code === 'AI-217' || error?.message?.includes('AI-217'));
+
+    const hasAssistantMessage = messages.some((m) => m.role === 'assistant');
+
+    if (isThreadDepthError && hasAssistantMessage) {
+      setThreadDepthErrorAtMessageCount(messages.length);
+      return;
+    }
+
+    const shouldResetError =
+      status !== 'error' && threadDepthErrorAtMessageCount !== null && messages.length < threadDepthErrorAtMessageCount;
+
+    if (shouldResetError) {
       setThreadDepthErrorAtMessageCount(null);
     }
   }, [status, askAiError, messages, threadDepthErrorAtMessageCount]);
