@@ -80,7 +80,8 @@ main {
 }
 
 /* search component wrapper */
-.search-wrapper {
+.search-wrapper,
+.default-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,7 +115,7 @@ main {
 }
 
 /* docsearch button customization */
-.DocSearch-Button {
+.search-wrapper .DocSearch-Button {
   margin: 0 !important;
   background: #f7fafc !important;
   border: 2px solid #e2e8f0 !important;
@@ -125,13 +126,13 @@ main {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
 }
 
-.DocSearch-Button:hover {
+.search-wrapper .DocSearch-Button:hover {
   border-color: #667eea !important;
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15) !important;
   transform: translateY(-1px) !important;
 }
 
-.DocSearch-Button-Placeholder {
+.search-wrapper .DocSearch-Button-Placeholder {
   color: #718096 !important;
 }
 
