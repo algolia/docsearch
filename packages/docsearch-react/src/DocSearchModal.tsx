@@ -927,17 +927,17 @@ export function DocSearchModal({
           />
         </header>
 
-        {/* Thread Depth Error Banner */}
+        {/* Thread Depth Error */}
         {showThreadDepthError && (
-          <div className="DocSearch-ThreadDepthError-Banner">
-            <div className="DocSearch-ThreadDepthError-Content">
-              <div className="DocSearch-ThreadDepthError-Message">
+          <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error DocSearch-AskAiScreen-Error--ThreadDepth">
+            <div className="DocSearch-AskAiScreen-Error-Content">
+              <p>
                 This conversation is now closed to keep responses accurate.{' '}
                 <button type="button" className="DocSearch-ThreadDepthError-Link" onClick={handleNewConversation}>
                   Start a new conversation
                 </button>{' '}
                 to continue.
-              </div>
+              </p>
             </div>
           </div>
         )}
