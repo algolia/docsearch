@@ -23,11 +23,12 @@ function sourceOutput(fileName) {
       globals: {
         react: 'React',
         'react-dom': 'ReactDOM',
+        '@docsearch/core': 'DocSearchCore',
       },
       file: `dist/umd/${fileName}`,
       format: 'umd',
       sourcemap: true,
-      name: pkg.name,
+      name: 'DocSearchReact',
       banner: getBundleBanner(pkg),
     },
     { dir: 'dist/esm', format: 'es' },
