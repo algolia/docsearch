@@ -47,7 +47,6 @@ export function DocSearch({ children, theme, ...props }: DocSearchProps): JSX.El
 
   const closeModal = React.useCallback((): void => {
     setDocsearchState('ready');
-    searchButtonRef.current?.focus();
     setInitialQuery(props.initialQuery ?? '');
   }, [setDocsearchState, props.initialQuery]);
 
