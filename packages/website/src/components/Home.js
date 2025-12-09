@@ -161,7 +161,7 @@ function Home() {
             <Button href={withBaseUrl('docs/what-is-docsearch')}>Find out more</Button>
             <PrimaryButton
               href={
-                'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch'
+                'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch&utm_content=apply'
               }
             >
               Sign up
@@ -254,7 +254,7 @@ function Home() {
                 <PrimaryButton
                   key="apply"
                   href={
-                    'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch'
+                    'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch&utm_content=apply'
                   }
                 >
                   Sign up for free

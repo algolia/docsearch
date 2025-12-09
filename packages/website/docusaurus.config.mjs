@@ -4,7 +4,7 @@ import myLoaders from './plugins/my-loaders.mjs';
 import tailwindLoader from './plugins/tailwind-loader.mjs';
 
 const SIGNUP_LINK =
-  'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch';
+  'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch&utm_content=apply';
 
 const currentDate = new Date();
 const currentYear = currentDate.getFullYear();
