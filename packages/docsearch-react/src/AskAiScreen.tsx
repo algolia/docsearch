@@ -97,15 +97,8 @@ interface AskAiExchangeCardProps {
 // Helper function to check if error is a thread depth error (AI-217)
 function isThreadDepthError(error?: Error): boolean {
   if (!error) return false;
-  // Check if error has a code property (AI SDK errors typically have this)
-  const errorWithCode = error as Error & { code?: string };
-  // Check both code property and message content for AI-217
-  return (
-    errorWithCode.code === 'AI-217' ||
-    error.message?.includes('AI-217') ||
-    error.message?.includes('thread depth') ||
-    error.message?.includes('Thread depth')
-  );
+
+  return error.message?.includes('AI-217') || false;
 }
 
 function AskAiExchangeCard({

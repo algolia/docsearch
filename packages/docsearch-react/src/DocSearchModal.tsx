@@ -469,8 +469,9 @@ export function DocSearchModal({
 
   // Monitor for thread depth errors (AI-217)
   React.useEffect(() => {
-    const error = askAiError as (Error & { code?: string }) | null;
-    const isThreadDepthError = status === 'error' && (error?.code === 'AI-217' || error?.message?.includes('AI-217'));
+    const error = askAiError as Error | null;
+    // The backend error message includes "AI-217" in the text
+    const isThreadDepthError = status === 'error' && error?.message?.includes('AI-217');
 
     const hasAssistantMessage = messages.some((m) => m.role === 'assistant');
 
