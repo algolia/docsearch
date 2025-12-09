@@ -9,6 +9,10 @@
       "maxSize": "115 kB"
     },
     {
+      "path": "packages/docsearch-react/dist/umd/searchOnly.js",
+      "maxSize": "60 kB"
+    },
+    {
       "path": "packages/docsearch-js/dist/umd/index.js",
       "maxSize": "128 kB"
     },
@@ -18,7 +22,7 @@
     },
     {
       "path": "packages/docsearch-modal/dist/umd/index.js",
-      "maxSize": "113 kB"
+      "maxSize": "114 kB"
     }
   ]
 }

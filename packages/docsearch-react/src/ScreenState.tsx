@@ -29,33 +29,59 @@ export type ScreenStateTranslations = Partial<{
   newConversation: NewConversationTranslations;
 }>;
 
-export interface ScreenStateProps<TItem extends BaseItem>
-  extends AutocompleteApi<TItem, React.FormEvent, React.MouseEvent, React.KeyboardEvent> {
+type SharedProps<TItem extends BaseItem> = {
   state: AutocompleteState<TItem>;
   recentSearches: StoredSearchPlugin<StoredDocSearchHit>;
   favoriteSearches: StoredSearchPlugin<StoredDocSearchHit>;
-  conversations: StoredSearchPlugin<StoredAskAiState>;
   onItemClick: (item: InternalDocSearchHit, event: KeyboardEvent | MouseEvent) => void;
-  onAskAiToggle: (toggle: boolean) => void;
-  isAskAiActive: boolean;
-  canHandleAskAi: boolean;
   inputRef: React.MutableRefObject<HTMLInputElement | null>;
   hitComponent: DocSearchProps['hitComponent'];
   indexName: DocSearchProps['indexName'];
-  messages: UseChatHelpers<AIMessage>['messages'];
-  status: UseChatHelpers<AIMessage>['status'];
-  askAiError?: Error;
   disableUserPersonalization: boolean;
   resultsFooterComponent: DocSearchProps['resultsFooterComponent'];
   translations: ScreenStateTranslations;
   getMissingResultsUrl?: DocSearchProps['getMissingResultsUrl'];
   hasCollections: boolean;
+};
+
+export type AskAiScreenStateProps = {
+  canHandleAskAi: boolean | true;
+  isAskAiActive: boolean;
+  onAskAiToggle: (toggle: boolean) => void;
+  conversations: StoredSearchPlugin<StoredAskAiState>;
+  messages: UseChatHelpers<AIMessage>['messages'];
+  status: UseChatHelpers<AIMessage>['status'];
+  askAiError?: Error;
   onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
   askAiState: AskAiState;
   selectAskAiQuestion: (toggle: boolean, query: string) => void;
   suggestedQuestions: SuggestedQuestionHit[];
   selectSuggestedQuestion: (question: SuggestedQuestionHit) => void;
-}
+};
+
+type SearchOnlyaskAiScreenProps = {
+  canHandleAskAi: false;
+  isAskAiActive?: undefined;
+  onAskAiToggle?: undefined;
+  conversations?: undefined;
+  messages?: undefined;
+  status?: undefined;
+  askAiError?: undefined;
+  onFeedback?: undefined;
+  askAiState?: undefined;
+  selectAskAiQuestion?: undefined;
+  suggestedQuestions?: undefined;
+  selectSuggestedQuestion?: undefined;
+};
+
+export type ScreenStateProps<TItem extends BaseItem> = AutocompleteApi<
+  TItem,
+  React.FormEvent,
+  React.MouseEvent,
+  React.KeyboardEvent
+> &
+  SharedProps<TItem> &
+  (AskAiScreenStateProps | SearchOnlyaskAiScreenProps);
 
 export const ScreenState = React.memo(
   ({ translations = {}, ...props }: ScreenStateProps<InternalDocSearchHit>) => {
@@ -73,7 +99,7 @@ export const ScreenState = React.memo(
       );
     }
 
-    if (props.isAskAiActive && props.canHandleAskAi) {
+    if (props.canHandleAskAi && props.isAskAiActive) {
       return (
         <AskAiScreen
           {...props}

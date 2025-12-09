@@ -4,12 +4,13 @@ import React from 'react';
 import { CloseIcon, SparklesIcon } from './icons';
 import { Results } from './Results';
 import type { ResultsScreenTranslations } from './ResultsScreen';
-import type { ScreenStateProps } from './ScreenState';
+import type { AskAiScreenStateProps, ScreenStateProps } from './ScreenState';
 import type { InternalDocSearchHit } from './types';
 
-type ConversationHistoryScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
-  translations?: ResultsScreenTranslations;
-};
+type ConversationHistoryScreenProps = AskAiScreenStateProps &
+  Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
+    translations?: ResultsScreenTranslations;
+  };
 
 export function ConversationHistoryScreen({ onAskAiToggle, ...props }: ConversationHistoryScreenProps): JSX.Element {
   const collection = React.useMemo(() => props.state.collections[2], [props.state]);

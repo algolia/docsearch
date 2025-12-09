@@ -126,7 +126,9 @@ export function StartScreen({ translations = {}, ...props }: StartScreenProps): 
               onClick={(event) => {
                 event.preventDefault();
                 event.stopPropagation();
-                props.conversations.remove(item);
+                if (props.canHandleAskAi) {
+                  props.conversations?.remove(item);
+                }
                 props.refresh();
               }}
             >

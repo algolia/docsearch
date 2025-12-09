@@ -30,7 +30,8 @@
     "./style": "./style/index.js",
     "./useDocSearchKeyboardEvents": "./dist/esm/useDocSearchKeyboardEvents.js",
     "./useTheme": "./dist/esm/useTheme.js",
-    "./version": "./dist/esm/version.js"
+    "./version": "./dist/esm/version.js",
+    "./keyword": "./dist/esm/SearchOnly.js"
   },
   "source": "src/index.ts",
   "types": "dist/esm/index.d.ts",

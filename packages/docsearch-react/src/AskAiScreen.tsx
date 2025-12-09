@@ -4,7 +4,7 @@ import React, { type JSX, useMemo, useState, useEffect } from 'react';
 import { AggregatedSearchBlock } from './AggregatedSearchBlock';
 import { AlertIcon, LoadingIcon, SearchIcon } from './icons';
 import { MemoizedMarkdown } from './MemoizedMarkdown';
-import type { ScreenStateProps } from './ScreenState';
+import type { AskAiScreenStateProps, ScreenStateProps } from './ScreenState';
 import type { StoredSearchPlugin } from './stored-searches';
 import type { InternalDocSearchHit, StoredAskAiState } from './types';
 import type { AIMessage } from './types/AskiAi';
@@ -54,12 +54,10 @@ export type AskAiScreenTranslations = Partial<{
   errorTitleText: string;
 }>;
 
-type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
-  messages: AIMessage[];
-  status: UseChatHelpers<AIMessage>['status'];
-  askAiError?: Error;
-  translations?: AskAiScreenTranslations;
-};
+type AskAiScreenProps = AskAiScreenStateProps &
+  Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
+    translations?: AskAiScreenTranslations;
+  };
 
 interface AskAiScreenHeaderProps {
   disclaimerText: string;

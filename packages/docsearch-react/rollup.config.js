@@ -68,6 +68,12 @@ export default [
     plugins: sourcePlugins,
   },
   {
+    input: 'src/SearchOnly.tsx',
+    external: externalPackages,
+    output: sourceOutput('searchOnly.js'),
+    plugins: sourcePlugins,
+  },
+  {
     input: 'src/version.ts',
     output: sourceOutput('version.js'),
     plugins: sourcePlugins,
@@ -100,6 +106,11 @@ export default [
   {
     input: 'dist/esm/types/version.d.ts',
     output: [{ file: 'dist/esm/version.d.ts', format: 'es' }],
+    plugins: [dts()],
+  },
+  {
+    input: 'dist/esm/types/SearchOnly.d.ts',
+    output: [{ file: 'dist/esm/SearchOnly.d.ts', format: 'es' }],
     plugins: [dts()],
   },
 ];

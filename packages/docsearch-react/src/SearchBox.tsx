@@ -37,33 +37,42 @@ export type SearchBoxTranslations = Partial<{
   viewConversationHistoryText: string;
 }>;
 
-interface SearchBoxProps
-  extends AutocompleteApi<InternalDocSearchHit, React.FormEvent, React.MouseEvent, React.KeyboardEvent> {
-  state: AutocompleteState<InternalDocSearchHit>;
-  autoFocus: boolean;
-  inputRef: RefObject<HTMLInputElement | null>;
-  onClose: () => void;
+type AskAiEnabledProps = {
+  // `boolean | true` used here since the props is a toggle
+  isAskAiActive: boolean | true;
   onAskAiToggle: (toggle: boolean) => void;
   onAskAgain: (query: string) => void;
   onStopAskAiStreaming: () => Promise<void>;
-  placeholder: string;
-  isAskAiActive: boolean;
-  askAiStatus: UseChatHelpers<AIMessage>['status'];
-  isFromSelection: boolean;
-  translations?: SearchBoxTranslations;
   askAiState: AskAiState;
   setAskAiState: (state: AskAiState) => void;
   onNewConversation: () => void;
   onViewConversationHistory: () => void;
-}
+  askAiStatus: UseChatHelpers<AIMessage>['status'];
+};
 
-export function SearchBox({
-  translations = {},
-  askAiState,
-  onAskAiToggle,
-  setAskAiState,
-  ...props
-}: SearchBoxProps): JSX.Element {
+type SearchOnlyProps = {
+  isAskAiActive: false;
+  onAskAiToggle?: undefined;
+  onAskAgain?: undefined;
+  onStopAskAiStreaming?: undefined;
+  askAiState?: undefined;
+  setAskAiState?: undefined;
+  onNewConversation?: undefined;
+  onViewConversationHistory?: undefined;
+  askAiStatus?: undefined;
+};
+
+type SearchBoxProps = AutocompleteApi<InternalDocSearchHit, React.FormEvent, React.MouseEvent, React.KeyboardEvent> & {
+  state: AutocompleteState<InternalDocSearchHit>;
+  autoFocus: boolean;
+  inputRef: RefObject<HTMLInputElement | null>;
+  onClose: () => void;
+  placeholder: string;
+  translations?: SearchBoxTranslations;
+  isFromSelection: boolean;
+} & (AskAiEnabledProps | SearchOnlyProps);
+
+export function SearchBox({ translations = {}, ...props }: SearchBoxProps): JSX.Element {
   const {
     clearButtonTitle = 'Clear',
     clearButtonAriaLabel = 'Clear the query',
@@ -113,12 +122,13 @@ export function SearchBox({
   const blockedKeys = new Set(['ArrowUp', 'ArrowDown', 'Enter']);
   const origOnKeyDown = baseInputProps.onKeyDown;
   const origOnChange = baseInputProps.onChange;
-  const isAskAiStreaming = props.askAiStatus === 'streaming' || props.askAiStatus === 'submitted';
+  const isAskAiStreaming =
+    props.isAskAiActive && (props.askAiStatus === 'streaming' || props.askAiStatus === 'submitted');
   const isKeywordSearchLoading = props.state.status === 'stalled';
-  const renderMoreOptions = props.isAskAiActive && askAiState !== 'conversation-history';
+  const renderMoreOptions = props.isAskAiActive && props.askAiState !== 'conversation-history';
   let searchPlaceholder = props.placeholder;
 
-  if (askAiState === 'new-conversation') {
+  if (props.isAskAiActive && props.askAiState === 'new-conversation') {
     searchPlaceholder = newConversationPlaceholder;
   }
 
@@ -128,16 +138,21 @@ export function SearchBox({
     heading = placeholderTextAskAiStreaming;
   }
 
-  if (askAiState === 'conversation-history') {
+  if (props.isAskAiActive && props.askAiState === 'conversation-history') {
     heading = conversationHistoryTitle;
   }
 
   // when returning to another status than streaming or submitted, we focus on the input
   React.useEffect(() => {
-    if (props.askAiStatus !== 'streaming' && props.askAiStatus !== 'submitted' && props.inputRef.current) {
+    if (
+      props.isAskAiActive &&
+      props.askAiStatus !== 'streaming' &&
+      props.askAiStatus !== 'submitted' &&
+      props.inputRef.current
+    ) {
       props.inputRef.current.focus();
     }
-  }, [props.askAiStatus, props.inputRef]);
+  }, [props.isAskAiActive, props.askAiStatus, props.inputRef]);
 
   /**
    * We need to block the default behavior of the input when Ask AI is active.
@@ -178,14 +193,16 @@ export function SearchBox({
   };
 
   const handleAskAiBackClick = React.useCallback((): void => {
-    if (askAiState === 'conversation-history') {
-      onAskAiToggle(true);
-      setAskAiState('initial');
+    if (!props.isAskAiActive) return;
+
+    if (props.askAiState === 'conversation-history') {
+      props.onAskAiToggle(true);
+      props.setAskAiState('initial');
       return;
     }
 
-    onAskAiToggle(false);
-  }, [askAiState, onAskAiToggle, setAskAiState]);
+    props.onAskAiToggle(false);
+  }, [props]);
 
   return (
     <>
