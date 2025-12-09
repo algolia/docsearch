@@ -2,70 +2,122 @@
 title: Ask AI Errors Reference
 ---
 
-This is a reference to error codes and their definitions that can be returned from the Ask AI Chat.
+These error codes correspond to issues encountered when using Ask AI. Each code includes a short description and possible resolutions.
 
 ## General API errors
 
+These error codes represent issues at the HTTP or service level, independent of the AI stream. They cover authentication, routing, rate limiting, and server errors.
+
 ---
 
-### UNAUTHORIZED
+### AI-201 - Bad input {#ai-201}
 
-There was an issue validating the auth token for the request.
+The request included data that could not be used to find a resource, or the data was malformed.
 
-### FORBIDDEN
+> **Solution:** Make sure you are setting the correct configuration options for [DocSearch][1] or [SiteSearch][2], and that you are passing the correct [request body][3] in your API call.
 
-Access to a resource is not available or not allowed for the requester.
+### AI-202 - Unauthorized {#ai-202}
 
-> **Solution:** Make sure that your domain is [whitelisted](/docs/v4/askai-whitelisted-domains) and that you are using the correct `assistantId`.
+There was an issue validating the authentication token for the request.
 
-### BAD_INPUT
+> **Solution**: Ensure that you are including a valid authentication token in your request headers and that it has not expired.
 
-The request included data that could either not be used to find a resource, or the data was malformed.
+### AI-203 - Forbidden {#ai-203}
 
-### TOO_MANY_ATTEMPTS
+Access to the requested resource is unavailable or forbidden for this requester.
 
-There have been too many requests made within a designated window. The requests are being rate limited.
+> **Solution**: Verify that your domain is [whitelisted][4], that you are using the correct assistantId, and that your account has the necessary permissions for this resource.
 
-> **Solution:** Wait for the rate limit window to pass and then try again.
+### AI-204 - HTTP error {#ai-204}
+
+There was an issue with HTTP routing or endpoint configuration. This may indicate a problem with the target URL, proxy setup, or request path.
+
+> **Solution**: Double-check that the API endpoint is correct and that your network or proxy configuration allows outbound connections.
+
+### AI-205 - Too many attempts {#ai-205}
+
+Too many requests were made within the designated time window. Your requests are being rate-limited.
+
+> **Solution**: Wait for the rate limit window to reset before sending additional requests.
+
+### AI-206 - Unknown {#ai-206}
+
+An unknown error occurred.
+
+> **Solution**: Retry the request. If the issue persists, contact support with the full request and response details.
+
+### AI-207 - Internal error {#ai-207}
+
+An internal error occurred within the Ask AI service.
+
+> **Solution**: Retry your request later. If the problem continues, contact support with the error ID or timestamp.
 
 ## Ask AI chat errors
 
+These error codes represent issues with the AI stream or upstream LLM providers.
+
 ---
 
-### AI_STREAM_ERROR
+### AI-208 - Provider API call error {#ai-208}
 
-A general case error that occurred while communicating with the upstream provider. This could include stream processing issues, data corruption, or issues with the provider itself.
-
-### AI_API_CALL
-
-There was an issue specifically with communicating with the upstream provider.
+There was an issue communicating with the upstream provider’s API. This can occur when the provider returns an unexpected response or a timeout.
 
 > **Solution:** Check the provider's API status page(s) to see if they are experiencing any ongoing issues.
 
-### AI_INVALID_API_KEY
+### AI-209 - Provider retry error {#ai-209}
 
-The upstream provider reported that there was an issue with the supplied API key.
+There were too many failed attempts at communicating with the upstream provider. This could be caused by issues on the provider's end, an invalid API key, or a network issue causing repeated retries.
 
-> **Solution:** Make sure to double-check that you are using the correct API key for your assistant; and that it has the correct permissions.
+> **Solution:** Check the provider's API status page(s) to see if they are experiencing any ongoing issues.
 
-### AI_INSUFFICIENT_BALANCE
+### AI-210 - No tool available {#ai-210}
 
-The upstream provider could not process the chat request due to a billing issue.
-
-> **Solution:** You will need to log in to your provider’s dashboard to remedy this issue.
-
-### AI_NO_TOOL
-
-Ask AI could not call a specific tool.
+The AI runtime could not call the requested tool. This usually means the tool name referenced in your request does not exist or was not registered in the SDK configuration.
 
 > **Solution:** Be sure not to ask for any specific tool calls within your custom prompt. Ask AI has specific tools it uses to give the best results.
 
-### AI_RETRY
+### AI-211 - Stream error {#ai-211}
 
-There were too many failed attempts at communicating with the upstream provider. This could be an issue on the provider's end, an issue with the supplied API key or an underlying network issue causing these retries.
+A general error occurred while streaming data from the upstream provider. This could include connection interruptions, malformed data, or provider-side streaming issues.
+
+### AI-212 - Invalid API key {#ai-212}
+
+The upstream provider reported that there was an issue with the supplied API key.
+
+> **Solution:** Make sure to double-check that you are using the correct API key for your assistant, and that it has the correct permissions.
+
+### AI-213 - Billing error {#ai-213}
+
+The upstream provider could not process the request due to a billing or quota issue.
+
+> **Solution:** You will need to log in to your provider’s dashboard to remedy this issue.
+
+### AI-214 - No existing model {#ai-214}
+
+The selected model does not exist for the chosen provider.
+
+> **Solution**: Make sure the model exists for the selected provider. A list of supported models and providers can be found in our [docs][5].
+
+### AI-215 - No existing provider {#ai-215}
+
+The selected provider does not exist.
+
+> **Solution**: Make sure the provider is supported. A list of available providers and their compatible models can be found in our [docs][5].
+
+### AI-216 - Could not load API Key {#ai-216}
+
+This error occurs when the SDK could not load the provider’s API key successfully.
+
+> **Solution**: Ensure the API key for the chosen LLM provider is correct and has all of the correct permissions added to it.
 
 ### AI-217 - Thread Depth Exceeded {#ai-217}
 
 The conversation has reached its maximum depth limit and can no longer accept follow-up questions.
 
 > **Solution**: Start a new conversation to continue. The conversation depth limit is configured per assistant to maintain response accuracy and prevent conversation drift.
+
+[1]: /docs/api#askai
+[2]: https://sitesearch.algolia.com/docs/experiences/search-askai#configuration
+[3]: https://www.algolia.com/doc/guides/algolia-ai/askai/reference/api
+[4]: /docs/v4/askai-whitelisted-domains
+[5]: https://www.algolia.com/doc/guides/algolia-ai/askai/guides/models

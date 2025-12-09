@@ -8,6 +8,7 @@ import '@docsearch/css/dist/style.css';
 import Basic from './examples/basic';
 import BasicAskAI from './examples/basic-askai';
 import Composable from './examples/composable';
+import Default from './examples/default';
 import DynamicImportModal from './examples/dynamic-import-modal';
 import MultiIndex from './examples/multi-index';
 import WHitComponent from './examples/w-hit-component';
@@ -24,6 +25,13 @@ function App(): JSX.Element {
         </header>
 
         <main>
+          <section className="demo-section">
+            <p className="section-description">default</p>
+            <div className="default-wrapper">
+              <Default />
+            </div>
+          </section>
+
           <section className="demo-section">
             <p className="section-description">basic search functionality</p>
             <div className="search-wrapper">
