@@ -399,9 +399,6 @@ export function DocSearchModal({
 
   const [stoppedStream, setStoppedStream] = React.useState(false);
 
-  // Use a unique ID for each conversation to force a fresh chat instance
-  const [conversationId, setConversationId] = React.useState(() => `conversation-${Date.now()}`);
-
   const {
     messages,
     sendMessage,
@@ -410,7 +407,6 @@ export function DocSearchModal({
     error: askAiError,
     stop: stopAskAiStreaming,
   } = useChat<AIMessage>({
-    id: conversationId, // Force a fresh instance when this changes
     sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
     transport: new DefaultChatTransport({
       api: ASK_AI_API_URL,
@@ -831,11 +827,7 @@ export function DocSearchModal({
   };
 
   const handleNewConversation = (): void => {
-    // Generate a new conversation ID to force a fresh chat instance
-    // This will automatically clear messages and errors in the AI SDK
-    setConversationId(`conversation-${Date.now()}`);
     setAskAiState('new-conversation');
-    // Note: We don't call setMessages([]) because changing the ID creates a fresh instance
   };
 
   const handleViewConversationHistory = (): void => {
