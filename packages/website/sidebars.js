@@ -41,6 +41,16 @@ export default {
     },
     {
       type: 'category',
+      label: 'Sidepanel',
+      items: [
+        'sidepanel/getting-started',
+        'sidepanel/advanced-use-cases',
+        'sidepanel/hybrid',
+        'sidepanel/api-reference',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Algolia Crawler',
       items: ['create-crawler', 'record-extractor', 'templates', 'crawler-configuration-visual', 'manage-your-crawls'],
     },

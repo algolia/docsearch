@@ -1,0 +1,134 @@
+---
+title: Sidepanel API Reference
+---
+
+import Tabs from  '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## `appId`
+
+> `type: string` | **required**
+
+Your Algolia application ID.
+
+## `apiKey`
+
+> `type: string` | **required**
+
+Your Algolia Search API key.
+
+## `assistantId`
+
+> `type: string` | **required**
+
+The ID for which Ask AI assistant to use.
+
+## `indexName`
+
+> `type: string` | **required**
+
+The name of the index to be used with the Ask AI service.
+
+## `searchParameters`
+
+## `variant`
+
+> `type: 'floating' | 'inline'` | default: `'floating'` | **optional**
+
+Variant of the Sidepanel positioning.
+
+- `inline` pushes page content when opened.
+- `floating` is positioned above all other content on the page.
+
+## `side`
+
+> `type: 'right' | 'left'` | default: `'right'` | **optional**
+
+The side of the page which the panel will originate from.
+
+## `width`
+
+> `type: number | string` | default: `'360px'` | **optional**
+
+Width of the Sidepanel (px or any CSS width) while in it's default state.
+
+## `expandedWidth`
+
+> `type: number | string` | default: `'580px'` | **optional**
+
+Width of the Sidepanel (px or any CSS width) while in it's expanded state.
+
+## `suggestedQuestions`
+
+> `type: boolean` | default: `false` | **optional**
+
+Enables displaying suggested questions on new conversation screen.
+
+More information on setting up Suggested Questions can be found on [Algolia Docs][1]
+
+## `keyboardShortcuts`
+
+> `type: { 'Ctrl/Cmd+I': boolean }` | **optional**
+
+Configuration for keyboard shortcuts. Allows enabling/disabling specific shortcuts.
+
+### Default behavior:
+
+- `Ctrl/Cmd+I` - Opens and closes the Sidepanel
+
+### Interface:
+
+```ts
+interface SidepanelShortcuts {
+  'Ctrl/Cmd+I'?: boolean; // default: true
+}
+```
+
+## `theme`
+
+> `type: 'light' | 'dark'` | default: `'light'` | **optional**
+
+## `portalContainer` (React only)
+
+> `type: Element | DocumentFragment` | default: `document.body` | **optional**
+
+The container element where the panel should be portaled to. Use this when you need the Sidepanel to render in a custom DOM node.
+
+:::warning
+This prop only exists in the React based versions of Sidepanel. If you are using the `@docsearch/sidepanel-js` package, use the `container` option instead.
+:::
+
+<Tabs>
+  <TabItem value="React">
+    ```tsx
+    // assume you have a dedicated DOM node in your HTML
+    <div id="sidepanel-root" />
+
+    const portalEl = document.getElementById('sidepanel-root');
+
+    <Sidepanel
+      appId="YOUR_APP_ID"
+      apiKey="YOUR_SEARCH_API_KEY"
+      assistantId="YOUR_ASSISTANT_ID"
+      indexName="YOUR_INDEX_NAME"
+      // Render the Sidepanel inside of #sidepanel-root instead of document.body
+      portalContainer={portalEl}
+    />
+    ```
+  </TabItem>
+
+  <TabItem value="JavaScript">
+    ```js
+    sidepanel({
+      // The element that will contain the Sidepanel Button and Sidepanel
+      container: '#sidepanel-root',
+      indexName: 'YOUR_INDEX_NAME',
+      appId: 'YOUR_APP_ID',
+      apiKey: 'YOUR_SEARCH_API_KEY',
+      assistantId: 'YOUR_ASSISTANT_ID',
+    })
+    ```
+  </TabItem>
+</Tabs>
+
+[1]: https://www.algolia.com/doc/guides/algolia-ai/askai/guides/suggested-questions

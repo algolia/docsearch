@@ -1,0 +1,136 @@
+---
+title: Get started with Sidepanel
+---
+
+import Tabs from  '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+:::info
+Sidepanel is available from version `>= 4.4`
+:::
+
+## Introduction
+
+DocSearch Sidepanel is a new experience separate from the DocSearch Modal experience. Sidepanel is built entirely for usage with Ask AI and can be used completely standalone or in [Hybrid mode][1] with the Modal.
+
+## Installation
+
+To get started with Sidepanel, first you will need to install the needed packages:
+
+<Tabs>
+<TabItem value="npm">
+
+```bash
+npm install @docsearch/react @docsearch/css
+
+# Or if using JS based package
+
+npm install @docsearch/sidepanel-js @docsearch/css
+```
+
+</TabItem>
+
+<TabItem value="yarn">
+
+```bash
+yarn add @docsearch/react @docsearch/css
+
+# Or if using JS based package
+
+yarn add @docsearch/sidepanel-js @docsearch/css
+```
+
+</TabItem>
+
+<TabItem value="pnpm">
+
+```bash
+pnpm add @docsearch/react @docsearch/css
+
+# Or if using JS based package
+
+pnpm add @docsearch/sidepanel-js @docsearch/css
+```
+
+</TabItem>
+
+<TabItem value="bun">
+
+```bash
+bun add @docsearch/react @docsearch/css
+
+# Or if using JS based package
+
+bun add @docsearch/sidepanel-js @docsearch/css
+```
+
+</TabItem>
+</Tabs>
+
+> Or using your package manager of choice
+
+### Without package manager
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css/dist/style.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css/dist/sidepanel.css" />
+
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/sidepanel-js"></script>
+```
+
+## Implementation
+
+The simplest implementation of Sidepanel would be as follows:
+
+<Tabs>
+<TabItem value="React">
+```tsx
+import { DocSearchSidepanel } from '@docsearch/react/sidepanel';
+
+import '@docsearch/css/dist/style.css';
+import '@docsearch/css/dist/sidepanel.css';
+
+function App() {
+  return (
+    <DocSearchSidepanel
+      appId='YOUR_APP_ID'
+      apiKey='YOUR_SEARCH_API_KEY'
+      assistantId='YOUR_ASSISTANT_ID'
+      indexName='YOUR_INDEX_NAME'
+    />
+  );
+}
+```
+</TabItem>
+
+<TabItem value="JavaScript">
+You will need a `container` DOM node to render the Sidepanel into:
+
+```html
+<div id="docsearch-sidepanel"></div>
+```
+
+```js
+import sidepanel from '@docsearch/sidepanel-js';
+
+import '@docsearch/css/dist/style.css';
+import '@docsearch/css/dist/sidepanel.css';
+
+sidepanel({
+  container: '#docsearch-sidepanel',
+  indexName: 'YOUR_INDEX_NAME',
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_SEARCH_API_KEY',
+  assistantId: 'YOUR_ASSISTANT_ID',
+});
+```
+</TabItem>
+</Tabs>
+
+This is just the most basic form of implementation. To learn about other implementation methods, you can read our [Advanced use cases][2].
+
+To learn more about the different configuration options for Sidepanel, you can read our [Sidepanel API References][3]
+
+[1]: /docs/sidepanel/hybrid
+[2]: /docs/sidepanel/advanced-use-cases
+[3]: /docs/sidepanel/api-reference
