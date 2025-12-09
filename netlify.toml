@@ -3,6 +3,6 @@ YARN_VERSION = "1.22.5"
 
 [[redirects]]
 from = "/apply/"
-to = "https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch"
+to = "https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch"
 status = 301
 force = true

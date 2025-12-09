@@ -88,7 +88,7 @@ Please reach out to our [support](https://algolia.com/support) team.
 
 ## Can I have multiple projects under the same Algolia application?
 
-We recommend having a single Algolia application per project. Please [apply](https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch) if you'd like to use DocSearch in an other project of yours.
+We recommend having a single Algolia application per project. Please [apply](https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch) if you'd like to use DocSearch in an other project of yours.
 
 ### Why ?
 

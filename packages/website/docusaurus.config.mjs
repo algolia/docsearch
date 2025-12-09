@@ -3,7 +3,8 @@ import { themes } from 'prism-react-renderer';
 import myLoaders from './plugins/my-loaders.mjs';
 import tailwindLoader from './plugins/tailwind-loader.mjs';
 
-const SIGNUP_LINK = 'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch';
+const SIGNUP_LINK =
+  'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch';
 
 const currentDate = new Date();
 const currentYear = currentDate.getFullYear();

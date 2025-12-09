@@ -75,7 +75,10 @@ function VideoPlayer({ chapters }) {
             <div
               key={chapter.label}
               className="absolute flex flex-col items-center"
-              style={{ left: `${(chapter.time / duration) * 100}%`, transform: 'translateX(-50%)' }}
+              style={{
+                left: `${(chapter.time / duration) * 100}%`,
+                transform: 'translateX(-50%)',
+              }}
             >
               {/* Arrow/triangle */}
               <div
@@ -156,7 +159,11 @@ function Home() {
           </div>
           <div className="flex my-12 gap-8">
             <Button href={withBaseUrl('docs/what-is-docsearch')}>Find out more</Button>
-            <PrimaryButton href={'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch'}>
+            <PrimaryButton
+              href={
+                'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch'
+              }
+            >
               Sign up
             </PrimaryButton>
           </div>
@@ -244,7 +251,12 @@ function Home() {
                   <br />
                   with DocSearch
                 </div>
-                <PrimaryButton key="apply" href={'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch'}>
+                <PrimaryButton
+                  key="apply"
+                  href={
+                    'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch'
+                  }
+                >
                   Sign up for free
                 </PrimaryButton>
               </div>
