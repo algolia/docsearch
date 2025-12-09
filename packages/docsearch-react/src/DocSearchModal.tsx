@@ -399,10 +399,6 @@ export function DocSearchModal({
 
   const [stoppedStream, setStoppedStream] = React.useState(false);
 
-  // Track the message count when a thread depth error occurred
-  // This allows us to ignore old errors from previous conversations
-  const [threadDepthErrorAtMessageCount, setThreadDepthErrorAtMessageCount] = React.useState<number | null>(null);
-
   // Use a unique ID for each conversation to force a fresh chat instance
   const [conversationId, setConversationId] = React.useState(() => `conversation-${Date.now()}`);
 
@@ -467,26 +463,11 @@ export function DocSearchModal({
     prevStatus.current = status;
   }, [status, messages, conversations, disableUserPersonalization, stoppedStream]);
 
-  // Monitor for thread depth errors (AI-217)
-  React.useEffect(() => {
+  // Check if there's a thread depth error (AI-217)
+  const hasThreadDepthError = React.useMemo(() => {
     const error = askAiError as Error | null;
-    // The backend error message includes "AI-217" in the text
-    const isThreadDepthError = status === 'error' && error?.message?.includes('AI-217');
-
-    const hasAssistantMessage = messages.some((m) => m.role === 'assistant');
-
-    if (isThreadDepthError && hasAssistantMessage) {
-      setThreadDepthErrorAtMessageCount(messages.length);
-      return;
-    }
-
-    const shouldResetError =
-      status !== 'error' && threadDepthErrorAtMessageCount !== null && messages.length < threadDepthErrorAtMessageCount;
-
-    if (shouldResetError) {
-      setThreadDepthErrorAtMessageCount(null);
-    }
-  }, [status, askAiError, messages, threadDepthErrorAtMessageCount]);
+    return status === 'error' && error?.message?.includes('AI-217');
+  }, [status, askAiError]);
 
   const createSyntheticParent = React.useCallback(function createSyntheticParent(
     item: InternalDocSearchHit,
@@ -854,7 +835,6 @@ export function DocSearchModal({
     // This will automatically clear messages and errors in the AI SDK
     setConversationId(`conversation-${Date.now()}`);
     setAskAiState('new-conversation');
-    setThreadDepthErrorAtMessageCount(null);
     // Note: We don't call setMessages([]) because changing the ID creates a fresh instance
   };
 
@@ -870,8 +850,7 @@ export function DocSearchModal({
   const showThreadDepthError =
     isAskAiActive &&
     askAiState !== 'new-conversation' &&
-    threadDepthErrorAtMessageCount !== null &&
-    messages.length >= threadDepthErrorAtMessageCount &&
+    hasThreadDepthError &&
     messages.some((m) => m.role === 'assistant');
 
   // hide the dropdown on idle and no collections
