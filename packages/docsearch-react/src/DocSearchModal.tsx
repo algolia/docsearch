@@ -574,7 +574,7 @@ export function DocSearchModal({
         autocompleteRef.current.setQuery('');
       }
     },
-    [onAskAiToggle, sendMessage, askAiState, setAskAiState, setMessages],
+    [onAskAiToggle, sendMessage, askAiState, setAskAiState],
   );
 
   // feedback handler
