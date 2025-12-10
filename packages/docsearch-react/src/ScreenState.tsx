@@ -55,6 +55,7 @@ export interface ScreenStateProps<TItem extends BaseItem>
   selectAskAiQuestion: (toggle: boolean, query: string) => void;
   suggestedQuestions: SuggestedQuestionHit[];
   selectSuggestedQuestion: (question: SuggestedQuestionHit) => void;
+  onNewConversation: () => void;
 }
 
 export const ScreenState = React.memo(

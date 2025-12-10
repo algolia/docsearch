@@ -127,8 +127,8 @@ export function SearchBox({
     searchPlaceholder = newConversationPlaceholder;
   }
 
-  // Override placeholder when thread depth error occurs
-  if (isThreadDepthError) {
+  // Override placeholder when thread depth error occurs (only in Ask AI mode)
+  if (isThreadDepthError && props.isAskAiActive) {
     searchPlaceholder = 'Conversation limit reached';
   }
 
@@ -184,10 +184,16 @@ export function SearchBox({
       }
       origOnChange?.(e);
     },
-    disabled: isAskAiStreaming || isThreadDepthError,
+    disabled: isAskAiStreaming || (isThreadDepthError && props.isAskAiActive),
   };
 
   const handleAskAiBackClick = React.useCallback((): void => {
+    // If there's a thread depth error, start a new conversation instead of exiting
+    if (isThreadDepthError) {
+      props.onNewConversation();
+      return;
+    }
+
     if (askAiState === 'conversation-history') {
       onAskAiToggle(true);
       setAskAiState('initial');
@@ -195,7 +201,7 @@ export function SearchBox({
     }
 
     onAskAiToggle(false);
-  }, [askAiState, onAskAiToggle, setAskAiState]);
+  }, [askAiState, isThreadDepthError, onAskAiToggle, setAskAiState, props]);
 
   return (
     <>

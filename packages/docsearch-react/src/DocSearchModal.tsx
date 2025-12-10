@@ -37,7 +37,7 @@ import { useSuggestedQuestions } from './useSuggestedQuestions';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
 import { groupBy, identity, noop, removeHighlightTags, isModifierEvent, scrollTo as scrollToUtils } from './utils';
-import { buildDummyAskAiHit } from './utils/ai';
+import { buildDummyAskAiHit, isThreadDepthError } from './utils/ai';
 import { manageLocalStorageQuota } from './utils/storage';
 
 export type ModalTranslations = Partial<{
@@ -461,8 +461,7 @@ export function DocSearchModal({
 
   // Check if there's a thread depth error (AI-217)
   const hasThreadDepthError = React.useMemo(() => {
-    const error = askAiError as Error | null;
-    return status === 'error' && error?.message?.includes('AI-217');
+    return status === 'error' && isThreadDepthError(askAiError as Error | undefined);
   }, [status, askAiError]);
 
   const createSyntheticParent = React.useCallback(function createSyntheticParent(
@@ -533,8 +532,6 @@ export function DocSearchModal({
   const handleSelectAskAiQuestion = React.useCallback(
     (toggle: boolean, query: string, suggestedQuestion: SuggestedQuestionHit | undefined = undefined) => {
       if (toggle && askAiState === 'new-conversation') {
-        // We're starting a new conversation, clear out current messages
-        setMessages([]);
         setAskAiState('initial');
       }
 
@@ -827,6 +824,7 @@ export function DocSearchModal({
   };
 
   const handleNewConversation = (): void => {
+    setMessages([]);
     setAskAiState('new-conversation');
   };
 
@@ -837,13 +835,6 @@ export function DocSearchModal({
   const selectSuggestedQuestion = (suggestedQuestion: SuggestedQuestionHit): void => {
     handleSelectAskAiQuestion(true, suggestedQuestion.question, suggestedQuestion);
   };
-
-  // Check if we should show the thread depth error banner
-  const showThreadDepthError =
-    isAskAiActive &&
-    askAiState !== 'new-conversation' &&
-    hasThreadDepthError &&
-    messages.some((m) => m.role === 'assistant');
 
   // hide the dropdown on idle and no collections
   let showDocsearchDropdown = true;
@@ -887,7 +878,7 @@ export function DocSearchModal({
             askAiError={askAiError}
             askAiState={askAiState}
             setAskAiState={setAskAiState}
-            isThreadDepthError={showThreadDepthError}
+            isThreadDepthError={hasThreadDepthError && askAiState !== 'new-conversation'}
             onClose={onClose}
             onAskAiToggle={onAskAiToggle}
             onAskAgain={(query) => {
@@ -898,21 +889,6 @@ export function DocSearchModal({
             onViewConversationHistory={handleViewConversationHistory}
           />
         </header>
-
-        {/* Thread Depth Error */}
-        {showThreadDepthError && (
-          <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error DocSearch-AskAiScreen-Error--ThreadDepth">
-            <div className="DocSearch-AskAiScreen-Error-Content">
-              <p>
-                This conversation is now closed to keep responses accurate.{' '}
-                <button type="button" className="DocSearch-ThreadDepthError-Link" onClick={handleNewConversation}>
-                  Start a new conversation
-                </button>{' '}
-                to continue.
-              </p>
-            </div>
-          </div>
-        )}
 
         {showDocsearchDropdown && (
           <div className="DocSearch-Dropdown" ref={dropdownRef}>
@@ -940,6 +916,7 @@ export function DocSearchModal({
               suggestedQuestions={suggestedQuestions}
               selectSuggestedQuestion={selectSuggestedQuestion}
               onAskAiToggle={onAskAiToggle}
+              onNewConversation={handleNewConversation}
               onItemClick={(item, event) => {
                 // if the item is askAI toggle the screen
                 if (item.type === 'askAI' && item.query) {

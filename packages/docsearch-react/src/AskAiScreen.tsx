@@ -8,7 +8,7 @@ import type { ScreenStateProps } from './ScreenState';
 import type { StoredSearchPlugin } from './stored-searches';
 import type { InternalDocSearchHit, StoredAskAiState } from './types';
 import type { AIMessage } from './types/AskiAi';
-import { extractLinksFromMessage, getMessageContent } from './utils/ai';
+import { extractLinksFromMessage, getMessageContent, isThreadDepthError } from './utils/ai';
 import { groupConsecutiveToolResults } from './utils/groupConsecutiveToolResults';
 
 export type AskAiScreenTranslations = Partial<{
@@ -67,6 +67,7 @@ type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translatio
   status: UseChatHelpers<AIMessage>['status'];
   askAiError?: Error;
   translations?: AskAiScreenTranslations;
+  onNewConversation: () => void;
 };
 
 interface AskAiScreenHeaderProps {
@@ -92,13 +93,6 @@ interface AskAiExchangeCardProps {
   translations: AskAiScreenTranslations;
   conversations: StoredSearchPlugin<StoredAskAiState>;
   onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
-}
-
-// Helper function to check if error is a thread depth error (AI-217)
-function isThreadDepthError(error?: Error): boolean {
-  if (!error) return false;
-
-  return error.message?.includes('AI-217') || false;
 }
 
 function AskAiExchangeCard({
@@ -392,7 +386,11 @@ function AskAiSourcesPanel({ urlsToDisplay, relatedSourcesText }: AskAiSourcesPa
 }
 
 export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): JSX.Element | null {
-  const { disclaimerText = 'Answers are generated with AI which can make mistakes. Verify responses.' } = translations;
+  const {
+    disclaimerText = 'Answers are generated with AI which can make mistakes. Verify responses.',
+    threadDepthExceededMessage = 'This conversation is now closed to keep responses accurate.',
+    startNewConversationButtonText = 'Start a new conversation',
+  } = translations;
 
   const { messages, askAiError, status } = props;
 
@@ -433,9 +431,28 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
     props.setQuery(query);
   };
 
+  // Only show the thread depth error if we have assistant messages
+  const showThreadDepthError = hasThreadDepthError && messages.some((m) => m.role === 'assistant');
+
   return (
     <div className="DocSearch-AskAiScreen DocSearch-AskAiScreen-Container">
+      {/* Thread Depth Error */}
+      {showThreadDepthError && (
+        <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error DocSearch-AskAiScreen-Error--ThreadDepth">
+          <div className="DocSearch-AskAiScreen-Error-Content">
+            <p>
+              {threadDepthExceededMessage}{' '}
+              <button type="button" className="DocSearch-ThreadDepthError-Link" onClick={props.onNewConversation}>
+                {startNewConversationButtonText}
+              </button>{' '}
+              to continue.
+            </p>
+          </div>
+        </div>
+      )}
+
       <AskAiScreenHeader disclaimerText={disclaimerText} />
+
       <div className="DocSearch-AskAiScreen-Body">
         <div className="DocSearch-AskAiScreen-ExchangesList">
           {exchanges

@@ -95,3 +95,12 @@ export const buildDummyAskAiHit = (query: string, messages: AIMessage[]): Stored
 
 export const getMessageContent = (message: AIMessage | null): TextUIPart | undefined =>
   message?.parts.find((part) => part.type === 'text');
+
+/**
+ * Helper function to check if error is a thread depth error (AI-217).
+ */
+export function isThreadDepthError(error?: Error): boolean {
+  if (!error) return false;
+
+  return error.message?.includes('AI-217') || false;
+}
