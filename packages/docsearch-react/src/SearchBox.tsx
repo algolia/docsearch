@@ -35,6 +35,7 @@ export type SearchBoxTranslations = Partial<{
   conversationHistoryTitle: string;
   startNewConversationText: string;
   viewConversationHistoryText: string;
+  threadDepthErrorPlaceholder: string;
 }>;
 
 interface SearchBoxProps
@@ -79,6 +80,7 @@ export function SearchBox({
     conversationHistoryTitle = 'My conversation history',
     startNewConversationText = 'Start a new conversation',
     viewConversationHistoryText = 'Conversation history',
+    threadDepthErrorPlaceholder = 'Conversation limit reached',
   } = translations;
   const { onReset } = props.getFormProps({
     inputElement: props.inputRef.current,
@@ -129,7 +131,7 @@ export function SearchBox({
 
   // Override placeholder when thread depth error occurs (only in Ask AI mode)
   if (isThreadDepthError && props.isAskAiActive) {
-    searchPlaceholder = 'Conversation limit reached';
+    searchPlaceholder = threadDepthErrorPlaceholder;
   }
 
   let heading: string | null = null;
