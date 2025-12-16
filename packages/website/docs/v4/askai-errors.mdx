@@ -110,6 +110,12 @@ This error occurs when the SDK could not load the provider’s API key successfu
 
 > **Solution**: Ensure the API key for the chosen LLM provider is correct and has all of the correct permissions added to it.
 
+### AI-217 - Thread Depth Exceeded {#ai-217}
+
+The conversation has reached its maximum depth limit and can no longer accept follow-up questions.
+
+> **Solution**: Start a new conversation to continue. The conversation depth limit is configured per assistant to maintain response accuracy and prevent conversation drift.
+
 [1]: /docs/api#askai
 [2]: https://sitesearch.algolia.com/docs/experiences/search-askai#configuration
 [3]: https://www.algolia.com/doc/guides/algolia-ai/askai/reference/api

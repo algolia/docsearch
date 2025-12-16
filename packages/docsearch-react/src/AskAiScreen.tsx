@@ -8,7 +8,7 @@ import type { ScreenStateProps } from './ScreenState';
 import type { StoredSearchPlugin } from './stored-searches';
 import type { InternalDocSearchHit, StoredAskAiState } from './types';
 import type { AIMessage } from './types/AskiAi';
-import { extractLinksFromMessage, getMessageContent } from './utils/ai';
+import { extractLinksFromMessage, getMessageContent, isThreadDepthError } from './utils/ai';
 import { groupConsecutiveToolResults } from './utils/groupConsecutiveToolResults';
 
 export type AskAiScreenTranslations = Partial<{
@@ -52,6 +52,14 @@ export type AskAiScreenTranslations = Partial<{
    * Error title shown if there is an error while chatting.
    */
   errorTitleText: string;
+  /**
+   * Message shown when thread depth limit is exceeded (AI-217 error).
+   */
+  threadDepthExceededMessage: string;
+  /**
+   * Button text for starting a new conversation after thread depth error.
+   */
+  startNewConversationButtonText: string;
 }>;
 
 type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
@@ -59,6 +67,7 @@ type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translatio
   status: UseChatHelpers<AIMessage>['status'];
   askAiError?: Error;
   translations?: AskAiScreenTranslations;
+  onNewConversation: () => void;
 };
 
 interface AskAiScreenHeaderProps {
@@ -100,6 +109,8 @@ function AskAiExchangeCard({
 
   const { stoppedStreamingText = 'You stopped this response', errorTitleText = 'Chat error' } = translations;
 
+  const isThreadDepth = isThreadDepthError(askAiError);
+
   const assistantContent = useMemo(() => getMessageContent(assistantMessage), [assistantMessage]);
   const userContent = useMemo(() => getMessageContent(userMessage), [userMessage]);
 
@@ -127,7 +138,7 @@ function AskAiExchangeCard({
         </div>
         <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--assistant">
           <div className="DocSearch-AskAiScreen-MessageContent">
-            {loadingStatus === 'error' && askAiError && isLastExchange && (
+            {loadingStatus === 'error' && askAiError && isLastExchange && !isThreadDepth && (
               <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error">
                 <AlertIcon />
                 <div className="DocSearch-AskAiScreen-Error-Content">
@@ -375,9 +386,18 @@ function AskAiSourcesPanel({ urlsToDisplay, relatedSourcesText }: AskAiSourcesPa
 }
 
 export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): JSX.Element | null {
-  const { disclaimerText = 'Answers are generated with AI which can make mistakes. Verify responses.' } = translations;
+  const {
+    disclaimerText = 'Answers are generated with AI which can make mistakes. Verify responses.',
+    threadDepthExceededMessage = 'This conversation is now closed to keep responses accurate.',
+    startNewConversationButtonText = 'Start a new conversation',
+  } = translations;
 
-  const { messages } = props;
+  const { messages, askAiError, status } = props;
+
+  // Check if there's a thread depth error
+  const hasThreadDepthError = useMemo(() => {
+    return status === 'error' && isThreadDepthError(askAiError);
+  }, [status, askAiError]);
 
   // Group messages into exchanges (user + assistant pairs)
   const exchanges: Exchange[] = useMemo(() => {
@@ -392,17 +412,47 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
         }
       }
     }
+
+    // If there's a thread depth error, remove the last exchange (the one that triggered the error)
+    // We only want to show successful exchanges
+    if (hasThreadDepthError && grouped.length > 0) {
+      // Check if the last exchange has no assistant message (failed to complete)
+      const lastExchange = grouped[grouped.length - 1];
+      if (!lastExchange.assistantMessage) {
+        grouped.pop();
+      }
+    }
+
     return grouped;
-  }, [messages]);
+  }, [messages, hasThreadDepthError]);
 
   const handleSearchQueryClick = (query: string): void => {
     props.onAskAiToggle(false);
     props.setQuery(query);
   };
 
+  // Only show the thread depth error if we have assistant messages
+  const showThreadDepthError = hasThreadDepthError && messages.some((m) => m.role === 'assistant');
+
   return (
     <div className="DocSearch-AskAiScreen DocSearch-AskAiScreen-Container">
+      {/* Thread Depth Error */}
+      {showThreadDepthError && (
+        <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error DocSearch-AskAiScreen-Error--ThreadDepth">
+          <div className="DocSearch-AskAiScreen-Error-Content">
+            <p>
+              {threadDepthExceededMessage}{' '}
+              <button type="button" className="DocSearch-ThreadDepthError-Link" onClick={props.onNewConversation}>
+                {startNewConversationButtonText}
+              </button>{' '}
+              to continue.
+            </p>
+          </div>
+        </div>
+      )}
+
       <AskAiScreenHeader disclaimerText={disclaimerText} />
+
       <div className="DocSearch-AskAiScreen-Body">
         <div className="DocSearch-AskAiScreen-ExchangesList">
           {exchanges

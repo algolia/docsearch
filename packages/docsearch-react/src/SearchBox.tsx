@@ -35,6 +35,7 @@ export type SearchBoxTranslations = Partial<{
   conversationHistoryTitle: string;
   startNewConversationText: string;
   viewConversationHistoryText: string;
+  threadDepthErrorPlaceholder: string;
 }>;
 
 interface SearchBoxProps
@@ -49,12 +50,14 @@ interface SearchBoxProps
   placeholder: string;
   isAskAiActive: boolean;
   askAiStatus: UseChatHelpers<AIMessage>['status'];
+  askAiError?: Error;
   isFromSelection: boolean;
   translations?: SearchBoxTranslations;
   askAiState: AskAiState;
   setAskAiState: (state: AskAiState) => void;
   onNewConversation: () => void;
   onViewConversationHistory: () => void;
+  isThreadDepthError?: boolean;
 }
 
 export function SearchBox({
@@ -77,6 +80,7 @@ export function SearchBox({
     conversationHistoryTitle = 'My conversation history',
     startNewConversationText = 'Start a new conversation',
     viewConversationHistoryText = 'Conversation history',
+    threadDepthErrorPlaceholder = 'Conversation limit reached',
   } = translations;
   const { onReset } = props.getFormProps({
     inputElement: props.inputRef.current,
@@ -116,10 +120,18 @@ export function SearchBox({
   const isAskAiStreaming = props.askAiStatus === 'streaming' || props.askAiStatus === 'submitted';
   const isKeywordSearchLoading = props.state.status === 'stalled';
   const renderMoreOptions = props.isAskAiActive && askAiState !== 'conversation-history';
+
+  // Use the thread depth error state passed from parent
+  const isThreadDepthError = props.isThreadDepthError || false;
   let searchPlaceholder = props.placeholder;
 
   if (askAiState === 'new-conversation') {
     searchPlaceholder = newConversationPlaceholder;
+  }
+
+  // Override placeholder when thread depth error occurs (only in Ask AI mode)
+  if (isThreadDepthError && props.isAskAiActive) {
+    searchPlaceholder = threadDepthErrorPlaceholder;
   }
 
   let heading: string | null = null;
@@ -174,10 +186,16 @@ export function SearchBox({
       }
       origOnChange?.(e);
     },
-    disabled: isAskAiStreaming,
+    disabled: isAskAiStreaming || (isThreadDepthError && props.isAskAiActive),
   };
 
   const handleAskAiBackClick = React.useCallback((): void => {
+    // If there's a thread depth error, start a new conversation instead of exiting
+    if (isThreadDepthError) {
+      props.onNewConversation();
+      return;
+    }
+
     if (askAiState === 'conversation-history') {
       onAskAiToggle(true);
       setAskAiState('initial');
@@ -185,7 +203,7 @@ export function SearchBox({
     }
 
     onAskAiToggle(false);
-  }, [askAiState, onAskAiToggle, setAskAiState]);
+  }, [askAiState, isThreadDepthError, onAskAiToggle, setAskAiState, props]);
 
   return (
     <>

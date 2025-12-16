@@ -37,7 +37,7 @@ import { useSuggestedQuestions } from './useSuggestedQuestions';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
 import { groupBy, identity, noop, removeHighlightTags, isModifierEvent, scrollTo as scrollToUtils } from './utils';
-import { buildDummyAskAiHit } from './utils/ai';
+import { buildDummyAskAiHit, isThreadDepthError } from './utils/ai';
 import { manageLocalStorageQuota } from './utils/storage';
 
 export type ModalTranslations = Partial<{
@@ -459,6 +459,11 @@ export function DocSearchModal({
     prevStatus.current = status;
   }, [status, messages, conversations, disableUserPersonalization, stoppedStream]);
 
+  // Check if there's a thread depth error (AI-217)
+  const hasThreadDepthError = React.useMemo(() => {
+    return status === 'error' && isThreadDepthError(askAiError as Error | undefined);
+  }, [status, askAiError]);
+
   const createSyntheticParent = React.useCallback(function createSyntheticParent(
     item: InternalDocSearchHit,
   ): InternalDocSearchHit {
@@ -527,8 +532,6 @@ export function DocSearchModal({
   const handleSelectAskAiQuestion = React.useCallback(
     (toggle: boolean, query: string, suggestedQuestion: SuggestedQuestionHit | undefined = undefined) => {
       if (toggle && askAiState === 'new-conversation') {
-        // We're starting a new conversation, clear out current messages
-        setMessages([]);
         setAskAiState('initial');
       }
 
@@ -571,7 +574,7 @@ export function DocSearchModal({
         autocompleteRef.current.setQuery('');
       }
     },
-    [onAskAiToggle, sendMessage, askAiState, setAskAiState, setMessages],
+    [onAskAiToggle, sendMessage, askAiState, setAskAiState],
   );
 
   // feedback handler
@@ -821,6 +824,7 @@ export function DocSearchModal({
   };
 
   const handleNewConversation = (): void => {
+    setMessages([]);
     setAskAiState('new-conversation');
   };
 
@@ -871,8 +875,10 @@ export function DocSearchModal({
             translations={searchBoxTranslations}
             isAskAiActive={isAskAiActive}
             askAiStatus={status}
+            askAiError={askAiError}
             askAiState={askAiState}
             setAskAiState={setAskAiState}
+            isThreadDepthError={hasThreadDepthError && askAiState !== 'new-conversation'}
             onClose={onClose}
             onAskAiToggle={onAskAiToggle}
             onAskAgain={(query) => {
@@ -910,6 +916,7 @@ export function DocSearchModal({
               suggestedQuestions={suggestedQuestions}
               selectSuggestedQuestion={selectSuggestedQuestion}
               onAskAiToggle={onAskAiToggle}
+              onNewConversation={handleNewConversation}
               onItemClick={(item, event) => {
                 // if the item is askAI toggle the screen
                 if (item.type === 'askAI' && item.query) {
