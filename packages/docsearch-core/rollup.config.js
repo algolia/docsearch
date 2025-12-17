@@ -27,7 +27,7 @@ function sourceOutput(fileName) {
       file: `dist/umd/${fileName}`,
       format: 'umd',
       sourcemap: true,
-      name: pkg.name,
+      name: 'DocSearchCore',
       banner: getBundleBanner(pkg),
     },
     { dir: 'dist/esm', format: 'es' },

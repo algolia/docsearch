@@ -7,7 +7,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/docsearch.git",
-    "directory": "packages/docsearch-react"
+    "directory": "packages/docsearch-modal"
   },
   "author": {
     "name": "Algolia, Inc.",
@@ -41,6 +41,7 @@
     "watch": "nodemon --watch src --ext ts,tsx,js,jsx,json --ignore dist/ --ignore node_modules/ --verbose --delay 250ms --exec \"yarn on:change\""
   },
   "dependencies": {
+    "@docsearch/core": "4.3.1",
     "@docsearch/react": "4.3.2"
   },
   "devDependencies": {
@@ -52,7 +53,6 @@
     "vitest": "3.0.2"
   },
   "peerDependencies": {
-    "@docsearch/core": ">= 4.2.0",
     "@types/react": ">= 16.8.0 < 20.0.0",
     "react": ">= 16.8.0 < 20.0.0",
     "react-dom": ">= 16.8.0 < 20.0.0"

@@ -23,11 +23,12 @@ function sourceOutput(fileName) {
       globals: {
         react: 'React',
         'react-dom': 'ReactDOM',
+        '@docsearch/core': 'DocSearchCore',
       },
       file: `dist/umd/${fileName}`,
       format: 'umd',
       sourcemap: true,
-      name: pkg.name,
+      name: 'DocSearchReact',
       banner: getBundleBanner(pkg),
     },
     { dir: 'dist/esm', format: 'es' },
@@ -73,6 +74,12 @@ export default [
     plugins: sourcePlugins,
   },
   {
+    input: 'src/Sidepanel.tsx',
+    external: externalPackages,
+    output: sourceOutput('Sidepanel.js'),
+    plugins: sourcePlugins,
+  },
+  {
     input: 'dist/esm/types/index.d.ts',
     output: [{ file: 'dist/esm/index.d.ts', format: 'es' }],
     plugins: [dts()],
@@ -100,6 +107,11 @@ export default [
   {
     input: 'dist/esm/types/version.d.ts',
     output: [{ file: 'dist/esm/version.d.ts', format: 'es' }],
+    plugins: [dts()],
+  },
+  {
+    input: 'dist/esm/types/Sidepanel.d.ts',
+    output: [{ file: 'dist/esm/Sidepanel.d.ts', format: 'es' }],
     plugins: [dts()],
   },
 ];
