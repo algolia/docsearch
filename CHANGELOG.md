@@ -1,3 +1,23 @@
+## [4.4.0](https://github.com/algolia/docsearch/compare/v4.3.1...v4.3.2) (2025-12-18)
+
+
+### Bug Fixes
+
+* **button:** Fixes default button styling accessibility ([#2814](https://github.com/algolia/docsearch/pull/2814)) ([b0a28f5](https://github.com/algolia/docsearch/commit/b0a28f57f74a903aef4ad6620f0d34eb5be9e7a4)), closes [#2804](https://github.com/algolia/docsearch/issues/2804)
+* **modal:** Fixes modal opening on every keypress ([#2813](https://github.com/algolia/docsearch/pull/2813)) ([373d139](https://github.com/algolia/docsearch/commit/373d1394e1e789f451a55a6377798705351856ca)), closes [#2809](https://github.com/algolia/docsearch/issues/2809)
+* **modal:** dropdown menu styles ([#2801](https://github.com/algolia/docsearch/pull/2801)) ([5ef01ec](https://github.com/algolia/docsearch/commit/5ef01ecd4dbda1bfb89e03ddbad4be6e30dba89a))
+
+
+### Features
+
+* **sidepanel:** Introduce Ask AI Sidepanel ([#2816](https://github.com/algolia/docsearch/issues/2816)) ([171c504](https://github.com/algolia/docsearch/commit/171c504f11d63e9a3a3abfc69b779594ef2c0b67))
+* **askai:** add thread depth limit logic ([#2812](https://github.com/algolia/docsearch/pull/2812)) ([fd0de3d](https://github.com/algolia/docsearch/commit/fd0de3d16f8c434b7f75793fae69fe8e2c2d159d))
+* **askai:** Handle errors better for Ask AI ([#2803](https://github.com/algolia/docsearch/pull/2803)) ([d531137](https://github.com/algolia/docsearch/commit/d531137f14accb82732804452bf324093a827cea))
+* **modal:** Native RTL support ([#2802](https://github.com/algolia/docsearch/pull/2802)) ([9ed6c5a](https://github.com/algolia/docsearch/commit/9ed6c5a9bad1bcbaf46f551506dccdd9342c03c8)), closes [#1512](https://github.com/algolia/docsearch/issues/1512)
+* **docs:** Add utm_ params to apply links ([#2817](https://github.com/algolia/docsearch/pull/2817)) ([8a9c451](https://github.com/algolia/docsearch/commit/8a9c4519eb04254d64fad8432c4fc395cf848cc1))
+
+
+
 ## [4.3.2](https://github.com/algolia/docsearch/compare/v4.3.1...v4.3.2) (2025-11-10)
 
 
