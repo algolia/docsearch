@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/sidepanel-js",
   "description": "JavaScript package for DocSearch Sidepanel for interfacing with Ask AI.",
-  "version": "4.3.2",
+  "version": "4.4.0",
   "license": "MIT",
   "homepage": "https://docsearch.algolia.com",
   "repository": {
@@ -36,7 +36,7 @@
     "watch": "nodemon --watch src --ext ts,tsx,js,jsx,json --ignore dist/ --ignore node_modules/ --verbose --delay 250ms --exec \"yarn on:change\""
   },
   "devDependencies": {
-    "@docsearch/react": "4.3.2",
+    "@docsearch/react": "4.4.0",
     "@rollup/plugin-replace": "6.0.2",
     "nodemon": "^3.1.9",
     "preact": "^10.0.0",
