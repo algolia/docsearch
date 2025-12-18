@@ -1,7 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
-import { dts } from 'rollup-plugin-dts';
 
 import { plugins } from '../../rollup.base.config';
 import { getBundleBanner } from '../../scripts/getBundleBanner';
@@ -56,20 +55,5 @@ export default [
     external: externals,
     output: sourceOutput('Sidepanel.js'),
     plugins: sourcePlugins,
-  },
-  {
-    input: 'dist/esm/types/index.d.ts',
-    output: [{ file: 'dist/esm/index.d.ts', format: 'es' }],
-    plugins: [dts()],
-  },
-  {
-    input: 'dist/esm/types/SidepanelButton.d.ts',
-    output: [{ file: 'dist/esm/SidepanelButton.d.ts', format: 'es' }],
-    plugins: [dts()],
-  },
-  {
-    input: 'dist/esm/types/Sidepanel.d.ts',
-    output: [{ file: 'dist/esm/Sidepanel.d.ts', format: 'es' }],
-    plugins: [dts()],
   },
 ];
