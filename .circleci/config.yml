@@ -4,11 +4,11 @@ aliases:
   - &restore_yarn_cache
     name: Restore Yarn cache
     keys:
-      - yarn-packages-v4.3.2-{{ checksum "yarn.lock" }}
+      - yarn-packages-{{ checksum "yarn.lock" }}
 
   - &save_yarn_cache
     name: Save Yarn cache
-    key: yarn-packages-v4.3.2-{{ checksum "yarn.lock" }}
+    key: yarn-packages-{{ checksum "yarn.lock" }}
     paths:
       - .yarn/cache
       - .yarn/unplugged
