@@ -3,7 +3,7 @@
     "allowSyntheticDefaultImports": true,
     "jsx": "react",
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false,
     "noImplicitReturns": true,
