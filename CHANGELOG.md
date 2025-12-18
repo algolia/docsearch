@@ -1,4 +1,4 @@
-## [4.4.0](https://github.com/algolia/docsearch/compare/v4.3.1...v4.3.2) (2025-12-18)
+## [4.4.0](https://github.com/algolia/docsearch/compare/v4.3.2...v4.4.0) (2025-12-18)
 
 
 ### Bug Fixes
