@@ -1,6 +1,5 @@
 // rollup.config.js
 import replace from '@rollup/plugin-replace';
-import { dts } from 'rollup-plugin-dts';
 
 import { plugins } from '../../rollup.base.config.js';
 import { getBundleBanner } from '../../scripts/getBundleBanner.js';
