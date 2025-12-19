@@ -37,8 +37,10 @@
     "on:change": "yarn build",
     "watch": "nodemon --watch src --ext ts,tsx,js,jsx,json --ignore dist/ --ignore node_modules/ --verbose --delay 250ms --exec \"yarn on:change\""
   },
+  "dependencies": {
+    "@docsearch/react": "4.4.0"
+  },
   "devDependencies": {
-    "@docsearch/react": "4.4.0",
     "@rollup/plugin-replace": "6.0.2",
     "nodemon": "^3.1.9",
     "preact": "^10.0.0",

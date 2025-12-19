@@ -35,10 +35,10 @@
     "watch": "nodemon --watch src --exec \"yarn on:change\" --ignore dist/ --ext ts,tsx"
   },
   "dependencies": {
+    "@docsearch/react": "4.4.0",
     "htm": "3.1.1"
   },
   "devDependencies": {
-    "@docsearch/react": "4.4.0",
     "@rollup/plugin-replace": "6.0.2",
     "nodemon": "^3.1.9",
     "preact": "^10.0.0",
