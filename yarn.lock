@@ -2561,8 +2561,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docsearch/website@workspace:packages/website"
   dependencies:
+    "@docsearch/core": "workspace:*"
     "@docsearch/css": "npm:4.4.0"
     "@docsearch/react": "npm:4.4.0"
+    "@docsearch/sidepanel": "workspace:*"
     "@docusaurus/core": "npm:3.8.1-canary-6397"
     "@docusaurus/module-type-aliases": "npm:3.8.1-canary-6397"
     "@docusaurus/preset-classic": "npm:3.8.1-canary-6397"
