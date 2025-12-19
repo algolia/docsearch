@@ -31,7 +31,9 @@
     "build:clean": "rm -rf ./dist",
     "build:clean-types": "rm -rf ./dist/esm/types",
     "build:types": "tsc -p ./tsconfig.declaration.json --outDir ./dist/esm/types",
-    "build": "yarn build:clean && yarn build:types && rollup --config --bundleConfigAsCjs && yarn build:clean-types",
+    "build:source": "rollup --config --bundleConfigAsCjs",
+    "build:dts": "rollup --config rollup.dts.config.js --bundleConfigAsCjs",
+    "build": "yarn build:clean && yarn build:types && yarn build:source && yarn build:dts && yarn build:clean-types",
     "on:change": "yarn build",
     "watch": "nodemon --watch src --ext ts,tsx,js,jsx,json --ignore dist/ --ignore node_modules/ --verbose --delay 250ms --exec \"yarn on:change\""
   },
