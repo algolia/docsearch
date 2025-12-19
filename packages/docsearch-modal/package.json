@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/modal",
   "description": "DocSearch modal package for keyword search and Ask AI.",
-  "version": "4.3.2",
+  "version": "4.4.0",
   "license": "MIT",
   "homepage": "https://docsearch.algolia.com",
   "repository": {
@@ -36,13 +36,15 @@
     "build:clean": "rm -rf ./dist",
     "build:clean-types": "rm -rf ./dist/esm/types",
     "build:types": "tsc -p ./tsconfig.declaration.json --outDir ./dist/esm/types",
-    "build": "yarn build:clean && yarn build:types && rollup --config --bundleConfigAsCjs && rollup --config rollup.dts.config.js --bundleConfigAsCjs && yarn build:clean-types",
+    "build:source": "rollup --config --bundleConfigAsCjs",
+    "build:dts": "rollup --config rollup.dts.config.js --bundleConfigAsCjs",
+    "build": "yarn build:clean && yarn build:types && yarn build:source && yarn build:dts && yarn build:clean-types",
     "on:change": "yarn build",
     "watch": "nodemon --watch src --ext ts,tsx,js,jsx,json --ignore dist/ --ignore node_modules/ --verbose --delay 250ms --exec \"yarn on:change\""
   },
   "dependencies": {
-    "@docsearch/core": "4.3.1",
-    "@docsearch/react": "4.3.2"
+    "@docsearch/core": "4.4.0",
+    "@docsearch/react": "4.4.0"
   },
   "devDependencies": {
     "@rollup/plugin-replace": "6.0.2",

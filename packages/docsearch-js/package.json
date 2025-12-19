@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/js",
   "description": "JavaScript package for DocSearch, the best search experience for docs.",
-  "version": "4.3.2",
+  "version": "4.4.0",
   "license": "MIT",
   "homepage": "https://docsearch.algolia.com",
   "repository": {
@@ -28,15 +28,17 @@
     "build:clean": "rm -rf ./dist",
     "build:types": "tsc -p ./tsconfig.declaration.json --outDir ./dist/esm/types",
     "build:clean-types": "rm -rf ./dist/esm/types",
-    "build": "yarn build:clean && yarn build:types && rollup --config --bundleConfigAsCjs && yarn build:clean-types",
+    "build:source": "rollup --config --bundleConfigAsCjs",
+    "build:dts": "rollup --config rollup.dts.config.js --bundleConfigAsCjs",
+    "build": "yarn build:clean && yarn build:types && yarn build:source && yarn build:dts && yarn build:clean-types",
     "on:change": "yarn build",
     "watch": "nodemon --watch src --exec \"yarn on:change\" --ignore dist/ --ext ts,tsx"
   },
   "dependencies": {
+    "@docsearch/react": "4.4.0",
     "htm": "3.1.1"
   },
   "devDependencies": {
-    "@docsearch/react": "4.3.2",
     "@rollup/plugin-replace": "6.0.2",
     "nodemon": "^3.1.9",
     "preact": "^10.0.0",

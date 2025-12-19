@@ -35,7 +35,7 @@ function sourceOutput(fileName) {
   ];
 }
 
-const externals = ['react', 'react-dom', '@docsearch/core'];
+const externals = ['react', 'react-dom', '@docsearch/core', /^@docsearch\/react/];
 
 export default [
   {
