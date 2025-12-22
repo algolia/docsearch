@@ -118,7 +118,7 @@ function Result<TItem extends StoredDocSearchHit>({
 
           {item.type === 'askAI' && (
             <div className="DocSearch-Hit-content-wrapper">
-              <Snippet className="DocSearch-Hit-title" hit={item} attribute="hierarchy.lvl1" />
+              <span className="DocSearch-Hit-title">{item.hierarchy.lvl1}</span>
             </div>
           )}
 
@@ -186,7 +186,7 @@ function AskAiButton<TItem extends StoredDocSearchHit>({
           </div>
           <div className="DocSearch-Hit-AskAIButton-title">
             <span className="DocSearch-Hit-AskAIButton-title-highlight">{placeholder}</span>
-            <mark className="DocSearch-Hit-AskAIButton-title-query">{item.query || ''}</mark>
+            <mark className="DocSearch-Hit-AskAIButton-title-query">{String(item.query || '')}</mark>
           </div>
         </div>
       </div>
