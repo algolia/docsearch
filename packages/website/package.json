@@ -17,8 +17,8 @@
   },
   "dependencies": {
     "@docsearch/core": "workspace:*",
-    "@docsearch/css": "4.4.0",
-    "@docsearch/react": "4.4.0",
+    "@docsearch/css": "workspace:*",
+    "@docsearch/react": "workspace:*",
     "@docsearch/sidepanel": "workspace:*",
     "@docusaurus/core": "3.8.1-canary-6397",
     "@docusaurus/preset-classic": "3.8.1-canary-6397",
