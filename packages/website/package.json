@@ -20,8 +20,8 @@
     "@docsearch/css": "workspace:*",
     "@docsearch/react": "workspace:*",
     "@docsearch/sidepanel": "workspace:*",
-    "@docusaurus/core": "3.8.1-canary-6397",
-    "@docusaurus/preset-classic": "3.8.1-canary-6397",
+    "@docusaurus/core": "3.9.2",
+    "@docusaurus/preset-classic": "3.9.2",
     "@mdx-js/react": "^3.1.0",
     "@tabler/icons-react": "^3.34.0",
     "class-variance-authority": "^0.7.1",
@@ -43,9 +43,9 @@
     "tw-animate-css": "^1.3.5"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.8.1-canary-6397",
-    "@docusaurus/tsconfig": "3.8.1-canary-6397",
-    "@docusaurus/types": "3.8.1-canary-6397",
+    "@docusaurus/module-type-aliases": "3.9.2",
+    "@docusaurus/tsconfig": "3.9.2",
+    "@docusaurus/types": "3.9.2",
     "@tailwindcss/postcss": "4.1.11",
     "image-webpack-loader": "^8.1.0",
     "tailwindcss": "4.1.11",
