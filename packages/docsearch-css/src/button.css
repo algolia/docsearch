@@ -59,6 +59,7 @@
   position: relative;
   border: 0;
   font-size: 14px;
+  font-family: system-ui, -apple-system, sans-serif;
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 100ms;

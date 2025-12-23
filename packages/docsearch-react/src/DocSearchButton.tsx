@@ -3,7 +3,6 @@ import { useTheme } from '@docsearch/core/useTheme';
 import React, { useEffect, useState, type JSX } from 'react';
 
 import { getKeyboardShortcuts } from './constants/keyboardShortcuts';
-import { ControlKeyIcon, KKeyIcon, MetaKeyIcon } from './icons/MetaKeysIcon';
 import { SearchIcon } from './icons/SearchIcon';
 import type { DocSearchTheme } from './types';
 import { ACTION_KEY_APPLE, ACTION_KEY_DEFAULT, isAppleDevice } from './utils';
@@ -32,12 +31,10 @@ export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButt
       }
     }, []);
 
-    const [actionKeyReactsTo, actionKeyAltText, actionKeyChild] =
+    const [actionKeyReactsTo, actionKeyAltText, actionKeyLabel] =
       key === ACTION_KEY_DEFAULT
-        ? // eslint-disable-next-line react/jsx-key -- false flag
-          ([ACTION_KEY_DEFAULT, 'Control', <ControlKeyIcon />] as const)
-        : // eslint-disable-next-line react/jsx-key -- false flag
-          (['Meta', 'Meta', <MetaKeyIcon />] as const);
+        ? ([ACTION_KEY_DEFAULT, 'Control', 'Ctrl'] as const)
+        : (['Meta', 'Meta', '⌘'] as const);
 
     const isCtrlCmdKEnabled = resolvedShortcuts['Ctrl/Cmd+K'];
     const shortcut = `${actionKeyAltText}+k`;
@@ -59,10 +56,8 @@ export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButt
         <span className="DocSearch-Button-Keys">
           {key !== null && isCtrlCmdKEnabled && (
             <>
-              <DocSearchButtonKey reactsToKey={actionKeyReactsTo}>{actionKeyChild}</DocSearchButtonKey>
-              <DocSearchButtonKey reactsToKey="k">
-                <KKeyIcon />
-              </DocSearchButtonKey>
+              <DocSearchButtonKey reactsToKey={actionKeyReactsTo}>{actionKeyLabel}</DocSearchButtonKey>
+              <DocSearchButtonKey reactsToKey="k">K</DocSearchButtonKey>
             </>
           )}
         </span>
