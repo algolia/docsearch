@@ -138,7 +138,7 @@ export const SidepanelHeader = React.memo(
           <h2 className="DocSearch-Sidepanel-Title">{header}</h2>
         </div>
         <div className="DocSearch-Sidepanel-Header--right">
-          {sidepanelState !== 'conversation-history' && (
+          {sidepanelState !== 'conversation-history' && (!newConversationDisabled || hasConversations) && (
             <Menu>
               <Menu.Trigger className="DocSearch-Action DocSearch-Sidepanel-Action-menu">
                 <MoreVerticalIcon />
