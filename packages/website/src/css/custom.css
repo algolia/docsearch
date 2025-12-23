@@ -752,3 +752,8 @@ html[data-theme='dark'] .shimmer-effect {
   text-align: start;
   background-color: var(--ifm-background-color);
 }
+
+/* SIDEPANEL */
+.DocSearch-Sidepanel-Title {
+  margin-bottom: 0;
+}

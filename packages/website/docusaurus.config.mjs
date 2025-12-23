@@ -66,29 +66,30 @@ export default {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      algolia: {
-        placeholder: 'Search or ask AI',
-        appId: 'PMZUYBQDAK',
-        apiKey: '24b09689d5b4223813d9b8e48563c8f6',
-        indexName: 'docsearch',
-        askAi: {
-          indexName: 'docsearch-markdown',
-          assistantId: 'askAIDemo',
-          apiKey: '24b09689d5b4223813d9b8e48563c8f6',
-          appId: 'PMZUYBQDAK',
-        },
-        contextualSearch: true,
-        translations: {
-          button: {
-            buttonText: 'Go on, give it a search...',
-          },
-          modal: {
-            footer: {
-              poweredByText: 'Powered by',
-            },
-          },
-        },
-      },
+      // NOTE: Commented out since we need to manually render the modal for hybrid mode right now
+      // algolia: {
+      //   placeholder: 'Search or ask AI',
+      //   appId: 'PMZUYBQDAK',
+      //   apiKey: '24b09689d5b4223813d9b8e48563c8f6',
+      //   indexName: 'docsearch',
+      //   askAi: {
+      //     indexName: 'docsearch-markdown',
+      //     assistantId: 'askAIDemo',
+      //     apiKey: '24b09689d5b4223813d9b8e48563c8f6',
+      //     appId: 'PMZUYBQDAK',
+      //   },
+      //   contextualSearch: true,
+      //   translations: {
+      //     button: {
+      //       buttonText: 'Go on, give it a search...',
+      //     },
+      //     modal: {
+      //       footer: {
+      //         poweredByText: 'Powered by',
+      //       },
+      //     },
+      //   },
+      // },
       metadata: [
         {
           name: 'google-site-verification',
