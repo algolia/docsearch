@@ -193,6 +193,14 @@ html[data-theme='dark'] {
   opacity: 1;
 }
 
+/* Ensure open state always overrides side-specific transforms even if CSS gets reordered during bundling/minification. */
+.DocSearch-Sidepanel-Container.floating.side-right.is-open,
+.DocSearch-Sidepanel-Container.floating.side-left.is-open,
+.DocSearch-Sidepanel-Container.inline.side-right.is-open,
+.DocSearch-Sidepanel-Container.inline.side-left.is-open {
+  transform: none;
+}
+
 .DocSearch-Sidepanel-Container.side-right.is-open {
   transform: none;
 }
