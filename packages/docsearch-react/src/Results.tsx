@@ -5,6 +5,7 @@ import type { DocSearchProps } from './DocSearch';
 import { SparklesIcon } from './icons/SparklesIcon';
 import { Snippet } from './Snippet';
 import type { InternalDocSearchHit, StoredDocSearchHit } from './types';
+import { sanitizeUserInput } from './utils/sanitize';
 
 export type ResultsTranslations = Partial<{
   askAiPlaceholder: string;
@@ -118,7 +119,7 @@ function Result<TItem extends StoredDocSearchHit>({
 
           {item.type === 'askAI' && (
             <div className="DocSearch-Hit-content-wrapper">
-              <Snippet className="DocSearch-Hit-title" hit={item} attribute="hierarchy.lvl1" />
+              <span className="DocSearch-Hit-title">{sanitizeUserInput(item.hierarchy.lvl1 || '')}</span>
             </div>
           )}
 
@@ -186,7 +187,7 @@ function AskAiButton<TItem extends StoredDocSearchHit>({
           </div>
           <div className="DocSearch-Hit-AskAIButton-title">
             <span className="DocSearch-Hit-AskAIButton-title-highlight">{placeholder}</span>
-            <mark className="DocSearch-Hit-AskAIButton-title-query">{item.query || ''}</mark>
+            <mark className="DocSearch-Hit-AskAIButton-title-query">{String(item.query || '')}</mark>
           </div>
         </div>
       </div>
