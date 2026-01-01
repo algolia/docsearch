@@ -1,1 +1,1 @@
-export * from './.down/esm/useDocSearchKeyboardEvents.js';
+export * from './dist/esm/useDocSearchKeyboardEvents.js';

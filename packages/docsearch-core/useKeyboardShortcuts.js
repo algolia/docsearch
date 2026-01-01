@@ -1,1 +1,1 @@
-export * from './.down/esm/useKeyboardShortcuts.js';
+export * from './dist/esm/useKeyboardShortcuts.js';
