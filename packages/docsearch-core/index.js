@@ -1,1 +1,1 @@
-export { DocSearch, useDocSearch } from './.down/esm/index.js';
+export { DocSearch, useDocSearch } from './dist/esm/index.js';

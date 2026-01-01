@@ -1,1 +1,1 @@
-export * from './.down/esm/Sidepanel.js';
+export * from './dist/esm/Sidepanel.js';
