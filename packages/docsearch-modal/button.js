@@ -1,1 +1,1 @@
-export * from './dist/esm/DocSearchButton.js';
+export * from './.down/esm/DocSearchButton.js';

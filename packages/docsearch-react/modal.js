@@ -1,1 +1,1 @@
-export { DocSearchModal } from './dist/esm/DocSearchModal.js';
+export { DocSearchModal } from './.down/esm/DocSearchModal.js';

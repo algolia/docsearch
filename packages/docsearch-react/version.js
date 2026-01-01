@@ -1,1 +1,1 @@
-export { version } from './dist/esm/version.js';
+export { version } from './.down/esm/version.js';
