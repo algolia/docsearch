@@ -25,7 +25,7 @@ export default defineConfig([
   {
     entry: {
       index: 'src/index.ts',
-      DocSearchButton: 'src/DocsearchButton.tsx',
+      DocSearchButton: 'src/DocSearchButton.tsx',
       DocSearchModal: 'src/DocSearchModal.tsx',
       useDocSearchKeyboardEvents: 'src/useDocSearchKeyboardEvents.ts',
       useTheme: 'src/useTheme.tsx',
