@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved
 import { replacePlugin } from 'rolldown/plugins';
 
 export const rolldownPlugins = [

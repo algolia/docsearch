@@ -1,1 +1,1 @@
-export { useTheme } from './.down/esm/useTheme.js';
+export { useTheme } from './dist/esm/useTheme.js';
