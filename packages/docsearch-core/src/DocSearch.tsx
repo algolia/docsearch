@@ -30,7 +30,7 @@ export interface DocSearchRef {
   close: () => void;
   /** Opens Ask AI mode (sidepanel if available, otherwise modal). */
   openAskAi: (initialMessage?: InitialAskAiMessage) => void;
-  /** Opens the sidepanel directly. */
+  /** Opens the sidepanel directly (no-op if sidepanel view not registered). */
   openSidepanel: (initialMessage?: InitialAskAiMessage) => void;
   /** Returns true once the component is mounted and ready. */
   readonly isReady: boolean;
@@ -38,6 +38,8 @@ export interface DocSearchRef {
   readonly isOpen: boolean;
   /** Returns true if the sidepanel is currently open. */
   readonly isSidepanelOpen: boolean;
+  /** Returns true if sidepanel view is registered (hybrid mode). */
+  readonly isSidepanelSupported: boolean;
 }
 
 export interface DocSearchContext {
@@ -162,10 +164,13 @@ function DocSearchInner(
 
   const openSidepanel = React.useCallback(
     (initialMessage?: InitialAskAiMessage): void => {
+      // Guard: no-op if sidepanel view hasn't been registered
+      if (!registeredViews.has('sidepanel')) return;
+
       setInitialAskAiMessage(initialMessage);
       setDocsearchState('sidepanel');
     },
-    [setDocsearchState],
+    [setDocsearchState, registeredViews],
   );
 
   const onInput = React.useCallback(
@@ -206,8 +211,11 @@ function DocSearchInner(
       get isSidepanelOpen(): boolean {
         return isSidepanelOpen;
       },
+      get isSidepanelSupported(): boolean {
+        return isHybridModeSupported;
+      },
     }),
-    [openModal, closeModal, onAskAiToggle, openSidepanel, isModalActive, isSidepanelOpen],
+    [openModal, closeModal, onAskAiToggle, openSidepanel, isModalActive, isSidepanelOpen, isHybridModeSupported],
   );
 
   useTheme({ theme });

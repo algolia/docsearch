@@ -15,13 +15,15 @@ export interface DocSearchInstance {
   readonly isOpen: boolean;
   /** Returns true if the sidepanel is currently open. */
   readonly isSidepanelOpen: boolean;
+  /** Returns true if sidepanel view is registered (hybrid mode). */
+  readonly isSidepanelSupported: boolean;
   /** Opens the search modal. */
   open(): void;
   /** Closes the search modal. */
   close(): void;
   /** Opens Ask AI mode (sidepanel if available, otherwise modal). */
   openAskAi(initialMessage?: InitialAskAiMessage): void;
-  /** Opens the sidepanel directly. */
+  /** Opens the sidepanel directly (no-op if sidepanel not supported). */
   openSidepanel(initialMessage?: InitialAskAiMessage): void;
   /** Unmounts the DocSearch component and cleans up. */
   destroy(): void;
@@ -128,6 +130,9 @@ export function docsearch(allProps: DocSearchProps): DocSearchInstance {
     },
     get isSidepanelOpen(): boolean {
       return ref.current?.isSidepanelOpen ?? false;
+    },
+    get isSidepanelSupported(): boolean {
+      return ref.current?.isSidepanelSupported ?? false;
     },
     destroy(): void {
       unmountComponentAtNode(containerEl);
