@@ -1,13 +1,53 @@
-import type { DocSearchProps as DocSearchComponentProps } from '@docsearch/react';
+import type { InitialAskAiMessage } from '@docsearch/core';
+import type { DocSearchProps as DocSearchComponentProps, DocSearchRef } from '@docsearch/react';
 import { DocSearch, version as docSearchVersion } from '@docsearch/react';
 import htm from 'htm';
 import type { JSX } from 'preact';
-import { createElement, render, isValidElement, unmountComponentAtNode } from 'preact/compat';
+import { createElement, render, isValidElement, unmountComponentAtNode, createRef } from 'preact/compat';
 
-export type DocSearchProps = DocSearchComponentProps & {
-  container: HTMLElement | string;
-  environment?: typeof window;
-};
+/**
+ * Instance returned by docsearch() for programmatic control.
+ */
+export interface DocSearchInstance {
+  /** Returns true once the component is mounted and ready. */
+  readonly isReady: boolean;
+  /** Returns true if the modal is currently open. */
+  readonly isOpen: boolean;
+  /** Returns true if the sidepanel is currently open. */
+  readonly isSidepanelOpen: boolean;
+  /** Opens the search modal. */
+  open(): void;
+  /** Closes the search modal. */
+  close(): void;
+  /** Opens Ask AI mode (sidepanel if available, otherwise modal). */
+  openAskAi(initialMessage?: InitialAskAiMessage): void;
+  /** Opens the sidepanel directly. */
+  openSidepanel(initialMessage?: InitialAskAiMessage): void;
+  /** Unmounts the DocSearch component and cleans up. */
+  destroy(): void;
+}
+
+/**
+ * Lifecycle callbacks for the DocSearch instance.
+ */
+export interface DocSearchCallbacks {
+  /** Called once DocSearch is mounted and ready for interaction. */
+  onReady?: () => void;
+  /** Called when the modal opens. */
+  onOpen?: () => void;
+  /** Called when the modal closes. */
+  onClose?: () => void;
+  /** Called when the sidepanel opens. */
+  onSidepanelOpen?: () => void;
+  /** Called when the sidepanel closes. */
+  onSidepanelClose?: () => void;
+}
+
+export type DocSearchProps = DocSearchCallbacks &
+  DocSearchComponentProps & {
+    container: HTMLElement | string;
+    environment?: typeof window;
+  };
 
 function getHTMLElement(value: HTMLElement | string, env: typeof window | undefined): HTMLElement {
   if (typeof value !== 'string') return value;
@@ -43,12 +83,15 @@ function createTemplateFunction<P extends Record<string, unknown>, R = JSX.Eleme
   };
 }
 
-export function docsearch(allProps: DocSearchProps): () => void {
+export function docsearch(allProps: DocSearchProps): DocSearchInstance {
   const { container, environment, transformSearchClient, hitComponent, resultsFooterComponent, ...rest } = allProps;
   const containerEl = getHTMLElement(container, environment || (typeof window !== 'undefined' ? window : undefined));
+  const ref = createRef<DocSearchRef>();
+  let isReady = false;
 
   const props = {
     ...rest,
+    ref,
     hitComponent: createTemplateFunction(hitComponent),
     resultsFooterComponent: createTemplateFunction(resultsFooterComponent),
     transformSearchClient: (searchClient: any): any => {
@@ -57,11 +100,38 @@ export function docsearch(allProps: DocSearchProps): () => void {
       }
       return typeof transformSearchClient === 'function' ? transformSearchClient(searchClient) : searchClient;
     },
-  } satisfies DocSearchComponentProps;
+  } satisfies DocSearchComponentProps & { ref: typeof ref };
 
   render(createElement(DocSearch, props), containerEl);
 
-  return () => {
-    unmountComponentAtNode(containerEl);
+  // Mark as ready after render completes
+  isReady = true;
+
+  return {
+    open(): void {
+      ref.current?.open();
+    },
+    close(): void {
+      ref.current?.close();
+    },
+    openAskAi(initialMessage?: InitialAskAiMessage): void {
+      ref.current?.openAskAi(initialMessage);
+    },
+    openSidepanel(initialMessage?: InitialAskAiMessage): void {
+      ref.current?.openSidepanel(initialMessage);
+    },
+    get isReady(): boolean {
+      return isReady;
+    },
+    get isOpen(): boolean {
+      return ref.current?.isOpen ?? false;
+    },
+    get isSidepanelOpen(): boolean {
+      return ref.current?.isSidepanelOpen ?? false;
+    },
+    destroy(): void {
+      unmountComponentAtNode(containerEl);
+      isReady = false;
+    },
   };
 }

@@ -24,6 +24,20 @@ import { useManageSidepanelLayout } from './useManageSidepanelLayout';
 import { useSidepanelKeyboardEvents } from './useSidepanelKeyboardEvents';
 import { useSidepanelWidth } from './useSidepanelWidth';
 
+/**
+ * Imperative handle exposed by the Sidepanel component for programmatic control.
+ */
+export interface SidepanelRef {
+  /** Opens the sidepanel. */
+  open: () => void;
+  /** Closes the sidepanel. */
+  close: () => void;
+  /** Returns true once the component is mounted and ready. */
+  readonly isReady: boolean;
+  /** Returns true if the sidepanel is currently open. */
+  readonly isOpen: boolean;
+}
+
 export type SidepanelTranslations = Partial<{
   /**
    * Translation texts for the Sidepanel header.
@@ -113,25 +127,28 @@ type Props = Omit<DocSearchSidepanelProps, 'button' | 'panel'> &
     initialMessage?: InitialAskAiMessage;
   };
 
-export const Sidepanel = ({
-  isOpen = false,
-  onOpen,
-  onClose,
-  assistantId,
-  apiKey,
-  appId,
-  indexName,
-  variant = 'floating',
-  searchParameters,
-  pushSelector,
-  width,
-  expandedWidth,
-  suggestedQuestions: suggestedQuestionsEnabled = false,
-  translations = {},
-  keyboardShortcuts,
-  side = 'right',
-  initialMessage,
-}: Props): JSX.Element => {
+function SidepanelInner(
+  {
+    isOpen = false,
+    onOpen,
+    onClose,
+    assistantId,
+    apiKey,
+    appId,
+    indexName,
+    variant = 'floating',
+    searchParameters,
+    pushSelector,
+    width,
+    expandedWidth,
+    suggestedQuestions: suggestedQuestionsEnabled = false,
+    translations = {},
+    keyboardShortcuts,
+    side = 'right',
+    initialMessage,
+  }: Props,
+  ref: React.ForwardedRef<SidepanelRef>,
+): JSX.Element {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [sidepanelState, setSidepanelState] = React.useState<SidepanelState>('new-conversation');
   const [stoppedStreaming, setStoppedStreaming] = React.useState(false);
@@ -237,6 +254,22 @@ export const Sidepanel = ({
     isOpen,
     keyboardShortcuts,
   });
+
+  // Expose imperative handle for programmatic control
+  React.useImperativeHandle(
+    ref,
+    () => ({
+      open: onOpen,
+      close: onClose,
+      get isReady(): boolean {
+        return true;
+      },
+      get isOpen(): boolean {
+        return isOpen;
+      },
+    }),
+    [onOpen, onClose, isOpen],
+  );
 
   React.useEffect(() => {
     if (prevStatus.current === 'streaming' && status === 'ready') {
@@ -368,4 +401,6 @@ export const Sidepanel = ({
       </aside>
     </div>
   );
-};
+}
+
+export const Sidepanel = React.forwardRef(SidepanelInner);

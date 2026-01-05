@@ -1,6 +1,6 @@
 import type { AutocompleteOptions, AutocompleteState } from '@algolia/autocomplete-core';
 import { DocSearch as DocSearchProvider, useDocSearch } from '@docsearch/core';
-import type { DocSearchModalShortcuts } from '@docsearch/core';
+import type { DocSearchModalShortcuts, DocSearchRef } from '@docsearch/core';
 import type { LiteClient, SearchParamsObject } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
@@ -10,6 +10,8 @@ import { DocSearchModal } from './DocSearchModal';
 import type { DocSearchHit, DocSearchTheme, InternalDocSearchHit, StoredDocSearchHit } from './types';
 
 import type { ButtonTranslations, ModalTranslations } from '.';
+
+export type { DocSearchRef } from '@docsearch/core';
 
 export type DocSearchTranslations = Partial<{
   button: ButtonTranslations;
@@ -199,13 +201,15 @@ export interface DocSearchProps {
   keyboardShortcuts?: DocSearchModalShortcuts;
 }
 
-export function DocSearch(props: DocSearchProps): JSX.Element {
+function DocSearchComponent(props: DocSearchProps, ref: React.ForwardedRef<DocSearchRef>): JSX.Element {
   return (
-    <DocSearchProvider {...props}>
+    <DocSearchProvider {...props} ref={ref}>
       <DocSearchInner {...props} />
     </DocSearchProvider>
   );
 }
+
+export const DocSearch = React.forwardRef(DocSearchComponent);
 
 export function DocSearchInner(props: DocSearchProps): JSX.Element {
   const {

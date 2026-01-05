@@ -20,6 +20,26 @@ export type InitialAskAiMessage = {
 
 export type OnAskAiToggle = (active: boolean, initialMessage?: InitialAskAiMessage) => void;
 
+/**
+ * Imperative handle exposed by the DocSearch provider for programmatic control.
+ */
+export interface DocSearchRef {
+  /** Opens the search modal. */
+  open: () => void;
+  /** Closes the search modal. */
+  close: () => void;
+  /** Opens Ask AI mode (sidepanel if available, otherwise modal). */
+  openAskAi: (initialMessage?: InitialAskAiMessage) => void;
+  /** Opens the sidepanel directly. */
+  openSidepanel: (initialMessage?: InitialAskAiMessage) => void;
+  /** Returns true once the component is mounted and ready. */
+  readonly isReady: boolean;
+  /** Returns true if the modal is currently open. */
+  readonly isOpen: boolean;
+  /** Returns true if the sidepanel is currently open. */
+  readonly isSidepanelOpen: boolean;
+}
+
 export interface DocSearchContext {
   docsearchState: DocSearchState;
   setDocsearchState: (newState: DocSearchState) => void;
@@ -36,7 +56,23 @@ export interface DocSearchContext {
   isHybridModeSupported: boolean;
 }
 
-export interface DocSearchProps {
+/**
+ * Lifecycle callbacks for DocSearch.
+ */
+export interface DocSearchCallbacks {
+  /** Called once DocSearch is mounted and ready for interaction. */
+  onReady?: () => void;
+  /** Called when the modal opens. */
+  onOpen?: () => void;
+  /** Called when the modal closes. */
+  onClose?: () => void;
+  /** Called when the sidepanel opens. */
+  onSidepanelOpen?: () => void;
+  /** Called when the sidepanel closes. */
+  onSidepanelClose?: () => void;
+}
+
+export interface DocSearchProps extends DocSearchCallbacks {
   children: Array<JSX.Element | null> | JSX.Element | React.ReactNode | null;
   theme?: DocSearchTheme;
   initialQuery?: string;
@@ -46,7 +82,10 @@ export interface DocSearchProps {
 const Context = React.createContext<DocSearchContext | undefined>(undefined);
 Context.displayName = 'DocSearchContext';
 
-export function DocSearch({ children, theme, ...props }: DocSearchProps): JSX.Element {
+function DocSearchInner(
+  { children, theme, onReady, onOpen, onClose, onSidepanelOpen, onSidepanelClose, ...props }: DocSearchProps,
+  ref: React.ForwardedRef<DocSearchRef>,
+): JSX.Element {
   const [docsearchState, setDocsearchState] = React.useState<DocSearchState>('ready');
   const [initialQuery, setInitialQuery] = React.useState<string>(props.initialQuery || '');
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
@@ -54,10 +93,49 @@ export function DocSearch({ children, theme, ...props }: DocSearchProps): JSX.El
   const [initialAskAiMessage, setInitialAskAiMessage] = React.useState<InitialAskAiMessage>();
   const [registeredViews, setRegisteredViews] = React.useState(() => new Set<View>());
   const isMobile = useIsMobile();
+  const prevStateRef = React.useRef<DocSearchState>('ready');
 
   const isModalActive = ['modal-search', 'modal-askai'].includes(docsearchState);
   const isAskAiActive = docsearchState === 'modal-askai';
   const isHybridModeSupported = registeredViews.has('sidepanel');
+  const isSidepanelOpen = docsearchState === 'sidepanel';
+
+  // Call onReady on mount
+  React.useEffect(() => {
+    onReady?.();
+  }, [onReady]);
+
+  // Track state changes for lifecycle callbacks
+  React.useEffect(() => {
+    const prevState = prevStateRef.current;
+    const currentState = docsearchState;
+
+    // Modal opened
+    if (
+      (currentState === 'modal-search' || currentState === 'modal-askai') &&
+      prevState !== 'modal-search' &&
+      prevState !== 'modal-askai'
+    ) {
+      onOpen?.();
+    }
+
+    // Modal closed
+    if (currentState === 'ready' && (prevState === 'modal-search' || prevState === 'modal-askai')) {
+      onClose?.();
+    }
+
+    // Sidepanel opened
+    if (currentState === 'sidepanel' && prevState !== 'sidepanel') {
+      onSidepanelOpen?.();
+    }
+
+    // Sidepanel closed
+    if (currentState !== 'sidepanel' && prevState === 'sidepanel') {
+      onSidepanelClose?.();
+    }
+
+    prevStateRef.current = currentState;
+  }, [docsearchState, onOpen, onClose, onSidepanelOpen, onSidepanelClose]);
 
   const openModal = React.useCallback((): void => {
     setDocsearchState('modal-search');
@@ -82,6 +160,14 @@ export function DocSearch({ children, theme, ...props }: DocSearchProps): JSX.El
     [setDocsearchState, isMobile, isHybridModeSupported],
   );
 
+  const openSidepanel = React.useCallback(
+    (initialMessage?: InitialAskAiMessage): void => {
+      setInitialAskAiMessage(initialMessage);
+      setDocsearchState('sidepanel');
+    },
+    [setDocsearchState],
+  );
+
   const onInput = React.useCallback(
     (event: KeyboardEvent): void => {
       setDocsearchState('modal-search');
@@ -101,6 +187,27 @@ export function DocSearch({ children, theme, ...props }: DocSearchProps): JSX.El
       });
     },
     [registeredViews],
+  );
+
+  // Expose imperative handle for programmatic control
+  React.useImperativeHandle(
+    ref,
+    () => ({
+      open: openModal,
+      close: closeModal,
+      openAskAi: (initialMessage?: InitialAskAiMessage): void => onAskAiToggle(true, initialMessage),
+      openSidepanel,
+      get isReady(): boolean {
+        return true;
+      },
+      get isOpen(): boolean {
+        return isModalActive;
+      },
+      get isSidepanelOpen(): boolean {
+        return isSidepanelOpen;
+      },
+    }),
+    [openModal, closeModal, onAskAiToggle, openSidepanel, isModalActive, isSidepanelOpen],
   );
 
   useTheme({ theme });
@@ -150,6 +257,8 @@ export function DocSearch({ children, theme, ...props }: DocSearchProps): JSX.El
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
+
+export const DocSearch = React.forwardRef(DocSearchInner);
 DocSearch.displayName = 'DocSearch';
 
 export function useDocSearch(): DocSearchContext {
