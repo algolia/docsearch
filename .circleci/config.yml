@@ -47,10 +47,10 @@ defaults: &defaults
   docker:
     - image: cimg/node:22.15.0
 
-cypress: &cypress
+playwright: &playwright
   working_directory: ~/docsearch
   docker:
-    - image: cypress/browsers:node-22.15.0-chrome-136.0.7103.113-1-ff-138.0.3-edge-136.0.3240.64-1
+    - image: mcr.microsoft.com/playwright:v1.49.1-noble
       environment:
         ## this enables colors in the output
         TERM: xterm
@@ -168,8 +168,8 @@ jobs:
       - run:
           name: Release if needed
           command: bun run release
-  test_cypress:
-    <<: *cypress
+  test_playwright:
+    <<: *playwright
     steps:
       - checkout
       - *attach_workspace
@@ -179,8 +179,14 @@ jobs:
       - save_cache: *save_bun_cache
       - run: *restore_dist_folders
       - run:
-          name: Cypress test Actions
-          command: bun run cy:run
+          name: Playwright E2E tests
+          command: bun run pw:run
+      - store_artifacts:
+          path: playwright-report
+          destination: playwright-report
+      - store_artifacts:
+          path: test-results
+          destination: test-results
 
 workflows:
   version: 2
@@ -199,7 +205,7 @@ workflows:
       - test_unit:
           requires:
             - build
-      - test_cypress:
+      - test_playwright:
           requires:
             - build
       - release:

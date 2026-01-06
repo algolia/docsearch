@@ -51,6 +51,21 @@ function useTransformItems() {
 export default function Root({ children }) {
   const navigator = useNavigator();
   const transformItems = useTransformItems();
+  const [container, setContainer] = React.useState(null);
+
+  React.useEffect(() => {
+    // Wait for the container to exist before rendering the portal
+    const findContainer = () => {
+      const element = document.querySelector('[class*="navbarSearchContainer"]');
+      if (element) {
+        setContainer(element);
+      } else {
+        // Retry if container doesn't exist yet
+        requestAnimationFrame(findContainer);
+      }
+    };
+    findContainer();
+  }, []);
 
   return (
     <>
@@ -59,31 +74,32 @@ export default function Root({ children }) {
       <BrowserOnly>
         {() => (
           <DocSearch>
-            {createPortal(
-              <>
-                <DocSearchButton translations={{ buttonText: 'Go on, give it a search...' }} />
-                <DocSearchModal
-                  appId={APP_ID}
-                  apiKey={API_KEY}
-                  indexName="docsearch"
-                  askAi={{
-                    appId: APP_ID,
-                    apiKey: API_KEY,
-                    indexName: ASK_AI_INDEX_NAME,
-                    assistantId: ASSISTANT_ID,
-                  }}
-                  placeholder="Search or ask AI"
-                  translations={{
-                    footer: {
-                      poweredByText: 'Powered by',
-                    },
-                  }}
-                  navigator={navigator}
-                  transformItems={transformItems}
-                />
-              </>,
-              document.querySelector('.navbarSearchContainer_Bca1'),
-            )}
+            {container &&
+              createPortal(
+                <>
+                  <DocSearchButton translations={{ buttonText: 'Go on, give it a search...' }} />
+                  <DocSearchModal
+                    appId={APP_ID}
+                    apiKey={API_KEY}
+                    indexName="docsearch"
+                    askAi={{
+                      appId: APP_ID,
+                      apiKey: API_KEY,
+                      indexName: ASK_AI_INDEX_NAME,
+                      assistantId: ASSISTANT_ID,
+                    }}
+                    placeholder="Search or ask AI"
+                    translations={{
+                      footer: {
+                        poweredByText: 'Powered by',
+                      },
+                    }}
+                    navigator={navigator}
+                    transformItems={transformItems}
+                  />
+                </>,
+                container,
+              )}
 
             <SidepanelButton />
             <Sidepanel
