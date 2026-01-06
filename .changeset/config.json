@@ -1,0 +1,25 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "fixed": [
+    [
+      "@docsearch/css",
+      "@docsearch/core",
+      "@docsearch/js",
+      "@docsearch/modal",
+      "@docsearch/react",
+      "@docsearch/sidepanel",
+      "@docsearch/sidepanel-js"
+    ]
+  ],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": [
+    "@docsearch/website",
+    "@docsearch/react-example",
+    "@docsearch/js-example"
+  ]
+}

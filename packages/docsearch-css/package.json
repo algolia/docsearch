@@ -22,8 +22,8 @@
   "scripts": {
     "build:clean": "rm -rf ./dist",
     "build:css": "node build-css.js",
-    "build": "yarn build:clean && mkdir dist && yarn build:css",
-    "watch": "nodemon --watch 'src/**/*.css' --exec 'yarn build:css' --ext css"
+    "build": "bun run build:clean && mkdir dist && bun run build:css",
+    "watch": "nodemon --watch 'src/**/*.css' --exec 'bun run build:css' --ext css"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"

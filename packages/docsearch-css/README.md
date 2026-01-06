@@ -5,8 +5,6 @@ Style package for [DocSearch](http://docsearch.algolia.com/), the best search ex
 ## Installation
 
 ```bash
-yarn add @docsearch/css@4
-# or
 npm install @docsearch/css@4
 ```
 

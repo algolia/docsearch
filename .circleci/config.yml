@@ -1,21 +1,28 @@
 version: 2.1
 
 aliases:
-  - &restore_yarn_cache
-    name: Restore Yarn cache
+  - &install_bun
+    name: Install Bun
+    command: |
+      curl -fsSL https://bun.sh/install | bash
+      echo 'export BUN_INSTALL="$HOME/.bun"' >> $BASH_ENV
+      echo 'export PATH="$BUN_INSTALL/bin:$PATH"' >> $BASH_ENV
+      source $BASH_ENV
+
+  - &restore_bun_cache
+    name: Restore Bun cache
     keys:
-      - yarn-packages-{{ checksum "yarn.lock" }}
+      - bun-packages-{{ checksum "bun.lock" }}
 
-  - &save_yarn_cache
-    name: Save Yarn cache
-    key: yarn-packages-{{ checksum "yarn.lock" }}
+  - &save_bun_cache
+    name: Save Bun cache
+    key: bun-packages-{{ checksum "bun.lock" }}
     paths:
-      - .yarn/cache
-      - .yarn/unplugged
+      - ~/.bun/install/cache
 
-  - &run_yarn_install
+  - &run_bun_install
     name: Install dependencies
-    command: yarn install --immutable
+    command: bun install --frozen-lockfile
 
   - &restore_dist_folders
     name: Restore dist folders
@@ -62,13 +69,14 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - restore_cache: *restore_yarn_cache
-      - run: *run_yarn_install
-      - save_cache: *save_yarn_cache
+      - run: *install_bun
+      - restore_cache: *restore_bun_cache
+      - run: *run_bun_install
+      - save_cache: *save_bun_cache
       - run:
           name: Build and Size
           command: |
-            yarn run build
+            bun run build
       - run:
           name: Move dist folders to workspace
           command: |
@@ -98,57 +106,62 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      - restore_cache: *restore_yarn_cache
-      - run: *run_yarn_install
-      - save_cache: *save_yarn_cache
+      - run: *install_bun
+      - restore_cache: *restore_bun_cache
+      - run: *run_bun_install
+      - save_cache: *save_bun_cache
       - run: *restore_dist_folders
       - run:
           name: Linting
-          command: yarn run lint
+          command: bun run lint
   test_types:
     <<: *defaults
     steps:
       - checkout
       - *attach_workspace
-      - restore_cache: *restore_yarn_cache
-      - run: *run_yarn_install
-      - save_cache: *save_yarn_cache
+      - run: *install_bun
+      - restore_cache: *restore_bun_cache
+      - run: *run_bun_install
+      - save_cache: *save_bun_cache
       - run: *restore_dist_folders
       - run:
           name: Type checking
-          command: yarn run test:types
+          command: bun run test:types
   test_size:
     <<: *defaults
     steps:
       - checkout
       - *attach_workspace
-      - restore_cache: *restore_yarn_cache
-      - run: *run_yarn_install
-      - save_cache: *save_yarn_cache
+      - run: *install_bun
+      - restore_cache: *restore_bun_cache
+      - run: *run_bun_install
+      - save_cache: *save_bun_cache
       - run: *restore_dist_folders
       - run:
           name: Size checking
-          command: yarn run test:size
+          command: bun run test:size
   test_unit:
     <<: *defaults
     steps:
       - checkout
       - *attach_workspace
-      - restore_cache: *restore_yarn_cache
-      - run: *run_yarn_install
-      - save_cache: *save_yarn_cache
+      - run: *install_bun
+      - restore_cache: *restore_bun_cache
+      - run: *run_bun_install
+      - save_cache: *save_bun_cache
       - run: *restore_dist_folders
       - run:
           name: Unit tests
-          command: yarn run test
+          command: bun run test
   release:
     <<: *defaults
     steps:
       - checkout
       - *attach_workspace
-      - restore_cache: *restore_yarn_cache
-      - run: *run_yarn_install
-      - save_cache: *save_yarn_cache
+      - run: *install_bun
+      - restore_cache: *restore_bun_cache
+      - run: *run_bun_install
+      - save_cache: *save_bun_cache
       - run: *restore_dist_folders
       - run:
           name: Setup git user
@@ -157,19 +170,20 @@ jobs:
             git config --global user.name "algolia-bot"
       - run:
           name: Release if needed
-          command: yarn run shipjs trigger
+          command: bun run release
   test_cypress:
     <<: *cypress
     steps:
       - checkout
       - *attach_workspace
-      - restore_cache: *restore_yarn_cache
-      - run: *run_yarn_install
-      - save_cache: *save_yarn_cache
+      - run: *install_bun
+      - restore_cache: *restore_bun_cache
+      - run: *run_bun_install
+      - save_cache: *save_bun_cache
       - run: *restore_dist_folders
       - run:
           name: Cypress test Actions
-          command: yarn run cy:run
+          command: bun run cy:run
 
 workflows:
   version: 2

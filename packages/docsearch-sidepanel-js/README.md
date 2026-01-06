@@ -5,8 +5,6 @@ JavaScript package for [DocSearch Sidepanel](http://docsearch.algolia.com/), a s
 ## Installation
 
 ```bash
-yarn add @docsearch/sidepanel-js
-# or
 npm install @docsearch/sidepanel-js
 ```
 
