@@ -4,7 +4,7 @@
     "": {
       "name": "@docsearch/monorepo",
       "devDependencies": {
-        "@changesets/cli": "^2.27.0",
+        "@changesets/cli": "^2.29.7",
         "@eslint-community/eslint-plugin-eslint-comments": "4.4.1",
         "@stylistic/eslint-plugin": "2.13.0",
         "@testing-library/dom": "10.4.0",
@@ -250,9 +250,6 @@
         "typescript": "^5.8.3",
       },
     },
-  },
-  "overrides": {
-    "@docsearch/react": "^4.1.0",
   },
   "packages": {
     "@adobe/css-tools": ["@adobe/css-tools@4.4.4", "", {}, "sha512-Elp+iwUx5rN5+Y8xLt5/GRoG20WGoDCQ/1Fb+1LiGtvwbDavuSk0jhD/eZdckHAuzcDzccnkv+rEjyWfRx18gg=="],

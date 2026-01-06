@@ -73,8 +73,5 @@
     "typescript-eslint": "8.20.0",
     "vitest": "3.0.2",
     "watch": "1.0.2"
-  },
-  "overrides": {
-    "@docsearch/react": "^4.1.0"
   }
 }

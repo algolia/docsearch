@@ -53,10 +53,6 @@
     "tailwindcss": "4.1.11",
     "typescript": "^5.8.3"
   },
-  "overrides": {
-    "@docsearch/react": "^4.1.0",
-    "@docsearch/css": "^4.1.0"
-  },
   "browserslist": {
     "production": [
       ">0.5%",
