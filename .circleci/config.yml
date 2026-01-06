@@ -4,14 +4,7 @@ aliases:
   - &install_bun
     name: Install Bun
     command: |
-      # Install curl if not available (needed for Cypress image)
-      if ! command -v curl &> /dev/null; then
-        sudo apt-get update && sudo apt-get install -y curl
-      fi
-      curl -fsSL https://bun.sh/install | bash
-      echo 'export BUN_INSTALL="$HOME/.bun"' >> $BASH_ENV
-      echo 'export PATH="$BUN_INSTALL/bin:$PATH"' >> $BASH_ENV
-      source $BASH_ENV
+      npm install -g bun
 
   - &restore_bun_cache
     name: Restore Bun cache
