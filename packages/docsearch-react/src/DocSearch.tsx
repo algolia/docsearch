@@ -62,6 +62,8 @@ export type DocSearchAskAi = {
    * @default false
    */
   suggestedQuestions?: boolean;
+  // HACK: This is a hack for testing staging, remove before releasing
+  useStagingEnv?: boolean;
 };
 
 export interface DocSearchIndex {
