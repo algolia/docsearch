@@ -30,8 +30,9 @@
     "website:serve": "bun --filter @docsearch/website serve -- --host 0.0.0.0",
     "website:test": "bun --filter @docsearch/website start -- --no-open",
     "changeset": "changeset",
-    "version": "changeset version",
-    "release": "changeset publish"
+    "version": "changeset version && bun run sync:docsearch-version",
+    "release": "changeset publish",
+    "sync:docsearch-version": "bun scripts/updateDocsearchVersion.ts"
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.7",
