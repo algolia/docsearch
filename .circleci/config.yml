@@ -1,21 +1,25 @@
 version: 2.1
 
 aliases:
-  - &restore_yarn_cache
-    name: Restore Yarn cache
+  - &install_bun
+    name: Install Bun
+    command: |
+      npm install -g bun
+
+  - &restore_bun_cache
+    name: Restore Bun cache
     keys:
-      - yarn-packages-{{ checksum "yarn.lock" }}
+      - bun-packages-{{ checksum "bun.lock" }}
 
-  - &save_yarn_cache
-    name: Save Yarn cache
-    key: yarn-packages-{{ checksum "yarn.lock" }}
+  - &save_bun_cache
+    name: Save Bun cache
+    key: bun-packages-{{ checksum "bun.lock" }}
     paths:
-      - .yarn/cache
-      - .yarn/unplugged
+      - ~/.bun/install/cache
 
-  - &run_yarn_install
+  - &run_bun_install
     name: Install dependencies
-    command: yarn install --immutable
+    command: bun install --frozen-lockfile
 
   - &restore_dist_folders
     name: Restore dist folders
@@ -43,10 +47,10 @@ defaults: &defaults
   docker:
     - image: cimg/node:22.15.0
 
-cypress: &cypress
+playwright: &playwright
   working_directory: ~/docsearch
   docker:
-    - image: cypress/browsers:node-22.15.0-chrome-136.0.7103.113-1-ff-138.0.3-edge-136.0.3240.64-1
+    - image: mcr.microsoft.com/playwright:v1.49.1-noble
       environment:
         ## this enables colors in the output
         TERM: xterm
@@ -62,13 +66,14 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - restore_cache: *restore_yarn_cache
-      - run: *run_yarn_install
-      - save_cache: *save_yarn_cache
+      - run: *install_bun
+      - restore_cache: *restore_bun_cache
+      - run: *run_bun_install
+      - save_cache: *save_bun_cache
       - run:
           name: Build and Size
           command: |
-            yarn run build
+            bun run build
       - run:
           name: Move dist folders to workspace
           command: |
@@ -98,57 +103,62 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      - restore_cache: *restore_yarn_cache
-      - run: *run_yarn_install
-      - save_cache: *save_yarn_cache
+      - run: *install_bun
+      - restore_cache: *restore_bun_cache
+      - run: *run_bun_install
+      - save_cache: *save_bun_cache
       - run: *restore_dist_folders
       - run:
           name: Linting
-          command: yarn run lint
+          command: bun run lint
   test_types:
     <<: *defaults
     steps:
       - checkout
       - *attach_workspace
-      - restore_cache: *restore_yarn_cache
-      - run: *run_yarn_install
-      - save_cache: *save_yarn_cache
+      - run: *install_bun
+      - restore_cache: *restore_bun_cache
+      - run: *run_bun_install
+      - save_cache: *save_bun_cache
       - run: *restore_dist_folders
       - run:
           name: Type checking
-          command: yarn run test:types
+          command: bun run test:types
   test_size:
     <<: *defaults
     steps:
       - checkout
       - *attach_workspace
-      - restore_cache: *restore_yarn_cache
-      - run: *run_yarn_install
-      - save_cache: *save_yarn_cache
+      - run: *install_bun
+      - restore_cache: *restore_bun_cache
+      - run: *run_bun_install
+      - save_cache: *save_bun_cache
       - run: *restore_dist_folders
       - run:
           name: Size checking
-          command: yarn run test:size
+          command: bun run test:size
   test_unit:
     <<: *defaults
     steps:
       - checkout
       - *attach_workspace
-      - restore_cache: *restore_yarn_cache
-      - run: *run_yarn_install
-      - save_cache: *save_yarn_cache
+      - run: *install_bun
+      - restore_cache: *restore_bun_cache
+      - run: *run_bun_install
+      - save_cache: *save_bun_cache
       - run: *restore_dist_folders
       - run:
           name: Unit tests
-          command: yarn run test
+          command: bun run test
   release:
     <<: *defaults
     steps:
       - checkout
       - *attach_workspace
-      - restore_cache: *restore_yarn_cache
-      - run: *run_yarn_install
-      - save_cache: *save_yarn_cache
+      - run: *install_bun
+      - restore_cache: *restore_bun_cache
+      - run: *run_bun_install
+      - save_cache: *save_bun_cache
       - run: *restore_dist_folders
       - run:
           name: Setup git user
@@ -157,19 +167,26 @@ jobs:
             git config --global user.name "algolia-bot"
       - run:
           name: Release if needed
-          command: yarn run shipjs trigger
-  test_cypress:
-    <<: *cypress
+          command: bun run release
+  test_playwright:
+    <<: *playwright
     steps:
       - checkout
       - *attach_workspace
-      - restore_cache: *restore_yarn_cache
-      - run: *run_yarn_install
-      - save_cache: *save_yarn_cache
+      - run: *install_bun
+      - restore_cache: *restore_bun_cache
+      - run: *run_bun_install
+      - save_cache: *save_bun_cache
       - run: *restore_dist_folders
       - run:
-          name: Cypress test Actions
-          command: yarn run cy:run
+          name: Playwright E2E tests
+          command: bun run pw:run
+      - store_artifacts:
+          path: playwright-report
+          destination: playwright-report
+      - store_artifacts:
+          path: test-results
+          destination: test-results
 
 workflows:
   version: 2
@@ -188,7 +205,7 @@ workflows:
       - test_unit:
           requires:
             - build
-      - test_cypress:
+      - test_playwright:
           requires:
             - build
       - release:

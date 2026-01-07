@@ -19,7 +19,7 @@
     "**/__mocks__/**/*",
     "**/dist",
     "**/node_modules",
-    "cypress",
+    "e2e",
     "examples"
   ]
 }

@@ -33,7 +33,7 @@ DocSearch crawls your documentation, pushes the content to an Algolia index and 
 #### Installation
 
 ```sh
-yarn add @docsearch/js@4
+bun add @docsearch/js@4
 # or
 npm install @docsearch/js@4
 ```
@@ -74,7 +74,7 @@ docsearch({
 #### Installation
 
 ```bash
-yarn add @docsearch/react@4
+bun add @docsearch/react@4
 # or
 npm install @docsearch/react@4
 ```

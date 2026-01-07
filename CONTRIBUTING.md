@@ -60,12 +60,43 @@ Some examples of valid commit messages (used as first lines):
 To run this project, you will need:
 
 - Node.js ≥ 18 – [nvm](https://github.com/nvm-sh/nvm#install-script) is recommended
-- [Yarn](https://yarnpkg.com)
+- [Bun](https://bun.sh) – our package manager and build tool
+
+## Getting started
+
+```sh
+# Install dependencies
+bun install
+
+# Build all packages
+bun run build
+
+# Run tests
+bun run test
+
+# Start development mode (watch + playground)
+bun run dev
+```
+
+## Changesets
+
+This project uses [Changesets](https://github.com/changesets/changesets) for versioning and publishing.
+
+If your PR includes changes that should be released, add a changeset:
+
+```sh
+bun run changeset
+```
+
+Select the packages affected by your change, choose the version bump type (major/minor/patch), and write a summary that will appear in the changelog.
 
 ## Release
 
-```sh
-yarn run release
-```
+When changesets are merged to `main`, a "Version Packages" PR will be automatically created (or updated). Merging that PR triggers the release workflow:
 
-It will create a pull request for the next release. When it's reviewed, approved and merged, then CircleCI will automatically publish it to npm.
+1. Package versions are bumped
+2. CHANGELOGs are updated
+3. Packages are published to npm
+4. Git tags are created
+
+All `@docsearch/*` packages share the same version number (fixed versioning).
