@@ -13,18 +13,12 @@ export interface DocSearchInstance {
   readonly isReady: boolean;
   /** Returns true if the modal is currently open. */
   readonly isOpen: boolean;
-  /** Returns true if the sidepanel is currently open. */
-  readonly isSidepanelOpen: boolean;
-  /** Returns true if sidepanel view is registered (hybrid mode). */
-  readonly isSidepanelSupported: boolean;
   /** Opens the search modal. */
   open(): void;
   /** Closes the search modal. */
   close(): void;
-  /** Opens Ask AI mode (sidepanel if available, otherwise modal). */
+  /** Opens Ask AI mode (modal). */
   openAskAi(initialMessage?: InitialAskAiMessage): void;
-  /** Opens the sidepanel directly (no-op if sidepanel not supported). */
-  openSidepanel(initialMessage?: InitialAskAiMessage): void;
   /** Unmounts the DocSearch component and cleans up. */
   destroy(): void;
 }
@@ -39,14 +33,11 @@ export interface DocSearchCallbacks {
   onOpen?: () => void;
   /** Called when the modal closes. */
   onClose?: () => void;
-  /** Called when the sidepanel opens. */
-  onSidepanelOpen?: () => void;
-  /** Called when the sidepanel closes. */
-  onSidepanelClose?: () => void;
+  interceptAskAiEvent?: (initialMessage: InitialAskAiMessage) => boolean | void;
 }
 
 export type DocSearchProps = DocSearchCallbacks &
-  DocSearchComponentProps & {
+  Omit<DocSearchComponentProps, 'onSidepanelClose' | 'onSidepanelOpen'> & {
     container: HTMLElement | string;
     environment?: typeof window;
   };
@@ -119,20 +110,11 @@ export function docsearch(allProps: DocSearchProps): DocSearchInstance {
     openAskAi(initialMessage?: InitialAskAiMessage): void {
       ref.current?.openAskAi(initialMessage);
     },
-    openSidepanel(initialMessage?: InitialAskAiMessage): void {
-      ref.current?.openSidepanel(initialMessage);
-    },
     get isReady(): boolean {
       return isReady;
     },
     get isOpen(): boolean {
       return ref.current?.isOpen ?? false;
-    },
-    get isSidepanelOpen(): boolean {
-      return ref.current?.isSidepanelOpen ?? false;
-    },
-    get isSidepanelSupported(): boolean {
-      return ref.current?.isSidepanelSupported ?? false;
     },
     destroy(): void {
       unmountComponentAtNode(containerEl);

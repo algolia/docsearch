@@ -89,7 +89,7 @@ function DocSearchSidepanelComp({
   panel: { portalContainer, ...panelProps } = {},
   ...rootProps
 }: DocSearchSidepanelProps): JSX.Element {
-  const { docsearchState, setDocsearchState, keyboardShortcuts, registerView } = useDocSearch();
+  const { docsearchState, setDocsearchState, keyboardShortcuts, registerView, initialAskAiMessage } = useDocSearch();
 
   const toggleSidepanelState = React.useCallback(() => {
     setDocsearchState(docsearchState === 'sidepanel' ? 'ready' : 'sidepanel');
@@ -119,6 +119,7 @@ function DocSearchSidepanelComp({
       {buttonProps.variant === 'inline' ? ButtonComp : createPortal(ButtonComp, containerElement)}
       {createPortal(
         <Sidepanel
+          initialMessage={initialAskAiMessage}
           isOpen={docsearchState === 'sidepanel'}
           onClose={handleClose}
           onOpen={handleOpen}
