@@ -1,5 +1,5 @@
-import type { InitialAskAiMessage } from '@docsearch/core';
-import type { DocSearchProps as DocSearchComponentProps, DocSearchRef } from '@docsearch/react';
+import type { DocSearchRef, InitialAskAiMessage } from '@docsearch/core';
+import type { DocSearchProps as DocSearchComponentProps } from '@docsearch/react';
 import { DocSearch, version as docSearchVersion } from '@docsearch/react';
 import htm from 'htm';
 import type { JSX } from 'preact';

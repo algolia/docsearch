@@ -1,3 +1,18 @@
+# [4.5.0-beta.0](https://github.com/algolia/docsearch/compare/v4.4.0...v4.5.0-beta.0) (2026-01-08)
+
+
+### Bug Fixes
+
+* **deps:** Move dependencies to devDependencies to fix peer dependency issues ([#2831](https://github.com/algolia/docsearch/issues/2831)) ([ed59c7b](https://github.com/algolia/docsearch/commit/ed59c7baa6644ff0a87a71cf84a912219e80ffb3))
+* prevent XSS vulnerability in AskAI conversation history ([#2822](https://github.com/algolia/docsearch/issues/2822)) ([f9ba0a0](https://github.com/algolia/docsearch/commit/f9ba0a01a48e35fd675b6e90e629728f699ce175))
+
+
+### Features
+
+* **website:** Add Sidepanel to DocSearch website ([#2821](https://github.com/algolia/docsearch/issues/2821)) ([54bac9c](https://github.com/algolia/docsearch/commit/54bac9cf54e4613a363a6df2fe7e5f3835009bdf))
+
+
+
 ## [4.4.0](https://github.com/algolia/docsearch/compare/v4.3.2...v4.4.0) (2025-12-18)
 
 
