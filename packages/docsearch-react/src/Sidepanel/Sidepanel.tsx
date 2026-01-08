@@ -103,6 +103,8 @@ export type SidepanelProps = {
    * @default `{ 'Ctrl/Cmd+I': true }`
    */
   keyboardShortcuts?: SidepanelShortcuts;
+  // HACK: This is a hack for testing staging, remove before releasing
+  useStagingEnv?: boolean;
 };
 
 type Props = Omit<DocSearchSidepanelProps, 'button' | 'panel'> &
@@ -131,6 +133,7 @@ export const Sidepanel = ({
   keyboardShortcuts,
   side = 'right',
   initialMessage,
+  useStagingEnv = false,
 }: Props): JSX.Element => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [sidepanelState, setSidepanelState] = React.useState<SidepanelState>('new-conversation');
@@ -169,6 +172,7 @@ export const Sidepanel = ({
     assistantId,
     apiKey,
     searchParameters,
+    useStagingEnv,
   });
 
   const suggestedQuestions = useSuggestedQuestions({
