@@ -51,6 +51,15 @@ export type DocSearchSidepanelProps = DocSearchCallbacks & {
    * Props specific to the Sidepanel panel.
    */
   panel?: Omit<SidepanelProps, 'keyboardShortcuts'>;
+  /**
+   * **Experimental:** Whether to use Agent Studio as the chat backend.
+   *
+   * This is an experimental feature and its API may change without notice in future releases.
+   * Use with caution in production environments.
+   *
+   * @default false
+   */
+  agentStudio?: boolean;
 };
 
 function DocSearchSidepanelComponent(

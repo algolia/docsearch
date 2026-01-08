@@ -1,4 +1,4 @@
-import { ASK_AI_API_URL, BETA_ASK_AI_API_URL, USE_ASK_AI_TOKEN } from './constants';
+import { ASK_AI_API_URL, BETA_ASK_AI_API_URL } from './constants';
 
 // ... existing imports ...
 const TOKEN_KEY = 'askai_token';
@@ -33,7 +33,7 @@ export const getValidToken = async ({
   abortSignal: AbortSignal;
   useStagingEnv?: boolean;
   // eslint-disable-next-line require-await
-}): Promise<string> => {
+}): Promise<string | null> => {
   const cached = sessionStorage.getItem(TOKEN_KEY);
   if (!isExpired(cached)) return cached!;
 
@@ -83,14 +83,12 @@ export const postFeedback = async ({
   headers.set('x-algolia-assistant-id', assistantId);
   headers.set('content-type', 'application/json');
 
-  if (USE_ASK_AI_TOKEN) {
-    const token = await getValidToken({
-      assistantId,
-      abortSignal,
-      useStagingEnv,
-    });
-    headers.set('authorization', `TOKEN ${token}`);
-  }
+  const token = await getValidToken({
+    assistantId,
+    abortSignal,
+    useStagingEnv,
+  });
+  headers.set('authorization', `TOKEN ${token}`);
 
   const baseUrl = useStagingEnv ? BETA_ASK_AI_API_URL : ASK_AI_API_URL;
 

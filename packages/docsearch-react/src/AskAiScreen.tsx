@@ -2,10 +2,11 @@ import type { UseChatHelpers } from '@ai-sdk/react';
 import React, { type JSX, useMemo, useState, useEffect } from 'react';
 
 import { AggregatedSearchBlock } from './AggregatedSearchBlock';
-import { AlertIcon, LoadingIcon, SearchIcon } from './icons';
+import { AlertIcon, LoadingIcon } from './icons';
 import { MemoizedMarkdown } from './MemoizedMarkdown';
 import type { ScreenStateProps } from './ScreenState';
 import type { StoredSearchPlugin } from './stored-searches';
+import { ToolCall } from './ToolCall';
 import type { InternalDocSearchHit, StoredAskAiState } from './types';
 import type { AIMessage } from './types/AskiAi';
 import { extractLinksFromMessage, getMessageContent, isThreadDepthError } from './utils/ai';
@@ -107,7 +108,13 @@ function AskAiExchangeCard({
 }: AskAiExchangeCardProps): JSX.Element {
   const { userMessage, assistantMessage } = exchange;
 
-  const { stoppedStreamingText = 'You stopped this response', errorTitleText = 'Chat error' } = translations;
+  const {
+    stoppedStreamingText = 'You stopped this response',
+    errorTitleText = 'Chat error',
+    preToolCallText = 'Searching...',
+    afterToolCallText = 'Searched for',
+    duringToolCallText = 'Searching...',
+  } = translations;
 
   const isThreadDepth = isThreadDepthError(askAiError);
 
@@ -203,52 +210,19 @@ function AskAiExchangeCard({
                   />
                 );
               }
-              if (part.type === 'tool-searchIndex') {
-                switch (part.state) {
-                  case 'input-streaming':
-                    return (
-                      <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--PartialCall shimmer">
-                        <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-                        <span>{translations.preToolCallText || 'Searching...'}</span>
-                      </div>
-                    );
-                  case 'input-available':
-                    return (
-                      <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Call shimmer">
-                        <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-                        <span>
-                          {`${translations.duringToolCallText || 'Searching for '} "${part.input.query || ''}" ...`}
-                        </span>
-                      </div>
-                    );
-                  case 'output-available':
-                    return (
-                      <div key={index} className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Result">
-                        <SearchIcon />
-                        <span>
-                          {`${translations.afterToolCallText || 'Searched for'}`}{' '}
-                          <span
-                            role="button"
-                            tabIndex={0}
-                            className="DocSearch-AskAiScreen-MessageContent-Tool-Query"
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter' || e.key === ' ') {
-                                e.preventDefault();
-                                onSearchQueryClick(part.output.query || '');
-                              }
-                            }}
-                            onClick={() => onSearchQueryClick(part.output.query || '')}
-                          >
-                            {' '}
-                            &quot;{part.output.query || ''}&quot;
-                          </span>{' '}
-                          found {part.output.hits?.length || 0} results
-                        </span>
-                      </div>
-                    );
-                  default:
-                    break;
-                }
+              if (part.type === 'tool-searchIndex' || part.type === 'tool-algolia_search_index') {
+                return (
+                  <ToolCall
+                    key={index}
+                    translations={{
+                      preToolCallText,
+                      searchingText: duringToolCallText,
+                      toolCallResultText: afterToolCallText,
+                    }}
+                    part={part}
+                    onSearchQueryClick={onSearchQueryClick}
+                  />
+                );
               }
               // fallback for unknown part type
               return null;

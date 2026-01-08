@@ -310,6 +310,7 @@ export function DocSearchModal({
   indexName,
   searchParameters,
   isHybridModeSupported = false,
+  agentStudio = false,
   ...props
 }: DocSearchModalProps): JSX.Element {
   const { footer: footerTranslations, searchBox: searchBoxTranslations, ...screenStateTranslations } = translations;
@@ -411,6 +412,7 @@ export function DocSearchModal({
     indexName: askAiConfig?.indexName || defaultIndexName,
     searchParameters: askAiSearchParameters,
     useStagingEnv: askAiUseStagingEnv,
+    agentStudio,
   });
 
   const prevStatus = React.useRef(status);

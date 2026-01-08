@@ -88,6 +88,11 @@ main {
   min-height: 60px;
 }
 
+.search-wrapper.column {
+  flex-direction: column;
+  gap: 1rem;
+}
+
 /* divider styles */
 .divider {
   border: none;
