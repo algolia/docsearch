@@ -57,8 +57,8 @@ console.log('[demo-js] sidepanel instance exposed on window.sidepanel');
 // eslint-disable-next-line no-console
 console.log('[demo-js] sidepanel try:', {
   open: 'window.sidepanel?.open()',
+  openWithMessage: "window.sidepanel?.open({ query: 'Hello from demo-js' })",
   close: 'window.sidepanel?.close()',
-  openWithMessage: "window.sidepanel?.openWithMessage({ query: 'Hello from demo-js' })",
   destroy: 'window.sidepanel?.destroy()',
 });
 logSidepanelState(sidepanelInstance, 'sidepanel initial state');
@@ -71,7 +71,7 @@ const docsearchInstance = docsearch({
   askAi: 'askAIDemo',
   interceptAskAiEvent: (initialMessage: InitialAskAiMessage) => {
     docsearchInstance.close();
-    sidepanelInstance.openWithMessage(initialMessage);
+    sidepanelInstance.open(initialMessage);
     return true;
   },
   onReady: () => {

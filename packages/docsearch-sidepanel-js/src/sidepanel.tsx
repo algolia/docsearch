@@ -11,12 +11,10 @@ export interface SidepanelInstance {
   readonly isReady: boolean;
   /** Returns true if the sidepanel is currently open. */
   readonly isOpen: boolean;
-  /** Opens the sidepanel. */
-  open(): void;
+  /** Opens the sidepanel, optionally with an initial message. */
+  open(initialMessage?: InitialAskAiMessage): void;
   /** Closes the sidepanel. */
   close(): void;
-  /** Opens the sidepanel with an initial message. */
-  openWithMessage(initialMessage?: InitialAskAiMessage): void;
   /** Unmounts the Sidepanel component and cleans up. */
   destroy(): void;
 }
@@ -68,14 +66,11 @@ export function sidepanel(props: SidepanelProps): SidepanelInstance {
   render(createElement(DocSearchSidepanel, componentProps), containerEl);
 
   return {
-    open(): void {
-      ref.current?.openSidepanel();
+    open(initialMessage?: InitialAskAiMessage): void {
+      ref.current?.openSidepanel(initialMessage);
     },
     close(): void {
       ref.current?.close();
-    },
-    openWithMessage(initialMessage?: InitialAskAiMessage): void {
-      ref.current?.openSidepanel(initialMessage);
     },
     get isReady(): boolean {
       return isReady;
