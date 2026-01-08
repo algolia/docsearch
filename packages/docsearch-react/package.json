@@ -52,22 +52,22 @@
     "watch": "nodemon --watch src --ext ts,tsx,js,jsx,json --ignore dist/ --ignore node_modules/ --verbose --delay 250ms --exec \"yarn on:change\""
   },
   "dependencies": {
+    "@docsearch/css": "4.4.0"
+  },
+  "devDependencies": {
     "@ai-sdk/react": "^2.0.30",
     "@algolia/autocomplete-core": "1.19.2",
     "@docsearch/core": "4.4.0",
-    "@docsearch/css": "4.4.0",
-    "ai": "^5.0.30",
-    "algoliasearch": "^5.28.0",
-    "marked": "^16.3.0",
-    "zod": "^4.1.8"
-  },
-  "devDependencies": {
     "@rollup/plugin-replace": "6.0.2",
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.2.0",
+    "ai": "^5.0.30",
+    "algoliasearch": "^5.28.0",
+    "marked": "^16.3.0",
     "nodemon": "^3.1.0",
     "rollup-plugin-dts": "^6.2.1",
-    "vitest": "3.0.2"
+    "vitest": "3.0.2",
+    "zod": "^4.1.8"
   },
   "peerDependencies": {
     "@types/react": ">= 16.8.0 < 20.0.0",
