@@ -99,7 +99,7 @@ function DocSearchInner(
 
   const isModalActive = ['modal-search', 'modal-askai'].includes(docsearchState);
   const isAskAiActive = docsearchState === 'modal-askai';
-  const isHybridModeSupported = registeredViews.has('sidepanel');
+  const isHybridModeSupported = !isMobile && registeredViews.has('sidepanel');
   const isSidepanelOpen = docsearchState === 'sidepanel';
 
   // Call onReady on mount
