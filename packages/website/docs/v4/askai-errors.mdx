@@ -152,6 +152,12 @@ Your organization must be verified to access certain provider features. This is 
 
 > **Solution**: Visit your provider's organization settings to complete the verification process. For OpenAI, go to [organization settings](https://platform.openai.com/settings/organization/general) and click "Verify Organization". Note that after verification, it may take up to 15 minutes for access to propagate.
 
+### AI-224 - Context length exceeded {#ai-224}
+
+The request exceeded the model's maximum context length. This happens when the combined size of your messages and requested completion exceeds what the model can handle.
+
+> **Solution**: Reduce the size of your conversation history or input. You can either start a new conversation, remove older messages, or shorten your prompts. Check your model's token limits in the [models documentation][5].
+
 [1]: /docs/api#askai
 [2]: https://sitesearch.algolia.com/docs/experiences/search-askai#configuration
 [3]: https://www.algolia.com/doc/guides/algolia-ai/askai/reference/api
