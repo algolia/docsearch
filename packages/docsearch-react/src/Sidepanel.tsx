@@ -1,5 +1,5 @@
 import { DocSearch, useDocSearch } from '@docsearch/core';
-import type { DocSearchTheme, SidepanelShortcuts } from '@docsearch/core';
+import type { DocSearchCallbacks, DocSearchRef, DocSearchTheme, SidepanelShortcuts } from '@docsearch/core';
 import type { JSX } from 'react';
 import React from 'react';
 import { createPortal } from 'react-dom';
@@ -8,7 +8,9 @@ import type { AskAiSearchParameters } from './DocSearch';
 import type { SidepanelButtonProps, SidepanelProps } from './Sidepanel/index';
 import { SidepanelButton, Sidepanel } from './Sidepanel/index';
 
-export type DocSearchSidepanelProps = {
+export type { DocSearchRef, DocSearchCallbacks } from '@docsearch/core';
+
+export type DocSearchSidepanelProps = DocSearchCallbacks & {
   /**
    * The assistant ID to use for the ask AI feature.
    */
@@ -51,20 +53,43 @@ export type DocSearchSidepanelProps = {
   panel?: Omit<SidepanelProps, 'keyboardShortcuts'>;
 };
 
-export function DocSearchSidepanel({ keyboardShortcuts, theme, ...props }: DocSearchSidepanelProps): JSX.Element {
+function DocSearchSidepanelComponent(
+  {
+    keyboardShortcuts,
+    theme,
+    onReady,
+    onOpen,
+    onClose,
+    onSidepanelOpen,
+    onSidepanelClose,
+    ...props
+  }: DocSearchSidepanelProps,
+  ref: React.ForwardedRef<DocSearchRef>,
+): JSX.Element {
   return (
-    <DocSearch keyboardShortcuts={keyboardShortcuts} theme={theme}>
+    <DocSearch
+      keyboardShortcuts={keyboardShortcuts}
+      theme={theme}
+      ref={ref}
+      onReady={onReady}
+      onOpen={onOpen}
+      onClose={onClose}
+      onSidepanelOpen={onSidepanelOpen}
+      onSidepanelClose={onSidepanelClose}
+    >
       <DocSearchSidepanelComp {...props} />
     </DocSearch>
   );
 }
+
+export const DocSearchSidepanel = React.forwardRef(DocSearchSidepanelComponent);
 
 function DocSearchSidepanelComp({
   button: buttonProps = {},
   panel: { portalContainer, ...panelProps } = {},
   ...rootProps
 }: DocSearchSidepanelProps): JSX.Element {
-  const { docsearchState, setDocsearchState, keyboardShortcuts, registerView } = useDocSearch();
+  const { docsearchState, setDocsearchState, keyboardShortcuts, registerView, initialAskAiMessage } = useDocSearch();
 
   const toggleSidepanelState = React.useCallback(() => {
     setDocsearchState(docsearchState === 'sidepanel' ? 'ready' : 'sidepanel');
@@ -94,6 +119,7 @@ function DocSearchSidepanelComp({
       {buttonProps.variant === 'inline' ? ButtonComp : createPortal(ButtonComp, containerElement)}
       {createPortal(
         <Sidepanel
+          initialMessage={initialAskAiMessage}
           isOpen={docsearchState === 'sidepanel'}
           onClose={handleClose}
           onOpen={handleOpen}

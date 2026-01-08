@@ -1,6 +1,6 @@
 import type { AutocompleteOptions, AutocompleteState } from '@algolia/autocomplete-core';
 import { DocSearch as DocSearchProvider, useDocSearch } from '@docsearch/core';
-import type { DocSearchModalShortcuts } from '@docsearch/core';
+import type { DocSearchModalShortcuts, DocSearchRef, InitialAskAiMessage } from '@docsearch/core';
 import type { LiteClient, SearchParamsObject } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
@@ -10,6 +10,8 @@ import { DocSearchModal } from './DocSearchModal';
 import type { DocSearchHit, DocSearchTheme, InternalDocSearchHit, StoredDocSearchHit } from './types';
 
 import type { ButtonTranslations, ModalTranslations } from '.';
+
+export type { DocSearchRef } from '@docsearch/core';
 
 export type DocSearchTranslations = Partial<{
   button: ButtonTranslations;
@@ -96,6 +98,19 @@ export interface DocSearchProps {
    * Configuration or assistant id to enable ask ai mode. Pass a string assistant id or a full config object.
    */
   askAi?: DocSearchAskAi | string;
+  /**
+   * Intercept Ask AI requests (e.g. Submitting a prompt or selecting a suggested question).
+   *
+   * Return `true` to prevent the default modal Ask AI flow (no toggle, no sendMessage).
+   * Useful to route Ask AI into a different UI (e.g. `@docsearch/sidepanel-js`) without flicker.
+   */
+  /**
+   * Intercept Ask AI events (prompt submit, suggested question selection, etc).
+   *
+   * Return `true` to prevent *all* default Ask AI behavior that would normally follow
+   * (no toggle, no sendMessage, no internal Ask AI state updates).
+   */
+  interceptAskAiEvent?: (initialMessage: InitialAskAiMessage) => boolean | void;
   /**
    * Theme overrides applied to the modal and related components.
    */
@@ -201,13 +216,15 @@ export interface DocSearchProps {
   keyboardShortcuts?: DocSearchModalShortcuts;
 }
 
-export function DocSearch(props: DocSearchProps): JSX.Element {
+function DocSearchComponent(props: DocSearchProps, ref: React.ForwardedRef<DocSearchRef>): JSX.Element {
   return (
-    <DocSearchProvider {...props}>
+    <DocSearchProvider {...props} ref={ref}>
       <DocSearchInner {...props} />
     </DocSearchProvider>
   );
 }
+
+export const DocSearch = React.forwardRef(DocSearchComponent);
 
 export function DocSearchInner(props: DocSearchProps): JSX.Element {
   const {
