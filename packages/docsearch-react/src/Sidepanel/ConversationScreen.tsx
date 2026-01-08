@@ -228,15 +228,17 @@ export const ConversationScreen = memo(
       translations;
 
     const mostRecentExchangeRef = React.useRef<HTMLDivElement>(null);
+    const totalExchanges = exchanges.length;
 
+    // Only scroll the most recent exchange into view when needed
     React.useEffect(() => {
       if (mostRecentExchangeRef.current) {
         mostRecentExchangeRef.current.scrollIntoView({
           behavior: 'smooth',
-          block: 'nearest',
+          block: 'start',
         });
       }
-    }, [exchanges, props.status]);
+    }, [totalExchanges]);
 
     return (
       <div className="DocSearch-Sidepanel-ConversationScreen">

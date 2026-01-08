@@ -21,15 +21,17 @@ import type { SidepanelState } from './types';
 type BackButtonProps = {
   mobile?: boolean;
   onBack: () => void;
+  disabled?: boolean;
 };
 
-const BackButton = ({ onBack, mobile = false }: BackButtonProps): JSX.Element => {
+const BackButton = ({ onBack, mobile = false, disabled = false }: BackButtonProps): JSX.Element => {
   return (
     <button
       type="button"
       className={`DocSearch-Action DocSearch-Sidepanel-Action-back${mobile ? ' mobile' : ''}`}
       title="Go back to previous screen"
-      onClick={onBack}
+      aria-disabled={disabled}
+      onClick={disabled ? undefined : onBack}
     >
       <BackIcon />
     </button>
@@ -64,6 +66,7 @@ type SidepanelHeaderProps = {
   onClose: () => void;
   translations?: HeaderTranslations;
   hasConversations: boolean;
+  isStreaming: boolean;
 };
 
 export const SidepanelHeader = React.memo(
@@ -76,6 +79,7 @@ export const SidepanelHeader = React.memo(
     onClose,
     translations = {},
     hasConversations,
+    isStreaming,
   }: SidepanelHeaderProps): JSX.Element => {
     const {
       title = 'Ask AI',
@@ -113,7 +117,7 @@ export const SidepanelHeader = React.memo(
     return (
       <header className="DocSearch-Sidepanel-Header">
         <div className="DocSearch-Sidepanel-Header--left">
-          <BackButton mobile={true} onBack={onBack} />
+          <BackButton mobile={true} disabled={isStreaming} onBack={onBack} />
 
           {sidepanelState === 'conversation-history' && <div className="DocSearch-Divider" />}
 
@@ -133,14 +137,14 @@ export const SidepanelHeader = React.memo(
           </button>
         </div>
         <div className="DocSearch-Sidepanel-Header--center">
-          <BackButton onBack={onBack} />
+          <BackButton disabled={isStreaming} onBack={onBack} />
           <SparklesIcon className="DocSearch-Sidepanel-Header-TitleIcon" />
           <h2 className="DocSearch-Sidepanel-Title">{header}</h2>
         </div>
         <div className="DocSearch-Sidepanel-Header--right">
           {sidepanelState !== 'conversation-history' && (!newConversationDisabled || hasConversations) && (
             <Menu>
-              <Menu.Trigger className="DocSearch-Action DocSearch-Sidepanel-Action-menu">
+              <Menu.Trigger className="DocSearch-Action DocSearch-Sidepanel-Action-menu" disabled={isStreaming}>
                 <MoreVerticalIcon />
               </Menu.Trigger>
               <Menu.Content>

@@ -284,6 +284,19 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   display: none;
 }
 
+.DocSearch-Sidepanel-Action-menu[aria-disabled='true'],
+.DocSearch-Sidepanel-Action-back[aria-disabled='true'] {
+  user-select: none;
+  pointer-events: none;
+  color: var(--docsearch-sidepanel-accent-muted);
+}
+
+.DocSearch-Sidepanel-Action-menu[aria-disabled='true']:hover,
+.DocSearch-Sidepanel-Action-back[aria-disabled='true']:hover {
+  color: var(--docsearch-sidepanel-accent-muted);
+  background-color: transparent;
+}
+
 @media screen and (min-width: 769px) {
   .DocSearch-Sidepanel-Action-menu,
   .DocSearch-Sidepanel-Action-expand {
