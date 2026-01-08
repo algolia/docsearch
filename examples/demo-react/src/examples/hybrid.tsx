@@ -14,14 +14,12 @@ export default function BasicHybrid(): JSX.Element {
         apiKey="0faad3eae2ba413c16355a0f8670c201"
         askAi={{
           assistantId: 'e3Kl4lTCBlSA',
-          useStagingEnv: true,
           indexName: 'docsearch-markdown',
         }}
       />
 
       <SidepanelButton />
       <Sidepanel
-        useStagingEnv={true}
         indexName="docsearch-markdown"
         appId="beta3G7FSQDJR3"
         apiKey="0faad3eae2ba413c16355a0f8670c201"
