@@ -33,25 +33,18 @@
   "unpkg": "dist/umd/index.js",
   "jsdelivr": "dist/umd/index.js",
   "scripts": {
-    "build:clean": "rm -rf ./dist",
-    "build:clean-types": "rm -rf ./dist/esm/types",
-    "build:types": "tsc -p ./tsconfig.declaration.json --outDir ./dist/esm/types",
-    "build:source": "rollup --config --bundleConfigAsCjs",
-    "build:dts": "rollup --config rollup.dts.config.js --bundleConfigAsCjs",
-    "build": "yarn build:clean && yarn build:types && yarn build:source && yarn build:dts && yarn build:clean-types",
-    "on:change": "yarn build",
-    "watch": "nodemon --watch src --ext ts,tsx,js,jsx,json --ignore dist/ --ignore node_modules/ --verbose --delay 250ms --exec \"yarn on:change\""
+    "build": "tsdown",
+    "watch": "tsdown --watch"
   },
   "dependencies": {
     "@docsearch/core": "4.4.0",
     "@docsearch/react": "4.4.0"
   },
   "devDependencies": {
-    "@rollup/plugin-replace": "6.0.2",
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.2.0",
-    "nodemon": "^3.1.0",
-    "rollup-plugin-dts": "^6.2.1",
+    "tsdown": "^0.18.3",
+    "typescript": "5.7.3",
     "vitest": "3.0.2"
   },
   "peerDependencies": {

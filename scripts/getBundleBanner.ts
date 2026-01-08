@@ -1,6 +1,6 @@
 import { execSync } from 'child_process';
 
-export function getBundleBanner(pkg) {
+export function getBundleBanner(pkg: any): string {
   const lastCommitHash = execSync('git rev-parse --short HEAD').toString().trim();
   const version = process.env.SHIPJS ? pkg.version : `${pkg.version} (UNRELEASED ${lastCommitHash})`;
   const authors = '© Algolia, Inc. and contributors';
