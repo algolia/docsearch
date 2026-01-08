@@ -4,7 +4,7 @@ import {
   createAutocomplete,
   type AutocompleteState,
 } from '@algolia/autocomplete-core';
-import type { OnAskAiToggle } from '@docsearch/core';
+import type { InitialAskAiMessage, OnAskAiToggle } from '@docsearch/core';
 import { useTheme } from '@docsearch/core/useTheme';
 import type { ChatRequestOptions } from 'ai';
 import type { SearchResponse } from 'algoliasearch/lite';
@@ -50,6 +50,7 @@ export type ModalTranslations = Partial<{
 export type DocSearchModalProps = DocSearchProps & {
   initialScrollY: number;
   onAskAiToggle: OnAskAiToggle;
+  interceptAskAiEvent?: (initialMessage: InitialAskAiMessage) => boolean | void;
   onClose?: () => void;
   isAskAiActive?: boolean;
   translations?: ModalTranslations;
@@ -301,6 +302,7 @@ export function DocSearchModal({
   getMissingResultsUrl,
   insights = false,
   onAskAiToggle,
+  interceptAskAiEvent,
   isAskAiActive = false,
   recentSearchesLimit = 7,
   recentSearchesWithFavoritesLimit = 4,
@@ -506,6 +508,21 @@ export function DocSearchModal({
 
   const handleSelectAskAiQuestion = React.useCallback(
     (toggle: boolean, query: string, suggestedQuestion: SuggestedQuestionHit | undefined = undefined) => {
+      if (toggle) {
+        const initialMessage: InitialAskAiMessage = {
+          query,
+          suggestedQuestionId: suggestedQuestion?.objectID,
+        };
+
+        if (interceptAskAiEvent?.(initialMessage)) {
+          // Consumer handled it. Avoid *all* default Ask AI behavior.
+          if (autocompleteRef.current) {
+            autocompleteRef.current.setQuery('');
+          }
+          return;
+        }
+      }
+
       if (toggle && askAiState === 'new-conversation') {
         setAskAiState('initial');
       }
@@ -558,7 +575,7 @@ export function DocSearchModal({
         autocompleteRef.current.setQuery('');
       }
     },
-    [onAskAiToggle, sendMessage, askAiState, setAskAiState, isHybridModeSupported],
+    [onAskAiToggle, interceptAskAiEvent, sendMessage, askAiState, setAskAiState, isHybridModeSupported],
   );
 
   // feedback handler
@@ -900,10 +917,20 @@ export function DocSearchModal({
                   // if the item is askAI and the anchor is stored
                   if (item.anchor === 'stored' && 'messages' in item) {
                     setMessages(item.messages as any);
-                    onAskAiToggle(true, {
+                    const initialMessage: InitialAskAiMessage = {
                       query: item.query,
                       messageId: (item.messages as StoredAskAiMessage[])[0].id,
-                    });
+                    };
+
+                    if (interceptAskAiEvent?.(initialMessage)) {
+                      if (autocompleteRef.current) {
+                        autocompleteRef.current.setQuery('');
+                      }
+                      event.preventDefault();
+                      return;
+                    }
+
+                    onAskAiToggle(true, initialMessage);
                   } else {
                     handleSelectAskAiQuestion(true, item.query);
                   }
