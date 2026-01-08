@@ -911,6 +911,7 @@ export function DocSearchModal({
               selectAskAiQuestion={handleSelectAskAiQuestion}
               suggestedQuestions={suggestedQuestions}
               selectSuggestedQuestion={selectSuggestedQuestion}
+              agentStudio={agentStudio}
               onAskAiToggle={onAskAiToggle}
               onNewConversation={handleNewConversation}
               onItemClick={(item, event) => {

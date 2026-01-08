@@ -67,6 +67,7 @@ export type ConversationScreenProps = {
   status: UseChatHelpers<AIMessage>['status'];
   handleFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
   streamError?: Error;
+  agentStudio?: boolean;
 };
 
 type ConversationnExchangeProps = {
@@ -77,11 +78,12 @@ type ConversationnExchangeProps = {
   translations?: ConversationScreenTranslations;
   onFeedback?: ConversationScreenProps['handleFeedback'];
   streamError?: ConversationScreenProps['streamError'];
+  agentStudio?: boolean;
 };
 
 const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExchangeProps>(
   (
-    { exchange, translations = {}, isLastExchange, conversations, onFeedback, status, streamError },
+    { exchange, translations = {}, isLastExchange, conversations, onFeedback, status, streamError, agentStudio },
     conversationRef,
   ): JSX.Element => {
     const { userMessage, assistantMessage } = exchange;
@@ -206,6 +208,7 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
               latestAssistantMessageContent={assistantContent?.text || null}
               translations={translations}
               conversations={conversations}
+              agentStudio={agentStudio}
               onFeedback={onFeedback}
             />
           </div>
