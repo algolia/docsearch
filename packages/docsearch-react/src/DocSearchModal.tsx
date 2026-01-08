@@ -352,6 +352,7 @@ export function DocSearchModal({
   const askAiConfig = typeof askAi === 'object' ? askAi : null;
   const askAiConfigurationId = typeof askAi === 'string' ? askAi : askAiConfig?.assistantId || null;
   const askAiSearchParameters = askAiConfig?.searchParameters;
+  const askAiUseStagingEnv = askAiConfig?.useStagingEnv || false;
   const [askAiState, setAskAiState] = React.useState<AskAiState>('initial');
   const suggestedQuestions = useSuggestedQuestions({
     assistantId: askAiConfigurationId,
@@ -409,6 +410,7 @@ export function DocSearchModal({
     appId: askAiConfig?.appId || appId,
     indexName: askAiConfig?.indexName || defaultIndexName,
     searchParameters: askAiSearchParameters,
+    useStagingEnv: askAiUseStagingEnv,
   });
 
   const prevStatus = React.useRef(status);

@@ -117,6 +117,8 @@ export type SidepanelProps = {
    * @default `{ 'Ctrl/Cmd+I': true }`
    */
   keyboardShortcuts?: SidepanelShortcuts;
+  // HACK: This is a hack for testing staging, remove before releasing
+  useStagingEnv?: boolean;
 };
 
 type Props = Omit<DocSearchSidepanelProps, 'button' | 'panel'> &
@@ -146,6 +148,7 @@ function SidepanelInner(
     keyboardShortcuts,
     side = 'right',
     initialMessage,
+    useStagingEnv = false,
   }: Props,
   ref: React.ForwardedRef<SidepanelRef>,
 ): JSX.Element {
@@ -186,6 +189,7 @@ function SidepanelInner(
     assistantId,
     apiKey,
     searchParameters,
+    useStagingEnv,
   });
 
   const suggestedQuestions = useSuggestedQuestions({

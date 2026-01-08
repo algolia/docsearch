@@ -5,7 +5,7 @@ import { useCallback, useMemo, useRef } from 'react';
 
 import { getValidToken, postFeedback } from './askai';
 import type { Exchange } from './AskAiScreen';
-import { ASK_AI_API_URL, USE_ASK_AI_TOKEN } from './constants';
+import { ASK_AI_API_URL, BETA_ASK_AI_API_URL, USE_ASK_AI_TOKEN } from './constants';
 import type { StoredSearchPlugin } from './stored-searches';
 import { createStoredConversations } from './stored-searches';
 import type { AIMessage } from './types/AskiAi';
@@ -20,6 +20,7 @@ type UseAskAiParams = {
   appId: string;
   indexName: string;
   searchParameters?: AskAiSearchParameters;
+  useStagingEnv?: boolean;
 };
 
 type UseAskAiReturn = {
@@ -37,13 +38,20 @@ type UseAskAiReturn = {
 
 type UseAskAi = (params: UseAskAiParams) => UseAskAiReturn;
 
-export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, searchParameters }) => {
+export const useAskAi: UseAskAi = ({
+  assistantId,
+  apiKey,
+  appId,
+  indexName,
+  searchParameters,
+  useStagingEnv = false,
+}) => {
   const abortControllerRef = useRef(new AbortController());
 
   const askAiTransport = useMemo(
     () =>
       new DefaultChatTransport({
-        api: ASK_AI_API_URL,
+        api: useStagingEnv ? BETA_ASK_AI_API_URL : ASK_AI_API_URL,
         headers: async (): Promise<Record<string, string>> => {
           if (!assistantId) {
             throw new Error('Ask AI assistant ID is required');
@@ -55,6 +63,7 @@ export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, sear
             token = await getValidToken({
               assistantId,
               abortSignal: abortControllerRef.current.signal,
+              useStagingEnv,
             });
           }
 
@@ -69,7 +78,7 @@ export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, sear
         },
         body: searchParameters ? { searchParameters } : {},
       }),
-    [apiKey, appId, assistantId, indexName, searchParameters],
+    [apiKey, appId, assistantId, indexName, searchParameters, useStagingEnv],
   );
 
   const { messages, sendMessage, status, setMessages, error, stop } = useChat<AIMessage>({
@@ -94,12 +103,13 @@ export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, sear
         messageId,
         appId,
         abortSignal: abortControllerRef.current.signal,
+        useStagingEnv,
       });
 
       if (res.status >= 300) throw new Error('Failed, try again later.');
       conversations.addFeedback?.(messageId, thumbs === 1 ? 'like' : 'dislike');
     },
-    [assistantId, appId, conversations],
+    [assistantId, appId, conversations, useStagingEnv],
   );
 
   const onStopStreaming = async (): Promise<void> => {
