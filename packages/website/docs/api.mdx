@@ -261,6 +261,18 @@ These parameters provide the essential functionality for Ask AI while keeping th
 
 :::
 
+## `agentStudio`
+
+> `type: boolean` | **optional** | **experimental**
+
+:::warning[Experimental]
+
+`agentStudio` is currently an experimental property. It is targeted to be stable in release `5.0.0`.
+
+:::
+
+If `agentStudio` is true, the Ask AI chat will use Algolia's [Agent Studio][12] as the chat backend instead of the Ask AI backend. More can be learned about setting up Agent Studio on their dedicated [documentation page][13].
+
 ## `searchParameters`
 
 > `type: SearchParameters` | **optional** | **deprecated**
@@ -894,3 +906,5 @@ docsearch({
 [9]: https://codesandbox.io/s/docsearch-v3-debounced-search-gnx87
 [10]: https://www.algolia.com/doc/api-client/getting-started/what-is-the-api-client/javascript/?client=javascript
 [11]: https://www.algolia.com/doc/ui-libraries/autocomplete/core-concepts/keyboard-navigation/
+[12]: https://www.algolia.com/products/ai/agent-studio
+[13]: https://www.algolia.com/doc/guides/algolia-ai/agent-studio

@@ -53,7 +53,7 @@ export type DocSearchAskAi = {
   /**
    * The assistant ID to use for the ask AI feature.
    */
-  assistantId: string | null;
+  assistantId: string;
   /**
    * The search parameters to use for the ask AI feature.
    */
@@ -104,13 +104,16 @@ export interface DocSearchProps {
    * Return `true` to prevent the default modal Ask AI flow (no toggle, no sendMessage).
    * Useful to route Ask AI into a different UI (e.g. `@docsearch/sidepanel-js`) without flicker.
    */
-  /**
-   * Intercept Ask AI events (prompt submit, suggested question selection, etc).
-   *
-   * Return `true` to prevent *all* default Ask AI behavior that would normally follow
-   * (no toggle, no sendMessage, no internal Ask AI state updates).
-   */
   interceptAskAiEvent?: (initialMessage: InitialAskAiMessage) => boolean | void;
+  /**
+   * **Experimental:** Whether to use Agent Studio as the chat backend.
+   *
+   * This is an experimental feature and its API may change without notice in future releases.
+   * Use with caution in production environments.
+   *
+   * @default false
+   */
+  agentStudio?: boolean;
   /**
    * Theme overrides applied to the modal and related components.
    */

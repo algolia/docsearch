@@ -91,8 +91,11 @@ html[data-theme='dark'] {
 }
 
 .DocSearch-SidepanelButton.inline:hover {
-  background-color: rgba(4, 4, 8, 1);
   border-color: var(--docsearch-sidepanel-accent);
+}
+
+html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
+  background-color: rgba(4, 4, 8, 1);
 }
 
 .DocSearch-SidepanelButton.inline svg {

@@ -5,7 +5,7 @@ import { useCallback, useMemo, useRef } from 'react';
 
 import { getValidToken, postFeedback } from './askai';
 import type { Exchange } from './AskAiScreen';
-import { ASK_AI_API_URL, BETA_ASK_AI_API_URL, USE_ASK_AI_TOKEN } from './constants';
+import { ASK_AI_API_URL, BETA_ASK_AI_API_URL } from './constants';
 import type { StoredSearchPlugin } from './stored-searches';
 import { createStoredConversations } from './stored-searches';
 import type { AIMessage } from './types/AskiAi';
@@ -21,6 +21,7 @@ type UseAskAiParams = {
   indexName: string;
   searchParameters?: AskAiSearchParameters;
   useStagingEnv?: boolean;
+  agentStudio?: boolean;
 };
 
 type UseAskAiReturn = {
@@ -38,6 +39,57 @@ type UseAskAiReturn = {
 
 type UseAskAi = (params: UseAskAiParams) => UseAskAiReturn;
 
+const getAgentStudioTransport = ({
+  appId,
+  apiKey,
+  assistantId,
+}: Pick<UseAskAiParams, 'apiKey' | 'appId' | 'assistantId'>): DefaultChatTransport<AIMessage> => {
+  return new DefaultChatTransport({
+    api: `https://${appId}.algolia.net/agent-studio/1/agents/${assistantId}/completions?stream=true&compatibilityMode=ai-sdk-5`,
+    headers: {
+      'x-algolia-application-id': appId,
+      'x-algolia-api-key': apiKey,
+    },
+  });
+};
+
+const getAskAiTransport = ({
+  assistantId,
+  apiKey,
+  indexName,
+  searchParameters,
+  appId,
+  abortController,
+  useStagingEnv,
+}: Pick<UseAskAiParams, 'apiKey' | 'appId' | 'assistantId' | 'indexName' | 'searchParameters' | 'useStagingEnv'> & {
+  abortController: AbortController;
+}): DefaultChatTransport<AIMessage> => {
+  return new DefaultChatTransport({
+    api: useStagingEnv ? BETA_ASK_AI_API_URL : ASK_AI_API_URL,
+    headers: async (): Promise<Record<string, string>> => {
+      if (!assistantId) {
+        throw new Error('Ask AI assistant ID is required');
+      }
+
+      const token = await getValidToken({
+        assistantId,
+        abortSignal: abortController.signal,
+        useStagingEnv,
+      });
+
+      return {
+        ...(token ? { authorization: `TOKEN ${token}` } : {}),
+        'X-Algolia-API-Key': apiKey,
+        'X-Algolia-Application-Id': appId,
+        'X-Algolia-Index-Name': indexName,
+        'X-Algolia-Assistant-Id': assistantId || '',
+        'X-AI-SDK-Version': 'v5',
+      };
+    },
+    body: searchParameters ? { searchParameters } : {},
+  });
+};
+
 export const useAskAi: UseAskAi = ({
   assistantId,
   apiKey,
@@ -45,43 +97,31 @@ export const useAskAi: UseAskAi = ({
   indexName,
   searchParameters,
   useStagingEnv = false,
+  agentStudio = false,
 }) => {
   const abortControllerRef = useRef(new AbortController());
 
   const askAiTransport = useMemo(
     () =>
-      new DefaultChatTransport({
-        api: useStagingEnv ? BETA_ASK_AI_API_URL : ASK_AI_API_URL,
-        headers: async (): Promise<Record<string, string>> => {
-          if (!assistantId) {
-            throw new Error('Ask AI assistant ID is required');
-          }
-
-          let token: string | null = null;
-
-          if (USE_ASK_AI_TOKEN) {
-            token = await getValidToken({
-              assistantId,
-              abortSignal: abortControllerRef.current.signal,
-              useStagingEnv,
-            });
-          }
-
-          return {
-            ...(token ? { authorization: `TOKEN ${token}` } : {}),
-            'X-Algolia-API-Key': apiKey,
-            'X-Algolia-Application-Id': appId,
-            'X-Algolia-Index-Name': indexName,
-            'X-Algolia-Assistant-Id': assistantId || '',
-            'X-AI-SDK-Version': 'v5',
-          };
-        },
-        body: searchParameters ? { searchParameters } : {},
-      }),
-    [apiKey, appId, assistantId, indexName, searchParameters, useStagingEnv],
+      agentStudio
+        ? getAgentStudioTransport({
+            apiKey,
+            appId,
+            assistantId: assistantId ?? '',
+          })
+        : getAskAiTransport({
+            assistantId: assistantId ?? '',
+            apiKey,
+            appId,
+            indexName,
+            searchParameters,
+            abortController: abortControllerRef.current,
+            useStagingEnv,
+          }),
+    [apiKey, appId, assistantId, indexName, searchParameters, agentStudio, useStagingEnv],
   );
 
-  const { messages, sendMessage, status, setMessages, error, stop } = useChat<AIMessage>({
+  const { messages, sendMessage, status, setMessages, error, stop } = useChat({
     sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
     transport: askAiTransport,
   });

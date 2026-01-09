@@ -14,6 +14,7 @@ interface ConversationActionsProps {
   conversations: StoredSearchPlugin<StoredAskAiState>;
   onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
   isSidepanel?: boolean;
+  agentStudio?: boolean;
 }
 
 export function ConversationActions({
@@ -23,6 +24,7 @@ export function ConversationActions({
   onFeedback,
   latestAssistantMessageContent,
   showActions,
+  agentStudio,
 }: ConversationActionsProps): JSX.Element | null {
   const initialFeedback = React.useMemo(() => {
     const message = conversations.getOne?.(id);
@@ -63,25 +65,26 @@ export function ConversationActions({
         translations={translations}
         onClick={() => navigator.clipboard.writeText(latestAssistantMessageContent)}
       />
-      {feedback === null ? (
-        <>
-          {saving ? (
-            <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-          ) : (
-            <>
-              <LikeButton title={likeButtonTitle} onClick={() => handleFeedback('like')} />
-              <DislikeButton title={dislikeButtonTitle} onClick={() => handleFeedback('dislike')} />
-            </>
-          )}
-          {savingError && (
-            <p className="DocSearch-AskAiScreen-FeedbackText">{savingError.message || 'An error occured'}</p>
-          )}
-        </>
-      ) : (
-        <p className="DocSearch-AskAiScreen-FeedbackText DocSearch-AskAiScreen-FeedbackText--visible">
-          {thanksForFeedbackText}
-        </p>
-      )}
+      {!agentStudio &&
+        (feedback === null ? (
+          <>
+            {saving ? (
+              <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
+            ) : (
+              <>
+                <LikeButton title={likeButtonTitle} onClick={() => handleFeedback('like')} />
+                <DislikeButton title={dislikeButtonTitle} onClick={() => handleFeedback('dislike')} />
+              </>
+            )}
+            {savingError && (
+              <p className="DocSearch-AskAiScreen-FeedbackText">{savingError.message || 'An error occured'}</p>
+            )}
+          </>
+        ) : (
+          <p className="DocSearch-AskAiScreen-FeedbackText DocSearch-AskAiScreen-FeedbackText--visible">
+            {thanksForFeedbackText}
+          </p>
+        ))}
     </div>
   );
 }
