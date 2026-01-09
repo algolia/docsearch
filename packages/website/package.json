@@ -30,7 +30,7 @@
     "react-dom": "^18.0.0"
   },
   "devDependencies": {
-    "tailwindcss": "3.4.17"
+    "tailwindcss": "4.1.18"
   },
   "browserslist": {
     "production": [
