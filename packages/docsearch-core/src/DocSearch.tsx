@@ -145,6 +145,8 @@ function DocSearchInner(
 
   const closeModal = React.useCallback((): void => {
     setDocsearchState('ready');
+    // Refocus the Modal trigger on close
+    searchButtonRef.current?.focus();
     setInitialQuery(props.initialQuery ?? '');
   }, [setDocsearchState, props.initialQuery]);
 
