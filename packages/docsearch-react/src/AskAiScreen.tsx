@@ -65,6 +65,10 @@ export type AskAiScreenTranslations = Partial<{
    * Button text for generating a summary.
    */
   generateSummaryButtonText: string;
+  /**
+   * Translations for the conversation summary.
+   */
+  conversationSummaryTitle: string;
 }>;
 
 type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
@@ -493,7 +497,7 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
               ))}
           </div>
         )}
-        {summary && <ConversationSummary summary={summary} translations={null} />}
+        {summary && <ConversationSummary summary={summary} translations={translations} />}
       </div>
     </div>
   );
