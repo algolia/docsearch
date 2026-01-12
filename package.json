@@ -86,8 +86,5 @@
     "vitest": "3.0.2",
     "watch": "1.0.2"
   },
-  "resolutions": {
-    "@docsearch/react": "^4.1.0"
-  },
   "packageManager": "yarn@4.6.0"
 }
