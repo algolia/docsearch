@@ -414,12 +414,41 @@ export function DocSearchModal({
   });
 
   const prevStatus = React.useRef(status);
+  const prevAskAiState = React.useRef(askAiState);
   React.useEffect(() => {
+    // Handle summary generation completion → initial state with summary as context
+    if (prevStatus.current === 'streaming' && status === 'ready' && prevAskAiState.current === 'generating-summary') {
+      // Extract the summary from the last assistant message
+      const lastMessage = messages.at(-1);
+      if (lastMessage && lastMessage.role === 'assistant') {
+        const summaryText = lastMessage.parts.find((part) => part.type === 'text');
+        if (summaryText && summaryText.type === 'text') {
+          // Create a new conversation with the summary as the first system/context message
+          const summaryMessage: AIMessage = {
+            id: `summary-${Date.now()}`,
+            role: 'assistant',
+            parts: [
+              {
+                type: 'text',
+                text: summaryText.text,
+              },
+            ],
+          };
+
+          setMessages([summaryMessage]);
+          setAskAiState('initial');
+        }
+      }
+    }
+
     if (disableUserPersonalization) {
+      prevStatus.current = status;
+      prevAskAiState.current = askAiState;
       return;
     }
+
     // if we just transitioned from "streaming" → "ready", persist
-    if (prevStatus.current === 'streaming' && status === 'ready') {
+    if (prevStatus.current === 'streaming' && status === 'ready' && prevAskAiState.current !== 'generating-summary') {
       // if we stopped the stream, store it on the most recent message
       if (stoppedStream && messages.at(-1)) {
         messages.at(-1)!.metadata = {
@@ -427,14 +456,41 @@ export function DocSearchModal({
         };
       }
 
-      for (const part of messages[0].parts) {
-        if (part.type === 'text') {
-          conversations.add(buildDummyAskAiHit(part.text, messages));
+      // If the first message is assistant (summary), use the second message (user) as query/objectID
+      if (
+        messages.length > 1 &&
+        messages[0]?.role === 'assistant' &&
+        messages[0].id.startsWith('summary-') &&
+        messages[1]?.role === 'user'
+      ) {
+        const userMessage = messages[1];
+        for (const part of userMessage.parts) {
+          if (part.type === 'text') {
+            conversations.add(buildDummyAskAiHit(part.text, messages, 1));
+          }
+        }
+      } else {
+        // Normal case: first message is user
+        for (const part of messages[0].parts) {
+          if (part.type === 'text') {
+            conversations.add(buildDummyAskAiHit(part.text, messages));
+          }
         }
       }
     }
+
     prevStatus.current = status;
-  }, [status, messages, conversations, disableUserPersonalization, stoppedStream]);
+    prevAskAiState.current = askAiState;
+  }, [
+    status,
+    askAiState,
+    messages,
+    setMessages,
+    setAskAiState,
+    conversations,
+    disableUserPersonalization,
+    stoppedStream,
+  ]);
 
   // Check if there's a thread depth error (AI-217)
   const hasThreadDepthError = React.useMemo(() => {
@@ -822,6 +878,19 @@ export function DocSearchModal({
     setAskAiState('new-conversation');
   };
 
+  const handleGenerateSummary = (): void => {
+    setAskAiState('generating-summary');
+    sendMessage({
+      role: 'user',
+      parts: [
+        {
+          type: 'text',
+          text: 'Summarize this conversation in 2-3 concise sentences, capturing the main question and key points of the answer.',
+        },
+      ],
+    });
+  };
+
   const handleViewConversationHistory = (): void => {
     setAskAiState('conversation-history');
   };
@@ -880,6 +949,7 @@ export function DocSearchModal({
             }}
             onStopAskAiStreaming={onStopAskAiStreaming}
             onNewConversation={handleNewConversation}
+            onGenerateSummary={handleGenerateSummary}
             onViewConversationHistory={handleViewConversationHistory}
           />
         </header>
@@ -911,6 +981,7 @@ export function DocSearchModal({
               selectSuggestedQuestion={selectSuggestedQuestion}
               onAskAiToggle={onAskAiToggle}
               onNewConversation={handleNewConversation}
+              onGenerateSummary={handleGenerateSummary}
               onItemClick={(item, event) => {
                 // if the item is askAI toggle the screen
                 if (item.type === 'askAI' && item.query) {

@@ -11,6 +11,7 @@ import {
   MoreVerticalIcon,
   NewConversationIcon,
   ConversationHistoryIcon,
+  SparklesIcon,
 } from './icons';
 import { BackIcon } from './icons/BackIcon';
 import { Menu } from './Menu';
@@ -36,6 +37,7 @@ export type SearchBoxTranslations = Partial<{
   startNewConversationText: string;
   viewConversationHistoryText: string;
   threadDepthErrorPlaceholder: string;
+  generateSummaryText: string;
 }>;
 
 interface SearchBoxProps
@@ -56,6 +58,7 @@ interface SearchBoxProps
   askAiState: AskAiState;
   setAskAiState: (state: AskAiState) => void;
   onNewConversation: () => void;
+  onGenerateSummary: () => void;
   onViewConversationHistory: () => void;
   isThreadDepthError?: boolean;
 }
@@ -79,6 +82,7 @@ export function SearchBox({
     newConversationPlaceholder = 'Ask a question',
     conversationHistoryTitle = 'My conversation history',
     startNewConversationText = 'Start a new conversation',
+    generateSummaryText = 'Generate summary',
     viewConversationHistoryText = 'Conversation history',
     threadDepthErrorPlaceholder = 'Conversation limit reached',
   } = translations;
@@ -186,7 +190,7 @@ export function SearchBox({
       }
       origOnChange?.(e);
     },
-    disabled: isAskAiStreaming || (isThreadDepthError && props.isAskAiActive),
+    disabled: isAskAiStreaming || (isThreadDepthError && props.isAskAiActive) || askAiState === 'generating-summary',
   };
 
   const handleAskAiBackClick = React.useCallback((): void => {
@@ -291,6 +295,10 @@ export function SearchBox({
                   <Menu.Item onClick={props.onNewConversation}>
                     <NewConversationIcon />
                     {startNewConversationText}
+                  </Menu.Item>
+                  <Menu.Item onClick={props.onGenerateSummary}>
+                    <SparklesIcon />
+                    {generateSummaryText}
                   </Menu.Item>
                   {hasRecentConversations && (
                     <Menu.Item onClick={props.onViewConversationHistory}>

@@ -2,6 +2,7 @@ import type { UseChatHelpers } from '@ai-sdk/react';
 import React, { type JSX, useMemo, useState, useEffect } from 'react';
 
 import { AggregatedSearchBlock } from './AggregatedSearchBlock';
+import { ConversationSummary } from './ConversationSummary';
 import { AlertIcon, LoadingIcon, SearchIcon } from './icons';
 import { MemoizedMarkdown } from './MemoizedMarkdown';
 import type { ScreenStateProps } from './ScreenState';
@@ -60,6 +61,10 @@ export type AskAiScreenTranslations = Partial<{
    * Button text for starting a new conversation after thread depth error.
    */
   startNewConversationButtonText: string;
+  /**
+   * Button text for generating a summary.
+   */
+  generateSummaryButtonText: string;
 }>;
 
 type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
@@ -68,6 +73,7 @@ type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translatio
   askAiError?: Error;
   translations?: AskAiScreenTranslations;
   onNewConversation: () => void;
+  onGenerateSummary: () => void;
 };
 
 interface AskAiScreenHeaderProps {
@@ -390,9 +396,18 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
     disclaimerText = 'Answers are generated with AI which can make mistakes. Verify responses.',
     threadDepthExceededMessage = 'This conversation is now closed to keep responses accurate.',
     startNewConversationButtonText = 'Start a new conversation',
+    generateSummaryButtonText = 'generate a summary',
   } = translations;
 
   const { messages, askAiError, status } = props;
+
+  const summary = useMemo(() => {
+    const summaryMessage = messages.find((m) => m.id.startsWith('summary-') && m.role === 'assistant');
+    if (summaryMessage) {
+      return summaryMessage.parts.find((part) => part.type === 'text')?.text || null;
+    }
+    return null;
+  }, [messages]);
 
   // Check if there's a thread depth error
   const hasThreadDepthError = useMemo(() => {
@@ -445,6 +460,10 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
               <button type="button" className="DocSearch-ThreadDepthError-Link" onClick={props.onNewConversation}>
                 {startNewConversationButtonText}
               </button>{' '}
+              or{' '}
+              <button type="button" className="DocSearch-ThreadDepthError-Link" onClick={props.onGenerateSummary}>
+                {generateSummaryButtonText}
+              </button>{' '}
               to continue.
             </p>
           </div>
@@ -454,24 +473,27 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
       <AskAiScreenHeader disclaimerText={disclaimerText} />
 
       <div className="DocSearch-AskAiScreen-Body">
-        <div className="DocSearch-AskAiScreen-ExchangesList">
-          {exchanges
-            .slice()
-            .reverse()
-            .map((exchange, index) => (
-              <AskAiExchangeCard
-                key={exchange.id}
-                exchange={exchange}
-                askAiError={props.askAiError}
-                isLastExchange={index === 0}
-                loadingStatus={props.status}
-                translations={translations}
-                conversations={props.conversations}
-                onSearchQueryClick={handleSearchQueryClick}
-                onFeedback={props.onFeedback}
-              />
-            ))}
-        </div>
+        {exchanges.length > 0 && (
+          <div className="DocSearch-AskAiScreen-ExchangesList">
+            {exchanges
+              .slice()
+              .reverse()
+              .map((exchange, index) => (
+                <AskAiExchangeCard
+                  key={exchange.id}
+                  exchange={exchange}
+                  askAiError={props.askAiError}
+                  isLastExchange={index === 0}
+                  loadingStatus={props.status}
+                  translations={translations}
+                  conversations={props.conversations}
+                  onSearchQueryClick={handleSearchQueryClick}
+                  onFeedback={props.onFeedback}
+                />
+              ))}
+          </div>
+        )}
+        {summary && <ConversationSummary summary={summary} translations={null} />}
       </div>
     </div>
   );

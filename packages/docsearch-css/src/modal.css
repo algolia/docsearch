@@ -1485,6 +1485,23 @@ assistive tech users */
   cursor: pointer;
 }
 
+/* GeneratingSummaryScreen */
+.DocSearch-GeneratingSummaryScreen {
+  padding: 3em var(--docsearch-spacing);
+}
+
+.DocSearch-GeneratingSummaryScreen-Title {
+  font-weight: 600;
+  font-size: 26px;
+  color: var(--docsearch-text-color);
+  margin-block-end: 0.15em;
+}
+
+.DocSearch-GeneratingSummaryScreen-Description {
+  font-size: 14px;
+  color: var(--docsearch-muted-color);
+}
+
 .DocSearch-Menu {
   position: relative;
 }
@@ -1524,4 +1541,36 @@ assistive tech users */
 
 .DocSearch-Menu-item:hover {
   background-color: var(--docsearch-dropdown-menu-item-hover-background);
+}
+
+/* Conversation Summary */
+.DocSearch-ConversationSummary {
+  background: rgba(var(--docsearch-highlight-color-rgb, 187, 209, 255), 0.1);
+  border: 1px solid var(--docsearch-subtle-color);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 0 0 16px;
+  animation: slideDown 0.3s ease-out;
+}
+
+.DocSearch-ConversationSummary-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--docsearch-text-color);
+  margin-bottom: 8px;
+}
+
+.DocSearch-ConversationSummary-title svg {
+  width: 16px;
+  height: 16px;
+  color: var(--docsearch-highlight-color);
+}
+
+.DocSearch-ConversationSummary-content {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--docsearch-muted-color);
 }

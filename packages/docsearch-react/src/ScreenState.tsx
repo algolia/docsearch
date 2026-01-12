@@ -8,6 +8,8 @@ import { ConversationHistoryScreen } from './ConversationHistoryScreen';
 import type { DocSearchProps } from './DocSearch';
 import type { ErrorScreenTranslations } from './ErrorScreen';
 import { ErrorScreen } from './ErrorScreen';
+import type { GeneratingSummaryTranslations } from './GenerateResumeScreen';
+import { GeneratingSummaryScreen } from './GenerateResumeScreen';
 import type { NewConversationTranslations } from './NewConversationScreen';
 import { NewConversationScreen } from './NewConversationScreen';
 import type { NoResultsScreenTranslations } from './NoResultsScreen';
@@ -27,6 +29,7 @@ export type ScreenStateTranslations = Partial<{
   resultsScreen: ResultsScreenTranslations;
   askAiScreen: AskAiScreenTranslations;
   newConversation: NewConversationTranslations;
+  generatingSummary: GeneratingSummaryTranslations;
 }>;
 
 export interface ScreenStateProps<TItem extends BaseItem>
@@ -56,6 +59,7 @@ export interface ScreenStateProps<TItem extends BaseItem>
   suggestedQuestions: SuggestedQuestionHit[];
   selectSuggestedQuestion: (question: SuggestedQuestionHit) => void;
   onNewConversation: () => void;
+  onGenerateSummary: () => void;
 }
 
 export const ScreenState = React.memo(
@@ -72,6 +76,10 @@ export const ScreenState = React.memo(
           suggestedQuestions={props.suggestedQuestions}
         />
       );
+    }
+
+    if (props.canHandleAskAi && props.isAskAiActive && props.askAiState === 'generating-summary') {
+      return <GeneratingSummaryScreen translations={translations?.generatingSummary} />;
     }
 
     if (props.isAskAiActive && props.canHandleAskAi) {
