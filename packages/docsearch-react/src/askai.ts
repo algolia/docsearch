@@ -1,4 +1,4 @@
-import { ASK_AI_API_URL, USE_ASK_AI_TOKEN } from './constants';
+import { ASK_AI_API_URL, BETA_ASK_AI_API_URL, USE_ASK_AI_TOKEN } from './constants';
 
 // ... existing imports ...
 const TOKEN_KEY = 'askai_token';
@@ -27,16 +27,20 @@ let inflight: Promise<string> | null = null;
 export const getValidToken = async ({
   assistantId,
   abortSignal,
+  useStagingEnv = false,
 }: {
   assistantId: string;
   abortSignal: AbortSignal;
+  useStagingEnv?: boolean;
   // eslint-disable-next-line require-await
 }): Promise<string> => {
   const cached = sessionStorage.getItem(TOKEN_KEY);
   if (!isExpired(cached)) return cached!;
 
+  const baseUrl = useStagingEnv ? BETA_ASK_AI_API_URL : ASK_AI_API_URL;
+
   if (!inflight) {
-    inflight = fetch(`${ASK_AI_API_URL}/token`, {
+    inflight = fetch(`${baseUrl}/token`, {
       method: 'POST',
       headers: {
         'x-algolia-assistant-id': assistantId,
@@ -66,23 +70,31 @@ export const postFeedback = async ({
   messageId,
   appId,
   abortSignal,
+  useStagingEnv = false,
 }: {
   assistantId: string;
   thumbs: 0 | 1;
   messageId: string;
   appId: string;
   abortSignal: AbortSignal;
+  useStagingEnv?: boolean;
 }): Promise<Response> => {
   const headers = new Headers();
   headers.set('x-algolia-assistant-id', assistantId);
   headers.set('content-type', 'application/json');
 
   if (USE_ASK_AI_TOKEN) {
-    const token = await getValidToken({ assistantId, abortSignal });
+    const token = await getValidToken({
+      assistantId,
+      abortSignal,
+      useStagingEnv,
+    });
     headers.set('authorization', `TOKEN ${token}`);
   }
 
-  return fetch(`${ASK_AI_API_URL}/feedback`, {
+  const baseUrl = useStagingEnv ? BETA_ASK_AI_API_URL : ASK_AI_API_URL;
+
+  return fetch(`${baseUrl}/feedback`, {
     method: 'POST',
     body: JSON.stringify({
       appId,

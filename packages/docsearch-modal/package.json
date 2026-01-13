@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/modal",
   "description": "DocSearch modal package for keyword search and Ask AI.",
-  "version": "4.4.0",
+  "version": "4.5.0-beta.0",
   "license": "MIT",
   "homepage": "https://docsearch.algolia.com",
   "repository": {
@@ -42,11 +42,9 @@
     "on:change": "yarn build",
     "watch": "nodemon --watch src --ext ts,tsx,js,jsx,json --ignore dist/ --ignore node_modules/ --verbose --delay 250ms --exec \"yarn on:change\""
   },
-  "dependencies": {
-    "@docsearch/core": "4.4.0",
-    "@docsearch/react": "4.4.0"
-  },
   "devDependencies": {
+    "@docsearch/core": "4.5.0-beta.0",
+    "@docsearch/react": "4.5.0-beta.0",
     "@rollup/plugin-replace": "6.0.2",
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.2.0",
