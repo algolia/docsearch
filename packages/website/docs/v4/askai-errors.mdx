@@ -144,7 +144,7 @@ The specified model does not exist or your API key does not have access to it. T
 
 The request was made to an incorrect regional endpoint or the resource is restricted by geography requirements. This typically occurs with OpenAI when using regional data residency settings.
 
-> **Solution**: Ensure you're making requests to the correct regional endpoint for your data residency settings. For OpenAI, use `api.openai.com` for the default endpoint, `us.api.openai.com` for US data residency, or `eu.api.openai.com` for EU data residency. Check your assistant configuration to verify the correct data residency setting.
+> **Solution**: When creating a new assistant with OpenAI in the Dashboard, select the appropriate data residency option that matches your requirements (none, Europe, or United States). If you're experiencing this error with an existing assistant, verify the data residency setting in your assistant configuration and ensure it matches your account's regional requirements.
 
 ### AI-223 - Verification required {#ai-223}
 
