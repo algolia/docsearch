@@ -1,3 +1,12 @@
+# [4.5.0-beta.2](https://github.com/algolia/docsearch/compare/v4.5.0-beta.1...v4.5.0-beta.2) (2026-01-13)
+
+
+### Bug Fixes
+
+* pin preact version ([a90f5b1](https://github.com/algolia/docsearch/commit/a90f5b10ce95b5717ce07df01cab49a5e74f457f))
+
+
+
 # [4.5.0-beta.1](https://github.com/algolia/docsearch/compare/v4.5.0-beta.0...v4.5.0-beta.1) (2026-01-13)
 
 
