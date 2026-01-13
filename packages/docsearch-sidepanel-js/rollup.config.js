@@ -35,7 +35,7 @@ export default [
         file: 'dist/umd/index.js',
         format: 'umd',
         sourcemap: true,
-        name: 'docsearch-sidepanel',
+        name: 'docsearchSidepanel',
         banner: getBundleBanner(pkg),
       },
     ],

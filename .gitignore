@@ -6,6 +6,7 @@ node_modules/
 coverage/
 .cache
 .nx
+scratchpad/
 
 # Bundle build files
 dist/

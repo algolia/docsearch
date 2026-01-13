@@ -2580,7 +2580,7 @@ __metadata:
     "@docsearch/react": "npm:4.5.0-beta.1"
     "@rollup/plugin-replace": "npm:6.0.3"
     nodemon: "npm:^3.1.11"
-    preact: "npm:^11.0.0-beta.0"
+    preact: "npm:11.0.0-beta.0"
     rollup-plugin-dts: "npm:^6.3.0"
   languageName: unknown
   linkType: soft
@@ -21831,13 +21831,6 @@ __metadata:
   version: 11.0.0-beta.0
   resolution: "preact@npm:11.0.0-beta.0"
   checksum: 10c0/250f960b12e6720a5a5cfc629290ea8c1e14059f88f6c2c6000a47defcc6ec52b521d1c11af59947685288200045eb7c829fd6fbbe4fac84606510c8772db8ec
-  languageName: node
-  linkType: hard
-
-"preact@npm:^11.0.0-beta.0":
-  version: 11.0.0-experimental.1
-  resolution: "preact@npm:11.0.0-experimental.1"
-  checksum: 10c0/97186edaf64291e70de89bc8a4ed8fa452ce571631a835cadec28ec19e10f049ff8dabe960c333e0db944afccf60c1e81eb1ae94ebf8b113ce9609a9d96086ee
   languageName: node
   linkType: hard
 
