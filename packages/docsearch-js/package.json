@@ -36,11 +36,11 @@
   },
   "devDependencies": {
     "@docsearch/react": "4.5.0-beta.0",
-    "@rollup/plugin-replace": "6.0.2",
+    "@rollup/plugin-replace": "6.0.3",
     "htm": "3.1.1",
-    "nodemon": "^3.1.9",
-    "preact": "^10.0.0",
-    "rollup-plugin-dts": "^6.2.1"
+    "nodemon": "^3.1.11",
+    "preact": "11.0.0-beta.0",
+    "rollup-plugin-dts": "^6.3.0"
   },
   "nx": {
     "implicitDependencies": [

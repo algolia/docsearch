@@ -2400,11 +2400,11 @@ __metadata:
   resolution: "@docsearch/js@workspace:packages/docsearch-js"
   dependencies:
     "@docsearch/react": "npm:4.5.0-beta.0"
-    "@rollup/plugin-replace": "npm:6.0.2"
+    "@rollup/plugin-replace": "npm:6.0.3"
     htm: "npm:3.1.1"
-    nodemon: "npm:^3.1.9"
-    preact: "npm:^10.0.0"
-    rollup-plugin-dts: "npm:^6.2.1"
+    nodemon: "npm:^3.1.11"
+    preact: "npm:11.0.0-beta.0"
+    rollup-plugin-dts: "npm:^6.3.0"
   languageName: unknown
   linkType: soft
 
@@ -2578,10 +2578,10 @@ __metadata:
   resolution: "@docsearch/sidepanel-js@workspace:packages/docsearch-sidepanel-js"
   dependencies:
     "@docsearch/react": "npm:4.5.0-beta.0"
-    "@rollup/plugin-replace": "npm:6.0.2"
-    nodemon: "npm:^3.1.9"
-    preact: "npm:^10.0.0"
-    rollup-plugin-dts: "npm:^6.2.1"
+    "@rollup/plugin-replace": "npm:6.0.3"
+    nodemon: "npm:^3.1.11"
+    preact: "npm:^11.0.0-beta.0"
+    rollup-plugin-dts: "npm:^6.3.0"
   languageName: unknown
   linkType: soft
 
@@ -6122,6 +6122,21 @@ __metadata:
     rollup:
       optional: true
   checksum: 10c0/71c0dea46f560c8dff59853446d43fa0e8258139a74d2af09fce5790d0540ff3d874c8fd9962cb049577d25327262bfc97485ef90b2a0a21bf28a9d3bd8c6d44
+  languageName: node
+  linkType: hard
+
+"@rollup/plugin-replace@npm:6.0.3":
+  version: 6.0.3
+  resolution: "@rollup/plugin-replace@npm:6.0.3"
+  dependencies:
+    "@rollup/pluginutils": "npm:^5.0.1"
+    magic-string: "npm:^0.30.3"
+  peerDependencies:
+    rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+  peerDependenciesMeta:
+    rollup:
+      optional: true
+  checksum: 10c0/93217c52fe86b03363bc534b5f07963ac4fd6b91f19f6070a66809b0c65a036b3b234624a65a8bfcc01a8dc0e42838feae03c021b0d1e5e91753c503c4d70cd6
   languageName: node
   linkType: hard
 
@@ -17338,7 +17353,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"magic-string@npm:^0.30.17, magic-string@npm:^0.30.3":
+"magic-string@npm:^0.30.17, magic-string@npm:^0.30.21, magic-string@npm:^0.30.3":
   version: 0.30.21
   resolution: "magic-string@npm:0.30.21"
   dependencies:
@@ -19074,7 +19089,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nodemon@npm:^3.1.0, nodemon@npm:^3.1.9":
+"nodemon@npm:^3.1.0, nodemon@npm:^3.1.11, nodemon@npm:^3.1.9":
   version: 3.1.11
   resolution: "nodemon@npm:3.1.11"
   dependencies:
@@ -21812,10 +21827,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"preact@npm:^10.0.0":
-  version: 10.27.2
-  resolution: "preact@npm:10.27.2"
-  checksum: 10c0/951b708f7afa34391e054b0f1026430e8f5f6d5de24020beef70288e17067e473b9ee5503a994e0a80ced014826f56708fea5902f80346432c22dfcf3dff4be7
+"preact@npm:11.0.0-beta.0":
+  version: 11.0.0-beta.0
+  resolution: "preact@npm:11.0.0-beta.0"
+  checksum: 10c0/250f960b12e6720a5a5cfc629290ea8c1e14059f88f6c2c6000a47defcc6ec52b521d1c11af59947685288200045eb7c829fd6fbbe4fac84606510c8772db8ec
+  languageName: node
+  linkType: hard
+
+"preact@npm:^11.0.0-beta.0":
+  version: 11.0.0-experimental.1
+  resolution: "preact@npm:11.0.0-experimental.1"
+  checksum: 10c0/97186edaf64291e70de89bc8a4ed8fa452ce571631a835cadec28ec19e10f049ff8dabe960c333e0db944afccf60c1e81eb1ae94ebf8b113ce9609a9d96086ee
   languageName: node
   linkType: hard
 
@@ -23283,6 +23305,22 @@ __metadata:
     "@babel/code-frame":
       optional: true
   checksum: 10c0/41cebbd0efcfcafbd35159d03d52531d6cc56f02b4fc99f56b6e552efdb6acf3228854520a1a12c879f90cdd60668edc115a73a8c822e4b4b62d267333f8f160
+  languageName: node
+  linkType: hard
+
+"rollup-plugin-dts@npm:^6.3.0":
+  version: 6.3.0
+  resolution: "rollup-plugin-dts@npm:6.3.0"
+  dependencies:
+    "@babel/code-frame": "npm:^7.27.1"
+    magic-string: "npm:^0.30.21"
+  peerDependencies:
+    rollup: ^3.29.4 || ^4
+    typescript: ^4.5 || ^5.0
+  dependenciesMeta:
+    "@babel/code-frame":
+      optional: true
+  checksum: 10c0/7eae726f0a15651a4705d49771cc02d2c7fb35fe107ada03cdacade5ed8bf026af066f1fc8936dde2c07da269d03dd790110589cd3b0c7062ed3bedc0f3c75ee
   languageName: node
   linkType: hard
 
