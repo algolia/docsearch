@@ -1,3 +1,21 @@
+# [4.5.0-beta.1](https://github.com/algolia/docsearch/compare/v4.5.0-beta.0...v4.5.0-beta.1) (2026-01-13)
+
+
+### Bug Fixes
+
+* **hybrid:** Fixes modal on mobile in hybrid mode ([#2835](https://github.com/algolia/docsearch/issues/2835)) ([8c750e5](https://github.com/algolia/docsearch/commit/8c750e5102763dd71cb7aab4ef40bdd5d0cb2ea5))
+* **js:** preact & types versions ([#2839](https://github.com/algolia/docsearch/issues/2839)) ([851cfae](https://github.com/algolia/docsearch/commit/851cfae380f58bf43778ef81e17785dc5c2100ba))
+* **modal:** Fixes modal opening on every key press ([#2837](https://github.com/algolia/docsearch/issues/2837)) ([7319f54](https://github.com/algolia/docsearch/commit/7319f54898af50883f66bedc0fa5a66cc38e07c0))
+* **sidepanel:** Fixes some issues while conversation is streaming ([#2828](https://github.com/algolia/docsearch/issues/2828)) ([8ad60d9](https://github.com/algolia/docsearch/commit/8ad60d9bab4e8a46b499375779996cbd9f76dc9a))
+
+
+### Features
+
+* **askai:** Allow use of Agent Studio for chat backend ([#2832](https://github.com/algolia/docsearch/issues/2832)) ([ffa2835](https://github.com/algolia/docsearch/commit/ffa283519411173306b9c4729bf26ffc736a1487))
+* **docs:** update Ask AI errors docs ([#2833](https://github.com/algolia/docsearch/issues/2833)) ([5aac293](https://github.com/algolia/docsearch/commit/5aac293d3e263e1206592a08484b8f00ea8107e9))
+
+
+
 # [4.5.0-beta.0](https://github.com/algolia/docsearch/compare/v4.4.0...v4.5.0-beta.0) (2026-01-08)
 
 
