@@ -149,6 +149,7 @@ function SidepanelInner(
     side = 'right',
     initialMessage,
     useStagingEnv = false,
+    agentStudio = false,
   }: Props,
   ref: React.ForwardedRef<SidepanelRef>,
 ): JSX.Element {
@@ -190,6 +191,7 @@ function SidepanelInner(
     apiKey,
     searchParameters,
     useStagingEnv,
+    agentStudio,
   });
 
   const suggestedQuestions = useSuggestedQuestions({
@@ -384,6 +386,7 @@ function SidepanelInner(
               handleFeedback={sendFeedback}
               translations={translations.conversationScreen}
               streamError={askAiError}
+              agentStudio={agentStudio}
             />
           )}
           {sidepanelState === 'conversation-history' && (

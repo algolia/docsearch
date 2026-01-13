@@ -29,6 +29,18 @@ The ID for which Ask AI assistant to use.
 
 The name of the index to be used with the Ask AI service.
 
+## `agentStudio`
+
+> `type: boolean` | **optional** | **experimental**
+
+:::warning[Experimental]
+
+`agentStudio` is currently an experimental property. It is targeted to be stable in release `5.0.0`.
+
+:::
+
+If `agentStudio` is true, the Ask AI chat will use Algolia's [Agent Studio][2] as the chat backend instead of the Ask AI backend. More can be learned about setting up Agent Studio on their dedicated [documentation page][3].
+
 ## `searchParameters`
 
 ## `variant`
@@ -132,3 +144,5 @@ This prop only exists in the React based versions of Sidepanel. If you are using
 </Tabs>
 
 [1]: https://www.algolia.com/doc/guides/algolia-ai/askai/guides/suggested-questions
+[2]: https://www.algolia.com/products/ai/agent-studio
+[3]: https://www.algolia.com/doc/guides/algolia-ai/agent-studio

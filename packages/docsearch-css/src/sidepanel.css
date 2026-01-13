@@ -17,11 +17,14 @@
   --docsearch-sidepanel-hit-background: var(--docsearch-hit-background);
   --docsearch-sidepanel-hit-color: var(--docsearch-hit-color);
   --docsearch-sidepanel-hit-highlight-color: var(--docsearch-hit-highlight-color);
+  --docsearch-sidepanel-button-background: var(--docsearch-sidepanel-background);
+  --docsearch-sidepanel-button-background-dark: var(--docsearch-sidepanel-background);
 }
 
 html[data-theme='dark'] {
   --docsearch-sidepanel-text-base: var(--docsearch-text-color);
   --docsearch-sidepanel-primary-disabled: rgba(1, 45, 186, 0.60);
+  --docsearch-sidepanel-button-background-dark: rgba(4, 4, 8, 1);
 }
 
 .DocSearch-SidepanelButton {
@@ -91,8 +94,11 @@ html[data-theme='dark'] {
 }
 
 .DocSearch-SidepanelButton.inline:hover {
-  background-color: rgba(4, 4, 8, 1);
   border-color: var(--docsearch-sidepanel-accent);
+}
+
+html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
+  background-color: var(--docsearch-sidepanel-button-background-dark);
 }
 
 .DocSearch-SidepanelButton.inline svg {
