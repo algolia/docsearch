@@ -21,9 +21,8 @@ export function AgentStudioExample(): JSX.Element {
           apiKey="a00716d83c64f6c61905c078b7d5ab66"
           askAi={{
             assistantId: 'ccdec697-e3fe-465b-a1c3-657e7bf18aef',
-            indexName: 'docsearch-markdown',
+            agentStudio: true,
           }}
-          agentStudio={true}
         />
       </DocSearch>
 

@@ -3,14 +3,14 @@ import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls } from 'ai';
 import { useCallback, useMemo, useRef } from 'react';
 
-import { getValidToken, postFeedback } from './askai';
+import { getAgentStudioErrorMessage, getValidToken, postFeedback } from './askai';
 import type { Exchange } from './AskAiScreen';
 import { ASK_AI_API_URL, BETA_ASK_AI_API_URL } from './constants';
 import type { StoredSearchPlugin } from './stored-searches';
 import { createStoredConversations } from './stored-searches';
 import type { AIMessage } from './types/AskiAi';
 
-import type { AskAiSearchParameters, StoredAskAiState } from '.';
+import type { AgentStudioIndexSearchParameters, AskAiSearchParameters, StoredAskAiState } from '.';
 
 type UseChat = UseChatHelpers<AIMessage>;
 
@@ -19,10 +19,19 @@ type UseAskAiParams = {
   apiKey: string;
   appId: string;
   indexName: string;
-  searchParameters?: AskAiSearchParameters;
   useStagingEnv?: boolean;
-  agentStudio?: boolean;
-};
+  searchParameters?: AskAiSearchParameters;
+  agentStudio: boolean;
+} & (
+  | {
+      agentStudio: false;
+      searchParameters?: AskAiSearchParameters;
+    }
+  | {
+      agentStudio: true;
+      searchParameters?: AgentStudioIndexSearchParameters;
+    }
+);
 
 type UseAskAiReturn = {
   messages: AIMessage[];
@@ -39,17 +48,23 @@ type UseAskAiReturn = {
 
 type UseAskAi = (params: UseAskAiParams) => UseAskAiReturn;
 
+type AgentStudioTransportParams = Pick<UseAskAiParams, 'apiKey' | 'appId' | 'assistantId'> & {
+  searchParameters?: AgentStudioIndexSearchParameters;
+};
+
 const getAgentStudioTransport = ({
   appId,
   apiKey,
   assistantId,
-}: Pick<UseAskAiParams, 'apiKey' | 'appId' | 'assistantId'>): DefaultChatTransport<AIMessage> => {
+  searchParameters,
+}: AgentStudioTransportParams): DefaultChatTransport<AIMessage> => {
   return new DefaultChatTransport({
     api: `https://${appId}.algolia.net/agent-studio/1/agents/${assistantId}/completions?stream=true&compatibilityMode=ai-sdk-5`,
     headers: {
       'x-algolia-application-id': appId,
       'x-algolia-api-key': apiKey,
     },
+    body: searchParameters ? { algolia: { searchParameters } } : {},
   });
 };
 
@@ -90,35 +105,28 @@ const getAskAiTransport = ({
   });
 };
 
-export const useAskAi: UseAskAi = ({
-  assistantId,
-  apiKey,
-  appId,
-  indexName,
-  searchParameters,
-  useStagingEnv = false,
-  agentStudio = false,
-}) => {
+export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, useStagingEnv = false, ...params }) => {
   const abortControllerRef = useRef(new AbortController());
 
   const askAiTransport = useMemo(
     () =>
-      agentStudio
+      params.agentStudio
         ? getAgentStudioTransport({
             apiKey,
             appId,
             assistantId: assistantId ?? '',
+            searchParameters: params.searchParameters,
           })
         : getAskAiTransport({
             assistantId: assistantId ?? '',
             apiKey,
             appId,
             indexName,
-            searchParameters,
+            searchParameters: params.searchParameters,
             abortController: abortControllerRef.current,
             useStagingEnv,
           }),
-    [apiKey, appId, assistantId, indexName, searchParameters, agentStudio, useStagingEnv],
+    [apiKey, appId, assistantId, indexName, useStagingEnv, params],
   );
 
   const { messages, sendMessage, status, setMessages, error, stop } = useChat({
@@ -176,12 +184,20 @@ export const useAskAi: UseAskAi = ({
 
   const isStreaming = status === 'streaming' || status === 'submitted';
 
+  const askAiError = useMemo((): Error | undefined => {
+    if (!error) return undefined;
+
+    if (!params.agentStudio) return error;
+
+    return getAgentStudioErrorMessage(error);
+  }, [error, params.agentStudio]);
+
   return {
     messages,
     sendMessage,
     status,
     setMessages,
-    askAiError: error,
+    askAiError,
     stopAskAiStreaming: onStopStreaming,
     isStreaming,
     exchanges,
