@@ -4,7 +4,7 @@ import type { JSX } from 'react';
 import React from 'react';
 import { createPortal } from 'react-dom';
 
-import type { AgentStudioIndexSearchParameters, AskAiSearchParameters } from './DocSearch';
+import type { AgentStudioSearchParameters, AskAiSearchParameters } from './DocSearch';
 import type { SidepanelButtonProps, SidepanelProps as SidepanelPanelProps } from './Sidepanel/index';
 import { SidepanelButton, Sidepanel } from './Sidepanel/index';
 
@@ -44,7 +44,7 @@ export type SidepanelSearchParameters =
        *   "INDEX_NAME": { distinct: false }
        * }
        */
-      searchParameters?: AgentStudioIndexSearchParameters;
+      searchParameters?: AgentStudioSearchParameters;
     };
 
 export type DocSearchSidepanelProps = DocSearchCallbacks & {

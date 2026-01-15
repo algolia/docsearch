@@ -10,7 +10,7 @@ import type { StoredSearchPlugin } from './stored-searches';
 import { createStoredConversations } from './stored-searches';
 import type { AIMessage } from './types/AskiAi';
 
-import type { AgentStudioIndexSearchParameters, AskAiSearchParameters, StoredAskAiState } from '.';
+import type { AgentStudioSearchParameters, AskAiSearchParameters, StoredAskAiState } from '.';
 
 type UseChat = UseChatHelpers<AIMessage>;
 
@@ -29,7 +29,7 @@ type UseAskAiParams = {
     }
   | {
       agentStudio: true;
-      searchParameters?: AgentStudioIndexSearchParameters;
+      searchParameters?: AgentStudioSearchParameters;
     }
 );
 
@@ -49,7 +49,7 @@ type UseAskAiReturn = {
 type UseAskAi = (params: UseAskAiParams) => UseAskAiReturn;
 
 type AgentStudioTransportParams = Pick<UseAskAiParams, 'apiKey' | 'appId' | 'assistantId'> & {
-  searchParameters?: AgentStudioIndexSearchParameters;
+  searchParameters?: AgentStudioSearchParameters;
 };
 
 const getAgentStudioTransport = ({
