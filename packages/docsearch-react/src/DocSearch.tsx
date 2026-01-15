@@ -36,31 +36,6 @@ export type AskAiSearchParameters = {
 
 export type AgentStudioSearchParameters = Record<string, Omit<AskAiSearchParameters, 'facetFilters'>>;
 
-export type AgentStudioAskAi = {
-  /**
-   * The API key to use for the ask AI feature. Your assistant will use this API key to search the index.
-   * If not provided, the API key will be used.
-   */
-  apiKey?: string;
-  /**
-   * The app ID to use for the ask AI feature. Your assistant will use this app ID to search the index.
-   * If not provided, the app ID will be used.
-   */
-  appId?: string;
-  /**
-   * The assistant ID to use for the ask AI feature.
-   */
-  assistantId: string;
-  /**
-   * Enables displaying suggested questions on Ask AI's new conversation screen.
-   *
-   * @default false
-   */
-  suggestedQuestions?: boolean;
-  agentStudio: true;
-  searchParameters?: AgentStudioSearchParameters;
-};
-
 export type DocSearchAskAi = {
   /**
    * The index name to use for the ask AI feature. Your assistant will search this index for relevant documents.
@@ -89,22 +64,43 @@ export type DocSearchAskAi = {
   suggestedQuestions?: boolean;
   // HACK: This is a hack for testing staging, remove before releasing
   useStagingEnv?: boolean;
-  /**
-   * **Experimental:** Whether to use Agent Studio as the chat backend.
-   *
-   * This is an experimental feature and its API may change without notice in future releases.
-   * Use with caution in production environments.
-   *
-   * @default false
-   */
-  agentStudio?: never | false;
-  /**
-   * The search parameters to use for the ask AI feature.
-   *
-   * **NOTE**: If using `agentStudio: true`, the search parameters are keyed by index name.
-   */
-  searchParameters?: AskAiSearchParameters;
-};
+} & (
+  | {
+      /**
+       * **Experimental:** Whether to use Agent Studio as the chat backend.
+       *
+       * This is an experimental feature and its API may change without notice in future releases.
+       * Use with caution in production environments.
+       *
+       * @default false
+       */
+      agentStudio?: never;
+      /**
+       * The search parameters to use for the ask AI feature.
+       *
+       * **NOTE**: If using `agentStudio = true`, the `searchParameters` object is
+       * keyed by the index name.
+       */
+      searchParameters?: AskAiSearchParameters;
+    }
+  | {
+      agentStudio: false;
+      searchParameters?: AskAiSearchParameters;
+    }
+  | {
+      agentStudio: true;
+      /**
+       * The search parameters to use for the ask AI feature.
+       * Keyed by the index name.
+       *
+       * @example
+       * {
+       *   "INDEX_NAME": { distinct: false }
+       * }
+       */
+      searchParameters?: AgentStudioSearchParameters;
+    }
+);
 
 export interface DocSearchIndex {
   name: string;
@@ -135,7 +131,7 @@ export interface DocSearchProps {
   /**
    * Configuration or assistant id to enable ask ai mode. Pass a string assistant id or a full config object.
    */
-  askAi?: AgentStudioAskAi | DocSearchAskAi | string;
+  askAi?: DocSearchAskAi | string;
   /**
    * Intercept Ask AI requests (e.g. Submitting a prompt or selecting a suggested question).
    *
