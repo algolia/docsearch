@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import type { JSX } from 'react';
 
 import { AlgoliaLogo, type AlgoliaLogoTranslations } from '../AlgoliaLogo';
-import type { DocSearchSidepanelProps } from '../Sidepanel';
+import type { DocSearchSidepanelProps, SidepanelSearchParameters } from '../Sidepanel';
 import type { StoredAskAiState, SuggestedQuestionHit } from '../types';
 import { useAskAi } from '../useAskAi';
 import { useSearchClient } from '../useSearchClient';
@@ -122,7 +122,8 @@ export type SidepanelProps = {
 };
 
 type Props = Omit<DocSearchSidepanelProps, 'button' | 'panel'> &
-  SidepanelProps & {
+  SidepanelProps &
+  SidepanelSearchParameters & {
     isOpen?: boolean;
     onOpen: () => void;
     onClose: () => void;
