@@ -3,6 +3,7 @@ import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
 import React, { useRef, useState } from 'react';
 
 import { Button, PrimaryButton } from './ui/button';
+import { IntroducingSection } from './ui/features';
 import { FeaturesBento } from './ui/features-bento';
 import { FlipWords } from './ui/flip-words';
 import Keyboard from './ui/keyboard';
@@ -220,6 +221,9 @@ function Home() {
             <FeaturesBento />
           </div>
         </div>
+
+        {/* Introducing Section */}
+        <IntroducingSection />
 
         <div className="py-16 overflow-hidden snap-start">
           <div className="relative max-w-xl mx-auto px-4 md:px-6 lg:px-8 lg:max-w-screen-xl">
