@@ -310,7 +310,6 @@ export function DocSearchModal({
   indexName,
   searchParameters,
   isHybridModeSupported = false,
-  agentStudio = false,
   ...props
 }: DocSearchModalProps): JSX.Element {
   const { footer: footerTranslations, searchBox: searchBoxTranslations, ...screenStateTranslations } = translations;
@@ -360,6 +359,7 @@ export function DocSearchModal({
     searchClient,
     suggestedQuestionsEnabled: askAiConfig?.suggestedQuestions,
   });
+  const agentStudio = askAiConfig?.agentStudio ?? false;
 
   // Format the `indexes` to be used until `indexName` and `searchParameters` props are fully removed.
   const indexes: DocSearchIndex[] = [];

@@ -57,6 +57,10 @@ export type ConversationScreenTranslations = Partial<
      * Message displayed after feedback action.
      **/
     thanksForFeedbackText: string;
+    /**
+     * Error title shown if there is an error while chatting.
+     */
+    errorTitleText;
   }
 >;
 
@@ -98,6 +102,7 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
       toolCallResultText = 'Searched for',
       copyButtonText = 'Copy',
       copyButtonCopiedText = 'Copied!',
+      errorTitleText = 'Chat error',
     } = translations;
 
     const assistantContent = useMemo(() => getMessageContent(assistantMessage), [assistantMessage]);
@@ -110,7 +115,8 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
     const urlsToDisplay = React.useMemo(() => extractLinksFromMessage(assistantMessage), [assistantMessage]);
 
     const wasStopped = userMessage.metadata?.stopped || assistantMessage?.metadata?.stopped;
-    const isThinking = !assistantParts.some((part) => part.type !== 'step-start');
+    const isThinking =
+      ['submitted', 'streaming'].includes(status) && !assistantParts.some((part) => part.type !== 'step-start');
     const showActions =
       !wasStopped && (!isLastExchange || (isLastExchange && status === 'ready' && Boolean(assistantMessage)));
 
@@ -125,12 +131,15 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
               {status === 'error' && streamError && isLastExchange && (
                 <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error">
                   <AlertIcon />
-                  <MemoizedMarkdown
-                    content={streamError.message}
-                    copyButtonText=""
-                    copyButtonCopiedText=""
-                    isStreaming={false}
-                  />
+                  <div className="DocSearch-AskAiScreen-Error-Content">
+                    <h4 className="DocSearch-AskAiScreen-Error-Title">{errorTitleText}</h4>
+                    <MemoizedMarkdown
+                      content={streamError.message}
+                      copyButtonText=""
+                      copyButtonCopiedText=""
+                      isStreaming={false}
+                    />
+                  </div>
                 </div>
               )}
 
