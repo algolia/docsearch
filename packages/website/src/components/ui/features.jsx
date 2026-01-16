@@ -22,7 +22,7 @@ export const IntroducingSection = () => {
         <div className="max-w-screen-xl mx-auto mb-12 px-4 md:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-3xl text-black dark:text-white font-bold leading-9 font-[Sora] md:text-4xl md:leading-10">
-              Expand your Docs beyond traditional search
+              Expand your Docs beyond the search box
             </p>
             <p className="text-lg md:text-2xl text-slate-400 dark:text-slate-500">Power your documentation with AI</p>
           </div>
