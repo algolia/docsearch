@@ -1,3 +1,14 @@
+# [4.5.0-beta.3](https://github.com/algolia/docsearch/compare/v4.5.0-beta.2...v4.5.0-beta.3) (2026-01-16)
+
+
+### Features
+
+* **askai:** Allow Agent Studio specific search params ([#2842](https://github.com/algolia/docsearch/issues/2842)) ([f1aaf91](https://github.com/algolia/docsearch/commit/f1aaf911d70a27935d628898bc7c12e2a85c4c2d))
+* **website:** new features section ([1015eb8](https://github.com/algolia/docsearch/commit/1015eb808bc92d9580a678307d780d0a106593e6))
+* **website:** new features section ([b4764c1](https://github.com/algolia/docsearch/commit/b4764c1552f19eda136f29b4609525cc6db0acab))
+
+
+
 # [4.5.0-beta.2](https://github.com/algolia/docsearch/compare/v4.5.0-beta.1...v4.5.0-beta.2) (2026-01-13)
 
 
