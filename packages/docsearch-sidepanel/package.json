@@ -48,7 +48,7 @@
     "watch": "nodemon --watch src --ext ts,tsx,js,jsx,json --ignore dist/ --ignore node_modules/ --verbose --delay 250ms --exec \"yarn on:change\""
   },
   "dependencies": {
-      "@docsearch/css": "4.5.1"
+    "@docsearch/css": "4.5.1"
   },
   "devDependencies": {
     "@docsearch/core": "4.5.1",
