@@ -32,7 +32,8 @@
     "./useDocSearchKeyboardEvents": "./dist/esm/useDocSearchKeyboardEvents.js",
     "./useTheme": "./dist/esm/useTheme.js",
     "./version": "./dist/esm/version.js",
-    "./sidepanel": "./dist/esm/Sidepanel.js"
+    "./sidepanel": "./dist/esm/Sidepanel.js",
+    "./style/sidepanel": "./style/sidepanel.js"
   },
   "source": "src/index.ts",
   "types": "dist/esm/index.d.ts",
