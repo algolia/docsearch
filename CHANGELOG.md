@@ -1,3 +1,12 @@
+## [4.5.1](https://github.com/algolia/docsearch/compare/v4.5.0...v4.5.1) (2026-01-20)
+
+
+### Bug Fixes
+
+* export sidepanel styles ([23f640b](https://github.com/algolia/docsearch/commit/23f640bac71942d5ec4bd522c4c038c1af2fee4d))
+
+
+
 # [4.5.0](https://github.com/algolia/docsearch/compare/v4.5.0...v4.5.0) (2026-01-20)
 
 
