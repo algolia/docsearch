@@ -1,4 +1,8 @@
-# [4.5.0-beta.3](https://github.com/algolia/docsearch/compare/v4.5.0-beta.2...v4.5.0-beta.3) (2026-01-16)
+# [4.5.0](https://github.com/algolia/docsearch/compare/v4.5.0...v4.5.0) (2026-01-20)
+
+
+
+# [4.5.0](https://github.com/algolia/docsearch/compare/v4.5.0-beta.2...v4.5.0) (2026-01-16)
 
 
 ### Features
