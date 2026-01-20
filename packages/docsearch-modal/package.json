@@ -43,8 +43,8 @@
     "watch": "nodemon --watch src --ext ts,tsx,js,jsx,json --ignore dist/ --ignore node_modules/ --verbose --delay 250ms --exec \"yarn on:change\""
   },
   "devDependencies": {
-    "@docsearch/core": "4.5.0",
-    "@docsearch/react": "4.5.0",
+    "@docsearch/core": "4.5.1",
+    "@docsearch/react": "4.5.1",
     "@rollup/plugin-replace": "6.0.2",
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.2.0",
