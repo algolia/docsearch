@@ -1,3 +1,12 @@
+## [4.5.2](https://github.com/algolia/docsearch/compare/v4.5.2...v4.5.2) (2026-01-21)
+
+
+### Reverts
+
+* changelog ([221fe8e](https://github.com/algolia/docsearch/commit/221fe8ec6c7ead0b2170b50eb9eb46846fcc1acc))
+
+
+
 # [4.5.0](https://github.com/algolia/docsearch/compare/v4.5.0...v4.5.0) (2026-01-20)
 
 # [4.5.0](https://github.com/algolia/docsearch/compare/v4.5.0-beta.2...v4.5.0) (2026-01-16)
