@@ -1,4 +1,13 @@
-## [4.5.2](https://github.com/algolia/docsearch/compare/v4.5.2...v4.5.2) (2026-01-21)
+## [4.5.3](https://github.com/algolia/docsearch/compare/v4.5.3...v4.5.3) (2026-01-21)
+
+
+### Bug Fixes
+
+* make @docsearch/core a real dependency. ([#2848](https://github.com/algolia/docsearch/issues/2848)) ([73eddb7](https://github.com/algolia/docsearch/commit/73eddb76fca7a6091f12c977caff76934bd508f1))
+
+
+
+## [4.5.3](https://github.com/algolia/docsearch/compare/v4.5.3...v4.5.3) (2026-01-21)
 
 
 ### Reverts
