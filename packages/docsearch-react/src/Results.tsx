@@ -13,7 +13,7 @@ export type ResultsTranslations = Partial<{
 }>;
 interface ResultsProps<TItem extends BaseItem>
   extends AutocompleteApi<TItem, React.FormEvent, React.MouseEvent, React.KeyboardEvent> {
-  title: string;
+  title?: string | null;
   translations?: ResultsTranslations;
   collection: AutocompleteState<TItem>['collections'][0];
   renderIcon: (props: { item: TItem; index: number }) => React.ReactNode;
@@ -25,7 +25,12 @@ interface ResultsProps<TItem extends BaseItem>
 
 export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TItem>): JSX.Element | null {
   // The collection title, decoded to handle encoded HTML entities
+  // If there is not a title, return null to not render anything
   const decodedTitle = React.useMemo(() => {
+    if (!props.title) {
+      return null;
+    }
+
     return props.title
       .replace(/&amp;/g, '&')
       .replace(/&lt;/g, '<')
