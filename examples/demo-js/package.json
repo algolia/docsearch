@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/js-example",
   "description": "DocSearch v4 Vanilla JavaScript example",
-  "version": "4.5.3",
+  "version": "4.5.4",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@docsearch/css": "4.5.3",
-    "@docsearch/js": "4.5.3",
-    "@docsearch/sidepanel-js": "4.5.3"
+    "@docsearch/js": "4.5.4",
+    "@docsearch/sidepanel-js": "4.5.4"
   },
   "devDependencies": {
     "vite": "^6.0.7"

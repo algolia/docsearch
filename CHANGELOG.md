@@ -1,3 +1,13 @@
+## [4.5.4](https://github.com/algolia/docsearch/compare/v4.5.3...v4.5.4) (2026-02-05)
+
+
+### Bug Fixes
+
+* include ac in package ([#2853](https://github.com/algolia/docsearch/issues/2853)) ([343115d](https://github.com/algolia/docsearch/commit/343115dc7c179bf2e238a88477f88e7172060813))
+* Missing result title would trigger an error ([#2852](https://github.com/algolia/docsearch/issues/2852)) ([6ef6505](https://github.com/algolia/docsearch/commit/6ef6505e871ad5bd57b9cac8829df3b764567047))
+
+
+
 ## [4.5.3](https://github.com/algolia/docsearch/compare/v4.5.3...v4.5.3) (2026-01-21)
 
 
