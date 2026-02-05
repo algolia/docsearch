@@ -13317,7 +13317,7 @@ __metadata:
 
 "fast-xml-parser@npm:^4.1.3":
   version: 4.5.4
-  resolution: "fast-xml-parser@npm:4.5.4"
+  resolution: "fast-xml-parser@npm:4.5.3"
   dependencies:
     strnum: "npm:^1.1.1"
   bin:
