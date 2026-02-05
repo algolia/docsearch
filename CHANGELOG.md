@@ -1,4 +1,4 @@
-## [4.5.4](https://github.com/algolia/docsearch/compare/v4.5.3...v4.5.4) (2026-02-05)
+## [4.5.4](https://github.com/algolia/docsearch/compare/v4.5.4...v4.5.4) (2026-02-05)
 
 
 ### Bug Fixes
@@ -8,7 +8,7 @@
 
 
 
-## [4.5.3](https://github.com/algolia/docsearch/compare/v4.5.3...v4.5.3) (2026-01-21)
+## [4.5.4](https://github.com/algolia/docsearch/compare/v4.5.4...v4.5.4) (2026-01-21)
 
 
 ### Bug Fixes
@@ -17,7 +17,7 @@
 
 
 
-## [4.5.3](https://github.com/algolia/docsearch/compare/v4.5.3...v4.5.3) (2026-01-21)
+## [4.5.4](https://github.com/algolia/docsearch/compare/v4.5.4...v4.5.4) (2026-01-21)
 
 
 ### Reverts

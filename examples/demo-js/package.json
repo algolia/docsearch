@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@docsearch/css": "4.5.3",
+    "@docsearch/css": "4.5.4",
     "@docsearch/js": "4.5.4",
     "@docsearch/sidepanel-js": "4.5.4"
   },

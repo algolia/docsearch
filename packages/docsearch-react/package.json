@@ -54,8 +54,8 @@
   },
   "dependencies": {
     "@algolia/autocomplete-core": "1.19.2",
-    "@docsearch/core": "4.5.3",
-    "@docsearch/css": "4.5.3"
+    "@docsearch/core": "4.5.4",
+    "@docsearch/css": "4.5.4"
   },
   "devDependencies": {
     "@ai-sdk/react": "^2.0.30",
