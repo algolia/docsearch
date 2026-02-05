@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/js",
   "description": "JavaScript package for DocSearch, the best search experience for docs.",
-  "version": "4.5.3",
+  "version": "4.5.4",
   "license": "MIT",
   "homepage": "https://docsearch.algolia.com",
   "repository": {
@@ -35,7 +35,7 @@
     "watch": "nodemon --watch src --exec \"yarn on:change\" --ignore dist/ --ext ts,tsx"
   },
   "devDependencies": {
-    "@docsearch/react": "4.5.3",
+    "@docsearch/react": "4.5.4",
     "@rollup/plugin-replace": "6.0.3",
     "htm": "3.1.1",
     "nodemon": "^3.1.11",
