@@ -296,12 +296,14 @@ new Crawler({
       pathsToMatch: ['https://YOUR_WEBSITE_URL/**'],
       recordExtractor: ({ $, helpers }) => {
         // priority order: deepest active sub list header -> navbar active item -> 'Documentation'
+        // Extracting the breadcrumb titles for better accessibility.
+        const navbarTitle = $(".navbar__item.navbar__link--active").text();
+        const pageBreadcrumbTitles = $(".breadcrumbs__link")
+          .toArray()
+          .map((item) => $(item).text().trim())
+          .filter(Boolean);
         const lvl0 =
-          $(
-            '.menu__link.menu__link--sublist.menu__link--active, .navbar__item.navbar__link--active'
-          )
-            .last()
-            .text() || 'Documentation';
+          [navbarTitle, ...pageBreadcrumbTitles].join(" / ") || "Documentation";
 
         return helpers.docsearch({
           recordProps: {
