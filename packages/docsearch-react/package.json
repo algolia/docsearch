@@ -54,11 +54,11 @@
   },
   "dependencies": {
     "@docsearch/core": "4.5.3",
-    "@docsearch/css": "4.5.3"
+    "@docsearch/css": "4.5.3",
+    "@algolia/autocomplete-core": "1.19.2"
   },
   "devDependencies": {
     "@ai-sdk/react": "^2.0.30",
-    "@algolia/autocomplete-core": "1.19.2",
     "@rollup/plugin-replace": "6.0.2",
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.2.0",
