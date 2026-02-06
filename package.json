@@ -50,7 +50,7 @@
     "babel-plugin-module-resolver": "5.0.2",
     "bundlesize2": "0.0.35",
     "cssnano": "7.1.1",
-    "cypress": "13.17.0",
+    "cypress": "15.10.0",
     "eslint": "8.57.1",
     "eslint-config-algolia": "23.2.1",
     "eslint-config-prettier": "10.1.8",
