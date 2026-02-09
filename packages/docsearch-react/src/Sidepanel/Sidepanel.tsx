@@ -6,6 +6,7 @@ import { AlgoliaLogo, type AlgoliaLogoTranslations } from '../AlgoliaLogo';
 import type { DocSearchSidepanelProps, SidepanelSearchParameters } from '../Sidepanel';
 import type { StoredAskAiState, SuggestedQuestionHit } from '../types';
 import { useAskAi } from '../useAskAi';
+import { useIsMobile } from '../useIsMobile';
 import { useSearchClient } from '../useSearchClient';
 import { useSuggestedQuestions } from '../useSuggestedQuestions';
 import { buildDummyAskAiHit } from '../utils/ai';
@@ -159,6 +160,7 @@ function SidepanelInner(
   const [stoppedStreaming, setStoppedStreaming] = React.useState(false);
   const sidepanelContainerRef = React.useRef<HTMLDivElement>(null);
   const promptInputRef = React.useRef<HTMLTextAreaElement>(null);
+  const isMobile = useIsMobile();
 
   const expectedWidth = useSidepanelWidth({
     isExpanded,
@@ -342,11 +344,19 @@ function SidepanelInner(
     }
   }, [initialMessage, sendMessage, conversations, handleSelectConversation, setMessages]);
 
-  // eslint-disable-next-line no-warning-comments
-  // FIX: Renable autofocus on open once mobile focus issue is solved
-  // React.useEffect(() => {
-  //   promptInputRef.current?.focus();
-  // }, [isOpen]);
+  // Autofocus the prompt input when the sidepanel opens and blur it when
+  // it closes. Disabled on mobile because focusing the textarea triggers the
+  // virtual keyboard which disrupts the layout — this is a known issue that
+  // has not been resolved yet.
+  React.useEffect(() => {
+    if (isOpen && !isMobile) {
+      promptInputRef.current?.focus();
+    }
+
+    if (!isOpen) {
+      promptInputRef.current?.blur();
+    }
+  }, [isOpen, isMobile]);
 
   return (
     <div
