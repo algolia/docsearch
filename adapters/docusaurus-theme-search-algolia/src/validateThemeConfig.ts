@@ -9,8 +9,8 @@ import type { ThemeConfig, ThemeConfigAlgolia } from '@docsearch/docusaurus-adap
 import type { ThemeConfigValidationContext } from '@docusaurus/types';
 import Joi from 'joi';
 
-import { getDocSearchConfig } from './getDocSearchConfig';
 import { docSearchVersionString } from './docSearchVersion';
+import { getDocSearchConfig } from './getDocSearchConfig';
 import { escapeRegexp } from './utils';
 
 export const DEFAULT_CONFIG = {
@@ -151,10 +151,7 @@ export const Schema = Joi.object<ThemeConfig>({
 
 function ensureSidepanelSupported(themeConfig: ThemeConfig) {
   const docsearch = getDocSearchConfig(themeConfig);
-  const sidePanelEnabled =
-    docsearch.askAi &&
-    typeof docsearch.askAi === 'object' &&
-    Boolean(docsearch.askAi.sidePanel);
+  const sidePanelEnabled = docsearch.askAi && typeof docsearch.askAi === 'object' && Boolean(docsearch.askAi.sidePanel);
 
   if (!sidePanelEnabled) {
     return;
@@ -178,11 +175,11 @@ function ensureSidepanelSupported(themeConfig: ThemeConfig) {
   }
 }
 
-function hasConfigValue<TValue>(value: TValue | undefined | null): value is TValue {
+function hasConfigValue<TValue>(value: TValue | null | undefined): value is TValue {
   return value !== undefined && value !== null;
 }
 
-function getThemeConfigSource(themeConfig: ThemeConfig): 'docsearch' | 'algolia' | null {
+function getThemeConfigSource(themeConfig: ThemeConfig): 'algolia' | 'docsearch' | null {
   const hasDocsearch = hasConfigValue(themeConfig.docsearch);
   const hasAlgolia = hasConfigValue(themeConfig.algolia);
 
@@ -217,9 +214,9 @@ export function validateThemeConfig({
     algolia: source === 'docsearch' ? themeConfigInput.docsearch : themeConfigInput.algolia,
   }) as ThemeConfig;
 
-  const themeConfig = {
+  const themeConfig: ThemeConfig = {
     [source]: validated.algolia,
-  } as ThemeConfig;
+  };
 
   ensureSidepanelSupported(themeConfig);
   return themeConfig;

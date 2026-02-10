@@ -7,11 +7,12 @@
 
 import type { ThemeConfig, UserThemeConfig } from '@docsearch/docusaurus-adapter';
 import type Joi from 'joi';
+import { describe, expect, it, vi } from 'vitest';
 
 import { DEFAULT_CONFIG, validateThemeConfig } from '../validateThemeConfig';
 
 // mock DocSearch to a v4.5 version to allow AskAI sidepanel tests to pass
-jest.mock('@docsearch/react', () => ({ version: '4.5.3' }));
+vi.mock('@docsearch/react', () => ({ version: '4.5.3' }));
 
 type AlgoliaInput = UserThemeConfig['algolia'];
 type DocSearchInput = UserThemeConfig['docsearch'];

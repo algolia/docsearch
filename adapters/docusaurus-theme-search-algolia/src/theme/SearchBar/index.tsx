@@ -23,8 +23,9 @@ import { useDocSearchKeyboardEvents } from '@docsearch/react/useDocSearchKeyboar
 import Head from '@docusaurus/Head';
 import Link from '@docusaurus/Link';
 import { useHistory } from '@docusaurus/router';
-import { isRegexpStringMatch, useSearchLinkCreator } from '@docusaurus/theme-common';
+import { isRegexpStringMatch } from '@docusaurus/theme-common';
 import Translate from '@docusaurus/Translate';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import translations from '@theme/SearchTranslations';
 import type { FacetFilters } from 'algoliasearch/lite';
@@ -143,13 +144,17 @@ function useTransformItems(props: Pick<DocSearchProps, 'transformItems'>) {
 
 function useResultsFooterComponent({
   closeModal,
+  searchPagePath,
 }: {
   closeModal: () => void;
+  searchPagePath?: string;
 }): DocSearchProps['resultsFooterComponent'] {
   return useMemo(
     () =>
-      ({ state }) => <ResultsFooter state={state} onClose={closeModal} />,
-    [closeModal],
+      searchPagePath
+        ? ({ state }) => <ResultsFooter state={state} searchPagePath={searchPagePath} onClose={closeModal} />
+        : undefined,
+    [closeModal, searchPagePath],
   );
 }
 
@@ -160,14 +165,18 @@ function Hit({ hit, children }: { hit: InternalDocSearchHit | StoredDocSearchHit
 type ResultsFooterProps = {
   state: AutocompleteState<InternalDocSearchHit>;
   onClose: () => void;
+  searchPagePath: string;
 };
 
-function ResultsFooter({ state, onClose }: ResultsFooterProps) {
-  const createSearchLink = useSearchLinkCreator();
+function ResultsFooter({ state, onClose, searchPagePath }: ResultsFooterProps) {
+  const searchPageLink = useBaseUrl(searchPagePath);
   const nbHits = (state.context as { nbHits?: number }).nbHits ?? 0;
+  const searchLink = state.query
+    ? `${searchPageLink}${searchPageLink.includes('?') ? '&' : '?'}q=${encodeURIComponent(state.query)}`
+    : searchPageLink;
 
   return (
-    <Link to={createSearchLink(state.query)} onClick={onClose}>
+    <Link to={searchLink} onClick={onClose}>
       <Translate id="theme.SearchBar.seeAll" values={{ count: nbHits }}>
         {'See all {count} results'}
       </Translate>
@@ -279,7 +288,11 @@ function DocSearch({ externalUrlRegex, ...props }: AlgoliaSearchBarProps) {
     [openModal],
   );
 
-  const resultsFooterComponent = useResultsFooterComponent({ closeModal });
+  const resultsFooterSearchPagePath = typeof props.searchPagePath === 'string' ? props.searchPagePath : undefined;
+  const resultsFooterComponent = useResultsFooterComponent({
+    closeModal,
+    searchPagePath: resultsFooterSearchPagePath,
+  });
 
   useDocSearchKeyboardEvents({
     isOpen,
@@ -345,7 +358,7 @@ function DocSearch({ externalUrlRegex, ...props }: AlgoliaSearchBarProps) {
               return true;
             }}
             onClose={closeModal}
-            {...(props.searchPagePath && {
+            {...(resultsFooterSearchPagePath && {
               resultsFooterComponent,
             })}
             placeholder={currentPlaceholder}

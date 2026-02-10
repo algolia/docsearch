@@ -92,9 +92,10 @@ function SearchVersionSelectList({
             key={pluginId}
             defaultValue={docsSearchVersionsHelpers.searchVersions[pluginId]}
             className={styles.searchVersionInput}
-            onChange={(e) => docsSearchVersionsHelpers.setSearchVersion(pluginId, e.target.value)}
+            onBlur={(e) => docsSearchVersionsHelpers.setSearchVersion(pluginId, e.target.value)}
           >
             {docsData.versions.map((version, i) => (
+              // eslint-disable-next-line react/no-array-index-key
               <option key={i} label={`${labelPrefix}${version.label}`} value={version.name} />
             ))}
           </select>
@@ -116,7 +117,6 @@ function AlgoliaLogo(): ReactNode {
       style={{ maxWidth: '150px' }}
     >
       <defs>
-        {/* eslint-disable-next-line @docusaurus/no-untranslated-text */}
         <style>{`.cls-1,.cls-2{fill:#003dff}.cls-2{fill-rule:evenodd}`}</style>
       </defs>
       <path
@@ -310,8 +310,6 @@ function SearchPageContent(): ReactNode {
   const observer = useRef(
     ExecutionEnvironment.canUseIntersectionObserver &&
       new IntersectionObserver(
-        // TODO need to fix this React Compiler lint error
-        // eslint-disable-next-line react-compiler/react-compiler
         (entries) => {
           const {
             isIntersecting,
@@ -356,13 +354,19 @@ function SearchPageContent(): ReactNode {
   useEffect(() => {
     searchResultStateDispatcher({ type: 'reset' });
 
-    if (searchQuery) {
-      searchResultStateDispatcher({ type: 'loading' });
-
-      setTimeout(() => {
-        makeSearch();
-      }, 300);
+    if (!searchQuery) {
+      return undefined;
     }
+
+    searchResultStateDispatcher({ type: 'loading' });
+
+    const searchTimeoutId = setTimeout(() => {
+      makeSearch();
+    }, 300);
+
+    return () => {
+      clearTimeout(searchTimeoutId);
+    };
   }, [searchQuery, docsSearchVersionsHelpers.searchVersions, makeSearch]);
 
   useEffect(() => {
@@ -449,6 +453,7 @@ function SearchPageContent(): ReactNode {
         {searchResultState.items.length > 0 ? (
           <main>
             {searchResultState.items.map(({ title, url, summary, breadcrumbs }, i) => (
+              // eslint-disable-next-line react/no-array-index-key
               <article key={i} className={styles.searchResultItem}>
                 <Heading as="h2" className={styles.searchResultItemHeading}>
                   <Link to={url} dangerouslySetInnerHTML={{ __html: title }} />
@@ -459,6 +464,7 @@ function SearchPageContent(): ReactNode {
                     <ul className={clsx('breadcrumbs', styles.searchResultItemPath)}>
                       {breadcrumbs.map((html, index) => (
                         <li
+                          // eslint-disable-next-line react/no-array-index-key
                           key={index}
                           className="breadcrumbs__item"
                           // Developer provided the HTML, so assume it's safe.
