@@ -1,3 +1,12 @@
+# [4.6.0](https://github.com/algolia/docsearch/compare/v4.5.4...v4.6.0) (2026-02-10)
+
+
+### Features
+
+* **docusaurus-adapter:** Support docsearch key and adapter docs ([a866654](https://github.com/algolia/docsearch/commit/a866654ca75e615daf73bf0f0557b73506597ec3))
+
+
+
 ## [4.5.4](https://github.com/algolia/docsearch/compare/v4.5.4...v4.5.4) (2026-02-05)
 
 
