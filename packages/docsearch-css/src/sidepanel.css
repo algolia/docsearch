@@ -538,6 +538,12 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
   padding-top: 1rem;
 }
 
+.DocSearch-Sidepanel-ConversationHistoryScreen ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
 .DocSearch-Sidepanel-RecentConversation {
   border-radius: 0.25rem;
   display: flex;

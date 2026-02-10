@@ -19,10 +19,10 @@ function useSearchTags() {
     return [DEFAULT_SEARCH_TAG, ...docsTags];
   } catch (error) {
     // In monorepo setups, duplicated docs plugin instances can cause
-    // React context lookup to fail during SSG. Fall back to default tags
-    // instead of crashing the whole build.
+    // React context lookup to fail during SSG/runtime. Disable contextual
+    // filters in that case instead of crashing or over-filtering results.
     if (error instanceof Error && error.name === 'ReactContextError') {
-      return [DEFAULT_SEARCH_TAG];
+      return undefined;
     }
     throw error;
   }
@@ -32,6 +32,10 @@ function useSearchTags() {
 export function useAlgoliaContextualFacetFilters(): FacetFilters {
   const locale = useDocusaurusContext().i18n.currentLocale;
   const tags = useSearchTags();
+
+  if (!tags) {
+    return [];
+  }
 
   // Seems safe to convert locale->language, see AlgoliaSearchMetadata comment
   const languageFilter = `language:${locale}`;
