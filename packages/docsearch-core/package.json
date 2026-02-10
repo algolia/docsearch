@@ -3,6 +3,7 @@
   "description": "Core package logic for DocSearch",
   "version": "4.5.4",
   "license": "MIT",
+  "type": "module",
   "homepage": "https://docsearch.algolia.com",
   "repository": {
     "type": "git",

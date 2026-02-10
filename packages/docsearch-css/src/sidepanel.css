@@ -339,6 +339,7 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   font-weight: 600;
   line-height: 1.25rem;
   color: var(--docsearch-sidepanel-text-base);
+  margin: 0;
 }
 
 .DocSearch-Sidepanel-Content {

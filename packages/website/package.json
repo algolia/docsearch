@@ -18,6 +18,7 @@
   "dependencies": {
     "@docsearch/core": "workspace:*",
     "@docsearch/css": "workspace:*",
+    "@docsearch/docusaurus-adapter": "workspace:*",
     "@docsearch/react": "workspace:*",
     "@docsearch/sidepanel": "workspace:*",
     "@docusaurus/core": "3.9.2",
@@ -50,10 +51,6 @@
     "image-webpack-loader": "^8.1.0",
     "tailwindcss": "4.1.11",
     "typescript": "^5.8.3"
-  },
-  "resolutions": {
-    "@docsearch/react": "^4.1.0",
-    "@docsearch/css": "^4.1.0"
   },
   "browserslist": {
     "production": [

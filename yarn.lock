@@ -2384,6 +2384,35 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@docsearch/docusaurus-adapter@workspace:*, @docsearch/docusaurus-adapter@workspace:adapters/docusaurus-theme-search-algolia":
+  version: 0.0.0-use.local
+  resolution: "@docsearch/docusaurus-adapter@workspace:adapters/docusaurus-theme-search-algolia"
+  dependencies:
+    "@docsearch/react": "npm:^4.5.3"
+    "@docusaurus/core": "npm:^3.9.2"
+    "@docusaurus/module-type-aliases": "npm:3.9.2"
+    "@docusaurus/plugin-content-docs": "npm:^3.9.2"
+    "@docusaurus/theme-classic": "npm:3.9.2"
+    "@docusaurus/theme-common": "npm:^3.9.2"
+    "@docusaurus/theme-translations": "npm:^3.9.2"
+    "@types/fs-extra": "npm:^11.0.4"
+    "@types/lodash": "npm:^4.17.10"
+    algoliasearch: "npm:^5.37.0"
+    algoliasearch-helper: "npm:^3.26.0"
+    clsx: "npm:^2.0.0"
+    eta: "npm:^2.2.0"
+    fs-extra: "npm:^11.1.1"
+    joi: "npm:^17.9.2"
+    lodash: "npm:^4.17.21"
+    tslib: "npm:^2.6.0"
+    typescript: "npm:5.7.3"
+    utility-types: "npm:^3.10.0"
+  peerDependencies:
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@docsearch/js-example@workspace:examples/demo-js":
   version: 0.0.0-use.local
   resolution: "@docsearch/js-example@workspace:examples/demo-js"
@@ -2508,7 +2537,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@docsearch/react@npm:4.5.4, @docsearch/react@workspace:*, @docsearch/react@workspace:packages/docsearch-react":
+"@docsearch/react@npm:4.5.4, @docsearch/react@npm:^4.5.3, @docsearch/react@workspace:*, @docsearch/react@workspace:packages/docsearch-react":
   version: 0.0.0-use.local
   resolution: "@docsearch/react@workspace:packages/docsearch-react"
   dependencies:
@@ -2618,6 +2647,7 @@ __metadata:
   dependencies:
     "@docsearch/core": "workspace:*"
     "@docsearch/css": "workspace:*"
+    "@docsearch/docusaurus-adapter": "workspace:*"
     "@docsearch/react": "workspace:*"
     "@docsearch/sidepanel": "workspace:*"
     "@docusaurus/core": "npm:3.9.2"
@@ -2711,7 +2741,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/core@npm:3.9.2":
+"@docusaurus/core@npm:3.9.2, @docusaurus/core@npm:^3.9.2":
   version: 3.9.2
   resolution: "@docusaurus/core@npm:3.9.2"
   dependencies:
@@ -2872,7 +2902,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/plugin-content-docs@npm:3.9.2":
+"@docusaurus/plugin-content-docs@npm:3.9.2, @docusaurus/plugin-content-docs@npm:^3.9.2":
   version: 3.9.2
   resolution: "@docusaurus/plugin-content-docs@npm:3.9.2"
   dependencies:
@@ -3097,7 +3127,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/theme-common@npm:3.9.2":
+"@docusaurus/theme-common@npm:3.9.2, @docusaurus/theme-common@npm:^3.9.2":
   version: 3.9.2
   resolution: "@docusaurus/theme-common@npm:3.9.2"
   dependencies:
@@ -3148,7 +3178,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/theme-translations@npm:3.9.2":
+"@docusaurus/theme-translations@npm:3.9.2, @docusaurus/theme-translations@npm:^3.9.2":
   version: 3.9.2
   resolution: "@docusaurus/theme-translations@npm:3.9.2"
   dependencies:
@@ -7332,6 +7362,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/fs-extra@npm:^11.0.4":
+  version: 11.0.4
+  resolution: "@types/fs-extra@npm:11.0.4"
+  dependencies:
+    "@types/jsonfile": "npm:*"
+    "@types/node": "npm:*"
+  checksum: 10c0/9e34f9b24ea464f3c0b18c3f8a82aefc36dc524cc720fc2b886e5465abc66486ff4e439ea3fb2c0acebf91f6d3f74e514f9983b1f02d4243706bdbb7511796ad
+  languageName: node
+  linkType: hard
+
 "@types/glob@npm:^7.1.1":
   version: 7.2.0
   resolution: "@types/glob@npm:7.2.0"
@@ -7434,12 +7474,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/jsonfile@npm:*":
+  version: 6.1.4
+  resolution: "@types/jsonfile@npm:6.1.4"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/b12d068b021e4078f6ac4441353965769be87acf15326173e2aea9f3bf8ead41bd0ad29421df5bbeb0123ec3fc02eb0a734481d52903704a1454a1845896b9eb
+  languageName: node
+  linkType: hard
+
 "@types/keyv@npm:^3.1.1":
   version: 3.1.4
   resolution: "@types/keyv@npm:3.1.4"
   dependencies:
     "@types/node": "npm:*"
   checksum: 10c0/ff8f54fc49621210291f815fe5b15d809fd7d032941b3180743440bd507ecdf08b9e844625fa346af568c84bf34114eb378dcdc3e921a08ba1e2a08d7e3c809c
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:^4.17.10":
+  version: 4.17.23
+  resolution: "@types/lodash@npm:4.17.23"
+  checksum: 10c0/9d9cbfb684e064a2b78aab9e220d398c9c2a7d36bc51a07b184ff382fa043a99b3d00c16c7f109b4eb8614118f4869678dbae7d5c6700ed16fb9340e26cc0bf6
   languageName: node
   linkType: hard
 

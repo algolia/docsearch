@@ -1,0 +1,61 @@
+---
+title: Docusaurus Adapter (Recommended)
+---
+
+If you use Docusaurus, install and configure `@docsearch/docusaurus-adapter` to get the latest DocSearch features on your current Docusaurus version.
+
+## Why this adapter exists
+
+Docusaurus ships an excellent built-in Algolia integration (`@docusaurus/theme-search-algolia`), but Docusaurus (Meta-maintained) and DocSearch don't always release on the same cadence.
+
+The DocSearch adapter lets us ship new DocSearch features (including Ask AI sidepanel support) without forcing users to wait for a Docusaurus integration update.
+
+In practice, this means:
+
+- Faster access to new DocSearch capabilities.
+- Better compatibility for Ask AI + sidepanel features.
+- A dedicated search integration path maintained in the DocSearch project.
+
+## Install
+
+```bash
+yarn add @docsearch/docusaurus-adapter
+# or
+npm install @docsearch/docusaurus-adapter
+```
+
+## Configuration
+
+Keep `@docusaurus/preset-classic`, add the adapter plugin, and configure search under `themeConfig.docsearch` (preferred):
+
+```js title="docusaurus.config.mjs"
+export default {
+  plugins: ['@docsearch/docusaurus-adapter'],
+  themeConfig: {
+    docsearch: {
+      appId: 'YOUR_APP_ID',
+      apiKey: 'YOUR_SEARCH_API_KEY',
+      indexName: 'YOUR_INDEX_NAME',
+      askAi: {
+        assistantId: 'YOUR_ASSISTANT_ID',
+        sidePanel: true,
+      },
+      contextualSearch: true,
+    },
+  },
+};
+```
+
+## `docsearch` vs `algolia` keys
+
+- `themeConfig.docsearch` is the canonical key.
+- `themeConfig.algolia` is supported as a backward-compatible alias.
+- Do not define both keys at the same time.
+
+Using `themeConfig.docsearch` helps avoid built-in Docusaurus search-theme validation conflicts when you want newer DocSearch options like `askAi.sidePanel`.
+
+## Customizing Search UI (SearchBar/SearchPage)
+
+If you want to customize search behavior or UI, customize the adapter theme components (`@theme/SearchBar` and `@theme/SearchPage`) from the adapter integration path.
+
+This keeps your customization aligned with DocSearch feature updates and avoids coupling to the built-in Docusaurus Algolia theme implementation.
