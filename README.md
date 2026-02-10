@@ -120,6 +120,13 @@ DocSearch is made of the following repositories:
 - **[algolia/docsearch-configs](https://github.com/algolia/docsearch-configs)**: DocSearch websites configurations that DocSearch powers.
 - **[algolia/docsearch-scraper](https://github.com/algolia/docsearch-scraper)**: DocSearch crawler that extracts data from your documentation.
 
+## Used by
+
+DocSearch is used by [Bootstrap](https://github.com/twbs/bootstrap), [Cheerio](https://github.com/cheeriojs/cheerio), [Element Plus](https://github.com/element-plus/element-plus), [Authelia](https://github.com/authelia/authelia), [MDX](https://github.com/mdx-js/mdx), [VitePress](https://github.com/vuejs/vitepress) and [many more](https://github.com/algolia/docsearch/network/dependents).
+
+[![Used by](https://api.usedby.dev/npm/@docsearch/js?max=50&sort=stars)](https://github.com/algolia/docsearch/network/dependents)
+Generated with [usedby.dev](https://usedby.dev/)
+
 ## License
 
 [MIT](LICENSE)
