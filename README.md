@@ -4,7 +4,7 @@
 
 The easiest way to add search to your documentation – for free.
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/30eacc09-d4b2-4a53-879b-04d40aaea454/deploy-status)](https://app.netlify.com/sites/docsearch/deploys) [![npm version](https://img.shields.io/npm/v/@docsearch/js.svg?style=flat-square)](https://www.npmjs.com/package/@docsearch/js/v/alpha) [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](./LICENSE)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/30eacc09-d4b2-4a53-879b-04d40aaea454/deploy-status)](https://app.netlify.com/sites/docsearch/deploys) [![npm version](https://img.shields.io/npm/v/@docsearch/js.svg?style=flat-square)](https://www.npmjs.com/package/@docsearch/js/v/alpha) [![Used by](https://img.shields.io/endpoint?style=flat-square&url=https://api.usedby.dev/npm/@docsearch/js/shield.json)](https://github.com/algolia/docsearch/network/dependents) [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](./LICENSE)
 
 <p align="center">
   <strong>
