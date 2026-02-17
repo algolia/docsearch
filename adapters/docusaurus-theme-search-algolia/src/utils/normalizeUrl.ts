@@ -19,7 +19,7 @@
  */
 export function normalizeUrl(rawUrls: string[]): string {
   const urls = [...rawUrls];
-  const resultArray = [];
+  const resultArray: string[] = [];
 
   let hasStartingSlash = false;
   let hasEndingSlash = false;

@@ -42,6 +42,19 @@ function testValidateThemeConfigDocSearch(docsearch: DocSearchInput) {
   return testValidateThemeConfigWithUserThemeConfig(docsearch ? { docsearch } : {});
 }
 
+function expectThrowMessage(fn: () => unknown, message: string): void {
+  let thrownError: unknown;
+  try {
+    fn();
+  } catch (error) {
+    thrownError = error;
+  }
+
+  expect(thrownError).toBeDefined();
+  expect(thrownError).toBeInstanceOf(Error);
+  expect((thrownError as Error).message).toBe(message);
+}
+
 describe('validateThemeConfig', () => {
   it('minimal config', () => {
     const algolia: AlgoliaInput = {
@@ -75,19 +88,17 @@ describe('validateThemeConfig', () => {
 
   it('undefined config', () => {
     const algolia = undefined;
-    expect(() => testValidateThemeConfig(algolia)).toThrowErrorMatchingInlineSnapshot(
-      `""themeConfig.algolia" is required"`,
-    );
+    expectThrowMessage(() => testValidateThemeConfig(algolia), '"themeConfig.algolia" is required');
   });
 
   it('empty config', () => {
-    expect(() =>
-      testValidateThemeConfig(
-        // @ts-expect-error: expected type error!
-        {},
-      ),
-    ).toThrowErrorMatchingInlineSnapshot(
-      `""algolia.appId" is required. If you haven't migrated to the new DocSearch infra, please refer to the blog post for instructions: https://docusaurus.io/blog/2021/11/21/algolia-docsearch-migration"`,
+    expectThrowMessage(
+      () =>
+        testValidateThemeConfig(
+          // @ts-expect-error: expected type error!
+          {},
+        ),
+      `"algolia.appId" is required. If you haven't migrated to the new DocSearch infra, please refer to the blog post for instructions: https://docusaurus.io/blog/2021/11/21/algolia-docsearch-migration`,
     );
   });
 
@@ -97,9 +108,7 @@ describe('validateThemeConfig', () => {
       apiKey: 'apiKey',
       appId: 'BH4D9OD16A',
     };
-    expect(() => testValidateThemeConfig(algolia)).toThrowErrorMatchingInlineSnapshot(
-      `""algolia.indexName" is required"`,
-    );
+    expectThrowMessage(() => testValidateThemeConfig(algolia), '"algolia.indexName" is required');
   });
 
   it('missing apiKey config', () => {
@@ -108,7 +117,7 @@ describe('validateThemeConfig', () => {
       indexName: 'indexName',
       appId: 'BH4D9OD16A',
     };
-    expect(() => testValidateThemeConfig(algolia)).toThrowErrorMatchingInlineSnapshot(`""algolia.apiKey" is required"`);
+    expectThrowMessage(() => testValidateThemeConfig(algolia), '"algolia.apiKey" is required');
   });
 
   it('missing appId config', () => {
@@ -117,8 +126,9 @@ describe('validateThemeConfig', () => {
       indexName: 'indexName',
       apiKey: 'apiKey',
     };
-    expect(() => testValidateThemeConfig(algolia)).toThrowErrorMatchingInlineSnapshot(
-      `""algolia.appId" is required. If you haven't migrated to the new DocSearch infra, please refer to the blog post for instructions: https://docusaurus.io/blog/2021/11/21/algolia-docsearch-migration"`,
+    expectThrowMessage(
+      () => testValidateThemeConfig(algolia),
+      `"algolia.appId" is required. If you haven't migrated to the new DocSearch infra, please refer to the blog post for instructions: https://docusaurus.io/blog/2021/11/21/algolia-docsearch-migration`,
     );
   });
 
@@ -416,8 +426,9 @@ describe('validateThemeConfig', () => {
         // @ts-expect-error: expected type error
         askAi: 123, // Invalid: should be string or object
       };
-      expect(() => testValidateThemeConfig(algolia)).toThrowErrorMatchingInlineSnapshot(
-        `"askAi must be either a string (assistantId) or an object with indexName, apiKey, appId, and assistantId"`,
+      expectThrowMessage(
+        () => testValidateThemeConfig(algolia),
+        'askAi must be either a string (assistantId) or an object with indexName, apiKey, appId, and assistantId',
       );
     });
 
@@ -429,9 +440,7 @@ describe('validateThemeConfig', () => {
         // @ts-expect-error: expected type error: missing mandatory fields
         askAi: {},
       };
-      expect(() => testValidateThemeConfig(algolia)).toThrowErrorMatchingInlineSnapshot(
-        `""algolia.askAi.assistantId" is required"`,
-      );
+      expectThrowMessage(() => testValidateThemeConfig(algolia), '"algolia.askAi.assistantId" is required');
     });
 
     it('accepts undefined askAi', () => {
@@ -624,8 +633,9 @@ describe('validateThemeConfig', () => {
             suggestedQuestions: 'invalid-string',
           },
         };
-        expect(() => testValidateThemeConfig(algolia)).toThrowErrorMatchingInlineSnapshot(
-          `""algolia.askAi.suggestedQuestions" must be a boolean"`,
+        expectThrowMessage(
+          () => testValidateThemeConfig(algolia),
+          '"algolia.askAi.suggestedQuestions" must be a boolean',
         );
       });
 
@@ -640,8 +650,9 @@ describe('validateThemeConfig', () => {
             suggestedQuestions: 123,
           },
         };
-        expect(() => testValidateThemeConfig(algolia)).toThrowErrorMatchingInlineSnapshot(
-          `""algolia.askAi.suggestedQuestions" must be a boolean"`,
+        expectThrowMessage(
+          () => testValidateThemeConfig(algolia),
+          '"algolia.askAi.suggestedQuestions" must be a boolean',
         );
       });
     });
@@ -675,13 +686,13 @@ describe('validateThemeConfig', () => {
         apiKey: 'apiKey',
       };
 
-      expect(() =>
-        testValidateThemeConfigWithUserThemeConfig({
-          docsearch,
-          algolia,
-        }),
-      ).toThrowErrorMatchingInlineSnapshot(
-        `"Please provide either \\"themeConfig.docsearch\\" (preferred) or \\"themeConfig.algolia\\" (legacy), but not both."`,
+      expectThrowMessage(
+        () =>
+          testValidateThemeConfigWithUserThemeConfig({
+            docsearch,
+            algolia,
+          }),
+        'Please provide either "themeConfig.docsearch" (preferred) or "themeConfig.algolia" (legacy), but not both.',
       );
     });
   });

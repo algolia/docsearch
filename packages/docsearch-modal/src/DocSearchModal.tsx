@@ -1,12 +1,12 @@
 import { useDocSearch } from '@docsearch/core';
-import type { DocSearchModalProps as ModalProps } from '@docsearch/react/modal';
+import type { DocSearchModalProps as ReactDocSearchModalProps } from '@docsearch/react';
 import { DocSearchModal as Modal } from '@docsearch/react/modal';
 import type { JSX } from 'react';
 import React from 'react';
 import { createPortal } from 'react-dom';
 
 export type DocSearchModalProps = Omit<
-  ModalProps,
+  ReactDocSearchModalProps,
   | 'initialScrollY'
   | 'isAskAiActive'
   | 'isHybridModeSupported'
@@ -28,7 +28,7 @@ export function DocSearchModal(props: DocSearchModalProps): JSX.Element | null {
     registerView('modal');
   }, [registerView]);
 
-  const modalProps: ModalProps = React.useMemo(
+  const modalProps: ReactDocSearchModalProps = React.useMemo(
     () => ({
       ...props,
       isAskAiActive,

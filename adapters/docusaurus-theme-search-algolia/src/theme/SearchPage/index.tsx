@@ -7,7 +7,6 @@
 
 /* eslint-disable jsx-a11y/no-autofocus */
 
-import { useAlgoliaThemeConfig, useSearchResultUrlProcessor } from '@docsearch/docusaurus-adapter/client';
 import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 import Head from '@docusaurus/Head';
 import Link from '@docusaurus/Link';
@@ -21,6 +20,8 @@ import { liteClient } from 'algoliasearch/lite';
 import algoliaSearchHelper from 'algoliasearch-helper';
 import clsx from 'clsx';
 import React, { type ReactNode, useEffect, useReducer, useRef, useState } from 'react';
+
+import { useAlgoliaThemeConfig, useSearchResultUrlProcessor } from '../../client';
 
 import styles from './styles.module.css';
 
