@@ -1,3 +1,17 @@
+# [4.6.0](https://github.com/algolia/docsearch/compare/v4.5.4...v4.6.0) (2026-02-17)
+
+
+### Bug Fixes
+
+* **sidepanel:** autofocus prompt input on open for desktop only ([#2857](https://github.com/algolia/docsearch/issues/2857)) ([b3fb7f5](https://github.com/algolia/docsearch/commit/b3fb7f50f879c70f6d4cd4f3d16e34f22fb08e37))
+
+
+### Features
+
+* **docusaurus-adapter:** support docsearch key and adapter docs ([#2858](https://github.com/algolia/docsearch/issues/2858)) ([4f68ebb](https://github.com/algolia/docsearch/commit/4f68ebbc06e515f54de3986464bcb633acc7337d))
+
+
+
 ## [4.5.4](https://github.com/algolia/docsearch/compare/v4.5.4...v4.5.4) (2026-02-05)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@docsearch/docusaurus-adapter",
-  "version": "4.5.4",
+  "version": "4.6.0",
   "description": "Algolia search component for Docusaurus.",
   "main": "lib/index.js",
   "sideEffects": [
@@ -35,7 +35,7 @@
     "copy:watch": "node ./scripts/copy-assets.mjs --watch"
   },
   "dependencies": {
-    "@docsearch/react": "^4.5.3",
+    "@docsearch/react": "4.6.0",
     "@docusaurus/core": "^3.9.2",
     "@docusaurus/plugin-content-docs": "^3.9.2",
     "@docusaurus/theme-common": "^3.9.2",
