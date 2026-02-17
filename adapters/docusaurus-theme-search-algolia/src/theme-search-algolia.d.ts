@@ -1,16 +1,15 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Facebook, Inc. And its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
 declare module '@docsearch/docusaurus-adapter' {
-  import type {DeepPartial, Overwrite, Optional} from 'utility-types';
-
-  import type {DocSearchProps} from '@docsearch/react';
-  import type {SidepanelProps} from '@docsearch/react/sidepanel';
-  import type {FacetFilters} from 'algoliasearch/lite';
+  import type { DocSearchProps } from '@docsearch/react';
+  import type { SidepanelProps } from '@docsearch/react/sidepanel';
+  import type { FacetFilters } from 'algoliasearch/lite';
+  import type { DeepPartial, Overwrite, Optional } from 'utility-types';
 
   type AskAiSearchParameters = {
     facetFilters?: FacetFilters;
@@ -20,10 +19,7 @@ declare module '@docsearch/docusaurus-adapter' {
     distinct?: boolean | number | string;
   };
 
-  type AgentStudioSearchParameters = Record<
-    string,
-    Omit<AskAiSearchParameters, 'facetFilters'>
-  >;
+  type AgentStudioSearchParameters = Record<string, Omit<AskAiSearchParameters, 'facetFilters'>>;
 
   // The config after normalization (e.g. AskAI string -> object)
   // This matches DocSearch v4.3+ AskAi configuration
@@ -34,12 +30,8 @@ declare module '@docsearch/docusaurus-adapter' {
     assistantId: string;
     suggestedQuestions?: boolean;
     useStagingEnv?: boolean;
-    sidePanel?: boolean | (SidepanelProps & {hideButton?: boolean});
+    sidePanel?: boolean | (SidepanelProps & { hideButton?: boolean });
   } & (
-    | {
-        agentStudio?: never;
-        searchParameters?: AskAiSearchParameters;
-      }
     | {
         agentStudio: false;
         searchParameters?: AskAiSearchParameters;
@@ -48,19 +40,16 @@ declare module '@docsearch/docusaurus-adapter' {
         agentStudio: true;
         searchParameters?: AgentStudioSearchParameters;
       }
+    | {
+        agentStudio?: never;
+        searchParameters?: AskAiSearchParameters;
+      }
   );
 
   // DocSearch props that Docusaurus exposes directly through props forwarding
   type DocusaurusDocSearchProps = Pick<
     DocSearchProps,
-    | 'appId'
-    | 'apiKey'
-    | 'indexName'
-    | 'placeholder'
-    | 'translations'
-    | 'searchParameters'
-    | 'insights'
-    | 'initialQuery'
+    'apiKey' | 'appId' | 'indexName' | 'initialQuery' | 'insights' | 'placeholder' | 'searchParameters' | 'translations'
   > & {
     // Docusaurus normalizes the AskAI config to an object
     askAi?: AskAiConfig;
@@ -87,9 +76,7 @@ declare module '@docsearch/docusaurus-adapter' {
       apiKey: ThemeConfigAlgolia['apiKey'];
       indexName: ThemeConfigAlgolia['indexName'];
       // askAi also accepts a shorter string form
-      askAi?:
-        | string
-        | Optional<AskAiConfig, 'indexName' | 'appId' | 'apiKey'>;
+      askAi?: Optional<AskAiConfig, 'apiKey' | 'appId' | 'indexName'> | string;
     }
   >;
 
@@ -109,19 +96,19 @@ declare module '@docsearch/docusaurus-adapter' {
 }
 
 declare module '@theme/SearchPage' {
-  import type {ReactNode} from 'react';
+  import type { ReactNode } from 'react';
 
   export default function SearchPage(): ReactNode;
 }
 
 declare module '@theme/SearchBar' {
-  import type {ReactNode} from 'react';
+  import type { ReactNode } from 'react';
 
   export default function SearchBar(): ReactNode;
 }
 
 declare module '@theme/SearchTranslations' {
-  import type {DocSearchTranslations} from '@docsearch/react';
+  import type { DocSearchTranslations } from '@docsearch/react';
 
   const translations: DocSearchTranslations & {
     placeholder: string;

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Facebook, Inc. And its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -24,8 +24,7 @@ export function normalizeUrl(rawUrls: string[]): string {
   let hasStartingSlash = false;
   let hasEndingSlash = false;
 
-  const isNonEmptyArray = (arr: string[]): arr is [string, ...string[]] =>
-    arr.length > 0;
+  const isNonEmptyArray = (arr: string[]): arr is [string, ...string[]] => arr.length > 0;
 
   if (!isNonEmptyArray(urls)) {
     return '';
@@ -59,6 +58,7 @@ export function normalizeUrl(rawUrls: string[]): string {
       if (i === urls.length - 1 && hasEndingSlash) {
         resultArray.push('/');
       }
+      // eslint-disable-next-line no-continue
       continue;
     }
 

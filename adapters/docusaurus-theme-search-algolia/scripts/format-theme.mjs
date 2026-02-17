@@ -1,5 +1,5 @@
 import { execSync } from 'node:child_process';
-import { existsSync } from 'node:fs';
+
 import { glob } from 'glob';
 
 const pattern = 'lib/theme/**/*.js';
@@ -11,7 +11,6 @@ if (files.length > 0) {
       stdio: 'inherit',
     });
   } catch (error) {
-    console.error('Prettier failed:', error.message);
-    process.exit(1);
+    throw new Error(`Prettier failed: ${error instanceof Error ? error.message : String(error)}`);
   }
 }

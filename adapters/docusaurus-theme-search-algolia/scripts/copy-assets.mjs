@@ -50,24 +50,20 @@ function watchAssets() {
 
   copyAssetsOnce();
 
-  fs.watch(
-    srcRoot,
-    { recursive: true },
-    (_eventType, filename) => {
-      if (!filename) {
-        return;
-      }
-      const filePath = path.join(srcRoot, filename);
-      const extension = path.extname(filePath);
-      if (IGNORED_EXTENSIONS.has(extension) || !ASSET_EXTENSIONS.has(extension)) {
-        return;
-      }
-      if (!fs.existsSync(filePath)) {
-        return;
-      }
-      copyAssetFile(filePath);
-    },
-  );
+  fs.watch(srcRoot, { recursive: true }, (_eventType, filename) => {
+    if (!filename) {
+      return;
+    }
+    const filePath = path.join(srcRoot, filename);
+    const extension = path.extname(filePath);
+    if (IGNORED_EXTENSIONS.has(extension) || !ASSET_EXTENSIONS.has(extension)) {
+      return;
+    }
+    if (!fs.existsSync(filePath)) {
+      return;
+    }
+    copyAssetFile(filePath);
+  });
 }
 
 if (process.argv.includes(WATCH_FLAG)) {

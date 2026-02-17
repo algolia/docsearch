@@ -1,12 +1,12 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Facebook, Inc. And its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
-import {useCallback, useMemo, useRef, useState} from 'react';
-import type {AskAiConfig} from '@docsearch/docusaurus-adapter';
+import type { AskAiConfig } from '@docsearch/docusaurus-adapter';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 type AskAiTogglePayload = {
   query: string;
@@ -41,17 +41,13 @@ export function useAlgoliaAskAiSidepanel({
   importSidepanel,
 }: UseAlgoliaAskAiSidepanelParams): UseAlgoliaAskAiSidepanelResult {
   const [isSidepanelOpen, setIsSidepanelOpen] = useState(false);
-  const [sidepanelInitialMessage, setSidepanelInitialMessage] = useState<
-    AskAiTogglePayload | undefined
-  >(undefined);
+  const [sidepanelInitialMessage, setSidepanelInitialMessage] = useState<AskAiTogglePayload | undefined>(undefined);
   const openRequestId = useRef(0);
 
   const sidePanelConfig = askAiConfig?.sidePanel;
   const sidePanelEnabled = Boolean(sidePanelConfig);
-  const sidePanelOptions =
-    typeof sidePanelConfig === 'object' ? sidePanelConfig : undefined;
-  const showSidepanelButton =
-    sidePanelEnabled && sidePanelOptions?.hideButton !== true;
+  const sidePanelOptions = typeof sidePanelConfig === 'object' ? sidePanelConfig : undefined;
+  const showSidepanelButton = sidePanelEnabled && sidePanelOptions?.hideButton !== true;
   const sidePanelAgentStudio = askAiConfig?.agentStudio ?? false;
 
   const sidepanelPortalContainer = useMemo(() => {
