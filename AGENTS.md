@@ -4,7 +4,7 @@ This document provides guidelines for AI agents working on the DocSearch codebas
 
 ## Project Overview
 
-DocSearch is an Algolia-powered search widget for documentation sites. It's a TypeScript/React monorepo using Yarn workspaces with Lerna for orchestration.
+DocSearch is an Algolia-powered search widget for documentation sites. It's a TypeScript/React monorepo using Bun workspaces.
 
 ### Packages
 
@@ -21,62 +21,62 @@ DocSearch is an Algolia-powered search widget for documentation sites. It's a Ty
 
 ```bash
 # Install dependencies
-yarn install
+bun install
 
 # Build all packages
-yarn build
+bun run build
 
 # Build specific package
-yarn workspace @docsearch/react build
+bun --filter @docsearch/react build
 
 # Watch mode (all packages)
-yarn watch
+bun run watch
 
 # Clean builds
-yarn build:clean
+bun run build:clean
 ```
 
 ## Test Commands
 
 ```bash
 # Run all unit tests
-yarn test
+bun run test
 
 # Run a single test file
-yarn test packages/docsearch-react/src/__tests__/utils.test.ts
+bun run test packages/docsearch-react/src/__tests__/utils.test.ts
 
 # Run tests matching a pattern
-yarn test --testNamePattern="extractLinksFromText"
+bun run test --testNamePattern="extractLinksFromText"
 
 # Run tests in watch mode
-yarn test --watch
+bun run test --watch
 
 # Type checking
-yarn test:types
+bun run test:types
 
 # Bundle size check
-yarn test:size
+bun run test:size
 ```
 
 ## Lint Commands
 
 ```bash
 # Run ESLint
-yarn lint
+bun run lint
 
 # Run CSS linting
-yarn lint:css
+bun run lint:css
 ```
 
 ## E2E Testing (Cypress)
 
 ```bash
 # Run Cypress tests
-yarn cy:run
+bun run cy:run
 
 # Run with specific browser
-yarn cy:run:chrome
-yarn cy:run:firefox
+bun run cy:run:chrome
+bun run cy:run:firefox
 ```
 
 ## Code Style Guidelines
