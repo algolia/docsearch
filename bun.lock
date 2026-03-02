@@ -67,6 +67,7 @@
         "@docusaurus/core": "^3.9.2",
         "@docusaurus/module-type-aliases": "3.9.2",
         "@docusaurus/theme-classic": "3.9.2",
+        "@docusaurus/types": "^3.9.2",
         "@types/fs-extra": "^11.0.4",
         "@types/lodash": "^4.17.10",
         "glob": "^13.0.6",

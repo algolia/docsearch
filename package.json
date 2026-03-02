@@ -7,7 +7,11 @@
     "examples/*"
   ],
   "scripts": {
-    "build": "bun --filter @docsearch/core build && bun --filter @docsearch/css build && bun --filter @docsearch/react build && bun --filter @docsearch/js build && bun --filter @docsearch/sidepanel build && bun --filter @docsearch/sidepanel-js build && bun --filter @docsearch/modal build && bun --filter @docsearch/website build",
+    "build": "bun run build:stage:base && bun run build:stage:react && bun run build:stage:consumers && bun run build:stage:adapter",
+    "build:stage:base": "bun --filter @docsearch/core build & bun --filter @docsearch/css build & wait",
+    "build:stage:react": "bun --filter @docsearch/react build",
+    "build:stage:consumers": "bun --filter @docsearch/js build & bun --filter @docsearch/sidepanel build & bun --filter @docsearch/sidepanel-js build & bun --filter @docsearch/modal build & wait",
+    "build:stage:adapter": "bun --filter @docsearch/docusaurus-adapter build",
     "build:examples": "bun --filter './examples/*' build",
     "pw:clean": "rm -rf playwright-report test-results",
     "pw:run": "start-server-and-test 'bun run website:test' http://localhost:3000 'playwright test'",
