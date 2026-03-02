@@ -7,7 +7,7 @@
     "examples/*"
   ],
   "scripts": {
-    "build": "bun --filter './packages/*' build",
+    "build": "bun --filter @docsearch/core build && bun --filter @docsearch/css build && bun --filter @docsearch/react build && bun --filter @docsearch/js build && bun --filter @docsearch/sidepanel build && bun --filter @docsearch/sidepanel-js build && bun --filter @docsearch/modal build && bun --filter @docsearch/website build",
     "build:examples": "bun --filter './examples/*' build",
     "pw:clean": "rm -rf playwright-report test-results",
     "pw:run": "start-server-and-test 'bun run website:test' http://localhost:3000 'playwright test'",
