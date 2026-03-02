@@ -9,7 +9,16 @@ export default [
   ...algoliaReact,
   ...algoliaTypescript,
   {
-    ignores: ['**/node_modules/', '**/dist/', '**/build/', '.yarn/', '**/.docusaurus'],
+    ignores: [
+      '**/node_modules/',
+      '**/dist/',
+      '**/build/',
+      '.yarn/',
+      '**/.docusaurus',
+      'scratchpad/**',
+      'adapters/**/lib/**',
+      '**/rollup.config-*.cjs',
+    ],
   },
   {
     plugins: {
