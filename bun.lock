@@ -1,5 +1,6 @@
 {
   "lockfileVersion": 1,
+  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "@docsearch/monorepo",
@@ -48,6 +49,7 @@
       "name": "@docsearch/docusaurus-adapter",
       "version": "4.6.0",
       "dependencies": {
+        "@algolia/autocomplete-core": "1.19.2",
         "@docsearch/react": "4.6.0",
         "@docusaurus/core": "^3.9.2",
         "@docusaurus/plugin-content-docs": "^3.9.2",

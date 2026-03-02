@@ -27,14 +27,15 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "yarn exec tsc --build --force && node ./scripts/copy-assets.mjs && node ./scripts/format-theme.mjs",
+    "build": "yarn exec tsc -- --build --force && node ./scripts/copy-assets.mjs && node ./scripts/format-theme.mjs",
     "build:clean": "yarn clean && yarn build",
     "clean": "rm -rf lib tsconfig.*.tsbuildinfo",
     "watch": "run-p -c copy:watch build:watch",
-    "build:watch": "yarn exec tsc --build --watch",
+    "build:watch": "yarn exec tsc -- --build --watch",
     "copy:watch": "node ./scripts/copy-assets.mjs --watch"
   },
   "dependencies": {
+    "@algolia/autocomplete-core": "1.19.2",
     "@docsearch/react": "4.6.0",
     "@docusaurus/core": "^3.9.2",
     "@docusaurus/plugin-content-docs": "^3.9.2",
