@@ -1,6 +1,6 @@
 import type { AutocompleteOptions, AutocompleteState } from '@algolia/autocomplete-core';
 import { DocSearch as DocSearchProvider, useDocSearch } from '@docsearch/core';
-import type { DocSearchModalShortcuts } from '@docsearch/core';
+import type { DocSearchModalShortcuts, DocSearchRef, InitialAskAiMessage } from '@docsearch/core';
 import type { LiteClient, SearchParamsObject } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
@@ -10,6 +10,8 @@ import { DocSearchModal } from './DocSearchModal';
 import type { DocSearchHit, DocSearchTheme, InternalDocSearchHit, StoredDocSearchHit } from './types';
 
 import type { ButtonTranslations, ModalTranslations } from '.';
+
+export type { DocSearchRef } from '@docsearch/core';
 
 export type DocSearchTranslations = Partial<{
   button: ButtonTranslations;
@@ -29,8 +31,10 @@ export type AskAiSearchParameters = {
   filters?: string;
   attributesToRetrieve?: string[];
   restrictSearchableAttributes?: string[];
-  distinct?: boolean;
+  distinct?: boolean | number | string;
 };
+
+export type AgentStudioSearchParameters = Record<string, Omit<AskAiSearchParameters, 'facetFilters'>>;
 
 export type DocSearchAskAi = {
   /**
@@ -51,18 +55,52 @@ export type DocSearchAskAi = {
   /**
    * The assistant ID to use for the ask AI feature.
    */
-  assistantId: string | null;
-  /**
-   * The search parameters to use for the ask AI feature.
-   */
-  searchParameters?: AskAiSearchParameters;
+  assistantId: string;
   /**
    * Enables displaying suggested questions on Ask AI's new conversation screen.
    *
    * @default false
    */
   suggestedQuestions?: boolean;
-};
+  // HACK: This is a hack for testing staging, remove before releasing
+  useStagingEnv?: boolean;
+} & (
+  | {
+      /**
+       * **Experimental:** Whether to use Agent Studio as the chat backend.
+       *
+       * This is an experimental feature and its API may change without notice in future releases.
+       * Use with caution in production environments.
+       *
+       * @default false
+       */
+      agentStudio?: never;
+      /**
+       * The search parameters to use for the ask AI feature.
+       *
+       * **NOTE**: If using `agentStudio = true`, the `searchParameters` object is
+       * keyed by the index name.
+       */
+      searchParameters?: AskAiSearchParameters;
+    }
+  | {
+      agentStudio: false;
+      searchParameters?: AskAiSearchParameters;
+    }
+  | {
+      agentStudio: true;
+      /**
+       * The search parameters to use for the ask AI feature.
+       * Keyed by the index name.
+       *
+       * @example
+       * {
+       *   "INDEX_NAME": { distinct: false }
+       * }
+       */
+      searchParameters?: AgentStudioSearchParameters;
+    }
+);
 
 export interface DocSearchIndex {
   name: string;
@@ -94,6 +132,13 @@ export interface DocSearchProps {
    * Configuration or assistant id to enable ask ai mode. Pass a string assistant id or a full config object.
    */
   askAi?: DocSearchAskAi | string;
+  /**
+   * Intercept Ask AI requests (e.g. Submitting a prompt or selecting a suggested question).
+   *
+   * Return `true` to prevent the default modal Ask AI flow (no toggle, no sendMessage).
+   * Useful to route Ask AI into a different UI (e.g. `@docsearch/sidepanel-js`) without flicker.
+   */
+  interceptAskAiEvent?: (initialMessage: InitialAskAiMessage) => boolean | void;
   /**
    * Theme overrides applied to the modal and related components.
    */
@@ -199,13 +244,15 @@ export interface DocSearchProps {
   keyboardShortcuts?: DocSearchModalShortcuts;
 }
 
-export function DocSearch(props: DocSearchProps): JSX.Element {
+function DocSearchComponent(props: DocSearchProps, ref: React.ForwardedRef<DocSearchRef>): JSX.Element {
   return (
-    <DocSearchProvider {...props}>
+    <DocSearchProvider {...props} ref={ref}>
       <DocSearchInner {...props} />
     </DocSearchProvider>
   );
 }
+
+export const DocSearch = React.forwardRef(DocSearchComponent);
 
 export function DocSearchInner(props: DocSearchProps): JSX.Element {
   const {

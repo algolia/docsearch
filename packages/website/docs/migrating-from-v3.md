@@ -4,6 +4,12 @@ title: Migrating from v3 to v4
 
 This guide provides detailed information on migrating from [DocSearch v3](/docs/v3/docsearch) to [DocSearch v4](/docs/docsearch), highlighting key differences and new configuration options. For a comprehensive overview, refer to the [API reference](/docs/api) and [Getting Started Guide](/docs/docsearch).
 
+## If You're Using Docusaurus
+
+Use [`@docsearch/docusaurus-adapter`](/docs/docusaurus-adapter) to get the latest DocSearch integration on your current Docusaurus version.
+
+This is the recommended path when you need newer DocSearch features (for example, Ask AI sidepanel support) without waiting for changes in Docusaurus' built-in search integration.
+
 ## If You're Using Algolia Keyword Search Only
 
 If your application utilizes only the Algolia keyword search functionality, **no migration steps are necessary**. DocSearch v4 maintains full backward compatibility for keyword search operations.
@@ -13,7 +19,7 @@ If your application utilizes only the Algolia keyword search functionality, **no
 We refreshed a few translations keys to make their purpose much clearer:
 
 | Interface | Old key | New key |
-|-----------|---------|---------|
+| ----------- | --------- | --------- |
 | SearchBoxTranslations | `resetButtonTitle` | `clearButtonTitle` |
 | SearchBoxTranslations | `resetButtonAriaLabel` | `clearButtonAriaLabel` |
 | SearchBoxTranslations | `cancelButtonText` | `closeButtonText` |

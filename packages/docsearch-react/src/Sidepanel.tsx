@@ -1,14 +1,53 @@
 import { DocSearch, useDocSearch } from '@docsearch/core';
-import type { DocSearchTheme, SidepanelShortcuts } from '@docsearch/core';
+import type { DocSearchCallbacks, DocSearchRef, DocSearchTheme, SidepanelShortcuts } from '@docsearch/core';
 import type { JSX } from 'react';
 import React from 'react';
 import { createPortal } from 'react-dom';
 
-import type { AskAiSearchParameters } from './DocSearch';
-import type { SidepanelButtonProps, SidepanelProps } from './Sidepanel/index';
+import type { AgentStudioSearchParameters, AskAiSearchParameters } from './DocSearch';
+import type { SidepanelButtonProps, SidepanelProps as SidepanelPanelProps } from './Sidepanel/index';
 import { SidepanelButton, Sidepanel } from './Sidepanel/index';
 
-export type DocSearchSidepanelProps = {
+export type { DocSearchRef, DocSearchCallbacks } from '@docsearch/core';
+
+export type SidepanelSearchParameters =
+  | {
+      /**
+       * **Experimental:** Whether to use Agent Studio as the chat backend.
+       *
+       * This is an experimental feature and its API may change without notice in future releases.
+       * Use with caution in production environments.
+       *
+       * @default false
+       */
+      agentStudio?: never;
+      /**
+       * The search parameters to use for the ask AI feature.
+       *
+       * **NOTE**: If using `agentStudio = true`, the `searchParameters` object is
+       * keyed by the index name.
+       */
+      searchParameters?: AskAiSearchParameters;
+    }
+  | {
+      agentStudio: false;
+      searchParameters?: AskAiSearchParameters;
+    }
+  | {
+      agentStudio: true;
+      /**
+       * The search parameters to use for the ask AI feature.
+       * Keyed by the index name.
+       *
+       * @example
+       * {
+       *   "INDEX_NAME": { distinct: false }
+       * }
+       */
+      searchParameters?: AgentStudioSearchParameters;
+    };
+
+export type DocSearchSidepanelProps = DocSearchCallbacks & {
   /**
    * The assistant ID to use for the ask AI feature.
    */
@@ -25,10 +64,6 @@ export type DocSearchSidepanelProps = {
    * The index name to use for the ask AI feature. Your assistant will search this index for relevant documents.
    */
   indexName: string;
-  /**
-   * The search parameters to use for the ask AI feature.
-   */
-  searchParameters?: AskAiSearchParameters;
   /**
    * Configuration for keyboard shortcuts. Allows enabling/disabling specific shortcuts.
    *
@@ -48,23 +83,39 @@ export type DocSearchSidepanelProps = {
   /**
    * Props specific to the Sidepanel panel.
    */
-  panel?: Omit<SidepanelProps, 'keyboardShortcuts'>;
+  panel?: Omit<SidepanelPanelProps, 'keyboardShortcuts'>;
 };
 
-export function DocSearchSidepanel({ keyboardShortcuts, theme, ...props }: DocSearchSidepanelProps): JSX.Element {
+type SidepanelProps = DocSearchSidepanelProps & SidepanelSearchParameters;
+
+function DocSearchSidepanelComponent(
+  { keyboardShortcuts, theme, onReady, onOpen, onClose, onSidepanelOpen, onSidepanelClose, ...props }: SidepanelProps,
+  ref: React.ForwardedRef<DocSearchRef>,
+): JSX.Element {
   return (
-    <DocSearch keyboardShortcuts={keyboardShortcuts} theme={theme}>
+    <DocSearch
+      keyboardShortcuts={keyboardShortcuts}
+      theme={theme}
+      ref={ref}
+      onReady={onReady}
+      onOpen={onOpen}
+      onClose={onClose}
+      onSidepanelOpen={onSidepanelOpen}
+      onSidepanelClose={onSidepanelClose}
+    >
       <DocSearchSidepanelComp {...props} />
     </DocSearch>
   );
 }
+
+export const DocSearchSidepanel = React.forwardRef(DocSearchSidepanelComponent);
 
 function DocSearchSidepanelComp({
   button: buttonProps = {},
   panel: { portalContainer, ...panelProps } = {},
   ...rootProps
 }: DocSearchSidepanelProps): JSX.Element {
-  const { docsearchState, setDocsearchState, keyboardShortcuts, registerView } = useDocSearch();
+  const { docsearchState, setDocsearchState, keyboardShortcuts, registerView, initialAskAiMessage } = useDocSearch();
 
   const toggleSidepanelState = React.useCallback(() => {
     setDocsearchState(docsearchState === 'sidepanel' ? 'ready' : 'sidepanel');
@@ -94,6 +145,7 @@ function DocSearchSidepanelComp({
       {buttonProps.variant === 'inline' ? ButtonComp : createPortal(ButtonComp, containerElement)}
       {createPortal(
         <Sidepanel
+          initialMessage={initialAskAiMessage}
           isOpen={docsearchState === 'sidepanel'}
           onClose={handleClose}
           onOpen={handleOpen}

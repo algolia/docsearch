@@ -60,7 +60,7 @@ These error codes represent issues with the AI stream or upstream LLM providers.
 
 ### AI-208 - Provider API call error {#ai-208}
 
-There was an issue communicating with the upstream provider’s API. This can occur when the provider returns an unexpected response or a timeout.
+There was an issue communicating with the upstream provider's API. This can occur when the provider returns an unexpected response or a timeout.
 
 > **Solution:** Check the provider's API status page(s) to see if they are experiencing any ongoing issues.
 
@@ -88,9 +88,9 @@ The upstream provider reported that there was an issue with the supplied API key
 
 ### AI-213 - Billing error {#ai-213}
 
-The upstream provider could not process the request due to a billing or quota issue.
+The upstream provider could not process the request due to a billing or account balance issue. This includes insufficient balance, credit limits, or account payment problems.
 
-> **Solution:** You will need to log in to your provider’s dashboard to remedy this issue.
+> **Solution:** Log in to your provider's billing dashboard to check your account balance, payment methods, and billing status. For Anthropic users, visit Plans & Billing to upgrade or purchase credits.
 
 ### AI-214 - No existing model {#ai-214}
 
@@ -106,7 +106,7 @@ The selected provider does not exist.
 
 ### AI-216 - Could not load API Key {#ai-216}
 
-This error occurs when the SDK could not load the provider’s API key successfully.
+This error occurs when the SDK could not load the provider's API key successfully.
 
 > **Solution**: Ensure the API key for the chosen LLM provider is correct and has all of the correct permissions added to it.
 
@@ -115,6 +115,48 @@ This error occurs when the SDK could not load the provider’s API key successfu
 The conversation has reached its maximum depth limit and can no longer accept follow-up questions.
 
 > **Solution**: Start a new conversation to continue. The conversation depth limit is configured per assistant to maintain response accuracy and prevent conversation drift.
+
+### AI-218 - Invalid custom provider {#ai-218}
+
+The custom provider configuration is invalid or missing required fields. This occurs when using the custom-openai provider without proper configuration.
+
+> **Solution**: Ensure your custom provider configuration includes a valid `baseUrl` and any required custom headers. Check the [custom provider documentation][5] for configuration requirements.
+
+### AI-219 - Custom provider retry failed {#ai-219}
+
+A request to a custom provider failed after exhausting all retry attempts. This can occur due to network issues, timeouts, or the custom provider being unavailable.
+
+> **Solution**: Verify that your custom provider endpoint is accessible and responding correctly. Check network connectivity and the custom provider's status. Review timeout and retry settings in your configuration.
+
+### AI-220 - Quota exceeded {#ai-220}
+
+The provider's rate limit or quota has been exceeded. This can happen when you've made too many requests in a short time period or exceeded your plan's usage limits.
+
+> **Solution**: Check your provider's dashboard to review your current usage and rate limits. For Google Gemini, visit the [quota monitoring page](https://ai.dev/rate-limit). For OpenAI, check your [usage dashboard](https://platform.openai.com/usage). You may need to wait for the quota to reset or upgrade your plan.
+
+### AI-221 - Model not found {#ai-221}
+
+The specified model does not exist or your API key does not have access to it. This can occur when using a model that requires special access permissions or has been deprecated.
+
+> **Solution**: Verify that the model name is correct and that your account has access to it. Check your provider's dashboard for available models and access permissions. If you recently gained access to a new model, it may take a few minutes to propagate.
+
+### AI-222 - Region mismatch {#ai-222}
+
+The request was made to an incorrect regional endpoint or the resource is restricted by geography requirements. This typically occurs with OpenAI when using regional data residency settings.
+
+> **Solution**: When creating a new assistant with OpenAI in the Dashboard, select the appropriate data residency option that matches your requirements (none, Europe, or United States). If you're experiencing this error with an existing assistant, verify the data residency setting in your assistant configuration and ensure it matches your account's regional requirements.
+
+### AI-223 - Verification required {#ai-223}
+
+Your organization must be verified to access certain provider features. This is commonly required for OpenAI's advanced features like reasoning summaries.
+
+> **Solution**: Visit your provider's organization settings to complete the verification process. For OpenAI, go to [organization settings](https://platform.openai.com/settings/organization/general) and click "Verify Organization". Note that after verification, it may take up to 15 minutes for access to propagate.
+
+### AI-224 - Context length exceeded {#ai-224}
+
+The request exceeded the model's maximum context length. This happens when the combined size of your messages and requested completion exceeds what the model can handle.
+
+> **Solution**: Reduce the size of your conversation history or input. You can either start a new conversation, remove older messages, or shorten your prompts. Check your model's token limits in the [models documentation][5].
 
 [1]: /docs/api#askai
 [2]: https://sitesearch.algolia.com/docs/experiences/search-askai#configuration

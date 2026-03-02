@@ -3,9 +3,10 @@ import React, { useCallback } from 'react';
 import type { JSX } from 'react';
 
 import { AlgoliaLogo, type AlgoliaLogoTranslations } from '../AlgoliaLogo';
-import type { DocSearchSidepanelProps } from '../Sidepanel';
+import type { DocSearchSidepanelProps, SidepanelSearchParameters } from '../Sidepanel';
 import type { StoredAskAiState, SuggestedQuestionHit } from '../types';
 import { useAskAi } from '../useAskAi';
+import { useIsMobile } from '../useIsMobile';
 import { useSearchClient } from '../useSearchClient';
 import { useSuggestedQuestions } from '../useSuggestedQuestions';
 import { buildDummyAskAiHit } from '../utils/ai';
@@ -23,6 +24,20 @@ import type { PanelSide, PanelVariant, SidepanelState } from './types';
 import { useManageSidepanelLayout } from './useManageSidepanelLayout';
 import { useSidepanelKeyboardEvents } from './useSidepanelKeyboardEvents';
 import { useSidepanelWidth } from './useSidepanelWidth';
+
+/**
+ * Imperative handle exposed by the Sidepanel component for programmatic control.
+ */
+export interface SidepanelRef {
+  /** Opens the sidepanel. */
+  open: () => void;
+  /** Closes the sidepanel. */
+  close: () => void;
+  /** Returns true once the component is mounted and ready. */
+  readonly isReady: boolean;
+  /** Returns true if the sidepanel is currently open. */
+  readonly isOpen: boolean;
+}
 
 export type SidepanelTranslations = Partial<{
   /**
@@ -103,40 +118,49 @@ export type SidepanelProps = {
    * @default `{ 'Ctrl/Cmd+I': true }`
    */
   keyboardShortcuts?: SidepanelShortcuts;
+  // HACK: This is a hack for testing staging, remove before releasing
+  useStagingEnv?: boolean;
 };
 
 type Props = Omit<DocSearchSidepanelProps, 'button' | 'panel'> &
-  SidepanelProps & {
+  SidepanelProps &
+  SidepanelSearchParameters & {
     isOpen?: boolean;
     onOpen: () => void;
     onClose: () => void;
     initialMessage?: InitialAskAiMessage;
   };
 
-export const Sidepanel = ({
-  isOpen = false,
-  onOpen,
-  onClose,
-  assistantId,
-  apiKey,
-  appId,
-  indexName,
-  variant = 'floating',
-  searchParameters,
-  pushSelector,
-  width,
-  expandedWidth,
-  suggestedQuestions: suggestedQuestionsEnabled = false,
-  translations = {},
-  keyboardShortcuts,
-  side = 'right',
-  initialMessage,
-}: Props): JSX.Element => {
+function SidepanelInner(
+  {
+    isOpen = false,
+    onOpen,
+    onClose,
+    assistantId,
+    apiKey,
+    appId,
+    indexName,
+    variant = 'floating',
+    searchParameters,
+    pushSelector,
+    width,
+    expandedWidth,
+    suggestedQuestions: suggestedQuestionsEnabled = false,
+    translations = {},
+    keyboardShortcuts,
+    side = 'right',
+    initialMessage,
+    useStagingEnv = false,
+    agentStudio = false,
+  }: Props,
+  ref: React.ForwardedRef<SidepanelRef>,
+): JSX.Element {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [sidepanelState, setSidepanelState] = React.useState<SidepanelState>('new-conversation');
   const [stoppedStreaming, setStoppedStreaming] = React.useState(false);
   const sidepanelContainerRef = React.useRef<HTMLDivElement>(null);
   const promptInputRef = React.useRef<HTMLTextAreaElement>(null);
+  const isMobile = useIsMobile();
 
   const expectedWidth = useSidepanelWidth({
     isExpanded,
@@ -169,6 +193,8 @@ export const Sidepanel = ({
     assistantId,
     apiKey,
     searchParameters,
+    useStagingEnv,
+    agentStudio,
   });
 
   const suggestedQuestions = useSuggestedQuestions({
@@ -238,6 +264,22 @@ export const Sidepanel = ({
     keyboardShortcuts,
   });
 
+  // Expose imperative handle for programmatic control
+  React.useImperativeHandle(
+    ref,
+    () => ({
+      open: onOpen,
+      close: onClose,
+      get isReady(): boolean {
+        return true;
+      },
+      get isOpen(): boolean {
+        return isOpen;
+      },
+    }),
+    [onOpen, onClose, isOpen],
+  );
+
   React.useEffect(() => {
     if (prevStatus.current === 'streaming' && status === 'ready') {
       if (stoppedStreaming && messages.at(-1)) {
@@ -302,11 +344,19 @@ export const Sidepanel = ({
     }
   }, [initialMessage, sendMessage, conversations, handleSelectConversation, setMessages]);
 
-  // eslint-disable-next-line no-warning-comments
-  // FIX: Renable autofocus on open once mobile focus issue is solved
-  // React.useEffect(() => {
-  //   promptInputRef.current?.focus();
-  // }, [isOpen]);
+  // Autofocus the prompt input when the sidepanel opens and blur it when
+  // it closes. Disabled on mobile because focusing the textarea triggers the
+  // virtual keyboard which disrupts the layout — this is a known issue that
+  // has not been resolved yet.
+  React.useEffect(() => {
+    if (isOpen && !isMobile) {
+      promptInputRef.current?.focus();
+    }
+
+    if (!isOpen) {
+      promptInputRef.current?.blur();
+    }
+  }, [isOpen, isMobile]);
 
   return (
     <div
@@ -326,6 +376,7 @@ export const Sidepanel = ({
           exchanges={exchanges}
           setSidepanelState={setSidepanelState}
           hasConversations={conversations.getAll().length > 0}
+          isStreaming={isStreaming}
           onNewConversation={handleStartNewConversation}
           onToggleExpanded={toggleIsExpanded}
           onClose={onClose}
@@ -346,6 +397,7 @@ export const Sidepanel = ({
               handleFeedback={sendFeedback}
               translations={translations.conversationScreen}
               streamError={askAiError}
+              agentStudio={agentStudio}
             />
           )}
           {sidepanelState === 'conversation-history' && (
@@ -368,4 +420,6 @@ export const Sidepanel = ({
       </aside>
     </div>
   );
-};
+}
+
+export const Sidepanel = React.forwardRef(SidepanelInner);

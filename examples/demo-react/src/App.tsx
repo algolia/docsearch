@@ -7,6 +7,7 @@ import './App.css';
 import '@docsearch/css/dist/style.css';
 import '@docsearch/css/dist/sidepanel.css';
 
+import { AgentStudioExample } from './examples/agent-studio';
 import Basic from './examples/basic';
 import BasicAskAI from './examples/basic-askai';
 import Composable from './examples/composable';
@@ -95,6 +96,13 @@ function App(): JSX.Element {
             <p className="section-description">sidepanel hybrid</p>
             <div className="search-wrapper">
               <BasicHybrid />
+            </div>
+          </section>
+
+          <section className="demo-section">
+            <p className="section-description">Agent Studio</p>
+            <div className="search-wrapper column">
+              <AgentStudioExample />
             </div>
           </section>
         </main>

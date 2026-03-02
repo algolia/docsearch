@@ -2,6 +2,7 @@
   "name": "@docsearch/monorepo",
   "private": true,
   "workspaces": [
+    "adapters/*",
     "packages/*",
     "examples/*"
   ],

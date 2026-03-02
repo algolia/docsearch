@@ -1,8 +1,9 @@
 {
   "name": "@docsearch/core",
   "description": "Core package logic for DocSearch",
-  "version": "4.4.0",
+  "version": "4.6.0",
   "license": "MIT",
+  "type": "module",
   "homepage": "https://docsearch.algolia.com",
   "repository": {
     "type": "git",

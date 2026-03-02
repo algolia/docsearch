@@ -37,15 +37,22 @@ export function Menu({ children }: PropsWithChildren): JSX.Element {
 
 type MenuTriggerProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
-function MenuTrigger({ children, className = '' }: PropsWithChildren<MenuTriggerProps>): JSX.Element {
+function MenuTrigger({ children, className = '', disabled }: PropsWithChildren<MenuTriggerProps>): JSX.Element {
   const { open, setOpen } = React.useContext(MenuContext);
 
   function toggleOpen(): void {
+    if (disabled) return;
+
     setOpen(!open);
   }
 
   return (
-    <button type="button" className={`DocSearch-Menu-trigger ${className}`} onClick={() => toggleOpen()}>
+    <button
+      type="button"
+      className={`DocSearch-Menu-trigger ${className}${disabled ? ' disabled' : ''}`}
+      aria-disabled={disabled}
+      onClick={() => toggleOpen()}
+    >
       {children}
     </button>
   );

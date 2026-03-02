@@ -10,17 +10,20 @@ export default function BasicHybrid(): JSX.Element {
       <DocSearchButton />
       <DocSearchModal
         indexName="docsearch"
-        appId="PMZUYBQDAK"
-        apiKey="24b09689d5b4223813d9b8e48563c8f6"
-        askAi="askAIDemo"
+        appId="beta3G7FSQDJR3"
+        apiKey="0faad3eae2ba413c16355a0f8670c201"
+        askAi={{
+          assistantId: 'e3Kl4lTCBlSA',
+          indexName: 'docsearch-markdown',
+        }}
       />
 
       <SidepanelButton />
       <Sidepanel
-        indexName="docsearch"
-        appId="PMZUYBQDAK"
-        apiKey="24b09689d5b4223813d9b8e48563c8f6"
-        assistantId="askAIDemo"
+        indexName="docsearch-markdown"
+        appId="beta3G7FSQDJR3"
+        apiKey="0faad3eae2ba413c16355a0f8670c201"
+        assistantId="e3Kl4lTCBlSA"
       />
     </DocSearch>
   );

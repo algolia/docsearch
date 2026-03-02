@@ -17,11 +17,14 @@
   --docsearch-sidepanel-hit-background: var(--docsearch-hit-background);
   --docsearch-sidepanel-hit-color: var(--docsearch-hit-color);
   --docsearch-sidepanel-hit-highlight-color: var(--docsearch-hit-highlight-color);
+  --docsearch-sidepanel-button-background: var(--docsearch-sidepanel-background);
+  --docsearch-sidepanel-button-background-dark: var(--docsearch-sidepanel-background);
 }
 
 html[data-theme='dark'] {
   --docsearch-sidepanel-text-base: var(--docsearch-text-color);
   --docsearch-sidepanel-primary-disabled: rgba(1, 45, 186, 0.60);
+  --docsearch-sidepanel-button-background-dark: rgba(4, 4, 8, 1);
 }
 
 .DocSearch-SidepanelButton {
@@ -91,8 +94,11 @@ html[data-theme='dark'] {
 }
 
 .DocSearch-SidepanelButton.inline:hover {
-  background-color: rgba(4, 4, 8, 1);
   border-color: var(--docsearch-sidepanel-accent);
+}
+
+html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
+  background-color: var(--docsearch-sidepanel-button-background-dark);
 }
 
 .DocSearch-SidepanelButton.inline svg {
@@ -281,6 +287,19 @@ html[data-theme='dark'] {
   display: none;
 }
 
+.DocSearch-Sidepanel-Action-menu[aria-disabled='true'],
+.DocSearch-Sidepanel-Action-back[aria-disabled='true'] {
+  user-select: none;
+  pointer-events: none;
+  color: var(--docsearch-sidepanel-accent-muted);
+}
+
+.DocSearch-Sidepanel-Action-menu[aria-disabled='true']:hover,
+.DocSearch-Sidepanel-Action-back[aria-disabled='true']:hover {
+  color: var(--docsearch-sidepanel-accent-muted);
+  background-color: transparent;
+}
+
 @media screen and (min-width: 769px) {
   .DocSearch-Sidepanel-Action-menu,
   .DocSearch-Sidepanel-Action-expand {
@@ -320,6 +339,7 @@ html[data-theme='dark'] {
   font-weight: 600;
   line-height: 1.25rem;
   color: var(--docsearch-sidepanel-text-base);
+  margin: 0;
 }
 
 .DocSearch-Sidepanel-Content {
@@ -516,6 +536,12 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
 
 .DocSearch-Sidepanel-ConversationHistoryScreen {
   padding-top: 1rem;
+}
+
+.DocSearch-Sidepanel-ConversationHistoryScreen ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
 .DocSearch-Sidepanel-RecentConversation {

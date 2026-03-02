@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/react",
   "description": "React package for DocSearch, the best search experience for docs.",
-  "version": "4.4.0",
+  "version": "4.6.0",
   "license": "MIT",
   "homepage": "https://docsearch.algolia.com",
   "repository": {
@@ -32,7 +32,8 @@
     "./useDocSearchKeyboardEvents": "./dist/esm/useDocSearchKeyboardEvents.js",
     "./useTheme": "./dist/esm/useTheme.js",
     "./version": "./dist/esm/version.js",
-    "./sidepanel": "./dist/esm/Sidepanel.js"
+    "./sidepanel": "./dist/esm/Sidepanel.js",
+    "./style/sidepanel": "./style/sidepanel.js"
   },
   "source": "src/index.ts",
   "types": "dist/esm/index.d.ts",
@@ -46,21 +47,23 @@
     "watch": "tsdown --watch"
   },
   "dependencies": {
+    "@algolia/autocomplete-core": "1.19.2",
+    "@docsearch/core": "4.6.0",
+    "@docsearch/css": "4.6.0"
+  },
+  "devDependencies": {
     "@ai-sdk/react": "^2.0.30",
     "@algolia/autocomplete-core": "1.19.2",
-    "@docsearch/core": "4.4.0",
-    "@docsearch/css": "4.4.0",
+    "@docsearch/core": "4.6.0",
+    "@testing-library/jest-dom": "6.6.3",
+    "@testing-library/react": "16.2.0",
     "ai": "^5.0.30",
     "algoliasearch": "^5.28.0",
     "marked": "^16.3.0",
-    "zod": "^4.1.8"
-  },
-  "devDependencies": {
-    "@testing-library/jest-dom": "6.6.3",
-    "@testing-library/react": "16.2.0",
     "tsdown": "^0.18.3",
     "typescript": "5.7.3",
-    "vitest": "3.0.2"
+    "vitest": "3.0.2",
+    "zod": "^4.1.8"
   },
   "peerDependencies": {
     "@types/react": ">= 16.8.0 < 20.0.0",

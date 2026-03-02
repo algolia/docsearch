@@ -1,7 +1,7 @@
 .DocSearch-Button {
   align-items: center;
   border: 1px solid var(--docsearch-subtle-color);
-  border-radius: 4px;
+  border-radius: .5rem;
   background-color: var(--docsearch-search-button-background);
   color: var(--docsearch-search-button-text-color);
   cursor: pointer;

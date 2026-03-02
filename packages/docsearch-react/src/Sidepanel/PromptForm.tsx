@@ -74,6 +74,8 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
     };
 
     const handleSend = (): void => {
+      if (isStreaming) return;
+
       const prompt = userPrompt.trim();
 
       if (prompt === '') return;
@@ -90,6 +92,9 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
+      // Allow Enter to work normally (new line) when streaming
+      if (isStreaming) return;
+
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
 
@@ -116,6 +121,8 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
           onSubmit={(e) => {
             e.preventDefault();
 
+            if (isStreaming) return;
+
             handleSend();
           }}
         >
@@ -123,7 +130,6 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
             ref={promptRef}
             placeholder={promptPlaceholder}
             className="DocSearch-Sidepanel-Prompt--textarea"
-            aria-disabled={isStreaming}
             value={userPrompt}
             aria-label={promptAriaLabelText}
             aria-labelledby="prompt-label"
