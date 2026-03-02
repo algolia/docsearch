@@ -10,7 +10,8 @@
       "@docsearch/modal",
       "@docsearch/react",
       "@docsearch/sidepanel",
-      "@docsearch/sidepanel-js"
+      "@docsearch/sidepanel-js",
+      "@docsearch/docusaurus-adapter"
     ]
   ],
   "linked": [],
