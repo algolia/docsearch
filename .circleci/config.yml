@@ -33,6 +33,7 @@ aliases:
       mkdir -p packages/docsearch-modal/dist
       mkdir -p packages/docsearch-sidepanel/dist
       mkdir -p packages/docsearch-sidepanel-js/dist
+      mkdir -p adapters/docusaurus-theme-search-algolia/lib
 
       cp -R /tmp/workspace/packages/docsearch-react/dist packages/docsearch-react
       cp -R /tmp/workspace/packages/docsearch-js/dist packages/docsearch-js
@@ -41,6 +42,7 @@ aliases:
       cp -R /tmp/workspace/packages/docsearch-modal/dist packages/docsearch-modal
       cp -R /tmp/workspace/packages/docsearch-sidepanel/dist packages/docsearch-sidepanel
       cp -R /tmp/workspace/packages/docsearch-sidepanel-js/dist packages/docsearch-sidepanel-js
+      cp -R /tmp/workspace/adapters/docusaurus-theme-search-algolia/lib adapters/docusaurus-theme-search-algolia
 
 defaults: &defaults
   working_directory: ~/docsearch
@@ -86,6 +88,7 @@ jobs:
             mkdir -p /tmp/workspace/packages/docsearch-modal/dist
             mkdir -p /tmp/workspace/packages/docsearch-sidepanel/dist
             mkdir -p /tmp/workspace/packages/docsearch-sidepanel-js/dist
+            mkdir -p /tmp/workspace/adapters/docusaurus-theme-search-algolia/lib
 
             cp -R packages/docsearch-react/dist /tmp/workspace/packages/docsearch-react
             cp -R packages/docsearch-js/dist /tmp/workspace/packages/docsearch-js
@@ -94,10 +97,12 @@ jobs:
             cp -R packages/docsearch-modal/dist /tmp/workspace/packages/docsearch-modal
             cp -R packages/docsearch-sidepanel/dist /tmp/workspace/packages/docsearch-sidepanel
             cp -R packages/docsearch-sidepanel-js/dist /tmp/workspace/packages/docsearch-sidepanel-js
+            cp -R adapters/docusaurus-theme-search-algolia/lib /tmp/workspace/adapters/docusaurus-theme-search-algolia
       - persist_to_workspace:
           root: *workspace_root
           paths:
             - packages
+            - adapters
   test_lint:
     <<: *defaults
     steps:
