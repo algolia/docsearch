@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@docsearch/react": "4.6.0",
-    "preact": "^10.0.0",
+    "preact": "11.0.0-beta.0",
     "tsdown": "^0.18.3",
     "typescript": "5.7.3"
   },
