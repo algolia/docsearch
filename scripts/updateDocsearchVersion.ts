@@ -16,8 +16,10 @@ const nextContent = `export const version = '${packageVersion}';\n`;
 const currentContent = readFileSync(versionFilePath, 'utf8');
 
 if (currentContent === nextContent) {
-  console.log('DocSearch version file already up to date.');
+  // eslint-disable-next-line no-console
+  console.info('DocSearch version file already up to date.');
 } else {
   writeFileSync(versionFilePath, nextContent, 'utf8');
-  console.log(`Updated docsearch-react version to ${packageVersion}.`);
+  // eslint-disable-next-line no-console
+  console.info(`Updated docsearch-react version to ${packageVersion}.`);
 }
