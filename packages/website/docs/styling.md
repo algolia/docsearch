@@ -21,8 +21,6 @@ This package is a dependency of [`@docsearch/js`][1] and [`@docsearch/react`][1]
 ## Installation
 
 ```bash
-yarn add @docsearch/css@4
-# or
 npm install @docsearch/css@4
 ```
 

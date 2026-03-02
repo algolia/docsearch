@@ -5,7 +5,6 @@ React package for [DocSearch Sidepanel](http://docsearch.algolia.com/), a standa
 ## Installation
 
 ```bash
-yarn add @docsearch/core@4 @docsearch/sidepanel@4 @docsearch/css@4
 # or
 npm install @docsearch/core@4 @docsearch/sidepanel@4 @docsearch/css@4
 ```

@@ -2,3 +2,4 @@ node_modules
 dist
 build
 .cache
+adapters/docusaurus-theme-search-algolia/lib

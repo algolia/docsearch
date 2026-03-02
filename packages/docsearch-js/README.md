@@ -5,8 +5,6 @@ JavaScript package for [DocSearch](http://docsearch.algolia.com/), the best sear
 ## Installation
 
 ```sh
-yarn add @docsearch/js@4
-# or
 npm install @docsearch/js@4
 ```
 

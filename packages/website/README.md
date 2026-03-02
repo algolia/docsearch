@@ -8,8 +8,8 @@ Check out our [website][2] for a complete explanation and documentation.
 
 # Installation
 
-1. In the root of this repository (two level above this directory), do `yarn install` and `yarn build`
-1. In this directory, do `yarn start`.
+1. In the root of this repository (two levels above this directory), do `bun install` and `bun run build`
+1. In this directory, do `bun run start`.
 1. A browser window will open up, pointing to the docs.
 
 # Deployment

@@ -1,7 +1,6 @@
 import algolia from 'eslint-config-algolia/flat/base.js';
 import algoliaReact from 'eslint-config-algolia/flat/react.js';
 import algoliaTypescript from 'eslint-config-algolia/flat/typescript.js';
-import cypresss from 'eslint-plugin-cypress/flat'; // eslint-disable-line import/no-unresolved
 import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint'; // eslint-disable-line import/no-unresolved
 
@@ -10,7 +9,16 @@ export default [
   ...algoliaReact,
   ...algoliaTypescript,
   {
-    ignores: ['**/node_modules/', '**/dist/', '**/build/', '.yarn/', '**/.docusaurus'],
+    ignores: [
+      '**/node_modules/',
+      '**/dist/',
+      '**/build/',
+      '.yarn/',
+      '**/.docusaurus',
+      'scratchpad/**',
+      'adapters/**/lib/**',
+      '**/rollup.config-*.cjs',
+    ],
   },
   {
     plugins: {
@@ -74,12 +82,9 @@ export default [
   },
   tseslint.configs.disableTypeChecked,
   {
-    files: ['cypress/**/*'],
-    plugins: {
-      cypresss,
-    },
+    files: ['e2e/**/*'],
     rules: {
-      '@typescript-eslint/triple-slash-reference': 0,
+      '@typescript-eslint/no-floating-promises': 0,
     },
   },
   {
