@@ -38,7 +38,7 @@
     "test:size": "bundlesize",
     "test:types": "tsc --noEmit",
     "test": "vitest",
-    "watch": "bun run --parallel watch:pkg:core watch:pkg:css watch:pkg:react watch:pkg:js watch:pkg:sidepanel watch:pkg:sidepanel-js watch:pkg:modal",
+    "watch": "bun --parallel --filter './packages/*' watch",
     "watch:pkg:core": "bun --filter @docsearch/core watch",
     "watch:pkg:css": "bun --filter @docsearch/css watch",
     "watch:pkg:react": "bun --filter @docsearch/react watch",
