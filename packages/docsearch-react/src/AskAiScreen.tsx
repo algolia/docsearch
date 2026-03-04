@@ -69,7 +69,6 @@ type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translatio
   askAiError?: Error;
   translations?: AskAiScreenTranslations;
   onNewConversation: () => void;
-  agentStudio?: boolean;
 };
 
 interface AskAiScreenHeaderProps {
@@ -95,7 +94,6 @@ interface AskAiExchangeCardProps {
   translations: AskAiScreenTranslations;
   conversations: StoredSearchPlugin<StoredAskAiState>;
   onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
-  agentStudio?: boolean;
 }
 
 function AskAiExchangeCard({
@@ -107,7 +105,6 @@ function AskAiExchangeCard({
   translations,
   conversations,
   onFeedback,
-  agentStudio,
 }: AskAiExchangeCardProps): JSX.Element {
   const { userMessage, assistantMessage } = exchange;
 
@@ -241,7 +238,6 @@ function AskAiExchangeCard({
             latestAssistantMessageContent={assistantContent?.text || null}
             translations={translations}
             conversations={conversations}
-            agentStudio={agentStudio}
             onFeedback={onFeedback}
           />
         </div>
@@ -262,7 +258,6 @@ interface AskAiScreenFooterActionsProps {
   translations: AskAiScreenTranslations;
   conversations: StoredSearchPlugin<StoredAskAiState>;
   onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
-  agentStudio?: boolean;
 }
 
 export function AskAiScreenFooterActions({
@@ -272,7 +267,6 @@ export function AskAiScreenFooterActions({
   translations,
   conversations,
   onFeedback,
-  agentStudio,
 }: AskAiScreenFooterActionsProps): JSX.Element | null {
   // local state for feedback, initialised from stored conversations
   const initialFeedback = React.useMemo(() => {
@@ -310,26 +304,25 @@ export function AskAiScreenFooterActions({
 
   return (
     <div className="DocSearch-AskAiScreen-Actions">
-      {!agentStudio &&
-        (feedback === null ? (
-          <>
-            {saving ? (
-              <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-            ) : (
-              <>
-                <LikeButton title={likeButtonTitle} onClick={() => handleFeedback('like')} />
-                <DislikeButton title={dislikeButtonTitle} onClick={() => handleFeedback('dislike')} />
-              </>
-            )}
-            {savingError && (
-              <p className="DocSearch-AskAiScreen-FeedbackText">{savingError.message || 'An error occured'}</p>
-            )}
-          </>
-        ) : (
-          <p className="DocSearch-AskAiScreen-FeedbackText DocSearch-AskAiScreen-FeedbackText--visible">
-            {thanksForFeedbackText}
-          </p>
-        ))}
+      {feedback === null ? (
+        <>
+          {saving ? (
+            <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
+          ) : (
+            <>
+              <LikeButton title={likeButtonTitle} onClick={() => handleFeedback('like')} />
+              <DislikeButton title={dislikeButtonTitle} onClick={() => handleFeedback('dislike')} />
+            </>
+          )}
+          {savingError && (
+            <p className="DocSearch-AskAiScreen-FeedbackText">{savingError.message || 'An error occured'}</p>
+          )}
+        </>
+      ) : (
+        <p className="DocSearch-AskAiScreen-FeedbackText DocSearch-AskAiScreen-FeedbackText--visible">
+          {thanksForFeedbackText}
+        </p>
+      )}
       <CopyButton
         translations={translations}
         onClick={() => navigator.clipboard.writeText(latestAssistantMessageContent)}
@@ -448,7 +441,6 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
                 loadingStatus={props.status}
                 translations={translations}
                 conversations={props.conversations}
-                agentStudio={props.agentStudio}
                 onSearchQueryClick={handleSearchQueryClick}
                 onFeedback={props.onFeedback}
               />

@@ -83,7 +83,6 @@ export const ScreenState = React.memo(
           status={props.status}
           askAiError={props.askAiError}
           translations={translations?.askAiScreen}
-          agentStudio={props.agentStudio}
         />
       );
     }

@@ -397,7 +397,6 @@ function SidepanelInner(
               handleFeedback={sendFeedback}
               translations={translations.conversationScreen}
               streamError={askAiError}
-              agentStudio={agentStudio}
             />
           )}
           {sidepanelState === 'conversation-history' && (
