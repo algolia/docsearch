@@ -71,6 +71,7 @@ export type ConversationScreenProps = {
   status: UseChatHelpers<AIMessage>['status'];
   handleFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
   streamError?: Error;
+  agentStudio?: boolean;
 };
 
 type ConversationnExchangeProps = {
@@ -81,11 +82,12 @@ type ConversationnExchangeProps = {
   translations?: ConversationScreenTranslations;
   onFeedback?: ConversationScreenProps['handleFeedback'];
   streamError?: ConversationScreenProps['streamError'];
+  agentStudio?: boolean;
 };
 
 const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExchangeProps>(
   (
-    { exchange, translations = {}, isLastExchange, conversations, onFeedback, status, streamError },
+    { exchange, translations = {}, isLastExchange, conversations, onFeedback, status, streamError, agentStudio },
     conversationRef,
   ): JSX.Element => {
     const { userMessage, assistantMessage } = exchange;
@@ -117,6 +119,8 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
       ['submitted', 'streaming'].includes(status) && !assistantParts.some((part) => part.type !== 'step-start');
     const showActions =
       !wasStopped && (!isLastExchange || (isLastExchange && status === 'ready' && Boolean(assistantMessage)));
+
+    const messageId = agentStudio ? assistantMessage?.id || exchange.id : userMessage?.id || exchange.id;
 
     return (
       <div className="DocSearch-AskAiScreen-Response-Container" ref={conversationRef}>
@@ -210,7 +214,7 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
 
           <div className="DocSearch-AskAiScreen-Answer-Footer">
             <ConversationActions
-              id={userMessage?.id || exchange.id}
+              id={messageId}
               showActions={showActions}
               latestAssistantMessageContent={assistantContent?.text || null}
               translations={translations}

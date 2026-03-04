@@ -69,6 +69,7 @@ type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translatio
   askAiError?: Error;
   translations?: AskAiScreenTranslations;
   onNewConversation: () => void;
+  agentStudio?: boolean;
 };
 
 interface AskAiScreenHeaderProps {
@@ -94,6 +95,7 @@ interface AskAiExchangeCardProps {
   translations: AskAiScreenTranslations;
   conversations: StoredSearchPlugin<StoredAskAiState>;
   onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
+  agentStudio?: boolean;
 }
 
 function AskAiExchangeCard({
@@ -105,6 +107,7 @@ function AskAiExchangeCard({
   translations,
   conversations,
   onFeedback,
+  agentStudio,
 }: AskAiExchangeCardProps): JSX.Element {
   const { userMessage, assistantMessage } = exchange;
 
@@ -136,6 +139,8 @@ function AskAiExchangeCard({
     ['submitted', 'streaming'].includes(loadingStatus) &&
     isLastExchange &&
     !displayParts.some((part) => part.type !== 'step-start');
+
+  const messageId = agentStudio ? assistantMessage?.id || exchange.id : userMessage?.id || exchange.id;
 
   return (
     <div className="DocSearch-AskAiScreen-Response-Container">
@@ -233,7 +238,7 @@ function AskAiExchangeCard({
         </div>
         <div className="DocSearch-AskAiScreen-Answer-Footer">
           <AskAiScreenFooterActions
-            id={userMessage?.id || exchange.id}
+            id={messageId}
             showActions={showActions}
             latestAssistantMessageContent={assistantContent?.text || null}
             translations={translations}
@@ -366,7 +371,7 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
     startNewConversationButtonText = 'Start a new conversation',
   } = translations;
 
-  const { messages, askAiError, status } = props;
+  const { messages, askAiError, status, agentStudio } = props;
 
   // Check if there's a thread depth error
   const hasThreadDepthError = useMemo(() => {
@@ -441,6 +446,7 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
                 loadingStatus={props.status}
                 translations={translations}
                 conversations={props.conversations}
+                agentStudio={agentStudio}
                 onSearchQueryClick={handleSearchQueryClick}
                 onFeedback={props.onFeedback}
               />

@@ -20,13 +20,12 @@ import type { ScreenStateTranslations } from './ScreenState';
 import { ScreenState } from './ScreenState';
 import type { SearchBoxTranslations } from './SearchBox';
 import { SearchBox } from './SearchBox';
-import { createStoredConversations, createStoredSearches } from './stored-searches';
+import { createStoredSearches } from './stored-searches';
 import type {
   DocSearchHit,
   DocSearchState,
   InternalDocSearchHit,
   StoredAskAiMessage,
-  StoredAskAiState,
   StoredDocSearchHit,
   SuggestedQuestionHit,
 } from './types';
@@ -384,12 +383,6 @@ export function DocSearchModal({
   const defaultIndexName = indexes[0].name;
 
   // storage
-  const conversations = React.useRef(
-    createStoredConversations<StoredAskAiState>({
-      key: `__DOCSEARCH_ASKAI_CONVERSATIONS__${askAiConfig?.indexName || defaultIndexName}`,
-      limit: 10,
-    }),
-  ).current;
   const favoriteSearches = React.useRef(
     createStoredSearches<StoredDocSearchHit>({
       key: `__DOCSEARCH_FAVORITE_SEARCHES__${defaultIndexName}`,
@@ -405,15 +398,16 @@ export function DocSearchModal({
 
   const [stoppedStream, setStoppedStream] = React.useState(false);
 
-  const { messages, status, setMessages, sendMessage, stopAskAiStreaming, askAiError, sendFeedback } = useAskAi({
-    assistantId: askAiConfigurationId,
-    apiKey: askAiConfig?.apiKey || apiKey,
-    appId: askAiConfig?.appId || appId,
-    indexName: askAiConfig?.indexName || defaultIndexName,
-    searchParameters: askAiSearchParameters,
-    useStagingEnv: askAiUseStagingEnv,
-    agentStudio,
-  });
+  const { messages, status, setMessages, sendMessage, stopAskAiStreaming, askAiError, sendFeedback, conversations } =
+    useAskAi({
+      assistantId: askAiConfigurationId,
+      apiKey: askAiConfig?.apiKey || apiKey,
+      appId: askAiConfig?.appId || appId,
+      indexName: askAiConfig?.indexName || defaultIndexName,
+      searchParameters: askAiSearchParameters,
+      useStagingEnv: askAiUseStagingEnv,
+      agentStudio,
+    });
 
   const prevStatus = React.useRef(status);
   React.useEffect(() => {
