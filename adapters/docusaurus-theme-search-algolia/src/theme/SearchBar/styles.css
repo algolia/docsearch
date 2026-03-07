@@ -1,0 +1,119 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+:root {
+  --docsearch-primary-color: var(--ifm-color-primary);
+  --docsearch-text-color: var(--ifm-font-color-base);
+  --docsearch-border-radius: var(--ifm-global-radius);
+  --docsearch-highlight-color: var(--ifm-color-primary);
+  --docsearch-soft-primary-color: color-mix(
+    in srgb,
+    var(--ifm-color-primary) 12%,
+    transparent
+  );
+  --docsearch-focus-color: var(--ifm-color-primary-dark);
+  --docsearch-subtle-color: var(--ifm-color-emphasis-200);
+  --docsearch-secondary-text-color: var(--ifm-color-emphasis-600);
+  --docsearch-icon-color: var(--ifm-color-emphasis-600);
+  --docsearch-muted-color: var(--ifm-color-emphasis-600);
+  --docsearch-container-background: rgb(0 0 0 / 60%);
+  --docsearch-background-color: var(--ifm-color-emphasis-200);
+  /* Modal */
+  --docsearch-modal-background: var(--ifm-color-emphasis-100);
+  --docsearch-modal-shadow: var(--ifm-global-shadow-md);
+  /* Button */
+  --docsearch-search-button-background: var(--ifm-background-color);
+  --docsearch-search-button-text-color: var(--ifm-color-emphasis-600);
+  /* Search box */
+  --docsearch-searchbox-background: var(--ifm-background-color);
+  --docsearch-searchbox-focus-background: var(--ifm-background-surface-color);
+  /* Hit */
+  --docsearch-hit-color: var(--ifm-font-color-base);
+  --docsearch-hit-highlight-color: color-mix(
+    in srgb,
+    var(--ifm-color-primary) 12%,
+    transparent
+  );
+  --docsearch-hit-active-color: var(--ifm-color-white);
+  --docsearch-hit-background: var(--ifm-background-surface-color);
+  --docsearch-key-background: var(--ifm-color-emphasis-200);
+  --docsearch-key-color: var(--ifm-color-emphasis-600);
+  --docsearch-key-pressed-shadow: inset 0 2px 4px rgb(0 0 0 / 12%);
+  /* Footer */
+  --docsearch-footer-background: var(--ifm-background-surface-color);
+  --docsearch-footer-shadow: 0 -1px 0 0 var(--ifm-color-emphasis-200);
+  --docsearch-key-gradient: linear-gradient(
+    -26.5deg,
+    var(--ifm-color-emphasis-300) 0%,
+    var(--ifm-color-emphasis-200) 100%
+  );
+
+  /* Sidepanel */
+  --docsearch-sidepanel-background: var(--ifm-color-emphasis-100);
+  --docsearch-sidepanel-background-dark: var(--docsearch-searchbox-background);
+  --docsearch-sidepanel-white: var(--ifm-background-color);
+  --docsearch-sidepanel-primary: var(--docsearch-primary-color);
+  --docsearch-sidepanel-primary-dark: var(--ifm-color-primary-dark);
+  --docsearch-sidepanel-primary-disabled: var(--ifm-color-primary-lightest);
+  --docsearch-sidepanel-accent: var(--docsearch-highlight-color);
+  --docsearch-sidepanel-accent-muted: var(--ifm-color-primary-lightest);
+  --docsearch-sidepanel-border: var(--ifm-color-emphasis-200);
+  --docsearch-sidepanel-text-base: var(--docsearch-text-color);
+  --docsearch-sidepanel-text-muted: var(--docsearch-secondary-text-color);
+  --docsearch-sidepanel-scrollbar-color: var(--docsearch-muted-color);
+  --docsearch-sidepanel-scrollbar-bg: var(--docsearch-modal-background);
+  --docsearch-sidepanel-hit-background: var(--docsearch-hit-background);
+  --docsearch-sidepanel-hit-color: var(--docsearch-hit-color);
+  --docsearch-sidepanel-hit-highlight-color: var(
+    --docsearch-hit-highlight-color
+  );
+}
+
+.DocSearch-SearchBar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.DocSearch-Button {
+  border-radius: 0.5rem;
+}
+
+.DocSearch-Sidepanel-Header {
+  height: 3.8rem;
+}
+
+.DocSearch-Sidepanel-Title {
+  margin: 0;
+}
+
+.DocSearch-Sidepanel-Header-TitleIcon {
+  display: none;
+}
+
+.DocSearch-SidepanelButton.inline {
+  background-color: var(--ifm-background-color);
+}
+
+/* Match inline panel borders with app borders */
+.DocSearch-Sidepanel-Container.inline {
+  box-shadow: 0 0 0 1px var(--docsearch-sidepanel-border);
+}
+
+/* is aesthetically better to have no border radius */
+@media screen and (min-width: 769px) {
+  .DocSearch-Sidepanel-Container.inline.side-right {
+    border-radius: 0 !important;
+  }
+  .DocSearch-Sidepanel-Container.inline.side-left {
+    border-radius: 0 !important;
+  }
+}
+
+.DocSearch-Container {
+  z-index: calc(var(--ifm-z-index-fixed) + 1);
+}

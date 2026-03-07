@@ -1,6 +1,7 @@
 export * from './groupBy';
 export * from './identity';
 export * from './isModifierEvent';
+export * from './keyboard';
 export * from './noop';
 export * from './removeHighlightTags';
 export * from './scrollTo';

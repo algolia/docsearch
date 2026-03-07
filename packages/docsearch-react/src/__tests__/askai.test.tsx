@@ -37,13 +37,7 @@ describe('AskAiScreen', () => {
     ];
 
     const { getByText } = render(
-      <AskAiScreen
-        {...baseProps}
-        messages={messages}
-        status="error"
-        askAiStreamError={new Error('oh no')}
-        askAiFetchError={undefined}
-      />,
+      <AskAiScreen {...baseProps} messages={messages} status="error" askAiError={new Error('oh no')} />,
     );
 
     expect(getByText('oh no')).toBeInTheDocument();

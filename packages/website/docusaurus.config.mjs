@@ -3,7 +3,8 @@ import { themes } from 'prism-react-renderer';
 import myLoaders from './plugins/my-loaders.mjs';
 import tailwindLoader from './plugins/tailwind-loader.mjs';
 
-const SIGNUP_LINK = 'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch';
+const SIGNUP_LINK =
+  'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch&utm_content=apply';
 
 const currentDate = new Date();
 const currentYear = currentDate.getFullYear();
@@ -61,11 +62,11 @@ export default {
       }),
     ],
   ],
-  plugins: [myLoaders, tailwindLoader],
+  plugins: [myLoaders, tailwindLoader, '@docsearch/docusaurus-adapter'],
   themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+    /** @type {import('@docsearch/docusaurus-adapter').ThemeConfig} */
     ({
-      algolia: {
+      docsearch: {
         placeholder: 'Search or ask AI',
         appId: 'PMZUYBQDAK',
         apiKey: '24b09689d5b4223813d9b8e48563c8f6',
@@ -75,6 +76,7 @@ export default {
           assistantId: 'askAIDemo',
           apiKey: '24b09689d5b4223813d9b8e48563c8f6',
           appId: 'PMZUYBQDAK',
+          sidePanel: true,
         },
         contextualSearch: true,
         translations: {

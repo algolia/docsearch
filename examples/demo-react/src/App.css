@@ -80,11 +80,17 @@ main {
 }
 
 /* search component wrapper */
-.search-wrapper {
+.search-wrapper,
+.default-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 60px;
+}
+
+.search-wrapper.column {
+  flex-direction: column;
+  gap: 1rem;
 }
 
 /* divider styles */
@@ -114,7 +120,7 @@ main {
 }
 
 /* docsearch button customization */
-.DocSearch-Button {
+.search-wrapper .DocSearch-Button {
   margin: 0 !important;
   background: #f7fafc !important;
   border: 2px solid #e2e8f0 !important;
@@ -126,18 +132,18 @@ main {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .DocSearch-Button {
+  .search-wrapper .DocSearch-Button {
     transition-duration: 0;
   }
 }
 
-.DocSearch-Button:hover {
+.search-wrapper .DocSearch-Button:hover {
   border-color: #667eea !important;
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15) !important;
   transform: translateY(-1px) !important;
 }
 
-.DocSearch-Button-Placeholder {
+.search-wrapper .DocSearch-Button-Placeholder {
   color: #718096 !important;
 }
 

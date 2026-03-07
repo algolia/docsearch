@@ -3,6 +3,8 @@ import type { TextUIPart } from 'ai';
 import type { StoredAskAiState } from '../types';
 import type { AIMessage } from '../types/AskiAi';
 
+import { sanitizeUserInput } from './sanitize';
+
 type ExtractedLink = {
   url: string;
   title?: string;
@@ -69,10 +71,11 @@ export function extractLinksFromMessage(message: AIMessage | null): ExtractedLin
 
 export const buildDummyAskAiHit = (query: string, messages: AIMessage[]): StoredAskAiState => {
   const textPart = messages[0].parts.find((part) => part.type === 'text');
+  const sanitizedText = textPart?.text ? sanitizeUserInput(textPart.text) : '';
 
   return {
     query,
-    objectID: textPart?.text ?? '',
+    objectID: sanitizedText,
     messages,
     type: 'askAI',
     anchor: 'stored',
@@ -81,7 +84,7 @@ export const buildDummyAskAiHit = (query: string, messages: AIMessage[]): Stored
     content: null,
     hierarchy: {
       lvl0: 'askAI',
-      lvl1: textPart?.text ?? '', // use first message as hit name
+      lvl1: sanitizedText, // use first message as hit name (sanitized to prevent XSS)
       lvl2: null,
       lvl3: null,
       lvl4: null,
@@ -95,3 +98,12 @@ export const buildDummyAskAiHit = (query: string, messages: AIMessage[]): Stored
 
 export const getMessageContent = (message: AIMessage | null): TextUIPart | undefined =>
   message?.parts.find((part) => part.type === 'text');
+
+/**
+ * Helper function to check if error is a thread depth error (AI-217).
+ */
+export function isThreadDepthError(error?: Error): boolean {
+  if (!error) return false;
+
+  return error.message?.includes('AI-217') || false;
+}
