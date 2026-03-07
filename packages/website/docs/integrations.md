@@ -9,7 +9,7 @@ We worked with **documentation website generators** to have DocSearch directly e
 So, if you're using one of the following tools, checkout their documentation to see how to enable DocSearch on your website:
 
 - [Docusaurus v1][1] - [How to enable search][2]
-- [Docusaurus v2 & v3][3] - [Using Algolia DocSearch][4]
+- [Docusaurus v2 & v3][3] - [DocSearch adapter (recommended)][23] / [Using Algolia DocSearch][4]
 - [VuePress][5] - [Algolia Search][6]
 - [VitePress][21] - [Search][22]
 - [Starlight][7] - [Algolia Search][8]
@@ -42,3 +42,4 @@ If you're maintaining a similar tool and want us to add you to the list, [feel f
 [20]: https://lotusdocs.dev/docs/guides/features/docsearch/#enabling-the-docsearch-plugin
 [21]: https://vitepress.dev/
 [22]: https://vitepress.dev/reference/default-theme-search#algolia-search
+[23]: /docs/docusaurus-adapter

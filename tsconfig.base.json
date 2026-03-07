@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "rootDir": "${configDir}/src",
+    "outDir": "${configDir}/lib",
+    "composite": true,
+    "declaration": true,
+    "target": "ES2021",
+    "lib": ["ES2021", "DOM"],
+    "jsx": "react-jsx",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true
+  }
+}

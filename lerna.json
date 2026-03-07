@@ -1,8 +1,9 @@
 {
   "packages": [
+    "adapters/*",
     "packages/*",
     "examples/*"
   ],
-  "version": "4.3.2",
+  "version": "4.6.0",
   "npmClient": "yarn"
 }

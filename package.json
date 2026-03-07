@@ -2,6 +2,7 @@
   "name": "@docsearch/monorepo",
   "private": true,
   "workspaces": [
+    "adapters/*",
     "packages/*",
     "examples/*"
   ],
@@ -14,7 +15,7 @@
     "cy:run:chrome": "yarn run cy:run --browser chrome",
     "cy:run:edge": "yarn run cy:run --browser edge",
     "cy:run:firefox": "yarn run cy:run --browser firefox",
-    "cy:run": "start-server-and-test 'yarn website:test' http://localhost:3000 'cypress run --headless'",
+    "cy:run": "start-server-and-test 'yarn workspace @docsearch/docusaurus-adapter build && yarn website:test' http://localhost:3000 'cypress run --headless'",
     "cy:verify": "cypress verify",
     "lint:css": "stylelint **/src/**/*.css",
     "lint": "eslint .",
@@ -85,9 +86,6 @@
     "typescript-eslint": "8.20.0",
     "vitest": "3.0.2",
     "watch": "1.0.2"
-  },
-  "resolutions": {
-    "@docsearch/react": "^4.1.0"
   },
   "packageManager": "yarn@4.6.0"
 }

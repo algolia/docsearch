@@ -93,7 +93,7 @@
   font-weight: 300;
   height: 100%;
   outline: none;
-  padding-block-start: 4px;
+  padding-block-start: 0px;
   padding-inline-start: 8px;
   width: 80%;
   line-height: 1.4;
@@ -873,10 +873,14 @@ assistive tech users */
   cursor: default;
 }
 
+.DocSearch-AskAiScreen-MessageContent {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
+}
+
 .DocSearch-AskAiScreen-Error {
   padding: var(--docsearch-spacing);
-  display: flex;
-  align-items: baseline;
   padding: 1em;
   gap: 8px;
   color: var(--docsearch-error-color);
@@ -884,12 +888,11 @@ assistive tech users */
   border-radius: 4px;
   font-size: 1em;
   font-weight: 400;
+  flex-direction: row;
 }
 
-.DocSearch-AskAiScreen-MessageContent {
-  display: flex;
-  flex-direction: column;
-  row-gap: 1em;
+.DocSearch-AskAiScreen-Error svg {
+  margin-top: 0.25rem;
 }
 
 .DocSearch-AskAiScreen-Error svg,
@@ -903,8 +906,59 @@ assistive tech users */
   margin: 0;
 }
 
+.DocSearch-AskAiScreen-Error-Content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0%;
+}
+
+.DocSearch-AskAiScreen-Error-Title {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
 .DocSearch-AskAiScreen-Error .DocSearch-Markdown-Content {
   color: var(--docsearch-error-color);
+}
+
+/* Thread Depth Error - positioned below input */
+.DocSearch-AskAiScreen-Error--ThreadDepth {
+  margin: 12px 0 8px 0;
+  color: var(--docsearch-text-color);
+  font-size: 12px;
+  border: 1px solid #febdc5;
+  animation: slideDown 0.3s ease-out;
+  width: 100%;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.DocSearch-ThreadDepthError-Link {
+  color: var(--docsearch-highlight-color);
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.DocSearch-ThreadDepthError-Link:hover {
+  opacity: 0.8;
+}
+
+.DocSearch-ThreadDepthError-Link:active {
+  color: rgb(153 27 27);
 }
 
 .DocSearch-AskAiScreen-FeedbackText {
@@ -937,7 +991,7 @@ assistive tech users */
 .DocSearch-AskAiScreen-RelatedSources-Title {
   font-size: 0.7em;
   font-weight: 400;
-  color: var(--docsearch-secondary-color);
+  color: var(--docsearch-secondary-text-color);
   padding: 6px 0;
   margin: 0;
 }
@@ -1446,7 +1500,9 @@ assistive tech users */
   flex-direction: column;
   border-radius: var(--docsearch-border-radius);
   background-color: var(--docsearch-dropdown-menu-background);
-  box-shadow: 0px 0px 0px 1px #21243D0D, 0px 8px 16px -4px #21243D40;
+  box-shadow:
+    0px 0px 0px 1px #21243d0d,
+    0px 8px 16px -4px #21243d40;
   min-width: 195px;
   inset-block-start: calc(100% + 12px);
   z-index: 422;

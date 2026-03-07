@@ -44,8 +44,7 @@ export interface ScreenStateProps<TItem extends BaseItem>
   indexName: DocSearchProps['indexName'];
   messages: UseChatHelpers<AIMessage>['messages'];
   status: UseChatHelpers<AIMessage>['status'];
-  askAiStreamError: Error | null;
-  askAiFetchError: Error | undefined;
+  askAiError?: Error;
   disableUserPersonalization: boolean;
   resultsFooterComponent: DocSearchProps['resultsFooterComponent'];
   translations: ScreenStateTranslations;
@@ -56,6 +55,8 @@ export interface ScreenStateProps<TItem extends BaseItem>
   selectAskAiQuestion: (toggle: boolean, query: string) => void;
   suggestedQuestions: SuggestedQuestionHit[];
   selectSuggestedQuestion: (question: SuggestedQuestionHit) => void;
+  onNewConversation: () => void;
+  agentStudio?: boolean;
 }
 
 export const ScreenState = React.memo(
@@ -80,9 +81,9 @@ export const ScreenState = React.memo(
           {...props}
           messages={props.messages}
           status={props.status}
-          askAiStreamError={props.askAiStreamError}
-          askAiFetchError={props.askAiFetchError}
+          askAiError={props.askAiError}
           translations={translations?.askAiScreen}
+          agentStudio={props.agentStudio}
         />
       );
     }

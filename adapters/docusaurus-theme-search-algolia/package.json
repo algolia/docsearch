@@ -1,0 +1,68 @@
+{
+  "name": "@docsearch/docusaurus-adapter",
+  "version": "4.6.0",
+  "description": "Algolia search component for Docusaurus.",
+  "main": "lib/index.js",
+  "sideEffects": [
+    "*.css"
+  ],
+  "exports": {
+    "./client": {
+      "types": "./lib/client/index.d.ts",
+      "default": "./lib/client/index.js"
+    },
+    ".": {
+      "types": "./src/theme-search-algolia.d.ts",
+      "default": "./lib/index.js"
+    }
+  },
+  "types": "src/theme-search-algolia.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/algolia/docsearch.git",
+    "directory": "adapters/docusaurus-theme-search-algolia"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn exec tsc --build --force && node ./scripts/copy-assets.mjs && node ./scripts/format-theme.mjs",
+    "build:clean": "yarn clean && yarn build",
+    "clean": "rm -rf lib tsconfig.*.tsbuildinfo",
+    "watch": "run-p -c copy:watch build:watch",
+    "build:watch": "yarn exec tsc --build --watch",
+    "copy:watch": "node ./scripts/copy-assets.mjs --watch"
+  },
+  "dependencies": {
+    "@docsearch/react": "4.6.0",
+    "@docusaurus/core": "^3.9.2",
+    "@docusaurus/plugin-content-docs": "^3.9.2",
+    "@docusaurus/theme-common": "^3.9.2",
+    "@docusaurus/theme-translations": "^3.9.2",
+    "algoliasearch": "^5.37.0",
+    "algoliasearch-helper": "^3.26.0",
+    "clsx": "^2.0.0",
+    "eta": "^2.2.0",
+    "fs-extra": "^11.1.1",
+    "joi": "^17.9.2",
+    "lodash": "^4.17.21",
+    "tslib": "^2.6.0",
+    "utility-types": "^3.10.0"
+  },
+  "devDependencies": {
+    "@docusaurus/core": "^3.9.2",
+    "@docusaurus/module-type-aliases": "3.9.2",
+    "@docusaurus/theme-classic": "3.9.2",
+    "@types/fs-extra": "^11.0.4",
+    "@types/lodash": "^4.17.10",
+    "typescript": "5.7.3"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "engines": {
+    "node": ">=20.0"
+  }
+}
