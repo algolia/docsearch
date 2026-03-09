@@ -43,6 +43,44 @@ If `agentStudio` is true, the Ask AI chat will use Algolia's [Agent Studio][2] a
 
 ## `searchParameters`
 
+> `type: AskAiSearchParameters | Record<string, Omit<AskAiSearchParameters, 'facetFilters'>>` | **optional**
+
+Additional search parameters used to scope Ask AI or Agent Studio retrieval.
+
+- When `agentStudio` is omitted or `false`, pass a flat object such as `facetFilters`, `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`.
+- When `agentStudio` is `true`, `searchParameters` must be keyed by index name and supports `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`.
+
+```tsx
+<Sidepanel
+  indexName="YOUR_INDEX_NAME"
+  appId="YOUR_APP_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  assistantId="YOUR_ASSISTANT_ID"
+  searchParameters={{
+    facetFilters: ['language:en'],
+    distinct: true,
+  }}
+/>
+```
+
+```tsx
+<Sidepanel
+  indexName="YOUR_INDEX_NAME"
+  appId="YOUR_APP_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  assistantId="YOUR_ASSISTANT_ID"
+  agentStudio={true}
+  searchParameters={{
+    YOUR_INDEX_NAME: {
+      filters: 'type:content AND language:en',
+      attributesToRetrieve: ['title', 'content', 'url'],
+      restrictSearchableAttributes: ['title', 'content'],
+      distinct: 'url',
+    },
+  }}
+/>
+```
+
 ## `variant`
 
 > `type: 'floating' | 'inline'` | default: `'floating'` | **optional**
