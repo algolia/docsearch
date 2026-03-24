@@ -136,7 +136,7 @@ export default {
       announcementBar: {
         id: 'announcement-bar',
         content:
-          'Ask AI is now part of <strong>Agent Studio</strong> – We\'re integrating Ask AI into Agent Studio, our centralized space to build and manage AI agents.<br/>A migration plan will be shared soon. No action is required at this time. <a target="_blank" rel="noopener noreferrer" href="https://www.algolia.com/doc/guides/algolia-ai/agent-studio">Explore Agent Studio →</a>',
+          'Ask AI is now part of <strong>Agent Studio</strong> – We\'re integrating Ask AI into Agent Studio, our centralized space to build and manage AI agents.<br/>A migration plan will be shared soon. No action is required at this time. <a target="_blank" rel="noopener noreferrer" href="https://www.algolia.com/doc/guides/algolia-ai/agent-studio">Explore Agent Studio</a>',
       },
       colorMode: {
         defaultMode: 'light',
