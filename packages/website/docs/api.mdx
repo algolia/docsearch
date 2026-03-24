@@ -255,23 +255,48 @@ in case you want to use different credentials for askAi
 - **Complex filtering**: `filters: 'type:content AND language:en'` - Apply complex filtering rules
 - **Content control**: `attributesToRetrieve: ['title', 'content', 'url']` - Control which attributes are retrieved
 - **Search scope**: `restrictSearchableAttributes: ['title', 'content']` - Limit search to specific fields
-- **Deduplication**: `distinct: true` - Remove duplicate results
+- **Deduplication**: `distinct: true` - Remove duplicate results (`boolean | number | string`)
 
 These parameters provide the essential functionality for Ask AI while keeping the API simple and focused.
 
 :::
 
-## `agentStudio`
+### `askAi.agentStudio`
 
 > `type: boolean` | **optional** | **experimental**
 
 :::warning[Experimental]
 
-`agentStudio` is currently an experimental property. It is targeted to be stable in release `5.0.0`.
+`askAi.agentStudio` is currently an experimental property. It is targeted to be stable in release `5.0.0`.
 
 :::
 
-If `agentStudio` is true, the Ask AI chat will use Algolia's [Agent Studio][12] as the chat backend instead of the Ask AI backend. Learn more on [Algolia Agent Studio Docs][13].
+If `askAi.agentStudio` is `true`, the Ask AI chat will use Algolia's [Agent Studio][12] as the chat backend instead of the Ask AI backend. Learn more on [Algolia Agent Studio Docs][13].
+
+```js
+docsearch({
+  // ...
+  askAi: {
+    assistantId: 'YOUR_ALGOLIA_ASSISTANT_ID',
+    agentStudio: true,
+    searchParameters: {
+      YOUR_INDEX_NAME: {
+        filters: 'type:content AND language:en',
+        attributesToRetrieve: ['title', 'content', 'url'],
+        restrictSearchableAttributes: ['title', 'content'],
+        distinct: 'url',
+      },
+    },
+  },
+});
+```
+
+::::info[Search parameter shapes]
+
+- Standard Ask AI (`agentStudio` omitted or `false`): `searchParameters` is a flat object and supports `facetFilters`, `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`.
+- Agent Studio (`agentStudio: true`): `searchParameters` must be keyed by index name and supports `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`.
+
+::::
 
 ## `searchParameters`
 
