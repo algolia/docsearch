@@ -2345,24 +2345,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docsearch/core@npm:4.6.0":
-  version: 4.6.0
-  resolution: "@docsearch/core@npm:4.6.0"
-  peerDependencies:
-    "@types/react": ">= 16.8.0 < 20.0.0"
-    react: ">= 16.8.0 < 20.0.0"
-    react-dom: ">= 16.8.0 < 20.0.0"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-    react:
-      optional: true
-    react-dom:
-      optional: true
-  checksum: 10c0/372092e6d38720db40aefe38226d20a3b37c75389de159bfa5e86258b97257022193dc0463876a0c5878e9f28f8b5672a2c55d1c091dbd07f01d726e54158c85
-  languageName: node
-  linkType: hard
-
 "@docsearch/core@npm:4.6.1, @docsearch/core@workspace:*, @docsearch/core@workspace:packages/docsearch-core":
   version: 0.0.0-use.local
   resolution: "@docsearch/core@workspace:packages/docsearch-core"
@@ -2413,7 +2395,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docsearch/docusaurus-adapter@workspace:adapters/docusaurus-theme-search-algolia"
   dependencies:
-    "@docsearch/react": "npm:4.6.0"
+    "@docsearch/react": "npm:4.6.1"
     "@docusaurus/core": "npm:^3.9.2"
     "@docusaurus/module-type-aliases": "npm:3.9.2"
     "@docusaurus/plugin-content-docs": "npm:^3.9.2"
@@ -2568,31 +2550,6 @@ __metadata:
     vite: "npm:^6.0.7"
   languageName: unknown
   linkType: soft
-
-"@docsearch/react@npm:4.6.0":
-  version: 4.6.0
-  resolution: "@docsearch/react@npm:4.6.0"
-  dependencies:
-    "@algolia/autocomplete-core": "npm:1.19.2"
-    "@docsearch/core": "npm:4.6.0"
-    "@docsearch/css": "npm:4.6.0"
-  peerDependencies:
-    "@types/react": ">= 16.8.0 < 20.0.0"
-    react: ">= 16.8.0 < 20.0.0"
-    react-dom: ">= 16.8.0 < 20.0.0"
-    search-insights: ">= 1 < 3"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-    react:
-      optional: true
-    react-dom:
-      optional: true
-    search-insights:
-      optional: true
-  checksum: 10c0/ce5cf473779dbf045486b4d9a8095a83d07bbdb59420aa207f20f6a6387785d7fa6b7945b5cf8a025799fe59ae96c14755037a5ec8fc0b3dff3e0a615ee30337
-  languageName: node
-  linkType: hard
 
 "@docsearch/react@npm:4.6.1, @docsearch/react@workspace:*, @docsearch/react@workspace:packages/docsearch-react":
   version: 0.0.0-use.local

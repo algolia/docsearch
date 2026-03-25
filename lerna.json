@@ -5,5 +5,10 @@
     "examples/*"
   ],
   "version": "4.6.1",
-  "npmClient": "yarn"
+  "npmClient": "yarn",
+  "command": {
+    "version": {
+      "forcePublish": true
+    }
+  }
 }
