@@ -140,6 +140,8 @@ function AskAiExchangeCard({
     isLastExchange &&
     !displayParts.some((part) => part.type !== 'step-start');
 
+  const messageId = agentStudio ? assistantMessage?.id || exchange.id : userMessage?.id || exchange.id;
+
   return (
     <div className="DocSearch-AskAiScreen-Response-Container">
       <div className="DocSearch-AskAiScreen-Response">
@@ -236,12 +238,11 @@ function AskAiExchangeCard({
         </div>
         <div className="DocSearch-AskAiScreen-Answer-Footer">
           <AskAiScreenFooterActions
-            id={userMessage?.id || exchange.id}
+            id={messageId}
             showActions={showActions}
             latestAssistantMessageContent={assistantContent?.text || null}
             translations={translations}
             conversations={conversations}
-            agentStudio={agentStudio}
             onFeedback={onFeedback}
           />
         </div>
@@ -262,7 +263,6 @@ interface AskAiScreenFooterActionsProps {
   translations: AskAiScreenTranslations;
   conversations: StoredSearchPlugin<StoredAskAiState>;
   onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
-  agentStudio?: boolean;
 }
 
 export function AskAiScreenFooterActions({
@@ -272,7 +272,6 @@ export function AskAiScreenFooterActions({
   translations,
   conversations,
   onFeedback,
-  agentStudio,
 }: AskAiScreenFooterActionsProps): JSX.Element | null {
   // local state for feedback, initialised from stored conversations
   const initialFeedback = React.useMemo(() => {
@@ -310,26 +309,25 @@ export function AskAiScreenFooterActions({
 
   return (
     <div className="DocSearch-AskAiScreen-Actions">
-      {!agentStudio &&
-        (feedback === null ? (
-          <>
-            {saving ? (
-              <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-            ) : (
-              <>
-                <LikeButton title={likeButtonTitle} onClick={() => handleFeedback('like')} />
-                <DislikeButton title={dislikeButtonTitle} onClick={() => handleFeedback('dislike')} />
-              </>
-            )}
-            {savingError && (
-              <p className="DocSearch-AskAiScreen-FeedbackText">{savingError.message || 'An error occured'}</p>
-            )}
-          </>
-        ) : (
-          <p className="DocSearch-AskAiScreen-FeedbackText DocSearch-AskAiScreen-FeedbackText--visible">
-            {thanksForFeedbackText}
-          </p>
-        ))}
+      {feedback === null ? (
+        <>
+          {saving ? (
+            <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
+          ) : (
+            <>
+              <LikeButton title={likeButtonTitle} onClick={() => handleFeedback('like')} />
+              <DislikeButton title={dislikeButtonTitle} onClick={() => handleFeedback('dislike')} />
+            </>
+          )}
+          {savingError && (
+            <p className="DocSearch-AskAiScreen-FeedbackText">{savingError.message || 'An error occured'}</p>
+          )}
+        </>
+      ) : (
+        <p className="DocSearch-AskAiScreen-FeedbackText DocSearch-AskAiScreen-FeedbackText--visible">
+          {thanksForFeedbackText}
+        </p>
+      )}
       <CopyButton
         translations={translations}
         onClick={() => navigator.clipboard.writeText(latestAssistantMessageContent)}
@@ -373,7 +371,7 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
     startNewConversationButtonText = 'Start a new conversation',
   } = translations;
 
-  const { messages, askAiError, status } = props;
+  const { messages, askAiError, status, agentStudio } = props;
 
   // Check if there's a thread depth error
   const hasThreadDepthError = useMemo(() => {
@@ -448,7 +446,7 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
                 loadingStatus={props.status}
                 translations={translations}
                 conversations={props.conversations}
-                agentStudio={props.agentStudio}
+                agentStudio={agentStudio}
                 onSearchQueryClick={handleSearchQueryClick}
                 onFeedback={props.onFeedback}
               />

@@ -3,7 +3,13 @@ import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls } from 'ai';
 import { useCallback, useMemo, useRef } from 'react';
 
-import { getAgentStudioErrorMessage, getValidToken, postFeedback } from './askai';
+import {
+  agentStudioBaseUrl,
+  getAgentStudioErrorMessage,
+  getValidToken,
+  postAgentStudioFeedback,
+  postFeedback,
+} from './askai';
 import type { Exchange } from './AskAiScreen';
 import { ASK_AI_API_URL, BETA_ASK_AI_API_URL } from './constants';
 import type { StoredSearchPlugin } from './stored-searches';
@@ -59,7 +65,7 @@ const getAgentStudioTransport = ({
   searchParameters,
 }: AgentStudioTransportParams): DefaultChatTransport<AIMessage> => {
   return new DefaultChatTransport({
-    api: `https://${appId}.algolia.net/agent-studio/1/agents/${assistantId}/completions?stream=true&compatibilityMode=ai-sdk-5`,
+    api: `${agentStudioBaseUrl(appId)}/agents/${assistantId}/completions?stream=true&compatibilityMode=ai-sdk-5`,
     headers: {
       'x-algolia-application-id': appId,
       'x-algolia-api-key': apiKey,
@@ -145,19 +151,28 @@ export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, useS
     async (messageId: string, thumbs: 0 | 1): Promise<void> => {
       if (!assistantId) return;
 
-      const res = await postFeedback({
-        assistantId,
-        thumbs,
-        messageId,
-        appId,
-        abortSignal: abortControllerRef.current.signal,
-        useStagingEnv,
-      });
+      const res = await (params.agentStudio
+        ? postAgentStudioFeedback({
+            agentId: assistantId,
+            vote: thumbs,
+            messageId,
+            appId,
+            apiKey,
+            abortSignal: abortControllerRef.current.signal,
+          })
+        : postFeedback({
+            assistantId,
+            thumbs,
+            messageId,
+            appId,
+            abortSignal: abortControllerRef.current.signal,
+            useStagingEnv,
+          }));
 
       if (res.status >= 300) throw new Error('Failed, try again later.');
       conversations.addFeedback?.(messageId, thumbs === 1 ? 'like' : 'dislike');
     },
-    [assistantId, appId, conversations, useStagingEnv],
+    [assistantId, params.agentStudio, appId, apiKey, useStagingEnv, conversations],
   );
 
   const onStopStreaming = async (): Promise<void> => {

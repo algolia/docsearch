@@ -120,6 +120,8 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
     const showActions =
       !wasStopped && (!isLastExchange || (isLastExchange && status === 'ready' && Boolean(assistantMessage)));
 
+    const messageId = agentStudio ? assistantMessage?.id || exchange.id : userMessage?.id || exchange.id;
+
     return (
       <div className="DocSearch-AskAiScreen-Response-Container" ref={conversationRef}>
         <div className="DocSearch-AskAiScreen-Response">
@@ -212,12 +214,11 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
 
           <div className="DocSearch-AskAiScreen-Answer-Footer">
             <ConversationActions
-              id={userMessage?.id || exchange.id}
+              id={messageId}
               showActions={showActions}
               latestAssistantMessageContent={assistantContent?.text || null}
               translations={translations}
               conversations={conversations}
-              agentStudio={agentStudio}
               onFeedback={onFeedback}
             />
           </div>
