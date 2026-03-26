@@ -1,3 +1,18 @@
+## [4.6.2](https://github.com/algolia/docsearch/compare/v4.6.1...v4.6.2) (2026-03-26)
+
+
+### Bug Fixes
+
+* rollup version ([eac7019](https://github.com/algolia/docsearch/commit/eac70196eb38794aff8c8e1256a77ad8086c4288))
+
+
+### Features
+
+* agent studio feedback integration ([#2868](https://github.com/algolia/docsearch/issues/2868)) ([f83f5a9](https://github.com/algolia/docsearch/commit/f83f5a911c84ec86dee3db167567679a092abd32))
+* **askai:** add compatibility with algolia mcp search tool [DASH-2294] ([#2862](https://github.com/algolia/docsearch/issues/2862)) ([e20d30d](https://github.com/algolia/docsearch/commit/e20d30de7b2cbd297529e9b0449b1d8147858a9b))
+
+
+
 ## [4.6.1](https://github.com/algolia/docsearch/compare/v4.6.0...v4.6.1) (2026-03-24)
 
 
