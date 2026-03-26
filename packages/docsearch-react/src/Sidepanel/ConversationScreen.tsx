@@ -8,7 +8,7 @@ import { MemoizedMarkdown } from '../MemoizedMarkdown';
 import type { StoredSearchPlugin } from '../stored-searches';
 import { ToolCall, type ToolCallTranslations } from '../ToolCall';
 import type { StoredAskAiState } from '../types';
-import type { AIMessage } from '../types/AskiAi';
+import { isAIToolPart, type AIMessage } from '../types/AskiAi';
 import { extractLinksFromMessage, getMessageContent } from '../utils/ai';
 import { groupConsecutiveToolResults } from '../utils/groupConsecutiveToolResults';
 
@@ -159,7 +159,7 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
                   return <AggregatedSearchBlock key={index} queries={part.queries} />;
                 }
 
-                if (part.type === 'tool-searchIndex' || part.type === 'tool-algolia_search_index') {
+                if (isAIToolPart(part)) {
                   return (
                     <ToolCall
                       key={index}
