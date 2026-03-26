@@ -5,7 +5,10 @@ description: live demos showing how to use and extend docsearch beyond documenta
 ---
 
 import { DocSearch } from '@docsearch/react';
+import { DocSearchSidepanel } from '@docsearch/react/sidepanel';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 import '@docsearch/css/dist/style.css';
+import '@docsearch/css/dist/sidepanel.css';
 
 > These examples are interactive. click a button to open the modal and try a query.
 
@@ -66,6 +69,32 @@ Add algolia askai to get synthesized answers grounded in your indexed content. y
   insights={true}
   translations={{ button: { buttonText: 'search with askai (demo)' } }}
 />
+
+---
+
+## Sidepanel: persistent AI chat
+
+The sidepanel provides a persistent chat interface anchored to the side of the page, ideal for documentation sites where users want to ask follow-up questions without losing their place. Look for the button on the bottom right of the screen to try the demo.
+
+```jsx
+<DocSearchSidepanel
+  appId="PMZUYBQDAK"
+  apiKey="24b09689d5b4223813d9b8e48563c8f6"
+  indexName="docsearch"
+  assistantId="askAIDemo"
+/>
+```
+
+<BrowserOnly>
+  {() => (
+    <DocSearchSidepanel
+      appId="PMZUYBQDAK"
+      apiKey="24b09689d5b4223813d9b8e48563c8f6"
+      indexName="docsearch"
+      assistantId="askAIDemo"
+    />
+  )}
+</BrowserOnly>
 
 ---
 

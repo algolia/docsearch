@@ -136,7 +136,7 @@ export default {
       announcementBar: {
         id: 'announcement-bar',
         content:
-          '🚀 Get Ask AI now! Turn your docs site search into an AI-powered assistant – faster answers, fewer tickets, better self-serve. <a target="_blank" rel="noopener noreferrer" href="https://dashboard.algolia.com/ask-ai">Get Started Now</a>',
+          'Ask AI is now part of <strong>Agent Studio</strong> - We\'re integrating Ask AI into Agent Studio, our centralized space to build and manage AI agents.<a target="_blank" rel="noopener noreferrer" href="https://www.algolia.com/doc/guides/algolia-ai/agent-studio">Explore Agent Studio</a>',
       },
       colorMode: {
         defaultMode: 'light',
