@@ -72,7 +72,7 @@
     "prettier": "3.4.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "rollup": "4.31.0",
+    "rollup": "4.60.0",
     "rollup-plugin-filesize": "10.0.0",
     "shipjs": "0.27.0",
     "start-server-and-test": "2.0.10",
@@ -84,7 +84,7 @@
     "stylelint-prettier": "5.0.2",
     "typescript": "5.7.3",
     "typescript-eslint": "8.20.0",
-    "vitest": "3.0.2",
+    "vitest": "3.0.9",
     "watch": "1.0.2"
   },
   "packageManager": "yarn@4.6.0"

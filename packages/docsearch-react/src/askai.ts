@@ -3,6 +3,8 @@ import { ASK_AI_API_URL, BETA_ASK_AI_API_URL } from './constants';
 // ... existing imports ...
 const TOKEN_KEY = 'askai_token';
 
+export const agentStudioBaseUrl = (appId: string): string => `https://${appId}.algolia.net/agent-studio/1`;
+
 type TokenPayload = { exp: number };
 
 const decode = (token: string): TokenPayload => {
@@ -133,4 +135,38 @@ export const getAgentStudioErrorMessage = (error: Error): Error => {
   }
 
   return new Error(errorMessage);
+};
+
+export const postAgentStudioFeedback = ({
+  agentId,
+  vote,
+  messageId,
+  appId,
+  apiKey,
+  abortSignal,
+}: {
+  agentId: string;
+  vote: 0 | 1;
+  messageId: string;
+  appId: string;
+  apiKey: string;
+  abortSignal: AbortSignal;
+}): Promise<Response> => {
+  const headers = new Headers();
+  headers.set('x-algolia-application-id', appId);
+  headers.set('x-algolia-api-key', apiKey);
+  headers.set('content-type', 'application/json');
+
+  const baseUrl = `${agentStudioBaseUrl(appId)}/feedback`;
+
+  return fetch(baseUrl, {
+    method: 'POST',
+    body: JSON.stringify({
+      messageId,
+      agentId,
+      vote,
+    }),
+    headers,
+    signal: abortSignal,
+  });
 };

@@ -4,6 +4,11 @@
     "packages/*",
     "examples/*"
   ],
-  "version": "4.6.1",
-  "npmClient": "yarn"
+  "version": "4.6.2",
+  "npmClient": "yarn",
+  "command": {
+    "version": {
+      "forcePublish": true
+    }
+  }
 }
