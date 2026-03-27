@@ -5,6 +5,8 @@ description: live demos showing how to use and extend docsearch beyond documenta
 ---
 
 import { DocSearch } from '@docsearch/react';
+import { DocSearch as DocSearchProvider } from '@docsearch/core';
+import { DocSearchButton, DocSearchModal } from '@docsearch/modal';
 import { DocSearchSidepanel } from '@docsearch/react/sidepanel';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import '@docsearch/css/dist/style.css';
@@ -93,6 +95,45 @@ The sidepanel provides a persistent chat interface anchored to the side of the p
       indexName="docsearch"
       assistantId="askAIDemo"
     />
+  )}
+</BrowserOnly>
+
+---
+
+## Composable API: DocSearchButton + DocSearchModal
+
+Use the [Composable API](/docs/composable-api) to render the button and modal as separate components. This gives you explicit control over where each piece is rendered and when the modal code is loaded.
+
+```jsx
+import { DocSearch } from '@docsearch/core';
+import { DocSearchButton, DocSearchModal } from '@docsearch/modal';
+
+import '@docsearch/css/style.css';
+
+<DocSearch>
+  <DocSearchButton translations={{ buttonText: 'Composable search (demo)' }} />
+  <DocSearchModal
+    appId="PMZUYBQDAK"
+    apiKey="24b09689d5b4223813d9b8e48563c8f6"
+    indexName="docsearch"
+    askAi={{ assistantId: 'askAIDemo' }}
+  />
+</DocSearch>
+```
+
+<BrowserOnly>
+  {() => (
+    <DocSearchProvider>
+      <DocSearchButton
+        translations={{ buttonText: 'Composable search (demo)' }}
+      />
+      <DocSearchModal
+        appId="PMZUYBQDAK"
+        apiKey="24b09689d5b4223813d9b8e48563c8f6"
+        indexName="docsearch"
+        askAi={{ assistantId: 'askAIDemo' }}
+      />
+    </DocSearchProvider>
   )}
 </BrowserOnly>
 
