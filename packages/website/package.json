@@ -19,6 +19,7 @@
     "@docsearch/core": "workspace:*",
     "@docsearch/css": "workspace:*",
     "@docsearch/docusaurus-adapter": "workspace:*",
+    "@docsearch/modal": "workspace:*",
     "@docsearch/react": "workspace:*",
     "@docsearch/sidepanel": "workspace:*",
     "@docusaurus/core": "3.9.2",
