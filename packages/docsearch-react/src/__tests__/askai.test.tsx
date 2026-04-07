@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, within } from '@testing-library/react';
 import type { UIMessage } from 'ai';
 import React from 'react';
 import { describe, it, expect } from 'vitest';
@@ -41,5 +41,45 @@ describe('AskAiScreen', () => {
     );
 
     expect(getByText('oh no')).toBeInTheDocument();
+  });
+
+  it('surfaces thread depth (AI-217) with a banner and hides the generic chat error', () => {
+    const messages: UIMessage[] = [
+      {
+        id: '1',
+        role: 'user',
+        parts: [{ type: 'text', text: 'first' }],
+      },
+      {
+        id: '2',
+        role: 'assistant',
+        parts: [{ type: 'text', text: 'answer' }],
+      },
+      {
+        id: '3',
+        role: 'user',
+        parts: [{ type: 'text', text: 'follow-up' }],
+      },
+    ];
+
+    const onNewConversation = (): void => {};
+
+    const { container, getByText } = render(
+      <AskAiScreen
+        {...baseProps}
+        messages={messages}
+        status="error"
+        askAiError={new Error('AI-217 - Thread depth exceeded')}
+        onNewConversation={onNewConversation}
+      />,
+    );
+
+    expect(
+      getByText('This conversation is now closed to keep responses accurate.', { exact: false }),
+    ).toBeInTheDocument();
+    expect(getByText('Start a new conversation')).toBeInTheDocument();
+    // Bound queries from `render()` use `baseElement` (often `document.body`), so a prior test can still
+    // match. Restrict to this instance's root so we only assert on this tree.
+    expect(within(container).queryByText('Chat error')).not.toBeInTheDocument();
   });
 });

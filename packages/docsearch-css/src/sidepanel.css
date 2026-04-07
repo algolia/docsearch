@@ -623,6 +623,11 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
   flex-direction: column;
 }
 
+.DocSearch-Sidepanel-ConversationScreen-threadDepth {
+  margin: 0 1rem 0.75rem;
+  flex-shrink: 0;
+}
+
 @media screen and (min-width: 769px) {
   .DocSearch-Sidepanel-ConversationScreen {
     padding: 1rem 0;

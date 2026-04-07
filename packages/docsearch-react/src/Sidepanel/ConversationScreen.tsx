@@ -9,7 +9,7 @@ import type { StoredSearchPlugin } from '../stored-searches';
 import { ToolCall, type ToolCallTranslations } from '../ToolCall';
 import type { StoredAskAiState } from '../types';
 import { isAIToolPart, type AIMessage } from '../types/AskiAi';
-import { extractLinksFromMessage, getMessageContent } from '../utils/ai';
+import { extractLinksFromMessage, getMessageContent, isThreadDepthError } from '../utils/ai';
 import { groupConsecutiveToolResults } from '../utils/groupConsecutiveToolResults';
 
 import { AggregatedSearchBlock } from './AggregatedSearchBlock';
@@ -60,7 +60,15 @@ export type ConversationScreenTranslations = Partial<
     /**
      * Error title shown if there is an error while chatting.
      */
-    errorTitleText;
+    errorTitleText: string;
+    /**
+     * Message shown when thread depth limit is exceeded (AI-217).
+     */
+    threadDepthExceededMessage: string;
+    /**
+     * Button label to start a new conversation after a thread depth error.
+     */
+    startNewConversationButtonText: string;
   }
 >;
 
@@ -72,6 +80,8 @@ export type ConversationScreenProps = {
   handleFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
   streamError?: Error;
   agentStudio?: boolean;
+  showThreadDepthError?: boolean;
+  onThreadDepthNewConversation?: () => void;
 };
 
 type ConversationnExchangeProps = {
@@ -105,6 +115,8 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
       errorTitleText = 'Chat error',
     } = translations;
 
+    const isThreadDepth = isThreadDepthError(streamError);
+
     const assistantContent = useMemo(() => getMessageContent(assistantMessage), [assistantMessage]);
     const userContent = useMemo(() => getMessageContent(userMessage), [userMessage]);
 
@@ -130,7 +142,7 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
           </div>
           <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--assistant">
             <div className="DocSearch-AskAiScreen-MessageContent">
-              {status === 'error' && streamError && isLastExchange && (
+              {status === 'error' && streamError && isLastExchange && !isThreadDepth && (
                 <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error">
                   <AlertIcon />
                   <div className="DocSearch-AskAiScreen-Error-Content">
@@ -233,9 +245,19 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
 );
 
 export const ConversationScreen = memo(
-  ({ exchanges, translations = {}, handleFeedback, ...props }: ConversationScreenProps): JSX.Element => {
-    const { conversationDisclaimer = 'Answers are generated with AI which can make mistakes. Verify responses.' } =
-      translations;
+  ({
+    exchanges,
+    translations = {},
+    handleFeedback,
+    showThreadDepthError = false,
+    onThreadDepthNewConversation,
+    ...props
+  }: ConversationScreenProps): JSX.Element => {
+    const {
+      conversationDisclaimer = 'Answers are generated with AI which can make mistakes. Verify responses.',
+      threadDepthExceededMessage = 'This conversation is now closed to keep responses accurate.',
+      startNewConversationButtonText = 'Start a new conversation',
+    } = translations;
 
     const mostRecentExchangeRef = React.useRef<HTMLDivElement>(null);
     const totalExchanges = exchanges.length;
@@ -252,6 +274,23 @@ export const ConversationScreen = memo(
 
     return (
       <div className="DocSearch-Sidepanel-ConversationScreen">
+        {showThreadDepthError && onThreadDepthNewConversation ? (
+          <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error DocSearch-AskAiScreen-Error--ThreadDepth DocSearch-Sidepanel-ConversationScreen-threadDepth">
+            <div className="DocSearch-AskAiScreen-Error-Content">
+              <p>
+                {threadDepthExceededMessage}{' '}
+                <button
+                  type="button"
+                  className="DocSearch-ThreadDepthError-Link"
+                  onClick={onThreadDepthNewConversation}
+                >
+                  {startNewConversationButtonText}
+                </button>{' '}
+                to continue.
+              </p>
+            </div>
+          </div>
+        ) : null}
         <p className="DocSearch-Sidepanel-ConversationScreen-disclaimer">{conversationDisclaimer}</p>
 
         {exchanges.slice().map((exchange, idx) => {

@@ -99,11 +99,61 @@ export const buildDummyAskAiHit = (query: string, messages: AIMessage[]): Stored
 export const getMessageContent = (message: AIMessage | null): TextUIPart | undefined =>
   message?.parts.find((part) => part.type === 'text');
 
+type ExchangeWithOptionalAssistant = {
+  assistantMessage: AIMessage | null;
+};
+
 /**
- * Helper function to check if error is a thread depth error (AI-217).
+ * When thread depth is exceeded, the last user turn has no assistant reply — omit it so the UI
+ * only shows successful exchanges (same behavior as the modal Ask AI screen).
+ */
+export function filterExchangesForThreadDepthError<T extends ExchangeWithOptionalAssistant>(
+  exchanges: T[],
+  hasThreadDepthError: boolean,
+): T[] {
+  if (!hasThreadDepthError || exchanges.length === 0) {
+    return exchanges;
+  }
+
+  const last = exchanges[exchanges.length - 1];
+  if (!last.assistantMessage) {
+    return exchanges.slice(0, -1);
+  }
+
+  return exchanges;
+}
+
+function threadDepthFromPlainText(message: string): boolean {
+  if (!message) return false;
+  if (message.toUpperCase().includes('AI-217')) return true;
+  return /thread\s+depth/i.test(message);
+}
+
+function messageLooksLikeThreadDepth(message: string): boolean {
+  if (threadDepthFromPlainText(message)) return true;
+
+  try {
+    const parsed = JSON.parse(message) as {
+      code?: string;
+      errorCode?: string;
+      message?: string;
+    };
+    const code = parsed.code ?? parsed.errorCode;
+    if (typeof code === 'string' && code.toUpperCase() === 'AI-217') {
+      return true;
+    }
+    const nested = typeof parsed.message === 'string' ? parsed.message : '';
+    return threadDepthFromPlainText(nested);
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Whether the error is thread depth exceeded (AI-217), including JSON-shaped Agent Studio payloads.
  */
 export function isThreadDepthError(error?: Error): boolean {
   if (!error) return false;
 
-  return error.message?.includes('AI-217') || false;
+  return messageLooksLikeThreadDepth(error.message ?? '');
 }

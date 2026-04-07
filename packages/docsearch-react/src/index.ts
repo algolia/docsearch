@@ -1,3 +1,5 @@
+export { filterExchangesForThreadDepthError, isThreadDepthError } from './utils/ai';
+
 export * from './DocSearch';
 export * from './DocSearchButton';
 export * from './DocSearchModal';

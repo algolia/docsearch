@@ -9,7 +9,7 @@ import { useAskAi } from '../useAskAi';
 import { useIsMobile } from '../useIsMobile';
 import { useSearchClient } from '../useSearchClient';
 import { useSuggestedQuestions } from '../useSuggestedQuestions';
-import { buildDummyAskAiHit } from '../utils/ai';
+import { buildDummyAskAiHit, filterExchangesForThreadDepthError, isThreadDepthError } from '../utils/ai';
 
 import { ConversationHistoryScreen } from './ConversationHistoryScreen';
 import type { ConversationScreenTranslations } from './ConversationScreen';
@@ -203,6 +203,19 @@ function SidepanelInner(
     searchClient,
   });
 
+  const hasThreadDepthError = React.useMemo(
+    () => status === 'error' && isThreadDepthError(askAiError),
+    [status, askAiError],
+  );
+
+  const displayExchanges = React.useMemo(
+    () => filterExchangesForThreadDepthError(exchanges, hasThreadDepthError),
+    [exchanges, hasThreadDepthError],
+  );
+
+  const showThreadDepthBanner =
+    sidepanelState === 'conversation' && hasThreadDepthError && messages.some((m) => m.role === 'assistant');
+
   const prevStatus = React.useRef(status);
 
   const handleSend = (prompt: string): void => {
@@ -373,7 +386,7 @@ function SidepanelInner(
       <aside id="docsearch-sidepanel" className={`DocSearch-Sidepanel ${sidepanelState}`}>
         <SidepanelHeader
           sidepanelState={sidepanelState}
-          exchanges={exchanges}
+          exchanges={displayExchanges}
           setSidepanelState={setSidepanelState}
           hasConversations={conversations.getAll().length > 0}
           isStreaming={isStreaming}
@@ -391,13 +404,15 @@ function SidepanelInner(
           )}
           {sidepanelState === 'conversation' && (
             <ConversationScreen
-              exchanges={exchanges}
+              exchanges={displayExchanges}
               status={status}
               conversations={conversations}
               handleFeedback={sendFeedback}
               translations={translations.conversationScreen}
               streamError={askAiError}
               agentStudio={agentStudio}
+              showThreadDepthError={showThreadDepthBanner}
+              onThreadDepthNewConversation={handleStartNewConversation}
             />
           )}
           {sidepanelState === 'conversation-history' && (
@@ -406,9 +421,10 @@ function SidepanelInner(
         </div>
         <PromptForm
           ref={promptInputRef}
-          exchanges={exchanges}
+          exchanges={displayExchanges}
           isStreaming={isStreaming}
           translations={translations.promptForm}
+          isThreadDepthError={showThreadDepthBanner}
           onSend={handleSend}
           onStopStreaming={handleStopStreaming}
         />
