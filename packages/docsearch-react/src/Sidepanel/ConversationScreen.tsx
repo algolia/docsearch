@@ -80,8 +80,6 @@ export type ConversationScreenProps = {
   handleFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
   streamError?: Error;
   agentStudio?: boolean;
-  showThreadDepthError?: boolean;
-  onThreadDepthNewConversation?: () => void;
 };
 
 type ConversationnExchangeProps = {
@@ -245,19 +243,9 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
 );
 
 export const ConversationScreen = memo(
-  ({
-    exchanges,
-    translations = {},
-    handleFeedback,
-    showThreadDepthError = false,
-    onThreadDepthNewConversation,
-    ...props
-  }: ConversationScreenProps): JSX.Element => {
-    const {
-      conversationDisclaimer = 'Answers are generated with AI which can make mistakes. Verify responses.',
-      threadDepthExceededMessage = 'This conversation is now closed to keep responses accurate.',
-      startNewConversationButtonText = 'Start a new conversation',
-    } = translations;
+  ({ exchanges, translations = {}, handleFeedback, ...props }: ConversationScreenProps): JSX.Element => {
+    const { conversationDisclaimer = 'Answers are generated with AI which can make mistakes. Verify responses.' } =
+      translations;
 
     const mostRecentExchangeRef = React.useRef<HTMLDivElement>(null);
     const totalExchanges = exchanges.length;
@@ -274,23 +262,6 @@ export const ConversationScreen = memo(
 
     return (
       <div className="DocSearch-Sidepanel-ConversationScreen">
-        {showThreadDepthError && onThreadDepthNewConversation ? (
-          <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error DocSearch-AskAiScreen-Error--ThreadDepth DocSearch-Sidepanel-ConversationScreen-threadDepth">
-            <div className="DocSearch-AskAiScreen-Error-Content">
-              <p>
-                {threadDepthExceededMessage}{' '}
-                <button
-                  type="button"
-                  className="DocSearch-ThreadDepthError-Link"
-                  onClick={onThreadDepthNewConversation}
-                >
-                  {startNewConversationButtonText}
-                </button>{' '}
-                to continue.
-              </p>
-            </div>
-          </div>
-        ) : null}
         <p className="DocSearch-Sidepanel-ConversationScreen-disclaimer">{conversationDisclaimer}</p>
 
         {exchanges.slice().map((exchange, idx) => {

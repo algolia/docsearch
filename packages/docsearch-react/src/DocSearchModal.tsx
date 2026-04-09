@@ -398,16 +398,26 @@ export function DocSearchModal({
 
   const [stoppedStream, setStoppedStream] = React.useState(false);
 
-  const { messages, status, setMessages, sendMessage, stopAskAiStreaming, askAiError, sendFeedback, conversations } =
-    useAskAi({
-      assistantId: askAiConfigurationId,
-      apiKey: askAiConfig?.apiKey || apiKey,
-      appId: askAiConfig?.appId || appId,
-      indexName: askAiConfig?.indexName || defaultIndexName,
-      searchParameters: askAiSearchParameters,
-      useStagingEnv: askAiUseStagingEnv,
-      agentStudio,
-    });
+  const {
+    messages,
+    status,
+    sendMessage,
+    stopAskAiStreaming,
+    askAiError,
+    sendFeedback,
+    conversations,
+    clearError,
+    resetAskAiAbortScope,
+    resetAskAiChatSession,
+  } = useAskAi({
+    assistantId: askAiConfigurationId,
+    apiKey: askAiConfig?.apiKey || apiKey,
+    appId: askAiConfig?.appId || appId,
+    indexName: askAiConfig?.indexName || defaultIndexName,
+    searchParameters: askAiSearchParameters,
+    useStagingEnv: askAiUseStagingEnv,
+    agentStudio,
+  });
 
   const prevStatus = React.useRef(status);
   React.useEffect(() => {
@@ -423,9 +433,12 @@ export function DocSearchModal({
         };
       }
 
-      for (const part of messages[0].parts) {
-        if (part.type === 'text') {
-          conversations.add(buildDummyAskAiHit(part.text, messages));
+      const first = messages[0];
+      if (first?.parts) {
+        for (const part of first.parts) {
+          if (part.type === 'text') {
+            conversations.add(buildDummyAskAiHit(part.text, messages));
+          }
         }
       }
     }
@@ -533,6 +546,8 @@ export function DocSearchModal({
       if (isHybridModeSupported) return;
 
       setStoppedStream(false);
+      resetAskAiAbortScope();
+      clearError();
 
       const messageOptions: ChatRequestOptions = {};
 
@@ -571,7 +586,16 @@ export function DocSearchModal({
         autocompleteRef.current.setQuery('');
       }
     },
-    [onAskAiToggle, interceptAskAiEvent, sendMessage, askAiState, setAskAiState, isHybridModeSupported],
+    [
+      onAskAiToggle,
+      interceptAskAiEvent,
+      askAiState,
+      setAskAiState,
+      isHybridModeSupported,
+      clearError,
+      resetAskAiAbortScope,
+      sendMessage,
+    ],
   );
 
   // feedback handler
@@ -623,7 +647,10 @@ export function DocSearchModal({
                     },
                     onSelect({ item }): void {
                       if (item.messages) {
-                        setMessages(item.messages as any);
+                        resetAskAiChatSession({
+                          kind: 'setMessages',
+                          messages: item.messages as AIMessage[],
+                        });
                         onAskAiToggle(true);
                       }
                     },
@@ -793,14 +820,18 @@ export function DocSearchModal({
     };
   }, []);
 
-  // Refresh the autocomplete results when ask ai is toggled off
-  // helps return to the previous ac state and start screen
+  // Refresh autocomplete and rotate the chat session only when Ask AI is turned off — not on every
+  // mount while inactive. `clearError` from `useChat` can change when `chatSessionId` changes; listing
+  // it (and re-running `resetAskAiChatSession` on that) caused an infinite update loop.
+  const prevIsAskAiActiveRef = React.useRef(isAskAiActive);
   React.useEffect(() => {
-    if (!isAskAiActive) {
+    if (prevIsAskAiActiveRef.current && !isAskAiActive) {
       autocomplete.refresh();
-      setMessages([]);
+      clearError();
+      resetAskAiChatSession();
     }
-  }, [isAskAiActive, autocomplete, setMessages]);
+    prevIsAskAiActiveRef.current = isAskAiActive;
+  }, [isAskAiActive, autocomplete, clearError, resetAskAiChatSession]);
 
   // Track external state in order to manage internal askAiState
   React.useEffect(() => {
@@ -814,7 +845,8 @@ export function DocSearchModal({
   };
 
   const handleNewConversation = (): void => {
-    setMessages([]);
+    clearError();
+    resetAskAiChatSession();
     setAskAiState('new-conversation');
   };
 
@@ -913,7 +945,10 @@ export function DocSearchModal({
                 if (item.type === 'askAI' && item.query) {
                   // if the item is askAI and the anchor is stored
                   if (item.anchor === 'stored' && 'messages' in item) {
-                    setMessages(item.messages as any);
+                    resetAskAiChatSession({
+                      kind: 'setMessages',
+                      messages: item.messages as AIMessage[],
+                    });
                     const initialMessage: InitialAskAiMessage = {
                       query: item.query,
                       messageId: (item.messages as StoredAskAiMessage[])[0].id,

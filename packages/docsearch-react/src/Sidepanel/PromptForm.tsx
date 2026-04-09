@@ -44,13 +44,25 @@ type Props = {
   onStopStreaming: () => void;
   /** When true, the prompt is disabled (same as modal SearchBox in Ask AI mode). */
   isThreadDepthError?: boolean;
+  /**
+   * Rendered above the textarea inside the prompt chrome (e.g. Thread-depth AI-217 banner).
+   */
+  threadDepthBanner?: React.ReactNode;
 };
 
 const MAX_PROMPT_ROWS = 8;
 
 export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
   (
-    { exchanges, isStreaming, translations = {}, onSend, onStopStreaming, isThreadDepthError = false },
+    {
+      exchanges,
+      isStreaming,
+      translations = {},
+      onSend,
+      onStopStreaming,
+      isThreadDepthError = false,
+      threadDepthBanner,
+    },
     ref,
   ): JSX.Element => {
     const isMobile = useIsMobile();
@@ -134,6 +146,7 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
 
     return (
       <div className="DocSearch-Sidepanel-Prompt">
+        {threadDepthBanner}
         <form
           className="DocSearch-Sidepanel-Prompt--form"
           onSubmit={(e) => {

@@ -54,6 +54,7 @@ export interface DocSearchContext {
   isModalActive: boolean;
   onAskAiToggle: OnAskAiToggle;
   initialAskAiMessage: InitialAskAiMessage | undefined;
+  clearInitialAskAiMessage: () => void;
   registerView: (view: View) => void;
   isHybridModeSupported: boolean;
 }
@@ -183,6 +184,10 @@ function DocSearchInner(
     [setDocsearchState, setInitialQuery],
   );
 
+  const clearInitialAskAiMessage = React.useCallback((): void => {
+    setInitialAskAiMessage(undefined);
+  }, []);
+
   const registerView = React.useCallback(
     (view: View): void => {
       if (registeredViews.has(view)) return;
@@ -246,6 +251,7 @@ function DocSearchInner(
       isModalActive,
       onAskAiToggle,
       initialAskAiMessage,
+      clearInitialAskAiMessage,
       registerView,
       isHybridModeSupported,
     }),
@@ -260,6 +266,7 @@ function DocSearchInner(
       isModalActive,
       onAskAiToggle,
       initialAskAiMessage,
+      clearInitialAskAiMessage,
       registerView,
       isHybridModeSupported,
     ],

@@ -182,7 +182,8 @@ function SidepanelInner(
     stopAskAiStreaming,
     isStreaming,
     exchanges,
-    setMessages,
+    clearError,
+    resetAskAiChatSession,
     conversations,
     messages,
     sendFeedback,
@@ -216,31 +217,39 @@ function SidepanelInner(
   const showThreadDepthBanner =
     sidepanelState === 'conversation' && hasThreadDepthError && messages.some((m) => m.role === 'assistant');
 
+  const {
+    threadDepthExceededMessage = 'This conversation is now closed to keep responses accurate.',
+    startNewConversationButtonText = 'Start a new conversation',
+  } = translations.conversationScreen ?? {};
+
   const prevStatus = React.useRef(status);
 
   const handleSend = (prompt: string): void => {
     setStoppedStreaming(false);
+    clearError();
 
     sendMessage({ text: prompt });
     setSidepanelState('conversation');
   };
 
   const handleStartNewConversation = (): void => {
-    setMessages([]);
+    clearError();
+    resetAskAiChatSession();
     setSidepanelState('new-conversation');
   };
 
   const handleSelectQuestion = (question: SuggestedQuestionHit): void => {
     setStoppedStreaming(false);
-    setMessages([]);
-    sendMessage(
-      { text: question.question },
-      {
+    clearError();
+    resetAskAiChatSession({
+      kind: 'sendText',
+      text: question.question,
+      requestOptions: {
         body: {
           suggestedQuestionId: question.objectID,
         },
       },
-    );
+    });
     setSidepanelState('conversation');
   };
 
@@ -251,15 +260,16 @@ function SidepanelInner(
 
   const handleSelectConversation = React.useCallback(
     (conversation: StoredAskAiState): void => {
+      clearError();
       if (conversation.messages) {
-        setMessages(conversation.messages);
+        resetAskAiChatSession({ kind: 'setMessages', messages: conversation.messages });
       } else if (conversation.query) {
-        sendMessage({ text: conversation.query });
+        resetAskAiChatSession({ kind: 'sendText', text: conversation.query });
       }
 
       setSidepanelState('conversation');
     },
-    [sendMessage, setMessages],
+    [clearError, resetAskAiChatSession],
   );
 
   useManageSidepanelLayout({
@@ -301,9 +311,12 @@ function SidepanelInner(
         };
       }
 
-      for (const part of messages[0].parts) {
-        if (part.type === 'text') {
-          conversations.add(buildDummyAskAiHit(part.text, messages));
+      const first = messages[0];
+      if (first?.parts) {
+        for (const part of first.parts) {
+          if (part.type === 'text') {
+            conversations.add(buildDummyAskAiHit(part.text, messages));
+          }
         }
       }
     }
@@ -328,34 +341,57 @@ function SidepanelInner(
     };
   }, []);
 
+  // Only re-run when `initialMessage` changes. Other handlers (e.g. `sendMessage`) can change every
+  // render; listing them here was re-firing the effect and repeatedly clearing the chat.
+  const initialMessageHandlingRef = React.useRef({
+    clearError,
+    resetAskAiChatSession,
+    conversations,
+    handleSelectConversation,
+  });
+  initialMessageHandlingRef.current = {
+    clearError,
+    resetAskAiChatSession,
+    conversations,
+    handleSelectConversation,
+  };
+
   React.useEffect(() => {
     if (!initialMessage) return;
+
+    const {
+      clearError: clr,
+      resetAskAiChatSession: resetSession,
+      conversations: convs,
+      handleSelectConversation: selectConv,
+    } = initialMessageHandlingRef.current;
 
     let selectedConversation: StoredAskAiState | undefined;
 
     if (initialMessage.messageId) {
-      selectedConversation = conversations.getConversation?.(initialMessage.messageId);
+      selectedConversation = convs.getConversation?.(initialMessage.messageId);
     }
 
     if (selectedConversation) {
-      handleSelectConversation(selectedConversation);
+      selectConv(selectedConversation);
     } else {
-      setMessages([]);
-      sendMessage(
-        {
-          text: initialMessage.query,
-        },
+      clr();
+      resetSession(
         initialMessage.suggestedQuestionId
           ? {
-              body: {
-                suggestedQuestionId: initialMessage.suggestedQuestionId,
+              kind: 'sendText',
+              text: initialMessage.query,
+              requestOptions: {
+                body: {
+                  suggestedQuestionId: initialMessage.suggestedQuestionId,
+                },
               },
             }
-          : {},
+          : { kind: 'sendText', text: initialMessage.query },
       );
       setSidepanelState('conversation');
     }
-  }, [initialMessage, sendMessage, conversations, handleSelectConversation, setMessages]);
+  }, [initialMessage]);
 
   // Autofocus the prompt input when the sidepanel opens and blur it when
   // it closes. Disabled on mobile because focusing the textarea triggers the
@@ -411,8 +447,6 @@ function SidepanelInner(
               translations={translations.conversationScreen}
               streamError={askAiError}
               agentStudio={agentStudio}
-              showThreadDepthError={showThreadDepthBanner}
-              onThreadDepthNewConversation={handleStartNewConversation}
             />
           )}
           {sidepanelState === 'conversation-history' && (
@@ -425,6 +459,23 @@ function SidepanelInner(
           isStreaming={isStreaming}
           translations={translations.promptForm}
           isThreadDepthError={showThreadDepthBanner}
+          threadDepthBanner={
+            showThreadDepthBanner ? (
+              <div className="DocSearch-Sidepanel-ThreadDepthBanner">
+                <p>
+                  {threadDepthExceededMessage}{' '}
+                  <button
+                    type="button"
+                    className="DocSearch-ThreadDepthError-Link"
+                    onClick={handleStartNewConversation}
+                  >
+                    {startNewConversationButtonText}
+                  </button>{' '}
+                  to continue.
+                </p>
+              </div>
+            ) : null
+          }
           onSend={handleSend}
           onStopStreaming={handleStopStreaming}
         />
