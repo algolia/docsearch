@@ -1,4 +1,8 @@
-export { filterExchangesForThreadDepthError, isThreadDepthError } from './utils/ai';
+export {
+  filterExchangesForThreadDepthError,
+  getThreadDepthErrorUserFacingMessage,
+  isThreadDepthError,
+} from './utils/ai';
 
 export * from './DocSearch';
 export * from './DocSearchButton';

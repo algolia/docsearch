@@ -13,6 +13,7 @@ import {
   extractLinksFromMessage,
   filterExchangesForThreadDepthError,
   getMessageContent,
+  getThreadDepthErrorUserFacingMessage,
   isThreadDepthError,
 } from './utils/ai';
 import { groupConsecutiveToolResults } from './utils/groupConsecutiveToolResults';
@@ -383,6 +384,8 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
     return status === 'error' && isThreadDepthError(askAiError);
   }, [status, askAiError]);
 
+  const threadDepthApiMessage = useMemo(() => getThreadDepthErrorUserFacingMessage(askAiError), [askAiError]);
+
   // Group messages into exchanges (user + assistant pairs)
   const exchanges: Exchange[] = useMemo(() => {
     const grouped: Exchange[] = [];
@@ -414,6 +417,9 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
       {showThreadDepthError && (
         <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error DocSearch-AskAiScreen-Error--ThreadDepth">
           <div className="DocSearch-AskAiScreen-Error-Content">
+            {threadDepthApiMessage ? (
+              <p className="DocSearch-AskAiScreen-Error-Title">{threadDepthApiMessage}</p>
+            ) : null}
             <p>
               {threadDepthExceededMessage}{' '}
               <button type="button" className="DocSearch-ThreadDepthError-Link" onClick={props.onNewConversation}>

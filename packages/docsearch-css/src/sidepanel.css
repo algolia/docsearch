@@ -661,6 +661,11 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
   margin: 0;
 }
 
+.DocSearch-Sidepanel .DocSearch-Sidepanel-ThreadDepthBanner-apiMessage {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
 @media screen and (min-width: 769px) {
   .DocSearch-Sidepanel-ConversationScreen {
     padding: 1rem 0;

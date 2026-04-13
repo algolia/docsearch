@@ -54,8 +54,8 @@ type Props = {
   translations?: PromptFormTranslations;
   onSend: (prompt: string) => void;
   onStopStreaming: () => void;
-  /** When true, the thread-depth banner is shown and the prompt is disabled (AI-217). */
   showThreadDepthBanner: boolean;
+  threadDepthApiMessage?: string;
   onStartNewConversation: () => void;
 };
 
@@ -70,6 +70,7 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
       onSend,
       onStopStreaming,
       showThreadDepthBanner,
+      threadDepthApiMessage,
       onStartNewConversation,
     },
     ref,
@@ -160,6 +161,9 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
       <div className="DocSearch-Sidepanel-Prompt">
         {showThreadDepthBanner ? (
           <div className="DocSearch-Sidepanel-ThreadDepthBanner">
+            {threadDepthApiMessage ? (
+              <p className="DocSearch-Sidepanel-ThreadDepthBanner-apiMessage">{threadDepthApiMessage}</p>
+            ) : null}
             <p>
               {threadDepthExceededMessage}{' '}
               <button type="button" className="DocSearch-ThreadDepthError-Link" onClick={onStartNewConversation}>

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import type { AIMessage } from '../../types/AskiAi';
-import { filterExchangesForThreadDepthError, isThreadDepthError } from '../ai';
+import { filterExchangesForThreadDepthError, getThreadDepthErrorUserFacingMessage, isThreadDepthError } from '../ai';
 
 describe('isThreadDepthError', () => {
   it('detects AI-217 in message (any case)', () => {
@@ -39,9 +39,9 @@ describe('filterExchangesForThreadDepthError', () => {
     assistantMessage: { id: `${id}-a`, role: 'assistant', parts: [{ type: 'text', text: 'a' }] },
   });
 
-  it('removes trailing user-only exchange when thread depth failed', () => {
+  it('keeps trailing user-only exchange when thread depth failed so the last prompt stays visible', () => {
     const exchanges = [withAssistant('1'), userOnly('2')];
-    expect(filterExchangesForThreadDepthError(exchanges, true)).toEqual([withAssistant('1')]);
+    expect(filterExchangesForThreadDepthError(exchanges, true)).toEqual(exchanges);
   });
 
   it('leaves exchanges unchanged when not a thread depth error', () => {
@@ -49,8 +49,23 @@ describe('filterExchangesForThreadDepthError', () => {
     expect(filterExchangesForThreadDepthError(exchanges, false)).toEqual(exchanges);
   });
 
-  it('does not remove the last exchange when an assistant reply exists', () => {
+  it('does not remove exchanges when an assistant reply exists', () => {
     const exchanges = [withAssistant('1'), withAssistant('2')];
     expect(filterExchangesForThreadDepthError(exchanges, true)).toEqual(exchanges);
+  });
+});
+
+describe('getThreadDepthErrorUserFacingMessage', () => {
+  it('returns nested message from JSON-shaped thread depth errors', () => {
+    const body = JSON.stringify({
+      message: 'Conversation has reached its maximum thread depth of 3 messages. Please start a new conversation.',
+    });
+    expect(getThreadDepthErrorUserFacingMessage(new Error(body))).toBe(
+      'Conversation has reached its maximum thread depth of 3 messages. Please start a new conversation.',
+    );
+  });
+
+  it('returns undefined when not a thread depth error', () => {
+    expect(getThreadDepthErrorUserFacingMessage(new Error('Network failed'))).toBeUndefined();
   });
 });

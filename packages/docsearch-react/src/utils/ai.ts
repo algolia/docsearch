@@ -104,22 +104,13 @@ type ExchangeWithOptionalAssistant = {
 };
 
 /**
- * When thread depth is exceeded, the last user turn has no assistant reply — omit it so the UI
- * only shows successful exchanges (same behavior as the modal Ask AI screen).
+ * Pass-through: keep all exchanges when thread depth fails so the last user message stays visible
+ * (there is often no assistant reply for that turn).
  */
 export function filterExchangesForThreadDepthError<T extends ExchangeWithOptionalAssistant>(
   exchanges: T[],
-  hasThreadDepthError: boolean,
+  _hasThreadDepthError: boolean,
 ): T[] {
-  if (!hasThreadDepthError || exchanges.length === 0) {
-    return exchanges;
-  }
-
-  const last = exchanges[exchanges.length - 1];
-  if (!last.assistantMessage) {
-    return exchanges.slice(0, -1);
-  }
-
   return exchanges;
 }
 
@@ -156,4 +147,26 @@ export function isThreadDepthError(error?: Error): boolean {
   if (!error) return false;
 
   return messageLooksLikeThreadDepth(error.message ?? '');
+}
+
+/**
+ * Prefer the API `message` field when the error body is JSON; otherwise the thrown message string.
+ * Only meaningful when {@link isThreadDepthError} is true.
+ */
+export function getThreadDepthErrorUserFacingMessage(error?: Error): string | undefined {
+  if (!error || !isThreadDepthError(error)) return undefined;
+
+  const raw = error.message ?? '';
+
+  try {
+    const parsed = JSON.parse(raw) as { message?: string };
+    if (typeof parsed.message === 'string' && parsed.message.trim() !== '') {
+      return parsed.message.trim();
+    }
+  } catch {
+    // not JSON — fall through
+  }
+
+  const trimmed = raw.trim();
+  return trimmed !== '' ? trimmed : undefined;
 }

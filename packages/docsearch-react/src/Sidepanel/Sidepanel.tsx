@@ -9,7 +9,12 @@ import { useAskAi } from '../useAskAi';
 import { useIsMobile } from '../useIsMobile';
 import { useSearchClient } from '../useSearchClient';
 import { useSuggestedQuestions } from '../useSuggestedQuestions';
-import { buildDummyAskAiHit, filterExchangesForThreadDepthError, isThreadDepthError } from '../utils/ai';
+import {
+  buildDummyAskAiHit,
+  filterExchangesForThreadDepthError,
+  getThreadDepthErrorUserFacingMessage,
+  isThreadDepthError,
+} from '../utils/ai';
 
 import { ConversationHistoryScreen } from './ConversationHistoryScreen';
 import type { ConversationScreenTranslations } from './ConversationScreen';
@@ -216,6 +221,8 @@ function SidepanelInner(
 
   const showThreadDepthBanner =
     sidepanelState === 'conversation' && hasThreadDepthError && messages.some((m) => m.role === 'assistant');
+
+  const threadDepthApiMessage = React.useMemo(() => getThreadDepthErrorUserFacingMessage(askAiError), [askAiError]);
 
   const promptFormTranslations = React.useMemo(
     () => ({
@@ -466,6 +473,7 @@ function SidepanelInner(
           exchanges={displayExchanges}
           isStreaming={isStreaming}
           showThreadDepthBanner={showThreadDepthBanner}
+          threadDepthApiMessage={threadDepthApiMessage}
           translations={promptFormTranslations}
           onSend={handleSend}
           onStartNewConversation={handleStartNewConversation}
