@@ -34,6 +34,18 @@ export type PromptFormTranslations = Partial<{
    * Placeholder when the conversation hit the thread depth limit (AI-217).
    **/
   threadDepthErrorPlaceholder: string;
+  /**
+   * Message shown in the thread-depth banner above the prompt (AI-217).
+   **/
+  threadDepthExceededMessage: string;
+  /**
+   * Button label in the thread-depth banner to start a new conversation.
+   **/
+  startNewConversationButtonText: string;
+  /**
+   * Trailing sentence fragment after the button in the thread-depth banner (e.g. "to continue.").
+   **/
+  threadDepthBannerContinueText: string;
 }>;
 
 type Props = {
@@ -42,12 +54,9 @@ type Props = {
   translations?: PromptFormTranslations;
   onSend: (prompt: string) => void;
   onStopStreaming: () => void;
-  /** When true, the prompt is disabled (same as modal SearchBox in Ask AI mode). */
-  isThreadDepthError?: boolean;
-  /**
-   * Rendered above the textarea inside the prompt chrome (e.g. Thread-depth AI-217 banner).
-   */
-  threadDepthBanner?: React.ReactNode;
+  /** When true, the thread-depth banner is shown and the prompt is disabled (AI-217). */
+  showThreadDepthBanner: boolean;
+  onStartNewConversation: () => void;
 };
 
 const MAX_PROMPT_ROWS = 8;
@@ -60,8 +69,8 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
       translations = {},
       onSend,
       onStopStreaming,
-      isThreadDepthError = false,
-      threadDepthBanner,
+      showThreadDepthBanner,
+      onStartNewConversation,
     },
     ref,
   ): JSX.Element => {
@@ -79,6 +88,9 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
       promptLabelText = 'Press Enter to send, or Shift and Enter for new line.',
       promptAriaLabelText = 'Prompt input',
       threadDepthErrorPlaceholder = 'Conversation limit reached',
+      threadDepthExceededMessage = 'This conversation is now closed to keep responses accurate.',
+      startNewConversationButtonText = 'Start a new conversation',
+      threadDepthBannerContinueText = 'to continue.',
     } = translations;
 
     const managePromptHeight = (): void => {
@@ -102,7 +114,7 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
     };
 
     const handleSend = (): void => {
-      if (isStreaming || isThreadDepthError) return;
+      if (isStreaming || showThreadDepthBanner) return;
 
       const prompt = userPrompt.trim();
 
@@ -121,7 +133,7 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
       // Allow Enter to work normally (new line) when streaming
-      if (isStreaming || isThreadDepthError) return;
+      if (isStreaming || showThreadDepthBanner) return;
 
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
@@ -136,7 +148,7 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
 
     let promptPlaceholder = promptPlaceholderText;
 
-    if (isThreadDepthError) {
+    if (showThreadDepthBanner) {
       promptPlaceholder = threadDepthErrorPlaceholder;
     } else if (isStreaming) {
       promptPlaceholder = promptAnsweringText;
@@ -146,13 +158,23 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
 
     return (
       <div className="DocSearch-Sidepanel-Prompt">
-        {threadDepthBanner}
+        {showThreadDepthBanner ? (
+          <div className="DocSearch-Sidepanel-ThreadDepthBanner">
+            <p>
+              {threadDepthExceededMessage}{' '}
+              <button type="button" className="DocSearch-ThreadDepthError-Link" onClick={onStartNewConversation}>
+                {startNewConversationButtonText}
+              </button>{' '}
+              {threadDepthBannerContinueText}
+            </p>
+          </div>
+        ) : null}
         <form
           className="DocSearch-Sidepanel-Prompt--form"
           onSubmit={(e) => {
             e.preventDefault();
 
-            if (isStreaming || isThreadDepthError) return;
+            if (isStreaming || showThreadDepthBanner) return;
 
             handleSend();
           }}
@@ -167,7 +189,7 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
             autoComplete="off"
             translate="no"
             rows={isMobile ? 1 : 2}
-            disabled={isThreadDepthError}
+            disabled={showThreadDepthBanner}
             onKeyDown={handleKeyDown}
             onInput={managePromptHeight}
             onChange={(e) => setUserPrompt(e.target.value)}
@@ -186,7 +208,7 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
                 <StopIcon />
               </button>
             )}
-            {!isStreaming && !isThreadDepthError && (
+            {!isStreaming && !showThreadDepthBanner && (
               <button
                 type="submit"
                 aria-label="Send question"

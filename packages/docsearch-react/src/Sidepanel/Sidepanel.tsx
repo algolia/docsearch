@@ -217,10 +217,18 @@ function SidepanelInner(
   const showThreadDepthBanner =
     sidepanelState === 'conversation' && hasThreadDepthError && messages.some((m) => m.role === 'assistant');
 
-  const {
-    threadDepthExceededMessage = 'This conversation is now closed to keep responses accurate.',
-    startNewConversationButtonText = 'Start a new conversation',
-  } = translations.conversationScreen ?? {};
+  const promptFormTranslations = React.useMemo(
+    () => ({
+      ...translations.promptForm,
+      ...(translations.conversationScreen?.threadDepthExceededMessage !== undefined
+        ? { threadDepthExceededMessage: translations.conversationScreen.threadDepthExceededMessage }
+        : {}),
+      ...(translations.conversationScreen?.startNewConversationButtonText !== undefined
+        ? { startNewConversationButtonText: translations.conversationScreen.startNewConversationButtonText }
+        : {}),
+    }),
+    [translations.promptForm, translations.conversationScreen],
+  );
 
   const prevStatus = React.useRef(status);
 
@@ -457,26 +465,10 @@ function SidepanelInner(
           ref={promptInputRef}
           exchanges={displayExchanges}
           isStreaming={isStreaming}
-          translations={translations.promptForm}
-          isThreadDepthError={showThreadDepthBanner}
-          threadDepthBanner={
-            showThreadDepthBanner ? (
-              <div className="DocSearch-Sidepanel-ThreadDepthBanner">
-                <p>
-                  {threadDepthExceededMessage}{' '}
-                  <button
-                    type="button"
-                    className="DocSearch-ThreadDepthError-Link"
-                    onClick={handleStartNewConversation}
-                  >
-                    {startNewConversationButtonText}
-                  </button>{' '}
-                  to continue.
-                </p>
-              </div>
-            ) : null
-          }
+          showThreadDepthBanner={showThreadDepthBanner}
+          translations={promptFormTranslations}
           onSend={handleSend}
+          onStartNewConversation={handleStartNewConversation}
           onStopStreaming={handleStopStreaming}
         />
         <footer className="DocSearch-Sidepanel-Footer">
