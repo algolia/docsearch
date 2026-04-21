@@ -12,7 +12,9 @@ import { useSuggestedQuestions } from '../useSuggestedQuestions';
 import {
   buildDummyAskAiHit,
   filterExchangesForThreadDepthError,
-  getThreadDepthErrorUserFacingMessage,
+  getAskAiBlockingBannerMessage,
+  isAskAiPromptBlockingError,
+  showAskAiBlockingBannerNewConversationLink,
   isThreadDepthError,
 } from '../utils/ai';
 
@@ -209,27 +211,26 @@ function SidepanelInner(
     searchClient,
   });
 
-  const hasThreadDepthError = React.useMemo(
-    () => status === 'error' && isThreadDepthError(askAiError),
-    [status, askAiError],
+  const hasAskAiPromptBlockingError = React.useMemo(
+    () => status === 'error' && isAskAiPromptBlockingError(askAiError, agentStudio),
+    [status, askAiError, agentStudio],
   );
 
   const displayExchanges = React.useMemo(
-    () => filterExchangesForThreadDepthError(exchanges, hasThreadDepthError),
-    [exchanges, hasThreadDepthError],
+    () => filterExchangesForThreadDepthError(exchanges, hasAskAiPromptBlockingError),
+    [exchanges, hasAskAiPromptBlockingError],
   );
 
   const showThreadDepthBanner =
-    sidepanelState === 'conversation' && hasThreadDepthError && messages.some((m) => m.role === 'assistant');
+    sidepanelState === 'conversation' &&
+    hasAskAiPromptBlockingError &&
+    (isThreadDepthError(askAiError) ? messages.some((m) => m.role === 'assistant') : true);
 
-  const threadDepthApiMessage = React.useMemo(() => getThreadDepthErrorUserFacingMessage(askAiError), [askAiError]);
+  const threadDepthApiMessage = React.useMemo(() => getAskAiBlockingBannerMessage(askAiError), [askAiError]);
 
   const promptFormTranslations = React.useMemo(
     () => ({
       ...translations.promptForm,
-      ...(translations.conversationScreen?.threadDepthExceededMessage !== undefined
-        ? { threadDepthExceededMessage: translations.conversationScreen.threadDepthExceededMessage }
-        : {}),
       ...(translations.conversationScreen?.startNewConversationButtonText !== undefined
         ? { startNewConversationButtonText: translations.conversationScreen.startNewConversationButtonText }
         : {}),
@@ -474,6 +475,10 @@ function SidepanelInner(
           isStreaming={isStreaming}
           showThreadDepthBanner={showThreadDepthBanner}
           threadDepthApiMessage={threadDepthApiMessage}
+          showBlockingBannerNewConversationLink={showAskAiBlockingBannerNewConversationLink(
+            askAiError,
+            Boolean(agentStudio),
+          )}
           translations={promptFormTranslations}
           onSend={handleSend}
           onStartNewConversation={handleStartNewConversation}

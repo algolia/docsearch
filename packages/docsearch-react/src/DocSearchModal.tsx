@@ -36,7 +36,7 @@ import { useSuggestedQuestions } from './useSuggestedQuestions';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
 import { groupBy, identity, noop, removeHighlightTags, isModifierEvent, scrollTo as scrollToUtils } from './utils';
-import { buildDummyAskAiHit, isThreadDepthError } from './utils/ai';
+import { buildDummyAskAiHit, isAgentStudioTokenOutputLimitError, isAskAiPromptBlockingError } from './utils/ai';
 import { manageLocalStorageQuota } from './utils/storage';
 
 export type ModalTranslations = Partial<{
@@ -445,10 +445,16 @@ export function DocSearchModal({
     prevStatus.current = status;
   }, [status, messages, conversations, disableUserPersonalization, stoppedStream]);
 
-  // Check if there's a thread depth error (AI-217)
-  const hasThreadDepthError = React.useMemo(() => {
-    return status === 'error' && isThreadDepthError(askAiError as Error | undefined);
-  }, [status, askAiError]);
+  const hasAskAiPromptBlockingError = React.useMemo(() => {
+    return status === 'error' && isAskAiPromptBlockingError(askAiError as Error | undefined, agentStudio);
+  }, [status, askAiError, agentStudio]);
+
+  const askAiBlockingChrome = React.useMemo((): 'minimal' | 'thread-depth' | undefined => {
+    const blocked = hasAskAiPromptBlockingError && askAiState !== 'new-conversation';
+    if (!blocked) return undefined;
+    // Match thread-depth modal chrome for all blocking errors except token output limit (minimal).
+    return isAgentStudioTokenOutputLimitError(askAiError as Error | undefined) ? 'minimal' : 'thread-depth';
+  }, [hasAskAiPromptBlockingError, askAiState, askAiError]);
 
   const createSyntheticParent = React.useCallback(function createSyntheticParent(
     item: InternalDocSearchHit,
@@ -900,7 +906,8 @@ export function DocSearchModal({
             askAiError={askAiError}
             askAiState={askAiState}
             setAskAiState={setAskAiState}
-            isThreadDepthError={hasThreadDepthError && askAiState !== 'new-conversation'}
+            isThreadDepthError={hasAskAiPromptBlockingError && askAiState !== 'new-conversation'}
+            askAiBlockingChrome={askAiBlockingChrome}
             onClose={onClose}
             onAskAiToggle={onAskAiToggle}
             onAskAgain={(query) => {

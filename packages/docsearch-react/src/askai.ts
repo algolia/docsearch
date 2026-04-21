@@ -1,6 +1,6 @@
 import { ASK_AI_API_URL, BETA_ASK_AI_API_URL } from './constants';
+import { extractAgentStudioErrorFieldMessage } from './utils/ai';
 
-// ... existing imports ...
 const TOKEN_KEY = 'askai_token';
 
 export const agentStudioBaseUrl = (appId: string): string => `https://${appId}.algolia.net/agent-studio/1`;
@@ -112,26 +112,66 @@ interface AgentStudioValidationError extends Error {
 
 // Parse Agent Studio errors as they are returned as JSON rather than Markdown/text
 export const getAgentStudioErrorMessage = (error: Error): Error => {
-  let errorMessage = error.message;
+  const raw = error.message;
 
+  let parsed: unknown;
   try {
-    const parsedError = JSON.parse(error.message) as Error;
-
-    // Check for known errors that we know how to parse
-    if (parsedError.name === 'ValidationError') {
-      const validationError = parsedError as AgentStudioValidationError;
-
-      if (validationError.detail && validationError.detail.length > 0) {
-        const { msg, loc } = validationError.detail[0];
-        const field = loc.at(-1);
-
-        errorMessage = `${msg}: ${field}`;
-      }
-    } else {
-      errorMessage = parsedError.message;
-    }
+    parsed = JSON.parse(raw);
   } catch {
-    // We don't care about this catch, we default to the error.message above
+    const extracted = extractAgentStudioErrorFieldMessage(raw);
+    return new Error(extracted ?? raw);
+  }
+
+  while (typeof parsed === 'string') {
+    try {
+      parsed = JSON.parse(parsed.trim());
+    } catch {
+      const extracted = extractAgentStudioErrorFieldMessage(raw);
+      return new Error(extracted ?? (parsed as string));
+    }
+  }
+
+  if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) {
+    const extracted = extractAgentStudioErrorFieldMessage(raw);
+    return new Error(extracted ?? raw);
+  }
+
+  const parsedError = parsed as Error & {
+    code?: string;
+    errorCode?: string;
+    message?: string;
+    error?: string;
+  };
+
+  if (parsedError.name === 'ValidationError') {
+    const validationError = parsedError as AgentStudioValidationError;
+    let errorMessage = raw;
+    if (validationError.detail && validationError.detail.length > 0) {
+      const { msg, loc } = validationError.detail[0];
+      const field = loc.at(-1);
+      errorMessage = `${msg}: ${field}`;
+    }
+    return new Error(errorMessage);
+  }
+
+  const extracted = extractAgentStudioErrorFieldMessage(raw);
+  let errorMessage: string;
+  if (extracted) {
+    errorMessage = extracted;
+  } else if (typeof parsedError.message === 'string' && parsedError.message.trim() !== '') {
+    errorMessage = parsedError.message.trim();
+  } else if (typeof parsedError.error === 'string' && parsedError.error.trim() !== '') {
+    errorMessage = parsedError.error.trim();
+  } else {
+    errorMessage = raw;
+  }
+
+  const code = parsedError.code ?? parsedError.errorCode;
+  if (typeof code === 'string' && code.trim() !== '') {
+    const c = code.trim();
+    if (!errorMessage.toUpperCase().includes(c.toUpperCase())) {
+      errorMessage = `${errorMessage} (${c})`;
+    }
   }
 
   return new Error(errorMessage);

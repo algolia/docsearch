@@ -3,6 +3,11 @@ import type { TextUIPart } from 'ai';
 import type { StoredAskAiState } from '../types';
 import type { AIMessage } from '../types/AskiAi';
 
+import {
+  matchesThreadDepthLimitError,
+  readAgentStudioJsonStringField,
+  resolveAgentStudioPromptBlocking,
+} from './askAiBlockingMatchers';
 import { sanitizeUserInput } from './sanitize';
 
 type ExtractedLink = {
@@ -116,8 +121,7 @@ export function filterExchangesForThreadDepthError<T extends ExchangeWithOptiona
 
 function threadDepthFromPlainText(message: string): boolean {
   if (!message) return false;
-  if (message.toUpperCase().includes('AI-217')) return true;
-  return /thread\s+depth/i.test(message);
+  return matchesThreadDepthLimitError(message.toLowerCase());
 }
 
 function messageLooksLikeThreadDepth(message: string): boolean {
@@ -149,6 +153,151 @@ export function isThreadDepthError(error?: Error): boolean {
   return messageLooksLikeThreadDepth(error.message ?? '');
 }
 
+function messageLooksLikeAgentStudioCostControl(error: Error): boolean {
+  return resolveAgentStudioPromptBlocking(error).blocking;
+}
+
+/**
+ * Whether further prompts should be blocked: thread depth (all backends) or Agent Studio cost controls.
+ */
+export function isAskAiPromptBlockingError(error: Error | undefined, agentStudio: boolean): boolean {
+  if (!error) return false;
+  if (isThreadDepthError(error)) return true;
+  if (!agentStudio) return false;
+  return messageLooksLikeAgentStudioCostControl(error);
+}
+
+/**
+ * Agent Studio stream hit the completion token ceiling (`TokenOutputLimitError`).
+ * This case uses a message-only banner (no “Start a new conversation” row).
+ */
+export function isAgentStudioTokenOutputLimitError(error?: Error): boolean {
+  if (!error) return false;
+  const msg = error.message ?? '';
+  if (/TokenOutputLimitError/i.test(msg)) return true;
+  if (/could not complete response due to token output limits/i.test(msg)) return true;
+  try {
+    const p = JSON.parse(msg) as { type?: string; error?: string };
+    if (typeof p.type === 'string' && /^TokenOutputLimitError$/i.test(p.type.trim())) {
+      return true;
+    }
+    if (typeof p.error === 'string' && /token output limits/i.test(p.error)) {
+      return true;
+    }
+  } catch {
+    // not JSON
+  }
+  return false;
+}
+
+/**
+ * Whether the blocking banner should include “Start a new conversation … to continue”.
+ * Thread depth and most Agent Studio limits keep it; token output limit and “request blocked for this domain” omit it.
+ */
+export function showAskAiBlockingBannerNewConversationLink(error: Error | undefined, agentStudio: boolean): boolean {
+  if (!error) return true;
+  if (isAgentStudioTokenOutputLimitError(error)) return false;
+  if (isThreadDepthError(error)) return true;
+  if (!agentStudio) return true;
+  return resolveAgentStudioPromptBlocking(error).showNewConversationLink;
+}
+
+function stripTrailingAiCodeSuffix(message: string): string {
+  return message.replace(/\s*\(AI-\d{3}\)\s*$/i, '').trim();
+}
+
+/**
+ * Pulls `message` or `error` from Agent Studio JSON payloads, including double-encoded JSON
+ * and objects serialized with escaped quotes (`{\"error\": \"...\"}`).
+ */
+export function extractAgentStudioErrorFieldMessage(raw: string): string | undefined {
+  let s = raw.trim();
+  if (!s) return undefined;
+
+  let iterations = 0;
+  while (iterations < 10) {
+    iterations += 1;
+    try {
+      const v: unknown = JSON.parse(s);
+      if (typeof v === 'string') {
+        const next = v.trim();
+        if (!next) return undefined;
+        s = next;
+      } else if (v && typeof v === 'object' && !Array.isArray(v)) {
+        const o = v as Record<string, unknown>;
+        const msg = readAgentStudioJsonStringField(o, 'message');
+        if (msg) {
+          return msg;
+        }
+        const err = readAgentStudioJsonStringField(o, 'error');
+        if (err) {
+          return err;
+        }
+        return undefined;
+      } else {
+        return undefined;
+      }
+    } catch {
+      if (/\\"/.test(s)) {
+        s = s.replace(/\\"/g, '"').replace(/\\\\/g, '\\').trim();
+      } else {
+        const mMsg = /"message"\s*:\s*"((?:[^"\\]|\\.)*)"/.exec(s);
+        if (mMsg?.[1]) {
+          return mMsg[1].replace(/\\"/g, '"').replace(/\\\\/g, '\\').trim();
+        }
+        const mErr = /"error"\s*:\s*"((?:[^"\\]|\\.)*)"/.exec(s);
+        if (mErr?.[1]) {
+          return mErr[1].replace(/\\"/g, '"').replace(/\\\\/g, '\\').trim();
+        }
+        return undefined;
+      }
+    }
+  }
+
+  return undefined;
+}
+
+/**
+ * Prefer the API `message` when the body was JSON; otherwise the thrown message (without a trailing `(AI-xxx)` suffix).
+ * Only meaningful when {@link isAskAiPromptBlockingError} would return true for this error.
+ */
+export function getAskAiPromptBlockingUserFacingMessage(error?: Error): string | undefined {
+  if (!error) return undefined;
+
+  const raw = error.message ?? '';
+  const extracted = extractAgentStudioErrorFieldMessage(raw);
+  if (extracted) {
+    return extracted;
+  }
+
+  const stripped = stripTrailingAiCodeSuffix(raw.trim());
+  return stripped !== '' ? stripped : undefined;
+}
+
+const TOKEN_OUTPUT_LIMIT_FALLBACK = 'Could not complete response due to token output limits';
+
+function looksLikeJsonObjectString(s: string): boolean {
+  const t = s.trim();
+  return t.startsWith('{') && t.endsWith('}');
+}
+
+/**
+ * Message shown in the top blocking banner (parsed API text, never raw JSON when avoidable).
+ */
+export function getAskAiBlockingBannerMessage(error?: Error): string | undefined {
+  if (!error) return undefined;
+
+  if (isAgentStudioTokenOutputLimitError(error)) {
+    const m = getAskAiPromptBlockingUserFacingMessage(error);
+    if (m && !looksLikeJsonObjectString(m)) {
+      return m;
+    }
+    return TOKEN_OUTPUT_LIMIT_FALLBACK;
+  }
+
+  return getAskAiPromptBlockingUserFacingMessage(error);
+}
+
 /**
  * Prefer the API `message` field when the error body is JSON; otherwise the thrown message string.
  * Only meaningful when {@link isThreadDepthError} is true.
@@ -156,17 +305,5 @@ export function isThreadDepthError(error?: Error): boolean {
 export function getThreadDepthErrorUserFacingMessage(error?: Error): string | undefined {
   if (!error || !isThreadDepthError(error)) return undefined;
 
-  const raw = error.message ?? '';
-
-  try {
-    const parsed = JSON.parse(raw) as { message?: string };
-    if (typeof parsed.message === 'string' && parsed.message.trim() !== '') {
-      return parsed.message.trim();
-    }
-  } catch {
-    // not JSON — fall through
-  }
-
-  const trimmed = raw.trim();
-  return trimmed !== '' ? trimmed : undefined;
+  return getAskAiPromptBlockingUserFacingMessage(error);
 }

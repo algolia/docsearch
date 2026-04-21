@@ -9,7 +9,7 @@ import type { StoredSearchPlugin } from '../stored-searches';
 import { ToolCall, type ToolCallTranslations } from '../ToolCall';
 import type { StoredAskAiState } from '../types';
 import { isAIToolPart, type AIMessage } from '../types/AskiAi';
-import { extractLinksFromMessage, getMessageContent, isThreadDepthError } from '../utils/ai';
+import { extractLinksFromMessage, getMessageContent, isAskAiPromptBlockingError } from '../utils/ai';
 import { groupConsecutiveToolResults } from '../utils/groupConsecutiveToolResults';
 
 import { AggregatedSearchBlock } from './AggregatedSearchBlock';
@@ -62,11 +62,7 @@ export type ConversationScreenTranslations = Partial<
      */
     errorTitleText: string;
     /**
-     * Message shown when thread depth limit is exceeded (AI-217).
-     */
-    threadDepthExceededMessage: string;
-    /**
-     * Button label to start a new conversation after a thread depth error.
+     * Button label to start a new conversation after a blocking Ask AI error.
      */
     startNewConversationButtonText: string;
   }
@@ -113,7 +109,7 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
       errorTitleText = 'Chat error',
     } = translations;
 
-    const isThreadDepth = isThreadDepthError(streamError);
+    const isPromptBlockingError = isAskAiPromptBlockingError(streamError, Boolean(agentStudio));
 
     const assistantContent = useMemo(() => getMessageContent(assistantMessage), [assistantMessage]);
     const userContent = useMemo(() => getMessageContent(userMessage), [userMessage]);
@@ -140,7 +136,7 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
           </div>
           <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--assistant">
             <div className="DocSearch-AskAiScreen-MessageContent">
-              {status === 'error' && streamError && isLastExchange && !isThreadDepth && (
+              {status === 'error' && streamError && isLastExchange && !isPromptBlockingError && (
                 <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error">
                   <AlertIcon />
                   <div className="DocSearch-AskAiScreen-Error-Content">

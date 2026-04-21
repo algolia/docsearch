@@ -64,7 +64,7 @@ describe('AskAiScreen', () => {
 
     const onNewConversation = (): void => {};
 
-    const { container, getByText } = render(
+    const { container } = render(
       <AskAiScreen
         {...baseProps}
         messages={messages}
@@ -74,12 +74,77 @@ describe('AskAiScreen', () => {
       />,
     );
 
-    expect(
-      getByText('This conversation is now closed to keep responses accurate.', { exact: false }),
-    ).toBeInTheDocument();
-    expect(getByText('Start a new conversation')).toBeInTheDocument();
+    expect(within(container).getByText('AI-217 - Thread depth exceeded')).toBeInTheDocument();
+    expect(within(container).getByText('Start a new conversation')).toBeInTheDocument();
+    expect(within(container).getByText(/to continue\./i)).toBeInTheDocument();
     // Bound queries from `render()` use `baseElement` (often `document.body`), so a prior test can still
     // match. Restrict to this instance's root so we only assert on this tree.
     expect(within(container).queryByText('Chat error')).not.toBeInTheDocument();
+  });
+
+  it('for Agent Studio cost-control errors, shows the blocking banner (message + start new conversation), not inline Chat error', () => {
+    const messages: UIMessage[] = [
+      {
+        id: '1',
+        role: 'user',
+        parts: [{ type: 'text', text: 'hello' }],
+      },
+    ];
+
+    const { container } = render(
+      <AskAiScreen
+        {...baseProps}
+        agentStudio={true}
+        messages={messages}
+        status="error"
+        askAiError={new Error('Too many requests (AI-205)')}
+        onNewConversation={(): void => {}}
+      />,
+    );
+
+    expect(within(container).getByText('Too many requests')).toBeInTheDocument();
+    expect(within(container).getByText('Start a new conversation')).toBeInTheDocument();
+    expect(within(container).getByText(/to continue\./i)).toBeInTheDocument();
+    expect(
+      within(container).queryByText('This conversation is now closed to keep responses accurate.', { exact: false }),
+    ).not.toBeInTheDocument();
+  });
+
+  it('for Agent Studio token output limit, banner shows only the human message without start-new-conversation', () => {
+    const messages: UIMessage[] = [
+      {
+        id: '1',
+        role: 'user',
+        parts: [{ type: 'text', text: 'Hello' }],
+      },
+      {
+        id: '2',
+        role: 'assistant',
+        parts: [{ type: 'text', text: 'Hello! How can I assist' }],
+      },
+    ];
+
+    const raw = JSON.stringify({
+      error: 'Could not complete response due to token output limits',
+      type: 'TokenOutputLimitError',
+      statusCode: 400,
+    });
+
+    const { container } = render(
+      <AskAiScreen
+        {...baseProps}
+        agentStudio={true}
+        messages={messages}
+        status="error"
+        askAiError={new Error(raw)}
+        onNewConversation={(): void => {}}
+      />,
+    );
+
+    expect(within(container).getByText('Could not complete response due to token output limits')).toBeInTheDocument();
+    expect(within(container).queryByText('Start a new conversation')).not.toBeInTheDocument();
+    expect(within(container).queryByText(/to continue\./i)).not.toBeInTheDocument();
+    expect(within(container).queryByText('Chat error')).not.toBeInTheDocument();
+    expect(within(container).queryByText(/\{"error":/)).not.toBeInTheDocument();
   });
 });

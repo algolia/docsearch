@@ -12,8 +12,10 @@ import type { AIMessage } from './types/AskiAi';
 import {
   extractLinksFromMessage,
   filterExchangesForThreadDepthError,
+  getAskAiBlockingBannerMessage,
   getMessageContent,
-  getThreadDepthErrorUserFacingMessage,
+  isAskAiPromptBlockingError,
+  showAskAiBlockingBannerNewConversationLink,
   isThreadDepthError,
 } from './utils/ai';
 import { groupConsecutiveToolResults } from './utils/groupConsecutiveToolResults';
@@ -60,11 +62,7 @@ export type AskAiScreenTranslations = Partial<{
    */
   errorTitleText: string;
   /**
-   * Message shown when thread depth limit is exceeded (AI-217 error).
-   */
-  threadDepthExceededMessage: string;
-  /**
-   * Button text for starting a new conversation after thread depth error.
+   * Button text for starting a new conversation after a blocking Ask AI error.
    */
   startNewConversationButtonText: string;
 }>;
@@ -125,7 +123,7 @@ function AskAiExchangeCard({
     duringToolCallText = 'Searching...',
   } = translations;
 
-  const isThreadDepth = isThreadDepthError(askAiError);
+  const isPromptBlockingError = isAskAiPromptBlockingError(askAiError, Boolean(agentStudio));
 
   const assistantContent = useMemo(() => getMessageContent(assistantMessage), [assistantMessage]);
   const userContent = useMemo(() => getMessageContent(userMessage), [userMessage]);
@@ -156,7 +154,7 @@ function AskAiExchangeCard({
         </div>
         <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--assistant">
           <div className="DocSearch-AskAiScreen-MessageContent">
-            {loadingStatus === 'error' && askAiError && isLastExchange && !isThreadDepth && (
+            {loadingStatus === 'error' && askAiError && isLastExchange && !isPromptBlockingError && (
               <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error">
                 <AlertIcon />
                 <div className="DocSearch-AskAiScreen-Error-Content">
@@ -373,18 +371,21 @@ export function AskAiSourcesPanel({ urlsToDisplay, relatedSourcesText }: AskAiSo
 export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): JSX.Element | null {
   const {
     disclaimerText = 'Answers are generated with AI which can make mistakes. Verify responses.',
-    threadDepthExceededMessage = 'This conversation is now closed to keep responses accurate.',
     startNewConversationButtonText = 'Start a new conversation',
   } = translations;
 
   const { messages, askAiError, status, agentStudio } = props;
 
-  // Check if there's a thread depth error
-  const hasThreadDepthError = useMemo(() => {
-    return status === 'error' && isThreadDepthError(askAiError);
-  }, [status, askAiError]);
+  const hasPromptBlockingError = useMemo(() => {
+    return status === 'error' && isAskAiPromptBlockingError(askAiError, Boolean(agentStudio));
+  }, [status, askAiError, agentStudio]);
 
-  const threadDepthApiMessage = useMemo(() => getThreadDepthErrorUserFacingMessage(askAiError), [askAiError]);
+  const blockingApiMessage = useMemo(() => getAskAiBlockingBannerMessage(askAiError), [askAiError]);
+
+  const showBlockingBannerNewConversationLink = showAskAiBlockingBannerNewConversationLink(
+    askAiError,
+    Boolean(agentStudio),
+  );
 
   // Group messages into exchanges (user + assistant pairs)
   const exchanges: Exchange[] = useMemo(() => {
@@ -400,33 +401,35 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
       }
     }
 
-    return filterExchangesForThreadDepthError(grouped, hasThreadDepthError);
-  }, [messages, hasThreadDepthError]);
+    return filterExchangesForThreadDepthError(grouped, hasPromptBlockingError);
+  }, [messages, hasPromptBlockingError]);
 
   const handleSearchQueryClick = (query: string): void => {
     props.onAskAiToggle(false);
     props.setQuery(query);
   };
 
-  // Only show the thread depth error if we have assistant messages
-  const showThreadDepthError = hasThreadDepthError && messages.some((m) => m.role === 'assistant');
+  /** Thread depth only appears after at least one assistant reply;
+   * other Agent Studio blocks can occur on the first turn.
+   * */
+  const showBlockingBanner =
+    hasPromptBlockingError && (isThreadDepthError(askAiError) ? messages.some((m) => m.role === 'assistant') : true);
 
   return (
     <div className="DocSearch-AskAiScreen DocSearch-AskAiScreen-Container">
-      {/* Thread Depth Error */}
-      {showThreadDepthError && (
+      {/* Agent Studio cost-control errors */}
+      {showBlockingBanner && (
         <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error DocSearch-AskAiScreen-Error--ThreadDepth">
           <div className="DocSearch-AskAiScreen-Error-Content">
-            {threadDepthApiMessage ? (
-              <p className="DocSearch-AskAiScreen-Error-Title">{threadDepthApiMessage}</p>
+            {blockingApiMessage ? <p className="DocSearch-AskAiScreen-Error-Title">{blockingApiMessage}</p> : null}
+            {showBlockingBannerNewConversationLink ? (
+              <p>
+                <button type="button" className="DocSearch-ThreadDepthError-Link" onClick={props.onNewConversation}>
+                  {startNewConversationButtonText}
+                </button>{' '}
+                to continue.
+              </p>
             ) : null}
-            <p>
-              {threadDepthExceededMessage}{' '}
-              <button type="button" className="DocSearch-ThreadDepthError-Link" onClick={props.onNewConversation}>
-                {startNewConversationButtonText}
-              </button>{' '}
-              to continue.
-            </p>
           </div>
         </div>
       )}
