@@ -1,3 +1,13 @@
+## [4.6.3](https://github.com/algolia/docsearch/compare/v4.6.2...v4.6.3) (2026-04-27)
+
+
+### Features
+
+* **agentStudio:** cost controls errors surface ([#2878](https://github.com/algolia/docsearch/issues/2878)) ([166b76d](https://github.com/algolia/docsearch/commit/166b76de2f7e728c7dd9994257fb7c6d2497a9c6))
+* **agentStudio:** surface thread depth error ([#2877](https://github.com/algolia/docsearch/issues/2877)) ([cf42ab5](https://github.com/algolia/docsearch/commit/cf42ab519b7f4b80a1ae7c8425846bceab1b7bd2))
+
+
+
 ## [4.6.2](https://github.com/algolia/docsearch/compare/v4.6.1...v4.6.2) (2026-03-26)
 
 

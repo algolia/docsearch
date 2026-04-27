@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/js-example",
   "description": "DocSearch v4 Vanilla JavaScript example",
-  "version": "4.6.2",
+  "version": "4.6.3",
   "private": true,
   "license": "MIT",
   "scripts": {
