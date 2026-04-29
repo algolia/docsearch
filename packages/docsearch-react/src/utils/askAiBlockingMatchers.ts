@@ -52,7 +52,7 @@ export function extractAiErrorCodeFromMessage(message: string): string | undefin
 
 /** Plain-text / stringified JSON heuristic; JSON-shaped payloads still use `isThreadDepthError` in `ai.ts`. */
 export function matchesThreadDepthLimitError(normalizedMessage: string): boolean {
-  return normalizedMessage.includes('ai-217') || /thread\s+depth/.test(normalizedMessage);
+  return normalizedMessage.includes('ai-217') || /conversation\s+depth/i.test(normalizedMessage);
 }
 
 /** API copy for domain allowlisting — starting a new conversation does not resolve it. */
@@ -223,7 +223,7 @@ export function resolveAgentStudioPromptBlocking(error: Error): {
 
 /**
  * Plain-text matchers over `Error.message.toLowerCase()` (callers pass `error.message.toLowerCase()`).
- * Thread depth: first entry mirrors common plain cases; JSON-shaped payloads still need `isThreadDepthError` in `ai.ts`.
+ * Conversation depth / AI-217: first entry mirrors common plain cases; JSON-shaped payloads still need `isThreadDepthError` in `ai.ts`.
  *
  * Blocking UX and “Start new conversation” visibility are driven by `agentStudioPromptBlockingMatchers`.
  */

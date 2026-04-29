@@ -19,9 +19,11 @@ describe('isThreadDepthError', () => {
     expect(isThreadDepthError(new Error('prefix AI-217 suffix'))).toBe(true);
   });
 
-  it('detects thread depth phrasing without code', () => {
-    expect(isThreadDepthError(new Error('Thread depth exceeded'))).toBe(true);
-    expect(isThreadDepthError(new Error('thread depth limit reached'))).toBe(true);
+  it('detects conversation depth phrasing without code', () => {
+    expect(
+      isThreadDepthError(new Error("You've hit the max conversation depth (4 messages), start a new conversation.")),
+    ).toBe(true);
+    expect(isThreadDepthError(new Error('Maximum conversation depth reached.'))).toBe(true);
   });
 
   it('detects AI-217 in JSON-shaped error bodies', () => {
@@ -68,10 +70,10 @@ describe('filterExchangesForThreadDepthError', () => {
 describe('getThreadDepthErrorUserFacingMessage', () => {
   it('returns nested message from JSON-shaped thread depth errors', () => {
     const body = JSON.stringify({
-      message: 'Conversation has reached its maximum thread depth of 3 messages. Please start a new conversation.',
+      message: "You've hit the max conversation depth (4 messages), start a new conversation.",
     });
     expect(getThreadDepthErrorUserFacingMessage(new Error(body))).toBe(
-      'Conversation has reached its maximum thread depth of 3 messages. Please start a new conversation.',
+      "You've hit the max conversation depth (4 messages), start a new conversation.",
     );
   });
 

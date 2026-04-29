@@ -145,7 +145,7 @@ function messageLooksLikeThreadDepth(message: string): boolean {
 }
 
 /**
- * Whether the error is thread depth exceeded (AI-217), including JSON-shaped Agent Studio payloads.
+ * Whether the error is conversation depth exceeded (AI-217), including JSON-shaped Agent Studio payloads.
  */
 export function isThreadDepthError(error?: Error): boolean {
   if (!error) return false;
