@@ -77,7 +77,7 @@ recordExtractor: ({ $, helpers }) => {
       // `.exists h1` will be selected if `.exists-probably h1` does not exists.
       lvl0: {
         selectors: [".exists-probably h1", ".exists h1"],
-      }
+      },
       lvl1: "article h2",
       lvl2: "article h3",
       lvl3: "article h4",
@@ -131,7 +131,7 @@ recordExtractor: ({ $, helpers }) => {
 
 _These selectors also support [`defaultValue`](#provide-raw-text-defaultvalue) and [fallback selectors](#provide-fallback-selectors)_
 
-You might want to index content that will be used as filters in your frontend (e.g. `version` or `lang`), you can defined any custom variable to the `recordProps` object to add them to your Algolia records:
+You might want to index content that will be used as filters in your frontend (e.g. `version` or `lang`), you can define any custom variable to the `recordProps` object to add them to your Algolia records:
 
 ```js
 recordExtractor: ({ helpers }) => {
@@ -209,7 +209,7 @@ You can view the computed weight directly from the Algolia dashboard (dashboard.
 
 ### Reduce the number of records
 
-If you encounter the `Extractors returned too many records` error when your page outputs more than 750 records. The [`aggregateContent`](#aggregatecontent) option helps you reducing the number of records at the `content` level of the extractor.
+If you encounter the `Extractors returned too many records` error when your page outputs more than 750 records, the [`aggregateContent`](#aggregatecontent) option helps you reduce the number of records at the `content` level of the extractor.
 
 ```js
 {
@@ -236,7 +236,7 @@ If you encounter the `Extractors returned too many records` error when your page
 
 ### Reduce the record size
 
-If you encounter the `Records extracted are too big` error when crawling your website, it's mostly because there was too many informations in your records, or that your page is too big. The [`recordVersion`](#recordversion) option helps you reducing the records size by removing informations that are only used with [DocSearch v2](/docs/legacy/dropdown).
+If you encounter the `Records extracted are too big` error when crawling your website, it is usually because there is too much information in your records, or because your page is too large. The [`recordVersion`](#recordversion) option helps you reduce the records size by removing informations that are only used with [DocSearch v2](/docs/legacy/dropdown).
 
 ```js
 {
@@ -317,7 +317,7 @@ Custom variables are used to [`filter your search`](/docs/v3/docsearch#filtering
 
 > `type: 'v3' | 'v2'` | default: `v2` | **optional**
 
-This option remove content from the Algolia records that are only used for [DocSearch v2](/docs/legacy/dropdown). If you are using [the latest version of DocSearch](/docs/v3/docsearch), you can [set it to `v3`](#reduce-the-record-size).
+This option removes content from the Algolia records that are only used for [DocSearch v2](/docs/legacy/dropdown). If you are using [the latest version of DocSearch](/docs/v3/docsearch), you can [set it to `v3`](#reduce-the-record-size).
 
 ### `indexHeadings`
 

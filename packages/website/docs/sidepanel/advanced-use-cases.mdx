@@ -52,7 +52,7 @@ Below is an example of a more complex implementation with `searchParameters`, a 
 
 ```tsx
 import { DocSearch } from '@docsearch/core';
-import { SidepanelButton, Sidepanel } from '@docsearch/sidepanel'
+import { SidepanelButton, Sidepanel } from '@docsearch/sidepanel';
 
 function App() {
   return (
@@ -93,7 +93,7 @@ Sidepanel is built in a way that allows for dynamic importing of its components 
 ```tsx
 import { DocSearch } from '@docsearch/core';
 import { SidepanelButton } from '@docsearch/sidepanel/button';
-import type { Sidepanel as SidepanelType} from '@docsearch/sidepanel/sidepanel';
+import type { Sidepanel as SidepanelType } from '@docsearch/sidepanel/sidepanel';
 import { useState } from 'react';
 
 let Sidepanel: typeof SidepanelType | null = null;
