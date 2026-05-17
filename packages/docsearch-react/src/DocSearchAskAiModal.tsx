@@ -4,37 +4,55 @@ import {
   createAutocomplete,
   type AutocompleteState,
 } from '@algolia/autocomplete-core';
+import type { InitialAskAiMessage, OnAskAiToggle } from '@docsearch/core';
 import { useTheme } from '@docsearch/core/useTheme';
+import type { ChatRequestOptions } from 'ai';
 import type { SearchResponse } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 
+import type { AskAiScreenStateTranslations } from './AskAiScreenState';
+import { AskAiScreenState } from './AskAiScreenState';
+import type { AskAiSearchBoxTranslations } from './AskAiSearchBox';
+import { AskAiSearchBox } from './AskAiSearchBox';
 import { MAX_QUERY_SIZE } from './constants';
-import type { DocSearchIndex, DocSearchProps } from './DocSearch';
+import type { DocSearchAIProps, DocSearchIndex, DocSearchProps } from './DocSearch';
 import type { FooterTranslations } from './Footer';
 import { Footer } from './Footer';
 import { Hit } from './Hit';
-import type { ScreenStateTranslations } from './ScreenState';
-import { ScreenState } from './ScreenState';
-import type { SearchBoxTranslations } from './SearchBox';
-import { SearchBox } from './SearchBox';
+import type { NewConversationTranslations } from './NewConversationScreen';
 import { createStoredSearches } from './stored-searches';
-import type { DocSearchHit, DocSearchState, InternalDocSearchHit, StoredDocSearchHit } from './types';
+import type {
+  DocSearchHit,
+  DocSearchState,
+  InternalDocSearchHit,
+  StoredAskAiMessage,
+  StoredDocSearchHit,
+  SuggestedQuestionHit,
+} from './types';
+import type { AIMessage, AskAiState } from './types/AskiAi';
+import { useAskAi } from './useAskAi';
 import { useSearchClient } from './useSearchClient';
+import { useSuggestedQuestions } from './useSuggestedQuestions';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
 import { groupBy, identity, noop, removeHighlightTags, isModifierEvent, scrollTo as scrollToUtils } from './utils';
+import { buildDummyAskAiHit, isThreadDepthError } from './utils/ai';
 import { manageLocalStorageQuota } from './utils/storage';
 
-export type ModalTranslations = Partial<{
-  searchBox: SearchBoxTranslations;
-  footer: FooterTranslations;
-}> &
-  ScreenStateTranslations;
+export type DocSearchAskAiModalTranslations = AskAiScreenStateTranslations &
+  Partial<{
+    searchBox: AskAiSearchBoxTranslations;
+    newConversation: NewConversationTranslations;
+    footer: FooterTranslations;
+  }>;
 
-export type DocSearchModalProps = DocSearchProps & {
+export type DocSearchAskAiModalProps = DocSearchAIProps & {
   initialScrollY: number;
+  onAskAiToggle: OnAskAiToggle;
   onClose?: () => void;
-  translations?: ModalTranslations;
+  isAskAiActive?: boolean;
+  translations?: DocSearchAskAiModalTranslations;
+  isHybridModeSupported?: boolean;
 };
 
 /**
@@ -47,6 +65,7 @@ type BuildNoQuerySourcesOptions = {
   saveRecentSearch: (item: InternalDocSearchHit) => void;
   onClose: () => void;
   disableUserPersonalization: boolean;
+  canHandleAskAi: boolean;
 };
 
 const buildNoQuerySources = ({
@@ -262,9 +281,10 @@ const buildQuerySources = async ({
   }
 };
 
-export function DocSearchModal({
+export function DocSearchAskAiModal({
   appId,
   apiKey,
+  askAi,
   maxResultsPerGroup,
   theme,
   onClose = noop,
@@ -279,13 +299,17 @@ export function DocSearchModal({
   translations = {},
   getMissingResultsUrl,
   insights = false,
+  onAskAiToggle,
+  interceptAskAiEvent,
+  isAskAiActive = false,
   recentSearchesLimit = 7,
   recentSearchesWithFavoritesLimit = 4,
   indices = [],
   indexName,
   searchParameters,
+  isHybridModeSupported = false,
   ...props
-}: DocSearchModalProps): JSX.Element {
+}: DocSearchAskAiModalProps): JSX.Element {
   const { footer: footerTranslations, searchBox: searchBoxTranslations, ...screenStateTranslations } = translations;
   const [state, setState] = React.useState<DocSearchState<InternalDocSearchHit>>({
     query: '',
@@ -297,7 +321,18 @@ export function DocSearchModal({
     status: 'idle',
   });
 
-  const placeholder = translations?.searchBox?.placeholderText || props.placeholder || 'Search docs';
+  // check if the instance is configured to handle ask ai
+  const canHandleAskAi = Boolean(askAi);
+
+  let placeholder = translations?.searchBox?.placeholderText || props.placeholder || 'Search docs';
+
+  if (canHandleAskAi) {
+    placeholder = translations?.searchBox?.placeholderText || 'Search docs or ask AI a question';
+  }
+
+  if (isAskAiActive) {
+    placeholder = translations?.searchBox?.placeholderTextAskAi || 'Ask another question...';
+  }
 
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const modalRef = React.useRef<HTMLDivElement | null>(null);
@@ -311,6 +346,18 @@ export function DocSearchModal({
   const initialQuery = React.useRef(initialQueryFromProp || initialQueryFromSelection).current;
 
   const searchClient = useSearchClient(appId, apiKey, transformSearchClient);
+
+  const askAiConfig = typeof askAi === 'object' ? askAi : null;
+  const askAiConfigurationId = typeof askAi === 'string' ? askAi : askAiConfig?.assistantId || null;
+  const askAiSearchParameters = askAiConfig?.searchParameters;
+  const askAiUseStagingEnv = askAiConfig?.useStagingEnv || false;
+  const [askAiState, setAskAiState] = React.useState<AskAiState>('initial');
+  const suggestedQuestions = useSuggestedQuestions({
+    assistantId: askAiConfigurationId,
+    searchClient,
+    suggestedQuestionsEnabled: askAiConfig?.suggestedQuestions,
+  });
+  const agentStudio = askAiConfig?.agentStudio ?? false;
 
   // Format the `indexes` to be used until `indexName` and `searchParameters` props are fully removed.
   const indexes: DocSearchIndex[] = [];
@@ -347,6 +394,47 @@ export function DocSearchModal({
       limit: favoriteSearches.getAll().length === 0 ? recentSearchesLimit : recentSearchesWithFavoritesLimit,
     }),
   ).current;
+
+  const [stoppedStream, setStoppedStream] = React.useState(false);
+
+  const { messages, status, setMessages, sendMessage, stopAskAiStreaming, askAiError, sendFeedback, conversations } =
+    useAskAi({
+      assistantId: askAiConfigurationId,
+      apiKey: askAiConfig?.apiKey || apiKey,
+      appId: askAiConfig?.appId || appId,
+      indexName: askAiConfig?.indexName || defaultIndexName,
+      searchParameters: askAiSearchParameters,
+      useStagingEnv: askAiUseStagingEnv,
+      agentStudio,
+    });
+
+  const prevStatus = React.useRef(status);
+  React.useEffect(() => {
+    if (disableUserPersonalization) {
+      return;
+    }
+    // if we just transitioned from "streaming" → "ready", persist
+    if (prevStatus.current === 'streaming' && status === 'ready') {
+      // if we stopped the stream, store it on the most recent message
+      if (stoppedStream && messages.at(-1)) {
+        messages.at(-1)!.metadata = {
+          stopped: true,
+        };
+      }
+
+      for (const part of messages[0].parts) {
+        if (part.type === 'text') {
+          conversations.add(buildDummyAskAiHit(part.text, messages));
+        }
+      }
+    }
+    prevStatus.current = status;
+  }, [status, messages, conversations, disableUserPersonalization, stoppedStream]);
+
+  // Check if there's a thread depth error (AI-217)
+  const hasThreadDepthError = React.useMemo(() => {
+    return status === 'error' && isThreadDepthError(askAiError as Error | undefined);
+  }, [status, askAiError]);
 
   const createSyntheticParent = React.useCallback(function createSyntheticParent(
     item: InternalDocSearchHit,
@@ -413,6 +501,87 @@ export function DocSearchModal({
       >
     >(undefined);
 
+  const handleSelectAskAiQuestion = React.useCallback(
+    (toggle: boolean, query: string, suggestedQuestion: SuggestedQuestionHit | undefined = undefined) => {
+      if (toggle) {
+        const initialMessage: InitialAskAiMessage = {
+          query,
+          suggestedQuestionId: suggestedQuestion?.objectID,
+        };
+
+        if (interceptAskAiEvent?.(initialMessage)) {
+          // Consumer handled it. Avoid *all* default Ask AI behavior.
+          if (autocompleteRef.current) {
+            autocompleteRef.current.setQuery('');
+          }
+          return;
+        }
+      }
+
+      if (toggle && askAiState === 'new-conversation') {
+        setAskAiState('initial');
+      }
+
+      onAskAiToggle(toggle, {
+        query,
+        suggestedQuestionId: suggestedQuestion?.objectID,
+      });
+
+      // If we're in hybrid mode, we don't need to send the message,
+      // it will be handled by the Sidepanel.
+      if (isHybridModeSupported) return;
+
+      setStoppedStream(false);
+
+      const messageOptions: ChatRequestOptions = {};
+
+      if (suggestedQuestion) {
+        messageOptions.body = {
+          suggestedQuestionId: suggestedQuestion.objectID,
+        };
+      }
+
+      sendMessage(
+        {
+          role: 'user',
+          parts: [
+            {
+              type: 'text',
+              text: query,
+            },
+          ],
+        },
+        messageOptions,
+      );
+
+      if (dropdownRef.current) {
+        // some test environments (like jsdom) don't implement element.scrollTo
+        const el = dropdownRef.current;
+        if (typeof (el as any).scrollTo === 'function') {
+          el.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          // fallback for environments without scrollTo support
+          el.scrollTop = 0;
+        }
+      }
+
+      // clear the query
+      if (autocompleteRef.current) {
+        autocompleteRef.current.setQuery('');
+      }
+    },
+    [onAskAiToggle, interceptAskAiEvent, sendMessage, askAiState, setAskAiState, isHybridModeSupported],
+  );
+
+  // feedback handler
+  const handleFeedbackSubmit = React.useCallback(
+    async (messageId: string, thumbs: 0 | 1): Promise<void> => {
+      if (!askAiConfigurationId || !appId) return;
+      await sendFeedback(messageId, thumbs);
+    },
+    [askAiConfigurationId, appId, sendFeedback],
+  );
+
   if (!autocompleteRef.current) {
     autocompleteRef.current = createAutocomplete({
       id: 'docsearch',
@@ -437,8 +606,30 @@ export function DocSearchModal({
             saveRecentSearch,
             onClose,
             disableUserPersonalization,
+            canHandleAskAi,
           });
-          return noQuerySources;
+
+          const recentConversationSource: Array<AutocompleteSource<InternalDocSearchHit & { messages?: AIMessage[] }>> =
+            canHandleAskAi
+              ? [
+                  {
+                    sourceId: 'recentConversations',
+                    getItems(): InternalDocSearchHit[] {
+                      if (disableUserPersonalization) {
+                        return [];
+                      }
+                      return conversations.getAll() as unknown as InternalDocSearchHit[];
+                    },
+                    onSelect({ item }): void {
+                      if (item.messages) {
+                        setMessages(item.messages as any);
+                        onAskAiToggle(true);
+                      }
+                    },
+                  },
+                ]
+              : [];
+          return [...noQuerySources, ...recentConversationSource];
         }
 
         const querySourcesState: BuildQuerySourcesState = {
@@ -462,7 +653,49 @@ export function DocSearchModal({
           onClose,
         });
 
-        return algoliaSourcesPromise;
+        // Ask AI source
+        const askAiSource: Array<AutocompleteSource<InternalDocSearchHit>> = canHandleAskAi
+          ? [
+              {
+                sourceId: 'askAI',
+                getItems(): InternalDocSearchHit[] {
+                  // return a single item representing the Ask AI action
+                  // placeholder data matching the InternalDocSearchHit structure
+                  const askItem: InternalDocSearchHit = {
+                    type: 'askAI',
+                    query,
+                    url_without_anchor: '',
+                    objectID: `ask-ai-button`,
+                    content: null,
+                    url: '',
+                    anchor: null,
+                    hierarchy: {
+                      lvl0: 'Ask AI', // Or contextually relevant
+                      lvl1: query,
+                      lvl2: null,
+                      lvl3: null,
+                      lvl4: null,
+                      lvl5: null,
+                      lvl6: null,
+                    },
+                    _highlightResult: {} as any,
+                    _snippetResult: {} as any,
+                    __docsearch_parent: null,
+                  };
+                  return [askItem];
+                },
+                onSelect({ item }): void {
+                  if (item.type === 'askAI' && item.query) {
+                    handleSelectAskAiQuestion(true, item.query);
+                  }
+                },
+              },
+            ]
+          : [];
+        // Combine Algolia results (once resolved) with the Ask AI source
+        return algoliaSourcesPromise.then((algoliaSources) => {
+          return [...askAiSource, ...algoliaSources];
+        });
       },
     });
   }
@@ -519,10 +752,10 @@ export function DocSearchModal({
   }, []);
 
   React.useEffect(() => {
-    if (dropdownRef.current) {
+    if (dropdownRef.current && !isAskAiActive) {
       scrollToUtils(dropdownRef.current);
     }
-  }, [state.query]);
+  }, [state.query, isAskAiActive]);
 
   // We don't focus the input when there's an initial query (i.e. Selection
   // Search) because users rather want to see the results directly, without the
@@ -559,10 +792,43 @@ export function DocSearchModal({
     };
   }, []);
 
+  // Refresh the autocomplete results when ask ai is toggled off
+  // helps return to the previous ac state and start screen
+  React.useEffect(() => {
+    if (!isAskAiActive) {
+      autocomplete.refresh();
+      setMessages([]);
+    }
+  }, [isAskAiActive, autocomplete, setMessages]);
+
+  // Track external state in order to manage internal askAiState
+  React.useEffect(() => {
+    setAskAiState('initial');
+  }, [isAskAiActive, setAskAiState]);
+
+  const onStopAskAiStreaming = async (): Promise<void> => {
+    setStoppedStream(true);
+
+    await stopAskAiStreaming();
+  };
+
+  const handleNewConversation = (): void => {
+    setMessages([]);
+    setAskAiState('new-conversation');
+  };
+
+  const handleViewConversationHistory = (): void => {
+    setAskAiState('conversation-history');
+  };
+
+  const selectSuggestedQuestion = (suggestedQuestion: SuggestedQuestionHit): void => {
+    handleSelectAskAiQuestion(true, suggestedQuestion.question, suggestedQuestion);
+  };
+
   // hide the dropdown on idle and no collections
   let showDocsearchDropdown = true;
   const hasCollections = state.collections.some((collection) => collection.items.length > 0);
-  if (state.status === 'idle' && hasCollections === false && state.query.length === 0) {
+  if (state.status === 'idle' && hasCollections === false && state.query.length === 0 && !isAskAiActive) {
     showDocsearchDropdown = false;
   }
 
@@ -588,7 +854,7 @@ export function DocSearchModal({
     >
       <div className="DocSearch-Modal" ref={modalRef}>
         <header className="DocSearch-SearchBar" ref={formElementRef}>
-          <SearchBox
+          <AskAiSearchBox
             {...autocomplete}
             state={state}
             placeholder={placeholder || 'Search docs'}
@@ -596,13 +862,26 @@ export function DocSearchModal({
             inputRef={inputRef}
             isFromSelection={Boolean(initialQuery) && initialQuery === initialQueryFromSelection}
             translations={searchBoxTranslations}
+            isAskAiActive={isAskAiActive}
+            askAiStatus={status}
+            askAiError={askAiError}
+            askAiState={askAiState}
+            setAskAiState={setAskAiState}
+            isThreadDepthError={hasThreadDepthError && askAiState !== 'new-conversation'}
             onClose={onClose}
+            onAskAiToggle={onAskAiToggle}
+            onAskAgain={(query) => {
+              handleSelectAskAiQuestion(true, query);
+            }}
+            onStopAskAiStreaming={onStopAskAiStreaming}
+            onNewConversation={handleNewConversation}
+            onViewConversationHistory={handleViewConversationHistory}
           />
         </header>
 
         {showDocsearchDropdown && (
           <div className="DocSearch-Dropdown" ref={dropdownRef}>
-            <ScreenState
+            <AskAiScreenState
               {...autocomplete}
               indexName={defaultIndexName}
               state={state}
@@ -611,11 +890,51 @@ export function DocSearchModal({
               disableUserPersonalization={disableUserPersonalization}
               recentSearches={recentSearches}
               favoriteSearches={favoriteSearches}
+              conversations={conversations}
               inputRef={inputRef}
               translations={screenStateTranslations}
               getMissingResultsUrl={getMissingResultsUrl}
+              isAskAiActive={isAskAiActive}
+              canHandleAskAi={canHandleAskAi}
+              messages={messages}
+              askAiError={askAiError}
+              status={status}
               hasCollections={hasCollections}
+              askAiState={askAiState}
+              selectAskAiQuestion={handleSelectAskAiQuestion}
+              suggestedQuestions={suggestedQuestions}
+              selectSuggestedQuestion={selectSuggestedQuestion}
+              agentStudio={agentStudio}
+              onAskAiToggle={onAskAiToggle}
+              onNewConversation={handleNewConversation}
               onItemClick={(item, event) => {
+                // if the item is askAI toggle the screen
+                if (item.type === 'askAI' && item.query) {
+                  // if the item is askAI and the anchor is stored
+                  if (item.anchor === 'stored' && 'messages' in item) {
+                    setMessages(item.messages as any);
+                    const initialMessage: InitialAskAiMessage = {
+                      query: item.query,
+                      messageId: (item.messages as StoredAskAiMessage[])[0].id,
+                    };
+
+                    if (interceptAskAiEvent?.(initialMessage)) {
+                      if (autocompleteRef.current) {
+                        autocompleteRef.current.setQuery('');
+                      }
+                      event.preventDefault();
+                      return;
+                    }
+
+                    onAskAiToggle(true, initialMessage);
+                  } else {
+                    handleSelectAskAiQuestion(true, item.query);
+                  }
+                  setAskAiState('initial');
+                  event.preventDefault();
+                  return;
+                }
+
                 // If insights is active, send insights click event
                 sendItemClickEvent(item);
 
@@ -624,11 +943,12 @@ export function DocSearchModal({
                   onClose();
                 }
               }}
+              onFeedback={handleFeedbackSubmit}
             />
           </div>
         )}
         <footer className="DocSearch-Footer">
-          <Footer translations={footerTranslations} />
+          <Footer translations={footerTranslations} isAskAiActive={isAskAiActive} />
         </footer>
       </div>
     </div>

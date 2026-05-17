@@ -27,6 +27,7 @@ export default defineConfig([
     entry: {
       index: 'src/index.ts',
       DocSearchButton: 'src/DocSearchButton.tsx',
+      DocSearchAskAiModal: 'src/DocSearchAskAiModal.tsx',
       DocSearchModal: 'src/DocSearchModal.tsx',
     },
     outDir: 'dist/esm',

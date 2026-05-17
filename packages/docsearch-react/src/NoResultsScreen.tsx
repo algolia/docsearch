@@ -12,6 +12,7 @@ export type NoResultsScreenTranslations = Partial<{
 }>;
 
 type NoResultsScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
+  canHandleAskAi?: boolean;
   translations?: NoResultsScreenTranslations;
 };
 

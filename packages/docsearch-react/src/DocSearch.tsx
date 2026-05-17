@@ -6,10 +6,10 @@ import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
 
 import { DocSearchButton } from './DocSearchButton';
+import type { ButtonTranslations } from './DocSearchButton';
 import { DocSearchModal } from './DocSearchModal';
+import type { ModalTranslations } from './DocSearchModal';
 import type { DocSearchHit, DocSearchTheme, InternalDocSearchHit, StoredDocSearchHit } from './types';
-
-import type { ButtonTranslations, ModalTranslations } from '.';
 
 export type { DocSearchRef } from '@docsearch/core';
 
@@ -129,17 +129,6 @@ export interface DocSearchProps {
    */
   indices?: Array<DocSearchIndex | string>;
   /**
-   * Configuration or assistant id to enable ask ai mode. Pass a string assistant id or a full config object.
-   */
-  askAi?: DocSearchAskAi | string;
-  /**
-   * Intercept Ask AI requests (e.g. Submitting a prompt or selecting a suggested question).
-   *
-   * Return `true` to prevent the default modal Ask AI flow (no toggle, no sendMessage).
-   * Useful to route Ask AI into a different UI (e.g. `@docsearch/sidepanel-js`) without flicker.
-   */
-  interceptAskAiEvent?: (initialMessage: InitialAskAiMessage) => boolean | void;
-  /**
    * Theme overrides applied to the modal and related components.
    */
   theme?: DocSearchTheme;
@@ -244,6 +233,20 @@ export interface DocSearchProps {
   keyboardShortcuts?: DocSearchModalShortcuts;
 }
 
+export interface DocSearchAIProps extends DocSearchProps {
+  /**
+   * Configuration or assistant id to enable ask ai mode. Pass a string assistant id or a full config object.
+   */
+  askAi: DocSearchAskAi | string;
+  /**
+   * Intercept Ask AI requests (e.g. Submitting a prompt or selecting a suggested question).
+   *
+   * Return `true` to prevent the default modal Ask AI flow (no toggle, no sendMessage).
+   * Useful to route Ask AI into a different UI (e.g. `@docsearch/sidepanel-js`) without flicker.
+   */
+  interceptAskAiEvent?: (initialMessage: InitialAskAiMessage) => boolean | void;
+}
+
 function DocSearchComponent(props: DocSearchProps, ref: React.ForwardedRef<DocSearchRef>): JSX.Element {
   return (
     <DocSearchProvider {...props} ref={ref}>
@@ -255,16 +258,7 @@ function DocSearchComponent(props: DocSearchProps, ref: React.ForwardedRef<DocSe
 export const DocSearch = React.forwardRef(DocSearchComponent);
 
 export function DocSearchInner(props: DocSearchProps): JSX.Element {
-  const {
-    searchButtonRef,
-    keyboardShortcuts,
-    isModalActive,
-    isAskAiActive,
-    initialQuery,
-    onAskAiToggle,
-    openModal,
-    closeModal,
-  } = useDocSearch();
+  const { searchButtonRef, keyboardShortcuts, isModalActive, initialQuery, openModal, closeModal } = useDocSearch();
 
   return (
     <>
@@ -281,8 +275,6 @@ export function DocSearchInner(props: DocSearchProps): JSX.Element {
             initialScrollY={window.scrollY}
             initialQuery={initialQuery}
             translations={props?.translations?.modal}
-            isAskAiActive={isAskAiActive}
-            onAskAiToggle={onAskAiToggle}
             onClose={closeModal}
           />,
           props.portalContainer ?? document.body,

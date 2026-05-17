@@ -2,9 +2,9 @@ import type { UseChatHelpers } from '@ai-sdk/react';
 import React, { type JSX, useMemo, useState, useEffect } from 'react';
 
 import { AggregatedSearchBlock } from './AggregatedSearchBlock';
+import type { AskAiScreenStateProps } from './AskAiScreenState';
 import { AlertIcon, LoadingIcon } from './icons';
 import { MemoizedMarkdown } from './MemoizedMarkdown';
-import type { ScreenStateProps } from './ScreenState';
 import type { StoredSearchPlugin } from './stored-searches';
 import { ToolCall } from './ToolCall';
 import type { InternalDocSearchHit, StoredAskAiState } from './types';
@@ -63,7 +63,7 @@ export type AskAiScreenTranslations = Partial<{
   startNewConversationButtonText: string;
 }>;
 
-type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
+type AskAiScreenProps = Omit<AskAiScreenStateProps<InternalDocSearchHit>, 'translations'> & {
   messages: AIMessage[];
   status: UseChatHelpers<AIMessage>['status'];
   askAiError?: Error;

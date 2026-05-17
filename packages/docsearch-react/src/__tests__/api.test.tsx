@@ -5,10 +5,15 @@ import { describe, it, expect, afterEach } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 
 import { DocSearch as DocSearchComponent } from '../DocSearch';
-import type { DocSearchProps } from '../DocSearch';
+import type { DocSearchAIProps, DocSearchProps } from '../DocSearch';
+import { DocSearchAI as DocSearchAIComponent } from '../DocSearchAI';
 
 function DocSearch(props: Partial<DocSearchProps>): JSX.Element {
   return <DocSearchComponent appId="woo" apiKey="foo" indexName="bar" {...props} />;
+}
+
+function DocSearchAI(props: Partial<DocSearchAIProps>): JSX.Element {
+  return <DocSearchAIComponent appId="woo" apiKey="foo" indexName="bar" askAi="assistant" {...props} />;
 }
 
 // mock empty response
@@ -264,7 +269,7 @@ describe('api', () => {
 
   describe('ask AI integration', () => {
     it('updates placeholder when ask AI is available', async () => {
-      render(<DocSearch askAi="assistant" />);
+      render(<DocSearchAI />);
 
       await act(async () => {
         fireEvent.click(await screen.findByText('Search'));
@@ -275,8 +280,7 @@ describe('api', () => {
 
     it('opens ask AI screen and returns to search', async () => {
       render(
-        <DocSearch
-          askAi="assistant"
+        <DocSearchAI
           transformSearchClient={(searchClient) => ({
             ...searchClient,
             search: noResultSearch,

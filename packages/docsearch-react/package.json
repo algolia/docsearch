@@ -26,8 +26,11 @@
   ],
   "exports": {
     ".": "./dist/esm/index.js",
+    "./DocSearchAI": "./dist/esm/DocSearchAI.js",
+    "./DocSearchAskAiModal": "./dist/esm/DocSearchAskAiModal.js",
     "./button": "./dist/esm/DocSearchButton.js",
     "./modal": "./dist/esm/DocSearchModal.js",
+    "./askai": "./dist/esm/DocSearchAskAiModal.js",
     "./style": "./style/index.js",
     "./useDocSearchKeyboardEvents": "./dist/esm/useDocSearchKeyboardEvents.js",
     "./useTheme": "./dist/esm/useTheme.js",

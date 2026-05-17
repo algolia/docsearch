@@ -9,6 +9,8 @@ import type { AutocompleteState } from '@algolia/autocomplete-core';
 import type { ThemeConfigAlgolia } from '@docsearch/docusaurus-adapter';
 import type {
   InternalDocSearchHit,
+  DocSearchAskAiModal as DocSearchAskAiModalType,
+  DocSearchAskAiModalProps,
   DocSearchModal as DocSearchModalType,
   DocSearchModalProps,
   StoredDocSearchHit,
@@ -45,7 +47,7 @@ type DocSearchProps = Omit<DocSearchModalProps, 'initialScrollY' | 'onClose'> & 
   contextualSearch?: string;
   externalUrlRegex?: string;
   searchPagePath: boolean | string;
-  askAi?: Exclude<(DocSearchModalProps & { askAi: unknown })['askAi'], string | undefined>;
+  askAi?: Exclude<DocSearchAskAiModalProps['askAi'], string | undefined>;
 };
 
 type AskAiTogglePayload = {
@@ -64,19 +66,24 @@ interface AlgoliaSearchBarProps extends Omit<DocSearchProps, 'askAi'> {
 }
 
 let DocSearchModal: typeof DocSearchModalType | null = null;
+let DocSearchAskAiModal: typeof DocSearchAskAiModalType | null = null;
 let DocSearchSidepanel: typeof SidepanelType | null = null;
 
 function importDocSearchModalIfNeeded(): Promise<void> {
-  if (DocSearchModal) {
+  if (DocSearchModal && DocSearchAskAiModal) {
     return Promise.resolve();
   }
 
   // eslint-disable-next-line import/dynamic-import-chunkname
-  return Promise.all([import('@docsearch/react/modal'), import('@docsearch/react/style'), import('./styles.css')]).then(
-    ([{ DocSearchModal: Modal }]) => {
-      DocSearchModal = Modal;
-    },
-  );
+  return Promise.all([
+    import('@docsearch/react/modal'),
+    import('@docsearch/react/DocSearchAskAiModal'),
+    import('@docsearch/react/style'),
+    import('./styles.css'),
+  ]).then(([{ DocSearchModal: Modal }, { DocSearchAskAiModal: AskAiModal }]) => {
+    DocSearchModal = Modal;
+    DocSearchAskAiModal = AskAiModal;
+  });
 }
 
 async function importDocSearchSidepanelIfNeeded(): Promise<void> {
@@ -340,35 +347,38 @@ function DocSearch({ externalUrlRegex, ...props }: AlgoliaSearchBarProps) {
 
       {isOpen &&
         DocSearchModal &&
+        DocSearchAskAiModal &&
         searchContainer.current &&
         createPortal(
-          <DocSearchModal
-            initialScrollY={window.scrollY}
-            initialQuery={initialQuery}
-            navigator={navigator}
-            transformItems={transformItems}
-            hitComponent={Hit}
-            transformSearchClient={transformSearchClient}
-            interceptAskAiEvent={(payload) => {
+          React.createElement((askAi ? DocSearchAskAiModal : DocSearchModal) as React.ComponentType<any>, {
+            initialScrollY: window.scrollY,
+            initialQuery,
+            navigator,
+            transformItems,
+            hitComponent: Hit,
+            transformSearchClient,
+            interceptAskAiEvent: (
+              payload: Parameters<NonNullable<DocSearchAskAiModalProps['interceptAskAiEvent']>>[0],
+            ) => {
               if (!sidePanelEnabled) {
                 return false;
               }
               closeModal();
               openSidepanel(payload);
               return true;
-            }}
-            onClose={closeModal}
-            {...(resultsFooterSearchPagePath && {
+            },
+            onClose: closeModal,
+            ...(resultsFooterSearchPagePath && {
               resultsFooterComponent,
-            })}
-            placeholder={currentPlaceholder}
-            {...(props as DocSearchProps)}
-            translations={props.translations?.modal ?? translations.modal}
-            searchParameters={searchParameters}
-            {...extraAskAiProps}
-            isHybridModeSupported={sidePanelEnabled}
-            onAskAiToggle={handleAskAiToggle as DocSearchModalProps['onAskAiToggle']}
-          />,
+            }),
+            placeholder: currentPlaceholder,
+            ...(props as DocSearchProps),
+            translations: props.translations?.modal ?? translations.modal,
+            searchParameters,
+            ...extraAskAiProps,
+            isHybridModeSupported: sidePanelEnabled,
+            onAskAiToggle: handleAskAiToggle as DocSearchAskAiModalProps['onAskAiToggle'],
+          }),
           searchContainer.current,
         )}
 

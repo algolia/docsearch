@@ -1,6 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { DocSearch } from '@docsearch/core';
-import { DocSearchButton, DocSearchModal } from '@docsearch/modal';
+import { DocSearchButton, DocSearchAskAiModal } from '@docsearch/modal';
 import { Sidepanel, SidepanelButton } from '@docsearch/sidepanel';
 import type { JSX } from 'react';
 
@@ -8,7 +8,7 @@ export default function BasicHybrid(): JSX.Element {
   return (
     <DocSearch>
       <DocSearchButton />
-      <DocSearchModal
+      <DocSearchAskAiModal
         indexName="docsearch"
         appId="beta3G7FSQDJR3"
         apiKey="0faad3eae2ba413c16355a0f8670c201"
