@@ -7,7 +7,6 @@ import type { AskAiScreenStateTranslations } from './AskAiScreenState';
 import { AskAiScreenState } from './AskAiScreenState';
 import type { AskAiSearchBoxTranslations } from './components/AskAiSearchBox';
 import { AskAiSearchBox } from './components/AskAiSearchBox';
-import { MAX_QUERY_SIZE } from './constants';
 import type { DocSearchAIProps } from './DocSearch';
 import type { FooterTranslations } from './Footer';
 import { Footer } from './Footer';
@@ -17,7 +16,10 @@ import { buildNoQuerySources, buildQuerySources, type BuildQuerySourcesState } f
 import { DocSearchModalShell } from './modal/DocSearchModalShell';
 import { normalizeDocSearchIndexes } from './modal/normalizeDocSearchIndexes';
 import { useSendItemClickEvent } from './modal/useDocSearchInsights';
-import { useDocSearchModalEffects } from './modal/useDocSearchModalEffects';
+import { useInitialModalQuery } from './modal/useInitialModalQuery';
+import { useModalEnvironment } from './modal/useModalEnvironment';
+import { useModalRefs } from './modal/useModalRefs';
+import { useRefreshOnInitialQuery } from './modal/useRefreshOnInitialQuery';
 import { useSaveRecentSearch } from './modal/useSaveRecentSearch';
 import { useStoredDocSearches } from './modal/useStoredDocSearches';
 import type { NewConversationTranslations } from './NewConversationScreen';
@@ -26,8 +28,6 @@ import type { AskAiState } from './types/AskiAi';
 import { useAskAi } from './useAskAi';
 import { useSearchClient } from './useSearchClient';
 import { useSuggestedQuestions } from './useSuggestedQuestions';
-import { useTouchEvents } from './useTouchEvents';
-import { useTrapFocus } from './useTrapFocus';
 import { identity, isModifierEvent, noop, scrollTo as scrollToUtils } from './utils';
 import { buildDummyAskAiHit, isThreadDepthError } from './utils/ai';
 
@@ -100,16 +100,8 @@ export function DocSearchAskAiModal({
     placeholder = translations?.searchBox?.placeholderTextAskAi || 'Ask another question...';
   }
 
-  const containerRef = React.useRef<HTMLDivElement | null>(null);
-  const modalRef = React.useRef<HTMLDivElement | null>(null);
-  const formElementRef = React.useRef<HTMLDivElement | null>(null);
-  const dropdownRef = React.useRef<HTMLDivElement | null>(null);
-  const inputRef = React.useRef<HTMLInputElement | null>(null);
-  const snippetLength = React.useRef<number>(15);
-  const initialQueryFromSelection = React.useRef(
-    typeof window !== 'undefined' ? window.getSelection()!.toString().slice(0, MAX_QUERY_SIZE) : '',
-  ).current;
-  const initialQuery = React.useRef(initialQueryFromProp || initialQueryFromSelection).current;
+  const { containerRef, modalRef, formElementRef, dropdownRef, inputRef, snippetLength } = useModalRefs();
+  const { initialQuery, initialQueryFromSelection } = useInitialModalQuery(initialQueryFromProp);
 
   const searchClient = useSearchClient(appId, apiKey, transformSearchClient);
 
@@ -125,7 +117,11 @@ export function DocSearchAskAiModal({
   });
   const agentStudio = askAiConfig?.agentStudio ?? false;
 
-  const indexes = normalizeDocSearchIndexes({ indexName, indices, searchParameters });
+  const indexes = normalizeDocSearchIndexes({
+    indexName,
+    indices,
+    searchParameters,
+  });
   const defaultIndexName = indexes[0].name;
 
   const { favoriteSearches, recentSearches } = useStoredDocSearches({
@@ -263,7 +259,7 @@ export function DocSearchAskAiModal({
         autocompleteRef.current.setQuery('');
       }
     },
-    [onAskAiToggle, interceptAskAiEvent, sendMessage, askAiState, setAskAiState, isHybridModeSupported],
+    [askAiState, onAskAiToggle, isHybridModeSupported, sendMessage, dropdownRef, interceptAskAiEvent],
   );
 
   // feedback handler
@@ -346,55 +342,25 @@ export function DocSearchAskAiModal({
 
   const { getEnvironmentProps, getRootProps, refresh } = autocomplete;
 
-  useTouchEvents({
+  useModalEnvironment({
     getEnvironmentProps,
-    panelElement: dropdownRef.current,
-    formElement: formElementRef.current,
-    inputElement: inputRef.current,
+    containerRef,
+    dropdownRef,
+    formElementRef,
+    inputRef,
+    initialScrollY,
+    modalRef,
+    snippetLength,
+    theme,
   });
-  useTrapFocus({ container: containerRef.current });
-  useDocSearchModalEffects({ initialScrollY, modalRef, snippetLength, theme });
 
   React.useEffect(() => {
     if (dropdownRef.current && !isAskAiActive) {
       scrollToUtils(dropdownRef.current);
     }
-  }, [state.query, isAskAiActive]);
+  }, [state.query, isAskAiActive, dropdownRef]);
 
-  // We don't focus the input when there's an initial query (i.e. Selection
-  // Search) because users rather want to see the results directly, without the
-  // keyboard appearing.
-  // We therefore need to refresh the autocomplete instance to load all the
-  // results, which is usually triggered on focus.
-  React.useEffect(() => {
-    if (initialQuery.length > 0) {
-      refresh();
-
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
-    }
-  }, [initialQuery, refresh]);
-
-  // We rely on a CSS property to set the modal height to the full viewport height
-  // because all mobile browsers don't compute their height the same way.
-  // See https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
-  React.useEffect(() => {
-    function setFullViewportHeight(): void {
-      if (modalRef.current) {
-        const vh = window.innerHeight * 0.01;
-        modalRef.current.style.setProperty('--docsearch-vh', `${vh}px`);
-      }
-    }
-
-    setFullViewportHeight();
-
-    window.addEventListener('resize', setFullViewportHeight);
-
-    return (): void => {
-      window.removeEventListener('resize', setFullViewportHeight);
-    };
-  }, []);
+  useRefreshOnInitialQuery({ initialQuery, inputRef, refresh });
 
   // Refresh the autocomplete results when ask ai is toggled off
   // helps return to the previous ac state and start screen
