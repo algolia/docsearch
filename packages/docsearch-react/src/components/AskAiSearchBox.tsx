@@ -2,21 +2,14 @@ import type { UseChatHelpers } from '@ai-sdk/react';
 import type { AutocompleteApi, AutocompleteState } from '@algolia/autocomplete-core';
 import React, { type JSX, type RefObject } from 'react';
 
-import { MAX_QUERY_SIZE } from './constants';
-import {
-  LoadingIcon,
-  CloseIcon,
-  SearchIcon,
-  StopIcon,
-  MoreVerticalIcon,
-  NewConversationIcon,
-  ConversationHistoryIcon,
-} from './icons';
-import { BackIcon } from './icons/BackIcon';
-import { Menu } from './Menu';
-import { ModalHeading } from './ModalHeading';
-import type { InternalDocSearchHit } from './types';
-import type { AIMessage, AskAiState } from './types/AskiAi';
+import { ConversationHistoryIcon, MoreVerticalIcon, NewConversationIcon, StopIcon } from '../icons';
+import { BackIcon } from '../icons/BackIcon';
+import { Menu } from '../Menu';
+import { ModalHeading } from '../ModalHeading';
+import type { InternalDocSearchHit } from '../types';
+import type { AIMessage, AskAiState } from '../types/AskiAi';
+
+import { SearchBoxForm } from './ui/SearchBoxForm';
 
 export type AskAiSearchBoxTranslations = Partial<{
   clearButtonTitle: string;
@@ -82,21 +75,6 @@ export function AskAiSearchBox({
     viewConversationHistoryText = 'Conversation history',
     threadDepthErrorPlaceholder = 'Conversation limit reached',
   } = translations;
-  const { onReset } = props.getFormProps({
-    inputElement: props.inputRef.current,
-  });
-
-  React.useEffect(() => {
-    if (props.autoFocus && props.inputRef.current) {
-      props.inputRef.current.focus();
-    }
-  }, [props.autoFocus, props.inputRef]);
-
-  React.useEffect(() => {
-    if (props.isFromSelection && props.inputRef.current) {
-      props.inputRef.current.select();
-    }
-  }, [props.isFromSelection, props.inputRef]);
 
   const hasRecentConversations = React.useMemo(() => {
     const askAiSource = props.state.collections[2];
@@ -111,14 +89,11 @@ export function AskAiSearchBox({
   const baseInputProps = props.getInputProps({
     inputElement: props.inputRef.current!,
     autoFocus: props.autoFocus,
-    maxLength: MAX_QUERY_SIZE,
   });
-
   const blockedKeys = new Set(['ArrowUp', 'ArrowDown', 'Enter']);
   const origOnKeyDown = baseInputProps.onKeyDown;
   const origOnChange = baseInputProps.onChange;
   const isAskAiStreaming = props.askAiStatus === 'streaming' || props.askAiStatus === 'submitted';
-  const isKeywordSearchLoading = props.state.status === 'stalled';
   const renderMoreOptions = props.isAskAiActive && askAiState !== 'conversation-history';
 
   // Use the thread depth error state passed from parent
@@ -159,7 +134,6 @@ export function AskAiSearchBox({
    * https://github.com/algolia/autocomplete/blob/next/packages/autocomplete-core/src/getDefaultProps.ts.
    */
   const inputProps = {
-    ...baseInputProps,
     enterKeyHint: props.isAskAiActive ? ('enter' as const) : ('search' as const),
     onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>): void => {
       // block these up, down, enter listeners when Ask AI is active
@@ -205,117 +179,75 @@ export function AskAiSearchBox({
     onAskAiToggle(false);
   }, [askAiState, isThreadDepthError, onAskAiToggle, setAskAiState, props]);
 
-  return (
+  const leadingElement = props.isAskAiActive ? (
+    <button
+      type="button"
+      tabIndex={0}
+      className="DocSearch-Action DocSearch-AskAi-Return"
+      title={backToKeywordSearchButtonText}
+      aria-label={backToKeywordSearchButtonAriaLabel}
+      onClick={handleAskAiBackClick}
+    >
+      <BackIcon />
+    </button>
+  ) : undefined;
+  const inputOverlay = heading ? <ModalHeading heading={heading} shimmer={isAskAiStreaming} /> : null;
+  const actionsBeforeClose = (
     <>
-      <form
-        className="DocSearch-Form"
-        onSubmit={(event) => {
-          event.preventDefault();
-        }}
-        onReset={onReset}
-      >
-        {props.isAskAiActive ? (
-          <>
-            <button
-              type="button"
-              tabIndex={0}
-              className="DocSearch-Action DocSearch-AskAi-Return"
-              title={backToKeywordSearchButtonText}
-              aria-label={backToKeywordSearchButtonAriaLabel}
-              onClick={handleAskAiBackClick}
-            >
-              <BackIcon />
-            </button>
-          </>
-        ) : (
-          <>
-            {isKeywordSearchLoading && (
-              <div className="DocSearch-LoadingIndicator">
-                <LoadingIcon />
-              </div>
-            )}
-            {!isKeywordSearchLoading && (
-              <label className="DocSearch-MagnifierLabel" {...props.getLabelProps()}>
-                <SearchIcon />
-                <span className="DocSearch-VisuallyHiddenForAccessibility">{searchInputLabel}</span>
-              </label>
-            )}
-          </>
-        )}
-
-        {heading && <ModalHeading heading={heading} shimmer={isAskAiStreaming} />}
-
-        <input
-          className="DocSearch-Input"
-          ref={props.inputRef}
-          {...inputProps}
-          placeholder={searchPlaceholder}
-          hidden={Boolean(heading)}
-        />
-
-        <div className="DocSearch-Actions">
-          <button
-            className="DocSearch-Clear"
-            type="reset"
-            aria-label={clearButtonAriaLabel}
-            hidden={!props.state.query}
-            tabIndex={props.state.query ? 0 : -1}
-            aria-hidden={!props.state.query ? 'true' : 'false'}
-          >
-            {clearButtonTitle}
-          </button>
-
-          {props.state.query && <div className="DocSearch-Divider" />}
-
-          {isAskAiStreaming && (
-            <>
-              <button
-                type="button"
-                className="DocSearch-Action DocSearch-StopStreaming"
-                onClick={props.onStopAskAiStreaming}
-              >
-                <StopIcon />
-              </button>
-
-              <div className="DocSearch-Divider" />
-            </>
-          )}
-
-          {renderMoreOptions && (
-            <>
-              <Menu>
-                <Menu.Trigger className="DocSearch-Action">
-                  <MoreVerticalIcon />
-                </Menu.Trigger>
-                <Menu.Content>
-                  <Menu.Item onClick={props.onNewConversation}>
-                    <NewConversationIcon />
-                    {startNewConversationText}
-                  </Menu.Item>
-                  {hasRecentConversations && (
-                    <Menu.Item onClick={props.onViewConversationHistory}>
-                      <ConversationHistoryIcon />
-                      {viewConversationHistoryText}
-                    </Menu.Item>
-                  )}
-                </Menu.Content>
-              </Menu>
-
-              <div className="DocSearch-Divider" />
-            </>
-          )}
-
+      {isAskAiStreaming && (
+        <>
           <button
             type="button"
-            title={closeButtonText}
-            className="DocSearch-Action DocSearch-Close"
-            aria-label={closeButtonAriaLabel}
-            onClick={props.onClose}
+            className="DocSearch-Action DocSearch-StopStreaming"
+            onClick={props.onStopAskAiStreaming}
           >
-            <CloseIcon />
+            <StopIcon />
           </button>
-        </div>
-      </form>
+
+          <div className="DocSearch-Divider" />
+        </>
+      )}
+
+      {renderMoreOptions && (
+        <>
+          <Menu>
+            <Menu.Trigger className="DocSearch-Action">
+              <MoreVerticalIcon />
+            </Menu.Trigger>
+            <Menu.Content>
+              <Menu.Item onClick={props.onNewConversation}>
+                <NewConversationIcon />
+                {startNewConversationText}
+              </Menu.Item>
+              {hasRecentConversations && (
+                <Menu.Item onClick={props.onViewConversationHistory}>
+                  <ConversationHistoryIcon />
+                  {viewConversationHistoryText}
+                </Menu.Item>
+              )}
+            </Menu.Content>
+          </Menu>
+
+          <div className="DocSearch-Divider" />
+        </>
+      )}
     </>
+  );
+
+  return (
+    <SearchBoxForm
+      {...props}
+      placeholder={searchPlaceholder}
+      clearButtonTitle={clearButtonTitle}
+      clearButtonAriaLabel={clearButtonAriaLabel}
+      closeButtonText={closeButtonText}
+      closeButtonAriaLabel={closeButtonAriaLabel}
+      searchInputLabel={searchInputLabel}
+      leadingElement={leadingElement}
+      inputOverlay={inputOverlay}
+      hideInput={Boolean(heading)}
+      actionsBeforeClose={actionsBeforeClose}
+      inputProps={inputProps}
+    />
   );
 }

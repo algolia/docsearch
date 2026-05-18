@@ -1,6 +1,8 @@
 import { createAutocomplete } from '@algolia/autocomplete-core';
 import React, { type JSX } from 'react';
 
+import type { KeywordSearchBoxTranslations } from './components/KeywordSearchBox';
+import { KeywordSearchBox } from './components/KeywordSearchBox';
 import { MAX_QUERY_SIZE } from './constants';
 import type { DocSearchProps } from './DocSearch';
 import type { FooterTranslations } from './Footer';
@@ -15,8 +17,6 @@ import { useSaveRecentSearch } from './modal/useSaveRecentSearch';
 import { useStoredDocSearches } from './modal/useStoredDocSearches';
 import type { ScreenStateTranslations } from './ScreenState';
 import { ScreenState } from './ScreenState';
-import type { SearchBoxTranslations } from './SearchBox';
-import { SearchBox } from './SearchBox';
 import type { DocSearchState, InternalDocSearchHit } from './types';
 import { useSearchClient } from './useSearchClient';
 import { useTouchEvents } from './useTouchEvents';
@@ -24,7 +24,7 @@ import { useTrapFocus } from './useTrapFocus';
 import { identity, isModifierEvent, noop, scrollTo as scrollToUtils } from './utils';
 
 export type ModalTranslations = Partial<{
-  searchBox: SearchBoxTranslations;
+  searchBox: KeywordSearchBoxTranslations;
   footer: FooterTranslations;
 }> &
   ScreenStateTranslations;
@@ -241,7 +241,7 @@ export function DocSearchModal({
       getRootProps={getRootProps}
       showDropdown={showDocsearchDropdown}
       searchBox={
-        <SearchBox
+        <KeywordSearchBox
           {...autocomplete}
           state={state}
           placeholder={placeholder || 'Search docs'}

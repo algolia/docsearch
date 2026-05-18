@@ -5,8 +5,8 @@ import React, { type JSX } from 'react';
 
 import type { AskAiScreenStateTranslations } from './AskAiScreenState';
 import { AskAiScreenState } from './AskAiScreenState';
-import type { AskAiSearchBoxTranslations } from './AskAiSearchBox';
-import { AskAiSearchBox } from './AskAiSearchBox';
+import type { AskAiSearchBoxTranslations } from './components/AskAiSearchBox';
+import { AskAiSearchBox } from './components/AskAiSearchBox';
 import { MAX_QUERY_SIZE } from './constants';
 import type { DocSearchAIProps } from './DocSearch';
 import type { FooterTranslations } from './Footer';
