@@ -5,7 +5,11 @@ import type React from 'react';
 import type { DocSearchIndex, DocSearchProps } from '../DocSearch';
 import type { DocSearchHit, DocSearchState, InternalDocSearchHit } from '../types';
 import type { useSearchClient } from '../useSearchClient';
-import { groupBy, identity, isModifierEvent, removeHighlightTags } from '../utils';
+
+import { groupBy } from './groupBy';
+import { identity } from './identity';
+import { isModifierEvent } from './isModifierEvent';
+import { removeHighlightTags } from './removeHighlightTags';
 
 export type BuildQuerySourcesState = Pick<AutocompleteState<InternalDocSearchHit>, 'context'>;
 

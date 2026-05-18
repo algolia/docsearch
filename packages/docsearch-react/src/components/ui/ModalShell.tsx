@@ -1,9 +1,9 @@
 import type { AutocompleteApi } from '@algolia/autocomplete-core';
 import React, { type JSX } from 'react';
 
-import type { DocSearchState, InternalDocSearchHit } from '../types';
+import type { DocSearchState, InternalDocSearchHit } from '../../types';
 
-export type DocSearchModalShellProps = {
+export type ModalShellProps = {
   state: DocSearchState<InternalDocSearchHit>;
   containerRef: React.RefObject<HTMLDivElement | null>;
   modalRef: React.RefObject<HTMLDivElement | null>;
@@ -22,7 +22,7 @@ export type DocSearchModalShellProps = {
   footer: React.ReactNode;
 };
 
-export function DocSearchModalShell({
+export function ModalShell({
   state,
   containerRef,
   modalRef,
@@ -34,7 +34,7 @@ export function DocSearchModalShell({
   searchBox,
   screenState,
   footer,
-}: DocSearchModalShellProps): JSX.Element {
+}: ModalShellProps): JSX.Element {
   return (
     <div
       ref={containerRef}

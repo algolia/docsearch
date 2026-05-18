@@ -7,21 +7,18 @@ import type { AskAiScreenStateTranslations } from './AskAiScreenState';
 import { AskAiScreenState } from './AskAiScreenState';
 import type { AskAiSearchBoxTranslations } from './components/AskAiSearchBox';
 import { AskAiSearchBox } from './components/AskAiSearchBox';
+import { ModalShell } from './components/ui/ModalShell';
 import type { DocSearchAIProps } from './DocSearch';
 import type { FooterTranslations } from './Footer';
 import { Footer } from './Footer';
 import { Hit } from './Hit';
-import { buildAskAiActionSources, buildRecentConversationSources } from './modal/createAskAiSources';
-import { buildNoQuerySources, buildQuerySources, type BuildQuerySourcesState } from './modal/createDocSearchSources';
-import { DocSearchModalShell } from './modal/DocSearchModalShell';
-import { normalizeDocSearchIndexes } from './modal/normalizeDocSearchIndexes';
-import { useSendItemClickEvent } from './modal/useDocSearchInsights';
-import { useInitialModalQuery } from './modal/useInitialModalQuery';
-import { useModalEnvironment } from './modal/useModalEnvironment';
-import { useModalRefs } from './modal/useModalRefs';
-import { useRefreshOnInitialQuery } from './modal/useRefreshOnInitialQuery';
-import { useSaveRecentSearch } from './modal/useSaveRecentSearch';
-import { useStoredDocSearches } from './modal/useStoredDocSearches';
+import { useSendItemClickEvent } from './hooks/useDocSearchInsights';
+import { useInitialModalQuery } from './hooks/useInitialModalQuery';
+import { useModalEnvironment } from './hooks/useModalEnvironment';
+import { useModalRefs } from './hooks/useModalRefs';
+import { useRefreshOnInitialQuery } from './hooks/useRefreshOnInitialQuery';
+import { useSaveRecentSearch } from './hooks/useSaveRecentSearch';
+import { useStoredDocSearches } from './hooks/useStoredDocSearches';
 import type { NewConversationTranslations } from './NewConversationScreen';
 import type { DocSearchState, InternalDocSearchHit, StoredAskAiMessage, SuggestedQuestionHit } from './types';
 import type { AskAiState } from './types/AskiAi';
@@ -30,6 +27,9 @@ import { useSearchClient } from './useSearchClient';
 import { useSuggestedQuestions } from './useSuggestedQuestions';
 import { identity, isModifierEvent, noop, scrollTo as scrollToUtils } from './utils';
 import { buildDummyAskAiHit, isThreadDepthError } from './utils/ai';
+import { buildAskAiActionSources, buildRecentConversationSources } from './utils/createAskAiSources';
+import { buildNoQuerySources, buildQuerySources, type BuildQuerySourcesState } from './utils/createDocSearchSources';
+import { normalizeDocSearchIndexes } from './utils/normalizeDocSearchIndexes';
 
 export type DocSearchAskAiModalTranslations = AskAiScreenStateTranslations &
   Partial<{
@@ -403,7 +403,7 @@ export function DocSearchAskAiModal({
   }
 
   return (
-    <DocSearchModalShell
+    <ModalShell
       state={state}
       containerRef={containerRef}
       modalRef={modalRef}
