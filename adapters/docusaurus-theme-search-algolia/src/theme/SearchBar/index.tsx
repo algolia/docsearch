@@ -1,3 +1,4 @@
+/* eslint-disable import/dynamic-import-chunkname */
 /**
  * Copyright (c) Facebook, Inc. And its affiliates.
  *
@@ -74,7 +75,6 @@ function importDocSearchModalIfNeeded(): Promise<void> {
     return Promise.resolve();
   }
 
-  // eslint-disable-next-line import/dynamic-import-chunkname
   return Promise.all([
     import('@docsearch/react/modal'),
     import('@docsearch/react/DocSearchAskAiModal'),
@@ -92,7 +92,6 @@ async function importDocSearchSidepanelIfNeeded(): Promise<void> {
     return Promise.resolve();
   }
 
-  // eslint-disable-next-line import/dynamic-import-chunkname
   return Promise.all([import('@docsearch/react/sidepanel'), import('@docsearch/react/style/sidepanel')]).then(
     ([{ Sidepanel }]) => {
       DocSearchSidepanel = Sidepanel;
