@@ -16,6 +16,8 @@
   "sideEffects": false,
   "files": [
     "dist/",
+    "askaiModal.js",
+    "docsearchAi.js",
     "button.js",
     "modal.js",
     "useTheme.js",
@@ -26,11 +28,10 @@
   ],
   "exports": {
     ".": "./dist/esm/index.js",
-    "./DocSearchAI": "./dist/esm/DocSearchAI.js",
-    "./DocSearchAskAiModal": "./dist/esm/DocSearchAskAiModal.js",
+    "./askaiModal": "./dist/esm/DocSearchAskAiModal.js",
+    "./docsearchAi": "./dist/esm/DocSearchAI.js",
     "./button": "./dist/esm/DocSearchButton.js",
     "./modal": "./dist/esm/DocSearchModal.js",
-    "./askai": "./dist/esm/DocSearchAskAiModal.js",
     "./style": "./style/index.js",
     "./useDocSearchKeyboardEvents": "./dist/esm/useDocSearchKeyboardEvents.js",
     "./useTheme": "./dist/esm/useTheme.js",

@@ -18,7 +18,8 @@
     "dist/",
     "button.js",
     "index.js",
-    "modal.js"
+    "modal.js",
+    "askai.js"
   ],
   "exports": {
     ".": "./dist/esm/index.js",

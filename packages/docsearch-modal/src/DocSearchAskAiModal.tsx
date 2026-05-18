@@ -1,6 +1,6 @@
 import { useDocSearch } from '@docsearch/core';
-import { DocSearchAskAiModal as Modal } from '@docsearch/react/askai';
-import type { DocSearchAskAiModalProps as ReactDocSearchAskAiModalProps } from '@docsearch/react/DocSearchAskAiModal';
+import type { DocSearchAskAiModalProps as ReactDocSearchAskAiModalProps } from '@docsearch/react/askaiModal';
+import { DocSearchAskAiModal as Modal } from '@docsearch/react/askaiModal';
 import type { JSX } from 'react';
 import React from 'react';
 import { createPortal } from 'react-dom';
