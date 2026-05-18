@@ -1,11 +1,11 @@
 import React, { type JSX } from 'react';
 
-import { RecentIcon, CloseIcon, StarIcon } from './icons';
-import { Results } from './Results';
-import type { ScreenStateProps } from './ScreenState';
-import type { InternalDocSearchHit } from './types';
+import { CloseIcon, RecentIcon, StarIcon } from '../../icons';
+import { Results } from '../../Results';
+import type { ScreenStateProps } from '../../ScreenState';
+import type { InternalDocSearchHit } from '../../types';
 
-export type StartScreenTranslations = Partial<{
+export type StoredSearchesSectionsTranslations = Partial<{
   recentSearchesTitle: string;
   noRecentSearchesText: string;
   saveRecentSearchButtonTitle: string;
@@ -14,12 +14,11 @@ export type StartScreenTranslations = Partial<{
   removeFavoriteSearchButtonTitle: string;
 }>;
 
-type StartScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
-  hasCollections: boolean;
-  translations?: StartScreenTranslations;
+type StoredSearchesSectionsProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
+  translations?: StoredSearchesSectionsTranslations;
 };
 
-export function StartScreen({ translations = {}, ...props }: StartScreenProps): JSX.Element | null {
+export function StoredSearchesSections({ translations = {}, ...props }: StoredSearchesSectionsProps): JSX.Element {
   const {
     recentSearchesTitle = 'Recent',
     saveRecentSearchButtonTitle = 'Save this search',
@@ -27,13 +26,14 @@ export function StartScreen({ translations = {}, ...props }: StartScreenProps): 
     favoriteSearchesTitle = 'Favorite',
     removeFavoriteSearchButtonTitle = 'Remove this search from favorites',
   } = translations;
+  const recentSearchesCollection = props.state.collections[0];
 
   return (
-    <div className="DocSearch-Dropdown-Container">
+    <>
       <Results
         {...props}
         title={recentSearchesTitle}
-        collection={props.state.collections[0]}
+        collection={recentSearchesCollection}
         renderIcon={() => (
           <div className="DocSearch-Hit-icon">
             <RecentIcon />
@@ -103,6 +103,6 @@ export function StartScreen({ translations = {}, ...props }: StartScreenProps): 
           </div>
         )}
       />
-    </div>
+    </>
   );
 }

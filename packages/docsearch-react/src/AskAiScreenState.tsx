@@ -4,8 +4,8 @@ import React from 'react';
 
 import type { AskAiScreenTranslations } from './AskAiScreen';
 import { AskAiScreen } from './AskAiScreen';
-import type { AskAiStartScreenTranslations } from './AskAiStartScreen';
-import { AskAiStartScreen } from './AskAiStartScreen';
+import type { AskAiStartScreenTranslations } from './components/AskAiStartScreen';
+import { AskAiStartScreen } from './components/AskAiStartScreen';
 import { ConversationHistoryScreen } from './ConversationHistoryScreen';
 import type { DocSearchProps } from './DocSearch';
 import type { ErrorScreenTranslations } from './ErrorScreen';

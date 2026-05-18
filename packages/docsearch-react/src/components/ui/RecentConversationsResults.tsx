@@ -1,0 +1,55 @@
+import React, { type JSX } from 'react';
+
+import type { AskAiScreenStateProps } from '../../AskAiScreenState';
+import { CloseIcon, SparklesIcon } from '../../icons';
+import { Results } from '../../Results';
+import type { InternalDocSearchHit } from '../../types';
+
+export type RecentConversationsResultsTranslations = Partial<{
+  recentConversationsTitle: string;
+  removeRecentConversationButtonTitle: string;
+}>;
+
+type RecentConversationsResultsProps = Omit<AskAiScreenStateProps<InternalDocSearchHit>, 'translations'> & {
+  translations?: RecentConversationsResultsTranslations;
+};
+
+export function RecentConversationsResults({
+  translations = {},
+  ...props
+}: RecentConversationsResultsProps): JSX.Element {
+  const {
+    recentConversationsTitle = 'Recent conversations',
+    removeRecentConversationButtonTitle = 'Remove this conversation from history',
+  } = translations;
+
+  return (
+    <Results
+      {...props}
+      title={recentConversationsTitle}
+      collection={props.state.collections[2]}
+      renderIcon={() => (
+        <div className="DocSearch-Hit-icon">
+          <SparklesIcon />
+        </div>
+      )}
+      renderAction={({ item }) => (
+        <div className="DocSearch-Hit-action">
+          <button
+            className="DocSearch-Hit-action-button"
+            title={removeRecentConversationButtonTitle}
+            type="submit"
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              props.conversations.remove(item);
+              props.refresh();
+            }}
+          >
+            <CloseIcon />
+          </button>
+        </div>
+      )}
+    />
+  );
+}

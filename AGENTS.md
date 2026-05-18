@@ -142,11 +142,11 @@ function createStorage<TItem>(key: string): StorageInterface<TItem> {
 
 ### React Component Structure
 
-- `src/components/ui/` contains base-level, reusable UI primitives.
-- UI primitives should be domain-light and avoid feature-specific state, side effects, and AI-specific imports.
-- `src/components/` contains scoped components that compose primitives and own feature logic.
-- Feature components may import hooks, domain types, state machines, and scoped behavior.
-- Keep AI-specific imports and behavior out of `src/components/ui/`; place them in scoped components such as `src/components/AskAiSearchBox.tsx`.
+- `src/components/ui/` contains reusable rendering components.
+- Prefer domain-light primitives in `src/components/ui/` when possible.
+- Feature-scoped UI components may live in `src/components/ui/` when their feature scope is explicit in the filename, such as `RecentConversationsResults.tsx`.
+- `src/components/` contains scoped composition components that own feature flow, branching, and state orchestration.
+- Keep AI-specific behavior out of generic UI primitives. If a UI component is AI-specific, make that scope clear in its name.
 
 ```typescript
 function DocSearchComponent(
@@ -234,8 +234,8 @@ describe('ComponentName', () => {
 packages/
   docsearch-react/
     src/
-      components/         # Scoped React components with feature logic
-        ui/               # Base-level reusable UI primitives
+      components/         # Scoped React composition components
+        ui/               # Reusable rendering components and explicitly scoped UI pieces
       __tests__/          # Test files
       icons/              # Icon components
       types/              # Type definitions
