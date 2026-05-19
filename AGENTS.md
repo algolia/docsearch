@@ -140,6 +140,14 @@ function createStorage<TItem>(key: string): StorageInterface<TItem> {
 - Use `React.useMemo` for expensive computations
 - Prefer destructuring props in function signature
 
+### React Component Structure
+
+- `src/components/ui/` contains reusable rendering components.
+- Prefer domain-light primitives in `src/components/ui/` when possible.
+- Feature-scoped UI components may live in `src/components/ui/` when their feature scope is explicit in the filename, such as `RecentConversationsResults.tsx`.
+- `src/components/` contains scoped composition components that own feature flow, branching, and state orchestration.
+- Keep AI-specific behavior out of generic UI primitives. If a UI component is AI-specific, make that scope clear in its name.
+
 ```typescript
 function DocSearchComponent(
   props: DocSearchProps,
@@ -226,6 +234,8 @@ describe('ComponentName', () => {
 packages/
   docsearch-react/
     src/
+      components/         # Scoped React composition components
+        ui/               # Reusable rendering components and explicitly scoped UI pieces
       __tests__/          # Test files
       icons/              # Icon components
       types/              # Type definitions

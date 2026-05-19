@@ -30,6 +30,7 @@
     "pw:ui": "start-server-and-test 'bun run website:test' http://localhost:3000 'playwright test --ui'",
     "lint:css": "stylelint **/src/**/*.css",
     "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "playground:build": "bun --filter @docsearch/react-example build",
     "playground:start": "bun --filter @docsearch/react-example dev -- --host",
     "playground-js:start": "bun --filter @docsearch/js-example dev -- --host",

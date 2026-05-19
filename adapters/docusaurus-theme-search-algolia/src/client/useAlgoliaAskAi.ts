@@ -6,7 +6,7 @@
  */
 
 import type { AskAiConfig } from '@docsearch/docusaurus-adapter';
-import type { DocSearchModalProps, DocSearchTranslations } from '@docsearch/react';
+import type { DocSearchAskAiModalProps, DocSearchTranslations } from '@docsearch/react';
 import translations from '@theme/SearchTranslations';
 import type { FacetFilters } from 'algoliasearch/lite';
 import { useCallback, useMemo, useState } from 'react';
@@ -21,14 +21,14 @@ interface DocSearchPropsLite {
   appId: string;
   placeholder?: string;
   translations?: DocSearchTranslations;
-  searchParameters?: DocSearchModalProps['searchParameters'];
+  searchParameters?: DocSearchAskAiModalProps['searchParameters'];
   askAi?: AskAiConfig;
 }
 
-type OnAskAiToggle = NonNullable<DocSearchModalProps['onAskAiToggle']>;
+type OnAskAiToggle = NonNullable<DocSearchAskAiModalProps['onAskAiToggle']>;
 type AskAiConfigWithoutSidePanel = Omit<AskAiConfig, 'sidePanel'>;
-type DocSearchAskAi = Exclude<DocSearchModalProps['askAi'], string | undefined>;
-type DocSearchModalPropsLite = Partial<Omit<DocSearchModalProps, 'askAi'>>;
+type DocSearchAskAi = Exclude<DocSearchAskAiModalProps['askAi'], string | undefined>;
+type DocSearchModalPropsLite = Partial<Omit<DocSearchAskAiModalProps, 'askAi'>>;
 
 type UseAskAiResult = {
   canHandleAskAi: boolean;
@@ -96,7 +96,7 @@ export function useAlgoliaAskAi(props: DocSearchPropsLite): UseAskAiResult {
   const canHandleAskAi = Boolean(askAi);
 
   const currentPlaceholder = isAskAiActive
-    ? translations.modal?.searchBox?.placeholderTextAskAi
+    ? (translations.modal?.searchBox as { placeholderTextAskAi?: string } | undefined)?.placeholderTextAskAi
     : translations.modal?.searchBox?.placeholderText || props?.placeholder;
 
   const onAskAiToggle = useCallback<OnAskAiToggle>((askAiToggle: boolean) => {

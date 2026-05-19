@@ -1,13 +1,13 @@
 import type { JSX } from 'react';
 import React from 'react';
 
+import type { AskAiScreenStateProps } from './AskAiScreenState';
 import { CloseIcon, SparklesIcon } from './icons';
 import { Results } from './Results';
 import type { ResultsScreenTranslations } from './ResultsScreen';
-import type { ScreenStateProps } from './ScreenState';
 import type { InternalDocSearchHit } from './types';
 
-type ConversationHistoryScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
+type ConversationHistoryScreenProps = Omit<AskAiScreenStateProps<InternalDocSearchHit>, 'translations'> & {
   translations?: ResultsScreenTranslations;
 };
 

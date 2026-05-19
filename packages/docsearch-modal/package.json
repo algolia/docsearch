@@ -18,11 +18,13 @@
     "dist/",
     "button.js",
     "index.js",
-    "modal.js"
+    "modal.js",
+    "askai.js"
   ],
   "exports": {
     ".": "./dist/esm/index.js",
     "./button": "./dist/esm/DocSearchButton.js",
+    "./askai": "./dist/esm/DocSearchAskAiModal.js",
     "./modal": "./dist/esm/DocSearchModal.js"
   },
   "source": "src/index.ts",

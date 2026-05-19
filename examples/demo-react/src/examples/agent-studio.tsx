@@ -1,7 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { DocSearch } from '@docsearch/core';
-import { DocSearchButton } from '@docsearch/modal/button';
-import { DocSearchModal } from '@docsearch/modal/modal';
+import { DocSearchButton, DocSearchAskAiModal } from '@docsearch/modal';
 import type { JSX } from 'react';
 
 export default function AgentStudio(): JSX.Element {
@@ -12,7 +11,7 @@ export default function AgentStudio(): JSX.Element {
           buttonText: 'Ask AI with Agent Studio',
         }}
       />
-      <DocSearchModal
+      <DocSearchAskAiModal
         indexName="docsearch"
         appId="PMZUYBQDAK"
         apiKey="a00716d83c64f6c61905c078b7d5ab66"

@@ -1,43 +1,39 @@
 import React, { type JSX } from 'react';
 
-import { RecentIcon, CloseIcon, StarIcon, SparklesIcon } from './icons';
-import { Results } from './Results';
-import type { ScreenStateProps } from './ScreenState';
-import type { InternalDocSearchHit } from './types';
+import { CloseIcon, RecentIcon, StarIcon } from '../../icons';
+import { Results } from '../../Results';
+import type { ScreenStateProps } from '../../ScreenState';
+import type { InternalDocSearchHit } from '../../types';
 
-export type StartScreenTranslations = Partial<{
+export type StoredSearchesSectionsTranslations = Partial<{
   recentSearchesTitle: string;
   noRecentSearchesText: string;
   saveRecentSearchButtonTitle: string;
   removeRecentSearchButtonTitle: string;
   favoriteSearchesTitle: string;
   removeFavoriteSearchButtonTitle: string;
-  recentConversationsTitle: string;
-  removeRecentConversationButtonTitle: string;
 }>;
 
-type StartScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
-  hasCollections: boolean;
-  translations?: StartScreenTranslations;
+type StoredSearchesSectionsProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
+  translations?: StoredSearchesSectionsTranslations;
 };
 
-export function StartScreen({ translations = {}, ...props }: StartScreenProps): JSX.Element | null {
+export function StoredSearchesSections({ translations = {}, ...props }: StoredSearchesSectionsProps): JSX.Element {
   const {
     recentSearchesTitle = 'Recent',
     saveRecentSearchButtonTitle = 'Save this search',
     removeRecentSearchButtonTitle = 'Remove this search from history',
     favoriteSearchesTitle = 'Favorite',
     removeFavoriteSearchButtonTitle = 'Remove this search from favorites',
-    recentConversationsTitle = 'Recent conversations',
-    removeRecentConversationButtonTitle = 'Remove this conversation from history',
   } = translations;
+  const recentSearchesCollection = props.state.collections[0];
 
   return (
-    <div className="DocSearch-Dropdown-Container">
+    <>
       <Results
         {...props}
         title={recentSearchesTitle}
-        collection={props.state.collections[0]}
+        collection={recentSearchesCollection}
         renderIcon={() => (
           <div className="DocSearch-Hit-icon">
             <RecentIcon />
@@ -107,34 +103,6 @@ export function StartScreen({ translations = {}, ...props }: StartScreenProps): 
           </div>
         )}
       />
-
-      <Results
-        {...props}
-        title={recentConversationsTitle}
-        collection={props.state.collections[2]}
-        renderIcon={() => (
-          <div className="DocSearch-Hit-icon">
-            <SparklesIcon />
-          </div>
-        )}
-        renderAction={({ item }) => (
-          <div className="DocSearch-Hit-action">
-            <button
-              className="DocSearch-Hit-action-button"
-              title={removeRecentConversationButtonTitle}
-              type="submit"
-              onClick={(event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                props.conversations.remove(item);
-                props.refresh();
-              }}
-            >
-              <CloseIcon />
-            </button>
-          </div>
-        )}
-      />
-    </div>
+    </>
   );
 }

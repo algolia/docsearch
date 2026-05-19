@@ -7,18 +7,11 @@ import { createPortal } from 'react-dom';
 
 export type DocSearchModalProps = Omit<
   ReactDocSearchModalProps,
-  | 'initialScrollY'
-  | 'isAskAiActive'
-  | 'isHybridModeSupported'
-  | 'keyboardShortcuts'
-  | 'onAskAiToggle'
-  | 'onClose'
-  | 'theme'
+  'initialScrollY' | 'keyboardShortcuts' | 'onClose' | 'theme'
 >;
 
 export function DocSearchModal(props: DocSearchModalProps): JSX.Element | null {
-  const { isModalActive, onAskAiToggle, closeModal, isAskAiActive, initialQuery, registerView, isHybridModeSupported } =
-    useDocSearch();
+  const { isModalActive, closeModal, initialQuery, registerView } = useDocSearch();
 
   const containerElement = React.useMemo(() => props.portalContainer ?? document.body, [props.portalContainer]);
 
@@ -31,14 +24,11 @@ export function DocSearchModal(props: DocSearchModalProps): JSX.Element | null {
   const modalProps: ReactDocSearchModalProps = React.useMemo(
     () => ({
       ...props,
-      isAskAiActive,
       initialQuery: props.initialQuery ?? initialQuery,
       initialScrollY: initialScroll,
-      onAskAiToggle,
       onClose: closeModal,
-      isHybridModeSupported,
     }),
-    [props, isAskAiActive, initialQuery, initialScroll, onAskAiToggle, closeModal, isHybridModeSupported],
+    [props, initialQuery, initialScroll, closeModal],
   );
 
   return isModalActive ? createPortal(<Modal {...modalProps} />, containerElement) : null;
