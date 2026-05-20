@@ -10,6 +10,7 @@ import type { ButtonTranslations } from './DocSearchButton';
 import { DocSearchModal } from './DocSearchModal';
 import type { ModalTranslations } from './DocSearchModal';
 import type { DocSearchHit, DocSearchTheme, InternalDocSearchHit, StoredDocSearchHit } from './types';
+import type { ToolCalls } from './types/AskiAi';
 
 export type { DocSearchRef } from '@docsearch/core';
 
@@ -245,6 +246,14 @@ export interface DocSearchAIProps extends DocSearchProps {
    * Useful to route Ask AI into a different UI (e.g. `@docsearch/sidepanel-js`) without flicker.
    */
   interceptAskAiEvent?: (initialMessage: InitialAskAiMessage) => boolean | void;
+  /**
+   * Use custom tools driven by Agent Studio.
+   *
+   * For best performance, memoize this object with `useMemo` or define it
+   * outside the component. Inline object literals will be recreated every
+   * render but will not affect correctness.
+   **/
+  tools?: ToolCalls;
 }
 
 function DocSearchComponent(props: DocSearchProps, ref: React.ForwardedRef<DocSearchRef>): JSX.Element {

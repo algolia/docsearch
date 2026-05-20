@@ -1,7 +1,8 @@
 import type { UseChatHelpers } from '@ai-sdk/react';
 import { useChat } from '@ai-sdk/react';
+import type { ChatOnToolCallCallback } from 'ai';
 import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls } from 'ai';
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 
 import {
   agentStudioBaseUrl,
@@ -14,7 +15,8 @@ import type { Exchange } from './AskAiScreen';
 import { ASK_AI_API_URL, BETA_ASK_AI_API_URL } from './constants';
 import type { StoredSearchPlugin } from './stored-searches';
 import { createStoredConversations } from './stored-searches';
-import type { AIMessage } from './types/AskiAi';
+import { type AIMessage, type ToolCalls } from './types/AskiAi';
+import { EMPTY_TOOLS } from './utils/ai';
 
 import type { AgentStudioSearchParameters, AskAiSearchParameters, StoredAskAiState } from '.';
 
@@ -27,6 +29,7 @@ type UseAskAiParams = {
   indexName: string;
   useStagingEnv?: boolean;
   searchParameters?: AskAiSearchParameters;
+  tools: ToolCalls;
   agentStudio: boolean;
 } & (
   | {
@@ -111,34 +114,76 @@ const getAskAiTransport = ({
   });
 };
 
-export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, useStagingEnv = false, ...params }) => {
+export const useAskAi: UseAskAi = ({
+  assistantId,
+  apiKey,
+  appId,
+  indexName,
+  useStagingEnv = false,
+  tools = EMPTY_TOOLS,
+  agentStudio,
+  searchParameters,
+}) => {
   const abortControllerRef = useRef(new AbortController());
 
   const askAiTransport = useMemo(
     () =>
-      params.agentStudio
+      agentStudio
         ? getAgentStudioTransport({
             apiKey,
             appId,
             assistantId: assistantId ?? '',
-            searchParameters: params.searchParameters,
+            searchParameters,
           })
         : getAskAiTransport({
             assistantId: assistantId ?? '',
             apiKey,
             appId,
             indexName,
-            searchParameters: params.searchParameters,
+            searchParameters,
             abortController: abortControllerRef.current,
             useStagingEnv,
           }),
-    [apiKey, appId, assistantId, indexName, useStagingEnv, params],
+    [apiKey, appId, assistantId, indexName, useStagingEnv, agentStudio, searchParameters],
   );
 
-  const { messages, sendMessage, status, setMessages, error, stop } = useChat({
+  // Sync ref during render so the stable `handleToolCall` (registered once
+  // by useChat) always sees the latest `tools` without re-creating itself.
+  // Safe because tool calls only fire after a commit, and writes are idempotent.
+  const toolsRef = useRef(tools);
+  toolsRef.current = tools;
+
+  const addToolOutputRef = useRef<UseChat['addToolOutput'] | null>(null);
+
+  const handleToolCall: ChatOnToolCallCallback<AIMessage> = useCallback(async ({ toolCall }) => {
+    const tool = toolsRef.current[toolCall.toolName];
+    if (!tool?.onToolCall) {
+      return;
+    }
+
+    await tool.onToolCall({
+      ...toolCall,
+      addToolOutput: async ({ output }) => {
+        if (!addToolOutputRef.current) return;
+
+        await addToolOutputRef.current({
+          output,
+          tool: toolCall.toolName,
+          toolCallId: toolCall.toolCallId,
+        });
+      },
+    });
+  }, []);
+
+  const { messages, sendMessage, status, setMessages, error, stop, addToolOutput } = useChat({
     sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
     transport: askAiTransport,
+    onToolCall: handleToolCall,
   });
+
+  useEffect(() => {
+    addToolOutputRef.current = addToolOutput;
+  }, [addToolOutput]);
 
   const conversations = useRef(
     createStoredConversations<StoredAskAiState>({
@@ -151,7 +196,7 @@ export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, useS
     async (messageId: string, thumbs: 0 | 1): Promise<void> => {
       if (!assistantId) return;
 
-      const res = await (params.agentStudio
+      const res = await (agentStudio
         ? postAgentStudioFeedback({
             agentId: assistantId,
             vote: thumbs,
@@ -172,7 +217,7 @@ export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, useS
       if (res.status >= 300) throw new Error('Failed, try again later.');
       conversations.addFeedback?.(messageId, thumbs === 1 ? 'like' : 'dislike');
     },
-    [assistantId, params.agentStudio, appId, apiKey, useStagingEnv, conversations],
+    [assistantId, agentStudio, appId, apiKey, useStagingEnv, conversations],
   );
 
   const onStopStreaming = async (): Promise<void> => {
@@ -202,10 +247,10 @@ export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, useS
   const askAiError = useMemo((): Error | undefined => {
     if (!error) return undefined;
 
-    if (!params.agentStudio) return error;
+    if (!agentStudio) return error;
 
     return getAgentStudioErrorMessage(error);
-  }, [error, params.agentStudio]);
+  }, [error, agentStudio]);
 
   return {
     messages,

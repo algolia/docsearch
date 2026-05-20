@@ -62,7 +62,7 @@ describe('ToolCall', () => {
     ] satisfies Array<{ description: string; part: AIToolPart; expectedHits: number }>)(
       'displays $expectedHits results for $description',
       ({ part, expectedHits }) => {
-        render(<ToolCall part={part} translations={TRANSLATIONS} />);
+        render(<ToolCall part={part} translations={TRANSLATIONS} tools={{}} />);
 
         expect(screen.getByText(`found ${expectedHits} results`, { exact: false })).toBeInTheDocument();
       },

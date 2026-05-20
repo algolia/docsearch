@@ -18,7 +18,7 @@ import type { ResultsScreenTranslations } from './ResultsScreen';
 import { ResultsScreen } from './ResultsScreen';
 import type { StoredSearchPlugin } from './stored-searches';
 import type { InternalDocSearchHit, StoredAskAiState, StoredDocSearchHit, SuggestedQuestionHit } from './types';
-import type { AIMessage, AskAiState } from './types/AskiAi';
+import type { AIMessage, AskAiState, ToolCalls } from './types/AskiAi';
 
 export type AskAiScreenStateTranslations = Partial<{
   errorScreen: ErrorScreenTranslations;
@@ -43,6 +43,7 @@ export interface AskAiScreenStateProps<TItem extends BaseItem>
   hitComponent: DocSearchProps['hitComponent'];
   indexName: DocSearchProps['indexName'];
   messages: UseChatHelpers<AIMessage>['messages'];
+  tools: ToolCalls;
   status: UseChatHelpers<AIMessage>['status'];
   askAiError?: Error;
   disableUserPersonalization: boolean;
@@ -80,6 +81,7 @@ export const AskAiScreenState = React.memo(
         <AskAiScreen
           {...props}
           messages={props.messages}
+          tools={props.tools}
           status={props.status}
           askAiError={props.askAiError}
           translations={translations?.askAiScreen}
