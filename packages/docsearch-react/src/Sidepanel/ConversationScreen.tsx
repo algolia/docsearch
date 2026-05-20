@@ -3,10 +3,10 @@ import type { JSX } from 'react';
 import React, { memo, useMemo } from 'react';
 
 import { AskAiSourcesPanel, type Exchange } from '../AskAiScreen';
+import { ToolCall, type ToolCallTranslations } from '../components/ui/ToolCall';
 import { AlertIcon, LoadingIcon } from '../icons';
 import { MemoizedMarkdown } from '../MemoizedMarkdown';
 import type { StoredSearchPlugin } from '../stored-searches';
-import { ToolCall, type ToolCallTranslations } from '../ToolCall';
 import type { StoredAskAiState } from '../types';
 import { type AIMessage, type ToolCalls } from '../types/AskiAi';
 import { extractLinksFromMessage, getMessageContent, EMPTY_TOOLS, isAIToolPart } from '../utils/ai';

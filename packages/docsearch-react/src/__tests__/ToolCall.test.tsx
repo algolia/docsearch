@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/vitest';
 import React from 'react';
 import { describe, it, expect } from 'vitest';
 
-import { ToolCall, type ToolCallTranslations } from '../ToolCall';
+import { ToolCall, type ToolCallTranslations } from '../components/ui/ToolCall';
 import type { AIToolPart } from '../types/AskiAi';
 
 const TRANSLATIONS: ToolCallTranslations = {
@@ -43,7 +43,12 @@ describe('ToolCall', () => {
           type: 'tool-algolia_search_index',
           toolCallId: 'id-3',
           state: 'output-available',
-          input: { index: 'docs', query: 'test', number_of_results: 10, facet_filters: null },
+          input: {
+            index: 'docs',
+            query: 'test',
+            number_of_results: 10,
+            facet_filters: null,
+          },
           output: { hits: [{}, {}] },
         },
         expectedHits: 2,
@@ -59,13 +64,14 @@ describe('ToolCall', () => {
         },
         expectedHits: 1,
       },
-    ] satisfies Array<{ description: string; part: AIToolPart; expectedHits: number }>)(
-      'displays $expectedHits results for $description',
-      ({ part, expectedHits }) => {
-        render(<ToolCall part={part} translations={TRANSLATIONS} tools={{}} />);
+    ] satisfies Array<{
+      description: string;
+      part: AIToolPart;
+      expectedHits: number;
+    }>)('displays $expectedHits results for $description', ({ part, expectedHits }) => {
+      render(<ToolCall part={part} translations={TRANSLATIONS} tools={{}} />);
 
-        expect(screen.getByText(`found ${expectedHits} results`, { exact: false })).toBeInTheDocument();
-      },
-    );
+      expect(screen.getByText(`found ${expectedHits} results`, { exact: false })).toBeInTheDocument();
+    });
   });
 });

@@ -3,10 +3,10 @@ import React, { type JSX, useMemo, useState, useEffect } from 'react';
 
 import { AggregatedSearchBlock } from './AggregatedSearchBlock';
 import type { AskAiScreenStateProps } from './AskAiScreenState';
+import { ToolCall } from './components/ui/ToolCall';
 import { AlertIcon, LoadingIcon } from './icons';
 import { MemoizedMarkdown } from './MemoizedMarkdown';
 import type { StoredSearchPlugin } from './stored-searches';
-import { ToolCall } from './ToolCall';
 import type { InternalDocSearchHit, StoredAskAiState } from './types';
 import { type AIMessage, type ToolCalls } from './types/AskiAi';
 import { extractLinksFromMessage, getMessageContent, isThreadDepthError, isAIToolPart } from './utils/ai';

@@ -1,8 +1,8 @@
 import type { JSX } from 'react';
 import React, { useMemo } from 'react';
 
-import { LoadingIcon, SearchIcon, ToolIcon } from './icons';
-import type { AIToolPart, SearchToolPart, ToolCalls, ToolDefinition } from './types/AskiAi';
+import { LoadingIcon, SearchIcon, ToolIcon } from '../../icons';
+import type { AIToolPart, SearchToolPart, ToolCalls, ToolDefinition } from '../../types/AskiAi';
 
 export type ToolCallTranslations = {
   /**
