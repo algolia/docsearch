@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
-import { isAIToolPart } from '../../utils/ai';
-import type { AIMessagePart } from '../AskiAi';
+import type { AIMessagePart } from '../../types/AskiAi';
+import { isAIToolPart } from '../ai';
 
 describe('isAIToolPart', () => {
   it.each([

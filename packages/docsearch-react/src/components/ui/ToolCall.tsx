@@ -113,12 +113,12 @@ function SearchTool({ part, translations, onSearchQueryClick }: SearchToolProps)
   }
 }
 
-interface DynamicToolProps {
+interface CustomToolProps {
   tool: ToolDefinition;
   part: AIToolPart;
 }
 
-function DynamicTool({ tool, part }: DynamicToolProps) {
+function CustomTool({ tool, part }: CustomToolProps) {
   const toolOutput = useMemo(() => {
     if (part.state !== 'output-available') return null;
 
@@ -157,7 +157,7 @@ export function ToolCall({ part, translations, tools, onSearchQueryClick }: Tool
   const dynamicTool = tools[normalizedToolName];
 
   if (dynamicTool) {
-    return <DynamicTool tool={dynamicTool} part={part} />;
+    return <CustomTool tool={dynamicTool} part={part} />;
   }
 
   if (!isSearchToolPart(part)) {

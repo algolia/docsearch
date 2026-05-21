@@ -3,7 +3,7 @@ import { type ToolUIPart, type UIDataTypes, type UIMessagePart } from 'ai';
 
 export type AskAiState = 'conversation-history' | 'conversation' | 'initial' | 'new-conversation';
 
-export interface DynamicTool {
+export interface CustomTool {
   input: unknown;
   output: unknown;
 }
@@ -18,27 +18,17 @@ export interface SearchIndexTool {
   };
 }
 
-export interface AgentStudioSearchTool {
-  input: {
-    index: string;
-    query: string;
-    number_of_results: number;
-    facet_filters: any | null;
-  };
-  output: {
-    hits?: any[];
-    nbHits?: number;
-    queryID?: string;
-  };
-}
-
 export interface AlgoliaMCPSearchTool {
   input: {
     query: string;
+    index: string;
+    number_of_results?: number;
+    facet_filters?: string[];
   };
   output: {
     hits?: any[];
     nbHits?: number;
+    queryId?: string;
   };
 }
 
@@ -70,13 +60,13 @@ export type ToolCalls = Record<string, ToolDefinition>;
 type SearchTools = {
   [K in `algolia_search_index_${string}`]: AlgoliaMCPSearchTool;
 } & {
+  algolia_search_index: AlgoliaMCPSearchTool;
   searchIndex: SearchIndexTool;
-  algolia_search_index: AgentStudioSearchTool;
 };
-type DynamicTools = {
-  [K in string as K extends keyof SearchTools | `algolia_search_index_${string}` ? never : K]: DynamicTool;
+type CustomTools = {
+  [K in string as K extends keyof SearchTools | `algolia_search_index_${string}` ? never : K]: CustomTool;
 };
-type Tools = DynamicTools & SearchTools;
+type Tools = CustomTools & SearchTools;
 
 export type AIMessage = UIMessage<{ stopped?: boolean }, UIDataTypes, Tools>;
 

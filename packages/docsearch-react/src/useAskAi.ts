@@ -155,13 +155,13 @@ export const useAskAi: UseAskAi = ({
 
   const addToolOutputRef = useRef<UseChat['addToolOutput'] | null>(null);
 
-  const handleToolCall: ChatOnToolCallCallback<AIMessage> = useCallback(async ({ toolCall }) => {
+  const handleToolCall: ChatOnToolCallCallback<AIMessage> = useCallback(({ toolCall }) => {
     const tool = toolsRef.current[toolCall.toolName];
     if (!tool?.onToolCall) {
       return;
     }
 
-    await tool.onToolCall({
+    tool.onToolCall({
       ...toolCall,
       addToolOutput: async ({ output }) => {
         if (!addToolOutputRef.current) return;
