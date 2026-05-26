@@ -27,7 +27,8 @@ export default function AgentStudio(): JSX.Element {
               return output as string;
             },
             async onToolCall({ input, addToolOutput }) {
-              console.log(input.message);
+              // eslint-disable-next-line no-console
+              console.log((input as any).message);
 
               await addToolOutput({
                 output: 'Check your console for a nice message :)',
