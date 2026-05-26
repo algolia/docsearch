@@ -3,13 +3,13 @@ import type { JSX } from 'react';
 import React, { memo, useMemo } from 'react';
 
 import { AskAiSourcesPanel, type Exchange } from '../AskAiScreen';
+import { ToolCall, type ToolCallTranslations } from '../components/ui/ToolCall';
 import { AlertIcon, LoadingIcon } from '../icons';
 import { MemoizedMarkdown } from '../MemoizedMarkdown';
 import type { StoredSearchPlugin } from '../stored-searches';
-import { ToolCall, type ToolCallTranslations } from '../ToolCall';
 import type { StoredAskAiState } from '../types';
-import { isAIToolPart, type AIMessage } from '../types/AskiAi';
-import { extractLinksFromMessage, getMessageContent } from '../utils/ai';
+import { type AIMessage, type ToolCalls } from '../types/AskiAi';
+import { extractLinksFromMessage, getMessageContent, EMPTY_TOOLS, isAIToolPart } from '../utils/ai';
 import { groupConsecutiveToolResults } from '../utils/groupConsecutiveToolResults';
 
 import { AggregatedSearchBlock } from './AggregatedSearchBlock';
@@ -72,6 +72,7 @@ export type ConversationScreenProps = {
   handleFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
   streamError?: Error;
   agentStudio?: boolean;
+  tools?: ToolCalls;
 };
 
 type ConversationnExchangeProps = {
@@ -83,11 +84,12 @@ type ConversationnExchangeProps = {
   onFeedback?: ConversationScreenProps['handleFeedback'];
   streamError?: ConversationScreenProps['streamError'];
   agentStudio?: boolean;
+  tools: ToolCalls;
 };
 
 const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExchangeProps>(
   (
-    { exchange, translations = {}, isLastExchange, conversations, onFeedback, status, streamError, agentStudio },
+    { exchange, translations = {}, isLastExchange, conversations, onFeedback, status, streamError, agentStudio, tools },
     conversationRef,
   ): JSX.Element => {
     const { userMessage, assistantMessage } = exchange;
@@ -171,6 +173,7 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
                         searchingText,
                         toolCallResultText,
                       }}
+                      tools={tools}
                     />
                   );
                 }
@@ -233,7 +236,13 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
 );
 
 export const ConversationScreen = memo(
-  ({ exchanges, translations = {}, handleFeedback, ...props }: ConversationScreenProps): JSX.Element => {
+  ({
+    exchanges,
+    translations = {},
+    handleFeedback,
+    tools = EMPTY_TOOLS,
+    ...props
+  }: ConversationScreenProps): JSX.Element => {
     const { conversationDisclaimer = 'Answers are generated with AI which can make mistakes. Verify responses.' } =
       translations;
 
@@ -263,6 +272,7 @@ export const ConversationScreen = memo(
               translations={translations}
               isLastExchange={isLastExchange}
               ref={isLastExchange ? mostRecentExchangeRef : null}
+              tools={tools}
               onFeedback={handleFeedback}
               {...props}
             />

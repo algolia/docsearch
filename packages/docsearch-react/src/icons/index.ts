@@ -18,3 +18,4 @@ export * from './SendIcon';
 export * from './ExpandIcon';
 export * from './FolderIcon';
 export * from './EditIcon';
+export * from './ToolIcon';

@@ -9,7 +9,7 @@ import { useAskAi } from '../useAskAi';
 import { useIsMobile } from '../useIsMobile';
 import { useSearchClient } from '../useSearchClient';
 import { useSuggestedQuestions } from '../useSuggestedQuestions';
-import { buildDummyAskAiHit } from '../utils/ai';
+import { EMPTY_TOOLS, buildDummyAskAiHit } from '../utils/ai';
 
 import { ConversationHistoryScreen } from './ConversationHistoryScreen';
 import type { ConversationScreenTranslations } from './ConversationScreen';
@@ -152,6 +152,7 @@ function SidepanelInner(
     initialMessage,
     useStagingEnv = false,
     agentStudio = false,
+    tools = EMPTY_TOOLS,
   }: Props,
   ref: React.ForwardedRef<SidepanelRef>,
 ): JSX.Element {
@@ -195,6 +196,7 @@ function SidepanelInner(
     searchParameters,
     useStagingEnv,
     agentStudio,
+    tools,
   });
 
   const suggestedQuestions = useSuggestedQuestions({
@@ -398,6 +400,7 @@ function SidepanelInner(
               translations={translations.conversationScreen}
               streamError={askAiError}
               agentStudio={agentStudio}
+              tools={tools}
             />
           )}
           {sidepanelState === 'conversation-history' && (

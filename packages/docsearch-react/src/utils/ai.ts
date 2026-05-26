@@ -1,7 +1,7 @@
 import type { TextUIPart } from 'ai';
 
 import type { StoredAskAiState } from '../types';
-import type { AIMessage } from '../types/AskiAi';
+import type { AggregatedToolCallPart, AIMessage, AIMessagePart, AIToolPart, ToolCalls } from '../types/AskiAi';
 
 import { sanitizeUserInput } from './sanitize';
 
@@ -106,4 +106,10 @@ export function isThreadDepthError(error?: Error): boolean {
   if (!error) return false;
 
   return error.message?.includes('AI-217') || false;
+}
+
+export const EMPTY_TOOLS: Readonly<ToolCalls> = Object.freeze({});
+
+export function isAIToolPart(part: AggregatedToolCallPart | AIMessagePart): part is AIToolPart {
+  return part.type.startsWith('tool-');
 }

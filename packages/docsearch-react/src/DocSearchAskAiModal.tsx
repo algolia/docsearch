@@ -21,12 +21,12 @@ import { useSaveRecentSearch } from './hooks/useSaveRecentSearch';
 import { useStoredDocSearches } from './hooks/useStoredDocSearches';
 import type { NewConversationTranslations } from './NewConversationScreen';
 import type { DocSearchState, InternalDocSearchHit, StoredAskAiMessage, SuggestedQuestionHit } from './types';
-import type { AskAiState } from './types/AskiAi';
+import { type AskAiState } from './types/AskiAi';
 import { useAskAi } from './useAskAi';
 import { useSearchClient } from './useSearchClient';
 import { useSuggestedQuestions } from './useSuggestedQuestions';
 import { identity, isModifierEvent, noop, scrollTo as scrollToUtils } from './utils';
-import { buildDummyAskAiHit, isThreadDepthError } from './utils/ai';
+import { buildDummyAskAiHit, isThreadDepthError, EMPTY_TOOLS } from './utils/ai';
 import { buildAskAiActionSources, buildRecentConversationSources } from './utils/createAskAiSources';
 import { buildNoQuerySources, buildQuerySources, type BuildQuerySourcesState } from './utils/createDocSearchSources';
 import { normalizeDocSearchIndexes } from './utils/normalizeDocSearchIndexes';
@@ -74,6 +74,7 @@ export function DocSearchAskAiModal({
   indexName,
   searchParameters,
   isHybridModeSupported = false,
+  tools = EMPTY_TOOLS,
   ...props
 }: DocSearchAskAiModalProps): JSX.Element {
   const { footer: footerTranslations, searchBox: searchBoxTranslations, ...screenStateTranslations } = translations;
@@ -141,6 +142,7 @@ export function DocSearchAskAiModal({
       searchParameters: askAiSearchParameters,
       useStagingEnv: askAiUseStagingEnv,
       agentStudio,
+      tools,
     });
 
   const prevStatus = React.useRef(status);
@@ -453,6 +455,7 @@ export function DocSearchAskAiModal({
           isAskAiActive={isAskAiActive}
           canHandleAskAi={canHandleAskAi}
           messages={messages}
+          tools={tools}
           askAiError={askAiError}
           status={status}
           hasCollections={hasCollections}

@@ -1,8 +1,9 @@
-import type { AIMessagePart } from '../types/AskiAi';
+import type { ToolUIPart } from 'ai';
 
-export interface AggregatedToolCallPart {
-  type: 'aggregated-tool-call';
-  queries: string[];
+import type { AIMessagePart, SearchIndexTool, AggregatedToolCallPart } from '../types/AskiAi';
+
+function isSearchIndexOutputPart(part: AIMessagePart): part is ToolUIPart<{ searchIndex: SearchIndexTool }> {
+  return part.type === 'tool-searchIndex' && part.state === 'output-available';
 }
 
 /**
@@ -15,13 +16,13 @@ export function groupConsecutiveToolResults(parts: AIMessagePart[]): Array<Aggre
   for (let i = 0; i < parts.length; i++) {
     const part = parts[i];
 
-    if (part.type === 'tool-searchIndex' && part.state === 'output-available') {
+    if (isSearchIndexOutputPart(part)) {
       // build list of consecutive result queries
       const queries: string[] = [];
       let j = i;
       while (j < parts.length) {
         const candidate = parts[j];
-        if (candidate.type === 'tool-searchIndex' && candidate.state === 'output-available') {
+        if (isSearchIndexOutputPart(candidate)) {
           const q = (candidate.output?.query ?? '').trim();
 
           // eslint-disable-next-line max-depth

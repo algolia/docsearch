@@ -3,13 +3,13 @@ import React, { type JSX, useMemo, useState, useEffect } from 'react';
 
 import { AggregatedSearchBlock } from './AggregatedSearchBlock';
 import type { AskAiScreenStateProps } from './AskAiScreenState';
+import { ToolCall } from './components/ui/ToolCall';
 import { AlertIcon, LoadingIcon } from './icons';
 import { MemoizedMarkdown } from './MemoizedMarkdown';
 import type { StoredSearchPlugin } from './stored-searches';
-import { ToolCall } from './ToolCall';
 import type { InternalDocSearchHit, StoredAskAiState } from './types';
-import type { AIMessage } from './types/AskiAi';
-import { extractLinksFromMessage, getMessageContent, isThreadDepthError } from './utils/ai';
+import { type AIMessage, type ToolCalls } from './types/AskiAi';
+import { extractLinksFromMessage, getMessageContent, isThreadDepthError, isAIToolPart } from './utils/ai';
 import { groupConsecutiveToolResults } from './utils/groupConsecutiveToolResults';
 
 export type AskAiScreenTranslations = Partial<{
@@ -65,6 +65,7 @@ export type AskAiScreenTranslations = Partial<{
 
 type AskAiScreenProps = Omit<AskAiScreenStateProps<InternalDocSearchHit>, 'translations'> & {
   messages: AIMessage[];
+  tools: ToolCalls;
   status: UseChatHelpers<AIMessage>['status'];
   askAiError?: Error;
   translations?: AskAiScreenTranslations;
@@ -93,6 +94,7 @@ interface AskAiExchangeCardProps {
   loadingStatus: UseChatHelpers<AIMessage>['status'];
   onSearchQueryClick: (query: string) => void;
   translations: AskAiScreenTranslations;
+  tools: ToolCalls;
   conversations: StoredSearchPlugin<StoredAskAiState>;
   onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
   agentStudio?: boolean;
@@ -105,6 +107,7 @@ function AskAiExchangeCard({
   loadingStatus,
   onSearchQueryClick,
   translations,
+  tools,
   conversations,
   onFeedback,
   agentStudio,
@@ -184,6 +187,22 @@ function AskAiExchangeCard({
                 );
               }
 
+              if (isAIToolPart(part)) {
+                return (
+                  <ToolCall
+                    key={index}
+                    translations={{
+                      preToolCallText,
+                      searchingText: duringToolCallText,
+                      toolCallResultText: afterToolCallText,
+                    }}
+                    part={part}
+                    tools={tools}
+                    onSearchQueryClick={onSearchQueryClick}
+                  />
+                );
+              }
+
               if (part.type === 'aggregated-tool-call') {
                 return (
                   <AggregatedSearchBlock
@@ -215,20 +234,7 @@ function AskAiExchangeCard({
                   />
                 );
               }
-              if (part.type === 'tool-searchIndex' || part.type === 'tool-algolia_search_index') {
-                return (
-                  <ToolCall
-                    key={index}
-                    translations={{
-                      preToolCallText,
-                      searchingText: duringToolCallText,
-                      toolCallResultText: afterToolCallText,
-                    }}
-                    part={part}
-                    onSearchQueryClick={onSearchQueryClick}
-                  />
-                );
-              }
+
               // fallback for unknown part type
               return null;
             })}
@@ -371,7 +377,7 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
     startNewConversationButtonText = 'Start a new conversation',
   } = translations;
 
-  const { messages, askAiError, status, agentStudio } = props;
+  const { messages, tools, askAiError, status, agentStudio } = props;
 
   // Check if there's a thread depth error
   const hasThreadDepthError = useMemo(() => {
@@ -445,6 +451,7 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
                 isLastExchange={index === 0}
                 loadingStatus={props.status}
                 translations={translations}
+                tools={tools}
                 conversations={props.conversations}
                 agentStudio={agentStudio}
                 onSearchQueryClick={handleSearchQueryClick}

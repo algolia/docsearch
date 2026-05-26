@@ -7,6 +7,7 @@ import { createPortal } from 'react-dom';
 import type { AgentStudioSearchParameters, AskAiSearchParameters } from './DocSearch';
 import type { SidepanelButtonProps, SidepanelProps as SidepanelPanelProps } from './Sidepanel/index';
 import { SidepanelButton, Sidepanel } from './Sidepanel/index';
+import type { ToolCalls } from './types/AskiAi';
 
 export type { DocSearchRef, DocSearchCallbacks } from '@docsearch/core';
 
@@ -84,6 +85,14 @@ export type DocSearchSidepanelProps = DocSearchCallbacks & {
    * Props specific to the Sidepanel panel.
    */
   panel?: Omit<SidepanelPanelProps, 'keyboardShortcuts'>;
+  /**
+   * Use custom tools driven by Agent Studio.
+   *
+   * For best performance, memoize this object with `useMemo` or define it
+   * outside the component. Inline object literals will be recreated every
+   * render but will not affect correctness.
+   **/
+  tools?: ToolCalls;
 };
 
 type SidepanelProps = DocSearchSidepanelProps & SidepanelSearchParameters;
