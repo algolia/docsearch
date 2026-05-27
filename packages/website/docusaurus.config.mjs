@@ -2,6 +2,7 @@ import { themes } from 'prism-react-renderer';
 
 import myLoaders from './plugins/my-loaders.mjs';
 import tailwindLoader from './plugins/tailwind-loader.mjs';
+import { trackingHeadTags } from './src/tracking-head-tags.mjs';
 
 const SIGNUP_LINK =
   'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch&utm_content=apply';
@@ -20,6 +21,7 @@ export default {
   favicon: 'img/favicon.ico',
   organizationName: 'Algolia',
   projectName: 'DocSearch',
+  headTags: trackingHeadTags,
   onBrokenLinks: 'throw',
   markdown: {
     hooks: {
