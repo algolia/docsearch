@@ -32,6 +32,11 @@ export interface AlgoliaMCPSearchTool {
   };
 }
 
+export interface MemoryTool {
+  input: unknown;
+  output: unknown;
+}
+
 export type ToolDefinition = {
   /**
    * Use the tool's input and output to build a string output for the tool result.
@@ -57,6 +62,12 @@ export type ToolDefinition = {
 
 export type ToolCalls = Record<string, ToolDefinition>;
 
+type AgentStudioMemoryTools = {
+  algolia_ponder: MemoryTool;
+  algolia_memorize: MemoryTool;
+  algolia_memory_search: MemoryTool;
+};
+
 type SearchTools = {
   [K in `algolia_search_index_${string}`]: AlgoliaMCPSearchTool;
 } & {
@@ -66,13 +77,14 @@ type SearchTools = {
 type CustomTools = {
   [K in string as K extends keyof SearchTools | `algolia_search_index_${string}` ? never : K]: CustomTool;
 };
-type Tools = CustomTools & SearchTools;
+type Tools = AgentStudioMemoryTools & CustomTools & SearchTools;
 
 export type AIMessage = UIMessage<{ stopped?: boolean }, UIDataTypes, Tools>;
 
 export type AIMessagePart = UIMessagePart<UIDataTypes, Tools>;
 
 export type SearchToolPart = ToolUIPart<SearchTools>;
+export type MemoryToolPart = ToolUIPart<AgentStudioMemoryTools>;
 export type AIToolPart = ToolUIPart<Tools>;
 
 export interface AggregatedToolCallPart {

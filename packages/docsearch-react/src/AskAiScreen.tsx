@@ -3,7 +3,7 @@ import React, { type JSX, useMemo, useState, useEffect } from 'react';
 
 import { AggregatedSearchBlock } from './AggregatedSearchBlock';
 import type { AskAiScreenStateProps } from './AskAiScreenState';
-import { ToolCall } from './components/ui/ToolCall';
+import { ToolCall, type ToolCallTranslations } from './components/ToolCall';
 import { AlertIcon, LoadingIcon } from './icons';
 import { MemoizedMarkdown } from './MemoizedMarkdown';
 import type { StoredSearchPlugin } from './stored-searches';
@@ -12,56 +12,88 @@ import { type AIMessage, type ToolCalls } from './types/AskiAi';
 import { extractLinksFromMessage, getMessageContent, isThreadDepthError, isAIToolPart } from './utils/ai';
 import { groupConsecutiveToolResults } from './utils/groupConsecutiveToolResults';
 
-export type AskAiScreenTranslations = Partial<{
-  // Misc texts
-  disclaimerText: string;
-  relatedSourcesText: string;
-  thinkingText: string;
-  copyButtonText: string;
-  copyButtonCopiedText: string;
-  // Feedback buttons
-  copyButtonTitle: string;
-  likeButtonTitle: string;
-  dislikeButtonTitle: string;
-  thanksForFeedbackText: string;
-  // Tool call texts
-  preToolCallText: string;
-  duringToolCallText: string;
-  afterToolCallText: string;
-  /**
-   * Build the full jsx element for the aggregated search block.
-   * If provided, completely overrides the default english renderer.
-   */
-  aggregatedToolCallNode?: (queries: string[], onSearchQueryClick: (query: string) => void) => React.ReactNode;
+export type AskAiScreenTranslations = Partial<
+  // Inherit the shared tool-call translations, but expose the search-related
+  // keys under AskAiScreen's own public names (see mapping below).
+  Omit<ToolCallTranslations, 'searchingText' | 'toolCallResultText'> & {
+    // Misc texts
+    disclaimerText: string;
+    relatedSourcesText: string;
+    thinkingText: string;
+    copyButtonText: string;
+    copyButtonCopiedText: string;
+    // Feedback buttons
+    copyButtonTitle: string;
+    likeButtonTitle: string;
+    dislikeButtonTitle: string;
+    thanksForFeedbackText: string;
+    // Tool call texts
+    /**
+     * Text shown while assistant is performing search tool call.
+     * Maps to `ToolCallTranslations.searchingText`.
+     */
+    duringToolCallText: string;
+    /**
+     * Text shown while assistant is finished performing tool call.
+     * Maps to `ToolCallTranslations.toolCallResultText`.
+     */
+    afterToolCallText: string;
+    /**
+     * Build the full jsx element for the aggregated search block.
+     * If provided, completely overrides the default english renderer.
+     */
+    aggregatedToolCallNode?: (queries: string[], onSearchQueryClick: (query: string) => void) => React.ReactNode;
+    /**
+     * Generate the list connective parts only (backwards compatibility).
+     * Receives full list of queries and should return translation parts for before/after/separators.
+     * Example: (qs) => ({ before: 'searched for ', separator: ', ', lastSeparator: ' and ', after: '' }).
+     */
+    aggregatedToolCallText?: (queries: string[]) => {
+      before?: string;
+      separator?: string;
+      lastSeparator?: string;
+      after?: string;
+    };
+    /**
+     * Message that's shown when user has stopped the streaming of a message.
+     */
+    stoppedStreamingText: string;
+    /**
+     * Error title shown if there is an error while chatting.
+     */
+    errorTitleText: string;
+    /**
+     * Message shown when thread depth limit is exceeded (AI-217 error).
+     */
+    threadDepthExceededMessage: string;
+    /**
+     * Button text for starting a new conversation after thread depth error.
+     */
+    startNewConversationButtonText: string;
+  }
+>;
 
-  /**
-   * Generate the list connective parts only (backwards compatibility).
-   * Receives full list of queries and should return translation parts for before/after/separators.
-   * Example: (qs) => ({ before: 'searched for ', separator: ', ', lastSeparator: ' and ', after: '' }).
-   */
-  aggregatedToolCallText?: (queries: string[]) => {
-    before?: string;
-    separator?: string;
-    lastSeparator?: string;
-    after?: string;
+/**
+ * Maps AskAiScreen's public translation keys to the shared `ToolCallTranslations`
+ * shape consumed by the `ToolCall` component, applying default English values.
+ */
+function toToolCallTranslations(translations: AskAiScreenTranslations): ToolCallTranslations {
+  const {
+    preToolCallText = 'Searching...',
+    duringToolCallText = 'Searching...',
+    afterToolCallText = 'Searched for',
+    savedMemoryToolResultText = 'Saved to memory',
+    memoryToolResultText = 'Used memory to enhance results',
+  } = translations;
+
+  return {
+    preToolCallText,
+    searchingText: duringToolCallText,
+    toolCallResultText: afterToolCallText,
+    savedMemoryToolResultText,
+    memoryToolResultText,
   };
-  /**
-   * Message that's shown when user has stopped the streaming of a message.
-   */
-  stoppedStreamingText: string;
-  /**
-   * Error title shown if there is an error while chatting.
-   */
-  errorTitleText: string;
-  /**
-   * Message shown when thread depth limit is exceeded (AI-217 error).
-   */
-  threadDepthExceededMessage: string;
-  /**
-   * Button text for starting a new conversation after thread depth error.
-   */
-  startNewConversationButtonText: string;
-}>;
+}
 
 type AskAiScreenProps = Omit<AskAiScreenStateProps<InternalDocSearchHit>, 'translations'> & {
   messages: AIMessage[];
@@ -71,6 +103,7 @@ type AskAiScreenProps = Omit<AskAiScreenStateProps<InternalDocSearchHit>, 'trans
   translations?: AskAiScreenTranslations;
   onNewConversation: () => void;
   agentStudio?: boolean;
+  memoryEnabled?: boolean;
 };
 
 interface AskAiScreenHeaderProps {
@@ -98,6 +131,7 @@ interface AskAiExchangeCardProps {
   conversations: StoredSearchPlugin<StoredAskAiState>;
   onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
   agentStudio?: boolean;
+  memoryEnabled?: boolean;
 }
 
 function AskAiExchangeCard({
@@ -111,16 +145,13 @@ function AskAiExchangeCard({
   conversations,
   onFeedback,
   agentStudio,
+  memoryEnabled,
 }: AskAiExchangeCardProps): JSX.Element {
   const { userMessage, assistantMessage } = exchange;
 
-  const {
-    stoppedStreamingText = 'You stopped this response',
-    errorTitleText = 'Chat error',
-    preToolCallText = 'Searching...',
-    afterToolCallText = 'Searched for',
-    duringToolCallText = 'Searching...',
-  } = translations;
+  const { stoppedStreamingText = 'You stopped this response', errorTitleText = 'Chat error' } = translations;
+
+  const toolCallTranslations = useMemo(() => toToolCallTranslations(translations), [translations]);
 
   const isThreadDepth = isThreadDepthError(askAiError);
 
@@ -191,13 +222,10 @@ function AskAiExchangeCard({
                 return (
                   <ToolCall
                     key={index}
-                    translations={{
-                      preToolCallText,
-                      searchingText: duringToolCallText,
-                      toolCallResultText: afterToolCallText,
-                    }}
+                    translations={toolCallTranslations}
                     part={part}
                     tools={tools}
+                    memoryEnabled={memoryEnabled}
                     onSearchQueryClick={onSearchQueryClick}
                   />
                 );
@@ -377,7 +405,7 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
     startNewConversationButtonText = 'Start a new conversation',
   } = translations;
 
-  const { messages, tools, askAiError, status, agentStudio } = props;
+  const { messages, tools, askAiError, status, agentStudio, memoryEnabled } = props;
 
   // Check if there's a thread depth error
   const hasThreadDepthError = useMemo(() => {
@@ -454,6 +482,7 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
                 tools={tools}
                 conversations={props.conversations}
                 agentStudio={agentStudio}
+                memoryEnabled={memoryEnabled}
                 onSearchQueryClick={handleSearchQueryClick}
                 onFeedback={props.onFeedback}
               />

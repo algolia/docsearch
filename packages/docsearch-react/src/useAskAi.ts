@@ -18,7 +18,7 @@ import { createStoredConversations } from './stored-searches';
 import { type AIMessage, type ToolCalls } from './types/AskiAi';
 import { EMPTY_TOOLS } from './utils/ai';
 
-import type { AgentStudioSearchParameters, AskAiSearchParameters, StoredAskAiState } from '.';
+import type { AgentStudioSearchParameters, AskAiSearchParameters, Memory, StoredAskAiState } from '.';
 
 type UseChat = UseChatHelpers<AIMessage>;
 
@@ -31,6 +31,7 @@ type UseAskAiParams = {
   searchParameters?: AskAiSearchParameters;
   tools: ToolCalls;
   agentStudio: boolean;
+  memory?: Memory;
 } & (
   | {
       agentStudio: false;
@@ -59,6 +60,7 @@ type UseAskAi = (params: UseAskAiParams) => UseAskAiReturn;
 
 type AgentStudioTransportParams = Pick<UseAskAiParams, 'apiKey' | 'appId' | 'assistantId'> & {
   searchParameters?: AgentStudioSearchParameters;
+  userToken?: string;
 };
 
 const getAgentStudioTransport = ({
@@ -66,12 +68,14 @@ const getAgentStudioTransport = ({
   apiKey,
   assistantId,
   searchParameters,
+  userToken,
 }: AgentStudioTransportParams): DefaultChatTransport<AIMessage> => {
   return new DefaultChatTransport({
     api: `${agentStudioBaseUrl(appId)}/agents/${assistantId}/completions?stream=true&compatibilityMode=ai-sdk-5`,
     headers: {
       'x-algolia-application-id': appId,
       'x-algolia-api-key': apiKey,
+      ...(userToken ? { 'x-algolia-secure-user-token': userToken } : {}),
     },
     body: searchParameters ? { algolia: { searchParameters } } : {},
   });
@@ -123,6 +127,7 @@ export const useAskAi: UseAskAi = ({
   tools = EMPTY_TOOLS,
   agentStudio,
   searchParameters,
+  memory,
 }) => {
   const abortControllerRef = useRef(new AbortController());
 
@@ -134,6 +139,7 @@ export const useAskAi: UseAskAi = ({
             appId,
             assistantId: assistantId ?? '',
             searchParameters,
+            userToken: memory?.userToken,
           })
         : getAskAiTransport({
             assistantId: assistantId ?? '',
@@ -144,7 +150,7 @@ export const useAskAi: UseAskAi = ({
             abortController: abortControllerRef.current,
             useStagingEnv,
           }),
-    [apiKey, appId, assistantId, indexName, useStagingEnv, agentStudio, searchParameters],
+    [apiKey, appId, assistantId, indexName, useStagingEnv, agentStudio, searchParameters, memory?.userToken],
   );
 
   // Sync ref during render so the stable `handleToolCall` (registered once

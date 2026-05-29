@@ -234,6 +234,21 @@ export interface DocSearchProps {
   keyboardShortcuts?: DocSearchModalShortcuts;
 }
 
+export interface Memory {
+  /**
+   * Determines whether or not to display the memory based tool calls.
+   *
+   * @default false
+   */
+  enabled?: boolean;
+  /**
+   * The JWT used by the agent to know which user's memory to read.
+   *
+   * @see https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/user-authentication
+   */
+  userToken?: string;
+}
+
 export interface DocSearchAIProps extends DocSearchProps {
   /**
    * Configuration or assistant id to enable ask ai mode. Pass a string assistant id or a full config object.
@@ -254,6 +269,10 @@ export interface DocSearchAIProps extends DocSearchProps {
    * render but will not affect correctness.
    **/
   tools?: ToolCalls;
+  /**
+   * Configuration for the Agent Studio memory feature.
+   */
+  memory?: Memory;
 }
 
 function DocSearchComponent(props: DocSearchProps, ref: React.ForwardedRef<DocSearchRef>): JSX.Element {

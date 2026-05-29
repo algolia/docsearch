@@ -58,6 +58,7 @@ export interface AskAiScreenStateProps<TItem extends BaseItem>
   selectSuggestedQuestion: (question: SuggestedQuestionHit) => void;
   onNewConversation: () => void;
   agentStudio?: boolean;
+  memoryEnabled?: boolean;
 }
 
 export const AskAiScreenState = React.memo(
@@ -86,6 +87,7 @@ export const AskAiScreenState = React.memo(
           askAiError={props.askAiError}
           translations={translations?.askAiScreen}
           agentStudio={props.agentStudio}
+          memoryEnabled={props.memoryEnabled}
         />
       );
     }

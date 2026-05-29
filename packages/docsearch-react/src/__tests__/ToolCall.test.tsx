@@ -1,15 +1,17 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 
-import { ToolCall, type ToolCallTranslations } from '../components/ui/ToolCall';
-import type { AIToolPart, ToolCalls } from '../types/AskiAi';
+import { ToolCall, type ToolCallTranslations } from '../components/ToolCall';
+import type { AIToolPart, MemoryToolPart, ToolCalls } from '../types/AskiAi';
 
 const TRANSLATIONS: ToolCallTranslations = {
   preToolCallText: 'Searching for',
   searchingText: 'Searching...',
   toolCallResultText: 'Searched',
+  savedMemoryToolResultText: 'Saved to memory',
+  memoryToolResultText: 'Used memory to enhance results',
 };
 
 describe('ToolCall', () => {
@@ -72,6 +74,172 @@ describe('ToolCall', () => {
       render(<ToolCall part={part} translations={TRANSLATIONS} tools={{}} />);
 
       expect(screen.getByText(`found ${expectedHits} results`, { exact: false })).toBeInTheDocument();
+    });
+  });
+
+  describe('memory tools', () => {
+    it.each([
+      {
+        description: 'tool-algolia_ponder',
+        part: {
+          type: 'tool-algolia_ponder',
+          toolCallId: 'memory-ponder',
+          state: 'output-available',
+          input: { value: 'remember this' },
+          output: { stored: true },
+        },
+        expectedMessage: 'Used memory to enhance results',
+      },
+      {
+        description: 'tool-algolia_memorize',
+        part: {
+          type: 'tool-algolia_memorize',
+          toolCallId: 'memory-memorize',
+          state: 'output-available',
+          input: { value: 'remember this' },
+          output: { stored: true },
+        },
+        expectedMessage: 'Saved to memory',
+      },
+      {
+        description: 'tool-algolia_memory_search',
+        part: {
+          type: 'tool-algolia_memory_search',
+          toolCallId: 'memory-search',
+          state: 'output-available',
+          input: { value: 'remember this' },
+          output: { stored: true },
+        },
+        expectedMessage: 'Used memory to enhance results',
+      },
+    ] satisfies Array<{
+      description: string;
+      part: MemoryToolPart;
+      expectedMessage: string;
+    }>)(
+      'renders the memory result text for $description when output is available and memory is enabled',
+      ({ part, expectedMessage }) => {
+        const { container } = render(
+          <ToolCall part={part} translations={TRANSLATIONS} tools={{}} memoryEnabled={true} />,
+        );
+
+        expect(within(container).getByText(expectedMessage)).toBeInTheDocument();
+      },
+    );
+
+    it.each([
+      {
+        description: 'input-streaming',
+        part: {
+          type: 'tool-algolia_ponder',
+          toolCallId: 'memory-input-streaming',
+          state: 'input-streaming',
+          input: { value: 'remember this' },
+        },
+        expectedMessage: 'Used memory to enhance results',
+      },
+      {
+        description: 'input-available',
+        part: {
+          type: 'tool-algolia_memorize',
+          toolCallId: 'memory-input-available',
+          state: 'input-available',
+          input: { value: 'remember this' },
+        },
+        expectedMessage: 'Saved to memory',
+      },
+      {
+        description: 'output-available',
+        part: {
+          type: 'tool-algolia_memory_search',
+          toolCallId: 'memory-output-available',
+          state: 'output-available',
+          input: { value: 'remember this' },
+          output: { stored: true },
+        },
+        expectedMessage: 'Used memory to enhance results',
+      },
+    ] satisfies Array<{
+      description: string;
+      part: MemoryToolPart;
+      expectedMessage: string;
+    }>)('renders the memory result text in $description state when memory is enabled', ({ part, expectedMessage }) => {
+      const { container } = render(
+        <ToolCall part={part} translations={TRANSLATIONS} tools={{}} memoryEnabled={true} />,
+      );
+
+      expect(within(container).getByText(expectedMessage)).toBeInTheDocument();
+    });
+
+    it('renders nothing for memory tool output errors when memory is enabled', () => {
+      const part: MemoryToolPart = {
+        type: 'tool-algolia_memorize',
+        toolCallId: 'memory-error',
+        state: 'output-error',
+        input: { value: 'remember this' },
+        errorText: 'Memory tool failed',
+      };
+
+      const { container } = render(
+        <ToolCall part={part} translations={TRANSLATIONS} tools={{}} memoryEnabled={true} />,
+      );
+
+      expect(container).toBeEmptyDOMElement();
+    });
+
+    it.each([
+      {
+        description: 'memoryEnabled is false',
+        part: {
+          type: 'tool-algolia_ponder',
+          toolCallId: 'memory-disabled',
+          state: 'output-available',
+          input: { value: 'remember this' },
+          output: { stored: true },
+        },
+        memoryEnabled: false,
+      },
+      {
+        description: 'memoryEnabled is omitted (defaults to false)',
+        part: {
+          type: 'tool-algolia_memory_search',
+          toolCallId: 'memory-default-off',
+          state: 'output-available',
+          input: { value: 'remember this' },
+          output: { stored: true },
+        },
+        memoryEnabled: undefined,
+      },
+    ] satisfies Array<{
+      description: string;
+      part: MemoryToolPart;
+      memoryEnabled: boolean | undefined;
+    }>)('renders nothing for memory tools when $description', ({ part, memoryEnabled }) => {
+      const { container } = render(
+        <ToolCall part={part} translations={TRANSLATIONS} tools={{}} memoryEnabled={memoryEnabled} />,
+      );
+
+      expect(container).toBeEmptyDOMElement();
+    });
+
+    it('prioritizes a matching custom tool over the memory tool rendering', () => {
+      const part: MemoryToolPart = {
+        type: 'tool-algolia_ponder',
+        toolCallId: 'memory-custom',
+        state: 'output-available',
+        input: { value: 'remember this' },
+        output: { stored: true },
+      };
+      const tools: ToolCalls = {
+        algolia_ponder: {
+          render: () => 'Custom memory render',
+        },
+      };
+
+      const { container } = render(<ToolCall part={part} translations={TRANSLATIONS} tools={tools} />);
+
+      expect(within(container).getByText('Custom memory render')).toBeInTheDocument();
+      expect(within(container).queryByText('Used memory to enhance results')).not.toBeInTheDocument();
     });
   });
 

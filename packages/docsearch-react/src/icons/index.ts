@@ -19,3 +19,4 @@ export * from './ExpandIcon';
 export * from './FolderIcon';
 export * from './EditIcon';
 export * from './ToolIcon';
+export * from './MemoryIcon';
