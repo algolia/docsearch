@@ -63,45 +63,17 @@ export type DocSearchAskAi = {
    * @default false
    */
   suggestedQuestions?: boolean;
-  // HACK: This is a hack for testing staging, remove before releasing
-  useStagingEnv?: boolean;
-} & (
-  | {
-      /**
-       * **Experimental:** Whether to use Agent Studio as the chat backend.
-       *
-       * This is an experimental feature and its API may change without notice in future releases.
-       * Use with caution in production environments.
-       *
-       * @default false
-       */
-      agentStudio?: never;
-      /**
-       * The search parameters to use for the ask AI feature.
-       *
-       * **NOTE**: If using `agentStudio = true`, the `searchParameters` object is
-       * keyed by the index name.
-       */
-      searchParameters?: AskAiSearchParameters;
-    }
-  | {
-      agentStudio: false;
-      searchParameters?: AskAiSearchParameters;
-    }
-  | {
-      agentStudio: true;
-      /**
-       * The search parameters to use for the ask AI feature.
-       * Keyed by the index name.
-       *
-       * @example
-       * {
-       *   "INDEX_NAME": { distinct: false }
-       * }
-       */
-      searchParameters?: AgentStudioSearchParameters;
-    }
-);
+  /**
+   * The search parameters to use for the ask AI feature.
+   * Keyed by the index name.
+   *
+   * @example
+   * {
+   *   "INDEX_NAME": { distinct: false }
+   * }
+   */
+  searchParameters?: AgentStudioSearchParameters;
+};
 
 export interface DocSearchIndex {
   name: string;

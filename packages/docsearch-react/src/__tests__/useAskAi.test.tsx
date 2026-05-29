@@ -84,7 +84,6 @@ describe('useAskAi', () => {
 
     renderHook(() =>
       useAskAi({
-        agentStudio: false,
         apiKey: 'api-key',
         appId: 'app-id',
         assistantId: 'assistant-id',
@@ -133,7 +132,6 @@ describe('useAskAi', () => {
 
     renderHook(() =>
       useAskAi({
-        agentStudio: false,
         apiKey: 'api-key',
         appId: 'app-id',
         assistantId: 'assistant-id',
@@ -159,10 +157,9 @@ describe('useAskAi', () => {
     expect(result).toBeUndefined();
   });
 
-  it('sends the secure user token header when memory.userToken is provided in Agent Studio mode', () => {
+  it('sends the secure user token header when memory.userToken is provided', () => {
     renderHook(() =>
       useAskAi({
-        agentStudio: true,
         apiKey: 'api-key',
         appId: 'app-id',
         assistantId: 'assistant-id',
@@ -180,7 +177,6 @@ describe('useAskAi', () => {
   it('omits the secure user token header when no memory token is provided', () => {
     renderHook(() =>
       useAskAi({
-        agentStudio: true,
         apiKey: 'api-key',
         appId: 'app-id',
         assistantId: 'assistant-id',

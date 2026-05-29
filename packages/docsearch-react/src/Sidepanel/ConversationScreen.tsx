@@ -71,7 +71,6 @@ export type ConversationScreenProps = {
   status: UseChatHelpers<AIMessage>['status'];
   handleFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
   streamError?: Error;
-  agentStudio?: boolean;
   memoryEnabled?: boolean;
   tools?: ToolCalls;
 };
@@ -84,7 +83,6 @@ type ConversationnExchangeProps = {
   translations?: ConversationScreenTranslations;
   onFeedback?: ConversationScreenProps['handleFeedback'];
   streamError?: ConversationScreenProps['streamError'];
-  agentStudio?: boolean;
   memoryEnabled?: boolean;
   tools: ToolCalls;
 };
@@ -99,7 +97,6 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
       onFeedback,
       status,
       streamError,
-      agentStudio,
       memoryEnabled,
       tools,
     },
@@ -137,7 +134,7 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
     const showActions =
       !wasStopped && (!isLastExchange || (isLastExchange && status === 'ready' && Boolean(assistantMessage)));
 
-    const messageId = agentStudio ? assistantMessage?.id || exchange.id : userMessage?.id || exchange.id;
+    const messageId = assistantMessage?.id || exchange.id;
 
     return (
       <div className="DocSearch-AskAiScreen-Response-Container" ref={conversationRef}>

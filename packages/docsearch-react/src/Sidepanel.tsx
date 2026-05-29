@@ -4,49 +4,25 @@ import type { JSX } from 'react';
 import React from 'react';
 import { createPortal } from 'react-dom';
 
-import type { AgentStudioSearchParameters, AskAiSearchParameters, Memory } from './DocSearch';
+import type { AgentStudioSearchParameters, Memory } from './DocSearch';
 import type { SidepanelButtonProps, SidepanelProps as SidepanelPanelProps } from './Sidepanel/index';
 import { SidepanelButton, Sidepanel } from './Sidepanel/index';
 import type { ToolCalls } from './types/AskiAi';
 
 export type { DocSearchRef, DocSearchCallbacks } from '@docsearch/core';
 
-export type SidepanelSearchParameters =
-  | {
-      /**
-       * **Experimental:** Whether to use Agent Studio as the chat backend.
-       *
-       * This is an experimental feature and its API may change without notice in future releases.
-       * Use with caution in production environments.
-       *
-       * @default false
-       */
-      agentStudio?: never;
-      /**
-       * The search parameters to use for the ask AI feature.
-       *
-       * **NOTE**: If using `agentStudio = true`, the `searchParameters` object is
-       * keyed by the index name.
-       */
-      searchParameters?: AskAiSearchParameters;
-    }
-  | {
-      agentStudio: false;
-      searchParameters?: AskAiSearchParameters;
-    }
-  | {
-      agentStudio: true;
-      /**
-       * The search parameters to use for the ask AI feature.
-       * Keyed by the index name.
-       *
-       * @example
-       * {
-       *   "INDEX_NAME": { distinct: false }
-       * }
-       */
-      searchParameters?: AgentStudioSearchParameters;
-    };
+export type SidepanelSearchParameters = {
+  /**
+   * The search parameters to use for the ask AI feature.
+   * Keyed by the index name.
+   *
+   * @example
+   * {
+   *   "INDEX_NAME": { distinct: false }
+   * }
+   */
+  searchParameters?: AgentStudioSearchParameters;
+};
 
 export type DocSearchSidepanelProps = DocSearchCallbacks & {
   /**

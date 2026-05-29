@@ -102,7 +102,6 @@ type AskAiScreenProps = Omit<AskAiScreenStateProps<InternalDocSearchHit>, 'trans
   askAiError?: Error;
   translations?: AskAiScreenTranslations;
   onNewConversation: () => void;
-  agentStudio?: boolean;
   memoryEnabled?: boolean;
 };
 
@@ -130,7 +129,6 @@ interface AskAiExchangeCardProps {
   tools: ToolCalls;
   conversations: StoredSearchPlugin<StoredAskAiState>;
   onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
-  agentStudio?: boolean;
   memoryEnabled?: boolean;
 }
 
@@ -144,7 +142,6 @@ function AskAiExchangeCard({
   tools,
   conversations,
   onFeedback,
-  agentStudio,
   memoryEnabled,
 }: AskAiExchangeCardProps): JSX.Element {
   const { userMessage, assistantMessage } = exchange;
@@ -174,7 +171,7 @@ function AskAiExchangeCard({
     isLastExchange &&
     !displayParts.some((part) => part.type !== 'step-start');
 
-  const messageId = agentStudio ? assistantMessage?.id || exchange.id : userMessage?.id || exchange.id;
+  const messageId = assistantMessage?.id || exchange.id;
 
   return (
     <div className="DocSearch-AskAiScreen-Response-Container">
@@ -405,7 +402,7 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
     startNewConversationButtonText = 'Start a new conversation',
   } = translations;
 
-  const { messages, tools, askAiError, status, agentStudio, memoryEnabled } = props;
+  const { messages, tools, askAiError, status, memoryEnabled } = props;
 
   // Check if there's a thread depth error
   const hasThreadDepthError = useMemo(() => {
@@ -481,7 +478,6 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
                 translations={translations}
                 tools={tools}
                 conversations={props.conversations}
-                agentStudio={agentStudio}
                 memoryEnabled={memoryEnabled}
                 onSearchQueryClick={handleSearchQueryClick}
                 onFeedback={props.onFeedback}

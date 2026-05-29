@@ -118,8 +118,6 @@ export type SidepanelProps = {
    * @default `{ 'Ctrl/Cmd+I': true }`
    */
   keyboardShortcuts?: SidepanelShortcuts;
-  // HACK: This is a hack for testing staging, remove before releasing
-  useStagingEnv?: boolean;
 };
 
 type Props = Omit<DocSearchSidepanelProps, 'button' | 'panel'> &
@@ -150,8 +148,6 @@ function SidepanelInner(
     keyboardShortcuts,
     side = 'right',
     initialMessage,
-    useStagingEnv = false,
-    agentStudio = false,
     tools = EMPTY_TOOLS,
     memory,
   }: Props,
@@ -195,8 +191,6 @@ function SidepanelInner(
     assistantId,
     apiKey,
     searchParameters,
-    useStagingEnv,
-    agentStudio,
     tools,
     memory,
   });
@@ -401,7 +395,6 @@ function SidepanelInner(
               handleFeedback={sendFeedback}
               translations={translations.conversationScreen}
               streamError={askAiError}
-              agentStudio={agentStudio}
               memoryEnabled={memory?.enabled ?? false}
               tools={tools}
             />
