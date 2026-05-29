@@ -1,5 +1,16 @@
-import type { DocSearchHit, StoredAskAiState, StoredDocSearchHit, StoredAskAiMessage } from './types';
+import type {
+  AskAiFeedbackReason,
+  DocSearchHit,
+  StoredAskAiState,
+  StoredDocSearchHit,
+  StoredAskAiMessage,
+} from './types';
 import { createStorage } from './utils/storage';
+
+export type StoredFeedbackDetails = {
+  tags?: AskAiFeedbackReason[];
+  notes?: string;
+};
 
 type CreateStoredSearchesOptions = {
   key: string;
@@ -10,7 +21,7 @@ export type StoredSearchPlugin<TItem> = {
   add: (item: TItem) => void;
   remove: (item: TItem) => void;
   getAll: () => TItem[];
-  addFeedback?: (messageId: string, feedback: 'dislike' | 'like') => void;
+  addFeedback?: (messageId: string, feedback: 'dislike' | 'like', details?: StoredFeedbackDetails) => void;
   getOne?: (messageId: string) => StoredAskAiMessage | undefined;
   getConversation?: (messageId: string) => TItem | undefined;
 };
@@ -72,14 +83,16 @@ export function createStoredConversations<TItem extends StoredAskAiState>({
       storage.setItem(items);
     },
     /** Record feedback (like/dislike) for a given message id within stored conversations. */
-    addFeedback(messageId: string, feedback: 'dislike' | 'like'): void {
+    addFeedback(messageId: string, feedback: 'dislike' | 'like', details?: StoredFeedbackDetails): void {
       const conv = items.find((c) => c.messages?.some((m) => m.id === messageId));
       if (!conv || !conv.messages) return;
 
-      const msg = conv.messages.find((m) => m.id === messageId);
+      const msg = conv.messages.find((m) => m.id === messageId) as StoredAskAiMessage | undefined;
       if (!msg) return;
 
-      (msg as any).feedback = feedback;
+      msg.feedback = feedback;
+      msg.feedbackTags = details?.tags;
+      msg.feedbackNotes = details?.notes;
 
       storage.setItem(items);
     },

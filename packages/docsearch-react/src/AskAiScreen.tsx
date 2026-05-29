@@ -1,16 +1,21 @@
 import type { UseChatHelpers } from '@ai-sdk/react';
-import React, { type JSX, useMemo, useState, useEffect } from 'react';
+import React, { type JSX, useMemo } from 'react';
 
 import { AggregatedSearchBlock } from './AggregatedSearchBlock';
 import type { AskAiScreenStateProps } from './AskAiScreenState';
 import { ToolCall, type ToolCallTranslations } from './components/ToolCall';
+import { FeedbackActions } from './components/ui/FeedbackActions';
 import { AlertIcon, LoadingIcon } from './icons';
 import { MemoizedMarkdown } from './MemoizedMarkdown';
 import type { StoredSearchPlugin } from './stored-searches';
-import type { InternalDocSearchHit, StoredAskAiState } from './types';
+import type { InternalDocSearchHit, OnAskAiFeedback, StoredAskAiState } from './types';
 import { type AIMessage, type ToolCalls } from './types/AskiAi';
 import { extractLinksFromMessage, getMessageContent, isThreadDepthError, isAIToolPart } from './utils/ai';
 import { groupConsecutiveToolResults } from './utils/groupConsecutiveToolResults';
+
+// Re-exported for backwards compatibility; the implementations now live in
+// the shared FeedbackActions component.
+export { CopyButton, DislikeButton, LikeButton } from './components/ui/FeedbackActions';
 
 export type AskAiScreenTranslations = Partial<
   // Inherit the shared tool-call translations, but expose the search-related
@@ -27,6 +32,18 @@ export type AskAiScreenTranslations = Partial<
     likeButtonTitle: string;
     dislikeButtonTitle: string;
     thanksForFeedbackText: string;
+    // Negative feedback note panel
+    feedbackPanelTitle: string;
+    feedbackDetailsPlaceholder: string;
+    feedbackDisclaimerText: string;
+    feedbackSubmitButtonText: string;
+    feedbackCloseButtonTitle: string;
+    feedbackTagIncorrect: string;
+    feedbackTagNotWhatIAsked: string;
+    feedbackTagSlowOrBuggy: string;
+    feedbackTagStyleOrTone: string;
+    feedbackTagSafetyOrLegal: string;
+    feedbackTagOther: string;
     // Tool call texts
     /**
      * Text shown while assistant is performing search tool call.
@@ -128,7 +145,7 @@ interface AskAiExchangeCardProps {
   translations: AskAiScreenTranslations;
   tools: ToolCalls;
   conversations: StoredSearchPlugin<StoredAskAiState>;
-  onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
+  onFeedback?: OnAskAiFeedback;
   memoryEnabled?: boolean;
 }
 
@@ -268,7 +285,7 @@ function AskAiExchangeCard({
           {wasStopped && <p className="DocSearck-AskAiScreen-MessageContent-Stopped">{stoppedStreamingText}</p>}
         </div>
         <div className="DocSearch-AskAiScreen-Answer-Footer">
-          <AskAiScreenFooterActions
+          <FeedbackActions
             id={messageId}
             showActions={showActions}
             latestAssistantMessageContent={assistantContent?.text || null}
@@ -283,86 +300,6 @@ function AskAiExchangeCard({
       {urlsToDisplay.length > 0 ? (
         <AskAiSourcesPanel urlsToDisplay={urlsToDisplay} relatedSourcesText={translations.relatedSourcesText} />
       ) : null}
-    </div>
-  );
-}
-
-interface AskAiScreenFooterActionsProps {
-  id: string;
-  showActions: boolean;
-  latestAssistantMessageContent: string | null;
-  translations: AskAiScreenTranslations;
-  conversations: StoredSearchPlugin<StoredAskAiState>;
-  onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
-}
-
-export function AskAiScreenFooterActions({
-  id,
-  showActions,
-  latestAssistantMessageContent,
-  translations,
-  conversations,
-  onFeedback,
-}: AskAiScreenFooterActionsProps): JSX.Element | null {
-  // local state for feedback, initialised from stored conversations
-  const initialFeedback = React.useMemo(() => {
-    const message = conversations.getOne?.(id);
-    return message?.feedback ?? null;
-  }, [conversations, id]);
-
-  const [feedback, setFeedback] = React.useState<'dislike' | 'like' | null>(initialFeedback);
-  const [saving, setSaving] = React.useState(false);
-  const [savingError, setSavingError] = React.useState<Error | null>(null);
-
-  const handleFeedback = async (value: 'dislike' | 'like'): Promise<void> => {
-    if (saving) return;
-    setSavingError(null);
-    setSaving(true);
-    try {
-      await onFeedback?.(id, value === 'like' ? 1 : 0);
-      setFeedback(value);
-    } catch (error) {
-      setSavingError(error as Error);
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const {
-    likeButtonTitle = 'Like',
-    dislikeButtonTitle = 'Dislike',
-    thanksForFeedbackText = 'Thanks for your feedback!',
-  } = translations;
-
-  if (!showActions || !latestAssistantMessageContent) {
-    return null;
-  }
-
-  return (
-    <div className="DocSearch-AskAiScreen-Actions">
-      {feedback === null ? (
-        <>
-          {saving ? (
-            <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-          ) : (
-            <>
-              <LikeButton title={likeButtonTitle} onClick={() => handleFeedback('like')} />
-              <DislikeButton title={dislikeButtonTitle} onClick={() => handleFeedback('dislike')} />
-            </>
-          )}
-          {savingError && (
-            <p className="DocSearch-AskAiScreen-FeedbackText">{savingError.message || 'An error occured'}</p>
-          )}
-        </>
-      ) : (
-        <p className="DocSearch-AskAiScreen-FeedbackText DocSearch-AskAiScreen-FeedbackText--visible">
-          {thanksForFeedbackText}
-        </p>
-      )}
-      <CopyButton
-        translations={translations}
-        onClick={() => navigator.clipboard.writeText(latestAssistantMessageContent)}
-      />
     </div>
   );
 }
@@ -506,131 +443,5 @@ function RelatedSourceIcon(): JSX.Element {
       <line x1="10" x2="8" y1="3" y2="21" />
       <line x1="16" x2="14" y1="3" y2="21" />
     </svg>
-  );
-}
-
-export function CopyButton({
-  onClick,
-  translations,
-}: {
-  onClick: () => void;
-  translations: AskAiScreenTranslations;
-}): JSX.Element {
-  const { copyButtonTitle = 'Copy', copyButtonCopiedText = 'Copied!' } = translations;
-
-  const [isCopied, setIsCopied] = useState(false);
-
-  useEffect(() => {
-    if (isCopied) {
-      const timer = setTimeout(() => {
-        setIsCopied(false);
-      }, 1500); // reset after 1.5 seconds
-      return (): void => clearTimeout(timer);
-    }
-    return undefined;
-  }, [isCopied]);
-
-  const handleClick = (): void => {
-    onClick();
-    setIsCopied(true);
-  };
-
-  return (
-    <button
-      type="button"
-      className={`DocSearch-AskAiScreen-ActionButton DocSearch-AskAiScreen-CopyButton ${
-        isCopied ? 'DocSearch-AskAiScreen-CopyButton--copied' : ''
-      }`}
-      disabled={isCopied} // disable button briefly after copy
-      title={isCopied ? copyButtonCopiedText : copyButtonTitle}
-      onClick={handleClick}
-    >
-      {isCopied ? (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="lucide lucide-check-icon lucide-check"
-        >
-          <path d="M20 6 9 17l-5-5" />
-        </svg>
-      ) : (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="lucide lucide-copy-icon lucide-copy"
-        >
-          <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
-          <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
-        </svg>
-      )}
-    </button>
-  );
-}
-
-export function LikeButton({ title, onClick }: { title: string; onClick: () => void }): JSX.Element {
-  return (
-    <button
-      type="button"
-      className="DocSearch-AskAiScreen-ActionButton DocSearch-AskAiScreen-LikeButton"
-      title={title}
-      onClick={onClick}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="lucide lucide-thumbs-up-icon lucide-thumbs-up"
-      >
-        <path d="M7 10v12" />
-        <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z" />
-      </svg>
-    </button>
-  );
-}
-
-export function DislikeButton({ title, onClick }: { title: string; onClick: () => void }): JSX.Element {
-  return (
-    <button
-      type="button"
-      className="DocSearch-AskAiScreen-ActionButton DocSearch-AskAiScreen-DislikeButton"
-      title={title}
-      onClick={onClick}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="lucide lucide-thumbs-down-icon lucide-thumbs-down"
-      >
-        <path d="M17 14V2" />
-        <path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z" />
-      </svg>
-    </button>
   );
 }

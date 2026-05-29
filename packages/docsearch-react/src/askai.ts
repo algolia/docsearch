@@ -39,6 +39,8 @@ export const postAgentStudioFeedback = ({
   appId,
   apiKey,
   abortSignal,
+  notes,
+  tags,
 }: {
   agentId: string;
   vote: 0 | 1;
@@ -46,6 +48,8 @@ export const postAgentStudioFeedback = ({
   appId: string;
   apiKey: string;
   abortSignal: AbortSignal;
+  notes?: string;
+  tags?: string[];
 }): Promise<Response> => {
   const headers = new Headers();
   headers.set('x-algolia-application-id', appId);
@@ -60,6 +64,8 @@ export const postAgentStudioFeedback = ({
       messageId,
       agentId,
       vote,
+      ...(notes ? { notes } : {}),
+      ...(tags && tags.length > 0 ? { tags } : {}),
     }),
     headers,
     signal: abortSignal,

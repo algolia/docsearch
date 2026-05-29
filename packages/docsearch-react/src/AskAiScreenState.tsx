@@ -17,7 +17,13 @@ import { NoResultsScreen } from './NoResultsScreen';
 import type { ResultsScreenTranslations } from './ResultsScreen';
 import { ResultsScreen } from './ResultsScreen';
 import type { StoredSearchPlugin } from './stored-searches';
-import type { InternalDocSearchHit, StoredAskAiState, StoredDocSearchHit, SuggestedQuestionHit } from './types';
+import type {
+  InternalDocSearchHit,
+  OnAskAiFeedback,
+  StoredAskAiState,
+  StoredDocSearchHit,
+  SuggestedQuestionHit,
+} from './types';
 import type { AIMessage, AskAiState, ToolCalls } from './types/AskiAi';
 
 export type AskAiScreenStateTranslations = Partial<{
@@ -51,7 +57,7 @@ export interface AskAiScreenStateProps<TItem extends BaseItem>
   translations: AskAiScreenStateTranslations;
   getMissingResultsUrl?: DocSearchProps['getMissingResultsUrl'];
   hasCollections: boolean;
-  onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
+  onFeedback?: OnAskAiFeedback;
   askAiState: AskAiState;
   selectAskAiQuestion: (toggle: boolean, query: string) => void;
   suggestedQuestions: SuggestedQuestionHit[];

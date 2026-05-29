@@ -35,7 +35,7 @@ const sidepanelInstance = sidepanel({
   indexName: 'docsearch',
   appId: 'PMZUYBQDAK',
   apiKey: '24b09689d5b4223813d9b8e48563c8f6',
-  assistantId: 'askAIDemo',
+  assistantId: 'ccdec697-e3fe-465b-a1c3-657e7bf18aef',
   onReady: () => {
     // eslint-disable-next-line no-console
     console.log('[demo-js] sidepanel onReady()');
@@ -68,7 +68,6 @@ const docsearchInstance = docsearch({
   indexName: 'docsearch',
   appId: 'PMZUYBQDAK',
   apiKey: '24b09689d5b4223813d9b8e48563c8f6',
-  askAi: 'askAIDemo',
   interceptAskAiEvent: (initialMessage: InitialAskAiMessage) => {
     docsearchInstance.close();
     sidepanelInstance.open(initialMessage);

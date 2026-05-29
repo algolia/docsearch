@@ -46,6 +46,17 @@ const translations: DocSearchTranslations & {
       likeButtonTitle: string;
       dislikeButtonTitle: string;
       thanksForFeedbackText: string;
+      feedbackPanelTitle: string;
+      feedbackDetailsPlaceholder: string;
+      feedbackDisclaimerText: string;
+      feedbackSubmitButtonText: string;
+      feedbackCloseButtonTitle: string;
+      feedbackTagIncorrect: string;
+      feedbackTagNotWhatIAsked: string;
+      feedbackTagSlowOrBuggy: string;
+      feedbackTagStyleOrTone: string;
+      feedbackTagSafetyOrLegal: string;
+      feedbackTagOther: string;
       preToolCallText: string;
       duringToolCallText: string;
       afterToolCallText: string;
@@ -261,6 +272,61 @@ const translations: DocSearchTranslations & {
         id: 'theme.SearchModal.askAiScreen.thanksForFeedbackText',
         message: 'Thanks for your feedback!',
         description: 'The text for thanks for feedback',
+      }),
+      feedbackPanelTitle: translate({
+        id: 'theme.SearchModal.askAiScreen.feedbackPanelTitle',
+        message: 'What went wrong? (optional)',
+        description: 'The title of the negative feedback note panel',
+      }),
+      feedbackDetailsPlaceholder: translate({
+        id: 'theme.SearchModal.askAiScreen.feedbackDetailsPlaceholder',
+        message: 'Share some details...',
+        description: 'The placeholder for the negative feedback details textarea',
+      }),
+      feedbackDisclaimerText: translate({
+        id: 'theme.SearchModal.askAiScreen.feedbackDisclaimerText',
+        message: 'A copy of this chat will be included with your feedback.',
+        description: 'The disclaimer shown inside the negative feedback note panel',
+      }),
+      feedbackSubmitButtonText: translate({
+        id: 'theme.SearchModal.askAiScreen.feedbackSubmitButtonText',
+        message: 'Submit',
+        description: 'The submit button text for the negative feedback note panel',
+      }),
+      feedbackCloseButtonTitle: translate({
+        id: 'theme.SearchModal.askAiScreen.feedbackCloseButtonTitle',
+        message: 'Close',
+        description: 'The accessible title for the negative feedback note panel close button',
+      }),
+      feedbackTagIncorrect: translate({
+        id: 'theme.SearchModal.askAiScreen.feedbackTagIncorrect',
+        message: 'Incorrect or incomplete',
+        description: 'The "incorrect" reason chip for negative feedback',
+      }),
+      feedbackTagNotWhatIAsked: translate({
+        id: 'theme.SearchModal.askAiScreen.feedbackTagNotWhatIAsked',
+        message: 'Not what I asked for',
+        description: 'The "not what I asked for" reason chip for negative feedback',
+      }),
+      feedbackTagSlowOrBuggy: translate({
+        id: 'theme.SearchModal.askAiScreen.feedbackTagSlowOrBuggy',
+        message: 'Slow or buggy',
+        description: 'The "slow or buggy" reason chip for negative feedback',
+      }),
+      feedbackTagStyleOrTone: translate({
+        id: 'theme.SearchModal.askAiScreen.feedbackTagStyleOrTone',
+        message: 'Style or tone',
+        description: 'The "style or tone" reason chip for negative feedback',
+      }),
+      feedbackTagSafetyOrLegal: translate({
+        id: 'theme.SearchModal.askAiScreen.feedbackTagSafetyOrLegal',
+        message: 'Safety or legal concern',
+        description: 'The "safety or legal concern" reason chip for negative feedback',
+      }),
+      feedbackTagOther: translate({
+        id: 'theme.SearchModal.askAiScreen.feedbackTagOther',
+        message: 'Other',
+        description: 'The "other" reason chip for negative feedback',
       }),
       preToolCallText: translate({
         id: 'theme.SearchModal.askAiScreen.preToolCallText',
