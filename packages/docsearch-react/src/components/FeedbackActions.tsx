@@ -1,8 +1,8 @@
 import React, { type JSX, useEffect, useState } from 'react';
 
-import { LoadingIcon } from '../../icons';
-import type { StoredSearchPlugin } from '../../stored-searches';
-import type { AskAiFeedbackReason, OnAskAiFeedback, StoredAskAiState } from '../../types';
+import { LoadingIcon } from '../icons';
+import type { StoredSearchPlugin } from '../stored-searches';
+import type { AskAiFeedbackReason, OnAskAiFeedback, StoredAskAiState } from '../types';
 
 export type FeedbackActionsTranslations = Partial<{
   /** Tooltip/aria-label for the button that copies the assistant's answer to the clipboard. */

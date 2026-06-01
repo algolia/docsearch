@@ -3,8 +3,8 @@ import type { JSX } from 'react';
 import React, { memo, useMemo } from 'react';
 
 import { AskAiSourcesPanel, type Exchange } from '../AskAiScreen';
+import { FeedbackActions } from '../components/FeedbackActions';
 import { ToolCall, type ToolCallTranslations } from '../components/ToolCall';
-import { FeedbackActions } from '../components/ui/FeedbackActions';
 import { AlertIcon, LoadingIcon } from '../icons';
 import { MemoizedMarkdown } from '../MemoizedMarkdown';
 import type { StoredSearchPlugin } from '../stored-searches';

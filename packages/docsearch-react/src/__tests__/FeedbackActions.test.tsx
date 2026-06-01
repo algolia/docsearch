@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/vitest';
 import React from 'react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
-import { FeedbackActions, type FeedbackActionsTranslations } from '../components/ui/FeedbackActions';
+import { FeedbackActions, type FeedbackActionsTranslations } from '../components/FeedbackActions';
 import type { StoredSearchPlugin } from '../stored-searches';
 import type { StoredAskAiMessage, StoredAskAiState } from '../types';
 

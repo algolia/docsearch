@@ -3,8 +3,8 @@ import React, { type JSX, useMemo } from 'react';
 
 import { AggregatedSearchBlock } from './AggregatedSearchBlock';
 import type { AskAiScreenStateProps } from './AskAiScreenState';
+import { FeedbackActions } from './components/FeedbackActions';
 import { ToolCall, type ToolCallTranslations } from './components/ToolCall';
-import { FeedbackActions } from './components/ui/FeedbackActions';
 import { AlertIcon, LoadingIcon } from './icons';
 import { MemoizedMarkdown } from './MemoizedMarkdown';
 import type { StoredSearchPlugin } from './stored-searches';
@@ -12,10 +12,6 @@ import type { InternalDocSearchHit, OnAskAiFeedback, StoredAskAiState } from './
 import { type AIMessage, type ToolCalls } from './types/AskiAi';
 import { extractLinksFromMessage, getMessageContent, isThreadDepthError, isAIToolPart } from './utils/ai';
 import { groupConsecutiveToolResults } from './utils/groupConsecutiveToolResults';
-
-// Re-exported for backwards compatibility; the implementations now live in
-// the shared FeedbackActions component.
-export { CopyButton, DislikeButton, LikeButton } from './components/ui/FeedbackActions';
 
 export type AskAiScreenTranslations = Partial<
   // Inherit the shared tool-call translations, but expose the search-related
