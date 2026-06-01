@@ -1,8 +1,10 @@
 import type { JSX } from 'react';
 import React, { useMemo } from 'react';
 
-import { LoadingIcon, SearchIcon, ToolIcon } from '../../icons';
-import type { AIToolPart, SearchToolPart, ToolCalls, ToolDefinition } from '../../types/AskiAi';
+import { LoadingIcon, MemoryIcon, SearchIcon, ToolIcon } from '../icons';
+import type { AIToolPart, MemoryToolPart, SearchToolPart, ToolCalls, ToolDefinition } from '../types/AskiAi';
+
+import { ToolState } from './ui/ToolState';
 
 export type ToolCallTranslations = {
   /**
@@ -17,6 +19,14 @@ export type ToolCallTranslations = {
    * Text shown while assistant is finished performing tool call.
    */
   toolCallResultText: string;
+  /**
+   * Text shown when the agent saved related information to memory.
+   */
+  savedMemoryToolResultText: string;
+  /**
+   * Text shown when the agent used the memory tool to enhance results.
+   */
+  memoryToolResultText: string;
 };
 
 interface ToolCallProps {
@@ -24,24 +34,7 @@ interface ToolCallProps {
   translations: ToolCallTranslations;
   tools: ToolCalls;
   onSearchQueryClick?: (query: string) => void;
-}
-
-interface ToolStateProps {
-  variant: 'Call' | 'PartialCall' | 'Result';
-  icon: React.ReactNode;
-  shimmer?: boolean;
-  children: React.ReactNode;
-}
-
-function ToolState({ icon, shimmer = false, children, variant }: ToolStateProps) {
-  const className = `DocSearch-AskAiScreen-MessageContent-Tool Tool--${variant}${shimmer ? ' shimmer' : ''}`;
-
-  return (
-    <div className={className}>
-      {icon}
-      {children}
-    </div>
-  );
+  memoryEnabled?: boolean;
 }
 
 interface SearchToolProps {
@@ -148,21 +141,59 @@ function CustomTool({ tool, part }: CustomToolProps) {
   );
 }
 
+function MemoryTool({ part, translations }: { part: MemoryToolPart; translations: ToolCallTranslations }) {
+  const { savedMemoryToolResultText, memoryToolResultText } = translations;
+
+  if (part.state === 'output-error') return null;
+
+  if (part.type === 'tool-algolia_memorize') {
+    return (
+      <ToolState variant="Result" icon={<MemoryIcon />}>
+        {savedMemoryToolResultText}
+      </ToolState>
+    );
+  }
+
+  return (
+    <ToolState variant="Result" icon={<MemoryIcon />}>
+      {memoryToolResultText}
+    </ToolState>
+  );
+}
+
 function isSearchToolPart(part: AIToolPart): part is SearchToolPart {
   return part.type === 'tool-searchIndex' || part.type.startsWith('tool-algolia_search_index');
 }
 
-export function ToolCall({ part, translations, tools, onSearchQueryClick }: ToolCallProps): JSX.Element | null {
+function isMemoryToolPart(part: AIToolPart): part is MemoryToolPart {
+  return (
+    part.type === 'tool-algolia_ponder' ||
+    part.type === 'tool-algolia_memorize' ||
+    part.type === 'tool-algolia_memory_search'
+  );
+}
+
+export function ToolCall({
+  part,
+  translations,
+  tools,
+  onSearchQueryClick,
+  memoryEnabled = false,
+}: ToolCallProps): JSX.Element | null {
   const normalizedToolName = part.type.replace('tool-', '');
-  const dynamicTool = tools[normalizedToolName];
+  const customTool = tools[normalizedToolName];
 
-  if (dynamicTool) {
-    return <CustomTool tool={dynamicTool} part={part} />;
+  if (customTool) {
+    return <CustomTool tool={customTool} part={part} />;
   }
 
-  if (!isSearchToolPart(part)) {
-    return null;
+  if (memoryEnabled && isMemoryToolPart(part)) {
+    return <MemoryTool part={part} translations={translations} />;
   }
 
-  return <SearchTool part={part} translations={translations} onSearchQueryClick={onSearchQueryClick} />;
+  if (isSearchToolPart(part)) {
+    return <SearchTool part={part} translations={translations} onSearchQueryClick={onSearchQueryClick} />;
+  }
+
+  return null;
 }

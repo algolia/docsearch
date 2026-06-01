@@ -11,6 +11,7 @@ type ToolCall = {
 
 type ChatOptions = {
   onToolCall: (params: { toolCall: ToolCall }) => unknown;
+  transport: { options: { headers?: Record<string, string> } };
 };
 
 type CustomOnToolCallParams = ToolCall & {
@@ -46,6 +47,14 @@ describe('useAskAi', () => {
     }
 
     return chatOptions.onToolCall;
+  }
+
+  function getTransportHeaders(): Record<string, string> {
+    if (!chatOptions) {
+      throw new Error('useChat was not initialized');
+    }
+
+    return chatOptions.transport.options.headers ?? {};
   }
 
   beforeEach(() => {
@@ -148,5 +157,38 @@ describe('useAskAi', () => {
 
     expect(onToolCall).toHaveBeenCalledTimes(1);
     expect(result).toBeUndefined();
+  });
+
+  it('sends the secure user token header when memory.userToken is provided in Agent Studio mode', () => {
+    renderHook(() =>
+      useAskAi({
+        agentStudio: true,
+        apiKey: 'api-key',
+        appId: 'app-id',
+        assistantId: 'assistant-id',
+        indexName: 'index-name',
+        tools: {},
+        memory: { userToken: 'secure-user-token' },
+      }),
+    );
+
+    expect(getTransportHeaders()).toMatchObject({
+      'x-algolia-secure-user-token': 'secure-user-token',
+    });
+  });
+
+  it('omits the secure user token header when no memory token is provided', () => {
+    renderHook(() =>
+      useAskAi({
+        agentStudio: true,
+        apiKey: 'api-key',
+        appId: 'app-id',
+        assistantId: 'assistant-id',
+        indexName: 'index-name',
+        tools: {},
+      }),
+    );
+
+    expect(getTransportHeaders()).not.toHaveProperty('x-algolia-secure-user-token');
   });
 });

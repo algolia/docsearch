@@ -153,6 +153,7 @@ function SidepanelInner(
     useStagingEnv = false,
     agentStudio = false,
     tools = EMPTY_TOOLS,
+    memory,
   }: Props,
   ref: React.ForwardedRef<SidepanelRef>,
 ): JSX.Element {
@@ -197,6 +198,7 @@ function SidepanelInner(
     useStagingEnv,
     agentStudio,
     tools,
+    memory,
   });
 
   const suggestedQuestions = useSuggestedQuestions({
@@ -400,6 +402,7 @@ function SidepanelInner(
               translations={translations.conversationScreen}
               streamError={askAiError}
               agentStudio={agentStudio}
+              memoryEnabled={memory?.enabled ?? false}
               tools={tools}
             />
           )}

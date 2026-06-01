@@ -3,7 +3,7 @@ import type { JSX } from 'react';
 import React, { memo, useMemo } from 'react';
 
 import { AskAiSourcesPanel, type Exchange } from '../AskAiScreen';
-import { ToolCall, type ToolCallTranslations } from '../components/ui/ToolCall';
+import { ToolCall, type ToolCallTranslations } from '../components/ToolCall';
 import { AlertIcon, LoadingIcon } from '../icons';
 import { MemoizedMarkdown } from '../MemoizedMarkdown';
 import type { StoredSearchPlugin } from '../stored-searches';
@@ -72,6 +72,7 @@ export type ConversationScreenProps = {
   handleFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
   streamError?: Error;
   agentStudio?: boolean;
+  memoryEnabled?: boolean;
   tools?: ToolCalls;
 };
 
@@ -84,12 +85,24 @@ type ConversationnExchangeProps = {
   onFeedback?: ConversationScreenProps['handleFeedback'];
   streamError?: ConversationScreenProps['streamError'];
   agentStudio?: boolean;
+  memoryEnabled?: boolean;
   tools: ToolCalls;
 };
 
 const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExchangeProps>(
   (
-    { exchange, translations = {}, isLastExchange, conversations, onFeedback, status, streamError, agentStudio, tools },
+    {
+      exchange,
+      translations = {},
+      isLastExchange,
+      conversations,
+      onFeedback,
+      status,
+      streamError,
+      agentStudio,
+      memoryEnabled,
+      tools,
+    },
     conversationRef,
   ): JSX.Element => {
     const { userMessage, assistantMessage } = exchange;
@@ -105,6 +118,8 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
       copyButtonText = 'Copy',
       copyButtonCopiedText = 'Copied!',
       errorTitleText = 'Chat error',
+      savedMemoryToolResultText = 'Saved to memory',
+      memoryToolResultText = 'Used memory to enhance results',
     } = translations;
 
     const assistantContent = useMemo(() => getMessageContent(assistantMessage), [assistantMessage]);
@@ -172,8 +187,11 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
                         preToolCallText,
                         searchingText,
                         toolCallResultText,
+                        savedMemoryToolResultText,
+                        memoryToolResultText,
                       }}
                       tools={tools}
+                      memoryEnabled={memoryEnabled}
                     />
                   );
                 }

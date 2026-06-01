@@ -117,6 +117,7 @@ export function DocSearchAskAiModal({
     suggestedQuestionsEnabled: askAiConfig?.suggestedQuestions,
   });
   const agentStudio = askAiConfig?.agentStudio ?? false;
+  const memoryEnabled = props.memory?.enabled ?? false;
 
   const indexes = normalizeDocSearchIndexes({
     indexName,
@@ -143,6 +144,7 @@ export function DocSearchAskAiModal({
       useStagingEnv: askAiUseStagingEnv,
       agentStudio,
       tools,
+      memory: props.memory,
     });
 
   const prevStatus = React.useRef(status);
@@ -464,6 +466,7 @@ export function DocSearchAskAiModal({
           suggestedQuestions={suggestedQuestions}
           selectSuggestedQuestion={selectSuggestedQuestion}
           agentStudio={agentStudio}
+          memoryEnabled={memoryEnabled}
           onAskAiToggle={onAskAiToggle}
           onNewConversation={handleNewConversation}
           onItemClick={(item, event) => {
