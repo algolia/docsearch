@@ -91,3 +91,15 @@ export interface AggregatedToolCallPart {
   type: 'aggregated-tool-call';
   queries: string[];
 }
+
+export type SearchIndexOutputPart = ToolUIPart<{
+  searchIndex: SearchIndexTool;
+}>;
+export type AlgoliaMCPSearchOutputPart = ToolUIPart<
+  {
+    [K in `algolia_search_index_${string}`]: AlgoliaMCPSearchTool;
+  } & {
+    algolia_search_index: AlgoliaMCPSearchTool;
+  }
+>;
+export type SearchOutputPart = AlgoliaMCPSearchOutputPart | SearchIndexOutputPart;

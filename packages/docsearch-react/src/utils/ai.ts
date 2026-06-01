@@ -1,7 +1,17 @@
 import type { TextUIPart } from 'ai';
 
 import type { StoredAskAiState } from '../types';
-import type { AggregatedToolCallPart, AIMessage, AIMessagePart, AIToolPart, ToolCalls } from '../types/AskiAi';
+import type {
+  AggregatedToolCallPart,
+  AIMessage,
+  AIMessagePart,
+  AIToolPart,
+  AlgoliaMCPSearchOutputPart,
+  SearchIndexOutputPart,
+  SearchOutputPart,
+  SearchToolPart,
+  ToolCalls,
+} from '../types/AskiAi';
 
 import { sanitizeUserInput } from './sanitize';
 
@@ -112,4 +122,28 @@ export const EMPTY_TOOLS: Readonly<ToolCalls> = Object.freeze({});
 
 export function isAIToolPart(part: AggregatedToolCallPart | AIMessagePart): part is AIToolPart {
   return part.type.startsWith('tool-');
+}
+
+export function isSearchToolPart(part: AIToolPart): part is SearchToolPart {
+  return (
+    part.type === 'tool-searchIndex' ||
+    part.type === 'tool-algolia_search_index' ||
+    part.type.startsWith('tool-algolia_search_index_')
+  );
+}
+
+export function isSearchIndexOutputPart(part: AIMessagePart): part is SearchIndexOutputPart {
+  return part.type === 'tool-searchIndex' && part.state === 'output-available';
+}
+
+export function isAlgoliaMCPSearchOutputPart(part: AIMessagePart): part is AlgoliaMCPSearchOutputPart {
+  return (
+    isAIToolPart(part) &&
+    (part.type === 'tool-algolia_search_index' || part.type.startsWith('tool-algolia_search_index_')) &&
+    part.state === 'output-available'
+  );
+}
+
+export function isSearchOutputPart(part: AIMessagePart): part is SearchOutputPart {
+  return isAIToolPart(part) && isSearchToolPart(part) && part.state === 'output-available';
 }
