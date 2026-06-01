@@ -109,14 +109,12 @@ export function DocSearchAskAiModal({
   const askAiConfig = typeof askAi === 'object' ? askAi : null;
   const askAiConfigurationId = typeof askAi === 'string' ? askAi : askAiConfig?.assistantId || null;
   const askAiSearchParameters = askAiConfig?.searchParameters;
-  const askAiUseStagingEnv = askAiConfig?.useStagingEnv || false;
   const [askAiState, setAskAiState] = React.useState<AskAiState>('initial');
   const suggestedQuestions = useSuggestedQuestions({
     assistantId: askAiConfigurationId,
     searchClient,
     suggestedQuestionsEnabled: askAiConfig?.suggestedQuestions,
   });
-  const agentStudio = askAiConfig?.agentStudio ?? false;
   const memoryEnabled = props.memory?.enabled ?? false;
 
   const indexes = normalizeDocSearchIndexes({
@@ -141,8 +139,6 @@ export function DocSearchAskAiModal({
       appId: askAiConfig?.appId || appId,
       indexName: askAiConfig?.indexName || defaultIndexName,
       searchParameters: askAiSearchParameters,
-      useStagingEnv: askAiUseStagingEnv,
-      agentStudio,
       tools,
       memory: props.memory,
     });
@@ -465,7 +461,6 @@ export function DocSearchAskAiModal({
           selectAskAiQuestion={handleSelectAskAiQuestion}
           suggestedQuestions={suggestedQuestions}
           selectSuggestedQuestion={selectSuggestedQuestion}
-          agentStudio={agentStudio}
           memoryEnabled={memoryEnabled}
           onAskAiToggle={onAskAiToggle}
           onNewConversation={handleNewConversation}

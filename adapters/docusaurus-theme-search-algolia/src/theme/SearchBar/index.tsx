@@ -222,7 +222,6 @@ function DocSearch({ externalUrlRegex, ...props }: AlgoliaSearchBarProps) {
     sidePanelEnabled,
     showSidepanelButton,
     sidePanelOptions,
-    sidePanelAgentStudio,
     sidepanelPortalContainer,
     isSidepanelOpen,
     sidepanelInitialMessage,
@@ -391,7 +390,6 @@ function DocSearch({ externalUrlRegex, ...props }: AlgoliaSearchBarProps) {
             apiKey={askAi.apiKey}
             appId={askAi.appId}
             indexName={askAi.indexName}
-            agentStudio={sidePanelAgentStudio}
             suggestedQuestions={sidePanelOptions?.suggestedQuestions ?? askAi.suggestedQuestions}
             isOpen={isSidepanelOpen}
             initialMessage={sidepanelInitialMessage}
