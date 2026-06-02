@@ -9,6 +9,7 @@ import type { Exchange } from './AskAiScreen';
 import type { StoredSearchPlugin } from './stored-searches';
 import { createStoredConversations } from './stored-searches';
 import { type AIMessage, type ToolCalls } from './types/AskiAi';
+import type { OnAskAiFeedback } from './types/Feedback';
 import { EMPTY_TOOLS } from './utils/ai';
 
 import type { AgentStudioSearchParameters, Memory, StoredAskAiState } from '.';
@@ -35,7 +36,7 @@ type UseAskAiReturn = {
   isStreaming: boolean;
   exchanges: Exchange[];
   conversations: StoredSearchPlugin<StoredAskAiState>;
-  sendFeedback: (messageId: string, thumbs: 0 | 1) => Promise<void>;
+  sendFeedback: OnAskAiFeedback;
 };
 
 type UseAskAi = (params: UseAskAiParams) => UseAskAiReturn;
@@ -131,8 +132,8 @@ export const useAskAi: UseAskAi = ({
     }),
   ).current;
 
-  const sendFeedback = useCallback(
-    async (messageId: string, thumbs: 0 | 1): Promise<void> => {
+  const sendFeedback = useCallback<OnAskAiFeedback>(
+    async (messageId, { thumbs, tags, notes }): Promise<void> => {
       if (!assistantId) return;
 
       const res = await postAgentStudioFeedback({
@@ -142,10 +143,12 @@ export const useAskAi: UseAskAi = ({
         appId,
         apiKey,
         abortSignal: abortControllerRef.current.signal,
+        notes,
+        tags,
       });
 
       if (res.status >= 300) throw new Error('Failed, try again later.');
-      conversations.addFeedback?.(messageId, thumbs === 1 ? 'like' : 'dislike');
+      conversations.addFeedback?.(messageId, thumbs === 1 ? 'like' : 'dislike', { tags, notes });
     },
     [assistantId, appId, apiKey, conversations],
   );

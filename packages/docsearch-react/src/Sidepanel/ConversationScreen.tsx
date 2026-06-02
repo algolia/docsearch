@@ -3,17 +3,17 @@ import type { JSX } from 'react';
 import React, { memo, useMemo } from 'react';
 
 import { AskAiSourcesPanel, type Exchange } from '../AskAiScreen';
+import { FeedbackActions } from '../components/FeedbackActions';
 import { ToolCall, type ToolCallTranslations } from '../components/ToolCall';
 import { AlertIcon, LoadingIcon } from '../icons';
 import { MemoizedMarkdown } from '../MemoizedMarkdown';
 import type { StoredSearchPlugin } from '../stored-searches';
-import type { StoredAskAiState } from '../types';
+import type { OnAskAiFeedback, StoredAskAiState } from '../types';
 import { type AIMessage, type ToolCalls } from '../types/AskiAi';
 import { extractLinksFromMessage, getMessageContent, EMPTY_TOOLS, isAIToolPart } from '../utils/ai';
 import { groupConsecutiveToolResults } from '../utils/groupConsecutiveToolResults';
 
 import { AggregatedSearchBlock } from './AggregatedSearchBlock';
-import { ConversationActions } from './ConversationActions';
 
 export type ConversationScreenTranslations = Partial<
   ToolCallTranslations & {
@@ -58,6 +58,35 @@ export type ConversationScreenTranslations = Partial<
      **/
     thanksForFeedbackText: string;
     /**
+     * Title shown at the top of the negative feedback note panel.
+     **/
+    feedbackPanelTitle: string;
+    /**
+     * Placeholder for the negative feedback details textarea.
+     **/
+    feedbackDetailsPlaceholder: string;
+    /**
+     * Disclaimer shown inside the negative feedback note panel.
+     **/
+    feedbackDisclaimerText: string;
+    /**
+     * Submit button text for the negative feedback note panel.
+     **/
+    feedbackSubmitButtonText: string;
+    /**
+     * Accessible title for the negative feedback note panel close button.
+     **/
+    feedbackCloseButtonTitle: string;
+    /**
+     * Reason chip labels for the negative feedback note panel.
+     **/
+    feedbackTagIncorrect: string;
+    feedbackTagNotWhatIAsked: string;
+    feedbackTagSlowOrBuggy: string;
+    feedbackTagStyleOrTone: string;
+    feedbackTagSafetyOrLegal: string;
+    feedbackTagOther: string;
+    /**
      * Error title shown if there is an error while chatting.
      */
     errorTitleText;
@@ -69,7 +98,7 @@ export type ConversationScreenProps = {
   conversations: StoredSearchPlugin<StoredAskAiState>;
   translations?: ConversationScreenTranslations;
   status: UseChatHelpers<AIMessage>['status'];
-  handleFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
+  handleFeedback?: OnAskAiFeedback;
   streamError?: Error;
   memoryEnabled?: boolean;
   tools?: ToolCalls;
@@ -231,7 +260,8 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
           </div>
 
           <div className="DocSearch-AskAiScreen-Answer-Footer">
-            <ConversationActions
+            <FeedbackActions
+              isSidepanel={true}
               id={messageId}
               showActions={showActions}
               latestAssistantMessageContent={assistantContent?.text || null}

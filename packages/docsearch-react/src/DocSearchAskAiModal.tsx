@@ -20,7 +20,13 @@ import { useRefreshOnInitialQuery } from './hooks/useRefreshOnInitialQuery';
 import { useSaveRecentSearch } from './hooks/useSaveRecentSearch';
 import { useStoredDocSearches } from './hooks/useStoredDocSearches';
 import type { NewConversationTranslations } from './NewConversationScreen';
-import type { DocSearchState, InternalDocSearchHit, StoredAskAiMessage, SuggestedQuestionHit } from './types';
+import type {
+  DocSearchState,
+  InternalDocSearchHit,
+  OnAskAiFeedback,
+  StoredAskAiMessage,
+  SuggestedQuestionHit,
+} from './types';
 import { type AskAiState } from './types/AskiAi';
 import { useAskAi } from './useAskAi';
 import { useSearchClient } from './useSearchClient';
@@ -263,10 +269,10 @@ export function DocSearchAskAiModal({
   );
 
   // feedback handler
-  const handleFeedbackSubmit = React.useCallback(
-    async (messageId: string, thumbs: 0 | 1): Promise<void> => {
+  const handleFeedbackSubmit = React.useCallback<OnAskAiFeedback>(
+    async (messageId, feedback): Promise<void> => {
       if (!askAiConfigurationId || !appId) return;
-      await sendFeedback(messageId, thumbs);
+      await sendFeedback(messageId, feedback);
     },
     [askAiConfigurationId, appId, sendFeedback],
   );

@@ -672,12 +672,16 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
   color: var(--docsearch-muted-color);
 }
 
-.DocSearch-Sidepanel .DocSearch-AskAiScreen-Actions {
-  margin-left: 0;
+.DocSearch-Sidepanel .DocSearch-AskAiScreen-Actions-Controls {
+  align-self: flex-start;
 }
 
 .DocSearch-Sidepanel .DocSearch-AskAiScreen-CopyButton {
   order: -1;
+}
+
+.DocSearch-Sidepanel .DocSearch-Feedback-Panel {
+  padding: 0.75em;
 }
 
 .DocSearch-Sidepanel .DocSearch-AskAiScreen-RelatedSources {

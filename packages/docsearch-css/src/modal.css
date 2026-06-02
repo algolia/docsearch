@@ -835,11 +835,192 @@ assistive tech users */
 
 .DocSearch-AskAiScreen-Actions {
   display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: var(--docsearch-spacing);
+}
+
+.DocSearch-AskAiScreen-Actions-Controls {
+  display: flex;
   flex-direction: row;
   gap: 12px;
   align-items: center;
-  margin-inline-start: auto;
+  align-self: flex-end;
 }
+
+/* Negative feedback note panel */
+.DocSearch-Feedback-Panel {
+  flex-basis: 100%;
+  width: 100%;
+  padding: var(--docsearch-spacing);
+  border-top: 1px solid var(--docsearch-subtle-color);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: start;
+  animation: fade-in 0.2s ease-in forwards;
+}
+
+.DocSearch-Feedback-Panel-Header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.DocSearch-Feedback-Panel-Title {
+  margin: 0;
+  font-size: 1em;
+  font-weight: 600;
+  color: var(--docsearch-text-color);
+}
+
+.DocSearch-Feedback-Panel-Close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: var(--docsearch-border-radius);
+  color: var(--docsearch-icon-color);
+  transition: background-color 0.2s ease;
+}
+
+.DocSearch-Feedback-Panel-Close:hover {
+  background: var(--docsearch-hit-highlight-color);
+}
+
+.DocSearch-Feedback-Panel-Close svg {
+  width: 16px;
+  height: 16px;
+}
+
+.DocSearch-Feedback-Panel-Reasons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.DocSearch-Feedback-Panel-Reason {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--docsearch-border-radius);
+  border: 1px solid var(--docsearch-subtle-color);
+  background: var(--docsearch-hit-background);
+  color: var(--docsearch-text-color);
+  font-family: inherit;
+  font-size: 1em;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.DocSearch-Feedback-Panel-Reason:hover {
+  border-color: var(--docsearch-highlight-color);
+  background: var(--docsearch-hit-highlight-color);
+}
+
+.DocSearch-Feedback-Panel-Reason--selected {
+  border-color: var(--docsearch-highlight-color);
+  background: var(--docsearch-soft-primary-color);
+  color: var(--docsearch-highlight-color);
+  font-weight: 500;
+}
+
+.DocSearch-Feedback-Panel-Reason svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.DocSearch-Feedback-Panel-Textarea {
+  width: 100%;
+  min-height: 64px;
+  resize: vertical;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border-radius: var(--docsearch-border-radius);
+  border: 1px solid var(--docsearch-subtle-color);
+  background: var(--docsearch-hit-background);
+  color: var(--docsearch-text-color);
+  font-family: inherit;
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+.DocSearch-Feedback-Panel-Textarea::placeholder {
+  color: var(--docsearch-muted-color);
+  opacity: 1;
+}
+
+.DocSearch-Feedback-Panel-Textarea:focus {
+  outline: none;
+  border-color: var(--docsearch-highlight-color);
+}
+
+.DocSearch-Feedback-Panel-CharCount {
+  margin: 0;
+  align-self: flex-end;
+  font-size: 0.8em;
+  color: var(--docsearch-muted-color);
+  font-variant-numeric: tabular-nums;
+}
+
+.DocSearch-Feedback-Panel-Error {
+  margin: 0;
+  font-size: 0.85em;
+  color: var(--docsearch-error-color);
+}
+
+.DocSearch-Feedback-Panel-Actions {
+  align-self: flex-end;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1em;
+}
+
+.DocSearch-Feedback-Panel-Submit,
+.DocSearch-Feedback-Panel-Cancel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 6px 15px;
+  border: none;
+  border-radius: var(--docsearch-border-radius);
+  font-family: inherit;
+  font-size: 0.9em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.DocSearch-Feedback-Panel-Submit {
+  background: var(--docsearch-highlight-color);
+  color: #fff;
+}
+
+.DocSearch-Feedback-Panel-Submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.DocSearch-Feedback-Panel-Submit:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.DocSearch-Feedback-Panel-Cancel {
+  background: var(--docsearch-modal-background);
+}
+
+.DocSearch-Feedback-Panel-Cancel:hover {
+  background: var(--docsearch-subtle-color);
+}
+
 
 .DocSearch-AskAiScreen-ActionButton {
   display: flex;
