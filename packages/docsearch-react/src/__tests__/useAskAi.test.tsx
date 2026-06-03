@@ -11,7 +11,12 @@ type ToolCall = {
 
 type ChatOptions = {
   onToolCall: (params: { toolCall: ToolCall }) => unknown;
-  transport: { options: { headers?: Record<string, string> } };
+  transport: {
+    options: {
+      headers?: Record<string, string>;
+      body?: Record<string, unknown>;
+    };
+  };
 };
 
 type CustomOnToolCallParams = ToolCall & {
@@ -55,6 +60,14 @@ describe('useAskAi', () => {
     }
 
     return chatOptions.transport.options.headers ?? {};
+  }
+
+  function getTransportBody(): Record<string, unknown> {
+    if (!chatOptions) {
+      throw new Error('useChat was not initialized');
+    }
+
+    return chatOptions.transport.options.body ?? {};
   }
 
   beforeEach(() => {
@@ -186,5 +199,107 @@ describe('useAskAi', () => {
     );
 
     expect(getTransportHeaders()).not.toHaveProperty('x-algolia-secure-user-token');
+  });
+
+  it('sends an empty transport body when no search parameters or indices are provided', () => {
+    renderHook(() =>
+      useAskAi({
+        apiKey: 'api-key',
+        appId: 'app-id',
+        assistantId: 'assistant-id',
+        indexName: 'index-name',
+        tools: {},
+      }),
+    );
+
+    expect(getTransportBody()).toEqual({ algolia: {} });
+  });
+
+  it('includes searchParameters under the algolia body when provided', () => {
+    const searchParameters = {
+      'index-name': { distinct: false },
+    };
+
+    renderHook(() =>
+      useAskAi({
+        apiKey: 'api-key',
+        appId: 'app-id',
+        assistantId: 'assistant-id',
+        indexName: 'index-name',
+        tools: {},
+        searchParameters,
+      }),
+    );
+
+    expect(getTransportBody()).toEqual({
+      algolia: { searchParameters },
+    });
+  });
+
+  it('includes indices under the algolia body when provided', () => {
+    const indices = [
+      {
+        index: 'docsearch-markdown',
+        description: 'Use this to gather specific results.',
+      },
+    ];
+
+    renderHook(() =>
+      useAskAi({
+        apiKey: 'api-key',
+        appId: 'app-id',
+        assistantId: 'assistant-id',
+        indexName: 'index-name',
+        tools: {},
+        indices,
+      }),
+    );
+
+    expect(getTransportBody()).toEqual({
+      algolia: { indices },
+    });
+  });
+
+  it('includes both searchParameters and indices under the algolia body when both are provided', () => {
+    const searchParameters = {
+      'index-name': { distinct: false },
+    };
+    const indices = [
+      {
+        index: 'docsearch-markdown',
+        description: 'Use this to gather specific results.',
+      },
+    ];
+
+    renderHook(() =>
+      useAskAi({
+        apiKey: 'api-key',
+        appId: 'app-id',
+        assistantId: 'assistant-id',
+        indexName: 'index-name',
+        tools: {},
+        searchParameters,
+        indices,
+      }),
+    );
+
+    expect(getTransportBody()).toEqual({
+      algolia: { searchParameters, indices },
+    });
+  });
+
+  it('omits indices from the body when an empty indices array is provided', () => {
+    renderHook(() =>
+      useAskAi({
+        apiKey: 'api-key',
+        appId: 'app-id',
+        assistantId: 'assistant-id',
+        indexName: 'index-name',
+        tools: {},
+        indices: [],
+      }),
+    );
+
+    expect(getTransportBody()).toEqual({ algolia: {} });
   });
 });

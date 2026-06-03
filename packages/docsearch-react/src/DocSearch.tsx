@@ -1,6 +1,6 @@
 import type { AutocompleteOptions, AutocompleteState } from '@algolia/autocomplete-core';
 import { DocSearch as DocSearchProvider, useDocSearch } from '@docsearch/core';
-import type { DocSearchModalShortcuts, DocSearchRef, InitialAskAiMessage } from '@docsearch/core';
+import type { DocSearchModalShortcuts, DocSearchRef } from '@docsearch/core';
 import type { LiteClient, SearchParamsObject } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
@@ -10,7 +10,6 @@ import type { ButtonTranslations } from './DocSearchButton';
 import { DocSearchModal } from './DocSearchModal';
 import type { ModalTranslations } from './DocSearchModal';
 import type { DocSearchHit, DocSearchTheme, InternalDocSearchHit, StoredDocSearchHit } from './types';
-import type { ToolCalls } from './types/AskiAi';
 
 export type { DocSearchRef } from '@docsearch/core';
 
@@ -24,55 +23,6 @@ export type DocSearchTransformClient = {
   search: LiteClient['search'];
   addAlgoliaAgent: LiteClient['addAlgoliaAgent'];
   transporter: Pick<LiteClient['transporter'], 'algoliaAgent'>;
-};
-
-// Define the specific search parameters allowed for Ask AI
-export type AskAiSearchParameters = {
-  facetFilters?: string[];
-  filters?: string;
-  attributesToRetrieve?: string[];
-  restrictSearchableAttributes?: string[];
-  distinct?: boolean | number | string;
-};
-
-export type AgentStudioSearchParameters = Record<string, Omit<AskAiSearchParameters, 'facetFilters'>>;
-
-export type DocSearchAskAi = {
-  /**
-   * The index name to use for the ask AI feature. Your assistant will search this index for relevant documents.
-   * If not provided, the index name will be used.
-   */
-  indexName?: string;
-  /**
-   * The API key to use for the ask AI feature. Your assistant will use this API key to search the index.
-   * If not provided, the API key will be used.
-   */
-  apiKey?: string;
-  /**
-   * The app ID to use for the ask AI feature. Your assistant will use this app ID to search the index.
-   * If not provided, the app ID will be used.
-   */
-  appId?: string;
-  /**
-   * The assistant ID to use for the ask AI feature.
-   */
-  assistantId: string;
-  /**
-   * Enables displaying suggested questions on Ask AI's new conversation screen.
-   *
-   * @default false
-   */
-  suggestedQuestions?: boolean;
-  /**
-   * The search parameters to use for the ask AI feature.
-   * Keyed by the index name.
-   *
-   * @example
-   * {
-   *   "INDEX_NAME": { distinct: false }
-   * }
-   */
-  searchParameters?: AgentStudioSearchParameters;
 };
 
 export interface DocSearchIndex {
@@ -204,47 +154,6 @@ export interface DocSearchProps {
    * @default `{ 'Ctrl/Cmd+K': true, '/': true }`
    */
   keyboardShortcuts?: DocSearchModalShortcuts;
-}
-
-export interface Memory {
-  /**
-   * Determines whether or not to display the memory based tool calls.
-   *
-   * @default false
-   */
-  enabled?: boolean;
-  /**
-   * The JWT used by the agent to know which user's memory to read.
-   *
-   * @see https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/user-authentication
-   */
-  userToken?: string;
-}
-
-export interface DocSearchAIProps extends DocSearchProps {
-  /**
-   * Configuration or assistant id to enable ask ai mode. Pass a string assistant id or a full config object.
-   */
-  askAi: DocSearchAskAi | string;
-  /**
-   * Intercept Ask AI requests (e.g. Submitting a prompt or selecting a suggested question).
-   *
-   * Return `true` to prevent the default modal Ask AI flow (no toggle, no sendMessage).
-   * Useful to route Ask AI into a different UI (e.g. `@docsearch/sidepanel-js`) without flicker.
-   */
-  interceptAskAiEvent?: (initialMessage: InitialAskAiMessage) => boolean | void;
-  /**
-   * Use custom tools driven by Agent Studio.
-   *
-   * For best performance, memoize this object with `useMemo` or define it
-   * outside the component. Inline object literals will be recreated every
-   * render but will not affect correctness.
-   **/
-  tools?: ToolCalls;
-  /**
-   * Configuration for the Agent Studio memory feature.
-   */
-  memory?: Memory;
 }
 
 function DocSearchComponent(props: DocSearchProps, ref: React.ForwardedRef<DocSearchRef>): JSX.Element {
