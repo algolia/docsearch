@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 
 import { LoadingIcon, MemoryIcon, SearchIcon, ToolIcon } from '../icons';
 import type { AIToolPart, MemoryToolPart, SearchToolPart, ToolCalls, ToolDefinition } from '../types/AskiAi';
+import { isSearchToolPart } from '../utils/ai';
 
 import { ToolState } from './ui/ToolState';
 
@@ -159,10 +160,6 @@ function MemoryTool({ part, translations }: { part: MemoryToolPart; translations
       {memoryToolResultText}
     </ToolState>
   );
-}
-
-function isSearchToolPart(part: AIToolPart): part is SearchToolPart {
-  return part.type === 'tool-searchIndex' || part.type.startsWith('tool-algolia_search_index');
 }
 
 function isMemoryToolPart(part: AIToolPart): part is MemoryToolPart {

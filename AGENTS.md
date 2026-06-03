@@ -27,13 +27,10 @@ bun install
 bun run build
 
 # Build specific package
-bun --filter @docsearch/react build
+bun run --filter @docsearch/react build
 
 # Watch mode (all packages)
 bun run watch
-
-# Clean builds
-bun run build:clean
 ```
 
 ## Test Commands
@@ -43,13 +40,7 @@ bun run build:clean
 bun run test
 
 # Run a single test file
-bun run test packages/docsearch-react/src/__tests__/utils.test.ts
-
-# Run tests matching a pattern
-bun run test --testNamePattern="extractLinksFromText"
-
-# Run tests in watch mode
-bun run test --watch
+bun run test --run packages/docsearch-react/src/__tests__/utils.test.ts
 
 # Type checking
 bun run test:types
@@ -57,6 +48,8 @@ bun run test:types
 # Bundle size check
 bun run test:size
 ```
+
+When running tests, prefer to run specific files with the `--run` flag to prevent running with watch mode.
 
 ## Lint Commands
 
@@ -68,15 +61,16 @@ bun run lint
 bun run lint:css
 ```
 
-## E2E Testing (Cypress)
+## E2E Testing (Playwright)
 
 ```bash
 # Run Cypress tests
-bun run cy:run
+bun run pw:run
 
 # Run with specific browser
-bun run cy:run:chrome
-bun run cy:run:firefox
+bun run pw:run:chromium
+bun run pw:run:firefox
+bun run pw:run:webkit
 ```
 
 ## Code Style Guidelines
