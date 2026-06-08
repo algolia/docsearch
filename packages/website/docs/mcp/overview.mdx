@@ -1,0 +1,58 @@
+---
+title: DocSearch MCP
+sidebar_label: Overview
+---
+
+DocSearch MCP lets AI clients search current public developer documentation from the DocSearch corpus.
+
+Use it when you want an assistant to answer questions from public docs instead of relying only on model training data. The public endpoint does not require authentication:
+
+```text
+https://mcp.algolia.com/1/docsearch/mcp
+```
+
+## What it does
+
+DocSearch MCP exposes documentation search through the [Model Context Protocol](https://modelcontextprotocol.io/). MCP-compatible clients can connect to the endpoint and call DocSearch tools while answering your questions.
+
+The endpoint is focused on public developer documentation. You do not need an Algolia application ID, search API key, or DocSearch application to use it.
+
+## How it works
+
+DocSearch MCP uses a two-step lookup flow:
+
+1. Resolve the documentation set that best matches the library, framework, API, or product you asked about.
+2. Query that documentation set for the specific topic.
+
+For example, if you ask about Next.js middleware, the client first resolves the Next.js docs, then searches those docs for middleware-specific pages.
+
+## Available tools
+
+### `algolia_docsearch_resolve_docset`
+
+Finds matching documentation sets. It returns candidates with a `docset_id` and `targetIndex`, plus ranking signals that help the client choose the best match.
+
+Good queries are short and keyword-based:
+
+```text
+Next.js middleware
+Stripe webhooks
+Algolia InstantSearch React
+```
+
+### `algolia_docsearch_query_docs`
+
+Searches inside one or more resolved documentation sets. The client passes the selected `docset_id` values and their matching `targetIndex` values.
+
+Good queries are specific to the docs content you want:
+
+```text
+middleware matcher config
+webhook signature verification
+configure search client
+```
+
+## Next steps
+
+- [Install DocSearch MCP](/docs/mcp/installation)
+- [Use DocSearch MCP](/docs/mcp/usage)

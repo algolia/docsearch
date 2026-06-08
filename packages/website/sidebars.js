@@ -23,6 +23,11 @@ export default {
     },
     {
       type: 'category',
+      label: 'MCP',
+      items: ['mcp/overview', 'mcp/installation', 'mcp/usage'],
+    },
+    {
+      type: 'category',
       label: 'Algolia Ask AI',
       items: [
         'v4/askai',
