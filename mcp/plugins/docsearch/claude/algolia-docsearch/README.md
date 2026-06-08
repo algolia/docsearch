@@ -13,13 +13,20 @@ Algolia DocSearch connects Claude Code to the public DocSearch MCP endpoint for 
 For local beta testing, install this plugin package from:
 
 ```text
-plugins/docsearch/claude/algolia-docsearch
+mcp/plugins/docsearch/claude/algolia-docsearch
 ```
 
 The MCP server config is also available at:
 
 ```text
-plugins/docsearch/claude/algolia-docsearch/.mcp.json
+mcp/plugins/docsearch/claude/algolia-docsearch/.mcp.json
+```
+
+For Claude Code marketplace install from this repository:
+
+```bash
+claude plugin marketplace add algolia/docsearch
+claude plugin install algolia-docsearch@algolia-docsearch-marketplace
 ```
 
 ## Available Tools

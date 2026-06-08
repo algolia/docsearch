@@ -5,7 +5,7 @@
   },
   "plugins": [
     {
-      "name": "algolia-docsearch-plugin",
+      "name": "algolia-docsearch",
       "source": ".",
       "description": "up-to-date public developer documentation from the DocSearch corpus.",
       "version": "1.0.0"

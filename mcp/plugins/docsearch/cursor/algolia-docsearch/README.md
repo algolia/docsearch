@@ -13,13 +13,13 @@ Algolia DocSearch connects Cursor to the public DocSearch MCP endpoint for curre
 For local beta testing, install this plugin package from:
 
 ```text
-plugins/docsearch/cursor/algolia-docsearch
+mcp/plugins/docsearch/cursor/algolia-docsearch
 ```
 
 The MCP server config is also available at:
 
 ```text
-plugins/docsearch/cursor/algolia-docsearch/mcp.json
+mcp/plugins/docsearch/cursor/algolia-docsearch/mcp.json
 ```
 
 ## Available Tools
