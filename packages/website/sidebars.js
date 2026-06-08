@@ -76,7 +76,7 @@ export default {
     {
       type: 'category',
       label: 'Under the hood',
-      items: ['how-does-it-work', 'required-configuration'],
+      items: ['how-does-it-work', 'required-configuration', 'boosting'],
     },
     {
       type: 'category',
