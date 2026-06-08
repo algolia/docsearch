@@ -24,9 +24,9 @@ mcp/plugins/docsearch/claude/algolia-docsearch/.mcp.json
 
 For Claude Code marketplace install from this repository:
 
-```bash
-claude plugin marketplace add algolia/docsearch
-claude plugin install algolia-docsearch@algolia-docsearch-marketplace
+```text
+/plugin marketplace add algolia/docsearch
+/plugin install algolia-docsearch@algolia-docsearch-marketplace
 ```
 
 ## Available Tools
