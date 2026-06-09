@@ -1,12 +1,13 @@
 import type { AutocompleteApi, AutocompleteState, BaseItem } from '@algolia/autocomplete-core';
 import React, { type JSX } from 'react';
 
+import { HitContent } from './components/ui/HitContent';
 import type { DocSearchProps } from './DocSearch';
 import { useRelativeFormattedDate } from './hooks/useRelativeFormattedDate';
 import { SparklesIcon } from './icons/SparklesIcon';
 import { Snippet } from './Snippet';
 import type { InternalDocSearchHit, StoredDocSearchHit } from './types';
-import { sanitizeUserInput } from './utils/sanitize';
+import { decodeHtmlEntities, getHitItemBreadcrumbs } from './utils';
 
 export type ResultsTranslations = Partial<{
   askAiPlaceholder: string;
@@ -34,12 +35,7 @@ export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TI
       return null;
     }
 
-    return props.title
-      .replace(/&amp;/g, '&')
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&quot;/g, '"')
-      .replace(/&#039;/g, "'");
+    return decodeHtmlEntities(props.title);
   }, [props.title]);
 
   if (!props.collection || props.collection.items.length === 0) {
@@ -107,8 +103,8 @@ function Result<TItem extends StoredDocSearchHit>({
 }: ResultProps<TItem>): JSX.Element {
   const Hit = hitComponent!;
   const { recentConversationTimestampFallback = 'A while ago' } = translations;
-  const storedDate = item.type === 'askAI' && item.hierarchy.lvl2 ? new Date(item.hierarchy.lvl2) : null;
-  const relativeDate = useRelativeFormattedDate(storedDate);
+  const titleAttribute = item.type === 'content' ? 'content' : `hierarchy.${item.type}`;
+  const breadcrumbs = getHitItemBreadcrumbs(item);
 
   return (
     <li
@@ -130,43 +126,44 @@ function Result<TItem extends StoredDocSearchHit>({
         <div className="DocSearch-Hit-Container">
           {renderIcon({ item, index })}
 
-          {item.type === 'askAI' && (
-            <div className="DocSearch-Hit-content-wrapper">
-              <span className="DocSearch-Hit-title">{sanitizeUserInput(item.hierarchy.lvl1 || '')}</span>
-              <span className="DocSearch-Hit-path">{relativeDate || recentConversationTimestampFallback}</span>
-            </div>
+          {/* lvl0 is special where there wouldn't be any "parent" to use for breadcrumbs */}
+          {item.type === 'lvl0' && (
+            <HitContent
+              title={<Snippet hit={item} attribute="hierarchy.lvl0" />}
+              subText={<Snippet hit={item} attribute="content" />}
+            />
           )}
 
-          {item.hierarchy[item.type] && item.type === 'lvl1' && (
-            <div className="DocSearch-Hit-content-wrapper">
-              <Snippet className="DocSearch-Hit-title" hit={item} attribute="hierarchy.lvl1" />
-              {item.hierarchy.lvl0 && <Snippet className="DocSearch-Hit-path" hit={item} attribute="hierarchy.lvl0" />}
-            </div>
-          )}
-
-          {item.hierarchy[item.type] &&
-            (item.type === 'lvl2' ||
-              item.type === 'lvl3' ||
-              item.type === 'lvl4' ||
-              item.type === 'lvl5' ||
-              item.type === 'lvl6') && (
-              <div className="DocSearch-Hit-content-wrapper">
-                <Snippet className="DocSearch-Hit-title" hit={item} attribute={`hierarchy.${item.type}`} />
-                <Snippet className="DocSearch-Hit-path" hit={item} attribute="hierarchy.lvl1" />
-              </div>
-            )}
-
-          {item.type === 'content' && (
-            <div className="DocSearch-Hit-content-wrapper">
-              <Snippet className="DocSearch-Hit-title" hit={item} attribute="content" />
-              <Snippet className="DocSearch-Hit-path" hit={item} attribute="hierarchy.lvl1" />
-            </div>
+          {item.type === 'askAI' ? (
+            <AskAIResultContent item={item} relativeDateFallbackText={recentConversationTimestampFallback} />
+          ) : (
+            <HitContent title={<Snippet hit={item} attribute={titleAttribute} />} subText={breadcrumbs} />
           )}
 
           {renderAction({ item })}
         </div>
       </Hit>
     </li>
+  );
+}
+
+interface AskAIResultContentProps<TItem extends StoredDocSearchHit> {
+  item: TItem;
+  relativeDateFallbackText: string;
+}
+
+function AskAIResultContent<TItem extends StoredDocSearchHit>({
+  item,
+  relativeDateFallbackText,
+}: AskAIResultContentProps<TItem>) {
+  const storedDate = item.hierarchy.lvl2 ? new Date(item.hierarchy.lvl2) : new Date();
+  const relativeDate = useRelativeFormattedDate(storedDate);
+
+  return (
+    <HitContent
+      title={decodeHtmlEntities(item.hierarchy.lvl1 || '')}
+      subText={relativeDate || relativeDateFallbackText}
+    />
   );
 }
 
