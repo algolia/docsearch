@@ -4,7 +4,7 @@ import type { JSX } from 'react';
 import React from 'react';
 import { createPortal } from 'react-dom';
 
-import type { AgentStudioSearchParameters, Memory } from './DocSearch';
+import type { AgentStudioIndices, AgentStudioSearchParameters, Memory } from './DocSearchAI';
 import type { SidepanelButtonProps, SidepanelProps as SidepanelPanelProps } from './Sidepanel/index';
 import { SidepanelButton, Sidepanel } from './Sidepanel/index';
 import type { ToolCalls } from './types/AskiAi';
@@ -73,6 +73,10 @@ export type DocSearchSidepanelProps = DocSearchCallbacks & {
    * Configuration for the Agent Studio memory feature.
    */
   memory?: Memory;
+  /**
+   * List of dynamic indices for the Agent Studio search tool to use.
+   */
+  indices?: AgentStudioIndices[];
 };
 
 type SidepanelProps = DocSearchSidepanelProps & SidepanelSearchParameters;

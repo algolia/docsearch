@@ -5,8 +5,9 @@ import { describe, it, expect, afterEach } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 
 import { DocSearch as DocSearchComponent } from '../DocSearch';
-import type { DocSearchAIProps, DocSearchProps } from '../DocSearch';
+import type { DocSearchProps } from '../DocSearch';
 import { DocSearchAI as DocSearchAIComponent } from '../DocSearchAI';
+import type { DocSearchAIProps } from '../DocSearchAI';
 
 function DocSearch(props: Partial<DocSearchProps>): JSX.Element {
   return <DocSearchComponent appId="woo" apiKey="foo" indexName="bar" {...props} />;
