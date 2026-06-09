@@ -74,18 +74,16 @@ export function SourcesPanel({ links, titleText = 'Sources' }: SourcesProps): JS
         collisionBoundary={boundary ?? 'clipping-ancestors'}
       >
         <Popover.Title>{titleText}</Popover.Title>
-        <div className="DocSearch-AskAiScreen-Sources">
-          <h4>Articles</h4>
-          <ul>
-            {links.map((l) => (
-              <li key={l.url}>
-                <a href={l.url} target="_blank" rel="noopener noreferrer">
-                  <ContentIcon /> {l.title || l.url}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <ul className="DocSearch-AskAiScreen-Sources">
+          {links.map((l) => (
+            <li key={l.url} className="DocSearch-AskAiScreen-Sources-source">
+              <a href={l.url} target="_blank" rel="noopener noreferrer">
+                <ContentIcon />
+                <span className="DocSearch-AskAiScreen-Sources-source-title">{l.title || l.url}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </Popover.Popup>
     </Popover>
   );

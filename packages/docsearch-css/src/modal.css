@@ -65,7 +65,7 @@
   height: var(--popup-height, auto);
   max-width: 500px;
   position: relative;
-  background-color: #fff;
+  background-color: var(--docsearch-popover-background);
   z-index: 999;
   box-shadow: 0px 0px 0px 1px rgba(33, 36, 61, 0.05), 0px 4px 8px -2px rgba(33, 36, 61, 0.25);
   border-radius: var(--docsearch-border-radius);
@@ -121,8 +121,8 @@
   box-sizing: border-box;
   width: calc(var(--arrow-height) * sqrt(2));
   height: calc(var(--arrow-height) * sqrt(2));
-  background-color: #fff;
-  border: 1px solid rgb(230, 230, 240);
+  background-color: var(--docsearch-popover-background);
+  border: 1px solid var(--docsearch-popover-arrow-color);
   transform: translate(-50%, 50%) rotate(45deg);
 }
 
@@ -142,6 +142,7 @@
   stroke-width: var(--docsearch-icon-stroke-width);
   border-radius: var(--docsearch-border-radius);
   cursor: pointer;
+  color: var(--docsearch-text-color);
 }
 
 .DocSearch-Popover-Close:hover {
@@ -152,50 +153,6 @@
 .DocSearch-Popover-Close svg {
   height: 1rem;
   width: 1rem;
-}
-
-.DocSearch-AskAiScreen-Sources {
-  border: 1px solid var(--docsearch-subtle-color);
-  border-radius: var(--docsearch-border-radius);
-  padding: 0.875em;
-  margin-top: 0.5rem;
-}
-
-.DocSearch-AskAiScreen-Sources h4 {
-  color: rbga(0, 0, 0, 1);
-  font-weight: 400;
-  font-size: 0.875em;
-}
-
-.DocSearch-AskAiScreen-Sources ul {
-  list-style-type: none;
-  padding-inline: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.375em;
-  margin-top: 0.375em;
-}
-
-.DocSearch-AskAiScreen-Sources ul li svg {
-  stroke-width: var(--docsearch-icon-stroke-width);
-  height: 1.25rem;
-  width: 1.25rem;
-  color: var(--docsearch-icon-color);
-}
-
-.DocSearch-AskAiScreen-Sources ul li a {
-  display: grid;
-  grid-template-columns: 1.25rem 1fr;
-  align-items: center;
-  gap: 0.375em;
-  font-size: 0.875rem;
-  color: var(--docsearch-text-color);
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.DocSearch-AskAiScreen-Sources ul li a:hover {
-  text-decoration: underline;
 }
 
 /* Modal Searchbox */
@@ -270,7 +227,7 @@
 
 .DocSearch-Actions-Ask-AI {
   border: 1px solid var(--docsearch-subtle-color);
-  background-color: #fff;
+  background-color: var(--docsearch-hit-background);
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
@@ -295,6 +252,7 @@
 .DocSearch-Actions-Ask-AI svg {
   color: var(--docsearch-icon-color);
   inline-size: 1rem;
+  block-size: 1rem;
 }
 
 .DocSearch-Actions-Ask-AI:hover svg,
@@ -592,11 +550,11 @@
 
 .DocSearch-Hit[aria-selected='true'] a,
 .DocSearch-Hit[aria-selected='true'] .DocSearch-Hit--AskAI {
-  background-color: var(--docsearch-background-color);
+  background-color: var(--docsearch-hit-focus-background);
 }
 
 .DocSearch-Conversation-History .DocSearch-Hit[aria-selected='true'] a {
-  background-color: var(--docsearch-background-color);
+  background-color: var(--docsearch-hit-focus-background);
 }
 
 .DocSearch-Hit mark {
@@ -730,7 +688,7 @@ svg.DocSearch-Hit-Select-Icon {
 }
 
 .DocSearch-Hit[aria-selected='true'] .DocSearch-Hit-action {
-  color: rgba(90, 94, 154, 1);
+  color: var(--docsearch-secondary-text-color);
 }
 
 .DocSearch-Hit[aria-selected='true'] mark {
@@ -1874,6 +1832,50 @@ assistive tech users */
   white-space: nowrap;
   color: var(--docsearch-secondary-text-color);
   font-weight: 300;
+}
+
+.DocSearch-AskAiScreen-Sources {
+  padding-inline: 0;
+  margin-top: 0.5rem;
+  color: var(--docsearch-text-color);
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375em;
+}
+
+.DocSearch-AskAiScreen-Sources-source svg {
+  stroke-width: var(--docsearch-icon-stroke-width);
+  height: 1.25rem;
+  width: 1.25rem;
+  color: var(--docsearch-icon-color);
+}
+
+.DocSearch-AskAiScreen-Sources-source a {
+  display: grid;
+  grid-template-columns: 1.25rem 1fr;
+  align-items: center;
+  gap: 0.375em;
+  font-size: 0.875rem;
+  color: var(--docsearch-text-color);
+  text-decoration: none;
+}
+
+.DocSearch-AskAiScreen-Sources-source a:hover {
+  text-decoration: underline;
+}
+
+.DocSearch-AskAiScreen-Sources-source-title {
+  white-space: nowrap;
+  max-width: 15rem;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+@media screen and (min-width: 768px) {
+  .DocSearch-AskAiScreen-Sources-source-title {
+    max-width: 20rem;
+  }
 }
 
 /* code snippet wrapper */

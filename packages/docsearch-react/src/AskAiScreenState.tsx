@@ -110,15 +110,7 @@ export const AskAiScreenState = React.memo(
       return <NoResultsScreen {...props} translations={translations?.noResultsScreen} />;
     }
 
-    return (
-      <>
-        <ResultsScreen {...props} translations={translations?.resultsScreen} />
-        {props.canHandleAskAi && props.state.collections.length === 1 && (
-          // if there's one collection it is the ask ai action, show the no results screen
-          <NoResultsScreen {...props} translations={translations?.noResultsScreen} />
-        )}
-      </>
-    );
+    return <ResultsScreen {...props} translations={translations?.resultsScreen} />;
   },
   function areEqual(_prevProps, nextProps) {
     // We don't update the screen when Autocomplete is loading or stalled to
