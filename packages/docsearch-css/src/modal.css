@@ -566,13 +566,17 @@
   width: 1rem;
 }
 
+.DocSearch-Hit-action,
+.DocSearch-Hit-action-button {
+  height: 22px;
+  width: 22px;
+}
+
 .DocSearch-Hit-action {
   align-items: center;
   color: var(--docsearch-muted-color);
   display: flex;
-  height: 22px;
   stroke-width: var(--docsearch-icon-stroke-width);
-  width: 22px;
 }
 
 .DocSearch-Hit-action svg {
@@ -581,12 +585,8 @@
   width: 18px;
 }
 
-/* Keep the circular button footprint while rendering a smaller pin icon */
-.DocSearch-Hit-action-button--pin {
-  padding: 4px;
-}
-
 .DocSearch-Hit-action-button--pin svg {
+  margin-inline-start: 2px;
   height: 14px;
   width: 14px;
 }
