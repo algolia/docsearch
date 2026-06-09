@@ -101,7 +101,7 @@ test.describe('Search', () => {
     const initialURL = page.url();
 
     await docSearch.typeQueryMatching();
-    await page.locator('#docsearch-hits_docsearch_0-item-1 > a').click({ force: true });
+    await page.locator('#docsearch-hits_docsearch-item-0 > a').click({ force: true });
 
     await expect(page).not.toHaveURL(initialURL);
   });
@@ -121,7 +121,7 @@ test.describe('Recent and Favorites', () => {
     await docSearch.goto();
     await docSearch.openModal();
     await docSearch.typeQueryMatching();
-    await page.locator('#docsearch-hits_docsearch_0-item-1 > a').click({ force: true });
+    await page.locator('#docsearch-hits_docsearch-item-0 > a').click({ force: true });
     await page.waitForTimeout(1000);
     await docSearch.openModal();
     await expect(page.getByText('Recent')).toBeVisible();
@@ -138,13 +138,13 @@ test.describe('Recent and Favorites', () => {
   });
 
   test('Recent search can be favorited', async ({ page }) => {
-    await page.locator('#docsearch-recentSearches-item-0').locator('[title="Save this search"]').click();
+    await page.locator('#docsearch-recentSearches-item-0').locator('[title="Pin this search"]').click();
     await expect(page.getByText('Favorite')).toBeVisible();
     await expect(page.locator('#docsearch-favoriteSearches-item-0')).toBeVisible();
   });
 
   test('Favorite can be deleted', async ({ docSearch, page }) => {
-    await page.locator('#docsearch-recentSearches-item-0').locator('[title="Save this search"]').click();
+    await page.locator('#docsearch-recentSearches-item-0').locator('[title="Pin this search"]').click();
     await expect(page.getByText('Favorite')).toBeVisible();
     await page
       .locator('#docsearch-favoriteSearches-item-0')
