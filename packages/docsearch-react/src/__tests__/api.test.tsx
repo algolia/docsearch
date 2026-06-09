@@ -299,11 +299,7 @@ describe('api', () => {
       });
 
       await act(async () => {
-        fireEvent.click(
-          await screen.findByRole('button', {
-            name: /Ask AI/,
-          }),
-        );
+        fireEvent.click(await screen.findByText('hello', { selector: '.DocSearch-Hit-AskAIButton-title-query' }));
       });
 
       expect(document.querySelector('.DocSearch-AskAiScreen')).toBeInTheDocument();

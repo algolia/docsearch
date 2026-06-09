@@ -2,15 +2,7 @@ import type { UseChatHelpers } from '@ai-sdk/react';
 import type { AutocompleteApi, AutocompleteState } from '@algolia/autocomplete-core';
 import React, { type JSX, type RefObject } from 'react';
 
-import { usePlatformKeys } from '../hooks/usePlatformKeys';
-import {
-  ConversationHistoryIcon,
-  MoreVerticalIcon,
-  NewConversationIcon,
-  StopIcon,
-  BackIcon,
-  SparklesIcon,
-} from '../icons';
+import { ConversationHistoryIcon, MoreVerticalIcon, NewConversationIcon, StopIcon, BackIcon } from '../icons';
 import { Menu } from '../Menu';
 import { ModalHeading } from '../ModalHeading';
 import type { InternalDocSearchHit } from '../types';
@@ -155,13 +147,6 @@ export function AskAiSearchBox({
         askAiHandled = true;
       }
 
-      // Trigger Ask AI with current query on cmd/ctrl+Enter
-      if (props.state.query && props.state.query !== '' && (e.metaKey || e.ctrlKey) && e.key === 'Enter') {
-        props.onAskAgain(props.state.query);
-
-        askAiHandled = true;
-      }
-
       if (askAiHandled) {
         e.preventDefault();
         e.stopPropagation();
@@ -201,9 +186,6 @@ export function AskAiSearchBox({
     onAskAiToggle(false);
   }, [askAiState, isThreadDepthError, onAskAiToggle, setAskAiState, props]);
 
-  const { actionKeyAltText, actionKeyLabel } = usePlatformKeys();
-  const shortcut = `${actionKeyAltText}+Enter`;
-
   const leadingElement = props.isAskAiActive ? (
     <button
       type="button"
@@ -219,19 +201,6 @@ export function AskAiSearchBox({
   const inputOverlay = heading ? <ModalHeading heading={heading} shimmer={isAskAiStreaming} /> : null;
   const actionsBeforeClose = (
     <>
-      {props.state.query && (
-        <button
-          type="button"
-          className="DocSearch-Actions-Ask-AI"
-          aria-label={`Ask AI (${shortcut})`}
-          aria-keyshortcuts={shortcut}
-          title={`${actionKeyLabel}+Enter`}
-          onClick={() => props.onAskAgain(props.state.query)}
-        >
-          <SparklesIcon /> Ask AI
-        </button>
-      )}
-
       {isAskAiStreaming && (
         <>
           <button

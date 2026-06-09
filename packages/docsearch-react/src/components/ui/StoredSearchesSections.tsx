@@ -25,7 +25,7 @@ export function StoredSearchesSections({ translations = {}, ...props }: StoredSe
     saveRecentSearchButtonTitle = 'Pin this search',
     removeRecentSearchButtonTitle = 'Remove this search from history',
     favoriteSearchesTitle = 'Pinned',
-    removeFavoriteSearchButtonTitle = 'Remove this search from pinned searches',
+    removeFavoriteSearchButtonTitle = 'Remove this saved search',
   } = translations;
   const favoriteSearches = getCollection(props.state, 'favoriteSearches');
   const recentSearchesCollection = getCollection(props.state, 'recentSearches');
@@ -78,7 +78,7 @@ export function StoredSearchesSections({ translations = {}, ...props }: StoredSe
             <>
               <div className="DocSearch-Hit-action">
                 <button
-                  className="DocSearch-Hit-action-button"
+                  className="DocSearch-Hit-action-button DocSearch-Hit-action-button--pin"
                   title={saveRecentSearchButtonTitle}
                   type="submit"
                   onClick={(event) => {

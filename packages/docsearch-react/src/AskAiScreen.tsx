@@ -373,6 +373,8 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
         </div>
       )}
 
+      <AskAiScreenDisclaimer disclaimerText={disclaimerText} />
+
       <div className="DocSearch-AskAiScreen-Body">
         <div className="DocSearch-AskAiScreen-ExchangesList">
           {exchanges
@@ -395,8 +397,6 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
             ))}
         </div>
       </div>
-
-      <AskAiScreenDisclaimer disclaimerText={disclaimerText} />
     </div>
   );
 }

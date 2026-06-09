@@ -126,7 +126,7 @@ describe('start screen components', () => {
     fireEvent.click(screen.getByTitle('Remove this search from history'));
     expect(props.recentSearches.remove).toHaveBeenCalledWith(recentHit);
 
-    fireEvent.click(screen.getByTitle('Remove this search from pinned searches'));
+    fireEvent.click(screen.getByTitle('Remove this saved search'));
     expect(props.favoriteSearches.remove).toHaveBeenCalledWith(favoriteHit);
     expect(props.refresh).toHaveBeenCalledTimes(3);
   });

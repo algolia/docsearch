@@ -5,6 +5,8 @@ import type { AIMessage } from '../types/AskiAi';
 
 import { SOURCE_IDS } from './collections';
 
+const MAX_RECENT_CONVERSATIONS_DISPLAYED = 3;
+
 export function buildRecentConversationSources({
   conversations,
   disableUserPersonalization,
@@ -23,7 +25,10 @@ export function buildRecentConversationSources({
         if (disableUserPersonalization) {
           return [];
         }
-        return conversations.getAll() as unknown as InternalDocSearchHit[];
+        return (conversations.getAll() as unknown as InternalDocSearchHit[]).slice(
+          0,
+          MAX_RECENT_CONVERSATIONS_DISPLAYED,
+        );
       },
       onSelect({ item }): void {
         if (item.messages) {

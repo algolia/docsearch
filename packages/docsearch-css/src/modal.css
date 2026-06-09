@@ -203,6 +203,11 @@
   overflow-y: hidden; /* js toggles to auto when exceeding max */
 }
 
+.DocSearch-Modal-heading {
+  align-items: center;
+  display: inline-flex;
+}
+
 .DocSearch-Input::placeholder {
   color: var(--docsearch-secondary-text-color);
   opacity: 1; /* Firefox */
@@ -223,41 +228,6 @@
   justify-content: flex-end;
   padding: 0 2px;
   gap: 8px;
-}
-
-.DocSearch-Actions-Ask-AI {
-  border: 1px solid var(--docsearch-subtle-color);
-  background-color: var(--docsearch-hit-background);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding-inline: 0.5rem;
-  user-select: none;
-  height: 1.5rem;
-  border-radius: 0.25rem;
-  color: var(--docsearch-text-color);
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 400;
-  white-space: nowrap;
-  cursor: pointer;
-  outline: none;
-}
-
-.DocSearch-Actions-Ask-AI:hover,
-.DocSearch-Actions-Ask-AI:focus {
-  background-color: var(--docsearch-subtle-color);
-}
-
-.DocSearch-Actions-Ask-AI svg {
-  color: var(--docsearch-icon-color);
-  inline-size: 1rem;
-  block-size: 1rem;
-}
-
-.DocSearch-Actions-Ask-AI:hover svg,
-.DocSearch-Actions-Ask-AI:focus svg {
-  color: var(--docsearch-highlight-color);
 }
 
 .DocSearch-Divider {
@@ -611,6 +581,16 @@
   width: 18px;
 }
 
+/* Keep the circular button footprint while rendering a smaller pin icon */
+.DocSearch-Hit-action-button--pin {
+  padding: 4px;
+}
+
+.DocSearch-Hit-action-button--pin svg {
+  height: 14px;
+  width: 14px;
+}
+
 .DocSearch-Hit-action + .DocSearch-Hit-action {
   margin-inline-start: 6px;
 }
@@ -939,7 +919,7 @@ assistive tech users */
   display: flex;
   font-size: 0.6em;
   font-weight: 300;
-  padding-block: 1em 0.5em;
+  padding-block: 0.5em 1em;
   padding-inline: 0;
   text-align: center;
   margin: 0;
@@ -970,11 +950,10 @@ assistive tech users */
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 1em;
+  gap: 0.75em;
   font-size: 0.8em;
-  margin-block-end: 8px;
   background: var(--docsearch-hit-background);
-  padding: 24px;
+  padding: 16px;
   color: var(--docsearch-text-color);
   border-radius: 4px;
   align-self: flex-start;
@@ -1195,6 +1174,7 @@ assistive tech users */
 
 .DocSearch-Feedback-Panel-Cancel {
   background: var(--docsearch-modal-background);
+  color: var(--docsearch-text-color);
 }
 
 .DocSearch-Feedback-Panel-Cancel:hover {
@@ -1396,7 +1376,7 @@ assistive tech users */
 }
 
 .DocSearch-AskAiScreen-ExchangesList {
-  gap: 24px;
+  gap: 12px;
   margin: 8px 0;
   display: flex;
   flex-direction: column;
