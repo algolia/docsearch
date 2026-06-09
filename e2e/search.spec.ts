@@ -137,15 +137,15 @@ test.describe('Recent and Favorites', () => {
     await expect(docSearch.hits).not.toBeVisible();
   });
 
-  test('Recent search can be favorited', async ({ page }) => {
+  test('Recent search can be pinned', async ({ page }) => {
     await page.locator('#docsearch-recentSearches-item-0').locator('[title="Pin this search"]').click();
-    await expect(page.getByText('Favorite')).toBeVisible();
+    await expect(page.getByText('Pinned')).toBeVisible();
     await expect(page.locator('#docsearch-favoriteSearches-item-0')).toBeVisible();
   });
 
-  test('Favorite can be deleted', async ({ docSearch, page }) => {
+  test('Pinned can be deleted', async ({ docSearch, page }) => {
     await page.locator('#docsearch-recentSearches-item-0').locator('[title="Pin this search"]').click();
-    await expect(page.getByText('Favorite')).toBeVisible();
+    await expect(page.getByText('Pinned')).toBeVisible();
     await page
       .locator('#docsearch-favoriteSearches-item-0')
       .locator('[title="Remove this search from favorites"]')
