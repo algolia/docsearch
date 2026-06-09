@@ -148,7 +148,7 @@ test.describe('Recent and Favorites', () => {
     await expect(page.getByText('Pinned')).toBeVisible();
     await page
       .locator('#docsearch-favoriteSearches-item-0')
-      .locator('[title="Remove this search from favorites"]')
+      .locator('[title="Remove this search from pinned searches"]')
       .click();
     await expect(docSearch.hits).not.toBeVisible();
   });
