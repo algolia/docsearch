@@ -2,6 +2,8 @@
 import { DocSearchAI } from '@docsearch/react';
 import type { JSX } from 'react';
 
+import type { DemoTheme } from '../App';
+
 // this type matches the structure of the provided example hit
 /* type _DocSearchCustomHit = {
   path: string;
@@ -19,7 +21,7 @@ import type { JSX } from 'react';
   _highlightResult: any;
 }; */
 
-export default function WTransformItems(): JSX.Element {
+export default function WTransformItems({ theme }: { theme: DemoTheme }): JSX.Element {
   return (
     <DocSearchAI
       indexName="crawler_doc"
@@ -56,6 +58,7 @@ export default function WTransformItems(): JSX.Element {
         }));
       }}
       translations={{ button: { buttonText: 'Search with transformItems' } }}
+      theme={theme}
     />
   );
 }

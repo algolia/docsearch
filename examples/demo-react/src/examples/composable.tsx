@@ -3,9 +3,11 @@ import { DocSearch } from '@docsearch/core';
 import { DocSearchButton, DocSearchAskAiModal } from '@docsearch/modal';
 import { type JSX } from 'react';
 
-export default function Composable(): JSX.Element {
+import type { DemoTheme } from '../App';
+
+export default function Composable({ theme }: { theme: DemoTheme }): JSX.Element {
   return (
-    <DocSearch>
+    <DocSearch theme={theme}>
       <DocSearchButton translations={{ buttonText: 'Composable API' }} />
       <DocSearchAskAiModal
         indexName="docsearch"

@@ -2,6 +2,8 @@
 import { DocSearch } from '@docsearch/react';
 import type { JSX } from 'react';
 
+import type { DemoTheme } from '../App';
+
 function CustomHit({ hit }: { hit: any }): JSX.Element {
   return (
     <a
@@ -111,7 +113,7 @@ function CustomHit({ hit }: { hit: any }): JSX.Element {
   );
 }
 
-export default function WHitComponent(): JSX.Element {
+export default function WHitComponent({ theme }: { theme: DemoTheme }): JSX.Element {
   return (
     <DocSearch
       indexName="docsearch"
@@ -120,6 +122,7 @@ export default function WHitComponent(): JSX.Element {
       insights={true}
       translations={{ button: { buttonText: 'Search with custom hits' } }}
       hitComponent={CustomHit}
+      theme={theme}
     />
   );
 }

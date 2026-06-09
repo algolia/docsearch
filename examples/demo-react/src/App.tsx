@@ -1,7 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { version } from '@docsearch/react';
 import { DocSearchSidepanel } from '@docsearch/react/sidepanel';
-import type { JSX } from 'react';
+import { useState, type JSX } from 'react';
 
 import './App.css';
 import '@docsearch/css/dist/style.css';
@@ -17,84 +17,96 @@ import MultiIndex from './examples/multi-index';
 import WHitComponent from './examples/w-hit-component';
 import WTransformItems from './examples/w-hit-transformItems';
 import WResultsFooter from './examples/w-results-footer';
+import { MoonIcon, SunIcon } from './icons';
+
+export type DemoTheme = 'dark' | 'light';
 
 function App(): JSX.Element {
+  const [theme, setTheme] = useState<DemoTheme>('light');
+
+  const toggleTheme = (): void => {
+    setTheme((currentTheme) => (currentTheme === 'light' ? 'dark' : 'light'));
+  };
+
   return (
-    <div className="body-container">
+    <div className="body-container" data-theme={theme}>
       <div className="app-container">
         <header className="app-header">
           <h1 className="app-title">DocSearch v{version}</h1>
           <p className="app-subtitle">Experience the power of intelligent documentation search</p>
+          <button className="theme-switcher" type="button" onClick={toggleTheme}>
+            {theme === 'light' ? <MoonIcon /> : <SunIcon />}
+          </button>
         </header>
 
         <main>
           <section className="demo-section">
             <p className="section-description">default</p>
             <div className="default-wrapper">
-              <Default />
+              <Default theme={theme} />
             </div>
           </section>
 
           <section className="demo-section">
             <p className="section-description">basic search functionality</p>
             <div className="search-wrapper">
-              <Basic />
+              <Basic theme={theme} />
             </div>
           </section>
 
           <section className="demo-section">
             <p className="section-description">search with ask ai integration</p>
             <div className="search-wrapper">
-              <BasicAskAI />
+              <BasicAskAI theme={theme} />
             </div>
           </section>
 
           <section className="demo-section">
             <p className="section-description">custom hit rendering</p>
             <div className="search-wrapper">
-              <WHitComponent />
+              <WHitComponent theme={theme} />
             </div>
           </section>
 
           <section className="demo-section">
             <p className="section-description">transform items before rendering</p>
             <div className="search-wrapper">
-              <WTransformItems />
+              <WTransformItems theme={theme} />
             </div>
           </section>
 
           <section className="demo-section">
             <p className="section-description">multi index search</p>
             <div className="search-wrapper">
-              <MultiIndex />
+              <MultiIndex theme={theme} />
             </div>
           </section>
 
           <section className="demo-section">
             <p className="section-description">composable</p>
             <div className="search-wrapper">
-              <Composable />
+              <Composable theme={theme} />
             </div>
           </section>
 
           <section className="demo-section">
             <p className="section-description">dynamically imported modal</p>
             <div className="search-wrapper">
-              <DynamicImportModal />
+              <DynamicImportModal theme={theme} />
             </div>
           </section>
 
           <section className="demo-section">
             <p className="section-description">results footer component</p>
             <div className="search-wrapper">
-              <WResultsFooter />
+              <WResultsFooter theme={theme} />
             </div>
           </section>
 
           <section className="demo-section">
             <p className="section-description">sidepanel hybrid</p>
             <div className="search-wrapper">
-              <BasicHybrid />
+              <BasicHybrid theme={theme} />
             </div>
           </section>
         </main>
@@ -108,6 +120,7 @@ function App(): JSX.Element {
         panel={{
           suggestedQuestions: true,
         }}
+        theme={theme}
       />
     </div>
   );

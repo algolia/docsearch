@@ -6,11 +6,49 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.body-container {
+  --demo-background: radial-gradient(125% 125% at 50% 90%, #fff 40%, #7c3aed 100%);
+  --demo-border: rgba(255, 255, 255, 0.2);
+  --demo-card-background: #fff;
+  --demo-card-shadow: rgba(0, 0, 0, 0.1);
+  --demo-docsearch-button-background: #f7fafc;
+  --demo-docsearch-button-border: #e2e8f0;
+  --demo-docsearch-button-hover-border: #667eea;
+  --demo-docsearch-button-hover-shadow: rgba(102, 126, 234, 0.15);
+  --demo-docsearch-button-placeholder: #718096;
+  --demo-divider: #e2e8f0;
+  --demo-text-primary: #111;
+  --demo-text-secondary: #666;
+  --demo-theme-button-background: #fff;
+  --demo-theme-button-border: #d6d6e7;
+  --demo-theme-button-hover-border: #7c3aed;
+  min-height: 100vh;
+  background: var(--demo-background);
+  color: var(--demo-text-primary);
+}
+
+.body-container[data-theme='dark'] {
+  --demo-background: radial-gradient(125% 125% at 50% 90%, #161025 40%, #4c1d95 100%);
+  --demo-border: rgba(255, 255, 255, 0.1);
+  --demo-card-background: #1f1b2e;
+  --demo-card-shadow: rgba(0, 0, 0, 0.35);
+  --demo-docsearch-button-background: #15111f;
+  --demo-docsearch-button-border: #3b3550;
+  --demo-docsearch-button-hover-border: #a78bfa;
+  --demo-docsearch-button-hover-shadow: rgba(167, 139, 250, 0.2);
+  --demo-docsearch-button-placeholder: #c4b5fd;
+  --demo-divider: #3b3550;
+  --demo-text-primary: #f8f7ff;
+  --demo-text-secondary: #c9c3dc;
+  --demo-theme-button-background: #2d2540;
+  --demo-theme-button-border: #5b4a78;
+  --demo-theme-button-hover-border: #c4b5fd;
+}
+
 body {
   font-family: 'TikTok Sans', 'sans-serif';
   min-height: 100vh;
-  background: radial-gradient(125% 125% at 50% 90%, #fff 40%, #7c3aed 100%);
-  color: #333;
   line-height: 1.6;
 }
 
@@ -34,15 +72,41 @@ body {
 .app-title {
   font-size: 2rem;
   font-weight: 700;
-  color: black;
+  color: var(--demo-text-primary);
   margin-block-end: 0;
 }
 
 .app-subtitle {
   font-size: 1rem;
-  color: black;
-  color: #666;
+  color: var(--demo-text-secondary);
   font-weight: 400;
+}
+
+.theme-switcher {
+  margin-block-start: 1rem;
+  border: 1px solid var(--demo-theme-button-border);
+  border-radius: 100vw;
+  background: var(--demo-theme-button-background);
+  color: var(--demo-text-primary);
+  cursor: pointer;
+  font: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
+  position: absolute;
+  top: 2rem;
+  right: 4rem;
+}
+
+.theme-switcher svg {
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+}
+
+.theme-switcher:hover {
+  border-color: var(--demo-theme-button-hover-border);
 }
 
 main {
@@ -54,17 +118,17 @@ main {
 
 /* demo section styles */
 .demo-section {
-  background: white;
+  background: var(--demo-card-background);
   border-radius: 16px;
   padding: 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px var(--demo-card-shadow);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--demo-border);
 }
 
 .section-description {
   text-align: center;
-  color: #666;
+  color: var(--demo-text-secondary);
   font-family: 'Source Code Pro', monospace;
   font-size: 0.9rem;
   margin-block-end: 1rem;
@@ -97,7 +161,7 @@ main {
 .divider {
   border: none;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+  background: linear-gradient(90deg, transparent, var(--demo-divider), transparent);
   margin: 0;
 }
 
@@ -122,8 +186,8 @@ main {
 /* docsearch button customization */
 .search-wrapper .DocSearch-Button {
   margin: 0 !important;
-  background: #f7fafc !important;
-  border: 2px solid #e2e8f0 !important;
+  background: var(--demo-docsearch-button-background) !important;
+  border: 2px solid var(--demo-docsearch-button-border) !important;
   border-radius: 12px !important;
   padding: 12px 16px !important;
   font-size: 16px !important;
@@ -132,13 +196,13 @@ main {
 }
 
 .search-wrapper .DocSearch-Button:hover {
-  border-color: #667eea !important;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15) !important;
+  border-color: var(--demo-docsearch-button-hover-border) !important;
+  box-shadow: 0 4px 12px var(--demo-docsearch-button-hover-shadow) !important;
   transform: translateY(-1px) !important;
 }
 
 .search-wrapper .DocSearch-Button-Placeholder {
-  color: #718096 !important;
+  color: var(--demo-docsearch-button-placeholder) !important;
 }
 
 /* add subtle animations */

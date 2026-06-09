@@ -3,9 +3,11 @@ import { DocSearch } from '@docsearch/core';
 import { SidepanelButton, Sidepanel } from '@docsearch/sidepanel';
 import type { JSX } from 'react';
 
-export default function SidepanelExample(): JSX.Element {
+import type { DemoTheme } from '../App';
+
+export default function SidepanelExample({ theme }: { theme: DemoTheme }): JSX.Element {
   return (
-    <DocSearch>
+    <DocSearch theme={theme}>
       <SidepanelButton variant="inline" />
       <Sidepanel
         indexName="docsearch"

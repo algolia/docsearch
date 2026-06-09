@@ -4,6 +4,8 @@ import { DocSearch } from '@docsearch/react';
 import type { InternalDocSearchHit } from '@docsearch/react';
 import type { JSX } from 'react';
 
+import type { DemoTheme } from '../App';
+
 function ResultsFooterComponent({ state }: { state: AutocompleteState<InternalDocSearchHit> }): JSX.Element {
   // Using JSX templates
   return (
@@ -15,7 +17,7 @@ function ResultsFooterComponent({ state }: { state: AutocompleteState<InternalDo
   );
 }
 
-export default function WResultsFooter(): JSX.Element {
+export default function WResultsFooter({ theme }: { theme: DemoTheme }): JSX.Element {
   return (
     <DocSearch
       indexName="docsearch"
@@ -24,6 +26,7 @@ export default function WResultsFooter(): JSX.Element {
       insights={true}
       resultsFooterComponent={ResultsFooterComponent}
       translations={{ button: { buttonText: 'Search with results footer' } }}
+      theme={theme}
     />
   );
 }
