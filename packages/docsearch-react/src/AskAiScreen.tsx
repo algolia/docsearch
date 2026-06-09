@@ -4,8 +4,9 @@ import React, { type JSX, useMemo } from 'react';
 import { AggregatedSearchBlock } from './AggregatedSearchBlock';
 import type { AskAiScreenStateProps } from './AskAiScreenState';
 import { FeedbackActions } from './components/FeedbackActions';
+import { SourcesPanel } from './components/SourcesPanel';
 import { ToolCall, type ToolCallTranslations } from './components/ToolCall';
-import { AlertIcon, LoadingIcon } from './icons';
+import { AlertIcon, LoadingIcon, SparklesIcon } from './icons';
 import { MemoizedMarkdown } from './MemoizedMarkdown';
 import type { StoredSearchPlugin } from './stored-searches';
 import type { InternalDocSearchHit, OnAskAiFeedback, StoredAskAiState } from './types';
@@ -128,8 +129,12 @@ export interface Exchange {
   assistantMessage: AIMessage | null;
 }
 
-function AskAiScreenHeader({ disclaimerText }: AskAiScreenHeaderProps): JSX.Element {
-  return <p className="DocSearch-AskAiScreen-Disclaimer">{disclaimerText}</p>;
+function AskAiScreenDisclaimer({ disclaimerText }: AskAiScreenHeaderProps): JSX.Element {
+  return (
+    <p className="DocSearch-AskAiScreen-Disclaimer">
+      <SparklesIcon /> {disclaimerText}
+    </p>
+  );
 }
 
 interface AskAiExchangeCardProps {
@@ -159,7 +164,11 @@ function AskAiExchangeCard({
 }: AskAiExchangeCardProps): JSX.Element {
   const { userMessage, assistantMessage } = exchange;
 
-  const { stoppedStreamingText = 'You stopped this response', errorTitleText = 'Chat error' } = translations;
+  const {
+    stoppedStreamingText = 'You stopped this response',
+    errorTitleText = 'Chat error',
+    relatedSourcesText,
+  } = translations;
 
   const toolCallTranslations = useMemo(() => toToolCallTranslations(translations), [translations]);
 
@@ -209,8 +218,10 @@ function AskAiExchangeCard({
               </div>
             )}
             {isThinking && (
-              <div className="DocSearch-AskAiScreen-MessageContent-Reasoning">
+              <div className="DocSearch-AskAiScreen-MessageContent-Thinking">
                 <span className="shimmer">{translations.thinkingText || 'Thinking...'}</span>
+                <span className="DocSearch-AskAi-Thinking-Skeleton shimmer" />
+                <span className="DocSearch-AskAi-Thinking-Skeleton DocSearch-AskAi-Thinking-Skeleton--short shimmer" />
               </div>
             )}
             {displayParts.map((part, idx) => {
@@ -281,6 +292,7 @@ function AskAiExchangeCard({
           {wasStopped && <p className="DocSearck-AskAiScreen-MessageContent-Stopped">{stoppedStreamingText}</p>}
         </div>
         <div className="DocSearch-AskAiScreen-Answer-Footer">
+          <SourcesPanel links={urlsToDisplay} titleText={relatedSourcesText} />
           <FeedbackActions
             id={messageId}
             showActions={showActions}
@@ -291,46 +303,13 @@ function AskAiExchangeCard({
           />
         </div>
       </div>
-
-      {/* Sources for this exchange */}
-      {urlsToDisplay.length > 0 ? (
-        <AskAiSourcesPanel urlsToDisplay={urlsToDisplay} relatedSourcesText={translations.relatedSourcesText} />
-      ) : null}
-    </div>
-  );
-}
-
-interface AskAiSourcesPanelProps {
-  urlsToDisplay: Array<{ url: string; title?: string }>;
-  relatedSourcesText?: string;
-}
-
-export function AskAiSourcesPanel({ urlsToDisplay, relatedSourcesText }: AskAiSourcesPanelProps): JSX.Element {
-  return (
-    <div className="DocSearch-AskAiScreen-RelatedSources">
-      <p className="DocSearch-AskAiScreen-RelatedSources-Title">{relatedSourcesText || 'Related sources'}</p>
-      <div className="DocSearch-AskAiScreen-RelatedSources-List">
-        {urlsToDisplay.length > 0 &&
-          urlsToDisplay.map((link) => (
-            <a
-              key={link.url}
-              href={link.url}
-              className="DocSearch-AskAiScreen-RelatedSources-Item-Link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <RelatedSourceIcon />
-              <span>{link.title || link.url}</span>
-            </a>
-          ))}
-      </div>
     </div>
   );
 }
 
 export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): JSX.Element | null {
   const {
-    disclaimerText = 'Answers are generated with AI which can make mistakes. Verify responses.',
+    disclaimerText = 'Answers are generated with AI which can make mistakes.',
     threadDepthExceededMessage = 'This conversation is now closed to keep responses accurate.',
     startNewConversationButtonText = 'Start a new conversation',
   } = translations;
@@ -394,8 +373,6 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
         </div>
       )}
 
-      <AskAiScreenHeader disclaimerText={disclaimerText} />
-
       <div className="DocSearch-AskAiScreen-Body">
         <div className="DocSearch-AskAiScreen-ExchangesList">
           {exchanges
@@ -418,26 +395,8 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
             ))}
         </div>
       </div>
-    </div>
-  );
-}
 
-function RelatedSourceIcon(): JSX.Element {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="4" x2="20" y1="9" y2="9" />
-      <line x1="4" x2="20" y1="15" y2="15" />
-      <line x1="10" x2="8" y1="3" y2="21" />
-      <line x1="16" x2="14" y1="3" y2="21" />
-    </svg>
+      <AskAiScreenDisclaimer disclaimerText={disclaimerText} />
+    </div>
   );
 }

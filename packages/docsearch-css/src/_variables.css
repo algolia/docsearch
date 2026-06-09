@@ -4,12 +4,12 @@
   --docsearch-primary-color: rgb(0, 61, 255);
   --docsearch-soft-primary-color: rgba(0, 61, 255, 0.1);
   --docsearch-subtle-color: rgb(214, 214, 231);
-  --docsearch-text-color: #36395a;
+  --docsearch-text-color: rgba(35, 38, 59, 1);
   --docsearch-error-color: #ef5350;
   --docsearch-success-color: #e8f5e9;
   --docsearch-secondary-text-color: rgba(90, 94, 154, 1);
   --docsearch-background-color: rgb(245, 245, 250);
-  --docsearch-spacing: 12px;
+  --docsearch-spacing: 1rem;
   --docsearch-icon-stroke-width: 1.4;
   --docsearch-focus-color: rgb(0, 95, 204);
   --docsearch-highlight-color: rgb(0, 61, 255);
@@ -27,8 +27,9 @@
   /* modal */
   --docsearch-modal-width: 800px;
   --docsearch-modal-height: 600px;
+  --docsearch-modal-radius: 12px;
   --docsearch-modal-variable-height: 60dvh;
-  --docsearch-modal-background: rgb(245, 246, 247);
+  --docsearch-modal-background: rgba(255, 255, 255, 1);
   --docsearch-modal-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px,
     rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,
     rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;

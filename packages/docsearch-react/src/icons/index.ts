@@ -20,3 +20,6 @@ export * from './FolderIcon';
 export * from './EditIcon';
 export * from './ToolIcon';
 export * from './MemoryIcon';
+export * from './MessageIcon';
+export * from './PinIcon';
+export * from './BackIcon';

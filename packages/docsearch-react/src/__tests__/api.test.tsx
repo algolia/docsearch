@@ -299,7 +299,11 @@ describe('api', () => {
       });
 
       await act(async () => {
-        fireEvent.click(await screen.findByText(/Ask AI to help:/));
+        fireEvent.click(
+          await screen.findByRole('button', {
+            name: /Ask AI/,
+          }),
+        );
       });
 
       expect(document.querySelector('.DocSearch-AskAiScreen')).toBeInTheDocument();

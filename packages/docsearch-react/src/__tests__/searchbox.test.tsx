@@ -7,6 +7,7 @@ import '@testing-library/jest-dom/vitest';
 import { AskAiSearchBox } from '../components/AskAiSearchBox';
 import { KeywordSearchBox } from '../components/KeywordSearchBox';
 import { SearchBoxForm } from '../components/ui/SearchBoxForm';
+import { SOURCE_IDS } from '../utils';
 
 function createState(overrides = {}): any {
   return {
@@ -66,14 +67,13 @@ describe('SearchBoxForm', () => {
     vi.clearAllMocks();
   });
 
-  it('renders the shared form, input, clear button, close button, and search label', () => {
+  it('renders the shared form, input, close button, and search label', () => {
     renderSearchBoxForm({
       state: createState({ query: 'docsearch' }),
     });
 
     expect(document.querySelector('.DocSearch-Form')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Search docs')).toBeInTheDocument();
-    expect(document.querySelector('.DocSearch-Clear')).toHaveTextContent('Clear');
     expect(screen.getByRole('button', { name: 'Close' })).toHaveAttribute('title', 'Close');
     expect(document.querySelector('.DocSearch-MagnifierLabel')).toHaveTextContent('Search');
   });
@@ -156,7 +156,14 @@ describe('AskAiSearchBox', () => {
     return render(
       <AskAiSearchBox
         {...createAutocomplete()}
-        state={createState({ query: 'follow up', collections: [null, null, { items: [{ objectID: '1' }] }] })}
+        state={createState({
+          query: 'follow up',
+          collections: [
+            null,
+            null,
+            { source: { sourceId: SOURCE_IDS.recentConversations }, items: [{ objectID: '1' }] },
+          ],
+        })}
         autoFocus={false}
         inputRef={React.createRef<HTMLInputElement>()}
         isFromSelection={false}

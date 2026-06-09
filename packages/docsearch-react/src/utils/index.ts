@@ -1,3 +1,4 @@
+export * from './collections';
 export * from './groupBy';
 export * from './identity';
 export * from './isModifierEvent';

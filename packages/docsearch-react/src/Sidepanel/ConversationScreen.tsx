@@ -2,8 +2,9 @@ import type { UseChatHelpers } from '@ai-sdk/react';
 import type { JSX } from 'react';
 import React, { memo, useMemo } from 'react';
 
-import { AskAiSourcesPanel, type Exchange } from '../AskAiScreen';
+import { type Exchange } from '../AskAiScreen';
 import { FeedbackActions } from '../components/FeedbackActions';
+import { SourcesPanel } from '../components/SourcesPanel';
 import { ToolCall, type ToolCallTranslations } from '../components/ToolCall';
 import { AlertIcon, LoadingIcon } from '../icons';
 import { MemoizedMarkdown } from '../MemoizedMarkdown';
@@ -137,7 +138,7 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
       reasoningText = 'Reasoning...',
       thinkingText = 'Thinking...',
       searchingText = 'Searching...',
-      relatedSourcesText = 'Related sources',
+      relatedSourcesText,
       stoppedStreamingText = 'You stopped this response',
       preToolCallText = 'Searching...',
       toolCallResultText = 'Searched for',
@@ -260,6 +261,7 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
           </div>
 
           <div className="DocSearch-AskAiScreen-Answer-Footer">
+            <SourcesPanel links={urlsToDisplay} titleText={relatedSourcesText} />
             <FeedbackActions
               isSidepanel={true}
               id={messageId}
@@ -271,10 +273,6 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
             />
           </div>
         </div>
-
-        {urlsToDisplay.length > 0 ? (
-          <AskAiSourcesPanel urlsToDisplay={urlsToDisplay} relatedSourcesText={relatedSourcesText} />
-        ) : null}
       </div>
     );
   },

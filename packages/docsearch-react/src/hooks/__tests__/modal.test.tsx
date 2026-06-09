@@ -4,10 +4,10 @@ import { describe, it, expect, afterEach, vi } from 'vitest';
 
 import '@testing-library/jest-dom/vitest';
 
-import { MAX_QUERY_SIZE } from '../constants';
-import { useInitialModalQuery } from '../hooks/useInitialModalQuery';
-import { useModalRefs } from '../hooks/useModalRefs';
-import { useRefreshOnInitialQuery } from '../hooks/useRefreshOnInitialQuery';
+import { MAX_QUERY_SIZE } from '../../constants';
+import { useInitialModalQuery } from '../useInitialModalQuery';
+import { useModalRefs } from '../useModalRefs';
+import { useRefreshOnInitialQuery } from '../useRefreshOnInitialQuery';
 
 describe('modal hooks', () => {
   afterEach(() => {

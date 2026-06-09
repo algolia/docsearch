@@ -33,7 +33,7 @@ import { useSearchClient } from './useSearchClient';
 import { useSuggestedQuestions } from './useSuggestedQuestions';
 import { identity, isModifierEvent, noop, scrollTo as scrollToUtils } from './utils';
 import { buildDummyAskAiHit, isThreadDepthError, EMPTY_TOOLS } from './utils/ai';
-import { buildAskAiActionSources, buildRecentConversationSources } from './utils/createAskAiSources';
+import { buildRecentConversationSources } from './utils/createAskAiSources';
 import { buildNoQuerySources, buildQuerySources, type BuildQuerySourcesState } from './utils/createDocSearchSources';
 import { normalizeDocSearchIndexes } from './utils/normalizeDocSearchIndexes';
 
@@ -311,7 +311,7 @@ export function DocSearchAskAiModal({
                 onAskAiToggle,
               })
             : [];
-          return [...noQuerySources, ...recentConversationSource];
+          return [...recentConversationSource, ...noQuerySources];
         }
 
         const querySourcesState: BuildQuerySourcesState = {
@@ -335,10 +335,8 @@ export function DocSearchAskAiModal({
           onClose,
         });
 
-        const askAiSource = canHandleAskAi ? buildAskAiActionSources({ query, handleSelectAskAiQuestion }) : [];
-        // Combine Algolia results (once resolved) with the Ask AI source
         return algoliaSourcesPromise.then((algoliaSources) => {
-          return [...askAiSource, ...algoliaSources];
+          return [...algoliaSources];
         });
       },
     });

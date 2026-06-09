@@ -9,6 +9,7 @@ import { KeywordStartScreen } from '../components/KeywordStartScreen';
 import { RecentConversationsResults } from '../components/ui/RecentConversationsResults';
 import { StoredSearchesSections } from '../components/ui/StoredSearchesSections';
 import type { InternalDocSearchHit, StoredAskAiState } from '../types';
+import { SOURCE_IDS } from '../utils';
 
 afterEach(() => {
   cleanup();
@@ -109,8 +110,8 @@ describe('start screen components', () => {
     const recentHit = createHit('recent', 'Recent result');
     const favoriteHit = createHit('favorite', 'Favorite result');
     const props = createProps([
-      createCollection('recentSearches', [recentHit]),
-      createCollection('favoriteSearches', [favoriteHit]),
+      createCollection(SOURCE_IDS.recentSearches, [recentHit]),
+      createCollection(SOURCE_IDS.favoriteSearches, [favoriteHit]),
     ]);
 
     render(<StoredSearchesSections {...props} />);
@@ -118,14 +119,14 @@ describe('start screen components', () => {
     expect(screen.getByText('Recent result')).toBeInTheDocument();
     expect(screen.getByText('Favorite result')).toBeInTheDocument();
 
-    fireEvent.click(screen.getByTitle('Save this search'));
+    fireEvent.click(screen.getByTitle('Pin this search'));
     expect(props.favoriteSearches.add).toHaveBeenCalledWith(recentHit);
     expect(props.recentSearches.remove).toHaveBeenCalledWith(recentHit);
 
     fireEvent.click(screen.getByTitle('Remove this search from history'));
     expect(props.recentSearches.remove).toHaveBeenCalledWith(recentHit);
 
-    fireEvent.click(screen.getByTitle('Remove this search from favorites'));
+    fireEvent.click(screen.getByTitle('Remove this search from pinned searches'));
     expect(props.favoriteSearches.remove).toHaveBeenCalledWith(favoriteHit);
     expect(props.refresh).toHaveBeenCalledTimes(3);
   });
@@ -133,9 +134,9 @@ describe('start screen components', () => {
   it('renders recent conversations and removes them', () => {
     const conversation = createHit('conversation', 'Conversation result') as InternalDocSearchHit & StoredAskAiState;
     const props = createProps([
-      createCollection('recentSearches', []),
-      createCollection('favoriteSearches', []),
-      createCollection('recentConversations', [conversation]),
+      createCollection(SOURCE_IDS.recentSearches, []),
+      createCollection(SOURCE_IDS.favoriteSearches, []),
+      createCollection(SOURCE_IDS.recentConversations, [conversation]),
     ]);
 
     render(<RecentConversationsResults {...props} />);
@@ -149,9 +150,9 @@ describe('start screen components', () => {
 
   it('keeps the keyword start screen scoped to stored searches', () => {
     const props = createProps([
-      createCollection('recentSearches', []),
-      createCollection('favoriteSearches', []),
-      createCollection('recentConversations', [createHit('conversation', 'Conversation result')]),
+      createCollection(SOURCE_IDS.recentSearches, []),
+      createCollection(SOURCE_IDS.favoriteSearches, []),
+      createCollection(SOURCE_IDS.recentConversations, [createHit('conversation', 'Conversation result')]),
     ]);
 
     render(
@@ -169,9 +170,9 @@ describe('start screen components', () => {
 
   it('composes stored searches and recent conversations for Ask AI', () => {
     const props = createProps([
-      createCollection('recentSearches', []),
-      createCollection('favoriteSearches', []),
-      createCollection('recentConversations', [createHit('conversation', 'Conversation result')]),
+      createCollection(SOURCE_IDS.recentSearches, []),
+      createCollection(SOURCE_IDS.favoriteSearches, []),
+      createCollection(SOURCE_IDS.recentConversations, [createHit('conversation', 'Conversation result')]),
     ]);
 
     render(

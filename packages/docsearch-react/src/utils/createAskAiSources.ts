@@ -3,6 +3,8 @@ import type { AutocompleteSource } from '@algolia/autocomplete-core';
 import type { InternalDocSearchHit } from '../types';
 import type { AIMessage } from '../types/AskiAi';
 
+import { SOURCE_IDS } from './collections';
+
 export function buildRecentConversationSources({
   conversations,
   disableUserPersonalization,
@@ -16,7 +18,7 @@ export function buildRecentConversationSources({
 }): Array<AutocompleteSource<InternalDocSearchHit & { messages?: AIMessage[] }>> {
   return [
     {
-      sourceId: 'recentConversations',
+      sourceId: SOURCE_IDS.recentConversations,
       getItems(): InternalDocSearchHit[] {
         if (disableUserPersonalization) {
           return [];
@@ -62,7 +64,7 @@ export function buildAskAiActionSources({
 
   return [
     {
-      sourceId: 'askAI',
+      sourceId: SOURCE_IDS.askAI,
       getItems(): InternalDocSearchHit[] {
         return [
           {

@@ -2,12 +2,20 @@ import type { UseChatHelpers } from '@ai-sdk/react';
 import type { AutocompleteApi, AutocompleteState } from '@algolia/autocomplete-core';
 import React, { type JSX, type RefObject } from 'react';
 
-import { ConversationHistoryIcon, MoreVerticalIcon, NewConversationIcon, StopIcon } from '../icons';
-import { BackIcon } from '../icons/BackIcon';
+import { usePlatformKeys } from '../hooks/usePlatformKeys';
+import {
+  ConversationHistoryIcon,
+  MoreVerticalIcon,
+  NewConversationIcon,
+  StopIcon,
+  BackIcon,
+  SparklesIcon,
+} from '../icons';
 import { Menu } from '../Menu';
 import { ModalHeading } from '../ModalHeading';
 import type { InternalDocSearchHit } from '../types';
 import type { AIMessage, AskAiState } from '../types/AskiAi';
+import { getCollection } from '../utils';
 
 import { SearchBoxForm } from './ui/SearchBoxForm';
 
@@ -77,14 +85,14 @@ export function AskAiSearchBox({
   } = translations;
 
   const hasRecentConversations = React.useMemo(() => {
-    const askAiSource = props.state.collections[2];
+    const askAiSource = getCollection(props.state, 'recentConversations');
 
     if (!askAiSource) {
       return false;
     }
 
     return askAiSource.items.length > 0;
-  }, [props.state.collections]);
+  }, [props.state]);
 
   const baseInputProps = props.getInputProps({
     inputElement: props.inputRef.current!,
@@ -136,16 +144,30 @@ export function AskAiSearchBox({
   const inputProps = {
     enterKeyHint: props.isAskAiActive ? ('enter' as const) : ('search' as const),
     onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>): void => {
+      let askAiHandled = false;
       // block these up, down, enter listeners when Ask AI is active
       if (props.isAskAiActive && blockedKeys.has(e.key)) {
         // enter key asks another question
         if (e.key === 'Enter' && !isAskAiStreaming && props.state.query) {
           props.onAskAgain(props.state.query);
         }
+
+        askAiHandled = true;
+      }
+
+      // Trigger Ask AI with current query on cmd/ctrl+Enter
+      if (props.state.query && props.state.query !== '' && (e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+        props.onAskAgain(props.state.query);
+
+        askAiHandled = true;
+      }
+
+      if (askAiHandled) {
         e.preventDefault();
         e.stopPropagation();
         return;
       }
+
       origOnKeyDown?.(e);
     },
     onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -179,6 +201,9 @@ export function AskAiSearchBox({
     onAskAiToggle(false);
   }, [askAiState, isThreadDepthError, onAskAiToggle, setAskAiState, props]);
 
+  const { actionKeyAltText, actionKeyLabel } = usePlatformKeys();
+  const shortcut = `${actionKeyAltText}+Enter`;
+
   const leadingElement = props.isAskAiActive ? (
     <button
       type="button"
@@ -194,6 +219,19 @@ export function AskAiSearchBox({
   const inputOverlay = heading ? <ModalHeading heading={heading} shimmer={isAskAiStreaming} /> : null;
   const actionsBeforeClose = (
     <>
+      {props.state.query && (
+        <button
+          type="button"
+          className="DocSearch-Actions-Ask-AI"
+          aria-label={`Ask AI (${shortcut})`}
+          aria-keyshortcuts={shortcut}
+          title={`${actionKeyLabel}+Enter`}
+          onClick={() => props.onAskAgain(props.state.query)}
+        >
+          <SparklesIcon /> Ask AI
+        </button>
+      )}
+
       {isAskAiStreaming && (
         <>
           <button

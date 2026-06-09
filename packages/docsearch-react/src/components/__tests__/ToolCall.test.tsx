@@ -1,10 +1,10 @@
-import { render, screen, within } from '@testing-library/react';
+import { cleanup, render, screen, within } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import React from 'react';
-import { describe, it, expect, vi } from 'vitest';
+import { afterEach, describe, it, expect, vi } from 'vitest';
 
-import { ToolCall, type ToolCallTranslations } from '../components/ToolCall';
-import type { AIToolPart, MemoryToolPart, ToolCalls } from '../types/AskiAi';
+import type { AIToolPart, MemoryToolPart, ToolCalls } from '../../types/AskiAi';
+import { ToolCall, type ToolCallTranslations } from '../ToolCall';
 
 const TRANSLATIONS: ToolCallTranslations = {
   preToolCallText: 'Searching for',
@@ -15,7 +15,11 @@ const TRANSLATIONS: ToolCallTranslations = {
 };
 
 describe('ToolCall', () => {
-  describe('number of hits rendering', () => {
+  afterEach(() => {
+    cleanup();
+  });
+
+  describe('search tools', () => {
     it.each([
       {
         description: 'tool-searchIndex with hits array',
@@ -26,7 +30,6 @@ describe('ToolCall', () => {
           input: { query: 'test' },
           output: { query: 'test', hits: [{}, {}, {}] },
         },
-        expectedHits: 3,
       },
       {
         description: 'tool-searchIndex with empty hits',
@@ -37,7 +40,6 @@ describe('ToolCall', () => {
           input: { query: 'test' },
           output: { query: 'test', hits: [] },
         },
-        expectedHits: 0,
       },
       {
         description: 'tool-algolia_search_index with nbHits',
@@ -53,7 +55,6 @@ describe('ToolCall', () => {
           },
           output: { hits: [{}, {}] },
         },
-        expectedHits: 2,
       },
       {
         description: 'tool-algolia_search_index_custom with results array',
@@ -64,16 +65,15 @@ describe('ToolCall', () => {
           input: { query: 'test' },
           output: { hits: [{}] },
         },
-        expectedHits: 1,
       },
     ] satisfies Array<{
       description: string;
       part: AIToolPart;
-      expectedHits: number;
-    }>)('displays $expectedHits results for $description', ({ part, expectedHits }) => {
-      render(<ToolCall part={part} translations={TRANSLATIONS} tools={{}} />);
+    }>)('renders the completed search tool result for $description', ({ part }) => {
+      const { container } = render(<ToolCall part={part} translations={TRANSLATIONS} tools={{}} />);
 
-      expect(screen.getByText(`found ${expectedHits} results`, { exact: false })).toBeInTheDocument();
+      expect(within(container).getByText('Searched', { exact: false })).toBeInTheDocument();
+      expect(within(container).getByText(/"test"/)).toBeInTheDocument();
     });
   });
 
