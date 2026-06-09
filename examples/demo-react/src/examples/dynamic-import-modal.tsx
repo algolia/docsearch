@@ -78,11 +78,11 @@ function DocSearch({ theme }: { theme: DemoTheme }): JSX.Element {
       <DocSearchButton
         ref={searchButtonRef}
         translations={{ buttonText: 'Dynamic modal search' }}
+        theme={theme}
         onTouchStart={importDocSearchModalIfNeeded}
         onFocus={importDocSearchModalIfNeeded}
         onMouseOver={importDocSearchModalIfNeeded}
         onClick={openModal}
-        theme={theme}
       />
 
       {isOpen &&
@@ -99,9 +99,9 @@ function DocSearch({ theme }: { theme: DemoTheme }): JSX.Element {
             initialScrollY={window.scrollY}
             initialQuery={initialQuery}
             isAskAiActive={isAskAiActive}
+            theme={theme}
             onClose={closeModal}
             onAskAiToggle={toggleAskAi}
-            theme={theme}
           />,
           searchContainer.current,
         )}
