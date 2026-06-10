@@ -11,6 +11,7 @@ import { sanitizeUserInput } from './utils/sanitize';
 export type ResultsTranslations = Partial<{
   askAiPlaceholder: string;
   noResultsAskAiPlaceholder: string;
+  recentConversationTimestampFallback: string;
 }>;
 interface ResultsProps<TItem extends BaseItem>
   extends AutocompleteApi<TItem, React.FormEvent, React.MouseEvent, React.KeyboardEvent> {
@@ -102,9 +103,11 @@ function Result<TItem extends StoredDocSearchHit>({
   onItemClick,
   collection,
   hitComponent,
+  translations = {},
 }: ResultProps<TItem>): JSX.Element {
   const Hit = hitComponent!;
-  const storedDate = item.type === 'askAI' && item.hierarchy.lvl2 ? new Date(item.hierarchy.lvl2) : new Date();
+  const { recentConversationTimestampFallback = 'A while ago' } = translations;
+  const storedDate = item.type === 'askAI' && item.hierarchy.lvl2 ? new Date(item.hierarchy.lvl2) : null;
   const relativeDate = useRelativeFormattedDate(storedDate);
 
   return (
@@ -130,7 +133,7 @@ function Result<TItem extends StoredDocSearchHit>({
           {item.type === 'askAI' && (
             <div className="DocSearch-Hit-content-wrapper">
               <span className="DocSearch-Hit-title">{sanitizeUserInput(item.hierarchy.lvl1 || '')}</span>
-              <span className="DocSearch-Hit-path">{relativeDate}</span>
+              <span className="DocSearch-Hit-path">{relativeDate || recentConversationTimestampFallback}</span>
             </div>
           )}
 

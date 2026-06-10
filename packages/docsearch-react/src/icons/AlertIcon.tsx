@@ -1,6 +1,6 @@
 import React, { type JSX } from 'react';
 
-export function AlertIcon(): JSX.Element {
+export function AlertIcon(props: React.SVGProps<SVGSVGElement>): JSX.Element {
   return (
     <svg
       width="16"
@@ -12,7 +12,7 @@ export function AlertIcon(): JSX.Element {
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="2"
-      className="lucide lucide-triangle-alert-icon lucide-triangle-alert"
+      {...props}
     >
       <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" />
       <path d="M12 9v4" />

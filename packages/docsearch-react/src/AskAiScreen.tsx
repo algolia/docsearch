@@ -204,8 +204,8 @@ function AskAiExchangeCard({
         <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--assistant">
           <div className="DocSearch-AskAiScreen-MessageContent">
             {loadingStatus === 'error' && askAiError && isLastExchange && !isThreadDepth && (
-              <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error">
-                <AlertIcon />
+              <div className="DocSearch-AskAiScreen-Error" role="alert">
+                <AlertIcon aria-hidden="true" />
                 <div className="DocSearch-AskAiScreen-Error-Content">
                   <h4 className="DocSearch-AskAiScreen-Error-Title">{errorTitleText}</h4>
                   <MemoizedMarkdown
@@ -218,7 +218,7 @@ function AskAiExchangeCard({
               </div>
             )}
             {isThinking && (
-              <div className="DocSearch-AskAiScreen-MessageContent-Thinking">
+              <div className="DocSearch-AskAiScreen-MessageContent-Thinking" role="status">
                 <span className="shimmer">{translations.thinkingText || 'Thinking...'}</span>
                 <span className="DocSearch-AskAi-Thinking-Skeleton shimmer" />
                 <span className="DocSearch-AskAi-Thinking-Skeleton DocSearch-AskAi-Thinking-Skeleton--short shimmer" />

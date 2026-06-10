@@ -6,7 +6,6 @@
    * `style` attribute (e.g. Docusaurus).
    */
   overflow: hidden !important;
-  isolation: isolate;
 }
 
 /* Container & Modal */
@@ -504,6 +503,7 @@
 .DocSearch-Hit-source svg {
   width: 18px;
   height: 18px;
+  stroke-width: var(--docsearch-icon-stroke-width);
 }
 
 .DocSearch-Dropdown-Container ul.DocSearch-Hits-padded {
@@ -1219,11 +1219,13 @@ assistive tech users */
 }
 
 .DocSearch-AskAiScreen-Error {
-  padding: 1em;
+  display: flex;
+  padding-inline: 1em;
+  padding-block: 1em;
   gap: 8px;
-  color: rgba(20, 20, 20, 1);
   background-color: var(--docsearch-background-color);
   border-radius: var(--docsearch-modal-radius);
+  color: var(--docsearch-text-color);
   font-size: 1em;
   font-weight: 400;
   flex-direction: row;
@@ -1558,19 +1560,20 @@ assistive tech users */
 }
 
 .DocSearch-AskAi-Thinking-Skeleton {
+  --shimmer-gradient: rgb(170, 193, 250) 0%, rgb(245, 251, 255) 50%, rgb(170, 193, 250) 100%;
+  --shimmer-bg: linear-gradient(
+    95deg,
+    var(--shimmer-gradient)
+  );
   display: block;
   height: 0.875rem;
   width: 100%;
   border-radius: 100px;
   background-color: rgba(187, 209, 255, 1);
-  --shimmer-bg: linear-gradient(
-    95deg,
-    rgba(187, 209, 255, 1) 0%,
-    rgba(243, 253, 255, 0.7) 55%,
-    rgba(243, 253, 255, 0.3) 60%,
-    rgba(243, 253, 255, 0.7) 65%,
-    rgba(187, 209, 255, 1) 80%
-  );
+}
+
+html[data-theme='dark'] .DocSearch-AskAi-Thinking-Skeleton {
+  --shimmer-gradient: rgb(31, 64, 195) 0%, rgb(160, 185, 250) 50%, rgb(31, 64, 195) 100%;
 }
 
 .DocSearch-AskAi-Thinking-Skeleton.shimmer {
@@ -1578,17 +1581,19 @@ assistive tech users */
 }
 
 .DocSearch-AskAiScreen-MessageContent-Thinking {
+  --shimmer-gradient: rgb(40, 55, 190) 0%, rgb(150, 162, 240) 50%, rgb(40, 55, 190) 100%;
   --shimmer-bg: linear-gradient(
     95deg,
-    rgba(2, 46, 185, 1) 0%,
-    rgba(187, 209, 255, 1) 40%,
-    rgba(187, 209, 255, 1) 60%,
-    rgba(2, 46, 185, 1) 95%
+    var(--shimmer-gradient)
   );
   display: flex;
   flex-direction: column;
   gap: 0.875rem;
   font-size: 1em;
+}
+
+html[data-theme='dark'] .DocSearch-AskAiScreen-MessageContent-Thinking {
+  --shimmer-gradient: rgb(108, 145, 255) 0%, rgb(200, 218, 255) 50%, rgb(108, 145, 255) 100%;
 }
 
 .DocSearch-AskAiScreen-MessageContent-Thinking .DocSearch-AskAi-Thinking-Skeleton {
@@ -1668,6 +1673,12 @@ assistive tech users */
   -webkit-text-fill-color: transparent;
   animation: shimmerText 2.5s linear infinite;
   pointer-events: none;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .shimmer {
+    animation: none;
+  }
 }
 
 @keyframes shimmerText {

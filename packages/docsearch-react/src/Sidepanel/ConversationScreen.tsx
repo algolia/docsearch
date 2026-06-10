@@ -175,8 +175,8 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
           <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--assistant">
             <div className="DocSearch-AskAiScreen-MessageContent">
               {status === 'error' && streamError && isLastExchange && (
-                <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error">
-                  <AlertIcon />
+                <div className="DocSearch-AskAiScreen-Error" role="alert">
+                  <AlertIcon aria-hidden="true" />
                   <div className="DocSearch-AskAiScreen-Error-Content">
                     <h4 className="DocSearch-AskAiScreen-Error-Title">{errorTitleText}</h4>
                     <MemoizedMarkdown
@@ -251,8 +251,10 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
               })}
 
               {isThinking && isLastExchange && assistantParts.length === 0 && (
-                <div className="DocSearch-AskAiScreen-MessageContent-Reasoning">
+                <div className="DocSearch-AskAiScreen-MessageContent-Thinking" role="status">
                   <span className="shimmer">{thinkingText}</span>
+                  <span className="DocSearch-AskAi-Thinking-Skeleton shimmer" />
+                  <span className="DocSearch-AskAi-Thinking-Skeleton DocSearch-AskAi-Thinking-Skeleton--short shimmer" />
                 </div>
               )}
             </div>

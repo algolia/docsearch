@@ -57,6 +57,12 @@ describe('useRelativeFormattedDate', () => {
     expect(result.current).toEqual('0 seconds ago');
   });
 
+  it('returns null when start is null', () => {
+    const { result } = renderHook(() => useRelativeFormattedDate(null));
+
+    expect(result.current).toBeNull();
+  });
+
   it('floors the elapsed value to the unit', () => {
     // 2 hours and 59 minutes -> 2 hours
     const start = new Date(NOW - (2 * 60 * 60 * 1000 + 59 * 60 * 1000));
