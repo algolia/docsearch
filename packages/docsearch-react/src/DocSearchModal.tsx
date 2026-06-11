@@ -3,6 +3,7 @@ import React, { type JSX } from 'react';
 
 import type { KeywordSearchBoxTranslations } from './components/KeywordSearchBox';
 import { KeywordSearchBox } from './components/KeywordSearchBox';
+import { FilterBar } from './components/ui/FilterBar';
 import { ModalShell } from './components/ui/ModalShell';
 import type { DocSearchProps } from './DocSearch';
 import type { FooterTranslations } from './Footer';
@@ -18,9 +19,11 @@ import { useStoredDocSearches } from './hooks/useStoredDocSearches';
 import type { ScreenStateTranslations } from './ScreenState';
 import { ScreenState } from './ScreenState';
 import type { DocSearchState, InternalDocSearchHit } from './types';
+import { useFacetValues } from './useFacetValues';
 import { useSearchClient } from './useSearchClient';
 import { identity, isModifierEvent, noop, scrollTo as scrollToUtils } from './utils';
 import { buildNoQuerySources, buildQuerySources, type BuildQuerySourcesState } from './utils/createDocSearchSources';
+import { normalizeFacets } from './utils/facets';
 import { normalizeDocSearchIndexes } from './utils/normalizeDocSearchIndexes';
 
 export type ModalTranslations = Partial<{
@@ -57,6 +60,7 @@ export function DocSearchModal({
   indices = [],
   indexName,
   searchParameters,
+  facets,
   ...props
 }: DocSearchModalProps): JSX.Element {
   const { footer: footerTranslations, searchBox: searchBoxTranslations, ...screenStateTranslations } = translations;
@@ -77,12 +81,24 @@ export function DocSearchModal({
 
   const searchClient = useSearchClient(appId, apiKey, transformSearchClient);
 
-  const indexes = normalizeDocSearchIndexes({
-    indexName,
-    indices,
-    searchParameters,
-  });
+  const indexes = React.useMemo(
+    () =>
+      normalizeDocSearchIndexes({
+        indexName,
+        indices,
+        searchParameters,
+      }),
+    [indexName, indices, searchParameters],
+  );
   const defaultIndexName = indexes[0].name;
+  const normalizedFacets = React.useMemo(() => normalizeFacets(facets), [facets]);
+  const facetValues = useFacetValues({ facets: normalizedFacets, indexes, searchClient });
+  const [facetSelections, setFacetSelections] = React.useState<Record<string, string>>({});
+  const facetSelectionsRef = React.useRef(facetSelections);
+  facetSelectionsRef.current = facetSelections;
+  const visibleFacets = normalizedFacets
+    .map((facet) => ({ ...facet, values: facetValues[facet.key] ?? [] }))
+    .filter((facet) => facet.values.length > 0);
 
   const { favoriteSearches, recentSearches } = useStoredDocSearches({
     defaultIndexName,
@@ -155,6 +171,7 @@ export function DocSearchModal({
           transformItems,
           saveRecentSearch,
           onClose,
+          facetSelections: facetSelectionsRef,
         });
 
         return algoliaSourcesPromise;
@@ -186,6 +203,25 @@ export function DocSearchModal({
 
   useRefreshOnInitialQuery({ initialQuery, inputRef, refresh });
 
+  const handleFacetSelectionChange = React.useCallback(
+    (facet: string, value: string): void => {
+      setFacetSelections((currentFacetSelections) => {
+        const nextFacetSelections = {
+          ...currentFacetSelections,
+          [facet]: value,
+        };
+        facetSelectionsRef.current = nextFacetSelections;
+        return nextFacetSelections;
+      });
+      facetSelectionsRef.current = {
+        ...facetSelectionsRef.current,
+        [facet]: value,
+      };
+      refresh();
+    },
+    [refresh],
+  );
+
   // hide the dropdown on idle and no collections
   let showDocsearchDropdown = true;
   const hasCollections = state.collections.some((collection) => collection.items.length > 0);
@@ -213,6 +249,9 @@ export function DocSearchModal({
           translations={searchBoxTranslations}
           onClose={onClose}
         />
+      }
+      filterBar={
+        <FilterBar facets={visibleFacets} selections={facetSelections} onSelectionChange={handleFacetSelectionChange} />
       }
       screenState={
         <ScreenState

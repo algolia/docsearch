@@ -30,6 +30,11 @@ export interface DocSearchIndex {
   searchParameters?: SearchParamsObject;
 }
 
+export interface DocSearchFacet {
+  key: string;
+  label?: string;
+}
+
 export interface DocSearchProps {
   /**
    * Algolia application id used by the search client.
@@ -51,6 +56,13 @@ export interface DocSearchProps {
    * @see {@link https://docsearch.algolia.com/docs/api#indices}
    */
   indices?: Array<DocSearchIndex | string>;
+  /**
+   * Facets to display as keyword-search filter controls.
+   * Values are read dynamically from the configured Algolia indices.
+   *
+   * @default []
+   */
+  facets?: DocSearchFacet[];
   /**
    * Theme overrides applied to the modal and related components.
    */

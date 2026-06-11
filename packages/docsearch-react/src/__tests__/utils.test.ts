@@ -1,7 +1,9 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 import type { AIMessage } from '../types/AskiAi';
 import { extractLinksFromMessage } from '../utils/ai';
+import { createFacetFilters } from '../utils/createDocSearchSources';
+import { getFacetLabel, normalizeFacets } from '../utils/facets';
 import {
   createObjectStorage,
   createStorage,
@@ -11,6 +13,47 @@ import {
 } from '../utils/storage';
 
 describe('utils', () => {
+  describe('facet filters', () => {
+    it('normalizes facets and enforces the maximum', () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      expect(
+        normalizeFacets([
+          { key: 'language' },
+          { key: 'version' },
+          { key: 'type' },
+          { key: 'framework' },
+          { key: 'platform' },
+          { key: 'extra' },
+          { key: ' ' },
+        ]),
+      ).toEqual([{ key: 'language' }, { key: 'version' }, { key: 'type' }, { key: 'framework' }, { key: 'platform' }]);
+
+      warn.mockRestore();
+    });
+
+    it('creates labels from facet keys', () => {
+      expect(getFacetLabel({ key: 'content_type' })).toBe('Content Type');
+      expect(getFacetLabel({ key: 'docs.version', label: 'Version' })).toBe('Version');
+    });
+
+    it('returns configured facetFilters when no dynamic facets are selected', () => {
+      expect(createFacetFilters(['language:en'], {})).toEqual(['language:en']);
+    });
+
+    it('merges configured and dynamic facetFilters', () => {
+      expect(createFacetFilters(['docusaurus_tag:default'], { language: 'en', version: 'v2' })).toEqual([
+        'docusaurus_tag:default',
+        'language:en',
+        'version:v2',
+      ]);
+    });
+
+    it('ignores empty dynamic facet selections', () => {
+      expect(createFacetFilters(undefined, { language: '', version: 'v2' })).toEqual(['version:v2']);
+    });
+  });
+
   describe('extractLinksFromText', () => {
     it('returns an empty array when no links are present', () => {
       const message: AIMessage = {

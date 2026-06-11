@@ -7,6 +7,7 @@ import type { AskAiScreenStateTranslations } from './AskAiScreenState';
 import { AskAiScreenState } from './AskAiScreenState';
 import type { AskAiSearchBoxTranslations } from './components/AskAiSearchBox';
 import { AskAiSearchBox } from './components/AskAiSearchBox';
+import { FilterBar } from './components/ui/FilterBar';
 import { ModalShell } from './components/ui/ModalShell';
 import type { DocSearchAIProps } from './DocSearchAI';
 import type { FooterTranslations } from './Footer';
@@ -29,12 +30,14 @@ import type {
 } from './types';
 import { type AskAiState } from './types/AskiAi';
 import { useAskAi } from './useAskAi';
+import { useFacetValues } from './useFacetValues';
 import { useSearchClient } from './useSearchClient';
 import { useSuggestedQuestions } from './useSuggestedQuestions';
 import { identity, isModifierEvent, noop, scrollTo as scrollToUtils } from './utils';
 import { buildDummyAskAiHit, isThreadDepthError, EMPTY_TOOLS } from './utils/ai';
 import { buildAskAiActionSources, buildRecentConversationSources } from './utils/createAskAiSources';
 import { buildNoQuerySources, buildQuerySources, type BuildQuerySourcesState } from './utils/createDocSearchSources';
+import { normalizeFacets } from './utils/facets';
 import { normalizeDocSearchIndexes } from './utils/normalizeDocSearchIndexes';
 
 export type DocSearchAskAiModalTranslations = AskAiScreenStateTranslations &
@@ -79,6 +82,7 @@ export function DocSearchAskAiModal({
   indices = [],
   indexName,
   searchParameters,
+  facets,
   isHybridModeSupported = false,
   tools = EMPTY_TOOLS,
   ...props
@@ -123,12 +127,24 @@ export function DocSearchAskAiModal({
   });
   const memoryEnabled = props.memory?.enabled ?? false;
 
-  const indexes = normalizeDocSearchIndexes({
-    indexName,
-    indices,
-    searchParameters,
-  });
+  const indexes = React.useMemo(
+    () =>
+      normalizeDocSearchIndexes({
+        indexName,
+        indices,
+        searchParameters,
+      }),
+    [indexName, indices, searchParameters],
+  );
   const defaultIndexName = indexes[0].name;
+  const normalizedFacets = React.useMemo(() => normalizeFacets(facets), [facets]);
+  const facetValues = useFacetValues({ facets: normalizedFacets, indexes, searchClient });
+  const [facetSelections, setFacetSelections] = React.useState<Record<string, string>>({});
+  const facetSelectionsRef = React.useRef(facetSelections);
+  facetSelectionsRef.current = facetSelections;
+  const visibleFacets = normalizedFacets
+    .map((facet) => ({ ...facet, values: facetValues[facet.key] ?? [] }))
+    .filter((facet) => facet.values.length > 0);
 
   const { favoriteSearches, recentSearches } = useStoredDocSearches({
     defaultIndexName,
@@ -334,6 +350,7 @@ export function DocSearchAskAiModal({
           transformItems,
           saveRecentSearch,
           onClose,
+          facetSelections: facetSelectionsRef,
         });
 
         const askAiSource = canHandleAskAi ? buildAskAiActionSources({ query, handleSelectAskAiQuestion }) : [];
@@ -368,6 +385,25 @@ export function DocSearchAskAiModal({
   }, [state.query, isAskAiActive, dropdownRef]);
 
   useRefreshOnInitialQuery({ initialQuery, inputRef, refresh });
+
+  const handleFacetSelectionChange = React.useCallback(
+    (facet: string, value: string): void => {
+      setFacetSelections((currentFacetSelections) => {
+        const nextFacetSelections = {
+          ...currentFacetSelections,
+          [facet]: value,
+        };
+        facetSelectionsRef.current = nextFacetSelections;
+        return nextFacetSelections;
+      });
+      facetSelectionsRef.current = {
+        ...facetSelectionsRef.current,
+        [facet]: value,
+      };
+      refresh();
+    },
+    [refresh],
+  );
 
   // Refresh the autocomplete results when ask ai is toggled off
   // helps return to the previous ac state and start screen
@@ -442,6 +478,15 @@ export function DocSearchAskAiModal({
           onNewConversation={handleNewConversation}
           onViewConversationHistory={handleViewConversationHistory}
         />
+      }
+      filterBar={
+        !isAskAiActive ? (
+          <FilterBar
+            facets={visibleFacets}
+            selections={facetSelections}
+            onSelectionChange={handleFacetSelectionChange}
+          />
+        ) : null
       }
       screenState={
         <AskAiScreenState

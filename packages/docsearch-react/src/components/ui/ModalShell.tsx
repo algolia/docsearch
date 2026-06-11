@@ -18,6 +18,7 @@ export type ModalShellProps = {
   onClose: () => void;
   showDropdown: boolean;
   searchBox: React.ReactNode;
+  filterBar?: React.ReactNode;
   screenState: React.ReactNode;
   footer: React.ReactNode;
 };
@@ -32,6 +33,7 @@ export function ModalShell({
   onClose,
   showDropdown,
   searchBox,
+  filterBar,
   screenState,
   footer,
 }: ModalShellProps): JSX.Element {
@@ -59,6 +61,8 @@ export function ModalShell({
         <header className="DocSearch-SearchBar" ref={formElementRef}>
           {searchBox}
         </header>
+
+        {filterBar}
 
         {showDropdown && (
           <div className="DocSearch-Dropdown" ref={dropdownRef}>
