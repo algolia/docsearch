@@ -8,7 +8,7 @@ import { AskAiScreenState } from './AskAiScreenState';
 import type { AskAiSearchBoxTranslations } from './components/AskAiSearchBox';
 import { AskAiSearchBox } from './components/AskAiSearchBox';
 import { ModalShell } from './components/ui/ModalShell';
-import type { DocSearchAIProps } from './DocSearch';
+import type { DocSearchAIProps } from './DocSearchAI';
 import type { FooterTranslations } from './Footer';
 import { Footer } from './Footer';
 import { Hit } from './Hit';
@@ -113,7 +113,7 @@ export function DocSearchAskAiModal({
   const searchClient = useSearchClient(appId, apiKey, transformSearchClient);
 
   const askAiConfig = typeof askAi === 'object' ? askAi : null;
-  const askAiConfigurationId = typeof askAi === 'string' ? askAi : askAiConfig?.assistantId || null;
+  const askAiConfigurationId = askAiConfig ? askAiConfig.assistantId : (askAi as string);
   const askAiSearchParameters = askAiConfig?.searchParameters;
   const [askAiState, setAskAiState] = React.useState<AskAiState>('initial');
   const suggestedQuestions = useSuggestedQuestions({
@@ -147,6 +147,7 @@ export function DocSearchAskAiModal({
       searchParameters: askAiSearchParameters,
       tools,
       memory: props.memory,
+      indices: askAiConfig?.indices,
     });
 
   const prevStatus = React.useRef(status);

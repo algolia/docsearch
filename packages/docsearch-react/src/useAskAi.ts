@@ -12,18 +12,19 @@ import { type AIMessage, type ToolCalls } from './types/AskiAi';
 import type { OnAskAiFeedback } from './types/Feedback';
 import { EMPTY_TOOLS } from './utils/ai';
 
-import type { AgentStudioSearchParameters, Memory, StoredAskAiState } from '.';
+import type { AgentStudioIndices, AgentStudioSearchParameters, Memory, StoredAskAiState } from '.';
 
 type UseChat = UseChatHelpers<AIMessage>;
 
 type UseAskAiParams = {
-  assistantId?: string | null;
+  assistantId: string;
   apiKey: string;
   appId: string;
   indexName: string;
   searchParameters?: AgentStudioSearchParameters;
   tools: ToolCalls;
   memory?: Memory;
+  indices?: AgentStudioIndices[];
 };
 
 type UseAskAiReturn = {
@@ -44,6 +45,7 @@ type UseAskAi = (params: UseAskAiParams) => UseAskAiReturn;
 type AgentStudioTransportParams = Pick<UseAskAiParams, 'apiKey' | 'appId' | 'assistantId'> & {
   searchParameters?: AgentStudioSearchParameters;
   userToken?: string;
+  indices?: AgentStudioIndices[];
 };
 
 const getAgentStudioTransport = ({
@@ -52,7 +54,21 @@ const getAgentStudioTransport = ({
   assistantId,
   searchParameters,
   userToken,
+  indices,
 }: AgentStudioTransportParams): DefaultChatTransport<AIMessage> => {
+  const algoliaParams: {
+    searchParameters?: AgentStudioSearchParameters;
+    indices?: AgentStudioIndices[];
+  } = {};
+
+  if (searchParameters) {
+    algoliaParams.searchParameters = searchParameters;
+  }
+
+  if (indices && indices.length > 0) {
+    algoliaParams.indices = indices;
+  }
+
   return new DefaultChatTransport({
     api: `${agentStudioBaseUrl(appId)}/agents/${assistantId}/completions?stream=true&compatibilityMode=ai-sdk-5`,
     headers: {
@@ -60,7 +76,7 @@ const getAgentStudioTransport = ({
       'x-algolia-api-key': apiKey,
       ...(userToken ? { 'x-algolia-secure-user-token': userToken } : {}),
     },
-    body: searchParameters ? { algolia: { searchParameters } } : {},
+    body: { algolia: algoliaParams },
   });
 };
 
@@ -72,6 +88,7 @@ export const useAskAi: UseAskAi = ({
   tools = EMPTY_TOOLS,
   searchParameters,
   memory,
+  indices,
 }) => {
   const abortControllerRef = useRef(new AbortController());
 
@@ -80,11 +97,12 @@ export const useAskAi: UseAskAi = ({
       getAgentStudioTransport({
         apiKey,
         appId,
-        assistantId: assistantId ?? '',
+        assistantId,
         searchParameters,
         userToken: memory?.userToken,
+        indices,
       }),
-    [apiKey, appId, assistantId, searchParameters, memory?.userToken],
+    [apiKey, appId, assistantId, searchParameters, memory?.userToken, indices],
   );
 
   // Sync ref during render so the stable `handleToolCall` (registered once

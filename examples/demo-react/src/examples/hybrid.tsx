@@ -12,20 +12,19 @@ export default function BasicHybrid({ theme }: { theme: DemoTheme }): JSX.Elemen
       <DocSearchButton />
       <DocSearchAskAiModal
         indexName="docsearch"
-        appId="beta3G7FSQDJR3"
-        apiKey="0faad3eae2ba413c16355a0f8670c201"
+        appId="PMZUYBQDAK"
+        apiKey="24b09689d5b4223813d9b8e48563c8f6"
         askAi={{
-          assistantId: 'e3Kl4lTCBlSA',
-          indexName: 'docsearch-markdown',
+          assistantId: 'ccdec697-e3fe-465b-a1c3-657e7bf18aef',
         }}
       />
 
       <SidepanelButton />
       <Sidepanel
         indexName="docsearch-markdown"
-        appId="beta3G7FSQDJR3"
-        apiKey="0faad3eae2ba413c16355a0f8670c201"
-        assistantId="e3Kl4lTCBlSA"
+        appId="PMZUYBQDAK"
+        apiKey="24b09689d5b4223813d9b8e48563c8f6"
+        assistantId="ccdec697-e3fe-465b-a1c3-657e7bf18aef"
       />
     </DocSearch>
   );

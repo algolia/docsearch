@@ -150,6 +150,7 @@ function SidepanelInner(
     initialMessage,
     tools = EMPTY_TOOLS,
     memory,
+    indices,
   }: Props,
   ref: React.ForwardedRef<SidepanelRef>,
 ): JSX.Element {
@@ -193,6 +194,7 @@ function SidepanelInner(
     searchParameters,
     tools,
     memory,
+    indices,
   });
 
   const suggestedQuestions = useSuggestedQuestions({

@@ -659,7 +659,17 @@ svg.DocSearch-Hit-Select-Icon {
 }
 
 .DocSearch-Hit-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
   font-size: 0.9em;
+}
+
+@media screen and (min-width: 768px) {
+ .DocSearch-Hit-title {
+    max-width: 584px;
+  }
 }
 
 .DocSearch-Hit-path {
