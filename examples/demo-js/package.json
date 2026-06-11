@@ -15,6 +15,6 @@
     "@docsearch/sidepanel-js": "4.6.0"
   },
   "devDependencies": {
-    "vite": "^6.0.7"
+    "vite": "^6.4.1"
   }
 }
