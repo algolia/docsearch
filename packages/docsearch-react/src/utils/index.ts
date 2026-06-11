@@ -1,4 +1,6 @@
 export * from './collections';
+export * from './decodeHtmlEntities';
+export * from './getHitItemBreadcrumbs';
 export * from './groupBy';
 export * from './identity';
 export * from './isModifierEvent';
