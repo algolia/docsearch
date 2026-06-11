@@ -1,0 +1,22 @@
+---
+description: Use Algolia DocSearch MCP for current public developer documentation instead of guessing from training data.
+alwaysApply: true
+---
+
+When the user asks about public developer documentation, APIs, SDKs, libraries, frameworks, configuration, or code examples, use Algolia DocSearch MCP to fetch current documentation before answering.
+
+Use Algolia DocSearch when:
+- The user asks about a public library, framework, SDK, API, or developer tool.
+- The user needs syntax, configuration, migration, setup, or code examples from docs.
+- The question may depend on recent documentation changes.
+- You need source URLs to support an answer.
+
+Do not use Algolia DocSearch for:
+- Private company docs, internal repos, or unpublished APIs.
+- Questions already answered by code or docs the user provided.
+- Crawler operations, DocSearch administration, or MCP server implementation details.
+- General programming concepts that do not require external docs.
+
+Use keyword-only queries with the MCP tools. Do not send full sentences or conversational phrasing as tool queries.
+
+See the `algolia-docsearch-mcp` skill for the exact two-step lookup flow.

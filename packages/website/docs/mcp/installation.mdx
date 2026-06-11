@@ -1,0 +1,142 @@
+---
+title: Install DocSearch MCP
+sidebar_label: Installation
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+DocSearch MCP is available at:
+
+```text
+https://mcp.algolia.com/1/docsearch/mcp
+```
+
+No authentication is required for the public endpoint.
+
+## Plugins
+
+Plugins install the MCP server config plus client-specific guidance, such as rules, skills, and commands.
+
+<Tabs groupId="mcp-plugin-client" defaultValue="cursor" values={[{ label: 'Cursor', value: 'cursor' }, { label: 'Claude Code', value: 'claude-code' }]}>
+<TabItem value="cursor">
+
+The Cursor plugin package lives in this repository:
+
+```text
+mcp/plugins/docsearch/cursor/algolia-docsearch
+```
+
+It includes:
+
+- `mcp.json` with the public DocSearch MCP endpoint.
+- A Cursor rule that asks the agent to use DocSearch MCP for public developer documentation questions.
+- A skill that explains the two-step `resolve_docset` then `query_docs` flow.
+
+</TabItem>
+<TabItem value="claude-code">
+
+The Claude Code plugin package lives in this repository:
+
+```text
+mcp/plugins/docsearch/claude/algolia-docsearch
+```
+
+It includes:
+
+- `.mcp.json` with the public DocSearch MCP endpoint.
+- A Claude Code skill that triggers for public developer documentation questions.
+- `/algolia-docsearch:docs` for manual documentation lookups.
+
+If you install from the Claude Code marketplace, add the marketplace and install the plugin from Claude Code:
+
+```text
+/plugin marketplace add algolia/docsearch
+/plugin install algolia-docsearch@algolia-docsearch-marketplace
+```
+
+</TabItem>
+</Tabs>
+
+## Manual installation
+
+Use manual installation when you only want the MCP tools, or when your client does not support DocSearch plugins yet.
+
+<Tabs groupId="mcp-manual-client" defaultValue="cursor" values={[{ label: 'Cursor', value: 'cursor' }, { label: 'Claude Code', value: 'claude-code' }, { label: 'Claude Desktop', value: 'claude-desktop' }, { label: 'Generic client', value: 'generic' }]}>
+<TabItem value="cursor">
+
+Go to `Settings` -> `Cursor Settings` -> `MCP` -> `Add new global MCP server`.
+
+You can also add it to `~/.cursor/mcp.json` for a global install, or `.cursor/mcp.json` for a project install:
+
+[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=algolia-docsearch&config=eyJ1cmwiOiJodHRwczovL21jcC5hbGdvbGlhLmNvbS8xL2RvY3NlYXJjaC9tY3AifQ%3D%3D)
+
+```json
+{
+  "mcpServers": {
+    "algolia-docsearch": {
+      "url": "https://mcp.algolia.com/1/docsearch/mcp"
+    }
+  }
+}
+```
+
+</TabItem>
+<TabItem value="claude-code">
+
+Add the remote HTTP server with the Claude Code CLI:
+
+```bash
+claude mcp add --scope user --transport http algolia-docsearch https://mcp.algolia.com/1/docsearch/mcp
+```
+
+Use `--scope project` instead of `--scope user` if you want the configuration stored with a specific project.
+
+</TabItem>
+<TabItem value="claude-desktop">
+
+Open Claude Desktop, then go to `Settings` -> `Connectors` -> `Add Custom Connector`.
+
+Use:
+
+```text
+Name: Algolia DocSearch
+URL: https://mcp.algolia.com/1/docsearch/mcp
+```
+
+</TabItem>
+<TabItem value="generic">
+
+For clients that support remote HTTP MCP servers, configure a server named `algolia-docsearch` with this URL:
+
+```text
+https://mcp.algolia.com/1/docsearch/mcp
+```
+
+Many clients use a JSON shape similar to:
+
+```json
+{
+  "mcpServers": {
+    "algolia-docsearch": {
+      "type": "http",
+      "url": "https://mcp.algolia.com/1/docsearch/mcp"
+    }
+  }
+}
+```
+
+If your client uses a different MCP config format, keep the same server name and URL, and follow that client's remote HTTP MCP documentation.
+
+</TabItem>
+</Tabs>
+
+## Verify the install
+
+Ask your MCP client a public documentation question, for example:
+
+```text
+Use DocSearch MCP to find the current Next.js middleware matcher docs.
+```
+
+The client should call `algolia_docsearch_resolve_docset`, then `algolia_docsearch_query_docs`, and answer with content from the matching documentation.

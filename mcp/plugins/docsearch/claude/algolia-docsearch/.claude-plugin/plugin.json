@@ -1,0 +1,8 @@
+{
+  "name": "algolia-docsearch",
+  "description": "Algolia DocSearch MCP plugin for searching up-to-date public developer documentation from the DocSearch corpus.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Algolia"
+  }
+}
