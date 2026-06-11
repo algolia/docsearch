@@ -3,9 +3,9 @@ import '@testing-library/jest-dom/vitest';
 import React from 'react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
-import { FeedbackActions, type FeedbackActionsTranslations } from '../components/FeedbackActions';
-import type { StoredSearchPlugin } from '../stored-searches';
-import type { StoredAskAiMessage, StoredAskAiState } from '../types';
+import type { StoredSearchPlugin } from '../../stored-searches';
+import type { StoredAskAiMessage, StoredAskAiState } from '../../types';
+import { FeedbackActions, type FeedbackActionsTranslations } from '../FeedbackActions';
 
 const TRANSLATIONS: FeedbackActionsTranslations = {
   likeButtonTitle: 'Like',

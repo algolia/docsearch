@@ -2,12 +2,12 @@ import type { UseChatHelpers } from '@ai-sdk/react';
 import type { AutocompleteApi, AutocompleteState } from '@algolia/autocomplete-core';
 import React, { type JSX, type RefObject } from 'react';
 
-import { ConversationHistoryIcon, MoreVerticalIcon, NewConversationIcon, StopIcon } from '../icons';
-import { BackIcon } from '../icons/BackIcon';
+import { ConversationHistoryIcon, MoreVerticalIcon, NewConversationIcon, StopIcon, BackIcon } from '../icons';
 import { Menu } from '../Menu';
 import { ModalHeading } from '../ModalHeading';
 import type { InternalDocSearchHit } from '../types';
 import type { AIMessage, AskAiState } from '../types/AskiAi';
+import { getCollection } from '../utils';
 
 import { SearchBoxForm } from './ui/SearchBoxForm';
 
@@ -77,14 +77,14 @@ export function AskAiSearchBox({
   } = translations;
 
   const hasRecentConversations = React.useMemo(() => {
-    const askAiSource = props.state.collections[2];
+    const askAiSource = getCollection(props.state, 'recentConversations');
 
     if (!askAiSource) {
       return false;
     }
 
     return askAiSource.items.length > 0;
-  }, [props.state.collections]);
+  }, [props.state]);
 
   const baseInputProps = props.getInputProps({
     inputElement: props.inputRef.current!,
@@ -136,16 +136,23 @@ export function AskAiSearchBox({
   const inputProps = {
     enterKeyHint: props.isAskAiActive ? ('enter' as const) : ('search' as const),
     onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>): void => {
+      let askAiHandled = false;
       // block these up, down, enter listeners when Ask AI is active
       if (props.isAskAiActive && blockedKeys.has(e.key)) {
         // enter key asks another question
         if (e.key === 'Enter' && !isAskAiStreaming && props.state.query) {
           props.onAskAgain(props.state.query);
         }
+
+        askAiHandled = true;
+      }
+
+      if (askAiHandled) {
         e.preventDefault();
         e.stopPropagation();
         return;
       }
+
       origOnKeyDown?.(e);
     },
     onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {

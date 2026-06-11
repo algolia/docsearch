@@ -4,9 +4,11 @@ import { DocSearchButton, DocSearchAskAiModal } from '@docsearch/modal';
 import { Sidepanel, SidepanelButton } from '@docsearch/sidepanel';
 import type { JSX } from 'react';
 
-export default function BasicHybrid(): JSX.Element {
+import type { DemoTheme } from '../App';
+
+export default function BasicHybrid({ theme }: { theme: DemoTheme }): JSX.Element {
   return (
-    <DocSearch>
+    <DocSearch theme={theme}>
       <DocSearchButton />
       <DocSearchAskAiModal
         indexName="docsearch"

@@ -2,7 +2,9 @@
 import { DocSearchAI } from '@docsearch/react';
 import type { JSX } from 'react';
 
-export default function BasicAskAI(): JSX.Element {
+import type { DemoTheme } from '../App';
+
+export default function BasicAskAI({ theme }: { theme: DemoTheme }): JSX.Element {
   return (
     <DocSearchAI
       indexName="docsearch"
@@ -14,6 +16,7 @@ export default function BasicAskAI(): JSX.Element {
       }}
       insights={true}
       translations={{ button: { buttonText: 'Search with Ask AI' } }}
+      theme={theme}
       tools={{
         printConsoleMessage: {
           render({ message: { output } }) {

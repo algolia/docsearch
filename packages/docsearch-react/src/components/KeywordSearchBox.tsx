@@ -35,6 +35,23 @@ export function KeywordSearchBox({ translations = {}, ...props }: KeywordSearchB
     searchInputLabel = 'Search',
   } = translations;
 
+  const actionsBeforeClose = (
+    <>
+      <button
+        className="DocSearch-Clear"
+        type="reset"
+        aria-label={clearButtonAriaLabel}
+        hidden={!props.state.query}
+        tabIndex={props.state.query ? 0 : -1}
+        aria-hidden={!props.state.query ? 'true' : 'false'}
+      >
+        {clearButtonTitle}
+      </button>
+
+      {props.state.query && <div className="DocSearch-Divider" />}
+    </>
+  );
+
   return (
     <SearchBoxForm
       {...props}
@@ -46,6 +63,7 @@ export function KeywordSearchBox({ translations = {}, ...props }: KeywordSearchB
       inputProps={{
         enterKeyHint: 'search',
       }}
+      actionsBeforeClose={actionsBeforeClose}
     />
   );
 }

@@ -52,6 +52,7 @@
   },
   "dependencies": {
     "@algolia/autocomplete-core": "1.19.2",
+    "@base-ui/react": "^1.5.0",
     "@docsearch/core": "4.6.0",
     "@docsearch/css": "4.6.0"
   },

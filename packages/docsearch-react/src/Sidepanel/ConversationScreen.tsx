@@ -2,8 +2,9 @@ import type { UseChatHelpers } from '@ai-sdk/react';
 import type { JSX } from 'react';
 import React, { memo, useMemo } from 'react';
 
-import { AskAiSourcesPanel, type Exchange } from '../AskAiScreen';
+import { type Exchange } from '../AskAiScreen';
 import { FeedbackActions } from '../components/FeedbackActions';
+import { SourcesPanel } from '../components/SourcesPanel';
 import { ToolCall, type ToolCallTranslations } from '../components/ToolCall';
 import { AlertIcon, LoadingIcon } from '../icons';
 import { MemoizedMarkdown } from '../MemoizedMarkdown';
@@ -137,7 +138,7 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
       reasoningText = 'Reasoning...',
       thinkingText = 'Thinking...',
       searchingText = 'Searching...',
-      relatedSourcesText = 'Related sources',
+      relatedSourcesText,
       stoppedStreamingText = 'You stopped this response',
       preToolCallText = 'Searching...',
       toolCallResultText = 'Searched for',
@@ -174,8 +175,8 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
           <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--assistant">
             <div className="DocSearch-AskAiScreen-MessageContent">
               {status === 'error' && streamError && isLastExchange && (
-                <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error">
-                  <AlertIcon />
+                <div className="DocSearch-AskAiScreen-Error" role="alert">
+                  <AlertIcon aria-hidden="true" />
                   <div className="DocSearch-AskAiScreen-Error-Content">
                     <h4 className="DocSearch-AskAiScreen-Error-Title">{errorTitleText}</h4>
                     <MemoizedMarkdown
@@ -250,8 +251,10 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
               })}
 
               {isThinking && isLastExchange && assistantParts.length === 0 && (
-                <div className="DocSearch-AskAiScreen-MessageContent-Reasoning">
+                <div className="DocSearch-AskAiScreen-MessageContent-Thinking" role="status">
                   <span className="shimmer">{thinkingText}</span>
+                  <span className="DocSearch-AskAi-Thinking-Skeleton shimmer" />
+                  <span className="DocSearch-AskAi-Thinking-Skeleton DocSearch-AskAi-Thinking-Skeleton--short shimmer" />
                 </div>
               )}
             </div>
@@ -260,6 +263,7 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
           </div>
 
           <div className="DocSearch-AskAiScreen-Answer-Footer">
+            <SourcesPanel links={urlsToDisplay} titleText={relatedSourcesText} />
             <FeedbackActions
               isSidepanel={true}
               id={messageId}
@@ -271,10 +275,6 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
             />
           </div>
         </div>
-
-        {urlsToDisplay.length > 0 ? (
-          <AskAiSourcesPanel urlsToDisplay={urlsToDisplay} relatedSourcesText={relatedSourcesText} />
-        ) : null}
       </div>
     );
   },

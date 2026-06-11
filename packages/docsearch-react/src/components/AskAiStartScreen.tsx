@@ -18,8 +18,8 @@ type AskAiStartScreenProps = Omit<AskAiScreenStateProps<InternalDocSearchHit>, '
 export function AskAiStartScreen({ translations = {}, ...props }: AskAiStartScreenProps): JSX.Element | null {
   return (
     <div className="DocSearch-Dropdown-Container">
-      <StoredSearchesSections {...props} translations={translations} />
       <RecentConversationsResults {...props} translations={translations} />
+      <StoredSearchesSections {...props} translations={translations} />
     </div>
   );
 }

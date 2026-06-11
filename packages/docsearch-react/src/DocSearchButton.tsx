@@ -3,9 +3,9 @@ import { useTheme } from '@docsearch/core/useTheme';
 import React, { useEffect, useState, type JSX } from 'react';
 
 import { getKeyboardShortcuts } from './constants/keyboardShortcuts';
+import { usePlatformKeys } from './hooks/usePlatformKeys';
 import { SearchIcon } from './icons/SearchIcon';
 import type { DocSearchTheme } from './types';
-import { ACTION_KEY_APPLE, ACTION_KEY_DEFAULT, isAppleDevice } from './utils';
 
 export type ButtonTranslations = Partial<{
   buttonText: string;
@@ -22,19 +22,9 @@ export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButt
   ({ translations = {}, keyboardShortcuts, ...props }, ref) => {
     const { buttonText = 'Search', buttonAriaLabel = 'Search' } = translations;
     const resolvedShortcuts = getKeyboardShortcuts(keyboardShortcuts);
+    const { actionKeyReactsTo, actionKeyAltText, actionKeyLabel, key } = usePlatformKeys();
 
-    const [key, setKey] = useState<typeof ACTION_KEY_APPLE | typeof ACTION_KEY_DEFAULT | null>(null);
     useTheme({ theme: props.theme });
-    useEffect(() => {
-      if (typeof navigator !== 'undefined') {
-        isAppleDevice() ? setKey(ACTION_KEY_APPLE) : setKey(ACTION_KEY_DEFAULT);
-      }
-    }, []);
-
-    const [actionKeyReactsTo, actionKeyAltText, actionKeyLabel] =
-      key === ACTION_KEY_DEFAULT
-        ? ([ACTION_KEY_DEFAULT, 'Control', 'Ctrl'] as const)
-        : (['Meta', 'Meta', '⌘'] as const);
 
     const isCtrlCmdKEnabled = resolvedShortcuts['Ctrl/Cmd+K'];
     const shortcut = `${actionKeyAltText}+k`;

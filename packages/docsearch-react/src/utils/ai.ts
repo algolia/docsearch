@@ -15,10 +15,10 @@ import type {
 
 import { sanitizeUserInput } from './sanitize';
 
-type ExtractedLink = {
+export interface ExtractedLink {
   url: string;
   title?: string;
-};
+}
 
 // utility to extract links (markdown and bare urls) from a string
 export function extractLinksFromMessage(message: AIMessage | null): ExtractedLink[] {
@@ -95,7 +95,7 @@ export const buildDummyAskAiHit = (query: string, messages: AIMessage[]): Stored
     hierarchy: {
       lvl0: 'askAI',
       lvl1: sanitizedText, // use first message as hit name (sanitized to prevent XSS)
-      lvl2: null,
+      lvl2: new Date().toISOString(),
       lvl3: null,
       lvl4: null,
       lvl5: null,

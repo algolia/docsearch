@@ -312,7 +312,7 @@ export function DocSearchAskAiModal({
                 onAskAiToggle,
               })
             : [];
-          return [...noQuerySources, ...recentConversationSource];
+          return [...recentConversationSource, ...noQuerySources];
         }
 
         const querySourcesState: BuildQuerySourcesState = {

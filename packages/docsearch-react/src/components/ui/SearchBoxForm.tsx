@@ -100,19 +100,6 @@ export function SearchBoxForm({
       />
 
       <div className="DocSearch-Actions">
-        <button
-          className="DocSearch-Clear"
-          type="reset"
-          aria-label={clearButtonAriaLabel}
-          hidden={!state.query}
-          tabIndex={state.query ? 0 : -1}
-          aria-hidden={!state.query ? 'true' : 'false'}
-        >
-          {clearButtonTitle}
-        </button>
-
-        {state.query && <div className="DocSearch-Divider" />}
-
         {actionsBeforeClose}
 
         <button

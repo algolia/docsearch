@@ -2,6 +2,7 @@ import type { AutocompleteApi, AutocompleteState, BaseItem } from '@algolia/auto
 import React, { type JSX } from 'react';
 
 import type { DocSearchProps } from './DocSearch';
+import { useRelativeFormattedDate } from './hooks/useRelativeFormattedDate';
 import { SparklesIcon } from './icons/SparklesIcon';
 import { Snippet } from './Snippet';
 import type { InternalDocSearchHit, StoredDocSearchHit } from './types';
@@ -10,6 +11,7 @@ import { sanitizeUserInput } from './utils/sanitize';
 export type ResultsTranslations = Partial<{
   askAiPlaceholder: string;
   noResultsAskAiPlaceholder: string;
+  recentConversationTimestampFallback: string;
 }>;
 interface ResultsProps<TItem extends BaseItem>
   extends AutocompleteApi<TItem, React.FormEvent, React.MouseEvent, React.KeyboardEvent> {
@@ -21,6 +23,7 @@ interface ResultsProps<TItem extends BaseItem>
   onItemClick: (item: TItem, event: KeyboardEvent | MouseEvent) => void;
   hitComponent: DocSearchProps['hitComponent'];
   state: AutocompleteState<TItem>;
+  sourceIcon?: JSX.Element;
 }
 
 export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TItem>): JSX.Element | null {
@@ -45,8 +48,9 @@ export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TI
 
   if (props.collection.source.sourceId === 'askAI') {
     return (
-      <section className="DocSearch-AskAi-Section">
-        <ul {...props.getListProps({ source: props.collection.source })}>
+      <section className="DocSearch-Hits">
+        <div className="DocSearch-Hit-source">Ask AI Assistant</div>
+        <ul className="DocSearch-Hits-padded" {...props.getListProps({ source: props.collection.source })}>
           <AskAiButton item={props.collection.items[0]} translations={props.translations} {...props} />
         </ul>
       </section>
@@ -56,8 +60,11 @@ export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TI
   if (props.collection.source.sourceId === 'recentConversations') {
     return (
       <section className="DocSearch-Hits">
-        <div className="DocSearch-Hit-source">{decodedTitle}</div>
-        <ul {...props.getListProps({ source: props.collection.source })}>
+        <div className="DocSearch-Hit-source">
+          <SparklesIcon />
+          {decodedTitle}
+        </div>
+        <ul className="DocSearch-Hits-padded" {...props.getListProps({ source: props.collection.source })}>
           {props.collection.items.map((item, index) => {
             return <Result key={[props.title, item.objectID].join(':')} item={item} index={index} {...props} />;
           })}
@@ -68,9 +75,12 @@ export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TI
 
   return (
     <section className="DocSearch-Hits">
-      <div className="DocSearch-Hit-source">{decodedTitle}</div>
+      <div className="DocSearch-Hit-source">
+        {props.sourceIcon ?? null}
+        {decodedTitle}
+      </div>
 
-      <ul {...props.getListProps({ source: props.collection.source })}>
+      <ul className="DocSearch-Hits-padded" {...props.getListProps({ source: props.collection.source })}>
         {props.collection.items.map((item, index) => {
           return <Result key={[props.title, item.objectID].join(':')} item={item} index={index} {...props} />;
         })}
@@ -93,8 +103,13 @@ function Result<TItem extends StoredDocSearchHit>({
   onItemClick,
   collection,
   hitComponent,
+  translations = {},
 }: ResultProps<TItem>): JSX.Element {
   const Hit = hitComponent!;
+  const { recentConversationTimestampFallback = 'A while ago' } = translations;
+  const storedDate = item.type === 'askAI' && item.hierarchy.lvl2 ? new Date(item.hierarchy.lvl2) : null;
+  const relativeDate = useRelativeFormattedDate(storedDate);
+
   return (
     <li
       className={[
@@ -115,16 +130,17 @@ function Result<TItem extends StoredDocSearchHit>({
         <div className="DocSearch-Hit-Container">
           {renderIcon({ item, index })}
 
-          {item.hierarchy[item.type] && item.type === 'lvl1' && (
-            <div className="DocSearch-Hit-content-wrapper">
-              <Snippet className="DocSearch-Hit-title" hit={item} attribute="hierarchy.lvl1" />
-              {item.content && <Snippet className="DocSearch-Hit-path" hit={item} attribute="content" />}
-            </div>
-          )}
-
           {item.type === 'askAI' && (
             <div className="DocSearch-Hit-content-wrapper">
               <span className="DocSearch-Hit-title">{sanitizeUserInput(item.hierarchy.lvl1 || '')}</span>
+              <span className="DocSearch-Hit-path">{relativeDate || recentConversationTimestampFallback}</span>
+            </div>
+          )}
+
+          {item.hierarchy[item.type] && item.type === 'lvl1' && (
+            <div className="DocSearch-Hit-content-wrapper">
+              <Snippet className="DocSearch-Hit-title" hit={item} attribute="hierarchy.lvl1" />
+              {item.hierarchy.lvl0 && <Snippet className="DocSearch-Hit-path" hit={item} attribute="hierarchy.lvl0" />}
             </div>
           )}
 
@@ -164,15 +180,9 @@ function AskAiButton<TItem extends StoredDocSearchHit>({
   item,
   getItemProps,
   onItemClick,
-  translations,
   collection,
-  ...props
-}: AskAiButtonProps<TItem>): JSX.Element {
-  const { askAiPlaceholder = 'Ask AI: ', noResultsAskAiPlaceholder = "Didn't find it in the docs? Ask AI to help: " } =
-    translations || {};
-  const noKeywordResults = props.state.collections.length === 1;
-
-  const placeholder = noKeywordResults ? noResultsAskAiPlaceholder : askAiPlaceholder;
+}: AskAiButtonProps<TItem>): JSX.Element | null {
+  if (!item.query) return null;
 
   return (
     <li
@@ -191,8 +201,7 @@ function AskAiButton<TItem extends StoredDocSearchHit>({
             <SparklesIcon />
           </div>
           <div className="DocSearch-Hit-AskAIButton-title">
-            <span className="DocSearch-Hit-AskAIButton-title-highlight">{placeholder}</span>
-            <mark className="DocSearch-Hit-AskAIButton-title-query">{String(item.query || '')}</mark>
+            <span className="DocSearch-Hit-AskAIButton-title-query">{item.query}</span>
           </div>
         </div>
       </div>

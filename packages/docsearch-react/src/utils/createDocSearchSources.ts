@@ -6,6 +6,7 @@ import type { DocSearchIndex, DocSearchProps } from '../DocSearch';
 import type { DocSearchHit, DocSearchState, InternalDocSearchHit } from '../types';
 import type { useSearchClient } from '../useSearchClient';
 
+import { SOURCE_IDS } from './collections';
 import { groupBy } from './groupBy';
 import { identity } from './identity';
 import { isModifierEvent } from './isModifierEvent';
@@ -36,22 +37,7 @@ export function buildNoQuerySources({
 
   return [
     {
-      sourceId: 'recentSearches',
-      onSelect({ item, event }): void {
-        saveRecentSearch(item);
-        if (!isModifierEvent(event)) {
-          onClose();
-        }
-      },
-      getItemUrl({ item }): string {
-        return item.url;
-      },
-      getItems(): InternalDocSearchHit[] {
-        return recentSearches.getAll() as InternalDocSearchHit[];
-      },
-    },
-    {
-      sourceId: 'favoriteSearches',
+      sourceId: SOURCE_IDS.favoriteSearches,
       onSelect({ item, event }): void {
         saveRecentSearch(item);
         if (!isModifierEvent(event)) {
@@ -63,6 +49,21 @@ export function buildNoQuerySources({
       },
       getItems(): InternalDocSearchHit[] {
         return favoriteSearches.getAll() as InternalDocSearchHit[];
+      },
+    },
+    {
+      sourceId: SOURCE_IDS.recentSearches,
+      onSelect({ item, event }): void {
+        saveRecentSearch(item);
+        if (!isModifierEvent(event)) {
+          onClose();
+        }
+      },
+      getItemUrl({ item }): string {
+        return item.url;
+      },
+      getItems(): InternalDocSearchHit[] {
+        return recentSearches.getAll() as InternalDocSearchHit[];
       },
     },
   ];
@@ -173,8 +174,10 @@ export async function buildQuerySources({
         };
       }
 
-      return Object.values<DocSearchHit[]>(sources).map((items, index) => ({
-        sourceId: `hits_${result.index}_${index}`,
+      const items = Object.values(sources).flat();
+
+      return {
+        sourceId: `hits_${result.index}`,
         onSelect({ item, event }): void {
           saveRecentSearch(item);
           if (!isModifierEvent(event)) {
@@ -184,30 +187,32 @@ export async function buildQuerySources({
         getItemUrl({ item }): string {
           return item.url;
         },
-        getItems(): InternalDocSearchHit[] {
+        getItems() {
           return Object.values(groupBy(items, (item) => item.hierarchy.lvl1, maxResultsPerGroup))
             .map((groupedHits) =>
-              groupedHits.map((item) => {
-                let parent: InternalDocSearchHit | null = null;
+              groupedHits
+                .map((item) => {
+                  let parent: InternalDocSearchHit | null = null;
 
-                const potentialParent = groupedHits.find(
-                  (siblingItem) => siblingItem.type === 'lvl1' && siblingItem.hierarchy.lvl1 === item.hierarchy.lvl1,
-                ) as InternalDocSearchHit | undefined;
+                  const potentialParent = groupedHits.find(
+                    (siblingItem) => siblingItem.type === 'lvl1' && siblingItem.hierarchy.lvl1 === item.hierarchy.lvl1,
+                  ) as InternalDocSearchHit | undefined;
 
-                if (item.type !== 'lvl1' && potentialParent) {
-                  parent = potentialParent;
-                }
+                  if (item.type !== 'lvl1' && potentialParent) {
+                    parent = potentialParent;
+                  }
 
-                return {
-                  ...item,
-                  __docsearch_parent: parent,
-                  ...insightsParams,
-                };
-              }),
+                  return {
+                    ...item,
+                    __docsearch_parent: parent,
+                    ...insightsParams,
+                  };
+                })
+                .flat(),
             )
             .flat();
         },
-      }));
+      };
     });
   } catch (error) {
     if ((error as Error).name === 'RetryError') {

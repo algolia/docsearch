@@ -72,7 +72,6 @@ function SearchTool({ part, translations, onSearchQueryClick }: SearchToolProps)
       );
     case 'output-available': {
       const query = part.type === 'tool-searchIndex' ? part.output.query : part.input.query;
-      const numberOfHits = part.output.hits?.length ?? 0;
 
       return (
         <ToolState icon={<SearchIcon />} variant="Result">
@@ -96,8 +95,7 @@ function SearchTool({ part, translations, onSearchQueryClick }: SearchToolProps)
               </span>
             ) : (
               <span className="DocSearch-AskAiScreen-MessageContent-Tool-Query"> &quot;{query || ''}&quot;</span>
-            )}{' '}
-            found {numberOfHits} results
+            )}
           </span>
         </ToolState>
       );

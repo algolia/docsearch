@@ -349,6 +349,7 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   overflow-y: overlay;
   scrollbar-color: var(--docsearch-sidepanel-scrollbar-color) var(--docsearch-sidepanel-scrollbar-bg);
   scrollbar-width: thin;
+  scrollbar-gutter: stable;
 }
 
 .DocSearch-Sidepanel-Content::-webkit-scrollbar {
@@ -644,12 +645,8 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
 }
 
 .DocSearch-Sidepanel .DocSearch-AskAiScreen-Response {
-  padding: 1rem;
+  padding: 0;
   font-size: 0.95em;
-}
-
-.DocSearch-Sidepanel .DocSearch-AskAiScreen-Query {
-  font-size: 1.25rem;
 }
 
 .DocSearch-Sidepanel .DocSearch-Markdown-Content {

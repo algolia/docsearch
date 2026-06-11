@@ -300,7 +300,7 @@ describe('api', () => {
       });
 
       await act(async () => {
-        fireEvent.click(await screen.findByText(/Ask AI to help:/));
+        fireEvent.click(await screen.findByText('hello', { selector: '.DocSearch-Hit-AskAIButton-title-query' }));
       });
 
       expect(document.querySelector('.DocSearch-AskAiScreen')).toBeInTheDocument();
