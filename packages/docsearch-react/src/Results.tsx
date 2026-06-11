@@ -156,7 +156,7 @@ function AskAIResultContent<TItem extends StoredDocSearchHit>({
   item,
   relativeDateFallbackText,
 }: AskAIResultContentProps<TItem>) {
-  const storedDate = item.hierarchy.lvl2 ? new Date(item.hierarchy.lvl2) : new Date();
+  const storedDate = item.hierarchy.lvl2 ? new Date(item.hierarchy.lvl2) : null;
   const relativeDate = useRelativeFormattedDate(storedDate);
 
   return (
