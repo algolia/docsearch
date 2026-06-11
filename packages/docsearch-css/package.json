@@ -21,11 +21,16 @@
   "jsdelivr": "dist/style.css",
   "scripts": {
     "build:clean": "rm -rf ./dist",
-    "build:css": "node build-css.js",
+    "build:css": "bun build-css.ts",
     "build": "bun run build:clean && mkdir dist && bun run build:css",
     "watch": "nodemon --watch 'src/**/*.css' --exec 'bun run build:css' --ext css"
   },
   "devDependencies": {
+    "browserslist": "4.28.2",
+    "lightningcss": "1.32.0",
     "nodemon": "^3.1.9"
-  }
+  },
+  "browserslist": [
+    "defaults"
+  ]
 }

@@ -1,6 +1,7 @@
+@import url('./_variables.css');
+
 :root {
   /* Theme colors */
-  /* Pulls variables from ./_variables.css at build */
   --docsearch-sidepanel-background: var(--docsearch-modal-background);
   --docsearch-sidepanel-background-dark: var(--docsearch-searchbox-background);
   --docsearch-sidepanel-white: #fff;
