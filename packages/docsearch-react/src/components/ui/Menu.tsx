@@ -1,11 +1,13 @@
 import { Menu as MenuPrimitive } from '@base-ui/react/menu';
-import React from 'react';
+import React, { type JSX } from 'react';
 
-export function Menu({ ...props }: MenuPrimitive.Root.Props) {
+import { CheckIcon } from '../../icons';
+
+export function Menu({ ...props }: MenuPrimitive.Root.Props): JSX.Element {
   return <MenuPrimitive.Root {...props} />;
 }
 
-function MenuTrigger({ className, ...props }: MenuPrimitive.Trigger.Props) {
+function MenuTrigger({ className, ...props }: MenuPrimitive.Trigger.Props): JSX.Element {
   const cn = `DocSearch-Menu-Trigger${className ? ` ${className}` : ''}`;
   return <MenuPrimitive.Trigger className={cn} {...props} />;
 }
@@ -24,7 +26,7 @@ function MenuPopup({
   collisionBoundary = 'clipping-ancestors',
   container,
   ...props
-}: MenuPopupProps) {
+}: MenuPopupProps): JSX.Element {
   return (
     <MenuPrimitive.Portal container={container}>
       <MenuPrimitive.Positioner
@@ -43,27 +45,29 @@ function MenuPopup({
 
 Menu.Popup = MenuPopup;
 
-function MenuRadioGroup({ ...props }: MenuPrimitive.RadioGroup.Props) {
+function MenuRadioGroup({ ...props }: MenuPrimitive.RadioGroup.Props): JSX.Element {
   return <MenuPrimitive.RadioGroup {...props} />;
 }
 
 Menu.RadioGroup = MenuRadioGroup;
 
-function MenuRadioItem({ className, ...props }: MenuPrimitive.RadioItem.Props) {
-  const cn = `DocSearch-Menu-RadioItem${className ? ` ${className}` : ''}`;
-  return <MenuPrimitive.RadioItem className={cn} closeOnClick={true} {...props} />;
+function MenuRadioItem({ className, children, ...props }: MenuPrimitive.RadioItem.Props): JSX.Element {
+  const cn = `DocSearch-Menu-Item DocSearch-Menu-RadioItem${className ? ` ${className}` : ''}`;
+  return (
+    <MenuPrimitive.RadioItem className={cn} closeOnClick={true} {...props}>
+      <span className="DocSearch-Menu-RadioItem-Indicator">
+        <MenuPrimitive.RadioItemIndicator>
+          <CheckIcon />
+        </MenuPrimitive.RadioItemIndicator>
+      </span>
+      {children}
+    </MenuPrimitive.RadioItem>
+  );
 }
 
 Menu.RadioItem = MenuRadioItem;
 
-function MenuRadioItemIndicator({ className, ...props }: MenuPrimitive.RadioItemIndicator.Props) {
-  const cn = `DocSearch-Menu-RadioItem-Indicator${className ? ` ${className}` : ''}`;
-  return <MenuPrimitive.RadioItemIndicator className={cn} {...props} />;
-}
-
-Menu.RadioItemIndicator = MenuRadioItemIndicator;
-
-function MenuGroupLabel({ className, ...props }: MenuPrimitive.GroupLabel.Props) {
+function MenuGroupLabel({ className, ...props }: MenuPrimitive.GroupLabel.Props): JSX.Element {
   const cn = `DocSearch-Menu-GroupLabel${className ? ` ${className}` : ''}`;
   return <MenuPrimitive.GroupLabel className={cn} {...props} />;
 }

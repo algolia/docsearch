@@ -13,6 +13,11 @@ export default function Basic({ theme }: { theme: DemoTheme }): JSX.Element {
       translations={{ button: { buttonText: 'Keyword search' } }}
       insights={true}
       theme={theme}
+      facets={[
+        { key: 'language', label: 'Language' },
+        { key: 'version', label: 'Version' },
+        { key: 'type', label: 'Content type' },
+      ]}
     />
   );
 }

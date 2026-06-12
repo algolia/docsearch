@@ -1,14 +1,16 @@
 import { createAutocomplete } from '@algolia/autocomplete-core';
 import React, { type JSX } from 'react';
 
+import type { FacetBarTranslations } from './components/FacetBar';
+import { FacetBar } from './components/FacetBar';
 import type { KeywordSearchBoxTranslations } from './components/KeywordSearchBox';
 import { KeywordSearchBox } from './components/KeywordSearchBox';
-import { FilterBar } from './components/ui/FilterBar';
 import { ModalShell } from './components/ui/ModalShell';
 import type { DocSearchProps } from './DocSearch';
 import type { FooterTranslations } from './Footer';
 import { Footer } from './Footer';
 import { Hit } from './Hit';
+import { useDocSearchFacets } from './hooks/useDocSearchFacets';
 import { useSendItemClickEvent } from './hooks/useDocSearchInsights';
 import { useInitialModalQuery } from './hooks/useInitialModalQuery';
 import { useModalEnvironment } from './hooks/useModalEnvironment';
@@ -19,16 +21,15 @@ import { useStoredDocSearches } from './hooks/useStoredDocSearches';
 import type { ScreenStateTranslations } from './ScreenState';
 import { ScreenState } from './ScreenState';
 import type { DocSearchState, InternalDocSearchHit } from './types';
-import { useFacetValues } from './useFacetValues';
 import { useSearchClient } from './useSearchClient';
 import { identity, isModifierEvent, noop, scrollTo as scrollToUtils } from './utils';
 import { buildNoQuerySources, buildQuerySources, type BuildQuerySourcesState } from './utils/createDocSearchSources';
-import { normalizeFacets } from './utils/facets';
 import { normalizeDocSearchIndexes } from './utils/normalizeDocSearchIndexes';
 
 export type ModalTranslations = Partial<{
   searchBox: KeywordSearchBoxTranslations;
   footer: FooterTranslations;
+  facets: FacetBarTranslations;
 }> &
   ScreenStateTranslations;
 
@@ -63,7 +64,12 @@ export function DocSearchModal({
   facets,
   ...props
 }: DocSearchModalProps): JSX.Element {
-  const { footer: footerTranslations, searchBox: searchBoxTranslations, ...screenStateTranslations } = translations;
+  const {
+    footer: footerTranslations,
+    searchBox: searchBoxTranslations,
+    facets: facetBarTranslations,
+    ...screenStateTranslations
+  } = translations;
   const [state, setState] = React.useState<DocSearchState<InternalDocSearchHit>>({
     query: '',
     collections: [],
@@ -91,26 +97,6 @@ export function DocSearchModal({
     [indexName, indices, searchParameters],
   );
   const defaultIndexName = indexes[0].name;
-  const normalizedFacets = React.useMemo(() => normalizeFacets(facets), [facets]);
-  const facetValues = useFacetValues({ facets: normalizedFacets, indexes, searchClient });
-  const [facetSelections, setFacetSelections] = React.useState<Record<string, string>>({});
-  const facetSelectionsRef = React.useRef(facetSelections);
-  facetSelectionsRef.current = facetSelections;
-  const visibleFacets = normalizedFacets
-    .map((facet) => ({ ...facet, values: facetValues[facet.key] ?? [] }))
-    .filter((facet) => facet.values.length > 0);
-
-  const { favoriteSearches, recentSearches } = useStoredDocSearches({
-    defaultIndexName,
-    recentSearchesLimit,
-    recentSearchesWithFavoritesLimit,
-  });
-  const saveRecentSearch = useSaveRecentSearch({
-    favoriteSearches,
-    recentSearches,
-    disableUserPersonalization,
-  });
-  const sendItemClickEvent = useSendItemClickEvent(state);
 
   const autocompleteRef =
     React.useRef<
@@ -123,6 +109,26 @@ export function DocSearchModal({
         >
       >
     >(undefined);
+
+  const { visibleFacets, facetSelections, facetSelectionsRef, handleFacetSelectionChange, clearFacetSelections } =
+    useDocSearchFacets({
+      facets,
+      indexes,
+      searchClient,
+      onSelectionsChange: () => autocompleteRef.current?.refresh(),
+    });
+
+  const { favoriteSearches, recentSearches } = useStoredDocSearches({
+    defaultIndexName,
+    recentSearchesLimit,
+    recentSearchesWithFavoritesLimit,
+  });
+  const saveRecentSearch = useSaveRecentSearch({
+    favoriteSearches,
+    recentSearches,
+    disableUserPersonalization,
+  });
+  const sendItemClickEvent = useSendItemClickEvent(state);
 
   if (!autocompleteRef.current) {
     autocompleteRef.current = createAutocomplete({
@@ -203,25 +209,6 @@ export function DocSearchModal({
 
   useRefreshOnInitialQuery({ initialQuery, inputRef, refresh });
 
-  const handleFacetSelectionChange = React.useCallback(
-    (facet: string, value: string): void => {
-      setFacetSelections((currentFacetSelections) => {
-        const nextFacetSelections = {
-          ...currentFacetSelections,
-          [facet]: value,
-        };
-        facetSelectionsRef.current = nextFacetSelections;
-        return nextFacetSelections;
-      });
-      facetSelectionsRef.current = {
-        ...facetSelectionsRef.current,
-        [facet]: value,
-      };
-      refresh();
-    },
-    [refresh],
-  );
-
   // hide the dropdown on idle and no collections
   let showDocsearchDropdown = true;
   const hasCollections = state.collections.some((collection) => collection.items.length > 0);
@@ -251,7 +238,15 @@ export function DocSearchModal({
         />
       }
       filterBar={
-        <FilterBar facets={visibleFacets} selections={facetSelections} onSelectionChange={handleFacetSelectionChange} />
+        state.query !== '' ? (
+          <FacetBar
+            facets={visibleFacets}
+            selections={facetSelections}
+            translations={facetBarTranslations}
+            clearSelections={clearFacetSelections}
+            onSelectionChange={handleFacetSelectionChange}
+          />
+        ) : null
       }
       screenState={
         <ScreenState

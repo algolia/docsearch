@@ -56,7 +56,8 @@
 .DocSearch-Popover-Positioner {
   width: var(--positioner-width);
   height: var(--positioner-height);
-  max-width: var(--available-width)
+  max-width: var(--available-width);
+  isolation: isolate;
 }
 
 .DocSearch-Popover-Popup {
@@ -66,7 +67,7 @@
   position: relative;
   background-color: var(--docsearch-popover-background);
   z-index: 999;
-  box-shadow: 0px 0px 0px 1px rgba(33, 36, 61, 0.05), 0px 4px 8px -2px rgba(33, 36, 61, 0.25);
+  box-shadow: var(--docsearch-popover-shadow);
   border-radius: var(--docsearch-border-radius);
   padding-inline: 1rem;
   padding-block: 1rem;
@@ -154,6 +155,8 @@
   width: 1rem;
 }
 
+/* DocSearch Menu */
+
 .DocSearch-Menu {
   position: relative;
 }
@@ -195,22 +198,144 @@
   background-color: var(--docsearch-dropdown-menu-item-hover-background);
 }
 
+.DocSearch-Menu-Trigger {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 0.25rem;
+  color: var(--docsearch-text-color);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-size: 0.875em;
+  font-weight: 400;
+  gap: 0.5em;
+  line-height: 1.43em;
+  padding-block: 0.285em;
+  padding-inline: 0.571em;
+
+  &:hover,
+  &[data-popup-open],
+  &[data-has-selection="true"] {
+    background: var(--docsearch-menu-trigger-active-background);
+    color: var(--docsearch-menu-trigger-active-text-color);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--docsearch-primary-color);
+  }
+
+  & svg {
+    stroke-width: var(--docsearch-icon-stroke-width);
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    flex-shrink: 0;
+  }
+}
+
 .DocSearch-Menu-Positioner {
+  isolation: isolate;
   z-index: 999;
 }
 
 .DocSearch-Menu-Popup {
-  background-color: var(--docsearch-modal-background);
-  border: 1px solid var(--docsearch-subtle-color);
-  border-radius: 4px;
-  box-shadow: 0 12px 28px rgb(33 36 61 / 20%);
-  max-height: 320px;
-  max-width: 320px;
-  min-width: 200px;
+  background-color: var(--docsearch-popover-background);
+  border-radius: 0.25rem;
+  box-shadow: var(--docsearch-popover-shadow);
+  max-height: 20rem;
+  min-width: 12.5rem;
   outline: none;
   overflow-y: auto;
-  padding-block: 0;
+  padding-block: 0.5rem;
   transform-origin: var(--transform-origin);
+}
+
+.DocSearch-Menu-Item {
+  display: flex;
+  align-items: center;
+  color: var(--docsearch-text-color);
+  cursor: pointer;
+  font-size: 0.875em;
+  line-height: 1.43em;
+  outline: none;
+  padding-block: 0.714em;
+  padding-inline: 1.14em;
+  user-select: none;
+  gap: 0.25rem;
+  min-height: 3rem;
+
+  @media screen and (min-width: 768px) {
+    min-height: 0;
+  }
+
+  &:hover,
+  &[data-highlighted] {
+    background: var(--docsearch-dropdown-menu-item-hover-background);
+  }
+
+  & svg {
+    flex-shrink: 0;
+  }
+}
+
+.DocSearch-Menu-RadioItem[data-checked] {
+  color: var(--docsearch-highlight-color);
+}
+
+.DocSearch-Menu-RadioItem-Indicator {
+  --indicator-size: 1rem;
+  pointer-events: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--indicator-size);
+
+  & span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  & svg {
+    stroke-width: var(--docsearch-icon-stroke-width);
+    height: var(--indicator-size);
+    width: var(--indicator-size);
+  }
+}
+
+/* Chip */
+
+.DocSearch-Chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.29em;
+  font-size: 0.875em;
+  color: var(--docsearch-chip-text-color);
+  background: var(--docsearch-chip-background);
+  padding-inline: 0.57em;
+  border-radius: 100vw;
+  height: 2.14em;
+
+  &:focus-within,
+  &:has(:focus-visible) {
+    outline: 2px solid var(--docsearch-primary-color);
+  }
+}
+
+.DocSearch-Chip-Dismiss {
+  all: unset;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 1em;
+  width: 1em;
+  cursor: pointer;
+
+  & svg {
+    stroke-width: var(--docsearch-icon-stroke-width);
+  }
 }
 
 /* Modal Searchbox */
@@ -223,91 +348,62 @@
   color: var(--docsearch-highlight-color);
 }
 
-.DocSearch-FilterBar {
+/* Facet bar */
+
+.DocSearch-FacetBar {
   align-items: center;
   background: var(--docsearch-modal-background);
   display: flex;
-  gap: 8px;
+  gap: 0.57em;
   overflow-x: auto;
-  padding-block: 8px;
-  padding-inline: 12px;
+  padding-block: 0.57em;
+  padding-inline: 0.857em;
   scrollbar-width: none;
 }
 
-.DocSearch-FilterBar::-webkit-scrollbar {
+.DocSearch-FacetBar::-webkit-scrollbar {
   display: none;
 }
 
-.DocSearch-FilterBar-Trigger {
+/* Facet selection bar */
+
+.DocSearch-FacetSelectionBar {
+  display: flex;
   align-items: center;
-  appearance: none;
-  background: transparent;
-  border: 0;
-  border-radius: 8px;
-  color: var(--docsearch-text-color);
+  flex-wrap: wrap;
+  padding-block: 0.57em;
+  padding-inline: 0.857em;
+  gap: 0.57em;
+  border-block: 1px solid var(--docsearch-subtle-color);
+}
+
+.DocSearch-FacetSelectionBar::-webkit-scrollbar {
+  display: none;
+}
+
+.DocSearch-FacetSelectionBar-Action {
+  all: unset;
+  color: var(--docsearch-secondary-text-color);
+  font-size: 0.875em;
+  display: inline-flex;
+  align-items: center;
+  padding-inline: 0.57em;
+  border-radius: 100vw;
+  height: 2.14em;
   cursor: pointer;
-  display: flex;
-  flex: 0 0 auto;
-  font: inherit;
-  font-size: 1em;
-  font-weight: 400;
-  gap: 8px;
-  line-height: 1;
-  padding-block: 10px;
-  padding-inline: 12px;
+
+  &:hover,
+  &:focus {
+    background-color: var(--docsearch-background-color);
+    color: var(--docsearch-text-color);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--docsearch-primary-color);
+  }
 }
 
-.DocSearch-FilterBar-Trigger:hover,
-.DocSearch-FilterBar-Trigger[data-popup-open] {
-  background: var(--docsearch-soft-primary-color);
-  color: var(--docsearch-highlight-color);
-}
-
-.DocSearch-FilterBar-Trigger--Active {
-  background: var(--docsearch-soft-primary-color);
-  color: var(--docsearch-highlight-color);
-}
-
-.DocSearch-FilterBar-Trigger-Icon {
-  align-items: center;
-  color: var(--docsearch-muted-color);
-  display: flex;
-  transition: transform 0.15s ease;
-}
-
-.DocSearch-FilterBar-Trigger--Active .DocSearch-FilterBar-Trigger-Icon,
-.DocSearch-FilterBar-Trigger:hover .DocSearch-FilterBar-Trigger-Icon,
-.DocSearch-FilterBar-Trigger[data-popup-open] .DocSearch-FilterBar-Trigger-Icon {
-  color: inherit;
-}
-
-.DocSearch-FilterBar-Trigger[data-popup-open] .DocSearch-FilterBar-Trigger-Icon {
-  transform: rotate(-90deg);
-}
-
-.DocSearch-FilterBar-Option {
-  align-items: center;
-  color: var(--docsearch-text-color);
-  cursor: pointer;
-  display: flex;
-  font-size: 1em;
-  line-height: 1.2;
-  min-height: 48px;
-  outline: none;
-  padding-block: 12px;
-  padding-inline: 24px;
-  user-select: none;
-}
-
-.DocSearch-FilterBar-Option:hover,
-.DocSearch-FilterBar-Option[data-highlighted] {
-  background: var(--docsearch-dropdown-menu-item-hover-background);
-}
-
-.DocSearch-FilterBar-Option[data-checked] {
-  color: var(--docsearch-highlight-color);
-  font-weight: 400;
-}
+/* DocSearch Form */
 
 .DocSearch-Form {
   align-items: center;

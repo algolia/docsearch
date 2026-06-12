@@ -1,3 +1,4 @@
+export * from './capitalize';
 export * from './collections';
 export * from './decodeHtmlEntities';
 export * from './getHitItemBreadcrumbs';

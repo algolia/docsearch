@@ -7,12 +7,14 @@ import type { AskAiScreenStateTranslations } from './AskAiScreenState';
 import { AskAiScreenState } from './AskAiScreenState';
 import type { AskAiSearchBoxTranslations } from './components/AskAiSearchBox';
 import { AskAiSearchBox } from './components/AskAiSearchBox';
-import { FilterBar } from './components/ui/FilterBar';
+import type { FacetBarTranslations } from './components/FacetBar';
+import { FacetBar } from './components/FacetBar';
 import { ModalShell } from './components/ui/ModalShell';
 import type { DocSearchAIProps } from './DocSearchAI';
 import type { FooterTranslations } from './Footer';
 import { Footer } from './Footer';
 import { Hit } from './Hit';
+import { useDocSearchFacets } from './hooks/useDocSearchFacets';
 import { useSendItemClickEvent } from './hooks/useDocSearchInsights';
 import { useInitialModalQuery } from './hooks/useInitialModalQuery';
 import { useModalEnvironment } from './hooks/useModalEnvironment';
@@ -30,14 +32,12 @@ import type {
 } from './types';
 import { type AskAiState } from './types/AskiAi';
 import { useAskAi } from './useAskAi';
-import { useFacetValues } from './useFacetValues';
 import { useSearchClient } from './useSearchClient';
 import { useSuggestedQuestions } from './useSuggestedQuestions';
-import { identity, isModifierEvent, noop, scrollTo as scrollToUtils } from './utils';
+import { identity, isModifierEvent, noop, scrollTo as scrollToUtils, SOURCE_IDS } from './utils';
 import { buildDummyAskAiHit, isThreadDepthError, EMPTY_TOOLS } from './utils/ai';
 import { buildAskAiActionSources, buildRecentConversationSources } from './utils/createAskAiSources';
 import { buildNoQuerySources, buildQuerySources, type BuildQuerySourcesState } from './utils/createDocSearchSources';
-import { normalizeFacets } from './utils/facets';
 import { normalizeDocSearchIndexes } from './utils/normalizeDocSearchIndexes';
 
 export type DocSearchAskAiModalTranslations = AskAiScreenStateTranslations &
@@ -45,6 +45,7 @@ export type DocSearchAskAiModalTranslations = AskAiScreenStateTranslations &
     searchBox: AskAiSearchBoxTranslations;
     newConversation: NewConversationTranslations;
     footer: FooterTranslations;
+    facets: FacetBarTranslations;
   }>;
 
 export type DocSearchAskAiModalProps = DocSearchAIProps & {
@@ -87,7 +88,12 @@ export function DocSearchAskAiModal({
   tools = EMPTY_TOOLS,
   ...props
 }: DocSearchAskAiModalProps): JSX.Element {
-  const { footer: footerTranslations, searchBox: searchBoxTranslations, ...screenStateTranslations } = translations;
+  const {
+    footer: footerTranslations,
+    searchBox: searchBoxTranslations,
+    facets: facetBarTranslations,
+    ...screenStateTranslations
+  } = translations;
   const [state, setState] = React.useState<DocSearchState<InternalDocSearchHit>>({
     query: '',
     collections: [],
@@ -137,14 +143,26 @@ export function DocSearchAskAiModal({
     [indexName, indices, searchParameters],
   );
   const defaultIndexName = indexes[0].name;
-  const normalizedFacets = React.useMemo(() => normalizeFacets(facets), [facets]);
-  const facetValues = useFacetValues({ facets: normalizedFacets, indexes, searchClient });
-  const [facetSelections, setFacetSelections] = React.useState<Record<string, string>>({});
-  const facetSelectionsRef = React.useRef(facetSelections);
-  facetSelectionsRef.current = facetSelections;
-  const visibleFacets = normalizedFacets
-    .map((facet) => ({ ...facet, values: facetValues[facet.key] ?? [] }))
-    .filter((facet) => facet.values.length > 0);
+
+  const autocompleteRef =
+    React.useRef<
+      ReturnType<
+        typeof createAutocomplete<
+          InternalDocSearchHit,
+          React.FormEvent<HTMLFormElement>,
+          React.MouseEvent,
+          React.KeyboardEvent
+        >
+      >
+    >(undefined);
+
+  const { visibleFacets, facetSelections, facetSelectionsRef, handleFacetSelectionChange, clearFacetSelections } =
+    useDocSearchFacets({
+      facets,
+      indexes,
+      searchClient,
+      onSelectionsChange: () => autocompleteRef.current?.refresh(),
+    });
 
   const { favoriteSearches, recentSearches } = useStoredDocSearches({
     defaultIndexName,
@@ -200,18 +218,6 @@ export function DocSearchAskAiModal({
     disableUserPersonalization,
   });
   const sendItemClickEvent = useSendItemClickEvent(state);
-
-  const autocompleteRef =
-    React.useRef<
-      ReturnType<
-        typeof createAutocomplete<
-          InternalDocSearchHit,
-          React.FormEvent<HTMLFormElement>,
-          React.MouseEvent,
-          React.KeyboardEvent
-        >
-      >
-    >(undefined);
 
   const handleSelectAskAiQuestion = React.useCallback(
     (toggle: boolean, query: string, suggestedQuestion: SuggestedQuestionHit | undefined = undefined) => {
@@ -386,25 +392,6 @@ export function DocSearchAskAiModal({
 
   useRefreshOnInitialQuery({ initialQuery, inputRef, refresh });
 
-  const handleFacetSelectionChange = React.useCallback(
-    (facet: string, value: string): void => {
-      setFacetSelections((currentFacetSelections) => {
-        const nextFacetSelections = {
-          ...currentFacetSelections,
-          [facet]: value,
-        };
-        facetSelectionsRef.current = nextFacetSelections;
-        return nextFacetSelections;
-      });
-      facetSelectionsRef.current = {
-        ...facetSelectionsRef.current,
-        [facet]: value,
-      };
-      refresh();
-    },
-    [refresh],
-  );
-
   // Refresh the autocomplete results when ask ai is toggled off
   // helps return to the previous ac state and start screen
   React.useEffect(() => {
@@ -440,7 +427,9 @@ export function DocSearchAskAiModal({
 
   // hide the dropdown on idle and no collections
   let showDocsearchDropdown = true;
-  const hasCollections = state.collections.some((collection) => collection.items.length > 0);
+  const hasCollections = state.collections.some(
+    (collection) => collection.source.sourceId !== SOURCE_IDS.askAI && collection.items.length > 0,
+  );
   if (state.status === 'idle' && hasCollections === false && state.query.length === 0 && !isAskAiActive) {
     showDocsearchDropdown = false;
   }
@@ -480,10 +469,12 @@ export function DocSearchAskAiModal({
         />
       }
       filterBar={
-        !isAskAiActive ? (
-          <FilterBar
+        !isAskAiActive && state.query !== '' ? (
+          <FacetBar
             facets={visibleFacets}
             selections={facetSelections}
+            translations={facetBarTranslations}
+            clearSelections={clearFacetSelections}
             onSelectionChange={handleFacetSelectionChange}
           />
         ) : null

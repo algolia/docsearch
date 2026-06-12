@@ -24,3 +24,4 @@ export * from './MessageIcon';
 export * from './PinIcon';
 export * from './BackIcon';
 export * from './ChevronIcon';
+export * from './CheckIcon';
