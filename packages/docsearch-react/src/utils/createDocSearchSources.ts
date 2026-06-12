@@ -1,5 +1,5 @@
 import type { AutocompleteSource, AutocompleteState } from '@algolia/autocomplete-core';
-import type { SearchResponse } from 'algoliasearch/lite';
+import type { SearchParamsObject, SearchResponse } from 'algoliasearch/lite';
 import type React from 'react';
 
 import type { DocSearchIndex, DocSearchProps } from '../DocSearch';
@@ -17,6 +17,27 @@ export type BuildQuerySourcesState = Pick<AutocompleteState<InternalDocSearchHit
 export type StoredSearchesLike<TItem> = {
   getAll: () => TItem[];
 };
+
+export type FacetSelections = Record<string, string>;
+
+export function createFacetFilters(
+  searchParametersFacetFilters: SearchParamsObject['facetFilters'],
+  facetSelections: FacetSelections,
+): SearchParamsObject['facetFilters'] {
+  const dynamicFacetFilters = Object.entries(facetSelections)
+    .filter(([, value]) => value)
+    .map(([facet, value]) => `${facet}:${value}`);
+
+  if (dynamicFacetFilters.length === 0) {
+    return searchParametersFacetFilters;
+  }
+
+  if (!searchParametersFacetFilters) {
+    return dynamicFacetFilters;
+  }
+
+  return [...searchParametersFacetFilters, ...dynamicFacetFilters];
+}
 
 export function buildNoQuerySources({
   recentSearches,
@@ -84,6 +105,7 @@ export async function buildQuerySources({
   transformItems = identity,
   saveRecentSearch,
   onClose,
+  facetSelections,
 }: {
   query: string;
   state: BuildQuerySourcesState;
@@ -99,6 +121,7 @@ export async function buildQuerySources({
   transformItems?: DocSearchProps['transformItems'];
   saveRecentSearch: (item: InternalDocSearchHit) => void;
   onClose: () => void;
+  facetSelections: React.MutableRefObject<FacetSelections>;
 }): Promise<Array<AutocompleteSource<InternalDocSearchHit>>> {
   const insightsActive = insights;
 
@@ -107,6 +130,7 @@ export async function buildQuerySources({
       requests: indexes.map((index) => {
         const indexName = index.name;
         const searchParams = index.searchParameters;
+        const facetFilters = createFacetFilters(searchParams?.facetFilters, facetSelections.current);
 
         return {
           query,
@@ -138,6 +162,7 @@ export async function buildQuerySources({
           hitsPerPage: searchParams?.hitsPerPage ?? 20,
           clickAnalytics: searchParams?.clickAnalytics ?? insightsActive,
           ...(searchParams ?? {}),
+          ...(facetFilters ? { facetFilters } : {}),
         };
       }),
     });
