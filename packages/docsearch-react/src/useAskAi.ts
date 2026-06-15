@@ -1,8 +1,8 @@
 import type { UseChatHelpers } from '@ai-sdk/react';
 import { useChat } from '@ai-sdk/react';
 import type { ChatOnToolCallCallback } from 'ai';
-import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls } from 'ai';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls, generateId } from 'ai';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { agentStudioBaseUrl, getAgentStudioErrorMessage, postAgentStudioFeedback } from './askai';
 import type { Exchange } from './AskAiScreen';
@@ -28,6 +28,7 @@ type UseAskAiParams = {
 };
 
 type UseAskAiReturn = {
+  chatId: string;
   messages: AIMessage[];
   status: UseChat['status'];
   sendMessage: UseChat['sendMessage'];
@@ -38,6 +39,8 @@ type UseAskAiReturn = {
   exchanges: Exchange[];
   conversations: StoredSearchPlugin<StoredAskAiState>;
   sendFeedback: OnAskAiFeedback;
+  startNewConversation: () => void;
+  restoreConversation: (restored: AIMessage[], existingConversationId?: string) => void;
 };
 
 type UseAskAi = (params: UseAskAiParams) => UseAskAiReturn;
@@ -90,6 +93,8 @@ export const useAskAi: UseAskAi = ({
   memory,
   indices,
 }) => {
+  const [chatId, setChatId] = useState(generateId);
+  const [restoredMessages, setRestoredMessages] = useState<AIMessage[] | undefined>(undefined);
   const abortControllerRef = useRef(new AbortController());
 
   const askAiTransport = useMemo(
@@ -134,6 +139,8 @@ export const useAskAi: UseAskAi = ({
   }, []);
 
   const { messages, sendMessage, status, setMessages, error, stop, addToolOutput } = useChat({
+    id: chatId,
+    messages: restoredMessages,
     sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
     transport: askAiTransport,
     onToolCall: handleToolCall,
@@ -201,7 +208,18 @@ export const useAskAi: UseAskAi = ({
     return getAgentStudioErrorMessage(error);
   }, [error]);
 
+  const startNewConversation = useCallback(() => {
+    setRestoredMessages(undefined);
+    setChatId(generateId());
+  }, []);
+
+  const restoreConversation = useCallback((restored: AIMessage[], existingConversationId?: string) => {
+    setRestoredMessages(restored);
+    setChatId(existingConversationId ?? generateId());
+  }, []);
+
   return {
+    chatId,
     messages,
     sendMessage,
     status,
@@ -212,5 +230,7 @@ export const useAskAi: UseAskAi = ({
     exchanges,
     conversations,
     sendFeedback,
+    startNewConversation,
+    restoreConversation,
   };
 };

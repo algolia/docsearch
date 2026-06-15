@@ -25,6 +25,7 @@ import type {
   InternalDocSearchHit,
   OnAskAiFeedback,
   StoredAskAiMessage,
+  StoredAskAiState,
   SuggestedQuestionHit,
 } from './types';
 import { type AskAiState } from './types/AskiAi';
@@ -138,17 +139,28 @@ export function DocSearchAskAiModal({
 
   const [stoppedStream, setStoppedStream] = React.useState(false);
 
-  const { messages, status, setMessages, sendMessage, stopAskAiStreaming, askAiError, sendFeedback, conversations } =
-    useAskAi({
-      assistantId: askAiConfigurationId,
-      apiKey: askAiConfig?.apiKey || apiKey,
-      appId: askAiConfig?.appId || appId,
-      indexName: askAiConfig?.indexName || defaultIndexName,
-      searchParameters: askAiSearchParameters,
-      tools,
-      memory: props.memory,
-      indices: askAiConfig?.indices,
-    });
+  const {
+    chatId,
+    messages,
+    status,
+    setMessages,
+    sendMessage,
+    stopAskAiStreaming,
+    askAiError,
+    sendFeedback,
+    conversations,
+    startNewConversation,
+    restoreConversation,
+  } = useAskAi({
+    assistantId: askAiConfigurationId,
+    apiKey: askAiConfig?.apiKey || apiKey,
+    appId: askAiConfig?.appId || appId,
+    indexName: askAiConfig?.indexName || defaultIndexName,
+    searchParameters: askAiSearchParameters,
+    tools,
+    memory: props.memory,
+    indices: askAiConfig?.indices,
+  });
 
   const prevStatus = React.useRef(status);
   React.useEffect(() => {
@@ -166,12 +178,12 @@ export function DocSearchAskAiModal({
 
       for (const part of messages[0].parts) {
         if (part.type === 'text') {
-          conversations.add(buildDummyAskAiHit(part.text, messages));
+          conversations.add(buildDummyAskAiHit(part.text, messages, chatId));
         }
       }
     }
     prevStatus.current = status;
-  }, [status, messages, conversations, disableUserPersonalization, stoppedStream]);
+  }, [status, messages, conversations, disableUserPersonalization, stoppedStream, chatId]);
 
   // Check if there's a thread depth error (AI-217)
   const hasThreadDepthError = React.useMemo(() => {
@@ -369,14 +381,19 @@ export function DocSearchAskAiModal({
 
   useRefreshOnInitialQuery({ initialQuery, inputRef, refresh });
 
+  const hasCurrentMessages = messages.length > 0;
+
   // Refresh the autocomplete results when ask ai is toggled off
   // helps return to the previous ac state and start screen
   React.useEffect(() => {
     if (!isAskAiActive) {
       autocomplete.refresh();
-      setMessages([]);
+
+      if (hasCurrentMessages) {
+        startNewConversation();
+      }
     }
-  }, [isAskAiActive, autocomplete, setMessages]);
+  }, [isAskAiActive, autocomplete, startNewConversation, hasCurrentMessages]);
 
   // Track external state in order to manage internal askAiState
   React.useEffect(() => {
@@ -390,7 +407,7 @@ export function DocSearchAskAiModal({
   };
 
   const handleNewConversation = (): void => {
-    setMessages([]);
+    startNewConversation();
     setAskAiState('new-conversation');
   };
 
@@ -474,10 +491,11 @@ export function DocSearchAskAiModal({
           onItemClick={(item, event) => {
             if (item.type === 'askAI' && item.query) {
               if (item.anchor === 'stored' && 'messages' in item) {
-                setMessages(item.messages as any);
+                const hitMessages = item.messages as StoredAskAiMessage[];
+                restoreConversation(hitMessages, (item as StoredAskAiState).chatId);
                 const initialMessage: InitialAskAiMessage = {
                   query: item.query,
-                  messageId: (item.messages as StoredAskAiMessage[])[0].id,
+                  messageId: hitMessages[0].id,
                 };
 
                 if (interceptAskAiEvent?.(initialMessage)) {

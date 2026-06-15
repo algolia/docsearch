@@ -79,13 +79,14 @@ export function extractLinksFromMessage(message: AIMessage | null): ExtractedLin
   return links;
 }
 
-export const buildDummyAskAiHit = (query: string, messages: AIMessage[]): StoredAskAiState => {
+export const buildDummyAskAiHit = (query: string, messages: AIMessage[], chatId?: string): StoredAskAiState => {
   const textPart = messages[0].parts.find((part) => part.type === 'text');
   const sanitizedText = textPart?.text ? sanitizeUserInput(textPart.text) : '';
 
   return {
     query,
     objectID: sanitizedText,
+    chatId,
     messages,
     type: 'askAI',
     anchor: 'stored',
