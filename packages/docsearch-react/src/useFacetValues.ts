@@ -19,15 +19,15 @@ export function useFacetValues({
   const [facetValues, setFacetValues] = React.useState<FacetValues>({});
 
   // Derive stable string keys so the effect only re-runs when the actual
-  // facet keys or index names change, not on every render (the `facets` and
+  // facet keys or index names/searchParameters change, not on every render (the `facets` and
   // `indexes` props are recreated on each render and would otherwise loop).
-  const facetKeysKey = facets.map((facet) => facet.key).join(',');
-  const indexNamesKey = indexes.map((index) => index.name).join(',');
+  const stableFacetKeys = facets.map((facet) => facet.key).join(',');
+  const stableIndexes = JSON.stringify(indexes.map((index) => [index.name, index.searchParameters ?? null]));
 
   React.useEffect(() => {
     let isMounted = true;
 
-    const facetKeys = facetKeysKey ? facetKeysKey.split(',') : [];
+    const facetKeys = stableFacetKeys ? stableFacetKeys.split(',') : [];
 
     if (facetKeys.length === 0 || indexes.length === 0) {
       setFacetValues({});
@@ -79,7 +79,7 @@ export function useFacetValues({
       isMounted = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [facetKeysKey, indexNamesKey, searchClient]);
+  }, [stableFacetKeys, stableIndexes, searchClient]);
 
   return facetValues;
 }

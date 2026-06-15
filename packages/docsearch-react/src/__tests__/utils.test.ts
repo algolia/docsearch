@@ -32,6 +32,21 @@ describe('utils', () => {
       warn.mockRestore();
     });
 
+    it('dedupes facets based on key', () => {
+      expect(
+        normalizeFacets([
+          { key: 'language' },
+          { key: 'version' },
+          { key: 'Language' },
+          { key: 'type' },
+          { key: 'VerSion' },
+          { key: 'framework' },
+          { key: 'platform' },
+          { key: 'extra' },
+        ]),
+      ).toEqual([{ key: 'language' }, { key: 'version' }, { key: 'type' }, { key: 'framework' }, { key: 'platform' }]);
+    });
+
     it('creates labels from facet keys', () => {
       expect(getFacetLabel({ key: 'content_type' })).toBe('Content Type');
       expect(getFacetLabel({ key: 'docs.version', label: 'Version' })).toBe('Version');
@@ -42,11 +57,12 @@ describe('utils', () => {
     });
 
     it('merges configured and dynamic facetFilters', () => {
-      expect(createFacetFilters(['docusaurus_tag:default'], { language: 'en', version: 'v2' })).toEqual([
-        'docusaurus_tag:default',
-        'language:en',
-        'version:v2',
-      ]);
+      expect(
+        createFacetFilters(['docusaurus_tag:default'], {
+          language: 'en',
+          version: 'v2',
+        }),
+      ).toEqual(['docusaurus_tag:default', 'language:en', 'version:v2']);
     });
 
     it('ignores empty dynamic facet selections', () => {

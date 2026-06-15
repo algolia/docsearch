@@ -62,8 +62,49 @@ describe('useFacetValues', () => {
     expect(search).toHaveBeenCalledTimes(1);
   });
 
+  it('re-fetches when searchParameters change', async () => {
+    const { result, rerender } = renderHook(
+      ({ facets, indexes }: { facets: DocSearchFacet[]; indexes: DocSearchIndex[] }) =>
+        useFacetValues({ facets, indexes, searchClient }),
+      {
+        initialProps: {
+          facets: [{ key: 'language' }] as DocSearchFacet[],
+          indexes: [{ name: 'docs', searchParameters: { analytics: true } }] as DocSearchIndex[],
+        },
+      },
+    );
+
+    await waitFor(() => {
+      expect(result.current.language).toBeDefined();
+    });
+
+    rerender({
+      facets: [{ key: 'language' }],
+      indexes: [{ name: 'docs', searchParameters: { analytics: true } }],
+    });
+    rerender({
+      facets: [{ key: 'language' }],
+      indexes: [{ name: 'docs', searchParameters: { analytics: false } }],
+    });
+
+    expect(search).toHaveBeenCalledTimes(2);
+  });
+
   it('does not search when there are no facets', () => {
     const { result } = renderHook(() => useFacetValues({ facets: [], indexes: [{ name: 'docs' }], searchClient }));
+
+    expect(result.current).toEqual({});
+    expect(search).not.toHaveBeenCalled();
+  });
+
+  it('does not search when there are no indexes', () => {
+    const { result } = renderHook(() =>
+      useFacetValues({
+        facets: [{ key: 'language' }],
+        indexes: [],
+        searchClient,
+      }),
+    );
 
     expect(result.current).toEqual({});
     expect(search).not.toHaveBeenCalled();
