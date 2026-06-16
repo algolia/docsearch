@@ -231,6 +231,18 @@
     inline-size: 1.5rem;
     block-size: 1.5rem;
     flex-shrink: 0;
+    transform: rotate(0deg);
+    transition: transform 0.15s ease-in-out;
+  }
+
+  &[data-popup-open] svg {
+    transform: rotate(-180deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    & svg {
+      transition: none;
+    }
   }
 }
 
