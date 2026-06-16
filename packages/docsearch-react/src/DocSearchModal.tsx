@@ -1,6 +1,8 @@
 import { createAutocomplete } from '@algolia/autocomplete-core';
 import React, { type JSX } from 'react';
 
+import type { FacetBarTranslations } from './components/FacetBar';
+import { FacetBar } from './components/FacetBar';
 import type { KeywordSearchBoxTranslations } from './components/KeywordSearchBox';
 import { KeywordSearchBox } from './components/KeywordSearchBox';
 import { ModalShell } from './components/ui/ModalShell';
@@ -8,6 +10,7 @@ import type { DocSearchProps } from './DocSearch';
 import type { FooterTranslations } from './Footer';
 import { Footer } from './Footer';
 import { Hit } from './Hit';
+import { useDocSearchFacets } from './hooks/useDocSearchFacets';
 import { useSendItemClickEvent } from './hooks/useDocSearchInsights';
 import { useInitialModalQuery } from './hooks/useInitialModalQuery';
 import { useModalEnvironment } from './hooks/useModalEnvironment';
@@ -26,6 +29,7 @@ import { normalizeDocSearchIndexes } from './utils/normalizeDocSearchIndexes';
 export type ModalTranslations = Partial<{
   searchBox: KeywordSearchBoxTranslations;
   footer: FooterTranslations;
+  facets: FacetBarTranslations;
 }> &
   ScreenStateTranslations;
 
@@ -57,9 +61,15 @@ export function DocSearchModal({
   indices = [],
   indexName,
   searchParameters,
+  facets,
   ...props
 }: DocSearchModalProps): JSX.Element {
-  const { footer: footerTranslations, searchBox: searchBoxTranslations, ...screenStateTranslations } = translations;
+  const {
+    footer: footerTranslations,
+    searchBox: searchBoxTranslations,
+    facets: facetBarTranslations,
+    ...screenStateTranslations
+  } = translations;
   const [state, setState] = React.useState<DocSearchState<InternalDocSearchHit>>({
     query: '',
     collections: [],
@@ -77,24 +87,16 @@ export function DocSearchModal({
 
   const searchClient = useSearchClient(appId, apiKey, transformSearchClient);
 
-  const indexes = normalizeDocSearchIndexes({
-    indexName,
-    indices,
-    searchParameters,
-  });
+  const indexes = React.useMemo(
+    () =>
+      normalizeDocSearchIndexes({
+        indexName,
+        indices,
+        searchParameters,
+      }),
+    [indexName, indices, searchParameters],
+  );
   const defaultIndexName = indexes[0].name;
-
-  const { favoriteSearches, recentSearches } = useStoredDocSearches({
-    defaultIndexName,
-    recentSearchesLimit,
-    recentSearchesWithFavoritesLimit,
-  });
-  const saveRecentSearch = useSaveRecentSearch({
-    favoriteSearches,
-    recentSearches,
-    disableUserPersonalization,
-  });
-  const sendItemClickEvent = useSendItemClickEvent(state);
 
   const autocompleteRef =
     React.useRef<
@@ -107,6 +109,26 @@ export function DocSearchModal({
         >
       >
     >(undefined);
+
+  const { visibleFacets, facetSelections, facetSelectionsRef, handleFacetSelectionChange, clearFacetSelections } =
+    useDocSearchFacets({
+      facets,
+      indexes,
+      searchClient,
+      onSelectionsChange: () => autocompleteRef.current?.refresh(),
+    });
+
+  const { favoriteSearches, recentSearches } = useStoredDocSearches({
+    defaultIndexName,
+    recentSearchesLimit,
+    recentSearchesWithFavoritesLimit,
+  });
+  const saveRecentSearch = useSaveRecentSearch({
+    favoriteSearches,
+    recentSearches,
+    disableUserPersonalization,
+  });
+  const sendItemClickEvent = useSendItemClickEvent(state);
 
   if (!autocompleteRef.current) {
     autocompleteRef.current = createAutocomplete({
@@ -155,6 +177,7 @@ export function DocSearchModal({
           transformItems,
           saveRecentSearch,
           onClose,
+          facetSelections: facetSelectionsRef,
         });
 
         return algoliaSourcesPromise;
@@ -213,6 +236,17 @@ export function DocSearchModal({
           translations={searchBoxTranslations}
           onClose={onClose}
         />
+      }
+      filterBar={
+        state.query !== '' ? (
+          <FacetBar
+            facets={visibleFacets}
+            selections={facetSelections}
+            translations={facetBarTranslations}
+            clearSelections={clearFacetSelections}
+            onSelectionChange={handleFacetSelectionChange}
+          />
+        ) : null
       }
       screenState={
         <ScreenState

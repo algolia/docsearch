@@ -101,12 +101,11 @@ import type { DocSearchHit } from './types';
 - Use `type` imports for type-only imports: `import type { Foo } from './types'`
 - Prefer interfaces for object shapes, types for unions/primitives
 - Explicit return types on exported functions
-- Use `declare type` for exported type declarations
 - Avoid `any`; use `unknown` when type is truly unknown
 
 ```typescript
 // Good
-export declare type DocSearchHit = {
+export type DocSearchHit = {
   objectID: string;
   content: string | null;
 };

@@ -2,6 +2,7 @@
 
 :root {
   --docsearch-primary-color: rgb(0, 61, 255);
+  --docsearch-primary-dark-color: rgba(2, 46, 185, 1);
   --docsearch-soft-primary-color: rgba(0, 61, 255, 0.1);
   --docsearch-subtle-color: rgb(214, 214, 231);
   --docsearch-text-color: rgba(35, 38, 59, 1);
@@ -78,14 +79,24 @@
   --docsearch-dropdown-menu-background: var(--docsearch-hit-background);
   --docsearch-dropdown-menu-item-hover-background: var(--docsearch-background-color);
 
+  /* Chip */
+  --docsearch-chip-text-color: var(--docsearch-primary-dark-color);
+  --docsearch-chip-background: rgb(187, 209, 255);
+
+  /* Menu */
+  --docsearch-menu-trigger-active-background: var(--docsearch-soft-primary-color);
+  --docsearch-menu-trigger-active-text-color: var(--docsearch-primary-dark-color);
+
   /* Popover */
   --docsearch-popover-background: #fff;
+  --docsearch-popover-shadow: 0px 0px 0px 1px rgba(33, 36, 61, 0.05), 0px 4px 8px -2px rgba(33, 36, 61, 0.25);
   --docsearch-popover-arrow-color: rgb(230, 230, 240);
 }
 
 /* Darkmode */
 
 html[data-theme='dark'] {
+  --docsearch-primary-dark-color: rgba(154, 200, 255, 1);
   --docsearch-text-color: rgba(196, 199, 220, 1);
   --docsearch-secondary-text-color: rgba(182, 183, 213, 1);
   --docsearch-subtle-color: rgba(33, 33, 57, 1);
@@ -125,7 +136,16 @@ html[data-theme='dark'] {
   --docsearch-search-button-background: var(--docsearch-modal-background);
   --docsearch-search-button-text-color: var(--docsearch-text-color);
 
-    /* Popover */
+  /* Chip */
+  --docsearch-chip-text-color: var(--docsearch-text-color);
+  --docsearch-chip-background: var(--docsearch-hit-focus-background);
+
+  /* Menu */
+  --docsearch-menu-trigger-active-background: var(--docsearch-hit-focus-background);
+  --docsearch-menu-trigger-active-text-color: var(--docsearch-text-color);
+
+  /* Popover */
   --docsearch-popover-background: var(--docsearch-hit-focus-background);
+  --docsearch-popover-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.08), 0px 4px 8px -2px rgba(0, 0, 0, 0.55);
   --docsearch-popover-arrow-color: var(--docsearch-hit-focus-background);
 }

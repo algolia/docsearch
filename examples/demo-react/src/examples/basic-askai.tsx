@@ -14,6 +14,11 @@ export default function BasicAskAI({ theme }: { theme: DemoTheme }): JSX.Element
         assistantId: 'ccdec697-e3fe-465b-a1c3-657e7bf18aef',
         suggestedQuestions: true,
       }}
+      facets={[
+        { key: 'language', label: 'Language' },
+        { key: 'version', label: 'Version' },
+        { key: 'type', label: 'Content type' },
+      ]}
       insights={true}
       translations={{ button: { buttonText: 'Search with Ask AI' } }}
       theme={theme}

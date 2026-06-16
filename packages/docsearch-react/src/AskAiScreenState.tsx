@@ -113,7 +113,7 @@ export const AskAiScreenState = React.memo(
     return (
       <>
         <ResultsScreen {...props} translations={translations?.resultsScreen} />
-        {props.canHandleAskAi && props.state.collections.length === 1 && (
+        {props.canHandleAskAi && !props.hasCollections && (
           // if there's one collection it is the ask ai action, show the no results screen
           <NoResultsScreen {...props} translations={translations?.noResultsScreen} />
         )}
