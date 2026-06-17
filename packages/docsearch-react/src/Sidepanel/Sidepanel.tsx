@@ -176,16 +176,18 @@ function SidepanelInner(
   const searchClient = useSearchClient(appId, apiKey, setSidepanelSearchClient);
 
   const {
+    chatId,
     status,
     sendMessage,
     stopAskAiStreaming,
     isStreaming,
     exchanges,
-    setMessages,
     conversations,
     messages,
     sendFeedback,
     askAiError,
+    startNewConversation,
+    restoreConversation,
   } = useAskAi({
     appId,
     indexName,
@@ -213,13 +215,13 @@ function SidepanelInner(
   };
 
   const handleStartNewConversation = (): void => {
-    setMessages([]);
+    startNewConversation();
     setSidepanelState('new-conversation');
   };
 
   const handleSelectQuestion = (question: SuggestedQuestionHit): void => {
     setStoppedStreaming(false);
-    setMessages([]);
+    startNewConversation();
     sendMessage(
       { text: question.question },
       {
@@ -239,14 +241,14 @@ function SidepanelInner(
   const handleSelectConversation = React.useCallback(
     (conversation: StoredAskAiState): void => {
       if (conversation.messages) {
-        setMessages(conversation.messages);
+        restoreConversation(conversation.messages, conversation.chatId);
       } else if (conversation.query) {
         sendMessage({ text: conversation.query });
       }
 
       setSidepanelState('conversation');
     },
-    [sendMessage, setMessages],
+    [sendMessage, restoreConversation],
   );
 
   useManageSidepanelLayout({
@@ -290,13 +292,13 @@ function SidepanelInner(
 
       for (const part of messages[0].parts) {
         if (part.type === 'text') {
-          conversations.add(buildDummyAskAiHit(part.text, messages));
+          conversations.add(buildDummyAskAiHit(part.text, messages, chatId));
         }
       }
     }
 
     prevStatus.current = status;
-  }, [conversations, status, messages, stoppedStreaming]);
+  }, [conversations, status, messages, stoppedStreaming, chatId]);
 
   React.useEffect(() => {
     function setFullViewportHeight(): void {
@@ -327,7 +329,7 @@ function SidepanelInner(
     if (selectedConversation) {
       handleSelectConversation(selectedConversation);
     } else {
-      setMessages([]);
+      startNewConversation();
       sendMessage(
         {
           text: initialMessage.query,
@@ -342,7 +344,7 @@ function SidepanelInner(
       );
       setSidepanelState('conversation');
     }
-  }, [initialMessage, sendMessage, conversations, handleSelectConversation, setMessages]);
+  }, [initialMessage, sendMessage, conversations, handleSelectConversation, startNewConversation]);
 
   // Autofocus the prompt input when the sidepanel opens and blur it when
   // it closes. Disabled on mobile because focusing the textarea triggers the

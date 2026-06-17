@@ -77,7 +77,7 @@ bun run pw:run:webkit
 
 ### Imports
 
-Imports must be ordered alphabetically with newlines between groups:
+Imported modules must be ordered alphabetically with newlines between groups:
 
 1. Built-in modules
 2. External dependencies

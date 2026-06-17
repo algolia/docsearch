@@ -14,6 +14,7 @@ export type StoredAskAiMessage = AIMessage & {
 };
 
 export type StoredAskAiState = StoredDocSearchHit & {
+  chatId?: string;
   stopped?: boolean;
   messages?: StoredAskAiMessage[];
 };

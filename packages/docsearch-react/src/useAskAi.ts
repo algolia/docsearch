@@ -1,8 +1,8 @@
 import type { UseChatHelpers } from '@ai-sdk/react';
-import { useChat } from '@ai-sdk/react';
+import { Chat, useChat } from '@ai-sdk/react';
 import type { ChatOnToolCallCallback } from 'ai';
-import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls } from 'ai';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls, generateId } from 'ai';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { agentStudioBaseUrl, getAgentStudioErrorMessage, postAgentStudioFeedback } from './askai';
 import type { Exchange } from './AskAiScreen';
@@ -28,6 +28,7 @@ type UseAskAiParams = {
 };
 
 type UseAskAiReturn = {
+  chatId: string;
   messages: AIMessage[];
   status: UseChat['status'];
   sendMessage: UseChat['sendMessage'];
@@ -38,6 +39,14 @@ type UseAskAiReturn = {
   exchanges: Exchange[];
   conversations: StoredSearchPlugin<StoredAskAiState>;
   sendFeedback: OnAskAiFeedback;
+  /**
+   * Create's a new chat instance, clearing existing messages and generating a new conversation ID.
+   */
+  startNewConversation: () => void;
+  /**
+   * Create's a new chat instance, seeded with an existing conversation's ID and its messages.
+   */
+  restoreConversation: (restored: AIMessage[], existingConversationId?: string) => void;
 };
 
 type UseAskAi = (params: UseAskAiParams) => UseAskAiReturn;
@@ -105,6 +114,12 @@ export const useAskAi: UseAskAi = ({
     [apiKey, appId, assistantId, searchParameters, memory?.userToken, indices],
   );
 
+  // Store transport in a ref since it is dependent on unstable dependencies:
+  // - searchParameters, an object whose changed values trigger a new transport
+  // - indices, an array whose changed values trigger a new transport
+  const askAiTransportRef = useRef(askAiTransport);
+  askAiTransportRef.current = askAiTransport;
+
   // Sync ref during render so the stable `handleToolCall` (registered once
   // by useChat) always sees the latest `tools` without re-creating itself.
   // Safe because tool calls only fire after a commit, and writes are idempotent.
@@ -133,10 +148,25 @@ export const useAskAi: UseAskAi = ({
     });
   }, []);
 
-  const { messages, sendMessage, status, setMessages, error, stop, addToolOutput } = useChat({
-    sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
-    transport: askAiTransport,
-    onToolCall: handleToolCall,
+  const createChatInstance = useCallback(
+    (messages?: AIMessage[], id = generateId()): Chat<AIMessage> =>
+      new Chat<AIMessage>({
+        id,
+        messages,
+        sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
+        transport: askAiTransportRef.current,
+        onToolCall: handleToolCall,
+      }),
+    [handleToolCall],
+  );
+
+  const [chatInstance, setChatInstance] = useState((): Chat<AIMessage> => createChatInstance());
+  // Keep a stable reference to the chat instance so reading messages are render safe
+  const chatInstanceRef = useRef<Chat<AIMessage>>(chatInstance);
+  chatInstanceRef.current = chatInstance;
+
+  const { messages, status, setMessages, error, stop, addToolOutput } = useChat({
+    chat: chatInstance,
   });
 
   useEffect(() => {
@@ -171,12 +201,12 @@ export const useAskAi: UseAskAi = ({
     [assistantId, appId, apiKey, conversations],
   );
 
-  const onStopStreaming = async (): Promise<void> => {
+  const onStopStreaming = useCallback(async (): Promise<void> => {
     abortControllerRef.current.abort();
     await stop();
-  };
+  }, [stop]);
 
-  const exchanges = useMemo(() => {
+  const exchanges = useMemo((): Exchange[] => {
     const grouped: Exchange[] = [];
 
     for (let i = 0; i < messages.length; i++) {
@@ -201,9 +231,36 @@ export const useAskAi: UseAskAi = ({
     return getAgentStudioErrorMessage(error);
   }, [error]);
 
+  const updateChatInstance = useCallback(
+    (restored?: AIMessage[], existingConversationId?: string): void => {
+      const newChatInstance = createChatInstance(restored, existingConversationId);
+      chatInstanceRef.current = newChatInstance;
+      setChatInstance(newChatInstance);
+    },
+    [createChatInstance],
+  );
+
+  const startNewConversation = useCallback((): void => {
+    updateChatInstance();
+  }, [updateChatInstance]);
+
+  const restoreConversation = useCallback(
+    (restored: AIMessage[], existingConversationId?: string): void => {
+      updateChatInstance(restored, existingConversationId);
+    },
+    [updateChatInstance],
+  );
+
+  // This is so that the public `sendMessage` is always pointed to a stable reference of the chat instance
+  const sendMessageSafe = useCallback<UseChat['sendMessage']>(
+    (...args): Promise<void> => chatInstanceRef.current!.sendMessage(...args),
+    [],
+  );
+
   return {
+    chatId: chatInstance.id,
     messages,
-    sendMessage,
+    sendMessage: sendMessageSafe,
     status,
     setMessages,
     askAiError,
@@ -212,5 +269,7 @@ export const useAskAi: UseAskAi = ({
     exchanges,
     conversations,
     sendFeedback,
+    startNewConversation,
+    restoreConversation,
   };
 };
