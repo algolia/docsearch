@@ -1,21 +1,22 @@
+/* eslint-disable max-classes-per-file */
 import { act, renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { useAskAi } from '../useAskAi';
 
-type ToolCall = {
+interface ToolCall {
   input: unknown;
   toolCallId: string;
   toolName: string;
-};
+}
 
-type ChatMessage = {
+interface ChatMessage {
   id: string;
   role: 'assistant' | 'user';
   parts: Array<{ type: 'text'; text: string }>;
-};
+}
 
-type ChatOptions = {
+interface ChatOptions {
   id?: string;
   messages?: ChatMessage[];
   onToolCall: (params: { toolCall: ToolCall }) => unknown;
@@ -25,7 +26,18 @@ type ChatOptions = {
       body?: Record<string, unknown>;
     };
   };
-};
+}
+
+interface ChatInstance {
+  id?: string;
+  messages?: ChatMessage[];
+  options: ChatOptions;
+  sendMessage: (message: unknown) => void;
+}
+
+interface UseChatOptions {
+  chat: ChatInstance;
+}
 
 type CustomOnToolCallParams = ToolCall & {
   addToolOutput: (props: { output: unknown }) => Promise<void>;
@@ -34,11 +46,27 @@ type CustomOnToolCallParams = ToolCall & {
 const mocks = vi.hoisted(() => ({
   addToolOutput: vi.fn(),
   setMessages: vi.fn(),
+  sendMessage: vi.fn(),
   useChat: vi.fn(),
   generateId: vi.fn(),
 }));
 
 vi.mock('@ai-sdk/react', () => ({
+  Chat: class Chat {
+    id?: string;
+    messages?: ChatMessage[];
+    options: ChatOptions;
+
+    constructor(options: ChatOptions) {
+      this.id = options.id;
+      this.messages = options.messages;
+      this.options = options;
+    }
+
+    sendMessage(message: unknown): void {
+      mocks.sendMessage({ chatId: this.id, message });
+    }
+  },
   useChat: mocks.useChat,
 }));
 
@@ -54,9 +82,15 @@ vi.mock('ai', () => ({
   generateId: mocks.generateId,
 }));
 
+interface SendMessageCall {
+  chatId?: string;
+  message: unknown;
+}
+
 describe('useAskAi', () => {
   let chatOptions: ChatOptions | undefined;
   let chatOptionsHistory: ChatOptions[] = [];
+  let sendMessageCalls: SendMessageCall[] = [];
 
   function getOnToolCall(): ChatOptions['onToolCall'] {
     if (!chatOptions) {
@@ -93,15 +127,19 @@ describe('useAskAi', () => {
 
     chatOptions = undefined;
     chatOptionsHistory = [];
-    mocks.useChat.mockImplementation((options: ChatOptions) => {
-      chatOptions = options;
-      chatOptionsHistory.push(options);
+    sendMessageCalls = [];
+    mocks.sendMessage.mockImplementation((call: SendMessageCall) => {
+      sendMessageCalls.push(call);
+    });
+    mocks.useChat.mockImplementation(({ chat }: UseChatOptions) => {
+      chatOptions = chat.options;
+      chatOptionsHistory.push(chat.options);
 
       return {
         addToolOutput: mocks.addToolOutput,
         error: undefined,
-        messages: [],
-        sendMessage: vi.fn(),
+        messages: chat.messages ?? [],
+        sendMessage: chat.sendMessage,
         setMessages: mocks.setMessages,
         status: 'ready',
         stop: vi.fn(),
@@ -494,6 +532,78 @@ describe('useAskAi', () => {
       // recreation does not re-hydrate the previous conversation.
       expect(chatOptions?.messages).toBeUndefined();
       expect(chatOptions?.id).toBe('generated-id-2');
+    });
+
+    it('sends the next message with the new chat id after startNewConversation', () => {
+      const { result } = renderHook(() =>
+        useAskAi({
+          apiKey: 'api-key',
+          appId: 'app-id',
+          assistantId: 'assistant-id',
+          indexName: 'index-name',
+          tools: {},
+        }),
+      );
+
+      const initialId = chatOptions?.id;
+      expect(initialId).toBe('generated-id-1');
+
+      // Capture `sendMessage` from the current render, mirroring how a consumer
+      // (e.g. the Sidepanel) grabs it before rotating the conversation.
+      const sendMessage = result.current.sendMessage;
+
+      act(() => {
+        result.current.startNewConversation();
+        sendMessage({
+          role: 'user',
+          parts: [{ type: 'text', text: 'new question' }],
+        });
+      });
+
+      // The rotated id is what every later request must target.
+      expect(chatOptions?.id).toBe('generated-id-2');
+      expect(chatOptions?.id).not.toBe(initialId);
+
+      // Regression: the request must NOT go out on the stale (pre-rotation) id.
+      expect(sendMessageCalls).toHaveLength(1);
+      expect(sendMessageCalls[0].chatId).toBe('generated-id-2');
+      expect(sendMessageCalls[0].chatId).not.toBe(initialId);
+    });
+
+    it('keeps conversation lifecycle callbacks stable when transport inputs change by reference', () => {
+      const { result, rerender } = renderHook(
+        ({ indices, searchParameters }) =>
+          useAskAi({
+            apiKey: 'api-key',
+            appId: 'app-id',
+            assistantId: 'assistant-id',
+            indexName: 'index-name',
+            searchParameters,
+            indices,
+            tools: {},
+          }),
+        {
+          initialProps: {
+            searchParameters: {
+              'index-name': { distinct: false },
+            },
+            indices: [{ index: 'index-name', description: 'Test index' }],
+          },
+        },
+      );
+
+      const startNewConversation = result.current.startNewConversation;
+      const restoreConversation = result.current.restoreConversation;
+
+      rerender({
+        searchParameters: {
+          'index-name': { distinct: false },
+        },
+        indices: [{ index: 'index-name', description: 'Test index' }],
+      });
+
+      expect(result.current.startNewConversation).toBe(startNewConversation);
+      expect(result.current.restoreConversation).toBe(restoreConversation);
     });
   });
 });
