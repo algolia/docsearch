@@ -6,7 +6,7 @@ Algolia DocSearch connects Cursor to the public DocSearch MCP endpoint for curre
 
 - **MCP Server** - Connects Cursor to `https://mcp.algolia.com/1/docsearch/mcp`.
 - **Rule** - Nudges the agent to use DocSearch for public developer docs instead of guessing from training data.
-- **Skill** - Documents the two-step `resolve_docset` then `query_docs` lookup flow.
+- **Skill** - Documents the one-shot `search_docs` lookup and the `resolve_docset` + `query_docs` flow.
 
 ## Installation
 
@@ -24,23 +24,17 @@ mcp/plugins/docsearch/cursor/algolia-docsearch/mcp.json
 
 ## Available Tools
 
+### algolia_docsearch_search_docs
+
+One-shot lookup, and the right default for most questions. Pass a `library` (product or platform) and a `query` (the question); it resolves the best documentation set and returns ranked content in a single call.
+
 ### algolia_docsearch_resolve_docset
 
-Finds matching documentation sets and returns `docset_id` plus `targetIndex` values.
-
-Use keyword-only queries:
-
-```text
-Next.js middleware
-Stripe webhooks
-Algolia InstantSearch React
-```
+Step 1 of the manual flow. Finds matching documentation sets and returns candidates with a `docset_id`, title, description, and ranking signals.
 
 ### algolia_docsearch_query_docs
 
-Queries documentation content for selected docsets.
-
-Use the `docset_id` values returned by `algolia_docsearch_resolve_docset`, and pass each selected `targetIndex` as the `indexName` in `targets`.
+Step 2 of the manual flow. Queries documentation content for the `docset_id` values returned by `algolia_docsearch_resolve_docset`. Pass several `docsetIds` when a question spans multiple products.
 
 ## Usage Examples
 

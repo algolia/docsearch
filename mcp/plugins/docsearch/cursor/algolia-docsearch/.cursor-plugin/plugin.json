@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "Algolia DocSearch MCP plugin for searching up-to-date public developer documentation from the DocSearch corpus.",
   "author": {
-    "name": "Algolia",
-    "url": "https://www.algolia.com"
+    "name": "Algolia"
   },
+  "homepage": "https://docsearch.algolia.com/docs/mcp/overview",
   "keywords": ["documentation", "mcp", "algolia", "docsearch", "developer-docs"],
-  "logo": "https://www.algolia.com/favicon.ico",
-  "primaryColor": "#003DFF"
+  "logo": "assets/docsearch-monogram.svg"
 }

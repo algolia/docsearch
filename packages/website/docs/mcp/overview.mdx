@@ -13,44 +13,29 @@ https://mcp.algolia.com/1/docsearch/mcp
 
 ## What it does
 
-DocSearch MCP exposes documentation search through the [Model Context Protocol](https://modelcontextprotocol.io/). MCP-compatible clients can connect to the endpoint and call DocSearch tools while answering your questions.
+DocSearch MCP exposes documentation search through the [Model Context Protocol](https://modelcontextprotocol.io/). MCP-compatible clients connect to the endpoint and call DocSearch tools while answering your questions.
 
 The endpoint is focused on public developer documentation. You do not need an Algolia application ID, search API key, or DocSearch application to use it.
 
 ## How it works
 
-DocSearch MCP uses a two-step lookup flow:
+Most lookups are a single call: name the product and ask your question, and DocSearch finds the right documentation set and returns the matching content together.
 
-1. Resolve the documentation set that best matches the library, framework, API, or product you asked about.
-2. Query that documentation set for the specific topic.
-
-For example, if you ask about Next.js middleware, the client first resolves the Next.js docs, then searches those docs for middleware-specific pages.
+When a question spans several products, or you want to inspect and hand-pick documentation sets first, there is a two-step flow: resolve the documentation sets, then query the ones you choose.
 
 ## Available tools
 
+### `algolia_docsearch_search_docs`
+
+The one-shot tool, and the right default for most lookups. Give it a `library` (the product, SDK, or platform) and a `query` (your question); it resolves the best matching documentation set and returns ranked content in a single call. If the library is ambiguous, it returns candidate documentation sets to choose from instead.
+
 ### `algolia_docsearch_resolve_docset`
 
-Finds matching documentation sets. It returns candidates with a `docset_id` and `targetIndex`, plus ranking signals that help the client choose the best match.
-
-Good queries are short and keyword-based:
-
-```text
-Next.js middleware
-Stripe webhooks
-Algolia InstantSearch React
-```
+Step 1 of the manual flow. Finds the documentation sets that best match a product, library, or platform and returns candidates — each with a `docset_id`, title, description, and ranking signals to help pick the best match.
 
 ### `algolia_docsearch_query_docs`
 
-Searches inside one or more resolved documentation sets. The client passes the selected `docset_id` values and their matching `targetIndex` values.
-
-Good queries are specific to the docs content you want:
-
-```text
-middleware matcher config
-webhook signature verification
-configure search client
-```
+Step 2 of the manual flow. Retrieves documentation content for one or more `docset_id`s returned by `algolia_docsearch_resolve_docset`. Pass several at once when a question spans multiple products.
 
 ## Next steps
 

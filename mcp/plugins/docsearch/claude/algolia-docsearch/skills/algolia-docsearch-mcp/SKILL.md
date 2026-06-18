@@ -17,66 +17,50 @@ Use this skill when the user:
 
 Do not use this skill for private company docs, internal repositories, unpublished APIs, or questions where the user already supplied the relevant docs.
 
-## Tool Flow
+## Tools
+
+DocSearch MCP exposes three tools. You can query in natural language — full sentences and questions work well.
+
+- `algolia_docsearch_search_docs` — one-shot lookup. Use this by default.
+- `algolia_docsearch_resolve_docset` — step 1 of the manual flow: find documentation sets.
+- `algolia_docsearch_query_docs` — step 2 of the manual flow: fetch content for chosen docsets.
+
+## Default Flow: One-Shot Search
+
+Call `algolia_docsearch_search_docs` for most lookups.
+
+Input:
+
+- `library`: the product, library, SDK, or platform. Use the official name (for example: `Next.js`, `Stripe`, `Algolia InstantSearch`).
+- `query`: the question, in natural language (for example: `how do middleware matchers work`).
+
+It resolves the best matching documentation set and returns ranked content in a single call. If `library` is ambiguous, it returns candidate documentation sets instead — pick the right one and pass its `docset_id` to `algolia_docsearch_query_docs`, or retry with the official product name.
+
+## Manual Flow: Resolve, Then Query
+
+Use the two-step flow when a question spans several products, or when you want to inspect and hand-pick documentation sets.
 
 ### Step 1: Resolve The Docset
 
-Call `algolia_docsearch_resolve_docset` first.
-
-Use a concise keyword-only query, not the user's full sentence. Good examples:
-
-- `Next.js middleware`
-- `React Server Components`
-- `Stripe webhooks`
-- `Algolia InstantSearch React`
+Call `algolia_docsearch_resolve_docset`.
 
 Input:
 
-- `query`: concise keywords for the library, product, API, or concept.
+- `query`: describe the product, library, SDK, or platform. Including the vendor name improves matching.
 - `topN`: optional. Use the default unless the initial result is ambiguous.
 
-### Step 2: Select The Best Candidate
+Each candidate returns a `title`, `docset_id`, `description`, and ranking signals (`trustScore`, `benchmarkScore`, `popularityScore`). Prefer the official vendor's docset over third-party mentions, breaking ties by the higher scores.
 
-Choose the candidate that best matches the user's target docs.
-
-Prefer:
-
-- Exact product, library, or framework name matches.
-- Official or primary documentation when the title/description makes that clear.
-- Higher `trustScore`, `benchmarkScore`, or `popularityScore` when multiple candidates look similar.
-
-Keep the selected candidate's:
-
-- `docset_id`
-- `targetIndex`
-
-Convert that pair into a `targets` entry for the next tool:
-
-```json
-{
-  "docsetId": "<docset_id>",
-  "indexName": "<targetIndex>"
-}
-```
-
-### Step 3: Query The Docs
+### Step 2: Query The Docs
 
 Call `algolia_docsearch_query_docs`.
 
-Use a concise keyword-only query for the specific documentation content. Good examples:
-
-- `middleware matcher config`
-- `server components data fetching`
-- `webhook signature verification`
-- `configure search client`
-
 Input:
 
-- `query`: concise keywords for the docs content.
-- `docsetIds`: an array containing the selected `docset_id` values.
-- `targets`: an array of `{ "docsetId": "...", "indexName": "..." }` entries built from the selected candidates.
+- `query`: what to find in the docs, in natural language.
+- `docsetIds`: an array of the `docset_id` values you selected. Pass several when a question spans multiple products.
 
-### Step 4: Answer With Sources
+## Answer With Sources
 
 Use the returned documentation content to answer the user directly.
 

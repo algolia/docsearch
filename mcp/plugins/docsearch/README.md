@@ -15,38 +15,43 @@ The plugins connect AI coding clients to the public DocSearch documentation corp
 
 ## Public MCP Tools
 
+You can query in natural language — full sentences and questions work well.
+
+### algolia_docsearch_search_docs
+
+One-shot lookup, and the right default for most questions. Pass a `library` and a `query`; it resolves the best matching documentation set and returns ranked content in a single call:
+
+```json
+{
+  "library": "Next.js",
+  "query": "how do middleware matchers work"
+}
+```
+
+If the library is ambiguous, it returns candidate documentation sets instead — pick a `docset_id` and pass it to `algolia_docsearch_query_docs`.
+
 ### algolia_docsearch_resolve_docset
 
-Finds matching documentation sets and returns candidates with:
+Step 1 of the manual flow. Finds matching documentation sets and returns candidates with:
 
 - `docset_id`
-- `targetIndex`
+- title and description
 - optional quality signals such as `trustScore`, `benchmarkScore`, and `popularityScore`
 
-Use concise keyword-only queries, for example:
-
-```text
-Next.js middleware
-Stripe webhooks
-Algolia InstantSearch React
+```json
+{
+  "query": "Next.js app router"
+}
 ```
 
 ### algolia_docsearch_query_docs
 
-Queries documentation content for selected docsets.
-
-Use the selected `docset_id` values as `docsetIds`. Pass each selected `targetIndex` as `indexName` in the `targets` array:
+Step 2 of the manual flow. Queries documentation content for the selected `docset_id` values. Pass several when a question spans multiple products:
 
 ```json
 {
   "query": "middleware matcher config",
-  "docsetIds": ["nextjs"],
-  "targets": [
-    {
-      "docsetId": "nextjs",
-      "indexName": "nextjs_docs"
-    }
-  ]
+  "docsetIds": ["nextjs"]
 }
 ```
 

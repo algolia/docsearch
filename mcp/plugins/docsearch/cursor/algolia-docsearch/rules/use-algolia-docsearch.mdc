@@ -17,6 +17,6 @@ Do not use Algolia DocSearch for:
 - Crawler operations, DocSearch administration, or MCP server implementation details.
 - General programming concepts that do not require external docs.
 
-Use keyword-only queries with the MCP tools. Do not send full sentences or conversational phrasing as tool queries.
+For most lookups call `algolia_docsearch_search_docs` with the product as `library` and the question as `query`. Use the `algolia_docsearch_resolve_docset` + `algolia_docsearch_query_docs` flow when a question spans several products or you need to hand-pick documentation sets. Natural-language queries work well.
 
-See the `algolia-docsearch-mcp` skill for the exact two-step lookup flow.
+See the `algolia-docsearch-mcp` skill for the full tool flow.
