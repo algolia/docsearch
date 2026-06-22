@@ -1,5 +1,6 @@
 {
   "name": "algolia-docsearch-marketplace",
+  "description": "Algolia DocSearch plugins for Claude Code — search up-to-date public developer documentation from the DocSearch corpus.",
   "owner": {
     "name": "Algolia"
   },
