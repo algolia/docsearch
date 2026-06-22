@@ -34,6 +34,7 @@ export interface ScreenStateProps<TItem extends BaseItem>
   translations: ScreenStateTranslations;
   getMissingResultsUrl?: DocSearchProps['getMissingResultsUrl'];
   hasCollections: boolean;
+  resultBadgeKey?: string;
 }
 
 export const ScreenState = React.memo(

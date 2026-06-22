@@ -1,6 +1,7 @@
 import type { AutocompleteApi, AutocompleteState, BaseItem } from '@algolia/autocomplete-core';
 import React, { type JSX } from 'react';
 
+import type { HitResultBadgeTranslations } from './components/HitResultBadge';
 import { HitContent } from './components/ui/HitContent';
 import type { DocSearchProps } from './DocSearch';
 import { useRelativeFormattedDate } from './hooks/useRelativeFormattedDate';
@@ -9,11 +10,12 @@ import { Snippet } from './Snippet';
 import type { InternalDocSearchHit, StoredDocSearchHit } from './types';
 import { decodeHtmlEntities, getHitItemBreadcrumbs } from './utils';
 
-export type ResultsTranslations = Partial<{
-  askAiPlaceholder: string;
-  noResultsAskAiPlaceholder: string;
-  recentConversationTimestampFallback: string;
-}>;
+export type ResultsTranslations = HitResultBadgeTranslations &
+  Partial<{
+    askAiPlaceholder: string;
+    noResultsAskAiPlaceholder: string;
+    recentConversationTimestampFallback: string;
+  }>;
 interface ResultsProps<TItem extends BaseItem>
   extends AutocompleteApi<TItem, React.FormEvent, React.MouseEvent, React.KeyboardEvent> {
   title?: string | null;
@@ -21,6 +23,7 @@ interface ResultsProps<TItem extends BaseItem>
   collection: AutocompleteState<TItem>['collections'][0];
   renderIcon: (props: { item: TItem; index: number }) => React.ReactNode;
   renderAction: (props: { item: TItem }) => React.ReactNode;
+  renderResultBadge?: (props: { item: TItem }) => React.ReactNode;
   onItemClick: (item: TItem, event: KeyboardEvent | MouseEvent) => void;
   hitComponent: DocSearchProps['hitComponent'];
   state: AutocompleteState<TItem>;
@@ -100,6 +103,7 @@ function Result<TItem extends StoredDocSearchHit>({
   collection,
   hitComponent,
   translations = {},
+  renderResultBadge,
 }: ResultProps<TItem>): JSX.Element {
   const Hit = hitComponent!;
   const { recentConversationTimestampFallback = 'A while ago' } = translations;
@@ -139,6 +143,8 @@ function Result<TItem extends StoredDocSearchHit>({
           ) : (
             <HitContent title={<Snippet hit={item} attribute={titleAttribute} />} subText={breadcrumbs} />
           )}
+
+          {renderResultBadge?.({ item })}
 
           {renderAction({ item })}
         </div>

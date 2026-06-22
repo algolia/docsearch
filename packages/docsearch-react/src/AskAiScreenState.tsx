@@ -64,6 +64,7 @@ export interface AskAiScreenStateProps<TItem extends BaseItem>
   selectSuggestedQuestion: (question: SuggestedQuestionHit) => void;
   onNewConversation: () => void;
   memoryEnabled?: boolean;
+  resultBadgeKey?: string;
 }
 
 export const AskAiScreenState = React.memo(

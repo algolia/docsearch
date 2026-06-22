@@ -522,6 +522,7 @@ export function DocSearchAskAiModal({
           suggestedQuestions={suggestedQuestions}
           selectSuggestedQuestion={selectSuggestedQuestion}
           memoryEnabled={memoryEnabled}
+          resultBadgeKey={props.resultBadgeKey}
           onAskAiToggle={onAskAiToggle}
           onNewConversation={handleNewConversation}
           onItemClick={(item, event) => {

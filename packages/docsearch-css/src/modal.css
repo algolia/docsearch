@@ -952,6 +952,11 @@ svg.DocSearch-Hit-Select-Icon {
   }
 }
 
+.DocSearch-Hit-badge {
+  font-size: 0.75rem;
+  margin-right: 1em;
+}
+
 /* No Results - Start Screen - Error Screen */
 
 .DocSearch-NoResults,
