@@ -39,6 +39,7 @@ export default function BasicAskAI({ theme }: { theme: DemoTheme }): JSX.Element
           },
         },
       }}
+      resultBadgeKey="type"
     />
   );
 }

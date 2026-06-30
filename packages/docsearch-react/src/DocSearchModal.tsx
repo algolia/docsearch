@@ -262,6 +262,7 @@ export function DocSearchModal({
           translations={screenStateTranslations}
           getMissingResultsUrl={getMissingResultsUrl}
           hasCollections={hasCollections}
+          resultBadgeKey={props.resultBadgeKey}
           onItemClick={(item, event) => {
             sendItemClickEvent(item);
             saveRecentSearch(item);

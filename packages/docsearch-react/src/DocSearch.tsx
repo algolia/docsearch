@@ -166,6 +166,16 @@ export interface DocSearchProps {
    * @default `{ 'Ctrl/Cmd+K': true, '/': true }`
    */
   keyboardShortcuts?: DocSearchModalShortcuts;
+  /**
+   * The key used to render a custom badge for each hit. Key must match a property returned in `searchParameters.attributesToRetrieve`.
+   *
+   * @example
+   * "version"
+   * "hierarchy.lvl1"
+   * "tags[2]"
+   * @default undefined
+   */
+  resultBadgeKey?: string;
 }
 
 function DocSearchComponent(props: DocSearchProps, ref: React.ForwardedRef<DocSearchRef>): JSX.Element {
