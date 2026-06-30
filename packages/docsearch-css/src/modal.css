@@ -955,6 +955,16 @@ svg.DocSearch-Hit-Select-Icon {
 .DocSearch-Hit-badge {
   font-size: 0.75rem;
   margin-right: 1em;
+  display: inline-flex;
+  padding-inline: 1em;
+  padding-block: 0.5em;
+  border-radius: 100vw;
+  background-color: var(--docsearch-hit-focus-background);
+}
+
+.DocSearch-Hit[aria-selected='true'] .DocSearch-Hit-badge,
+.DocSearch-Hit:hover .DocSearch-Hit-badge {
+  background-color: var(--docsearch-modal-background);
 }
 
 /* No Results - Start Screen - Error Screen */
