@@ -1,5 +1,5 @@
 import type { UIMessage } from '@ai-sdk/react';
-import { type ToolUIPart, type UIDataTypes, type UIMessagePart } from 'ai';
+import { type ToolUIPart, type UIMessagePart } from 'ai';
 
 export type AskAiState = 'conversation-history' | 'conversation' | 'initial' | 'new-conversation';
 
@@ -79,9 +79,15 @@ type CustomTools = {
 };
 type Tools = AgentStudioMemoryTools & CustomTools & SearchTools;
 
-export type AIMessage = UIMessage<{ stopped?: boolean }, UIDataTypes, Tools>;
+type DataParts = {
+  suggestions: {
+    suggestions: string[];
+  };
+};
 
-export type AIMessagePart = UIMessagePart<UIDataTypes, Tools>;
+export type AIMessage = UIMessage<{ stopped?: boolean }, DataParts, Tools>;
+
+export type AIMessagePart = UIMessagePart<DataParts, Tools>;
 
 export type SearchToolPart = ToolUIPart<SearchTools>;
 export type MemoryToolPart = ToolUIPart<AgentStudioMemoryTools>;

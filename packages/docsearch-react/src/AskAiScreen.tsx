@@ -3,6 +3,7 @@ import React, { type JSX, useMemo } from 'react';
 
 import { AggregatedSearchBlock } from './AggregatedSearchBlock';
 import type { AskAiScreenStateProps } from './AskAiScreenState';
+import { ConversationPromptSuggestions } from './components/ConversationPromptSuggestions';
 import { FeedbackActions } from './components/FeedbackActions';
 import { SourcesPanel } from './components/SourcesPanel';
 import { ToolCall, type ToolCallTranslations } from './components/ToolCall';
@@ -11,7 +12,13 @@ import { MemoizedMarkdown } from './MemoizedMarkdown';
 import type { StoredSearchPlugin } from './stored-searches';
 import type { InternalDocSearchHit, OnAskAiFeedback, StoredAskAiState } from './types';
 import { type AIMessage, type ToolCalls } from './types/AskiAi';
-import { extractLinksFromMessage, getMessageContent, isThreadDepthError, isAIToolPart } from './utils/ai';
+import {
+  extractLinksFromMessage,
+  getMessageContent,
+  isThreadDepthError,
+  isAIToolPart,
+  getAgentPromptSuggestions,
+} from './utils/ai';
 import { groupConsecutiveToolResults } from './utils/groupConsecutiveToolResults';
 
 export type AskAiScreenTranslations = Partial<
@@ -84,6 +91,7 @@ export type AskAiScreenTranslations = Partial<
      * Button text for starting a new conversation after thread depth error.
      */
     startNewConversationButtonText: string;
+    suggestedPromptsTitleText: string;
   }
 >;
 
@@ -116,6 +124,7 @@ type AskAiScreenProps = Omit<AskAiScreenStateProps<InternalDocSearchHit>, 'trans
   askAiError?: Error;
   translations?: AskAiScreenTranslations;
   onNewConversation: () => void;
+  onSelectPromptSuggestion: (prompt: string) => void;
   memoryEnabled?: boolean;
 };
 
@@ -148,6 +157,7 @@ interface AskAiExchangeCardProps {
   conversations: StoredSearchPlugin<StoredAskAiState>;
   onFeedback?: OnAskAiFeedback;
   memoryEnabled?: boolean;
+  onSelectPromptSuggestion: (prompt: string) => void;
 }
 
 function AskAiExchangeCard({
@@ -161,6 +171,7 @@ function AskAiExchangeCard({
   conversations,
   onFeedback,
   memoryEnabled,
+  onSelectPromptSuggestion,
 }: AskAiExchangeCardProps): JSX.Element {
   const { userMessage, assistantMessage } = exchange;
 
@@ -168,6 +179,7 @@ function AskAiExchangeCard({
     stoppedStreamingText = 'You stopped this response',
     errorTitleText = 'Chat error',
     relatedSourcesText,
+    suggestedPromptsTitleText = 'Suggested prompts',
   } = translations;
 
   const toolCallTranslations = useMemo(() => toToolCallTranslations(translations), [translations]);
@@ -182,6 +194,11 @@ function AskAiExchangeCard({
   const displayParts = React.useMemo(() => {
     return groupConsecutiveToolResults(assistantMessage?.parts || []);
   }, [assistantMessage]);
+
+  const promptSuggestions = useMemo(() => {
+    if (!isLastExchange) return [];
+    return getAgentPromptSuggestions(assistantMessage?.parts || []);
+  }, [assistantMessage, isLastExchange]);
 
   const wasStopped = userMessage.metadata?.stopped || assistantMessage?.metadata?.stopped;
 
@@ -302,6 +319,14 @@ function AskAiExchangeCard({
             onFeedback={onFeedback}
           />
         </div>
+
+        {promptSuggestions.length > 0 && (
+          <ConversationPromptSuggestions
+            title={suggestedPromptsTitleText}
+            suggestions={promptSuggestions}
+            onSelectPromptSuggestion={onSelectPromptSuggestion}
+          />
+        )}
       </div>
     </div>
   );
@@ -393,6 +418,7 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
                 memoryEnabled={memoryEnabled}
                 onSearchQueryClick={handleSearchQueryClick}
                 onFeedback={props.onFeedback}
+                onSelectPromptSuggestion={props.onSelectPromptSuggestion}
               />
             ))}
         </div>

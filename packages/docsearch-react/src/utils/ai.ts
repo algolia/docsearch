@@ -148,3 +148,36 @@ export function isAlgoliaMCPSearchOutputPart(part: AIMessagePart): part is Algol
 export function isSearchOutputPart(part: AIMessagePart): part is SearchOutputPart {
   return isAIToolPart(part) && isSearchToolPart(part) && part.state === 'output-available';
 }
+
+export function sanitizeMessagesForRequest(messages: AIMessage[]): AIMessage[] {
+  let sanitizedMessages: AIMessage[] | undefined;
+
+  messages.forEach((message, index) => {
+    // Filter out `data-*` part types since Agent Studio does not currently support them on the request
+    const parts = message.parts.filter((part) => !part.type.startsWith('data-'));
+
+    if (parts.length === message.parts.length) {
+      sanitizedMessages?.push(message);
+      return;
+    }
+
+    if (!sanitizedMessages) {
+      sanitizedMessages = messages.slice(0, index);
+    }
+
+    sanitizedMessages.push({
+      ...message,
+      parts,
+    });
+  });
+
+  return sanitizedMessages ?? messages;
+}
+
+export function getAgentPromptSuggestions(parts: AIMessagePart[]): string[] {
+  const suggestionsPart = parts.find((part) => part.type === 'data-suggestions');
+
+  if (!suggestionsPart) return [];
+
+  return suggestionsPart.data.suggestions;
+}
