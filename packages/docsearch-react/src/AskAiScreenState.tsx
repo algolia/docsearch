@@ -1,5 +1,6 @@
 import type { UseChatHelpers } from '@ai-sdk/react';
 import type { AutocompleteApi, AutocompleteState, BaseItem } from '@algolia/autocomplete-core';
+import type { JSX } from 'react';
 import React from 'react';
 
 import type { AskAiScreenTranslations } from './AskAiScreen';
@@ -68,9 +69,16 @@ export interface AskAiScreenStateProps<TItem extends BaseItem>
 }
 
 export const AskAiScreenState = React.memo(
-  ({ translations = {}, ...props }: AskAiScreenStateProps<InternalDocSearchHit>) => {
+  ({ translations = {}, selectAskAiQuestion, ...props }: AskAiScreenStateProps<InternalDocSearchHit>): JSX.Element => {
+    const handleSelectPromptSuggestion = React.useCallback(
+      (prompt: string) => {
+        selectAskAiQuestion(true, prompt);
+      },
+      [selectAskAiQuestion],
+    );
+
     if (props.canHandleAskAi && props.isAskAiActive && props.askAiState === 'conversation-history') {
-      return <ConversationHistoryScreen {...props} />;
+      return <ConversationHistoryScreen selectAskAiQuestion={selectAskAiQuestion} {...props} />;
     }
 
     if (props.canHandleAskAi && props.isAskAiActive && props.askAiState === 'new-conversation') {
@@ -93,6 +101,8 @@ export const AskAiScreenState = React.memo(
           askAiError={props.askAiError}
           translations={translations?.askAiScreen}
           memoryEnabled={props.memoryEnabled}
+          selectAskAiQuestion={selectAskAiQuestion}
+          onSelectPromptSuggestion={handleSelectPromptSuggestion}
         />
       );
     }
@@ -103,7 +113,12 @@ export const AskAiScreenState = React.memo(
 
     if (!props.state.query) {
       return (
-        <AskAiStartScreen {...props} hasCollections={props.hasCollections} translations={translations?.startScreen} />
+        <AskAiStartScreen
+          {...props}
+          hasCollections={props.hasCollections}
+          translations={translations?.startScreen}
+          selectAskAiQuestion={selectAskAiQuestion}
+        />
       );
     }
 

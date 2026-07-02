@@ -10,7 +10,7 @@ import type { StoredSearchPlugin } from './stored-searches';
 import { createStoredConversations } from './stored-searches';
 import { type AIMessage, type ToolCalls } from './types/AskiAi';
 import type { OnAskAiFeedback } from './types/Feedback';
-import { EMPTY_TOOLS } from './utils/ai';
+import { EMPTY_TOOLS, sanitizeMessagesForRequest } from './utils/ai';
 
 import type { AgentStudioIndices, AgentStudioSearchParameters, Memory, StoredAskAiState } from '.';
 
@@ -85,7 +85,22 @@ const getAgentStudioTransport = ({
       'x-algolia-api-key': apiKey,
       ...(userToken ? { 'x-algolia-secure-user-token': userToken } : {}),
     },
-    body: { algolia: algoliaParams },
+    body: {
+      algolia: algoliaParams,
+    },
+    prepareSendMessagesRequest({ id, messages, body, ...rest }) {
+      // Filter out `data-*` part types since Agent Studio does not currently support them on the request
+      const sanitizedMessages = sanitizeMessagesForRequest(messages);
+
+      return {
+        ...rest,
+        body: {
+          id,
+          messages: sanitizedMessages,
+          ...body,
+        },
+      };
+    },
   });
 };
 
