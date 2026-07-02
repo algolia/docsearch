@@ -84,22 +84,54 @@ export function SearchFacets({
     >
       <button
         type="button"
-        className={styles.filtersToggle}
+        className={clsx(styles.filtersToggle, open && styles.filtersToggleOpen)}
         aria-expanded={open}
+        aria-controls="search-page-filters-panel"
         onClick={() => setOpen((current) => !current)}
       >
-        <span>
+        <span className={styles.filtersToggleLabel}>
           {translate({
             id: 'theme.SearchPage.filtersToggle',
             message: 'Filters',
             description: 'The label for the mobile filters toggle button',
           })}
+          {activeCount > 0 && <span className={styles.filtersToggleBadge}>{activeCount}</span>}
         </span>
-        {activeCount > 0 && <span className={styles.filtersToggleBadge}>{activeCount}</span>}
+        <svg
+          className={styles.filtersToggleChevron}
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          aria-hidden="true"
+        >
+          <path
+            d="M4 6l4 4 4-4"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
+          />
+        </svg>
       </button>
 
-      <div className={clsx(styles.sidebarPanel, open && styles.sidebarPanelOpen)}>
-        <div className={styles.sidebarHeader}>
+      <div
+        id="search-page-filters-panel"
+        className={clsx(styles.sidebarPanel, open && styles.sidebarPanelOpen)}
+      >
+        {hasActiveRefinements && (
+          <div className={styles.sidebarHeaderMobileClear}>
+            <button type="button" className={styles.clearFacetsButton} onClick={onClear}>
+              {translate({
+                id: 'theme.SearchPage.clearFilters',
+                message: 'Clear all',
+                description: 'The label for the button that clears all active filters',
+              })}
+            </button>
+          </div>
+        )}
+
+        <div className={styles.sidebarHeaderDesktop}>
           <span className={styles.sidebarTitle}>
             {translate({
               id: 'theme.SearchPage.filtersTitle',
