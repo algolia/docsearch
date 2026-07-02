@@ -4,7 +4,7 @@
 
 The easiest way to add search to your documentation – for free.
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/30eacc09-d4b2-4a53-879b-04d40aaea454/deploy-status)](https://app.netlify.com/sites/docsearch/deploys) [![npm version](https://img.shields.io/npm/v/@docsearch/js.svg?style=flat-square)](https://www.npmjs.com/package/@docsearch/js/v/alpha) [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](./LICENSE)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/30eacc09-d4b2-4a53-879b-04d40aaea454/deploy-status)](https://app.netlify.com/sites/docsearch/deploys) [![npm version](https://img.shields.io/npm/v/@docsearch/js.svg?style=flat-square)](https://www.npmjs.com/package/@docsearch/js/v/alpha) [![Used by](https://img.shields.io/endpoint?style=flat-square&url=https://api.usedby.dev/npm/@docsearch/js/shield.json)](https://github.com/algolia/docsearch/network/dependents) [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](./LICENSE)
 
 <p align="center">
   <strong>
@@ -119,6 +119,13 @@ DocSearch is made of the following repositories:
 - **[algolia/docsearch/packages/website](https://github.com/algolia/docsearch/tree/main/packages/website)**: DocSearch website and documentation.
 - **[algolia/docsearch-configs](https://github.com/algolia/docsearch-configs)**: DocSearch websites configurations that DocSearch powers.
 - **[algolia/docsearch-scraper](https://github.com/algolia/docsearch-scraper)**: DocSearch crawler that extracts data from your documentation.
+
+## Used by
+
+DocSearch is used by [Bootstrap](https://github.com/twbs/bootstrap), [Cheerio](https://github.com/cheeriojs/cheerio), [Element Plus](https://github.com/element-plus/element-plus), [Authelia](https://github.com/authelia/authelia), [MDX](https://github.com/mdx-js/mdx), [VitePress](https://github.com/vuejs/vitepress) and [many more](https://github.com/algolia/docsearch/network/dependents).
+
+[![Used by](https://api.usedby.dev/npm/@docsearch/js?max=50&sort=stars)](https://github.com/algolia/docsearch/network/dependents)
+Generated with [usedby.dev](https://usedby.dev/)
 
 ## License
 

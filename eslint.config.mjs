@@ -64,6 +64,7 @@ export default [
 
       // TMP
       'react/function-component-definition': ['off'],
+      '@typescript-eslint/explicit-function-return-type': ['off'],
       'react/jsx-filename-extension': ['off'],
       'jsdoc/check-examples': ['off'],
     },
@@ -82,7 +83,7 @@ export default [
     },
   },
   {
-    files: ['packages/website/**/*'],
+    files: ['packages/website/**/*', 'adapters/**/*'],
     rules: {
       'import/no-unresolved': 0,
       'import/no-extraneous-dependencies': 0,

@@ -19,7 +19,7 @@ export default {
     {
       type: 'category',
       label: 'DocSearch v4',
-      items: ['docsearch', 'composable-api', 'styling', 'api', 'examples', 'migrating-from-v3'],
+      items: ['docsearch', 'docusaurus-adapter', 'composable-api', 'styling', 'api', 'examples', 'migrating-from-v3'],
     },
     {
       type: 'category',
@@ -37,6 +37,16 @@ export default {
           label: 'Full Documentation',
           href: 'https://www.algolia.com/doc/guides/algolia-ai/askai',
         },
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Sidepanel',
+      items: [
+        'sidepanel/getting-started',
+        'sidepanel/advanced-use-cases',
+        'sidepanel/hybrid',
+        'sidepanel/api-reference',
       ],
     },
     {

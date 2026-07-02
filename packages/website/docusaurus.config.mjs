@@ -2,8 +2,10 @@ import { themes } from 'prism-react-renderer';
 
 import myLoaders from './plugins/my-loaders.mjs';
 import tailwindLoader from './plugins/tailwind-loader.mjs';
+import { trackingHeadTags } from './src/tracking-head-tags.mjs';
 
-const SIGNUP_LINK = 'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch';
+const SIGNUP_LINK =
+  'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch&utm_content=apply';
 
 const currentDate = new Date();
 const currentYear = currentDate.getFullYear();
@@ -19,6 +21,7 @@ export default {
   favicon: 'img/favicon.ico',
   organizationName: 'Algolia',
   projectName: 'DocSearch',
+  headTags: trackingHeadTags,
   onBrokenLinks: 'throw',
   markdown: {
     hooks: {
@@ -61,11 +64,11 @@ export default {
       }),
     ],
   ],
-  plugins: [myLoaders, tailwindLoader],
+  plugins: [myLoaders, tailwindLoader, '@docsearch/docusaurus-adapter'],
   themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+    /** @type {import('@docsearch/docusaurus-adapter').ThemeConfig} */
     ({
-      algolia: {
+      docsearch: {
         placeholder: 'Search or ask AI',
         appId: 'PMZUYBQDAK',
         apiKey: '24b09689d5b4223813d9b8e48563c8f6',
@@ -75,6 +78,7 @@ export default {
           assistantId: 'askAIDemo',
           apiKey: '24b09689d5b4223813d9b8e48563c8f6',
           appId: 'PMZUYBQDAK',
+          sidePanel: true,
         },
         contextualSearch: true,
         translations: {
@@ -134,7 +138,7 @@ export default {
       announcementBar: {
         id: 'announcement-bar',
         content:
-          '🚀 Get Ask AI now! Turn your docs site search into an AI-powered assistant – faster answers, fewer tickets, better self-serve. <a target="_blank" rel="noopener noreferrer" href="https://dashboard.algolia.com/ask-ai">Get Started Now</a>',
+          'Ask AI is now part of <strong>Agent Studio</strong> - We\'re integrating Ask AI into Agent Studio, our centralized space to build and manage AI agents.<a target="_blank" rel="noopener noreferrer" href="https://www.algolia.com/doc/guides/algolia-ai/agent-studio">Explore Agent Studio</a>',
       },
       colorMode: {
         defaultMode: 'light',

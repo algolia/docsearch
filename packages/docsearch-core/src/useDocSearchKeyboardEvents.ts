@@ -6,8 +6,18 @@ export interface UseDocSearchKeyboardEventsProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
+  /**
+   * Deprecated: Still here for backwards compat.
+   *
+   * @deprecated
+   */
   onInput?: (event: KeyboardEvent) => void;
-  searchButtonRef: React.RefObject<HTMLButtonElement | null>;
+  /**
+   * Deprecated: Still here for backwards compat.
+   *
+   * @deprecated
+   */
+  searchButtonRef?: React.RefObject<HTMLButtonElement | null>;
   isAskAiActive: boolean;
   onAskAiToggle: (toggle: boolean) => void;
   keyboardShortcuts?: KeyboardShortcuts;
@@ -26,8 +36,6 @@ export function useDocSearchKeyboardEvents({
   onAskAiToggle,
   onClose,
   onOpen,
-  onInput,
-  searchButtonRef,
   keyboardShortcuts = DEFAULT_KEYBOARD_SHORTCUTS,
 }: UseDocSearchKeyboardEventsProps): void {
   React.useEffect(() => {
@@ -49,14 +57,6 @@ export function useDocSearchKeyboardEvents({
         } else if (!document.body.classList.contains('DocSearch--active')) {
           onOpen();
         }
-
-        return;
-      }
-
-      if (searchButtonRef && searchButtonRef.current === document.activeElement && onInput) {
-        if (/[a-zA-Z0-9]/.test(String.fromCharCode(event.keyCode))) {
-          onInput(event);
-        }
       }
     }
 
@@ -65,5 +65,5 @@ export function useDocSearchKeyboardEvents({
     return (): void => {
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [isOpen, isAskAiActive, searchButtonRef, keyboardShortcuts, onOpen, onClose, onInput, onAskAiToggle]);
+  }, [isOpen, isAskAiActive, keyboardShortcuts, onOpen, onClose, onAskAiToggle]);
 }

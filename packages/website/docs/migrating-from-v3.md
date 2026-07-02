@@ -4,6 +4,12 @@ title: Migrating from v3 to v4
 
 This guide provides detailed information on migrating from [DocSearch v3](/docs/v3/docsearch) to [DocSearch v4](/docs/docsearch), highlighting key differences and new configuration options. For a comprehensive overview, refer to the [API reference](/docs/api) and [Getting Started Guide](/docs/docsearch).
 
+## If You're Using Docusaurus
+
+Use [`@docsearch/docusaurus-adapter`](/docs/docusaurus-adapter) to get the latest DocSearch integration on your current Docusaurus version.
+
+This is the recommended path when you need newer DocSearch features (for example, Ask AI sidepanel support) without waiting for changes in Docusaurus' built-in search integration.
+
 ## If You're Using Algolia Keyword Search Only
 
 If your application utilizes only the Algolia keyword search functionality, **no migration steps are necessary**. DocSearch v4 maintains full backward compatibility for keyword search operations.
@@ -13,14 +19,14 @@ If your application utilizes only the Algolia keyword search functionality, **no
 We refreshed a few translations keys to make their purpose much clearer:
 
 | Interface | Old key | New key |
-|-----------|---------|---------|
+| ----------- | --------- | --------- |
 | SearchBoxTranslations | `resetButtonTitle` | `clearButtonTitle` |
 | SearchBoxTranslations | `resetButtonAriaLabel` | `clearButtonAriaLabel` |
 | SearchBoxTranslations | `cancelButtonText` | `closeButtonText` |
 | SearchBoxTranslations | `cancelButtonAriaLabel` | `closeButtonAriaLabel` |
 | FooterTranslations | `searchByText` | `poweredByText` |
 
-Find the full list of translations in the [API documentation](/docs/api#translations)
+Find the full list of translations in the [API documentation](/docs/api#translations).
 
 ## Integrating Ask AI with DocSearch v4
 
@@ -82,7 +88,7 @@ For full details on endpoint security, caching strategies, and infrastructure, s
 ## Support and Resources
 
 * **Ask AI documentation**: Learn everything about Algolia Ask AI ([Documentation](/#)).
-* **DocSearch Playground**: Interactive environment to test DocSearch configurations ([Docsearch Playground](https://community.algolia.com/docsearch-playground/)).
+* **DocSearch Playground**: Interactive environment to test DocSearch configurations ([DocSearch Playground](https://community.algolia.com/docsearch-playground/)).
 * **Community & Support**: Reach out through the [Algolia Discord](https://alg.li/discord).
 
 Following this guide ensures a smooth transition to DocSearch v4, unlocking the full capabilities of Algolia's powerful AI-driven search features.

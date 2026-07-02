@@ -24,7 +24,7 @@ This can happen when you have more than one URL pointing to the same content, fo
 
 We recommend configuring canonical URLs on your website, you can read more on the ["Consolidate duplicate URLs" guide by Google](https://developers.google.com/search/docs/advanced/crawling/consolidate-duplicate-urls).
 
-Ultimately, it is possible to set set the [`exclusionPatterns`](https://www.algolia.com/doc/tools/crawler/apis/configuration/exclusion-patterns/) to all the patterns you want to exclude.
+Ultimately, it is possible to set the [`exclusionPatterns`](https://www.algolia.com/doc/tools/crawler/apis/configuration/exclusion-patterns/) to all the patterns you want to exclude.
 
 ## Are the [`docsearch-scraper`](https://github.com/algolia/docsearch-scraper) and [`docsearch-configs`](https://github.com/algolia/docsearch-configs) repository still maintained?
 
@@ -32,7 +32,7 @@ We've deprecated our legacy infrastructure, but you can still use it to [run you
 
 ## How to migrate
 
-> Every owners should have received a migration email from Algolia with the details. If you were not part of the previous `index` owners, or the maintainer has changed, you can request access via [our support page](https://www.algolia.com/support/).
+> Every owner should have received a migration email from Algolia with the details. If you were not part of the previous `index` owners, or the maintainer has changed, you can request access via [our support page](https://www.algolia.com/support/).
 
 All the steps are detailed in the email you've received, but in order to use the new infrastructure you need to:
 
@@ -84,7 +84,7 @@ You should use [the dedicated web interface][2] to make any changes to your inde
 
 We did not remove access to the legacy DocSearch application (`BH4D9OD16A`) to give you the time to get familiar with our new infrastructure. `BH4D9OD16A` will remain available until the migration has been completed for all the DocSearch users.
 
-## Search yield no results
+## Search yields no results
 
 If your search does not yield any results, but there is no error in [your browser developer tools](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_are_browser_developer_tools), there might be an issue with your index.
 
@@ -96,7 +96,7 @@ We provide [config templates](/docs/templates) for many website generators, but 
 
 2. Your index settings are up to date (you'll see a banner in [the search preview](/docs/manage-your-crawls/#search-preview) if not)
 
-The Crawler only applies `index settings` at index creation index, to keep the Algolia dashboard as the source of truth. If you have drastically changed your config, or moved to a website generator, we recommend you to delete your index from the Algolia dashboard before starting a new crawl.
+The Crawler only applies `index settings` at index creation time, to keep the Algolia dashboard as the source of truth. If you have drastically changed your config, or moved to a website generator, we recommend you to delete your index from the Algolia dashboard before starting a new crawl.
 
 ## Can I delete my crawler?
 

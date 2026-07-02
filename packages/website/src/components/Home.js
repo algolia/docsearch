@@ -3,6 +3,7 @@ import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
 import React, { useRef, useState } from 'react';
 
 import { Button, PrimaryButton } from './ui/button';
+import { IntroducingSection } from './ui/features';
 import { FeaturesBento } from './ui/features-bento';
 import { FlipWords } from './ui/flip-words';
 import Keyboard from './ui/keyboard';
@@ -75,7 +76,10 @@ function VideoPlayer({ chapters }) {
             <div
               key={chapter.label}
               className="absolute flex flex-col items-center"
-              style={{ left: `${(chapter.time / duration) * 100}%`, transform: 'translateX(-50%)' }}
+              style={{
+                left: `${(chapter.time / duration) * 100}%`,
+                transform: 'translateX(-50%)',
+              }}
             >
               {/* Arrow/triangle */}
               <div
@@ -156,7 +160,11 @@ function Home() {
           </div>
           <div className="flex my-12 gap-8">
             <Button href={withBaseUrl('docs/what-is-docsearch')}>Find out more</Button>
-            <PrimaryButton href={'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch'}>
+            <PrimaryButton
+              href={
+                'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch&utm_content=apply'
+              }
+            >
               Sign up
             </PrimaryButton>
           </div>
@@ -214,6 +222,9 @@ function Home() {
           </div>
         </div>
 
+        {/* Introducing Section */}
+        <IntroducingSection />
+
         <div className="py-16 overflow-hidden snap-start">
           <div className="relative max-w-xl mx-auto px-4 md:px-6 lg:px-8 lg:max-w-screen-xl">
             <div className="max-w-screen-xl mx-auto mb-16 px-4 md:px-6 lg:px-8">
@@ -244,7 +255,12 @@ function Home() {
                   <br />
                   with DocSearch
                 </div>
-                <PrimaryButton key="apply" href={'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch'}>
+                <PrimaryButton
+                  key="apply"
+                  href={
+                    'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch&utm_content=apply'
+                  }
+                >
                   Sign up for free
                 </PrimaryButton>
               </div>

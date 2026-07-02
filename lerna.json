@@ -1,8 +1,14 @@
 {
   "packages": [
+    "adapters/*",
     "packages/*",
     "examples/*"
   ],
-  "version": "4.3.2",
-  "npmClient": "yarn"
+  "version": "4.6.3",
+  "npmClient": "yarn",
+  "command": {
+    "version": {
+      "forcePublish": true
+    }
+  }
 }

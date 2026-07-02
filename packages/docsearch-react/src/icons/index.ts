@@ -14,3 +14,7 @@ export * from './NoResultsIcon';
 export * from './MoreVerticalIcon';
 export * from './ConversationHistoryIcon';
 export * from './NewConversationIcon';
+export * from './SendIcon';
+export * from './ExpandIcon';
+export * from './FolderIcon';
+export * from './EditIcon';

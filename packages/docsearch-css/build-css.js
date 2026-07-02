@@ -78,4 +78,32 @@ async function buildStyle() {
   );
 }
 
-buildStyle();
+async function buildSidepanel() {
+  const variablesCss = await readFile('src/_variables.css');
+  const sidepanelCss = await readFile('src/sidepanel.css');
+
+  const [variablesOutput, sidepanelOutput] = await Promise.all([
+    postcss([cssnano]).process(variablesCss, { from: undefined }),
+    postcss([cssnano]).process(sidepanelCss, { from: undefined }),
+  ]);
+
+  fs.writeFile(
+    'dist/sidepanel.css',
+    [
+      getBundleBanner({ ...pkg, name: `${pkg.name} Sidepanel` }),
+      [variablesOutput.css, sidepanelOutput.css].join(''),
+    ].join('\n'),
+    () => true,
+  );
+
+  fs.writeFile(
+    'dist/sidepanel.scss',
+    [
+      getBundleBanner({ ...pkg, name: `${pkg.name} Sidepanel` }),
+      [variablesOutput.css, sidepanelOutput.css].join(''),
+    ].join('\n'),
+    () => true,
+  );
+}
+
+Promise.all([buildStyle(), buildSidepanel()]);

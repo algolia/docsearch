@@ -4,7 +4,7 @@ title: Who can apply?
 
 **Open for all developer documentation and technical blogs.**
 
-We built DocSearch from the ground up with the idea of improving search on large technical documentations. For this reason, we are offering a free hosting version to all online technical documentations and technical blogs.
+We built DocSearch from the ground up with the idea of improving search on large technical documentations. For this reason, we are offering a free hosting version to all public online technical documentations and technical blogs.
 
 We usually turn down applications when they are not production ready or have non-technical content on the website.
 
@@ -24,7 +24,7 @@ DocSearch application process includes automated validation for faster processin
 
 Once approved, you can continue the onboarding process to create your DocSearch crawler. After your data is ingested into Algolia, you'll need to implement the search UI using either our provided code snippet or one of our [integrations][3].
 
-[1]: https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch
+[1]: https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch&utm_content=apply
 [2]: https://www.algolia.com/policies/docsearch-plan-specific-terms
 [3]: integrations.md
 [4]: https://alg.li/discord

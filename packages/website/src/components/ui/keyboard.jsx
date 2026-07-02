@@ -51,6 +51,12 @@ export default function Keyboard() {
       saturate: 1.3,
       bright: 1.0,
     },
+    {
+      id: 'i',
+      label: 'I',
+      keyCodes: ['i', 'I'],
+      hidden: true,
+    },
   ];
 
   const [pressed, setPressed] = useState(keySpec.reduce((acc, k) => ({ ...acc, [k.id]: false }), {}));
@@ -96,42 +102,46 @@ export default function Keyboard() {
           <img src="/img/resources/keypad-base.webp" alt="" />
         </div>
 
-        {keySpec.map((k) => (
-          <button
-            type="button"
-            key={k.id}
-            className={[
-              'key',
-              k.double ? 'keypad__double' : 'keypad__single',
-              k.id === 'cmd' ? 'keypad__single--left' : '',
-            ].join(' ')}
-            data-pressed={pressed[k.id] || undefined}
-            style={{
-              '--hue': `${k.hue}`,
-              '--saturate': `${k.saturate}`,
-              '--bright': `${k.bright}`,
-            }}
-            onPointerDown={() => {
-              pressOn(k.id);
-              playClick();
-            }}
-            onPointerUp={() => pressOff(k.id)}
-            onPointerLeave={() => pressOff(k.id)}
-          >
-            <span className="key__mask">
-              <span className="key__content">
-                <span className={`key__text ${k.id === 'search' ? 'key__text--search' : ''}`}>{k.label}</span>
-                <img
-                  style={{
-                    filter: `hue-rotate(${k.hue}deg) saturate(${k.saturate}) brightness(${k.bright})`,
-                  }}
-                  src={`/img/resources/${k.double ? 'keypad-double' : 'keypad-single'}.png`}
-                  alt=""
-                />
+        {keySpec.map((k) => {
+          if (k.hidden) return null;
+
+          return (
+            <button
+              type="button"
+              key={k.id}
+              className={[
+                'key',
+                k.double ? 'keypad__double' : 'keypad__single',
+                k.id === 'cmd' ? 'keypad__single--left' : '',
+              ].join(' ')}
+              data-pressed={pressed[k.id] || undefined}
+              style={{
+                '--hue': `${k.hue}`,
+                '--saturate': `${k.saturate}`,
+                '--bright': `${k.bright}`,
+              }}
+              onPointerDown={() => {
+                pressOn(k.id);
+                playClick();
+              }}
+              onPointerUp={() => pressOff(k.id)}
+              onPointerLeave={() => pressOff(k.id)}
+            >
+              <span className="key__mask">
+                <span className="key__content">
+                  <span className={`key__text ${k.id === 'search' ? 'key__text--search' : ''}`}>{k.label}</span>
+                  <img
+                    style={{
+                      filter: `hue-rotate(${k.hue}deg) saturate(${k.saturate}) brightness(${k.bright})`,
+                    }}
+                    src={`/img/resources/${k.double ? 'keypad-double' : 'keypad-single'}.png`}
+                    alt=""
+                  />
+                </span>
               </span>
-            </span>
-          </button>
-        ))}
+            </button>
+          );
+        })}
       </div>
     </>
   );

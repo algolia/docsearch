@@ -88,9 +88,9 @@ Please reach out to our [support](https://algolia.com/support) team.
 
 ## Can I have multiple projects under the same Algolia application?
 
-We recommend having a single Algolia application per project. Please [apply](https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch) if you'd like to use DocSearch in an other project of yours.
+We recommend having a single Algolia application per project. Please [apply](https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch&utm_content=apply) if you'd like to use DocSearch in an other project of yours.
 
-### Why ?
+### Why?
 
 The information of the initially applied project is used everywhere when we deploy your app:
 
@@ -99,7 +99,7 @@ The information of the initially applied project is used everywhere when we depl
 - The indices we generate
 - The allowed domains of your Crawler
 
-This allow us to easily scope issues when reaching out for support.
+This allows us to easily scope issues when reaching out for support.
 
 ## Support
 
@@ -123,7 +123,7 @@ Please be informed that while Algolia does not provide support for DocSearch its
 - The Algolia Crawler, reach out [via the support page](https://algolia.com/support).
 - The Algolia Dashboard, reach out [via the support page](https://algolia.com/support).
 
-For any issue related to [the DocSearch UI library](https://github.com/algolia/docsearch), please open a [GitHub issues](https://github.com/algolia/docsearch/issues).
+For any issue related to [the DocSearch UI library](https://github.com/algolia/docsearch), please open a [GitHub issue](https://github.com/algolia/docsearch/issues).
 
 [1]: https://alg.li/discord
 [2]: https://www.algolia.com/

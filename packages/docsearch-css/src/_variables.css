@@ -20,6 +20,10 @@
   --docsearch-logo-color: rgba(0, 61, 255, 1);
   --docsearch-border-radius: 4px;
 
+  /* button */
+  --docsearch-search-button-background: #fff;
+  --docsearch-search-button-text-color: var(--docsearch-secondary-text-color);
+
   /* modal */
   --docsearch-modal-width: 800px;
   --docsearch-modal-height: 600px;
@@ -111,4 +115,6 @@ html[data-theme='dark'] {
   );
   --docsearch-dropdown-menu-background: var(--docsearch-hit-background);
   --docsearch-dropdown-menu-item-hover-background: var(--docsearch-modal-background);
+  --docsearch-search-button-background: var(--docsearch-modal-background);
+  --docsearch-search-button-text-color: var(--docsearch-text-color);
 }

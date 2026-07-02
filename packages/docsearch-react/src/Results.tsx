@@ -5,6 +5,7 @@ import type { DocSearchProps } from './DocSearch';
 import { SparklesIcon } from './icons/SparklesIcon';
 import { Snippet } from './Snippet';
 import type { InternalDocSearchHit, StoredDocSearchHit } from './types';
+import { sanitizeUserInput } from './utils/sanitize';
 
 export type ResultsTranslations = Partial<{
   askAiPlaceholder: string;
@@ -12,7 +13,7 @@ export type ResultsTranslations = Partial<{
 }>;
 interface ResultsProps<TItem extends BaseItem>
   extends AutocompleteApi<TItem, React.FormEvent, React.MouseEvent, React.KeyboardEvent> {
-  title: string;
+  title?: string | null;
   translations?: ResultsTranslations;
   collection: AutocompleteState<TItem>['collections'][0];
   renderIcon: (props: { item: TItem; index: number }) => React.ReactNode;
@@ -24,7 +25,12 @@ interface ResultsProps<TItem extends BaseItem>
 
 export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TItem>): JSX.Element | null {
   // The collection title, decoded to handle encoded HTML entities
+  // If there is not a title, return null to not render anything
   const decodedTitle = React.useMemo(() => {
+    if (!props.title) {
+      return null;
+    }
+
     return props.title
       .replace(/&amp;/g, '&')
       .replace(/&lt;/g, '<')
@@ -118,7 +124,7 @@ function Result<TItem extends StoredDocSearchHit>({
 
           {item.type === 'askAI' && (
             <div className="DocSearch-Hit-content-wrapper">
-              <Snippet className="DocSearch-Hit-title" hit={item} attribute="hierarchy.lvl1" />
+              <span className="DocSearch-Hit-title">{sanitizeUserInput(item.hierarchy.lvl1 || '')}</span>
             </div>
           )}
 
@@ -186,7 +192,7 @@ function AskAiButton<TItem extends StoredDocSearchHit>({
           </div>
           <div className="DocSearch-Hit-AskAIButton-title">
             <span className="DocSearch-Hit-AskAIButton-title-highlight">{placeholder}</span>
-            <mark className="DocSearch-Hit-AskAIButton-title-query">{item.query || ''}</mark>
+            <mark className="DocSearch-Hit-AskAIButton-title-query">{String(item.query || '')}</mark>
           </div>
         </div>
       </div>

@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.client.json",
+  "compilerOptions": {
+    "outDir": "lib",
+    "rootDir": "src",
+    "composite": true
+  },
+  "include": ["src/theme", "src/client", "src/getDocSearchConfig.ts", "src/*.d.ts"],
+  "exclude": ["**/__tests__/**"]
+}
