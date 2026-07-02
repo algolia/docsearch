@@ -1,5 +1,12 @@
+import { cleanup } from '@testing-library/react';
 import type { Mock } from 'vitest';
-import { vi } from 'vitest';
+import { afterEach, vi } from 'vitest';
+
+// Vitest does not expose a global `afterEach`, so @testing-library/react never registers its
+// automatic cleanup (see RTL dist/index.js). Without this, DOM from earlier tests leaks.
+afterEach(() => {
+  cleanup();
+});
 
 type MatchMediaProps = Partial<{
   matches: boolean;

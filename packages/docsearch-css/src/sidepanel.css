@@ -19,12 +19,16 @@
   --docsearch-sidepanel-hit-highlight-color: var(--docsearch-hit-highlight-color);
   --docsearch-sidepanel-button-background: var(--docsearch-sidepanel-background);
   --docsearch-sidepanel-button-background-dark: var(--docsearch-sidepanel-background);
+  --docsearch-sidepanel-thread-depth-banner-bg: #fff1f2;
+  --docsearch-sidepanel-thread-depth-banner-border: #fecdd3;
 }
 
 html[data-theme='dark'] {
   --docsearch-sidepanel-text-base: var(--docsearch-text-color);
   --docsearch-sidepanel-primary-disabled: rgba(1, 45, 186, 0.60);
   --docsearch-sidepanel-button-background-dark: rgba(4, 4, 8, 1);
+  --docsearch-sidepanel-thread-depth-banner-bg: rgb(239 83 80 / 12%);
+  --docsearch-sidepanel-thread-depth-banner-border: rgb(254 205 211 / 35%);
 }
 
 .DocSearch-SidepanelButton {
@@ -621,6 +625,45 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
   padding: 0;
   display: flex;
   flex-direction: column;
+}
+
+@keyframes docsearch-sidepanel-thread-depth-banner-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.DocSearch-Sidepanel .DocSearch-Sidepanel-ThreadDepthBanner {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  flex-shrink: 0;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--docsearch-sidepanel-thread-depth-banner-bg);
+  border: 1px solid var(--docsearch-sidepanel-thread-depth-banner-border);
+  box-sizing: border-box;
+  color: var(--docsearch-sidepanel-text-base);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 400;
+  width: 100%;
+  animation: docsearch-sidepanel-thread-depth-banner-enter 0.3s ease-out;
+}
+
+.DocSearch-Sidepanel .DocSearch-Sidepanel-ThreadDepthBanner p {
+  margin: 0;
+}
+
+.DocSearch-Sidepanel .DocSearch-Sidepanel-ThreadDepthBanner-apiMessage {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
 }
 
 @media screen and (min-width: 769px) {

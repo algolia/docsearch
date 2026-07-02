@@ -87,7 +87,8 @@
   background: transparent;
   border: 0;
   color: var(--docsearch-text-color);
-  flex: 1;
+  flex: 1 1 0%;
+  min-width: 0;
   font: inherit;
   font-size: 1.2em;
   font-weight: 300;
@@ -95,10 +96,14 @@
   outline: none;
   padding-block-start: 0px;
   padding-inline-start: 8px;
-  width: 80%;
   line-height: 1.4;
   resize: none;
   overflow-y: hidden; /* js toggles to auto when exceeding max */
+}
+
+.DocSearch-Input {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 
 .DocSearch-Input::placeholder {
@@ -114,7 +119,8 @@
 }
 
 .DocSearch-Actions {
-  width: var(--docsearch-actions-width);
+  flex: 0 0 auto;
+  width: auto;
   height: var(--docsearch-actions-height);
   display: flex;
   align-items: center;
@@ -927,6 +933,10 @@ assistive tech users */
   border: 1px solid #febdc5;
   animation: slideDown 0.3s ease-out;
   width: 100%;
+}
+
+.DocSearch-AskAiScreen-Error--ThreadDepth .DocSearch-AskAiScreen-Error-Title {
+  margin-bottom: 6px;
 }
 
 @keyframes slideDown {

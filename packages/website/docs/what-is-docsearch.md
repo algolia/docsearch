@@ -22,7 +22,7 @@ DocSearch is entirely free and automated. The one thing we'll need from you is t
 
 DocSearch is [one of our ways][1] to give back to the open source community for everything it did for us already.
 
-You can now [apply to the program][3]
+You can now [apply to the program][3].
 
 [1]: https://opencollective.com/algolia
 [2]: /docs/who-can-apply

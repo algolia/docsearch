@@ -189,9 +189,9 @@ Or use our new dedicated [DocSearch Playground](https://community.algolia.com/do
 
 ### Using DocSearch with Ask AI
 
-DocSearch v4 introduces support for Ask AI, Algolia's advanced, AI-powered search capability. Ask AI enhances the user experience by providing contextually relevant and intelligent responses directly from your documentation.
+DocSearch v4 introduces support for Ask AI, Algolia's advanced, AI-powered search capability. Ask AI enhances the user experience by providing contextually relevant and intelligent responses directly from your documentation. You can also use the same `askAi` configuration object to route chat through Agent Studio.
 
-To enable Ask AI, you can add your Algolia Assistant ID as a string, or use an object for more advanced configuration (such as specifying a different index, credentials, or search parameters):
+To enable Ask AI, you can add your Algolia Assistant ID as a string, or use an object for more advanced configuration (such as specifying a different index, credentials, search parameters, or enabling Agent Studio):
 
 <Tabs groupId="askai-format" defaultValue="string" values={[{ label: 'String', value: 'string' }, { label: 'Object', value: 'object' }]}>
 <TabItem value="string">
@@ -232,6 +232,34 @@ docsearch({
 - Use the string form for a simple setup.
 - Use the object form to customize which index, credentials, or filters Ask AI uses.
 - The suggested questions feature is controlled on the [Dashboard](https://dashboard.algolia.com) in the Ask AI section.
+
+### Using Agent Studio with DocSearch
+
+To use [Algolia Agent Studio](https://www.algolia.com/doc/guides/algolia-ai/agent-studio) as the chat backend, set `agentStudio: true` inside the `askAi` object.
+
+```js
+docsearch({
+  appId: 'YOUR_APP_ID',
+  indexName: 'YOUR_INDEX_NAME',
+  apiKey: 'YOUR_SEARCH_API_KEY',
+  askAi: {
+    assistantId: 'YOUR_ALGOLIA_ASSISTANT_ID',
+    agentStudio: true,
+    searchParameters: {
+      YOUR_INDEX_NAME: {
+        filters: 'type:content AND language:en',
+        attributesToRetrieve: ['title', 'content', 'url'],
+        restrictSearchableAttributes: ['title', 'content'],
+        distinct: 'url',
+      },
+    },
+  },
+});
+```
+
+- `agentStudio` is configured inside `askAi`, not as a top-level DocSearch prop.
+- When `agentStudio: true`, `searchParameters` must be keyed by index name.
+- Agent Studio search parameters support `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`.
 
 ### Filtering search results
 

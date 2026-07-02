@@ -2,6 +2,10 @@
 title: Ask AI Errors Reference
 ---
 
+import AskAIDeprecationNotice from '../../src/components/mdx/ask-ai-deprecation-notice.jsx'
+
+<AskAIDeprecationNotice />
+
 These error codes correspond to issues encountered when using Ask AI. Each code includes a short description and possible resolutions.
 
 ## General API errors
@@ -79,6 +83,8 @@ The AI runtime could not call the requested tool. This usually means the tool na
 ### AI-211 - Stream error {#ai-211}
 
 A general error occurred while streaming data from the upstream provider. This could include connection interruptions, malformed data, or provider-side streaming issues.
+
+> **Solution:** Retry the request. If the issue persists, check your network connection and the upstream provider's status page.
 
 ### AI-212 - Invalid API key {#ai-212}
 
