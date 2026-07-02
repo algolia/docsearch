@@ -8,23 +8,22 @@
 import type { ThemeConfigValidationContext } from '@docusaurus/types';
 import Joi from 'joi';
 
-import { docSearchVersionString } from './docSearchVersion';
-import { getDocSearchConfig } from './getDocSearchConfig';
 import { escapeRegexp } from './utils';
 
-import type { ThemeConfig, ThemeConfigAlgolia } from '@docsearch/docusaurus-adapter';
+import type { ThemeConfig, ThemeConfigDocSearch } from '@docsearch/docusaurus-adapter';
 
 export const DEFAULT_CONFIG = {
   // Enabled by default, as it makes sense in most cases
   // see also https://github.com/facebook/docusaurus/issues/5880
   contextualSearch: true,
-  searchParameters: {},
-  searchPagePath: 'search',
-} satisfies Partial<ThemeConfigAlgolia>;
+  searchPage: {
+    path: 'search',
+  },
+} satisfies Partial<ThemeConfigDocSearch>;
 
 const FacetFiltersSchema = Joi.array().items(Joi.alternatives().try(Joi.string(), Joi.array().items(Joi.string())));
 
-const AskAiSearchParametersSchema = Joi.object({
+const SearchParametersSchema = Joi.object({
   facetFilters: FacetFiltersSchema.optional(),
   filters: Joi.string().optional(),
   attributesToRetrieve: Joi.array().items(Joi.string()).optional(),
@@ -34,7 +33,7 @@ const AskAiSearchParametersSchema = Joi.object({
 
 const SidePanelKeyboardShortcutsSchema = Joi.object({
   'Ctrl/Cmd+I': Joi.boolean().optional(),
-});
+}).unknown(false);
 
 const SidePanelSchema = Joi.object({
   keyboardShortcuts: SidePanelKeyboardShortcutsSchema.optional(),
@@ -46,179 +45,228 @@ const SidePanelSchema = Joi.object({
   suggestedQuestions: Joi.boolean().optional(),
   translations: Joi.object().optional().unknown(),
   hideButton: Joi.boolean().optional(),
-});
+  portalContainer: Joi.object().optional().unknown(),
+}).unknown(false);
 
-export const Schema = Joi.object<ThemeConfig>({
-  algolia: Joi.object<ThemeConfigAlgolia>({
-    // Docusaurus attributes
-    contextualSearch: Joi.boolean().default(DEFAULT_CONFIG.contextualSearch),
-    externalUrlRegex: Joi.string().optional(),
-    // Algolia attributes
-    appId: Joi.string().required().messages({
-      'any.required':
-        '"algolia.appId" is required. If you haven\'t migrated to the new DocSearch infra, please refer to the blog post for instructions: https://docusaurus.io/blog/2021/11/21/algolia-docsearch-migration',
-    }),
-    apiKey: Joi.string().required(),
-    indexName: Joi.string().required(),
-    searchParameters: Joi.object({
-      facetFilters: FacetFiltersSchema.optional(),
-    })
-      .default(DEFAULT_CONFIG.searchParameters)
-      .unknown(),
-    searchPagePath: Joi.alternatives()
-      .try(Joi.boolean().invalid(true), Joi.string())
-      .allow(null)
-      .default(DEFAULT_CONFIG.searchPagePath),
-    replaceSearchResultPathname: Joi.object({
-      from: Joi.custom((from) => {
-        if (typeof from === 'string') {
-          return escapeRegexp(from);
-        }
-        if (from instanceof RegExp) {
-          return from.source;
-        }
-        throw new Error(`it should be a RegExp or a string, but received ${from}`);
-      }).required(),
-      to: Joi.string().required(),
-    }).optional(),
-    // Ask AI configuration (DocSearch v4 only)
-    askAi: Joi.alternatives()
-      .try(
-        // Simple string format (assistantId only)
-        Joi.string(),
-        // Full configuration object
-        Joi.object({
-          assistantId: Joi.string().required(),
-          // Optional Ask AI configuration
-          indexName: Joi.string().optional(),
-          apiKey: Joi.string().optional(),
-          appId: Joi.string().optional(),
-          agentStudio: Joi.boolean().optional(),
-          searchParameters: AskAiSearchParametersSchema,
-          suggestedQuestions: Joi.boolean().optional(),
-          sidePanel: Joi.alternatives().try(Joi.boolean(), SidePanelSchema).optional(),
-        }),
-      )
-      .custom((askAiInput: ThemeConfigAlgolia['askAi'] | string | undefined, helpers) => {
-        if (!askAiInput) {
-          return askAiInput;
-        }
-        const algolia: ThemeConfigAlgolia = helpers.state.ancestors[0];
-        const algoliaFacetFilters = algolia.searchParameters?.facetFilters;
-        if (typeof askAiInput === 'string') {
-          return {
-            assistantId: askAiInput,
-            indexName: algolia.indexName,
-            apiKey: algolia.apiKey,
-            appId: algolia.appId,
-            ...(algoliaFacetFilters
-              ? {
-                  searchParameters: {
-                    facetFilters: algoliaFacetFilters,
-                  },
-                }
-              : {}),
-          } satisfies ThemeConfigAlgolia['askAi'];
-        }
+const KeyboardShortcutsSchema = Joi.object({
+  'Ctrl/Cmd+K': Joi.boolean().optional(),
+  '/': Joi.boolean().optional(),
+  'Ctrl/Cmd+I': Joi.boolean().optional(),
+}).unknown(false);
 
-        // Fill in missing fields with the top-level Algolia config
-        const normalizedAskAi = { ...askAiInput };
-        normalizedAskAi.indexName = normalizedAskAi.indexName ?? algolia.indexName;
-        normalizedAskAi.apiKey = normalizedAskAi.apiKey ?? algolia.apiKey;
-        normalizedAskAi.appId = normalizedAskAi.appId ?? algolia.appId;
-        if (
-          normalizedAskAi.agentStudio !== true &&
-          normalizedAskAi.searchParameters?.facetFilters === undefined &&
-          algoliaFacetFilters
-        ) {
-          normalizedAskAi.searchParameters = {
-            ...(normalizedAskAi.searchParameters ?? {}),
-            facetFilters: algoliaFacetFilters,
-          };
-        }
+const IndexSchema = Joi.alternatives().try(
+  Joi.string(),
+  Joi.object({
+    name: Joi.string().required(),
+    searchParameters: SearchParametersSchema.optional(),
+  }).unknown(false),
+);
 
-        return normalizedAskAi;
-      })
-      .optional()
-      .messages({
-        'alternatives.types':
-          'askAi must be either a string (assistantId) or an object with indexName, apiKey, appId, and assistantId',
-      }),
+const SearchControlTextParamSchema = Joi.object({
+  exposed: Joi.boolean().required(),
+  default: Joi.string().optional(),
+}).unknown(false);
+
+const SearchControlNumberParamSchema = Joi.object({
+  exposed: Joi.boolean().required(),
+  default: Joi.number().optional(),
+  constraint: Joi.object({
+    min: Joi.number().optional(),
+    max: Joi.number().optional(),
   })
-    .label('themeConfig.algolia')
-    .required()
-    .unknown(),
-});
+    .unknown(false)
+    .optional(),
+}).unknown(false);
 
-function ensureSidepanelSupported(themeConfig: ThemeConfig) {
-  const docsearch = getDocSearchConfig(themeConfig);
-  const sidePanelEnabled = docsearch.askAi && typeof docsearch.askAi === 'object' && Boolean(docsearch.askAi.sidePanel);
+const SearchControlStringArrayParamSchema = Joi.object({
+  exposed: Joi.boolean().required(),
+  default: Joi.array().items(Joi.string()).optional(),
+  constraint: Joi.object({
+    values: Joi.array().items(Joi.string()).optional(),
+  })
+    .unknown(false)
+    .optional(),
+  merge: Joi.boolean().optional(),
+}).unknown(false);
 
-  if (!sidePanelEnabled) {
+const SearchControlFacetParamSchema = Joi.object({
+  exposed: Joi.boolean().valid(false).required(),
+  default: Joi.array().items(Joi.string()).optional(),
+}).unknown(false);
+
+const AgentStudioSearchControlsSchema = Joi.object({
+  query: SearchControlTextParamSchema.optional(),
+  hits_per_page: SearchControlNumberParamSchema.optional(),
+  page: SearchControlNumberParamSchema.optional(),
+  attributesToRetrieve: SearchControlStringArrayParamSchema.optional(),
+  responseFields: SearchControlStringArrayParamSchema.optional(),
+  facets: SearchControlFacetParamSchema.optional(),
+  custom: Joi.object().unknown().optional(),
+}).unknown(false);
+
+const AskAiIndexSchema = Joi.object({
+  index: Joi.string().required(),
+  description: Joi.string().required(),
+  enhancedDescription: Joi.string().optional(),
+  searchParameters: SearchParametersSchema.optional(),
+  searchControls: AgentStudioSearchControlsSchema.optional(),
+}).unknown(false);
+
+const AskAiSchema = Joi.object({
+  assistantId: Joi.string().required(),
+  suggestedQuestions: Joi.boolean().optional(),
+  searchParameters: Joi.object().pattern(Joi.string(), SearchParametersSchema).optional(),
+  indices: Joi.array().items(AskAiIndexSchema).min(1).required(),
+}).unknown(false);
+
+const SearchPageFacetSchema = Joi.object({
+  attribute: Joi.string().required(),
+  label: Joi.string().optional(),
+}).unknown(false);
+
+const SearchPageSchema = Joi.alternatives()
+  .try(
+    Joi.boolean().valid(false),
+    Joi.object({
+      path: Joi.string().default(DEFAULT_CONFIG.searchPage.path),
+      facets: Joi.array().items(SearchPageFacetSchema).optional(),
+    }).unknown(false),
+  )
+  .default(DEFAULT_CONFIG.searchPage);
+
+const DocSearchSchema = Joi.object<ThemeConfigDocSearch>({
+  contextualSearch: Joi.boolean().default(DEFAULT_CONFIG.contextualSearch),
+  externalUrlRegex: Joi.string().optional(),
+  appId: Joi.string().required().messages({
+    'any.required':
+      '"docsearch.appId" is required. If you haven\'t migrated to the new DocSearch infra, please refer to the blog post for instructions: https://docusaurus.io/blog/2021/11/21/algolia-docsearch-migration',
+  }),
+  apiKey: Joi.string().required(),
+  indices: Joi.array().items(IndexSchema).min(1).required(),
+  facets: Joi.array()
+    .items(
+      Joi.object({
+        key: Joi.string().required(),
+        label: Joi.string().optional(),
+      }).unknown(false),
+    )
+    .optional(),
+  initialQuery: Joi.string().optional(),
+  insights: Joi.alternatives().try(Joi.boolean(), Joi.object().unknown()).optional(),
+  placeholder: Joi.string().optional(),
+  translations: Joi.object().optional().unknown(),
+  maxResultsPerGroup: Joi.number().optional(),
+  disableUserPersonalization: Joi.boolean().optional(),
+  getMissingResultsUrl: Joi.function().optional(),
+  keyboardShortcuts: KeyboardShortcutsSchema.optional(),
+  recentSearchesLimit: Joi.number().optional(),
+  recentSearchesWithFavoritesLimit: Joi.number().optional(),
+  resultBadgeKey: Joi.string().optional(),
+  replaceSearchResultPathname: Joi.object({
+    from: Joi.custom((from) => {
+      if (typeof from === 'string') {
+        return escapeRegexp(from);
+      }
+      if (from instanceof RegExp) {
+        return from.source;
+      }
+      throw new Error(`it should be a RegExp or a string, but received ${from}`);
+    }).required(),
+    to: Joi.string().required(),
+  })
+    .unknown(false)
+    .optional(),
+  searchPage: SearchPageSchema,
+  askAi: AskAiSchema.optional(),
+  sidePanel: Joi.alternatives().try(Joi.boolean(), SidePanelSchema).optional(),
+})
+  .label('themeConfig.docsearch')
+  .unknown(false);
+
+const Schema = Joi.object<ThemeConfig>({
+  docsearch: DocSearchSchema.required(),
+}).unknown(false);
+
+function assertNoRemovedKeys(themeConfig: ThemeConfig): void {
+  const themeConfigRecord = themeConfig as Record<string, unknown>;
+
+  if (themeConfigRecord.algolia !== undefined) {
+    throw new Error(
+      '`themeConfig.algolia` is no longer supported by @docsearch/docusaurus-adapter v5. Move the configuration to `themeConfig.docsearch`.',
+    );
+  }
+
+  const docsearch = themeConfigRecord.docsearch;
+  if (!docsearch || typeof docsearch !== 'object') {
     return;
   }
 
-  const isSidepanelSupported = (() => {
-    const match = docSearchVersionString.match(/^(?<major>\d+)\.(?<minor>\d+)/);
-    if (!match?.groups) {
-      return false;
-    }
-    const major = Number(match.groups.major);
-    const minor = Number(match.groups.minor);
-    return major > 4 || (major === 4 && minor >= 5);
-  })();
+  const docsearchRecord = docsearch as Record<string, unknown>;
 
-  if (!isSidepanelSupported) {
+  if (docsearchRecord.indexName !== undefined) {
+    throw new Error('`themeConfig.docsearch.indexName` was removed. Use `themeConfig.docsearch.indices` instead.');
+  }
+
+  if (docsearchRecord.searchParameters !== undefined) {
     throw new Error(
-      'The askAi.sidePanel feature is only supported in DocSearch v4.5+. ' +
-        'Please upgrade to DocSearch v4.5+ or remove the askAi.sidePanel configuration.',
+      '`themeConfig.docsearch.searchParameters` was removed. Configure `searchParameters` on each `themeConfig.docsearch.indices` entry instead.',
+    );
+  }
+
+  if (docsearchRecord.searchPagePath !== undefined) {
+    throw new Error(
+      '`themeConfig.docsearch.searchPagePath` was removed. Use `themeConfig.docsearch.searchPage` instead.',
+    );
+  }
+
+  const askAi = docsearchRecord.askAi;
+  if (typeof askAi === 'string') {
+    throw new Error('`themeConfig.docsearch.askAi` must be an object with `assistantId` and `indices`.');
+  }
+
+  if (!askAi || typeof askAi !== 'object') {
+    return;
+  }
+
+  const askAiRecord = askAi as Record<string, unknown>;
+
+  if (askAiRecord.agentStudio !== undefined) {
+    throw new Error(
+      '`themeConfig.docsearch.askAi.agentStudio` was removed. The adapter now only supports Agent Studio.',
+    );
+  }
+
+  if (askAiRecord.indexName !== undefined || askAiRecord.apiKey !== undefined || askAiRecord.appId !== undefined) {
+    throw new Error(
+      '`themeConfig.docsearch.askAi.indexName`, `apiKey`, and `appId` were removed. Use `themeConfig.docsearch.askAi.indices` and the top-level DocSearch credentials instead.',
+    );
+  }
+
+  if (askAiRecord.sidePanel !== undefined) {
+    throw new Error(
+      '`themeConfig.docsearch.askAi.sidePanel` was removed. Use `themeConfig.docsearch.sidePanel` instead.',
     );
   }
 }
 
-function hasConfigValue<TValue>(value: TValue | null | undefined): value is TValue {
-  return value !== undefined && value !== null;
-}
+function ensureSidePanelHasAskAi(themeConfig: ThemeConfig): void {
+  const { docsearch } = themeConfig;
 
-function getThemeConfigSource(themeConfig: ThemeConfig): 'algolia' | 'docsearch' | null {
-  const hasDocsearch = hasConfigValue(themeConfig.docsearch);
-  const hasAlgolia = hasConfigValue(themeConfig.algolia);
-
-  if (hasDocsearch && hasAlgolia) {
-    throw new Error(
-      'Please provide either "themeConfig.docsearch" (preferred) or "themeConfig.algolia" (legacy), but not both.',
-    );
+  if (docsearch?.sidePanel && !docsearch.askAi) {
+    throw new Error('`themeConfig.docsearch.sidePanel` requires `themeConfig.docsearch.askAi`.');
   }
-
-  if (hasDocsearch) {
-    return 'docsearch';
-  }
-
-  if (hasAlgolia) {
-    return 'algolia';
-  }
-
-  return null;
 }
 
 export function validateThemeConfig({
   validate,
   themeConfig: themeConfigInput,
 }: ThemeConfigValidationContext<ThemeConfig>): ThemeConfig {
-  const source = getThemeConfigSource(themeConfigInput);
+  assertNoRemovedKeys(themeConfigInput);
 
-  if (!source) {
-    return validate(Schema, {});
-  }
-
-  const validated = validate(Schema, {
-    algolia: source === 'docsearch' ? themeConfigInput.docsearch : themeConfigInput.algolia,
+  const themeConfig = validate(Schema, {
+    docsearch: themeConfigInput.docsearch,
   }) as ThemeConfig;
 
-  const themeConfig: ThemeConfig = {
-    [source]: validated.algolia,
-  };
-
-  ensureSidepanelSupported(themeConfig);
+  ensureSidePanelHasAskAi(themeConfig);
   return themeConfig;
 }

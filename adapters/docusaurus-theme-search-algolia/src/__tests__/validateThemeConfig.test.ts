@@ -6,19 +6,31 @@
  */
 
 import type Joi from 'joi';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { DEFAULT_CONFIG, validateThemeConfig } from '../validateThemeConfig';
 
 import type { ThemeConfig, UserThemeConfig } from '@docsearch/docusaurus-adapter';
 
-// mock DocSearch to a v4.5 version to allow AskAI sidepanel tests to pass
-vi.mock('@docsearch/react', () => ({ version: '4.5.3' }));
-
-type AlgoliaInput = UserThemeConfig['algolia'];
 type DocSearchInput = UserThemeConfig['docsearch'];
 
-function testValidateThemeConfigWithUserThemeConfig(themeConfig: UserThemeConfig) {
+const minimalDocSearchConfig = {
+  appId: 'BH4D9OD16A',
+  apiKey: 'apiKey',
+  indices: [{ name: 'index' }],
+} satisfies DocSearchInput;
+
+const minimalAskAiConfig = {
+  assistantId: 'my-assistant-id',
+  indices: [
+    {
+      index: 'markdown-index',
+      description: 'Documentation content.',
+    },
+  ],
+} satisfies NonNullable<DocSearchInput>['askAi'];
+
+function testValidateThemeConfigWithUserThemeConfig(themeConfig: UserThemeConfig): ThemeConfig {
   function validate(schema: Joi.ObjectSchema<{ [key: string]: unknown }>, cfg: { [key: string]: unknown }) {
     const { value, error } = schema.validate(cfg, {
       convert: false,
@@ -35,11 +47,7 @@ function testValidateThemeConfigWithUserThemeConfig(themeConfig: UserThemeConfig
   });
 }
 
-function testValidateThemeConfig(algolia: AlgoliaInput) {
-  return testValidateThemeConfigWithUserThemeConfig(algolia ? { algolia } : {});
-}
-
-function testValidateThemeConfigDocSearch(docsearch: DocSearchInput) {
+function testValidateThemeConfig(docsearch: DocSearchInput): ThemeConfig {
   return testValidateThemeConfigWithUserThemeConfig(docsearch ? { docsearch } : {});
 }
 
@@ -53,131 +61,118 @@ function expectThrowMessage(fn: () => unknown, message: string): void {
 
   expect(thrownError).toBeDefined();
   expect(thrownError).toBeInstanceOf(Error);
-  expect((thrownError as Error).message).toBe(message);
+  expect((thrownError as Error).message).toContain(message);
 }
 
 describe('validateThemeConfig', () => {
-  it('minimal config', () => {
-    const algolia: AlgoliaInput = {
-      indexName: 'index',
-      apiKey: 'apiKey',
-      appId: 'BH4D9OD16A',
-    };
-    expect(testValidateThemeConfig(algolia)).toEqual({
-      algolia: {
+  it('accepts minimal v5 docsearch config', () => {
+    expect(testValidateThemeConfig(minimalDocSearchConfig)).toEqual({
+      docsearch: {
         ...DEFAULT_CONFIG,
-        ...algolia,
+        ...minimalDocSearchConfig,
       },
     });
   });
 
-  it('unknown attributes', () => {
-    const algolia: AlgoliaInput = {
-      indexName: 'index',
-      apiKey: 'apiKey',
-      // @ts-expect-error: expected type error!
+  it('rejects missing docsearch config', () => {
+    expectThrowMessage(() => testValidateThemeConfig(undefined), '"themeConfig.docsearch" is required');
+  });
+
+  it('rejects unknown docsearch attributes', () => {
+    const docsearch = {
+      ...minimalDocSearchConfig,
       unknownKey: 'unknownKey',
+    } as unknown as DocSearchInput;
+
+    expectThrowMessage(() => testValidateThemeConfig(docsearch), '"docsearch.unknownKey" is not allowed');
+  });
+
+  it('rejects missing indices config', () => {
+    const docsearch = {
       appId: 'BH4D9OD16A',
+      apiKey: 'apiKey',
+    } as unknown as DocSearchInput;
+
+    expectThrowMessage(() => testValidateThemeConfig(docsearch), '"docsearch.indices" is required');
+  });
+
+  it('accepts per-index searchParameters', () => {
+    const docsearch: DocSearchInput = {
+      ...minimalDocSearchConfig,
+      indices: [
+        {
+          name: 'index',
+          searchParameters: {
+            facetFilters: ['version:1.0'],
+          },
+        },
+      ],
     };
-    expect(testValidateThemeConfig(algolia)).toEqual({
-      algolia: {
+
+    expect(testValidateThemeConfig(docsearch)).toEqual({
+      docsearch: {
         ...DEFAULT_CONFIG,
-        ...algolia,
+        ...docsearch,
       },
     });
   });
 
-  it('undefined config', () => {
-    const algolia = undefined;
-    expectThrowMessage(() => testValidateThemeConfig(algolia), '"themeConfig.algolia" is required');
-  });
-
-  it('empty config', () => {
-    expectThrowMessage(
-      () =>
-        testValidateThemeConfig(
-          // @ts-expect-error: expected type error!
-          {},
-        ),
-      `"algolia.appId" is required. If you haven't migrated to the new DocSearch infra, please refer to the blog post for instructions: https://docusaurus.io/blog/2021/11/21/algolia-docsearch-migration`,
-    );
-  });
-
-  it('missing indexName config', () => {
-    // @ts-expect-error: expected type error!
-    const algolia: AlgoliaInput = {
-      apiKey: 'apiKey',
-      appId: 'BH4D9OD16A',
+  it('accepts string index entries', () => {
+    const docsearch: DocSearchInput = {
+      ...minimalDocSearchConfig,
+      indices: ['index'],
     };
-    expectThrowMessage(() => testValidateThemeConfig(algolia), '"algolia.indexName" is required');
-  });
 
-  it('missing apiKey config', () => {
-    // @ts-expect-error: expected type error!
-    const algolia: AlgoliaInput = {
-      indexName: 'indexName',
-      appId: 'BH4D9OD16A',
-    };
-    expectThrowMessage(() => testValidateThemeConfig(algolia), '"algolia.apiKey" is required');
-  });
-
-  it('missing appId config', () => {
-    // @ts-expect-error: expected type error!
-    const algolia: AlgoliaInput = {
-      indexName: 'indexName',
-      apiKey: 'apiKey',
-    };
-    expectThrowMessage(
-      () => testValidateThemeConfig(algolia),
-      `"algolia.appId" is required. If you haven't migrated to the new DocSearch infra, please refer to the blog post for instructions: https://docusaurus.io/blog/2021/11/21/algolia-docsearch-migration`,
-    );
-  });
-
-  it('contextualSearch config', () => {
-    const algolia: AlgoliaInput = {
-      appId: 'BH4D9OD16A',
-      indexName: 'index',
-      apiKey: 'apiKey',
-      contextualSearch: true,
-    };
-    expect(testValidateThemeConfig(algolia)).toEqual({
-      algolia: {
+    expect(testValidateThemeConfig(docsearch)).toEqual({
+      docsearch: {
         ...DEFAULT_CONFIG,
-        ...algolia,
+        ...docsearch,
       },
     });
   });
 
-  it('externalUrlRegex config', () => {
-    const algolia: AlgoliaInput = {
-      appId: 'BH4D9OD16A',
-      indexName: 'index',
-      apiKey: 'apiKey',
-      externalUrlRegex: 'http://external-domain.com',
+  it('accepts searchPage false', () => {
+    const docsearch: DocSearchInput = {
+      ...minimalDocSearchConfig,
+      searchPage: false,
     };
-    expect(testValidateThemeConfig(algolia)).toEqual({
-      algolia: {
+
+    expect(testValidateThemeConfig(docsearch)).toEqual({
+      docsearch: {
         ...DEFAULT_CONFIG,
-        ...algolia,
+        ...docsearch,
+      },
+    });
+  });
+
+  it('defaults searchPage.path when searchPage is an empty object', () => {
+    const docsearch = {
+      ...minimalDocSearchConfig,
+      searchPage: {},
+    } as unknown as DocSearchInput;
+
+    expect(testValidateThemeConfig(docsearch)).toEqual({
+      docsearch: {
+        ...DEFAULT_CONFIG,
+        ...minimalDocSearchConfig,
       },
     });
   });
 
   describe('replaceSearchResultPathname', () => {
     it('escapes from string', () => {
-      const algolia: AlgoliaInput = {
-        appId: 'BH4D9OD16A',
-        indexName: 'index',
-        apiKey: 'apiKey',
+      const docsearch: DocSearchInput = {
+        ...minimalDocSearchConfig,
         replaceSearchResultPathname: {
           from: '/docs/some-\\special-.[regexp]{chars*}',
           to: '/abc',
         },
       };
-      expect(testValidateThemeConfig(algolia)).toEqual({
-        algolia: {
+
+      expect(testValidateThemeConfig(docsearch)).toEqual({
+        docsearch: {
           ...DEFAULT_CONFIG,
-          ...algolia,
+          ...docsearch,
           replaceSearchResultPathname: {
             from: '/docs/some\\x2d\\\\special\\x2d\\.\\[regexp\\]\\{chars\\*\\}',
             to: '/abc',
@@ -187,21 +182,18 @@ describe('validateThemeConfig', () => {
     });
 
     it('converts from regexp to string', () => {
-      const algolia: AlgoliaInput = {
-        appId: 'BH4D9OD16A',
-        indexName: 'index',
-        apiKey: 'apiKey',
+      const docsearch = {
+        ...minimalDocSearchConfig,
         replaceSearchResultPathname: {
-          // @ts-expect-error: test regexp input
           from: /^\/docs\/(?:1\.0|next)/,
           to: '/abc',
         },
-      };
+      } as unknown as DocSearchInput;
 
-      expect(testValidateThemeConfig(algolia)).toEqual({
-        algolia: {
+      expect(testValidateThemeConfig(docsearch)).toEqual({
+        docsearch: {
           ...DEFAULT_CONFIG,
-          ...algolia,
+          ...minimalDocSearchConfig,
           replaceSearchResultPathname: {
             from: '^\\/docs\\/(?:1\\.0|next)',
             to: '/abc',
@@ -211,463 +203,14 @@ describe('validateThemeConfig', () => {
     });
   });
 
-  it('searchParameters.facetFilters search config', () => {
-    const algolia: AlgoliaInput = {
-      appId: 'BH4D9OD16A',
-      indexName: 'index',
-      apiKey: 'apiKey',
-      searchParameters: {
-        facetFilters: ['version:1.0'],
-      },
-    };
-    expect(testValidateThemeConfig(algolia)).toEqual({
-      algolia: {
-        ...DEFAULT_CONFIG,
-        ...algolia,
-      },
-    });
-  });
-
   describe('askAi config validation', () => {
-    it('accepts string format (assistantId)', () => {
-      const algolia: AlgoliaInput = {
-        appId: 'BH4D9OD16A',
-        indexName: 'index',
-        apiKey: 'apiKey',
-        askAi: 'my-assistant-id',
-      };
-      expect(testValidateThemeConfig(algolia)).toEqual({
-        algolia: {
-          ...DEFAULT_CONFIG,
-          ...algolia,
-          askAi: {
-            assistantId: 'my-assistant-id',
-            indexName: algolia.indexName,
-            apiKey: algolia.apiKey,
-            appId: algolia.appId,
-          },
-        },
-      });
-    });
-
-    it('accepts minimal object format', () => {
-      const algolia: AlgoliaInput = {
-        appId: 'BH4D9OD16A',
-        indexName: 'index',
-        apiKey: 'apiKey',
-        askAi: {
-          assistantId: 'my-assistant-id',
-        },
-      };
-      expect(testValidateThemeConfig(algolia)).toEqual({
-        algolia: {
-          ...DEFAULT_CONFIG,
-          ...algolia,
-          askAi: {
-            assistantId: 'my-assistant-id',
-            indexName: algolia.indexName,
-            apiKey: algolia.apiKey,
-            appId: algolia.appId,
-          },
-        },
-      });
-    });
-
-    it('accepts sidePanel as true', () => {
-      const algolia: AlgoliaInput = {
-        appId: 'BH4D9OD16A',
-        indexName: 'index',
-        apiKey: 'apiKey',
-        askAi: {
-          assistantId: 'my-assistant-id',
-          sidePanel: true,
-        },
-      };
-      expect(testValidateThemeConfig(algolia)).toEqual({
-        algolia: {
-          ...DEFAULT_CONFIG,
-          ...algolia,
-          askAi: {
-            assistantId: 'my-assistant-id',
-            indexName: algolia.indexName,
-            apiKey: algolia.apiKey,
-            appId: algolia.appId,
-            sidePanel: true,
-          },
-        },
-      });
-    });
-
-    it('accepts sidePanel as object', () => {
-      const algolia: AlgoliaInput = {
-        appId: 'BH4D9OD16A',
-        indexName: 'index',
-        apiKey: 'apiKey',
-        askAi: {
-          assistantId: 'my-assistant-id',
-          sidePanel: {
-            keyboardShortcuts: {
-              'Ctrl/Cmd+I': false,
-            },
-            variant: 'inline',
-            side: 'left',
-            width: '420px',
-            expandedWidth: 640,
-            pushSelector: '#__docusaurus',
-          },
-        },
-      };
-      const sidePanelValue = (
-        (algolia as NonNullable<AlgoliaInput>).askAi as Exclude<NonNullable<AlgoliaInput>['askAi'], string>
-      )?.sidePanel;
-      expect(testValidateThemeConfig(algolia)).toEqual({
-        algolia: {
-          ...DEFAULT_CONFIG,
-          ...algolia,
-          askAi: {
-            assistantId: 'my-assistant-id',
-            indexName: algolia.indexName,
-            apiKey: algolia.apiKey,
-            appId: algolia.appId,
-            sidePanel: sidePanelValue,
-          },
-        },
-      });
-    });
-
-    it('accepts sidePanel.hideButton as true', () => {
-      const algolia: AlgoliaInput = {
-        appId: 'BH4D9OD16A',
-        indexName: 'index',
-        apiKey: 'apiKey',
-        askAi: {
-          assistantId: 'my-assistant-id',
-          sidePanel: {
-            hideButton: true,
-          },
-        },
-      };
-      expect(testValidateThemeConfig(algolia)).toEqual({
-        algolia: {
-          ...DEFAULT_CONFIG,
-          ...algolia,
-          askAi: {
-            assistantId: 'my-assistant-id',
-            indexName: algolia.indexName,
-            apiKey: algolia.apiKey,
-            appId: algolia.appId,
-            sidePanel: {
-              hideButton: true,
-            },
-          },
-        },
-      });
-    });
-
-    it('accepts full object format', () => {
-      const algolia: AlgoliaInput = {
-        appId: 'BH4D9OD16A',
-        indexName: 'index',
-        apiKey: 'apiKey',
-        askAi: {
-          indexName: 'ai-index',
-          apiKey: 'ai-apiKey',
-          appId: 'ai-appId',
-          assistantId: 'my-assistant-id',
-        },
-      };
-      expect(testValidateThemeConfig(algolia)).toEqual({
-        algolia: {
-          ...DEFAULT_CONFIG,
-          ...algolia,
-        },
-      });
-    });
-
-    it('accepts agentStudio=true with per-index searchParameters', () => {
-      const algolia: AlgoliaInput = {
-        appId: 'BH4D9OD16A',
-        indexName: 'index',
-        apiKey: 'apiKey',
-        askAi: {
-          assistantId: 'my-assistant-id',
-          agentStudio: true,
-          searchParameters: {
-            index: {
-              distinct: false,
-            },
-          },
-        },
-      };
-      expect(testValidateThemeConfig(algolia)).toEqual({
-        algolia: {
-          ...DEFAULT_CONFIG,
-          ...algolia,
-          askAi: {
-            assistantId: 'my-assistant-id',
-            indexName: algolia.indexName,
-            apiKey: algolia.apiKey,
-            appId: algolia.appId,
-            agentStudio: true,
-            searchParameters: {
-              index: {
-                distinct: false,
-              },
-            },
-          },
-        },
-      });
-    });
-
-    it('rejects invalid type', () => {
-      const algolia: AlgoliaInput = {
-        appId: 'BH4D9OD16A',
-        indexName: 'index',
-        apiKey: 'apiKey',
-        // @ts-expect-error: expected type error
-        askAi: 123, // Invalid: should be string or object
-      };
-      expectThrowMessage(
-        () => testValidateThemeConfig(algolia),
-        'askAi must be either a string (assistantId) or an object with indexName, apiKey, appId, and assistantId',
-      );
-    });
-
-    it('rejects empty askAi', () => {
-      const algolia: AlgoliaInput = {
-        appId: 'BH4D9OD16A',
-        indexName: 'index',
-        apiKey: 'apiKey',
-        // @ts-expect-error: expected type error: missing mandatory fields
-        askAi: {},
-      };
-      expectThrowMessage(() => testValidateThemeConfig(algolia), '"algolia.askAi.assistantId" is required');
-    });
-
-    it('accepts undefined askAi', () => {
-      const algolia: AlgoliaInput = {
-        appId: 'BH4D9OD16A',
-        indexName: 'index',
-        apiKey: 'apiKey',
-      };
-      expect(testValidateThemeConfig(algolia)).toEqual({
-        algolia: {
-          ...DEFAULT_CONFIG,
-          ...algolia,
-        },
-      });
-    });
-
-    describe('Ask AI search parameters', () => {
-      it('accepts Ask AI facet filters', () => {
-        const algolia = {
-          appId: 'BH4D9OD16A',
-          indexName: 'index',
-          apiKey: 'apiKey',
-          askAi: {
-            indexName: 'ai-index',
-            apiKey: 'ai-apiKey',
-            appId: 'ai-appId',
-            assistantId: 'my-assistant-id',
-            searchParameters: {
-              facetFilters: ['version:1.0'],
-            },
-          },
-        } satisfies AlgoliaInput;
-
-        expect(testValidateThemeConfig(algolia)).toEqual({
-          algolia: {
-            ...DEFAULT_CONFIG,
-            ...algolia,
-          },
-        });
-      });
-
-      it('accepts distinct Ask AI / algolia facet filters', () => {
-        const algolia = {
-          appId: 'BH4D9OD16A',
-          indexName: 'index',
-          apiKey: 'apiKey',
-          searchParameters: {
-            facetFilters: ['version:algolia'],
-          },
-          askAi: {
-            indexName: 'ai-index',
-            apiKey: 'ai-apiKey',
-            appId: 'ai-appId',
-            assistantId: 'my-assistant-id',
-            searchParameters: {
-              facetFilters: ['version:askAi'],
-            },
-          },
-        } satisfies AlgoliaInput;
-
-        expect(testValidateThemeConfig(algolia)).toEqual({
-          algolia: {
-            ...DEFAULT_CONFIG,
-            ...algolia,
-          },
-        });
-      });
-
-      it('falls back to algolia facet filters', () => {
-        const algolia = {
-          appId: 'BH4D9OD16A',
-          indexName: 'index',
-          apiKey: 'apiKey',
-          searchParameters: {
-            facetFilters: ['version:1.0'],
-          },
-          askAi: {
-            indexName: 'ai-index',
-            apiKey: 'ai-apiKey',
-            appId: 'ai-appId',
-            assistantId: 'my-assistant-id',
-            searchParameters: {},
-          },
-        } satisfies AlgoliaInput;
-
-        expect(testValidateThemeConfig(algolia)).toEqual({
-          algolia: {
-            ...DEFAULT_CONFIG,
-            ...algolia,
-            askAi: {
-              ...algolia.askAi,
-              searchParameters: {
-                facetFilters: ['version:1.0'],
-              },
-            },
-          },
-        });
-      });
-
-      it('falls back to algolia facet filters with AskAI string format (assistantId)', () => {
-        const algolia = {
-          appId: 'BH4D9OD16A',
-          indexName: 'index',
-          apiKey: 'apiKey',
-          searchParameters: {
-            facetFilters: ['version:1.0'],
-          },
-          askAi: 'my-assistant-id',
-        } satisfies AlgoliaInput;
-
-        expect(testValidateThemeConfig(algolia)).toEqual({
-          algolia: {
-            ...DEFAULT_CONFIG,
-            ...algolia,
-            askAi: {
-              indexName: algolia.indexName,
-              apiKey: algolia.apiKey,
-              appId: algolia.appId,
-              assistantId: 'my-assistant-id',
-              searchParameters: {
-                facetFilters: ['version:1.0'],
-              },
-            },
-          },
-        });
-      });
-    });
-
-    describe('Ask AI suggestedQuestions', () => {
-      it('accepts suggestedQuestions as true', () => {
-        const algolia = {
-          appId: 'BH4D9OD16A',
-          indexName: 'index',
-          apiKey: 'apiKey',
-          askAi: {
-            assistantId: 'my-assistant-id',
-            suggestedQuestions: true,
-          },
-        } satisfies AlgoliaInput;
-
-        expect(testValidateThemeConfig(algolia)).toEqual({
-          algolia: {
-            ...DEFAULT_CONFIG,
-            ...algolia,
-            askAi: {
-              indexName: algolia.indexName,
-              apiKey: algolia.apiKey,
-              appId: algolia.appId,
-              assistantId: 'my-assistant-id',
-              suggestedQuestions: true,
-            },
-          },
-        });
-      });
-
-      it('accepts suggestedQuestions as false', () => {
-        const algolia = {
-          appId: 'BH4D9OD16A',
-          indexName: 'index',
-          apiKey: 'apiKey',
-          askAi: {
-            assistantId: 'my-assistant-id',
-            suggestedQuestions: false,
-          },
-        } satisfies AlgoliaInput;
-
-        expect(testValidateThemeConfig(algolia)).toEqual({
-          algolia: {
-            ...DEFAULT_CONFIG,
-            ...algolia,
-            askAi: {
-              indexName: algolia.indexName,
-              apiKey: algolia.apiKey,
-              appId: algolia.appId,
-              assistantId: 'my-assistant-id',
-              suggestedQuestions: false,
-            },
-          },
-        });
-      });
-
-      it('rejects invalid suggestedQuestions type', () => {
-        const algolia: AlgoliaInput = {
-          appId: 'BH4D9OD16A',
-          indexName: 'index',
-          apiKey: 'apiKey',
-          askAi: {
-            assistantId: 'my-assistant-id',
-            // @ts-expect-error: expected type error
-            suggestedQuestions: 'invalid-string',
-          },
-        };
-        expectThrowMessage(
-          () => testValidateThemeConfig(algolia),
-          '"algolia.askAi.suggestedQuestions" must be a boolean',
-        );
-      });
-
-      it('rejects suggestedQuestions as number', () => {
-        const algolia: AlgoliaInput = {
-          appId: 'BH4D9OD16A',
-          indexName: 'index',
-          apiKey: 'apiKey',
-          askAi: {
-            assistantId: 'my-assistant-id',
-            // @ts-expect-error: expected type error
-            suggestedQuestions: 123,
-          },
-        };
-        expectThrowMessage(
-          () => testValidateThemeConfig(algolia),
-          '"algolia.askAi.suggestedQuestions" must be a boolean',
-        );
-      });
-    });
-  });
-
-  describe('theme config keys', () => {
-    it('accepts themeConfig.docsearch (preferred)', () => {
+    it('accepts object-only Agent Studio config', () => {
       const docsearch: DocSearchInput = {
-        appId: 'BH4D9OD16A',
-        indexName: 'index',
-        apiKey: 'apiKey',
+        ...minimalDocSearchConfig,
+        askAi: minimalAskAiConfig,
       };
 
-      expect(testValidateThemeConfigDocSearch(docsearch)).toEqual({
+      expect(testValidateThemeConfig(docsearch)).toEqual({
         docsearch: {
           ...DEFAULT_CONFIG,
           ...docsearch,
@@ -675,25 +218,183 @@ describe('validateThemeConfig', () => {
       });
     });
 
-    it('rejects defining both themeConfig.docsearch and themeConfig.algolia', () => {
+    it('accepts Agent Studio index searchParameters', () => {
       const docsearch: DocSearchInput = {
-        appId: 'BH4D9OD16A',
-        indexName: 'index',
-        apiKey: 'apiKey',
+        ...minimalDocSearchConfig,
+        askAi: {
+          assistantId: 'my-assistant-id',
+          indices: [
+            {
+              index: 'markdown-index',
+              description: 'Documentation content.',
+              searchParameters: {
+                facetFilters: ['language:en', 'version:1.0'],
+              },
+            },
+          ],
+        },
       };
-      const algolia: AlgoliaInput = {
-        appId: 'BH4D9OD16A',
-        indexName: 'index',
-        apiKey: 'apiKey',
+
+      expect(testValidateThemeConfig(docsearch)).toEqual({
+        docsearch: {
+          ...DEFAULT_CONFIG,
+          ...docsearch,
+        },
+      });
+    });
+
+    it('accepts top-level sidePanel as true', () => {
+      const docsearch: DocSearchInput = {
+        ...minimalDocSearchConfig,
+        askAi: minimalAskAiConfig,
+        sidePanel: true,
+      };
+
+      expect(testValidateThemeConfig(docsearch)).toEqual({
+        docsearch: {
+          ...DEFAULT_CONFIG,
+          ...docsearch,
+        },
+      });
+    });
+
+    it('accepts top-level sidePanel as an options object', () => {
+      const docsearch: DocSearchInput = {
+        ...minimalDocSearchConfig,
+        askAi: minimalAskAiConfig,
+        sidePanel: {
+          variant: 'inline',
+          side: 'left',
+          width: 420,
+          expandedWidth: '60vw',
+          pushSelector: '#__docusaurus',
+          hideButton: true,
+          keyboardShortcuts: {
+            'Ctrl/Cmd+I': false,
+          },
+        },
+      };
+
+      expect(testValidateThemeConfig(docsearch)).toEqual({
+        docsearch: {
+          ...DEFAULT_CONFIG,
+          ...docsearch,
+        },
+      });
+    });
+
+    it('rejects sidePanel without askAi', () => {
+      const docsearch: DocSearchInput = {
+        ...minimalDocSearchConfig,
+        sidePanel: true,
       };
 
       expectThrowMessage(
+        () => testValidateThemeConfig(docsearch),
+        '`themeConfig.docsearch.sidePanel` requires `themeConfig.docsearch.askAi`.',
+      );
+    });
+  });
+
+  describe('removed config migration errors', () => {
+    it('rejects themeConfig.algolia', () => {
+      expectThrowMessage(
         () =>
           testValidateThemeConfigWithUserThemeConfig({
-            docsearch,
-            algolia,
-          }),
-        'Please provide either "themeConfig.docsearch" (preferred) or "themeConfig.algolia" (legacy), but not both.',
+            algolia: minimalDocSearchConfig,
+          } as unknown as UserThemeConfig),
+        '`themeConfig.algolia` is no longer supported',
+      );
+    });
+
+    it('rejects indexName', () => {
+      const docsearch = {
+        ...minimalDocSearchConfig,
+        indexName: 'index',
+      } as unknown as DocSearchInput;
+
+      expectThrowMessage(() => testValidateThemeConfig(docsearch), '`themeConfig.docsearch.indexName` was removed');
+    });
+
+    it('rejects top-level searchParameters', () => {
+      const docsearch = {
+        ...minimalDocSearchConfig,
+        searchParameters: {
+          facetFilters: ['language:en'],
+        },
+      } as unknown as DocSearchInput;
+
+      expectThrowMessage(
+        () => testValidateThemeConfig(docsearch),
+        '`themeConfig.docsearch.searchParameters` was removed',
+      );
+    });
+
+    it('rejects searchPagePath', () => {
+      const docsearch = {
+        ...minimalDocSearchConfig,
+        searchPagePath: 'search',
+      } as unknown as DocSearchInput;
+
+      expectThrowMessage(
+        () => testValidateThemeConfig(docsearch),
+        '`themeConfig.docsearch.searchPagePath` was removed',
+      );
+    });
+
+    it('rejects askAi string shorthand', () => {
+      const docsearch = {
+        ...minimalDocSearchConfig,
+        askAi: 'my-assistant-id',
+      } as unknown as DocSearchInput;
+
+      expectThrowMessage(() => testValidateThemeConfig(docsearch), '`themeConfig.docsearch.askAi` must be an object');
+    });
+
+    it('rejects askAi.agentStudio', () => {
+      const docsearch = {
+        ...minimalDocSearchConfig,
+        askAi: {
+          ...minimalAskAiConfig,
+          agentStudio: true,
+        },
+      } as unknown as DocSearchInput;
+
+      expectThrowMessage(
+        () => testValidateThemeConfig(docsearch),
+        '`themeConfig.docsearch.askAi.agentStudio` was removed',
+      );
+    });
+
+    it('rejects Ask AI credential overrides', () => {
+      const docsearch = {
+        ...minimalDocSearchConfig,
+        askAi: {
+          ...minimalAskAiConfig,
+          indexName: 'ai-index',
+          apiKey: 'ai-api-key',
+          appId: 'AIAPPID',
+        },
+      } as unknown as DocSearchInput;
+
+      expectThrowMessage(
+        () => testValidateThemeConfig(docsearch),
+        '`themeConfig.docsearch.askAi.indexName`, `apiKey`, and `appId` were removed',
+      );
+    });
+
+    it('rejects askAi.sidePanel', () => {
+      const docsearch = {
+        ...minimalDocSearchConfig,
+        askAi: {
+          ...minimalAskAiConfig,
+          sidePanel: true,
+        },
+      } as unknown as DocSearchInput;
+
+      expectThrowMessage(
+        () => testValidateThemeConfig(docsearch),
+        '`themeConfig.docsearch.askAi.sidePanel` was removed',
       );
     });
   });

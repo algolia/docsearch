@@ -48,7 +48,10 @@
       "version": "4.6.0",
       "dependencies": {
         "@algolia/autocomplete-core": "1.19.2",
+        "@docsearch/core": "4.6.0",
+        "@docsearch/modal": "4.6.0",
         "@docsearch/react": "4.6.0",
+        "@docsearch/sidepanel": "4.6.0",
         "@docusaurus/core": "^3.10.2",
         "@docusaurus/plugin-content-docs": "^3.10.2",
         "@docusaurus/theme-common": "^3.10.2",
@@ -59,9 +62,8 @@
         "eta": "^2.2.0",
         "fs-extra": "^11.1.1",
         "joi": "^17.9.2",
-        "lodash": "^4.17.21",
+        "search-insights": "^2.17.3",
         "tslib": "^2.6.0",
-        "utility-types": "^3.10.0",
       },
       "devDependencies": {
         "@docusaurus/core": "^3.10.2",
@@ -69,7 +71,6 @@
         "@docusaurus/theme-classic": "3.10.2",
         "@docusaurus/types": "^3.10.2",
         "@types/fs-extra": "^11.0.4",
-        "@types/lodash": "^4.17.10",
         "glob": "^13.0.6",
         "typescript": "5.7.3",
       },
@@ -276,12 +277,9 @@
       "name": "@docsearch/website",
       "version": "4.6.0",
       "dependencies": {
-        "@docsearch/core": "workspace:*",
         "@docsearch/css": "workspace:*",
         "@docsearch/docusaurus-adapter": "workspace:*",
-        "@docsearch/modal": "workspace:*",
         "@docsearch/react": "workspace:*",
-        "@docsearch/sidepanel": "workspace:*",
         "@docusaurus/core": "3.10.2",
         "@docusaurus/preset-classic": "3.10.2",
         "@docusaurus/theme-common": "3.10.2",
@@ -1349,8 +1347,6 @@
 
     "@types/jsonfile": ["@types/jsonfile@6.1.4", "", { "dependencies": { "@types/node": "*" } }, "sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ=="],
 
-    "@types/lodash": ["@types/lodash@4.17.24", "", {}, "sha512-gIW7lQLZbue7lRSWEFql49QJJWThrTFFeIMJdp3eH4tKoxm1OvEPg02rm4wCCSHS0cL3/Fizimb35b7k8atwsQ=="],
-
     "@types/mdast": ["@types/mdast@4.0.4", "", { "dependencies": { "@types/unist": "*" } }, "sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA=="],
 
     "@types/mdx": ["@types/mdx@2.0.14", "", {}, "sha512-T48PeuJtvLosNTPVhfnIp3i/n3a4g4Bad7YCq5k64D4u7NwDrAotikQ+5+sjtUvBmxCMlbo3dVL+C2dP0rWHzg=="],
@@ -2049,7 +2045,7 @@
 
     "ee-first": ["ee-first@1.1.1", "", {}, "sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow=="],
 
-    "electron-to-chromium": ["electron-to-chromium@1.5.389", "", {}, "sha512-cEto7aeOqBfU1D+c5py5pE+ooscKE75JifxLBdFUZsqAxRS6y7kebtxAZvICszSl05gPjYHDTjY+lXpyGvpJbg=="],
+    "electron-to-chromium": ["electron-to-chromium@1.5.392", "", {}, "sha512-1yQq3VQCZRwsnYc67Oc+1fge6Lwtn0hzi6zmEVkB61Zx21kTbwJAW4dFLadl5Rc1tKhG/kSpYXnfiAhu0f0a1g=="],
 
     "emoji-regex": ["emoji-regex@9.2.2", "", {}, "sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg=="],
 

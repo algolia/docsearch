@@ -70,15 +70,19 @@ export default {
         placeholder: 'Search or ask AI',
         appId: 'PMZUYBQDAK',
         apiKey: '24b09689d5b4223813d9b8e48563c8f6',
-        indexName: 'docsearch',
+        indices: [{ name: 'docsearch' }],
         askAi: {
-          indexName: 'docsearch-markdown',
           assistantId: 'askAIDemo',
-          apiKey: '24b09689d5b4223813d9b8e48563c8f6',
-          appId: 'PMZUYBQDAK',
-          sidePanel: true,
+          indices: [
+            {
+              index: 'docsearch-markdown',
+              description: 'DocSearch documentation content.',
+            },
+          ],
         },
+        sidePanel: true,
         contextualSearch: true,
+        searchPage: { path: 'search' },
         translations: {
           button: {
             buttonText: 'Go on, give it a search...',
