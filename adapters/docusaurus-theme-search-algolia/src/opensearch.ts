@@ -11,13 +11,20 @@ import type { ThemeConfig } from '@docsearch/docusaurus-adapter';
 import type { HtmlTags, LoadContext } from '@docusaurus/types';
 import { defaultConfig, compile } from 'eta';
 import fs from 'fs-extra';
-import _ from 'lodash';
 
 import { getDocSearchConfig } from './getDocSearchConfig';
 import openSearchTemplate from './templates/opensearch';
 import { normalizeUrl } from './utils';
 
-const getCompiledOpenSearchTemplate = _.memoize(() => compile(openSearchTemplate.trim()));
+let compiledOpenSearchTemplate: ReturnType<typeof compile> | null = null;
+
+function getCompiledOpenSearchTemplate(): ReturnType<typeof compile> {
+  if (!compiledOpenSearchTemplate) {
+    compiledOpenSearchTemplate = compile(openSearchTemplate.trim());
+  }
+
+  return compiledOpenSearchTemplate;
+}
 
 function renderOpenSearchTemplate(data: {
   title: string;
@@ -38,7 +45,8 @@ export function shouldCreateOpenSearchFile({ context }: { context: LoadContext }
       future: { experimental_router: router },
     },
   } = context;
-  const { searchPagePath } = getDocSearchConfig(themeConfig as ThemeConfig);
+  const { searchPage } = getDocSearchConfig(themeConfig as ThemeConfig);
+  const searchPagePath = searchPage === false ? false : searchPage.path;
 
   return Boolean(searchPagePath) && router !== 'hash';
 }
@@ -70,9 +78,10 @@ export async function createOpenSearchFile({ context }: { context: LoadContext }
     outDir,
     siteConfig: { themeConfig },
   } = context;
-  const { searchPagePath } = getDocSearchConfig(themeConfig as ThemeConfig);
+  const { searchPage } = getDocSearchConfig(themeConfig as ThemeConfig);
+  const searchPagePath = searchPage === false ? false : searchPage.path;
   if (!searchPagePath) {
-    throw new Error('no searchPagePath provided in themeConfig.docsearch or themeConfig.algolia');
+    throw new Error('no searchPage.path provided in themeConfig.docsearch');
   }
   const fileContent = createOpenSearchFileContent({ context, searchPagePath });
   try {

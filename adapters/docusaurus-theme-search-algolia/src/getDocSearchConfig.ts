@@ -5,22 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { ThemeConfig, ThemeConfigAlgolia } from '@docsearch/docusaurus-adapter';
+import type { ThemeConfig, ThemeConfigDocSearch } from '@docsearch/docusaurus-adapter';
 
-export function hasLegacyAlgoliaConfig(themeConfig: ThemeConfig): boolean {
-  return Boolean(themeConfig.algolia);
-}
-
-export function getDocSearchConfig(themeConfig: ThemeConfig): ThemeConfigAlgolia {
+export function getDocSearchConfig(themeConfig: ThemeConfig): ThemeConfigDocSearch {
   if (themeConfig.docsearch) {
     return themeConfig.docsearch;
   }
 
-  if (themeConfig.algolia) {
-    return themeConfig.algolia;
-  }
-
-  throw new Error(
-    'No DocSearch config found. Please provide "themeConfig.docsearch" (preferred) or "themeConfig.algolia" (legacy).',
-  );
+  throw new Error('No DocSearch config found. Please provide "themeConfig.docsearch".');
 }

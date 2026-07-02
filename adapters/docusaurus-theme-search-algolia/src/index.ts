@@ -9,23 +9,9 @@ import type { ThemeConfig } from '@docsearch/docusaurus-adapter';
 import { readDefaultCodeTranslationMessages } from '@docusaurus/theme-translations';
 import type { LoadContext, Plugin } from '@docusaurus/types';
 
-import { getDocSearchConfig, hasLegacyAlgoliaConfig } from './getDocSearchConfig';
+import { getDocSearchConfig } from './getDocSearchConfig';
 import { createOpenSearchFile, createOpenSearchHeadTags, shouldCreateOpenSearchFile } from './opensearch';
 import { normalizeUrl } from './utils';
-
-function hasClassicPreset(context: LoadContext): boolean {
-  return (context.siteConfig.presets ?? []).some((preset) => {
-    if (typeof preset === 'string') {
-      return preset === 'classic' || preset === '@docusaurus/preset-classic';
-    }
-
-    if (Array.isArray(preset)) {
-      return preset[0] === 'classic' || preset[0] === '@docusaurus/preset-classic';
-    }
-
-    return false;
-  });
-}
 
 export default function themeSearchAlgolia(context: LoadContext): Plugin<void> {
   const {
@@ -33,9 +19,8 @@ export default function themeSearchAlgolia(context: LoadContext): Plugin<void> {
     siteConfig: { themeConfig },
     i18n: { currentLocale },
   } = context;
-  const { searchPagePath } = getDocSearchConfig(themeConfig as ThemeConfig);
-  const classicPresetWithLegacyAlgoliaConfig =
-    hasClassicPreset(context) && hasLegacyAlgoliaConfig(themeConfig as ThemeConfig);
+  const { searchPage } = getDocSearchConfig(themeConfig as ThemeConfig);
+  const searchPagePath = searchPage === false ? false : searchPage.path;
 
   return {
     name: 'docsearch-docusaurus-algolia-search',
@@ -55,9 +40,7 @@ export default function themeSearchAlgolia(context: LoadContext): Plugin<void> {
     },
 
     contentLoaded({ actions: { addRoute } }) {
-      // The classic preset adds /search through @docusaurus/theme-search-algolia,
-      // but only when the legacy "themeConfig.algolia" key is used.
-      if (searchPagePath && !classicPresetWithLegacyAlgoliaConfig) {
+      if (searchPagePath) {
         addRoute({
           path: normalizeUrl([baseUrl, searchPagePath]),
           component: '@theme/SearchPage',

@@ -48,7 +48,10 @@
       "version": "4.6.0",
       "dependencies": {
         "@algolia/autocomplete-core": "1.19.2",
+        "@docsearch/core": "4.6.0",
+        "@docsearch/modal": "4.6.0",
         "@docsearch/react": "4.6.0",
+        "@docsearch/sidepanel": "4.6.0",
         "@docusaurus/core": "^3.9.2",
         "@docusaurus/plugin-content-docs": "^3.9.2",
         "@docusaurus/theme-common": "^3.9.2",
@@ -59,9 +62,7 @@
         "eta": "^2.2.0",
         "fs-extra": "^11.1.1",
         "joi": "^17.9.2",
-        "lodash": "^4.17.21",
         "tslib": "^2.6.0",
-        "utility-types": "^3.10.0",
       },
       "devDependencies": {
         "@docusaurus/core": "^3.9.2",
@@ -69,7 +70,6 @@
         "@docusaurus/theme-classic": "3.9.2",
         "@docusaurus/types": "^3.9.2",
         "@types/fs-extra": "^11.0.4",
-        "@types/lodash": "^4.17.10",
         "glob": "^13.0.6",
         "typescript": "5.7.3",
       },
@@ -252,12 +252,9 @@
       "name": "@docsearch/website",
       "version": "4.6.0",
       "dependencies": {
-        "@docsearch/core": "workspace:*",
         "@docsearch/css": "workspace:*",
         "@docsearch/docusaurus-adapter": "workspace:*",
-        "@docsearch/modal": "workspace:*",
         "@docsearch/react": "workspace:*",
-        "@docsearch/sidepanel": "workspace:*",
         "@docusaurus/core": "3.9.2",
         "@docusaurus/preset-classic": "3.9.2",
         "@docusaurus/theme-common": "3.9.2",
@@ -1278,8 +1275,6 @@
     "@types/json5": ["@types/json5@0.0.29", "", {}, "sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ=="],
 
     "@types/jsonfile": ["@types/jsonfile@6.1.4", "", { "dependencies": { "@types/node": "*" } }, "sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ=="],
-
-    "@types/lodash": ["@types/lodash@4.17.24", "", {}, "sha512-gIW7lQLZbue7lRSWEFql49QJJWThrTFFeIMJdp3eH4tKoxm1OvEPg02rm4wCCSHS0cL3/Fizimb35b7k8atwsQ=="],
 
     "@types/mdast": ["@types/mdast@4.0.4", "", { "dependencies": { "@types/unist": "*" } }, "sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA=="],
 

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { ThemeConfigAlgolia } from '@docsearch/docusaurus-adapter';
+import type { ThemeConfigDocSearch } from '@docsearch/docusaurus-adapter';
 import { isRegexpStringMatch } from '@docusaurus/theme-common';
 import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
 import { useCallback } from 'react';
@@ -14,7 +14,7 @@ import { useAlgoliaThemeConfig } from './useAlgoliaThemeConfig';
 
 function replacePathname(
   pathname: string,
-  replaceSearchResultPathname: ThemeConfigAlgolia['replaceSearchResultPathname'],
+  replaceSearchResultPathname: ThemeConfigDocSearch['replaceSearchResultPathname'],
 ): string {
   return replaceSearchResultPathname
     ? pathname.replaceAll(new RegExp(replaceSearchResultPathname.from, 'g'), replaceSearchResultPathname.to)

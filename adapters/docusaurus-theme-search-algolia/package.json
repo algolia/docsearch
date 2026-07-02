@@ -36,7 +36,10 @@
   },
   "dependencies": {
     "@algolia/autocomplete-core": "1.19.2",
+    "@docsearch/core": "4.6.0",
+    "@docsearch/modal": "4.6.0",
     "@docsearch/react": "4.6.0",
+    "@docsearch/sidepanel": "4.6.0",
     "@docusaurus/core": "^3.9.2",
     "@docusaurus/plugin-content-docs": "^3.9.2",
     "@docusaurus/theme-common": "^3.9.2",
@@ -47,9 +50,8 @@
     "eta": "^2.2.0",
     "fs-extra": "^11.1.1",
     "joi": "^17.9.2",
-    "lodash": "^4.17.21",
-    "tslib": "^2.6.0",
-    "utility-types": "^3.10.0"
+    "search-insights": "^2.17.3",
+    "tslib": "^2.6.0"
   },
   "devDependencies": {
     "@docusaurus/core": "^3.9.2",
@@ -57,7 +59,6 @@
     "@docusaurus/theme-classic": "3.9.2",
     "@docusaurus/types": "^3.9.2",
     "@types/fs-extra": "^11.0.4",
-    "@types/lodash": "^4.17.10",
     "glob": "^13.0.6",
     "typescript": "5.7.3"
   },

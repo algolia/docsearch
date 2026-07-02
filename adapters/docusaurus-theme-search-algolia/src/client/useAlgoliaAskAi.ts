@@ -6,43 +6,50 @@
  */
 
 import type { AskAiConfig } from '@docsearch/docusaurus-adapter';
-import type { DocSearchAskAiModalProps, DocSearchTranslations } from '@docsearch/react';
-import translations from '@theme/SearchTranslations';
+import type { AgentStudioIndices, DocSearchAskAi, DocSearchProps } from '@docsearch/react';
 import type { FacetFilters } from 'algoliasearch/lite';
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import { useAlgoliaContextualFacetFiltersIfEnabled } from './useAlgoliaContextualFacetFilters';
 import { mergeFacetFilters } from './utils';
 
 // The minimal props the hook needs from DocSearch
 interface DocSearchPropsLite {
-  indexName: string;
   apiKey: string;
   appId: string;
-  placeholder?: string;
-  translations?: DocSearchTranslations;
-  searchParameters?: DocSearchAskAiModalProps['searchParameters'];
+  indices: NonNullable<DocSearchProps['indices']>;
   askAi?: AskAiConfig;
 }
 
-type OnAskAiToggle = NonNullable<DocSearchAskAiModalProps['onAskAiToggle']>;
-type AskAiConfigWithoutSidePanel = Omit<AskAiConfig, 'sidePanel'>;
-type DocSearchAskAi = Exclude<DocSearchAskAiModalProps['askAi'], string | undefined>;
-type DocSearchModalPropsLite = Partial<Omit<DocSearchAskAiModalProps, 'askAi'>>;
-
 type UseAskAiResult = {
-  canHandleAskAi: boolean;
-  isAskAiActive: boolean;
-  currentPlaceholder: string | undefined;
-  onAskAiToggle: OnAskAiToggle;
-  askAi?: AskAiConfig;
-  extraAskAiProps: DocSearchModalPropsLite & {
-    askAi?: DocSearchAskAi;
-    canHandleAskAi?: boolean;
-    isAskAiActive?: boolean;
-    onAskAiToggle?: OnAskAiToggle;
+  modalAskAi?: DocSearchAskAi;
+  sidePanelAskAi?: DocSearchAskAi & {
+    apiKey: string;
+    appId: string;
+    indexName: string;
   };
 };
+
+function getIndexName(index: NonNullable<DocSearchProps['indices']>[number]): string {
+  return typeof index === 'string' ? index : index.name;
+}
+
+function getAskAiIndexName(askAi: AskAiConfig, indices: NonNullable<DocSearchProps['indices']>): string {
+  return askAi.indices[0]?.index ?? getIndexName(indices[0]!);
+}
+
+function applyContextualSearchToAgentStudioIndex(
+  index: AgentStudioIndices,
+  contextualSearchFilters: FacetFilters,
+): AgentStudioIndices {
+  return {
+    ...index,
+    searchParameters: {
+      ...index.searchParameters,
+      facetFilters: mergeFacetFilters(index.searchParameters?.facetFilters, contextualSearchFilters),
+    },
+  };
+}
 
 // We need to apply contextualSearch facetFilters to AskAI filters
 // This can't be done at config normalization time because contextual filters
@@ -54,68 +61,37 @@ function applyAskAiContextualSearch(
   if (!askAi) {
     return undefined;
   }
-  if (askAi.agentStudio === true) {
-    return askAi;
-  }
   if (!contextualSearchFilters) {
     return askAi;
   }
-  const askAiFacetFilters = askAi.searchParameters?.facetFilters;
+
   return {
     ...askAi,
-    searchParameters: {
-      ...askAi.searchParameters,
-      facetFilters: mergeFacetFilters(askAiFacetFilters, contextualSearchFilters),
-    },
+    indices: askAi.indices.map((index) => applyContextualSearchToAgentStudioIndex(index, contextualSearchFilters)),
   };
 }
 
 export function useAlgoliaAskAi(props: DocSearchPropsLite): UseAskAiResult {
-  const [isAskAiActive, setIsAskAiActive] = useState(false);
   const contextualSearchFilters = useAlgoliaContextualFacetFiltersIfEnabled();
 
   const askAi = useMemo(() => {
     return applyAskAiContextualSearch(props.askAi, contextualSearchFilters);
   }, [props.askAi, contextualSearchFilters]);
 
-  const askAiWithoutSidePanel = useMemo<AskAiConfigWithoutSidePanel | undefined>(() => {
+  const resolvedAskAi = useMemo<UseAskAiResult['sidePanelAskAi']>(() => {
     if (!askAi) {
       return undefined;
     }
-    const { sidePanel: _sidePanel, ...docsearchAskAi } = askAi;
-    return docsearchAskAi;
-  }, [askAi]);
-
-  const modalAskAi = useMemo<DocSearchAskAi | undefined>(() => {
-    if (!askAiWithoutSidePanel) {
-      return undefined;
-    }
-    return askAiWithoutSidePanel as DocSearchAskAi;
-  }, [askAiWithoutSidePanel]);
-
-  const canHandleAskAi = Boolean(askAi);
-
-  const currentPlaceholder = isAskAiActive
-    ? (translations.modal?.searchBox as { placeholderTextAskAi?: string } | undefined)?.placeholderTextAskAi
-    : translations.modal?.searchBox?.placeholderText || props?.placeholder;
-
-  const onAskAiToggle = useCallback<OnAskAiToggle>((askAiToggle: boolean) => {
-    setIsAskAiActive(askAiToggle);
-  }, []);
-
-  const extraAskAiProps: UseAskAiResult['extraAskAiProps'] = {
-    askAi: modalAskAi,
-    canHandleAskAi,
-    isAskAiActive,
-    onAskAiToggle,
-  };
+    return {
+      ...askAi,
+      apiKey: props.apiKey,
+      appId: props.appId,
+      indexName: getAskAiIndexName(askAi, props.indices),
+    };
+  }, [askAi, props.apiKey, props.appId, props.indices]);
 
   return {
-    canHandleAskAi,
-    isAskAiActive,
-    currentPlaceholder,
-    onAskAiToggle,
-    askAi,
-    extraAskAiProps,
+    modalAskAi: resolvedAskAi,
+    sidePanelAskAi: resolvedAskAi,
   };
 }
