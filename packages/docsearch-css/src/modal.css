@@ -1366,8 +1366,16 @@ assistive tech users */
 
   .DocSearch-Hit-content-wrapper {
     display: flex;
+    overflow-wrap: break-word;
     position: relative;
+    white-space: normal;
     width: 80%;
+  }
+
+  .DocSearch-Hit-Container {
+    height: auto;
+    min-height: var(--docsearch-hit-height);
+    padding-block: 8px;
   }
 
   .DocSearch-Modal {
