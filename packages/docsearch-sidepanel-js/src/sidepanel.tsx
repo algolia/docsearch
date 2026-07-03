@@ -1,5 +1,5 @@
 import type { DocSearchRef, InitialAskAiMessage } from '@docsearch/core';
-import type { DocSearchSidepanelProps } from '@docsearch/react/sidepanel';
+import type { DocSearchSidepanelProps, SidepanelSearchParameters } from '@docsearch/react/sidepanel';
 import { DocSearchSidepanel } from '@docsearch/react/sidepanel';
 import { render, createElement, unmountComponentAtNode, createRef } from 'preact/compat';
 
@@ -32,7 +32,8 @@ export interface SidepanelCallbacks {
 }
 
 export type SidepanelProps = DocSearchSidepanelProps &
-  SidepanelCallbacks & {
+  SidepanelCallbacks &
+  SidepanelSearchParameters & {
     container: HTMLElement | string;
     environment?: typeof window;
   };
