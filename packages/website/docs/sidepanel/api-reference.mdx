@@ -4,6 +4,9 @@ title: Sidepanel API Reference
 
 import Tabs from  '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import AskAIDeprecationNotice from '../../src/components/mdx/ask-ai-deprecation-notice.jsx'
+
+<AskAIDeprecationNotice />
 
 ## `appId`
 
@@ -43,6 +46,44 @@ If `agentStudio` is true, the Ask AI chat will use Algolia's [Agent Studio][2] a
 
 ## `searchParameters`
 
+> `type: AskAiSearchParameters | Record<string, Omit<AskAiSearchParameters, 'facetFilters'>>` | **optional**
+
+Additional search parameters used to scope Ask AI or Agent Studio retrieval.
+
+- When `agentStudio` is omitted or `false`, pass a flat object such as `facetFilters`, `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`.
+- When `agentStudio` is `true`, `searchParameters` must be keyed by index name and supports `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`.
+
+```tsx
+<Sidepanel
+  indexName="YOUR_INDEX_NAME"
+  appId="YOUR_APP_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  assistantId="YOUR_ASSISTANT_ID"
+  searchParameters={{
+    facetFilters: ['language:en'],
+    distinct: true,
+  }}
+/>
+```
+
+```tsx
+<Sidepanel
+  indexName="YOUR_INDEX_NAME"
+  appId="YOUR_APP_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  assistantId="YOUR_ASSISTANT_ID"
+  agentStudio={true}
+  searchParameters={{
+    YOUR_INDEX_NAME: {
+      filters: 'type:content AND language:en',
+      attributesToRetrieve: ['title', 'content', 'url'],
+      restrictSearchableAttributes: ['title', 'content'],
+      distinct: 'url',
+    },
+  }}
+/>
+```
+
 ## `variant`
 
 > `type: 'floating' | 'inline'` | default: `'floating'` | **optional**
@@ -62,13 +103,13 @@ The side of the page which the panel will originate from.
 
 > `type: number | string` | default: `'360px'` | **optional**
 
-Width of the Sidepanel (px or any CSS width) while in it's default state.
+Width of the Sidepanel (px or any CSS width) while in its default state.
 
 ## `expandedWidth`
 
 > `type: number | string` | default: `'580px'` | **optional**
 
-Width of the Sidepanel (px or any CSS width) while in it's expanded state.
+Width of the Sidepanel (px or any CSS width) while in its expanded state.
 
 ## `suggestedQuestions`
 
@@ -84,11 +125,11 @@ More information on setting up Suggested Questions can be found on [Algolia Docs
 
 Configuration for keyboard shortcuts. Allows enabling/disabling specific shortcuts.
 
-### Default behavior:
+### Default behavior
 
 - `Ctrl/Cmd+I` - Opens and closes the Sidepanel
 
-### Interface:
+### Interface
 
 ```ts
 interface SidepanelShortcuts {

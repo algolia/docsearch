@@ -1,6 +1,6 @@
 {
   "name": "@docsearch/website",
-  "version": "4.6.0",
+  "version": "4.6.3",
   "private": true,
   "homepage": "https://docsearch.algolia.com/",
   "scripts": {
@@ -19,6 +19,7 @@
     "@docsearch/core": "workspace:*",
     "@docsearch/css": "workspace:*",
     "@docsearch/docusaurus-adapter": "workspace:*",
+    "@docsearch/modal": "workspace:*",
     "@docsearch/react": "workspace:*",
     "@docsearch/sidepanel": "workspace:*",
     "@docusaurus/core": "3.9.2",

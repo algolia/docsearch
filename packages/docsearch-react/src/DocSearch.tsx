@@ -130,6 +130,8 @@ export interface DocSearchProps {
   indices?: Array<DocSearchIndex | string>;
   /**
    * Configuration or assistant id to enable ask ai mode. Pass a string assistant id or a full config object.
+   *
+   * @deprecated Ask AI is being migrated from a standalone DocSearch feature into Algolia's Agent Studio. The `askAi` prop will be removed in DocSearch v5.
    */
   askAi?: DocSearchAskAi | string;
   /**

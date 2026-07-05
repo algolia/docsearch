@@ -1,17 +1,22 @@
 ---
 id: examples
 title: Examples and extensions
-description: live demos showing how to use and extend docsearch beyond documentation-only use cases.
+description: Live demos showing how to use and extend DocSearch beyond documentation-only use cases.
 ---
 
 import { DocSearch } from '@docsearch/react';
+import { DocSearch as DocSearchProvider } from '@docsearch/core';
+import { DocSearchButton, DocSearchModal } from '@docsearch/modal';
+import { DocSearchSidepanel } from '@docsearch/react/sidepanel';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 import '@docsearch/css/dist/style.css';
+import '@docsearch/css/dist/sidepanel.css';
 
-> These examples are interactive. click a button to open the modal and try a query.
+> These examples are interactive. Click a button to open the modal and try a query.
 
 ## Basic keyword search
 
-Use the default experience with your index credentials. this works great for typical docs, blogs, and any site with a docsearch-compliant index.
+Use the default experience with your index credentials. This works great for typical docs, blogs, and any site with a DocSearch-compliant index.
 
 ```jsx
 <DocSearch
@@ -35,7 +40,7 @@ Use the default experience with your index credentials. this works great for typ
 
 ## Ask AI: ai-assisted answers
 
-Add algolia askai to get synthesized answers grounded in your indexed content. you can scope the llm context using `searchParameters` like `facetFilters`, `filters`, `attributesToRetrieve`,`restrictSearchableAttributes`, and `distinct`.
+Add Algolia Ask AI to get synthesized answers grounded in your indexed content. You can scope the LLM context using `searchParameters` like `facetFilters`, `filters`, `attributesToRetrieve`,`restrictSearchableAttributes`, and `distinct`.
 
 ```jsx
 <DocSearch
@@ -69,9 +74,80 @@ Add algolia askai to get synthesized answers grounded in your indexed content. y
 
 ---
 
+## Sidepanel: persistent AI chat
+
+The sidepanel provides a persistent chat interface anchored to the side of the page, ideal for documentation sites where users want to ask follow-up questions without losing their place. Look for the button on the bottom right of the screen to try the demo.
+
+```jsx
+<DocSearchSidepanel
+  appId="PMZUYBQDAK"
+  apiKey="24b09689d5b4223813d9b8e48563c8f6"
+  indexName="docsearch"
+  assistantId="askAIDemo"
+/>
+```
+
+<BrowserOnly>
+  {() => (
+    <DocSearchSidepanel
+      appId="PMZUYBQDAK"
+      apiKey="24b09689d5b4223813d9b8e48563c8f6"
+      indexName="docsearch"
+      assistantId="askAIDemo"
+    />
+  )}
+</BrowserOnly>
+
+---
+
+## Composable API: DocSearchButton + DocSearchModal
+
+Use the [Composable API](/docs/composable-api) to render the button and modal as separate components. This gives you explicit control over where each piece is rendered and when the modal code is loaded.
+
+```jsx
+import { DocSearch } from '@docsearch/core';
+import { DocSearchButton, DocSearchModal } from '@docsearch/modal';
+
+import '@docsearch/css/style.css';
+
+<DocSearch>
+  <DocSearchButton translations={{ buttonText: 'Composable search (demo)' }} />
+  <DocSearchModal
+    appId="PMZUYBQDAK"
+    indexName="docsearch"
+    apiKey="a00716d83c64f6c61905c078b7d5ab66"
+    askAi={{
+      assistantId: 'ccdec697-e3fe-465b-a1c3-657e7bf18aef',
+      agentStudio: true,
+    }}
+  />
+</DocSearch>;
+```
+
+<BrowserOnly>
+  {() => (
+    <DocSearchProvider>
+      <DocSearchButton
+        translations={{ buttonText: 'Composable search (demo)' }}
+      />
+      <DocSearchModal
+        appId="PMZUYBQDAK"
+        indexName="docsearch"
+        apiKey="a00716d83c64f6c61905c078b7d5ab66"
+        askAi={{
+          assistantId: 'ccdec697-e3fe-465b-a1c3-657e7bf18aef',
+          agentStudio: true,
+        }}
+      />
+    </DocSearchProvider>
+  )}
+</BrowserOnly>
+
+---
+
 ## Custom hit rendering (`hitComponent`)
 
-Replace the default hit markup to match your brand and layout. below is a minimal example of a custom component.
+Replace the default hit markup to match your brand and layout. Below is a minimal example of a custom component.
 
 ```jsx
 function CustomHit({ hit }) {
@@ -267,9 +343,9 @@ const newTabNavigator = {
 
 ## Bring-your-own-data shape with `transformItems`
 
-Docsearch is not limited to docsearch-like records. use `transformItems` to adapt any record shape into the internal structure docsearch expects. this lets you build search for apps, help centers, changelogs, or any custom content.
+DocSearch is not limited to DocSearch-like records. Use `transformItems` to adapt any record shape into the internal structure DocSearch expects. This lets you build search for apps, help centers, changelogs, or any custom content.
 
-the snippet below maps a non-standard record to the internal format. try it live:
+The snippet below maps a non-standard record to the internal format. Try it live:
 
 ```jsx
 <DocSearch
@@ -348,5 +424,5 @@ the snippet below maps a non-standard record to the internal format. try it live
 ## Tips
 
 - **Instrumentation**: enable `insights` to send usage analytics and iterate on relevance.
-- **Ask AI scoping**: use `facetFilters`, `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct` to control ai context and improve answer quality.
-- **Customization**: use `hitComponent`, `transformItems`, and `translations` to make docsearch feel native to any product surface.
+- **Ask AI scoping**: use `facetFilters`, `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct` to control AI context and improve answer quality.
+- **Customization**: use `hitComponent`, `transformItems`, and `translations` to make DocSearch feel native to any product surface.

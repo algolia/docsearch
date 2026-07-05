@@ -58,6 +58,7 @@ interface SearchBoxProps
   onNewConversation: () => void;
   onViewConversationHistory: () => void;
   isThreadDepthError?: boolean;
+  askAiBlockingChrome?: 'minimal' | 'thread-depth';
 }
 
 export function SearchBox({
@@ -129,8 +130,8 @@ export function SearchBox({
     searchPlaceholder = newConversationPlaceholder;
   }
 
-  // Override placeholder when thread depth error occurs (only in Ask AI mode)
-  if (isThreadDepthError && props.isAskAiActive) {
+  // Override placeholder when prompt is blocked (only in Ask AI mode); cost-control uses minimal chrome
+  if (isThreadDepthError && props.isAskAiActive && props.askAiBlockingChrome !== 'minimal') {
     searchPlaceholder = threadDepthErrorPlaceholder;
   }
 

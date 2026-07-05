@@ -20,13 +20,12 @@ import type { ScreenStateTranslations } from './ScreenState';
 import { ScreenState } from './ScreenState';
 import type { SearchBoxTranslations } from './SearchBox';
 import { SearchBox } from './SearchBox';
-import { createStoredConversations, createStoredSearches } from './stored-searches';
+import { createStoredSearches } from './stored-searches';
 import type {
   DocSearchHit,
   DocSearchState,
   InternalDocSearchHit,
   StoredAskAiMessage,
-  StoredAskAiState,
   StoredDocSearchHit,
   SuggestedQuestionHit,
 } from './types';
@@ -37,7 +36,7 @@ import { useSuggestedQuestions } from './useSuggestedQuestions';
 import { useTouchEvents } from './useTouchEvents';
 import { useTrapFocus } from './useTrapFocus';
 import { groupBy, identity, noop, removeHighlightTags, isModifierEvent, scrollTo as scrollToUtils } from './utils';
-import { buildDummyAskAiHit, isThreadDepthError } from './utils/ai';
+import { buildDummyAskAiHit, isAgentStudioTokenOutputLimitError, isAskAiPromptBlockingError } from './utils/ai';
 import { manageLocalStorageQuota } from './utils/storage';
 
 export type ModalTranslations = Partial<{
@@ -384,12 +383,6 @@ export function DocSearchModal({
   const defaultIndexName = indexes[0].name;
 
   // storage
-  const conversations = React.useRef(
-    createStoredConversations<StoredAskAiState>({
-      key: `__DOCSEARCH_ASKAI_CONVERSATIONS__${askAiConfig?.indexName || defaultIndexName}`,
-      limit: 10,
-    }),
-  ).current;
   const favoriteSearches = React.useRef(
     createStoredSearches<StoredDocSearchHit>({
       key: `__DOCSEARCH_FAVORITE_SEARCHES__${defaultIndexName}`,
@@ -405,7 +398,18 @@ export function DocSearchModal({
 
   const [stoppedStream, setStoppedStream] = React.useState(false);
 
-  const { messages, status, setMessages, sendMessage, stopAskAiStreaming, askAiError, sendFeedback } = useAskAi({
+  const {
+    messages,
+    status,
+    sendMessage,
+    stopAskAiStreaming,
+    askAiError,
+    sendFeedback,
+    conversations,
+    clearError,
+    resetAskAiAbortScope,
+    resetAskAiChatSession,
+  } = useAskAi({
     assistantId: askAiConfigurationId,
     apiKey: askAiConfig?.apiKey || apiKey,
     appId: askAiConfig?.appId || appId,
@@ -429,19 +433,28 @@ export function DocSearchModal({
         };
       }
 
-      for (const part of messages[0].parts) {
-        if (part.type === 'text') {
-          conversations.add(buildDummyAskAiHit(part.text, messages));
+      const first = messages[0];
+      if (first?.parts) {
+        for (const part of first.parts) {
+          if (part.type === 'text') {
+            conversations.add(buildDummyAskAiHit(part.text, messages));
+          }
         }
       }
     }
     prevStatus.current = status;
   }, [status, messages, conversations, disableUserPersonalization, stoppedStream]);
 
-  // Check if there's a thread depth error (AI-217)
-  const hasThreadDepthError = React.useMemo(() => {
-    return status === 'error' && isThreadDepthError(askAiError as Error | undefined);
-  }, [status, askAiError]);
+  const hasAskAiPromptBlockingError = React.useMemo(() => {
+    return status === 'error' && isAskAiPromptBlockingError(askAiError as Error | undefined, agentStudio);
+  }, [status, askAiError, agentStudio]);
+
+  const askAiBlockingChrome = React.useMemo((): 'minimal' | 'thread-depth' | undefined => {
+    const blocked = hasAskAiPromptBlockingError && askAiState !== 'new-conversation';
+    if (!blocked) return undefined;
+    // Match thread-depth modal chrome for all blocking errors except token output limit (minimal).
+    return isAgentStudioTokenOutputLimitError(askAiError as Error | undefined) ? 'minimal' : 'thread-depth';
+  }, [hasAskAiPromptBlockingError, askAiState, askAiError]);
 
   const createSyntheticParent = React.useCallback(function createSyntheticParent(
     item: InternalDocSearchHit,
@@ -539,6 +552,8 @@ export function DocSearchModal({
       if (isHybridModeSupported) return;
 
       setStoppedStream(false);
+      resetAskAiAbortScope();
+      clearError();
 
       const messageOptions: ChatRequestOptions = {};
 
@@ -577,7 +592,16 @@ export function DocSearchModal({
         autocompleteRef.current.setQuery('');
       }
     },
-    [onAskAiToggle, interceptAskAiEvent, sendMessage, askAiState, setAskAiState, isHybridModeSupported],
+    [
+      onAskAiToggle,
+      interceptAskAiEvent,
+      askAiState,
+      setAskAiState,
+      isHybridModeSupported,
+      clearError,
+      resetAskAiAbortScope,
+      sendMessage,
+    ],
   );
 
   // feedback handler
@@ -629,7 +653,10 @@ export function DocSearchModal({
                     },
                     onSelect({ item }): void {
                       if (item.messages) {
-                        setMessages(item.messages as any);
+                        resetAskAiChatSession({
+                          kind: 'setMessages',
+                          messages: item.messages as AIMessage[],
+                        });
                         onAskAiToggle(true);
                       }
                     },
@@ -799,14 +826,18 @@ export function DocSearchModal({
     };
   }, []);
 
-  // Refresh the autocomplete results when ask ai is toggled off
-  // helps return to the previous ac state and start screen
+  // Refresh autocomplete and rotate the chat session only when Ask AI is turned off — not on every
+  // mount while inactive. `clearError` from `useChat` can change when `chatSessionId` changes; listing
+  // it (and re-running `resetAskAiChatSession` on that) caused an infinite update loop.
+  const prevIsAskAiActiveRef = React.useRef(isAskAiActive);
   React.useEffect(() => {
-    if (!isAskAiActive) {
+    if (prevIsAskAiActiveRef.current && !isAskAiActive) {
       autocomplete.refresh();
-      setMessages([]);
+      clearError();
+      resetAskAiChatSession();
     }
-  }, [isAskAiActive, autocomplete, setMessages]);
+    prevIsAskAiActiveRef.current = isAskAiActive;
+  }, [isAskAiActive, autocomplete, clearError, resetAskAiChatSession]);
 
   // Track external state in order to manage internal askAiState
   React.useEffect(() => {
@@ -820,7 +851,8 @@ export function DocSearchModal({
   };
 
   const handleNewConversation = (): void => {
-    setMessages([]);
+    clearError();
+    resetAskAiChatSession();
     setAskAiState('new-conversation');
   };
 
@@ -874,7 +906,8 @@ export function DocSearchModal({
             askAiError={askAiError}
             askAiState={askAiState}
             setAskAiState={setAskAiState}
-            isThreadDepthError={hasThreadDepthError && askAiState !== 'new-conversation'}
+            isThreadDepthError={hasAskAiPromptBlockingError && askAiState !== 'new-conversation'}
+            askAiBlockingChrome={askAiBlockingChrome}
             onClose={onClose}
             onAskAiToggle={onAskAiToggle}
             onAskAgain={(query) => {
@@ -919,7 +952,10 @@ export function DocSearchModal({
                 if (item.type === 'askAI' && item.query) {
                   // if the item is askAI and the anchor is stored
                   if (item.anchor === 'stored' && 'messages' in item) {
-                    setMessages(item.messages as any);
+                    resetAskAiChatSession({
+                      kind: 'setMessages',
+                      messages: item.messages as AIMessage[],
+                    });
                     const initialMessage: InitialAskAiMessage = {
                       query: item.query,
                       messageId: (item.messages as StoredAskAiMessage[])[0].id,
