@@ -9,7 +9,14 @@ import { useAskAi } from '../useAskAi';
 import { useIsMobile } from '../useIsMobile';
 import { useSearchClient } from '../useSearchClient';
 import { useSuggestedQuestions } from '../useSuggestedQuestions';
-import { buildDummyAskAiHit } from '../utils/ai';
+import {
+  buildDummyAskAiHit,
+  filterExchangesForThreadDepthError,
+  getAskAiBlockingBannerMessage,
+  isAskAiPromptBlockingError,
+  showAskAiBlockingBannerNewConversationLink,
+  isThreadDepthError,
+} from '../utils/ai';
 
 import { ConversationHistoryScreen } from './ConversationHistoryScreen';
 import type { ConversationScreenTranslations } from './ConversationScreen';
@@ -182,7 +189,8 @@ function SidepanelInner(
     stopAskAiStreaming,
     isStreaming,
     exchanges,
-    setMessages,
+    clearError,
+    resetAskAiChatSession,
     conversations,
     messages,
     sendFeedback,
@@ -203,31 +211,61 @@ function SidepanelInner(
     searchClient,
   });
 
+  const hasAskAiPromptBlockingError = React.useMemo(
+    () => status === 'error' && isAskAiPromptBlockingError(askAiError, agentStudio),
+    [status, askAiError, agentStudio],
+  );
+
+  const displayExchanges = React.useMemo(
+    () => filterExchangesForThreadDepthError(exchanges, hasAskAiPromptBlockingError),
+    [exchanges, hasAskAiPromptBlockingError],
+  );
+
+  const showThreadDepthBanner =
+    sidepanelState === 'conversation' &&
+    hasAskAiPromptBlockingError &&
+    (isThreadDepthError(askAiError) ? messages.some((m) => m.role === 'assistant') : true);
+
+  const threadDepthApiMessage = React.useMemo(() => getAskAiBlockingBannerMessage(askAiError), [askAiError]);
+
+  const promptFormTranslations = React.useMemo(
+    () => ({
+      ...translations.promptForm,
+      ...(translations.conversationScreen?.startNewConversationButtonText !== undefined
+        ? { startNewConversationButtonText: translations.conversationScreen.startNewConversationButtonText }
+        : {}),
+    }),
+    [translations.promptForm, translations.conversationScreen],
+  );
+
   const prevStatus = React.useRef(status);
 
   const handleSend = (prompt: string): void => {
     setStoppedStreaming(false);
+    clearError();
 
     sendMessage({ text: prompt });
     setSidepanelState('conversation');
   };
 
   const handleStartNewConversation = (): void => {
-    setMessages([]);
+    clearError();
+    resetAskAiChatSession();
     setSidepanelState('new-conversation');
   };
 
   const handleSelectQuestion = (question: SuggestedQuestionHit): void => {
     setStoppedStreaming(false);
-    setMessages([]);
-    sendMessage(
-      { text: question.question },
-      {
+    clearError();
+    resetAskAiChatSession({
+      kind: 'sendText',
+      text: question.question,
+      requestOptions: {
         body: {
           suggestedQuestionId: question.objectID,
         },
       },
-    );
+    });
     setSidepanelState('conversation');
   };
 
@@ -238,15 +276,16 @@ function SidepanelInner(
 
   const handleSelectConversation = React.useCallback(
     (conversation: StoredAskAiState): void => {
+      clearError();
       if (conversation.messages) {
-        setMessages(conversation.messages);
+        resetAskAiChatSession({ kind: 'setMessages', messages: conversation.messages });
       } else if (conversation.query) {
-        sendMessage({ text: conversation.query });
+        resetAskAiChatSession({ kind: 'sendText', text: conversation.query });
       }
 
       setSidepanelState('conversation');
     },
-    [sendMessage, setMessages],
+    [clearError, resetAskAiChatSession],
   );
 
   useManageSidepanelLayout({
@@ -288,9 +327,12 @@ function SidepanelInner(
         };
       }
 
-      for (const part of messages[0].parts) {
-        if (part.type === 'text') {
-          conversations.add(buildDummyAskAiHit(part.text, messages));
+      const first = messages[0];
+      if (first?.parts) {
+        for (const part of first.parts) {
+          if (part.type === 'text') {
+            conversations.add(buildDummyAskAiHit(part.text, messages));
+          }
         }
       }
     }
@@ -315,34 +357,57 @@ function SidepanelInner(
     };
   }, []);
 
+  // Only re-run when `initialMessage` changes. Other handlers (e.g. `sendMessage`) can change every
+  // render; listing them here was re-firing the effect and repeatedly clearing the chat.
+  const initialMessageHandlingRef = React.useRef({
+    clearError,
+    resetAskAiChatSession,
+    conversations,
+    handleSelectConversation,
+  });
+  initialMessageHandlingRef.current = {
+    clearError,
+    resetAskAiChatSession,
+    conversations,
+    handleSelectConversation,
+  };
+
   React.useEffect(() => {
     if (!initialMessage) return;
+
+    const {
+      clearError: clr,
+      resetAskAiChatSession: resetSession,
+      conversations: convs,
+      handleSelectConversation: selectConv,
+    } = initialMessageHandlingRef.current;
 
     let selectedConversation: StoredAskAiState | undefined;
 
     if (initialMessage.messageId) {
-      selectedConversation = conversations.getConversation?.(initialMessage.messageId);
+      selectedConversation = convs.getConversation?.(initialMessage.messageId);
     }
 
     if (selectedConversation) {
-      handleSelectConversation(selectedConversation);
+      selectConv(selectedConversation);
     } else {
-      setMessages([]);
-      sendMessage(
-        {
-          text: initialMessage.query,
-        },
+      clr();
+      resetSession(
         initialMessage.suggestedQuestionId
           ? {
-              body: {
-                suggestedQuestionId: initialMessage.suggestedQuestionId,
+              kind: 'sendText',
+              text: initialMessage.query,
+              requestOptions: {
+                body: {
+                  suggestedQuestionId: initialMessage.suggestedQuestionId,
+                },
               },
             }
-          : {},
+          : { kind: 'sendText', text: initialMessage.query },
       );
       setSidepanelState('conversation');
     }
-  }, [initialMessage, sendMessage, conversations, handleSelectConversation, setMessages]);
+  }, [initialMessage]);
 
   // Autofocus the prompt input when the sidepanel opens and blur it when
   // it closes. Disabled on mobile because focusing the textarea triggers the
@@ -373,7 +438,7 @@ function SidepanelInner(
       <aside id="docsearch-sidepanel" className={`DocSearch-Sidepanel ${sidepanelState}`}>
         <SidepanelHeader
           sidepanelState={sidepanelState}
-          exchanges={exchanges}
+          exchanges={displayExchanges}
           setSidepanelState={setSidepanelState}
           hasConversations={conversations.getAll().length > 0}
           isStreaming={isStreaming}
@@ -391,7 +456,7 @@ function SidepanelInner(
           )}
           {sidepanelState === 'conversation' && (
             <ConversationScreen
-              exchanges={exchanges}
+              exchanges={displayExchanges}
               status={status}
               conversations={conversations}
               handleFeedback={sendFeedback}
@@ -406,10 +471,17 @@ function SidepanelInner(
         </div>
         <PromptForm
           ref={promptInputRef}
-          exchanges={exchanges}
+          exchanges={displayExchanges}
           isStreaming={isStreaming}
-          translations={translations.promptForm}
+          showThreadDepthBanner={showThreadDepthBanner}
+          threadDepthApiMessage={threadDepthApiMessage}
+          showBlockingBannerNewConversationLink={showAskAiBlockingBannerNewConversationLink(
+            askAiError,
+            Boolean(agentStudio),
+          )}
+          translations={promptFormTranslations}
           onSend={handleSend}
+          onStartNewConversation={handleStartNewConversation}
           onStopStreaming={handleStopStreaming}
         />
         <footer className="DocSearch-Sidepanel-Footer">

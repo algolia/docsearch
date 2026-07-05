@@ -2,6 +2,10 @@
 title: Improving Answer Quality with Markdown Indexing
 ---
 
+import AskAIDeprecationNotice from '../../src/components/mdx/ask-ai-deprecation-notice.jsx'
+
+<AskAIDeprecationNotice />
+
 To deliver more accurate, context-rich answers at scale, Ask AI benefits from cleanly structured content. One of the most effective ways to achieve this is by using a Markdown-based indexing helper in your Algolia Crawler configuration. This setup ensures Ask AI can access well-formed, content-focused records—especially important for larger documentation sites where metadata, navigation elements, or layout artifacts might otherwise dilute the quality of generative responses.
 
 :::info
@@ -39,7 +43,7 @@ The easiest way to set up markdown indexing is through the Crawler UI, which aut
    - **Content Tag**: Specify the HTML content selector (typically `main`)
    - **Template**: Choose the template that matches your documentation framework:
      - **Docusaurus** - For Docusaurus sites
-     - **VitePress** - For VitePress sites  
+     - **VitePress** - For VitePress sites
      - **Astro/Starlight** - For Astro/Starlight sites
      - **Non-DocSearch (Generic)** - For custom sites or other frameworks
 
@@ -245,7 +249,7 @@ class CustomAskAI {
 
   async sendMessage(conversationId, messages, searchParameters = {}) {
     const token = await this.getToken();
-    
+
     const response = await fetch(`${this.baseUrl}/chat`, {
       method: 'POST',
       headers: {
@@ -270,14 +274,14 @@ class CustomAskAI {
     // Handle streaming response
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
-    
+
     return {
       async *[Symbol.asyncIterator]() {
         try {
           while (true) {
             const { done, value } = await reader.read();
             if (done) break;
-            
+
             const chunk = decoder.decode(value, { stream: true });
             if (chunk.trim()) {
               yield chunk;

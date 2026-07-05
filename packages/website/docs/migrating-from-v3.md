@@ -26,7 +26,7 @@ We refreshed a few translations keys to make their purpose much clearer:
 | SearchBoxTranslations | `cancelButtonAriaLabel` | `closeButtonAriaLabel` |
 | FooterTranslations | `searchByText` | `poweredByText` |
 
-Find the full list of translations in the [API documentation](/docs/api#translations)
+Find the full list of translations in the [API documentation](/docs/api#translations).
 
 ## Integrating Ask AI with DocSearch v4
 
@@ -88,7 +88,7 @@ For full details on endpoint security, caching strategies, and infrastructure, s
 ## Support and Resources
 
 * **Ask AI documentation**: Learn everything about Algolia Ask AI ([Documentation](/#)).
-* **DocSearch Playground**: Interactive environment to test DocSearch configurations ([Docsearch Playground](https://community.algolia.com/docsearch-playground/)).
+* **DocSearch Playground**: Interactive environment to test DocSearch configurations ([DocSearch Playground](https://community.algolia.com/docsearch-playground/)).
 * **Community & Support**: Reach out through the [Algolia Discord](https://alg.li/discord).
 
 Following this guide ensures a smooth transition to DocSearch v4, unlocking the full capabilities of Algolia's powerful AI-driven search features.

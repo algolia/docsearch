@@ -9,7 +9,15 @@ import type { StoredSearchPlugin } from './stored-searches';
 import { ToolCall } from './ToolCall';
 import type { InternalDocSearchHit, StoredAskAiState } from './types';
 import type { AIMessage } from './types/AskiAi';
-import { extractLinksFromMessage, getMessageContent, isThreadDepthError } from './utils/ai';
+import {
+  extractLinksFromMessage,
+  filterExchangesForThreadDepthError,
+  getAskAiBlockingBannerMessage,
+  getMessageContent,
+  isAskAiPromptBlockingError,
+  showAskAiBlockingBannerNewConversationLink,
+  isThreadDepthError,
+} from './utils/ai';
 import { groupConsecutiveToolResults } from './utils/groupConsecutiveToolResults';
 
 export type AskAiScreenTranslations = Partial<{
@@ -54,11 +62,7 @@ export type AskAiScreenTranslations = Partial<{
    */
   errorTitleText: string;
   /**
-   * Message shown when thread depth limit is exceeded (AI-217 error).
-   */
-  threadDepthExceededMessage: string;
-  /**
-   * Button text for starting a new conversation after thread depth error.
+   * Button text for starting a new conversation after a blocking Ask AI error.
    */
   startNewConversationButtonText: string;
 }>;
@@ -119,7 +123,7 @@ function AskAiExchangeCard({
     duringToolCallText = 'Searching...',
   } = translations;
 
-  const isThreadDepth = isThreadDepthError(askAiError);
+  const isPromptBlockingError = isAskAiPromptBlockingError(askAiError, Boolean(agentStudio));
 
   const assistantContent = useMemo(() => getMessageContent(assistantMessage), [assistantMessage]);
   const userContent = useMemo(() => getMessageContent(userMessage), [userMessage]);
@@ -140,6 +144,8 @@ function AskAiExchangeCard({
     isLastExchange &&
     !displayParts.some((part) => part.type !== 'step-start');
 
+  const messageId = agentStudio ? assistantMessage?.id || exchange.id : userMessage?.id || exchange.id;
+
   return (
     <div className="DocSearch-AskAiScreen-Response-Container">
       <div className="DocSearch-AskAiScreen-Response">
@@ -148,7 +154,7 @@ function AskAiExchangeCard({
         </div>
         <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--assistant">
           <div className="DocSearch-AskAiScreen-MessageContent">
-            {loadingStatus === 'error' && askAiError && isLastExchange && !isThreadDepth && (
+            {loadingStatus === 'error' && askAiError && isLastExchange && !isPromptBlockingError && (
               <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error">
                 <AlertIcon />
                 <div className="DocSearch-AskAiScreen-Error-Content">
@@ -236,12 +242,11 @@ function AskAiExchangeCard({
         </div>
         <div className="DocSearch-AskAiScreen-Answer-Footer">
           <AskAiScreenFooterActions
-            id={userMessage?.id || exchange.id}
+            id={messageId}
             showActions={showActions}
             latestAssistantMessageContent={assistantContent?.text || null}
             translations={translations}
             conversations={conversations}
-            agentStudio={agentStudio}
             onFeedback={onFeedback}
           />
         </div>
@@ -262,7 +267,6 @@ interface AskAiScreenFooterActionsProps {
   translations: AskAiScreenTranslations;
   conversations: StoredSearchPlugin<StoredAskAiState>;
   onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
-  agentStudio?: boolean;
 }
 
 export function AskAiScreenFooterActions({
@@ -272,7 +276,6 @@ export function AskAiScreenFooterActions({
   translations,
   conversations,
   onFeedback,
-  agentStudio,
 }: AskAiScreenFooterActionsProps): JSX.Element | null {
   // local state for feedback, initialised from stored conversations
   const initialFeedback = React.useMemo(() => {
@@ -310,26 +313,25 @@ export function AskAiScreenFooterActions({
 
   return (
     <div className="DocSearch-AskAiScreen-Actions">
-      {!agentStudio &&
-        (feedback === null ? (
-          <>
-            {saving ? (
-              <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-            ) : (
-              <>
-                <LikeButton title={likeButtonTitle} onClick={() => handleFeedback('like')} />
-                <DislikeButton title={dislikeButtonTitle} onClick={() => handleFeedback('dislike')} />
-              </>
-            )}
-            {savingError && (
-              <p className="DocSearch-AskAiScreen-FeedbackText">{savingError.message || 'An error occured'}</p>
-            )}
-          </>
-        ) : (
-          <p className="DocSearch-AskAiScreen-FeedbackText DocSearch-AskAiScreen-FeedbackText--visible">
-            {thanksForFeedbackText}
-          </p>
-        ))}
+      {feedback === null ? (
+        <>
+          {saving ? (
+            <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
+          ) : (
+            <>
+              <LikeButton title={likeButtonTitle} onClick={() => handleFeedback('like')} />
+              <DislikeButton title={dislikeButtonTitle} onClick={() => handleFeedback('dislike')} />
+            </>
+          )}
+          {savingError && (
+            <p className="DocSearch-AskAiScreen-FeedbackText">{savingError.message || 'An error occured'}</p>
+          )}
+        </>
+      ) : (
+        <p className="DocSearch-AskAiScreen-FeedbackText DocSearch-AskAiScreen-FeedbackText--visible">
+          {thanksForFeedbackText}
+        </p>
+      )}
       <CopyButton
         translations={translations}
         onClick={() => navigator.clipboard.writeText(latestAssistantMessageContent)}
@@ -369,16 +371,21 @@ export function AskAiSourcesPanel({ urlsToDisplay, relatedSourcesText }: AskAiSo
 export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): JSX.Element | null {
   const {
     disclaimerText = 'Answers are generated with AI which can make mistakes. Verify responses.',
-    threadDepthExceededMessage = 'This conversation is now closed to keep responses accurate.',
     startNewConversationButtonText = 'Start a new conversation',
   } = translations;
 
-  const { messages, askAiError, status } = props;
+  const { messages, askAiError, status, agentStudio } = props;
 
-  // Check if there's a thread depth error
-  const hasThreadDepthError = useMemo(() => {
-    return status === 'error' && isThreadDepthError(askAiError);
-  }, [status, askAiError]);
+  const hasPromptBlockingError = useMemo(() => {
+    return status === 'error' && isAskAiPromptBlockingError(askAiError, Boolean(agentStudio));
+  }, [status, askAiError, agentStudio]);
+
+  const blockingApiMessage = useMemo(() => getAskAiBlockingBannerMessage(askAiError), [askAiError]);
+
+  const showBlockingBannerNewConversationLink = showAskAiBlockingBannerNewConversationLink(
+    askAiError,
+    Boolean(agentStudio),
+  );
 
   // Group messages into exchanges (user + assistant pairs)
   const exchanges: Exchange[] = useMemo(() => {
@@ -394,40 +401,35 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
       }
     }
 
-    // If there's a thread depth error, remove the last exchange (the one that triggered the error)
-    // We only want to show successful exchanges
-    if (hasThreadDepthError && grouped.length > 0) {
-      // Check if the last exchange has no assistant message (failed to complete)
-      const lastExchange = grouped[grouped.length - 1];
-      if (!lastExchange.assistantMessage) {
-        grouped.pop();
-      }
-    }
-
-    return grouped;
-  }, [messages, hasThreadDepthError]);
+    return filterExchangesForThreadDepthError(grouped, hasPromptBlockingError);
+  }, [messages, hasPromptBlockingError]);
 
   const handleSearchQueryClick = (query: string): void => {
     props.onAskAiToggle(false);
     props.setQuery(query);
   };
 
-  // Only show the thread depth error if we have assistant messages
-  const showThreadDepthError = hasThreadDepthError && messages.some((m) => m.role === 'assistant');
+  /** Thread depth only appears after at least one assistant reply;
+   * other Agent Studio blocks can occur on the first turn.
+   * */
+  const showBlockingBanner =
+    hasPromptBlockingError && (isThreadDepthError(askAiError) ? messages.some((m) => m.role === 'assistant') : true);
 
   return (
     <div className="DocSearch-AskAiScreen DocSearch-AskAiScreen-Container">
-      {/* Thread Depth Error */}
-      {showThreadDepthError && (
+      {/* Agent Studio cost-control errors */}
+      {showBlockingBanner && (
         <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error DocSearch-AskAiScreen-Error--ThreadDepth">
           <div className="DocSearch-AskAiScreen-Error-Content">
-            <p>
-              {threadDepthExceededMessage}{' '}
-              <button type="button" className="DocSearch-ThreadDepthError-Link" onClick={props.onNewConversation}>
-                {startNewConversationButtonText}
-              </button>{' '}
-              to continue.
-            </p>
+            {blockingApiMessage ? <p className="DocSearch-AskAiScreen-Error-Title">{blockingApiMessage}</p> : null}
+            {showBlockingBannerNewConversationLink ? (
+              <p>
+                <button type="button" className="DocSearch-ThreadDepthError-Link" onClick={props.onNewConversation}>
+                  {startNewConversationButtonText}
+                </button>{' '}
+                to continue.
+              </p>
+            ) : null}
           </div>
         </div>
       )}
@@ -448,7 +450,7 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
                 loadingStatus={props.status}
                 translations={translations}
                 conversations={props.conversations}
-                agentStudio={props.agentStudio}
+                agentStudio={agentStudio}
                 onSearchQueryClick={handleSearchQueryClick}
                 onFeedback={props.onFeedback}
               />

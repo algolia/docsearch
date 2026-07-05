@@ -287,12 +287,12 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 /* hide on mobile */
 .theme-announcement-bar {
   z-index: 100;
-  min-height: 3rem !important;
+  min-height: 4rem !important;
   font-size: 1.1rem !important;
   font-family: 'Sora', sans-serif !important;
   font-weight: 400 !important;
   line-height: 1.5;
-  padding: 0.5rem 1rem !important;
+  padding: 0.75rem 1rem !important;
   background-color: var(--ifm-announcement-bar-background-color) !important;
   color: #fff !important;
   white-space: normal !important; /* Allow text to wrap */
@@ -721,6 +721,29 @@ html[data-theme='dark'] .shimmer-effect {
 
 .footer {
   @apply bg-neutral-100 dark:bg-zinc-800 py-16 rounded-2xl ring-1 ring-neutral-200 dark:ring-neutral-700 ring-offset-3 dark:ring-offset-neutral-900;
+}
+
+.footer__copyright--with-cookie-settings {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 1.5rem;
+}
+
+.footer__copyright--with-cookie-settings .ot-sdk-show-settings {
+  background: transparent;
+  border: none;
+  color: var(--ifm-footer-link-color);
+  cursor: pointer;
+  font-size: var(--ifm-footer-link-font-size);
+  padding: 0;
+  text-decoration: underline;
+}
+
+.footer__copyright--with-cookie-settings .ot-sdk-show-settings:hover {
+  color: var(--ifm-footer-link-hover-color);
+  text-decoration: underline;
 }
 
 .DocSearch-Button:focus,

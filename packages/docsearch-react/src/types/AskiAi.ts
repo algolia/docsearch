@@ -27,7 +27,19 @@ export interface AgentStudioSearchTool {
   };
 }
 
+export interface AlgoliaMCPSearchTool {
+  input: {
+    query: string;
+  };
+  output: {
+    hits?: any[];
+    nbHits?: number;
+  };
+}
+
 type Tools = {
+  [K in `algolia_search_index_${string}`]: AlgoliaMCPSearchTool;
+} & {
   searchIndex: SearchIndexTool;
   algolia_search_index: AgentStudioSearchTool;
 };
@@ -37,3 +49,7 @@ export type AIMessage = UIMessage<{ stopped?: boolean }, UIDataTypes, Tools>;
 export type AIMessagePart = UIMessagePart<UIDataTypes, Tools>;
 
 export type AIToolPart = ToolUIPart<Tools>;
+
+export function isAIToolPart(part: AIMessagePart): part is AIToolPart {
+  return part.type.startsWith('tool-');
+}

@@ -47,7 +47,7 @@ export function ToolCall({ part, translations, onSearchQueryClick }: ToolCallPro
       );
     case 'output-available': {
       const query = part.type === 'tool-searchIndex' ? part.output.query : part.input.query;
-      const numberOfHits = part.type === 'tool-searchIndex' ? part.output.hits?.length : part.output.nbHits;
+      const numberOfHits = part.output.hits?.length ?? 0;
 
       return (
         <div className="DocSearch-AskAiScreen-MessageContent-Tool Tool--Result">
@@ -73,7 +73,7 @@ export function ToolCall({ part, translations, onSearchQueryClick }: ToolCallPro
             ) : (
               <span className="DocSearch-AskAiScreen-MessageContent-Tool-Query"> &quot;{query || ''}&quot;</span>
             )}{' '}
-            found {numberOfHits || 0} results
+            found {numberOfHits} results
           </span>
         </div>
       );

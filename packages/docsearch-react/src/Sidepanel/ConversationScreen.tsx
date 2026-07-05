@@ -8,8 +8,8 @@ import { MemoizedMarkdown } from '../MemoizedMarkdown';
 import type { StoredSearchPlugin } from '../stored-searches';
 import { ToolCall, type ToolCallTranslations } from '../ToolCall';
 import type { StoredAskAiState } from '../types';
-import type { AIMessage } from '../types/AskiAi';
-import { extractLinksFromMessage, getMessageContent } from '../utils/ai';
+import { isAIToolPart, type AIMessage } from '../types/AskiAi';
+import { extractLinksFromMessage, getMessageContent, isAskAiPromptBlockingError } from '../utils/ai';
 import { groupConsecutiveToolResults } from '../utils/groupConsecutiveToolResults';
 
 import { AggregatedSearchBlock } from './AggregatedSearchBlock';
@@ -60,7 +60,11 @@ export type ConversationScreenTranslations = Partial<
     /**
      * Error title shown if there is an error while chatting.
      */
-    errorTitleText;
+    errorTitleText: string;
+    /**
+     * Button label to start a new conversation after a blocking Ask AI error.
+     */
+    startNewConversationButtonText: string;
   }
 >;
 
@@ -105,6 +109,8 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
       errorTitleText = 'Chat error',
     } = translations;
 
+    const isPromptBlockingError = isAskAiPromptBlockingError(streamError, Boolean(agentStudio));
+
     const assistantContent = useMemo(() => getMessageContent(assistantMessage), [assistantMessage]);
     const userContent = useMemo(() => getMessageContent(userMessage), [userMessage]);
 
@@ -120,6 +126,8 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
     const showActions =
       !wasStopped && (!isLastExchange || (isLastExchange && status === 'ready' && Boolean(assistantMessage)));
 
+    const messageId = agentStudio ? assistantMessage?.id || exchange.id : userMessage?.id || exchange.id;
+
     return (
       <div className="DocSearch-AskAiScreen-Response-Container" ref={conversationRef}>
         <div className="DocSearch-AskAiScreen-Response">
@@ -128,7 +136,7 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
           </div>
           <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--assistant">
             <div className="DocSearch-AskAiScreen-MessageContent">
-              {status === 'error' && streamError && isLastExchange && (
+              {status === 'error' && streamError && isLastExchange && !isPromptBlockingError && (
                 <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error">
                   <AlertIcon />
                   <div className="DocSearch-AskAiScreen-Error-Content">
@@ -159,7 +167,7 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
                   return <AggregatedSearchBlock key={index} queries={part.queries} />;
                 }
 
-                if (part.type === 'tool-searchIndex' || part.type === 'tool-algolia_search_index') {
+                if (isAIToolPart(part)) {
                   return (
                     <ToolCall
                       key={index}
@@ -212,12 +220,11 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
 
           <div className="DocSearch-AskAiScreen-Answer-Footer">
             <ConversationActions
-              id={userMessage?.id || exchange.id}
+              id={messageId}
               showActions={showActions}
               latestAssistantMessageContent={assistantContent?.text || null}
               translations={translations}
               conversations={conversations}
-              agentStudio={agentStudio}
               onFeedback={onFeedback}
             />
           </div>

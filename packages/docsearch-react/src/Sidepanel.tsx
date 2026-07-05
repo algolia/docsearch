@@ -115,13 +115,21 @@ function DocSearchSidepanelComp({
   panel: { portalContainer, ...panelProps } = {},
   ...rootProps
 }: DocSearchSidepanelProps): JSX.Element {
-  const { docsearchState, setDocsearchState, keyboardShortcuts, registerView, initialAskAiMessage } = useDocSearch();
+  const {
+    docsearchState,
+    setDocsearchState,
+    keyboardShortcuts,
+    registerView,
+    initialAskAiMessage,
+    clearInitialAskAiMessage,
+  } = useDocSearch();
 
   const toggleSidepanelState = React.useCallback(() => {
     setDocsearchState(docsearchState === 'sidepanel' ? 'ready' : 'sidepanel');
   }, [docsearchState, setDocsearchState]);
 
   const handleClose = (): void => {
+    clearInitialAskAiMessage();
     setDocsearchState('ready');
   };
 
