@@ -207,12 +207,15 @@ function SidepanelInner(
 
   const prevStatus = React.useRef(status);
 
-  const handleSend = (prompt: string): void => {
-    setStoppedStreaming(false);
+  const handleSend = React.useCallback(
+    (prompt: string): void => {
+      setStoppedStreaming(false);
 
-    sendMessage({ text: prompt });
-    setSidepanelState('conversation');
-  };
+      sendMessage({ text: prompt });
+      setSidepanelState('conversation');
+    },
+    [sendMessage],
+  );
 
   const handleStartNewConversation = (): void => {
     startNewConversation();
@@ -401,6 +404,7 @@ function SidepanelInner(
               streamError={askAiError}
               memoryEnabled={memory?.enabled ?? false}
               tools={tools}
+              onSelectPromptSuggestion={handleSend}
             />
           )}
           {sidepanelState === 'conversation-history' && (

@@ -645,6 +645,10 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
   }
 }
 
+.DocSearch-Sidepanel .DocSearch-AskAiScreen-Response-Container {
+  margin-block: 1rem;
+}
+
 .DocSearch-Sidepanel .DocSearch-AskAiScreen-Response {
   padding: 0;
   font-size: 0.95em;
@@ -688,6 +692,17 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
 
 .DocSearch-Sidepanel .DocSearch-Menu-content {
   right: -4rem;
+}
+
+.DocSearch-Sidepanel {
+  @media screen and (min-width: 768px) {
+    .DocSearch-PromptSuggestions-Content {
+      align-items: start;
+      justify-content: start;
+      flex-direction: column;
+      flex-wrap: nowrap;
+    }
+  }
 }
 
 .sr-only {
