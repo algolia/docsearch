@@ -246,3 +246,14 @@ packages/
 - `marked` - Markdown rendering
 - `rollup` - Build bundling
 - `vitest` - Test runner
+
+## Cursor Cloud specific instructions
+
+Toolchain is pinned in `.tool-versions`: Node `22.15.0` (managed via `fnm`) and Bun `1.3.10`. These are preinstalled in the Cloud VM and available on `PATH` in new shells; the startup update script only runs `bun install`.
+
+Non-obvious caveats:
+
+- The **Docusaurus website does not run under Bun on this branch**. Both `bun run website:build` and the dev server (`bun run website:start` / `website:test`) fail at plugin load with `ERR_PACKAGE_PATH_NOT_EXPORTED` (e.g. `entities/lib/decode.js`, from `docusaurus` → `cheerio`/`htmlparser2`) because of how Bun hoists transitive deps. Consequently, **`bun run build` (which ends with `website:build`) and Playwright E2E (`bun run pw:*`, which boots the website first) cannot complete as-is.** Build the libraries only with: `bun run --sequential build:stage:base build:stage:react build:stage:consumers build:stage:adapter`.
+- **To run/demo the widget, use the React playground:** `bun run playground:start` serves at `http://localhost:5173` (Vite). `bun run playground-js:start` serves the vanilla-JS demo. These connect to Algolia's hosted index using public credentials baked into the demo, so **outbound internet is required** for live search results.
+- Run unit tests non-interactively with `bun run test --run` (plain `bun run test` starts Vitest watch mode).
+- `bun run lint:css` reports many pre-existing CSS lint violations in the repo; these are not environment problems.
