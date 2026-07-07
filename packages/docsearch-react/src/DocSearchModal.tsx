@@ -10,7 +10,7 @@ import type { ChatRequestOptions } from 'ai';
 import type { SearchResponse } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 
-import { MAX_QUERY_SIZE } from './constants';
+import { MAX_QUERY_SIZE, SNIPPET_LENGTH } from './constants';
 import type { DocSearchIndex, DocSearchProps } from './DocSearch';
 import type { FooterTranslations } from './Footer';
 import { Footer } from './Footer';
@@ -129,7 +129,6 @@ const buildQuerySources = async ({
   setStatus,
   searchClient,
   indexes: indices,
-  snippetLength,
   insights,
   appId,
   apiKey,
@@ -144,7 +143,6 @@ const buildQuerySources = async ({
   setStatus: (status: DocSearchState<InternalDocSearchHit>['status']) => void;
   searchClient: ReturnType<typeof useSearchClient>;
   indexes: DocSearchIndex[];
-  snippetLength: React.MutableRefObject<number>;
   insights: boolean;
   appId?: string;
   apiKey?: string;
@@ -177,13 +175,13 @@ const buildQuerySources = async ({
             'url',
           ],
           attributesToSnippet: searchParams?.attributesToSnippet ?? [
-            `hierarchy.lvl1:${snippetLength.current}`,
-            `hierarchy.lvl2:${snippetLength.current}`,
-            `hierarchy.lvl3:${snippetLength.current}`,
-            `hierarchy.lvl4:${snippetLength.current}`,
-            `hierarchy.lvl5:${snippetLength.current}`,
-            `hierarchy.lvl6:${snippetLength.current}`,
-            `content:${snippetLength.current}`,
+            `hierarchy.lvl1:${SNIPPET_LENGTH}`,
+            `hierarchy.lvl2:${SNIPPET_LENGTH}`,
+            `hierarchy.lvl3:${SNIPPET_LENGTH}`,
+            `hierarchy.lvl4:${SNIPPET_LENGTH}`,
+            `hierarchy.lvl5:${SNIPPET_LENGTH}`,
+            `hierarchy.lvl6:${SNIPPET_LENGTH}`,
+            `content:${SNIPPET_LENGTH}`,
           ],
           snippetEllipsisText: searchParams?.snippetEllipsisText ?? '…',
           highlightPreTag: searchParams?.highlightPreTag ?? '<mark>',
@@ -340,7 +338,6 @@ export function DocSearchModal({
   const formElementRef = React.useRef<HTMLDivElement | null>(null);
   const dropdownRef = React.useRef<HTMLDivElement | null>(null);
   const inputRef = React.useRef<HTMLInputElement | null>(null);
-  const snippetLength = React.useRef<number>(15);
   const initialQueryFromSelection = React.useRef(
     typeof window !== 'undefined' ? window.getSelection()!.toString().slice(0, MAX_QUERY_SIZE) : '',
   ).current;
@@ -677,7 +674,6 @@ export function DocSearchModal({
           setStatus,
           searchClient,
           indexes,
-          snippetLength,
           insights: Boolean(insights),
           appId,
           apiKey,
@@ -775,14 +771,6 @@ export function DocSearchModal({
     return (): void => {
       document.body.style.marginInlineEnd = '0px';
     };
-  }, []);
-
-  React.useEffect(() => {
-    const isMobileMediaQuery = window.matchMedia('(max-width: 768px)');
-
-    if (isMobileMediaQuery.matches) {
-      snippetLength.current = 5;
-    }
   }, []);
 
   React.useEffect(() => {
