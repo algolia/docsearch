@@ -11,6 +11,7 @@ export type ResultsScreenTranslations = Partial<{
   askAiPlaceholder: string;
   noResultsAskAiPlaceholder: string;
   resultsSectionTitle: string;
+  askAiResultsTitle: string;
 }> &
   ResultsTranslations;
 

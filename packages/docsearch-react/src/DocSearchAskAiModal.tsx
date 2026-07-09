@@ -87,6 +87,7 @@ export function DocSearchAskAiModal({
   facets,
   isHybridModeSupported = false,
   tools = EMPTY_TOOLS,
+  promptSuggestions,
   ...props
 }: DocSearchAskAiModalProps): JSX.Element {
   const {
@@ -328,7 +329,7 @@ export function DocSearchAskAiModal({
       onStateChange(changes) {
         setState(changes.state);
       },
-      getSources({ query, state: sourcesState, setContext, setStatus }) {
+      async getSources({ query, state: sourcesState, setContext, setStatus }) {
         if (!query) {
           const noQuerySources = buildNoQuerySources({
             recentSearches,
@@ -371,11 +372,19 @@ export function DocSearchAskAiModal({
           facetSelections: facetSelectionsRef,
         });
 
-        const askAiSource = canHandleAskAi ? buildAskAiActionSources({ query, handleSelectAskAiQuestion }) : [];
+        const askAiSourcesPromise = canHandleAskAi
+          ? buildAskAiActionSources({
+              query,
+              handleSelectAskAiQuestion,
+              promptSuggestionsOptions: promptSuggestions,
+              searchClient,
+            })
+          : Promise.resolve([]);
+
+        const [askAiSources, algoliaSources] = await Promise.all([askAiSourcesPromise, algoliaSourcesPromise]);
+
         // Combine Algolia results (once resolved) with the Ask AI source
-        return algoliaSourcesPromise.then((algoliaSources) => {
-          return [...askAiSource, ...algoliaSources];
-        });
+        return [...askAiSources, ...algoliaSources];
       },
     });
   }
