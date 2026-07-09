@@ -27,6 +27,11 @@ const ENTRIES: Entry[] = [
     bannerName: 'Button',
   },
   { input: 'src/modal.css', outputs: ['dist/modal.css'], bannerName: 'Modal' },
+  {
+    input: 'src/askai.css',
+    outputs: ['dist/askai.css', 'dist/askai.scss'],
+    bannerName: 'Ask AI',
+  },
   { input: 'src/style.css', outputs: ['dist/style.css', 'dist/style.scss'] },
   {
     input: 'src/sidepanel.css',

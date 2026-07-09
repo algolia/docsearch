@@ -5,6 +5,7 @@ import { useState, type JSX } from 'react';
 
 import './App.css';
 import '@docsearch/css/dist/style.css';
+import '@docsearch/css/dist/askai.css';
 import '@docsearch/css/dist/sidepanel.css';
 
 import Basic from './examples/basic';
