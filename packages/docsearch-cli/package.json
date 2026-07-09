@@ -14,20 +14,31 @@
     "name": "Algolia, Inc.",
     "url": "https://www.algolia.com"
   },
+  "bugs": {
+    "url": "https://github.com/algolia/docsearch/issues"
+  },
   "bin": {
     "docsearch": "./dist/index.js"
   },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist/"
+  ],
+  "keywords": [
+    "algolia",
+    "cli",
+    "documentation",
+    "docsearch",
+    "mcp"
   ],
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "build": "tsc --project tsconfig.json",
+    "build": "bun run clean && tsc --project tsconfig.json",
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
+    "prepack": "bun run build",
     "test": "vitest run --config vitest.config.mts",
+    "test:pack": "npm pack --dry-run",
     "watch": "tsc --project tsconfig.json --watch"
   },
   "engines": {
@@ -35,6 +46,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
+    "jsonc-parser": "^3.3.1",
     "picocolors": "^1.1.1"
   },
   "devDependencies": {

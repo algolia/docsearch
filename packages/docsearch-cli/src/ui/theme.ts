@@ -44,7 +44,9 @@ export const symbols = {
 };
 
 export function isInteractive(): boolean {
-  return process.stdin.isTTY === true && process.stderr.isTTY === true;
+  return (
+    process.stdin.isTTY === true && process.stderr.isTTY === true && typeof process.stdin.setRawMode === 'function'
+  );
 }
 
 // Maps a 0..1 level to the xterm-256 grayscale ramp (232=black .. 255=white)

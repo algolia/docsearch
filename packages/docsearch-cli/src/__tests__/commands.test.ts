@@ -1,3 +1,5 @@
+// @vitest-environment node
+
 import { describe, expect, it } from 'vitest';
 
 import { buildSetupRequest, buildToolRequest, parseArgs } from '../commands';
@@ -52,6 +54,31 @@ describe('buildToolRequest', () => {
       },
     });
   });
+
+  it('supports equals syntax for value options', () => {
+    const request = buildToolRequest('resolve', parseArgs(['Next.js', '--top-n=2']));
+
+    expect(request.toolArguments).toEqual({
+      query: 'Next.js',
+      topN: 2,
+    });
+  });
+
+  it('rejects empty docset IDs', () => {
+    expect(() => buildToolRequest('query', parseArgs([',', 'search query']))).toThrow(/docset ID/i);
+  });
+
+  it('rejects options that do not belong to the command', () => {
+    expect(() => buildToolRequest('resolve', parseArgs(['Next.js', '--max-results', '2']))).toThrow(
+      /not valid for the resolve command/,
+    );
+  });
+
+  it('rejects non-HTTP endpoints', () => {
+    expect(() => buildToolRequest('resolve', parseArgs(['Next.js', '--endpoint', 'file:///tmp/mcp']))).toThrow(
+      /HTTP or HTTPS/,
+    );
+  });
 });
 
 describe('buildSetupRequest', () => {
@@ -63,5 +90,10 @@ describe('buildSetupRequest', () => {
       scope: 'project',
       yes: true,
     });
+  });
+
+  it('rejects positional setup arguments and unrelated flags', () => {
+    expect(() => buildSetupRequest(parseArgs(['cursor']))).toThrow(/Unexpected setup argument/);
+    expect(() => buildSetupRequest(parseArgs(['--json']))).toThrow(/not valid for the setup command/);
   });
 });

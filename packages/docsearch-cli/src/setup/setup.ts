@@ -1,11 +1,10 @@
 /* eslint-disable import/no-unresolved -- NodeNext source imports use runtime .js extensions. */
 import { homedir } from 'node:os';
-import { dirname, join } from 'node:path';
+import { dirname, isAbsolute, join, relative, resolve } from 'node:path';
 
 import { DOCSEARCH_MCP_SERVER_NAME } from '../constants.js';
 
 import {
-  ALL_AGENT_NAMES,
   getAgent,
   getAllAgents,
   type AgentConfig,
@@ -18,24 +17,20 @@ import { getRuleContent, getSkillContent } from './templates.js';
 import {
   appendRuleSection,
   appendTomlServer,
-  mergeServerEntry,
   pathExists,
-  readJsonConfig,
   resolveConfigPath,
-  writeJsonConfig,
+  upsertJsonServerEntry,
   writeRuleFile,
   writeSkill,
 } from './writers.js';
 
 export interface SetupOptions {
   agents: SetupAgent[];
-  all: boolean;
   cwd?: string;
   endpoint: string;
   env?: NodeJS.ProcessEnv;
   homeDir?: string;
   scope: SetupScope;
-  yes: boolean;
 }
 
 export interface SetupResult {
@@ -81,12 +76,19 @@ const ROOT_MARKERS = [
 // and returns the best project root. Falls back to `startDir` when nothing is
 // found, so a directory-less invocation still installs into the current folder.
 export async function findProjectRoot(startDir: string, homeDir: string): Promise<string> {
+  const start = resolve(startDir);
+  const home = resolve(homeDir);
+  const stopBeforeHome = start !== home && isPathWithin(start, home);
   let vcsRoot: string | undefined;
   let rootMarkerDir: string | undefined;
   let topmostPackage: string | undefined;
 
-  let dir = startDir;
-  while (dir !== homeDir) {
+  let dir = start;
+  let reachedFileSystemRoot = false;
+  while (!reachedFileSystemRoot) {
+    if (stopBeforeHome && dir === home) {
+      break;
+    }
     if (vcsRoot === undefined && (await hasAnyMarker(dir, VCS_MARKERS))) {
       vcsRoot = dir;
     }
@@ -98,18 +100,25 @@ export async function findProjectRoot(startDir: string, homeDir: string): Promis
     }
 
     const parent = dirname(dir);
-    if (parent === dir) {
-      break;
-    }
+    reachedFileSystemRoot = parent === dir;
     dir = parent;
   }
 
-  return vcsRoot ?? rootMarkerDir ?? topmostPackage ?? startDir;
+  return vcsRoot ?? rootMarkerDir ?? topmostPackage ?? start;
 }
 
 async function hasAnyMarker(dir: string, markers: string[]): Promise<boolean> {
   const found = await Promise.all(markers.map((marker) => pathExists(join(dir, marker))));
   return found.some(Boolean);
+}
+
+function isPathWithin(path: string, parent: string): boolean {
+  const pathFromParent = relative(parent, path);
+  return (
+    pathFromParent !== '..' &&
+    !pathFromParent.startsWith(`..${process.platform === 'win32' ? '\\' : '/'}`) &&
+    !isAbsolute(pathFromParent)
+  );
 }
 
 export async function setupDocSearch(options: SetupOptions): Promise<SetupResult[]> {
@@ -118,10 +127,9 @@ export async function setupDocSearch(options: SetupOptions): Promise<SetupResult
     env: options.env,
     homeDir: options.homeDir,
   });
-  const selectedAgents = options.all ? [...ALL_AGENT_NAMES] : options.agents;
   const results: SetupResult[] = [];
 
-  for (const agentName of selectedAgents) {
+  for (const agentName of options.agents) {
     results.push(
       await setupAgent(getAgent(agentName, context), {
         endpoint: options.endpoint,
@@ -163,7 +171,7 @@ export function buildAgentChoices(context: PathContext, detected: SetupAgent[]):
 async function setupAgent(agent: AgentConfig, options: { endpoint: string; scope: SetupScope }): Promise<SetupResult> {
   const mcpPath = await installMcpConfig(agent, options.endpoint, options.scope);
   const rulePath = await installRule(agent, options.scope);
-  const skillPath = await writeSkill(agent.skill.dir(options.scope), getSkillContent());
+  const skill = await writeSkill(agent.skill.dir(options.scope), getSkillContent());
 
   return {
     agent: agent.displayName,
@@ -171,8 +179,8 @@ async function setupAgent(agent: AgentConfig, options: { endpoint: string; scope
     mcpStatus: mcpPath.alreadyExists ? 'updated' : 'configured',
     rulePath: rulePath.path,
     ruleStatus: rulePath.status,
-    skillPath,
-    skillStatus: 'installed',
+    skillPath: skill.path,
+    skillStatus: skill.alreadyExists ? 'preserved' : 'installed',
   };
 }
 
@@ -190,10 +198,8 @@ async function installMcpConfig(
     return { alreadyExists: result.alreadyExists, path: mcpPath };
   }
 
-  const existing = await readJsonConfig(mcpPath);
-  const { alreadyExists, config } = mergeServerEntry(existing, agent.mcp.configKey, entry);
-  await writeJsonConfig(mcpPath, config);
-  return { alreadyExists, path: mcpPath };
+  const result = await upsertJsonServerEntry(mcpPath, agent.mcp.configKey, entry);
+  return { alreadyExists: result.alreadyExists, path: mcpPath };
 }
 
 async function installRule(agent: AgentConfig, scope: SetupScope): Promise<{ path: string; status: string }> {
@@ -201,9 +207,8 @@ async function installRule(agent: AgentConfig, scope: SetupScope): Promise<{ pat
 
   if (agent.rule.kind === 'file') {
     const rulePath = join(agent.rule.dir(scope), agent.rule.filename);
-    const existed = await pathExists(rulePath);
-    await writeRuleFile(rulePath, content);
-    return { path: rulePath, status: existed ? 'updated' : 'installed' };
+    const result = await writeRuleFile(rulePath, content);
+    return { path: rulePath, status: result.alreadyExists ? 'preserved' : 'installed' };
   }
 
   const rulePath = agent.rule.file(scope);

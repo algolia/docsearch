@@ -5,6 +5,8 @@ import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 
 import { CLI_NAME, CLI_VERSION } from '../constants.js';
 
+const MCP_REQUEST_TIMEOUT_MS = 30_000;
+
 export interface CallDocSearchToolOptions {
   endpoint: string;
   toolArguments: Record<string, unknown>;
@@ -22,18 +24,26 @@ export async function callDocSearchTool({
   });
   const transport = new StreamableHTTPClientTransport(new URL(endpoint));
 
-  await client.connect(transport);
-
   try {
-    const { tools } = await client.listTools();
+    await client.connect(transport);
+
+    const { tools } = await client.listTools(undefined, {
+      timeout: MCP_REQUEST_TIMEOUT_MS,
+    });
     if (!tools.some((tool) => tool.name === toolName)) {
       throw new Error(`DocSearch MCP tool "${toolName}" is not available at ${endpoint}.`);
     }
 
-    const result = await client.callTool({
-      name: toolName,
-      arguments: toolArguments,
-    });
+    const result = await client.callTool(
+      {
+        name: toolName,
+        arguments: toolArguments,
+      },
+      undefined,
+      {
+        timeout: MCP_REQUEST_TIMEOUT_MS,
+      },
+    );
     if (!('content' in result)) {
       throw new Error(`DocSearch MCP tool "${toolName}" returned an unsupported result shape.`);
     }

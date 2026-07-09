@@ -10,15 +10,20 @@ export function formatToolResult(result: CallToolResult, json: boolean): string 
     return `${JSON.stringify(result, null, 2)}\n`;
   }
 
+  const text = getToolResultText(result);
+  if (text) {
+    return `${text}\n`;
+  }
+
+  return `${JSON.stringify(result, null, 2)}\n`;
+}
+
+export function getToolResultText(result: CallToolResult): string {
   const text = result.content
     .filter((part): part is TextContent => part.type === 'text')
     .map((part) => part.text.trim())
     .filter(Boolean)
     .join('\n\n');
 
-  if (text) {
-    return `${text}\n`;
-  }
-
-  return `${JSON.stringify(result, null, 2)}\n`;
+  return text;
 }

@@ -1,3 +1,5 @@
+// @vitest-environment node
+
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { describe, expect, it } from 'vitest';
 

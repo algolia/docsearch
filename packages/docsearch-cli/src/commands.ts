@@ -51,6 +51,23 @@ const BOOLEAN_OPTIONS = new Set([
 ]);
 
 const VALUE_OPTIONS = new Set(['--endpoint', '--max-docsets', '--max-results', '--top-n']);
+const HELP_OPTIONS = new Set(['--help', '-h']);
+const QUERY_COMMON_OPTIONS = new Set(['--endpoint', '--help', '--json', '-h']);
+const SETUP_OPTIONS = new Set([
+  '--all',
+  '--claude',
+  '--codex',
+  '--cursor',
+  '--endpoint',
+  '--gemini',
+  '--global',
+  '--help',
+  '--opencode',
+  '--project',
+  '--yes',
+  '-h',
+  '-y',
+]);
 
 export function parseArgs(argv: string[]): ParsedArgs {
   const options: Record<string, boolean | string> = {};
@@ -58,17 +75,26 @@ export function parseArgs(argv: string[]): ParsedArgs {
 
   for (let idx = 0; idx < argv.length; idx++) {
     const token = argv[idx];
-    if (VALUE_OPTIONS.has(token)) {
-      const value = argv[idx + 1];
+    const equalsIdx = token.startsWith('--') ? token.indexOf('=') : -1;
+    const option = equalsIdx > 0 ? token.slice(0, equalsIdx) : token;
+    const inlineValue = equalsIdx > 0 ? token.slice(equalsIdx + 1) : undefined;
+
+    if (VALUE_OPTIONS.has(option)) {
+      const value = inlineValue ?? argv[idx + 1];
       if (!value || value.startsWith('-')) {
-        throw new UsageError(`Missing value for ${token}.`);
+        throw new UsageError(`Missing value for ${option}.`);
       }
-      options[token] = value;
-      idx++;
-    } else if (BOOLEAN_OPTIONS.has(token)) {
-      options[token] = true;
-    } else if (token.startsWith('-')) {
-      throw new UsageError(`Unknown option: ${token}.`);
+      options[option] = value;
+      if (inlineValue === undefined) {
+        idx++;
+      }
+    } else if (BOOLEAN_OPTIONS.has(option)) {
+      if (inlineValue !== undefined) {
+        throw new UsageError(`${option} does not accept a value.`);
+      }
+      options[option] = true;
+    } else if (option.startsWith('-')) {
+      throw new UsageError(`Unknown option: ${option}.`);
     } else {
       positionals.push(token);
     }
@@ -78,7 +104,8 @@ export function parseArgs(argv: string[]): ParsedArgs {
 }
 
 export function buildToolRequest(commandName: QueryCommandName, args: ParsedArgs): ToolRequest {
-  const endpoint = readStringOption(args.options, '--endpoint') ?? DEFAULT_MCP_ENDPOINT;
+  validateToolOptions(commandName, args.options);
+  const endpoint = readEndpoint(args.options);
   const json = Boolean(args.options['--json']);
   const maxResults = readNumberOption(args.options, '--max-results');
 
@@ -127,15 +154,20 @@ export function buildToolRequest(commandName: QueryCommandName, args: ParsedArgs
         throw new UsageError('Usage: docsearch query <docset-id[,docset-id...]> <query> [--json]');
       }
 
+      const docsetIds = docsetId
+        .split(',')
+        .map((value) => value.trim())
+        .filter(Boolean);
+      if (docsetIds.length === 0) {
+        throw new UsageError('At least one non-empty docset ID is required.');
+      }
+
       return {
         endpoint,
         json,
         toolName: TOOL_QUERY_DOCS,
         toolArguments: removeUndefined({
-          docsetIds: docsetId
-            .split(',')
-            .map((value) => value.trim())
-            .filter(Boolean),
+          docsetIds,
           query,
           maxResults,
         }),
@@ -150,6 +182,11 @@ export function buildToolRequest(commandName: QueryCommandName, args: ParsedArgs
 }
 
 export function buildSetupRequest(args: ParsedArgs): SetupRequest {
+  validateOptions(args.options, SETUP_OPTIONS, 'setup');
+  if (args.positionals.length > 0) {
+    throw new UsageError(`Unexpected setup argument: ${args.positionals[0]}.`);
+  }
+
   const agents = Object.entries(AGENT_FLAGS)
     .filter(([flag]) => Boolean(args.options[flag]))
     .map(([, agent]) => agent);
@@ -161,7 +198,7 @@ export function buildSetupRequest(args: ParsedArgs): SetupRequest {
   return {
     agents: uniqueAgents(agents),
     all: Boolean(args.options['--all']),
-    endpoint: readStringOption(args.options, '--endpoint') ?? DEFAULT_MCP_ENDPOINT,
+    endpoint: readEndpoint(args.options),
     scope: resolveScopeFlag(args.options),
     yes: Boolean(args.options['--yes'] || args.options['-y']),
   };
@@ -184,6 +221,20 @@ function readStringOption(options: Record<string, boolean | string>, key: string
   return typeof value === 'string' ? value : undefined;
 }
 
+function readEndpoint(options: Record<string, boolean | string>): string {
+  const value = readStringOption(options, '--endpoint') ?? DEFAULT_MCP_ENDPOINT;
+  let url: URL;
+  try {
+    url = new URL(value);
+  } catch {
+    throw new UsageError(`--endpoint must be a valid HTTP(S) URL.`);
+  }
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+    throw new UsageError(`--endpoint must use HTTP or HTTPS.`);
+  }
+  return url.toString();
+}
+
 function readNumberOption(options: Record<string, boolean | string>, key: string): number | undefined {
   const value = readStringOption(options, key);
   if (value === undefined) {
@@ -204,4 +255,29 @@ function removeUndefined(values: Record<string, unknown>): Record<string, unknow
 
 function uniqueAgents(agents: SetupAgent[]): SetupAgent[] {
   return [...new Set(agents)];
+}
+
+function validateToolOptions(commandName: QueryCommandName, options: Record<string, boolean | string>): void {
+  const allowed = new Set(QUERY_COMMON_OPTIONS);
+  if (commandName === 'docs') {
+    allowed.add('--max-docsets');
+    allowed.add('--max-results');
+  } else if (commandName === 'resolve') {
+    allowed.add('--top-n');
+  } else {
+    allowed.add('--max-results');
+  }
+  validateOptions(options, allowed, commandName);
+}
+
+function validateOptions(
+  options: Record<string, boolean | string>,
+  allowed: ReadonlySet<string>,
+  commandName: string,
+): void {
+  for (const option of Object.keys(options)) {
+    if (!allowed.has(option) && !HELP_OPTIONS.has(option)) {
+      throw new UsageError(`${option} is not valid for the ${commandName} command.`);
+    }
+  }
 }

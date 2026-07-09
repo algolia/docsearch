@@ -37,11 +37,8 @@ export interface AgentConfig {
       };
   skill: {
     dir: (scope: SetupScope) => string;
-    name: string;
   };
 }
-
-export const ALL_AGENT_NAMES: SetupAgent[] = ['claude', 'cursor', 'codex', 'opencode', 'gemini'];
 
 export function getAgent(name: SetupAgent, context: PathContext): AgentConfig {
   return agents(context)[name];
@@ -74,7 +71,6 @@ function agents(context: PathContext): Record<SetupAgent, AgentConfig> {
         filename: `${DOCSEARCH_MCP_SERVER_NAME}.md`,
       },
       skill: {
-        name: DOCSEARCH_MCP_SERVER_NAME,
         dir: (scope) =>
           scope === 'global' ? join(claudeConfigDirectory, 'skills') : join(context.cwd, '.claude', 'skills'),
       },
@@ -99,7 +95,6 @@ function agents(context: PathContext): Record<SetupAgent, AgentConfig> {
         filename: `${DOCSEARCH_MCP_SERVER_NAME}.mdc`,
       },
       skill: {
-        name: DOCSEARCH_MCP_SERVER_NAME,
         dir: (scope) =>
           scope === 'global' ? join(context.homeDir, '.cursor', 'skills') : join(context.cwd, '.cursor', 'skills'),
       },
@@ -115,7 +110,7 @@ function agents(context: PathContext): Record<SetupAgent, AgentConfig> {
         projectPaths: [join(context.cwd, '.codex', 'config.toml')],
         globalPaths: [join(context.homeDir, '.codex', 'config.toml')],
         configKey: 'mcp_servers',
-        buildEntry: (endpoint) => ({ type: 'http', url: endpoint }),
+        buildEntry: (endpoint) => ({ url: endpoint }),
       },
       rule: {
         kind: 'append',
@@ -123,7 +118,6 @@ function agents(context: PathContext): Record<SetupAgent, AgentConfig> {
           scope === 'global' ? join(context.homeDir, '.codex', 'AGENTS.md') : join(context.cwd, 'AGENTS.md'),
       },
       skill: {
-        name: DOCSEARCH_MCP_SERVER_NAME,
         dir: (scope) =>
           scope === 'global' ? join(context.homeDir, '.agents', 'skills') : join(context.cwd, '.agents', 'skills'),
       },
@@ -136,17 +130,10 @@ function agents(context: PathContext): Record<SetupAgent, AgentConfig> {
       name: 'opencode',
       displayName: 'OpenCode',
       mcp: {
-        projectPaths: [
-          join(context.cwd, 'opencode.json'),
-          join(context.cwd, 'opencode.jsonc'),
-          join(context.cwd, '.opencode.json'),
-          join(context.cwd, '.opencode.jsonc'),
-        ],
+        projectPaths: [join(context.cwd, 'opencode.json'), join(context.cwd, 'opencode.jsonc')],
         globalPaths: [
           join(context.homeDir, '.config', 'opencode', 'opencode.json'),
           join(context.homeDir, '.config', 'opencode', 'opencode.jsonc'),
-          join(context.homeDir, '.config', 'opencode', '.opencode.json'),
-          join(context.homeDir, '.config', 'opencode', '.opencode.jsonc'),
         ],
         configKey: 'mcp',
         buildEntry: (endpoint) => ({ type: 'remote', url: endpoint, enabled: true }),
@@ -159,17 +146,11 @@ function agents(context: PathContext): Record<SetupAgent, AgentConfig> {
             : join(context.cwd, 'AGENTS.md'),
       },
       skill: {
-        name: DOCSEARCH_MCP_SERVER_NAME,
         dir: (scope) =>
           scope === 'global' ? join(context.homeDir, '.agents', 'skills') : join(context.cwd, '.agents', 'skills'),
       },
       detect: {
-        projectPaths: [
-          join(context.cwd, 'opencode.json'),
-          join(context.cwd, 'opencode.jsonc'),
-          join(context.cwd, '.opencode.json'),
-          join(context.cwd, '.opencode.jsonc'),
-        ],
+        projectPaths: [join(context.cwd, 'opencode.json'), join(context.cwd, 'opencode.jsonc')],
         globalPaths: [join(context.homeDir, '.config', 'opencode')],
       },
     },
@@ -188,7 +169,6 @@ function agents(context: PathContext): Record<SetupAgent, AgentConfig> {
           scope === 'global' ? join(context.homeDir, '.gemini', 'GEMINI.md') : join(context.cwd, 'GEMINI.md'),
       },
       skill: {
-        name: DOCSEARCH_MCP_SERVER_NAME,
         dir: (scope) =>
           scope === 'global' ? join(context.homeDir, '.gemini', 'skills') : join(context.cwd, '.gemini', 'skills'),
       },

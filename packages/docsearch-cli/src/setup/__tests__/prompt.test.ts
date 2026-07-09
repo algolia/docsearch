@@ -1,7 +1,9 @@
+// @vitest-environment node
+
 import { describe, expect, it } from 'vitest';
 
 import type { AgentChoice } from '../prompt';
-import { parseAgentSelection, parseScopeSelection } from '../prompt';
+import { parseAgentSelection, parseScopeSelection, PromptCancelledError } from '../prompt';
 
 const CHOICES: AgentChoice[] = [
   { detected: true, displayName: 'Cursor', name: 'cursor' },
@@ -33,8 +35,8 @@ describe('parseAgentSelection', () => {
 });
 
 describe('parseScopeSelection', () => {
-  it('defaults blank input to global', () => {
-    expect(parseScopeSelection('')).toBe('global');
+  it('defaults blank input to project', () => {
+    expect(parseScopeSelection('')).toBe('project');
   });
 
   it('accepts numbers, letters, and names', () => {
@@ -48,5 +50,12 @@ describe('parseScopeSelection', () => {
 
   it('rejects unknown scope input', () => {
     expect(() => parseScopeSelection('workspace')).toThrow(/Unknown scope/);
+  });
+});
+
+describe('PromptCancelledError', () => {
+  it('preserves the intended process exit code', () => {
+    expect(new PromptCancelledError().exitCode).toBe(0);
+    expect(new PromptCancelledError(130).exitCode).toBe(130);
   });
 });

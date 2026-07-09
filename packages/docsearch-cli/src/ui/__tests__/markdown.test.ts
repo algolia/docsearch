@@ -1,3 +1,5 @@
+// @vitest-environment node
+
 import { describe, expect, it } from 'vitest';
 
 import { renderMarkdown } from '../markdown';
@@ -12,6 +14,7 @@ describe('renderMarkdown', () => {
       'Source: https://example.com/docs',
       '',
       '- `apiKey`: Your key.',
+      '- Read the [configuration guide](https://example.com/config).',
       '--------------------------------',
     ].join('\n');
 
@@ -20,6 +23,7 @@ describe('renderMarkdown', () => {
     expect(output).toContain('Configure props');
     expect(output).toContain('https://example.com/docs');
     expect(output).toContain('apiKey');
+    expect(output).toContain('https://example.com/config');
     expect(output).not.toContain('###');
     expect(output).toMatch(/─{10,}/);
   });

@@ -1,4 +1,6 @@
 /* eslint-disable import/no-unresolved -- NodeNext source imports use runtime .js extensions. */
+import { DOCSEARCH_MCP_SERVER_NAME } from '../constants.js';
+
 import type { SetupAgent } from './agents.js';
 
 const BASE_GUIDANCE = `Use DocSearch MCP when the user asks about public developer documentation for a library, framework, SDK, API, CLI tool, or cloud service.
@@ -24,7 +26,12 @@ export function getRuleContent(agent: SetupAgent): string {
 }
 
 export function getSkillContent(): string {
-  return `# DocSearch MCP
+  return `---
+name: ${DOCSEARCH_MCP_SERVER_NAME}
+description: Search current public developer documentation through DocSearch MCP. Use for library, framework, SDK, API, CLI, and cloud service documentation questions.
+---
+
+# DocSearch MCP
 
 Use this skill to fetch current public developer documentation through DocSearch MCP before answering documentation questions.
 

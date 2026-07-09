@@ -1,6 +1,8 @@
+// @vitest-environment node
+
 import { describe, expect, it } from 'vitest';
 
-import { renderLanding, renderLogo } from '../render';
+import { renderHelp, renderLanding, renderLogo } from '../render';
 
 describe('renderLanding', () => {
   it('includes the logo, tagline, commands, and discovery link', () => {
@@ -17,5 +19,16 @@ describe('renderLanding', () => {
 
   it('renders the logo as multi-line art', () => {
     expect(renderLogo().trim().split('\n').length).toBeGreaterThan(20);
+  });
+
+  it('documents setup and query flags', () => {
+    const output = renderHelp();
+
+    expect(output).toContain('--all');
+    expect(output).toContain('--cursor');
+    expect(output).toContain('--max-results');
+    expect(output).toContain('--max-docsets');
+    expect(output).toContain('--top-n');
+    expect(output).toContain('project + detected agents');
   });
 });

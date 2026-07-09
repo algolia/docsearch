@@ -163,7 +163,10 @@ function renderCodeBottom(): string {
 
 function styleInline(text: string): string {
   return text
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_match, label: string) => color.underline(color.blue(label)))
+    .replace(
+      /\[([^\]]+)\]\(([^)]+)\)/g,
+      (_match, label: string, url: string) => `${color.underline(color.blue(label))}${color.dim(` (${url})`)}`,
+    )
     .replace(/`([^`]+)`/g, (_match, code: string) => color.cyan(code))
     .replace(/\*\*([^*]+)\*\*/g, (_match, bold: string) => color.bold(bold));
 }

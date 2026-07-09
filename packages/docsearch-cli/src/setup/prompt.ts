@@ -7,7 +7,7 @@ import { color, isInteractive, symbols } from '../ui/theme.js';
 import type { SetupAgent, SetupScope } from './agents.js';
 
 export class PromptCancelledError extends Error {
-  constructor() {
+  constructor(readonly exitCode: number = 0) {
     super('Setup cancelled.');
     this.name = 'PromptCancelledError';
   }
@@ -26,19 +26,19 @@ interface ScopeChoice {
 }
 
 const SCOPE_CHOICES: ScopeChoice[] = [
-  { hint: 'this project only (./.cursor, ./.mcp.json, …)', label: 'Project', value: 'project' },
+  { hint: 'the detected repository root', label: 'Project', value: 'project' },
   { hint: 'every project (~/.cursor, ~/.codex, …)', label: 'Global', value: 'global' },
 ];
 
 export function parseScopeSelection(raw: string): SetupScope {
   const normalized = raw.trim().toLowerCase();
 
-  if (normalized === '' || normalized === '2' || normalized === 'g' || normalized === 'global') {
-    return 'global';
+  if (normalized === '' || normalized === '1' || normalized === 'p' || normalized === 'project') {
+    return 'project';
   }
 
-  if (normalized === '1' || normalized === 'p' || normalized === 'project') {
-    return 'project';
+  if (normalized === '2' || normalized === 'g' || normalized === 'global') {
+    return 'global';
   }
 
   throw new UsageError(`Unknown scope: "${raw.trim()}". Choose "project" or "global".`);
@@ -55,8 +55,16 @@ export function promptScope(): Promise<SetupScope> {
 function promptScopeInteractive(): Promise<SetupScope> {
   const input = process.stdin;
   const output = process.stderr;
+  const wasRaw = input.isRaw === true;
   let cursor = 0;
   let renderedLines = 0;
+
+  try {
+    input.setRawMode(true);
+  } catch {
+    return promptScopeByLine();
+  }
+  readline.emitKeypressEvents(input);
 
   return new Promise<SetupScope>((resolve, reject) => {
     function render(): void {
@@ -80,7 +88,7 @@ function promptScopeInteractive(): Promise<SetupScope> {
     }
 
     function cleanup(): void {
-      input.setRawMode(false);
+      input.setRawMode(wasRaw);
       input.removeListener('keypress', onKeypress);
       output.write('\u001B[?25h');
       input.pause();
@@ -103,12 +111,10 @@ function promptScopeInteractive(): Promise<SetupScope> {
       } else if (key.name === 'escape' || (key.ctrl === true && key.name === 'c')) {
         cleanup();
         output.write('\n');
-        reject(new PromptCancelledError());
+        reject(new PromptCancelledError(key.ctrl === true ? 130 : 0));
       }
     }
 
-    readline.emitKeypressEvents(input);
-    input.setRawMode(true);
     output.write('\u001B[?25l');
     input.on('keypress', onKeypress);
     input.resume();
@@ -123,7 +129,7 @@ async function promptScopeByLine(): Promise<SetupScope> {
   for (const [index, choice] of SCOPE_CHOICES.entries()) {
     output.write(`  ${color.cyan(String(index + 1))}. ${choice.label} ${color.dim(`— ${choice.hint}`)}\n`);
   }
-  output.write(`${color.dim('Enter "project" or "global" (blank for global):')} `);
+  output.write(`${color.dim('Enter "project" or "global" (blank for project):')} `);
 
   return parseScopeSelection(await readSingleLine());
 }
@@ -174,9 +180,17 @@ export function promptAgents(choices: AgentChoice[]): Promise<SetupAgent[]> {
 function promptAgentsInteractive(choices: AgentChoice[]): Promise<SetupAgent[]> {
   const input = process.stdin;
   const output = process.stderr;
+  const wasRaw = input.isRaw === true;
   const selected = choices.map((choice) => choice.detected);
   let cursor = 0;
   let renderedLines = 0;
+
+  try {
+    input.setRawMode(true);
+  } catch {
+    return promptAgentsByLine(choices);
+  }
+  readline.emitKeypressEvents(input);
 
   return new Promise<SetupAgent[]>((resolve, reject) => {
     function render(): void {
@@ -200,7 +214,7 @@ function promptAgentsInteractive(choices: AgentChoice[]): Promise<SetupAgent[]> 
     }
 
     function cleanup(): void {
-      input.setRawMode(false);
+      input.setRawMode(wasRaw);
       input.removeListener('keypress', onKeypress);
       output.write('\u001B[?25h');
       input.pause();
@@ -230,12 +244,10 @@ function promptAgentsInteractive(choices: AgentChoice[]): Promise<SetupAgent[]> 
       } else if (key.name === 'escape' || (key.ctrl === true && key.name === 'c')) {
         cleanup();
         output.write('\n');
-        reject(new PromptCancelledError());
+        reject(new PromptCancelledError(key.ctrl === true ? 130 : 0));
       }
     }
 
-    readline.emitKeypressEvents(input);
-    input.setRawMode(true);
     output.write('\u001B[?25l');
     input.on('keypress', onKeypress);
     input.resume();

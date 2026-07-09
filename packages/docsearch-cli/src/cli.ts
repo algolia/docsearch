@@ -9,7 +9,7 @@ import {
 import { CLI_VERSION } from './constants.js';
 import { UsageError } from './errors.js';
 import { callDocSearchTool } from './mcp/client.js';
-import { formatToolResult } from './mcp/format.js';
+import { formatToolResult, getToolResultText } from './mcp/format.js';
 import type { SetupAgent, SetupScope } from './setup/agents.js';
 import { PromptCancelledError, promptAgents, promptScope } from './setup/prompt.js';
 import { buildAgentChoices, createPathContext, detectAgents, findProjectRoot, setupDocSearch } from './setup/setup.js';
@@ -61,7 +61,7 @@ export async function runCli(argv: string[] = process.argv.slice(2)): Promise<nu
   } catch (error) {
     if (error instanceof PromptCancelledError) {
       process.stderr.write(renderNotice('Setup cancelled. No changes were made.'));
-      return 0;
+      return error.exitCode;
     }
 
     const message = error instanceof Error ? error.message : String(error);
@@ -87,13 +87,11 @@ async function runSetup(request: SetupRequest): Promise<number> {
 
   const results = await setupDocSearch({
     agents,
-    all: false,
     cwd: context.cwd,
     endpoint: request.endpoint,
     env: context.env,
     homeDir: context.homeDir,
     scope,
-    yes: request.yes,
   });
 
   process.stdout.write(
@@ -112,7 +110,7 @@ function resolveScope(request: SetupRequest): Promise<SetupScope> {
   }
 
   if (request.yes) {
-    return Promise.resolve('global');
+    return Promise.resolve('project');
   }
 
   return promptScope();
@@ -133,6 +131,9 @@ async function resolveSetupAgents(
 
   const detected = await detectAgents(scope, context);
   if (request.yes) {
+    if (detected.length === 0) {
+      throw new UsageError('No supported agents were detected. Pass an agent flag such as --cursor, or use --all.');
+    }
     return detected;
   }
 
@@ -146,12 +147,15 @@ async function runQuery(commandName: QueryCommandName, parsedArgs: ReturnType<ty
   if (request.json) {
     const result = await callDocSearchTool(request);
     process.stdout.write(formatToolResult(result, true));
-    return 0;
+    return result.isError === true ? 1 : 0;
   }
 
   const spinner = startSpinner(`Searching ${subject}…`);
   try {
     const result = await callDocSearchTool(request);
+    if (result.isError === true) {
+      throw new Error(getToolResultText(result) || 'DocSearch MCP returned an error.');
+    }
     spinner.succeed(`Results for ${subject}`);
     process.stdout.write(renderResultHeader(commandName, subject));
     process.stdout.write(renderMarkdown(formatToolResult(result, false)));
