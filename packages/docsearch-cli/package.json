@@ -1,0 +1,45 @@
+{
+  "name": "@docsearch/cli",
+  "description": "Command-line tools for installing and querying DocSearch MCP.",
+  "version": "0.0.0",
+  "license": "MIT",
+  "type": "module",
+  "homepage": "https://docsearch.algolia.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/algolia/docsearch.git",
+    "directory": "packages/docsearch-cli"
+  },
+  "author": {
+    "name": "Algolia, Inc.",
+    "url": "https://www.algolia.com"
+  },
+  "bin": {
+    "docsearch": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "test": "vitest run --config vitest.config.mts",
+    "watch": "tsc --project tsconfig.json --watch"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "typescript": "5.7.3",
+    "vitest": "3.0.2"
+  }
+}
