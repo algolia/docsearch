@@ -118,6 +118,7 @@ export function SearchBox({
   const blockedKeys = new Set(['ArrowUp', 'ArrowDown', 'Enter']);
   const origOnKeyDown = baseInputProps.onKeyDown;
   const origOnChange = baseInputProps.onChange;
+  const origOnCompositionEnd = baseInputProps.onCompositionEnd;
   const isAskAiStreaming = props.askAiStatus === 'streaming' || props.askAiStatus === 'submitted';
   const isKeywordSearchLoading = props.state.status === 'stalled';
   const renderMoreOptions = props.isAskAiActive && askAiState !== 'conversation-history';
@@ -199,7 +200,7 @@ export function SearchBox({
         props.setQuery(e.currentTarget.value);
         return;
       }
-      baseInputProps.onCompositionEnd?.(e);
+      origOnCompositionEnd?.(e);
     },
     disabled: isAskAiStreaming || (isThreadDepthError && props.isAskAiActive),
   };
