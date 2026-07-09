@@ -2,55 +2,40 @@
 import { CLI_NAME, CLI_VERSION } from '../constants.js';
 import type { SetupResult } from '../setup/setup.js';
 
-import { color, shade, symbols } from './theme.js';
-
-function logoArc(lead: number, length: number): string {
-  return `${' '.repeat(lead)}${':'.repeat(length)}`;
-}
-
-function logoBar(fill: number, gap: number, length: number): string {
-  return `  ${'@'.repeat(fill)}${' '.repeat(gap)}${':'.repeat(length)}`;
-}
+import { brandShade, color, symbols } from './theme.js';
 
 const LOGO: string[] = [
-  ':'.repeat(33),
-  logoArc(32, 9),
-  logoArc(37, 6),
-  logoBar(21, 18, 4),
-  logoArc(43, 5),
-  logoArc(45, 4),
-  logoBar(26, 19, 3),
-  logoArc(48, 3),
-  logoArc(49, 3),
-  logoBar(29, 18, 4),
-  logoArc(50, 3),
-  logoArc(51, 3),
-  logoBar(30, 19, 3),
-  logoArc(51, 3),
-  logoArc(51, 3),
-  logoBar(30, 19, 3),
-  logoArc(51, 3),
-  logoArc(50, 3),
-  logoBar(29, 18, 4),
-  logoArc(49, 3),
-  logoArc(48, 3),
-  logoBar(26, 18, 4),
-  logoArc(45, 4),
-  logoArc(43, 4),
-  logoBar(21, 18, 4),
-  logoArc(37, 6),
-  logoArc(31, 9),
-  `  ${':'.repeat(32)}`,
+  '                         ',
+  ' ░░░░░░░░░░░░░░░░░░░░░░░░░░░',
+  '                          ░░░░░',
+  ' ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓             ░░░░',
+  '                               ░░░░',
+  ' ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓            ░░░░',
+  '                                 ░░░░',
+  ' ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓            ░░░',
+  '                                   ░░░',
+  ' ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓            ░░░',
+  '                                   ░░░',
+  ' ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓            ░░░',
+  '                                   ░░░',
+  ' ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓            ░░░',
+  '                                 ░░░░',
+  ' ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓            ░░░░',
+  '                               ░░░',
+  ' ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓             ░░░░',
+  '                          ░░░░░',
+  ' ░░░░░░░░░░░░░░░░░░░░░░░░░░',
+  '                        ',
 ];
 
-const LOGO_TOP_LEVEL = 0.95;
-const LOGO_BOTTOM_LEVEL = 0.34;
+const LOGO_TOP_LEVEL = 1;
+const LOGO_BOTTOM_LEVEL = 0;
 
 export function renderLogo(): string {
   const span = Math.max(1, LOGO.length - 1);
   const rows = LOGO.map((line, index) => {
     const level = LOGO_TOP_LEVEL - (index / span) * (LOGO_TOP_LEVEL - LOGO_BOTTOM_LEVEL);
-    return shade(level)(line);
+    return brandShade(level)(line);
   });
 
   return `\n${rows.join('\n')}\n`;

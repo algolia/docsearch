@@ -8,7 +8,7 @@ describe('renderLanding', () => {
   it('includes the logo, tagline, commands, and discovery link', () => {
     const output = renderLanding();
 
-    expect(output).toContain('@@@@@@@@@@@@@@@@@@@@@');
+    expect(output).toContain('▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓');
     expect(output).toContain('The open documentation search for AI agents');
     expect(output).toContain('setup');
     expect(output).toContain('docs');
@@ -18,7 +18,7 @@ describe('renderLanding', () => {
   });
 
   it('renders the logo as multi-line art', () => {
-    expect(renderLogo().trim().split('\n').length).toBeGreaterThan(20);
+    expect(renderLogo().trim().split('\n')).toHaveLength(21);
   });
 
   it('documents setup and query flags', () => {

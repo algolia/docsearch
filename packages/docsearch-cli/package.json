@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/cli",
   "description": "Command-line tools for installing and querying DocSearch MCP.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "type": "module",
   "homepage": "https://docsearch.algolia.com",

@@ -49,10 +49,17 @@ export function isInteractive(): boolean {
   );
 }
 
-// Maps a 0..1 level to the xterm-256 grayscale ramp (232=black .. 255=white)
-// so we can paint a smooth vertical gradient on the wordmark.
-export function shade(level: number): (text: string) => string {
+const DOCSEARCH_CYAN = [44, 200, 247] as const;
+const DOCSEARCH_NEBULA = [84, 104, 255] as const;
+const DOCSEARCH_PINK = [248, 44, 170] as const;
+
+export function brandShade(level: number): (text: string) => string {
   const clamped = Math.max(0, Math.min(1, level));
-  const code = 232 + Math.round(clamped * 23);
-  return (text: string) => (colorEnabled ? `\u001B[38;5;${code}m${text}\u001B[39m` : text);
+  const [from, to, progress] =
+    clamped >= 0.5
+      ? [DOCSEARCH_NEBULA, DOCSEARCH_PINK, (clamped - 0.5) * 2]
+      : [DOCSEARCH_CYAN, DOCSEARCH_NEBULA, clamped * 2];
+  const [red, green, blue] = from.map((channel, index) => Math.round(channel + (to[index] - channel) * progress));
+
+  return (text: string) => (colorEnabled ? `\u001B[38;2;${red};${green};${blue}m${text}\u001B[39m` : text);
 }
