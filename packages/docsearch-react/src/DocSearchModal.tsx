@@ -615,6 +615,10 @@ export function DocSearchModal({
       id: 'docsearch',
       defaultActiveItemId: 0,
       openOnFocus: true,
+      // Search once an IME composition ends instead of on every update:
+      // mid-composition rerenders interrupt the session in Firefox.
+      // See https://github.com/algolia/docsearch/issues/2503
+      ignoreCompositionEvents: true,
       initialState: {
         query: initialQuery,
         context: {

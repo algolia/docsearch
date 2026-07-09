@@ -134,6 +134,9 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
       // Allow Enter to work normally (new line) when streaming
       if (isStreaming || showThreadDepthBanner) return;
 
+      // Enter during an IME composition confirms it and must not send the prompt
+      if (e.nativeEvent.isComposing) return;
+
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
 

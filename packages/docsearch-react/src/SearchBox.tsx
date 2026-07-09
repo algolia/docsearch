@@ -163,6 +163,12 @@ export function SearchBox({
     ...baseInputProps,
     enterKeyHint: props.isAskAiActive ? ('enter' as const) : ('search' as const),
     onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>): void => {
+      // during an IME composition, keys interact with the candidate list:
+      // enter must confirm the composition, not select a hit or ask AI.
+      // See https://github.com/algolia/docsearch/issues/1304
+      if (e.nativeEvent.isComposing) {
+        return;
+      }
       // block these up, down, enter listeners when Ask AI is active
       if (props.isAskAiActive && blockedKeys.has(e.key)) {
         // enter key asks another question
@@ -186,6 +192,14 @@ export function SearchBox({
         return;
       }
       origOnChange?.(e);
+    },
+    onCompositionEnd: (e: React.CompositionEvent<HTMLInputElement>): void => {
+      // block search when Ask AI is active, like `onChange` above
+      if (props.isAskAiActive) {
+        props.setQuery(e.currentTarget.value);
+        return;
+      }
+      baseInputProps.onCompositionEnd?.(e);
     },
     disabled: isAskAiStreaming || (isThreadDepthError && props.isAskAiActive),
   };

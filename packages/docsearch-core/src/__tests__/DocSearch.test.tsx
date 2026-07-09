@@ -393,6 +393,31 @@ describe('@docsearch/core', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
+    it('does not close on escape key during IME composition', () => {
+      const onCloseSpy = vi.fn();
+
+      renderHook(() => {
+        const searchRef = useRef<HTMLButtonElement | null>(null);
+        return useDocSearchKeyboardEvents({
+          isOpen: true,
+          onOpen,
+          isAskAiActive: false,
+          onClose: onCloseSpy,
+          searchButtonRef: searchRef,
+          onAskAiToggle: () => {},
+        });
+      });
+
+      act(() => {
+        fireEvent.keyDown(document, {
+          code: 'Escape',
+          isComposing: true,
+        });
+      });
+
+      expect(onCloseSpy).not.toHaveBeenCalled();
+    });
+
     it('respects keyboard shortcuts', () => {
       renderHook(() => {
         const searchRef = useRef<HTMLButtonElement | null>(null);

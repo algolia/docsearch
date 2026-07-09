@@ -46,6 +46,10 @@ export function useDocSearchKeyboardEvents({
 }: UseDocSearchKeyboardEventsProps): void {
   React.useEffect(() => {
     function onKeyDown(event: KeyboardEvent): void {
+      if (event.isComposing) {
+        return;
+      }
+
       if (isOpen && event.code === 'Escape' && isAskAiActive) {
         onAskAiToggle(false);
         return;
