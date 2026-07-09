@@ -10,22 +10,27 @@ import { SOURCE_IDS } from './collections';
 
 const MAX_RECENT_CONVERSATIONS_DISPLAYED = 3;
 
+const EMPTY_RESULT_CONTENT = {
+  value: '',
+  matchLevel: 'none',
+  matchedWords: [],
+} satisfies InternalDocSearchHit['_highlightResult']['content'];
 const EMPTY_HIERARCHY_HIGHLIGHT_RESULT = {
-  lvl0: { value: '', matchLevel: 'none', matchedWords: [] },
-  lvl1: { value: '', matchLevel: 'none', matchedWords: [] },
-  lvl2: { value: '', matchLevel: 'none', matchedWords: [] },
-  lvl3: { value: '', matchLevel: 'none', matchedWords: [] },
-  lvl4: { value: '', matchLevel: 'none', matchedWords: [] },
-  lvl5: { value: '', matchLevel: 'none', matchedWords: [] },
-  lvl6: { value: '', matchLevel: 'none', matchedWords: [] },
+  lvl0: EMPTY_RESULT_CONTENT,
+  lvl1: EMPTY_RESULT_CONTENT,
+  lvl2: EMPTY_RESULT_CONTENT,
+  lvl3: EMPTY_RESULT_CONTENT,
+  lvl4: EMPTY_RESULT_CONTENT,
+  lvl5: EMPTY_RESULT_CONTENT,
+  lvl6: EMPTY_RESULT_CONTENT,
 } satisfies InternalDocSearchHit['_highlightResult']['hierarchy'];
 const EMPTY_HIGHLIGHT_RESULT: InternalDocSearchHit['_highlightResult'] = {
-  content: { value: '', matchLevel: 'none', matchedWords: [] },
+  content: EMPTY_RESULT_CONTENT,
   hierarchy: EMPTY_HIERARCHY_HIGHLIGHT_RESULT,
   hierarchy_camel: [],
 };
 const EMPTY_SNIPPET_RESULT: InternalDocSearchHit['_snippetResult'] = {
-  content: { value: '', matchLevel: 'none' },
+  content: EMPTY_RESULT_CONTENT,
   hierarchy: EMPTY_HIERARCHY_HIGHLIGHT_RESULT,
   hierarchy_camel: [],
 };
