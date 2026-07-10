@@ -1234,7 +1234,7 @@ assistive tech users */
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 0.75em;
+  gap: 0.8125rem;
   font-size: 0.8em;
   background: var(--docsearch-hit-background);
   padding: 16px;
@@ -1465,6 +1465,68 @@ assistive tech users */
   background: var(--docsearch-subtle-color);
 }
 
+/* Prompt Suggestions */
+
+.DocSearch-PromptSuggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.DocSearch-PromptSuggestions-Title {
+  color: var(--docsearch-text-color);
+  font-size: 0.875em;
+  line-height: 1.25em;
+  font-weight: 400;
+}
+
+.DocSearch-PromptSuggestions-Content {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  gap: 0.625rem;
+
+  @media screen and (min-width: 768px) {
+    align-items: unset;
+    justify-content: unset;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+.DocSearch-PromptSuggestions-Action {
+  display: inline-flex;
+  border: 1px solid var(--docsearch-subtle-color);
+  padding-inline: 0.625rem;
+  padding-block: 0.4375rem;
+  border-radius: 100vw;
+  background-color: var(--docsearch-modal-background);
+  font-size: 0.875em;
+  color: var(--docsearch-text-color);
+  font-weight: 400;
+  min-height: 1.875rem;
+  cursor: pointer;
+  transition-property: background-color, color, border-color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    transition-property: none;
+    transition-duration: 0s;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--docsearch-primary-color);
+    outline-offset: 2px;
+  }
+
+  &:hover {
+    background-color: var(--docsearch-soft-primary-color);
+    color: var(--docsearch-highlight-color);
+    border-color: var(--docsearch-soft-primary-color);
+  }
+}
 
 .DocSearch-AskAiScreen-ActionButton {
   display: flex;
@@ -2081,10 +2143,21 @@ html[data-theme='dark'] .DocSearch-AskAiScreen-MessageContent-Thinking {
   padding-block: 0.375em;
   cursor: pointer;
   user-select: none;
+  color: var(--docsearch-text-color);
+  transition: all 0.2s ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  &:hover {
+    background: var(--docsearch-soft-primary-color);
+    color: var(--docsearch-highlight-color);
+    border-color: var(--docsearch-soft-primary-color);
+  }
 }
 
 .DocSearch-AskAiScreen-Sources-Action-icon {
-  color: var(--docsearch-secondary-text-color);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2105,7 +2178,6 @@ html[data-theme='dark'] .DocSearch-AskAiScreen-MessageContent-Thinking {
   font-size: 1em;
   line-height: 1.15em;
   white-space: nowrap;
-  color: var(--docsearch-secondary-text-color);
   font-weight: 300;
 }
 

@@ -3,6 +3,7 @@ import type { JSX } from 'react';
 import React, { memo, useMemo } from 'react';
 
 import { type Exchange } from '../AskAiScreen';
+import { ConversationPromptSuggestions } from '../components/ConversationPromptSuggestions';
 import { FeedbackActions } from '../components/FeedbackActions';
 import { SourcesPanel } from '../components/SourcesPanel';
 import { ToolCall, type ToolCallTranslations } from '../components/ToolCall';
@@ -11,7 +12,13 @@ import { MemoizedMarkdown } from '../MemoizedMarkdown';
 import type { StoredSearchPlugin } from '../stored-searches';
 import type { OnAskAiFeedback, StoredAskAiState } from '../types';
 import { type AIMessage, type ToolCalls } from '../types/AskiAi';
-import { extractLinksFromMessage, getMessageContent, EMPTY_TOOLS, isAIToolPart } from '../utils/ai';
+import {
+  extractLinksFromMessage,
+  getMessageContent,
+  EMPTY_TOOLS,
+  isAIToolPart,
+  getAgentPromptSuggestions,
+} from '../utils/ai';
 import { groupConsecutiveToolResults } from '../utils/groupConsecutiveToolResults';
 
 import { AggregatedSearchBlock } from './AggregatedSearchBlock';
@@ -91,6 +98,7 @@ export type ConversationScreenTranslations = Partial<
      * Error title shown if there is an error while chatting.
      */
     errorTitleText;
+    suggestedPromptsTitleText: string;
   }
 >;
 
@@ -103,6 +111,7 @@ export type ConversationScreenProps = {
   streamError?: Error;
   memoryEnabled?: boolean;
   tools?: ToolCalls;
+  onSelectPromptSuggestion: (prompt: string) => void;
 };
 
 type ConversationnExchangeProps = {
@@ -115,6 +124,7 @@ type ConversationnExchangeProps = {
   streamError?: ConversationScreenProps['streamError'];
   memoryEnabled?: boolean;
   tools: ToolCalls;
+  onSelectPromptSuggestion: (prompt: string) => void;
 };
 
 const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExchangeProps>(
@@ -129,6 +139,7 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
       streamError,
       memoryEnabled,
       tools,
+      onSelectPromptSuggestion,
     },
     conversationRef,
   ): JSX.Element => {
@@ -147,6 +158,7 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
       errorTitleText = 'Chat error',
       savedMemoryToolResultText = 'Saved to memory',
       memoryToolResultText = 'Used memory to enhance results',
+      suggestedPromptsTitleText = 'Suggested prompts',
     } = translations;
 
     const assistantContent = useMemo(() => getMessageContent(assistantMessage), [assistantMessage]);
@@ -157,6 +169,10 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
       [assistantMessage],
     );
     const urlsToDisplay = React.useMemo(() => extractLinksFromMessage(assistantMessage), [assistantMessage]);
+    const suggestedPrompts = React.useMemo(() => {
+      if (!isLastExchange) return [];
+      return getAgentPromptSuggestions(assistantMessage?.parts || []);
+    }, [assistantMessage, isLastExchange]);
 
     const wasStopped = userMessage.metadata?.stopped || assistantMessage?.metadata?.stopped;
     const isThinking =
@@ -274,6 +290,14 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
               onFeedback={onFeedback}
             />
           </div>
+
+          {suggestedPrompts.length > 0 && (
+            <ConversationPromptSuggestions
+              title={suggestedPromptsTitleText}
+              suggestions={suggestedPrompts}
+              onSelectPromptSuggestion={onSelectPromptSuggestion}
+            />
+          )}
         </div>
       </div>
     );
@@ -286,7 +310,11 @@ export const ConversationScreen = memo(
     translations = {},
     handleFeedback,
     tools = EMPTY_TOOLS,
-    ...props
+    status,
+    conversations,
+    streamError,
+    memoryEnabled,
+    onSelectPromptSuggestion,
   }: ConversationScreenProps): JSX.Element => {
     const { conversationDisclaimer = 'Answers are generated with AI which can make mistakes. Verify responses.' } =
       translations;
@@ -318,8 +346,12 @@ export const ConversationScreen = memo(
               isLastExchange={isLastExchange}
               ref={isLastExchange ? mostRecentExchangeRef : null}
               tools={tools}
+              status={status}
+              conversations={conversations}
+              streamError={streamError}
+              memoryEnabled={memoryEnabled}
               onFeedback={handleFeedback}
-              {...props}
+              onSelectPromptSuggestion={onSelectPromptSuggestion}
             />
           );
         })}
