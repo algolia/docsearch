@@ -22,6 +22,10 @@ const minimalDocSearchConfig = {
 
 const minimalAskAiConfig = {
   assistantId: 'my-assistant-id',
+} satisfies NonNullable<DocSearchInput>['askAi'];
+
+const askAiConfigWithIndices = {
+  ...minimalAskAiConfig,
   indices: [
     {
       index: 'markdown-index',
@@ -204,7 +208,7 @@ describe('validateThemeConfig', () => {
   });
 
   describe('askAi config validation', () => {
-    it('accepts object-only Agent Studio config', () => {
+    it('accepts object-only Agent Studio config without dynamic indices', () => {
       const docsearch: DocSearchInput = {
         ...minimalDocSearchConfig,
         askAi: minimalAskAiConfig,
@@ -222,7 +226,7 @@ describe('validateThemeConfig', () => {
       const docsearch: DocSearchInput = {
         ...minimalDocSearchConfig,
         askAi: {
-          assistantId: 'my-assistant-id',
+          ...askAiConfigWithIndices,
           indices: [
             {
               index: 'markdown-index',

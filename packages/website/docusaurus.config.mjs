@@ -73,12 +73,6 @@ export default {
         indices: [{ name: 'docsearch' }],
         askAi: {
           assistantId: 'ccdec697-e3fe-465b-a1c3-657e7bf18aef',
-          indices: [
-            {
-              index: 'docsearch-markdown',
-              description: 'DocSearch documentation content.',
-            },
-          ],
         },
         sidePanel: true,
         contextualSearch: true,

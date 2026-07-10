@@ -36,7 +36,7 @@ function getIndexName(index: NonNullable<DocSearchProps['indices']>[number]): st
 }
 
 function getAskAiIndexName(askAi: AskAiConfig, indices: NonNullable<DocSearchProps['indices']>): string {
-  return askAi.indices[0]?.index ?? getIndexName(indices[0]!);
+  return askAi.indices?.[0]?.index ?? getIndexName(indices[0]!);
 }
 
 function applyContextualSearchToAgentStudioIndex(
@@ -68,7 +68,7 @@ function applyAskAiContextualSearch(
 
   return {
     ...askAi,
-    indices: askAi.indices.map((index) => applyContextualSearchToAgentStudioIndex(index, contextualSearchFilters)),
+    indices: askAi.indices?.map((index) => applyContextualSearchToAgentStudioIndex(index, contextualSearchFilters)),
   };
 }
 
