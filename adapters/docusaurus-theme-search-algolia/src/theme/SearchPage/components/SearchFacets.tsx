@@ -97,13 +97,7 @@ export function SearchFacets({
           })}
           {activeCount > 0 && <span className={styles.filtersToggleBadge}>{activeCount}</span>}
         </span>
-        <svg
-          className={styles.filtersToggleChevron}
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          aria-hidden="true"
-        >
+        <svg className={styles.filtersToggleChevron} width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
           <path
             d="M4 6l4 4 4-4"
             fill="none"
@@ -115,10 +109,7 @@ export function SearchFacets({
         </svg>
       </button>
 
-      <div
-        id="search-page-filters-panel"
-        className={clsx(styles.sidebarPanel, open && styles.sidebarPanelOpen)}
-      >
+      <div id="search-page-filters-panel" className={clsx(styles.sidebarPanel, open && styles.sidebarPanelOpen)}>
         {hasActiveRefinements && (
           <div className={styles.sidebarHeaderMobileClear}>
             <button type="button" className={styles.clearFacetsButton} onClick={onClear}>

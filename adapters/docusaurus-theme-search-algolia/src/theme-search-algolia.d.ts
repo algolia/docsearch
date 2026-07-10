@@ -76,10 +76,7 @@ declare module '@docsearch/docusaurus-adapter' {
     };
   };
 
-  type UserDocSearchConfig = Omit<
-    Partial<ThemeConfigDocSearch>,
-    'apiKey' | 'appId' | 'askAi' | 'indices'
-  > & {
+  type UserDocSearchConfig = Omit<Partial<ThemeConfigDocSearch>, 'apiKey' | 'appId' | 'askAi' | 'indices'> & {
     appId: ThemeConfigDocSearch['appId'];
     apiKey: ThemeConfigDocSearch['apiKey'];
     indices: ThemeConfigDocSearch['indices'];

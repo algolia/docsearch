@@ -230,7 +230,9 @@ function assertNoRemovedKeys(themeConfig: ThemeConfig): void {
   const askAiRecord = askAi as Record<string, unknown>;
 
   if (askAiRecord.agentStudio !== undefined) {
-    throw new Error('`themeConfig.docsearch.askAi.agentStudio` was removed. The adapter now only supports Agent Studio.');
+    throw new Error(
+      '`themeConfig.docsearch.askAi.agentStudio` was removed. The adapter now only supports Agent Studio.',
+    );
   }
 
   if (askAiRecord.indexName !== undefined || askAiRecord.apiKey !== undefined || askAiRecord.appId !== undefined) {
@@ -240,7 +242,9 @@ function assertNoRemovedKeys(themeConfig: ThemeConfig): void {
   }
 
   if (askAiRecord.sidePanel !== undefined) {
-    throw new Error('`themeConfig.docsearch.askAi.sidePanel` was removed. Use `themeConfig.docsearch.sidePanel` instead.');
+    throw new Error(
+      '`themeConfig.docsearch.askAi.sidePanel` was removed. Use `themeConfig.docsearch.sidePanel` instead.',
+    );
   }
 }
 

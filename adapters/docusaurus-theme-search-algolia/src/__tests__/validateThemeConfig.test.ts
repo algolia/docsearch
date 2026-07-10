@@ -335,7 +335,10 @@ describe('validateThemeConfig', () => {
         searchPagePath: 'search',
       } as unknown as DocSearchInput;
 
-      expectThrowMessage(() => testValidateThemeConfig(docsearch), '`themeConfig.docsearch.searchPagePath` was removed');
+      expectThrowMessage(
+        () => testValidateThemeConfig(docsearch),
+        '`themeConfig.docsearch.searchPagePath` was removed',
+      );
     });
 
     it('rejects askAi string shorthand', () => {
@@ -344,10 +347,7 @@ describe('validateThemeConfig', () => {
         askAi: 'my-assistant-id',
       } as unknown as DocSearchInput;
 
-      expectThrowMessage(
-        () => testValidateThemeConfig(docsearch),
-        '`themeConfig.docsearch.askAi` must be an object',
-      );
+      expectThrowMessage(() => testValidateThemeConfig(docsearch), '`themeConfig.docsearch.askAi` must be an object');
     });
 
     it('rejects askAi.agentStudio', () => {

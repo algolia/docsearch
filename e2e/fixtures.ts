@@ -7,6 +7,7 @@ export class DocSearchPage {
   readonly input: Locator;
   readonly hits: Locator;
   readonly clearButton: Locator;
+  readonly firstHit: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -15,6 +16,7 @@ export class DocSearchPage {
     this.input = page.locator('.DocSearch-Input');
     this.hits = page.locator('.DocSearch-Hits').first();
     this.clearButton = page.locator('.DocSearch-Clear');
+    this.firstHit = page.locator('#docsearch-hits_docsearch-list .DocSearch-Hit a').first();
   }
 
   async goto(): Promise<void> {
@@ -59,6 +61,11 @@ export class DocSearchPage {
 
   async clearSearch(): Promise<void> {
     await this.input.clear();
+  }
+
+  async clickFirstHit(): Promise<void> {
+    await expect(this.hits).toBeVisible();
+    await this.firstHit.click({ force: true });
   }
 
   async enableDarkMode(): Promise<void> {

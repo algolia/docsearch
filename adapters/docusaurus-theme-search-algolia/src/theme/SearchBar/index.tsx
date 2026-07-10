@@ -134,7 +134,9 @@ function useTransformSearchClient(): DocSearchModalProps['transformSearchClient'
   );
 }
 
-function useTransformItems(props: Pick<AdapterDocSearchProps, 'transformItems'>): DocSearchModalProps['transformItems'] {
+function useTransformItems(
+  props: Pick<AdapterDocSearchProps, 'transformItems'>,
+): DocSearchModalProps['transformItems'] {
   const processSearchResultUrl = useSearchResultUrlProcessor();
   const [transformItems] = useState<DocSearchModalProps['transformItems']>(() => {
     return (items: DocSearchHit[]) =>
@@ -237,7 +239,14 @@ function getSidePanelPanelOptions(sidePanelOptions?: SidePanelOptions): SidePane
   return panelOptions;
 }
 
-function DocSearch({ askAi, contextualSearch, externalUrlRegex, searchPage, sidePanel, ...props }: AdapterDocSearchProps) {
+function DocSearch({
+  askAi,
+  contextualSearch,
+  externalUrlRegex,
+  searchPage,
+  sidePanel,
+  ...props
+}: AdapterDocSearchProps) {
   const navigator = useNavigator({ externalUrlRegex });
   const indices = useSearchIndices({ contextualSearch, indices: props.indices });
   const transformItems = useTransformItems(props);
@@ -329,20 +338,24 @@ function DocSearch({ askAi, contextualSearch, externalUrlRegex, searchPage, side
           DocSearchModal && <DocSearchModal {...modalProps} />
         ))}
 
-      {ExecutionEnvironment.canUseDOM && sidePanelEnabled && sidepanelLoaded && sidePanelAskAi && DocSearchSidepanel && (
-        <DocSearchSidepanel
-          {...panelOptions}
-          variant={panelOptions.variant ?? 'inline'}
-          pushSelector={panelOptions.pushSelector ?? '#__docusaurus'}
-          assistantId={sidePanelAskAi.assistantId}
-          apiKey={sidePanelAskAi.apiKey}
-          appId={sidePanelAskAi.appId}
-          indexName={sidePanelAskAi.indexName}
-          searchParameters={sidePanelAskAi.searchParameters}
-          indices={sidePanelAskAi.indices}
-          suggestedQuestions={panelOptions.suggestedQuestions ?? sidePanelAskAi.suggestedQuestions}
-        />
-      )}
+      {ExecutionEnvironment.canUseDOM &&
+        sidePanelEnabled &&
+        sidepanelLoaded &&
+        sidePanelAskAi &&
+        DocSearchSidepanel && (
+          <DocSearchSidepanel
+            {...panelOptions}
+            variant={panelOptions.variant ?? 'inline'}
+            pushSelector={panelOptions.pushSelector ?? '#__docusaurus'}
+            assistantId={sidePanelAskAi.assistantId}
+            apiKey={sidePanelAskAi.apiKey}
+            appId={sidePanelAskAi.appId}
+            indexName={sidePanelAskAi.indexName}
+            searchParameters={sidePanelAskAi.searchParameters}
+            indices={sidePanelAskAi.indices}
+            suggestedQuestions={panelOptions.suggestedQuestions ?? sidePanelAskAi.suggestedQuestions}
+          />
+        )}
     </>
   );
 }
