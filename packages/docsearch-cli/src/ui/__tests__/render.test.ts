@@ -18,7 +18,7 @@ describe('renderLanding', () => {
   });
 
   it('renders the logo as multi-line art', () => {
-    expect(renderLogo().trim().split('\n')).toHaveLength(21);
+    expect(renderLogo().slice(1, -1).split('\n')).toHaveLength(21);
   });
 
   it('documents setup and query flags', () => {
