@@ -1,0 +1,113 @@
+---
+title: Use DocSearch MCP
+sidebar_label: Usage
+---
+
+DocSearch MCP works best when your client knows to search public documentation before answering library, framework, API, or SDK questions.
+
+## Ask documentation questions
+
+After installation, ask your client about public developer docs in natural language:
+
+```text
+How do I configure middleware matchers in Next.js?
+```
+
+```text
+Show me the current Stripe webhook signature verification docs.
+```
+
+```text
+What is the current setup for Algolia InstantSearch React?
+```
+
+If your client does not automatically use MCP tools, mention DocSearch MCP explicitly:
+
+```text
+Use DocSearch MCP to look up React Server Components data fetching.
+```
+
+## Use the Claude Code command
+
+The Claude Code plugin includes a manual command:
+
+```text
+/algolia-docsearch:docs <library-or-product> [topic]
+```
+
+Examples:
+
+```text
+/algolia-docsearch:docs Next.js middleware matcher
+/algolia-docsearch:docs Stripe webhook signature verification
+/algolia-docsearch:docs Algolia InstantSearch React configure search client
+```
+
+## Tool flow
+
+DocSearch MCP exposes three tools. Most of the time the client only needs the one-shot tool; the two-step flow is for multi-product questions or when you want to hand-pick documentation sets.
+
+You can ask in natural language — full sentences and questions work well. For the one-shot tool, keep `library` to the product name and put the actual question in `query`.
+
+### One-shot: `algolia_docsearch_search_docs`
+
+The client names the product and asks the question in a single call:
+
+```json
+{
+  "library": "Next.js",
+  "query": "how do middleware matchers work"
+}
+```
+
+It returns ranked documentation content for the best matching set. If the library is ambiguous, it returns candidate documentation sets instead so the client can pick one and fall back to `algolia_docsearch_query_docs`.
+
+### Two-step: resolve, then query
+
+For questions that span several products, or when the client wants to choose documentation sets explicitly:
+
+1. `algolia_docsearch_resolve_docset` finds documentation sets:
+
+```json
+{
+  "query": "Next.js app router"
+}
+```
+
+It returns candidates, each with a `docset_id`.
+
+2. `algolia_docsearch_query_docs` retrieves content for the chosen `docset_id`(s):
+
+```json
+{
+  "query": "middleware matcher config",
+  "docsetIds": ["nextjs"]
+}
+```
+
+Pass multiple `docsetIds` when a question spans more than one product.
+
+## Tips
+
+- Be specific about the product and topic you want.
+- Include a version when it matters.
+- Ask for source URLs if you want the client to show where the answer came from.
+- If the first result is too broad, ask for a narrower topic.
+
+## Troubleshooting
+
+### The client does not call DocSearch MCP
+
+Make sure the MCP server is enabled in your client and named `algolia-docsearch`. If you installed the plugin, check that the plugin is enabled too.
+
+### The result is about the wrong product
+
+Ask again with the official product name. For the one-shot tool, set `library` to the vendor's product name (for example, `Algolia InstantSearch` rather than `search`).
+
+### The client cannot connect
+
+Confirm that your client supports remote HTTP MCP servers and that the configured URL is:
+
+```text
+https://mcp.algolia.com/1/docsearch/mcp
+```

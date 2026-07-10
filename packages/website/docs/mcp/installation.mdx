@@ -1,0 +1,26 @@
+---
+title: Install DocSearch MCP
+sidebar_label: Installation
+---
+
+import MCPInstall from '@site/src/components/mcp/MCPInstall';
+
+DocSearch MCP is a remote MCP server. Point any MCP-compatible client at this endpoint — no authentication required:
+
+```text
+https://mcp.algolia.com/1/docsearch/mcp
+```
+
+You can install it as a **plugin** (ships the MCP server plus client guidance like rules, skills, and commands) or **manually** (just the MCP server config). Pick your client below.
+
+<MCPInstall />
+
+## Verify the install
+
+Ask your MCP client a public documentation question, for example:
+
+```text
+Use DocSearch MCP to find the current Next.js middleware matcher docs.
+```
+
+The client should call the DocSearch tools and answer with content from the matching documentation, ideally with source links.
