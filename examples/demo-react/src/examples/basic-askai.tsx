@@ -40,6 +40,9 @@ export default function BasicAskAI({ theme }: { theme: DemoTheme }): JSX.Element
         },
       }}
       resultBadgeKey="type"
+      promptSuggestions={{
+        indexName: 'docsearch-markdown_prompt_suggestions',
+      }}
     />
   );
 }

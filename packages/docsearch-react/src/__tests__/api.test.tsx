@@ -1,6 +1,6 @@
 import { render, act, fireEvent, screen, cleanup } from '@testing-library/react';
 import React, { type JSX } from 'react';
-import { describe, it, expect, afterEach } from 'vitest';
+import { describe, it, expect, afterEach, vi } from 'vitest';
 
 import '@testing-library/jest-dom/vitest';
 
@@ -36,6 +36,33 @@ function noResultSearch(_queries: any, _requestOptions?: any): Promise<any> {
       ],
     });
   });
+}
+
+function promptSuggestionsSearch(queries: any, _requestOptions?: any): Promise<any> {
+  const [request] = queries.requests;
+
+  if (request.indexName === 'prompt-suggestions') {
+    return Promise.resolve({
+      results: [
+        {
+          hits: [
+            { objectID: 'prompt-1', prompt: 'How do I configure DocSearch?' },
+            { objectID: 'prompt-2', prompt: 'How do I add facets?' },
+          ],
+          hitsPerPage: 3,
+          nbHits: 2,
+          nbPages: 1,
+          page: 0,
+          processingTimeMS: 0,
+          exhaustiveNbHits: true,
+          params: '',
+          query: request.query,
+        },
+      ],
+    });
+  }
+
+  return noResultSearch(queries);
 }
 
 describe('api', () => {
@@ -300,13 +327,67 @@ describe('api', () => {
       });
 
       await act(async () => {
-        fireEvent.click(await screen.findByText('hello', { selector: '.DocSearch-Hit-AskAIButton-title-query' }));
+        fireEvent.click(
+          await screen.findByText('hello', {
+            selector: '.DocSearch-Hit-AskAIButton-title-query',
+          }),
+        );
       });
 
       expect(document.querySelector('.DocSearch-AskAiScreen')).toBeInTheDocument();
 
       // could be "Answering..." or "Ask another question..."
       expect(screen.getByText('Answering...')).toBeInTheDocument();
+    });
+
+    it('renders and selects prompt suggestions', async () => {
+      const interceptAskAiEvent = vi.fn(() => true);
+
+      render(
+        <DocSearchAI
+          promptSuggestions={{ indexName: 'prompt-suggestions' }}
+          transformSearchClient={(searchClient) => ({
+            ...searchClient,
+            search: promptSuggestionsSearch,
+          })}
+          interceptAskAiEvent={interceptAskAiEvent}
+          translations={{
+            modal: {
+              resultsScreen: {
+                askAiResultsTitle: 'Suggested questions',
+              },
+            },
+          }}
+        />,
+      );
+
+      await act(async () => {
+        fireEvent.click(await screen.findByText('Search'));
+      });
+
+      await act(async () => {
+        fireEvent.input(await screen.findByPlaceholderText('Search docs or ask AI a question'), {
+          target: { value: 'configure' },
+        });
+      });
+
+      const heading = await screen.findByRole('heading', {
+        name: 'Suggested questions',
+      });
+      const results = document.querySelector(`[aria-labelledby="${heading.id}"]`);
+
+      expect(results).toBeInTheDocument();
+      expect(await screen.findByText('How do I configure DocSearch?')).toBeInTheDocument();
+      expect(screen.getByText('How do I add facets?')).toBeInTheDocument();
+
+      act(() => {
+        fireEvent.click(screen.getByText('How do I configure DocSearch?'));
+      });
+
+      expect(interceptAskAiEvent).toHaveBeenCalledWith({
+        query: 'How do I configure DocSearch?',
+        suggestedQuestionId: undefined,
+      });
     });
   });
 
