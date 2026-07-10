@@ -1243,6 +1243,10 @@ assistive tech users */
   align-self: flex-start;
 }
 
+.DocSearch-AskAiScreen-Query {
+  margin-block-end: 0;
+}
+
 .DocSearch-AskAiScreen-Message--user {
   align-self: flex-end;
   background-color: var(--docsearch-background-color);
