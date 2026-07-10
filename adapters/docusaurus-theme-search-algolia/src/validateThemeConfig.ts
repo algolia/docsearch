@@ -115,7 +115,7 @@ const AskAiSchema = Joi.object({
   assistantId: Joi.string().required(),
   suggestedQuestions: Joi.boolean().optional(),
   searchParameters: Joi.object().pattern(Joi.string(), SearchParametersSchema).optional(),
-  indices: Joi.array().items(AskAiIndexSchema).min(1).required(),
+  indices: Joi.array().items(AskAiIndexSchema).min(1).optional(),
 }).unknown(false);
 
 const SearchPageFacetSchema = Joi.object({
@@ -220,7 +220,7 @@ function assertNoRemovedKeys(themeConfig: ThemeConfig): void {
 
   const askAi = docsearchRecord.askAi;
   if (typeof askAi === 'string') {
-    throw new Error('`themeConfig.docsearch.askAi` must be an object with `assistantId` and `indices`.');
+    throw new Error('`themeConfig.docsearch.askAi` must be an object with `assistantId`.');
   }
 
   if (!askAi || typeof askAi !== 'object') {
@@ -237,7 +237,7 @@ function assertNoRemovedKeys(themeConfig: ThemeConfig): void {
 
   if (askAiRecord.indexName !== undefined || askAiRecord.apiKey !== undefined || askAiRecord.appId !== undefined) {
     throw new Error(
-      '`themeConfig.docsearch.askAi.indexName`, `apiKey`, and `appId` were removed. Use `themeConfig.docsearch.askAi.indices` and the top-level DocSearch credentials instead.',
+      '`themeConfig.docsearch.askAi.indexName`, `apiKey`, and `appId` were removed. Use the top-level DocSearch credentials instead.',
     );
   }
 

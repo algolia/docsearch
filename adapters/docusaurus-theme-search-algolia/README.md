@@ -17,12 +17,6 @@ export default {
       indices: [{ name: 'INDEX_NAME' }],
       askAi: {
         assistantId: 'ASSISTANT_ID',
-        indices: [
-          {
-            index: 'MARKDOWN_INDEX',
-            description: 'Documentation content.',
-          },
-        ],
       },
       sidePanel: true,
     },

@@ -44,15 +44,6 @@ Add algolia askai to get synthesized answers grounded in your indexed content. y
   indices={[{ name: 'docsearch' }]}
   askAi={{
     assistantId: 'askAIDemo',
-    indices: [
-      {
-        index: 'docsearch-markdown',
-        description: 'DocSearch documentation content.',
-        searchParameters: {
-          facetFilters: ['language:en'],
-        },
-      },
-    ],
   }}
   insights={true}
   translations={{ button: { buttonText: 'search with askai (demo)' } }}
@@ -65,15 +56,6 @@ Add algolia askai to get synthesized answers grounded in your indexed content. y
   indices={[{ name: 'docsearch' }]}
   askAi={{
     assistantId: 'askAIDemo',
-    indices: [
-      {
-        index: 'docsearch-markdown',
-        description: 'DocSearch documentation content.',
-        searchParameters: {
-          facetFilters: ['language:en'],
-        },
-      },
-    ],
   }}
   insights={true}
   translations={{ button: { buttonText: 'search with askai (demo)' } }}
@@ -299,12 +281,6 @@ the snippet below maps a non-standard record to the internal format. try it live
   ]}
   askAi={{
     assistantId: 'askAIDemo',
-    indices: [
-      {
-        index: 'crawler_doc',
-        description: 'Crawler demo content.',
-      },
-    ],
   }}
   transformItems={(items) =>
     items.map((item) => ({
@@ -347,12 +323,6 @@ the snippet below maps a non-standard record to the internal format. try it live
   ]}
   askAi={{
     assistantId: 'askAIDemo',
-    indices: [
-      {
-        index: 'crawler_doc',
-        description: 'Crawler demo content.',
-      },
-    ],
   }}
   transformItems={(items) =>
     items.map((item) => ({

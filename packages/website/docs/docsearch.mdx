@@ -164,12 +164,6 @@ docsearch({
   indices: [{ name: 'docsearch' }],
   askAi: {
     assistantId: 'askAIDemo',
-    indices: [
-      {
-        index: 'docsearch-markdown',
-        description: 'DocSearch documentation content.',
-      },
-    ],
   },
 });
 ```
@@ -185,12 +179,6 @@ docsearch({
   indices={[{ name: 'docsearch' }]}
   askAi={{
     assistantId: 'askAIDemo',
-    indices: [
-      {
-        index: 'docsearch-markdown',
-        description: 'DocSearch documentation content.',
-      },
-    ],
   }}
 />
 ```
@@ -205,7 +193,7 @@ Or use our new dedicated [DocSearch Playground](https://community.algolia.com/do
 
 DocSearch v5 supports Ask AI through Algolia Agent Studio. Ask AI enhances the user experience by providing contextually relevant and intelligent responses directly from your documentation.
 
-To enable Ask AI, add your Agent Studio assistant ID and the markdown/content indices the agent can query:
+To enable Ask AI, add your Agent Studio assistant ID:
 
 <Tabs groupId="askai-format" defaultValue="js" values={[{ label: 'JavaScript', value: 'js' }, { label: 'React', value: 'react' }]}>
 <TabItem value="js">
@@ -217,15 +205,6 @@ docsearch({
   apiKey: 'YOUR_SEARCH_API_KEY',
   askAi: {
     assistantId: 'YOUR_AGENT_STUDIO_ASSISTANT_ID',
-    indices: [
-      {
-        index: 'YOUR_MARKDOWN_INDEX',
-        description: 'Documentation content.',
-        searchParameters: {
-          facetFilters: ['language:en', 'version:1.0.0'],
-        },
-      },
-    ],
     suggestedQuestions: true,
   },
 });
@@ -241,15 +220,6 @@ docsearch({
   indices={[{ name: 'YOUR_INDEX_NAME' }]}
   askAi={{
     assistantId: 'YOUR_AGENT_STUDIO_ASSISTANT_ID',
-    indices: [
-      {
-        index: 'YOUR_MARKDOWN_INDEX',
-        description: 'Documentation content.',
-        searchParameters: {
-          facetFilters: ['language:en', 'version:1.0.0'],
-        },
-      },
-    ],
     suggestedQuestions: true,
   }}
 />
@@ -258,8 +228,7 @@ docsearch({
 </TabItem>
 </Tabs>
 
-- Use `askAi.indices` to describe the content indices the Agent Studio assistant can search.
-- Use per-index `searchParameters` to scope the agent to a language, version, or content type.
+- Configure the content indices the assistant can search in Agent Studio.
 - The suggested questions feature is controlled on the [Dashboard](https://dashboard.algolia.com) in the Ask AI section.
 
 ### Filtering search results
@@ -335,15 +304,11 @@ We recommend using the `facetFilters` option when using Ask AI with multiple lan
 docsearch({
   askAi: {
     assistantId: 'YOUR_AGENT_STUDIO_ASSISTANT_ID',
-    indices: [
-      {
-        index: 'YOUR_MARKDOWN_INDEX',
-        description: 'Documentation content.',
-        searchParameters: {
-          facetFilters: ['language:en', 'version:1.0.0'],
-        },
+    searchParameters: {
+      'YOUR_MARKDOWN_INDEX': {
+        facetFilters: ['language:en', 'version:1.0.0'],
       },
-    ],
+    },
   },
 });
 ```
@@ -354,15 +319,11 @@ docsearch({
 <DocSearch
   askAi={{
     assistantId: 'YOUR_AGENT_STUDIO_ASSISTANT_ID',
-    indices: [
-      {
-        index: 'YOUR_MARKDOWN_INDEX',
-        description: 'Documentation content.',
-        searchParameters: {
-          facetFilters: ['language:en', 'version:1.0.0'],
-        },
+    searchParameters: {
+      'YOUR_MARKDOWN_INDEX': {
+        facetFilters: ['language:en', 'version:1.0.0'],
       },
-    ],
+    },
   }}
 />
 ```
