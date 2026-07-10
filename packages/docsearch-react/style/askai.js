@@ -1,1 +1,1 @@
-export * from '@docsearch/css/dist/askai.css';
+export * from '@docsearch/css/dist/_askai.css';

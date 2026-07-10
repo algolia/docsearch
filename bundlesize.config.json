@@ -2,11 +2,7 @@
   "files": [
     {
       "path": "packages/docsearch-css/dist/style.css",
-      "maxSize": "5.5 kB"
-    },
-    {
-      "path": "packages/docsearch-css/dist/askai.css",
-      "maxSize": "4.5 kB"
+      "maxSize": "8 kB"
     },
     {
       "path": "packages/docsearch-react/dist/umd/index.js",

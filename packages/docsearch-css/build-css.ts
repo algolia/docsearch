@@ -18,18 +18,22 @@ interface Entry {
 const ENTRIES: Entry[] = [
   {
     input: 'src/_variables.css',
-    outputs: ['dist/_variables.css'],
+    outputs: ['dist/_variables.css', 'dist/_variables.scss'],
     bannerName: 'Variables',
   },
   {
     input: 'src/button.css',
-    outputs: ['dist/button.css'],
+    outputs: ['dist/button.css', 'dist/button.scss'],
     bannerName: 'Button',
   },
-  { input: 'src/modal.css', outputs: ['dist/modal.css'], bannerName: 'Modal' },
   {
-    input: 'src/askai.css',
-    outputs: ['dist/askai.css', 'dist/askai.scss'],
+    input: 'src/modal.css',
+    outputs: ['dist/modal.css', 'dist/modal.scss'],
+    bannerName: 'Modal',
+  },
+  {
+    input: 'src/_askai.css',
+    outputs: ['dist/_askai.css', 'dist/_askai.scss'],
     bannerName: 'Ask AI',
   },
   { input: 'src/style.css', outputs: ['dist/style.css', 'dist/style.scss'] },
