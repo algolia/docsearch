@@ -201,6 +201,23 @@ export function AskAiSearchBox({
   const inputOverlay = heading ? <ModalHeading heading={heading} shimmer={isAskAiStreaming} /> : null;
   const actionsBeforeClose = (
     <>
+      {!props.isAskAiActive && (
+        <>
+          <button
+            className="DocSearch-Clear"
+            type="reset"
+            aria-label={clearButtonAriaLabel}
+            hidden={!props.state.query}
+            tabIndex={props.state.query ? 0 : -1}
+            aria-hidden={!props.state.query ? 'true' : 'false'}
+          >
+            {clearButtonTitle}
+          </button>
+
+          {props.state.query && <div className="DocSearch-Divider" />}
+        </>
+      )}
+
       {isAskAiStreaming && (
         <>
           <button
