@@ -1,7 +1,7 @@
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import { Code2 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 const ENDPOINT = 'https://mcp.algolia.com/1/docsearch/mcp';
 
@@ -322,13 +322,13 @@ URL: ${ENDPOINT}`,
 function CopyButton({ value, className = '' }) {
   const [copied, setCopied] = useState(false);
 
-  function onCopy() {
+  const onCopy = useCallback(() => {
     if (typeof navigator === 'undefined' || !navigator.clipboard) return;
     navigator.clipboard.writeText(value).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     });
-  }
+  }, [value]);
 
   return (
     <motion.button
@@ -398,6 +398,24 @@ function CursorInstallButton({ href, label }) {
   );
 }
 
+function getBlockKey(block) {
+  switch (block.kind) {
+    case 'code':
+      return `${block.kind}-${block.caption}`;
+    case 'text':
+    case 'note':
+    case 'subhead':
+      return `${block.kind}-${block.content}`;
+    case 'installButton':
+    case 'button':
+      return `${block.kind}-${block.label}-${block.href}`;
+    case 'steps':
+      return `${block.kind}-${block.items.join('|')}`;
+    default:
+      return block.kind;
+  }
+}
+
 function Block({ block }) {
   switch (block.kind) {
     case 'subhead':
@@ -454,6 +472,10 @@ function Block({ block }) {
 }
 
 function ClientLogo({ client, size = 'h-7 w-7' }) {
+  const single = useBaseUrl(`/img/mcp-clients/${client.icon ?? client.logo}`);
+  const dark = useBaseUrl(`/img/mcp-clients/${client.logoDark ?? client.logo}`);
+  const hasDark = Boolean(client.logoDark);
+
   if (client.icon === 'code') {
     return (
       <span
@@ -463,10 +485,6 @@ function ClientLogo({ client, size = 'h-7 w-7' }) {
       </span>
     );
   }
-
-  const single = useBaseUrl(`/img/mcp-clients/${client.icon ?? client.logo}`);
-  const dark = useBaseUrl(`/img/mcp-clients/${client.logoDark ?? client.logo}`);
-  const hasDark = Boolean(client.logoDark);
 
   if (!hasDark) {
     return <img src={single} alt={`${client.name} logo`} className={`${size} object-contain`} />;
@@ -622,9 +640,9 @@ export default function MCPInstall() {
               }}
               className="flex flex-col gap-3"
             >
-              {blocks.map((block, idx) => (
+              {blocks.map((block) => (
                 <motion.div
-                  key={`${selectedId}-${activeMode}-${idx}`}
+                  key={`${selectedId}-${activeMode}-${getBlockKey(block)}`}
                   variants={{ hidden: { opacity: 0, y: reduce ? 0 : 4 }, show: { opacity: 1, y: 0 } }}
                 >
                   <Block block={block} />
