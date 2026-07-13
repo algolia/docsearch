@@ -22,6 +22,7 @@ const sharedConfig: UserConfig = {
     js: '.js',
   }),
   sourcemap: true,
+  noExternal: ['@docsearch/react', '@docsearch/core'],
 };
 
 export default defineConfig([
