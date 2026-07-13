@@ -1,12 +1,17 @@
 import type { UserConfig } from 'tsdown';
 import { defineConfig } from 'tsdown';
 
-import { getBundleBanner } from '../../scripts/getBundleBanner';
-import { rolldownPlugins } from '../../tsdown.base';
+import { getBundleBanner } from '../../scripts/getBundleBanner.ts';
+import { rolldownPlugins } from '../../tsdown.base.ts';
 
 import pkg from './package.json' with { type: 'json' };
 
-const externals = ['react', 'react-dom', '@docsearch/core', /^@docsearch\/react/];
+const externals = [
+  'react',
+  'react-dom',
+  '@docsearch/core',
+  /^@docsearch\/react/,
+];
 
 const sharedConfig: UserConfig = {
   platform: 'neutral',
