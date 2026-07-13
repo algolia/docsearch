@@ -6,12 +6,7 @@ import { rolldownPlugins } from '../../tsdown.base.ts';
 
 import pkg from './package.json' with { type: 'json' };
 
-const externals = [
-  'react',
-  'react-dom',
-  '@docsearch/core',
-  /^@docsearch\/react/,
-];
+const externals = ['react', 'react-dom', '@docsearch/core', /^@docsearch\/react/];
 
 const sharedConfig: UserConfig = {
   platform: 'neutral',
