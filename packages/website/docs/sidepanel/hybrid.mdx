@@ -152,6 +152,9 @@ docsearchInstance = docsearch({
     docsearchInstance?.close();
     sidepanelInstance.open(initialMessage);
     return true;
+  },
+  onOpen: () => {
+    sidepanelInstance?.close();
   }
 });
 
