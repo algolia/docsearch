@@ -12,7 +12,8 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ESNEXT"
+    "target": "ESNEXT",
+    "allowImportingTsExtensions": true
   },
   "exclude": [
     "**/__fixtures__/**/*",

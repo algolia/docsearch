@@ -6,6 +6,7 @@
     "packages/*",
     "examples/*"
   ],
+  "type": "module",
   "scripts": {
     "build": "bun run --sequential build:stage:base build:stage:react build:stage:consumers build:stage:adapter website:build",
     "build:all": "bun run --sequential build website:build",
