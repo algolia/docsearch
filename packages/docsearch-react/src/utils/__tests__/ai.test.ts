@@ -6,12 +6,40 @@ import {
   extractAgentStudioErrorFieldMessage,
   getAskAiBlockingBannerMessage,
   getAskAiPromptBlockingUserFacingMessage,
+  getMessageContent,
   getThreadDepthErrorUserFacingMessage,
   isAgentStudioTokenOutputLimitError,
   isAskAiPromptBlockingError,
   isThreadDepthError,
   showAskAiBlockingBannerNewConversationLink,
 } from '../ai';
+
+describe('getMessageContent', () => {
+  it('joins the text parts around tool calls so copying returns the full answer', () => {
+    const message = {
+      id: 'a1',
+      role: 'assistant',
+      parts: [
+        { type: 'text', text: 'Let me look that up.', state: 'done' },
+        { type: 'tool-searchIndex', toolCallId: 't1', state: 'output-available' },
+        { type: 'text', text: 'Docusaurus is a static site generator.', state: 'done' },
+      ],
+    } as unknown as AIMessage;
+
+    expect(getMessageContent(message)).toBe('Let me look that up.\n\nDocusaurus is a static site generator.');
+  });
+
+  it('returns an empty string without a message or text parts', () => {
+    expect(getMessageContent(null)).toBe('');
+    expect(
+      getMessageContent({
+        id: 'a1',
+        role: 'assistant',
+        parts: [{ type: 'tool-searchIndex', toolCallId: 't1', state: 'output-available' }],
+      } as unknown as AIMessage),
+    ).toBe('');
+  });
+});
 
 describe('isThreadDepthError', () => {
   it('detects AI-217 in message (any case)', () => {
