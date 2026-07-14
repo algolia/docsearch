@@ -4,7 +4,7 @@ aliases:
   - &install_bun
     name: Install Bun
     command: |
-      sudo npm install -g bun
+      curl -fsSL https://bun.com/install | bash -s "bun-v1.3.10"
 
   - &restore_bun_cache
     name: Restore Bun cache
