@@ -1,9 +1,8 @@
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import { track } from '@site/src/lib/segment';
 import { Code2 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import React, { useCallback, useState } from 'react';
-
-import { track } from '@site/src/lib/segment';
 
 const ENDPOINT = 'https://mcp.algolia.com/1/docsearch/mcp';
 
@@ -385,11 +384,11 @@ function CursorInstallButton({ href, label, onClick }) {
   return (
     <motion.a
       href={href}
-      onClick={onClick}
       whileHover={{ y: -1 }}
       whileTap={{ scale: 0.98 }}
       transition={SPRING}
       className="inline-flex w-fit no-underline!"
+      onClick={onClick}
     >
       <img
         src="https://cursor.com/deeplink/mcp-install-dark.svg"
@@ -536,10 +535,7 @@ function CliQuickInstall({ client, reduce }) {
             </AnimatePresence>
           </code>
         </pre>
-        <CopyButton
-          value={command}
-          onCopied={() => track('Install Command Copied', { client: client.id, command })}
-        />
+        <CopyButton value={command} onCopied={() => track('Install Command Copied', { client: client.id, command })} />
       </div>
     </div>
   );
