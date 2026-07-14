@@ -492,7 +492,7 @@ function Block({ block, client, mode }) {
 }
 
 function CliQuickInstall({ client, reduce }) {
-  const flag = ` --${client.id}`;
+  const flag = CLI_SUPPORTED_CLIENTS.has(client.id) ? ` --${client.id}` : '';
   const command = `${CLI_SETUP_PREFIX}${flag}`;
 
   return (
@@ -647,20 +647,18 @@ export default function MCPInstall() {
           })}
         </motion.div>
 
-        {/* Fastest path: one CLI command, flag follows the selected client */}
+        {/* Fastest path: supported clients include their setup flag; others use the interactive setup. */}
         <AnimatePresence initial={false}>
-          {CLI_SUPPORTED_CLIENTS.has(selected.id) && (
-            <motion.div
-              key="cli-quick-install"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: reduce ? 0 : 0.18, ease: 'easeOut' }}
-              className="overflow-hidden"
-            >
-              <CliQuickInstall client={selected} reduce={reduce} />
-            </motion.div>
-          )}
+          <motion.div
+            key="cli-quick-install"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: reduce ? 0 : 0.18, ease: 'easeOut' }}
+            className="overflow-hidden"
+          >
+            <CliQuickInstall client={selected} reduce={reduce} />
+          </motion.div>
         </AnimatePresence>
 
         {/* Detail panel */}
