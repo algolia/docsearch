@@ -3,7 +3,14 @@ import { Code2 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import React, { useCallback, useState } from 'react';
 
+import { track } from '@site/src/lib/segment';
+
 const ENDPOINT = 'https://mcp.algolia.com/1/docsearch/mcp';
+
+const CLI_SETUP_PREFIX = 'npx @docsearch/cli setup';
+
+// Clients with a matching `docsearch setup` agent flag (see packages/docsearch-cli).
+const CLI_SUPPORTED_CLIENTS = new Set(['cursor', 'claude', 'codex', 'opencode']);
 
 // Base64 of {"url":"https://mcp.algolia.com/1/docsearch/mcp"} for the Cursor install link.
 const CURSOR_DEEPLINK =
@@ -319,16 +326,17 @@ URL: ${ENDPOINT}`,
   },
 ];
 
-function CopyButton({ value, className = '' }) {
+function CopyButton({ value, onCopied, className = '' }) {
   const [copied, setCopied] = useState(false);
 
   const onCopy = useCallback(() => {
     if (typeof navigator === 'undefined' || !navigator.clipboard) return;
     navigator.clipboard.writeText(value).then(() => {
+      onCopied?.();
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     });
-  }, [value]);
+  }, [value, onCopied]);
 
   return (
     <motion.button
@@ -359,12 +367,12 @@ function CopyButton({ value, className = '' }) {
   );
 }
 
-function CodeCard({ caption, code }) {
+function CodeCard({ caption, code, onCopied }) {
   return (
     <div className="overflow-hidden rounded-xl ring-1 ring-neutral-200 dark:ring-neutral-700">
       <div className="flex items-center justify-between gap-3 border-b border-neutral-200 bg-neutral-50 px-4 py-2 dark:border-neutral-700 dark:bg-neutral-800/60">
         <span className="font-mono text-xs text-neutral-500 dark:text-neutral-400">{caption}</span>
-        <CopyButton value={code} />
+        <CopyButton value={code} onCopied={onCopied} />
       </div>
       <pre className="m-0 overflow-x-auto bg-neutral-900 p-4 text-[13px] leading-relaxed text-neutral-100">
         <code className="bg-transparent! p-0! text-inherit!">{code}</code>
@@ -373,10 +381,11 @@ function CodeCard({ caption, code }) {
   );
 }
 
-function CursorInstallButton({ href, label }) {
+function CursorInstallButton({ href, label, onClick }) {
   return (
     <motion.a
       href={href}
+      onClick={onClick}
       whileHover={{ y: -1 }}
       whileTap={{ scale: 0.98 }}
       transition={SPRING}
@@ -416,7 +425,7 @@ function getBlockKey(block) {
   }
 }
 
-function Block({ block }) {
+function Block({ block, client, mode }) {
   switch (block.kind) {
     case 'subhead':
       return (
@@ -436,7 +445,13 @@ function Block({ block }) {
         </p>
       );
     case 'code':
-      return <CodeCard caption={block.caption} code={block.code} />;
+      return (
+        <CodeCard
+          caption={block.caption}
+          code={block.code}
+          onCopied={() => track('Install Config Copied', { client, mode, caption: block.caption })}
+        />
+      );
     case 'steps':
       return (
         <ol className="my-0 flex list-none flex-col gap-2 pl-0">
@@ -465,10 +480,69 @@ function Block({ block }) {
         </motion.a>
       );
     case 'installButton':
-      return <CursorInstallButton href={block.href} label={block.label} />;
+      return (
+        <CursorInstallButton
+          href={block.href}
+          label={block.label}
+          onClick={() => track('Install Button Clicked', { client, mode })}
+        />
+      );
     default:
       return null;
   }
+}
+
+function CliQuickInstall({ client, reduce }) {
+  const flag = ` --${client.id}`;
+  const command = `${CLI_SETUP_PREFIX}${flag}`;
+
+  return (
+    <div className="border-t border-neutral-200 px-6 py-5 dark:border-neutral-700">
+      <div className="mb-2.5 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+        <span className="text-xs font-semibold tracking-wide text-neutral-700 uppercase dark:text-neutral-200">
+          One-command install
+        </span>
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.span
+            key={client.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.1 }}
+            className="text-xs text-neutral-400 dark:text-neutral-500"
+          >
+            {`Adds the server, rules, and skills to ${client.name}`}
+          </motion.span>
+        </AnimatePresence>
+      </div>
+      <div className="flex items-center justify-between gap-3 rounded-xl bg-neutral-900 py-2.5 pr-2.5 pl-4 ring-1 ring-neutral-800 dark:ring-neutral-700">
+        <pre className="m-0 flex-1 overflow-x-auto bg-transparent! p-0! font-mono text-[13px] leading-relaxed">
+          <code className="bg-transparent! p-0! text-neutral-100">
+            <span aria-hidden={true} className="select-none text-blue-400">
+              ${' '}
+            </span>
+            {CLI_SETUP_PREFIX}
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={client.id}
+                initial={{ opacity: 0, y: reduce ? 0 : 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: reduce ? 0 : -4 }}
+                transition={{ duration: 0.1 }}
+                className="inline-block whitespace-pre"
+              >
+                {flag}
+              </motion.span>
+            </AnimatePresence>
+          </code>
+        </pre>
+        <CopyButton
+          value={command}
+          onCopied={() => track('Install Command Copied', { client: client.id, command })}
+        />
+      </div>
+    </div>
+  );
 }
 
 function ClientLogo({ client, size = 'h-7 w-7' }) {
@@ -577,6 +651,22 @@ export default function MCPInstall() {
           })}
         </motion.div>
 
+        {/* Fastest path: one CLI command, flag follows the selected client */}
+        <AnimatePresence initial={false}>
+          {CLI_SUPPORTED_CLIENTS.has(selected.id) && (
+            <motion.div
+              key="cli-quick-install"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: reduce ? 0 : 0.18, ease: 'easeOut' }}
+              className="overflow-hidden"
+            >
+              <CliQuickInstall client={selected} reduce={reduce} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Detail panel */}
         <div className="border-t border-neutral-200 px-6 py-5 dark:border-neutral-700">
           <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -645,7 +735,7 @@ export default function MCPInstall() {
                   key={`${selectedId}-${activeMode}-${getBlockKey(block)}`}
                   variants={{ hidden: { opacity: 0, y: reduce ? 0 : 4 }, show: { opacity: 1, y: 0 } }}
                 >
-                  <Block block={block} />
+                  <Block block={block} client={selectedId} mode={activeMode} />
                 </motion.div>
               ))}
             </motion.div>
