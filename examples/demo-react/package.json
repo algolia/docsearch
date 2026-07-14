@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@algolia/autocomplete-core": "1.19.2",
     "@docsearch/core": "workspace:*",
     "@docsearch/css": "workspace:*",
     "@docsearch/modal": "workspace:*",

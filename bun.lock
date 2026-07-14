@@ -93,6 +93,7 @@
       "name": "@docsearch/react-example",
       "version": "4.6.0",
       "dependencies": {
+        "@algolia/autocomplete-core": "1.19.2",
         "@docsearch/core": "workspace:*",
         "@docsearch/css": "workspace:*",
         "@docsearch/modal": "workspace:*",
