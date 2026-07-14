@@ -111,6 +111,10 @@ export default App;
 
 [Read documentation →](https://docsearch.algolia.com/docs/styling)
 
+## MCP plugins
+
+Client plugins for the public DocSearch MCP endpoint are in [`mcp/plugins/docsearch`](mcp/plugins/docsearch). They connect Cursor and Claude Code to `https://mcp.algolia.com/1/docsearch/mcp` for current public developer documentation.
+
 ## Related projects
 
 DocSearch is made of the following repositories:

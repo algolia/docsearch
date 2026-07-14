@@ -184,6 +184,19 @@ export interface Memory {
   userToken?: string;
 }
 
+export interface PromptSuggestions {
+  /**
+   * The name of the index where the prompt suggestions are stored.
+   */
+  indexName: string;
+  /**
+   * The number of prompt suggestions that are retrieved and displayed.
+   *
+   * @default 3
+   */
+  hitsPerPage?: number;
+}
+
 export interface DocSearchAIProps extends DocSearchProps {
   /**
    * Configuration or assistant id to enable ask ai mode. Pass a string assistant id or a full config object.
@@ -208,6 +221,15 @@ export interface DocSearchAIProps extends DocSearchProps {
    * Configuration for the Agent Studio memory feature.
    */
   memory?: Memory;
+  /**
+   * Enables and configures prompt suggestions that are displayed during keyword search.
+   *
+   * @see https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/integration#prompt-suggestions
+   *
+   * @example
+   * { indexName: 'docsearch-markdown_prompt_suggestions', hitsPerPage: 1 }
+   */
+  promptSuggestions?: PromptSuggestions;
 }
 
 function DocSearchAIComponent(props: DocSearchAIProps, ref: React.ForwardedRef<DocSearchRef>): JSX.Element {

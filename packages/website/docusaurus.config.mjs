@@ -110,6 +110,11 @@ export default {
             position: 'left',
           },
           {
+            label: 'MCP',
+            to: 'docs/mcp/overview',
+            position: 'left',
+          },
+          {
             label: 'Playground',
             to: 'https://community.algolia.com/docsearch-playground/',
             position: 'left',

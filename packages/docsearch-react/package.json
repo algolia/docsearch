@@ -33,11 +33,15 @@
     "./button": "./dist/esm/DocSearchButton.js",
     "./modal": "./dist/esm/DocSearchModal.js",
     "./style": "./style/index.js",
+    "./style/askai": "./style/askai.js",
+    "./style/button": "./style/button.js",
+    "./style/modal": "./style/modal.js",
     "./useDocSearchKeyboardEvents": "./dist/esm/useDocSearchKeyboardEvents.js",
     "./useTheme": "./dist/esm/useTheme.js",
     "./version": "./dist/esm/version.js",
     "./sidepanel": "./dist/esm/Sidepanel.js",
-    "./style/sidepanel": "./style/sidepanel.js"
+    "./style/sidepanel": "./style/sidepanel.js",
+    "./style/variables": "./style/variables.js"
   },
   "source": "src/index.ts",
   "types": "dist/esm/index.d.ts",

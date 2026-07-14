@@ -1,8 +1,8 @@
 import type { UserConfig } from 'tsdown';
 import { defineConfig } from 'tsdown';
 
-import { getBundleBanner } from '../../scripts/getBundleBanner';
-import { rolldownPlugins } from '../../tsdown.base';
+import { getBundleBanner } from '../../scripts/getBundleBanner.ts';
+import { rolldownPlugins } from '../../tsdown.base.ts';
 
 import pkg from './package.json' with { type: 'json' };
 
@@ -22,6 +22,7 @@ const sharedConfig: UserConfig = {
     js: '.js',
   }),
   sourcemap: true,
+  noExternal: ['@docsearch/react', '@docsearch/core'],
 };
 
 export default defineConfig([

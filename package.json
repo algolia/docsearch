@@ -6,8 +6,9 @@
     "packages/*",
     "examples/*"
   ],
+  "type": "module",
   "scripts": {
-    "build": "bun run --sequential build:stage:base build:stage:react build:stage:consumers build:stage:adapter website:build",
+    "build": "bun run --sequential build:stage:base build:stage:react build:stage:consumers build:stage:adapter build:pkg:cli website:build",
     "build:all": "bun run --sequential build website:build",
     "build:pkg:core": "bun --filter @docsearch/core build",
     "build:pkg:css": "bun --filter @docsearch/css build",
@@ -17,6 +18,7 @@
     "build:pkg:sidepanel-js": "bun --filter @docsearch/sidepanel-js build",
     "build:pkg:modal": "bun --filter @docsearch/modal build",
     "build:pkg:adapter": "bun --filter @docsearch/docusaurus-adapter build",
+    "build:pkg:cli": "bun --filter @docsearch/cli build",
     "build:stage:base": "bun run --parallel build:pkg:core build:pkg:css",
     "build:stage:react": "bun run build:pkg:react",
     "build:stage:consumers": "bun run --parallel build:pkg:js build:pkg:sidepanel build:pkg:sidepanel-js build:pkg:modal",

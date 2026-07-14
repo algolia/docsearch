@@ -109,3 +109,7 @@ export type AlgoliaMCPSearchOutputPart = ToolUIPart<
   }
 >;
 export type SearchOutputPart = AlgoliaMCPSearchOutputPart | SearchIndexOutputPart;
+
+export interface PromptSuggestion {
+  prompt: string;
+}

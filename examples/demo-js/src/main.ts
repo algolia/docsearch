@@ -30,7 +30,10 @@ function logSidepanelState(instance: SidepanelInstance, label: string): void {
   });
 }
 
-const sidepanelInstance = sidepanel({
+let docsearchInstance: DocSearchInstance | undefined = undefined;
+let sidepanelInstance: SidepanelInstance | undefined = undefined;
+
+sidepanelInstance = sidepanel({
   container: '#docsearch-sidepanel',
   indexName: 'docsearch',
   appId: 'PMZUYBQDAK',
@@ -43,6 +46,7 @@ const sidepanelInstance = sidepanel({
   onOpen: () => {
     // eslint-disable-next-line no-console
     console.log('[demo-js] sidepanel onOpen()');
+    docsearchInstance?.close();
   },
   onClose: () => {
     // eslint-disable-next-line no-console
@@ -63,13 +67,13 @@ console.log('[demo-js] sidepanel try:', {
 });
 logSidepanelState(sidepanelInstance, 'sidepanel initial state');
 
-const docsearchInstance = docsearch({
+docsearchInstance = docsearch({
   container: '#docsearch',
   indexName: 'docsearch',
   appId: 'PMZUYBQDAK',
   apiKey: '24b09689d5b4223813d9b8e48563c8f6',
   interceptAskAiEvent: (initialMessage: InitialAskAiMessage) => {
-    docsearchInstance.close();
+    docsearchInstance?.close();
     sidepanelInstance.open(initialMessage);
     return true;
   },
@@ -80,6 +84,7 @@ const docsearchInstance = docsearch({
   onOpen: () => {
     // eslint-disable-next-line no-console
     console.log('[demo-js] docsearch onOpen()');
+    sidepanelInstance.close();
   },
   onClose: () => {
     // eslint-disable-next-line no-console

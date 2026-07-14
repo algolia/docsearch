@@ -8,13 +8,14 @@ import { useRelativeFormattedDate } from './hooks/useRelativeFormattedDate';
 import { SparklesIcon } from './icons/SparklesIcon';
 import { Snippet } from './Snippet';
 import type { InternalDocSearchHit, StoredDocSearchHit } from './types';
-import { decodeHtmlEntities, getHitItemBreadcrumbs } from './utils';
+import { decodeHtmlEntities, getHitItemBreadcrumbs, SOURCE_IDS } from './utils';
 
 export type ResultsTranslations = HitResultBadgeTranslations &
   Partial<{
     askAiPlaceholder: string;
     noResultsAskAiPlaceholder: string;
     recentConversationTimestampFallback: string;
+    askAiResultsTitle: string;
   }>;
 interface ResultsProps<TItem extends BaseItem>
   extends AutocompleteApi<TItem, React.FormEvent, React.MouseEvent, React.KeyboardEvent> {
@@ -31,6 +32,9 @@ interface ResultsProps<TItem extends BaseItem>
 }
 
 export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TItem>): JSX.Element | null {
+  const { askAiResultsTitle = 'Ask AI Assistant' } = props.translations || {};
+
+  const askAiResultsId = React.useId();
   // The collection title, decoded to handle encoded HTML entities
   // If there is not a title, return null to not render anything
   const decodedTitle = React.useMemo(() => {
@@ -45,18 +49,26 @@ export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TI
     return null;
   }
 
-  if (props.collection.source.sourceId === 'askAI') {
+  if (props.collection.source.sourceId === SOURCE_IDS.askAI) {
     return (
       <section className="DocSearch-Hits">
-        <div className="DocSearch-Hit-source">Ask AI Assistant</div>
-        <ul className="DocSearch-Hits-padded" {...props.getListProps({ source: props.collection.source })}>
-          <AskAiButton item={props.collection.items[0]} translations={props.translations} {...props} />
+        <h2 id={askAiResultsId} className="DocSearch-Hit-source">
+          {askAiResultsTitle}
+        </h2>
+        <ul
+          className="DocSearch-Hits-padded"
+          {...props.getListProps({ source: props.collection.source })}
+          aria-labelledby={askAiResultsId}
+        >
+          {props.collection.items.map((item) => (
+            <AskAiButton key={item.objectID} item={item} translations={props.translations} {...props} />
+          ))}
         </ul>
       </section>
     );
   }
 
-  if (props.collection.source.sourceId === 'recentConversations') {
+  if (props.collection.source.sourceId === SOURCE_IDS.recentConversations) {
     return (
       <section className="DocSearch-Hits">
         <div className="DocSearch-Hit-source">
