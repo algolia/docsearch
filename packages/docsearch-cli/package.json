@@ -1,0 +1,57 @@
+{
+  "name": "@docsearch/cli",
+  "description": "Command-line tools for installing and querying DocSearch MCP.",
+  "version": "0.0.2",
+  "license": "MIT",
+  "type": "module",
+  "homepage": "https://docsearch.algolia.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/algolia/docsearch.git",
+    "directory": "packages/docsearch-cli"
+  },
+  "author": {
+    "name": "Algolia, Inc.",
+    "url": "https://www.algolia.com"
+  },
+  "bugs": {
+    "url": "https://github.com/algolia/docsearch/issues"
+  },
+  "bin": {
+    "docsearch": "./dist/index.js"
+  },
+  "files": [
+    "dist/"
+  ],
+  "keywords": [
+    "algolia",
+    "cli",
+    "documentation",
+    "docsearch",
+    "mcp"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "bun run clean && tsc --project tsconfig.json",
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
+    "prepack": "bun run build",
+    "test": "vitest run --config vitest.config.mts",
+    "test:pack": "npm pack --dry-run",
+    "watch": "tsc --project tsconfig.json --watch"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "jsonc-parser": "^3.3.1",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "typescript": "5.7.3",
+    "vitest": "3.0.2"
+  }
+}
