@@ -49,7 +49,7 @@ aliases:
 defaults: &defaults
   working_directory: ~/docsearch
   docker:
-    - image: cimg/node:22.15.0
+    - image: cimg/node:24.13.1
 
 playwright: &playwright
   working_directory: ~/docsearch

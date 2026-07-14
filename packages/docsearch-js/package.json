@@ -28,11 +28,13 @@
     "build": "tsdown",
     "watch": "tsdown --watch"
   },
+  "dependencies": {
+    "@docsearch/react": "4.6.0"
+  },
   "devDependencies": {
-    "@docsearch/react": "4.6.0",
     "htm": "3.1.1",
     "preact": "11.0.0-beta.0",
-    "tsdown": "^0.18.3",
+    "tsdown": "0.22.7",
     "typescript": "5.7.3"
   },
   "nx": {

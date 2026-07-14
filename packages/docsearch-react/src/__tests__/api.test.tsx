@@ -337,7 +337,10 @@ describe('api', () => {
       expect(document.querySelector('.DocSearch-AskAiScreen')).toBeInTheDocument();
 
       // could be "Answering..." or "Ask another question..."
-      expect(screen.getByText('Answering...')).toBeInTheDocument();
+      // where "Ask another question..." is actually an input's placeholder text
+      expect(
+        screen.queryByText('Answering...') ?? screen.queryByPlaceholderText('Ask another question...'),
+      ).toBeInTheDocument();
     });
 
     it('renders and selects prompt suggestions', async () => {

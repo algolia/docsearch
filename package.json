@@ -83,7 +83,6 @@
     "prettier": "3.4.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "rolldown": "1.0.0-beta.57",
     "start-server-and-test": "2.0.10",
     "stylelint": "16.13.2",
     "stylelint-config-sass-guidelines": "12.1.0",
