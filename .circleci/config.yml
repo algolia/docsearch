@@ -4,10 +4,8 @@ aliases:
   - &install_bun
     name: Install Bun
     command: |
-      curl -fsSL https://bun.com/install | bash -s "bun-v1.3.10"
-
-      export BUN_INSTALL="$HOME/.bun"
-      export PATH="$BUN_INSTALL/bin:$PATH"
+      npm install --global --prefix "$HOME/.local" bun@1.3.10
+      echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$BASH_ENV"
 
   - &restore_bun_cache
     name: Restore Bun cache
