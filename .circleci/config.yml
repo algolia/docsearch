@@ -6,6 +6,9 @@ aliases:
     command: |
       curl -fsSL https://bun.com/install | bash -s "bun-v1.3.10"
 
+      export BUN_INSTALL="$HOME/.bun"
+      export PATH="$BUN_INSTALL/bin:$PATH"
+
   - &restore_bun_cache
     name: Restore Bun cache
     keys:
