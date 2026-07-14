@@ -515,7 +515,7 @@ function CliQuickInstall({ client, reduce }) {
         </AnimatePresence>
       </div>
       <div className="flex items-center justify-between gap-3 rounded-xl bg-neutral-900 py-2.5 pr-2.5 pl-4 ring-1 ring-neutral-800 dark:ring-neutral-700">
-        <pre className="m-0 flex-1 overflow-x-auto bg-transparent! p-0! font-mono text-[13px] leading-relaxed">
+        <pre className="m-0 flex-1 overflow-x-auto bg-transparent! mb-0! p-0! font-mono text-[13px] leading-relaxed">
           <code className="bg-transparent! p-0! text-neutral-100">
             <span aria-hidden={true} className="select-none text-blue-400">
               ${' '}
