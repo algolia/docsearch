@@ -10,7 +10,8 @@
     "moduleResolution": "NodeNext",
     "outDir": "dist",
     "rootDir": "src",
-    "target": "ES2022"
+    "target": "ES2022",
+    "allowImportingTsExtensions": false
   },
   "include": [
     "src/**/*.ts"
