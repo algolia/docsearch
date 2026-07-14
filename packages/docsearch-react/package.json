@@ -16,14 +16,6 @@
   "sideEffects": false,
   "files": [
     "dist/",
-    "askaiModal.js",
-    "docsearchAi.js",
-    "button.js",
-    "modal.js",
-    "useTheme.js",
-    "useDocSearchKeyboardEvents.js",
-    "version.js",
-    "sidepanel.js",
     "style/"
   ],
   "exports": {

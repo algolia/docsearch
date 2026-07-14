@@ -7,7 +7,6 @@
  */
 
 import type { AutocompleteState } from '@algolia/autocomplete-core';
-import type { ThemeConfigAlgolia } from '@docsearch/docusaurus-adapter';
 import type {
   InternalDocSearchHit,
   DocSearchAskAiModalProps,
@@ -42,6 +41,8 @@ import {
   useAlgoliaAskAiSidepanel,
   mergeFacetFilters,
 } from '../../client';
+
+import type { ThemeConfigAlgolia } from '@docsearch/docusaurus-adapter';
 
 type DocSearchProps = Omit<DocSearchModalProps, 'initialScrollY' | 'onClose'> & {
   contextualSearch?: string;

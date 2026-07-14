@@ -15,11 +15,7 @@
   },
   "sideEffects": false,
   "files": [
-    "dist/",
-    "button.js",
-    "index.js",
-    "modal.js",
-    "askai.js"
+    "dist/"
   ],
   "exports": {
     ".": "./dist/esm/index.js",

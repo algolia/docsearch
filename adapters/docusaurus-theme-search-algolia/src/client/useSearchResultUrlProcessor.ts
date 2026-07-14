@@ -5,12 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { ThemeConfigAlgolia } from '@docsearch/docusaurus-adapter';
 import { isRegexpStringMatch } from '@docusaurus/theme-common';
 import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
 import { useCallback } from 'react';
 
 import { useAlgoliaThemeConfig } from './useAlgoliaThemeConfig';
+
+import type { ThemeConfigAlgolia } from '@docsearch/docusaurus-adapter';
 
 function replacePathname(
   pathname: string,

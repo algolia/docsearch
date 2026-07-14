@@ -29,6 +29,7 @@
     "watch": "tsdown --watch"
   },
   "dependencies": {
+    "@docsearch/core": "4.6.0",
     "@docsearch/react": "4.6.0"
   },
   "devDependencies": {

@@ -16,11 +16,7 @@
   },
   "sideEffects": false,
   "files": [
-    "dist/",
-    "index.js",
-    "useTheme.js",
-    "useDocSearchKeyboardEvents.js",
-    "useKeyboardShortcuts.js"
+    "dist/"
   ],
   "exports": {
     ".": "./dist/esm/index.js",

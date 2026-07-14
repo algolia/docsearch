@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { AskAiConfig } from '@docsearch/docusaurus-adapter';
 import type { DocSearchAskAiModalProps, DocSearchTranslations } from '@docsearch/react';
 import translations from '@theme/SearchTranslations';
 import type { FacetFilters } from 'algoliasearch/lite';
@@ -13,6 +12,8 @@ import { useCallback, useMemo, useState } from 'react';
 
 import { useAlgoliaContextualFacetFiltersIfEnabled } from './useAlgoliaContextualFacetFilters';
 import { mergeFacetFilters } from './utils';
+
+import type { AskAiConfig } from '@docsearch/docusaurus-adapter';
 
 // The minimal props the hook needs from DocSearch
 interface DocSearchPropsLite {

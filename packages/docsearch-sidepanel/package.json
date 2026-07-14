@@ -19,9 +19,6 @@
   "sideEffects": false,
   "files": [
     "dist/",
-    "index.js",
-    "button.js",
-    "sidepanel.js",
     "style/"
   ],
   "exports": {

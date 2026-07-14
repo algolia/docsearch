@@ -5,11 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { ThemeConfig, UserThemeConfig } from '@docsearch/docusaurus-adapter';
 import type Joi from 'joi';
 import { describe, expect, it, vi } from 'vitest';
 
 import { DEFAULT_CONFIG, validateThemeConfig } from '../validateThemeConfig';
+
+import type { ThemeConfig, UserThemeConfig } from '@docsearch/docusaurus-adapter';
 
 // mock DocSearch to a v4.5 version to allow AskAI sidepanel tests to pass
 vi.mock('@docsearch/react', () => ({ version: '4.5.3' }));

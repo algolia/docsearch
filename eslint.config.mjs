@@ -35,6 +35,7 @@ export default [
         version: 'detect',
       },
       'import/resolver': {
+        typescript: true,
         node: {
           extensions: ['.js', '.ts', '.tsx'],
         },
