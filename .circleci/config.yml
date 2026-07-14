@@ -4,7 +4,7 @@ aliases:
   - &install_bun
     name: Install Bun
     command: |
-      npm install -g bun
+      sudo npm install -g bun
 
   - &restore_bun_cache
     name: Restore Bun cache
