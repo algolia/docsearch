@@ -5,13 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { ThemeConfig, ThemeConfigAlgolia } from '@docsearch/docusaurus-adapter';
 import type { ThemeConfigValidationContext } from '@docusaurus/types';
 import Joi from 'joi';
 
 import { docSearchVersionString } from './docSearchVersion';
 import { getDocSearchConfig } from './getDocSearchConfig';
 import { escapeRegexp } from './utils';
+
+import type { ThemeConfig, ThemeConfigAlgolia } from '@docsearch/docusaurus-adapter';
 
 export const DEFAULT_CONFIG = {
   // Enabled by default, as it makes sense in most cases

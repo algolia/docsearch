@@ -249,7 +249,7 @@ packages/
 
 ## Cursor Cloud specific instructions
 
-Toolchain is pinned in `.tool-versions`: Node `22.15.0` (managed via `fnm`) and Bun `1.3.10`. These are preinstalled in the Cloud VM and available on `PATH` in new shells; the startup update script only runs `bun install`.
+Toolchain is pinned in `.tool-versions`: Node `24.13.1` (managed via `fnm`) and Bun `1.3.10`. These are preinstalled in the Cloud VM and available on `PATH` in new shells; the startup update script only runs `bun install`.
 
 Non-obvious caveats:
 

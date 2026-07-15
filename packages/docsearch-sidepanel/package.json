@@ -19,20 +19,17 @@
   "sideEffects": false,
   "files": [
     "dist/",
-    "index.js",
-    "button.js",
-    "sidepanel.js",
     "style/"
   ],
   "exports": {
     ".": "./dist/esm/index.js",
-    "./sidepanel": "./dist/esm/Sidepanel.js",
-    "./button": "./dist/esm/SidepanelButton.js"
+    "./button": "./dist/esm/button.js",
+    "./sidepanel": "./dist/esm/sidepanel.js"
   },
   "source": "src/index.ts",
-  "types": "dist/esm/index.d.ts",
-  "module": "dist/esm/index.js",
-  "main": "dist/umd/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "main": "./dist/esm/index.js",
+  "module": "./dist/esm/index.js",
   "umd:main": "dist/umd/index.js",
   "unpkg": "dist/umd/index.js",
   "jsdelivr": "dist/umd/index.js",
@@ -48,7 +45,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.2.0",
-    "tsdown": "^0.18.3",
+    "tsdown": "0.22.7",
     "typescript": "5.7.3",
     "vitest": "3.0.2"
   },

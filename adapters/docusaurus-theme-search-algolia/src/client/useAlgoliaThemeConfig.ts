@@ -4,10 +4,11 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import type { ThemeConfig, ThemeConfigAlgolia } from '@docsearch/docusaurus-adapter';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 import { getDocSearchConfig } from '../getDocSearchConfig';
+
+import type { ThemeConfig, ThemeConfigAlgolia } from '@docsearch/docusaurus-adapter';
 
 export function useAlgoliaThemeConfig(): ThemeConfigAlgolia {
   const {

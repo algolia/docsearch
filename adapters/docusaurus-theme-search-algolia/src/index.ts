@@ -5,13 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { ThemeConfig } from '@docsearch/docusaurus-adapter';
 import { readDefaultCodeTranslationMessages } from '@docusaurus/theme-translations';
 import type { LoadContext, Plugin } from '@docusaurus/types';
 
 import { getDocSearchConfig, hasLegacyAlgoliaConfig } from './getDocSearchConfig';
 import { createOpenSearchFile, createOpenSearchHeadTags, shouldCreateOpenSearchFile } from './opensearch';
 import { normalizeUrl } from './utils';
+
+import type { ThemeConfig } from '@docsearch/docusaurus-adapter';
 
 function hasClassicPreset(context: LoadContext): boolean {
   return (context.siteConfig.presets ?? []).some((preset) => {

@@ -2,21 +2,27 @@ import type { UserConfig } from 'tsdown';
 import { defineConfig } from 'tsdown';
 
 import { getBundleBanner } from '../../scripts/getBundleBanner.ts';
-import { rolldownPlugins } from '../../tsdown.base.ts';
+import { defines, pkgExports } from '../../tsdown.base.ts';
 
 import pkg from './package.json' with { type: 'json' };
 
-const externals = ['react', 'react-dom', '@docsearch/core', /^@docsearch\/react/];
+const externals = [
+  'react',
+  'react-dom',
+  /^react\//,
+  '@docsearch/core',
+  /^@docsearch\/react/,
+];
 
 const sharedConfig: UserConfig = {
-  platform: 'neutral',
-  external: externals,
+  platform: 'browser',
+  deps: {
+    neverBundle: externals,
+  },
   target: 'es2017',
-  minify: true,
-  plugins: rolldownPlugins,
+  define: defines,
   sourcemap: true,
   outExtensions: () => ({
-    dts: '.js',
     js: '.js',
   }),
 };
@@ -24,27 +30,36 @@ const sharedConfig: UserConfig = {
 export default defineConfig([
   {
     ...sharedConfig,
+    dts: true,
+    format: 'esm',
+    minify: false,
     entry: {
       index: 'src/index.ts',
-      DocSearchButton: 'src/DocSearchButton.tsx',
-      DocSearchAskAiModal: 'src/DocSearchAskAiModal.tsx',
-      DocSearchModal: 'src/DocSearchModal.tsx',
+      button: 'src/DocSearchButton.tsx',
+      askai: 'src/DocSearchAskAiModal.tsx',
+      modal: 'src/DocSearchModal.tsx',
     },
     outDir: 'dist/esm',
+    exports: pkgExports,
   },
   {
     ...sharedConfig,
     entry: 'src/index.ts',
     outDir: 'dist/umd',
     banner: getBundleBanner(pkg),
+    dts: false,
+    globalName: 'DocSearchModal',
+    minify: true,
     outputOptions: {
       entryFileNames: '[name].js',
-      name: 'DocSearchModal',
       globals: {
         react: 'React',
         'react-dom': 'ReactDOM',
         '@docsearch/core': 'DocSearchCore',
         '@docsearch/react': 'DocSearchReact',
+        '@docsearch/react/askaiModal': 'DocSearchReact',
+        '@docsearch/react/button': 'DocSearchReact',
+        '@docsearch/react/modal': 'DocSearchReact',
       },
     },
     format: 'umd',

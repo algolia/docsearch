@@ -4,7 +4,8 @@ aliases:
   - &install_bun
     name: Install Bun
     command: |
-      npm install -g bun
+      npm install --global --prefix "$HOME/.local" bun@1.3.10
+      echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$BASH_ENV"
 
   - &restore_bun_cache
     name: Restore Bun cache
@@ -49,7 +50,7 @@ aliases:
 defaults: &defaults
   working_directory: ~/docsearch
   docker:
-    - image: cimg/node:22.15.0
+    - image: cimg/node:24.13.1
 
 playwright: &playwright
   working_directory: ~/docsearch

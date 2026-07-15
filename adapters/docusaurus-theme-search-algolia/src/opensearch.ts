@@ -7,7 +7,6 @@
 
 import path from 'path';
 
-import type { ThemeConfig } from '@docsearch/docusaurus-adapter';
 import type { HtmlTags, LoadContext } from '@docusaurus/types';
 import { defaultConfig, compile } from 'eta';
 import fs from 'fs-extra';
@@ -16,6 +15,8 @@ import _ from 'lodash';
 import { getDocSearchConfig } from './getDocSearchConfig';
 import openSearchTemplate from './templates/opensearch';
 import { normalizeUrl } from './utils';
+
+import type { ThemeConfig } from '@docsearch/docusaurus-adapter';
 
 const getCompiledOpenSearchTemplate = _.memoize(() => compile(openSearchTemplate.trim()));
 
