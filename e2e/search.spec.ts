@@ -101,7 +101,7 @@ test.describe('Search', () => {
     const initialURL = page.url();
 
     await docSearch.typeQueryMatching();
-    await page.locator('#docsearch-hits_docsearch-item-0 > a').click({ force: true });
+    await docSearch.clickFirstHit();
 
     await expect(page).not.toHaveURL(initialURL);
   });
@@ -121,7 +121,7 @@ test.describe('Recent and Favorites', () => {
     await docSearch.goto();
     await docSearch.openModal();
     await docSearch.typeQueryMatching();
-    await page.locator('#docsearch-hits_docsearch-item-0 > a').click({ force: true });
+    await docSearch.clickFirstHit();
     await page.waitForTimeout(1000);
     await docSearch.openModal();
     await expect(page.getByText('Recent')).toBeVisible();

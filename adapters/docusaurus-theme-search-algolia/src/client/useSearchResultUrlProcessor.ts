@@ -11,11 +11,11 @@ import { useCallback } from 'react';
 
 import { useAlgoliaThemeConfig } from './useAlgoliaThemeConfig';
 
-import type { ThemeConfigAlgolia } from '@docsearch/docusaurus-adapter';
+import type { ThemeConfigDocSearch } from '@docsearch/docusaurus-adapter';
 
 function replacePathname(
   pathname: string,
-  replaceSearchResultPathname: ThemeConfigAlgolia['replaceSearchResultPathname'],
+  replaceSearchResultPathname: ThemeConfigDocSearch['replaceSearchResultPathname'],
 ): string {
   return replaceSearchResultPathname
     ? pathname.replaceAll(new RegExp(replaceSearchResultPathname.from, 'g'), replaceSearchResultPathname.to)

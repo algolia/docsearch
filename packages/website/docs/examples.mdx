@@ -17,7 +17,7 @@ Use the default experience with your index credentials. this works great for typ
 <DocSearch
   appId="PMZUYBQDAK"
   apiKey="24b09689d5b4223813d9b8e48563c8f6"
-  indexName="docsearch"
+  indices={[{ name: 'docsearch' }]}
   insights={true}
   translations={{ button: { buttonText: 'keyword search (demo)' } }}
 />
@@ -26,7 +26,7 @@ Use the default experience with your index credentials. this works great for typ
 <DocSearch
   appId="PMZUYBQDAK"
   apiKey="24b09689d5b4223813d9b8e48563c8f6"
-  indexName="docsearch"
+  indices={[{ name: 'docsearch' }]}
   insights={true}
   translations={{ button: { buttonText: 'keyword search (demo)' } }}
 />
@@ -41,12 +41,9 @@ Add algolia askai to get synthesized answers grounded in your indexed content. y
 <DocSearch
   appId="PMZUYBQDAK"
   apiKey="24b09689d5b4223813d9b8e48563c8f6"
-  indexName="docsearch"
+  indices={[{ name: 'docsearch' }]}
   askAi={{
     assistantId: 'askAIDemo',
-    searchParameters: {
-      facetFilters: ['language:en'],
-    },
   }}
   insights={true}
   translations={{ button: { buttonText: 'search with askai (demo)' } }}
@@ -56,12 +53,9 @@ Add algolia askai to get synthesized answers grounded in your indexed content. y
 <DocSearch
   appId="PMZUYBQDAK"
   apiKey="24b09689d5b4223813d9b8e48563c8f6"
-  indexName="docsearch"
+  indices={[{ name: 'docsearch' }]}
   askAi={{
     assistantId: 'askAIDemo',
-    searchParameters: {
-      facetFilters: ['language:en'],
-    },
   }}
   insights={true}
   translations={{ button: { buttonText: 'search with askai (demo)' } }}
@@ -132,7 +126,7 @@ function CustomHit({ hit }) {
 <DocSearch
   appId="PMZUYBQDAK"
   apiKey="24b09689d5b4223813d9b8e48563c8f6"
-  indexName="docsearch"
+  indices={[{ name: 'docsearch' }]}
   hitComponent={CustomHit}
   insights={true}
   translations={{ button: { buttonText: 'custom hits (demo)' } }}
@@ -142,7 +136,7 @@ function CustomHit({ hit }) {
 <DocSearch
   appId="PMZUYBQDAK"
   apiKey="24b09689d5b4223813d9b8e48563c8f6"
-  indexName="docsearch"
+  indices={[{ name: 'docsearch' }]}
   hitComponent={({ hit }) => {
     // render a compact, branded hit card
     return (
@@ -231,7 +225,7 @@ const newTabNavigator = {
 <DocSearch
   appId="PMZUYBQDAK"
   apiKey="24b09689d5b4223813d9b8e48563c8f6"
-  indexName="docsearch"
+  indices={[{ name: 'docsearch' }]}
   hitComponent={HitWithNewTab}
   navigator={newTabNavigator}
   insights={true}
@@ -242,7 +236,7 @@ const newTabNavigator = {
 <DocSearch
   appId="PMZUYBQDAK"
   apiKey="24b09689d5b4223813d9b8e48563c8f6"
-  indexName="docsearch"
+  indices={[{ name: 'docsearch' }]}
   hitComponent={({ hit, children }) => (
     <a href={hit.url} target="_blank" rel="noopener noreferrer">
       {children}
@@ -275,12 +269,18 @@ the snippet below maps a non-standard record to the internal format. try it live
 <DocSearch
   appId="PMZUYBQDAK"
   apiKey="24b09689d5b4223813d9b8e48563c8f6"
-  indexName="crawler_doc"
-  askAi={{ assistantId: 'askAIDemo' }}
-  searchParameters={{
-    attributesToRetrieve: ['*'],
-    attributesToSnippet: ['*'],
-    hitsPerPage: 20,
+  indices={[
+    {
+      name: 'crawler_doc',
+      searchParameters: {
+        attributesToRetrieve: ['*'],
+        attributesToSnippet: ['*'],
+        hitsPerPage: 20,
+      },
+    },
+  ]}
+  askAi={{
+    assistantId: 'askAIDemo',
   }}
   transformItems={(items) =>
     items.map((item) => ({
@@ -311,12 +311,18 @@ the snippet below maps a non-standard record to the internal format. try it live
 <DocSearch
   appId="PMZUYBQDAK"
   apiKey="24b09689d5b4223813d9b8e48563c8f6"
-  indexName="crawler_doc"
-  askAi={{ assistantId: 'askAIDemo' }}
-  searchParameters={{
-    attributesToRetrieve: ['*'],
-    attributesToSnippet: ['*'],
-    hitsPerPage: 20,
+  indices={[
+    {
+      name: 'crawler_doc',
+      searchParameters: {
+        attributesToRetrieve: ['*'],
+        attributesToSnippet: ['*'],
+        hitsPerPage: 20,
+      },
+    },
+  ]}
+  askAi={{
+    assistantId: 'askAIDemo',
   }}
   transformItems={(items) =>
     items.map((item) => ({

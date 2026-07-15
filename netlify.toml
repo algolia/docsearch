@@ -1,5 +1,5 @@
 [build]
-command = "bun run build && bun run playground:build"
+command = "bun install --frozen-lockfile && bun run build && bun run playground:build"
 
 [[redirects]]
 from = "/apply/"

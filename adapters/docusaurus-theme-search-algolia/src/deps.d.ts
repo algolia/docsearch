@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-declare module '@docsearch/react/modal';
 declare module '@docsearch/react/style';
 declare module '@docsearch/react/style/sidepanel';
 

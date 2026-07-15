@@ -26,7 +26,7 @@ npm install @docsearch/docusaurus-adapter
 
 ## Configuration
 
-Keep `@docusaurus/preset-classic`, add the adapter plugin, and configure search under `themeConfig.docsearch` (preferred):
+Keep `@docusaurus/preset-classic`, add the adapter plugin, and configure search under `themeConfig.docsearch`:
 
 ```js title="docusaurus.config.mjs"
 export default {
@@ -35,24 +35,54 @@ export default {
     docsearch: {
       appId: 'YOUR_APP_ID',
       apiKey: 'YOUR_SEARCH_API_KEY',
-      indexName: 'YOUR_INDEX_NAME',
+      indices: [{ name: 'YOUR_INDEX_NAME' }],
       askAi: {
         assistantId: 'YOUR_ASSISTANT_ID',
-        sidePanel: true,
       },
+      sidePanel: true,
       contextualSearch: true,
+      searchPage: { path: 'search' },
     },
   },
 };
 ```
 
-## `docsearch` vs `algolia` keys
+## Configuration Key
 
-- `themeConfig.docsearch` is the canonical key.
-- `themeConfig.algolia` is supported as a backward-compatible alias.
-- Do not define both keys at the same time.
+Use `themeConfig.docsearch` as the only adapter configuration key.
 
-Using `themeConfig.docsearch` helps avoid built-in Docusaurus search-theme validation conflicts when you want newer DocSearch options like `askAi.sidePanel`.
+The adapter doesn't read `themeConfig.algolia`, which avoids built-in Docusaurus search-theme validation conflicts when you want newer DocSearch options like Agent Studio and the sidepanel.
+
+## Search Page
+
+The adapter ships a full search page (enabled by default at `/search`) with faceted filtering, an accessible "Load more" pagination, recent searches, and "Browse by section" shortcuts. Disable it with `searchPage: false`, or change its path with `searchPage: { path: 'search' }`.
+
+### Facets
+
+By default the sidebar exposes a single "Section" facet built from the `hierarchy.lvl0` attribute. Configure your own refinement lists with `searchPage.facets`:
+
+```js title="docusaurus.config.mjs"
+export default {
+  themeConfig: {
+    docsearch: {
+      // ...
+      searchPage: {
+        path: 'search',
+        facets: [
+          { attribute: 'hierarchy.lvl0', label: 'Section' },
+          { attribute: 'type', label: 'Type' },
+        ],
+      },
+    },
+  },
+};
+```
+
+Each facet is a disjunctive (OR) refinement list. Active refinements are reflected in the URL so filtered searches are shareable.
+
+### Analytics
+
+When `insights: true` is set (the same flag used by the modal), the search page enables Algolia click analytics and sends `clickedObjectIDsAfterSearch` events when a result is opened, so full-page searches feed relevance tuning just like the modal.
 
 ## Customizing Search UI (SearchBar/SearchPage)
 

@@ -1,5 +1,5 @@
 ---
-title: Getting Started with v4
+title: Getting Started with v5
 ---
 
 import Tabs from '@theme/Tabs';
@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 ## Introduction
 
-DocSearch v4 provides a significant upgrade over previous versions, offering enhanced accessibility, responsiveness, and an improved search experience for your documentation. Built on [Algolia Autocomplete][1], DocSearch v4 ensures a seamless integration trusted by leading documentation sites worldwide.
+DocSearch v5 provides a significant upgrade over previous versions, offering enhanced accessibility, responsiveness, and an improved search experience for your documentation. Built on [Algolia Autocomplete][1], DocSearch v5 ensures a seamless integration trusted by leading documentation sites worldwide.
 
 ## Installation
 
@@ -30,7 +30,7 @@ If your docs site is powered by Docusaurus, use [`@docsearch/docusaurus-adapter`
 <TabItem value="js">
 
 ```bash
-npm install @docsearch/js@4
+npm install @docsearch/js@5
 ```
 
 ### Without package manager
@@ -38,22 +38,22 @@ npm install @docsearch/js@4
 Include CSS in your website's `<head>`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@4" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@5" />
 ```
 
 And the JavaScript at the end of your `<body>`:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@5"></script>
 ```
 
 </TabItem>
 <TabItem value="react">
 
 ```bash
-bun add @docsearch/react@4
+bun add @docsearch/react@5
 # or
-npm install @docsearch/react@4
+npm install @docsearch/react@5
 ```
 
 ### Without package manager
@@ -61,13 +61,13 @@ npm install @docsearch/react@4
 Include CSS in your website's `<head>`:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@4" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@5" />
 ```
 
 And the JavaScript at the end of your `<body>`:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/react@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/react@5"></script>
 ```
 
 </TabItem>
@@ -106,7 +106,7 @@ import '@docsearch/css';
 docsearch({
   container: '#docsearch',
   appId: 'YOUR_APP_ID',
-  indexName: 'YOUR_INDEX_NAME',
+  indices: [{ name: 'YOUR_INDEX_NAME' }],
   apiKey: 'YOUR_SEARCH_API_KEY',
 });
 ```
@@ -128,7 +128,7 @@ function App() {
   return (
     <DocSearch
       appId="YOUR_APP_ID"
-      indexName="YOUR_INDEX_NAME"
+      indices={[{ name: 'YOUR_INDEX_NAME' }]}
       apiKey="YOUR_SEARCH_API_KEY"
     />
   );
@@ -161,8 +161,10 @@ If you'd like to test DocSearch immediately without your own credentials, use ou
 docsearch({
   appId: 'PMZUYBQDAK',
   apiKey: '24b09689d5b4223813d9b8e48563c8f6',
-  indexName: 'docsearch',
-  askAi: 'askAIDemo',
+  indices: [{ name: 'docsearch' }],
+  askAi: {
+    assistantId: 'askAIDemo',
+  },
 });
 ```
 
@@ -174,8 +176,10 @@ docsearch({
 <DocSearch
   appId="PMZUYBQDAK"
   apiKey="24b09689d5b4223813d9b8e48563c8f6"
-  indexName="docsearch"
-  askAi="askAIDemo"
+  indices={[{ name: 'docsearch' }]}
+  askAi={{
+    assistantId: 'askAIDemo',
+  }}
 />
 ```
 
@@ -187,48 +191,44 @@ Or use our new dedicated [DocSearch Playground](https://community.algolia.com/do
 
 ### Using DocSearch with Ask AI
 
-DocSearch v4 introduces support for Ask AI, Algolia's advanced, AI-powered search capability. Ask AI enhances the user experience by providing contextually relevant and intelligent responses directly from your documentation.
+DocSearch v5 supports Ask AI through Algolia Agent Studio. Ask AI enhances the user experience by providing contextually relevant and intelligent responses directly from your documentation.
 
-To enable Ask AI, you can add your Algolia Assistant ID as a string, or use an object for more advanced configuration (such as specifying a different index, credentials, or search parameters):
+To enable Ask AI, add your Agent Studio assistant ID:
 
-<Tabs groupId="askai-format" defaultValue="string" values={[{ label: 'String', value: 'string' }, { label: 'Object', value: 'object' }]}>
-<TabItem value="string">
-
-```js
-docsearch({
-  appId: 'YOUR_APP_ID',
-  indexName: 'YOUR_INDEX_NAME',
-  apiKey: 'YOUR_SEARCH_API_KEY',
-  askAi: 'YOUR_ALGOLIA_ASSISTANT_ID',
-});
-```
-
-</TabItem>
-<TabItem value="object">
+<Tabs groupId="askai-format" defaultValue="js" values={[{ label: 'JavaScript', value: 'js' }, { label: 'React', value: 'react' }]}>
+<TabItem value="js">
 
 ```js
 docsearch({
   appId: 'YOUR_APP_ID',
-  indexName: 'YOUR_INDEX_NAME',
+  indices: [{ name: 'YOUR_INDEX_NAME' }],
   apiKey: 'YOUR_SEARCH_API_KEY',
   askAi: {
-    indexName: 'YOUR_MARKDOWN_INDEX', // Optional: use a different index for Ask AI
-    apiKey: 'YOUR_SEARCH_API_KEY',     // Optional: use a different API key for Ask AI
-    appId: 'YOUR_APP_ID',              // Optional: use a different App ID for Ask AI
-    assistantId: 'YOUR_ALGOLIA_ASSISTANT_ID',
-    searchParameters: {
-      facetFilters: ['language:en', 'version:1.0.0'], // Optional: filter Ask AI context
-    },
-    suggestedQuestions: true // Optional: enable loading suggested questions on the Ask AI new conversation screen
+    assistantId: 'YOUR_AGENT_STUDIO_ASSISTANT_ID',
+    suggestedQuestions: true,
   },
 });
 ```
 
 </TabItem>
+<TabItem value="react">
+
+```jsx
+<DocSearch
+  appId="YOUR_APP_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  indices={[{ name: 'YOUR_INDEX_NAME' }]}
+  askAi={{
+    assistantId: 'YOUR_AGENT_STUDIO_ASSISTANT_ID',
+    suggestedQuestions: true,
+  }}
+/>
+```
+
+</TabItem>
 </Tabs>
 
-- Use the string form for a simple setup.
-- Use the object form to customize which index, credentials, or filters Ask AI uses.
+- Configure the content indices the assistant can search in Agent Studio.
 - The suggested questions feature is controlled on the [Dashboard](https://dashboard.algolia.com) in the Ask AI section.
 
 ### Filtering search results
@@ -251,9 +251,14 @@ This is useful to limit the scope of the search to one language or one version.
 
 ```js
 docsearch({
-  searchParameters: {
-    facetFilters: ['language:en', 'version:1.0.0'],
-  },
+  indices: [
+    {
+      name: 'YOUR_INDEX_NAME',
+      searchParameters: {
+        facetFilters: ['language:en', 'version:1.0.0'],
+      },
+    },
+  ],
 });
 ```
 
@@ -263,9 +268,14 @@ docsearch({
 
 ```jsx
 <DocSearch
-  searchParameters={{
-    facetFilters: ['language:en', 'version:1.0.0'],
-  }}
+  indices={[
+    {
+      name: 'YOUR_INDEX_NAME',
+      searchParameters: {
+        facetFilters: ['language:en', 'version:1.0.0'],
+      },
+    },
+  ]}
 />
 ```
 
@@ -293,9 +303,11 @@ We recommend using the `facetFilters` option when using Ask AI with multiple lan
 ```js
 docsearch({
   askAi: {
-    assistantId: 'YOUR_ALGOLIA_ASSISTANT_ID',
+    assistantId: 'YOUR_AGENT_STUDIO_ASSISTANT_ID',
     searchParameters: {
-      facetFilters: ['language:en', 'version:1.0.0'],
+      'YOUR_MARKDOWN_INDEX': {
+        facetFilters: ['language:en', 'version:1.0.0'],
+      },
     },
   },
 });
@@ -306,9 +318,11 @@ docsearch({
 ```jsx
 <DocSearch
   askAi={{
-    assistantId: 'YOUR_ALGOLIA_ASSISTANT_ID',
+    assistantId: 'YOUR_AGENT_STUDIO_ASSISTANT_ID',
     searchParameters: {
-      facetFilters: ['language:en', 'version:1.0.0'],
+      'YOUR_MARKDOWN_INDEX': {
+        facetFilters: ['language:en', 'version:1.0.0'],
+      },
     },
   }}
 />

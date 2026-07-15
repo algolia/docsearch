@@ -8,9 +8,9 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 import { getDocSearchConfig } from '../getDocSearchConfig';
 
-import type { ThemeConfig, ThemeConfigAlgolia } from '@docsearch/docusaurus-adapter';
+import type { ThemeConfig, ThemeConfigDocSearch } from '@docsearch/docusaurus-adapter';
 
-export function useAlgoliaThemeConfig(): ThemeConfigAlgolia {
+export function useAlgoliaThemeConfig(): ThemeConfigDocSearch {
   const {
     siteConfig: { themeConfig },
   } = useDocusaurusContext();
