@@ -5,8 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { ThemeConfigDocSearch } from '@docsearch/docusaurus-adapter';
 import type algoliaSearchHelper from 'algoliasearch-helper';
+
+import type { ThemeConfigDocSearch } from '@docsearch/docusaurus-adapter';
 
 type SearchIndex = ThemeConfigDocSearch['indices'][number];
 type PlainSearchParameters = NonNullable<Parameters<typeof algoliaSearchHelper>[2]>;
