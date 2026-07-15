@@ -298,6 +298,102 @@ describe('validateThemeConfig', () => {
         '`themeConfig.docsearch.sidePanel` requires `themeConfig.docsearch.askAi`.',
       );
     });
+
+    it('accepts askAi memory object', () => {
+      const docsearch: DocSearchInput = {
+        ...minimalDocSearchConfig,
+        askAi: {
+          ...minimalAskAiConfig,
+          memory: {
+            enabled: true,
+            userToken: 'b2916249-b172-4ca2-8d0f-663e0f37f85d',
+          },
+        },
+        sidePanel: {
+          variant: 'inline',
+          side: 'left',
+          width: 420,
+          expandedWidth: '60vw',
+          pushSelector: '#__docusaurus',
+          hideButton: true,
+          keyboardShortcuts: {
+            'Ctrl/Cmd+I': false,
+          },
+        },
+      };
+
+      expect(testValidateThemeConfig(docsearch)).toEqual({
+        docsearch: {
+          ...DEFAULT_CONFIG,
+          ...docsearch,
+        },
+      });
+    });
+
+    it('accepts askAi promptSuggestions object', () => {
+      const docsearch: DocSearchInput = {
+        ...minimalDocSearchConfig,
+        askAi: {
+          ...minimalAskAiConfig,
+          promptSuggestions: {
+            indexName: 'test-index',
+            hitsPerPage: 7,
+          },
+        },
+        sidePanel: {
+          variant: 'inline',
+          side: 'left',
+          width: 420,
+          expandedWidth: '60vw',
+          pushSelector: '#__docusaurus',
+          hideButton: true,
+          keyboardShortcuts: {
+            'Ctrl/Cmd+I': false,
+          },
+        },
+      };
+
+      expect(testValidateThemeConfig(docsearch)).toEqual({
+        docsearch: {
+          ...DEFAULT_CONFIG,
+          ...docsearch,
+        },
+      });
+    });
+
+    it('accepts askAi custom tools definitions', () => {
+      const docsearch: DocSearchInput = {
+        ...minimalDocSearchConfig,
+        askAi: {
+          ...minimalAskAiConfig,
+          tools: {
+            log_message: {
+              render({ message: { input } }) {
+                return `Got: ${input}`;
+              },
+            },
+          },
+        },
+        sidePanel: {
+          variant: 'inline',
+          side: 'left',
+          width: 420,
+          expandedWidth: '60vw',
+          pushSelector: '#__docusaurus',
+          hideButton: true,
+          keyboardShortcuts: {
+            'Ctrl/Cmd+I': false,
+          },
+        },
+      };
+
+      expect(testValidateThemeConfig(docsearch)).toEqual({
+        docsearch: {
+          ...DEFAULT_CONFIG,
+          ...docsearch,
+        },
+      });
+    });
   });
 
   describe('removed config migration errors', () => {

@@ -95,6 +95,10 @@
   display: none;
 }
 
+.DocSearch-Sidepanel .DocSearch-AskAiScreen-Query {
+  margin: 0;
+}
+
 .DocSearch-SidepanelButton.inline {
   background-color: var(--ifm-background-color);
 }
@@ -117,3 +121,4 @@
 .DocSearch-Container {
   z-index: calc(var(--ifm-z-index-fixed) + 1);
 }
+

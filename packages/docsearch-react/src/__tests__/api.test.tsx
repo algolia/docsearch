@@ -348,7 +348,6 @@ describe('api', () => {
 
       render(
         <DocSearchAI
-          promptSuggestions={{ indexName: 'prompt-suggestions' }}
           transformSearchClient={(searchClient) => ({
             ...searchClient,
             search: promptSuggestionsSearch,
@@ -359,6 +358,12 @@ describe('api', () => {
               resultsScreen: {
                 askAiResultsTitle: 'Suggested questions',
               },
+            },
+          }}
+          askAi={{
+            assistantId: '123',
+            promptSuggestions: {
+              indexName: 'prompt-suggestions',
             },
           }}
         />,

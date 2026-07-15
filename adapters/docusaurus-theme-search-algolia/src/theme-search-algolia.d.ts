@@ -39,6 +39,9 @@ declare module '@docsearch/docusaurus-adapter' {
     suggestedQuestions?: DocSearchAskAi['suggestedQuestions'];
     searchParameters?: AgentStudioSearchParameters;
     indices?: AgentStudioIndices[];
+    tools?: DocSearchAskAi['tools'];
+    memory?: DocSearchAskAi['memory'];
+    promptSuggestions?: DocSearchAskAi['promptSuggestions'];
   };
 
   // DocSearch props that Docusaurus exposes directly through props forwarding

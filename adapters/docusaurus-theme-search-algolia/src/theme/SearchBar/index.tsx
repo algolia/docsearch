@@ -356,8 +356,10 @@ function DocSearch({
             appId={sidePanelAskAi.appId}
             indexName={sidePanelAskAi.indexName}
             searchParameters={sidePanelAskAi.searchParameters}
-            indices={sidePanelAskAi.indices}
+            indices={panelOptions.indices ?? sidePanelAskAi.indices}
             suggestedQuestions={panelOptions.suggestedQuestions ?? sidePanelAskAi.suggestedQuestions}
+            tools={panelOptions.tools ?? sidePanelAskAi.tools}
+            memory={panelOptions.memory ?? sidePanelAskAi.memory}
           />
         )}
     </>

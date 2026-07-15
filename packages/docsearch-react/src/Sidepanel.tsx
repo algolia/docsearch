@@ -71,6 +71,11 @@ export type DocSearchSidepanelProps = DocSearchCallbacks & {
   tools?: ToolCalls;
   /**
    * Configuration for the Agent Studio memory feature.
+   *
+   * @see https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/memory/overview
+   *
+   * @example
+   * { enabled: true, userToken: '{{SERVER_GENERATED_JWT_TOKEN}}' }
    */
   memory?: Memory;
   /**

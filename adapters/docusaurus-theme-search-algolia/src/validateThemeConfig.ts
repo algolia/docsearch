@@ -31,37 +31,6 @@ const SearchParametersSchema = Joi.object({
   distinct: Joi.alternatives().try(Joi.boolean(), Joi.number(), Joi.string()).optional(),
 }).unknown();
 
-const SidePanelKeyboardShortcutsSchema = Joi.object({
-  'Ctrl/Cmd+I': Joi.boolean().optional(),
-}).unknown(false);
-
-const SidePanelSchema = Joi.object({
-  keyboardShortcuts: SidePanelKeyboardShortcutsSchema.optional(),
-  variant: Joi.string().valid('floating', 'inline').optional(),
-  side: Joi.string().valid('left', 'right').optional(),
-  width: Joi.alternatives().try(Joi.number(), Joi.string()).optional(),
-  expandedWidth: Joi.alternatives().try(Joi.number(), Joi.string()).optional(),
-  pushSelector: Joi.string().optional(),
-  suggestedQuestions: Joi.boolean().optional(),
-  translations: Joi.object().optional().unknown(),
-  hideButton: Joi.boolean().optional(),
-  portalContainer: Joi.object().optional().unknown(),
-}).unknown(false);
-
-const KeyboardShortcutsSchema = Joi.object({
-  'Ctrl/Cmd+K': Joi.boolean().optional(),
-  '/': Joi.boolean().optional(),
-  'Ctrl/Cmd+I': Joi.boolean().optional(),
-}).unknown(false);
-
-const IndexSchema = Joi.alternatives().try(
-  Joi.string(),
-  Joi.object({
-    name: Joi.string().required(),
-    searchParameters: SearchParametersSchema.optional(),
-  }).unknown(false),
-);
-
 const SearchControlTextParamSchema = Joi.object({
   exposed: Joi.boolean().required(),
   default: Joi.string().optional(),
@@ -112,11 +81,65 @@ const AskAiIndexSchema = Joi.object({
   searchControls: AgentStudioSearchControlsSchema.optional(),
 }).unknown(false);
 
+const AskAiToolDefinitionSchema = Joi.object({
+  render: Joi.function().required(),
+  onToolCall: Joi.function().optional(),
+  translations: Joi.object({
+    callingToolText: Joi.string().optional(),
+  }).optional(),
+}).unknown(false);
+
+const AskAiMemorySchema = Joi.object({
+  enabled: Joi.bool().optional().default(false),
+  userToken: Joi.string().optional(),
+}).unknown(false);
+
+const SidePanelKeyboardShortcutsSchema = Joi.object({
+  'Ctrl/Cmd+I': Joi.boolean().optional(),
+}).unknown(false);
+
+const SidePanelSchema = Joi.object({
+  keyboardShortcuts: SidePanelKeyboardShortcutsSchema.optional(),
+  variant: Joi.string().valid('floating', 'inline').optional(),
+  side: Joi.string().valid('left', 'right').optional(),
+  width: Joi.alternatives().try(Joi.number(), Joi.string()).optional(),
+  expandedWidth: Joi.alternatives().try(Joi.number(), Joi.string()).optional(),
+  pushSelector: Joi.string().optional(),
+  suggestedQuestions: Joi.boolean().optional(),
+  translations: Joi.object().optional().unknown(),
+  hideButton: Joi.boolean().optional(),
+  portalContainer: Joi.object().optional().unknown(),
+  tools: Joi.object().pattern(Joi.string(), AskAiToolDefinitionSchema.required()).optional(),
+  memory: AskAiMemorySchema.optional(),
+}).unknown(false);
+
+const KeyboardShortcutsSchema = Joi.object({
+  'Ctrl/Cmd+K': Joi.boolean().optional(),
+  '/': Joi.boolean().optional(),
+  'Ctrl/Cmd+I': Joi.boolean().optional(),
+}).unknown(false);
+
+const IndexSchema = Joi.alternatives().try(
+  Joi.string(),
+  Joi.object({
+    name: Joi.string().required(),
+    searchParameters: SearchParametersSchema.optional(),
+  }).unknown(false),
+);
+
+const AskAiPromptSuggestionsSchema = Joi.object({
+  indexName: Joi.string().min(1).required(),
+  hitsPerPage: Joi.number().positive().optional().default(3),
+}).unknown(false);
+
 const AskAiSchema = Joi.object({
   assistantId: Joi.string().required(),
   suggestedQuestions: Joi.boolean().optional(),
   searchParameters: Joi.object().pattern(Joi.string(), SearchParametersSchema).optional(),
   indices: Joi.array().items(AskAiIndexSchema).min(1).optional(),
+  tools: Joi.object().pattern(Joi.string(), AskAiToolDefinitionSchema.required()).optional(),
+  memory: AskAiMemorySchema.optional(),
+  promptSuggestions: AskAiPromptSuggestionsSchema.optional(),
 }).unknown(false);
 
 const SearchPageFacetSchema = Joi.object({

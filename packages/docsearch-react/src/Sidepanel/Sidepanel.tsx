@@ -62,7 +62,7 @@ export type SidepanelTranslations = Partial<{
   logo: AlgoliaLogoTranslations;
 }>;
 
-export type SidepanelProps = {
+export type SidepanelProps = Pick<DocSearchSidepanelProps, 'indices' | 'memory' | 'tools'> & {
   /**
    * Variant of the Sidepanel positioning.
    *
@@ -120,7 +120,7 @@ export type SidepanelProps = {
   keyboardShortcuts?: SidepanelShortcuts;
 };
 
-type Props = Omit<DocSearchSidepanelProps, 'button' | 'panel'> &
+type Props = Omit<DocSearchSidepanelProps, 'button' | 'indices' | 'memory' | 'panel' | 'tools'> &
   SidepanelProps &
   SidepanelSearchParameters & {
     isOpen?: boolean;
