@@ -287,6 +287,58 @@ describe('validateThemeConfig', () => {
       });
     });
 
+    it('accepts sidePanel Agent Studio indices', () => {
+      const docsearch: DocSearchInput = {
+        ...minimalDocSearchConfig,
+        askAi: minimalAskAiConfig,
+        sidePanel: {
+          indices: [
+            {
+              index: 'sidepanel-markdown-index',
+              description: 'Documentation content for the side panel.',
+            },
+          ],
+        },
+      };
+
+      expect(testValidateThemeConfig(docsearch)).toEqual({
+        docsearch: {
+          ...DEFAULT_CONFIG,
+          ...docsearch,
+        },
+      });
+    });
+
+    it('rejects empty sidePanel Agent Studio indices', () => {
+      const docsearch = {
+        ...minimalDocSearchConfig,
+        askAi: minimalAskAiConfig,
+        sidePanel: {
+          indices: [],
+        },
+      } as unknown as DocSearchInput;
+
+      expectThrowMessage(
+        () => testValidateThemeConfig(docsearch),
+        '"docsearch.sidePanel.indices" must contain at least 1 items',
+      );
+    });
+
+    it('rejects incomplete sidePanel Agent Studio indices', () => {
+      const docsearch = {
+        ...minimalDocSearchConfig,
+        askAi: minimalAskAiConfig,
+        sidePanel: {
+          indices: [{ index: 'sidepanel-markdown-index' }],
+        },
+      } as unknown as DocSearchInput;
+
+      expectThrowMessage(
+        () => testValidateThemeConfig(docsearch),
+        '"docsearch.sidePanel.indices[0].description" is required',
+      );
+    });
+
     it('rejects sidePanel without askAi', () => {
       const docsearch: DocSearchInput = {
         ...minimalDocSearchConfig,
@@ -361,38 +413,34 @@ describe('validateThemeConfig', () => {
       });
     });
 
-    it('accepts askAi custom tools definitions', () => {
-      const docsearch: DocSearchInput = {
+    it('rejects askAi custom tools definitions', () => {
+      const docsearch = {
         ...minimalDocSearchConfig,
         askAi: {
           ...minimalAskAiConfig,
-          tools: {
-            log_message: {
-              render({ message: { input } }) {
-                return `Got: ${input}`;
-              },
-            },
-          },
+          tools: {},
         },
-        sidePanel: {
-          variant: 'inline',
-          side: 'left',
-          width: 420,
-          expandedWidth: '60vw',
-          pushSelector: '#__docusaurus',
-          hideButton: true,
-          keyboardShortcuts: {
-            'Ctrl/Cmd+I': false,
-          },
-        },
-      };
+      } as unknown as DocSearchInput;
 
-      expect(testValidateThemeConfig(docsearch)).toEqual({
-        docsearch: {
-          ...DEFAULT_CONFIG,
-          ...docsearch,
+      expectThrowMessage(
+        () => testValidateThemeConfig(docsearch),
+        '`themeConfig.docsearch.askAi.tools` is not supported because Docusaurus removes function values',
+      );
+    });
+
+    it('rejects sidePanel custom tools definitions', () => {
+      const docsearch = {
+        ...minimalDocSearchConfig,
+        askAi: minimalAskAiConfig,
+        sidePanel: {
+          tools: {},
         },
-      });
+      } as unknown as DocSearchInput;
+
+      expectThrowMessage(
+        () => testValidateThemeConfig(docsearch),
+        '`themeConfig.docsearch.sidePanel.tools` is not supported because Docusaurus removes function values',
+      );
     });
   });
 

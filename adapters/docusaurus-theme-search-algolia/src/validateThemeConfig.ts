@@ -81,14 +81,6 @@ const AskAiIndexSchema = Joi.object({
   searchControls: AgentStudioSearchControlsSchema.optional(),
 }).unknown(false);
 
-const AskAiToolDefinitionSchema = Joi.object({
-  render: Joi.function().required(),
-  onToolCall: Joi.function().optional(),
-  translations: Joi.object({
-    callingToolText: Joi.string().optional(),
-  }).optional(),
-}).unknown(false);
-
 const AskAiMemorySchema = Joi.object({
   enabled: Joi.bool().optional().default(false),
   userToken: Joi.string().optional(),
@@ -109,7 +101,7 @@ const SidePanelSchema = Joi.object({
   translations: Joi.object().optional().unknown(),
   hideButton: Joi.boolean().optional(),
   portalContainer: Joi.object().optional().unknown(),
-  tools: Joi.object().pattern(Joi.string(), AskAiToolDefinitionSchema.required()).optional(),
+  indices: Joi.array().items(AskAiIndexSchema).min(1).optional(),
   memory: AskAiMemorySchema.optional(),
 }).unknown(false);
 
@@ -137,7 +129,6 @@ const AskAiSchema = Joi.object({
   suggestedQuestions: Joi.boolean().optional(),
   searchParameters: Joi.object().pattern(Joi.string(), SearchParametersSchema).optional(),
   indices: Joi.array().items(AskAiIndexSchema).min(1).optional(),
-  tools: Joi.object().pattern(Joi.string(), AskAiToolDefinitionSchema.required()).optional(),
   memory: AskAiMemorySchema.optional(),
   promptSuggestions: AskAiPromptSuggestionsSchema.optional(),
 }).unknown(false);
@@ -242,6 +233,13 @@ function assertNoRemovedKeys(themeConfig: ThemeConfig): void {
     );
   }
 
+  const sidePanel = docsearchRecord.sidePanel;
+  if (sidePanel && typeof sidePanel === 'object' && (sidePanel as Record<string, unknown>).tools !== undefined) {
+    throw new Error(
+      '`themeConfig.docsearch.sidePanel.tools` is not supported because Docusaurus removes function values when serializing theme config. Pass custom tools through a swizzled `@theme/SearchBar` component instead: use `askAi` for the modal and `sidePanel` for the side panel.',
+    );
+  }
+
   const askAi = docsearchRecord.askAi;
   if (typeof askAi === 'string') {
     throw new Error('`themeConfig.docsearch.askAi` must be an object with `assistantId`.');
@@ -268,6 +266,12 @@ function assertNoRemovedKeys(themeConfig: ThemeConfig): void {
   if (askAiRecord.sidePanel !== undefined) {
     throw new Error(
       '`themeConfig.docsearch.askAi.sidePanel` was removed. Use `themeConfig.docsearch.sidePanel` instead.',
+    );
+  }
+
+  if (askAiRecord.tools !== undefined) {
+    throw new Error(
+      '`themeConfig.docsearch.askAi.tools` is not supported because Docusaurus removes function values when serializing theme config. Pass custom tools through a swizzled `@theme/SearchBar` component instead: use `askAi` for the modal and `sidePanel` for the side panel.',
     );
   }
 }

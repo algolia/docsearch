@@ -1,5 +1,7 @@
 import { test, expect } from './fixtures';
 
+const MAX_KEYBOARD_NAVIGATION_STEPS = 10;
+
 test.describe('Start', () => {
   test.beforeEach(async ({ docSearch }) => {
     await docSearch.goto();
@@ -89,12 +91,22 @@ test.describe('Search', () => {
 
     await docSearch.typeQueryMatching();
     await expect(docSearch.hits).toBeVisible();
-    await page.keyboard.press('ArrowDown');
-    await page.keyboard.press('ArrowDown');
-    await page.keyboard.press('ArrowDown');
-    await page.keyboard.press('ArrowDown');
-    await page.keyboard.press('ArrowDown');
-    await page.keyboard.press('ArrowUp');
+    const firstHitOption = page.locator('#docsearch-hits_docsearch-list').getByRole('option').first();
+    const firstHitOptionId = await firstHitOption.getAttribute('id');
+
+    expect(firstHitOptionId).not.toBeNull();
+
+    // Prompt suggestions precede document hits, but the number is not stable.
+    for (let index = 0; index < MAX_KEYBOARD_NAVIGATION_STEPS; index++) {
+      if ((await docSearch.input.getAttribute('aria-activedescendant')) === firstHitOptionId) {
+        break;
+      }
+
+      await page.keyboard.press('ArrowDown');
+    }
+
+    await expect(docSearch.input).toHaveAttribute('aria-activedescendant', firstHitOptionId!);
+    await expect(firstHitOption).toHaveAttribute('aria-selected', 'true');
     await page.keyboard.press('Enter');
 
     await expect(page).not.toHaveURL(initialURL, { timeout: 10000 });

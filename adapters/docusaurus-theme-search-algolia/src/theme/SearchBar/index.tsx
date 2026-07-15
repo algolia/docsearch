@@ -20,6 +20,7 @@ import type {
   DocSearchTranslations,
   InternalDocSearchHit,
   StoredDocSearchHit,
+  ToolCalls,
 } from '@docsearch/react';
 import { SidepanelButton } from '@docsearch/sidepanel/button';
 import type { Sidepanel as SidepanelType } from '@docsearch/sidepanel/sidepanel';
@@ -43,12 +44,13 @@ import {
   useSearchResultUrlProcessor,
 } from '../../client';
 
-import type { ThemeConfigDocSearch } from '@docsearch/docusaurus-adapter';
+import type { DocusaurusSearchBarAskAiProps, ThemeConfigDocSearch } from '@docsearch/docusaurus-adapter';
 
 type NavigatorNavigateParams = Parameters<NonNullable<NonNullable<DocSearchModalProps['navigator']>['navigate']>>[0];
 
-type SidePanelOptions = Exclude<NonNullable<ThemeConfigDocSearch['sidePanel']>, boolean>;
+type SidePanelOptions = Exclude<NonNullable<ThemeConfigDocSearch['sidePanel']>, boolean> & { tools?: ToolCalls };
 type SidePanelPanelOptions = Omit<SidePanelOptions, 'hideButton' | 'keyboardShortcuts'>;
+type AskAiOptions = NonNullable<ThemeConfigDocSearch['askAi']> & Pick<DocusaurusSearchBarAskAiProps, 'tools'>;
 
 type AdapterDocSearchProps = Omit<
   DocSearchAskAiModalProps,
@@ -61,12 +63,12 @@ type AdapterDocSearchProps = Omit<
   | 'onClose'
   | 'searchParameters'
 > & {
-  askAi?: ThemeConfigDocSearch['askAi'];
+  askAi?: AskAiOptions;
   contextualSearch?: boolean;
   externalUrlRegex?: string;
   indices: NonNullable<DocSearchProps['indices']>;
   searchPage: ThemeConfigDocSearch['searchPage'];
-  sidePanel?: ThemeConfigDocSearch['sidePanel'];
+  sidePanel?: SidePanelOptions | boolean;
   translations?: DocSearchTranslations;
 };
 
@@ -305,7 +307,7 @@ function DocSearch({
     translations: props.translations?.modal ?? translations.modal,
     indices,
   };
-  const panelOptions = getSidePanelPanelOptions(sidePanelOptions);
+  const panelOptions = getSidePanelPanelOptions(typeof sidePanel === 'object' ? sidePanel : undefined);
 
   return (
     <>

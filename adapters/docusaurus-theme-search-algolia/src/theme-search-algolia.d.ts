@@ -11,10 +11,17 @@ declare module '@docsearch/docusaurus-adapter' {
     AgentStudioSearchParameters,
     DocSearchAskAi,
     DocSearchProps,
+    ToolCalls,
   } from '@docsearch/react';
   import type { SidepanelProps } from '@docsearch/react/sidepanel';
 
-  type DocusaurusSidePanelConfig = boolean | (SidepanelProps & { hideButton?: boolean });
+  type DocusaurusSidePanelConfig = boolean | (Omit<SidepanelProps, 'tools'> & { hideButton?: boolean });
+  type DocusaurusSearchBarSidePanelProps =
+    | boolean
+    | (Omit<SidepanelProps, 'tools'> & {
+        hideButton?: boolean;
+        tools?: ToolCalls;
+      });
 
   type SearchPageFacetConfig = {
     /** Algolia attribute to build a refinement list from (e.g. `hierarchy.lvl0`). */
@@ -39,10 +46,11 @@ declare module '@docsearch/docusaurus-adapter' {
     suggestedQuestions?: DocSearchAskAi['suggestedQuestions'];
     searchParameters?: AgentStudioSearchParameters;
     indices?: AgentStudioIndices[];
-    tools?: DocSearchAskAi['tools'];
     memory?: DocSearchAskAi['memory'];
     promptSuggestions?: DocSearchAskAi['promptSuggestions'];
   };
+
+  export type DocusaurusSearchBarAskAiProps = AskAiConfig & Pick<DocSearchAskAi, 'tools'>;
 
   // DocSearch props that Docusaurus exposes directly through props forwarding
   type DocusaurusDocSearchProps = Pick<
@@ -79,6 +87,13 @@ declare module '@docsearch/docusaurus-adapter' {
     };
   };
 
+  export type DocusaurusSearchBarProps = Partial<
+    Omit<ThemeConfigDocSearch, 'askAi' | 'sidePanel'> & {
+      askAi?: DocusaurusSearchBarAskAiProps;
+      sidePanel?: DocusaurusSearchBarSidePanelProps;
+    }
+  >;
+
   type UserDocSearchConfig = Omit<Partial<ThemeConfigDocSearch>, 'apiKey' | 'appId' | 'askAi' | 'indices'> & {
     appId: ThemeConfigDocSearch['appId'];
     apiKey: ThemeConfigDocSearch['apiKey'];
@@ -104,7 +119,9 @@ declare module '@theme/SearchPage' {
 declare module '@theme/SearchBar' {
   import type { ReactNode } from 'react';
 
-  export default function SearchBar(): ReactNode;
+  import type { DocusaurusSearchBarProps } from '@docsearch/docusaurus-adapter';
+
+  export default function SearchBar(props?: DocusaurusSearchBarProps): ReactNode;
 }
 
 declare module '@theme/SearchTranslations' {
