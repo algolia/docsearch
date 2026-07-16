@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/js",
   "description": "JavaScript package for DocSearch, the best search experience for docs.",
-  "version": "4.6.0",
+  "version": "5.0.0-beta.0",
   "license": "MIT",
   "homepage": "https://docsearch.algolia.com",
   "repository": {
@@ -33,8 +33,8 @@
     "watch": "tsdown --watch"
   },
   "dependencies": {
-    "@docsearch/core": "4.6.0",
-    "@docsearch/react": "4.6.0"
+    "@docsearch/core": "5.0.0-beta.0",
+    "@docsearch/react": "5.0.0-beta.0"
   },
   "devDependencies": {
     "htm": "3.1.1",

@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/react",
   "description": "React package for DocSearch, the best search experience for docs.",
-  "version": "4.6.0",
+  "version": "5.0.0-beta.0",
   "license": "MIT",
   "homepage": "https://docsearch.algolia.com",
   "repository": {
@@ -50,8 +50,8 @@
     "@ai-sdk/react": "^2.0.30",
     "@algolia/autocomplete-core": "1.19.2",
     "@base-ui/react": "^1.5.0",
-    "@docsearch/core": "4.6.0",
-    "@docsearch/css": "4.6.0",
+    "@docsearch/core": "5.0.0-beta.0",
+    "@docsearch/css": "5.0.0-beta.0",
     "ai": "^5.0.30",
     "algoliasearch": "^5.28.0",
     "marked": "^16.3.0",
@@ -59,7 +59,7 @@
   },
   "devDependencies": {
     "@algolia/autocomplete-core": "1.19.2",
-    "@docsearch/core": "4.6.0",
+    "@docsearch/core": "5.0.0-beta.0",
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.2.0",
     "preact": "11.0.0-beta.0",
