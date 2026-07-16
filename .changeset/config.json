@@ -16,7 +16,7 @@
   ],
   "linked": [],
   "access": "public",
-  "baseBranch": "main",
+  "baseBranch": "v5",
   "updateInternalDependencies": "patch",
   "ignore": [
     "@docsearch/website",
