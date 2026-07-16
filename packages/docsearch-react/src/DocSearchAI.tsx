@@ -127,6 +127,34 @@ export interface AgentStudioIndices {
   searchControls?: AgentStudioSearchControls;
 }
 
+export interface Memory {
+  /**
+   * Determines whether or not to display the memory based tool calls.
+   *
+   * @default false
+   */
+  enabled?: boolean;
+  /**
+   * The JWT used by the agent to know which user's memory to read.
+   *
+   * @see https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/user-authentication
+   */
+  userToken?: string;
+}
+
+export interface PromptSuggestions {
+  /**
+   * The name of the index where the prompt suggestions are stored.
+   */
+  indexName: string;
+  /**
+   * The number of prompt suggestions that are retrieved and displayed.
+   *
+   * @default 3
+   */
+  hitsPerPage?: number;
+}
+
 export interface DocSearchAskAi {
   /**
    * The index name to use for the Ask AI feature. Your assistant will search for relevant documents.
@@ -167,34 +195,32 @@ export interface DocSearchAskAi {
    * List of dynamic indices for the Agent Studio search tool to use.
    */
   indices?: AgentStudioIndices[];
-}
-
-export interface Memory {
   /**
-   * Determines whether or not to display the memory based tool calls.
+   * Use custom tools driven by Agent Studio.
    *
-   * @default false
-   */
-  enabled?: boolean;
+   * For best performance, memoize this object with `useMemo` or define it
+   * outside the component. Inline object literals will be recreated every
+   * render but will not affect correctness.
+   **/
+  tools?: ToolCalls;
   /**
-   * The JWT used by the agent to know which user's memory to read.
+   * Configuration for the Agent Studio memory feature.
    *
-   * @see https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/user-authentication
-   */
-  userToken?: string;
-}
-
-export interface PromptSuggestions {
-  /**
-   * The name of the index where the prompt suggestions are stored.
-   */
-  indexName: string;
-  /**
-   * The number of prompt suggestions that are retrieved and displayed.
+   * @see https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/memory/overview
    *
-   * @default 3
+   * @example
+   * { enabled: true, userToken: '{{SERVER_GENERATED_JWT_TOKEN}}' }
    */
-  hitsPerPage?: number;
+  memory?: Memory;
+  /**
+   * Enables and configures prompt suggestions that are displayed during keyword search.
+   *
+   * @see https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/integration#prompt-suggestions
+   *
+   * @example
+   * { indexName: 'docsearch-markdown_prompt_suggestions', hitsPerPage: 1 }
+   */
+  promptSuggestions?: PromptSuggestions;
 }
 
 export interface DocSearchAIProps extends DocSearchProps {
@@ -209,27 +235,6 @@ export interface DocSearchAIProps extends DocSearchProps {
    * Useful to route Ask AI into a different UI (e.g. `@docsearch/sidepanel-js`) without flicker.
    */
   interceptAskAiEvent?: (initialMessage: InitialAskAiMessage) => boolean | void;
-  /**
-   * Use custom tools driven by Agent Studio.
-   *
-   * For best performance, memoize this object with `useMemo` or define it
-   * outside the component. Inline object literals will be recreated every
-   * render but will not affect correctness.
-   **/
-  tools?: ToolCalls;
-  /**
-   * Configuration for the Agent Studio memory feature.
-   */
-  memory?: Memory;
-  /**
-   * Enables and configures prompt suggestions that are displayed during keyword search.
-   *
-   * @see https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/integration#prompt-suggestions
-   *
-   * @example
-   * { indexName: 'docsearch-markdown_prompt_suggestions', hitsPerPage: 1 }
-   */
-  promptSuggestions?: PromptSuggestions;
 }
 
 function DocSearchAIComponent(props: DocSearchAIProps, ref: React.ForwardedRef<DocSearchRef>): JSX.Element {
@@ -280,3 +285,5 @@ export function DocSearchAIInner(props: DocSearchAIProps): JSX.Element {
     </>
   );
 }
+
+export type { ToolCalls } from './types/AskiAi';

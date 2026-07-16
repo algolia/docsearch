@@ -86,8 +86,6 @@ export function DocSearchAskAiModal({
   searchParameters,
   facets,
   isHybridModeSupported = false,
-  tools = EMPTY_TOOLS,
-  promptSuggestions,
   ...props
 }: DocSearchAskAiModalProps): JSX.Element {
   const {
@@ -133,7 +131,8 @@ export function DocSearchAskAiModal({
     searchClient,
     suggestedQuestionsEnabled: askAiConfig?.suggestedQuestions,
   });
-  const memoryEnabled = props.memory?.enabled ?? false;
+  const memoryEnabled = askAiConfig?.memory?.enabled ?? false;
+  const tools = askAiConfig?.tools ?? EMPTY_TOOLS;
 
   const indexes = React.useMemo(
     () =>
@@ -193,7 +192,7 @@ export function DocSearchAskAiModal({
     indexName: askAiConfig?.indexName || defaultIndexName,
     searchParameters: askAiSearchParameters,
     tools,
-    memory: props.memory,
+    memory: askAiConfig?.memory,
     indices: askAiConfig?.indices,
   });
 
@@ -376,7 +375,7 @@ export function DocSearchAskAiModal({
           ? buildAskAiActionSources({
               query,
               handleSelectAskAiQuestion,
-              promptSuggestionsOptions: promptSuggestions,
+              promptSuggestionsOptions: askAiConfig?.promptSuggestions,
               searchClient,
             })
           : Promise.resolve([]);

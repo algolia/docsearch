@@ -14,12 +14,14 @@ import { mergeFacetFilters } from './utils';
 
 import type { AskAiConfig } from '@docsearch/docusaurus-adapter';
 
+type AskAiOptions = AskAiConfig & Pick<DocSearchAskAi, 'tools'>;
+
 // The minimal props the hook needs from DocSearch
 interface DocSearchPropsLite {
   apiKey: string;
   appId: string;
   indices: NonNullable<DocSearchProps['indices']>;
-  askAi?: AskAiConfig;
+  askAi?: AskAiOptions;
 }
 
 type UseAskAiResult = {
@@ -56,9 +58,9 @@ function applyContextualSearchToAgentStudioIndex(
 // This can't be done at config normalization time because contextual filters
 // can only be determined at runtime
 function applyAskAiContextualSearch(
-  askAi: AskAiConfig | undefined,
+  askAi: AskAiOptions | undefined,
   contextualSearchFilters: FacetFilters | undefined,
-): AskAiConfig | undefined {
+): AskAiOptions | undefined {
   if (!askAi) {
     return undefined;
   }

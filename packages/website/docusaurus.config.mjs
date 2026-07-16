@@ -73,6 +73,9 @@ export default {
         indices: [{ name: 'docsearch' }],
         askAi: {
           assistantId: 'ccdec697-e3fe-465b-a1c3-657e7bf18aef',
+          promptSuggestions: {
+            indexName: 'docsearch-markdown_prompt_suggestions',
+          },
         },
         sidePanel: true,
         contextualSearch: true,
