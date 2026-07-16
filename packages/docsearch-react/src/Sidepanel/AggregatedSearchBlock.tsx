@@ -12,7 +12,9 @@ const separator = ', ';
 const lastSeparator = ' and ';
 const after = '';
 
-export function AggregatedSearchBlock({ queries }: AggregatedSearchBlockProps): JSX.Element {
+export function AggregatedSearchBlock({
+  queries,
+}: AggregatedSearchBlockProps): JSX.Element {
   return (
     <div className="DocSearch-AskAiScreen-MessageContent-Tool Tool--AggregatedResult">
       <SearchIcon size={18} />
@@ -21,7 +23,9 @@ export function AggregatedSearchBlock({ queries }: AggregatedSearchBlockProps): 
         {queries.map((q, idx) => (
           // eslint-disable-next-line react/no-array-index-key
           <Fragment key={q + idx}>
-            <span className="DocSearch-AskAiScreen-MessageContent-Tool-Query">&quot;{q}&quot;</span>
+            <span className="DocSearch-AskAiScreen-MessageContent-Tool-Query">
+              &quot;{q}&quot;
+            </span>
             {idx < queries.length - 2 && separator}
             {idx === queries.length - 2 && lastSeparator}
           </Fragment>

@@ -14,7 +14,8 @@ const currentYear = currentDate.getFullYear();
 /** @type {import('@docusaurus/types').Config} */
 export default {
   title: 'DocSearch by Algolia',
-  tagline: 'The best search experience for docs, integrated in minutes, for free.',
+  tagline:
+    'The best search experience for docs, integrated in minutes, for free.',
   url: 'https://docsearch.algolia.com',
   baseUrl: '/',
   favicon: 'img/favicon.ico',
@@ -40,7 +41,8 @@ export default {
         docs: {
           path: 'docs',
           sidebarPath: 'sidebars.js',
-          editUrl: 'https://github.com/algolia/docsearch/edit/main/packages/website/',
+          editUrl:
+            'https://github.com/algolia/docsearch/edit/main/packages/website/',
           versions: {
             current: {
               label: 'Stable (v4.x)',

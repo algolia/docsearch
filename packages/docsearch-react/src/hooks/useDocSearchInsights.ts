@@ -4,7 +4,7 @@ import React from 'react';
 import type { DocSearchState, InternalDocSearchHit } from '../types';
 
 export function useSendItemClickEvent(
-  state: DocSearchState<InternalDocSearchHit>,
+  state: DocSearchState<InternalDocSearchHit>
 ): (item: InternalDocSearchHit) => void {
   return React.useCallback(
     (item: InternalDocSearchHit): void => {
@@ -22,6 +22,6 @@ export function useSendItemClickEvent(
         queryID: insightsItem.__autocomplete_queryID,
       });
     },
-    [state.context.algoliaInsightsPlugin],
+    [state.context.algoliaInsightsPlugin]
   );
 }

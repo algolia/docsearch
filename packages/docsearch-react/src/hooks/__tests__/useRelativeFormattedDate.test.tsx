@@ -97,7 +97,9 @@ describe('useRelativeFormattedDate', () => {
   it('returns a stable reference when inputs do not change', () => {
     const start = new Date(NOW - 60 * 60 * 1000);
     const end = NOW;
-    const { result, rerender } = renderHook(() => useRelativeFormattedDate(start, end));
+    const { result, rerender } = renderHook(() =>
+      useRelativeFormattedDate(start, end)
+    );
 
     const first = result.current;
     rerender();
@@ -107,9 +109,12 @@ describe('useRelativeFormattedDate', () => {
 
   it('does not recompute when inputs change', () => {
     const end = NOW;
-    const { result, rerender } = renderHook(({ start }) => useRelativeFormattedDate(start, end), {
-      initialProps: { start: new Date(NOW - 60 * 60 * 1000) },
-    });
+    const { result, rerender } = renderHook(
+      ({ start }) => useRelativeFormattedDate(start, end),
+      {
+        initialProps: { start: new Date(NOW - 60 * 60 * 1000) },
+      }
+    );
 
     const first = result.current;
 
@@ -123,7 +128,9 @@ describe('useRelativeFormattedDate', () => {
 
   it('does not recompute when Date.now changes', () => {
     const start = new Date(NOW - 60 * 60 * 1000);
-    const { result, rerender } = renderHook(() => useRelativeFormattedDate(start));
+    const { result, rerender } = renderHook(() =>
+      useRelativeFormattedDate(start)
+    );
 
     const first = result.current;
 

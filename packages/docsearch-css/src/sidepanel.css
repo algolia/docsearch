@@ -17,14 +17,20 @@
   --docsearch-sidepanel-scrollbar-bg: var(--docsearch-modal-background);
   --docsearch-sidepanel-hit-background: var(--docsearch-hit-background);
   --docsearch-sidepanel-hit-color: var(--docsearch-hit-color);
-  --docsearch-sidepanel-hit-highlight-color: var(--docsearch-hit-highlight-color);
-  --docsearch-sidepanel-button-background: var(--docsearch-sidepanel-background);
-  --docsearch-sidepanel-button-background-dark: var(--docsearch-sidepanel-background);
+  --docsearch-sidepanel-hit-highlight-color: var(
+    --docsearch-hit-highlight-color
+  );
+  --docsearch-sidepanel-button-background: var(
+    --docsearch-sidepanel-background
+  );
+  --docsearch-sidepanel-button-background-dark: var(
+    --docsearch-sidepanel-background
+  );
 }
 
 html[data-theme='dark'] {
   --docsearch-sidepanel-text-base: var(--docsearch-text-color);
-  --docsearch-sidepanel-primary-disabled: rgba(1, 45, 186, 0.60);
+  --docsearch-sidepanel-primary-disabled: rgba(1, 45, 186, 0.6);
   --docsearch-sidepanel-button-background-dark: rgba(4, 4, 8, 1);
 }
 
@@ -90,7 +96,18 @@ html[data-theme='dark'] {
   all: unset;
   cursor: pointer;
   transition: all 150ms ease-in-out;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Open Sans',
+    'Helvetica Neue',
+    sans-serif;
   line-height: normal;
 }
 
@@ -113,7 +130,9 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   min-width: 0px;
   will-change: transform, width, opacity;
   overflow: hidden;
-  box-shadow: 0px 0px 0px 1px rgba(35, 38, 59, 0.05), 0px 4px 8px -2px rgba(35, 38, 59, 0.25);
+  box-shadow:
+    0px 0px 0px 1px rgba(35, 38, 59, 0.05),
+    0px 4px 8px -2px rgba(35, 38, 59, 0.25);
   opacity: 0;
   z-index: 999;
   width: 100svw;
@@ -220,7 +239,18 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   display: flex;
   flex-direction: column;
   background-color: var(--docsearch-sidepanel-background);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Open Sans',
+    'Helvetica Neue',
+    sans-serif;
   overflow: hidden;
   box-sizing: border-box;
   height: 100%;
@@ -312,7 +342,8 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   display: none;
 }
 
-.DocSearch-Sidepanel.conversation-history .DocSearch-Action.DocSearch-Sidepanel-Action-back.mobile {
+.DocSearch-Sidepanel.conversation-history
+  .DocSearch-Action.DocSearch-Sidepanel-Action-back.mobile {
   display: inline-flex;
 }
 
@@ -330,7 +361,8 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
 }
 
 @media screen and (min-width: 769px) {
-  .DocSearch-Sidepanel.conversation-history .DocSearch-Sidepanel-Header-TitleIcon {
+  .DocSearch-Sidepanel.conversation-history
+    .DocSearch-Sidepanel-Header-TitleIcon {
     display: none;
   }
 }
@@ -348,7 +380,8 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   padding: 0 1rem;
   overflow-y: auto;
   overflow-y: overlay;
-  scrollbar-color: var(--docsearch-sidepanel-scrollbar-color) var(--docsearch-sidepanel-scrollbar-bg);
+  scrollbar-color: var(--docsearch-sidepanel-scrollbar-color)
+    var(--docsearch-sidepanel-scrollbar-bg);
   scrollbar-width: thin;
   scrollbar-gutter: stable;
 }
@@ -379,7 +412,7 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
 
 .DocSearch-Sidepanel-Prompt--form {
   --prompt-form-padding: 0.75rem;
-  border: 1px solid #777AAF;
+  border: 1px solid #777aaf;
   padding: var(--prompt-form-padding);
   border-radius: 0.25rem;
   display: flex;
@@ -406,7 +439,18 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   min-height: 1.5rem;
   height: 1.5rem;
   overflow: hidden;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Open Sans',
+    'Helvetica Neue',
+    sans-serif;
 }
 
 .DocSearch-Sidepanel-Prompt--textarea::placeholder {
@@ -446,7 +490,7 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   color: var(--docsearch-sidepanel-text-muted);
 }
 
-html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop {
+html[data-theme='dark'] .DocSearch-Sidepanel-Prompt--stop {
   background-color: var(--docsearch-sidepanel-background);
 }
 
@@ -454,7 +498,7 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop {
   background-color: var(--docsearch-sidepanel-background);
 }
 
-html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
+html[data-theme='dark'] .DocSearch-Sidepanel-Prompt--stop:hover {
   background-color: var(--docsearch-sidepanel-background-dark);
 }
 
@@ -570,9 +614,11 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
   background-color: var(--docsearch-hit-highlight-color);
 }
 
-.DocSearch-Sidepanel-RecentConversation:focus-within .DocSearch-Sidepanel-RecentConversation-icon,
+.DocSearch-Sidepanel-RecentConversation:focus-within
+  .DocSearch-Sidepanel-RecentConversation-icon,
 .DocSearch-Sidepanel-RecentConversation:focus-within .DocSearch-Hit-action,
-.DocSearch-Sidepanel-RecentConversation:hover .DocSearch-Sidepanel-RecentConversation-icon,
+.DocSearch-Sidepanel-RecentConversation:hover
+  .DocSearch-Sidepanel-RecentConversation-icon,
 .DocSearch-Sidepanel-RecentConversation:hover .DocSearch-Hit-action {
   color: var(--docsearch-sidepanel-accent);
 }

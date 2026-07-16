@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. And its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file
+ * in the root directory of this source tree.
  */
 
 import type { DocSearchTranslations } from '@docsearch/react';
@@ -138,7 +138,8 @@ const translations: DocSearchTranslations & {
       placeholderTextAskAiStreaming: translate({
         id: 'theme.SearchModal.searchBox.placeholderTextAskAiStreaming',
         message: 'Answering...',
-        description: 'The placeholder text for search box when AI is streaming an answer',
+        description:
+          'The placeholder text for search box when AI is streaming an answer',
       }),
       enterKeyHint: translate({
         id: 'theme.SearchModal.searchBox.enterKeyHint',
@@ -230,7 +231,8 @@ const translations: DocSearchTranslations & {
     askAiScreen: {
       disclaimerText: translate({
         id: 'theme.SearchModal.askAiScreen.disclaimerText',
-        message: 'Answers are generated with AI which can make mistakes. Verify responses.',
+        message:
+          'Answers are generated with AI which can make mistakes. Verify responses.',
         description: 'The disclaimer text for AI answers',
       }),
       relatedSourcesText: translate({
@@ -281,22 +283,26 @@ const translations: DocSearchTranslations & {
       feedbackDetailsPlaceholder: translate({
         id: 'theme.SearchModal.askAiScreen.feedbackDetailsPlaceholder',
         message: 'Share some details...',
-        description: 'The placeholder for the negative feedback details textarea',
+        description:
+          'The placeholder for the negative feedback details textarea',
       }),
       feedbackDisclaimerText: translate({
         id: 'theme.SearchModal.askAiScreen.feedbackDisclaimerText',
         message: 'A copy of this chat will be included with your feedback.',
-        description: 'The disclaimer shown inside the negative feedback note panel',
+        description:
+          'The disclaimer shown inside the negative feedback note panel',
       }),
       feedbackSubmitButtonText: translate({
         id: 'theme.SearchModal.askAiScreen.feedbackSubmitButtonText',
         message: 'Submit',
-        description: 'The submit button text for the negative feedback note panel',
+        description:
+          'The submit button text for the negative feedback note panel',
       }),
       feedbackCloseButtonTitle: translate({
         id: 'theme.SearchModal.askAiScreen.feedbackCloseButtonTitle',
         message: 'Close',
-        description: 'The accessible title for the negative feedback note panel close button',
+        description:
+          'The accessible title for the negative feedback note panel close button',
       }),
       feedbackTagIncorrect: translate({
         id: 'theme.SearchModal.askAiScreen.feedbackTagIncorrect',
@@ -306,7 +312,8 @@ const translations: DocSearchTranslations & {
       feedbackTagNotWhatIAsked: translate({
         id: 'theme.SearchModal.askAiScreen.feedbackTagNotWhatIAsked',
         message: 'Not what I asked for',
-        description: 'The "not what I asked for" reason chip for negative feedback',
+        description:
+          'The "not what I asked for" reason chip for negative feedback',
       }),
       feedbackTagSlowOrBuggy: translate({
         id: 'theme.SearchModal.askAiScreen.feedbackTagSlowOrBuggy',
@@ -321,7 +328,8 @@ const translations: DocSearchTranslations & {
       feedbackTagSafetyOrLegal: translate({
         id: 'theme.SearchModal.askAiScreen.feedbackTagSafetyOrLegal',
         message: 'Safety or legal concern',
-        description: 'The "safety or legal concern" reason chip for negative feedback',
+        description:
+          'The "safety or legal concern" reason chip for negative feedback',
       }),
       feedbackTagOther: translate({
         id: 'theme.SearchModal.askAiScreen.feedbackTagOther',

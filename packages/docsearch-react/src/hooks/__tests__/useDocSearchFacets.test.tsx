@@ -25,9 +25,15 @@ describe('useDocSearchFacets', () => {
   });
 
   it('exposes only facets that have values', async () => {
-    const facets: DocSearchFacet[] = [{ key: 'language' }, { key: 'version' }, { key: 'empty' }];
+    const facets: DocSearchFacet[] = [
+      { key: 'language' },
+      { key: 'version' },
+      { key: 'empty' },
+    ];
 
-    const { result } = renderHook(() => useDocSearchFacets({ facets, indexes, searchClient }));
+    const { result } = renderHook(() =>
+      useDocSearchFacets({ facets, indexes, searchClient })
+    );
 
     expect(result.current.visibleFacets).toEqual([]);
 
@@ -47,7 +53,7 @@ describe('useDocSearchFacets', () => {
         indexes,
         searchClient,
         onSelectionsChange,
-      }),
+      })
     );
 
     act(() => {
@@ -67,7 +73,7 @@ describe('useDocSearchFacets', () => {
         facets: [{ key: 'language' }],
         indexes,
         searchClient,
-      }),
+      })
     );
 
     let refValueDuringChange: Record<string, string> | undefined;
@@ -87,7 +93,7 @@ describe('useDocSearchFacets', () => {
         indexes,
         searchClient,
         onSelectionsChange,
-      }),
+      })
     );
 
     act(() => {
@@ -111,7 +117,7 @@ describe('useDocSearchFacets', () => {
           searchClient,
           onSelectionsChange,
         }),
-      { initialProps: { onSelectionsChange: vi.fn() } },
+      { initialProps: { onSelectionsChange: vi.fn() } }
     );
 
     const firstHandleChange = result.current.handleFacetSelectionChange;

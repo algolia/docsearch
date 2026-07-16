@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. And its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file
+ * in the root directory of this source tree.
  */
 
 import Head from '@docusaurus/Head';
@@ -42,8 +42,8 @@ function useDocumentsFoundPlural(): (count: number) => string {
             'Pluralized label for "{count} documents found". Use as much plural forms (separated by "|") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)',
           message: 'One document found|{count} documents found',
         },
-        { count },
-      ),
+        { count }
+      )
     );
 }
 
@@ -57,7 +57,7 @@ function getSearchPageTitle(searchQuery: string | undefined): string {
         },
         {
           query: searchQuery,
-        },
+        }
       )
     : translate({
         id: 'theme.SearchPage.emptyResultsTitle',
@@ -87,15 +87,24 @@ function SearchPageContent(): ReactNode {
   } = useSearchPage();
   const { contextualSearch } = useAlgoliaThemeConfig();
   const documentsFoundPlural = useDocumentsFoundPlural();
-  const { recentSearches, addRecentSearch, removeRecentSearch, clearRecentSearches } = useRecentSearches();
+  const {
+    recentSearches,
+    addRecentSearch,
+    removeRecentSearch,
+    clearRecentSearches,
+  } = useRecentSearches();
   const topSections = useTopSections();
 
   const pageTitle = getSearchPageTitle(searchQuery);
-  const showVersionSelects = contextualSearch && versionHelpers.versioningEnabled;
+  const showVersionSelects =
+    contextualSearch && versionHelpers.versioningEnabled;
   const hasSidebar = showVersionSelects || facets.length > 0;
   const isSearching = Boolean(searchQuery) || hasActiveRefinements;
 
-  const handleSelectResult = (item: SearchResultItem, position: number): void => {
+  const handleSelectResult = (
+    item: SearchResultItem,
+    position: number
+  ): void => {
     sendResultClick(item, position);
     if (searchQuery) {
       addRecentSearch(searchQuery);
@@ -111,7 +120,9 @@ function SearchPageContent(): ReactNode {
           onSelectRecent={setSearchQuery}
           onRemoveRecent={removeRecentSearch}
           onClearRecent={clearRecentSearches}
-          onSelectSection={(section) => toggleRefinement(TOP_SECTIONS_FACET, section)}
+          onSelectSection={(section) =>
+            toggleRefinement(TOP_SECTIONS_FACET, section)
+          }
         />
       );
     }
@@ -119,7 +130,10 @@ function SearchPageContent(): ReactNode {
     if (error) {
       return (
         <div className={styles.stateMessage}>
-          <Translate id="theme.SearchPage.errorText" description="The paragraph shown when the search request fails">
+          <Translate
+            id="theme.SearchPage.errorText"
+            description="The paragraph shown when the search request fails"
+          >
             Something went wrong while searching. Please try again.
           </Translate>
         </div>
@@ -138,7 +152,12 @@ function SearchPageContent(): ReactNode {
             <div className={styles.loadMoreWrapper}>
               <button
                 type="button"
-                className={clsx('button', 'button--secondary', 'button--lg', styles.loadMoreButton)}
+                className={clsx(
+                  'button',
+                  'button--secondary',
+                  'button--lg',
+                  styles.loadMoreButton
+                )}
                 disabled={loadingMore}
                 onClick={loadMore}
               >
@@ -167,12 +186,19 @@ function SearchPageContent(): ReactNode {
     return (
       <div className={styles.stateMessage}>
         <p>
-          <Translate id="theme.SearchPage.noResultsText" description="The paragraph for empty search result">
+          <Translate
+            id="theme.SearchPage.noResultsText"
+            description="The paragraph for empty search result"
+          >
             No results were found
           </Translate>
         </p>
         {hasActiveRefinements && (
-          <button type="button" className={clsx('button', 'button--secondary')} onClick={clearRefinements}>
+          <button
+            type="button"
+            className={clsx('button', 'button--secondary')}
+            onClick={clearRefinements}
+          >
             <Translate
               id="theme.SearchPage.clearFiltersFromNoResults"
               description="The label for the button that clears filters when there are no results"
@@ -204,7 +230,11 @@ function SearchPageContent(): ReactNode {
           <PoweredByAlgolia />
         </header>
 
-        <form className={styles.searchForm} role="search" onSubmit={(event) => event.preventDefault()}>
+        <form
+          className={styles.searchForm}
+          role="search"
+          onSubmit={(event) => event.preventDefault()}
+        >
           <SearchInput
             autoFocus={true}
             value={searchQuery}
@@ -213,7 +243,12 @@ function SearchPageContent(): ReactNode {
           />
         </form>
 
-        <div className={clsx(styles.layout, hasSidebar && styles.layoutWithSidebar)}>
+        <div
+          className={clsx(
+            styles.layout,
+            hasSidebar && styles.layoutWithSidebar
+          )}
+        >
           {hasSidebar && (
             <SearchFacets
               facets={facets}
@@ -230,9 +265,14 @@ function SearchPageContent(): ReactNode {
             {isSearching && (totalResults !== null || hasActiveRefinements) && (
               <div className={styles.resultsMeta}>
                 {totalResults !== null && (
-                  <span className={styles.resultsCount}>{documentsFoundPlural(totalResults)}</span>
+                  <span className={styles.resultsCount}>
+                    {documentsFoundPlural(totalResults)}
+                  </span>
                 )}
-                <ActiveRefinements refinements={refinements} onRemove={toggleRefinement} />
+                <ActiveRefinements
+                  refinements={refinements}
+                  onRemove={toggleRefinement}
+                />
               </div>
             )}
 

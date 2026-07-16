@@ -2,28 +2,50 @@ import React, { type JSX, useEffect, useState } from 'react';
 
 import { LoadingIcon } from '../icons';
 import type { StoredSearchPlugin } from '../stored-searches';
-import type { AskAiFeedbackReason, OnAskAiFeedback, StoredAskAiState } from '../types';
+import type {
+  AskAiFeedbackReason,
+  OnAskAiFeedback,
+  StoredAskAiState,
+} from '../types';
 
 export type FeedbackActionsTranslations = Partial<{
-  /** Tooltip/aria-label for the button that copies the assistant's answer to the clipboard. */
+  /**
+   * Tooltip/aria-label for the button that copies the assistant's answer to the
+   * clipboard.
+   */
   copyButtonTitle: string;
-  /** Transient confirmation label shown on the copy button right after a successful copy. */
+  /**
+   * Transient confirmation label shown on the copy button right after a
+   * successful copy.
+   */
   copyButtonCopiedText: string;
   /** Tooltip/aria-label for the thumbs-up (positive feedback) button. */
   likeButtonTitle: string;
-  /** Tooltip/aria-label for the thumbs-down (negative feedback) button that opens the notes form. */
+  /**
+   * Tooltip/aria-label for the thumbs-down (negative feedback) button that
+   * opens the notes form.
+   */
   dislikeButtonTitle: string;
   /** Confirmation message shown after feedback has been submitted. */
   thanksForFeedbackText: string;
-  /** Heading displayed at the top of the negative feedback form (e.g. "What went wrong?"). */
+  /**
+   * Heading displayed at the top of the negative feedback form (e.g. "What went
+   * wrong?").
+   */
   feedbackPanelTitle: string;
-  /** Placeholder text for the free-form notes textarea in the negative feedback form. */
+  /**
+   * Placeholder text for the free-form notes textarea in the negative feedback
+   * form.
+   */
   feedbackDetailsPlaceholder: string;
   /** Label for the button that submits the negative feedback form. */
   feedbackSubmitButtonText: string;
   /** Label for the button that cancels/dismisses the negative feedback form. */
   feedbackCancelButtonText: string;
-  /** Tooltip/aria-label for the button that closes/cancels the negative feedback form. */
+  /**
+   * Tooltip/aria-label for the button that closes/cancels the negative feedback
+   * form.
+   */
   feedbackCloseButtonTitle: string;
   /** Label for the "Incorrect or incomplete" tag. */
   feedbackTagIncorrect: string;
@@ -39,7 +61,10 @@ export type FeedbackActionsTranslations = Partial<{
   feedbackTagOther: string;
 }>;
 
-type TagTranslationKey = Extract<keyof FeedbackActionsTranslations, `feedbackTag${string}`>;
+type TagTranslationKey = Extract<
+  keyof FeedbackActionsTranslations,
+  `feedbackTag${string}`
+>;
 
 type FeedbackReasonOption = {
   value: AskAiFeedbackReason;
@@ -143,7 +168,11 @@ export function FeedbackActions({
   };
 
   const handleToggleTag = (value: AskAiFeedbackReason): void => {
-    setTags((prev) => (prev.includes(value) ? prev.filter((tag) => tag !== value) : [...prev, value]));
+    setTags((prev) =>
+      prev.includes(value)
+        ? prev.filter((tag) => tag !== value)
+        : [...prev, value]
+    );
   };
 
   const handleSubmitNote = async (): Promise<void> => {
@@ -178,7 +207,9 @@ export function FeedbackActions({
   const copyButton = (
     <CopyButton
       translations={translations}
-      onClick={() => navigator.clipboard.writeText(latestAssistantMessageContent)}
+      onClick={() =>
+        navigator.clipboard.writeText(latestAssistantMessageContent)
+      }
     />
   );
 
@@ -198,11 +229,16 @@ export function FeedbackActions({
             ) : (
               <>
                 <LikeButton title={likeButtonTitle} onClick={handleLike} />
-                <DislikeButton title={dislikeButtonTitle} onClick={handleDislike} />
+                <DislikeButton
+                  title={dislikeButtonTitle}
+                  onClick={handleDislike}
+                />
               </>
             )}
             {savingError && view === 'actions' ? (
-              <p className="DocSearch-AskAiScreen-FeedbackText">{savingError.message || 'An error occured'}</p>
+              <p className="DocSearch-AskAiScreen-FeedbackText">
+                {savingError.message || 'An error occured'}
+              </p>
             ) : null}
           </>
         )}
@@ -258,7 +294,11 @@ function NegativeFeedbackPanel({
   } = translations;
 
   return (
-    <div className="DocSearch-Feedback-Panel" role="group" aria-label={feedbackPanelTitle}>
+    <div
+      className="DocSearch-Feedback-Panel"
+      role="group"
+      aria-label={feedbackPanelTitle}
+    >
       <div className="DocSearch-Feedback-Panel-Header">
         <p className="DocSearch-Feedback-Panel-Title">{feedbackPanelTitle}</p>
       </div>
@@ -276,7 +316,9 @@ function NegativeFeedbackPanel({
               aria-pressed={isSelected}
               onClick={() => onToggleTag(reason.value)}
             >
-              <span>{translations[reason.translationKey] ?? reason.defaultLabel}</span>
+              <span>
+                {translations[reason.translationKey] ?? reason.defaultLabel}
+              </span>
             </button>
           );
         })}
@@ -288,7 +330,9 @@ function NegativeFeedbackPanel({
         value={notes}
         rows={3}
         maxLength={MAX_NOTES_LENGTH}
-        onChange={(event) => onNotesChange(event.target.value.slice(0, MAX_NOTES_LENGTH))}
+        onChange={(event) =>
+          onNotesChange(event.target.value.slice(0, MAX_NOTES_LENGTH))
+        }
       />
 
       <p className="DocSearch-Feedback-Panel-CharCount" aria-live="polite">
@@ -296,15 +340,30 @@ function NegativeFeedbackPanel({
       </p>
 
       {savingError ? (
-        <p className="DocSearch-Feedback-Panel-Error">{savingError.message || 'An error occured'}</p>
+        <p className="DocSearch-Feedback-Panel-Error">
+          {savingError.message || 'An error occured'}
+        </p>
       ) : null}
 
       <div className="DocSearch-Feedback-Panel-Actions">
-        <button type="button" className="DocSearch-Feedback-Panel-Cancel" onClick={onClose}>
+        <button
+          type="button"
+          className="DocSearch-Feedback-Panel-Cancel"
+          onClick={onClose}
+        >
           {feedbackCancelButtonText}
         </button>
-        <button type="button" className="DocSearch-Feedback-Panel-Submit" disabled={saving} onClick={onSubmit}>
-          {saving ? <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" /> : feedbackSubmitButtonText}
+        <button
+          type="button"
+          className="DocSearch-Feedback-Panel-Submit"
+          disabled={saving}
+          onClick={onSubmit}
+        >
+          {saving ? (
+            <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
+          ) : (
+            feedbackSubmitButtonText
+          )}
         </button>
       </div>
     </div>
@@ -318,7 +377,8 @@ export function CopyButton({
   onClick: () => void;
   translations: FeedbackActionsTranslations;
 }): JSX.Element {
-  const { copyButtonTitle = 'Copy', copyButtonCopiedText = 'Copied!' } = translations;
+  const { copyButtonTitle = 'Copy', copyButtonCopiedText = 'Copied!' } =
+    translations;
 
   const [isCopied, setIsCopied] = useState(false);
 
@@ -381,7 +441,13 @@ export function CopyButton({
   );
 }
 
-export function LikeButton({ title, onClick }: { title: string; onClick: () => void }): JSX.Element {
+export function LikeButton({
+  title,
+  onClick,
+}: {
+  title: string;
+  onClick: () => void;
+}): JSX.Element {
   return (
     <button
       type="button"
@@ -407,7 +473,13 @@ export function LikeButton({ title, onClick }: { title: string; onClick: () => v
   );
 }
 
-export function DislikeButton({ title, onClick }: { title: string; onClick: () => void }): JSX.Element {
+export function DislikeButton({
+  title,
+  onClick,
+}: {
+  title: string;
+  onClick: () => void;
+}): JSX.Element {
   return (
     <button
       type="button"

@@ -1,7 +1,13 @@
 import type { DocSearchRef, InitialAskAiMessage } from '@docsearch/core';
 import htm from 'htm';
 import type { ComponentType, JSX, Attributes } from 'preact';
-import { createElement, createRef, isValidElement, render, unmountComponentAtNode } from 'preact/compat';
+import {
+  createElement,
+  createRef,
+  isValidElement,
+  render,
+  unmountComponentAtNode,
+} from 'preact/compat';
 
 export interface DocSearchInstance {
   readonly isReady: boolean;
@@ -25,22 +31,33 @@ export type DocSearchProps<TProps> = DocSearchCallbacks &
     environment?: typeof window;
   };
 
-function getHTMLElement(value: HTMLElement | string, env: typeof window | undefined): HTMLElement {
+function getHTMLElement(
+  value: HTMLElement | string,
+  env: typeof window | undefined
+): HTMLElement {
   if (typeof value !== 'string') return value;
-  if (!env) throw new Error('Cannot resolve a selector without a browser environment.');
+  if (!env)
+    throw new Error('Cannot resolve a selector without a browser environment.');
 
   const element = env.document.querySelector<HTMLElement>(value);
-  if (!element) throw new Error(`Container selector did not match any element: "${value}"`);
+  if (!element)
+    throw new Error(`Container selector did not match any element: "${value}"`);
 
   return element;
 }
 
-const html = htm.bind(createElement) as unknown as (strings: TemplateStringsArray, ...values: unknown[]) => JSX.Element;
+const html = htm.bind(createElement) as unknown as (
+  strings: TemplateStringsArray,
+  ...values: unknown[]
+) => JSX.Element;
 
 export type TemplateHelpers = Record<string, unknown> & { html: typeof html };
 
-function createTemplateFunction<P extends Record<string, unknown>, R = JSX.Element | string | (() => JSX.Element)>(
-  original: ((props: P, helpers?: TemplateHelpers) => R) | undefined,
+function createTemplateFunction<
+  P extends Record<string, unknown>,
+  R = JSX.Element | string | (() => JSX.Element),
+>(
+  original: ((props: P, helpers?: TemplateHelpers) => R) | undefined
 ): ((props: P) => JSX.Element) | undefined {
   if (!original) return undefined;
 
@@ -56,21 +73,34 @@ function createTemplateFunction<P extends Record<string, unknown>, R = JSX.Eleme
 }
 
 interface ComponentProps {
-  hitComponent?: (props: Record<string, unknown>, helpers?: TemplateHelpers) => JSX.Element;
-  resultsFooterComponent?: (props: Record<string, unknown>, helpers?: TemplateHelpers) => JSX.Element | null;
+  hitComponent?: (
+    props: Record<string, unknown>,
+    helpers?: TemplateHelpers
+  ) => JSX.Element;
+  resultsFooterComponent?: (
+    props: Record<string, unknown>,
+    helpers?: TemplateHelpers
+  ) => JSX.Element | null;
   transformSearchClient?: (searchClient: unknown) => unknown;
 }
 
 export function createDocSearch<TComponentProps, TInputProps = TComponentProps>(
   Component: ComponentType<TComponentProps>,
-  version: string,
+  version: string
 ): (allProps: DocSearchProps<TInputProps>) => DocSearchInstance {
   return (allProps) => {
     const input = allProps as unknown as DocSearchProps<ComponentProps>;
-    const { container, environment, transformSearchClient, hitComponent, resultsFooterComponent, ...rest } = input;
+    const {
+      container,
+      environment,
+      transformSearchClient,
+      hitComponent,
+      resultsFooterComponent,
+      ...rest
+    } = input;
     const containerElement = getHTMLElement(
       container,
-      environment || (typeof window !== 'undefined' ? window : undefined),
+      environment || (typeof window !== 'undefined' ? window : undefined)
     );
     const ref = createRef<DocSearchRef>();
     let isReady = false;
@@ -90,11 +120,16 @@ export function createDocSearch<TComponentProps, TInputProps = TComponentProps>(
           searchClient.addAlgoliaAgent('docsearch.js', version);
         }
 
-        return typeof transformSearchClient === 'function' ? transformSearchClient(searchClient) : searchClient;
+        return typeof transformSearchClient === 'function'
+          ? transformSearchClient(searchClient)
+          : searchClient;
       },
     } as unknown as TComponentProps;
 
-    render(createElement(Component, props as Attributes & TComponentProps), containerElement);
+    render(
+      createElement(Component, props as Attributes & TComponentProps),
+      containerElement
+    );
     isReady = true;
 
     return {

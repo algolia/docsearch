@@ -11,9 +11,13 @@ export type DocSearchModalProps = Omit<
 >;
 
 export function DocSearchModal(props: DocSearchModalProps): JSX.Element | null {
-  const { isModalActive, closeModal, initialQuery, registerView } = useDocSearch();
+  const { isModalActive, closeModal, initialQuery, registerView } =
+    useDocSearch();
 
-  const containerElement = React.useMemo(() => props.portalContainer ?? document.body, [props.portalContainer]);
+  const containerElement = React.useMemo(
+    () => props.portalContainer ?? document.body,
+    [props.portalContainer]
+  );
 
   const initialScroll = React.useMemo(() => window.scrollY, []);
 
@@ -28,8 +32,10 @@ export function DocSearchModal(props: DocSearchModalProps): JSX.Element | null {
       initialScrollY: initialScroll,
       onClose: closeModal,
     }),
-    [props, initialQuery, initialScroll, closeModal],
+    [props, initialQuery, initialScroll, closeModal]
   );
 
-  return isModalActive ? createPortal(<Modal {...modalProps} />, containerElement) : null;
+  return isModalActive
+    ? createPortal(<Modal {...modalProps} />, containerElement)
+    : null;
 }

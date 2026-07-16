@@ -22,7 +22,9 @@ export function useFacetValues({
   // facet keys or index names/searchParameters change, not on every render (the `facets` and
   // `indexes` props are recreated on each render and would otherwise loop).
   const stableFacetKeys = facets.map((facet) => facet.key).join(',');
-  const stableIndexes = JSON.stringify(indexes.map((index) => [index.name, index.searchParameters ?? null]));
+  const stableIndexes = JSON.stringify(
+    indexes.map((index) => [index.name, index.searchParameters ?? null])
+  );
 
   React.useEffect(() => {
     let isMounted = true;
@@ -63,7 +65,9 @@ export function useFacetValues({
               return;
             }
 
-            valuesByFacet[facet] = Array.from(new Set([...valuesByFacet[facet], ...Object.keys(values)])).sort();
+            valuesByFacet[facet] = Array.from(
+              new Set([...valuesByFacet[facet], ...Object.keys(values)])
+            ).sort();
           });
         });
 

@@ -2,8 +2,19 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const root = process.cwd();
-const packageJsonPath = join(root, 'packages', 'docsearch-react', 'package.json');
-const versionFilePath = join(root, 'packages', 'docsearch-react', 'src', 'version.ts');
+const packageJsonPath = join(
+  root,
+  'packages',
+  'docsearch-react',
+  'package.json'
+);
+const versionFilePath = join(
+  root,
+  'packages',
+  'docsearch-react',
+  'src',
+  'version.ts'
+);
 
 const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
 const packageVersion = packageJson.version;

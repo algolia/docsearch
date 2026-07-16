@@ -59,7 +59,9 @@ export default function Keyboard() {
     },
   ];
 
-  const [pressed, setPressed] = useState(keySpec.reduce((acc, k) => ({ ...acc, [k.id]: false }), {}));
+  const [pressed, setPressed] = useState(
+    keySpec.reduce((acc, k) => ({ ...acc, [k.id]: false }), {})
+  );
 
   const pressOn = (id) => setPressed((p) => ({ ...p, [id]: true }));
   const pressOff = (id) => setPressed((p) => ({ ...p, [id]: false }));
@@ -92,7 +94,11 @@ export default function Keyboard() {
   return (
     <>
       {/* hidden <audio> element — preload for instant playback */}
-      <audio ref={clickRef} src="https://cdn.freesound.org/previews/378/378085_6260145-lq.mp3" preload="auto">
+      <audio
+        ref={clickRef}
+        src="https://cdn.freesound.org/previews/378/378085_6260145-lq.mp3"
+        preload="auto"
+      >
         <track kind="captions" />
       </audio>
 
@@ -129,7 +135,11 @@ export default function Keyboard() {
             >
               <span className="key__mask">
                 <span className="key__content">
-                  <span className={`key__text ${k.id === 'search' ? 'key__text--search' : ''}`}>{k.label}</span>
+                  <span
+                    className={`key__text ${k.id === 'search' ? 'key__text--search' : ''}`}
+                  >
+                    {k.label}
+                  </span>
                   <img
                     style={{
                       filter: `hue-rotate(${k.hue}deg) saturate(${k.saturate}) brightness(${k.bright})`,

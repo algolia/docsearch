@@ -21,7 +21,9 @@ export interface ExtractedLink {
 }
 
 // utility to extract links (markdown and bare urls) from a string
-export function extractLinksFromMessage(message: AIMessage | null): ExtractedLink[] {
+export function extractLinksFromMessage(
+  message: AIMessage | null
+): ExtractedLink[] {
   const links: ExtractedLink[] = [];
   // Used to dedupe multiple urls
   const seen = new Set<string>();
@@ -79,7 +81,11 @@ export function extractLinksFromMessage(message: AIMessage | null): ExtractedLin
   return links;
 }
 
-export const buildDummyAskAiHit = (query: string, messages: AIMessage[], chatId?: string): StoredAskAiState => {
+export const buildDummyAskAiHit = (
+  query: string,
+  messages: AIMessage[],
+  chatId?: string
+): StoredAskAiState => {
   const textPart = messages[0].parts.find((part) => part.type === 'text');
   const sanitizedText = textPart?.text ? sanitizeUserInput(textPart.text) : '';
 
@@ -107,12 +113,12 @@ export const buildDummyAskAiHit = (query: string, messages: AIMessage[], chatId?
   };
 };
 
-export const getMessageContent = (message: AIMessage | null): TextUIPart | undefined =>
+export const getMessageContent = (
+  message: AIMessage | null
+): TextUIPart | undefined =>
   message?.parts.find((part) => part.type === 'text');
 
-/**
- * Helper function to check if error is a thread depth error (AI-217).
- */
+/** Helper function to check if error is a thread depth error (AI-217). */
 export function isThreadDepthError(error?: Error): boolean {
   if (!error) return false;
 
@@ -121,7 +127,9 @@ export function isThreadDepthError(error?: Error): boolean {
 
 export const EMPTY_TOOLS: Readonly<ToolCalls> = Object.freeze({});
 
-export function isAIToolPart(part: AggregatedToolCallPart | AIMessagePart): part is AIToolPart {
+export function isAIToolPart(
+  part: AggregatedToolCallPart | AIMessagePart
+): part is AIToolPart {
   return part.type.startsWith('tool-');
 }
 
@@ -133,20 +141,31 @@ export function isSearchToolPart(part: AIToolPart): part is SearchToolPart {
   );
 }
 
-export function isSearchIndexOutputPart(part: AIMessagePart): part is SearchIndexOutputPart {
+export function isSearchIndexOutputPart(
+  part: AIMessagePart
+): part is SearchIndexOutputPart {
   return part.type === 'tool-searchIndex' && part.state === 'output-available';
 }
 
-export function isAlgoliaMCPSearchOutputPart(part: AIMessagePart): part is AlgoliaMCPSearchOutputPart {
+export function isAlgoliaMCPSearchOutputPart(
+  part: AIMessagePart
+): part is AlgoliaMCPSearchOutputPart {
   return (
     isAIToolPart(part) &&
-    (part.type === 'tool-algolia_search_index' || part.type.startsWith('tool-algolia_search_index_')) &&
+    (part.type === 'tool-algolia_search_index' ||
+      part.type.startsWith('tool-algolia_search_index_')) &&
     part.state === 'output-available'
   );
 }
 
-export function isSearchOutputPart(part: AIMessagePart): part is SearchOutputPart {
-  return isAIToolPart(part) && isSearchToolPart(part) && part.state === 'output-available';
+export function isSearchOutputPart(
+  part: AIMessagePart
+): part is SearchOutputPart {
+  return (
+    isAIToolPart(part) &&
+    isSearchToolPart(part) &&
+    part.state === 'output-available'
+  );
 }
 
 export function sanitizeMessagesForRequest(messages: AIMessage[]): AIMessage[] {
@@ -154,7 +173,9 @@ export function sanitizeMessagesForRequest(messages: AIMessage[]): AIMessage[] {
 
   messages.forEach((message, index) => {
     // Filter out `data-*` part types since Agent Studio does not currently support them on the request
-    const parts = message.parts.filter((part) => !part.type.startsWith('data-'));
+    const parts = message.parts.filter(
+      (part) => !part.type.startsWith('data-')
+    );
 
     if (parts.length === message.parts.length) {
       sanitizedMessages?.push(message);
@@ -175,7 +196,9 @@ export function sanitizeMessagesForRequest(messages: AIMessage[]): AIMessage[] {
 }
 
 export function getAgentPromptSuggestions(parts: AIMessagePart[]): string[] {
-  const suggestionsPart = parts.find((part) => part.type === 'data-suggestions');
+  const suggestionsPart = parts.find(
+    (part) => part.type === 'data-suggestions'
+  );
 
   if (!suggestionsPart) return [];
 

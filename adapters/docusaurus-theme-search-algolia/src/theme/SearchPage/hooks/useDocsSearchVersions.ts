@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. And its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file
+ * in the root directory of this source tree.
  */
 
 import { useAllDocsData } from '@docusaurus/plugin-content-docs/client';
@@ -28,14 +28,16 @@ export function useDocsSearchVersions(): DocsSearchVersionsHelpers {
         ...acc,
         [pluginId]: pluginData.versions[0]!.name,
       }),
-      {},
-    ),
+      {}
+    )
   );
 
   const setSearchVersion = (pluginId: string, searchVersion: string): void =>
     setSearchVersions((s) => ({ ...s, [pluginId]: searchVersion }));
 
-  const versioningEnabled = Object.values(allDocsData).some((docsData) => docsData.versions.length > 1);
+  const versioningEnabled = Object.values(allDocsData).some(
+    (docsData) => docsData.versions.length > 1
+  );
 
   return {
     allDocsData,

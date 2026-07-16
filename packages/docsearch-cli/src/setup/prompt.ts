@@ -27,13 +27,22 @@ interface ScopeChoice {
 
 const SCOPE_CHOICES: ScopeChoice[] = [
   { hint: 'the detected repository root', label: 'Project', value: 'project' },
-  { hint: 'every project (~/.cursor, ~/.codex, …)', label: 'Global', value: 'global' },
+  {
+    hint: 'every project (~/.cursor, ~/.codex, …)',
+    label: 'Global',
+    value: 'global',
+  },
 ];
 
 export function parseScopeSelection(raw: string): SetupScope {
   const normalized = raw.trim().toLowerCase();
 
-  if (normalized === '' || normalized === '1' || normalized === 'p' || normalized === 'project') {
+  if (
+    normalized === '' ||
+    normalized === '1' ||
+    normalized === 'p' ||
+    normalized === 'project'
+  ) {
     return 'project';
   }
 
@@ -41,7 +50,9 @@ export function parseScopeSelection(raw: string): SetupScope {
     return 'global';
   }
 
-  throw new UsageError(`Unknown scope: "${raw.trim()}". Choose "project" or "global".`);
+  throw new UsageError(
+    `Unknown scope: "${raw.trim()}". Choose "project" or "global".`
+  );
 }
 
 export function promptScope(): Promise<SetupScope> {
@@ -76,7 +87,9 @@ function promptScopeInteractive(): Promise<SetupScope> {
         `${color.magenta(symbols.diamond)} ${color.bold('Where should DocSearch be installed?')} ${color.dim('(↑↓ move · enter confirm)')}`,
         ...SCOPE_CHOICES.map((choice, index) => {
           const active = index === cursor;
-          const radio = active ? color.green(symbols.checkboxOn) : color.dim(symbols.checkboxOff);
+          const radio = active
+            ? color.green(symbols.checkboxOn)
+            : color.dim(symbols.checkboxOff);
           const pointer = active ? color.cyan(symbols.pointer) : ' ';
           const label = active ? color.cyan(choice.label) : choice.label;
           return `${pointer} ${radio} ${label} ${color.dim(`— ${choice.hint}`)}`;
@@ -108,7 +121,10 @@ function promptScopeInteractive(): Promise<SetupScope> {
       } else if (key.name === 'return') {
         cleanup();
         resolve(SCOPE_CHOICES[cursor].value);
-      } else if (key.name === 'escape' || (key.ctrl === true && key.name === 'c')) {
+      } else if (
+        key.name === 'escape' ||
+        (key.ctrl === true && key.name === 'c')
+      ) {
         cleanup();
         output.write('\n');
         reject(new PromptCancelledError(key.ctrl === true ? 130 : 0));
@@ -125,20 +141,31 @@ function promptScopeInteractive(): Promise<SetupScope> {
 async function promptScopeByLine(): Promise<SetupScope> {
   const output = process.stderr;
 
-  output.write(`${color.magenta(symbols.diamond)} ${color.bold('Where should DocSearch be installed?')}\n`);
+  output.write(
+    `${color.magenta(symbols.diamond)} ${color.bold('Where should DocSearch be installed?')}\n`
+  );
   for (const [index, choice] of SCOPE_CHOICES.entries()) {
-    output.write(`  ${color.cyan(String(index + 1))}. ${choice.label} ${color.dim(`— ${choice.hint}`)}\n`);
+    output.write(
+      `  ${color.cyan(String(index + 1))}. ${choice.label} ${color.dim(`— ${choice.hint}`)}\n`
+    );
   }
-  output.write(`${color.dim('Enter "project" or "global" (blank for project):')} `);
+  output.write(
+    `${color.dim('Enter "project" or "global" (blank for project):')} `
+  );
 
   return parseScopeSelection(await readSingleLine());
 }
 
-export function parseAgentSelection(raw: string, choices: AgentChoice[]): SetupAgent[] {
+export function parseAgentSelection(
+  raw: string,
+  choices: AgentChoice[]
+): SetupAgent[] {
   const normalized = raw.trim().toLowerCase();
 
   if (normalized === '') {
-    return choices.filter((choice) => choice.detected).map((choice) => choice.name);
+    return choices
+      .filter((choice) => choice.detected)
+      .map((choice) => choice.name);
   }
 
   if (normalized === 'all' || normalized === '*') {
@@ -159,7 +186,7 @@ export function parseAgentSelection(raw: string, choices: AgentChoice[]): SetupA
       const match = choices.find((choice) => choice.name === token);
       if (!match) {
         throw new UsageError(
-          `Unknown agent: "${token}". Choose a number or one of: ${choices.map((c) => c.name).join(', ')}.`,
+          `Unknown agent: "${token}". Choose a number or one of: ${choices.map((c) => c.name).join(', ')}.`
         );
       }
       selected.add(match.name);
@@ -177,7 +204,9 @@ export function promptAgents(choices: AgentChoice[]): Promise<SetupAgent[]> {
   return promptAgentsByLine(choices);
 }
 
-function promptAgentsInteractive(choices: AgentChoice[]): Promise<SetupAgent[]> {
+function promptAgentsInteractive(
+  choices: AgentChoice[]
+): Promise<SetupAgent[]> {
   const input = process.stdin;
   const output = process.stderr;
   const wasRaw = input.isRaw === true;
@@ -201,9 +230,14 @@ function promptAgentsInteractive(choices: AgentChoice[]): Promise<SetupAgent[]> 
       const lines = [
         `${color.magenta(symbols.diamond)} ${color.bold('Select agents to configure')} ${color.dim('(↑↓ move · space toggle · a all · enter confirm)')}`,
         ...choices.map((choice, index) => {
-          const box = selected[index] ? color.green(symbols.checkboxOn) : color.dim(symbols.checkboxOff);
+          const box = selected[index]
+            ? color.green(symbols.checkboxOn)
+            : color.dim(symbols.checkboxOff);
           const pointer = index === cursor ? color.cyan(symbols.pointer) : ' ';
-          const name = index === cursor ? color.cyan(choice.displayName) : choice.displayName;
+          const name =
+            index === cursor
+              ? color.cyan(choice.displayName)
+              : choice.displayName;
           const detected = choice.detected ? color.dim(' (detected)') : '';
           return `${pointer} ${box} ${name}${detected}`;
         }),
@@ -240,8 +274,15 @@ function promptAgentsInteractive(choices: AgentChoice[]): Promise<SetupAgent[]> 
         render();
       } else if (key.name === 'return') {
         cleanup();
-        resolve(choices.filter((_, index) => selected[index]).map((choice) => choice.name));
-      } else if (key.name === 'escape' || (key.ctrl === true && key.name === 'c')) {
+        resolve(
+          choices
+            .filter((_, index) => selected[index])
+            .map((choice) => choice.name)
+        );
+      } else if (
+        key.name === 'escape' ||
+        (key.ctrl === true && key.name === 'c')
+      ) {
         cleanup();
         output.write('\n');
         reject(new PromptCancelledError(key.ctrl === true ? 130 : 0));
@@ -255,15 +296,23 @@ function promptAgentsInteractive(choices: AgentChoice[]): Promise<SetupAgent[]> 
   });
 }
 
-async function promptAgentsByLine(choices: AgentChoice[]): Promise<SetupAgent[]> {
+async function promptAgentsByLine(
+  choices: AgentChoice[]
+): Promise<SetupAgent[]> {
   const output = process.stderr;
 
-  output.write(`${color.magenta(symbols.diamond)} ${color.bold('Select agents to configure')}\n`);
+  output.write(
+    `${color.magenta(symbols.diamond)} ${color.bold('Select agents to configure')}\n`
+  );
   for (const [index, choice] of choices.entries()) {
     const detected = choice.detected ? color.dim(' (detected)') : '';
-    output.write(`  ${color.cyan(String(index + 1))}. ${choice.displayName}${detected}\n`);
+    output.write(
+      `  ${color.cyan(String(index + 1))}. ${choice.displayName}${detected}\n`
+    );
   }
-  output.write(`${color.dim('Enter numbers/names (comma-separated), "all", or blank for detected:')} `);
+  output.write(
+    `${color.dim('Enter numbers/names (comma-separated), "all", or blank for detected:')} `
+  );
 
   const raw = await readSingleLine();
   return parseAgentSelection(raw, choices);

@@ -27,7 +27,9 @@ export function normalizeDocSearchIndexes({
   }
 
   if (indexes.length < 1) {
-    throw new Error('Must supply either `indexName` or `indices` for DocSearch to work');
+    throw new Error(
+      'Must supply either `indexName` or `indices` for DocSearch to work'
+    );
   }
 
   return indexes;

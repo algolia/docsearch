@@ -14,14 +14,18 @@ function importDocSearchModalIfNeeded(): Promise<void> {
     return Promise.resolve();
   }
   // eslint-disable-next-line import/dynamic-import-chunkname
-  return Promise.all([import('@docsearch/react/askaiModal')]).then(([{ DocSearchAskAiModal: Modal }]) => {
-    DocSearchModal = Modal;
-  });
+  return Promise.all([import('@docsearch/react/askaiModal')]).then(
+    ([{ DocSearchAskAiModal: Modal }]) => {
+      DocSearchModal = Modal;
+    }
+  );
 }
 
 function DocSearch({ theme }: { theme: DemoTheme }): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
-  const [initialQuery, setInitialQuery] = useState<string | undefined>(undefined);
+  const [initialQuery, setInitialQuery] = useState<string | undefined>(
+    undefined
+  );
   const [isAskAiActive, setIsAskAiActive] = useState(false);
   const searchContainer = useRef<HTMLDivElement | null>(null);
   const searchButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -56,7 +60,7 @@ function DocSearch({ theme }: { theme: DemoTheme }): JSX.Element {
       setInitialQuery(event.key);
       openModal();
     },
-    [openModal],
+    [openModal]
   );
 
   const toggleAskAi = (active: boolean): void => {
@@ -103,12 +107,16 @@ function DocSearch({ theme }: { theme: DemoTheme }): JSX.Element {
             onClose={closeModal}
             onAskAiToggle={toggleAskAi}
           />,
-          searchContainer.current,
+          searchContainer.current
         )}
     </>
   );
 }
 
-export default function DynamicImportModal({ theme }: { theme: DemoTheme }): JSX.Element {
+export default function DynamicImportModal({
+  theme,
+}: {
+  theme: DemoTheme;
+}): JSX.Element {
   return <DocSearch theme={theme} />;
 }

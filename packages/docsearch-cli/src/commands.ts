@@ -1,5 +1,10 @@
 /* eslint-disable import/no-unresolved -- NodeNext source imports use runtime .js extensions. */
-import { DEFAULT_MCP_ENDPOINT, TOOL_QUERY_DOCS, TOOL_RESOLVE_DOCSET, TOOL_SEARCH_DOCS } from './constants.js';
+import {
+  DEFAULT_MCP_ENDPOINT,
+  TOOL_QUERY_DOCS,
+  TOOL_RESOLVE_DOCSET,
+  TOOL_SEARCH_DOCS,
+} from './constants.js';
 import { UsageError } from './errors.js';
 import type { SetupAgent, SetupScope } from './setup/agents.js';
 
@@ -50,7 +55,12 @@ const BOOLEAN_OPTIONS = new Set([
   '-y',
 ]);
 
-const VALUE_OPTIONS = new Set(['--endpoint', '--max-docsets', '--max-results', '--top-n']);
+const VALUE_OPTIONS = new Set([
+  '--endpoint',
+  '--max-docsets',
+  '--max-results',
+  '--top-n',
+]);
 const HELP_OPTIONS = new Set(['--help', '-h']);
 const QUERY_COMMON_OPTIONS = new Set(['--endpoint', '--help', '--json', '-h']);
 const SETUP_OPTIONS = new Set([
@@ -103,7 +113,10 @@ export function parseArgs(argv: string[]): ParsedArgs {
   return { options, positionals };
 }
 
-export function buildToolRequest(commandName: QueryCommandName, args: ParsedArgs): ToolRequest {
+export function buildToolRequest(
+  commandName: QueryCommandName,
+  args: ParsedArgs
+): ToolRequest {
   validateToolOptions(commandName, args.options);
   const endpoint = readEndpoint(args.options);
   const json = Boolean(args.options['--json']);
@@ -114,7 +127,9 @@ export function buildToolRequest(commandName: QueryCommandName, args: ParsedArgs
       const [library, ...queryParts] = args.positionals;
       const query = queryParts.join(' ').trim();
       if (!library || !query) {
-        throw new UsageError('Usage: docsearch docs <library> <query> [--json]');
+        throw new UsageError(
+          'Usage: docsearch docs <library> <query> [--json]'
+        );
       }
 
       return {
@@ -133,7 +148,9 @@ export function buildToolRequest(commandName: QueryCommandName, args: ParsedArgs
     case 'resolve': {
       const query = args.positionals.join(' ').trim();
       if (!query) {
-        throw new UsageError('Usage: docsearch resolve <library-or-product> [--json]');
+        throw new UsageError(
+          'Usage: docsearch resolve <library-or-product> [--json]'
+        );
       }
 
       return {
@@ -151,7 +168,9 @@ export function buildToolRequest(commandName: QueryCommandName, args: ParsedArgs
       const [docsetId, ...queryParts] = args.positionals;
       const query = queryParts.join(' ').trim();
       if (!docsetId || !query) {
-        throw new UsageError('Usage: docsearch query <docset-id[,docset-id...]> <query> [--json]');
+        throw new UsageError(
+          'Usage: docsearch query <docset-id[,docset-id...]> <query> [--json]'
+        );
       }
 
       const docsetIds = docsetId
@@ -204,7 +223,9 @@ export function buildSetupRequest(args: ParsedArgs): SetupRequest {
   };
 }
 
-function resolveScopeFlag(options: Record<string, boolean | string>): SetupScope | undefined {
+function resolveScopeFlag(
+  options: Record<string, boolean | string>
+): SetupScope | undefined {
   if (options['--project']) {
     return 'project';
   }
@@ -216,7 +237,10 @@ function resolveScopeFlag(options: Record<string, boolean | string>): SetupScope
   return undefined;
 }
 
-function readStringOption(options: Record<string, boolean | string>, key: string): string | undefined {
+function readStringOption(
+  options: Record<string, boolean | string>,
+  key: string
+): string | undefined {
   const value = options[key];
   return typeof value === 'string' ? value : undefined;
 }
@@ -235,7 +259,10 @@ function readEndpoint(options: Record<string, boolean | string>): string {
   return url.toString();
 }
 
-function readNumberOption(options: Record<string, boolean | string>, key: string): number | undefined {
+function readNumberOption(
+  options: Record<string, boolean | string>,
+  key: string
+): number | undefined {
   const value = readStringOption(options, key);
   if (value === undefined) {
     return undefined;
@@ -249,15 +276,22 @@ function readNumberOption(options: Record<string, boolean | string>, key: string
   return parsed;
 }
 
-function removeUndefined(values: Record<string, unknown>): Record<string, unknown> {
-  return Object.fromEntries(Object.entries(values).filter(([, value]) => value !== undefined));
+function removeUndefined(
+  values: Record<string, unknown>
+): Record<string, unknown> {
+  return Object.fromEntries(
+    Object.entries(values).filter(([, value]) => value !== undefined)
+  );
 }
 
 function uniqueAgents(agents: SetupAgent[]): SetupAgent[] {
   return [...new Set(agents)];
 }
 
-function validateToolOptions(commandName: QueryCommandName, options: Record<string, boolean | string>): void {
+function validateToolOptions(
+  commandName: QueryCommandName,
+  options: Record<string, boolean | string>
+): void {
   const allowed = new Set(QUERY_COMMON_OPTIONS);
   if (commandName === 'docs') {
     allowed.add('--max-docsets');
@@ -273,11 +307,13 @@ function validateToolOptions(commandName: QueryCommandName, options: Record<stri
 function validateOptions(
   options: Record<string, boolean | string>,
   allowed: ReadonlySet<string>,
-  commandName: string,
+  commandName: string
 ): void {
   for (const option of Object.keys(options)) {
     if (!allowed.has(option) && !HELP_OPTIONS.has(option)) {
-      throw new UsageError(`${option} is not valid for the ${commandName} command.`);
+      throw new UsageError(
+        `${option} is not valid for the ${commandName} command.`
+      );
     }
   }
 }

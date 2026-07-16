@@ -17,7 +17,9 @@ async function createTempDir(): Promise<string> {
 }
 
 afterEach(async () => {
-  await Promise.all(tempDirs.splice(0).map((path) => rm(path, { force: true, recursive: true })));
+  await Promise.all(
+    tempDirs.splice(0).map((path) => rm(path, { force: true, recursive: true }))
+  );
 });
 
 describe('upsertJsonServerEntry', () => {
@@ -36,7 +38,7 @@ describe('upsertJsonServerEntry', () => {
     },
   },
 }
-`,
+`
     );
 
     await upsertJsonServerEntry(path, 'mcp', {
@@ -50,7 +52,9 @@ describe('upsertJsonServerEntry', () => {
     expect(updated).toContain('"theme": "system"');
     expect(updated).toContain('"existing"');
     expect(updated).toContain('"algolia-docsearch"');
-    expect(updated).toContain('"url": "https://mcp.algolia.com/1/docsearch/mcp"');
+    expect(updated).toContain(
+      '"url": "https://mcp.algolia.com/1/docsearch/mcp"'
+    );
   });
 
   it('preserves unknown fields on an existing DocSearch entry', async () => {
@@ -66,7 +70,7 @@ describe('upsertJsonServerEntry', () => {
             url: 'https://old.example.com/mcp',
           },
         },
-      })}\n`,
+      })}\n`
     );
 
     const result = await upsertJsonServerEntry(path, 'mcpServers', {
@@ -89,7 +93,9 @@ describe('upsertJsonServerEntry', () => {
     const path = join(cwd, 'broken.jsonc');
     await writeFile(path, '{ "mcp": {');
 
-    await expect(upsertJsonServerEntry(path, 'mcp', { url: 'https://example.com' })).rejects.toThrow(path);
+    await expect(
+      upsertJsonServerEntry(path, 'mcp', { url: 'https://example.com' })
+    ).rejects.toThrow(path);
   });
 
   it('rejects an existing configuration section with the wrong shape', async () => {
@@ -97,9 +103,9 @@ describe('upsertJsonServerEntry', () => {
     const path = join(cwd, 'mcp.json');
     await writeFile(path, '{ "mcpServers": [] }\n');
 
-    await expect(upsertJsonServerEntry(path, 'mcpServers', { url: 'https://example.com' })).rejects.toThrow(
-      '"mcpServers" must be an object',
-    );
+    await expect(
+      upsertJsonServerEntry(path, 'mcpServers', { url: 'https://example.com' })
+    ).rejects.toThrow('"mcpServers" must be an object');
   });
 });
 
@@ -119,7 +125,7 @@ X-Custom = "value"
 
 [mcp_servers.other]
 url = "https://other.example.com/mcp"
-`,
+`
     );
 
     const result = await appendTomlServer(path, {
@@ -129,7 +135,9 @@ url = "https://other.example.com/mcp"
 
     expect(result.alreadyExists).toBe(true);
     expect(updated).toContain('# [mcp_servers.algolia-docsearch]');
-    expect(updated).toContain('url = "https://mcp.algolia.com/1/docsearch/mcp" # Keep this comment.');
+    expect(updated).toContain(
+      'url = "https://mcp.algolia.com/1/docsearch/mcp" # Keep this comment.'
+    );
     expect(updated).toContain('enabled = false');
     expect(updated).toContain('[mcp_servers.algolia-docsearch.http_headers]');
     expect(updated).toContain('X-Custom = "value"');
@@ -146,9 +154,11 @@ url = "https://one.example.com"
 
 [mcp_servers.algolia-docsearch]
 url = "https://two.example.com"
-`,
+`
     );
 
-    await expect(appendTomlServer(path, { url: 'https://example.com' })).rejects.toThrow(/duplicate/i);
+    await expect(
+      appendTomlServer(path, { url: 'https://example.com' })
+    ).rejects.toThrow(/duplicate/i);
   });
 });

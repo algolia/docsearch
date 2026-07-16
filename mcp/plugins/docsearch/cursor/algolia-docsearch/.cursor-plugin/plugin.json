@@ -6,6 +6,12 @@
     "name": "Algolia"
   },
   "homepage": "https://docsearch.algolia.com/docs/mcp/overview",
-  "keywords": ["documentation", "mcp", "algolia", "docsearch", "developer-docs"],
+  "keywords": [
+    "documentation",
+    "mcp",
+    "algolia",
+    "docsearch",
+    "developer-docs"
+  ],
   "logo": "assets/docsearch-monogram.svg"
 }

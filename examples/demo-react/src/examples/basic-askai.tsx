@@ -22,7 +22,11 @@ const customTools: ToolCalls = {
   },
 };
 
-export default function BasicAskAI({ theme }: { theme: DemoTheme }): JSX.Element {
+export default function BasicAskAI({
+  theme,
+}: {
+  theme: DemoTheme;
+}): JSX.Element {
   return (
     <DocSearchAI
       indexName="docsearch"

@@ -23,7 +23,7 @@ describe('Chip', () => {
         <Chip>
           en
           <Chip.Dismiss onClick={onDismiss} />
-        </Chip>,
+        </Chip>
       );
 
       fireEvent.click(screen.getByRole('button'));

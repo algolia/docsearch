@@ -1,6 +1,4 @@
-/**
- * Estimates the size of localStorage usage in bytes.
- */
+/** Estimates the size of localStorage usage in bytes. */
 export function getLocalStorageSize(): number {
   if (typeof window === 'undefined' || !window.localStorage) {
     return 0;
@@ -92,9 +90,7 @@ export function manageLocalStorageQuota(): void {
   }
 }
 
-/**
- * Checks if local storage is available and usable.
- */
+/** Checks if local storage is available and usable. */
 export function isLocalStorageSupported(): boolean {
   // guard against ssr and browsers where localstorage is disabled
   if (typeof window === 'undefined' || !('localStorage' in window)) {
@@ -112,15 +108,14 @@ export function isLocalStorageSupported(): boolean {
 }
 
 /**
- * Creates a simple storage interface for arrays using localstorage.
- * Provides basic getitem and setitem functionality.
- * Falls back to a no-op implementation if localstorage is not supported..
+ * Creates a simple storage interface for arrays using localstorage. Provides
+ * basic getitem and setitem functionality. Falls back to a no-op implementation
+ * if localstorage is not supported..
  *
  * @template titem The type of items to store.
  * @param key - The localstorage key to use.
  * @returns An object with setitem and getitem methods.
  */
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createStorage<TItem>(key: string) {
   if (isLocalStorageSupported() === false) {
     return {
@@ -152,14 +147,13 @@ export function createStorage<TItem>(key: string) {
 
 /**
  * Creates a simple storage interface for a single object using localstorage.
- * Provides basic getitem, setitem, and removeitem functionality.
- * Falls back to a no-op implementation if localstorage is not supported.
+ * Provides basic getitem, setitem, and removeitem functionality. Falls back to
+ * a no-op implementation if localstorage is not supported.
  *
  * @template titem The type of the object to store.
  * @param key - The localstorage key to use.
  * @returns An object with setitem, getitem, and removeitem methods.
  */
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createObjectStorage<TItem>(key: string) {
   if (isLocalStorageSupported() === false) {
     return {

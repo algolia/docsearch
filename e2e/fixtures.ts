@@ -1,4 +1,9 @@
-import { test as base, expect, type Page, type Locator } from '@playwright/test';
+import {
+  test as base,
+  expect,
+  type Page,
+  type Locator,
+} from '@playwright/test';
 
 export class DocSearchPage {
   readonly page: Page;
@@ -16,7 +21,9 @@ export class DocSearchPage {
     this.input = page.locator('.DocSearch-Input');
     this.hits = page.locator('.DocSearch-Hits').first();
     this.clearButton = page.locator('.DocSearch-Clear');
-    this.firstHit = page.locator('#docsearch-hits_docsearch-list .DocSearch-Hit a').first();
+    this.firstHit = page
+      .locator('#docsearch-hits_docsearch-list .DocSearch-Hit a')
+      .first();
   }
 
   async goto(): Promise<void> {
@@ -43,7 +50,9 @@ export class DocSearchPage {
   }
 
   async expectModalNotVisible(): Promise<void> {
-    await expect(this.page.locator('body')).not.toHaveClass(/DocSearch--active/);
+    await expect(this.page.locator('body')).not.toHaveClass(
+      /DocSearch--active/
+    );
     await expect(this.modal).not.toBeVisible();
   }
 

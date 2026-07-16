@@ -8,10 +8,12 @@ import {
   type DocSearchProps as CreateDocSearchProps,
 } from './createDocSearch';
 
-export type { DocSearchCallbacks, DocSearchInstance, TemplateHelpers } from './createDocSearch';
+export type {
+  DocSearchCallbacks,
+  DocSearchInstance,
+  TemplateHelpers,
+} from './createDocSearch';
 export type DocSearchAIProps = CreateDocSearchProps<DocSearchComponentProps>;
 
-export const docsearchAi: (allProps: DocSearchAIProps) => DocSearchInstance = createDocSearch<DocSearchComponentProps>(
-  DocSearchAI,
-  version,
-);
+export const docsearchAi: (allProps: DocSearchAIProps) => DocSearchInstance =
+  createDocSearch<DocSearchComponentProps>(DocSearchAI, version);

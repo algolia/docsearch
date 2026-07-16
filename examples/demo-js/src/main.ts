@@ -1,4 +1,7 @@
-import docsearch, { type DocSearchInstance, type TemplateHelpers } from '@docsearch/js';
+import docsearch, {
+  type DocSearchInstance,
+  type TemplateHelpers,
+} from '@docsearch/js';
 import sidepanel, { type SidepanelInstance } from '@docsearch/sidepanel-js';
 
 import './app.css';

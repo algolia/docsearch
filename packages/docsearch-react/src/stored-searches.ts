@@ -21,7 +21,11 @@ export type StoredSearchPlugin<TItem> = {
   add: (item: TItem) => void;
   remove: (item: TItem) => void;
   getAll: () => TItem[];
-  addFeedback?: (messageId: string, feedback: 'dislike' | 'like', details?: StoredFeedbackDetails) => void;
+  addFeedback?: (
+    messageId: string,
+    feedback: 'dislike' | 'like',
+    details?: StoredFeedbackDetails
+  ) => void;
   getOne?: (messageId: string) => StoredAskAiMessage | undefined;
   getConversation?: (messageId: string) => TItem | undefined;
 };
@@ -35,9 +39,12 @@ export function createStoredSearches<TItem extends StoredDocSearchHit>({
 
   return {
     add(item: TItem): void {
-      const { _highlightResult, _snippetResult, ...hit } = item as unknown as DocSearchHit;
+      const { _highlightResult, _snippetResult, ...hit } =
+        item as unknown as DocSearchHit;
 
-      const isQueryAlreadySaved = items.findIndex((x) => x.objectID === hit.objectID);
+      const isQueryAlreadySaved = items.findIndex(
+        (x) => x.objectID === hit.objectID
+      );
 
       if (isQueryAlreadySaved > -1) {
         items.splice(isQueryAlreadySaved, 1);
@@ -71,7 +78,9 @@ export function createStoredConversations<TItem extends StoredAskAiState>({
       const { objectID, query } = item;
 
       // check if this query is already saved
-      const isQueryAlreadySaved = items.findIndex((x) => x.objectID === objectID || x.query === query);
+      const isQueryAlreadySaved = items.findIndex(
+        (x) => x.objectID === objectID || x.query === query
+      );
 
       if (isQueryAlreadySaved > -1) {
         items[isQueryAlreadySaved] = item;
@@ -82,12 +91,23 @@ export function createStoredConversations<TItem extends StoredAskAiState>({
 
       storage.setItem(items);
     },
-    /** Record feedback (like/dislike) for a given message id within stored conversations. */
-    addFeedback(messageId: string, feedback: 'dislike' | 'like', details?: StoredFeedbackDetails): void {
-      const conv = items.find((c) => c.messages?.some((m) => m.id === messageId));
+    /**
+     * Record feedback (like/dislike) for a given message id within stored
+     * conversations.
+     */
+    addFeedback(
+      messageId: string,
+      feedback: 'dislike' | 'like',
+      details?: StoredFeedbackDetails
+    ): void {
+      const conv = items.find((c) =>
+        c.messages?.some((m) => m.id === messageId)
+      );
       if (!conv || !conv.messages) return;
 
-      const msg = conv.messages.find((m) => m.id === messageId) as StoredAskAiMessage | undefined;
+      const msg = conv.messages.find((m) => m.id === messageId) as
+        | StoredAskAiMessage
+        | undefined;
       if (!msg) return;
 
       msg.feedback = feedback;
@@ -97,7 +117,9 @@ export function createStoredConversations<TItem extends StoredAskAiState>({
       storage.setItem(items);
     },
     getOne(messageId: string): StoredAskAiMessage | undefined {
-      const conv = items.find((c) => c.messages?.some((m) => m.id === messageId));
+      const conv = items.find((c) =>
+        c.messages?.some((m) => m.id === messageId)
+      );
       return conv?.messages?.find((m) => m.id === messageId);
     },
     getAll(): TItem[] {
@@ -109,7 +131,9 @@ export function createStoredConversations<TItem extends StoredAskAiState>({
       storage.setItem(items);
     },
     getConversation(messageId: string): TItem | undefined {
-      const conv = items.find((c) => c.messages?.some((m) => m.id === messageId));
+      const conv = items.find((c) =>
+        c.messages?.some((m) => m.id === messageId)
+      );
 
       if (!conv || !conv.messages) return undefined;
 

@@ -4,13 +4,9 @@ import React from 'react';
 import type { SuggestedQuestionHit } from '../types';
 
 export type NewConversationScreenTranslations = Partial<{
-  /**
-   * Title to be shown on the new conversation/starting screen.
-   **/
+  /** Title to be shown on the new conversation/starting screen. */
   titleText: string;
-  /**
-   * Introduction text displayed on the new conversation/starting screen.
-   **/
+  /** Introduction text displayed on the new conversation/starting screen. */
   introductionText: string;
 }>;
 
@@ -33,7 +29,9 @@ export const NewConversationScreen = ({
   return (
     <div className="DocSearch-Sidepanel-NewConversationScreen">
       <h4 className="DocSearch-Sidepanel-Screen--title">{titleText}</h4>
-      <p className="DocSearch-Sidepanel-Screen--introduction">{introductionText}</p>
+      <p className="DocSearch-Sidepanel-Screen--introduction">
+        {introductionText}
+      </p>
 
       <div className="DocSearch-Sidepanel-List">
         {suggestedQuestions.map((q) => (

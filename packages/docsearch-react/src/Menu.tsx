@@ -37,7 +37,11 @@ export function Menu({ children }: PropsWithChildren): JSX.Element {
 
 type MenuTriggerProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
-function MenuTrigger({ children, className = '', disabled }: PropsWithChildren<MenuTriggerProps>): JSX.Element {
+function MenuTrigger({
+  children,
+  className = '',
+  disabled,
+}: PropsWithChildren<MenuTriggerProps>): JSX.Element {
   const { open, setOpen } = React.useContext(MenuContext);
 
   function toggleOpen(): void {
@@ -63,14 +67,23 @@ Menu.Trigger = MenuTrigger;
 function MenuContent({ children }: PropsWithChildren): JSX.Element {
   const { open } = React.useContext(MenuContext);
 
-  return <div className={`DocSearch-Menu-content${open ? ' open' : ''}`}>{children}</div>;
+  return (
+    <div className={`DocSearch-Menu-content${open ? ' open' : ''}`}>
+      {children}
+    </div>
+  );
 }
 
 Menu.Content = MenuContent;
 
 type MenuItemProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
-function MenuItem({ children, className = '', onClick, ...props }: PropsWithChildren<MenuItemProps>): JSX.Element {
+function MenuItem({
+  children,
+  className = '',
+  onClick,
+  ...props
+}: PropsWithChildren<MenuItemProps>): JSX.Element {
   const { setOpen } = React.useContext(MenuContext);
 
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (e): void => {
@@ -80,7 +93,12 @@ function MenuItem({ children, className = '', onClick, ...props }: PropsWithChil
     }
   };
   return (
-    <button type="button" className={`DocSearch-Menu-item ${className}`} onClick={handleClick} {...props}>
+    <button
+      type="button"
+      className={`DocSearch-Menu-item ${className}`}
+      onClick={handleClick}
+      {...props}
+    >
       {children}
     </button>
   );

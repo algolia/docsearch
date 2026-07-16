@@ -121,7 +121,7 @@ export function ProvidersTable() {
 
       setSorts(newSorts);
     },
-    [sorts],
+    [sorts]
   );
 
   React.useEffect(() => {
@@ -162,9 +162,9 @@ export function ProvidersTable() {
             <td>{provider.name}</td>
             <td>{model.name}</td>
           </tr>
-        )),
+        ))
       ),
-    [providers],
+    [providers]
   );
 
   return (
@@ -177,20 +177,30 @@ export function ProvidersTable() {
           className="border rounded px-3 py-1.5 w-full md:w-1/2 placeholder-foreground order-2 md:order-1 mt-4 md:mt-0"
           onChange={(e) => setQuery(e.target.value)}
         />
-        <FiltersMenu selectedProvider={filter} providers={providersFilters} onSelect={handleFilter} />
+        <FiltersMenu
+          selectedProvider={filter}
+          providers={providersFilters}
+          onSelect={handleFilter}
+        />
       </div>
 
       <div className="w-full overflow-x-auto">
         <table className="providers-table">
           <thead>
             <tr>
-              <th className="cursor-pointer" onClick={() => handleSorting('provider')}>
+              <th
+                className="cursor-pointer"
+                onClick={() => handleSorting('provider')}
+              >
                 <span className="inline-flex items-center">
                   Provider
                   <SortIndicator sort={sorts.provider} />
                 </span>
               </th>
-              <th className="cursor-pointer w-1/4" onClick={() => handleSorting('model')}>
+              <th
+                className="cursor-pointer w-1/4"
+                onClick={() => handleSorting('model')}
+              >
                 <span className="inline-flex items-center">
                   Model
                   <SortIndicator sort={sorts.model} />

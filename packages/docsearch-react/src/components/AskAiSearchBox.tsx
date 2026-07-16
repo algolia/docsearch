@@ -1,8 +1,17 @@
 import type { UseChatHelpers } from '@ai-sdk/react';
-import type { AutocompleteApi, AutocompleteState } from '@algolia/autocomplete-core';
+import type {
+  AutocompleteApi,
+  AutocompleteState,
+} from '@algolia/autocomplete-core';
 import React, { type JSX, type RefObject } from 'react';
 
-import { ConversationHistoryIcon, MoreVerticalIcon, NewConversationIcon, StopIcon, BackIcon } from '../icons';
+import {
+  ConversationHistoryIcon,
+  MoreVerticalIcon,
+  NewConversationIcon,
+  StopIcon,
+  BackIcon,
+} from '../icons';
 import { Menu } from '../Menu';
 import { ModalHeading } from '../ModalHeading';
 import type { InternalDocSearchHit } from '../types';
@@ -31,8 +40,12 @@ export type AskAiSearchBoxTranslations = Partial<{
   threadDepthErrorPlaceholder: string;
 }>;
 
-interface AskAiSearchBoxProps
-  extends AutocompleteApi<InternalDocSearchHit, React.FormEvent, React.MouseEvent, React.KeyboardEvent> {
+interface AskAiSearchBoxProps extends AutocompleteApi<
+  InternalDocSearchHit,
+  React.FormEvent,
+  React.MouseEvent,
+  React.KeyboardEvent
+> {
   state: AutocompleteState<InternalDocSearchHit>;
   autoFocus: boolean;
   inputRef: RefObject<HTMLInputElement | null>;
@@ -93,8 +106,10 @@ export function AskAiSearchBox({
   const blockedKeys = new Set(['ArrowUp', 'ArrowDown', 'Enter']);
   const origOnKeyDown = baseInputProps.onKeyDown;
   const origOnChange = baseInputProps.onChange;
-  const isAskAiStreaming = props.askAiStatus === 'streaming' || props.askAiStatus === 'submitted';
-  const renderMoreOptions = props.isAskAiActive && askAiState !== 'conversation-history';
+  const isAskAiStreaming =
+    props.askAiStatus === 'streaming' || props.askAiStatus === 'submitted';
+  const renderMoreOptions =
+    props.isAskAiActive && askAiState !== 'conversation-history';
 
   // Use the thread depth error state passed from parent
   const isThreadDepthError = props.isThreadDepthError || false;
@@ -121,20 +136,27 @@ export function AskAiSearchBox({
 
   // when returning to another status than streaming or submitted, we focus on the input
   React.useEffect(() => {
-    if (props.askAiStatus !== 'streaming' && props.askAiStatus !== 'submitted' && props.inputRef.current) {
+    if (
+      props.askAiStatus !== 'streaming' &&
+      props.askAiStatus !== 'submitted' &&
+      props.inputRef.current
+    ) {
       props.inputRef.current.focus();
     }
   }, [props.askAiStatus, props.inputRef]);
 
   /**
    * We need to block the default behavior of the input when Ask AI is active.
-   * This is because the input is used to ask another question when the user presses enter.
+   * This is because the input is used to ask another question when the user
+   * presses enter.
    *
    * Learn more on default autocomplete behavior:
    * https://github.com/algolia/autocomplete/blob/next/packages/autocomplete-core/src/getDefaultProps.ts.
    */
   const inputProps = {
-    enterKeyHint: props.isAskAiActive ? ('enter' as const) : ('search' as const),
+    enterKeyHint: props.isAskAiActive
+      ? ('enter' as const)
+      : ('search' as const),
     onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>): void => {
       let askAiHandled = false;
       // block these up, down, enter listeners when Ask AI is active
@@ -198,7 +220,9 @@ export function AskAiSearchBox({
       <BackIcon />
     </button>
   ) : undefined;
-  const inputOverlay = heading ? <ModalHeading heading={heading} shimmer={isAskAiStreaming} /> : null;
+  const inputOverlay = heading ? (
+    <ModalHeading heading={heading} shimmer={isAskAiStreaming} />
+  ) : null;
   const actionsBeforeClose = (
     <>
       {!props.isAskAiActive && (

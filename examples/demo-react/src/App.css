@@ -8,7 +8,11 @@
 }
 
 .body-container {
-  --demo-background: radial-gradient(125% 125% at 50% 90%, #fff 40%, #7c3aed 100%);
+  --demo-background: radial-gradient(
+    125% 125% at 50% 90%,
+    #fff 40%,
+    #7c3aed 100%
+  );
   --demo-border: rgba(255, 255, 255, 0.2);
   --demo-card-background: #fff;
   --demo-card-shadow: rgba(0, 0, 0, 0.1);
@@ -29,7 +33,11 @@
 }
 
 .body-container[data-theme='dark'] {
-  --demo-background: radial-gradient(125% 125% at 50% 90%, #161025 40%, #4c1d95 100%);
+  --demo-background: radial-gradient(
+    125% 125% at 50% 90%,
+    #161025 40%,
+    #4c1d95 100%
+  );
   --demo-border: rgba(255, 255, 255, 0.1);
   --demo-card-background: #1f1b2e;
   --demo-card-shadow: rgba(0, 0, 0, 0.35);
@@ -161,7 +169,12 @@ main {
 .divider {
   border: none;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--demo-divider), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--demo-divider),
+    transparent
+  );
   margin: 0;
 }
 

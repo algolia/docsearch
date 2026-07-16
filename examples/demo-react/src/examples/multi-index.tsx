@@ -4,7 +4,11 @@ import type { JSX } from 'react';
 
 import type { DemoTheme } from '../App';
 
-export default function MultiIndex({ theme }: { theme: DemoTheme }): JSX.Element {
+export default function MultiIndex({
+  theme,
+}: {
+  theme: DemoTheme;
+}): JSX.Element {
   return (
     <DocSearch
       indices={[

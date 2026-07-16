@@ -1,7 +1,11 @@
 import type { UIMessage } from '@ai-sdk/react';
 import { type ToolUIPart, type UIMessagePart } from 'ai';
 
-export type AskAiState = 'conversation-history' | 'conversation' | 'initial' | 'new-conversation';
+export type AskAiState =
+  | 'conversation-history'
+  | 'conversation'
+  | 'initial'
+  | 'new-conversation';
 
 export interface CustomTool {
   input: unknown;
@@ -39,11 +43,13 @@ export interface MemoryTool {
 
 export type ToolDefinition = {
   /**
-   * Use the tool's input and output to build a string output for the tool result.
+   * Use the tool's input and output to build a string output for the tool
+   * result.
    */
   render: (params: { message: { input: unknown; output: unknown } }) => string;
   /**
-   * Optional callback function that is invoked when a tool call is received. You must call addToolOutput to provide the tool result.
+   * Optional callback function that is invoked when a tool call is received.
+   * You must call addToolOutput to provide the tool result.
    */
   onToolCall?: (params: {
     input: unknown;
@@ -53,9 +59,7 @@ export type ToolDefinition = {
     dynamic?: boolean;
   }) => Promise<void> | void;
   translations?: Partial<{
-    /**
-     * The text displayed before tool call output is available.
-     */
+    /** The text displayed before tool call output is available. */
     callingToolText: string;
   }>;
 };
@@ -75,7 +79,9 @@ type SearchTools = {
   searchIndex: SearchIndexTool;
 };
 type CustomTools = {
-  [K in string as K extends keyof SearchTools | `algolia_search_index_${string}` ? never : K]: CustomTool;
+  [K in string as K extends keyof SearchTools | `algolia_search_index_${string}`
+    ? never
+    : K]: CustomTool;
 };
 type Tools = AgentStudioMemoryTools & CustomTools & SearchTools;
 
@@ -108,7 +114,9 @@ export type AlgoliaMCPSearchOutputPart = ToolUIPart<
     algolia_search_index: AlgoliaMCPSearchTool;
   }
 >;
-export type SearchOutputPart = AlgoliaMCPSearchOutputPart | SearchIndexOutputPart;
+export type SearchOutputPart =
+  | AlgoliaMCPSearchOutputPart
+  | SearchIndexOutputPart;
 
 export interface PromptSuggestion {
   prompt: string;

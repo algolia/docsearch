@@ -6,21 +6,13 @@ import { SendIcon, StopIcon } from '../icons';
 import { useIsMobile } from '../useIsMobile';
 
 export type PromptFormTranslations = Partial<{
-  /**
-   * Initial placeholder for the prompt input.
-   **/
+  /** Initial placeholder for the prompt input. */
   promptPlaceholderText: string;
-  /**
-   * Placeholder text for wile a conversation is streaming.
-   **/
+  /** Placeholder text for wile a conversation is streaming. */
   promptAnsweringText: string;
-  /**
-   * Placeholder text for after a question has already been asked.
-   **/
+  /** Placeholder text for after a question has already been asked. */
   promptAskAnotherQuestionText: string;
-  /**
-   * Disclaimer text displayed beneath the prompt form.
-   **/
+  /** Disclaimer text displayed beneath the prompt form. */
   promptDisclaimerText: string;
   promptLabelText: string;
   promptAriaLabelText: string;
@@ -37,12 +29,18 @@ type Props = {
 const MAX_PROMPT_ROWS = 8;
 
 export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
-  ({ exchanges, isStreaming, translations = {}, onSend, onStopStreaming }, ref): JSX.Element => {
+  (
+    { exchanges, isStreaming, translations = {}, onSend, onStopStreaming },
+    ref
+  ): JSX.Element => {
     const isMobile = useIsMobile();
     const [userPrompt, setUserPrompt] = React.useState('');
     const promptRef = React.useRef<HTMLTextAreaElement>(null);
 
-    React.useImperativeHandle(ref, () => promptRef.current as HTMLTextAreaElement);
+    React.useImperativeHandle(
+      ref,
+      () => promptRef.current as HTMLTextAreaElement
+    );
 
     const {
       promptPlaceholderText = 'Ask a question',
@@ -91,7 +89,9 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
       });
     };
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
+    const handleKeyDown = (
+      e: React.KeyboardEvent<HTMLTextAreaElement>
+    ): void => {
       // Allow Enter to work normally (new line) when streaming
       if (isStreaming) return;
 
@@ -167,8 +167,10 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
             )}
           </div>
         </form>
-        <p className="DocSearch-Sidepanel-Prompt--disclaimer">{promptDisclaimerText}</p>
+        <p className="DocSearch-Sidepanel-Prompt--disclaimer">
+          {promptDisclaimerText}
+        </p>
       </div>
     );
-  },
+  }
 );

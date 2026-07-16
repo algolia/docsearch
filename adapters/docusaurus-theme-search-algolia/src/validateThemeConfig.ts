@@ -1,16 +1,18 @@
 /**
  * Copyright (c) Facebook, Inc. And its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file
+ * in the root directory of this source tree.
  */
 
+import type {
+  ThemeConfig,
+  ThemeConfigDocSearch,
+} from '@docsearch/docusaurus-adapter';
 import type { ThemeConfigValidationContext } from '@docusaurus/types';
 import Joi from 'joi';
 
 import { escapeRegexp } from './utils';
-
-import type { ThemeConfig, ThemeConfigDocSearch } from '@docsearch/docusaurus-adapter';
 
 export const DEFAULT_CONFIG = {
   // Enabled by default, as it makes sense in most cases
@@ -21,14 +23,18 @@ export const DEFAULT_CONFIG = {
   },
 } satisfies Partial<ThemeConfigDocSearch>;
 
-const FacetFiltersSchema = Joi.array().items(Joi.alternatives().try(Joi.string(), Joi.array().items(Joi.string())));
+const FacetFiltersSchema = Joi.array().items(
+  Joi.alternatives().try(Joi.string(), Joi.array().items(Joi.string()))
+);
 
 const SearchParametersSchema = Joi.object({
   facetFilters: FacetFiltersSchema.optional(),
   filters: Joi.string().optional(),
   attributesToRetrieve: Joi.array().items(Joi.string()).optional(),
   restrictSearchableAttributes: Joi.array().items(Joi.string()).optional(),
-  distinct: Joi.alternatives().try(Joi.boolean(), Joi.number(), Joi.string()).optional(),
+  distinct: Joi.alternatives()
+    .try(Joi.boolean(), Joi.number(), Joi.string())
+    .optional(),
 }).unknown();
 
 const SearchControlTextParamSchema = Joi.object({
@@ -116,7 +122,7 @@ const IndexSchema = Joi.alternatives().try(
   Joi.object({
     name: Joi.string().required(),
     searchParameters: SearchParametersSchema.optional(),
-  }).unknown(false),
+  }).unknown(false)
 );
 
 const AskAiPromptSuggestionsSchema = Joi.object({
@@ -127,7 +133,9 @@ const AskAiPromptSuggestionsSchema = Joi.object({
 const AskAiSchema = Joi.object({
   assistantId: Joi.string().required(),
   suggestedQuestions: Joi.boolean().optional(),
-  searchParameters: Joi.object().pattern(Joi.string(), SearchParametersSchema).optional(),
+  searchParameters: Joi.object()
+    .pattern(Joi.string(), SearchParametersSchema)
+    .optional(),
   indices: Joi.array().items(AskAiIndexSchema).min(1).optional(),
   memory: AskAiMemorySchema.optional(),
   promptSuggestions: AskAiPromptSuggestionsSchema.optional(),
@@ -144,7 +152,7 @@ const SearchPageSchema = Joi.alternatives()
     Joi.object({
       path: Joi.string().default(DEFAULT_CONFIG.searchPage.path),
       facets: Joi.array().items(SearchPageFacetSchema).optional(),
-    }).unknown(false),
+    }).unknown(false)
   )
   .default(DEFAULT_CONFIG.searchPage);
 
@@ -162,11 +170,13 @@ const DocSearchSchema = Joi.object<ThemeConfigDocSearch>({
       Joi.object({
         key: Joi.string().required(),
         label: Joi.string().optional(),
-      }).unknown(false),
+      }).unknown(false)
     )
     .optional(),
   initialQuery: Joi.string().optional(),
-  insights: Joi.alternatives().try(Joi.boolean(), Joi.object().unknown()).optional(),
+  insights: Joi.alternatives()
+    .try(Joi.boolean(), Joi.object().unknown())
+    .optional(),
   placeholder: Joi.string().optional(),
   translations: Joi.object().optional().unknown(),
   maxResultsPerGroup: Joi.number().optional(),
@@ -184,7 +194,9 @@ const DocSearchSchema = Joi.object<ThemeConfigDocSearch>({
       if (from instanceof RegExp) {
         return from.source;
       }
-      throw new Error(`it should be a RegExp or a string, but received ${from}`);
+      throw new Error(
+        `it should be a RegExp or a string, but received ${from}`
+      );
     }).required(),
     to: Joi.string().required(),
   })
@@ -206,7 +218,7 @@ function assertNoRemovedKeys(themeConfig: ThemeConfig): void {
 
   if (themeConfigRecord.algolia !== undefined) {
     throw new Error(
-      '`themeConfig.algolia` is no longer supported by @docsearch/docusaurus-adapter v5. Move the configuration to `themeConfig.docsearch`.',
+      '`themeConfig.algolia` is no longer supported by @docsearch/docusaurus-adapter v5. Move the configuration to `themeConfig.docsearch`.'
     );
   }
 
@@ -218,31 +230,39 @@ function assertNoRemovedKeys(themeConfig: ThemeConfig): void {
   const docsearchRecord = docsearch as Record<string, unknown>;
 
   if (docsearchRecord.indexName !== undefined) {
-    throw new Error('`themeConfig.docsearch.indexName` was removed. Use `themeConfig.docsearch.indices` instead.');
+    throw new Error(
+      '`themeConfig.docsearch.indexName` was removed. Use `themeConfig.docsearch.indices` instead.'
+    );
   }
 
   if (docsearchRecord.searchParameters !== undefined) {
     throw new Error(
-      '`themeConfig.docsearch.searchParameters` was removed. Configure `searchParameters` on each `themeConfig.docsearch.indices` entry instead.',
+      '`themeConfig.docsearch.searchParameters` was removed. Configure `searchParameters` on each `themeConfig.docsearch.indices` entry instead.'
     );
   }
 
   if (docsearchRecord.searchPagePath !== undefined) {
     throw new Error(
-      '`themeConfig.docsearch.searchPagePath` was removed. Use `themeConfig.docsearch.searchPage` instead.',
+      '`themeConfig.docsearch.searchPagePath` was removed. Use `themeConfig.docsearch.searchPage` instead.'
     );
   }
 
   const sidePanel = docsearchRecord.sidePanel;
-  if (sidePanel && typeof sidePanel === 'object' && (sidePanel as Record<string, unknown>).tools !== undefined) {
+  if (
+    sidePanel &&
+    typeof sidePanel === 'object' &&
+    (sidePanel as Record<string, unknown>).tools !== undefined
+  ) {
     throw new Error(
-      '`themeConfig.docsearch.sidePanel.tools` is not supported because Docusaurus removes function values when serializing theme config. Pass custom tools through a swizzled `@theme/SearchBar` component instead: use `askAi` for the modal and `sidePanel` for the side panel.',
+      '`themeConfig.docsearch.sidePanel.tools` is not supported because Docusaurus removes function values when serializing theme config. Pass custom tools through a swizzled `@theme/SearchBar` component instead: use `askAi` for the modal and `sidePanel` for the side panel.'
     );
   }
 
   const askAi = docsearchRecord.askAi;
   if (typeof askAi === 'string') {
-    throw new Error('`themeConfig.docsearch.askAi` must be an object with `assistantId`.');
+    throw new Error(
+      '`themeConfig.docsearch.askAi` must be an object with `assistantId`.'
+    );
   }
 
   if (!askAi || typeof askAi !== 'object') {
@@ -253,25 +273,29 @@ function assertNoRemovedKeys(themeConfig: ThemeConfig): void {
 
   if (askAiRecord.agentStudio !== undefined) {
     throw new Error(
-      '`themeConfig.docsearch.askAi.agentStudio` was removed. The adapter now only supports Agent Studio.',
+      '`themeConfig.docsearch.askAi.agentStudio` was removed. The adapter now only supports Agent Studio.'
     );
   }
 
-  if (askAiRecord.indexName !== undefined || askAiRecord.apiKey !== undefined || askAiRecord.appId !== undefined) {
+  if (
+    askAiRecord.indexName !== undefined ||
+    askAiRecord.apiKey !== undefined ||
+    askAiRecord.appId !== undefined
+  ) {
     throw new Error(
-      '`themeConfig.docsearch.askAi.indexName`, `apiKey`, and `appId` were removed. Use the top-level DocSearch credentials instead.',
+      '`themeConfig.docsearch.askAi.indexName`, `apiKey`, and `appId` were removed. Use the top-level DocSearch credentials instead.'
     );
   }
 
   if (askAiRecord.sidePanel !== undefined) {
     throw new Error(
-      '`themeConfig.docsearch.askAi.sidePanel` was removed. Use `themeConfig.docsearch.sidePanel` instead.',
+      '`themeConfig.docsearch.askAi.sidePanel` was removed. Use `themeConfig.docsearch.sidePanel` instead.'
     );
   }
 
   if (askAiRecord.tools !== undefined) {
     throw new Error(
-      '`themeConfig.docsearch.askAi.tools` is not supported because Docusaurus removes function values when serializing theme config. Pass custom tools through a swizzled `@theme/SearchBar` component instead: use `askAi` for the modal and `sidePanel` for the side panel.',
+      '`themeConfig.docsearch.askAi.tools` is not supported because Docusaurus removes function values when serializing theme config. Pass custom tools through a swizzled `@theme/SearchBar` component instead: use `askAi` for the modal and `sidePanel` for the side panel.'
     );
   }
 }
@@ -280,7 +304,9 @@ function ensureSidePanelHasAskAi(themeConfig: ThemeConfig): void {
   const { docsearch } = themeConfig;
 
   if (docsearch?.sidePanel && !docsearch.askAi) {
-    throw new Error('`themeConfig.docsearch.sidePanel` requires `themeConfig.docsearch.askAi`.');
+    throw new Error(
+      '`themeConfig.docsearch.sidePanel` requires `themeConfig.docsearch.askAi`.'
+    );
   }
 }
 

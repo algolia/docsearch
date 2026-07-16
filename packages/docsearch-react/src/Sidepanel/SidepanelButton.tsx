@@ -10,13 +10,13 @@ export type SidepanelButtonTranslations = Partial<{
    * Text to be displayed when button has variant: `inline`.
    *
    * @default 'Ask AI'
-   **/
+   */
   buttonText: string;
   /**
    * Aria label text for the button.
    *
    * @default 'Ask AI'
-   **/
+   */
   buttonAriaLabel: string;
 }>;
 
@@ -27,17 +27,17 @@ export type SidepanelButtonProps = {
    * Variant of the button positioning and styling.
    *
    * - `inline` displays the button inline where rendered, with extra text
-   * - `floating` displays the button floating in bottom right of screen with just icon.
+   * - `floating` displays the button floating in bottom right of screen with just
+   *   icon.
    *
    * @default 'floating'
-   **/
+   */
   variant?: ButtonVariant;
-  /**
-   * Translations specific to the Sidepanel button.
-   **/
+  /** Translations specific to the Sidepanel button. */
   translations?: SidepanelButtonTranslations;
   /**
-   * Configuration for keyboard shortcuts. Allows enabling/disabling specific shortcuts.
+   * Configuration for keyboard shortcuts. Allows enabling/disabling specific
+   * shortcuts.
    *
    * @default `{ 'Ctrl/Cmd+I': true }`
    */
@@ -53,7 +53,9 @@ export const SidepanelButton = ({
   ...props
 }: Props): JSX.Element => {
   const { buttonText = 'Ask AI', buttonAriaLabel = 'Ask AI' } = translations;
-  const [key, setKey] = useState<typeof ACTION_KEY_APPLE | typeof ACTION_KEY_DEFAULT | null>(null);
+  const [key, setKey] = useState<
+    typeof ACTION_KEY_APPLE | typeof ACTION_KEY_DEFAULT | null
+  >(null);
 
   useEffect(() => {
     if (typeof navigator !== 'undefined') {
@@ -69,7 +71,9 @@ export const SidepanelButton = ({
     <button
       className={`DocSearch-SidepanelButton ${variant}`}
       type="button"
-      aria-label={isCtrlCmdIEnabled ? `${buttonAriaLabel} (${shortcut})` : buttonAriaLabel}
+      aria-label={
+        isCtrlCmdIEnabled ? `${buttonAriaLabel} (${shortcut})` : buttonAriaLabel
+      }
       aria-keyshortcuts={isCtrlCmdIEnabled ? shortcut : undefined}
       {...(variant === 'floating' ? { tabIndex: -1 } : {})}
       {...props}

@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. And its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file
+ * in the root directory of this source tree.
  */
 
 import type { SearchPageFacetConfig } from './types';
@@ -21,7 +21,9 @@ export const RECENT_SEARCHES_LIMIT = 6;
 // Facets rendered in the sidebar when the user doesn't configure their own.
 // `hierarchy.lvl0` is the top-level documentation section, which is the most
 // useful, least noisy facet for a docs search page.
-export const DEFAULT_FACETS: SearchPageFacetConfig[] = [{ attribute: 'hierarchy.lvl0', label: 'Section' }];
+export const DEFAULT_FACETS: SearchPageFacetConfig[] = [
+  { attribute: 'hierarchy.lvl0', label: 'Section' },
+];
 
 export const FACET_VALUES_LIMIT = 12;
 

@@ -1,6 +1,8 @@
 import React, { type JSX } from 'react';
 
-export function CloseIcon({ ...props }: React.ComponentProps<'svg'>): JSX.Element {
+export function CloseIcon({
+  ...props
+}: React.ComponentProps<'svg'>): JSX.Element {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20" {...props}>
       <path

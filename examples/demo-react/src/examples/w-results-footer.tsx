@@ -6,18 +6,30 @@ import type { JSX } from 'react';
 
 import type { DemoTheme } from '../App';
 
-function ResultsFooterComponent({ state }: { state: AutocompleteState<InternalDocSearchHit> }): JSX.Element {
+function ResultsFooterComponent({
+  state,
+}: {
+  state: AutocompleteState<InternalDocSearchHit>;
+}): JSX.Element {
   // Using JSX templates
   return (
     <div className="DocSearch-HitsFooter">
-      <a href="https://docsearch.algolia.com/apply" target="_blank" rel="noreferrer">
+      <a
+        href="https://docsearch.algolia.com/apply"
+        target="_blank"
+        rel="noreferrer"
+      >
         See all {String(state.context?.nbHits || 0)} results
       </a>
     </div>
   );
 }
 
-export default function WResultsFooter({ theme }: { theme: DemoTheme }): JSX.Element {
+export default function WResultsFooter({
+  theme,
+}: {
+  theme: DemoTheme;
+}): JSX.Element {
   return (
     <DocSearch
       indexName="docsearch"

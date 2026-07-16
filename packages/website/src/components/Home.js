@@ -136,17 +136,28 @@ function Home() {
   function Header() {
     return (
       <div className="mt-20 mb-10 snap-start">
-        <Spotlight className="-top-40 left-0 md:-top-20 md:left-60 z-[10]" fill="white" />
+        <Spotlight
+          className="-top-40 left-0 md:-top-20 md:left-60 z-[10]"
+          fill="white"
+        />
         <div className="flex flex-col items-center rounded-md p-10 pb-0">
           <div className="text-center font-[Sora] text-black dark:text-white">
             <div className="flex items-center justify-center mb-2">
-              <span role="img" aria-label="sparkles" className="mr-2 animate-pulse">
+              <span
+                role="img"
+                aria-label="sparkles"
+                className="mr-2 animate-pulse"
+              >
                 ✨
               </span>
               <span className="text-blue-600 font-semibold text-lg md:text-xl shimmer-effect mb-2">
                 Celebrating 10 Years of DocSearch
               </span>
-              <span role="img" aria-label="sparkles" className="ml-2 animate-pulse">
+              <span
+                role="img"
+                aria-label="sparkles"
+                className="ml-2 animate-pulse"
+              >
                 ✨
               </span>
             </div>
@@ -154,12 +165,15 @@ function Home() {
               Search Made For Documentation
             </p>
             <p className="text-base md:text-2xl">
-              DocSearch by Algolia makes your docs and blogs instantly searchable—
+              DocSearch by Algolia makes your docs and blogs instantly
+              searchable—
               <span className="font-black">for free</span>.
             </p>
           </div>
           <div className="flex my-12 gap-8">
-            <Button href={withBaseUrl('docs/what-is-docsearch')}>Find out more</Button>
+            <Button href={withBaseUrl('docs/what-is-docsearch')}>
+              Find out more
+            </Button>
             <PrimaryButton
               href={
                 'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch&utm_content=apply'
@@ -214,7 +228,8 @@ function Home() {
                   Solve docs challenges with a search engine
                 </p>
                 <p className="text-lg md:text-2xl text-slate-400 dark:text-slate-500">
-                  Docs are only helpful when your users can find answers easily. Enter DocSearch.
+                  Docs are only helpful when your users can find answers easily.
+                  Enter DocSearch.
                 </p>
               </div>
             </div>
@@ -234,7 +249,8 @@ function Home() {
                     Over 10 years of
                     <span className="mx-1">
                       <kbd className="inline-block px-1 py-0.5 mx-1 bg-white dark:bg-blue-800 border rounded text-base md:text-lg font-mono align-middle">
-                        {typeof navigator !== 'undefined' && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)
+                        {typeof navigator !== 'undefined' &&
+                        /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)
                           ? '⌘'
                           : 'Ctrl'}
                       </kbd>
@@ -250,7 +266,15 @@ function Home() {
                   Build{' '}
                   <FlipWords
                     className="text-blue-600"
-                    words={['faster', 'smarter', 'freely', 'simpler', 'better', 'everything', 'NOW!']}
+                    words={[
+                      'faster',
+                      'smarter',
+                      'freely',
+                      'simpler',
+                      'better',
+                      'everything',
+                      'NOW!',
+                    ]}
                   />{' '}
                   <br />
                   with DocSearch

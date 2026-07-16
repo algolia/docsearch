@@ -10,7 +10,10 @@ interface SourcesProps {
   titleText?: string;
 }
 
-export function SourcesPanel({ links, titleText = 'Sources' }: SourcesProps): JSX.Element | null {
+export function SourcesPanel({
+  links,
+  titleText = 'Sources',
+}: SourcesProps): JSX.Element | null {
   const [open, setOpen] = React.useState(false);
   const triggerRef = React.useRef<HTMLButtonElement>(null);
   const [boundary, setBoundary] = React.useState<HTMLElement | null>(null);
@@ -40,7 +43,9 @@ export function SourcesPanel({ links, titleText = 'Sources' }: SourcesProps): JS
       const triggerRect = triggerRef.current.getBoundingClientRect();
       const containerRect = scrollContainer.getBoundingClientRect();
 
-      const isOutOfView = triggerRect.bottom <= containerRect.top || triggerRect.top >= containerRect.bottom;
+      const isOutOfView =
+        triggerRect.bottom <= containerRect.top ||
+        triggerRect.top >= containerRect.bottom;
 
       if (isOutOfView) {
         setOpen(false);
@@ -60,11 +65,16 @@ export function SourcesPanel({ links, titleText = 'Sources' }: SourcesProps): JS
 
   return (
     <Popover open={open} modal="trap-focus" onOpenChange={setOpen}>
-      <Popover.Trigger ref={triggerRef} className="DocSearch-AskAiScreen-Sources-Action">
+      <Popover.Trigger
+        ref={triggerRef}
+        className="DocSearch-AskAiScreen-Sources-Action"
+      >
         <span className="DocSearch-AskAiScreen-Sources-Action-icon">
           <ContentIcon />
         </span>
-        <span className="DocSearch-AskAiScreen-Sources-Action-text">{links.length} sources</span>
+        <span className="DocSearch-AskAiScreen-Sources-Action-text">
+          {links.length} sources
+        </span>
       </Popover.Trigger>
       <Popover.Popup
         container={boundary}
@@ -79,7 +89,9 @@ export function SourcesPanel({ links, titleText = 'Sources' }: SourcesProps): JS
             <li key={l.url} className="DocSearch-AskAiScreen-Sources-source">
               <a href={l.url} target="_blank" rel="noopener noreferrer">
                 <ContentIcon />
-                <span className="DocSearch-AskAiScreen-Sources-source-title">{l.title || l.url}</span>
+                <span className="DocSearch-AskAiScreen-Sources-source-title">
+                  {l.title || l.url}
+                </span>
               </a>
             </li>
           ))}

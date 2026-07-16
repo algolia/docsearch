@@ -8,7 +8,10 @@ import type { ResultsScreenTranslations } from './ResultsScreen';
 import type { InternalDocSearchHit } from './types';
 import { getCollection } from './utils';
 
-type ConversationHistoryScreenProps = Omit<AskAiScreenStateProps<InternalDocSearchHit>, 'translations'> & {
+type ConversationHistoryScreenProps = Omit<
+  AskAiScreenStateProps<InternalDocSearchHit>,
+  'translations'
+> & {
   translations?: ResultsScreenTranslations;
 };
 
@@ -16,7 +19,10 @@ export function ConversationHistoryScreen({
   onAskAiToggle,
   ...props
 }: ConversationHistoryScreenProps): JSX.Element | null {
-  const collection = React.useMemo(() => getCollection(props.state, 'recentConversations'), [props.state]);
+  const collection = React.useMemo(
+    () => getCollection(props.state, 'recentConversations'),
+    [props.state]
+  );
 
   React.useEffect(() => {
     if (!collection || collection.items.length === 0) {

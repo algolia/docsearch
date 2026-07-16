@@ -2,7 +2,7 @@
   all: unset;
   align-items: center;
   border: 1px solid var(--docsearch-subtle-color);
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   background-color: var(--docsearch-search-button-background);
   color: var(--docsearch-search-button-text-color);
   cursor: pointer;
@@ -59,7 +59,10 @@
   position: relative;
   border: 0;
   font-size: 14px;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 100ms;

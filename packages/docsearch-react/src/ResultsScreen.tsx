@@ -15,20 +15,30 @@ export type ResultsScreenTranslations = Partial<{
 }> &
   ResultsTranslations;
 
-type ResultsScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
+type ResultsScreenProps = Omit<
+  ScreenStateProps<InternalDocSearchHit>,
+  'translations'
+> & {
   translations?: ResultsScreenTranslations;
 };
 
-export function ResultsScreen({ translations = {}, resultBadgeKey, ...props }: ResultsScreenProps): JSX.Element {
+export function ResultsScreen({
+  translations = {},
+  resultBadgeKey,
+  ...props
+}: ResultsScreenProps): JSX.Element {
   const { resultsSectionTitle = 'Results' } = translations;
 
-  const renderIcon = React.useCallback(({ item }: { item: InternalDocSearchHit }) => {
-    return (
-      <div className="DocSearch-Hit-icon">
-        <SourceIcon type={item.type} />
-      </div>
-    );
-  }, []);
+  const renderIcon = React.useCallback(
+    ({ item }: { item: InternalDocSearchHit }) => {
+      return (
+        <div className="DocSearch-Hit-icon">
+          <SourceIcon type={item.type} />
+        </div>
+      );
+    },
+    []
+  );
 
   const renderAction = React.useCallback(() => {
     return (
@@ -50,7 +60,7 @@ export function ResultsScreen({ translations = {}, resultBadgeKey, ...props }: R
         />
       );
     },
-    [resultBadgeKey, translations.resultBadgeLabelText],
+    [resultBadgeKey, translations.resultBadgeLabelText]
   );
 
   return (

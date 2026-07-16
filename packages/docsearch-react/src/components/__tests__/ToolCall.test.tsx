@@ -69,12 +69,19 @@ describe('ToolCall', () => {
     ] satisfies Array<{
       description: string;
       part: AIToolPart;
-    }>)('renders the completed search tool result for $description', ({ part }) => {
-      const { container } = render(<ToolCall part={part} translations={TRANSLATIONS} tools={{}} />);
+    }>)(
+      'renders the completed search tool result for $description',
+      ({ part }) => {
+        const { container } = render(
+          <ToolCall part={part} translations={TRANSLATIONS} tools={{}} />
+        );
 
-      expect(within(container).getByText('Searched', { exact: false })).toBeInTheDocument();
-      expect(within(container).getByText(/"test"/)).toBeInTheDocument();
-    });
+        expect(
+          within(container).getByText('Searched', { exact: false })
+        ).toBeInTheDocument();
+        expect(within(container).getByText(/"test"/)).toBeInTheDocument();
+      }
+    );
   });
 
   describe('memory tools', () => {
@@ -120,11 +127,18 @@ describe('ToolCall', () => {
       'renders the memory result text for $description when output is available and memory is enabled',
       ({ part, expectedMessage }) => {
         const { container } = render(
-          <ToolCall part={part} translations={TRANSLATIONS} tools={{}} memoryEnabled={true} />,
+          <ToolCall
+            part={part}
+            translations={TRANSLATIONS}
+            tools={{}}
+            memoryEnabled={true}
+          />
         );
 
-        expect(within(container).getByText(expectedMessage)).toBeInTheDocument();
-      },
+        expect(
+          within(container).getByText(expectedMessage)
+        ).toBeInTheDocument();
+      }
     );
 
     it.each([
@@ -163,13 +177,23 @@ describe('ToolCall', () => {
       description: string;
       part: MemoryToolPart;
       expectedMessage: string;
-    }>)('renders the memory result text in $description state when memory is enabled', ({ part, expectedMessage }) => {
-      const { container } = render(
-        <ToolCall part={part} translations={TRANSLATIONS} tools={{}} memoryEnabled={true} />,
-      );
+    }>)(
+      'renders the memory result text in $description state when memory is enabled',
+      ({ part, expectedMessage }) => {
+        const { container } = render(
+          <ToolCall
+            part={part}
+            translations={TRANSLATIONS}
+            tools={{}}
+            memoryEnabled={true}
+          />
+        );
 
-      expect(within(container).getByText(expectedMessage)).toBeInTheDocument();
-    });
+        expect(
+          within(container).getByText(expectedMessage)
+        ).toBeInTheDocument();
+      }
+    );
 
     it('renders nothing for memory tool output errors when memory is enabled', () => {
       const part: MemoryToolPart = {
@@ -181,7 +205,12 @@ describe('ToolCall', () => {
       };
 
       const { container } = render(
-        <ToolCall part={part} translations={TRANSLATIONS} tools={{}} memoryEnabled={true} />,
+        <ToolCall
+          part={part}
+          translations={TRANSLATIONS}
+          tools={{}}
+          memoryEnabled={true}
+        />
       );
 
       expect(container).toBeEmptyDOMElement();
@@ -214,13 +243,21 @@ describe('ToolCall', () => {
       description: string;
       part: MemoryToolPart;
       memoryEnabled: boolean | undefined;
-    }>)('renders nothing for memory tools when $description', ({ part, memoryEnabled }) => {
-      const { container } = render(
-        <ToolCall part={part} translations={TRANSLATIONS} tools={{}} memoryEnabled={memoryEnabled} />,
-      );
+    }>)(
+      'renders nothing for memory tools when $description',
+      ({ part, memoryEnabled }) => {
+        const { container } = render(
+          <ToolCall
+            part={part}
+            translations={TRANSLATIONS}
+            tools={{}}
+            memoryEnabled={memoryEnabled}
+          />
+        );
 
-      expect(container).toBeEmptyDOMElement();
-    });
+        expect(container).toBeEmptyDOMElement();
+      }
+    );
 
     it('prioritizes a matching custom tool over the memory tool rendering', () => {
       const part: MemoryToolPart = {
@@ -236,10 +273,16 @@ describe('ToolCall', () => {
         },
       };
 
-      const { container } = render(<ToolCall part={part} translations={TRANSLATIONS} tools={tools} />);
+      const { container } = render(
+        <ToolCall part={part} translations={TRANSLATIONS} tools={tools} />
+      );
 
-      expect(within(container).getByText('Custom memory render')).toBeInTheDocument();
-      expect(within(container).queryByText('Used memory to enhance results')).not.toBeInTheDocument();
+      expect(
+        within(container).getByText('Custom memory render')
+      ).toBeInTheDocument();
+      expect(
+        within(container).queryByText('Used memory to enhance results')
+      ).not.toBeInTheDocument();
     });
   });
 
@@ -258,7 +301,9 @@ describe('ToolCall', () => {
         },
       };
 
-      render(<ToolCall part={part} translations={TRANSLATIONS} tools={tools} />);
+      render(
+        <ToolCall part={part} translations={TRANSLATIONS} tools={tools} />
+      );
 
       expect(screen.getByText('Running custom action')).toBeInTheDocument();
     });
@@ -278,7 +323,9 @@ describe('ToolCall', () => {
         },
       };
 
-      render(<ToolCall part={part} translations={TRANSLATIONS} tools={tools} />);
+      render(
+        <ToolCall part={part} translations={TRANSLATIONS} tools={tools} />
+      );
 
       expect(renderToolOutput).toHaveBeenCalledWith({
         message: {
@@ -303,7 +350,9 @@ describe('ToolCall', () => {
         },
       };
 
-      const { container } = render(<ToolCall part={part} translations={TRANSLATIONS} tools={tools} />);
+      const { container } = render(
+        <ToolCall part={part} translations={TRANSLATIONS} tools={tools} />
+      );
 
       expect(container).toBeEmptyDOMElement();
     });

@@ -35,7 +35,9 @@ export function AggregatedSearchBlock({
 
   // if the translator provides a fully custom node, render it and bail out.
   if (typeof translations.aggregatedToolCallNode === 'function') {
-    return <>{translations.aggregatedToolCallNode(queries, onSearchQueryClick)}</>;
+    return (
+      <>{translations.aggregatedToolCallNode(queries, onSearchQueryClick)}</>
+    );
   }
 
   // otherwise fall back to the classic english-pattern renderer.
@@ -43,7 +45,12 @@ export function AggregatedSearchBlock({
     ? translations.aggregatedToolCallText(queries)
     : defaultAggregatedToolCallParts;
 
-  const { before = '', separator = ', ', lastSeparator = ' and ', after = '' } = parts || {};
+  const {
+    before = '',
+    separator = ', ',
+    lastSeparator = ' and ',
+    after = '',
+  } = parts || {};
 
   return (
     <div className="DocSearch-AskAiScreen-MessageContent-Tool Tool--AggregatedResult">

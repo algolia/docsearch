@@ -34,14 +34,20 @@ test.describe.skip('Ask AI', () => {
     await expect(page.locator('.DocSearch-AskAiScreen-Message')).toBeVisible();
   });
 
-  test('Copy button copies the response to the clipboard', async ({ docSearch, page, context }) => {
+  test('Copy button copies the response to the clipboard', async ({
+    docSearch,
+    page,
+    context,
+  }) => {
     // Grant clipboard permissions
     await context.grantPermissions(['clipboard-read', 'clipboard-write']);
 
     await docSearch.goToAskAi();
     await expect(page.locator('.DocSearch-AskAiScreen-Response')).toBeVisible();
 
-    const clipboardText = await page.evaluate(() => navigator.clipboard.readText());
+    const clipboardText = await page.evaluate(() =>
+      navigator.clipboard.readText()
+    );
     expect(clipboardText.length).toBeGreaterThan(0);
   });
 });

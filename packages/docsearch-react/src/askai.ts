@@ -1,4 +1,5 @@
-export const agentStudioBaseUrl = (appId: string): string => `https://${appId}.algolia.net/agent-studio/1`;
+export const agentStudioBaseUrl = (appId: string): string =>
+  `https://${appId}.algolia.net/agent-studio/1`;
 
 interface AgentStudioValidationError extends Error {
   name: 'ValidationError';

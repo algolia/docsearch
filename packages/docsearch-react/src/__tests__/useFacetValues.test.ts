@@ -26,7 +26,9 @@ describe('useFacetValues', () => {
     const facets: DocSearchFacet[] = [{ key: 'language' }, { key: 'version' }];
     const indexes: DocSearchIndex[] = [{ name: 'docs' }];
 
-    const { result } = renderHook(() => useFacetValues({ facets, indexes, searchClient }));
+    const { result } = renderHook(() =>
+      useFacetValues({ facets, indexes, searchClient })
+    );
 
     await waitFor(() => {
       expect(result.current).toEqual({
@@ -40,14 +42,19 @@ describe('useFacetValues', () => {
 
   it('does not re-fetch when facet/index props are recreated with identical content', async () => {
     const { result, rerender } = renderHook(
-      ({ facets, indexes }: { facets: DocSearchFacet[]; indexes: DocSearchIndex[] }) =>
-        useFacetValues({ facets, indexes, searchClient }),
+      ({
+        facets,
+        indexes,
+      }: {
+        facets: DocSearchFacet[];
+        indexes: DocSearchIndex[];
+      }) => useFacetValues({ facets, indexes, searchClient }),
       {
         initialProps: {
           facets: [{ key: 'language' }] as DocSearchFacet[],
           indexes: [{ name: 'docs' }] as DocSearchIndex[],
         },
-      },
+      }
     );
 
     await waitFor(() => {
@@ -64,14 +71,21 @@ describe('useFacetValues', () => {
 
   it('re-fetches when searchParameters change', async () => {
     const { result, rerender } = renderHook(
-      ({ facets, indexes }: { facets: DocSearchFacet[]; indexes: DocSearchIndex[] }) =>
-        useFacetValues({ facets, indexes, searchClient }),
+      ({
+        facets,
+        indexes,
+      }: {
+        facets: DocSearchFacet[];
+        indexes: DocSearchIndex[];
+      }) => useFacetValues({ facets, indexes, searchClient }),
       {
         initialProps: {
           facets: [{ key: 'language' }] as DocSearchFacet[],
-          indexes: [{ name: 'docs', searchParameters: { analytics: true } }] as DocSearchIndex[],
+          indexes: [
+            { name: 'docs', searchParameters: { analytics: true } },
+          ] as DocSearchIndex[],
         },
-      },
+      }
     );
 
     await waitFor(() => {
@@ -91,7 +105,9 @@ describe('useFacetValues', () => {
   });
 
   it('does not search when there are no facets', () => {
-    const { result } = renderHook(() => useFacetValues({ facets: [], indexes: [{ name: 'docs' }], searchClient }));
+    const { result } = renderHook(() =>
+      useFacetValues({ facets: [], indexes: [{ name: 'docs' }], searchClient })
+    );
 
     expect(result.current).toEqual({});
     expect(search).not.toHaveBeenCalled();
@@ -103,7 +119,7 @@ describe('useFacetValues', () => {
         facets: [{ key: 'language' }],
         indexes: [],
         searchClient,
-      }),
+      })
     );
 
     expect(result.current).toEqual({});
