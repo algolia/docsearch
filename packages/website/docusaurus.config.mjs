@@ -111,7 +111,7 @@ export default {
           },
           {
             label: 'MCP',
-            to: 'docs/mcp/overview',
+            to: '/mcp',
             position: 'left',
           },
           {
