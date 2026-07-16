@@ -3,7 +3,11 @@
 import { describe, expect, it } from 'vitest';
 
 import type { AgentChoice } from '../prompt';
-import { parseAgentSelection, parseScopeSelection, PromptCancelledError } from '../prompt';
+import {
+  parseAgentSelection,
+  parseScopeSelection,
+  PromptCancelledError,
+} from '../prompt';
 
 const CHOICES: AgentChoice[] = [
   { detected: true, displayName: 'Cursor', name: 'cursor' },
@@ -17,7 +21,11 @@ describe('parseAgentSelection', () => {
   });
 
   it('selects every agent for "all"', () => {
-    expect(parseAgentSelection('all', CHOICES)).toEqual(['cursor', 'claude', 'codex']);
+    expect(parseAgentSelection('all', CHOICES)).toEqual([
+      'cursor',
+      'claude',
+      'codex',
+    ]);
   });
 
   it('selects nothing for "none"', () => {
@@ -25,7 +33,10 @@ describe('parseAgentSelection', () => {
   });
 
   it('parses a mix of numbers and names without duplicates', () => {
-    expect(parseAgentSelection('1, claude, 2', CHOICES)).toEqual(['cursor', 'claude']);
+    expect(parseAgentSelection('1, claude, 2', CHOICES)).toEqual([
+      'cursor',
+      'claude',
+    ]);
   });
 
   it('rejects unknown tokens', () => {

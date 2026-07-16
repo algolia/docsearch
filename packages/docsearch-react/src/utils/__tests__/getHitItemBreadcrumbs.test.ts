@@ -3,7 +3,9 @@ import { describe, it, expect } from 'vitest';
 import type { StoredDocSearchHit } from '../../types';
 import { getHitItemBreadcrumbs } from '../getHitItemBreadcrumbs';
 
-function createHit(overrides: Partial<StoredDocSearchHit> = {}): StoredDocSearchHit {
+function createHit(
+  overrides: Partial<StoredDocSearchHit> = {}
+): StoredDocSearchHit {
   return {
     objectID: '1',
     content: null,
@@ -63,7 +65,9 @@ describe('getHitItemBreadcrumbs', () => {
       },
     });
 
-    expect(getHitItemBreadcrumbs(item)).toBe('Documentation > Getting started > Installation');
+    expect(getHitItemBreadcrumbs(item)).toBe(
+      'Documentation > Getting started > Installation'
+    );
   });
 
   it('includes the immediate parent heading for content hits under lvl1', () => {
@@ -106,6 +110,8 @@ describe('getHitItemBreadcrumbs', () => {
       },
     });
 
-    expect(getHitItemBreadcrumbs(item)).toBe('Search & Discovery > <DocSearch />');
+    expect(getHitItemBreadcrumbs(item)).toBe(
+      'Search & Discovery > <DocSearch />'
+    );
   });
 });

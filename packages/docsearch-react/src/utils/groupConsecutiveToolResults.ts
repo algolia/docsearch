@@ -1,14 +1,20 @@
-import type { AIMessagePart, AggregatedToolCallPart, SearchOutputPart } from '../types/AskiAi';
+import type {
+  AIMessagePart,
+  AggregatedToolCallPart,
+  SearchOutputPart,
+} from '../types/AskiAi';
 
 import { isSearchIndexOutputPart, isSearchOutputPart } from './ai';
 
 /**
- * Extracts the search query from a search tool result part.
- * `searchIndex` exposes the query on its output, while the Algolia MCP search
- * tools expose it on their input.
+ * Extracts the search query from a search tool result part. `searchIndex`
+ * exposes the query on its output, while the Algolia MCP search tools expose it
+ * on their input.
  */
 function getSearchQuery(part: SearchOutputPart): string {
-  const query = isSearchIndexOutputPart(part) ? part.output?.query : part.input?.query;
+  const query = isSearchIndexOutputPart(part)
+    ? part.output?.query
+    : part.input?.query;
 
   return (query ?? '').trim();
 }
@@ -16,9 +22,12 @@ function getSearchQuery(part: SearchOutputPart): string {
 /**
  * Groups consecutive search tool invocation result parts together. Both the
  * `searchIndex` tool and the Algolia MCP search tools (`algolia_search_index`
- * and `algolia_search_index_*`) are aggregated. Empty or falsy queries are ignored.
+ * and `algolia_search_index_*`) are aggregated. Empty or falsy queries are
+ * ignored.
  */
-export function groupConsecutiveToolResults(parts: AIMessagePart[]): Array<AggregatedToolCallPart | AIMessagePart> {
+export function groupConsecutiveToolResults(
+  parts: AIMessagePart[]
+): Array<AggregatedToolCallPart | AIMessagePart> {
   const aggregatedParts: Array<AggregatedToolCallPart | AIMessagePart> = [];
 
   for (let i = 0; i < parts.length; i++) {

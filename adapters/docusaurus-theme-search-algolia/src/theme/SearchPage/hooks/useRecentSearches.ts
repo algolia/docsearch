@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. And its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file
+ * in the root directory of this source tree.
  */
 
 import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
@@ -21,7 +21,9 @@ function readRecentSearches(): string[] {
       return [];
     }
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed.filter((item): item is string => typeof item === 'string') : [];
+    return Array.isArray(parsed)
+      ? parsed.filter((item): item is string => typeof item === 'string')
+      : [];
   } catch {
     return [];
   }
@@ -67,7 +69,10 @@ export function useRecentSearches(): UseRecentSearches {
       return;
     }
     setRecentSearches((prev) => {
-      const next = [trimmed, ...prev.filter((item) => item !== trimmed)].slice(0, RECENT_SEARCHES_LIMIT);
+      const next = [trimmed, ...prev.filter((item) => item !== trimmed)].slice(
+        0,
+        RECENT_SEARCHES_LIMIT
+      );
       writeRecentSearches(next);
       return next;
     });
@@ -77,12 +82,17 @@ export function useRecentSearches(): UseRecentSearches {
     (query: string) => {
       persist(recentSearches.filter((item) => item !== query));
     },
-    [persist, recentSearches],
+    [persist, recentSearches]
   );
 
   const clearRecentSearches = useCallback(() => {
     persist([]);
   }, [persist]);
 
-  return { recentSearches, addRecentSearch, removeRecentSearch, clearRecentSearches };
+  return {
+    recentSearches,
+    addRecentSearch,
+    removeRecentSearch,
+    clearRecentSearches,
+  };
 }

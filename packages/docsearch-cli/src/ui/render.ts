@@ -34,7 +34,8 @@ const LOGO_BOTTOM_LEVEL = 0;
 export function renderLogo(): string {
   const span = Math.max(1, LOGO.length - 1);
   const rows = LOGO.map((line, index) => {
-    const level = LOGO_TOP_LEVEL - (index / span) * (LOGO_TOP_LEVEL - LOGO_BOTTOM_LEVEL);
+    const level =
+      LOGO_TOP_LEVEL - (index / span) * (LOGO_TOP_LEVEL - LOGO_BOTTOM_LEVEL);
     return brandShade(level)(line);
   });
 
@@ -55,9 +56,20 @@ interface LandingCommand {
 }
 
 const LANDING_COMMANDS: LandingCommand[] = [
-  { description: 'Configure the DocSearch MCP for your AI agents', name: 'setup' },
-  { args: '<library> <query>', description: "One-shot search across a library's docs", name: 'docs' },
-  { args: '<library>', description: 'Find matching docsets for a product', name: 'resolve' },
+  {
+    description: 'Configure the DocSearch MCP for your AI agents',
+    name: 'setup',
+  },
+  {
+    args: '<library> <query>',
+    description: "One-shot search across a library's docs",
+    name: 'docs',
+  },
+  {
+    args: '<library>',
+    description: 'Find matching docsets for a product',
+    name: 'resolve',
+  },
   {
     args: '<docset-id[,docset-id...]> <query>',
     description: 'Search inside specific docsets',
@@ -68,7 +80,8 @@ const LANDING_COMMANDS: LandingCommand[] = [
 export function renderLanding(): string {
   const prefix = `${CLI_NAME} `;
   const plainLefts = LANDING_COMMANDS.map(
-    (command) => `  $ ${prefix}${command.name}${command.args ? ` ${command.args}` : ''}`,
+    (command) =>
+      `  $ ${prefix}${command.name}${command.args ? ` ${command.args}` : ''}`
   );
   const column = Math.max(...plainLefts.map((left) => left.length)) + 3;
 
@@ -156,7 +169,10 @@ export interface SetupSummaryMeta {
   scope: string;
 }
 
-export function renderSetupResults(results: SetupResult[], meta: SetupSummaryMeta): string {
+export function renderSetupResults(
+  results: SetupResult[],
+  meta: SetupSummaryMeta
+): string {
   if (results.length === 0) {
     return renderNotice('No agents selected. Nothing was configured.');
   }
@@ -184,6 +200,7 @@ export function renderSetupResults(results: SetupResult[], meta: SetupSummaryMet
 }
 
 function renderStep(name: string, status: string, path: string): string {
-  const badge = status === 'updated' ? color.yellow(status) : color.green(status);
+  const badge =
+    status === 'updated' ? color.yellow(status) : color.green(status);
   return `  ${color.green(symbols.tick)} ${name} ${color.dim(symbols.bullet)} ${badge}\n    ${color.dim(path)}`;
 }

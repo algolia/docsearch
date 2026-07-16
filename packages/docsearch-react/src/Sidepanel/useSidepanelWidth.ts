@@ -9,13 +9,21 @@ type UseSidepanelWidthProps = {
   expandedWidth?: number | string;
 };
 
-export const useSidepanelWidth = ({ isExpanded, width, expandedWidth }: UseSidepanelWidthProps): string => {
+export const useSidepanelWidth = ({
+  isExpanded,
+  width,
+  expandedWidth,
+}: UseSidepanelWidthProps): string => {
   const baseWidth = React.useMemo(() => {
-    return typeof width === 'number' ? `${width}px` : (width ?? `${BASE_WIDTH}px`);
+    return typeof width === 'number'
+      ? `${width}px`
+      : (width ?? `${BASE_WIDTH}px`);
   }, [width]);
 
   const resolvedExpandedWidth = React.useMemo(() => {
-    return typeof expandedWidth === 'number' ? `${expandedWidth}px` : (expandedWidth ?? `${EXPANDED_WIDTH}px`);
+    return typeof expandedWidth === 'number'
+      ? `${expandedWidth}px`
+      : (expandedWidth ?? `${EXPANDED_WIDTH}px`);
   }, [expandedWidth]);
 
   const expectedWidth = isExpanded ? resolvedExpandedWidth : baseWidth;

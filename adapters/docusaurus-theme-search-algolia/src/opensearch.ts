@@ -1,12 +1,13 @@
 /**
  * Copyright (c) Facebook, Inc. And its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file
+ * in the root directory of this source tree.
  */
 
 import path from 'path';
 
+import type { ThemeConfig } from '@docsearch/docusaurus-adapter';
 import type { HtmlTags, LoadContext } from '@docusaurus/types';
 import { defaultConfig, compile } from 'eta';
 import fs from 'fs-extra';
@@ -14,8 +15,6 @@ import fs from 'fs-extra';
 import { getDocSearchConfig } from './getDocSearchConfig';
 import openSearchTemplate from './templates/opensearch';
 import { normalizeUrl } from './utils';
-
-import type { ThemeConfig } from '@docsearch/docusaurus-adapter';
 
 let compiledOpenSearchTemplate: ReturnType<typeof compile> | null = null;
 
@@ -39,7 +38,11 @@ function renderOpenSearchTemplate(data: {
 
 const OPEN_SEARCH_FILENAME = 'opensearch.xml';
 
-export function shouldCreateOpenSearchFile({ context }: { context: LoadContext }): boolean {
+export function shouldCreateOpenSearchFile({
+  context,
+}: {
+  context: LoadContext;
+}): boolean {
   const {
     siteConfig: {
       themeConfig,
@@ -74,7 +77,11 @@ function createOpenSearchFileContent({
   });
 }
 
-export async function createOpenSearchFile({ context }: { context: LoadContext }): Promise<void> {
+export async function createOpenSearchFile({
+  context,
+}: {
+  context: LoadContext;
+}): Promise<void> {
   const {
     outDir,
     siteConfig: { themeConfig },
@@ -94,7 +101,11 @@ export async function createOpenSearchFile({ context }: { context: LoadContext }
   }
 }
 
-export function createOpenSearchHeadTags({ context }: { context: LoadContext }): HtmlTags {
+export function createOpenSearchHeadTags({
+  context,
+}: {
+  context: LoadContext;
+}): HtmlTags {
   const {
     baseUrl,
     siteConfig: { title },

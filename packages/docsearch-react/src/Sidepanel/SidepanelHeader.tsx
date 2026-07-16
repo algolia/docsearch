@@ -24,7 +24,11 @@ type BackButtonProps = {
   disabled?: boolean;
 };
 
-const BackButton = ({ onBack, mobile = false, disabled = false }: BackButtonProps): JSX.Element => {
+const BackButton = ({
+  onBack,
+  mobile = false,
+  disabled = false,
+}: BackButtonProps): JSX.Element => {
   return (
     <button
       type="button"
@@ -39,21 +43,13 @@ const BackButton = ({ onBack, mobile = false, disabled = false }: BackButtonProp
 };
 
 export type HeaderTranslations = Partial<{
-  /**
-   * The main title text shown on the header.
-   **/
+  /** The main title text shown on the header. */
   title: string;
-  /**
-   * The title text shown on the conversation history screen.
-   **/
+  /** The title text shown on the conversation history screen. */
   conversationHistoryTitle: string;
-  /**
-   * The text shown on the start a conversation button.
-   **/
+  /** The text shown on the start a conversation button. */
   newConversationText: string;
-  /**
-   * The text shown on the view conversation history button.
-   **/
+  /** The text shown on the view conversation history button. */
   viewConversationHistoryText: string;
 }>;
 
@@ -102,7 +98,8 @@ export const SidepanelHeader = React.memo(
       }
     }, [exchanges, setSidepanelState]);
 
-    const newConversationDisabled = sidepanelState === 'new-conversation' && exchanges.length < 1;
+    const newConversationDisabled =
+      sidepanelState === 'new-conversation' && exchanges.length < 1;
 
     let header = title;
 
@@ -119,9 +116,16 @@ export const SidepanelHeader = React.memo(
         <div className="DocSearch-Sidepanel-Header--left">
           <BackButton mobile={true} disabled={isStreaming} onBack={onBack} />
 
-          {sidepanelState === 'conversation-history' && <div className="DocSearch-Divider" />}
+          {sidepanelState === 'conversation-history' && (
+            <div className="DocSearch-Divider" />
+          )}
 
-          <button type="button" className="DocSearch-Action" title={newConversationText} onClick={onNewConversation}>
+          <button
+            type="button"
+            className="DocSearch-Action"
+            title={newConversationText}
+            onClick={onNewConversation}
+          >
             <EditIcon />
           </button>
 
@@ -142,27 +146,31 @@ export const SidepanelHeader = React.memo(
           <h2 className="DocSearch-Sidepanel-Title">{header}</h2>
         </div>
         <div className="DocSearch-Sidepanel-Header--right">
-          {sidepanelState !== 'conversation-history' && (!newConversationDisabled || hasConversations) && (
-            <Menu>
-              <Menu.Trigger className="DocSearch-Action DocSearch-Sidepanel-Action-menu" disabled={isStreaming}>
-                <MoreVerticalIcon />
-              </Menu.Trigger>
-              <Menu.Content>
-                {!newConversationDisabled && (
-                  <Menu.Item onClick={onNewConversation}>
-                    <NewConversationIcon />
-                    {newConversationText}
-                  </Menu.Item>
-                )}
-                {hasConversations && (
-                  <Menu.Item onClick={goToConversationHistory}>
-                    <ConversationHistoryIcon />
-                    {viewConversationHistoryText}
-                  </Menu.Item>
-                )}
-              </Menu.Content>
-            </Menu>
-          )}
+          {sidepanelState !== 'conversation-history' &&
+            (!newConversationDisabled || hasConversations) && (
+              <Menu>
+                <Menu.Trigger
+                  className="DocSearch-Action DocSearch-Sidepanel-Action-menu"
+                  disabled={isStreaming}
+                >
+                  <MoreVerticalIcon />
+                </Menu.Trigger>
+                <Menu.Content>
+                  {!newConversationDisabled && (
+                    <Menu.Item onClick={onNewConversation}>
+                      <NewConversationIcon />
+                      {newConversationText}
+                    </Menu.Item>
+                  )}
+                  {hasConversations && (
+                    <Menu.Item onClick={goToConversationHistory}>
+                      <ConversationHistoryIcon />
+                      {viewConversationHistoryText}
+                    </Menu.Item>
+                  )}
+                </Menu.Content>
+              </Menu>
+            )}
           <button
             type="button"
             className="DocSearch-Action DocSearch-Sidepanel-Action-expand"
@@ -182,5 +190,5 @@ export const SidepanelHeader = React.memo(
         </div>
       </header>
     );
-  },
+  }
 );

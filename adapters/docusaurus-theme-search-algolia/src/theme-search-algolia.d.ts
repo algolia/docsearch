@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. And its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file
+ * in the root directory of this source tree.
  */
 
 declare module '@docsearch/docusaurus-adapter' {
@@ -15,7 +15,9 @@ declare module '@docsearch/docusaurus-adapter' {
   } from '@docsearch/react';
   import type { SidepanelProps } from '@docsearch/react/sidepanel';
 
-  type DocusaurusSidePanelConfig = boolean | (Omit<SidepanelProps, 'tools'> & { hideButton?: boolean });
+  type DocusaurusSidePanelConfig =
+    | boolean
+    | (Omit<SidepanelProps, 'tools'> & { hideButton?: boolean });
   type DocusaurusSearchBarSidePanelProps =
     | boolean
     | (Omit<SidepanelProps, 'tools'> & {
@@ -24,7 +26,10 @@ declare module '@docsearch/docusaurus-adapter' {
       });
 
   type SearchPageFacetConfig = {
-    /** Algolia attribute to build a refinement list from (e.g. `hierarchy.lvl0`). */
+    /**
+     * Algolia attribute to build a refinement list from (e.g.
+     * `hierarchy.lvl0`).
+     */
     attribute: string;
     /** Human-readable label displayed above the refinement list. */
     label?: string;
@@ -50,7 +55,8 @@ declare module '@docsearch/docusaurus-adapter' {
     promptSuggestions?: DocSearchAskAi['promptSuggestions'];
   };
 
-  export type DocusaurusSearchBarAskAiProps = AskAiConfig & Pick<DocSearchAskAi, 'tools'>;
+  export type DocusaurusSearchBarAskAiProps = AskAiConfig &
+    Pick<DocSearchAskAi, 'tools'>;
 
   // DocSearch props that Docusaurus exposes directly through props forwarding
   type DocusaurusDocSearchProps = Pick<
@@ -94,7 +100,10 @@ declare module '@docsearch/docusaurus-adapter' {
     }
   >;
 
-  type UserDocSearchConfig = Omit<Partial<ThemeConfigDocSearch>, 'apiKey' | 'appId' | 'askAi' | 'indices'> & {
+  type UserDocSearchConfig = Omit<
+    Partial<ThemeConfigDocSearch>,
+    'apiKey' | 'appId' | 'askAi' | 'indices'
+  > & {
     appId: ThemeConfigDocSearch['appId'];
     apiKey: ThemeConfigDocSearch['apiKey'];
     indices: ThemeConfigDocSearch['indices'];
@@ -117,11 +126,12 @@ declare module '@theme/SearchPage' {
 }
 
 declare module '@theme/SearchBar' {
+  import type { DocusaurusSearchBarProps } from '@docsearch/docusaurus-adapter';
   import type { ReactNode } from 'react';
 
-  import type { DocusaurusSearchBarProps } from '@docsearch/docusaurus-adapter';
-
-  export default function SearchBar(props?: DocusaurusSearchBarProps): ReactNode;
+  export default function SearchBar(
+    props?: DocusaurusSearchBarProps
+  ): ReactNode;
 }
 
 declare module '@theme/SearchTranslations' {

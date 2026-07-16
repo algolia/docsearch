@@ -33,8 +33,14 @@ function App(): JSX.Element {
       <div className="app-container">
         <header className="app-header">
           <h1 className="app-title">DocSearch v{version}</h1>
-          <p className="app-subtitle">Experience the power of intelligent documentation search</p>
-          <button className="theme-switcher" type="button" onClick={toggleTheme}>
+          <p className="app-subtitle">
+            Experience the power of intelligent documentation search
+          </p>
+          <button
+            className="theme-switcher"
+            type="button"
+            onClick={toggleTheme}
+          >
             {theme === 'light' ? <MoonIcon /> : <SunIcon />}
           </button>
         </header>
@@ -55,7 +61,9 @@ function App(): JSX.Element {
           </section>
 
           <section className="demo-section">
-            <p className="section-description">search with ask ai integration</p>
+            <p className="section-description">
+              search with ask ai integration
+            </p>
             <div className="search-wrapper">
               <BasicAskAI theme={theme} />
             </div>
@@ -69,7 +77,9 @@ function App(): JSX.Element {
           </section>
 
           <section className="demo-section">
-            <p className="section-description">transform items before rendering</p>
+            <p className="section-description">
+              transform items before rendering
+            </p>
             <div className="search-wrapper">
               <WTransformItems theme={theme} />
             </div>

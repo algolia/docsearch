@@ -11,7 +11,10 @@ export type RecentConversationsResultsTranslations = Partial<{
   removeRecentConversationButtonTitle: string;
 }>;
 
-type RecentConversationsResultsProps = Omit<AskAiScreenStateProps<InternalDocSearchHit>, 'translations'> & {
+type RecentConversationsResultsProps = Omit<
+  AskAiScreenStateProps<InternalDocSearchHit>,
+  'translations'
+> & {
   translations?: RecentConversationsResultsTranslations;
 };
 

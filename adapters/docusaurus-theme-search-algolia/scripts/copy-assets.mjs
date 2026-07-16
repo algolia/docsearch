@@ -39,7 +39,7 @@ async function copyAssetsOnce() {
         }
         return ASSET_EXTENSIONS.has(extension);
       })
-      .map((filePath) => copyAssetFile(filePath)),
+      .map((filePath) => copyAssetFile(filePath))
   );
 }
 

@@ -2,21 +2,28 @@
 /**
  * Copyright (c) Facebook, Inc. And its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file
+ * in the root directory of this source tree.
  */
 
 import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 import { useHistory } from '@docusaurus/router';
-import { useEvent, useHistorySelector, useSearchQueryString } from '@docusaurus/theme-common';
+import {
+  useEvent,
+  useHistorySelector,
+  useSearchQueryString,
+} from '@docusaurus/theme-common';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import { liteClient } from 'algoliasearch/lite';
 import type algoliaSearchHelper from 'algoliasearch-helper';
 import createAlgoliaSearchHelper from 'algoliasearch-helper';
+import { liteClient } from 'algoliasearch/lite';
 import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import type { InsightsClient } from 'search-insights';
 
-import { useAlgoliaThemeConfig, useSearchResultUrlProcessor } from '../../../client';
+import {
+  useAlgoliaThemeConfig,
+  useSearchResultUrlProcessor,
+} from '../../../client';
 import {
   DEFAULT_FACETS,
   FACET_SORT_BY,
@@ -27,10 +34,19 @@ import {
   SNIPPET_ELLIPSIS_TEXT,
   TOP_SECTIONS_FACET,
 } from '../constants';
-import type { FacetGroup, FacetValueItem, Refinements, SearchPageFacetConfig, SearchResultItem } from '../types';
+import type {
+  FacetGroup,
+  FacetValueItem,
+  Refinements,
+  SearchPageFacetConfig,
+  SearchResultItem,
+} from '../types';
 import { getIndexName, getIndexSearchParameters } from '../utils';
 
-import { useDocsSearchVersions, type DocsSearchVersionsHelpers } from './useDocsSearchVersions';
+import {
+  useDocsSearchVersions,
+  type DocsSearchVersionsHelpers,
+} from './useDocsSearchVersions';
 
 type AlgoliaDocHit = {
   objectID: string;
@@ -86,7 +102,10 @@ const initialSearchState: SearchState = {
   facets: [],
 };
 
-function searchReducer(prevState: SearchState, action: SearchAction): SearchState {
+function searchReducer(
+  prevState: SearchState,
+  action: SearchAction
+): SearchState {
   switch (action.type) {
     case 'reset': {
       return initialSearchState;
@@ -98,7 +117,8 @@ function searchReducer(prevState: SearchState, action: SearchAction): SearchStat
       return { ...prevState, loading: false, loadingMore: false, error: true };
     }
     case 'advance': {
-      const hasMore = (prevState.totalPages ?? 0) > (prevState.lastPage ?? 0) + 1;
+      const hasMore =
+        (prevState.totalPages ?? 0) > (prevState.lastPage ?? 0) + 1;
       return {
         ...prevState,
         lastPage: hasMore ? (prevState.lastPage ?? 0) + 1 : prevState.lastPage,
@@ -110,7 +130,10 @@ function searchReducer(prevState: SearchState, action: SearchAction): SearchStat
       const { value } = action;
       return {
         ...prevState,
-        items: value.lastPage === 0 ? value.items : prevState.items.concat(value.items),
+        items:
+          value.lastPage === 0
+            ? value.items
+            : prevState.items.concat(value.items),
         query: value.query,
         queryID: value.queryID,
         totalResults: value.totalResults,
@@ -133,12 +156,20 @@ function searchReducer(prevState: SearchState, action: SearchAction): SearchStat
 // DocSearch-scraped records use a legacy highlight tag. Map it onto a class we
 // can style on the search page.
 function sanitizeHighlight(value: string): string {
-  return value.replace(/algolia-docsearch-suggestion--highlight/g, 'search-result-match');
+  return value.replace(
+    /algolia-docsearch-suggestion--highlight/g,
+    'search-result-match'
+  );
 }
 
-function mapHitToResultItem(hit: AlgoliaDocHit, processUrl: (url: string) => string): SearchResultItem {
+function mapHitToResultItem(
+  hit: AlgoliaDocHit,
+  processUrl: (url: string) => string
+): SearchResultItem {
   const hierarchy = hit._highlightResult?.hierarchy ?? {};
-  const titles = Object.keys(hierarchy).map((key) => sanitizeHighlight(hierarchy[key]!.value));
+  const titles = Object.keys(hierarchy).map((key) =>
+    sanitizeHighlight(hierarchy[key]!.value)
+  );
   const snippet = hit._snippetResult?.content?.value;
 
   return {
@@ -151,14 +182,18 @@ function mapHitToResultItem(hit: AlgoliaDocHit, processUrl: (url: string) => str
   };
 }
 
-function toFacetValues(raw: ReturnType<algoliaSearchHelper.SearchResults['getFacetValues']>): FacetValueItem[] {
+function toFacetValues(
+  raw: ReturnType<algoliaSearchHelper.SearchResults['getFacetValues']>
+): FacetValueItem[] {
   if (!Array.isArray(raw)) {
     return [];
   }
 
-  return raw
-    .slice(0, FACET_VALUES_LIMIT)
-    .map((value) => ({ name: value.name, count: value.count, isRefined: value.isRefined }));
+  return raw.slice(0, FACET_VALUES_LIMIT).map((value) => ({
+    name: value.name,
+    count: value.count,
+    isRefined: value.isRefined,
+  }));
 }
 
 export type UseSearchPage = {
@@ -184,25 +219,32 @@ export function useSearchPage(): UseSearchPage {
   const {
     i18n: { currentLocale },
   } = useDocusaurusContext();
-  const { appId, apiKey, indices, contextualSearch, insights, searchPage } = useAlgoliaThemeConfig();
+  const { appId, apiKey, indices, contextualSearch, insights, searchPage } =
+    useAlgoliaThemeConfig();
   const insightsEnabled = Boolean(insights);
 
   const searchIndex = indices[0]!;
   const indexName = getIndexName(searchIndex);
-  const indexSearchParameters = useMemo(() => getIndexSearchParameters(searchIndex), [searchIndex]);
+  const indexSearchParameters = useMemo(
+    () => getIndexSearchParameters(searchIndex),
+    [searchIndex]
+  );
   const processSearchResultUrl = useSearchResultUrlProcessor();
 
   const facetConfig = useMemo<SearchPageFacetConfig[]>(() => {
     const configured = searchPage === false ? undefined : searchPage.facets;
     return configured && configured.length > 0 ? configured : DEFAULT_FACETS;
   }, [searchPage]);
-  const facetAttributes = useMemo(() => facetConfig.map((facet) => facet.attribute), [facetConfig]);
+  const facetAttributes = useMemo(
+    () => facetConfig.map((facet) => facet.attribute),
+    [facetConfig]
+  );
   // Attributes we can refine on via the URL. Always include the "browse by
   // section" facet so empty-state section chips work even if the user
   // customized `facets`.
   const refinableAttributes = useMemo(
     () => Array.from(new Set([...facetAttributes, TOP_SECTIONS_FACET])),
-    [facetAttributes],
+    [facetAttributes]
   );
 
   const versionHelpers = useDocsSearchVersions();
@@ -222,7 +264,10 @@ export function useSearchPage(): UseSearchPage {
     });
     return JSON.stringify(result);
   });
-  const refinements = useMemo(() => JSON.parse(refinementsJson) as Refinements, [refinementsJson]);
+  const refinements = useMemo(
+    () => JSON.parse(refinementsJson) as Refinements,
+    [refinementsJson]
+  );
   const hasActiveRefinements = Object.keys(refinements).length > 0;
 
   const setAttributeValues = useEvent((attribute: string, values: string[]) => {
@@ -234,7 +279,9 @@ export function useSearchPage(): UseSearchPage {
 
   const toggleRefinement = useEvent((attribute: string, value: string) => {
     const current = refinements[attribute] ?? [];
-    const next = current.includes(value) ? current.filter((item) => item !== value) : [...current, value];
+    const next = current.includes(value)
+      ? current.filter((item) => item !== value)
+      : [...current, value];
     setAttributeValues(attribute, next);
   });
 
@@ -250,7 +297,10 @@ export function useSearchPage(): UseSearchPage {
   const helper = useMemo(() => {
     const client = liteClient(appId, apiKey);
     const disjunctiveFacets = Array.from(
-      new Set([...(contextualSearch ? ['language', 'docusaurus_tag'] : []), ...refinableAttributes]),
+      new Set([
+        ...(contextualSearch ? ['language', 'docusaurus_tag'] : []),
+        ...refinableAttributes,
+      ])
     );
 
     return createAlgoliaSearchHelper(client, indexName, {
@@ -262,10 +312,22 @@ export function useSearchPage(): UseSearchPage {
       disjunctiveFacets,
       ...(insightsEnabled ? { clickAnalytics: true } : {}),
     });
-  }, [appId, apiKey, indexName, contextualSearch, insightsEnabled, indexSearchParameters, refinableAttributes]);
+  }, [
+    appId,
+    apiKey,
+    indexName,
+    contextualSearch,
+    insightsEnabled,
+    indexSearchParameters,
+    refinableAttributes,
+  ]);
 
   useEffect(() => {
-    const handleResult = ({ results }: { results: algoliaSearchHelper.SearchResults }): void => {
+    const handleResult = ({
+      results,
+    }: {
+      results: algoliaSearchHelper.SearchResults;
+    }): void => {
       const { query, hits, page, nbHits, nbPages, queryID } = results;
 
       // Ignore stale responses for a previous query.
@@ -280,12 +342,16 @@ export function useSearchPage(): UseSearchPage {
         return;
       }
 
-      const items = (hits as AlgoliaDocHit[]).map((hit) => mapHitToResultItem(hit, processSearchResultUrl));
+      const items = (hits as AlgoliaDocHit[]).map((hit) =>
+        mapHitToResultItem(hit, processSearchResultUrl)
+      );
       const facets = facetConfig
         .map((facet) => ({
           attribute: facet.attribute,
           label: facet.label ?? facet.attribute,
-          items: toFacetValues(results.getFacetValues(facet.attribute, { sortBy: FACET_SORT_BY })),
+          items: toFacetValues(
+            results.getFacetValues(facet.attribute, { sortBy: FACET_SORT_BY })
+          ),
         }))
         .filter((group) => group.items.length > 0);
 
@@ -315,7 +381,13 @@ export function useSearchPage(): UseSearchPage {
       helper.removeListener('result', handleResult);
       helper.removeListener('error', handleError);
     };
-  }, [helper, searchQuery, hasActiveRefinements, facetConfig, processSearchResultUrl]);
+  }, [
+    helper,
+    searchQuery,
+    hasActiveRefinements,
+    facetConfig,
+    processSearchResultUrl,
+  ]);
 
   const makeSearch = useEvent((page: number = 0) => {
     // Rebuild refinements from scratch each search, since the helper is stable.
@@ -325,13 +397,20 @@ export function useSearchPage(): UseSearchPage {
       helper.addDisjunctiveFacetRefinement('docusaurus_tag', 'default');
       helper.addDisjunctiveFacetRefinement('language', currentLocale);
 
-      Object.entries(versionHelpers.searchVersions).forEach(([pluginId, searchVersion]) => {
-        helper.addDisjunctiveFacetRefinement('docusaurus_tag', `docs-${pluginId}-${searchVersion}`);
-      });
+      Object.entries(versionHelpers.searchVersions).forEach(
+        ([pluginId, searchVersion]) => {
+          helper.addDisjunctiveFacetRefinement(
+            'docusaurus_tag',
+            `docs-${pluginId}-${searchVersion}`
+          );
+        }
+      );
     }
 
     Object.entries(refinements).forEach(([attribute, values]) => {
-      values.forEach((value) => helper.addDisjunctiveFacetRefinement(attribute, value));
+      values.forEach((value) =>
+        helper.addDisjunctiveFacetRefinement(attribute, value)
+      );
     });
 
     helper.setQuery(searchQuery).setPage(page).search();
@@ -354,7 +433,13 @@ export function useSearchPage(): UseSearchPage {
     return () => {
       clearTimeout(searchTimeoutId);
     };
-  }, [searchQuery, hasActiveRefinements, refinements, versionHelpers.searchVersions, makeSearch]);
+  }, [
+    searchQuery,
+    hasActiveRefinements,
+    refinements,
+    versionHelpers.searchVersions,
+    makeSearch,
+  ]);
 
   useEffect(() => {
     if (!state.lastPage || state.lastPage === 0) {
@@ -394,20 +479,22 @@ export function useSearchPage(): UseSearchPage {
     };
   }, [insightsEnabled, appId, apiKey]);
 
-  const sendResultClick = useEvent((item: SearchResultItem, position: number) => {
-    const aa = insightsRef.current;
-    if (!insightsEnabled || !aa || !state.queryID) {
-      return;
-    }
+  const sendResultClick = useEvent(
+    (item: SearchResultItem, position: number) => {
+      const aa = insightsRef.current;
+      if (!insightsEnabled || !aa || !state.queryID) {
+        return;
+      }
 
-    aa('clickedObjectIDsAfterSearch', {
-      eventName: 'Item Selected',
-      index: indexName,
-      queryID: state.queryID,
-      objectIDs: [item.objectID],
-      positions: [position],
-    });
-  });
+      aa('clickedObjectIDsAfterSearch', {
+        eventName: 'Item Selected',
+        index: indexName,
+        queryID: state.queryID,
+        objectIDs: [item.objectID],
+        positions: [position],
+      });
+    }
+  );
 
   return {
     searchQuery,

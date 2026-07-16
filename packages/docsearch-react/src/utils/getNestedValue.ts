@@ -19,7 +19,11 @@ export function getNestedValue(obj: unknown, key: string): unknown {
   const segments = parseKey(key);
 
   return segments.reduce<unknown>((acc, curr) => {
-    if (acc && typeof acc === 'object' && Object.prototype.hasOwnProperty.call(acc, curr)) {
+    if (
+      acc &&
+      typeof acc === 'object' &&
+      Object.prototype.hasOwnProperty.call(acc, curr)
+    ) {
       return (acc as Record<string, unknown>)[curr];
     }
 

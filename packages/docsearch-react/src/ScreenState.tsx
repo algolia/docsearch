@@ -1,4 +1,8 @@
-import type { AutocompleteApi, AutocompleteState, BaseItem } from '@algolia/autocomplete-core';
+import type {
+  AutocompleteApi,
+  AutocompleteState,
+  BaseItem,
+} from '@algolia/autocomplete-core';
 import React from 'react';
 
 import type { KeywordStartScreenTranslations } from './components/KeywordStartScreen';
@@ -20,12 +24,21 @@ export type ScreenStateTranslations = Partial<{
   resultsScreen: ResultsScreenTranslations;
 }>;
 
-export interface ScreenStateProps<TItem extends BaseItem>
-  extends AutocompleteApi<TItem, React.FormEvent, React.MouseEvent, React.KeyboardEvent> {
+export interface ScreenStateProps<
+  TItem extends BaseItem,
+> extends AutocompleteApi<
+  TItem,
+  React.FormEvent,
+  React.MouseEvent,
+  React.KeyboardEvent
+> {
   state: AutocompleteState<TItem>;
   recentSearches: StoredSearchPlugin<StoredDocSearchHit>;
   favoriteSearches: StoredSearchPlugin<StoredDocSearchHit>;
-  onItemClick: (item: InternalDocSearchHit, event: KeyboardEvent | MouseEvent) => void;
+  onItemClick: (
+    item: InternalDocSearchHit,
+    event: KeyboardEvent | MouseEvent
+  ) => void;
   inputRef: React.MutableRefObject<HTMLInputElement | null>;
   hitComponent: DocSearchProps['hitComponent'];
   indexName: DocSearchProps['indexName'];
@@ -45,21 +58,35 @@ export const ScreenState = React.memo(
 
     if (!props.state.query) {
       return (
-        <KeywordStartScreen {...props} hasCollections={props.hasCollections} translations={translations?.startScreen} />
+        <KeywordStartScreen
+          {...props}
+          hasCollections={props.hasCollections}
+          translations={translations?.startScreen}
+        />
       );
     }
 
     if (!props.hasCollections) {
-      return <NoResultsScreen {...props} translations={translations?.noResultsScreen} />;
+      return (
+        <NoResultsScreen
+          {...props}
+          translations={translations?.noResultsScreen}
+        />
+      );
     }
 
-    return <ResultsScreen {...props} translations={translations?.resultsScreen} />;
+    return (
+      <ResultsScreen {...props} translations={translations?.resultsScreen} />
+    );
   },
   function areEqual(_prevProps, nextProps) {
     // We don't update the screen when Autocomplete is loading or stalled to
     // avoid UI flashes:
     //  - Empty screen → Results screen
     //  - NoResults screen → NoResults screen with another query
-    return nextProps.state.status === 'loading' || nextProps.state.status === 'stalled';
-  },
+    return (
+      nextProps.state.status === 'loading' ||
+      nextProps.state.status === 'stalled'
+    );
+  }
 );

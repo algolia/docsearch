@@ -7,7 +7,10 @@ export function Menu({ ...props }: MenuPrimitive.Root.Props): JSX.Element {
   return <MenuPrimitive.Root {...props} />;
 }
 
-function MenuTrigger({ className, ...props }: MenuPrimitive.Trigger.Props): JSX.Element {
+function MenuTrigger({
+  className,
+  ...props
+}: MenuPrimitive.Trigger.Props): JSX.Element {
   const cn = `DocSearch-Menu-Trigger${className ? ` ${className}` : ''}`;
   return <MenuPrimitive.Trigger className={cn} {...props} />;
 }
@@ -16,7 +19,10 @@ Menu.Trigger = MenuTrigger;
 
 type MenuPopupProps = MenuPrimitive.Popup.Props &
   Pick<MenuPrimitive.Portal.Props, 'container'> &
-  Pick<MenuPrimitive.Positioner.Props, 'align' | 'alignOffset' | 'collisionBoundary' | 'side' | 'sideOffset'>;
+  Pick<
+    MenuPrimitive.Positioner.Props,
+    'align' | 'alignOffset' | 'collisionBoundary' | 'side' | 'sideOffset'
+  >;
 
 function MenuPopup({
   align = 'start',
@@ -45,13 +51,19 @@ function MenuPopup({
 
 Menu.Popup = MenuPopup;
 
-function MenuRadioGroup({ ...props }: MenuPrimitive.RadioGroup.Props): JSX.Element {
+function MenuRadioGroup({
+  ...props
+}: MenuPrimitive.RadioGroup.Props): JSX.Element {
   return <MenuPrimitive.RadioGroup {...props} />;
 }
 
 Menu.RadioGroup = MenuRadioGroup;
 
-function MenuRadioItem({ className, children, ...props }: MenuPrimitive.RadioItem.Props): JSX.Element {
+function MenuRadioItem({
+  className,
+  children,
+  ...props
+}: MenuPrimitive.RadioItem.Props): JSX.Element {
   const cn = `DocSearch-Menu-Item DocSearch-Menu-RadioItem${className ? ` ${className}` : ''}`;
   return (
     <MenuPrimitive.RadioItem className={cn} closeOnClick={true} {...props}>
@@ -67,7 +79,10 @@ function MenuRadioItem({ className, children, ...props }: MenuPrimitive.RadioIte
 
 Menu.RadioItem = MenuRadioItem;
 
-function MenuGroupLabel({ className, ...props }: MenuPrimitive.GroupLabel.Props): JSX.Element {
+function MenuGroupLabel({
+  className,
+  ...props
+}: MenuPrimitive.GroupLabel.Props): JSX.Element {
   const cn = `DocSearch-Menu-GroupLabel${className ? ` ${className}` : ''}`;
   return <MenuPrimitive.GroupLabel className={cn} {...props} />;
 }

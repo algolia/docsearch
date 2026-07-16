@@ -54,11 +54,11 @@ When running tests, prefer to run specific files with the `--run` flag to preven
 ## Lint Commands
 
 ```bash
-# Run ESLint
-bun run lint
+# Run oxlint
+bun run lint --format=agent
 
-# Run CSS linting
-bun run lint:css
+# Perform oxfmt formatting
+bun run fmt
 ```
 
 ## E2E Testing (Playwright)
@@ -100,7 +100,6 @@ import type { DocSearchHit } from './types';
 
 - Use `type` imports for type-only imports: `import type { Foo } from './types'`
 - Prefer interfaces for object shapes, types for unions/primitives
-- Explicit return types on exported functions
 - Avoid `any`; use `unknown` when type is truly unknown
 
 ```typescript
@@ -170,7 +169,7 @@ try {
 }
 ```
 
-### Formatting (Prettier)
+### Formatting (oxfmt)
 
 - Single quotes for strings
 - Trailing commas (ES5 style)

@@ -5,16 +5,18 @@ import { getNestedValue } from '../utils';
 
 export type HitResultBadgeTranslations = Partial<{
   /**
-   * Label text used for screen readers to announce the result badge. Should reflect
-   * the key of `resultBadgeKey`.
+   * Label text used for screen readers to announce the result badge. Should
+   * reflect the key of `resultBadgeKey`.
    *
-   * @default "Category"
+   * @default 'Category'
    */
   resultBadgeLabelText: string;
 }>;
 
 function isRenderablePrimitive(v: unknown): v is boolean | number | string {
-  return typeof v === 'string' || typeof v === 'number' || typeof v === 'boolean';
+  return (
+    typeof v === 'string' || typeof v === 'number' || typeof v === 'boolean'
+  );
 }
 
 interface HitResultBadgeProps {
@@ -23,7 +25,11 @@ interface HitResultBadgeProps {
   translations?: HitResultBadgeTranslations;
 }
 
-export function HitResultBadge({ item, resultBadgeKey, translations = {} }: HitResultBadgeProps): JSX.Element | null {
+export function HitResultBadge({
+  item,
+  resultBadgeKey,
+  translations = {},
+}: HitResultBadgeProps): JSX.Element | null {
   if (!resultBadgeKey) {
     return null;
   }
@@ -41,7 +47,9 @@ export function HitResultBadge({ item, resultBadgeKey, translations = {} }: HitR
   if (isRenderablePrimitive(parsedValue)) {
     badgeValue = String(parsedValue).trim();
   } else if (Array.isArray(parsedValue)) {
-    const parts = parsedValue.filter(isRenderablePrimitive).map((v) => String(v).trim());
+    const parts = parsedValue
+      .filter(isRenderablePrimitive)
+      .map((v) => String(v).trim());
     badgeValue = parts.length > 0 ? parts.join(', ') : null;
   }
 

@@ -45,7 +45,9 @@ export function buildRecentConversationSources({
   disableUserPersonalization: boolean;
   setMessages: (messages: AIMessage[]) => void;
   onAskAiToggle: (toggle: boolean) => void;
-}): Array<AutocompleteSource<InternalDocSearchHit & { messages?: AIMessage[] }>> {
+}): Array<
+  AutocompleteSource<InternalDocSearchHit & { messages?: AIMessage[] }>
+> {
   return [
     {
       sourceId: SOURCE_IDS.recentConversations,
@@ -53,10 +55,9 @@ export function buildRecentConversationSources({
         if (disableUserPersonalization) {
           return [];
         }
-        return (conversations.getAll() as unknown as InternalDocSearchHit[]).slice(
-          0,
-          MAX_RECENT_CONVERSATIONS_DISPLAYED,
-        );
+        return (
+          conversations.getAll() as unknown as InternalDocSearchHit[]
+        ).slice(0, MAX_RECENT_CONVERSATIONS_DISPLAYED);
       },
       onSelect({ item }): void {
         if (item.messages) {
@@ -130,7 +131,7 @@ async function getPromptSuggestions({
         query: hit.prompt,
         objectID: hit.objectID,
         lvl0: 'Prompt Suggestions',
-      }),
+      })
     );
     // NOTE: Not checking the exception here and just returning empty array since this isn't the hot path
   } catch {
@@ -162,7 +163,10 @@ export async function buildAskAiActionSources({
     {
       sourceId: SOURCE_IDS.askAI,
       getItems(): InternalDocSearchHit[] {
-        return [createAskAiHit({ query, objectID: 'ask-ai-button', lvl0: 'Ask AI' }), ...promptSuggestions];
+        return [
+          createAskAiHit({ query, objectID: 'ask-ai-button', lvl0: 'Ask AI' }),
+          ...promptSuggestions,
+        ];
       },
       onSelect({ item }): void {
         if (item.type === 'askAI' && item.query) {

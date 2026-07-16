@@ -11,8 +11,8 @@ export type AskAiFeedbackReason =
   | 'style_or_tone';
 
 /**
- * Payload sent when a user submits feedback on an AI chat message.
- * `tags` and `notes` are only present for negative feedback.
+ * Payload sent when a user submits feedback on an AI chat message. `tags` and
+ * `notes` are only present for negative feedback.
  */
 export type AskAiFeedbackPayload = {
   /** 1 for a thumbs up, 0 for a thumbs down. */
@@ -23,7 +23,8 @@ export type AskAiFeedbackPayload = {
   notes?: string;
 };
 
-/**
- * Callback invoked when a user submits feedback on an AI chat message.
- */
-export type OnAskAiFeedback = (messageId: string, feedback: AskAiFeedbackPayload) => Promise<void>;
+/** Callback invoked when a user submits feedback on an AI chat message. */
+export type OnAskAiFeedback = (
+  messageId: string,
+  feedback: AskAiFeedbackPayload
+) => Promise<void>;

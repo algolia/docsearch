@@ -3,7 +3,11 @@ import { useEffect, useState } from 'react';
 
 import { SUGGESTED_QUETIONS_INDEX_NAME } from './constants';
 
-import type { DocSearchTransformClient, SuggestedQuestion, SuggestedQuestionHit } from '.';
+import type {
+  DocSearchTransformClient,
+  SuggestedQuestion,
+  SuggestedQuestionHit,
+} from '.';
 
 type UseSuggestedQuestionsProps = {
   assistantId: string | null;
@@ -16,7 +20,9 @@ export const useSuggestedQuestions = ({
   searchClient,
   suggestedQuestionsEnabled = false,
 }: UseSuggestedQuestionsProps): SuggestedQuestionHit[] => {
-  const [suggestedQuestions, setSuggestedQuestions] = useState<SuggestedQuestionHit[]>([]);
+  const [suggestedQuestions, setSuggestedQuestions] = useState<
+    SuggestedQuestionHit[]
+  >([]);
 
   useEffect(() => {
     const getSuggestedQuestions = async (): Promise<void> => {

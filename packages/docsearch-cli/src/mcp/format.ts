@@ -5,7 +5,10 @@ type TextContent = {
   type: 'text';
 };
 
-export function formatToolResult(result: CallToolResult, json: boolean): string {
+export function formatToolResult(
+  result: CallToolResult,
+  json: boolean
+): string {
   if (json) {
     return `${JSON.stringify(result, null, 2)}\n`;
   }

@@ -4,9 +4,7 @@
     "allowImportingTsExtensions": false,
     "declaration": false,
     "declarationMap": false,
-    "lib": [
-      "ES2022"
-    ],
+    "lib": ["ES2022"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "outDir": "dist",
@@ -14,11 +12,6 @@
     "target": "ES2022",
     "allowImportingTsExtensions": false
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "src/**/*.test.ts",
-    "src/**/__tests__/**"
-  ]
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.test.ts", "src/**/__tests__/**"]
 }

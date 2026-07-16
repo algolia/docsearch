@@ -10,7 +10,10 @@ export interface Spinner {
   succeed: (text?: string) => void;
 }
 
-export function startSpinner(text: string, stream: NodeJS.WriteStream = process.stderr): Spinner {
+export function startSpinner(
+  text: string,
+  stream: NodeJS.WriteStream = process.stderr
+): Spinner {
   const animate = stream.isTTY === true && !('NO_COLOR' in process.env);
 
   if (!animate) {

@@ -1,11 +1,20 @@
-import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/react';
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+  cleanup,
+} from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import React from 'react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
 import type { StoredSearchPlugin } from '../../stored-searches';
 import type { StoredAskAiMessage, StoredAskAiState } from '../../types';
-import { FeedbackActions, type FeedbackActionsTranslations } from '../FeedbackActions';
+import {
+  FeedbackActions,
+  type FeedbackActionsTranslations,
+} from '../FeedbackActions';
 
 const TRANSLATIONS: FeedbackActionsTranslations = {
   likeButtonTitle: 'Like',
@@ -16,7 +25,9 @@ const TRANSLATIONS: FeedbackActionsTranslations = {
   feedbackTagIncorrect: 'Incorrect or incomplete',
 };
 
-function createConversations(stored?: StoredAskAiMessage): StoredSearchPlugin<StoredAskAiState> {
+function createConversations(
+  stored?: StoredAskAiMessage
+): StoredSearchPlugin<StoredAskAiState> {
   return {
     add: vi.fn(),
     remove: vi.fn(),
@@ -26,7 +37,9 @@ function createConversations(stored?: StoredAskAiMessage): StoredSearchPlugin<St
   };
 }
 
-function renderComponent(overrides: Partial<React.ComponentProps<typeof FeedbackActions>> = {}): {
+function renderComponent(
+  overrides: Partial<React.ComponentProps<typeof FeedbackActions>> = {}
+): {
   onFeedback: ReturnType<typeof vi.fn>;
 } {
   const onFeedback = vi.fn().mockResolvedValue(undefined);
@@ -39,7 +52,7 @@ function renderComponent(overrides: Partial<React.ComponentProps<typeof Feedback
       conversations={createConversations()}
       onFeedback={onFeedback}
       {...overrides}
-    />,
+    />
   );
   return { onFeedback };
 }
@@ -61,7 +74,7 @@ describe('FeedbackActions', () => {
         latestAssistantMessageContent="Some answer"
         translations={TRANSLATIONS}
         conversations={createConversations()}
-      />,
+      />
     );
     expect(container).toBeEmptyDOMElement();
   });
@@ -71,7 +84,9 @@ describe('FeedbackActions', () => {
 
     fireEvent.click(screen.getByTitle('Like'));
 
-    await waitFor(() => expect(onFeedback).toHaveBeenCalledWith('message-1', { thumbs: 1 }));
+    await waitFor(() =>
+      expect(onFeedback).toHaveBeenCalledWith('message-1', { thumbs: 1 })
+    );
     expect(onFeedback).toHaveBeenCalledTimes(1);
     expect(screen.getByText('Thanks for your feedback!')).toBeInTheDocument();
   });
@@ -100,7 +115,7 @@ describe('FeedbackActions', () => {
         thumbs: 0,
         tags: ['incorrect'],
         notes: 'it was wrong',
-      }),
+      })
     );
     expect(screen.getByText('Thanks for your feedback!')).toBeInTheDocument();
   });
@@ -118,7 +133,7 @@ describe('FeedbackActions', () => {
         thumbs: 0,
         tags: ['incorrect', 'other'],
         notes: undefined,
-      }),
+      })
     );
   });
 
@@ -133,7 +148,7 @@ describe('FeedbackActions', () => {
         thumbs: 0,
         tags: undefined,
         notes: undefined,
-      }),
+      })
     );
   });
 
@@ -151,7 +166,7 @@ describe('FeedbackActions', () => {
         thumbs: 0,
         tags: undefined,
         notes: undefined,
-      }),
+      })
     );
   });
 
@@ -161,7 +176,9 @@ describe('FeedbackActions', () => {
     fireEvent.click(screen.getByTitle('Dislike'));
     fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
 
-    expect(screen.queryByText('What went wrong? (optional)')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('What went wrong? (optional)')
+    ).not.toBeInTheDocument();
     expect(screen.getByTitle('Like')).toBeInTheDocument();
     expect(onFeedback).not.toHaveBeenCalled();
   });
@@ -176,7 +193,7 @@ describe('FeedbackActions', () => {
         translations={TRANSLATIONS}
         conversations={createConversations()}
         onFeedback={onFeedback}
-      />,
+      />
     );
 
     fireEvent.click(screen.getByTitle('Dislike'));

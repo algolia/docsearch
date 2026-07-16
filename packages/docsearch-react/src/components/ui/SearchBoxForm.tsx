@@ -1,12 +1,19 @@
-import type { AutocompleteApi, AutocompleteState } from '@algolia/autocomplete-core';
+import type {
+  AutocompleteApi,
+  AutocompleteState,
+} from '@algolia/autocomplete-core';
 import React, { type JSX, type RefObject } from 'react';
 
 import { MAX_QUERY_SIZE } from '../../constants';
 import { CloseIcon, LoadingIcon, SearchIcon } from '../../icons';
 import type { InternalDocSearchHit } from '../../types';
 
-interface SearchBoxFormProps
-  extends AutocompleteApi<InternalDocSearchHit, React.FormEvent, React.MouseEvent, React.KeyboardEvent> {
+interface SearchBoxFormProps extends AutocompleteApi<
+  InternalDocSearchHit,
+  React.FormEvent,
+  React.MouseEvent,
+  React.KeyboardEvent
+> {
   state: AutocompleteState<InternalDocSearchHit>;
   autoFocus: boolean;
   inputRef: RefObject<HTMLInputElement | null>;
@@ -82,9 +89,14 @@ export function SearchBoxForm({
             <LoadingIcon />
           </div>
         ) : (
-          <label className="DocSearch-MagnifierLabel" {...autocomplete.getLabelProps()}>
+          <label
+            className="DocSearch-MagnifierLabel"
+            {...autocomplete.getLabelProps()}
+          >
             <SearchIcon />
-            <span className="DocSearch-VisuallyHiddenForAccessibility">{searchInputLabel}</span>
+            <span className="DocSearch-VisuallyHiddenForAccessibility">
+              {searchInputLabel}
+            </span>
           </label>
         ))}
 

@@ -1,18 +1,21 @@
 /**
  * Copyright (c) Facebook, Inc. And its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file
+ * in the root directory of this source tree.
  */
 
+import type { ThemeConfig } from '@docsearch/docusaurus-adapter';
 import { readDefaultCodeTranslationMessages } from '@docusaurus/theme-translations';
 import type { LoadContext, Plugin } from '@docusaurus/types';
 
 import { getDocSearchConfig } from './getDocSearchConfig';
-import { createOpenSearchFile, createOpenSearchHeadTags, shouldCreateOpenSearchFile } from './opensearch';
+import {
+  createOpenSearchFile,
+  createOpenSearchHeadTags,
+  shouldCreateOpenSearchFile,
+} from './opensearch';
 import { normalizeUrl } from './utils';
-
-import type { ThemeConfig } from '@docsearch/docusaurus-adapter';
 
 export default function themeSearchAlgolia(context: LoadContext): Plugin<void> {
   const {

@@ -27,7 +27,9 @@ export function Snippet<TItem extends StoredDocSearchHit>({
   return createElement(tagName, {
     ...rest,
     dangerouslySetInnerHTML: {
-      __html: getPropertyByPath(hit, `_snippetResult.${attribute}.value`) || getPropertyByPath(hit, attribute),
+      __html:
+        getPropertyByPath(hit, `_snippetResult.${attribute}.value`) ||
+        getPropertyByPath(hit, attribute),
     },
   });
 }

@@ -13,7 +13,9 @@ export const TOOL_QUERY_DOCS = 'algolia_docsearch_query_docs';
 
 function readPackageVersion(): string {
   const currentDirectory = dirname(fileURLToPath(import.meta.url));
-  const packageJson = JSON.parse(readFileSync(join(currentDirectory, '..', 'package.json'), 'utf-8')) as {
+  const packageJson = JSON.parse(
+    readFileSync(join(currentDirectory, '..', 'package.json'), 'utf-8')
+  ) as {
     version?: string;
   };
 

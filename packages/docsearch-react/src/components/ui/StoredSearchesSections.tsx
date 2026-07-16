@@ -15,11 +15,17 @@ export type StoredSearchesSectionsTranslations = Partial<{
   removeFavoriteSearchButtonTitle: string;
 }>;
 
-type StoredSearchesSectionsProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
+type StoredSearchesSectionsProps = Omit<
+  ScreenStateProps<InternalDocSearchHit>,
+  'translations'
+> & {
   translations?: StoredSearchesSectionsTranslations;
 };
 
-export function StoredSearchesSections({ translations = {}, ...props }: StoredSearchesSectionsProps): JSX.Element {
+export function StoredSearchesSections({
+  translations = {},
+  ...props
+}: StoredSearchesSectionsProps): JSX.Element {
   const {
     recentSearchesTitle = 'Recently viewed docs',
     saveRecentSearchButtonTitle = 'Pin this search',

@@ -48,14 +48,16 @@ describe('callDocSearchTool', () => {
       toolName: 'algolia_docsearch_resolve_docset',
     });
 
-    expect(mocks.listTools).toHaveBeenCalledWith(undefined, { timeout: 30_000 });
+    expect(mocks.listTools).toHaveBeenCalledWith(undefined, {
+      timeout: 30_000,
+    });
     expect(mocks.callTool).toHaveBeenCalledWith(
       {
         arguments: { query: 'Next.js' },
         name: 'algolia_docsearch_resolve_docset',
       },
       undefined,
-      { timeout: 30_000 },
+      { timeout: 30_000 }
     );
     expect(mocks.close).toHaveBeenCalledOnce();
   });
@@ -68,7 +70,7 @@ describe('callDocSearchTool', () => {
         endpoint: 'https://example.com/mcp',
         toolArguments: {},
         toolName: 'algolia_docsearch_resolve_docset',
-      }),
+      })
     ).rejects.toThrow('connection failed');
 
     expect(mocks.close).toHaveBeenCalledOnce();

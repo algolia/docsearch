@@ -31,7 +31,9 @@ export async function callDocSearchTool({
       timeout: MCP_REQUEST_TIMEOUT_MS,
     });
     if (!tools.some((tool) => tool.name === toolName)) {
-      throw new Error(`DocSearch MCP tool "${toolName}" is not available at ${endpoint}.`);
+      throw new Error(
+        `DocSearch MCP tool "${toolName}" is not available at ${endpoint}.`
+      );
     }
 
     const result = await client.callTool(
@@ -42,10 +44,12 @@ export async function callDocSearchTool({
       undefined,
       {
         timeout: MCP_REQUEST_TIMEOUT_MS,
-      },
+      }
     );
     if (!('content' in result)) {
-      throw new Error(`DocSearch MCP tool "${toolName}" returned an unsupported result shape.`);
+      throw new Error(
+        `DocSearch MCP tool "${toolName}" returned an unsupported result shape.`
+      );
     }
 
     return result as CallToolResult;

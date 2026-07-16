@@ -1,4 +1,7 @@
-import type { AutocompleteApi, AutocompleteState } from '@algolia/autocomplete-core';
+import type {
+  AutocompleteApi,
+  AutocompleteState,
+} from '@algolia/autocomplete-core';
 import React, { type JSX, type RefObject } from 'react';
 
 import type { InternalDocSearchHit } from '../types';
@@ -15,8 +18,12 @@ export type KeywordSearchBoxTranslations = Partial<{
   searchInputLabel: string;
 }>;
 
-interface KeywordSearchBoxProps
-  extends AutocompleteApi<InternalDocSearchHit, React.FormEvent, React.MouseEvent, React.KeyboardEvent> {
+interface KeywordSearchBoxProps extends AutocompleteApi<
+  InternalDocSearchHit,
+  React.FormEvent,
+  React.MouseEvent,
+  React.KeyboardEvent
+> {
   state: AutocompleteState<InternalDocSearchHit>;
   autoFocus: boolean;
   inputRef: RefObject<HTMLInputElement | null>;
@@ -26,7 +33,10 @@ interface KeywordSearchBoxProps
   translations?: KeywordSearchBoxTranslations;
 }
 
-export function KeywordSearchBox({ translations = {}, ...props }: KeywordSearchBoxProps): JSX.Element {
+export function KeywordSearchBox({
+  translations = {},
+  ...props
+}: KeywordSearchBoxProps): JSX.Element {
   const {
     clearButtonTitle = 'Clear',
     clearButtonAriaLabel = 'Clear the query',

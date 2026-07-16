@@ -1,5 +1,9 @@
 import type { UseChatHelpers } from '@ai-sdk/react';
-import type { AutocompleteApi, AutocompleteState, BaseItem } from '@algolia/autocomplete-core';
+import type {
+  AutocompleteApi,
+  AutocompleteState,
+  BaseItem,
+} from '@algolia/autocomplete-core';
 import type { JSX } from 'react';
 import React from 'react';
 
@@ -36,13 +40,22 @@ export type AskAiScreenStateTranslations = Partial<{
   newConversation: NewConversationTranslations;
 }>;
 
-export interface AskAiScreenStateProps<TItem extends BaseItem>
-  extends AutocompleteApi<TItem, React.FormEvent, React.MouseEvent, React.KeyboardEvent> {
+export interface AskAiScreenStateProps<
+  TItem extends BaseItem,
+> extends AutocompleteApi<
+  TItem,
+  React.FormEvent,
+  React.MouseEvent,
+  React.KeyboardEvent
+> {
   state: AutocompleteState<TItem>;
   recentSearches: StoredSearchPlugin<StoredDocSearchHit>;
   favoriteSearches: StoredSearchPlugin<StoredDocSearchHit>;
   conversations: StoredSearchPlugin<StoredAskAiState>;
-  onItemClick: (item: InternalDocSearchHit, event: KeyboardEvent | MouseEvent) => void;
+  onItemClick: (
+    item: InternalDocSearchHit,
+    event: KeyboardEvent | MouseEvent
+  ) => void;
   onAskAiToggle: (toggle: boolean) => void;
   isAskAiActive: boolean;
   canHandleAskAi: boolean;
@@ -69,19 +82,36 @@ export interface AskAiScreenStateProps<TItem extends BaseItem>
 }
 
 export const AskAiScreenState = React.memo(
-  ({ translations = {}, selectAskAiQuestion, ...props }: AskAiScreenStateProps<InternalDocSearchHit>): JSX.Element => {
+  ({
+    translations = {},
+    selectAskAiQuestion,
+    ...props
+  }: AskAiScreenStateProps<InternalDocSearchHit>): JSX.Element => {
     const handleSelectPromptSuggestion = React.useCallback(
       (prompt: string) => {
         selectAskAiQuestion(true, prompt);
       },
-      [selectAskAiQuestion],
+      [selectAskAiQuestion]
     );
 
-    if (props.canHandleAskAi && props.isAskAiActive && props.askAiState === 'conversation-history') {
-      return <ConversationHistoryScreen selectAskAiQuestion={selectAskAiQuestion} {...props} />;
+    if (
+      props.canHandleAskAi &&
+      props.isAskAiActive &&
+      props.askAiState === 'conversation-history'
+    ) {
+      return (
+        <ConversationHistoryScreen
+          selectAskAiQuestion={selectAskAiQuestion}
+          {...props}
+        />
+      );
     }
 
-    if (props.canHandleAskAi && props.isAskAiActive && props.askAiState === 'new-conversation') {
+    if (
+      props.canHandleAskAi &&
+      props.isAskAiActive &&
+      props.askAiState === 'new-conversation'
+    ) {
       return (
         <NewConversationScreen
           translations={translations?.newConversation}
@@ -123,16 +153,25 @@ export const AskAiScreenState = React.memo(
     }
 
     if (!props.hasCollections && !props.canHandleAskAi) {
-      return <NoResultsScreen {...props} translations={translations?.noResultsScreen} />;
+      return (
+        <NoResultsScreen
+          {...props}
+          translations={translations?.noResultsScreen}
+        />
+      );
     }
 
     return (
       <>
         <ResultsScreen {...props} translations={translations?.resultsScreen} />
-        {props.canHandleAskAi && !props.hasCollections && (
-          // if there's one collection it is the ask ai action, show the no results screen
-          <NoResultsScreen {...props} translations={translations?.noResultsScreen} />
-        )}
+        {props.canHandleAskAi &&
+          !props.hasCollections && (
+            // if there's one collection it is the ask ai action, show the no results screen
+            <NoResultsScreen
+              {...props}
+              translations={translations?.noResultsScreen}
+            />
+          )}
       </>
     );
   },
@@ -141,6 +180,9 @@ export const AskAiScreenState = React.memo(
     // avoid UI flashes:
     //  - Empty screen → Results screen
     //  - NoResults screen → NoResults screen with another query
-    return nextProps.state.status === 'loading' || nextProps.state.status === 'stalled';
-  },
+    return (
+      nextProps.state.status === 'loading' ||
+      nextProps.state.status === 'stalled'
+    );
+  }
 );

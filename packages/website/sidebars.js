@@ -1,10 +1,9 @@
 /**
- * Creating a sidebar enables you to:
- * - create an ordered group of docs
- * - render a sidebar for each doc of that group
- * - provide next/previous navigation.
+ * Creating a sidebar enables you to: - create an ordered group of docs - render
+ * a sidebar for each doc of that group - provide next/previous navigation.
  *
- * The sidebars can be generated from the filesystem, or explicitly defined here.
+ * The sidebars can be generated from the filesystem, or explicitly defined
+ * here.
  *
  * Create as many sidebars as you want.
  */
@@ -19,7 +18,15 @@ export default {
     {
       type: 'category',
       label: 'DocSearch v4',
-      items: ['docsearch', 'docusaurus-adapter', 'composable-api', 'styling', 'api', 'examples', 'migrating-from-v3'],
+      items: [
+        'docsearch',
+        'docusaurus-adapter',
+        'composable-api',
+        'styling',
+        'api',
+        'examples',
+        'migrating-from-v3',
+      ],
     },
     {
       type: 'category',
@@ -57,7 +64,13 @@ export default {
     {
       type: 'category',
       label: 'Algolia Crawler',
-      items: ['create-crawler', 'record-extractor', 'templates', 'crawler-configuration-visual', 'manage-your-crawls'],
+      items: [
+        'create-crawler',
+        'record-extractor',
+        'templates',
+        'crawler-configuration-visual',
+        'manage-your-crawls',
+      ],
     },
     {
       type: 'category',

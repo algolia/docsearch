@@ -17,7 +17,8 @@ function CustomHit({ hit }: { hit: any }): JSX.Element {
         transition: 'background-color 0.2s ease',
         backgroundColor: 'transparent',
         cursor: 'pointer',
-        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+        fontFamily:
+          '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
         lineHeight: 1.4,
       }}
       onMouseEnter={(e) => {
@@ -43,8 +44,15 @@ function CustomHit({ hit }: { hit: any }): JSX.Element {
             color: '#1976d2',
           }}
         >
-          {/* eslint-disable-next-line no-nested-ternary */}
-          {hit.type === 'lvl1' ? 'H1' : hit.type === 'lvl2' ? 'H2' : hit.type === 'lvl3' ? 'H3' : 'DOC'}
+          {/* oxlint-disable-next-line no-nested-ternary */}
+          {hit.type === 'lvl1'
+            ? 'H1'
+            : // oxlint-disable-next-line no-nested-ternary
+              hit.type === 'lvl2'
+              ? 'H2'
+              : hit.type === 'lvl3'
+                ? 'H3'
+                : 'DOC'}
         </div>
 
         <div style={{ flex: 1, minWidth: 0 }}>
@@ -105,7 +113,9 @@ function CustomHit({ hit }: { hit: any }): JSX.Element {
             }}
           >
             <span>{hit.url}</span>
-            {hit.type && <span style={{ textTransform: 'capitalize' }}>{hit.type}</span>}
+            {hit.type && (
+              <span style={{ textTransform: 'capitalize' }}>{hit.type}</span>
+            )}
           </div>
         </div>
       </div>
@@ -113,7 +123,11 @@ function CustomHit({ hit }: { hit: any }): JSX.Element {
   );
 }
 
-export default function WHitComponent({ theme }: { theme: DemoTheme }): JSX.Element {
+export default function WHitComponent({
+  theme,
+}: {
+  theme: DemoTheme;
+}): JSX.Element {
   return (
     <DocSearch
       indexName="docsearch"

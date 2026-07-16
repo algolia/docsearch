@@ -58,7 +58,7 @@ export const MemoizedMarkdown = memo(
           breaks: true,
           renderer,
         }),
-      [content],
+      [content]
     );
 
     // container ref to scope dom queries and events
@@ -69,10 +69,16 @@ export const MemoizedMarkdown = memo(
       const container = containerRef.current;
       if (!container) return;
 
-      const buttons = Array.from(container.querySelectorAll<HTMLButtonElement>('.DocSearch-CodeSnippet-CopyButton'));
+      const buttons = Array.from(
+        container.querySelectorAll<HTMLButtonElement>(
+          '.DocSearch-CodeSnippet-CopyButton'
+        )
+      );
 
       buttons.forEach((btn) => {
-        const label = btn.querySelector<HTMLElement>('.DocSearch-CodeSnippet-CopyButton-Label');
+        const label = btn.querySelector<HTMLElement>(
+          '.DocSearch-CodeSnippet-CopyButton-Label'
+        );
         if (label) label.textContent = copyButtonText;
 
         // ensure icons initial visibility
@@ -81,7 +87,9 @@ export const MemoizedMarkdown = memo(
 
       function handleClick(event: MouseEvent): void {
         const targetEl = event.target as HTMLElement;
-        const btn = targetEl.closest<HTMLButtonElement>('.DocSearch-CodeSnippet-CopyButton');
+        const btn = targetEl.closest<HTMLButtonElement>(
+          '.DocSearch-CodeSnippet-CopyButton'
+        );
         if (!btn) return;
 
         const encoded = btn.getAttribute('data-code') ?? '';
@@ -89,7 +97,9 @@ export const MemoizedMarkdown = memo(
           /* noop */
         });
 
-        const label = btn.querySelector<HTMLElement>('.DocSearch-CodeSnippet-CopyButton-Label');
+        const label = btn.querySelector<HTMLElement>(
+          '.DocSearch-CodeSnippet-CopyButton-Label'
+        );
         if (!label) return;
 
         btn.classList.add('DocSearch-CodeSnippet-CopyButton--copied');
@@ -117,6 +127,6 @@ export const MemoizedMarkdown = memo(
         dangerouslySetInnerHTML={{ __html: html }}
       />
     );
-  },
+  }
 );
 MemoizedMarkdown.displayName = 'MemoizedMarkdown';

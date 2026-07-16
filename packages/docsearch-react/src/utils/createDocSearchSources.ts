@@ -1,9 +1,16 @@
-import type { AutocompleteSource, AutocompleteState } from '@algolia/autocomplete-core';
+import type {
+  AutocompleteSource,
+  AutocompleteState,
+} from '@algolia/autocomplete-core';
 import type { SearchParamsObject, SearchResponse } from 'algoliasearch/lite';
 import type React from 'react';
 
 import type { DocSearchIndex, DocSearchProps } from '../DocSearch';
-import type { DocSearchHit, DocSearchState, InternalDocSearchHit } from '../types';
+import type {
+  DocSearchHit,
+  DocSearchState,
+  InternalDocSearchHit,
+} from '../types';
 import type { useSearchClient } from '../useSearchClient';
 
 import { SOURCE_IDS } from './collections';
@@ -12,7 +19,10 @@ import { identity } from './identity';
 import { isModifierEvent } from './isModifierEvent';
 import { removeHighlightTags } from './removeHighlightTags';
 
-export type BuildQuerySourcesState = Pick<AutocompleteState<InternalDocSearchHit>, 'context'>;
+export type BuildQuerySourcesState = Pick<
+  AutocompleteState<InternalDocSearchHit>,
+  'context'
+>;
 
 export type StoredSearchesLike<TItem> = {
   getAll: () => TItem[];
@@ -22,7 +32,7 @@ export type FacetSelections = Record<string, string>;
 
 export function createFacetFilters(
   searchParametersFacetFilters: SearchParamsObject['facetFilters'],
-  facetSelections: FacetSelections,
+  facetSelections: FacetSelections
 ): SearchParamsObject['facetFilters'] {
   const dynamicFacetFilters = Object.entries(facetSelections)
     .filter(([, value]) => value)
@@ -109,7 +119,9 @@ export async function buildQuerySources({
 }: {
   query: string;
   state: BuildQuerySourcesState;
-  setContext: (context: Partial<DocSearchState<InternalDocSearchHit>['context']>) => void;
+  setContext: (
+    context: Partial<DocSearchState<InternalDocSearchHit>['context']>
+  ) => void;
   setStatus: (status: DocSearchState<InternalDocSearchHit>['status']) => void;
   searchClient: ReturnType<typeof useSearchClient>;
   indexes: DocSearchIndex[];
@@ -130,7 +142,10 @@ export async function buildQuerySources({
       requests: indexes.map((index) => {
         const indexName = index.name;
         const searchParams = index.searchParameters;
-        const facetFilters = createFacetFilters(searchParams?.facetFilters, facetSelections.current);
+        const facetFilters = createFacetFilters(
+          searchParams?.facetFilters,
+          facetSelections.current
+        );
 
         return {
           query,
@@ -171,9 +186,16 @@ export async function buildQuerySources({
       const result = res as SearchResponse<DocSearchHit>;
       const { hits, nbHits } = result;
       const transformedHits = transformItems(hits);
-      const sources = groupBy<DocSearchHit>(transformedHits, (hit) => removeHighlightTags(hit), maxResultsPerGroup);
+      const sources = groupBy<DocSearchHit>(
+        transformedHits,
+        (hit) => removeHighlightTags(hit),
+        maxResultsPerGroup
+      );
 
-      if ((sourcesState.context.searchSuggestions as unknown[]).length < Object.keys(sources).length) {
+      if (
+        (sourcesState.context.searchSuggestions as unknown[]).length <
+        Object.keys(sources).length
+      ) {
         setContext({
           searchSuggestions: {
             ...(sourcesState.context.searchSuggestions ?? []),
@@ -213,14 +235,18 @@ export async function buildQuerySources({
           return item.url;
         },
         getItems() {
-          return Object.values(groupBy(items, (item) => item.hierarchy.lvl1, maxResultsPerGroup))
+          return Object.values(
+            groupBy(items, (item) => item.hierarchy.lvl1, maxResultsPerGroup)
+          )
             .map((groupedHits) =>
               groupedHits
                 .map((item) => {
                   let parent: InternalDocSearchHit | null = null;
 
                   const potentialParent = groupedHits.find(
-                    (siblingItem) => siblingItem.type === 'lvl1' && siblingItem.hierarchy.lvl1 === item.hierarchy.lvl1,
+                    (siblingItem) =>
+                      siblingItem.type === 'lvl1' &&
+                      siblingItem.hierarchy.lvl1 === item.hierarchy.lvl1
                   ) as InternalDocSearchHit | undefined;
 
                   if (item.type !== 'lvl1' && potentialParent) {
@@ -233,7 +259,7 @@ export async function buildQuerySources({
                     ...insightsParams,
                   };
                 })
-                .flat(),
+                .flat()
             )
             .flat();
         },

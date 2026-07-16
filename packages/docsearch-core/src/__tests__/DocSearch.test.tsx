@@ -1,26 +1,42 @@
 import type { RenderHookResult, RenderResult } from '@testing-library/react';
-import { render, screen, cleanup, renderHook, act, fireEvent } from '@testing-library/react';
+import {
+  render,
+  screen,
+  cleanup,
+  renderHook,
+  act,
+  fireEvent,
+} from '@testing-library/react';
 import type { JSX } from 'react';
 import React, { useRef } from 'react';
 import { describe, it, expect, afterEach, vi } from 'vitest';
-
 import '@testing-library/jest-dom/vitest';
 
-import { DocSearch, useDocSearch, type DocSearchContext, type DocSearchProps } from '../DocSearch';
+import {
+  DocSearch,
+  useDocSearch,
+  type DocSearchContext,
+  type DocSearchProps,
+} from '../DocSearch';
 import { useDocSearchKeyboardEvents } from '../useDocSearchKeyboardEvents';
 import { useKeyboardShortcuts } from '../useKeyboardShortcuts';
 import { useTheme } from '../useTheme';
 
 type DocSearchPropsNoChildren = Omit<DocSearchProps, 'children'>;
 
-const renderWithProvider = (comp: React.ReactNode, props: DocSearchPropsNoChildren = {}): RenderResult =>
+const renderWithProvider = (
+  comp: React.ReactNode,
+  props: DocSearchPropsNoChildren = {}
+): RenderResult =>
   render(comp, {
     wrapper({ children }) {
       return <DocSearch {...props}>{children}</DocSearch>;
     },
   });
 
-const renderCustomHook = (props: DocSearchPropsNoChildren = {}): RenderHookResult<DocSearchContext, never> =>
+const renderCustomHook = (
+  props: DocSearchPropsNoChildren = {}
+): RenderHookResult<DocSearchContext, never> =>
   renderHook(() => useDocSearch(), {
     wrapper({ children }) {
       return <DocSearch {...props}>{children}</DocSearch>;

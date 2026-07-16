@@ -26,8 +26,14 @@ describe('utils', () => {
           { key: 'platform' },
           { key: 'extra' },
           { key: ' ' },
-        ]),
-      ).toEqual([{ key: 'language' }, { key: 'version' }, { key: 'type' }, { key: 'framework' }, { key: 'platform' }]);
+        ])
+      ).toEqual([
+        { key: 'language' },
+        { key: 'version' },
+        { key: 'type' },
+        { key: 'framework' },
+        { key: 'platform' },
+      ]);
 
       warn.mockRestore();
     });
@@ -43,13 +49,21 @@ describe('utils', () => {
           { key: 'framework' },
           { key: 'platform' },
           { key: 'extra' },
-        ]),
-      ).toEqual([{ key: 'language' }, { key: 'version' }, { key: 'type' }, { key: 'framework' }, { key: 'platform' }]);
+        ])
+      ).toEqual([
+        { key: 'language' },
+        { key: 'version' },
+        { key: 'type' },
+        { key: 'framework' },
+        { key: 'platform' },
+      ]);
     });
 
     it('creates labels from facet keys', () => {
       expect(getFacetLabel({ key: 'content_type' })).toBe('Content Type');
-      expect(getFacetLabel({ key: 'docs.version', label: 'Version' })).toBe('Version');
+      expect(getFacetLabel({ key: 'docs.version', label: 'Version' })).toBe(
+        'Version'
+      );
     });
 
     it('returns configured facetFilters when no dynamic facets are selected', () => {
@@ -61,12 +75,14 @@ describe('utils', () => {
         createFacetFilters(['docusaurus_tag:default'], {
           language: 'en',
           version: 'v2',
-        }),
+        })
       ).toEqual(['docusaurus_tag:default', 'language:en', 'version:v2']);
     });
 
     it('ignores empty dynamic facet selections', () => {
-      expect(createFacetFilters(undefined, { language: '', version: 'v2' })).toEqual(['version:v2']);
+      expect(
+        createFacetFilters(undefined, { language: '', version: 'v2' })
+      ).toEqual(['version:v2']);
     });
   });
 
@@ -86,7 +102,8 @@ describe('utils', () => {
     });
 
     it('extracts markdown and bare URLs', () => {
-      const text = 'See [DocSearch](https://docsearch.algolia.com) and https://example.com/docs.';
+      const text =
+        'See [DocSearch](https://docsearch.algolia.com) and https://example.com/docs.';
       const message: AIMessage = {
         id: '123',
         role: 'assistant',
@@ -115,7 +132,9 @@ describe('utils', () => {
           },
         ],
       };
-      expect(extractLinksFromMessage(message)).toEqual([{ url: 'https://algolia.com' }]);
+      expect(extractLinksFromMessage(message)).toEqual([
+        { url: 'https://algolia.com' },
+      ]);
     });
 
     it('does not return links from within code snippets', () => {
@@ -182,7 +201,9 @@ describe('utils', () => {
         ],
       };
 
-      expect(extractLinksFromMessage(message)).toEqual([{ url: 'https://docsearch.algolia.com', title: 'DocSearch' }]);
+      expect(extractLinksFromMessage(message)).toEqual([
+        { url: 'https://docsearch.algolia.com', title: 'DocSearch' },
+      ]);
     });
   });
 
@@ -264,8 +285,14 @@ describe('utils', () => {
 
     it('manageLocalStorageQuota runs without errors', () => {
       // Add some DocSearch data to localStorage
-      localStorage.setItem('__DOCSEARCH_TEST_1__', JSON.stringify({ test: 'data1' }));
-      localStorage.setItem('__DOCSEARCH_TEST_2__', JSON.stringify({ test: 'data2' }));
+      localStorage.setItem(
+        '__DOCSEARCH_TEST_1__',
+        JSON.stringify({ test: 'data1' })
+      );
+      localStorage.setItem(
+        '__DOCSEARCH_TEST_2__',
+        JSON.stringify({ test: 'data2' })
+      );
 
       // This should not throw an error
       expect(() => {
@@ -274,8 +301,12 @@ describe('utils', () => {
     });
 
     it('storage functions work correctly with normal data', () => {
-      const arrayStorage = createStorage<{ id: number; name: string }>(testKey + '_array');
-      const objectStorage = createObjectStorage<{ count: number }>(testKey + '_object');
+      const arrayStorage = createStorage<{ id: number; name: string }>(
+        testKey + '_array'
+      );
+      const objectStorage = createObjectStorage<{ count: number }>(
+        testKey + '_object'
+      );
 
       // Test array storage
       const testArray = [

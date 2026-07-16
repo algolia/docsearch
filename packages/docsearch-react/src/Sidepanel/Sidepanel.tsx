@@ -3,7 +3,10 @@ import React, { useCallback } from 'react';
 import type { JSX } from 'react';
 
 import { AlgoliaLogo, type AlgoliaLogoTranslations } from '../AlgoliaLogo';
-import type { DocSearchSidepanelProps, SidepanelSearchParameters } from '../Sidepanel';
+import type {
+  DocSearchSidepanelProps,
+  SidepanelSearchParameters,
+} from '../Sidepanel';
 import type { StoredAskAiState, SuggestedQuestionHit } from '../types';
 import { useAskAi } from '../useAskAi';
 import { useIsMobile } from '../useIsMobile';
@@ -26,7 +29,8 @@ import { useSidepanelKeyboardEvents } from './useSidepanelKeyboardEvents';
 import { useSidepanelWidth } from './useSidepanelWidth';
 
 /**
- * Imperative handle exposed by the Sidepanel component for programmatic control.
+ * Imperative handle exposed by the Sidepanel component for programmatic
+ * control.
  */
 export interface SidepanelRef {
   /** Opens the sidepanel. */
@@ -40,29 +44,22 @@ export interface SidepanelRef {
 }
 
 export type SidepanelTranslations = Partial<{
-  /**
-   * Translation texts for the Sidepanel header.
-   **/
+  /** Translation texts for the Sidepanel header. */
   header: HeaderTranslations;
-  /**
-   * Translation texts for the prompt form.
-   **/
+  /** Translation texts for the prompt form. */
   promptForm: PromptFormTranslations;
-  /**
-   * Translation texts for the conversation screen.
-   **/
+  /** Translation texts for the conversation screen. */
   conversationScreen: ConversationScreenTranslations;
-  /**
-   * Translation texts for the new conversation/starting screen.
-   **/
+  /** Translation texts for the new conversation/starting screen. */
   newConversationScreen: NewConversationScreenTranslations;
-  /**
-   * Translation text for the Algolia logo.
-   **/
+  /** Translation text for the Algolia logo. */
   logo: AlgoliaLogoTranslations;
 }>;
 
-export type SidepanelProps = Pick<DocSearchSidepanelProps, 'indices' | 'memory' | 'tools'> & {
+export type SidepanelProps = Pick<
+  DocSearchSidepanelProps,
+  'indices' | 'memory' | 'tools'
+> & {
   /**
    * Variant of the Sidepanel positioning.
    *
@@ -79,7 +76,8 @@ export type SidepanelProps = Pick<DocSearchSidepanelProps, 'indices' | 'memory' 
    */
   side?: PanelSide;
   /**
-   * The selector of the element to push when Sidepanel opens with `inline` variant.
+   * The selector of the element to push when Sidepanel opens with `inline`
+   * variant.
    *
    * @default `'#root, main, .app, body'`
    */
@@ -88,13 +86,13 @@ export type SidepanelProps = Pick<DocSearchSidepanelProps, 'indices' | 'memory' 
    * Width of the Sidepanel (px or any CSS width).
    *
    * @default `360px`
-   **/
+   */
   width?: number | string;
   /**
    * Width when expanded (px or any CSS width).
    *
    * @default `580px`
-   **/
+   */
   expandedWidth?: number | string;
   /**
    * The container element where the panel should be portaled to.
@@ -108,19 +106,21 @@ export type SidepanelProps = Pick<DocSearchSidepanelProps, 'indices' | 'memory' 
    * @default false
    */
   suggestedQuestions?: boolean;
-  /**
-   * Translations specific to the Sidepanel panel.
-   **/
+  /** Translations specific to the Sidepanel panel. */
   translations?: SidepanelTranslations;
   /**
-   * Configuration for keyboard shortcuts. Allows enabling/disabling specific shortcuts.
+   * Configuration for keyboard shortcuts. Allows enabling/disabling specific
+   * shortcuts.
    *
    * @default `{ 'Ctrl/Cmd+I': true }`
    */
   keyboardShortcuts?: SidepanelShortcuts;
 };
 
-type Props = Omit<DocSearchSidepanelProps, 'button' | 'indices' | 'memory' | 'panel' | 'tools'> &
+type Props = Omit<
+  DocSearchSidepanelProps,
+  'button' | 'indices' | 'memory' | 'panel' | 'tools'
+> &
   SidepanelProps &
   SidepanelSearchParameters & {
     isOpen?: boolean;
@@ -152,10 +152,11 @@ function SidepanelInner(
     memory,
     indices,
   }: Props,
-  ref: React.ForwardedRef<SidepanelRef>,
+  ref: React.ForwardedRef<SidepanelRef>
 ): JSX.Element {
   const [isExpanded, setIsExpanded] = React.useState(false);
-  const [sidepanelState, setSidepanelState] = React.useState<SidepanelState>('new-conversation');
+  const [sidepanelState, setSidepanelState] =
+    React.useState<SidepanelState>('new-conversation');
   const [stoppedStreaming, setStoppedStreaming] = React.useState(false);
   const sidepanelContainerRef = React.useRef<HTMLDivElement>(null);
   const promptInputRef = React.useRef<HTMLTextAreaElement>(null);
@@ -167,7 +168,10 @@ function SidepanelInner(
     expandedWidth,
   });
 
-  const selectors = React.useMemo(() => pushSelector ?? '#root, main, .app, body', [pushSelector]);
+  const selectors = React.useMemo(
+    () => pushSelector ?? '#root, main, .app, body',
+    [pushSelector]
+  );
 
   const toggleIsExpanded = useCallback((): void => {
     setIsExpanded(!isExpanded);
@@ -214,7 +218,7 @@ function SidepanelInner(
       sendMessage({ text: prompt });
       setSidepanelState('conversation');
     },
-    [sendMessage],
+    [sendMessage]
   );
 
   const handleStartNewConversation = (): void => {
@@ -231,7 +235,7 @@ function SidepanelInner(
         body: {
           suggestedQuestionId: question.objectID,
         },
-      },
+      }
     );
     setSidepanelState('conversation');
   };
@@ -251,7 +255,7 @@ function SidepanelInner(
 
       setSidepanelState('conversation');
     },
-    [sendMessage, restoreConversation],
+    [sendMessage, restoreConversation]
   );
 
   useManageSidepanelLayout({
@@ -282,7 +286,7 @@ function SidepanelInner(
         return isOpen;
       },
     }),
-    [onOpen, onClose, isOpen],
+    [onOpen, onClose, isOpen]
   );
 
   React.useEffect(() => {
@@ -326,7 +330,9 @@ function SidepanelInner(
     let selectedConversation: StoredAskAiState | undefined;
 
     if (initialMessage.messageId) {
-      selectedConversation = conversations.getConversation?.(initialMessage.messageId);
+      selectedConversation = conversations.getConversation?.(
+        initialMessage.messageId
+      );
     }
 
     if (selectedConversation) {
@@ -343,11 +349,17 @@ function SidepanelInner(
                 suggestedQuestionId: initialMessage.suggestedQuestionId,
               },
             }
-          : {},
+          : {}
       );
       setSidepanelState('conversation');
     }
-  }, [initialMessage, sendMessage, conversations, handleSelectConversation, startNewConversation]);
+  }, [
+    initialMessage,
+    sendMessage,
+    conversations,
+    handleSelectConversation,
+    startNewConversation,
+  ]);
 
   // Autofocus the prompt input when the sidepanel opens and blur it when
   // it closes. Disabled on mobile because focusing the textarea triggers the
@@ -375,7 +387,10 @@ function SidepanelInner(
       tabIndex={-1}
       ref={sidepanelContainerRef}
     >
-      <aside id="docsearch-sidepanel" className={`DocSearch-Sidepanel ${sidepanelState}`}>
+      <aside
+        id="docsearch-sidepanel"
+        className={`DocSearch-Sidepanel ${sidepanelState}`}
+      >
         <SidepanelHeader
           sidepanelState={sidepanelState}
           exchanges={exchanges}
@@ -408,7 +423,10 @@ function SidepanelInner(
             />
           )}
           {sidepanelState === 'conversation-history' && (
-            <ConversationHistoryScreen conversations={conversations} selectConversation={handleSelectConversation} />
+            <ConversationHistoryScreen
+              conversations={conversations}
+              selectConversation={handleSelectConversation}
+            />
           )}
         </div>
         <PromptForm
