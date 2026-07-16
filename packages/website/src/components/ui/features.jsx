@@ -1,13 +1,32 @@
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import React, { useCallback } from 'react';
 
 const mcpSteps = [
-  { id: 'signup', text: 'Sign up with Algolia or use an existing app' },
-  { id: 'navigate', text: 'Go to the MCP section under Generative AI' },
-  { id: 'create', text: 'Create a new MCP server with your index' },
-  { id: 'use', text: 'Use it anywhere' },
+  { id: 'install', text: 'Run one command to wire up your agent' },
+  { id: 'connect', text: 'Point Claude, Cursor, Codex & more at the server' },
+  { id: 'ask', text: 'Ask questions grounded in real docs' },
+  { id: 'ship', text: 'Ship answers your agents can actually trust' },
 ];
 
+const ArrowIcon = () => (
+  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+  </svg>
+);
+
+const cardClass =
+  'relative rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 transition-all hover:border-[var(--border-strong)]';
+const iconTileClass =
+  'flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--brand)] text-white';
+const cardTitleClass = 'font-display text-lg font-semibold text-[var(--text)]';
+const cardBodyClass = 'mb-4 text-sm text-[var(--text-secondary)]';
+const learnMoreClass =
+  'inline-flex items-center gap-1.5 text-sm font-medium text-[var(--brand-ink)] no-underline! transition-colors hover:text-[var(--brand)]';
+
 export const IntroducingSection = () => {
+  const { siteConfig } = useDocusaurusContext();
+  // /mcp is served externally at the same origin (not a Docusaurus route).
+  const mcpUrl = `${siteConfig.url}/mcp`;
   const handleTryAskAI = useCallback(() => {
     const sidepanelButton = document.querySelector('.DocSearch-SidepanelButton');
     if (sidepanelButton) {
@@ -16,25 +35,26 @@ export const IntroducingSection = () => {
   }, []);
 
   return (
-    <div className="py-16 overflow-hidden snap-start">
-      <div className="relative max-w-xl mx-auto px-4 md:px-6 lg:px-8 lg:max-w-screen-xl">
-        {/* Section Header */}
-        <div className="max-w-screen-xl mx-auto mb-12 px-4 md:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
-            <p className="text-3xl text-black dark:text-white font-bold leading-9 font-[Sora] md:text-4xl md:leading-10">
-              Expand your Docs beyond the search box
-            </p>
-            <p className="text-lg md:text-2xl text-slate-400 dark:text-slate-500">Power your documentation with AI</p>
-          </div>
+    <div className="overflow-hidden py-16">
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+        <div className="mx-auto mb-12 max-w-3xl text-center">
+          <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--accent)]">
+            Beyond the search box
+          </p>
+          <h2 className="font-display text-[28px] font-semibold leading-tight tracking-[-0.02em] text-[var(--text)] md:text-[36px]">
+            Expand your docs with AI
+          </h2>
+          <p className="mt-3 text-[15px] text-[var(--text-secondary)] md:text-[17px]">
+            Power your documentation with Ask AI and the Model Context Protocol.
+          </p>
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
           {/* Ask AI Card */}
-          <div className="relative rounded-2xl bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 p-6 transition-all hover:shadow-lg hover:shadow-blue-500/10">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 text-white">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+          <div className={cardClass}>
+            <div className="mb-4 flex items-center gap-3">
+              <div className={iconTileClass}>
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -42,20 +62,21 @@ export const IntroducingSection = () => {
                   />
                 </svg>
               </div>
-              <span className="text-lg font-semibold text-gray-900 dark:text-white font-[Sora]">Ask AI</span>
+              <span className={cardTitleClass}>Ask AI</span>
             </div>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-              Get instant, AI-powered answers from your documentation. Ask natural language questions and receive
-              accurate, context-aware responses.
+            <p className={cardBodyClass}>
+              Get instant, AI-powered answers from your documentation. Ask
+              natural-language questions and receive accurate, context-aware
+              responses.
             </p>
             <div className="flex items-center gap-4">
               <button
                 type="button"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white text-sm font-medium transition-all cursor-pointer"
+                className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg bg-[var(--brand)] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--brand-ink)]"
                 onClick={handleTryAskAI}
               >
                 Try now
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -65,21 +86,19 @@ export const IntroducingSection = () => {
               </button>
               <a
                 href="/docs/v4/askai?utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=askai"
-                className="inline-flex items-center gap-1.5 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium no-underline!"
+                className={learnMoreClass}
               >
                 Learn more
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                </svg>
+                <ArrowIcon />
               </a>
             </div>
           </div>
 
           {/* MCP Card */}
-          <div className="relative rounded-2xl bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 p-6 transition-all hover:shadow-lg hover:shadow-blue-500/10">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 text-white">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+          <div className={cardClass}>
+            <div className="mb-4 flex items-center gap-3">
+              <div className={iconTileClass}>
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -87,30 +106,33 @@ export const IntroducingSection = () => {
                   />
                 </svg>
               </div>
-              <span className="text-lg font-semibold text-gray-900 dark:text-white font-[Sora]">MCP Server</span>
+              <span className={cardTitleClass}>MCP Server</span>
             </div>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-              Connect your documentation to AI assistants like Claude and Cursor with the Model Context Protocol.
+            <p className={cardBodyClass}>
+              Connect your documentation to AI assistants like Claude and Cursor
+              with the Model Context Protocol.
             </p>
-            <div className="space-y-2 mb-4">
+            <div className="mb-4 space-y-2">
               {mcpSteps.map((step, index) => (
                 <div key={step.id} className="flex items-start gap-2">
-                  <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 text-xs font-bold flex items-center justify-center">
+                  <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-[var(--accent-light)] text-xs font-bold text-[var(--brand-ink)]">
                     {index + 1}
                   </span>
-                  <span className="text-sm text-gray-600 dark:text-gray-300 leading-tight">{step.text}</span>
+                  <span className="text-sm leading-tight text-[var(--text-secondary)]">
+                    {step.text}
+                  </span>
                 </div>
               ))}
             </div>
-            <a
-              href="https://www.algolia.com/doc/guides/algolia-ai/mcp-server/overview?utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=mcp"
-              className="inline-flex items-center gap-1.5 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium no-underline!"
-            >
-              Learn more
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-              </svg>
-            </a>
+            <div className="flex items-center gap-4">
+              <a href={mcpUrl} className={learnMoreClass}>
+                Explore MCP
+                <ArrowIcon />
+              </a>
+              <a href="/docs/mcp/installation" className={learnMoreClass}>
+                Install guide
+              </a>
+            </div>
           </div>
         </div>
       </div>

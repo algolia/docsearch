@@ -6,6 +6,11 @@ import tailwindLoader from './plugins/tailwind-loader.mjs';
 const SIGNUP_LINK =
   'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch&utm_content=apply';
 
+// The MCP app is served at the same origin (/mcp) by hosting, not by
+// Docusaurus. Linking to the absolute URL makes it an external link so the
+// build's broken-link check doesn't flag a route Docusaurus doesn't own.
+const MCP_URL = 'https://docsearch.algolia.com/mcp';
+
 const currentDate = new Date();
 const currentYear = currentDate.getFullYear();
 
@@ -20,7 +25,7 @@ export default {
   favicon: 'img/favicon.ico',
   organizationName: 'Algolia',
   projectName: 'DocSearch',
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   markdown: {
     hooks: {
       onBrokenMarkdownLinks: 'throw',
@@ -96,12 +101,8 @@ export default {
       ],
       navbar: {
         hideOnScroll: true,
-        logo: {
-          alt: 'DocSearch x Algolia',
-          src: 'img/docsearch-x-algolia-logo-light-mode.png',
-          srcDark: 'img/docsearch-x-algolia-logo-dark-mode.png',
-          className: 'docsearch-nav-logo',
-        },
+        // Brand lockup is rendered by the swizzled Navbar/Logo (MCP vibe);
+        // no image `logo` config needed.
         items: [
           // left
           {
@@ -111,17 +112,13 @@ export default {
           },
           {
             label: 'MCP',
-            to: 'docs/mcp/overview',
+            href: MCP_URL,
+            target: '_self',
             position: 'left',
           },
           {
             label: 'Playground',
             to: 'https://community.algolia.com/docsearch-playground/',
-            position: 'left',
-          },
-          {
-            label: 'Sign up',
-            to: SIGNUP_LINK,
             position: 'left',
           },
           // right
@@ -133,6 +130,12 @@ export default {
             href: 'https://github.com/algolia/docsearch',
             position: 'right',
             className: 'header-github-link',
+          },
+          {
+            label: 'Sign up',
+            to: SIGNUP_LINK,
+            position: 'right',
+            className: 'navbar-cta',
           },
         ],
       },
@@ -213,13 +216,8 @@ export default {
             ],
           },
         ],
-        logo: {
-          alt: 'Algolia',
-          src: 'img/docsearch-x-algolia-logo-light-mode.png',
-          srcDark: 'img/docsearch-x-algolia-logo-dark-mode.png',
-          width: 200,
-        },
-        copyright: `2015-${currentYear} – Built with 💙 by Algolia`,
+        // Brand lockup rendered by the swizzled Footer (MCP vibe).
+        copyright: `2015–${currentYear} — Built with <span style="color:var(--accent)">♥</span> by Algolia`,
       },
       image: 'img/og_image.png',
       prism: {

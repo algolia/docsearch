@@ -1,49 +1,139 @@
-/* fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sora:wght@100..800&display=swap');
+/* fonts — MCP design system: Switzer (body), Sora (display), Fraunces (editorial), JetBrains Mono (code) */
+@import url('https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&f[]=switzer-italic@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @custom-variant dark (&:is([data-theme="dark"] *));
 
 :root {
-  --ifm-font-size-base: 16px;
+  color-scheme: light;
+
+  /* ─────────────────────────────────────────────────────────────
+     MCP design tokens (source: docsearch-mcp-crawler apps/docsearch).
+     Neutral ramp is a warm h≈75 (not pure gray) so brand blue stays
+     the only blue on the page. All color authored in OKLCH.
+     ───────────────────────────────────────────────────────────── */
+  --bg: oklch(0.975 0.002 75);
+  --surface: oklch(0.995 0.001 75);
+  --surface-raised: oklch(0.99 0.002 75);
+  --border: oklch(0.905 0.005 75);
+  --border-strong: oklch(0.845 0.008 75);
+
+  /* Public landing background: faint cool tint up top fading to white */
+  --page-grad-top: oklch(0.975 0.007 265);
+  --page-grad-bottom: oklch(1 0 0);
+
+  --text: oklch(0.205 0.015 75);
+  --text-secondary: oklch(0.52 0.012 75);
+  --text-tertiary: oklch(0.64 0.008 75);
+
+  /* Home ambient glyph backdrop — alpha is the per-theme master strength */
+  --backdrop-glyph: oklch(0.55 0.012 75 / 0.4);
+  --backdrop-glyph-accent: oklch(0.5907 0.2231 272 / 0.85);
+
+  /* Algolia blue #5468FF, authored in-gamut so it renders identically. */
+  --accent: oklch(0.5907 0.2231 272);
+  --accent-hover: oklch(0.26 0.045 260);
+  --accent-light: oklch(0.94 0.02 272);
+  --accent-text: oklch(0.995 0.002 260);
+
+  --brand: oklch(0.5907 0.2231 272);
+  --brand-soft: oklch(0.94 0.05 268);
+  --brand-ink: oklch(50.6% 0.095 279.5);
+
+  --success: oklch(0.52 0.14 155);
+  --success-light: #e7f6ee;
+  --warning: oklch(0.62 0.14 85);
+  --warning-light: oklch(0.955 0.04 85);
+  --danger: oklch(0.52 0.18 25);
+  --danger-light: oklch(0.96 0.03 25);
+  --info: oklch(0.52 0.14 245);
+  --info-light: oklch(0.955 0.04 245);
+
+  --sidebar-bg: oklch(0.985 0.002 75);
+  --sidebar-border: oklch(0.915 0.005 75);
+
+  --dur-xs: 120ms;
+  --dur-sm: 200ms;
+  --dur-md: 320ms;
+  --dur-lg: 520ms;
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft-inout: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --container: clamp(61rem, 54vw, 61rem);
+
+  /* ─────────────────────────────────────────────────────────────
+     Infima remap → MCP tokens (drives all Docusaurus chrome + docs)
+     ───────────────────────────────────────────────────────────── */
+  --ifm-font-size-base: 15px;
   --ifm-code-font-size: 90%;
-  --ifm-background-color: var(--white);
-  --ifm-color-primary: var(--nebula-500);
-  --ifm-footer-background-color: var(--grey-100);
-  --ifm-menu-color-background-active: var(--ifm-color-emphasis-200);
-  --ifm-announcement-bar-background-color: #21243d;
-  --background: var(--ifm-background-color);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  --ifm-font-family-base: 'Switzer', ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ifm-heading-font-family: 'Sora', 'Switzer', ui-sans-serif, system-ui,
+    sans-serif;
+  --ifm-font-family-monospace: 'JetBrains Mono', ui-monospace, SFMono-Regular,
+    Menlo, Monaco, Consolas, monospace;
+
+  --ifm-background-color: var(--bg);
+  --ifm-background-surface-color: var(--surface);
+  --ifm-navbar-background-color: var(--surface);
+  --ifm-footer-background-color: var(--surface-raised);
+
+  --ifm-color-primary: #5468ff;
+  --ifm-color-primary-dark: #3c4fe0;
+  --ifm-color-primary-darker: #2b3cbb;
+  --ifm-color-primary-darkest: #1e2b8f;
+  --ifm-color-primary-light: #7c8aff;
+  --ifm-color-primary-lighter: #a3acff;
+  --ifm-color-primary-lightest: #cacfff;
+
+  --ifm-link-color: var(--brand-ink);
+  --ifm-link-hover-color: var(--brand);
+  --ifm-menu-color-active: var(--brand-ink);
+  --ifm-menu-color-background-active: var(--accent-light);
+  --ifm-navbar-link-hover-color: var(--text);
+
+  --ifm-heading-color: var(--text);
+  --ifm-font-color-base: var(--text);
+  --ifm-toc-border-color: var(--border);
+  --ifm-hr-border-color: var(--border);
+  --ifm-table-border-color: var(--border);
+  --ifm-color-emphasis-200: var(--border);
+  --ifm-color-emphasis-300: var(--border-strong);
+
+  --ifm-code-background: var(--surface-raised);
+  --ifm-pre-background: var(--surface-raised);
+  --ifm-code-border-radius: 6px;
+
+  --ifm-announcement-bar-background-color: var(--brand);
+
+  /* shadcn / Tailwind token shim → mapped to MCP tokens (see @theme inline) */
+  --background: var(--bg);
+  --foreground: var(--text);
+  --card: var(--surface);
+  --card-foreground: var(--text);
+  --popover: var(--surface);
+  --popover-foreground: var(--text);
+  --primary: var(--brand);
+  --primary-foreground: oklch(0.995 0.002 260);
+  --secondary: var(--surface-raised);
+  --secondary-foreground: var(--text);
+  --muted: var(--surface-raised);
+  --muted-foreground: var(--text-secondary);
+  --accent-foreground: oklch(0.995 0.002 260);
+  --destructive: var(--danger);
+  --destructive-foreground: oklch(0.995 0.002 75);
+  --input: var(--border);
+  --ring: var(--brand);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: var(--sidebar-bg);
+  --sidebar-foreground: var(--text);
+  --sidebar-primary: var(--brand);
+  --sidebar-primary-foreground: oklch(0.995 0.002 260);
+  --sidebar-accent: var(--accent-light);
+  --sidebar-accent-foreground: var(--text);
+  --sidebar-border: var(--sidebar-border);
+  --sidebar-ring: var(--brand);
   --transparent: transparent;
   --white: #fff;
   --grey-900: #23263b;
@@ -114,57 +204,83 @@
 }
 
 html[data-theme='dark'] {
-  --ifm-font-base-color: #dee0f2;
-  --ifm-navbar-link-hover-color: #8b9dff;
-  --ifm-link-color: #8b9dff;
-  --ifm-menu-color-active: #8b9dff;
-  --ifm-background-color: #0a141c;
-  --ifm-footer-background-color: #0a141c;
-  --ifm-navbar-background-color: #21243d;
-  --ifm-menu-color-background-active: #21243d;
-  --ifm-announcement-bar-background-color: var(--ifm-color-primary);
-  --background: var(--ifm-background-color);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+  color-scheme: dark;
+
+  /* Near-neutral warm ramp (same h≈75 family as light) — brand blue stays
+     the only blue. */
+  --bg: oklch(0.152 0.004 75);
+  --surface: oklch(0.185 0.005 75);
+  --surface-raised: oklch(0.215 0.006 75);
+  --border: oklch(0.27 0.006 75);
+  --border-strong: oklch(0.34 0.008 75);
+
+  --page-grad-top: oklch(0.192 0.005 75);
+  --page-grad-bottom: oklch(0.152 0.004 75);
+
+  --text: oklch(0.93 0.01 75);
+  --text-secondary: oklch(0.67 0.012 75);
+  --text-tertiary: oklch(0.55 0.01 75);
+
+  --backdrop-glyph: oklch(0.68 0.012 75 / 0.4);
+  --backdrop-glyph-accent: oklch(0.7147 0.1579 271.9 / 0.8);
+
+  --accent: oklch(0.7147 0.1579 271.9);
+  --accent-hover: oklch(0.79 0.12 271);
+  --accent-light: oklch(0.25 0.05 272);
+  --accent-text: oklch(0.15 0.015 260);
+
+  --brand: oklch(0.7147 0.1579 271.9);
+  --brand-soft: oklch(0.27 0.08 270);
+  --brand-ink: oklch(0.73 0.12 275);
+
+  --success: oklch(0.72 0.15 155);
+  --success-light: oklch(0.26 0.05 155);
+  --warning: oklch(0.78 0.13 85);
+  --warning-light: oklch(0.26 0.05 85);
+  --danger: oklch(0.72 0.17 25);
+  --danger-light: oklch(0.26 0.05 25);
+  --info: oklch(0.72 0.13 245);
+  --info-light: oklch(0.26 0.04 245);
+
+  --sidebar-bg: oklch(0.14 0.004 75);
+  --sidebar-border: oklch(0.24 0.005 75);
+
+  /* Infima dark remap */
+  --ifm-background-color: var(--bg);
+  --ifm-background-surface-color: var(--surface);
+  --ifm-navbar-background-color: var(--surface);
+  --ifm-footer-background-color: var(--surface-raised);
+  --ifm-color-primary: #8b9dff;
+  --ifm-color-primary-dark: #7c8aff;
+  --ifm-color-primary-darker: #6b7aff;
+  --ifm-color-primary-darkest: #5468ff;
+  --ifm-color-primary-light: #a3acff;
+  --ifm-color-primary-lighter: #b6bdff;
+  --ifm-color-primary-lightest: #cacfff;
+  --ifm-font-base-color: var(--text);
+
+  /* shadcn shim (dark) */
+  --primary-foreground: oklch(0.15 0.015 260);
+  --accent-foreground: oklch(0.15 0.015 260);
+  --destructive-foreground: oklch(0.995 0.002 75);
+}
+
+@theme {
+  --font-sans: 'Switzer', ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Sora', 'Switzer', ui-sans-serif, system-ui, sans-serif;
+  --font-editorial: 'Fraunces', 'Iowan Old Style', 'Apple Garamond', Georgia,
+    'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, monospace;
 }
 
 @theme inline {
-  /* Configure your theme variables here */
-  --font-display: 'Inter', 'sans-serif';
-  --font-title: 'Sora', 'sans-serif';
+  /* MCP display/title aliases kept for components that reference them */
+  --font-title: 'Sora', sans-serif;
   --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
-  --color-primary-500: oklch(0.84 0.18 117.33);
   --spacing: 0.25rem;
-  --color-background: var(--ifm-background-color);
+  --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
@@ -183,11 +299,10 @@ html[data-theme='dark'] {
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -234,7 +349,24 @@ html[data-theme='dark'] {
 }
 
 html {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
+  font-feature-settings: 'ss01', 'cv11', 'cv01', 'ss02';
+}
+
+body {
+  font-feature-settings: 'ss01', 'cv11', 'cv01', 'ss02';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  letter-spacing: -0.02em;
 }
 
 /* override to fix some logo placement issues due to flex auto */
@@ -756,4 +888,446 @@ html[data-theme='dark'] .shimmer-effect {
 /* SIDEPANEL */
 .DocSearch-Sidepanel-Title {
   margin-bottom: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   MCP DESIGN SYSTEM — utility classes, keyframes, terminal tokens
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+.font-editorial {
+  font-family: var(--font-editorial);
+  font-feature-settings: 'liga', 'dlig', 'kern', 'ss01';
+  font-variation-settings: 'SOFT' 100, 'WONK' 1, 'opsz' 144;
+  letter-spacing: -0.015em;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum', 'zero', 'cv11';
+}
+
+.app-container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2.25rem);
+}
+
+/* Hairline underline, grows from left on hover */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  transition: background-size var(--dur-xs) var(--ease-out-quart);
+}
+.link-underline:hover {
+  background-size: 100% 1px;
+}
+
+/* Focus ring uses Algolia brand blue — the single signature moment */
+.brand-focus:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--surface),
+    0 0 0 3px var(--brand);
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reveal-mask {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 -2% 0);
+  }
+}
+
+@keyframes hairline-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.85);
+  }
+}
+
+.reveal-up {
+  opacity: 0;
+  animation: reveal-up var(--dur-md) var(--ease-out-expo) forwards;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-mask {
+  opacity: 0;
+  animation: reveal-mask var(--dur-md) var(--ease-out-expo) forwards;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+.hairline-draw {
+  transform-origin: left center;
+  animation: hairline-draw var(--dur-lg) var(--ease-out-expo) 240ms forwards;
+}
+
+/* Hero shimmer + ring (editorial accent word) */
+.hero-ring {
+  border-radius: 50%;
+  border: 1px solid var(--brand);
+  animation: hero-ring-pulse 5s ease-in-out infinite;
+}
+@keyframes hero-ring-pulse {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  35% {
+    opacity: 0.07;
+  }
+}
+
+.hero-fresh {
+  background: linear-gradient(
+    105deg,
+    var(--brand-ink) 0%,
+    var(--brand) 50%,
+    var(--brand-ink) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: hero-shimmer 5s linear 0.5s infinite;
+}
+[data-theme='dark'] .hero-fresh {
+  background-image: linear-gradient(
+    105deg,
+    var(--brand) 0%,
+    oklch(0.86 0.09 272) 50%,
+    var(--brand) 100%
+  );
+}
+@keyframes hero-shimmer {
+  from {
+    background-position: 0% center;
+  }
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Install command chip (hero terminal): theme-aware pill */
+:root {
+  --term-bg: var(--text);
+  --term-border: var(--text);
+  --term-fg: var(--surface);
+  --term-fg-muted: color-mix(in oklch, var(--surface) 82%, transparent);
+  --term-btn-bg: color-mix(in oklch, white 10%, transparent);
+  --term-btn-bg-hover: color-mix(in oklch, white 20%, transparent);
+  --term-btn-border: color-mix(in oklch, white 16%, transparent);
+}
+[data-theme='dark'] {
+  --term-bg: oklch(0.235 0.006 75);
+  --term-border: var(--border-strong);
+  --term-fg: var(--text);
+  --term-fg-muted: var(--text-secondary);
+  --term-btn-bg: color-mix(in oklch, white 6%, transparent);
+  --term-btn-bg-hover: color-mix(in oklch, white 12%, transparent);
+  --term-btn-border: var(--border-strong);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+  }
+  .animate-spin {
+    animation-duration: 1s !important;
+    animation-iteration-count: infinite !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   FULL DOCS RESTYLE — chrome + reading experience via Infima + component CSS
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Navbar: hairline + soft blur to match MCP header */
+.navbar {
+  border-bottom: 1px solid var(--border);
+  box-shadow: none;
+  backdrop-filter: saturate(1.1) blur(6px);
+  background-color: color-mix(in oklch, var(--surface) 90%, transparent);
+}
+.navbar__link {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  letter-spacing: -0.01em;
+  color: var(--text-secondary);
+}
+.navbar__link:hover,
+.navbar__link--active {
+  color: var(--text);
+}
+
+/* Brand lockup (swizzled Navbar/Logo) */
+.ds-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 131px;
+  color: var(--text);
+}
+.ds-brand:hover {
+  color: var(--text);
+}
+.ds-brand__mark {
+  height: 1.5rem;
+  width: auto;
+  flex-shrink: 0;
+}
+.ds-brand__lockup {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+.ds-brand__word {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.ds-brand__by {
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--text-tertiary);
+}
+.ds-brand__algolia {
+  height: 10px;
+  width: auto;
+}
+/* Algolia wordmark is a fixed blue; invert nothing but lift slightly in dark */
+[data-theme='dark'] .ds-brand__algolia {
+  filter: brightness(1.35);
+}
+
+/* Neutralize legacy full-width logo flex now that the lockup renders inline */
+.navbar__brand.ds-brand {
+  flex: 0 0 auto;
+  margin-inline-end: 1rem;
+}
+
+/* Center the navbar row on the MCP content width */
+.navbar__inner {
+  max-width: 72rem;
+  margin-inline: auto;
+}
+
+/* "Sign up" primary CTA (brand fill + inset highlight, like the MCP button) */
+.navbar-cta.navbar__link {
+  display: inline-flex;
+  align-items: center;
+  height: 2rem;
+  padding-inline: 0.85rem;
+  border-radius: 8px;
+  background: var(--brand);
+  color: oklch(0.995 0.002 260) !important;
+  font-weight: 600;
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.08) inset,
+    0 1px 2px 0 rgba(16, 24, 40, 0.12);
+  transition: background var(--dur-xs) var(--ease-out-quart);
+}
+.navbar-cta.navbar__link:hover {
+  background: var(--brand-ink);
+  color: oklch(0.995 0.002 260) !important;
+}
+[data-theme='dark'] .navbar-cta.navbar__link {
+  color: oklch(0.15 0.015 260) !important;
+}
+[data-theme='dark'] .navbar-cta.navbar__link:hover {
+  color: oklch(0.15 0.015 260) !important;
+}
+
+/* Sidebar */
+.theme-doc-sidebar-container {
+  border-right: 1px solid var(--border) !important;
+  background-color: var(--sidebar-bg);
+}
+.menu {
+  font-size: 0.86rem;
+}
+.menu__link {
+  border-radius: 8px;
+  color: var(--text-secondary);
+  transition: color var(--dur-xs) var(--ease-out-quart),
+    background-color var(--dur-xs) var(--ease-out-quart);
+}
+.menu__link:hover {
+  background-color: var(--surface-raised);
+  color: var(--text);
+}
+.menu__link--active {
+  color: var(--brand-ink);
+  background-color: var(--accent-light);
+  font-weight: 600;
+}
+.menu__list-item-collapsible:hover {
+  background-color: var(--surface-raised);
+}
+
+/* Article prose (adapted from MCP .knowledge-prose) */
+.theme-doc-markdown .markdown h1,
+.theme-doc-markdown .markdown h2,
+.theme-doc-markdown .markdown h3,
+.theme-doc-markdown .markdown h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.theme-doc-markdown .markdown a:not(.card):not(.button) {
+  color: var(--brand-ink);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklch, var(--brand-ink) 35%, transparent);
+  text-underline-offset: 2px;
+}
+.theme-doc-markdown .markdown a:not(.card):not(.button):hover {
+  text-decoration-color: var(--brand-ink);
+}
+.theme-doc-markdown .markdown blockquote {
+  border-left: 2px solid var(--border-strong);
+  background: transparent;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+.theme-doc-markdown .markdown table th {
+  background: var(--bg);
+  font-weight: 600;
+}
+.theme-doc-markdown .markdown table th,
+.theme-doc-markdown .markdown table td {
+  border: 1px solid var(--border);
+}
+.theme-doc-markdown .markdown img {
+  border-radius: 8px;
+}
+
+/* Inline + block code */
+code {
+  font-family: var(--font-mono);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface-raised);
+}
+.theme-code-block,
+div[class*='codeBlockContainer'] {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.theme-code-block pre,
+div[class*='codeBlockContainer'] pre {
+  border-radius: 0;
+}
+pre code {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+/* Admonitions → tone-tinted MCP cards */
+.theme-admonition {
+  border-radius: 10px;
+  border-width: 1px;
+  border-style: solid;
+}
+.theme-admonition-note,
+.theme-admonition-info {
+  border-color: color-mix(in oklch, var(--info) 30%, transparent);
+  background: var(--info-light);
+}
+.theme-admonition-tip,
+.theme-admonition-success {
+  border-color: color-mix(in oklch, var(--success) 30%, transparent);
+  background: var(--success-light);
+}
+.theme-admonition-warning,
+.theme-admonition-caution {
+  border-color: color-mix(in oklch, var(--warning) 30%, transparent);
+  background: var(--warning-light);
+}
+.theme-admonition-danger {
+  border-color: color-mix(in oklch, var(--danger) 30%, transparent);
+  background: var(--danger-light);
+}
+
+/* Table of contents */
+.table-of-contents {
+  font-size: 0.78rem;
+  border-left: 1px solid var(--border);
+}
+.table-of-contents__link {
+  color: var(--text-tertiary);
+}
+.table-of-contents__link:hover,
+.table-of-contents__link--active {
+  color: var(--brand-ink);
+}
+
+/* Pagination cards */
+.pagination-nav__link {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: border-color var(--dur-xs) var(--ease-out-quart);
+}
+.pagination-nav__link:hover {
+  border-color: var(--border-strong);
 }
