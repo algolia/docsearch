@@ -1,5 +1,3 @@
-import type { AutocompleteState } from '@algolia/autocomplete-core';
-import type { InitialAskAiMessage } from '@docsearch/core';
 import docsearch, { type DocSearchInstance, type TemplateHelpers } from '@docsearch/js';
 import sidepanel, { type SidepanelInstance } from '@docsearch/sidepanel-js';
 
@@ -72,7 +70,10 @@ docsearchInstance = docsearch({
   indexName: 'docsearch',
   appId: 'PMZUYBQDAK',
   apiKey: '24b09689d5b4223813d9b8e48563c8f6',
-  interceptAskAiEvent: (initialMessage: InitialAskAiMessage) => {
+  askAi: {
+    assistantId: 'ccdec697-e3fe-465b-a1c3-657e7bf18aef',
+  },
+  interceptAskAiEvent: (initialMessage) => {
     docsearchInstance?.close();
     sidepanelInstance.open(initialMessage);
     return true;
@@ -90,7 +91,7 @@ docsearchInstance = docsearch({
     // eslint-disable-next-line no-console
     console.log('[demo-js] docsearch onClose()');
   },
-  resultsFooterComponent: ({ state }: { state: AutocompleteState<any> }, helpers?: TemplateHelpers) => {
+  resultsFooterComponent: ({ state }, helpers?: TemplateHelpers) => {
     const { html } = helpers || {};
     if (!html) return null;
 

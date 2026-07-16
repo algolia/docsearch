@@ -1,2 +1,7 @@
-export { docsearch as default } from './docsearch';
-export type { DocSearchProps, DocSearchInstance, DocSearchCallbacks, TemplateHelpers } from './docsearch';
+export { docsearchAi as default } from './docsearchAi';
+export type {
+  DocSearchAIProps as DocSearchProps,
+  DocSearchInstance,
+  DocSearchCallbacks,
+  TemplateHelpers,
+} from './docsearchAi';

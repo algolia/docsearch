@@ -17,6 +17,10 @@
   "files": [
     "dist/"
   ],
+  "exports": {
+    ".": "./dist/esm/index.js",
+    "./docsearch": "./dist/esm/docsearch.js"
+  },
   "source": "src/index.ts",
   "types": "dist/esm/index.d.ts",
   "module": "dist/esm/index.js",
