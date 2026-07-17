@@ -162,7 +162,9 @@ jobs:
           name: Unit tests
           command: bun run test
   release:
-    <<: *defaults
+    working_directory: ~/docsearch
+    docker:
+      - image: cimg/node:24.16
     steps:
       - checkout
       - *attach_workspace
@@ -179,8 +181,7 @@ jobs:
       - run:
           name: Release if needed
           command: |
-            export NPM_TOKEN=''
-            export NPM_AUTH_TOKEN=''
+            export NPM_ID_TOKEN="$(circleci run oidc get --claims '{"aud": "npm:registry.npmjs.org"}')"
             bun run release
   test_playwright:
     <<: *playwright
