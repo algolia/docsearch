@@ -20,7 +20,7 @@
 }
 
 .DocSearch-Button-Container svg {
-  color: currentColor;
+  color: currentcolor;
 }
 
 .DocSearch-Search-Icon {
@@ -37,7 +37,7 @@
   font-size: 1rem;
   padding-block: 0;
   padding-inline: 8px 12px;
-  color: currentColor;
+  color: currentcolor;
   display: inline-block;
   line-height: normal;
 }
@@ -57,7 +57,6 @@
   width: 24px;
   justify-content: center;
   position: relative;
-  border: 0;
   font-size: 14px;
   font-family:
     system-ui,
@@ -90,7 +89,7 @@
   box-shadow: var(--docsearch-key-pressed-shadow) !important;
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .DocSearch-Button {
     width: auto;
   }
