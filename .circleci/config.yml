@@ -179,6 +179,7 @@ jobs:
       - run:
           name: Release if needed
           command: |
+            export NPM_TOKEN=''
             bun run release
   test_playwright:
     <<: *playwright
