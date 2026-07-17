@@ -121,7 +121,9 @@ jobs:
       - run: *restore_dist_folders
       - run:
           name: Linting
-          command: bun run lint --quiet --format=stylish
+          command: |
+            bun run lint --quiet --format=stylish
+            bun run lint:css
   test_types:
     <<: *defaults
     steps:

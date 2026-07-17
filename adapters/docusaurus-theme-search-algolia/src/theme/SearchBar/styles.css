@@ -10,11 +10,9 @@
   --docsearch-text-color: var(--ifm-font-color-base);
   --docsearch-border-radius: var(--ifm-global-radius);
   --docsearch-highlight-color: var(--ifm-color-primary);
-  --docsearch-soft-primary-color: color-mix(
-    in srgb,
-    var(--ifm-color-primary) 12%,
-    transparent
-  );
+  --docsearch-soft-primary-color: color-mix(in srgb,
+  var(--ifm-color-primary) 12%,
+  transparent);
   --docsearch-focus-color: var(--ifm-color-primary-dark);
   --docsearch-subtle-color: var(--ifm-color-emphasis-200);
   --docsearch-secondary-text-color: var(--ifm-color-emphasis-600);
@@ -22,35 +20,36 @@
   --docsearch-muted-color: var(--ifm-color-emphasis-600);
   --docsearch-container-background: rgb(0 0 0 / 60%);
   --docsearch-background-color: var(--ifm-color-emphasis-200);
+
   /* Modal */
   --docsearch-modal-background: var(--ifm-color-emphasis-100);
   --docsearch-modal-shadow: var(--ifm-global-shadow-md);
+
   /* Button */
   --docsearch-search-button-background: var(--ifm-background-color);
   --docsearch-search-button-text-color: var(--ifm-color-emphasis-600);
+
   /* Search box */
   --docsearch-searchbox-background: var(--ifm-background-color);
   --docsearch-searchbox-focus-background: var(--ifm-background-surface-color);
+
   /* Hit */
   --docsearch-hit-color: var(--ifm-font-color-base);
-  --docsearch-hit-highlight-color: color-mix(
-    in srgb,
-    var(--ifm-color-primary) 12%,
-    transparent
-  );
+  --docsearch-hit-highlight-color: color-mix(in srgb,
+  var(--ifm-color-primary) 12%,
+  transparent);
   --docsearch-hit-active-color: var(--ifm-color-white);
   --docsearch-hit-background: var(--ifm-background-surface-color);
   --docsearch-key-background: var(--ifm-color-emphasis-200);
   --docsearch-key-color: var(--ifm-color-emphasis-600);
   --docsearch-key-pressed-shadow: inset 0 2px 4px rgb(0 0 0 / 12%);
+
   /* Footer */
   --docsearch-footer-background: var(--ifm-background-surface-color);
   --docsearch-footer-shadow: 0 -1px 0 0 var(--ifm-color-emphasis-200);
-  --docsearch-key-gradient: linear-gradient(
-    -26.5deg,
-    var(--ifm-color-emphasis-300) 0%,
-    var(--ifm-color-emphasis-200) 100%
-  );
+  --docsearch-key-gradient: linear-gradient(-26.5deg,
+  var(--ifm-color-emphasis-300) 0%,
+  var(--ifm-color-emphasis-200) 100%);
 
   /* Sidepanel */
   --docsearch-sidepanel-background: var(--ifm-color-emphasis-100);
@@ -68,9 +67,7 @@
   --docsearch-sidepanel-scrollbar-bg: var(--docsearch-modal-background);
   --docsearch-sidepanel-hit-background: var(--docsearch-hit-background);
   --docsearch-sidepanel-hit-color: var(--docsearch-hit-color);
-  --docsearch-sidepanel-hit-highlight-color: var(
-    --docsearch-hit-highlight-color
-  );
+  --docsearch-sidepanel-hit-highlight-color: var(--docsearch-hit-highlight-color);
 }
 
 .DocSearch-SearchBar {
@@ -109,10 +106,11 @@
 }
 
 /* is aesthetically better to have no border radius */
-@media screen and (min-width: 769px) {
+@media screen and (width >= 769px) {
   .DocSearch-Sidepanel-Container.inline.side-right {
     border-radius: 0 !important;
   }
+
   .DocSearch-Sidepanel-Container.inline.side-left {
     border-radius: 0 !important;
   }

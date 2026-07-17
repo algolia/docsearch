@@ -201,10 +201,10 @@ const ConversationExchange = React.forwardRef<
                   return (
                     <div
                       key={index}
-                      className="DocSearch-AskAiScreen-MessageContent-Reasoning shimmer"
+                      className="DocSearch-AskAiScreen-MessageContent-Reasoning DocSearch-shimmer"
                     >
                       <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-                      <span className="shimmer">{reasoningText}</span>
+                      <span className="DocSearch-shimmer">{reasoningText}</span>
                     </div>
                   );
                 }
@@ -265,15 +265,15 @@ const ConversationExchange = React.forwardRef<
                   className="DocSearch-AskAiScreen-MessageContent-Thinking"
                   role="status"
                 >
-                  <span className="shimmer">{thinkingText}</span>
-                  <span className="DocSearch-AskAi-Thinking-Skeleton shimmer" />
-                  <span className="DocSearch-AskAi-Thinking-Skeleton DocSearch-AskAi-Thinking-Skeleton--short shimmer" />
+                  <span className="DocSearch-shimmer">{thinkingText}</span>
+                  <span className="DocSearch-AskAi-Thinking-Skeleton DocSearch-shimmer" />
+                  <span className="DocSearch-AskAi-Thinking-Skeleton DocSearch-AskAi-Thinking-Skeleton--short DocSearch-shimmer" />
                 </div>
               )}
             </div>
 
             {wasStopped && (
-              <p className="DocSearck-AskAiScreen-MessageContent-Stopped">
+              <p className="DocSearch-AskAiScreen-MessageContent-Stopped">
                 {stoppedStreamingText}
               </p>
             )}

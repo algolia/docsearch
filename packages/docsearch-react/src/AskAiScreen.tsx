@@ -271,11 +271,11 @@ function AskAiExchangeCard({
                 className="DocSearch-AskAiScreen-MessageContent-Thinking"
                 role="status"
               >
-                <span className="shimmer">
+                <span className="DocSearch-shimmer">
                   {translations.thinkingText || 'Thinking...'}
                 </span>
-                <span className="DocSearch-AskAi-Thinking-Skeleton shimmer" />
-                <span className="DocSearch-AskAi-Thinking-Skeleton DocSearch-AskAi-Thinking-Skeleton--short shimmer" />
+                <span className="DocSearch-AskAi-Thinking-Skeleton DocSearch-shimmer" />
+                <span className="DocSearch-AskAi-Thinking-Skeleton DocSearch-AskAi-Thinking-Skeleton--short DocSearch-shimmer" />
               </div>
             )}
             {displayParts.map((part, idx) => {
@@ -323,10 +323,10 @@ function AskAiExchangeCard({
                 return (
                   <div
                     key={index}
-                    className="DocSearch-AskAiScreen-MessageContent-Reasoning shimmer"
+                    className="DocSearch-AskAiScreen-MessageContent-Reasoning DocSearch-shimmer"
                   >
                     <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-                    <span className="shimmer">Reasoning...</span>
+                    <span className="DocSearch-shimmer">Reasoning...</span>
                   </div>
                 );
               }
@@ -351,7 +351,7 @@ function AskAiExchangeCard({
           </div>
 
           {wasStopped && (
-            <p className="DocSearck-AskAiScreen-MessageContent-Stopped">
+            <p className="DocSearch-AskAiScreen-MessageContent-Stopped">
               {stoppedStreamingText}
             </p>
           )}
