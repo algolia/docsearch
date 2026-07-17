@@ -180,6 +180,7 @@ jobs:
           name: Release if needed
           command: |
             export NPM_TOKEN=''
+            export NPM_AUTH_TOKEN=''
             bun run release
   test_playwright:
     <<: *playwright
