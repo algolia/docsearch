@@ -1,8 +1,13 @@
 import { describe, it, expect } from 'vitest';
 
-import type { AIMessage, AIMessagePart } from '../../types/AskiAi';
+import type {
+  AIMessage,
+  AIMessagePart,
+  SearchToolPart,
+} from '../../types/AskiAi';
 import {
   getAgentPromptSuggestions,
+  getSearchToolQueries,
   isAIToolPart,
   isAlgoliaMCPSearchOutputPart,
   sanitizeMessagesForRequest,
@@ -183,5 +188,62 @@ describe('getAgentPromptSuggestions', () => {
         },
       ])
     ).toEqual(['First suggestion']);
+  });
+});
+
+describe('getSearchToolQueries', () => {
+  it('returns input query for tool-searchIndex', () => {
+    const queries = getSearchToolQueries({
+      toolCallId: 'testing-123',
+      type: 'tool-searchIndex',
+      state: 'input-available',
+      input: {
+        query: 'testing',
+      },
+      output: undefined,
+    });
+
+    expect(queries).toEqual(['testing']);
+  });
+
+  it('returns queries for MCP search tool', () => {
+    const queries = getSearchToolQueries({
+      type: 'tool-algolia_search_index_testing',
+      toolCallId: 'testing-456',
+      state: 'input-available',
+      input: {
+        clickAnalytics: false,
+        originalQuery: 'testing',
+        queries: [
+          {
+            query: 'first',
+          },
+          {
+            query: '',
+          },
+          {
+            query: 'second',
+          },
+        ],
+      },
+      output: undefined,
+    });
+
+    expect(queries).toEqual(['first', 'second']);
+  });
+
+  it('extracts query from stored MCP tool call with v1 input', () => {
+    const part: SearchToolPart = {
+      type: 'tool-algolia_search_index',
+      toolCallId: 'legacy-id',
+      state: 'output-available',
+      input: {
+        query: '  foo  ',
+        index: 'docs',
+      },
+      output: { hits: [] },
+    };
+
+    expect(getSearchToolQueries(part)).toEqual(['foo']);
   });
 });
