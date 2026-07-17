@@ -20,7 +20,7 @@
         "react-dom": "^19.0.0",
         "start-server-and-test": "2.0.10",
         "stylelint": "17.14.0",
-        "stylelint-config-sass-guidelines": "^13.0.0",
+        "stylelint-config-sass-guidelines": "13.0.0",
         "stylelint-config-standard": "40.0.0",
         "stylelint-no-unsupported-browser-features": "8.1.1",
         "stylelint-order": "8.1.1",
