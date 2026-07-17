@@ -4,20 +4,7 @@ import type {
   SearchOutputPart,
 } from '../types/AskiAi';
 
-import { isSearchIndexOutputPart, isSearchOutputPart } from './ai';
-
-/**
- * Extracts the search query from a search tool result part. `searchIndex`
- * exposes the query on its output, while the Algolia MCP search tools expose it
- * on their input.
- */
-function getSearchQuery(part: SearchOutputPart): string {
-  const query = isSearchIndexOutputPart(part)
-    ? part.output?.query
-    : part.input?.query;
-
-  return (query ?? '').trim();
-}
+import { getSearchToolQueries, isSearchOutputPart } from './ai';
 
 /**
  * Groups consecutive search tool invocation result parts together. Both the
@@ -41,11 +28,11 @@ export function groupConsecutiveToolResults(
       while (j < parts.length) {
         const candidate = parts[j];
         if (isSearchOutputPart(candidate)) {
-          const q = getSearchQuery(candidate);
+          const queriesForPart = getSearchToolQueries(candidate);
+          queries.push(...queriesForPart);
 
           // eslint-disable-next-line max-depth
-          if (q && q.length > 0) {
-            queries.push(q);
+          if (queriesForPart.length > 0) {
             singleQueryPart = candidate;
           }
           j++;
