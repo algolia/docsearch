@@ -13,7 +13,7 @@ export function ToolState({
   children,
   variant,
 }: ToolStateProps): React.JSX.Element {
-  const className = `DocSearch-AskAiScreen-MessageContent-Tool Tool--${variant}${shimmer ? ' shimmer' : ''}`;
+  const className = `DocSearch-AskAiScreen-MessageContent-Tool Tool--${variant}${shimmer ? ' DocSearch-shimmer' : ''}`;
 
   return (
     <div className={className}>
