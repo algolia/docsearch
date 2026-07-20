@@ -243,3 +243,7 @@ packages/
 - `marked` - Markdown rendering
 - `rollup` - Build bundling
 - `vitest` - Test runner
+
+## Documentation
+
+- When writing or working on the documentation website (`packages/website`), MUST adhere to the guidelines in @STYLE_GUIDE.md

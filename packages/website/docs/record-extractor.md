@@ -1,18 +1,19 @@
 ---
 title: Record Extractor
+description: Configure the DocSearch record extractor for Algolia Crawler records.
 ---
 
 ## Introduction
 
 :::info
 
-This documentation will only contain information regarding the **helpers.docsearch** method, see **[Algolia Crawler Documentation][7]** for more information on the **[Algolia Crawler][8]**.
+This page documents the **helpers.docsearch** method. See the **[Algolia Crawler documentation][7]** for information about the **[Algolia Crawler][8]**.
 
 :::
 
-Pages are extracted by a [`recordExtractor`][9]. These extractors are assigned to [`actions`][12] via the [`recordExtractor`][9] parameter. This parameter links to a function that returns the data you want to index, organized in an array of JSON objects.
+Set the [`recordExtractor`][9] parameter on an [`action`][12] to extract each page. Its function returns the data to index as an array of JSON objects.
 
-_The helpers are a collection of functions to help you extract content and generate Algolia records._
+The helpers are functions for extracting content and generating Algolia records.
 
 ### Useful links
 
@@ -21,7 +22,7 @@ _The helpers are a collection of functions to help you extract content and gener
 
 ## Usage
 
-The most common way to use the DocSearch helper, is to return its result to the [`recordExtractor`][9] function.
+The most common way to use the DocSearch helper is to return its result to the [`recordExtractor`][9] function.
 
 ```js
 recordExtractor: ({ helpers }) => {
@@ -131,7 +132,7 @@ recordExtractor: ({ $, helpers }) => {
 
 _These selectors also support [`defaultValue`](#provide-raw-text-defaultvalue) and [fallback selectors](#provide-fallback-selectors)_
 
-You might want to index content that will be used as filters in your frontend (e.g. `version` or `lang`), you can define any custom variable to the `recordProps` object to add them to your Algolia records:
+To index content for frontend filters, such as `version` or `language`, define custom variables in `recordProps`. The helper adds them to each matching Algolia record:
 
 ```js
 recordExtractor: ({ helpers }) => {
@@ -164,15 +165,19 @@ recordExtractor: ({ helpers }) => {
 },
 ```
 
-The following `version`, `lang` and `foo` attributes will be available in your records:
+The `version`, `language`, and `foo` attributes are then available in your records:
 
 ```json
-foo: "valueFromBarSelector",
-language: ["en", "en-US"],
-version: ["latest", "stable"]
+{
+  "foo": "valueFromBarSelector",
+  "language": ["en", "en-US"],
+  "version": ["latest", "stable"]
+}
 ```
 
-You can now use them to [filter your search in the frontend][16]
+Add every filter attribute to the index's `attributesForFaceting`, then expose up to five of them with the v5 [`facets` option][16]. If you display one with `resultBadgeKey`, also add that attribute to `attributesToRetrieve`; see the [`resultBadgeKey` reference][17].
+
+V5 result breadcrumbs use the `hierarchy.lvl0` through `hierarchy.lvl6` values generated from your selectors. Keep the heading levels ordered and include the hierarchy attributes in `attributesToRetrieve`.
 
 ### Boost search results with `pageRank`
 
@@ -236,7 +241,7 @@ If you encounter the `Extractors returned too many records` error when your page
 
 ### Reduce the record size
 
-If you encounter the `Records extracted are too big` error when crawling your website, it is usually because there is too much information in your records, or because your page is too large. The [`recordVersion`](#recordversion) option helps you reduce the records size by removing informations that are only used with [DocSearch v2](/docs/legacy/dropdown).
+If you encounter the `Records extracted are too big` error, your records or source page might contain too much information. The [`recordVersion`](#recordversion) option reduces record size by removing fields used only by the [DocSearch v2 UI](/docs/legacy/dropdown).
 
 ```js
 {
@@ -303,7 +308,7 @@ type CustomVariable =
     };
 ```
 
-Custom variables are used to [`filter your search`](/docs/v3/docsearch#filtering-your-search), you can define them in the [`recordProps`](#indexing-content-for-faceting)
+Define custom variables in [`recordProps`](#indexing-content-for-faceting). You can use them with v5 [`facets` and per-index filters][16].
 
 ## `helpers.docsearch` API Reference
 
@@ -317,7 +322,7 @@ Custom variables are used to [`filter your search`](/docs/v3/docsearch#filtering
 
 > `type: 'v3' | 'v2'` | default: `v2` | **optional**
 
-This option removes content from the Algolia records that are only used for [DocSearch v2](/docs/legacy/dropdown). If you are using [the latest version of DocSearch](/docs/v3/docsearch), you can [set it to `v3`](#reduce-the-record-size).
+This option selects the crawler record schema. It doesn't select the DocSearch UI package version. Set it to `v3` to remove fields used only by the [DocSearch v2 UI](/docs/legacy/dropdown). The `v3` value is also the current record schema for DocSearch v5 frontends.
 
 ### `indexHeadings`
 
@@ -328,7 +333,6 @@ This option tells the crawler if the `headings` (`lvlX`) should be indexed.
 - When `false`, only records for the `content` level will be created.
 - When `from, to` is provided, only records for the `lvlX` to `lvlY` will be created.
 
-[1]: /docs/v3/docsearch
 [2]: https://github.com/algolia/docsearch/
 [3]: https://github.com/algolia/docsearch/tree/master
 [4]: /docs/legacy/dropdown
@@ -342,4 +346,5 @@ This option tells the crawler if the `headings` (`lvlX`) should be indexed.
 [12]: https://www.algolia.com/doc/tools/crawler/apis/configuration/actions/
 [13]: /docs/record-extractor#indexing-content-for-faceting
 [15]: https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/
-[16]: /docs/v3/docsearch/#filtering-your-search
+[16]: /docs/packages/js/api-reference#facets
+[17]: /docs/packages/js/api-reference#resultbadgekey

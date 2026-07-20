@@ -1,0 +1,293 @@
+---
+title: Migrate from DocSearch v4
+description: Move a DocSearch v4 integration to the 5.0.0 beta packages and Agent Studio APIs.
+---
+
+import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs';
+
+DocSearch v5 separates keyword search from the AI experience and uses Agent Studio for Ask AI. Plan the migration around the experience your site provides.
+
+Review the complete [v5 breaking changes](./v5-breaking-changes) before releasing.
+
+## 1. Upgrade the beta packages
+
+Upgrade every DocSearch package in the integration together with the `^5.0.0-beta` range.
+
+<Tabs groupId="language" aria-label="Programming language">
+  <TabItem value="react" label="React">
+
+<Tabs groupId="package-manager" aria-label="Package manager">
+  <TabItem value="npm" label="npm">
+
+```bash
+npm install @docsearch/react@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+
+```bash
+yarn add @docsearch/react@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm add @docsearch/react@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="bun" label="Bun">
+
+```bash
+bun add @docsearch/react@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+</Tabs>
+
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+
+<Tabs groupId="package-manager" aria-label="Package manager">
+  <TabItem value="npm" label="npm">
+
+```bash
+npm install @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+
+```bash
+yarn add @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm add @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="bun" label="Bun">
+
+```bash
+bun add @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+</Tabs>
+
+  </TabItem>
+</Tabs>
+
+If you use the Composable API or sidepanel, also upgrade `@docsearch/core@^5.0.0-beta`, `@docsearch/modal@^5.0.0-beta`, `@docsearch/sidepanel@^5.0.0-beta`, or `@docsearch/sidepanel-js@^5.0.0-beta`.
+
+## 2. Choose keyword-only or AI-capable search
+
+### JavaScript without Ask AI
+
+The v4 root export rendered the combined component. In v5, the root export is AI-capable and the `/docsearch` subpath is keyword-only.
+
+Change the import:
+
+```diff
+-import docsearch from '@docsearch/js';
++import docsearch from '@docsearch/js/docsearch';
+```
+
+Your keyword options can remain unchanged while you migrate deprecated options in a later step.
+
+For a CDN integration, replace the root bundle with the keyword-only UMD file:
+
+```diff
+-<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@4"></script>
++<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@^5.0.0-beta/dist/umd/docsearch.js"></script>
+```
+
+### JavaScript with Ask AI
+
+Keep the root import. It now renders the AI-capable `DocSearchAI` component:
+
+```js
+import docsearch from '@docsearch/js';
+
+docsearch({
+  container: '#docsearch',
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_SEARCH_API_KEY',
+  indices: ['YOUR_INDEX_NAME'],
+  askAi: {
+    assistantId: 'YOUR_ASSISTANT_ID',
+  },
+});
+```
+
+For a CDN integration, use `dist/umd/index.js`. It exposes `window.docsearch`, as v4 did.
+
+### React without Ask AI
+
+Keep `DocSearch`, but remove any AI props. In v5 it renders keyword search only:
+
+```jsx
+import { DocSearch } from '@docsearch/react';
+
+<DocSearch
+  appId="YOUR_APP_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  indices={['YOUR_INDEX_NAME']}
+/>;
+```
+
+### React with Ask AI
+
+Replace `DocSearch` with `DocSearchAI`:
+
+```diff
+-import { DocSearch } from '@docsearch/react';
++import { DocSearchAI } from '@docsearch/react';
+
+-<DocSearch
++<DocSearchAI
+   appId="YOUR_APP_ID"
+   apiKey="YOUR_SEARCH_API_KEY"
+   indices={['YOUR_INDEX_NAME']}
+   askAi={{ assistantId: 'YOUR_ASSISTANT_ID' }}
+ />
+```
+
+`DocSearchAI` requires `askAi`. The string shorthand remains supported:
+
+```jsx
+<DocSearchAI askAi="YOUR_ASSISTANT_ID" {...searchProps} />
+```
+
+## 3. Move Ask AI to Agent Studio
+
+V5 removes the legacy Ask AI token and chat transport. Create the assistant in [Agent Studio](/docs/agent-studio/getting-started) before switching production traffic.
+
+Remove `agentStudio` and `useStagingEnv` from `askAi`. Agent Studio is the only Ask AI backend in v5.
+
+```diff
+ askAi: {
+   assistantId: 'YOUR_ASSISTANT_ID',
+-  agentStudio: true,
+-  useStagingEnv: false,
+ }
+```
+
+The v4 Agent Studio form keyed search parameters by index name. V5 keeps that shape and removes the legacy flat form:
+
+```diff
+ askAi: {
+   assistantId: 'YOUR_ASSISTANT_ID',
+   searchParameters: {
+-    filters: 'language:en',
+-    attributesToRetrieve: ['title', 'content', 'url'],
++    docs: {
++      filters: 'language:en',
++      attributesToRetrieve: ['title', 'content', 'url'],
++    },
+   },
+ }
+```
+
+Agent Studio search parameters support `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`. They don't support `facetFilters` in this object. Put fixed facet conditions in `filters`, or configure dynamic Agent Studio indices.
+
+V5 adds `askAi.indices`, `askAi.tools`, `askAi.memory`, and `askAi.promptSuggestions`. Keep all Agent Studio configuration inside `askAi`. Keep `interceptAskAiEvent` at the component or `docsearch()` root because it controls view routing.
+
+## 4. Move keyword configuration to `indices`
+
+`indexName` and root `searchParameters` still work in v5, but both are deprecated.
+
+```diff
+ docsearch({
+   appId: 'YOUR_APP_ID',
+   apiKey: 'YOUR_SEARCH_API_KEY',
+-  indexName: 'docs',
+-  searchParameters: {
+-    facetFilters: ['language:en'],
+-  },
++  indices: [
++    {
++      name: 'docs',
++      searchParameters: {
++        facetFilters: ['language:en'],
++      },
++    },
++  ],
+ });
+```
+
+Use one item per index. DocSearch queries them in array order. If you temporarily pass both `indexName` and `indices`, it queries `indexName` first, so remove the old option to avoid duplicate requests.
+
+## 5. Update result customization
+
+Existing `transformItems`, `hitComponent`, `resultsFooterComponent`, `transformSearchClient`, navigation, Insights, and translation props remain available.
+
+V5 changes the result markup and adds breadcrumbs, source sections, facets, and badges. Review custom CSS, DOM selectors, screenshots, and tests that depend on v4 markup.
+
+To show a badge from a custom record property, add the property to the per-index `attributesToRetrieve`, then set `resultBadgeKey`:
+
+```jsx
+<DocSearch
+  appId="YOUR_APP_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  indices={[
+    {
+      name: 'docs',
+      searchParameters: {
+        attributesToRetrieve: [
+          'hierarchy.lvl0',
+          'hierarchy.lvl1',
+          'hierarchy.lvl2',
+          'hierarchy.lvl3',
+          'hierarchy.lvl4',
+          'hierarchy.lvl5',
+          'hierarchy.lvl6',
+          'content',
+          'type',
+          'url',
+          'version',
+        ],
+      },
+    },
+  ]}
+  resultBadgeKey="version"
+/>
+```
+
+## 6. Verify styles and package exports
+
+The full stylesheet remains available from `@docsearch/css` and the CDN `dist/style.css` file:
+
+```js
+import '@docsearch/css';
+```
+
+The React package adds split style entries for variables, button, modal, Ask AI, and sidepanel. See [Styling](/docs/packages/css/styling).
+
+`@docsearch/js` now defines an exports map. Replace unsupported deep imports with `@docsearch/js` or `@docsearch/js/docsearch`. Continue to use documented React subpaths such as `@docsearch/react/button`, `/modal`, `/sidepanel`, and `/version`; their generated file names changed, but the package subpaths remain the public API.
+
+## 7. Verify programmatic controls
+
+The JavaScript function returns a `DocSearchInstance` with `open`, `close`, `openAskAi`, `destroy`, `isReady`, and `isOpen`. Use `openAskAi` only with the default AI-capable entry.
+
+React forwards `DocSearchRef`. It also exposes `openSidepanel`, `isSidepanelOpen`, and `isSidepanelSupported` for [hybrid mode](/docs/hybrid-mode).
+
+Test these cases before release:
+
+- Open and close by button, `Ctrl/Cmd+K`, `/`, and Escape.
+- Search every configured index and apply every facet.
+- Open Ask AI, send follow-up questions, submit feedback, and restore a conversation.
+- Exercise any custom tools and memory authentication.
+- Verify custom hit links, result footers, translations, badges, and Insights events.
+- Verify mobile behavior. Hybrid mode uses the modal instead of the sidepanel on mobile.
+
+## 8. Update framework integrations
+
+If Docusaurus manages DocSearch configuration, follow the [Docusaurus adapter guide](/docs/packages/docusaurus-adapter/getting-started). For custom provider, button, and modal layouts, review the [Composable API](/docs/composable-api).

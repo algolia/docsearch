@@ -1,0 +1,66 @@
+---
+title: DocSearch MCP
+description: Understand the DocSearch Model Context Protocol server.
+sidebar_label: Overview
+---
+
+DocSearch MCP lets AI clients search public developer documentation in the DocSearch corpus.
+
+Use it when an assistant needs information from published documentation instead of relying only on its training data. Connect an MCP-compatible client to this endpoint:
+
+```text
+https://mcp.algolia.com/1/docsearch/mcp
+```
+
+The endpoint doesn't require authentication. You don't need an Algolia application ID, search API key, or DocSearch application.
+
+## What DocSearch MCP provides
+
+DocSearch MCP exposes documentation search through the [Model Context Protocol](https://modelcontextprotocol.io/). Your client calls its tools, receives ranked documentation excerpts and source URLs, and uses those results to answer your question.
+
+Use DocSearch MCP for public documentation about libraries, frameworks, SDKs, APIs, CLI tools, and cloud services. It doesn't provide access to:
+
+- Private or unpublished documentation
+- Internal repositories
+- DocSearch crawler or administration operations
+- Algolia indices or credentials
+- General programming advice that isn't covered by indexed documentation
+
+## How searches work
+
+For most searches, provide a product name and a focused question. DocSearch resolves the matching documentation set and searches it in one call.
+
+Use the two-step workflow when a question covers several products or when you need to select the documentation set yourself. First resolve candidate sets, then query the selected set IDs.
+
+## Available tools
+
+### `algolia_docsearch_search_docs`
+
+Use this one-shot tool for most searches. Set `library` to the official product, SDK, or platform name. Set `query` to the documentation question.
+
+The tool resolves the best matching documentation set and returns ranked content. If the product name is ambiguous, it returns candidate documentation sets instead.
+
+### `algolia_docsearch_resolve_docset`
+
+Use this tool first in the manual workflow. It returns candidate documentation sets with a `docset_id`, title, description, and ranking signals.
+
+### `algolia_docsearch_query_docs`
+
+Use this tool with one or more `docset_id` values returned by `algolia_docsearch_resolve_docset`. Pass several IDs when the question covers more than one product.
+
+## Security and service limits
+
+Connect only to the HTTPS endpoint shown on this page. Don't add Algolia credentials to the MCP configuration. Send documentation questions, not secrets or confidential data, to the hosted service.
+
+DocSearch MCP searches public content and returns external documentation to your client. Review generated answers and commands before you use them.
+
+:::note[Service terms]
+
+Algolia DocSearch MCP is a free service and is provided by Algolia "AS IS" and "AS AVAILABLE" without warranty of any kind. Algolia may suspend, modify, or discontinue the service at any time at its sole discretion. Algolia disclaims all obligation and liability arising from or related to your use of DocSearch MCP. You must comply with all applicable laws and government regulations when you use the service.
+
+:::
+
+## Next steps
+
+- [Install DocSearch MCP](/docs/mcp/installation)
+- [Use DocSearch MCP](/docs/mcp/usage)

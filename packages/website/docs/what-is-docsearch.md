@@ -1,24 +1,27 @@
 ---
 title: What is DocSearch?
+description: Understand how DocSearch provides search for technical documentation.
 sidebar_label: What is DocSearch?
 ---
 
 ## Why?
 
-We created DocSearch because we are scratching our own itch. As developers, we spend a lot of time reading documentation, and it can be hard to find relevant information in large documentations. We're not blaming anyone here: building good search is a challenge.
+We created DocSearch because developers spend a lot of time reading documentation, and finding relevant information in large documentation sites can be difficult. Building good search is a challenge.
 
-It happens that we are a search company and we actually have a lot of experience building search interfaces. We wanted to use those skills to help others. That's why we created a way to automatically extract content from tech documentation and make it available to everyone from the first keystroke.
+Algolia has extensive experience building search interfaces. We use that experience to extract content from technical documentation and make it searchable from the first keystroke.
 
-## Quick description
+## Overview
 
-We split DocSearch into a crawler and a frontend library.
+DocSearch has two independent parts: indexing and the frontend search experience.
 
-- Crawls are handled by the [Algolia Crawler][4] and scheduled to run once a week by default, you can then trigger new crawls yourself and monitor them directly from the [Crawler interface][5], which also offers a live editor where you can maintain your config.
-- The frontend library is built on top of [Algolia Autocomplete][6] and provides an immersive search experience through its modal.
+- The [Algolia Crawler][4] extracts your documentation into an Algolia index. Use the [Crawler interface][5] to edit the crawler configuration, monitor crawls, and trigger new crawls.
+- The [DocSearch v5 packages][7] query that index and render keyword search or Ask AI in your frontend. They are built on [Algolia Autocomplete][6].
+
+Crawler configuration and record schema versions don't select the installed DocSearch frontend package version. You can update the frontend package without changing how the crawler is scheduled.
 
 ## How to feature DocSearch?
 
-DocSearch is entirely free and automated. The one thing we'll need from you is to read [our checklist][2] and apply! After that, we'll share with you the snippet needed to add DocSearch to your website. We ask that you keep the "Search by Algolia" link displayed.
+DocSearch is free for eligible documentation sites. Read [the eligibility requirements][2] and apply. After approval and indexing, add a [DocSearch v5 package][7] or a supported framework integration to your website. Keep the "Search by Algolia" link displayed.
 
 DocSearch is [one of our ways][1] to give back to the open source community for everything it did for us already.
 
@@ -30,3 +33,4 @@ You can now [apply to the program][3].
 [4]: https://www.algolia.com/products/search-and-discovery/crawler/
 [5]: https://dashboard.algolia.com/crawler
 [6]: https://www.algolia.com/doc/ui-libraries/autocomplete/introduction/what-is-autocomplete/
+[7]: /docs/packages/overview

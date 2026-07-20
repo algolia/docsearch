@@ -139,17 +139,6 @@ function Home() {
         <Spotlight className="-top-40 left-0 md:-top-20 md:left-60 z-[10]" fill="white" />
         <div className="flex flex-col items-center rounded-md p-10 pb-0">
           <div className="text-center font-[Sora] text-black dark:text-white">
-            <div className="flex items-center justify-center mb-2">
-              <span role="img" aria-label="sparkles" className="mr-2 animate-pulse">
-                ✨
-              </span>
-              <span className="text-blue-600 font-semibold text-lg md:text-xl shimmer-effect mb-2">
-                Celebrating 10 Years of DocSearch
-              </span>
-              <span role="img" aria-label="sparkles" className="ml-2 animate-pulse">
-                ✨
-              </span>
-            </div>
             <p className="text-center text-4xl font-bold bg-gradient-to-tl from-neutral-900 to-neutral-600 md:text-8xl dark:bg-gradient-to-b dark:from-neutral-50 dark:to-neutral-400 bg-clip-text text-transparent">
               Search Made For Documentation
             </p>
@@ -159,7 +148,7 @@ function Home() {
             </p>
           </div>
           <div className="flex my-12 gap-8">
-            <Button href={withBaseUrl('docs/what-is-docsearch')}>Find out more</Button>
+            <Button href={withBaseUrl('docs/migrating-from-v4')}>Migrate to v5</Button>
             <PrimaryButton
               href={
                 'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch&utm_content=apply'

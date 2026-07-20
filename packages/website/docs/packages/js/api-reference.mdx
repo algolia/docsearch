@@ -1,0 +1,311 @@
+---
+title: JavaScript API reference
+description: Configure @docsearch/js 5.0.0-beta.0 and control its returned instance.
+---
+
+## `docsearch(options)`
+
+Renders DocSearch in `options.container` and returns a `DocSearchInstance`.
+
+```ts
+import docsearch from '@docsearch/js';
+
+const instance = docsearch(options);
+```
+
+The default export from `@docsearch/js` is AI-capable and uses `DocSearchAI`. The default export from `@docsearch/js/docsearch` is keyword-only and uses `DocSearch`.
+
+## JavaScript options
+
+### `container`
+
+> `HTMLElement | string` | required
+
+Container element or CSS selector for the search button. A selector resolves against `environment.document` and must match an element.
+
+### `environment`
+
+> `typeof window` | default: `window`
+
+Browser-like environment used to resolve a string `container`.
+
+### `onReady`
+
+> `() => void`
+
+Callback after DocSearch mounts.
+
+### `onOpen`
+
+> `() => void`
+
+Callback when the modal opens.
+
+### `onClose`
+
+> `() => void`
+
+Callback when the modal closes.
+
+### `interceptAskAiEvent`
+
+> `(initialMessage: InitialAskAiMessage) => boolean | void`
+
+Callback before DocSearch starts an Ask AI request. Return `true` to prevent the modal from toggling or sending the message. Use this option to route the request to another view, such as the sidepanel.
+
+`InitialAskAiMessage` contains `query` and can contain `messageId` or `suggestedQuestionId`.
+
+## Search options
+
+These options apply to both package entries.
+
+| Option | Type and default | Description |
+| --- | --- | --- |
+| `appId` | `string`; required | Algolia application ID. |
+| `apiKey` | `string`; required | Public API key with search permission. |
+| `indices` | `Array<string \| DocSearchIndex>`; none | Indices used for keyword search, in display order. At least `indices` or `indexName` is required. |
+| `indexName` | `string`; none | Deprecated index name. Use `indices`. |
+| `facets` | `DocSearchFacet[]`; `[]` | Facet controls populated from the configured indices. |
+| `theme` | `'light' \| 'dark'`; unchanged | Theme written to `document.documentElement.dataset.theme`. |
+| `placeholder` | `string`; experience-specific | Search input placeholder. |
+| `searchParameters` | `SearchParamsObject`; none | Deprecated search parameters for `indexName`. Put them on an `indices` item. |
+| `maxResultsPerGroup` | `number`; none | Maximum results in each result group. |
+| `transformItems` | `(items: DocSearchHit[]) => DocSearchHit[]`; identity | Function that transforms hits before grouping and rendering. |
+| `hitComponent` | template function; built-in hit | Template for a result link. |
+| `resultsFooterComponent` | template function; none | Template below the result collections. |
+| `transformSearchClient` | `(client) => client`; identity | Function that wraps or replaces the Algolia search client. |
+| `disableUserPersonalization` | `boolean`; `false` | Whether to disable recent searches, favorites, and stored AI conversations. |
+| `initialQuery` | `string`; `''` | Query placed in the input when the modal opens. |
+| `navigator` | `AutocompleteOptions['navigator']`; default navigator | Autocomplete navigation implementation. |
+| `translations` | `DocSearchTranslations`; English strings | Button and modal text overrides. |
+| `getMissingResultsUrl` | `({ query }) => string`; none | Function that builds the no-results report URL. |
+| `insights` | `AutocompleteOptions['insights']`; `false` | Algolia Insights integration options. |
+| `portalContainer` | `DocumentFragment \| Element`; `document.body` | Element that receives the modal portal. |
+| `recentSearchesLimit` | `number`; `7` | Maximum recent searches without favorites. |
+| `recentSearchesWithFavoritesLimit` | `number`; `4` | Maximum recent searches when favorites exist. |
+| `keyboardShortcuts` | `DocSearchModalShortcuts`; both enabled | Whether `Ctrl/Cmd+K` and `/` open the modal. Escape always closes it. |
+| `resultBadgeKey` | `string`; none | Hit property rendered as a result badge. |
+
+### `indices`
+
+Use a string for default search parameters or a `DocSearchIndex` for per-index parameters:
+
+```ts
+interface DocSearchIndex {
+  name: string;
+  searchParameters?: SearchParamsObject;
+}
+```
+
+```js
+indices: [
+  {
+    name: 'docs_en',
+    searchParameters: {
+      facetFilters: ['version:v5'],
+      attributesToRetrieve: [
+        'hierarchy.lvl0',
+        'hierarchy.lvl1',
+        'hierarchy.lvl2',
+        'hierarchy.lvl3',
+        'hierarchy.lvl4',
+        'hierarchy.lvl5',
+        'hierarchy.lvl6',
+        'content',
+        'type',
+        'url',
+        'version',
+      ],
+    },
+  },
+  'docs_fr',
+];
+```
+
+If you pass both `indexName` and `indices`, DocSearch queries `indexName` first, then each `indices` item. `indexName` and the root `searchParameters` remain available for v4 compatibility but are deprecated.
+
+### `facets`
+
+```ts
+interface DocSearchFacet {
+  key: string;
+  label?: string;
+}
+```
+
+DocSearch supports up to five facets. It compares trimmed, lowercase keys to ignore duplicates and empty keys, fetches values from all configured indices, and displays only facets that have values. Selecting a value adds a `facetFilters` entry to every index query while retaining that index's configured filters.
+
+```js
+facets: [
+  { key: 'language', label: 'Language' },
+  { key: 'version', label: 'Version' },
+];
+```
+
+Configure each attribute for faceting in the Algolia index before exposing it here.
+
+### `resultBadgeKey`
+
+The key supports property paths such as `version`, `hierarchy.lvl1`, `tags[2]`, and `tags.2`. Primitive values render as text. Arrays of primitive values render as a comma-separated list.
+
+Add custom badge data to `attributesToRetrieve`. Otherwise the property isn't present in the hit:
+
+```js
+indices: [
+  {
+    name: 'docs',
+    searchParameters: {
+      attributesToRetrieve: [
+        'hierarchy.lvl0',
+        'hierarchy.lvl1',
+        'hierarchy.lvl2',
+        'hierarchy.lvl3',
+        'hierarchy.lvl4',
+        'hierarchy.lvl5',
+        'hierarchy.lvl6',
+        'content',
+        'type',
+        'url',
+        'version',
+      ],
+    },
+  },
+],
+resultBadgeKey: 'version',
+```
+
+Set `translations.modal.resultsScreen.resultBadgeLabelText` to describe the badge to screen-reader users. Its default is `Category`.
+
+### Templates
+
+`hitComponent` receives `{ hit, children }`. `resultsFooterComponent` receives `{ state }`. JavaScript templates can return a Preact element, a string, or a component function. The optional second argument provides an `html` tagged-template helper.
+
+```js
+hitComponent({ hit, children }, { html }) {
+  return html`<a href=${hit.url} data-result-type=${hit.type}>${children}</a>`;
+}
+```
+
+String returns render as text, not HTML.
+
+## Ask AI options
+
+Ask AI is available from the default `@docsearch/js` entry. Its `askAi` option is required by that entry's `DocSearchProps` type.
+
+### `askAi`
+
+> `string | DocSearchAskAi` | required for the default entry
+
+Assistant ID or Agent Studio configuration.
+
+```js
+askAi: 'YOUR_ASSISTANT_ID';
+```
+
+Use an object for additional controls:
+
+| Property | Type and default | Description |
+| --- | --- | --- |
+| `assistantId` | `string`; required | Agent Studio assistant ID. |
+| `appId` | `string`; root `appId` | Application ID used by Ask AI. |
+| `apiKey` | `string`; root `apiKey` | API key used by Ask AI. |
+| `indexName` | `string`; first normalized keyword index | Index used by Ask AI. |
+| `suggestedQuestions` | `boolean`; `false` | Whether to show published assistant questions on the new-conversation screen. |
+| `searchParameters` | `AgentStudioSearchParameters`; none | Search parameters keyed by index name. |
+| `indices` | `AgentStudioIndices[]`; none | Dynamic indices available to the Agent Studio search tool. |
+| `tools` | `ToolCalls`; `{}` | Custom Agent Studio tool renderers and handlers. |
+| `memory` | `Memory`; disabled | Agent Studio memory display and user token. |
+| `promptSuggestions` | `PromptSuggestions`; none | Prompt suggestions displayed with keyword results. |
+
+Follow [Get started with Agent Studio](/docs/agent-studio/getting-started) to create the assistant and [hybrid mode](/docs/hybrid-mode) to route AI requests to a sidepanel.
+
+### `searchParameters`
+
+An object keyed by index name. Each value supports `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`. This Agent Studio shape doesn't accept `facetFilters`.
+
+```js
+askAi: {
+  assistantId: 'YOUR_ASSISTANT_ID',
+  searchParameters: {
+    docs: {
+      filters: 'language:en',
+      attributesToRetrieve: ['title', 'content', 'url'],
+      distinct: true,
+    },
+  },
+}
+```
+
+### Dynamic `indices`
+
+Each `AgentStudioIndices` item requires `index` and `description`. It can also define `enhancedDescription`, `searchParameters`, and `searchControls`.
+
+`searchControls` supports `query`, `hits_per_page`, `page`, `attributesToRetrieve`, `responseFields`, `facets`, and `custom`. The `exposed` flag controls whether the model can set a value. Constraints set allowed numeric ranges or string-array values.
+
+```js
+askAi: {
+  assistantId: 'YOUR_ASSISTANT_ID',
+  indices: [
+    {
+      index: 'api_reference',
+      description: 'API symbols and parameter reference',
+      enhancedDescription: 'Use for questions about methods and options.',
+      searchControls: {
+        hits_per_page: {
+          exposed: true,
+          default: 7,
+          constraint: { min: 1, max: 10 },
+        },
+        facets: {
+          exposed: false,
+          default: ['version'],
+        },
+      },
+    },
+  ],
+}
+```
+
+### `memory`
+
+```js
+memory: {
+  enabled: true,
+  userToken: 'SERVER_GENERATED_JWT_TOKEN',
+}
+```
+
+`enabled` controls whether memory tool calls appear. `userToken` is the JWT sent in the `x-algolia-secure-user-token` header.
+
+### `promptSuggestions`
+
+```js
+promptSuggestions: {
+  indexName: 'docsearch_prompt_suggestions',
+  hitsPerPage: 3,
+}
+```
+
+The index records must contain a `prompt` attribute. `hitsPerPage` defaults to `3`.
+
+### `tools`
+
+`ToolCalls` maps Agent Studio tool names to `ToolDefinition` objects. `render` converts the tool input and output to displayed text. `onToolCall` handles a client-side tool and must call `addToolOutput` when it produces a result. `translations.callingToolText` changes the pending label.
+
+## `DocSearchInstance`
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `isReady` | `readonly boolean` | Whether the instance is mounted. |
+| `isOpen` | `readonly boolean` | Whether the modal is open. |
+| `open()` | `() => void` | Opens keyword search. |
+| `close()` | `() => void` | Closes the modal. |
+| `openAskAi(initialMessage?)` | `(InitialAskAiMessage?) => void` | Opens Ask AI with an optional query. Use with the AI-capable entry. |
+| `destroy()` | `() => void` | Unmounts DocSearch and marks the instance not ready. |
+
+## Compatibility and deprecations
+
+- The bundles target ES2017 browsers.
+- `indexName` and root `searchParameters` remain supported but are deprecated. Move to `indices`.
+- The default entry uses Agent Studio. The v4 Ask AI transport and `askAi.agentStudio` switch aren't available.
+- The keyword-only `/docsearch` export is the smaller choice when you don't configure Ask AI.

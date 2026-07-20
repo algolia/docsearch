@@ -1,22 +1,27 @@
 ---
 title: Config Templates
+description: Start a DocSearch crawler configuration from a framework template.
 ---
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-To help you create the best search experience for your users, we provide out-of-the-box crawler config templates for multiple websites generators. If you'd like to add a new template to our list, or believe we should update an existing one, please [let us know on Discord][1] or [open a pull request][2].
+Use these crawler configuration templates as a starting point for supported website generators. To add or update a template, [contact us on Discord][1] or [open a pull request][2].
 
 > If you want to better understand the default parameters of the configs below, take a look at the [Crawler documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/).
 
-## Getting Started
+## Getting started
 
-Once approved for DocSearch, we will automatically create a Crawler on your behalf, include your URL, and the Algolia credentials for your appId, apiKey, and indexName. If we detect that you are using any of the predefined generators, we'll attempt to automatically assign the proper template that matches your generator. However, this is not guaranteed. If no specific generator is detected, we will apply the default template seen below.
+After approval, the onboarding flow creates a crawler with your URL and Algolia credentials. If it detects one of the listed generators, it can assign the matching template. Otherwise, it applies the default template.
 
-## Updating the Template
+These templates configure indexing, not the installed DocSearch frontend package. In a template, `recordVersion: 'v3'` means the crawler's v3 record schema; it doesn't mean DocSearch UI v3.
+
+For v5 facets, add each custom filter attribute to `attributesForFaceting` and expose no more than five keys in the frontend. For `resultBadgeKey`, add the selected property to `attributesToRetrieve`. Keep `hierarchy.lvl0` through `hierarchy.lvl6` populated and retrievable so v5 can render result breadcrumbs. See the [v5 JavaScript API reference](/docs/packages/js/api-reference#facets).
+
+## Update a template
 
 You can manually update the crawler template by going to dashboard.algolia.com, click "Data sources", select your crawler, and go to the editor page. From there you can edit the JavaScript directly. Note that you can make draft changes without saving, test the changes using the "URL Tester", and then "Save" once you're happy with your changes.
 
-## Default Template
+## Default template
 
 <details>
 <summary>default.js</summary>
@@ -117,7 +122,7 @@ new Crawler({
 </div>
 </details>
 
-## Docusaurus v1 Template
+## Docusaurus v1 template
 
 <details>
 <summary>docusaurus-v1.js</summary>
@@ -274,7 +279,7 @@ new Crawler({
 </div>
 </details>
 
-## Docusaurus v2 & v3 Template
+## Docusaurus v2 and later template
 
 <details>
 <summary>docusaurus-v2.js</summary>
@@ -297,13 +302,13 @@ new Crawler({
       recordExtractor: ({ $, helpers }) => {
         // priority order: deepest active sub list header -> navbar active item -> 'Documentation'
         // Extracting the breadcrumb titles for better accessibility.
-        const navbarTitle = $(".navbar__item.navbar__link--active").text();
-        const pageBreadcrumbTitles = $(".breadcrumbs__link")
+        const navbarTitle = $('.navbar__item.navbar__link--active').text();
+        const pageBreadcrumbTitles = $('.breadcrumbs__link')
           .toArray()
           .map((item) => $(item).text().trim())
           .filter(Boolean);
         const lvl0 =
-          [navbarTitle, ...pageBreadcrumbTitles].join(" / ") || "Documentation";
+          [navbarTitle, ...pageBreadcrumbTitles].join(' / ') || 'Documentation';
 
         return helpers.docsearch({
           recordProps: {
@@ -415,23 +420,23 @@ new Crawler({
         // Get the top level menu item
         const lvl0 =
           $('details:has(a[aria-current="page"])')
-            .find("summary")
-            .find("span")
-            .text() || "Documentation";
+            .find('summary')
+            .find('span')
+            .text() || 'Documentation';
 
         return helpers.docsearch({
           recordProps: {
             lvl0: {
-              selectors: "",
+              selectors: '',
               defaultValue: lvl0,
             },
-            lvl1: "main h1",
-            lvl2: "main h2",
-            lvl3: "main h3",
-            lvl4: "main h4",
-            lvl5: "main h5",
-            lvl6: "main h6",
-            content: "main p, main li",
+            lvl1: 'main h1',
+            lvl2: 'main h2',
+            lvl3: 'main h3',
+            lvl4: 'main h4',
+            lvl5: 'main h5',
+            lvl6: 'main h6',
+            content: 'main p, main li',
           },
           indexHeadings: true,
           aggregateContent: true,
@@ -441,16 +446,8 @@ new Crawler({
   ],
   initialIndexSettings: {
     YOUR_INDEX_NAME: {
-      attributesForFaceting: [
-        'type',
-        'lang',
-      ],
-      attributesToRetrieve: [
-        'hierarchy',
-        'content',
-        'anchor',
-        'url',
-      ],
+      attributesForFaceting: ['type', 'lang'],
+      attributesToRetrieve: ['hierarchy', 'content', 'anchor', 'url'],
       attributesToHighlight: ['hierarchy', 'content'],
       attributesToSnippet: ['content:10'],
       camelCaseAttributes: ['hierarchy', 'content'],
@@ -815,37 +812,34 @@ new Crawler({
       pathsToMatch: ['https://YOUR_WEBSITE_URL/**'],
       recordExtractor: ({ $, helpers }) => {
         const lvl0 =
-          $(".rspress-nav-menu-item.rspress-nav-menu-item-active")
+          $('.rspress-nav-menu-item.rspress-nav-menu-item-active')
             .first()
-            .text() || "Documentation";
+            .text() || 'Documentation';
 
         return helpers.docsearch({
           recordProps: {
             lvl0: {
-              selectors: "",
+              selectors: '',
               defaultValue: lvl0,
             },
-            lvl1: ".rspress-doc h1",
-            lvl2: ".rspress-doc h2",
-            lvl3: ".rspress-doc h3",
-            lvl4: ".rspress-doc h4",
-            lvl5: ".rspress-doc h5",
-            lvl6: ".rspress-doc pre > code", // if you want to search code blocks, add this line
-            content: ".rspress-doc p, .rspress-doc li",
+            lvl1: '.rspress-doc h1',
+            lvl2: '.rspress-doc h2',
+            lvl3: '.rspress-doc h3',
+            lvl4: '.rspress-doc h4',
+            lvl5: '.rspress-doc h5',
+            lvl6: '.rspress-doc pre > code', // if you want to search code blocks, add this line
+            content: '.rspress-doc p, .rspress-doc li',
           },
           indexHeadings: true,
           aggregateContent: true,
-          recordVersion: "v3",
+          recordVersion: 'v3',
         });
       },
     },
   ],
   initialIndexSettings: {
     YOUR_INDEX_NAME: {
-      attributesForFaceting: [
-        'type',
-        'lang',
-      ],
+      attributesForFaceting: ['type', 'lang'],
       attributesToRetrieve: [
         'hierarchy',
         'content',

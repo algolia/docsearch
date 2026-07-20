@@ -1,0 +1,182 @@
+---
+title: Core API reference
+description: API reference for @docsearch/core v5 beta.
+---
+
+## `DocSearch`
+
+`DocSearch` is a ref-forwarding React provider.
+
+### `children`
+
+> `React.ReactNode` | **required**
+
+Views and controls that consume DocSearch state.
+
+### `theme`
+
+> `'dark' | 'light'` | **optional**
+
+Sets `document.documentElement.dataset.theme` while mounted.
+
+### `initialQuery`
+
+> `string` | **optional**
+
+Initial modal query and reset value after close. Defaults to `''`.
+
+### `keyboardShortcuts`
+
+> `KeyboardShortcuts` | **optional**
+
+Overrides individual shortcut defaults. All shortcuts are enabled by default.
+
+### `onReady`
+
+> `() => void` | **optional**
+
+Runs after the provider mounts.
+
+### `onOpen`
+
+> `() => void` | **optional**
+
+Runs when a modal opens.
+
+### `onClose`
+
+> `() => void` | **optional**
+
+Runs when a modal closes to the ready state.
+
+### `onSidepanelOpen`
+
+> `() => void` | **optional**
+
+Runs when the sidepanel opens.
+
+### `onSidepanelClose`
+
+> `() => void` | **optional**
+
+Runs when the sidepanel closes.
+
+### `KeyboardShortcuts`
+
+```ts
+interface KeyboardShortcuts {
+  'Ctrl/Cmd+K'?: boolean;
+  '/'?: boolean;
+  'Ctrl/Cmd+I'?: boolean;
+}
+```
+
+`DEFAULT_KEYBOARD_SHORTCUTS` sets all three fields to `true`.
+
+## `DocSearchRef`
+
+Attach this ref to `DocSearch`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `open` | `() => void` | Opens the search modal. |
+| `close` | `() => void` | Returns to the ready state and focuses the registered search button. |
+| `openAskAi` | `(message?: InitialAskAiMessage) => void` | Opens Ask AI in a registered view. See [Hybrid Mode](/docs/hybrid-mode). |
+| `openSidepanel` | `(message?: InitialAskAiMessage) => void` | Opens the sidepanel; it does nothing until that view registers. |
+| `isReady` | `readonly boolean` | Whether the provider is mounted. |
+| `isOpen` | `readonly boolean` | Whether a modal is open. |
+| `isSidepanelOpen` | `readonly boolean` | Whether the sidepanel is open. |
+| `isSidepanelSupported` | `readonly boolean` | Whether sidepanel support is registered. See [Hybrid Mode](/docs/hybrid-mode). |
+
+```ts
+type InitialAskAiMessage = {
+  query: string;
+  messageId?: string;
+  suggestedQuestionId?: string;
+};
+```
+
+## `useDocSearch`
+
+```ts
+function useDocSearch(): DocSearchContext;
+```
+
+The hook returns the nearest provider value:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `docsearchState` | `DocSearchState` | Active state. |
+| `setDocsearchState` | `(state: DocSearchState) => void` | Sets active state directly. |
+| `searchButtonRef` | `React.RefObject<HTMLButtonElement \| null>` | Ref used to restore focus after close. |
+| `initialQuery` | `string` | Query for a modal opening. |
+| `keyboardShortcuts` | `Required<KeyboardShortcuts>` | User options merged with defaults. |
+| `openModal` | `() => void` | Opens keyword search. |
+| `closeModal` | `() => void` | Closes the modal and resets its query. |
+| `isAskAiActive` | `boolean` | Whether the modal is in Ask AI state. |
+| `isModalActive` | `boolean` | Whether either modal state is active. |
+| `onAskAiToggle` | `OnAskAiToggle` | Changes the active Ask AI state. See [Hybrid Mode](/docs/hybrid-mode). |
+| `initialAskAiMessage` | `InitialAskAiMessage \| undefined` | Initial sidepanel message. |
+| `registerView` | `(view: View) => void` | Registers an available view. |
+| `isHybridModeSupported` | `boolean` | Whether cross-view support is available. See [Hybrid Mode](/docs/hybrid-mode). |
+
+`DocSearchState` is `'modal-askai' | 'modal-search' | 'ready' | 'sidepanel'`.
+
+`View` is `'modal' | 'sidepanel' | (Record<string, unknown> & string)`, so integrations can register another string view.
+
+## `useKeyboardShortcuts`
+
+```ts
+function useKeyboardShortcuts(
+  userShortcuts?: KeyboardShortcuts
+): Required<KeyboardShortcuts>;
+```
+
+Returns the defaults merged with the supplied fields.
+
+## `useTheme`
+
+```ts
+function useTheme(props: { theme?: 'dark' | 'light' }): void;
+```
+
+When `theme` differs from the document's existing `data-theme`, the hook sets it and restores the previous value on cleanup. It makes no change when `theme` is omitted.
+
+## `useDocSearchKeyboardEvents`
+
+```ts
+interface UseDocSearchKeyboardEventsProps {
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+  isAskAiActive: boolean;
+  onAskAiToggle: (active: boolean) => void;
+  keyboardShortcuts?: KeyboardShortcuts;
+  onInput?: (event: KeyboardEvent) => void;
+  searchButtonRef?: React.RefObject<HTMLButtonElement | null>;
+}
+```
+
+The hook registers a window `keydown` listener. `Escape` leaves Ask AI first, then closes an open modal. `Control/Command+K` toggles the modal. `/` opens it when the user isn't editing content.
+
+`onInput` and `searchButtonRef` remain in the type for compatibility but are deprecated and aren't used by the hook.
+
+## Exports
+
+The root `@docsearch/core` entry exports:
+
+| Kind | Exports |
+| --- | --- |
+| Components and hooks | `DocSearch`, `useDocSearch`, `useDocSearchKeyboardEvents`, `useKeyboardShortcuts`, `useTheme` |
+| Constants | `DEFAULT_KEYBOARD_SHORTCUTS` |
+| Types | `DocSearchState`, `View`, `InitialAskAiMessage`, `OnAskAiToggle`, `DocSearchRef`, `DocSearchContext`, `DocSearchCallbacks`, `DocSearchProps`, `DocSearchTheme`, `UseThemeProps`, `UseDocSearchKeyboardEventsProps`, `DocSearchModalShortcuts`, `SidepanelShortcuts`, `KeyboardShortcuts` |
+
+The package also exposes these subpaths:
+
+| Import path | Exports |
+| --- | --- |
+| `@docsearch/core/useDocSearchKeyboardEvents` | `useDocSearchKeyboardEvents`, `UseDocSearchKeyboardEventsProps` |
+| `@docsearch/core/useKeyboardShortcuts` | `useKeyboardShortcuts`, `DEFAULT_KEYBOARD_SHORTCUTS`, shortcut types |
+| `@docsearch/core/useTheme` | `useTheme`, `DocSearchTheme`, `UseThemeProps` |
+
+`useIsMobile` is internal and isn't a package export.

@@ -1,10 +1,11 @@
 ---
 title: How does it work?
+description: Learn how DocSearch crawls, indexes, and serves documentation content.
 ---
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-Getting up and ready with DocSearch is a straightforward process that requires three steps: you apply, we configure the crawler and the Algolia app for you, and you integrate our UI in your frontend. You only need to copy and paste a JavaScript snippet.
+DocSearch setup has three parts: join the DocSearch program, index your content, and add a frontend package or framework integration.
 
 <img
   src={useBaseUrl('img/assets/docsearch-how-it-works.png')}
@@ -13,39 +14,40 @@ Getting up and ready with DocSearch is a straightforward process that requires t
 
 ## You apply
 
-The first thing you'll need to do is to apply for DocSearch by [filling out the form on this page][1] (double check first that [you qualify][2]). We are receiving a lot of requests, so this form makes sure we won't be forgetting anyone.
+First, confirm that [your website qualifies][2], then [apply for DocSearch][1]. The onboarding flow validates your domain against the program requirements.
 
-We guarantee that we will answer every request, but as we receive a lot of applications, please give us a couple of days to get back to you :)
+If automated validation can't determine eligibility, the application might require a manual review.
 
-## We create your Algolia application and a dedicated crawler
+## Index your content
 
-Once we receive [your application][1], we'll have a look at your website, create an Algolia application and a dedicated [crawler][5] for it. Your crawler comes with [a configuration file][6] which defines which URLs we should crawl or ignore, as well as the specific CSS selectors to use for selecting headers, subheaders, etc.
+After approval, create a dedicated [crawler][5] in your Algolia application. Its [configuration file][6] defines which URLs to crawl, which URLs to ignore, and which selectors extract your content hierarchy.
 
-This step still requires some manual work and human brain, but thanks to the +4,000 configs we already created, we're able to automate most of it. Once this creation finishes, we'll run a first indexing of your website and have it run automatically at a random time of the week.
+Run a test crawl, review the extracted records, and configure recurring crawls. Use the Crawler interface to adjust the configuration as your website changes.
 
 **With the Crawler, comes [a dedicated interface][8] for you to:**
 
 - Start, schedule and monitor your crawls
-- Edit and test your config file directly with [DocSearch v3][7]
+- Edit and test your crawler configuration
 
 **With the Algolia application comes access to the dashboard for you to:**
 
 - Browse your index and see how your content is indexed
-- Various analytics to understand how your search performs and ensure that your users are able to find what they’re searching for
+- Review analytics to understand how search performs
 - Trials for other Algolia features
 - Team management
 
-## You update your website
+## Add DocSearch to your website
 
-We'll then get back to you with the JavaScript snippet you'll need to add to your website. This will bind your [DocSearch component][7] to display results from your Algolia index on each keystroke in a pop-up modal.
+Choose a [DocSearch v5 package][7] or [supported framework integration][9]. Configure it with your application ID, Search API key, and index name. The frontend queries the Algolia index and displays the results.
 
-Now that DocSearch is set, you don't have anything else to do. We'll keep crawling your website and update your search results automatically. All we ask is that you keep the "Search by Algolia" logo next to your search results.
+Crawler versions, record schema versions, and frontend package versions are separate. In particular, crawler `recordVersion: 'v3'` describes the indexed record schema, not the DocSearch UI version. You can upgrade the v5 frontend packages without recreating the crawler. Keep the "Search by Algolia" logo next to your search results.
 
 [1]: https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch&utm_content=apply
 [2]: /docs/who-can-apply
 [3]: https://github.com/algolia/docsearch-configs/tree/master/configs
-[4]: /docs/styling
+[4]: /docs/packages/css/styling
 [5]: https://www.algolia.com/products/search-and-discovery/crawler/
 [6]: https://www.algolia.com/doc/tools/crawler/apis/configuration/
-[7]: /docs/v3/docsearch
-[8]: https://crawler.algolia.com/
+[7]: /docs/packages/overview
+[8]: https://dashboard.algolia.com/crawler
+[9]: /docs/integrations

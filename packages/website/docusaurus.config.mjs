@@ -45,6 +45,9 @@ export default {
           editUrl: 'https://github.com/algolia/docsearch/edit/main/packages/website/',
           versions: {
             current: {
+              label: 'Beta (v5.0.0-beta)',
+            },
+            v4: {
               label: 'Stable (v4.x)',
             },
             v3: {
@@ -74,13 +77,11 @@ export default {
         apiKey: '24b09689d5b4223813d9b8e48563c8f6',
         indexName: 'docsearch',
         askAi: {
-          indexName: 'docsearch-markdown',
-          assistantId: 'askAIDemo',
-          apiKey: '24b09689d5b4223813d9b8e48563c8f6',
-          appId: 'PMZUYBQDAK',
-          sidePanel: true,
+          assistantId: 'ccdec697-e3fe-465b-a1c3-657e7bf18aef',
         },
+        sidePanel: true,
         contextualSearch: true,
+        searchPage: { path: 'search' },
         translations: {
           button: {
             buttonText: 'Go on, give it a search...',
@@ -136,9 +137,9 @@ export default {
         ],
       },
       announcementBar: {
-        id: 'announcement-bar',
+        id: 'docsearch-v5-beta',
         content:
-          'Ask AI is now part of <strong>Agent Studio</strong> - We\'re integrating Ask AI into Agent Studio, our centralized space to build and manage AI agents.<a target="_blank" rel="noopener noreferrer" href="https://www.algolia.com/doc/guides/algolia-ai/agent-studio">Explore Agent Studio</a>',
+          'DocSearch 5.0.0-beta is available. <a href="/docs/migrating-from-v4">Migrate from v4</a> or <a href="/docs/packages/overview">choose a package</a>.',
       },
       colorMode: {
         defaultMode: 'light',
@@ -163,8 +164,12 @@ export default {
                 to: 'docs/v3/docsearch',
               },
               {
-                label: 'DocSearch v4 - Beta',
-                to: 'docs/docsearch',
+                label: 'DocSearch v4',
+                to: 'docs/v4/docsearch',
+              },
+              {
+                label: 'DocSearch v5 beta',
+                to: 'docs/packages/overview',
               },
             ],
           },

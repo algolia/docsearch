@@ -1,0 +1,108 @@
+---
+title: Configure dynamic indices
+description: Select Agent Studio search indices dynamically at runtime.
+---
+
+Pass `askAi.indices` when the Agent Studio search tool needs index definitions at request time. This lets your application choose indices, descriptions, fixed search parameters, and model-controlled parameters for each DocSearch instance.
+
+This property isn't the same as the top-level `indices` property:
+
+- Top-level `indices` configures DocSearch keyword search. Entries are index names or objects with a `name` property.
+- `askAi.indices` configures Agent Studio search. Entries use an `index` property and require a `description`.
+
+## Define an index
+
+```tsx
+<DocSearchAI
+  appId="YOUR_APPLICATION_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  indices={['docs']}
+  askAi={{
+    assistantId: 'YOUR_AGENT_ID',
+    indices: [
+      {
+        index: 'docs_markdown',
+        description: 'Published product documentation.',
+        enhancedDescription:
+          'Use this index for installation, configuration, and API questions.',
+        searchParameters: {
+          filters: 'visibility:public',
+          attributesToRetrieve: ['title', 'content', 'url'],
+        },
+        searchControls: {
+          query: { exposed: true },
+          hits_per_page: {
+            exposed: false,
+            default: 7,
+            constraint: { min: 1, max: 10 },
+          },
+          attributesToRetrieve: {
+            exposed: false,
+            default: ['title', 'content', 'url'],
+            constraint: {
+              values: ['title', 'content', 'url'],
+            },
+          },
+          facets: {
+            exposed: false,
+            default: ['language', 'version'],
+          },
+        },
+      },
+    ],
+  }}
+/>
+```
+
+Each index accepts these properties:
+
+| Property | Required | Purpose |
+| --- | --- | --- |
+| `index` | Yes | Names the Algolia index. |
+| `description` | Yes | Tells the agent what the index contains. |
+| `enhancedDescription` | No | Gives the agent more guidance about when and how to use the index. |
+| `searchParameters` | No | Sets defaults for the internal, non-MCP search path. It accepts Algolia search parameters. |
+| `searchControls` | No | Configures parameters for the MCP-based search path. |
+
+Write specific descriptions. Agent Studio uses them to select an index and plan a search. See [Algolia Search tool configuration](https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/tools/algolia-search) for guidance.
+
+## Configure search controls
+
+A search control describes whether the model can provide a value and which default or constraints apply.
+
+| Control | Shape | Default when omitted |
+| --- | --- | --- |
+| `query` | `{ exposed, default? }` | No DocSearch default |
+| `hits_per_page` | `{ exposed, default?, constraint?: { min?, max? } }` | `{ exposed: false, default: 7 }` |
+| `page` | `{ exposed, default?, constraint?: { min?, max? } }` | `{ exposed: false, default: 0 }` |
+| `attributesToRetrieve` | `{ exposed, default?, constraint?: { values? }, merge? }` | `{ exposed: false, default: ['*'] }` |
+| `responseFields` | `{ exposed, default?, constraint?: { values? }, merge? }` | `{ exposed: false, default: ['hits', 'nbHits', 'page', 'nbPages', 'hitsPerPage', 'facets'] }` |
+| `facets` | `{ exposed: false, default? }` | No DocSearch default |
+| `custom` | `Record<string, unknown>` | No DocSearch default |
+
+Use `exposed: true` only for values the model should choose from conversation context. Use fixed defaults for business rules and response limits. For the distinction between runtime and predefined parameters, see [Agent Studio tools](https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/tools/overview#configure-runtime-parameters-for-dynamic-tool-execution).
+
+## Set request-wide search parameters
+
+`askAi.searchParameters` is keyed by index name:
+
+```js
+askAi: {
+  assistantId: 'YOUR_AGENT_ID',
+  searchParameters: {
+    docs_markdown: {
+      filters: 'visibility:public',
+      attributesToRetrieve: ['title', 'content', 'url'],
+      distinct: false,
+    },
+  },
+}
+```
+
+Don't use the flat search-parameter shape from earlier DocSearch AI integrations.
+
+## Docusaurus validation
+
+The v5 Docusaurus adapter requires at least one entry when you set `askAi.indices`. Every entry must include `index` and `description`. It rejects unknown `searchControls` properties, except values nested under `custom`.
+
+See the [React package reference](/docs/packages/react/api-reference) and [Docusaurus adapter guide](/docs/packages/docusaurus-adapter/getting-started) for the complete types.

@@ -1,0 +1,271 @@
+---
+title: React examples
+description: Configure DocSearch v5 indices, facets, result badges, templates, Agent Studio, and refs.
+---
+
+These examples build on the [React getting started guide](./getting-started). Replace all placeholder credentials before using them.
+
+## Search multiple indices
+
+Pass strings or per-index objects. Results follow the array order.
+
+```jsx
+<DocSearch
+  appId="YOUR_APP_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  indices={[
+    {
+      name: 'product_docs',
+      searchParameters: {
+        facetFilters: ['language:en'],
+      },
+    },
+    'api_reference',
+  ]}
+/>
+```
+
+## Add facet filters
+
+Configure the attributes for faceting in Algolia, then expose up to five controls:
+
+```jsx
+<DocSearch
+  appId="YOUR_APP_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  indices={['product_docs']}
+  facets={[
+    { key: 'language', label: 'Language' },
+    { key: 'version', label: 'Version' },
+  ]}
+/>
+```
+
+DocSearch loads available values from all configured indices and appends selected values to each index's `facetFilters`.
+
+## Show a result badge
+
+Retrieve the property and pass its path to `resultBadgeKey`:
+
+```jsx
+<DocSearch
+  appId="YOUR_APP_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  indices={[
+    {
+      name: 'product_docs',
+      searchParameters: {
+        attributesToRetrieve: [
+          'hierarchy.lvl0',
+          'hierarchy.lvl1',
+          'hierarchy.lvl2',
+          'hierarchy.lvl3',
+          'hierarchy.lvl4',
+          'hierarchy.lvl5',
+          'hierarchy.lvl6',
+          'content',
+          'type',
+          'url',
+          'version',
+        ],
+      },
+    },
+  ]}
+  resultBadgeKey="version"
+  translations={{
+    modal: {
+      resultsScreen: {
+        resultBadgeLabelText: 'Version',
+      },
+    },
+  }}
+/>
+```
+
+Nested paths such as `hierarchy.lvl1` and `tags[2]` also work.
+
+## Customize result links
+
+Use `hitComponent` to change the link while preserving DocSearch's result content:
+
+```jsx
+function SearchHit({ hit, children }) {
+  return (
+    <a
+      href={hit.url}
+      data-index={hit.__autocomplete_indexName}
+      onClick={() => console.info('Opened result', hit.objectID)}
+    >
+      {children}
+    </a>
+  );
+}
+
+<DocSearch
+  appId="YOUR_APP_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  indices={['product_docs']}
+  hitComponent={SearchHit}
+/>;
+```
+
+## Add a results footer
+
+Use the Autocomplete state to show query-level information:
+
+```jsx
+function ResultsFooter({ state }) {
+  const count = state.context.nbHits ?? 0;
+
+  return <p>{count} matching records</p>;
+}
+
+<DocSearch
+  appId="YOUR_APP_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  indices={['product_docs']}
+  resultsFooterComponent={ResultsFooter}
+/>;
+```
+
+## Transform results
+
+Return the hits in the order you want DocSearch to group and render them:
+
+```jsx
+<DocSearch
+  appId="YOUR_APP_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  indices={['product_docs']}
+  transformItems={(items) =>
+    items.filter((item) => item.hierarchy.lvl0 !== 'Archived')
+  }
+/>
+```
+
+## Open search from another control
+
+```tsx
+import { useRef } from 'react';
+import { DocSearch, type DocSearchRef } from '@docsearch/react';
+
+function Search() {
+  const searchRef = useRef<DocSearchRef>(null);
+
+  return (
+    <>
+      <button type="button" onClick={() => searchRef.current?.open()}>
+        Search documentation
+      </button>
+      <DocSearch
+        ref={searchRef}
+        appId="YOUR_APP_ID"
+        apiKey="YOUR_SEARCH_API_KEY"
+        indices={['product_docs']}
+      />
+    </>
+  );
+}
+```
+
+## Add Agent Studio search parameters
+
+Use `DocSearchAI`. Key Ask AI search parameters by index name:
+
+```jsx
+<DocSearchAI
+  appId="YOUR_APP_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  indices={['product_docs']}
+  askAi={{
+    assistantId: 'YOUR_ASSISTANT_ID',
+    searchParameters: {
+      product_docs: {
+        filters: 'language:en AND version:v5',
+        attributesToRetrieve: ['title', 'content', 'url'],
+        restrictSearchableAttributes: ['title', 'content'],
+        distinct: true,
+      },
+    },
+  }}
+/>
+```
+
+See [Get started with Agent Studio](/docs/agent-studio/getting-started) before configuring the component.
+
+## Add dynamic Agent Studio indices
+
+Describe each index so the agent can select the right source:
+
+```jsx
+const askAi = {
+  assistantId: 'YOUR_ASSISTANT_ID',
+  indices: [
+    {
+      index: 'product_docs',
+      description: 'Product guides and conceptual documentation',
+      searchControls: {
+        hits_per_page: {
+          exposed: true,
+          default: 7,
+          constraint: { min: 1, max: 10 },
+        },
+      },
+    },
+    {
+      index: 'api_reference',
+      description: 'API symbols, options, and return values',
+    },
+  ],
+};
+
+<DocSearchAI
+  appId="YOUR_APP_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  indices={['product_docs', 'api_reference']}
+  askAi={askAi}
+/>;
+```
+
+Define stable objects outside the component, or memoize them, when they contain `tools`.
+
+## Add prompt suggestions
+
+Show matching prompts next to keyword results:
+
+```jsx
+<DocSearchAI
+  appId="YOUR_APP_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  indices={['product_docs']}
+  askAi={{
+    assistantId: 'YOUR_ASSISTANT_ID',
+    suggestedQuestions: true,
+    promptSuggestions: {
+      indexName: 'docsearch_prompt_suggestions',
+      hitsPerPage: 3,
+    },
+  }}
+/>
+```
+
+`suggestedQuestions` shows published assistant questions on a new conversation. `promptSuggestions` searches your prompt index while the user types a keyword query.
+
+## Route Ask AI to another view
+
+Return `true` from `interceptAskAiEvent` after handling the message:
+
+```jsx
+<DocSearchAI
+  appId="YOUR_APP_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  indices={['product_docs']}
+  askAi="YOUR_ASSISTANT_ID"
+  interceptAskAiEvent={(initialMessage) => {
+    openCustomAssistant(initialMessage);
+    return true;
+  }}
+/>
+```
+
+For the supported modal and sidepanel integration, use [hybrid mode](/docs/hybrid-mode).

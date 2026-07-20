@@ -1,0 +1,163 @@
+---
+title: Use DocSearch MCP
+description: Query documentation with the DocSearch MCP server.
+sidebar_label: Usage
+---
+
+Ask focused questions about public documentation. Include the official product name, topic, and version when the version affects the answer.
+
+```text
+How do I configure middleware matchers in Next.js?
+```
+
+```text
+Show me the Stripe webhook signature verification documentation.
+```
+
+```text
+What is the setup for Algolia InstantSearch React?
+```
+
+If your client doesn't select MCP tools on its own, name the server in your request:
+
+```text
+Use DocSearch MCP to look up React Server Components data fetching.
+```
+
+Ask the client to include source URLs when you need to inspect the supporting documentation.
+
+## Use the Claude Code command
+
+The Claude Code plugin provides this command:
+
+```text
+/algolia-docsearch:docs <library-or-product> [topic]
+```
+
+For example:
+
+```text
+/algolia-docsearch:docs Next.js middleware matcher
+/algolia-docsearch:docs Stripe webhook signature verification
+/algolia-docsearch:docs Algolia InstantSearch React configure search client
+```
+
+## Search from the terminal
+
+`@docsearch/cli` can call the hosted MCP tools without a separate MCP client. Use `docs` for most questions:
+
+```sh
+docsearch docs Next.js "how do middleware matchers work"
+```
+
+Limit the number of results or documentation sets when needed:
+
+```sh
+docsearch docs Next.js "cache revalidation" --max-results 3 --max-docsets 2
+```
+
+For explicit documentation-set selection, resolve a product and then query its returned ID:
+
+```sh
+docsearch resolve "Algolia InstantSearch React"
+docsearch query repo/algolia/instantsearch "configure the React search client"
+```
+
+Limit resolver candidates with `--top-n`:
+
+```sh
+docsearch resolve Next.js --top-n 3
+```
+
+Add `--json` to print the raw MCP result as JSON:
+
+```sh
+docsearch docs Next.js "cache revalidation" --json
+```
+
+Machine-readable results go to standard output. Progress and errors go to standard error.
+
+## Choose a tool workflow
+
+DocSearch MCP provides a one-shot search and a two-step search. Use natural-language questions rather than lists of keywords.
+
+### Search in one call
+
+Use `algolia_docsearch_search_docs` for most questions. Keep the product name in `library` and the question in `query`:
+
+```json
+{
+  "library": "Next.js",
+  "query": "how do middleware matchers work"
+}
+```
+
+The tool resolves the best documentation set and returns ranked content. If `library` doesn't identify a clear match, it returns candidate sets instead of searching the wrong one.
+
+### Resolve and query documentation sets
+
+Use the two-step workflow when the product is ambiguous, you want to inspect the candidates, or the question covers multiple products.
+
+1. Call `algolia_docsearch_resolve_docset` with the product or platform name:
+
+```json
+{
+  "query": "Next.js app router"
+}
+```
+
+2. Select the best `docset_id` from the response.
+
+3. Call `algolia_docsearch_query_docs` with the selected ID and a focused question:
+
+```json
+{
+  "query": "middleware matcher configuration",
+  "docsetIds": ["nextjs"]
+}
+```
+
+Pass more than one `docsetIds` value when the question covers multiple products. Don't guess IDs. Use only IDs returned by `algolia_docsearch_resolve_docset` or `algolia_docsearch_search_docs`.
+
+## Troubleshooting
+
+### The client doesn't call DocSearch MCP
+
+Confirm that the server is enabled and named `algolia-docsearch`. If you installed a plugin, confirm that the plugin is enabled. Then ask the client to use DocSearch MCP explicitly.
+
+### The client can't connect
+
+Confirm that the client supports remote HTTP MCP servers and uses this exact HTTPS URL:
+
+```text
+https://mcp.algolia.com/1/docsearch/mcp
+```
+
+The public endpoint doesn't require authentication. Remove application IDs, API keys, headers, or authentication settings that the client doesn't require.
+
+### CLI setup doesn't detect an agent
+
+Pass the agent flag directly, or use `--all` with the setup command from the [installation guide](/docs/mcp/installation).
+
+```sh
+docsearch setup --project --cursor --yes
+docsearch setup --global --all --yes
+```
+
+Supported flags are `--cursor`, `--claude`, `--codex`, `--opencode`, and `--gemini`.
+
+### CLI setup reports an invalid configuration
+
+Fix the reported JSON, JSONC, or TOML error before running setup again. The CLI stops instead of replacing an invalid configuration. It also rejects duplicate `[mcp_servers.algolia-docsearch]` sections in Codex configuration.
+
+### The result covers the wrong product
+
+Use the official product or vendor name. For example, use `Algolia InstantSearch` instead of `search`. If the name remains ambiguous, resolve the documentation set first and query the selected ID.
+
+### The result is too broad or empty
+
+Add the product version and narrow the question to one task. Run separate searches for unrelated topics. If a narrower search still returns no useful content, the requested documentation might not be in the public DocSearch corpus.
+
+### Private documentation isn't returned
+
+DocSearch MCP searches public developer documentation only. It doesn't search private company docs, internal repositories, or unpublished APIs.

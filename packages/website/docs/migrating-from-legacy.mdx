@@ -1,5 +1,6 @@
 ---
 title: Migrating from the legacy scraper
+description: Move a legacy DocSearch scraper configuration to the Algolia Crawler.
 ---
 
 import Tabs from '@theme/Tabs';
@@ -7,21 +8,23 @@ import TabItem from '@theme/TabItem';
 
 ## Introduction
 
-With the new version of the [DocSearch UI][1], we wanted to go further and provide better tooling for you to create and maintain your config file, and some extra Algolia features that you all have been requesting for a long time!
+This guide covers the historical migration from the self-hosted DocSearch scraper to the Algolia Crawler. It is separate from upgrading the frontend UI. For the current frontend, choose a [DocSearch v5 package][33].
 
 ## What's new?
 
-### Scraper
+### Indexing infrastructure
 
-The DocSearch infrastructure now leverages the [Algolia Crawler][2]. We've teamed up with our friends and created a new [DocSearch helper][4], that extracts records as we were previously doing with our beloved [DocSearch scraper][3]!
+DocSearch indexing now uses the [Algolia Crawler][2]. The [DocSearch helper][4] extracts records in place of the legacy [DocSearch scraper][3].
 
-The best part is that you no longer need to install any tooling on your side if you want to maintain or update your index!
+You don't need to install local scraper tooling to maintain or update your index.
 
-We now provide a web interface **[legacy][7]** or **[new](https://dashboard.algolia.com/crawler)** that will allow you to:
+Use the **[legacy interface][7]** or the **[current Crawler interface](https://dashboard.algolia.com/crawler)** to:
 
 - Start, schedule and monitor your crawls
 - Edit your config file from our live editor
-- Test your results directly with [DocSearch v3][1] or [DocSearch v4][32]
+- Test results with the historical [DocSearch v3][1] or [DocSearch v4][32] previews
+
+These preview versions don't set the crawler record schema or the frontend package installed on your website. Likewise, crawler `recordVersion: 'v3'` names a record schema, not DocSearch UI v3.
 
 ### Algolia application and credentials
 
@@ -31,7 +34,7 @@ We've received a lot of requests asking for:
 - Browse and see how Algolia records are indexed
 - See and subscribe to other Algolia features
 
-They are now all available, in **your own Algolia application**, for free :D
+These features are available in your Algolia application.
 
 ## FAQ
 
@@ -84,4 +87,5 @@ Below are the keys that can be found in the [`legacy` DocSearch configs][14] and
 [29]: /docs/record-extractor
 [30]: /docs/record-extractor#introduction
 [31]: /docs/record-extractor#pagerank
-[32]: /docs/docsearch
+[32]: /docs/v4/docsearch
+[33]: /docs/packages/overview

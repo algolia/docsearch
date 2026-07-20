@@ -1,0 +1,142 @@
+---
+title: JavaScript sidepanel API reference
+description: API reference for @docsearch/sidepanel-js v5 beta.
+---
+
+## Exports
+
+`@docsearch/sidepanel-js` has one value export: the default `sidepanel` function.
+
+It also exports the `SidepanelProps`, `SidepanelInstance`, and `SidepanelCallbacks` TypeScript types. It doesn't provide a named `sidepanel` export or package subpaths.
+
+```ts
+import sidepanel, {
+  type SidepanelCallbacks,
+  type SidepanelInstance,
+  type SidepanelProps,
+} from '@docsearch/sidepanel-js';
+```
+
+## `sidepanel`
+
+```ts
+function sidepanel(props: SidepanelProps): SidepanelInstance;
+```
+
+The function resolves `container`, mounts the component, and returns immediately. Use `onReady` or `instance.isReady` to detect the mounted state.
+
+### Mounting props
+
+| Prop | Type and default | Description |
+| --- | --- | --- |
+| `container` | `HTMLElement \| string`; Required | Element or CSS selector that receives the sidepanel application. |
+| `environment` | `typeof window`; Browser `window` | Environment used to resolve a selector. A selector without a browser environment throws. |
+
+The function throws if a selector doesn't match an element.
+
+### Connection props
+
+| Prop | Type and default | Description |
+| --- | --- | --- |
+| `appId` | `string`; Required | Algolia application ID. |
+| `apiKey` | `string`; Required | Public API key with search permission. |
+| `assistantId` | `string`; Required | Agent Studio agent ID. |
+| `indexName` | `string`; Required | Primary index for Agent Studio and conversation storage. |
+
+The public `SidepanelProps` type in `5.0.0-beta.0` doesn't include the React sidepanel's top-level `searchParameters` field.
+
+### UI props
+
+| Prop | Type and default | Description |
+| --- | --- | --- |
+| `theme` | `'light' \| 'dark'`; - | Sets `data-theme` on the document root while mounted. |
+| `keyboardShortcuts` | `{ 'Ctrl/Cmd+I'?: boolean }`; Enabled | Enables or disables the sidepanel shortcut. |
+| `button` | `SidepanelButtonProps`; `{}` | Configures the built-in button. |
+| `panel` | `SidepanelPanelProps`; `{}` | Configures layout, suggested questions, and translations. |
+
+`button` accepts `variant: 'floating' | 'inline'` and `translations.buttonText` or `translations.buttonAriaLabel`.
+
+`panel` accepts `variant`, `side`, `pushSelector`, `width`, `expandedWidth`, `portalContainer`, `suggestedQuestions`, `translations`, `tools`, `memory`, and `indices`. Panel-level `tools`, `memory`, and `indices` override their root values. Don't set `panel.keyboardShortcuts`; configure shortcuts at the root.
+
+### Callbacks
+
+| Prop      | Type         | Description                           |
+| --------- | ------------ | ------------------------------------- |
+| `onReady` | `() => void` | Runs once after the component mounts. |
+| `onOpen`  | `() => void` | Runs when the sidepanel opens.        |
+| `onClose` | `() => void` | Runs when the sidepanel closes.       |
+
+Use these sidepanel-specific callbacks rather than the inherited React provider callback names.
+
+## Agent Studio options
+
+| Prop | Type and default | Description |
+| --- | --- | --- |
+| `tools` | `Record<string, ToolDefinition>`; `{}` | Handles and renders custom Agent Studio tools. |
+| `memory` | `{ enabled?: boolean; userToken?: string }`; - | Configures memory-tool rendering and authentication. |
+| `indices` | `AgentStudioIndices[]`; - | Defines dynamic indices available to Agent Studio. |
+
+These fields are root props:
+
+```js
+const assistant = sidepanel({
+  container: '#docsearch-sidepanel',
+  appId: 'YOUR_APPLICATION_ID',
+  apiKey: 'YOUR_SEARCH_API_KEY',
+  assistantId: 'YOUR_AGENT_ID',
+  indexName: 'docs',
+  memory: {
+    enabled: true,
+    userToken: userMemoryToken,
+  },
+  indices: [
+    {
+      index: 'docs',
+      description: 'Product documentation and API references.',
+    },
+    {
+      index: 'support_articles',
+      description: 'Troubleshooting and support articles.',
+    },
+  ],
+  tools: {
+    getReleaseChannel: {
+      async onToolCall({ input, addToolOutput }) {
+        const channel = await readReleaseChannel(input);
+        await addToolOutput({ output: { channel } });
+      },
+      render({ message }) {
+        return `Release channel: ${message.output.channel}`;
+      },
+    },
+  },
+});
+```
+
+`AgentStudioIndices` requires `index` and `description`. It also accepts `enhancedDescription`, `searchParameters`, and `searchControls`.
+
+`ToolDefinition` requires `render({ message: { input, output } })`, which returns a string. It can also define `onToolCall` and `translations.callingToolText`. If you handle a client-side tool, call `addToolOutput`.
+
+Generate `memory.userToken` on your server. The package sends it as `x-algolia-secure-user-token`.
+
+## `SidepanelInstance`
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `isReady` | `readonly boolean` | Whether the component is mounted. |
+| `isOpen` | `readonly boolean` | Whether the panel is open. |
+| `open` | `(initialMessage?: InitialAskAiMessage) => void` | Opens the panel, optionally with a question or stored-message IDs. |
+| `close` | `() => void` | Closes the panel. |
+| `destroy` | `() => void` | Unmounts the component and marks the instance not ready. |
+
+`InitialAskAiMessage` is:
+
+```ts
+type InitialAskAiMessage = {
+  query: string;
+  messageId?: string;
+  suggestedQuestionId?: string;
+};
+```
+
+Calls to `open` and `close` before the internal ref is ready are no-ops.

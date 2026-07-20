@@ -1,0 +1,266 @@
+---
+title: Install DocSearch MCP
+description: Install and configure the DocSearch MCP server.
+sidebar_label: Installation
+---
+
+import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs';
+
+DocSearch MCP is a hosted remote MCP server. It doesn't require authentication:
+
+```text
+https://mcp.algolia.com/1/docsearch/mcp
+```
+
+Use `@docsearch/cli` to configure a supported coding agent, or add the endpoint to another MCP client manually.
+
+## Install with `@docsearch/cli`
+
+The DocSearch CLI requires Node.js 20 or later. Run the interactive installer without installing the package globally:
+
+<Tabs groupId="package-manager" aria-label="Package manager">
+  <TabItem value="npm" label="npm">
+
+```sh
+npx @docsearch/cli@^0.0.2 setup
+```
+
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+
+```sh
+yarn dlx @docsearch/cli@^0.0.2 setup
+```
+
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+
+```sh
+pnpm dlx @docsearch/cli@^0.0.2 setup
+```
+
+  </TabItem>
+  <TabItem value="bun" label="Bun">
+
+```sh
+bunx @docsearch/cli@^0.0.2 setup
+```
+
+  </TabItem>
+</Tabs>
+
+The installer asks whether to update the current project or your user-level settings. It detects and configures these clients:
+
+- Cursor
+- Claude Code
+- Codex
+- OpenCode
+- Gemini CLI
+
+For each selected client, the installer adds the `algolia-docsearch` server, a rule that describes when to search documentation, and a skill that describes the tool workflow. Project setup finds the repository root before writing files. You can run setup again without removing unrelated configuration.
+
+Pass a scope and client flags to skip the prompts:
+
+<Tabs groupId="package-manager" aria-label="Package manager">
+  <TabItem value="npm" label="npm">
+
+```sh
+npx @docsearch/cli@^0.0.2 setup --project --cursor --claude --yes
+npx @docsearch/cli@^0.0.2 setup --global --all --yes
+```
+
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+
+```sh
+yarn dlx @docsearch/cli@^0.0.2 setup --project --cursor --claude --yes
+yarn dlx @docsearch/cli@^0.0.2 setup --global --all --yes
+```
+
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+
+```sh
+pnpm dlx @docsearch/cli@^0.0.2 setup --project --cursor --claude --yes
+pnpm dlx @docsearch/cli@^0.0.2 setup --global --all --yes
+```
+
+  </TabItem>
+  <TabItem value="bun" label="Bun">
+
+```sh
+bunx @docsearch/cli@^0.0.2 setup --project --cursor --claude --yes
+bunx @docsearch/cli@^0.0.2 setup --global --all --yes
+```
+
+  </TabItem>
+</Tabs>
+
+Use `--cursor`, `--claude`, `--codex`, `--opencode`, or `--gemini` to select clients. Use either `--project` or `--global`, not both.
+
+To install the `docsearch` command globally, run:
+
+<Tabs groupId="package-manager" aria-label="Package manager">
+  <TabItem value="npm" label="npm">
+
+```sh
+npm install --global @docsearch/cli@^0.0.2
+docsearch setup
+```
+
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+
+```sh
+yarn global add @docsearch/cli@^0.0.2
+docsearch setup
+```
+
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+
+```sh
+pnpm add --global @docsearch/cli@^0.0.2
+docsearch setup
+```
+
+  </TabItem>
+  <TabItem value="bun" label="Bun">
+
+```sh
+bun add --global @docsearch/cli@^0.0.2
+docsearch setup
+```
+
+  </TabItem>
+</Tabs>
+
+## Install a client plugin
+
+Plugins include the MCP connection and instructions that teach the client when and how to use DocSearch.
+
+### Claude Code
+
+Run these commands inside Claude Code:
+
+```text
+/plugin marketplace add algolia/docsearch
+/plugin install algolia-docsearch@algolia-docsearch-marketplace
+```
+
+The plugin adds the MCP server, a skill, and the `/algolia-docsearch:docs` command.
+
+### Cursor
+
+The Cursor plugin package is in the DocSearch repository at:
+
+```text
+mcp/plugins/docsearch/cursor/algolia-docsearch
+```
+
+It includes the MCP server configuration, a rule, and a skill.
+
+## Configure a supported agent manually
+
+Manual configuration adds the server but doesn't install the rules and skills supplied by the CLI or plugins.
+
+<Tabs groupId="mcp-client" aria-label="MCP client">
+<TabItem value="cursor" label="Cursor">
+
+Add this entry to `~/.cursor/mcp.json` for user-level configuration or `.cursor/mcp.json` for project configuration:
+
+```json
+{
+  "mcpServers": {
+    "algolia-docsearch": {
+      "url": "https://mcp.algolia.com/1/docsearch/mcp"
+    }
+  }
+}
+```
+
+</TabItem>
+<TabItem value="claude" label="Claude Code">
+
+Add the user-level remote server with the Claude Code CLI:
+
+```sh
+claude mcp add --scope user --transport http algolia-docsearch https://mcp.algolia.com/1/docsearch/mcp
+```
+
+</TabItem>
+<TabItem value="codex" label="Codex">
+
+Add the remote server with the Codex CLI:
+
+```sh
+codex mcp add algolia-docsearch --url https://mcp.algolia.com/1/docsearch/mcp
+```
+
+You can also add the URL under `[mcp_servers.algolia-docsearch]` in `~/.codex/config.toml`.
+
+</TabItem>
+<TabItem value="opencode" label="OpenCode">
+
+Add this entry to `opencode.json` or `opencode.jsonc`:
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "algolia-docsearch": {
+      "type": "remote",
+      "url": "https://mcp.algolia.com/1/docsearch/mcp",
+      "enabled": true
+    }
+  }
+}
+```
+
+</TabItem>
+<TabItem value="gemini" label="Gemini CLI">
+
+Add this entry to `.gemini/settings.json` for project configuration or `~/.gemini/settings.json` for user-level configuration:
+
+```json
+{
+  "mcpServers": {
+    "algolia-docsearch": {
+      "httpUrl": "https://mcp.algolia.com/1/docsearch/mcp"
+    }
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Connect another MCP client
+
+You can also connect clients that support remote HTTP MCP servers. The existing MCP drafts document these connection methods:
+
+| Client | Connection method |
+| --- | --- |
+| Claude Desktop | Add a custom connector named `Algolia DocSearch` with the endpoint URL. |
+| ChatGPT | Add a no-auth custom connector. Availability depends on the plan and workspace settings. |
+| Pi | Install an MCP extension or adapter before adding the server. |
+| VS Code | Add a remote server to the workspace or user MCP configuration. The tools are available in Copilot Chat agent mode. |
+| Windsurf | Add the endpoint to the Cascade MCP configuration, then restart Windsurf. |
+| Zed | Add the endpoint as a context server. |
+| Conductor | Configure the server in the selected Claude Code, Codex, or Cursor host. Conductor doesn't use a separate MCP configuration for those sessions. |
+| Antigravity | Add the endpoint through **Manage MCP Servers > View raw config**, then refresh the installed servers. |
+
+Configuration keys differ by client. Follow the client's MCP documentation and keep the server name `algolia-docsearch` and the endpoint URL unchanged.
+
+## Verify the installation
+
+Ask your client to search public documentation:
+
+```text
+Use DocSearch MCP to find the Next.js middleware matcher documentation.
+```
+
+Confirm that the client calls a tool whose name starts with `algolia_docsearch_` and returns source links from the selected documentation.
+
+If verification fails, see [Troubleshooting](/docs/mcp/usage#troubleshooting).

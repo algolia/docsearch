@@ -1,71 +1,76 @@
 ---
 title: Tips for a good search
+description: Improve DocSearch relevance with clear content structure and crawler selectors.
 ---
 
-DocSearch can work with almost any website, but we've found that some site structures yield more relevant results or faster indexing time. On this page we'll share some tips on how to make the most out of DocSearch.
+DocSearch works with many website structures, but consistent structure can improve relevance and indexing time. Follow these recommendations to improve your DocSearch results.
 
 ## Use a `sitemap.xml`
 
-If you provide a sitemap in your configuration, DocSearch will use it to directly browse the pages to index. Pages are still crawled which means we extract every compliant link.
+If you provide a sitemap in your crawler configuration, DocSearch uses it to find pages to index. The crawler also follows eligible links on those pages.
 
-We highly recommend you add a `sitemap.xml` to your website if you don't have one already. This will not only make the indexing faster, but also provide you more control over which pages to index.
+Add a `sitemap.xml` to your website if you don't have one. A sitemap can reduce indexing time and gives you more control over which pages are indexed.
 
-Sitemaps are also considered good practice for other aspects, including SEO ([more information on sitemaps][1]).
+Sitemaps can also improve search engine optimization. For more information, see the [sitemaps specification][1].
 
 ## Structure the hierarchy of information
 
-DocSearch works better on structured documentation. Relevance of results is based on the structural hierarchy of content. In simpler terms, it means that we read the `<h1>`, ..., `<h6>` headings of your page to guess the hierarchy of information. This hierarchy brings contextual information to your records.
+DocSearch works better on structured documentation. Result relevance uses the structural hierarchy of your content. The crawler reads the `<h1>` through `<h6>` headings or equivalent selectors to build `hierarchy.lvl0` through `hierarchy.lvl6`.
 
-Documentation starts by explaining generic concepts first and then goes deeper into specifics. This is represented in your HTML markup by the hierarchy of headings you're using. For example, concepts discussed under a `<h4>` are more specific than concepts discussed under a `<h2>` in the same page. The sooner the information comes up within the page, the higher is it ranked.
+Documentation usually introduces general concepts before covering details. Represent this structure with an ordered heading hierarchy. For example, content under an `<h4>` is more specific than content under an `<h2>` on the same page. Content that appears earlier on the page ranks higher.
 
-DocSearch uses this structure to fine-tune the relevance of results as well as to provide potential filtering. Documentations that follow this pattern often have better relevance in their search results.
+DocSearch uses this structure to improve relevance. V5 also uses the populated hierarchy levels to render result breadcrumbs. Keep headings in order and avoid skipping levels where possible so each result retains its page context.
 
-Finding the right depth of your documentation tree and how to split up your content are two of the most complex tasks. For large pages, we recommend having 4 levels (from `lvl0` to `lvl3`). We recommend at least three different levels.
+Choose a documentation depth that gives each result enough context. For large pages, use four levels, from `lvl0` to `lvl3`. Use at least three levels.
 
-_Note that you don't have to use `<hX>` tags and can use classes instead (e.g., `<span class="title-X">` )._
+You can use classes, such as `<span class="title-X">`, instead of `<hX>` elements.
 
 ## Set a unique class to the element holding the content
 
 DocSearch extracts content based on the HTML structure. We recommend that you add a custom `class` to the HTML element wrapping all your textual content. This will help narrow selectors to the relevant content.
 
-Having such a unique identifier will make your configuration more robust as it will make sure indexed content is relevant content. We found that this is the most reliable way to exclude content in headers, sidebars, and footers that are not relevant to the search.
+A unique identifier makes your configuration more robust and limits indexing to relevant content. Use it to exclude unrelated headers, sidebars, and footers.
 
 ## Add anchors to headings
 
-When using headings (as mentioned above), you should also try to add a custom anchor to each of them. Anchors are specified by HTML attributes (`name` or `id`) added to headers that allow browsers to directly scroll to the right position in the page. They're accessible by clicking a link with `#` followed by the anchor.
+Add a custom anchor to each heading. Define anchors with an `id` or `name` HTML attribute so browsers can scroll directly to the corresponding position. Links can target an anchor with `#` followed by its value.
 
-DocSearch will honor such anchors and automatically bring your users to the anchor closest to the search result they selected.
+DocSearch uses these anchors to send users to the location of the selected result.
 
-## Marking the active page(s) in the navigation
+## Mark active pages in the navigation
 
-If you're using a multi-level navigation, we recommend that you mark each active level with a custom CSS class. This will make it easier for DocSearch to know _where_ the current page fits in the website hierarchy.
+If you use multi-level navigation, mark each active level with a custom CSS class. The crawler can use this class to determine where the current page fits in the website hierarchy.
 
 For example, if your `troubleshooting.html` page is located under the "Installation" menu in your sidebar, we recommend that you add a custom CSS class to the "Installation" and "Troubleshooting" links in your sidebar.
 
-The name of the CSS class does not matter, as long as it's something that can be used as part of a CSS selector.
+Use any valid CSS class name that can be part of a CSS selector.
 
 ## Consistency of your content
 
-Consistency is a pillar of meaningful documentation. It increases the **intelligibility** of a document and shortens the time required for a user to find the coveted information. The document **topic** should be **identifiable** and its **outline** should be demarcated.
+Use the same heading structure across documentation pages. Make each page topic and outline clear, and avoid selectors that create records without enough context, such as standalone introductions or asides.
 
-The hierarchy should always have the same size. Try to **avoid orphan records** such as the introduction/conclusion, or asides. The selectors must be efficient for **every document** and highlight the proper hierarchy. They need to match the coveted elements depending on their level. Be careful to avoid the **edge effect** by matching unexpected **superfluous elements**.
+Write selectors that match documentation pages but exclude landing pages, tables of contents, and other unrelated content. Add a dedicated class, such as `.DocSearch-content`, to the main documentation container.
 
-Selectors should match information from **real document web pages** and stay ineffective for others ones (e.g., landing page, table of content, etc.). We urge the maintainer to define a **dedicated class** for the **main DOM container** that includes the actual document content such as `.DocSearch-content`
+Use consistent terms for the same concepts. You can also configure [synonyms][5] for terms your users search interchangeably.
 
-Since documentation should be **interactive**, it is a key point to **verbalize concepts with standardized words**. This **redundancy**, empowered with the **search experience** (dropdown), will even enable the **learn-as-you-type experience**. The **way to find the information** plays a key role in **leading** the user to the **retrieved knowledge**. You can also use the **synonym feature**.
+## Avoid duplicate content
 
-## Avoid duplicates by promoting unicity
+Split broad topics into focused pages. Avoid catch-all pages that make it difficult to identify the relevant result.
 
-The more time-consuming reading documentation is, the more painful and reluctant its use will be. You must avoid hazy points or catch-all. With being unhelpful, the catch-all document may be **confusing** and **counterproductive**.
+Duplicate content adds noise and can mislead users. Don't repeat all documentation content on a landing or summary page. If you need duplicate records for separate datasets, such as different versions, use [facets][3] to distinguish them.
 
-Duplicates introduce noise and mislead users. This is why you should always focus on the relevant content and avoid duplicating content within your site (for example landing page which contains all information, summing up, etc.). If duplicates are expected because they belong to multiple datasets (for example a different version), you should use [facets][3].
+## Index metadata for v5
+
+Add each attribute used by the v5 `facets` option to `attributesForFaceting`. DocSearch supports up to five facet controls. For a result badge, index a short value such as `version`, include it in `attributesToRetrieve`, and pass its property path to `resultBadgeKey`. See the [v5 JavaScript API reference][4].
 
 ## Conciseness
 
-What is clearly thought out is clearly and concisely expressed.
+Keep content focused on one task or concept, and use short headings and paragraphs.
 
-We highly recommend that you read this blog post about [how to build a helpful search for technical documentation][2].
+For more guidance, read [How to build a helpful search for technical documentation][2].
 
 [1]: https://www.sitemaps.org/index.html
 [2]: https://blog.algolia.com/how-to-build-a-helpful-search-for-technical-documentation-the-laravel-example/
 [3]: https://www.algolia.com/doc/guides/searching/faceting/
+[4]: /docs/packages/js/api-reference#facets
+[5]: https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/#synonyms

@@ -1,0 +1,158 @@
+---
+title: Get started with Agent Studio
+description: Configure Agent Studio to answer questions from your documentation.
+---
+
+import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs';
+
+DocSearch v5 uses [Agent Studio](https://www.algolia.com/doc/guides/algolia-ai/agent-studio) as its only AI backend. The public option is still named `askAi`, so you can add AI without learning a second DocSearch configuration shape.
+
+Don't add an `agentStudio` flag. There is no AI backend selector in v5.
+
+## Before you begin
+
+1. [Create and publish an Agent Studio agent](https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/quickstart).
+2. Copy its agent ID. DocSearch calls this value `assistantId` in its public API.
+3. Create a Search API key that can search the indices used by DocSearch and Agent Studio. Don't expose an Admin API key.
+4. Note your Algolia application ID and DocSearch index name.
+
+## Add DocSearch
+
+<Tabs groupId="language" aria-label="Programming language">
+  <TabItem value="react" label="React">
+
+Install the React package and styles:
+
+<Tabs groupId="package-manager" aria-label="Package manager">
+  <TabItem value="npm" label="npm">
+
+```bash
+npm install @docsearch/react@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+
+```bash
+yarn add @docsearch/react@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm add @docsearch/react@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="bun" label="Bun">
+
+```bash
+bun add @docsearch/react@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+</Tabs>
+
+Render `DocSearchAI`, not the search-only `DocSearch` component:
+
+```tsx
+import { DocSearchAI } from '@docsearch/react';
+import '@docsearch/css';
+
+export function Search() {
+  return (
+    <DocSearchAI
+      appId="YOUR_APPLICATION_ID"
+      apiKey="YOUR_SEARCH_API_KEY"
+      indices={['YOUR_DOCSEARCH_INDEX']}
+      askAi={{
+        assistantId: 'YOUR_AGENT_ID',
+      }}
+    />
+  );
+}
+```
+
+See the [React package reference](/docs/packages/react/api-reference) for all `DocSearchAI` props and exported types.
+
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+
+Install the JavaScript package and styles:
+
+<Tabs groupId="package-manager" aria-label="Package manager">
+  <TabItem value="npm" label="npm">
+
+```bash
+npm install @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+
+```bash
+yarn add @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm add @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="bun" label="Bun">
+
+```bash
+bun add @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+</Tabs>
+
+Add a container to your page:
+
+```html
+<div id="docsearch"></div>
+```
+
+Initialize DocSearch with your Agent Studio agent:
+
+```js
+import docsearch from '@docsearch/js';
+import '@docsearch/css';
+
+docsearch({
+  container: '#docsearch',
+  appId: 'YOUR_APPLICATION_ID',
+  apiKey: 'YOUR_SEARCH_API_KEY',
+  indices: ['YOUR_DOCSEARCH_INDEX'],
+  askAi: {
+    assistantId: 'YOUR_AGENT_ID',
+  },
+});
+```
+
+See the [JavaScript package reference](/docs/packages/js/api-reference) for the complete API.
+
+  </TabItem>
+</Tabs>
+
+## Configure more Agent Studio features
+
+Use the `askAi` object to add:
+
+- [Dynamic indices and search controls](/docs/agent-studio/dynamic-indices)
+- [Client-side and MCP tools](/docs/agent-studio/tools)
+- [User-scoped memory](/docs/agent-studio/memory)
+- [Suggested prompts and follow-ups](/docs/agent-studio/prompt-suggestions)
+- [Response feedback](/docs/agent-studio/feedback)
+
+## Use the Docusaurus adapter
+
+The v5 Docusaurus adapter requires `themeConfig.docsearch.askAi` to be an object with `assistantId`. It rejects the string shorthand and the removed `agentStudio` property. Keep `appId`, `apiKey`, and keyword-search `indices` at the top level.
+
+See the [Docusaurus adapter guide](/docs/packages/docusaurus-adapter/getting-started) for its full configuration and validation rules.

@@ -1,0 +1,67 @@
+---
+title: "[Pre-v4] Manage your crawls"
+---
+
+:::caution
+This UI is deprecated and no longer maintained. For the latest instructions, please use the new documentation: [Crawler Configuration Visual UI](./crawler-configuration-visual). You can find the new Crawler UI at [dashboard.algolia.com/crawler](https://dashboard.algolia.com/crawler).
+:::
+
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+DocSearch comes with the [Algolia Crawler web interface](https://crawler.algolia.com/) that allows you to configure how and when your Algolia index will be populated.
+
+## Trigger a new crawl
+
+Head over to the `Overview` section to `start`, `restart` or `pause` your crawls and view a real-time summary.
+
+<div className="uil-ta-center">
+  <img
+    src={useBaseUrl('img/assets/crawler-overview.png')}
+    alt="Algolia Crawler creation page"
+  />
+</div>
+
+## Monitor your crawls
+
+The `monitoring` section helps you find crawl errors or improve your search results.
+
+<div className="uil-ta-center">
+  <img
+    src={useBaseUrl('img/assets/crawler-monitoring.png')}
+    alt="Algolia Crawler creation page"
+  />
+</div>
+
+## Update your config
+
+The live editor allows you to update your config file and test your URLs (`URL tester`).
+
+<div className="uil-ta-center">
+  <img
+    src={useBaseUrl('img/assets/crawler-editor.png')}
+    alt="Algolia Crawler creation page"
+  />
+</div>
+
+## Search preview
+
+From the [`editor`](#update-your-config), you have access to a `Search preview` tab to browse search results with [`DocSearch v3`](/docs/v3/docsearch).
+
+<div className="uil-ta-center">
+  <img
+    src={useBaseUrl('img/assets/crawler-search-preview.png')}
+    alt="Algolia Crawler creation page"
+  />
+</div>
+
+## URL tester
+
+From the [`editor`](#update-your-config), you can use the URL tester to [debug selectors](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/#debugging-selectors) or how we crawl your website.
+
+<div className="uil-ta-center">
+  <img
+    src={useBaseUrl('img/assets/crawler-url-tester.png')}
+    alt="Algolia Crawler URL tester"
+  />
+</div>

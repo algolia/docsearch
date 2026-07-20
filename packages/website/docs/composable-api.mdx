@@ -1,315 +1,377 @@
 ---
 title: Composable API
+description: Build a DocSearch v5 interface from the button, keyword modal, Ask AI modal, and shared state provider.
 ---
 
-import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs';
 
-:::info
-The Composable API is available from version `>= 4.3`
-:::
+The composable API gives you control over where DocSearch renders, when its modal code loads, and how the rest of your application opens or closes it.
 
-DocSearch has a new Composable API for rendering the DocSearch button and modal. This API was
-introduced to help with more explicit control over where and how the components are rendered within a page.
+Use this API in React applications. For the connected component reference, see the [modal package overview](/docs/packages/modal/overview).
 
-## Introduction
+## Choose a modal
 
-The Composable API was introduced to help give more flexibility on how you render and use DocSearch on your website. With it,
-you have more control of where, when and how you want to bundle the components and render them.
+DocSearch v5 provides two modal components. Render one modal for each `DocSearch` provider.
 
-With Composable API comes two new NPM packages:
+| Component             | Use it for                                  |
+| --------------------- | ------------------------------------------- |
+| `DocSearchModal`      | Keyword search without Ask AI               |
+| `DocSearchAskAiModal` | Keyword search and Ask AI in the same modal |
 
-- `@docsearch/core` - Shared core logic for managing different states of DocSearch
-- `@docsearch/modal` - The actual components used for the DocSearch Modal
+`DocSearchAskAiModal` includes keyword search. Don't render both modal components to add Ask AI.
 
-:::warning
-Because of the nature of composability, this API is only available within React, and not within the `@docsearch/js` package.
-:::
+The composable components come from three packages:
 
-## Getting Started
+- [`@docsearch/core`](/docs/packages/core/overview) provides `DocSearch`, shared state, keyboard handling, and the imperative ref.
+- [`@docsearch/modal`](/docs/packages/modal/overview) provides the provider-connected button and modal components.
+- [`@docsearch/css`](/docs/packages/css/styling) provides the styles.
 
-In order to start using the Composable API, you will need to install the following three packages:
+## Install the packages
 
-<Tabs
-  groupId="language"
-  defaultValue="npm"
-  values={[
-    { label: 'npm', value: 'npm', },
-    { label: 'yarn', value: 'yarn', },
-    { label: 'pnpm', value: 'pnpm' },
-    { label: 'bun', value: 'bun' }
-  ]
-}>
-<TabItem value="npm">
+Install matching v5 versions of the DocSearch packages:
+
+<Tabs groupId="package-manager" aria-label="Package manager">
+  <TabItem value="npm" label="npm">
 
 ```bash
-npm install @docsearch/core @docsearch/modal @docsearch/css
+npm install @docsearch/core@^5.0.0-beta @docsearch/modal@^5.0.0-beta @docsearch/css@^5.0.0-beta
 ```
 
-</TabItem>
-
-<TabItem value="yarn">
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
 
 ```bash
-yarn add @docsearch/core @docsearch/modal @docsearch/css
+yarn add @docsearch/core@^5.0.0-beta @docsearch/modal@^5.0.0-beta @docsearch/css@^5.0.0-beta
 ```
 
-</TabItem>
-
-<TabItem value="pnpm">
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
 
 ```bash
-pnpm add @docsearch/core @docsearch/modal @docsearch/css
+pnpm add @docsearch/core@^5.0.0-beta @docsearch/modal@^5.0.0-beta @docsearch/css@^5.0.0-beta
 ```
 
-</TabItem>
-
-<TabItem value="bun">
+  </TabItem>
+  <TabItem value="bun" label="Bun">
 
 ```bash
-bun add @docsearch/core @docsearch/modal @docsearch/css
+bun add @docsearch/core@^5.0.0-beta @docsearch/modal@^5.0.0-beta @docsearch/css@^5.0.0-beta
 ```
 
-</TabItem>
+  </TabItem>
 </Tabs>
 
-> Or using your package manager of choice
+## Add keyword search
 
-## Implementation
+Wrap the button and keyword modal in one `DocSearch` provider. Pass a public search-only API key. Prefer `indices` over the deprecated `indexName` and `searchParameters` props.
 
-The most simple implementation would be as follows:
-
-```tsx
+```tsx title="KeywordSearch.tsx"
 import { DocSearch } from '@docsearch/core';
 import { DocSearchButton, DocSearchModal } from '@docsearch/modal';
-import '@docsearch/css/style.css';
+import type { JSX } from 'react';
 
-export function Search() {
-  return (
-    <DocSearch>
-      <DocSearchButton />
-      <DocSearchModal
-        indexName="YOUR_INDEX_NAME"
-        appId="YOUR_APP_ID"
-        apiKey="YOUR_SEARCH_API_KEY"
-      />
-    </DocSearch>
-  );
+import '@docsearch/css/dist/style.css';
+
+interface KeywordSearchProps {
+  appId: string;
+  apiKey: string;
+  indexName: string;
 }
-```
 
-:::info
-The actual components MUST be rendered within the `<DocSearch>` Provider in order for them to communicate with the global state.
-:::
-
-This setup is slightly more involved with now rendering three different components:
-
-- `<DocSearch>` is the parent element which controls and shares all state with the child components
-- `<DocSearchButton />` is the actual button element that is rendered and triggers the DocSearch Modal to open
-- `<DocSearchModal />` is the main modal containing the search form, search results, and Ask AI
-
-
-### Ask AI
-
-Using Ask AI with the Composable API is quite similar to the normal way of using DocSearch. All that is needed is the `askAi` configuration:
-
-```tsx
-import { DocSearch } from '@docsearch/core';
-import { DocSearchButton, DocSearchModal } from '@docsearch/modal';
-import '@docsearch/css/style.css';
-
-export function Search() {
+export function KeywordSearch({
+  appId,
+  apiKey,
+  indexName,
+}: KeywordSearchProps): JSX.Element {
   return (
     <DocSearch>
-      <DocSearchButton />
-      <DocSearchModal
-        indexName="YOUR_INDEX_NAME"
-        appId="YOUR_APP_ID"
-        apiKey="YOUR_SEARCH_API_KEY"
-        // With just a simple assistant ID
-        askAi="YOUR_ALGOLIA_ASSISTANT_ID"
-        // Or with a more complex configuration
-        askAi={{
-          indexName: 'YOUR_MARKDOWN_INDEX', // Optional: use a different index for Ask AI
-          apiKey: 'YOUR_SEARCH_API_KEY',     // Optional: use a different API key for Ask AI
-          appId: 'YOUR_APP_ID',              // Optional: use a different App ID for Ask AI
-          assistantId: 'YOUR_ALGOLIA_ASSISTANT_ID',
-          searchParameters: {
-            facetFilters: ['language:en', 'version:1.0.0'], // Optional: filter Ask AI context
-          },
+      <DocSearchButton
+        translations={{
+          buttonText: 'Search docs',
+          buttonAriaLabel: 'Search documentation',
         }}
       />
+      <DocSearchModal appId={appId} apiKey={apiKey} indices={[indexName]} />
     </DocSearch>
   );
 }
 ```
 
-You can find more information on Ask AI, and its setup in its [dedicated docs][2].
+The provider opens the modal when a user selects the button, presses <kbd>Ctrl</kbd>/<kbd>Command</kbd>+<kbd>K</kbd>, or presses <kbd>/</kbd> outside an editable field. Closing the modal returns focus to `DocSearchButton`.
 
-### Advanced
+## Add keyword search and Ask AI
+
+Replace `DocSearchModal` with `DocSearchAskAiModal`. Create the assistant in [Agent Studio](/docs/agent-studio/getting-started), then pass its ID through `askAi`.
+
+```tsx title="SearchWithAskAi.tsx"
+import { DocSearch } from '@docsearch/core';
+import { DocSearchAskAiModal, DocSearchButton } from '@docsearch/modal';
+import type { JSX } from 'react';
+
+import '@docsearch/css/dist/style.css';
+
+interface SearchWithAskAiProps {
+  appId: string;
+  apiKey: string;
+  indexName: string;
+  assistantId: string;
+}
+
+export function SearchWithAskAi({
+  appId,
+  apiKey,
+  indexName,
+  assistantId,
+}: SearchWithAskAiProps): JSX.Element {
+  return (
+    <DocSearch>
+      <DocSearchButton />
+      <DocSearchAskAiModal
+        appId={appId}
+        apiKey={apiKey}
+        indices={[indexName]}
+        askAi={{ assistantId }}
+      />
+    </DocSearch>
+  );
+}
+```
+
+The `askAi` prop also accepts an assistant ID string. Use the object form when you need options such as `indices`, `searchParameters`, `suggestedQuestions`, `promptSuggestions`, `tools`, or `memory`. See the [React package reference](/docs/packages/react/api-reference) for those option types.
+
+## Understand the shared state
+
+`DocSearch` holds one state value and shares it with its descendants:
+
+| State          | Meaning                          |
+| -------------- | -------------------------------- |
+| `ready`        | No modal or side panel is open.  |
+| `modal-search` | The keyword search view is open. |
+| `modal-askai`  | Ask AI is open in the modal.     |
+| `sidepanel`    | The Ask AI side panel is open.   |
+
+The connected components manage these transitions for you:
+
+- `DocSearchButton` calls its own `onClick` handler, then opens keyword search.
+- Each modal registers itself with the provider and renders in a React portal only while a modal state is active.
+- `DocSearchModal` reads the provider's initial query and close action.
+- `DocSearchAskAiModal` also reads and updates the Ask AI state.
+
+Use `useDocSearch` in a component under the provider when your application needs declarative access to this state.
 
 ```tsx
-export default function AdvancedSearch(): JSX.Element {
+import { useDocSearch } from '@docsearch/core';
+import type { JSX } from 'react';
+
+export function SearchControls(): JSX.Element {
+  const { closeModal, docsearchState, openModal, onAskAiToggle } =
+    useDocSearch();
+
+  return (
+    <div>
+      <span>Search state: {docsearchState}</span>
+      <button type="button" onClick={openModal}>
+        Open search
+      </button>
+      <button type="button" onClick={() => onAskAiToggle(true)}>
+        Open Ask AI
+      </button>
+      <button type="button" onClick={closeModal}>
+        Close search
+      </button>
+    </div>
+  );
+}
+```
+
+Only call `onAskAiToggle(true)` when the provider contains `DocSearchAskAiModal` or a compatible Ask AI view.
+
+## Control DocSearch with a ref
+
+Attach a `DocSearchRef` to the provider when non-React code or a parent component must control DocSearch.
+
+```tsx
+import { DocSearch, type DocSearchRef } from '@docsearch/core';
+import { DocSearchAskAiModal, DocSearchButton } from '@docsearch/modal';
+import { useRef, type JSX } from 'react';
+
+interface ControlledSearchProps {
+  appId: string;
+  apiKey: string;
+  indexName: string;
+  assistantId: string;
+  onReady?: () => void;
+  onOpen?: () => void;
+  onClose?: () => void;
+}
+
+export function ControlledSearch(props: ControlledSearchProps): JSX.Element {
+  const searchRef = useRef<DocSearchRef>(null);
+
   return (
     <DocSearch
-      keyboardShortcuts={{
-        '/': false, // Disable opening/closing the DocSearchModal with '/' key
-      }}
+      ref={searchRef}
+      onReady={props.onReady}
+      onOpen={props.onOpen}
+      onClose={props.onClose}
     >
-      <DocSearchButton
-        translations={{ buttonText: 'Advanced Search' }} // Change the displayed text on the DocSearchButton
-      />
-      <DocSearchModal
-        indexName="YOUR_INDEX_NAME"
-        appId="YOUR_APP_ID"
-        apiKey="YOUR_SEARCH_API_KEY"
-        askAi={{ // Enable Ask AI
-          assistantId: 'YOUR_ALGOLIA_ASSISTANT_ID',
-          searchParameters: {
-            facetFilters: ['language:en'],
-          },
-        }}
-        portalContainer='#algolia-search' // Custom element that the DocSearchModal will be rendered into
+      <DocSearchButton />
+      <button
+        type="button"
+        onClick={() =>
+          searchRef.current?.openAskAi({
+            query: 'How do I configure DocSearch?',
+          })
+        }
+      >
+        Ask a question
+      </button>
+      <DocSearchAskAiModal
+        appId={props.appId}
+        apiKey={props.apiKey}
+        indices={[props.indexName]}
+        askAi={{ assistantId: props.assistantId }}
       />
     </DocSearch>
   );
 }
 ```
 
-### Bundle saving exports
+The ref exposes these methods and read-only values:
 
-To help aid in trimming initial bundle size, the `@docsearch/modal` package exposes explicit file exports as well:
+| Member | Behavior |
+| --- | --- |
+| `open()` | Opens keyword search. |
+| `close()` | Returns the provider to `ready`. |
+| `openAskAi(initialMessage?)` | Opens Ask AI in a registered side panel on desktop, or in the modal otherwise. |
+| `openSidepanel(initialMessage?)` | Opens a registered side panel. It does nothing when no side panel is registered. |
+| `isReady` | Reports whether the provider is mounted. |
+| `isOpen` | Reports whether a modal view is open. |
+| `isSidepanelOpen` | Reports whether the side panel is open. |
+| `isSidepanelSupported` | Reports whether desktop hybrid mode is available. |
 
-```ts
+`initialMessage` has a required `query` and optional `messageId` and `suggestedQuestionId` fields.
+
+The provider accepts `onReady`, `onOpen`, `onClose`, `onSidepanelOpen`, and `onSidepanelClose`. `onReady` runs after mount. The other callbacks run once when their corresponding view changes state, not every time React renders.
+
+## Load the modal on demand
+
+Import the button eagerly and split the larger modal into another JavaScript chunk. The following Ask AI example preloads that chunk on hover, focus, or touch, then renders it only after the provider opens a modal state.
+
+```tsx title="LazySearch.tsx"
+import { DocSearch, useDocSearch } from '@docsearch/core';
 import { DocSearchButton } from '@docsearch/modal/button';
-import { DocSearchModal } from '@docsearch/modal/modal';
-```
+import type { DocSearchAskAiModalProps } from '@docsearch/modal/askai';
+import { lazy, Suspense, type JSX } from 'react';
 
-Here is a basic example of delaying the loading of the `DocSearchModal` code until the search button is clicked:
+import '@docsearch/css/dist/style.css';
 
-```tsx
-import { DocSearch } from '@docsearch/core';
-import { DocSearchButton } from '@docsearch/modal/button';
-import type { DocSearchModal as DocSearchModalType } from '@docsearch/modal/modal';
-import { useState } from 'react';
+let modalImport: Promise<typeof import('@docsearch/modal/askai')> | undefined;
 
-let DocSearchModal: typeof DocSearchModalType | null = null;
+function loadModal(): Promise<typeof import('@docsearch/modal/askai')> {
+  modalImport ??= import('@docsearch/modal/askai');
+  return modalImport;
+}
 
-async function importDocSearchModalIfNeeded() {
-  if (DocSearchModal) {
-    return;
+function preloadModal(): void {
+  void loadModal().catch(() => {
+    modalImport = undefined;
+  });
+}
+
+const LazyDocSearchAskAiModal = lazy(() =>
+  loadModal().then(({ DocSearchAskAiModal }) => ({
+    default: DocSearchAskAiModal,
+  }))
+);
+
+function ModalWhenOpen(props: DocSearchAskAiModalProps): JSX.Element | null {
+  const { isModalActive } = useDocSearch();
+
+  if (!isModalActive) {
+    return null;
   }
 
-  const { DocSearchModal: Modal } = await import('@docsearch/modal/modal');
-
-  DocSearchModal = Modal;
+  return (
+    <Suspense fallback={<span role="status">Loading search...</span>}>
+      <LazyDocSearchAskAiModal {...props} />
+    </Suspense>
+  );
 }
 
-export default function DynamicModal() {
-  const [modalLoaded, setModalLoaded] = useState(false);
+interface LazySearchProps {
+  appId: string;
+  apiKey: string;
+  indexName: string;
+  assistantId: string;
+}
 
-  const loadModal = () => {
-    importDocSearchModalIfNeeded().then(() => {
-      setModalLoaded(true);
-    });
-  };
-
+export function LazySearch(props: LazySearchProps): JSX.Element {
   return (
     <DocSearch>
-      <DocSearchButton onClick={loadModal} />
-      {modalLoaded && DocSearchModal && (
-        <DocSearchModal
-          indexName="YOUR_INDEX_NAME"
-          appId="YOUR_APP_ID"
-          apiKey="YOUR_SEARCH_API_KEY"
-        />
-      )}
+      <DocSearchButton
+        onFocus={preloadModal}
+        onMouseEnter={preloadModal}
+        onTouchStart={preloadModal}
+      />
+      <ModalWhenOpen
+        appId={props.appId}
+        apiKey={props.apiKey}
+        indices={[props.indexName]}
+        askAi={{ assistantId: props.assistantId }}
+      />
     </DocSearch>
   );
 }
 ```
 
-## Components
+Render the provider and connected components only in the browser. The modal wrappers read `document.body` and `window.scrollY` when they render.
 
-### `<DocSearch />`
+## Use the exact entry points
 
-The `<DocSearch />` component from the `@docsearch/core` package is the main state handler for all of DocSearch.
-It utilizes [React Context][1] to enable sharing its state across nested components.
+Use the package root for convenience or a subpath to keep eager bundles focused.
 
-#### Props
+| Import | Exports |
+| --- | --- |
+| `@docsearch/core` | `DocSearch`, `useDocSearch`, their types, keyboard utilities, and theme utilities |
+| `@docsearch/modal` | `DocSearchButton`, `DocSearchModal`, `DocSearchAskAiModal`, and their prop types |
+| `@docsearch/modal/button` | `DocSearchButton`, `DocSearchButtonProps` |
+| `@docsearch/modal/modal` | `DocSearchModal`, `DocSearchModalProps` |
+| `@docsearch/modal/askai` | `DocSearchAskAiModal`, `DocSearchAskAiModalProps` |
 
-```ts
-interface DocSearchProps {
-  // React children to be rendered within the DocSearch Provider
-  children: Array<JSX.Element | null> | JSX.Element | React.ReactNode | null;
-  // Theme to be set enabling style changes for `light` or `dark` themes
-  theme?: 'light' | 'dark';
-  // Initial starting query for keyword search
-  initialQuery?: string;
-  // Manage supported keyboard shortcuts for opening/closing the DocSearch Modal
-  keyboardShortcuts?: {
-    'Ctrl/Cmd+K': boolean,
-    '/': boolean,
-  };
-}
-```
+The lower-level React entry points are `@docsearch/react/button`, `@docsearch/react/modal`, and `@docsearch/react/askaiModal`. They don't connect themselves to the composable provider. Use them only when you intend to manage portal rendering, refs, `initialScrollY`, close behavior, and Ask AI state yourself.
 
-### `<DocSearchButton />`
+## Load the styles
 
-The main DocSearch search button to trigger the DocSearch Modal.
-
-#### Props
+For either complete modal, import the combined stylesheet once:
 
 ```ts
-interface DocSearchButtonProps {
-  // Optional callback for when the button is clicked. The original click event is passed.
-  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  // Translation strings specific to the button.
-  translations: {
-    buttonText?: string;
-    buttonAriaLabel?: string;
-  };
-}
+import '@docsearch/css/dist/style.css';
 ```
 
-### `<DocSearchModal />`
+The combined stylesheet contains variables, button styles, keyword modal styles, and Ask AI modal styles. It doesn't contain side panel styles.
 
-The main keyword search Modal used to search your documentation.
-
-#### Props
+For a keyword-only CSS bundle, import the layers in this order:
 
 ```ts
-interface DocSearchModalProps {
-  /**
-   * Algolia application id used by the search client.
-   */
-  appId: string;
-  /**
-   * Public api key with search permissions for the index.
-   */
-  apiKey: string;
-  /**
-   * Name of the algolia index to query.
-   *
-   * @deprecated `indexName` will be removed in a future version. Please use `indices` property going forward.
-   */
-  indexName?: string;
-  /**
-   * List of indices and _optional_ searchParameters to be used for search.
-   *
-   * @see {@link https://docsearch.algolia.com/docs/api#indices}
-   */
-  indices?: Array<DocSearchIndex | string>;
-  /**
-   * Configuration or assistant id to enable ask ai mode. Pass a string assistant id or a full config object.
-   */
-  askAi?: DocSearchAskAi | string;
-  // ...
-}
+import '@docsearch/css/dist/_variables.css';
+import '@docsearch/css/dist/button.css';
+import '@docsearch/css/dist/modal.css';
 ```
 
-More property documentation can be found in the [DocSearch API Reference][3] page.
+Add `@docsearch/css/dist/_askai.css` when you use `DocSearchAskAiModal`. Bundlers can also load the same files through `@docsearch/react/style`, `@docsearch/react/style/button`, `@docsearch/react/style/modal`, `@docsearch/react/style/askai`, and `@docsearch/react/style/variables`.
 
-[1]: https://react.dev/reference/react/createContext
-[2]: /docs/v4/askai
-[3]: /docs/api
+## API summary
+
+| API | Required configuration | Provider-managed behavior |
+| --- | --- | --- |
+| `DocSearch` | `children` | State, theme, initial query, shortcuts, focus restoration, lifecycle callbacks, and `DocSearchRef` |
+| `DocSearchButton` | None | Button ref, theme, shortcuts, and opening keyword search |
+| `DocSearchModal` | `appId`, `apiKey`, and at least one `indices` entry or deprecated `indexName` | Open state, close action, initial scroll position, initial query, theme, and shortcuts |
+| `DocSearchAskAiModal` | The keyword modal configuration plus `askAi` | Keyword modal behavior, Ask AI state, Ask AI transitions, and hybrid detection |
+| `useDocSearch` | A parent `DocSearch` provider | Reads the context and throws when used outside the provider |
+
+`DocSearchButton` accepts native React button props and `translations`. The connected wrapper doesn't accept `theme` or `keyboardShortcuts`; set those on `DocSearch`.
+
+Both connected modal wrappers accept the corresponding low-level modal options, except the state and lifecycle fields supplied by the provider. Consult the [modal API](/docs/packages/modal/api) before adding options.

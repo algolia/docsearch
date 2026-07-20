@@ -1,0 +1,124 @@
+---
+title: Core package
+description: Understand the shared state and controls in @docsearch/core v5 beta.
+---
+
+import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs';
+
+`@docsearch/core` provides the React state shared by DocSearch views. It owns open and close state, keyboard events, theme selection, lifecycle callbacks, initial queries, and imperative controls. It doesn't render a search interface by itself.
+
+:::info v5 beta
+
+These instructions use the `^5.0.0-beta` range.
+
+:::
+
+## Install
+
+<Tabs groupId="package-manager" aria-label="Package manager">
+  <TabItem value="npm" label="npm">
+
+```bash
+npm install @docsearch/core@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+
+```bash
+yarn add @docsearch/core@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm add @docsearch/core@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="bun" label="Bun">
+
+```bash
+bun add @docsearch/core@^5.0.0-beta
+```
+
+  </TabItem>
+</Tabs>
+
+Packages such as `@docsearch/modal` and `@docsearch/sidepanel` consume this provider. For component composition instructions, see the [Composable API guide](/docs/composable-api).
+
+## Configure shared behavior
+
+```tsx
+import { DocSearch } from '@docsearch/core';
+
+export function SearchState({ children }: { children: React.ReactNode }) {
+  return (
+    <DocSearch
+      theme="dark"
+      initialQuery="authentication"
+      keyboardShortcuts={{
+        'Ctrl/Cmd+K': true,
+        '/': false,
+        'Ctrl/Cmd+I': true,
+      }}
+      onReady={() => track('docsearch_ready')}
+      onOpen={() => track('search_opened')}
+      onClose={() => track('search_closed')}
+      onSidepanelOpen={() => track('assistant_opened')}
+      onSidepanelClose={() => track('assistant_closed')}
+    >
+      {children}
+    </DocSearch>
+  );
+}
+```
+
+The default shortcuts enable `Control/Command+K`, `/`, and `Control/Command+I`. Slash doesn't open the modal while focus is in an input, select, textarea, or editable element.
+
+## Use a ref
+
+```tsx
+import { DocSearch, type DocSearchRef } from '@docsearch/core';
+import { useRef } from 'react';
+
+export function SearchState({ children }: { children: React.ReactNode }) {
+  const ref = useRef<DocSearchRef>(null);
+
+  return (
+    <>
+      <button type="button" onClick={() => ref.current?.open()}>
+        Open search
+      </button>
+      <DocSearch ref={ref}>{children}</DocSearch>
+    </>
+  );
+}
+```
+
+The ref can open and close registered views and report their state. See the [core API reference](./api#docsearchref). For interactions between views, see [Hybrid Mode](/docs/hybrid-mode).
+
+## Read provider state
+
+Call `useDocSearch` only beneath `DocSearch`. The hook throws outside the provider.
+
+```tsx
+import { useDocSearch } from '@docsearch/core';
+
+export function SearchStatus() {
+  const { docsearchState, openModal, closeModal } = useDocSearch();
+
+  return (
+    <button
+      type="button"
+      onClick={docsearchState === 'ready' ? openModal : closeModal}
+    >
+      {docsearchState === 'ready' ? 'Open search' : 'Close search'}
+    </button>
+  );
+}
+```
+
+Use the higher-level modal and sidepanel packages for their standard triggers. Read context directly when your interface needs custom controls.

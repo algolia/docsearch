@@ -1,0 +1,236 @@
+---
+title: v5 breaking changes
+description: Complete user-facing breaking changes and compatibility notes for DocSearch v5.
+---
+
+This page lists the user-facing changes between the v4.6.0 package source and `5.0.0-beta.0`. Use it with the [v4 migration guide](./migrating-from-v4).
+
+## JavaScript entry points
+
+### The root export is AI-capable
+
+In v4, the root `@docsearch/js` export rendered the combined component and allowed Ask AI to be omitted. In v5, it renders `DocSearchAI`, and its `DocSearchProps` type requires `askAi`.
+
+Use the root entry when you configure Agent Studio:
+
+```js
+import docsearch from '@docsearch/js';
+```
+
+### Keyword-only search moved to `/docsearch`
+
+Use the new subpath when you don't need Ask AI:
+
+```js
+import docsearch from '@docsearch/js/docsearch';
+```
+
+This entry excludes Ask AI code.
+
+### The UMD bundle is split
+
+- `dist/umd/index.js` includes keyword search and Ask AI.
+- `dist/umd/docsearch.js` includes keyword search only.
+- Both bundles expose `window.docsearch`.
+- Loading both bundles causes the later script to replace the same global.
+
+### An exports map restricts JavaScript imports
+
+`@docsearch/js` now exports only `.` and `./docsearch`. Replace imports of internal distribution files with one of these public entry points. Direct CDN URLs to the two documented UMD files remain supported by the package layout.
+
+## React components
+
+### `DocSearch` is keyword-only
+
+V4's `DocSearch` accepted `askAi` and `interceptAskAiEvent`. V5's `DocSearch` contains keyword search only and no longer declares those props.
+
+### `DocSearchAI` owns the AI experience
+
+Use `DocSearchAI` for keyword search and Ask AI:
+
+```jsx
+import { DocSearchAI } from '@docsearch/react';
+```
+
+`DocSearchAIProps` extends `DocSearchProps`, requires `askAi`, and adds `interceptAskAiEvent`.
+
+The package also adds `@docsearch/react/docsearchAi` and `@docsearch/react/askaiModal` subpaths.
+
+### The Ask AI modal is separate
+
+`DocSearchModal` is keyword-only. `DocSearchAskAiModal` contains the combined keyword and AI modal. Composable integrations that rendered `DocSearchModal` with `askAi` must switch to `DocSearchAskAiModal` and its required provider callbacks. Review the [Composable API](/docs/composable-api) instead of constructing these props without the provider.
+
+`@docsearch/modal` exports the AI modal from its root and from `@docsearch/modal/askai`.
+
+## Ask AI and Agent Studio
+
+### The legacy transport is removed
+
+V5 no longer requests a legacy Ask AI token or sends chat requests to the v4 Ask AI endpoint. All Ask AI conversations use the Agent Studio completions endpoint.
+
+Create and configure an assistant in [Agent Studio](/docs/agent-studio/getting-started) before upgrading.
+
+### `askAi.agentStudio` is removed
+
+The backend switch is no longer needed because Agent Studio is the only backend. Remove both `agentStudio: true` and `agentStudio: false`.
+
+### `askAi.useStagingEnv` is removed
+
+The staging endpoint switch isn't part of `DocSearchAskAi` in v5.
+
+### Flat Ask AI search parameters are removed
+
+`DocSearchAskAi.searchParameters` now always uses `AgentStudioSearchParameters`: an object keyed by index name.
+
+```js
+searchParameters: {
+  docs: {
+    filters: 'language:en',
+    attributesToRetrieve: ['title', 'content', 'url'],
+    distinct: true,
+  },
+}
+```
+
+Each value supports `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`. The Agent Studio type omits `facetFilters`.
+
+### Agent Studio credentials are sent directly
+
+Ask AI requests use the configured application ID and API key in `x-algolia-application-id` and `x-algolia-api-key` headers. Memory authentication adds `x-algolia-secure-user-token`. Check the permissions and domain restrictions of keys that were issued for the legacy transport.
+
+### Feedback uses Agent Studio
+
+Feedback now posts to Agent Studio and supports negative-feedback reason tags and notes. Stored conversation messages can contain `feedbackTags` and `feedbackNotes` in addition to the like or dislike value.
+
+### Agent Studio configuration is nested under `askAi`
+
+Dynamic `indices`, custom `tools`, `memory`, and keyword `promptSuggestions` belong inside the `askAi` object. `interceptAskAiEvent` remains a top-level integration callback.
+
+### Suggested questions have two sources
+
+- `askAi.suggestedQuestions` determines whether DocSearch loads published questions for the assistant from `algolia_ask_ai_suggested_questions` on the new-conversation screen.
+- `askAi.promptSuggestions` searches a configured index containing a `prompt` attribute and displays those prompts with keyword results.
+
+These options aren't interchangeable.
+
+## Search configuration
+
+### The Docusaurus adapter configuration changed
+
+The v5 adapter reads `themeConfig.docsearch` and rejects the former `themeConfig.algolia` key. It also requires `indices` and rejects `indexName` and root `searchParameters`.
+
+Replace `searchPagePath` with `searchPage`. Move `askAi.sidePanel` to the root `sidePanel` option. Remove legacy Ask AI credentials and the `askAi.agentStudio` switch. Follow [Migrate the Docusaurus adapter from v4](/docs/packages/docusaurus-adapter/migrating-from-v4) for before-and-after configurations.
+
+### At least one index is required at runtime
+
+Pass `indices` or `indexName`. V5 throws this error when neither produces an index:
+
+```text
+Must supply either `indexName` or `indices` for DocSearch to work
+```
+
+### `indexName` remains deprecated
+
+`indexName` still works; it isn't removed in v5. If present, DocSearch places it before all `indices` entries. Passing the same index through both options sends duplicate requests.
+
+### Root `searchParameters` remains deprecated
+
+The root option applies only to `indexName`. Move search parameters to each `DocSearchIndex` in `indices`.
+
+### Multiple indices share one result flow
+
+V5 creates one source for each index response and combines hit totals across responses. Result order follows the normalized index order. Review code that assumes one index or source identifier.
+
+## New keyword search behavior
+
+### Facets add requests and filters
+
+The new `facets` option fetches facet values with a zero-hit query for every configured index. DocSearch merges and sorts values, supports at most five keys after trimmed, lowercase duplicate checks, and displays only facets with values.
+
+A selected value is appended to that index's existing `facetFilters`. Account for the additional facet-value request in analytics, rate estimates, and search-client mocks.
+
+### Result badges require retrieved attributes
+
+The new `resultBadgeKey` reads a property path from each hit. The default `attributesToRetrieve` list doesn't include custom badge properties. Add them to each relevant index's `searchParameters.attributesToRetrieve`.
+
+### Result markup and grouping changed
+
+V5 refreshes the modal and result markup, renders breadcrumbs, introduces source panels, and adds facet and badge elements. CSS selectors, DOM tests, snapshots, and custom overrides that target v4 internals can break.
+
+Use public component props for behavior and review [Styling](/docs/packages/css/styling) for visual changes.
+
+## Styles and builds
+
+### Ask AI styles have a separate source bundle
+
+The complete `@docsearch/css` stylesheet still imports button, modal, and Ask AI rules. React also exposes split style entries:
+
+- `@docsearch/react/style/variables`
+- `@docsearch/react/style/button`
+- `@docsearch/react/style/modal`
+- `@docsearch/react/style/askai`
+- `@docsearch/react/style/sidepanel`
+
+If you assemble styles by component, add `style/askai` for `DocSearchAI` or `DocSearchAskAiModal`.
+
+### Generated React file names changed
+
+The documented package subpaths remain stable, but their targets changed from names such as `dist/esm/DocSearchModal.js` to generated entry files such as `dist/esm/modal.js`. Imports that bypassed the package exports can break.
+
+### The React `main` field now points to ESM
+
+`@docsearch/react` changes `main` from `dist/umd/index.js` to `dist/esm/index.js`. Consumers that resolve `main` instead of the package exports need an ESM-compatible build pipeline. The explicit `unpkg` and `jsdelivr` fields continue to point to `dist/umd/index.js`.
+
+### The browser target is ES2017
+
+V5's tsdown builds target ES2017. Provide transpilation or polyfills if your browser support policy extends below that target.
+
+## Public controls
+
+### JavaScript instances don't expose sidepanel state
+
+`DocSearchInstance` exposes `open`, `close`, `openAskAi`, `destroy`, `isReady`, and `isOpen`. It doesn't expose `openSidepanel`, `isSidepanelOpen`, or `isSidepanelSupported`.
+
+### React refs include sidepanel controls
+
+`DocSearchRef` exposes the JavaScript-style modal controls plus `openSidepanel`, `isSidepanelOpen`, and `isSidepanelSupported`. `openSidepanel` does nothing until a sidepanel view registers. On mobile, `openAskAi` and standard Ask AI actions fall back to the modal.
+
+See [hybrid mode](/docs/hybrid-mode) for the supported integration.
+
+### Deprecated keyboard hook fields remain
+
+`UseDocSearchKeyboardEventsProps.onInput` and `searchButtonRef` are accepted for compatibility but are deprecated and aren't used by the v5 React hook implementation.
+
+## Compatibility
+
+### React peer range
+
+`@docsearch/react`, `@docsearch/core`, `@docsearch/modal`, and `@docsearch/sidepanel` declare these optional peers:
+
+- `react`: `>=16.8.0 <20.0.0`
+- `react-dom`: `>=16.8.0 <20.0.0`
+- `@types/react`: `>=16.8.0 <20.0.0`
+
+`@docsearch/react` also accepts optional `search-insights` versions `>=1 <3`.
+
+### Package versions must match
+
+The `5.0.0-beta.0` packages depend on matching beta versions of the other DocSearch packages. Don't mix v4 and v5 packages in a Composable API or sidepanel tree.
+
+### CSS remains a separate install for top-level integrations
+
+Install `@docsearch/css@^5.0.0-beta`, then import `@docsearch/css`. For a CDN integration, load `dist/style.css` from the same caret beta range.
+
+## Additive v5 APIs
+
+These additions aren't breaking by themselves, but they replace common v4 custom implementations:
+
+- `facets` and `DocSearchFacet` for keyword filters.
+- `resultBadgeKey` for hit metadata.
+- `DocSearchAI` and `DocSearchAskAiModal` for AI-capable React views.
+- `AgentStudioIndices` and `AgentStudioSearchControls` for dynamic search tools.
+- `ToolCalls` and `ToolDefinition` for custom Agent Studio tools.
+- `Memory` for user-scoped Agent Studio memory.
+- `PromptSuggestions` for keyword-query prompt suggestions.
+- Ask AI feedback tags and notes.
+- Split JavaScript, React, and style entries for smaller keyword-only builds.

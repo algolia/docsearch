@@ -1,94 +1,88 @@
 ---
 title: DocSearch program
+description: Learn about DocSearch program eligibility, costs, data, and support.
 ---
 
-If you're not finding the answer to your question on this website, this page will help you. If you're still unsure, don't hesitate to connect with us on [Discord][1] or let our [support][4] team know.
+Use this page to learn about the DocSearch program. If you need more help, contact us on [Discord][1] or through [Algolia support][4].
 
-For questions related to the DocSearch x Algolia Crawler, please see our [Crawler FAQ](/docs/crawler).
+For questions about the DocSearch crawler, see the [Crawler FAQ][5].
 
 ## What do I need to install on my side?
 
-You just need to [implement DocSearch in your frontend](/docs/docsearch) with the credentials received by email when your application has been deployed.
+After your content is indexed, add a [DocSearch v5 frontend package][19] with the application ID, Search API key, and index name from your Algolia application.
 
-DocSearch leverages the [Algolia Crawler](https://www.algolia.com/products/search-and-discovery/crawler/), which offers a web [interface](https://dashboard.algolia.com/crawler) to create, monitor, edit, start your Crawlers. If you have any questions regarding it, please see our [Crawler FAQ](/docs/crawler).
+DocSearch uses the [Algolia Crawler][6] to index your content. Use the [Crawler interface][7] to create, monitor, edit, and start crawlers. For crawler questions, see the [Crawler FAQ][5]. Crawler configuration and frontend package versions are independent.
 
 ## How much does it cost?
 
-It's free!
+The DocSearch program is free.
 
-We know that paying for search infrastructure is a cost not all open source projects can afford. That's why we decided to keep DocSearch free for everyone. All we ask in exchange is that you keep the "Search by [Algolia][2]" logo displayed next to the search results.
+Search infrastructure can be costly for open source projects, so the DocSearch program is free. In exchange, keep the "Search by [Algolia][2]" logo next to the search results.
 
-If this is not possible for you, you're free to [open your own Algolia account](https://www.algolia.com/pricing) and run [DocSearch on your own][3] without this limitation. In that case, though, depending on the size of your documentation, you might need a paid account (free accounts can hold as much as 10k records).
+If you can't display the logo, [create an Algolia account][8] and run [DocSearch on your own][3]. Depending on the size of your documentation, you might need a paid plan. Free plans can hold up to 10,000 records.
 
 ## What data are you collecting?
 
-We save the data we extract from your website markup, which we put in a custom JSON format instead of HTML. This is the data we put in the Algolia DocSearch index. The selectors in your config define what data to scrape.
+We extract data from your website markup and store it in a custom JSON format in your Algolia DocSearch index. The selectors in your crawler configuration determine what data to extract.
 
-As the website owner, we also give you access to your own Algolia application. This will let you see how your website is indexed in Algolia, detailed analytics about the anonymized searches in your website, team managements, and more!
+As the website owner, you can access your Algolia application to review indexed data, analyze anonymized searches, and manage your team.
 
 ## Where is my data hosted?
 
-We host the DocSearch data on Algolia's servers, with replications around the globe. You can find more details about the actual [server specs here](https://www.algolia.com/doc/guides/infrastructure/servers/), and more complete information in our [privacy policy](https://www.algolia.com/policies/privacy).
+We host DocSearch data on Algolia servers with replicas around the world. For more information, see the [Algolia infrastructure documentation][9] and [privacy policy][10].
 
 ## How do I upgrade my DocSearch app?
 
-Depending on what you are looking for you have a few options!
+Choose an option based on your goal.
 
 ### Upgrade #1: I want a specific feature, like Rules, added to my existing DocSearch application
 
-[Reach out to us](https://algolia.com/support) and we may be able to help!
+[Contact Algolia support][4] to discuss your requirements.
 
 ### Upgrade #2: I want to remove the Algolia logo
 
-This would disqualify you from the free DocSearch program. We do offer an open-source
-[legacy version](https://docsearch.algolia.com/docs/legacy/run-your-own) of the DocSearch Crawler that you can use and
-host yourself or you can use our [API clients](https://www.algolia.com/doc/api-client/getting-started/install/javascript/?client=javascript) but you will need to use a new Algolia application and pay for its usage.
+Removing the logo makes the project ineligible for the free DocSearch program. Instead, host the open source [legacy DocSearch crawler][3] or use an [Algolia API client][11]. Both options require a new Algolia application, and usage charges may apply.
 
 ### Upgrade #3: Algolia is awesome, I want to use it for my whole site
 
-That's awesome! Please reach out to our [sales team](https://www.algolia.com/contactus/)
-who can help you figure out the right plan for you. Once you have your new application
-created you can simply copy and paste [your Crawler config](https://docsearch.algolia.com/docs/templates) into your new application's
-Crawler.
+Contact the [Algolia sales team][12] to choose a plan. After creating your application, adapt a [crawler configuration template][20] for the new crawler.
 
 ## Can I use DocSearch on non-doc pages?
 
-The free DocSearch we provide will **only** crawl open-source projects documentation pages or technical blogs. To use it on other parts of your website, you'll need to create your own Algolia account and either:
+The free DocSearch program crawls only documentation pages for open source projects and technical blogs. To index other parts of your website, create an Algolia account and choose one of these options:
 
 - Run the [DocSearch crawler][3] on your own
-- Use one of our other [framework integrations or API clients](https://www.algolia.com/doc/api-client/getting-started/install/javascript/?client=javascript)
+- Use a [DocSearch frontend package][19], a supported [framework integration][21], or an [Algolia API client][11]
 
 ## Can you index code samples?
 
 Yes, but we do not recommend it.
 
-Code samples are a great way for humans to understand how people use a specific method. It often requires boilerplate code though, repeated across examples, which adds noise to the results.
+Code samples can help users understand a method, but repeated boilerplate adds noise to search results.
 
 ## A documentation website I like does not use DocSearch. What can I do?
 
-We'd love to help!
-
-If one of your favorite tool documentation websites is missing DocSearch, we encourage you to file an issue in their repository explaining how DocSearch could help. Feel free to [let us know on Discord][1] as well and we'll provide all the help we can.
+If a documentation website does not use DocSearch, file an issue in its repository that explains how DocSearch could help. You can also [contact us on Discord][1].
 
 ## How did we build this website?
 
-We build this website with [Docusaurus v2](https://docusaurus.io/). We were helped by a great man who inspired us a lot, Endi. We want [to pay a tribute to this exceptional human being that will be always part of the DocSearch project](https://docusaurus.io/blog/2020/01/07/tribute-to-endi). Rest in peace mate!
+We built this website with [Docusaurus][13]. Endi helped inspire the project. Read our [tribute to Endi][14].
 
 ## Can I share the `apiKey` in my repo?
 
-The `apiKey` the DocSearch team provides is [a search-only key](https://www.algolia.com/doc/guides/security/api-keys/#search-only-api-key) and can be safely shared publicly. You can track it in your version control system (e.g. git). If you are running the scraper on your own, please make sure to create a search-only key and [do not share your Admin key](https://www.algolia.com/doc/guides/security/api-keys/#admin-api-key).
+The `apiKey` from the DocSearch team is a [search-only API key][15], so you can share it publicly and track it in version control. If you run the scraper yourself, create a search-only key and [don't share your Admin API key][16].
 
 ## Why is the email API key different in the dashboard?
 
-Every Algolia app comes with a default "Search API Key" which can be seen in the dashboard. That key allow you to list indices, settings, and search on **every** index owned by your application. In the case of a DocSearch application, in your acceptance email we provide a search **ONLY** API key scoped to only your DocSearch index. If for any reason you need to recover the API key sent in the email, just connect with our [support](https://algolia.com/support) team.
+Every Algolia application has a default "Search API Key" in the dashboard. That key lets you list indices, retrieve settings, and search every index in your application. For DocSearch applications, the acceptance email includes a search-only API key scoped to your DocSearch index. To recover this key, contact [Algolia support][4].
 
 ## How do I rotate my API keys?
 
-Please reach out to our [support](https://algolia.com/support) team.
+Contact [Algolia support][4].
 
 ## Can I have multiple projects under the same Algolia application?
 
-We recommend having a single Algolia application per project. Please [apply](https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch&utm_content=apply) if you'd like to use DocSearch in an other project of yours.
+Use one Algolia application per project. [Apply to the DocSearch program][17] for each additional project.
 
 ### Why?
 
@@ -99,13 +93,13 @@ The information of the initially applied project is used everywhere when we depl
 - The indices we generate
 - The allowed domains of your Crawler
 
-This allows us to easily scope issues when reaching out for support.
+This information helps us scope support requests to the correct project.
 
 ## Support
 
 :::caution
 
-Please make sure to **first read the documentation before reaching out**.
+Before contacting support, read the relevant documentation.
 
 Here are some links to help you:
 
@@ -114,14 +108,14 @@ Here are some links to help you:
 - [The DocSearch FAQ](/docs/docsearch-program)
 - [The Algolia documentation](https://www.algolia.com/doc/)
 
-You can also take a look at [the Algolia academy](https://academy.algolia.com/trainings) to understand more about Algolia.
+Visit [Algolia Academy][18] to learn more about Algolia.
 
 :::
 
-Please be informed that while Algolia does not provide support for DocSearch itself, we can support requests for the following products:
+Algolia doesn't provide support for the DocSearch UI library, but support is available for these products:
 
-- The Algolia Crawler, reach out [via the support page](https://algolia.com/support).
-- The Algolia Dashboard, reach out [via the support page](https://algolia.com/support).
+- Contact [Algolia support][4] for the Algolia Crawler.
+- Contact [Algolia support][4] for the Algolia dashboard.
 
 For any issue related to [the DocSearch UI library](https://github.com/algolia/docsearch), please open a [GitHub issue](https://github.com/algolia/docsearch/issues).
 
@@ -129,3 +123,20 @@ For any issue related to [the DocSearch UI library](https://github.com/algolia/d
 [2]: https://www.algolia.com/
 [3]: /docs/legacy/run-your-own
 [4]: https://support.algolia.com/
+[5]: /docs/crawler
+[6]: https://www.algolia.com/products/search-and-discovery/crawler/
+[7]: https://dashboard.algolia.com/crawler
+[8]: https://www.algolia.com/pricing
+[9]: https://www.algolia.com/doc/guides/infrastructure/servers/
+[10]: https://www.algolia.com/policies/privacy
+[11]: https://www.algolia.com/doc/api-client/getting-started/install/javascript/?client=javascript
+[12]: https://www.algolia.com/contactus/
+[13]: https://docusaurus.io/
+[14]: https://docusaurus.io/blog/2020/01/07/tribute-to-endi
+[15]: https://www.algolia.com/doc/guides/security/api-keys/#search-only-api-key
+[16]: https://www.algolia.com/doc/guides/security/api-keys/#admin-api-key
+[17]: https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch&utm_content=apply
+[18]: https://academy.algolia.com/trainings
+[19]: /docs/packages/overview
+[20]: /docs/templates
+[21]: /docs/integrations

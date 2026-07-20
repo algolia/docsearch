@@ -1,0 +1,101 @@
+---
+title: Get started with the Sidepanel
+description: Add the v5 beta Agent Studio sidepanel to a React application.
+---
+
+import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs';
+
+`@docsearch/sidepanel` provides composable React components for an Agent Studio chat panel.
+
+:::info v5 beta
+
+These instructions use the `^5.0.0-beta` range. Use the same range for every DocSearch package.
+
+:::
+
+## Install
+
+<Tabs groupId="package-manager" aria-label="Package manager">
+  <TabItem value="npm" label="npm">
+
+```bash
+npm install @docsearch/core@^5.0.0-beta @docsearch/sidepanel@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+
+```bash
+yarn add @docsearch/core@^5.0.0-beta @docsearch/sidepanel@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm add @docsearch/core@^5.0.0-beta @docsearch/sidepanel@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="bun" label="Bun">
+
+```bash
+bun add @docsearch/core@^5.0.0-beta @docsearch/sidepanel@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+</Tabs>
+
+## Render the sidepanel
+
+Import both the main DocSearch stylesheet and the sidepanel stylesheet.
+
+```tsx
+import { DocSearch } from '@docsearch/core';
+import { Sidepanel, SidepanelButton } from '@docsearch/sidepanel';
+
+import '@docsearch/css';
+import '@docsearch/css/dist/sidepanel.css';
+
+export function HelpAssistant() {
+  return (
+    <DocSearch>
+      <SidepanelButton />
+      <Sidepanel
+        appId="YOUR_APPLICATION_ID"
+        apiKey="YOUR_SEARCH_API_KEY"
+        assistantId="YOUR_AGENT_ID"
+        indexName="YOUR_INDEX_NAME"
+      />
+    </DocSearch>
+  );
+}
+```
+
+Use a search-only API key. The `assistantId` is an Agent Studio agent ID. V5 doesn't provide the legacy Ask AI backend or an `agentStudio` switch.
+
+The default button and panel float over the page. Press `Control+I` or `Command+I` to toggle the panel, and press `Escape` to close it.
+
+## Configure the provider
+
+Set the theme and lifecycle callbacks on `DocSearch`.
+
+```tsx
+<DocSearch
+  theme="dark"
+  keyboardShortcuts={{ 'Ctrl/Cmd+I': true }}
+  onSidepanelOpen={() => track('assistant_opened')}
+  onSidepanelClose={() => track('assistant_closed')}
+>
+  <SidepanelButton variant="inline" />
+  <Sidepanel
+    appId="YOUR_APPLICATION_ID"
+    apiKey="YOUR_SEARCH_API_KEY"
+    assistantId="YOUR_AGENT_ID"
+    indexName="YOUR_INDEX_NAME"
+  />
+</DocSearch>
+```
+
+Continue with [advanced use cases](./advanced-use-cases) or review the [sidepanel API](./api). For a combined search and assistant experience, see [Hybrid Mode](/docs/hybrid-mode).
