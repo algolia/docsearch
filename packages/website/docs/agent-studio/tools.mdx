@@ -1,0 +1,106 @@
+---
+title: Add tools
+description: Extend Agent Studio with tools for custom actions and data.
+---
+
+Use tools to let your agent read live data or perform actions. Configure the tool and its input schema in Agent Studio, then add a matching entry to `askAi.tools` when DocSearch needs to run or render it.
+
+See [Agent Studio tools](https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/tools/overview) before exposing a tool to users.
+
+## Add a client-side tool
+
+The key in `tools` must match the tool name configured in Agent Studio.
+
+```tsx
+import { DocSearchAI, type ToolCalls } from '@docsearch/react';
+
+const tools: ToolCalls = {
+  getAccountPlan: {
+    translations: {
+      callingToolText: 'Checking your account',
+    },
+    render({ message: { input, output } }) {
+      const result = output as { plan?: string } | undefined;
+      return result?.plan ? `Account plan: ${result.plan}` : '';
+    },
+    async onToolCall({ input, addToolOutput }) {
+      const response = await fetch('/api/account-plan', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(input),
+      });
+
+      const output = await response.json();
+      await addToolOutput({ output });
+    },
+  },
+};
+
+export function Search() {
+  return (
+    <DocSearchAI
+      appId="YOUR_APPLICATION_ID"
+      apiKey="YOUR_SEARCH_API_KEY"
+      indices={['docs']}
+      askAi={{
+        assistantId: 'YOUR_AGENT_ID',
+        tools,
+      }}
+    />
+  );
+}
+```
+
+The JavaScript package accepts the same `askAi.tools` object.
+
+Every tool definition requires `render`. DocSearch calls it after output is available and passes both `input` and `output`. Return a string to show a result, or an empty string to show nothing.
+
+Add `onToolCall` for a tool that runs in the browser. It receives:
+
+- `input`: the arguments selected by the agent. Treat this value as untrusted and validate it.
+- `toolCallId`: the current call ID.
+- `toolName`: the configured tool name.
+- `dynamic`: whether the streamed call was marked as dynamic, when provided.
+- `addToolOutput`: the function that returns the result to the conversation.
+
+Call `addToolOutput({ output })` after your work finishes. DocSearch invokes `onToolCall` without waiting for its returned promise, so handle failures inside the callback.
+
+Keep browser tools within the signed-in user's permissions. Don't place service credentials in the tool definition. Call your backend for privileged work. See [client-side tool security](https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/tools/security).
+
+For React, define `tools` outside the component or memoize it. Recreating the object doesn't change behavior, but a stable object avoids rebuilding dependent configuration.
+
+## Render server-side or MCP tools
+
+If Agent Studio executes a tool, omit `onToolCall` and provide `render` under the streamed tool name. DocSearch uses the output returned by Agent Studio.
+
+```js
+const tools = {
+  get_release_status: {
+    render({ message: { output } }) {
+      const status = output?.status;
+      return status ? `Release status: ${status}` : '';
+    },
+  },
+};
+```
+
+## Understand Algolia MCP search tools
+
+DocSearch recognizes these Agent Studio search tool names without a `tools` entry:
+
+- `algolia_search_index`
+- Any name beginning with `algolia_search_index_`
+
+The recognized input includes `query`, `index`, optional `number_of_results`, and optional `facet_filters`. The output can include `hits`, `nbHits`, and `queryId`.
+
+DocSearch shows search progress and the query used by the tool. It combines consecutive completed search calls into one search summary when more than one call has a nonempty query. A non-search message part ends the group.
+
+You can add a matching `tools` entry to replace the built-in rendering for a search or memory tool. Your custom renderer takes precedence.
+
+To connect other MCP servers to an agent, see [MCP tools in Agent Studio](https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/tools/mcp-tools). See the [React package reference](/docs/packages/react/api-reference) for `ToolCalls` and `ToolDefinition`.
+
+## Use tools with Docusaurus
+
+Docusaurus removes functions while serializing theme configuration. The v5 adapter rejects `askAi.tools` and `sidePanel.tools` in `docusaurus.config`. Swizzle `@theme/SearchBar` and pass tools to the modal or side panel from React instead.
+
+See the [Docusaurus adapter guide](/docs/packages/docusaurus-adapter/getting-started) for the supported configuration.

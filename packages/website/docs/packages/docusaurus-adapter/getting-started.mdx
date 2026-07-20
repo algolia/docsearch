@@ -1,0 +1,142 @@
+---
+title: Get started with the Docusaurus adapter
+description: Add DocSearch v5 keyword search and Agent Studio answers to a Docusaurus site.
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Use `@docsearch/docusaurus-adapter` to add keyword search, a search results page, Ask AI, and an Ask AI side panel to Docusaurus.
+
+## Before you start
+
+Collect these values:
+
+- An Algolia application ID.
+- A Search API key with access to your DocSearch indices.
+- At least one DocSearch index name.
+- An Agent Studio assistant ID if you want Ask AI or the side panel. Follow [Get started with Agent Studio](/docs/agent-studio/getting-started) to create one.
+
+Use Node.js 20 or later, Docusaurus 3.10.2 or later in the Docusaurus 3 release line, and React 18 or 19.
+
+## Install the adapter
+
+Install `@docsearch/docusaurus-adapter@^5.0.0-beta`:
+
+<Tabs groupId="package-manager" aria-label="Package manager">
+  <TabItem value="npm" label="npm">
+
+```bash
+npm install @docsearch/docusaurus-adapter@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+
+```bash
+yarn add @docsearch/docusaurus-adapter@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm add @docsearch/docusaurus-adapter@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="bun" label="Bun">
+
+```bash
+bun add @docsearch/docusaurus-adapter@^5.0.0-beta
+```
+
+  </TabItem>
+</Tabs>
+
+Keep `@docusaurus/preset-classic`. Don't add `@docusaurus/theme-search-algolia` as another search integration.
+
+## Configure keyword search
+
+Add the adapter to `plugins`. Configure it under `themeConfig.docsearch`:
+
+```js title="docusaurus.config.mjs"
+export default {
+  plugins: ['@docsearch/docusaurus-adapter'],
+  themeConfig: {
+    docsearch: {
+      appId: 'YOUR_APPLICATION_ID',
+      apiKey: 'YOUR_SEARCH_API_KEY',
+      indices: [{ name: 'YOUR_INDEX_NAME' }],
+    },
+  },
+};
+```
+
+`indices` is required and must contain at least one index. Use an object to set search parameters for one index:
+
+```js
+indices: [
+  {
+    name: 'docs',
+    searchParameters: {
+      facetFilters: ['language:en'],
+      attributesToRetrieve: [
+        'content',
+        'hierarchy',
+        'type',
+        'url',
+        'version',
+      ],
+    },
+  },
+],
+```
+
+Start Docusaurus and open the search modal. The adapter also creates `/search` and links to it from the modal. Change or disable that route with [`searchPage`](./configuration-reference#search-page).
+
+## Add Ask AI
+
+Set `askAi` to an object with your Agent Studio assistant ID:
+
+```js title="docusaurus.config.mjs"
+export default {
+  plugins: ['@docsearch/docusaurus-adapter'],
+  themeConfig: {
+    docsearch: {
+      appId: 'YOUR_APPLICATION_ID',
+      apiKey: 'YOUR_SEARCH_API_KEY',
+      indices: [{ name: 'YOUR_INDEX_NAME' }],
+      askAi: {
+        assistantId: 'YOUR_ASSISTANT_ID',
+      },
+    },
+  },
+};
+```
+
+The adapter uses Agent Studio for Ask AI. Pass an object, not an assistant ID string. It reuses the root `appId`, `apiKey`, and first keyword index unless you configure dynamic Agent Studio indices.
+
+## Add the side panel
+
+Set `sidePanel` at the root of `docsearch`. You must also configure `askAi`:
+
+```js
+docsearch: {
+  appId: 'YOUR_APPLICATION_ID',
+  apiKey: 'YOUR_SEARCH_API_KEY',
+  indices: [{ name: 'YOUR_INDEX_NAME' }],
+  askAi: {
+    assistantId: 'YOUR_ASSISTANT_ID',
+  },
+  sidePanel: true,
+},
+```
+
+Pass an object instead of `true` to configure its placement, width, questions, translations, memory, or indices. The modal and side panel share the DocSearch provider. Review [hybrid mode](/docs/hybrid-mode) for their responsive behavior.
+
+## Next steps
+
+- Review every adapter option in the [configuration reference](./configuration-reference).
+- Follow [Migrate from v4](./migrating-from-v4) if your site uses `themeConfig.algolia`, `indexName`, root `searchParameters`, or `askAi.sidePanel`.
+- Review the package-level [DocSearch v4 migration guide](/docs/migrating-from-v4).

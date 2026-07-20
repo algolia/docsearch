@@ -1,0 +1,140 @@
+---
+title: Get started with DocSearch for React
+description: Add DocSearch v5 keyword search or Agent Studio answers to a React application.
+---
+
+import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs';
+
+`@docsearch/react` exports separate components for keyword search and Ask AI. Choose the component that matches your application.
+
+## Before you start
+
+Collect your Algolia application ID, Search API key, and index name. To add Ask AI, create an assistant in [Agent Studio](/docs/agent-studio/getting-started) and copy its assistant ID.
+
+## Install the packages
+
+<Tabs groupId="package-manager" aria-label="Package manager">
+  <TabItem value="npm" label="npm">
+
+```bash
+npm install @docsearch/react@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+
+```bash
+yarn add @docsearch/react@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm add @docsearch/react@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="bun" label="Bun">
+
+```bash
+bun add @docsearch/react@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+</Tabs>
+
+The package supports React and React DOM versions from 16.8 through 19.
+
+## Add keyword search
+
+Render `DocSearch` when your site only needs keyword results:
+
+```jsx title="Search.jsx"
+import { DocSearch } from '@docsearch/react';
+
+import '@docsearch/css';
+
+export function Search() {
+  return (
+    <DocSearch
+      appId="YOUR_APP_ID"
+      apiKey="YOUR_SEARCH_API_KEY"
+      indices={['YOUR_INDEX_NAME']}
+    />
+  );
+}
+```
+
+`DocSearch` doesn't include the Ask AI experience.
+
+## Add keyword search and Ask AI
+
+Render `DocSearchAI` and pass the Agent Studio assistant:
+
+```jsx title="Search.jsx"
+import { DocSearchAI } from '@docsearch/react';
+
+import '@docsearch/css';
+
+export function Search() {
+  return (
+    <DocSearchAI
+      appId="YOUR_APP_ID"
+      apiKey="YOUR_SEARCH_API_KEY"
+      indices={['YOUR_INDEX_NAME']}
+      askAi={{
+        assistantId: 'YOUR_ASSISTANT_ID',
+      }}
+    />
+  );
+}
+```
+
+`askAi` also accepts the assistant ID as a string. Use the object form for Agent Studio search parameters, dynamic indices, tools, memory, and prompt suggestions.
+
+## Control DocSearch with a ref
+
+Both components forward a `DocSearchRef`:
+
+```tsx
+import { useRef } from 'react';
+import { DocSearchAI, type DocSearchRef } from '@docsearch/react';
+
+export function Search() {
+  const searchRef = useRef<DocSearchRef>(null);
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() =>
+          searchRef.current?.openAskAi({
+            query: 'How do I configure search?',
+          })
+        }
+      >
+        Ask about setup
+      </button>
+      <DocSearchAI
+        ref={searchRef}
+        appId="YOUR_APP_ID"
+        apiKey="YOUR_SEARCH_API_KEY"
+        indices={['YOUR_INDEX_NAME']}
+        askAi="YOUR_ASSISTANT_ID"
+      />
+    </>
+  );
+}
+```
+
+Use `open()` and `close()` for keyword search. Sidepanel methods become useful when you register a sidepanel through [hybrid mode](/docs/hybrid-mode).
+
+## Next steps
+
+- Review every component option in the [React API reference](./api-reference).
+- Start from the [React examples](./examples) for indices, facets, badges, templates, and refs.
+- Use the [Composable API](/docs/composable-api) for separate provider, button, and modal components.
+- Customize the design in [Styling](/docs/packages/css/styling).
+- For Docusaurus, follow the [Docusaurus adapter guide](/docs/packages/docusaurus-adapter/getting-started).

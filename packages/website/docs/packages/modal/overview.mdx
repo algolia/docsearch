@@ -1,0 +1,139 @@
+---
+title: Modal package
+description: Add the composable DocSearch modal to a React application.
+---
+
+import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs';
+
+`@docsearch/modal` provides the DocSearch search button, keyword-search modal, and Agent Studio-enabled modal for React. Render these components inside the `DocSearch` provider from `@docsearch/core`.
+
+:::info v5 beta
+
+These instructions use the `^5.0.0-beta` range. Use the same range for every DocSearch package.
+
+:::
+
+For the complete component workflow, see the [Composable API guide](/docs/composable-api).
+
+## Install
+
+<Tabs groupId="package-manager" aria-label="Package manager">
+  <TabItem value="npm" label="npm">
+
+```bash
+npm install @docsearch/core@^5.0.0-beta @docsearch/modal@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+
+```bash
+yarn add @docsearch/core@^5.0.0-beta @docsearch/modal@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm add @docsearch/core@^5.0.0-beta @docsearch/modal@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="bun" label="Bun">
+
+```bash
+bun add @docsearch/core@^5.0.0-beta @docsearch/modal@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+</Tabs>
+
+## Add keyword search
+
+Import the main stylesheet once, near your application entry point.
+
+```tsx
+import { DocSearch } from '@docsearch/core';
+import { DocSearchButton, DocSearchModal } from '@docsearch/modal';
+
+import '@docsearch/css';
+
+export function Search() {
+  return (
+    <DocSearch>
+      <DocSearchButton />
+      <DocSearchModal
+        appId="YOUR_APPLICATION_ID"
+        apiKey="YOUR_SEARCH_API_KEY"
+        indices={['YOUR_INDEX_NAME']}
+      />
+    </DocSearch>
+  );
+}
+```
+
+Use a search-only API key. Don't expose an Algolia Admin API key in browser code.
+
+## Add Agent Studio
+
+In v5, Ask AI uses Agent Studio. Pass an Agent Studio agent ID through `askAi.assistantId`. There is no `agentStudio` boolean in the v5 API.
+
+```tsx
+import { DocSearch } from '@docsearch/core';
+import { DocSearchAskAiModal, DocSearchButton } from '@docsearch/modal';
+
+import '@docsearch/css';
+
+export function Search() {
+  return (
+    <DocSearch>
+      <DocSearchButton />
+      <DocSearchAskAiModal
+        appId="YOUR_APPLICATION_ID"
+        apiKey="YOUR_SEARCH_API_KEY"
+        indices={['YOUR_INDEX_NAME']}
+        askAi={{
+          assistantId: 'YOUR_AGENT_ID',
+        }}
+      />
+    </DocSearch>
+  );
+}
+```
+
+The `askAi` object also supports custom tools, conversation memory, and dynamic indices. See the [`DocSearchAskAiModal` API](./api#docsearchaskaimodal).
+
+## Set provider options
+
+The modal package reads theme, keyboard shortcut, and lifecycle state from `DocSearch`.
+
+```tsx
+<DocSearch
+  theme="dark"
+  keyboardShortcuts={{ 'Ctrl/Cmd+K': true, '/': false }}
+  onOpen={() => track('search_opened')}
+  onClose={() => track('search_closed')}
+>
+  <DocSearchButton />
+  <DocSearchModal
+    appId="YOUR_APPLICATION_ID"
+    apiKey="YOUR_SEARCH_API_KEY"
+    indices={['YOUR_INDEX_NAME']}
+  />
+</DocSearch>
+```
+
+See the [`@docsearch/core` API](../core/api) for provider props and refs.
+
+## Load smaller entry points
+
+The package exposes component-specific entry points for code splitting:
+
+```tsx
+import { DocSearchAskAiModal } from '@docsearch/modal/askai';
+import { DocSearchButton } from '@docsearch/modal/button';
+import { DocSearchModal } from '@docsearch/modal/modal';
+```
+
+See the [modal API reference](./api) for all exports and props.

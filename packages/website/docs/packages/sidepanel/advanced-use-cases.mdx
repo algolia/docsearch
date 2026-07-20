@@ -1,0 +1,162 @@
+---
+title: React sidepanel advanced use cases
+description: Control sidepanel layout, refs, Agent Studio tools, memory, and indices.
+---
+
+## Push page content
+
+Use the `inline` panel variant to add a margin to the first element that matches `pushSelector`. On screens up to 768 pixels wide, the panel overlays the page instead.
+
+```tsx
+<SidepanelButton variant="inline" />
+<Sidepanel
+  appId="YOUR_APPLICATION_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  assistantId="YOUR_AGENT_ID"
+  indexName="YOUR_INDEX_NAME"
+  variant="inline"
+  side="left"
+  pushSelector="#documentation"
+  width="24rem"
+  expandedWidth="36rem"
+/>
+```
+
+Keep `pushSelector` narrow enough to identify one layout container. The implementation uses the first matching element and restores its inline margin and transition when it unmounts.
+
+## Render into another container
+
+Both the floating button and panel default to `document.body`. Set `portalContainer` on the panel and `portalcontainer` on the button to use another element. The button prop is lower-case in the v5 beta API.
+
+```tsx
+const assistantRoot = document.getElementById('assistant-root');
+
+<DocSearch>
+  <SidepanelButton portalcontainer={assistantRoot} />
+  <Sidepanel
+    appId="YOUR_APPLICATION_ID"
+    apiKey="YOUR_SEARCH_API_KEY"
+    assistantId="YOUR_AGENT_ID"
+    indexName="YOUR_INDEX_NAME"
+    portalContainer={assistantRoot}
+  />
+</DocSearch>;
+```
+
+An inline `SidepanelButton` renders where it appears in the React tree and doesn't use its portal container.
+
+## Control the panel with a ref
+
+Attach a `DocSearchRef` to the provider. `openSidepanel` accepts an optional initial message.
+
+```tsx
+import { DocSearch, type DocSearchRef } from '@docsearch/core';
+import { Sidepanel } from '@docsearch/sidepanel';
+import { useRef } from 'react';
+
+export function Support() {
+  const docsearchRef = useRef<DocSearchRef>(null);
+
+  return (
+    <DocSearch ref={docsearchRef}>
+      <button
+        type="button"
+        onClick={() =>
+          docsearchRef.current?.openSidepanel({
+            query: 'How do I rotate an API key?',
+          })
+        }
+      >
+        Ask about API keys
+      </button>
+      <Sidepanel
+        appId="YOUR_APPLICATION_ID"
+        apiKey="YOUR_SEARCH_API_KEY"
+        assistantId="YOUR_AGENT_ID"
+        indexName="YOUR_INDEX_NAME"
+      />
+    </DocSearch>
+  );
+}
+```
+
+Call the method after the sidepanel has mounted and registered its view. Check `isSidepanelOpen` to read its open state. See [Hybrid Mode](/docs/hybrid-mode) for cross-view ref behavior.
+
+## Handle Agent Studio tools
+
+Key each client tool by the name emitted by your agent. Always return tool output through `addToolOutput` when you provide `onToolCall`.
+
+```tsx
+const tools = {
+  getReleaseChannel: {
+    translations: { callingToolText: 'Reading release settings' },
+    async onToolCall({ input, addToolOutput }) {
+      const channel = await readReleaseChannel(input);
+      await addToolOutput({ output: { channel } });
+    },
+    render({ message }) {
+      const output = message.output as { channel: string };
+      return `Release channel: ${output.channel}`;
+    },
+  },
+};
+
+<Sidepanel
+  appId="YOUR_APPLICATION_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  assistantId="YOUR_AGENT_ID"
+  indexName="YOUR_INDEX_NAME"
+  tools={tools}
+/>;
+```
+
+Define `tools` outside the component or memoize it. Tool errors don't render a tool result.
+
+## Enable memory
+
+Pass a server-generated Agent Studio user JWT. `enabled` controls whether memory tool activity appears in the conversation; `userToken` authenticates the user's memory requests.
+
+```tsx
+<Sidepanel
+  appId="YOUR_APPLICATION_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  assistantId="YOUR_AGENT_ID"
+  indexName="YOUR_INDEX_NAME"
+  memory={{
+    enabled: true,
+    userToken: userMemoryToken,
+  }}
+/>
+```
+
+Don't generate or sign the token in the browser.
+
+## Provide dynamic indices
+
+Use `indices` to describe the indices Agent Studio can select at request time. This list is separate from the required `indexName`, which remains the sidepanel's primary index.
+
+```tsx
+<Sidepanel
+  appId="YOUR_APPLICATION_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  assistantId="YOUR_AGENT_ID"
+  indexName="docs"
+  searchParameters={{
+    docs: { filters: 'version:v5' },
+    support_articles: { filters: 'visibility:public' },
+  }}
+  indices={[
+    {
+      index: 'docs',
+      description: 'Product documentation and API references.',
+    },
+    {
+      index: 'support_articles',
+      description: 'Troubleshooting and support articles.',
+      enhancedDescription: 'Use for errors and operational incidents.',
+    },
+  ]}
+/>
+```
+
+Search parameters are keyed by index name. See the [sidepanel API](./api#agent-studio-options) for the supported fields.

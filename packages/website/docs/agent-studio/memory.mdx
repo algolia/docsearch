@@ -1,0 +1,66 @@
+---
+title: Add user-scoped memory
+description: Store and retrieve user-scoped memory in Agent Studio conversations.
+---
+
+Agent Studio memory lets an agent retain useful context for a user across conversations. Configure memory in Agent Studio first, then give DocSearch a secure user token so Agent Studio can isolate each user's data.
+
+Read the [Agent Studio memory overview](https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/memory/overview) before enabling memory in production.
+
+## Generate a secure user token
+
+Generate the JWT on your backend after authenticating the user. Follow the [Agent Studio user authentication guide](https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/user-authentication) for the required claims, signing algorithm, and key ID.
+
+Protect the token flow:
+
+- Never generate the token in browser code.
+- Never expose the Algolia secret key used to sign it.
+- Use a stable, non-sensitive user identifier in the JWT `sub` claim.
+- Set an expiration and refresh expired tokens.
+- Serve the token only over HTTPS.
+- Don't put sensitive user data in JWT claims. JWT payloads aren't encrypted.
+
+## Pass the token to DocSearch
+
+Fetch a token from your backend and pass it as `memory.userToken`:
+
+```js
+const response = await fetch('/api/agent-studio-token', {
+  credentials: 'include',
+});
+const { userToken } = await response.json();
+
+docsearch({
+  container: '#docsearch',
+  appId: 'YOUR_APPLICATION_ID',
+  apiKey: 'YOUR_SEARCH_API_KEY',
+  indices: ['docs'],
+  askAi: {
+    assistantId: 'YOUR_AGENT_ID',
+    memory: {
+      enabled: true,
+      userToken,
+    },
+  },
+});
+```
+
+Use the same `askAi.memory` object with React's `DocSearchAI`.
+
+When `userToken` is present, DocSearch sends it in the `X-Algolia-Secure-User-Token` request header. When it is absent, DocSearch omits the header. Don't use unscoped memory for a multi-user application.
+
+## Understand `enabled`
+
+`memory.enabled` controls whether DocSearch displays Agent Studio's built-in memory tool activity:
+
+- `algolia_memorize` displays that information was saved.
+- `algolia_ponder` and `algolia_memory_search` display that memory was used.
+- Memory tool errors aren't displayed.
+
+The default is `false`.
+
+This option doesn't enable memory in Agent Studio and doesn't create a user identity. Configure the feature on the agent and pass `userToken` for user isolation. DocSearch sends `userToken` when provided even if `enabled` is `false`.
+
+A custom entry in `askAi.tools` with the same memory tool name replaces the built-in memory rendering.
+
+See the [JavaScript package reference](/docs/packages/js/api-reference) or [React package reference](/docs/packages/react/api-reference) for the `Memory` configuration type.

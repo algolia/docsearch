@@ -1,0 +1,341 @@
+---
+title: Modal API reference
+description: API reference for @docsearch/modal v5 beta.
+---
+
+## `DocSearchButton`
+
+> `type: React.ComponentType<DocSearchButtonProps>`
+
+Renders the search trigger. It runs your `onClick` handler, then opens the modal through the nearest `DocSearch` provider.
+
+`DocSearchButtonProps` accepts standard React `button` props and the following prop. Configure `theme` and `keyboardShortcuts` on `DocSearch`, not on this component.
+
+### `translations`
+
+> `type: { buttonText?: string; buttonAriaLabel?: string }` | **optional**
+
+Sets the visible and accessible button text. Both values default to English labels.
+
+## `DocSearchModal`
+
+> `type: React.ComponentType<DocSearchModalProps>`
+
+Renders a keyword-search modal when its provider is active. It renders in `document.body` unless you set [`portalContainer`](#portalcontainer).
+
+### Required props
+
+#### `appId`
+
+> `type: string` | **required**
+
+Algolia application ID.
+
+#### `apiKey`
+
+> `type: string` | **required**
+
+Public API key with search permission.
+
+#### `indices`
+
+> `type: Array<string | DocSearchIndex>` | **required**
+
+Indices to search. You can omit this prop only if you use the deprecated [`indexName`](#indexname).
+
+### Search props
+
+#### `indexName`
+
+> `type: string` | **optional** | **deprecated**
+
+Sets one index to search. Use [`indices`](#indices) instead.
+
+#### `facets`
+
+> `type: Array<{ key: string; label?: string }>` | **optional**
+
+Adds filter controls that use facet values from the configured indices. Defaults to `[]`.
+
+#### `placeholder`
+
+> `type: string` | **optional**
+
+Sets the search input placeholder. Defaults to `Search docs`. A translation can override this value.
+
+#### `searchParameters`
+
+> `type: SearchParamsObject` | **optional** | **deprecated**
+
+Merges parameters into search requests. Set parameters on each [`indices`](#indices) entry instead.
+
+#### `maxResultsPerGroup`
+
+> `type: number` | **optional**
+
+Limits the displayed hits in each result group.
+
+#### `transformItems`
+
+> `type: (items: DocSearchHit[]) => DocSearchHit[]` | **optional**
+
+Changes hits before rendering. Defaults to the identity function.
+
+#### `transformSearchClient`
+
+> `type: (client: DocSearchTransformClient) => DocSearchTransformClient` | **optional**
+
+Wraps or changes the search client. Defaults to the identity function.
+
+#### `navigator`
+
+> `type: AutocompleteOptions['navigator']` | **optional**
+
+Controls link navigation.
+
+#### `insights`
+
+> `type: AutocompleteOptions['insights']` | **optional**
+
+Configures Algolia Insights. Defaults to `false`.
+
+#### `resultBadgeKey`
+
+> `type: string` | **optional**
+
+Reads a hit property and displays it as a result badge. Include the property in `attributesToRetrieve`.
+
+### Rendering and behavior props
+
+#### `initialQuery`
+
+> `type: string` | **optional**
+
+Prefills the search input. This value takes precedence over the provider value and defaults to `''` if neither value is set.
+
+#### `portalContainer`
+
+> `type: DocumentFragment | Element` | **optional**
+
+Receives the modal portal. Defaults to `document.body`.
+
+#### `hitComponent`
+
+> `type: (props, helpers?) => JSX.Element` | **optional**
+
+Renders an individual result. Defaults to the built-in hit component.
+
+#### `resultsFooterComponent`
+
+> `type: (props, helpers?) => JSX.Element | null` | **optional**
+
+Renders content below the results. Defaults to `null`.
+
+#### `disableUserPersonalization`
+
+> `type: boolean` | **optional**
+
+Disables storing and using recent and favorite searches. Defaults to `false`.
+
+#### `recentSearchesLimit`
+
+> `type: number` | **optional**
+
+Limits saved and displayed recent searches. Defaults to `7`.
+
+#### `recentSearchesWithFavoritesLimit`
+
+> `type: number` | **optional**
+
+Limits recent searches when favorites exist. Defaults to `4`.
+
+#### `getMissingResultsUrl`
+
+> `type: ({ query }: { query: string }) => string` | **optional**
+
+Builds the missing-results report URL.
+
+#### `translations`
+
+> `type: ModalTranslations` | **optional**
+
+Supplies partial strings for `searchBox`, `footer`, `facets`, `errorScreen`, `startScreen`, `noResultsScreen`, and `resultsScreen`. Defaults to `{}`.
+
+`DocSearchModal` receives `theme`, `keyboardShortcuts`, and close behavior from the provider. It doesn't accept these props directly.
+
+### `DocSearchIndex`
+
+#### `name`
+
+> `type: string` | **required**
+
+Index to search.
+
+#### `searchParameters`
+
+> `type: SearchParamsObject` | **optional**
+
+Sets search parameters for this index.
+
+## `DocSearchAskAiModal`
+
+> `type: React.ComponentType<DocSearchAskAiModalProps>`
+
+Renders the Agent Studio-enabled modal. It accepts every `DocSearchModal` prop, requires [`askAi`](#askai), and adds Agent Studio translations.
+
+### `askAi`
+
+> `type: string | DocSearchAskAi` | **required**
+
+Sets the Agent Studio agent ID or the complete Agent Studio configuration.
+
+### `interceptAskAiEvent`
+
+> `type: (message: InitialAskAiMessage) => boolean | void` | **optional**
+
+Runs before the default Ask AI action. Return `true` to prevent the action.
+
+### `translations`
+
+> `type: DocSearchAskAiModalTranslations` | **optional**
+
+Adds `askAiScreen`, `newConversation`, and Agent Studio search-box strings to the search translations. Defaults to `{}`.
+
+The component receives its active state and close behavior from `DocSearch`. It doesn't accept `isAskAiActive`, `isHybridModeSupported`, `onAskAiToggle`, `onClose`, `theme`, or `keyboardShortcuts`. See [Hybrid Mode][1] for cross-view behavior.
+
+## `DocSearchAskAi`
+
+### `assistantId`
+
+> `type: string` | **required**
+
+Agent Studio agent ID.
+
+### `appId`
+
+> `type: string` | **optional**
+
+Overrides the root `appId` for Agent Studio.
+
+### `apiKey`
+
+> `type: string` | **optional**
+
+Overrides the root `apiKey` for Agent Studio.
+
+### `indexName`
+
+> `type: string` | **optional**
+
+Sets the index for conversation storage and Agent Studio requests. Defaults to the first root index.
+
+### `suggestedQuestions`
+
+> `type: boolean` | **optional**
+
+Shows configured suggested questions on the new-conversation screen. Defaults to `false`.
+
+### `searchParameters`
+
+> `type: Record<string, AgentStudioIndexSearchParameters>` | **optional**
+
+Sends search parameters keyed by index name. `AgentStudioIndexSearchParameters` supports `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`. It doesn't support `facetFilters`.
+
+### `indices`
+
+> `type: AgentStudioIndices[]` | **optional**
+
+Defines dynamic indices available to Agent Studio search tools.
+
+### `tools`
+
+> `type: Record<string, ToolDefinition>` | **optional**
+
+Handles and renders custom Agent Studio tools. Defaults to `{}`.
+
+### `memory`
+
+> `type: { enabled?: boolean; userToken?: string }` | **optional**
+
+Displays memory tool activity and sends a secure user token.
+
+### `promptSuggestions`
+
+> `type: { indexName: string; hitsPerPage?: number }` | **optional**
+
+Configures prompt suggestions in keyword search. `hitsPerPage` defaults to `3`.
+
+## Dynamic indices
+
+Each dynamic index accepts the following fields:
+
+### `index`
+
+> `type: string` | **required**
+
+Index available to Agent Studio search tools.
+
+### `description`
+
+> `type: string` | **required**
+
+Describes the index contents to Agent Studio.
+
+### `enhancedDescription`
+
+> `type: string` | **optional**
+
+Provides more context about the index contents.
+
+### `searchParameters`
+
+> `type: SearchParamsObject` | **optional**
+
+Sets search parameters for the dynamic index.
+
+### `searchControls`
+
+> `type: AgentStudioSearchControls` | **optional**
+
+Configures `query`, `hits_per_page`, `page`, `attributesToRetrieve`, `responseFields`, `facets`, and `custom` controls. Text, number, and string-array controls use an `exposed` flag and can define defaults or constraints.
+
+## Custom tools
+
+Each `ToolDefinition` accepts the following fields:
+
+### `render`
+
+> `type: (params: { message: { input: unknown; output: unknown } }) => string` | **required**
+
+Renders the tool input and output.
+
+### `onToolCall`
+
+> `type: (params: ToolCallParameters) => Promise<void> | void` | **optional**
+
+Handles a client-side tool call. `ToolCallParameters` includes `input`, `addToolOutput`, `toolCallId`, `toolName`, and the optional `dynamic` flag.
+
+### `translations`
+
+> `type: { callingToolText?: string }` | **optional**
+
+Overrides the text shown while the tool runs.
+
+When `onToolCall` handles a client-side tool, call `addToolOutput` with the result. Define the tools object outside your component or memoize it to keep its identity stable.
+
+## Memory
+
+Set `memory.enabled` to render Agent Studio memory tool calls. Set `memory.userToken` to send the JSON Web Token (JWT) as the `x-algolia-secure-user-token` request header.
+
+Generate the JWT on your server. Don't put signing secrets in browser code.
+
+## Exports
+
+| Import path | Value exports | Type exports |
+| --- | --- | --- |
+| `@docsearch/modal` | `DocSearchButton`, `DocSearchModal`, `DocSearchAskAiModal` | `DocSearchButtonProps`, `DocSearchModalProps`, `DocSearchAskAiModalProps` |
+| `@docsearch/modal/button` | `DocSearchButton` | `DocSearchButtonProps` |
+| `@docsearch/modal/modal` | `DocSearchModal` | `DocSearchModalProps` |
+| `@docsearch/modal/askai` | `DocSearchAskAiModal` | `DocSearchAskAiModalProps` |
+
+[1]: /docs/hybrid-mode

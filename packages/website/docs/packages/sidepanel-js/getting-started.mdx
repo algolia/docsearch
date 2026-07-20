@@ -1,0 +1,120 @@
+---
+title: Get started with the JavaScript sidepanel
+description: Mount and control the v5 beta Agent Studio sidepanel without React application code.
+---
+
+import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs';
+
+`@docsearch/sidepanel-js` mounts the Agent Studio sidepanel into an existing HTML element. It bundles its rendering dependencies and returns an imperative instance.
+
+:::info v5 beta
+
+These instructions use the `^5.0.0-beta` range.
+
+:::
+
+## Install
+
+<Tabs groupId="package-manager" aria-label="Package manager">
+  <TabItem value="npm" label="npm">
+
+```bash
+npm install @docsearch/sidepanel-js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+
+```bash
+yarn add @docsearch/sidepanel-js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm add @docsearch/sidepanel-js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="bun" label="Bun">
+
+```bash
+bun add @docsearch/sidepanel-js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+</Tabs>
+
+Add a container to your page:
+
+```html
+<div id="docsearch-sidepanel"></div>
+```
+
+Mount the sidepanel and retain the returned instance:
+
+```js
+import sidepanel from '@docsearch/sidepanel-js';
+
+import '@docsearch/css';
+import '@docsearch/css/dist/sidepanel.css';
+
+const assistant = sidepanel({
+  container: '#docsearch-sidepanel',
+  appId: 'YOUR_APPLICATION_ID',
+  apiKey: 'YOUR_SEARCH_API_KEY',
+  assistantId: 'YOUR_AGENT_ID',
+  indexName: 'YOUR_INDEX_NAME',
+  onReady() {
+    console.info('DocSearch sidepanel is ready');
+  },
+});
+
+document.querySelector('#ask-docs').addEventListener('click', () => {
+  assistant.open();
+});
+```
+
+Use a search-only API key. The `assistantId` is an Agent Studio agent ID. V5 doesn't provide an `agentStudio` switch.
+
+## Open with a question
+
+Pass an initial message to `open`:
+
+```js
+assistant.open({
+  query: 'How do I configure a search-only API key?',
+});
+```
+
+Call `assistant.destroy()` before removing the container or remounting another sidepanel in it.
+
+## Load from a CDN
+
+```html
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@docsearch/css@^5.0.0-beta/dist/style.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@docsearch/css@^5.0.0-beta/dist/sidepanel.css"
+/>
+
+<div id="docsearch-sidepanel"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/sidepanel-js@^5.0.0-beta/dist/umd/index.js"></script>
+<script>
+  const assistant = docsearchSidepanel({
+    container: '#docsearch-sidepanel',
+    appId: 'YOUR_APPLICATION_ID',
+    apiKey: 'YOUR_SEARCH_API_KEY',
+    assistantId: 'YOUR_AGENT_ID',
+    indexName: 'YOUR_INDEX_NAME',
+  });
+</script>
+```
+
+See the [JavaScript sidepanel API](./api) for configuration, Agent Studio options, callbacks, and instance methods.

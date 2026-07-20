@@ -1,0 +1,168 @@
+---
+title: Get started with DocSearch for JavaScript
+description: Add DocSearch v5 keyword search or Agent Studio answers to a JavaScript site.
+---
+
+import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs';
+
+Use `@docsearch/js` to render DocSearch into an HTML element. The default entry includes keyword search and Ask AI. A separate entry includes keyword search only.
+
+## Before you start
+
+Collect your Algolia application ID, Search API key, and index name. To add Ask AI, also create an assistant in [Agent Studio](/docs/agent-studio/getting-started) and copy its assistant ID.
+
+## Install the packages
+
+<Tabs groupId="package-manager" aria-label="Package manager">
+  <TabItem value="npm" label="npm">
+
+```bash
+npm install @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+
+```bash
+yarn add @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm add @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="bun" label="Bun">
+
+```bash
+bun add @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+</Tabs>
+
+Add a container where you want the search button:
+
+```html
+<div id="docsearch"></div>
+```
+
+Pass a container element or a selector that matches one. Don't pass an `input`; DocSearch renders the search button and input.
+
+## Add keyword search and Ask AI
+
+Import the default entry and provide an `askAi` configuration:
+
+```js title="app.js"
+import docsearch from '@docsearch/js';
+
+import '@docsearch/css';
+
+const search = docsearch({
+  container: '#docsearch',
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_SEARCH_API_KEY',
+  indices: ['YOUR_INDEX_NAME'],
+  askAi: {
+    assistantId: 'YOUR_ASSISTANT_ID',
+  },
+});
+```
+
+The default entry bundles both experiences. `askAi` accepts an assistant ID string or a configuration object. See the [JavaScript API reference](./api-reference#ask-ai-options).
+
+## Add keyword search only
+
+Import the `/docsearch` entry to exclude Ask AI code:
+
+```js title="app.js"
+import docsearch from '@docsearch/js/docsearch';
+
+import '@docsearch/css';
+
+const search = docsearch({
+  container: '#docsearch',
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_SEARCH_API_KEY',
+  indices: ['YOUR_INDEX_NAME'],
+});
+```
+
+## Load DocSearch from a CDN
+
+Load the complete stylesheet and one JavaScript bundle. Both UMD bundles expose `window.docsearch`.
+
+### Keyword search and Ask AI
+
+```html
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@docsearch/css@^5.0.0-beta/dist/style.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@^5.0.0-beta/dist/umd/index.js"></script>
+<script>
+  window.docsearch({
+    container: '#docsearch',
+    appId: 'YOUR_APP_ID',
+    apiKey: 'YOUR_SEARCH_API_KEY',
+    indices: ['YOUR_INDEX_NAME'],
+    askAi: {
+      assistantId: 'YOUR_ASSISTANT_ID',
+    },
+  });
+</script>
+```
+
+### Keyword search only
+
+```html
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@docsearch/css@^5.0.0-beta/dist/style.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@^5.0.0-beta/dist/umd/docsearch.js"></script>
+<script>
+  window.docsearch({
+    container: '#docsearch',
+    appId: 'YOUR_APP_ID',
+    apiKey: 'YOUR_SEARCH_API_KEY',
+    indices: ['YOUR_INDEX_NAME'],
+  });
+</script>
+```
+
+Don't load both UMD bundles on the same page. The second bundle replaces the same `window.docsearch` global.
+
+## Control the instance
+
+`docsearch()` returns a `DocSearchInstance`:
+
+```js
+const search = docsearch({
+  container: '#docsearch',
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_SEARCH_API_KEY',
+  indices: ['YOUR_INDEX_NAME'],
+  askAi: 'YOUR_ASSISTANT_ID',
+});
+
+search.open();
+search.close();
+search.openAskAi({ query: 'How do I configure search?' });
+
+// Unmount DocSearch when your application removes this view.
+search.destroy();
+```
+
+Use `openAskAi()` only with the default AI-capable entry.
+
+## Next steps
+
+- Review every option in the [JavaScript API reference](./api-reference).
+- Add multiple indices, facets, or result badges in the [React examples](../react/examples). The configuration options also apply to JavaScript.
+- Customize the design in [Styling](/docs/packages/css/styling).
+- Combine the modal and sidepanel in [hybrid mode](/docs/hybrid-mode).

@@ -1,0 +1,99 @@
+---
+title: CSS bundles and exports
+description: Choose the @docsearch/css v5 beta bundle for each DocSearch surface.
+---
+
+`@docsearch/css` publishes compiled CSS and SCSS-named assets in `dist`. The package doesn't define an `exports` map, so import the root entry or a listed `dist` file.
+
+## Root entry
+
+The package fields `main`, `unpkg`, and `jsdelivr` all point to `dist/style.css`.
+
+These imports load the same full search-and-modal bundle:
+
+```js
+import '@docsearch/css';
+import '@docsearch/css/dist/style.css';
+```
+
+Use only one of them.
+
+## Published assets
+
+| Path | Contents |
+| --- | --- |
+| `@docsearch/css/dist/style.css` | Variables, search button, modal, and Agent Studio response styles. |
+| `@docsearch/css/dist/_variables.css` | Shared light and dark custom properties. |
+| `@docsearch/css/dist/button.css` | Variables and search-button styles. |
+| `@docsearch/css/dist/modal.css` | Variables and keyword-search modal styles. |
+| `@docsearch/css/dist/_askai.css` | Agent Studio modal response and Markdown styles. |
+| `@docsearch/css/dist/sidepanel.css` | Variables, sidepanel button, panel layout, and sidepanel-specific overrides. |
+
+Each asset also has an equivalent `.scss` file: `style.scss`, `_variables.scss`, `button.scss`, `modal.scss`, `_askai.scss`, and `sidepanel.scss`. The build writes the compiled bundle to both extensions; these aren't Sass source partials.
+
+## Choose imports by surface
+
+### Search button only
+
+```js
+import '@docsearch/css/dist/button.css';
+```
+
+### Keyword-search modal
+
+```js
+import '@docsearch/css/dist/button.css';
+import '@docsearch/css/dist/modal.css';
+```
+
+Use the root bundle instead if your modal can show Agent Studio responses.
+
+### Agent Studio modal
+
+```js
+import '@docsearch/css';
+```
+
+### Sidepanel
+
+```js
+import '@docsearch/css';
+import '@docsearch/css/dist/sidepanel.css';
+```
+
+The sidepanel reuses Agent Studio response and Markdown classes from the root bundle, so `sidepanel.css` isn't the complete sidepanel presentation by itself.
+
+## React style bridge exports
+
+`@docsearch/react` v5 beta also exposes JavaScript style bridge entry points. They re-export files from `@docsearch/css`:
+
+| Import path                        | CSS target                           |
+| ---------------------------------- | ------------------------------------ |
+| `@docsearch/react/style`           | `@docsearch/css`                     |
+| `@docsearch/react/style/variables` | `@docsearch/css/dist/_variables.css` |
+| `@docsearch/react/style/button`    | `@docsearch/css/dist/button.css`     |
+| `@docsearch/react/style/modal`     | `@docsearch/css/dist/modal.css`      |
+| `@docsearch/react/style/askai`     | `@docsearch/css/dist/_askai.css`     |
+| `@docsearch/react/style/sidepanel` | `@docsearch/css/dist/sidepanel.css`  |
+
+Prefer direct `@docsearch/css` imports when your bundler supports CSS package imports. They show which assets enter your bundle and work across the DocSearch React packages.
+
+## Load from a CDN
+
+```html
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@docsearch/css@^5.0.0-beta/dist/style.css"
+/>
+```
+
+Add the sidepanel asset when needed:
+
+```html
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@docsearch/css@^5.0.0-beta/dist/sidepanel.css"
+/>
+```
+
+Use the caret beta range so compatible beta updates remain available.

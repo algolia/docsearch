@@ -1,0 +1,123 @@
+---
+title: React sidepanel API reference
+description: API reference for @docsearch/sidepanel v5 beta.
+---
+
+## Exports
+
+| Import path | Value exports | Type exports |
+| --- | --- | --- |
+| `@docsearch/sidepanel` | `Sidepanel`, `SidepanelButton` | `SidepanelProps`, `SidepanelButtonProps` |
+| `@docsearch/sidepanel/sidepanel` | `Sidepanel` | `SidepanelProps` |
+| `@docsearch/sidepanel/button` | `SidepanelButton` | `SidepanelButtonProps` |
+
+## `Sidepanel`
+
+Render `Sidepanel` inside `DocSearch` from `@docsearch/core`.
+
+### Connection props
+
+| Prop | Type and default | Description |
+| --- | --- | --- |
+| `appId` | `string`; Required | Algolia application ID. |
+| `apiKey` | `string`; Required | Public API key with search permission. |
+| `assistantId` | `string`; Required | Agent Studio agent ID. |
+| `indexName` | `string`; Required | Primary index for Agent Studio and conversation storage. |
+| `searchParameters` | `Record<string, AgentStudioIndexSearchParameters>`; - | Search parameters keyed by index name. |
+
+`AgentStudioIndexSearchParameters` supports `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`.
+
+### Layout props
+
+| Prop | Type and default | Description |
+| --- | --- | --- |
+| `variant` | `'floating' \| 'inline'`; `'floating'` | Overlays the page or pushes matching page content on desktop. |
+| `side` | `'left' \| 'right'`; `'right'` | Sets the side from which the panel opens. |
+| `pushSelector` | `string`; `'#root, main, .app, body'` | Selects the first element pushed by the inline panel. |
+| `width` | `number \| string`; `360` | Sets the normal width. Numbers use pixels. |
+| `expandedWidth` | `number \| string`; `580` | Sets the expanded width. Numbers use pixels. |
+| `portalContainer` | `DocumentFragment \| Element \| null`; `document.body` | Receives the panel portal. |
+
+### Behavior props
+
+| Prop | Type and default | Description |
+| --- | --- | --- |
+| `keyboardShortcuts` | `{ 'Ctrl/Cmd+I'?: boolean }`; Enabled | Enables or disables the sidepanel shortcut. |
+| `suggestedQuestions` | `boolean`; `false` | Whether to show Agent Studio suggested questions on the new-conversation screen. |
+| `translations` | `SidepanelTranslations`; `{}` | Supplies partial strings for `header`, `promptForm`, `conversationScreen`, `newConversationScreen`, and `logo`. |
+| `tools` | `Record<string, ToolDefinition>`; `{}` | Handles and renders custom Agent Studio tools. |
+| `memory` | `{ enabled?: boolean; userToken?: string }`; - | Configures Agent Studio memory rendering and authentication. |
+| `indices` | `AgentStudioIndices[]`; - | Defines dynamic indices available to Agent Studio. |
+
+Set `theme` on `DocSearch`; `SidepanelProps` omits it. Set lifecycle callbacks such as `onSidepanelOpen` and `onSidepanelClose` on the provider. Don't pass inherited `onOpen` or `onClose` callbacks to `Sidepanel`, because they replace the wrapper's state handlers in this beta.
+
+### Translation groups
+
+| Group | Keys |
+| --- | --- |
+| `header` | `title`, `conversationHistoryTitle`, `newConversationText`, `viewConversationHistoryText` |
+| `promptForm` | `promptPlaceholderText`, `promptAnsweringText`, `promptAskAnotherQuestionText`, `promptDisclaimerText`, `promptLabelText`, `promptAriaLabelText` |
+| `newConversationScreen` | `titleText`, `introductionText` |
+| `logo` | `poweredByText` |
+| `conversationScreen` | Tool status, source, copy, feedback, error, disclaimer, and suggested-prompt strings exposed by `ConversationScreenTranslations` |
+
+## Agent Studio options
+
+V5 uses Agent Studio for sidepanel conversations. It doesn't expose an `agentStudio` prop.
+
+### `AgentStudioIndices`
+
+```ts
+interface AgentStudioIndices {
+  index: string;
+  description: string;
+  enhancedDescription?: string;
+  searchParameters?: SearchParamsObject;
+  searchControls?: AgentStudioSearchControls;
+}
+```
+
+`searchControls` accepts `query`, `hits_per_page`, `page`, `attributesToRetrieve`, `responseFields`, `facets`, and `custom`. Controls specify whether Agent Studio may expose a value to the model and can include defaults and constraints.
+
+### `ToolDefinition`
+
+```ts
+type ToolDefinition = {
+  render: (params: { message: { input: unknown; output: unknown } }) => string;
+  onToolCall?: (params: {
+    input: unknown;
+    addToolOutput: (props: { output: unknown }) => Promise<void>;
+    toolCallId: string;
+    toolName: string;
+    dynamic?: boolean;
+  }) => Promise<void> | void;
+  translations?: { callingToolText?: string };
+};
+```
+
+### `memory`
+
+`enabled` defaults to `false` and controls memory-tool status rendering. `userToken` is sent as the `x-algolia-secure-user-token` header.
+
+## `SidepanelButton`
+
+| Prop | Type and default | Description |
+| --- | --- | --- |
+| `variant` | `'floating' \| 'inline'`; `'floating'` | Renders an icon-only floating button or an inline button with text. |
+| `translations` | `{ buttonText?: string; buttonAriaLabel?: string }`; English labels | Changes visible and accessible text. `buttonText` applies to the inline variant. |
+| `portalcontainer` | `DocumentFragment \| Element \| null`; `document.body` | Receives the floating button portal. This beta prop uses a lower-case `c`. |
+
+The wrapper supplies its click handler and keyboard shortcut configuration from `DocSearch`. An inline button renders at its position in the React tree.
+
+## Programmatic control
+
+`Sidepanel` doesn't expose its lower-level `SidepanelRef` directly. Attach a `DocSearchRef` to the provider and use:
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `openSidepanel` | `(initialMessage?: InitialAskAiMessage) => void` | Opens a registered sidepanel. |
+| `close` | `() => void` | Returns the provider to its ready state. |
+| `isSidepanelOpen` | `boolean` | Whether the sidepanel is open. |
+| `isReady` | `boolean` | Whether the provider is mounted. |
+
+`InitialAskAiMessage` is `{ query: string; messageId?: string; suggestedQuestionId?: string }`. See the [`@docsearch/core` API](../core/api) for the full ref.

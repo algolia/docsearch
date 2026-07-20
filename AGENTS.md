@@ -259,3 +259,7 @@ Non-obvious caveats:
 - **To run/demo the widget, use the React playground:** `bun run playground:start` serves at `http://localhost:5173` (Vite). `bun run playground-js:start` serves the vanilla-JS demo. These connect to Algolia's hosted index using public credentials baked into the demo, so **outbound internet is required** for live search results.
 - Run unit tests non-interactively with `bun run test --run` (plain `bun run test` starts Vitest watch mode).
 - `bun run lint:css` reports many pre-existing CSS lint violations in the repo; these are not environment problems.
+
+## Documentation
+
+- When writing or working on the documentation website (`packages/website`), MUST adhere to the guidelines in @STYLE_GUIDE.md

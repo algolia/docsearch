@@ -1,0 +1,82 @@
+---
+title: Collect response feedback
+description: Collect user feedback on Agent Studio responses.
+---
+
+DocSearch v5 includes feedback controls for completed Agent Studio answers. You don't need to add an `askAi` option to enable them.
+
+Use an API key with the `search` ACL. Agent Studio accepts one vote per message. See [Agent Studio feedback](https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/feedback) for service requirements and reporting details.
+
+## Understand the ratings
+
+Thumbs up submits positive feedback immediately:
+
+```ts
+{
+  thumbs: 1;
+}
+```
+
+Thumbs down opens a form before submission. A user can select zero or more reason tags and add an optional note:
+
+```ts
+{
+  thumbs: 0;
+  tags?: AskAiFeedbackReason[];
+  notes?: string;
+}
+```
+
+Closing or canceling the form doesn't submit feedback. Submitting without a reason or note is valid. DocSearch trims notes, omits an empty note, and limits notes to 1,000 characters.
+
+DocSearch supports these reason values:
+
+| Value              | Default label           |
+| ------------------ | ----------------------- |
+| `incorrect`        | Incorrect or incomplete |
+| `not_what_i_asked` | Not what I asked for    |
+| `slow_or_buggy`    | Slow or buggy           |
+| `style_or_tone`    | Style or tone           |
+| `safety_or_legal`  | Safety or legal concern |
+| `other`            | Other                   |
+
+Reason tags and notes are collected only for negative feedback.
+
+## Understand submission behavior
+
+DocSearch sends the Agent Studio agent ID, message ID, vote, and optional negative-feedback details to Agent Studio. After a successful request, it shows a thank-you state and records the rating with the locally stored conversation.
+
+If submission fails, DocSearch keeps the negative-feedback form open and displays the error so the user can retry.
+
+## Change feedback labels
+
+Override feedback text through `translations.modal.askAiScreen`:
+
+```tsx
+<DocSearchAI
+  appId="YOUR_APPLICATION_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  indices={['docs']}
+  askAi={{ assistantId: 'YOUR_AGENT_ID' }}
+  translations={{
+    modal: {
+      askAiScreen: {
+        likeButtonTitle: 'Helpful',
+        dislikeButtonTitle: 'Not helpful',
+        thanksForFeedbackText: 'Feedback received',
+        feedbackPanelTitle: 'Tell us what went wrong',
+        feedbackDetailsPlaceholder: 'Add details',
+        feedbackSubmitButtonText: 'Send feedback',
+        feedbackTagIncorrect: 'Incorrect or incomplete',
+        feedbackTagNotWhatIAsked: 'Not what I asked for',
+        feedbackTagSlowOrBuggy: 'Slow or buggy',
+        feedbackTagStyleOrTone: 'Style or tone',
+        feedbackTagSafetyOrLegal: 'Safety or legal concern',
+        feedbackTagOther: 'Other',
+      },
+    },
+  }}
+/>
+```
+
+See the [React package reference](/docs/packages/react/api-reference) for all feedback translation keys and the exported feedback types.

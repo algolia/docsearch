@@ -1,0 +1,388 @@
+---
+title: Migrate the Docusaurus adapter from v4
+description: Move a Docusaurus DocSearch adapter configuration from v4 to the v5 beta.
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+DocSearch v5 requires `themeConfig.docsearch`, a nonempty `indices` array, and Agent Studio for Ask AI. Update the adapter and configuration together.
+
+Review the broader [DocSearch v4 migration guide](/docs/migrating-from-v4) for changes outside the Docusaurus adapter.
+
+## 1. Check compatibility
+
+Upgrade the site to Node.js 20 or later and Docusaurus 3.10.2 or later in the Docusaurus 3 release line. Use React and React DOM 18 or 19.
+
+## 2. Install the v5 adapter
+
+Install `@docsearch/docusaurus-adapter@^5.0.0-beta`:
+
+<Tabs groupId="package-manager" aria-label="Package manager">
+  <TabItem value="npm" label="npm">
+
+```bash
+npm install @docsearch/docusaurus-adapter@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+
+```bash
+yarn add @docsearch/docusaurus-adapter@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm add @docsearch/docusaurus-adapter@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="bun" label="Bun">
+
+```bash
+bun add @docsearch/docusaurus-adapter@^5.0.0-beta
+```
+
+  </TabItem>
+</Tabs>
+
+Keep the adapter in `plugins` and don't add `@docusaurus/theme-search-algolia` as another search integration.
+
+## 3. Move to `themeConfig.docsearch`
+
+V4 accepted `themeConfig.algolia` as an alias. V5 rejects it.
+
+<Tabs aria-label="Comparison">
+  <TabItem value="before" label="Before: v4">
+
+```js title="docusaurus.config.mjs"
+export default {
+  plugins: ['@docsearch/docusaurus-adapter'],
+  themeConfig: {
+    algolia: {
+      appId: 'YOUR_APPLICATION_ID',
+      apiKey: 'YOUR_SEARCH_API_KEY',
+      indexName: 'docs',
+    },
+  },
+};
+```
+
+  </TabItem>
+  <TabItem value="after" label="After: v5">
+
+```js title="docusaurus.config.mjs"
+export default {
+  plugins: ['@docsearch/docusaurus-adapter'],
+  themeConfig: {
+    docsearch: {
+      appId: 'YOUR_APPLICATION_ID',
+      apiKey: 'YOUR_SEARCH_API_KEY',
+      indices: [{ name: 'docs' }],
+    },
+  },
+};
+```
+
+  </TabItem>
+</Tabs>
+
+Don't define both keys during the migration. V5 accepts only `themeConfig.docsearch`.
+
+## 4. Replace `indexName` and root search parameters
+
+Move every keyword index into `indices`. Move root `searchParameters` onto the matching index:
+
+<Tabs aria-label="Comparison">
+  <TabItem value="before" label="Before: v4">
+
+```js
+docsearch: {
+  appId: 'YOUR_APPLICATION_ID',
+  apiKey: 'YOUR_SEARCH_API_KEY',
+  indexName: 'docs',
+  searchParameters: {
+    facetFilters: ['language:en'],
+    attributesToRetrieve: ['content', 'hierarchy', 'type', 'url'],
+  },
+},
+```
+
+  </TabItem>
+  <TabItem value="after" label="After: v5">
+
+```js
+docsearch: {
+  appId: 'YOUR_APPLICATION_ID',
+  apiKey: 'YOUR_SEARCH_API_KEY',
+  indices: [
+    {
+      name: 'docs',
+      searchParameters: {
+        facetFilters: ['language:en'],
+        attributesToRetrieve: ['content', 'hierarchy', 'type', 'url'],
+      },
+    },
+  ],
+},
+```
+
+  </TabItem>
+</Tabs>
+
+`indices` is required and must contain at least one item. The modal queries all items in order. The search page uses the first item.
+
+## 5. Replace `searchPagePath`
+
+V5 replaces the path value with an object that can also configure facets:
+
+<Tabs aria-label="Comparison">
+  <TabItem value="before" label="Before: v4">
+
+```js
+searchPagePath: 'find',
+```
+
+  </TabItem>
+  <TabItem value="after" label="After: v5">
+
+```js
+searchPage: {
+  path: 'find',
+  facets: [
+    { attribute: 'hierarchy.lvl0', label: 'Section' },
+    { attribute: 'version', label: 'Version' },
+  ],
+},
+```
+
+  </TabItem>
+</Tabs>
+
+Use `searchPage: false` to disable the route. An empty object uses the default `search` path and the default `hierarchy.lvl0` section facet.
+
+## 6. Move Ask AI to Agent Studio
+
+Create an assistant by following [Get started with Agent Studio](/docs/agent-studio/getting-started). V5 accepts only an `askAi` object and always uses Agent Studio.
+
+<Tabs aria-label="Comparison">
+  <TabItem value="before" label="Before: v4">
+
+```js
+askAi: {
+  assistantId: 'YOUR_ASSISTANT_ID',
+  appId: 'ASK_AI_APPLICATION_ID',
+  apiKey: 'ASK_AI_SEARCH_API_KEY',
+  indexName: 'docs_markdown',
+  agentStudio: true,
+},
+```
+
+V4 also accepted this shorthand:
+
+```js
+askAi: 'YOUR_ASSISTANT_ID',
+```
+
+  </TabItem>
+  <TabItem value="after" label="After: v5">
+
+```js
+askAi: {
+  assistantId: 'YOUR_ASSISTANT_ID',
+  indices: [
+    {
+      index: 'docs_markdown',
+      description: 'Product documentation.',
+    },
+  ],
+},
+```
+
+  </TabItem>
+</Tabs>
+
+Remove `agentStudio`, `appId`, `apiKey`, and `indexName` from `askAi`. The adapter reuses the root credentials. Without `askAi.indices`, it uses the first keyword index as the Ask AI index.
+
+V4 supported flat search parameters for the legacy Ask AI backend. V5 requires Agent Studio search parameters keyed by index name:
+
+<Tabs aria-label="Comparison">
+  <TabItem value="before" label="Before: v4">
+
+```js
+askAi: {
+  assistantId: 'YOUR_ASSISTANT_ID',
+  searchParameters: {
+    filters: 'language:en',
+    attributesToRetrieve: ['title', 'content', 'url'],
+  },
+},
+```
+
+  </TabItem>
+  <TabItem value="after" label="After: v5">
+
+```js
+askAi: {
+  assistantId: 'YOUR_ASSISTANT_ID',
+  searchParameters: {
+    docs: {
+      filters: 'language:en',
+      attributesToRetrieve: ['title', 'content', 'url'],
+    },
+  },
+},
+```
+
+  </TabItem>
+</Tabs>
+
+Root `askAi.searchParameters` supports `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`. Put `facetFilters` on a dynamic `askAi.indices` item's `searchParameters` instead.
+
+## 7. Move the side panel to the root
+
+Move `sidePanel` out of `askAi`:
+
+<Tabs aria-label="Comparison">
+  <TabItem value="before" label="Before: v4">
+
+```js
+askAi: {
+  assistantId: 'YOUR_ASSISTANT_ID',
+  sidePanel: {
+    variant: 'inline',
+    side: 'right',
+  },
+},
+```
+
+  </TabItem>
+  <TabItem value="after" label="After: v5">
+
+```js
+askAi: {
+  assistantId: 'YOUR_ASSISTANT_ID',
+},
+sidePanel: {
+  variant: 'inline',
+  side: 'right',
+},
+```
+
+  </TabItem>
+</Tabs>
+
+The root `sidePanel` requires `askAi`. It can override Agent Studio `indices`, `memory`, `suggestedQuestions`, and translations for the panel. Review [hybrid mode](/docs/hybrid-mode) for modal and panel behavior.
+
+## 8. Move custom tools into `SearchBar`
+
+V5 rejects `askAi.tools` and `sidePanel.tools` in `docusaurus.config` because Docusaurus removes functions while serializing theme config. Swizzle `@theme/SearchBar` and pass tools as component props.
+
+```bash
+npm run swizzle -- @docsearch/docusaurus-adapter SearchBar --eject
+```
+
+<Tabs groupId="language" aria-label="Programming language">
+  <TabItem value="react" label="React">
+
+```tsx title="src/theme/SearchBar/index.tsx"
+import type { DocusaurusSearchBarProps } from '@docsearch/docusaurus-adapter';
+import type { ToolCalls } from '@docsearch/react';
+import OriginalSearchBar from '@theme-original/SearchBar';
+
+const tools: ToolCalls = {
+  getReleaseStatus: {
+    render: ({ message }) => JSON.stringify(message.output),
+  },
+};
+
+export default function SearchBar(props: DocusaurusSearchBarProps) {
+  return (
+    <OriginalSearchBar
+      {...props}
+      askAi={{ assistantId: 'YOUR_ASSISTANT_ID', tools }}
+      sidePanel={{ tools }}
+    />
+  );
+}
+```
+
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+
+```jsx title="src/theme/SearchBar/index.js"
+import OriginalSearchBar from '@theme-original/SearchBar';
+
+const tools = {
+  getReleaseStatus: {
+    render: ({ message }) => JSON.stringify(message.output),
+  },
+};
+
+export default function SearchBar(props) {
+  return (
+    <OriginalSearchBar
+      {...props}
+      askAi={{ assistantId: 'YOUR_ASSISTANT_ID', tools }}
+      sidePanel={{ tools }}
+    />
+  );
+}
+```
+
+  </TabItem>
+</Tabs>
+
+Include every nested `askAi` and `sidePanel` option that you want to keep because component props replace those nested theme-config values. See [Agent Studio tools](/docs/agent-studio/tools) for complete tool definitions.
+
+## 9. Add v5 search features
+
+Configure modal facets at the `docsearch` root:
+
+```js
+facets: [
+  { key: 'language', label: 'Language' },
+  { key: 'version', label: 'Version' },
+],
+```
+
+Configure search-page facets separately under `searchPage.facets`. Configure every facet attribute in your Algolia index.
+
+Show a custom hit property in modal results with `resultBadgeKey`. Add that property to each index's `attributesToRetrieve`:
+
+```js
+indices: [
+  {
+    name: 'docs',
+    searchParameters: {
+      attributesToRetrieve: [
+        'content',
+        'hierarchy',
+        'type',
+        'url',
+        'version',
+      ],
+    },
+  },
+],
+resultBadgeKey: 'version',
+```
+
+## 10. Verify the migration
+
+Run the production Docusaurus build, then verify these paths:
+
+- Open keyword search with the button, `Ctrl/Cmd+K`, and `/`.
+- Search every configured index and apply each modal facet.
+- Open the search page, apply its facets, and check docs-version filtering.
+- Open Ask AI and submit a follow-up question.
+- Open the side panel with its button and `Ctrl/Cmd+I`.
+- Check contextual results in every locale and docs version.
+- Follow internal, replaced, and external result URLs.
+- Check translated strings and result badges.
+- Test mobile behavior. Hybrid mode uses the modal instead of the side panel on mobile.
+
+Use the [configuration reference](./configuration-reference) to resolve validation messages and review every v5 option.

@@ -1,0 +1,84 @@
+---
+title: DocSearch packages
+description: Choose the DocSearch v5 package that matches your framework and search experience.
+---
+
+import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs';
+
+DocSearch v5 provides keyword search, AI answers powered by Agent Studio, and lower-level packages for custom integrations.
+
+Start with `@docsearch/js` for a browser integration or `@docsearch/react` for a React application. Both packages support the same keyword search options.
+
+## Choose a package
+
+| Package | Use it for |
+| --- | --- |
+| [`@docsearch/js`](./js/getting-started) | JavaScript sites, including sites that don't use React. The default entry includes keyword search and Ask AI. |
+| [`@docsearch/react`](./react/getting-started) | React applications. Choose `DocSearch` for keyword search or `DocSearchAI` for keyword search and Ask AI. |
+| [`@docsearch/css`](./css/styling) | The complete button and modal stylesheet. See [Styling](/docs/packages/css/styling). |
+| [`@docsearch/core`](./core/overview) | Shared state, keyboard handling, and the provider for the [Composable API](/docs/composable-api). |
+| [`@docsearch/modal`](./modal/overview) | Search button, keyword modal, and Ask AI modal components for the Composable API. |
+| [`@docsearch/sidepanel`](./sidepanel/getting-started) | React sidepanel components for persistent AI conversations. |
+| [`@docsearch/sidepanel-js`](./sidepanel-js/getting-started) | JavaScript wrapper for the AI sidepanel. |
+
+If your Docusaurus site uses the DocSearch adapter, follow the [Docusaurus adapter guide](/docs/packages/docusaurus-adapter/getting-started).
+
+## Choose a search experience
+
+### Keyword search
+
+Use keyword search when you only need results from Algolia indices. It has no Ask AI runtime.
+
+- JavaScript: import `@docsearch/js/docsearch`.
+- React: render `DocSearch` from `@docsearch/react`.
+
+### Keyword search and Ask AI
+
+Use the AI-capable integration when you have an Agent Studio assistant.
+
+- JavaScript: use the default `@docsearch/js` export.
+- React: render `DocSearchAI` from `@docsearch/react`.
+
+Create and configure the assistant before adding it to DocSearch. See [Get started with Agent Studio](/docs/agent-studio/getting-started).
+
+### Composable and hybrid experiences
+
+Use the [Composable API](/docs/composable-api) to control the provider, button, and modal separately. Use [hybrid mode](/docs/hybrid-mode) to combine the modal with the AI sidepanel.
+
+## Beta version
+
+Install the v5 beta with the caret range:
+
+<Tabs groupId="package-manager" aria-label="Package manager">
+  <TabItem value="npm" label="npm">
+
+```bash
+npm install @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+
+```bash
+yarn add @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm add @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+  <TabItem value="bun" label="Bun">
+
+```bash
+bun add @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+```
+
+  </TabItem>
+</Tabs>
+
+For an existing v4 integration, read [Migrate from v4](/docs/migrating-from-v4) and [v5 breaking changes](/docs/v5-breaking-changes).
