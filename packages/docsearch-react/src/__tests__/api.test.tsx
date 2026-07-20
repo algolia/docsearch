@@ -262,6 +262,82 @@ describe('api', () => {
     });
   });
 
+  it('renders no-results suggestions from previous successful searches', async () => {
+    let shouldReturnResults = true;
+
+    const search = () => {
+      return new Promise((resolve) => {
+        resolve({
+          results: shouldReturnResults
+            ? [
+                {
+                  hits: [
+                    {
+                      hierarchy: { lvl0: 'React' },
+                      objectID: '1',
+                      url: 'https://react.dev',
+                      content: 'React content',
+                      type: 'lvl0',
+                    },
+                    {
+                      hierarchy: { lvl0: 'Hooks' },
+                      objectID: '2',
+                      url: 'https://react.dev/hooks',
+                      content: 'Hooks content',
+                      type: 'lvl0',
+                    },
+                  ],
+                  hitsPerPage: 20,
+                  nbHits: 2,
+                  nbPages: 1,
+                  page: 0,
+                  processingTimeMS: 0,
+                  exhaustiveNbHits: true,
+                  params: '',
+                  query: 'react',
+                },
+              ]
+            : [
+                {
+                  hits: [],
+                  hitsPerPage: 0,
+                  nbHits: 0,
+                  nbPages: 0,
+                  page: 0,
+                  processingTimeMS: 0,
+                  exhaustiveNbHits: true,
+                  params: '',
+                  query: 'nothing',
+                },
+              ],
+        });
+      });
+    };
+
+    render(<DocSearch transformSearchClient={(searchClient) => ({ ...searchClient, search })} />);
+
+    await act(async () => {
+      fireEvent.click(await screen.findByText('Search'));
+    });
+
+    await act(async () => {
+      fireEvent.input(await screen.findByPlaceholderText('Search docs'), {
+        target: { value: 'react' },
+      });
+    });
+
+    await act(async () => {
+      shouldReturnResults = false;
+      fireEvent.input(await screen.findByPlaceholderText('Search docs'), {
+        target: { value: 'nothing' },
+      });
+    });
+
+    expect(await screen.findByText(/Try searching for/)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'React' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Hooks' })).toBeInTheDocument();
+  });
+
   describe('ask AI integration', () => {
     it('updates placeholder when ask AI is available', async () => {
       render(<DocSearch askAi="assistant" />);
