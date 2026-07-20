@@ -48,12 +48,15 @@ describe('ToolCall', () => {
           toolCallId: 'id-3',
           state: 'output-available',
           input: {
-            index: 'docs',
-            query: 'test',
-            number_of_results: 10,
-            facet_filters: null,
+            clickAnalytics: false,
+            originalQuery: 'testing',
+            queries: [
+              {
+                query: 'test',
+              },
+            ],
           },
-          output: { hits: [{}, {}] },
+          output: { hits: [], nbHits: 7 },
         },
       },
       {
@@ -62,7 +65,15 @@ describe('ToolCall', () => {
           type: 'tool-algolia_search_index_custom',
           toolCallId: 'id-4',
           state: 'output-available',
-          input: { query: 'test' },
+          input: {
+            clickAnalytics: false,
+            originalQuery: 'testing',
+            queries: [
+              {
+                query: 'test',
+              },
+            ],
+          },
           output: { hits: [{}] },
         },
       },
@@ -82,6 +93,34 @@ describe('ToolCall', () => {
         expect(within(container).getByText(/"test"/)).toBeInTheDocument();
       }
     );
+
+    it('renders multiple MCP search tool queries', () => {
+      const part = {
+        type: 'tool-algolia_search_index_test',
+        toolCallId: 'multiple-queries',
+        state: 'output-available',
+        input: {
+          clickAnalytics: false,
+          originalQuery: 'testing',
+          queries: [
+            {
+              query: 'first',
+            },
+            {
+              query: 'second',
+            },
+          ],
+        },
+        output: {
+          hits: [],
+        },
+      } satisfies AIToolPart;
+
+      render(<ToolCall part={part} translations={TRANSLATIONS} tools={{}} />);
+
+      expect(screen.getByText(/"first"/)).toBeInTheDocument();
+      expect(screen.getByText(/"second"/)).toBeInTheDocument();
+    });
   });
 
   describe('memory tools', () => {
