@@ -116,7 +116,8 @@ export default {
           },
           {
             label: 'MCP',
-            to: 'docs/mcp/overview',
+            // Sibling SPA at /mcp — pathname:// bypasses Docusaurus route/link checks.
+            to: 'pathname:///mcp',
             position: 'left',
           },
           {
