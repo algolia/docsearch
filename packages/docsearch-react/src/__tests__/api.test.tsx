@@ -1,5 +1,5 @@
 import { render, act, fireEvent, screen, cleanup } from '@testing-library/react';
-import type { LiteClient, SearchResponse, SearchResponses } from 'algoliasearch/lite';
+import type { Hit, LiteClient, SearchResponse, SearchResponses } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 import { describe, it, expect, afterEach } from 'vitest';
 
@@ -13,25 +13,22 @@ function DocSearch(props: Partial<DocSearchProps>): JSX.Element {
 }
 
 // mock empty response
-function noResultSearch<T = unknown>(
+function noResultSearch<T = Record<string, unknown>>(
   _queries: Parameters<LiteClient['search']>[0],
   _requestOptions?: Parameters<LiteClient['search']>[1],
 ): Promise<SearchResponses<T>> {
-  return Promise.resolve({
-    results: [
-      {
-        hits: [] as T[],
-        hitsPerPage: 0,
-        nbHits: 0,
-        nbPages: 0,
-        page: 0,
-        processingTimeMS: 0,
-        exhaustiveNbHits: true,
-        params: '',
-        query: '',
-      } as SearchResponse<T>,
-    ],
-  } as SearchResponses<T>);
+  const emptyResult: SearchResponse<T> = {
+    hits: [] as Array<Hit<T>>,
+    hitsPerPage: 0,
+    nbHits: 0,
+    nbPages: 0,
+    page: 0,
+    processingTimeMS: 0,
+    exhaustiveNbHits: true,
+    params: '',
+    query: '',
+  };
+  return Promise.resolve({ results: [emptyResult] });
 }
 
 describe('api', () => {
@@ -267,57 +264,59 @@ describe('api', () => {
   it('renders no-results suggestions from previous successful searches', async () => {
     let shouldReturnResults = true;
 
-    const search = async <T = unknown>(
+    const search = <T = Record<string, unknown>,>(
       _queries: Parameters<LiteClient['search']>[0],
       _requestOptions?: Parameters<LiteClient['search']>[1],
     ): Promise<SearchResponses<T>> => {
-      return {
-        results: shouldReturnResults
-          ? [
-              {
-                hits: [
-                  {
-                    hierarchy: { lvl0: 'React' },
-                    objectID: '1',
-                    url: 'https://react.dev',
-                    content: 'React content',
-                    type: 'lvl0',
-                  },
-                  {
-                    hierarchy: { lvl0: 'Hooks' },
-                    objectID: '2',
-                    url: 'https://react.dev/hooks',
-                    content: 'Hooks content',
-                    type: 'lvl0',
-                  },
-                ] as T[],
-                hitsPerPage: 20,
-                nbHits: 2,
-                nbPages: 1,
-                page: 0,
-                processingTimeMS: 0,
-                exhaustiveNbHits: true,
-                params: '',
-                query: 'react',
-              } as SearchResponse<T>,
-            ]
-          : [
-              {
-                hits: [] as T[],
-                hitsPerPage: 0,
-                nbHits: 0,
-                nbPages: 0,
-                page: 0,
-                processingTimeMS: 0,
-                exhaustiveNbHits: true,
-                params: '',
-                query: 'nothing',
-              } as SearchResponse<T>,
-            ],
-      } as SearchResponses<T>;
+      const successResult: SearchResponse<T> = {
+        hits: [
+          {
+            hierarchy: { lvl0: 'React' },
+            objectID: '1',
+            url: 'https://react.dev',
+            content: 'React content',
+            type: 'lvl0',
+          } as unknown as Hit<T>,
+          {
+            hierarchy: { lvl0: 'Hooks' },
+            objectID: '2',
+            url: 'https://react.dev/hooks',
+            content: 'Hooks content',
+            type: 'lvl0',
+          } as unknown as Hit<T>,
+        ],
+        hitsPerPage: 20,
+        nbHits: 2,
+        nbPages: 1,
+        page: 0,
+        processingTimeMS: 0,
+        exhaustiveNbHits: true,
+        params: '',
+        query: 'react',
+      };
+      const emptyResult: SearchResponse<T> = {
+        hits: [],
+        hitsPerPage: 0,
+        nbHits: 0,
+        nbPages: 0,
+        page: 0,
+        processingTimeMS: 0,
+        exhaustiveNbHits: true,
+        params: '',
+        query: 'nothing',
+      };
+      const resultsResponse: SearchResponses<T> = {
+        results: shouldReturnResults ? [successResult] : [emptyResult],
+      };
+      return Promise.resolve(resultsResponse);
     };
 
-    render(<DocSearch transformSearchClient={(searchClient) => ({ ...searchClient, search: search as DocSearchTransformClient['search'] }) as DocSearchTransformClient} />);
+    const transformSearchClient = (searchClient: DocSearchTransformClient): DocSearchTransformClient => ({
+      ...searchClient,
+      search,
+    });
+
+    render(<DocSearch transformSearchClient={transformSearchClient} />);
 
     await act(async () => {
       fireEvent.click(await screen.findByText('Search'));
@@ -353,15 +352,12 @@ describe('api', () => {
     });
 
     it('opens ask AI screen and returns to search', async () => {
-      render(
-        <DocSearch
-          askAi="assistant"
-          transformSearchClient={(searchClient) => ({
-            ...searchClient,
-            search: noResultSearch as DocSearchTransformClient['search'],
-          }) as DocSearchTransformClient}
-        />,
-      );
+      const transformAiSearchClient = (searchClient: DocSearchTransformClient): DocSearchTransformClient => ({
+        ...searchClient,
+        search: noResultSearch,
+      });
+
+      render(<DocSearch askAi="assistant" transformSearchClient={transformAiSearchClient} />);
 
       await act(async () => {
         fireEvent.click(await screen.findByText('Search'));
