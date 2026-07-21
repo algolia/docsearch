@@ -41,6 +41,14 @@ describe('parseMarkdownToSafeHtml', () => {
   it('still renders fenced code blocks with escaped content', () => {
     const html = parseMarkdownToSafeHtml('```js\nconst x = "<script>"\n```');
     expect(html).toContain('DocSearch-CodeSnippet');
+    expect(html).toContain('language-js');
     expect(html).toContain('&lt;script&gt;');
+  });
+
+  it('does not allow HTML breakout via fenced-code lang', () => {
+    const html = parseMarkdownToSafeHtml('```"><img src=x onerror=alert(1)>\nx\n```');
+    expect(html).not.toMatch(/<img\b/i);
+    expect(html).not.toContain('onerror=alert');
+    expect(html).not.toContain('language-">');
   });
 });

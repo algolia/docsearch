@@ -38,4 +38,12 @@ describe('sanitizeUrl', () => {
     expect(sanitizeUrl('vbscript:msgbox(1)')).toBe('');
     expect(sanitizeUrl('//evil.example/path')).toBe('');
   });
+
+  it('blocks schemes broken up by whitespace or control characters', () => {
+    expect(sanitizeUrl(`java\tscript${':'}alert(1)`)).toBe('');
+    expect(sanitizeUrl(`java\nscript${':'}alert(1)`)).toBe('');
+    expect(sanitizeUrl(`java\rscript${':'}alert(1)`)).toBe('');
+    expect(sanitizeUrl(`java script${':'}alert(1)`)).toBe('');
+    expect(sanitizeUrl(`java\u0000script${':'}alert(1)`)).toBe('');
+  });
 });

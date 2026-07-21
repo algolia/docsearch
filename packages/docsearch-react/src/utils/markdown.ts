@@ -5,7 +5,8 @@ import { escapeHtml, sanitizeUrl } from './sanitize';
 const renderer = new marked.Renderer();
 
 renderer.code = ({ text, lang = '', escaped }: Tokens.Code): string => {
-  const languageClass = lang ? `language-${lang}` : '';
+  const safeLang = /^[a-zA-Z0-9_-]+$/.test(lang) ? lang : '';
+  const languageClass = safeLang ? `language-${safeLang}` : '';
   const safeCode = escaped ? text : escapeHtml(text);
   const encodedCode = encodeURIComponent(text);
 

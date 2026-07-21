@@ -37,20 +37,33 @@ export function sanitizeUrl(url: string | null | undefined): string {
     return '';
   }
 
+  // Browsers may ignore ASCII whitespace/controls inside schemes (e.g. java\tscript:)
+  let normalized = '';
+  for (let i = 0; i < trimmed.length; i += 1) {
+    const code = trimmed.charCodeAt(i);
+    // Keep characters outside ASCII controls (0x00-0x1F), space (0x20), and DEL (0x7F)
+    if (code > 0x20 && code !== 0x7f) {
+      normalized += trimmed[i];
+    }
+  }
+  if (!normalized) {
+    return '';
+  }
+
   // Protocol-relative URLs can be used for XSS in some contexts
-  if (trimmed.startsWith('//')) {
+  if (normalized.startsWith('//')) {
     return '';
   }
 
   // No scheme → treat as relative / fragment / query
-  if (!/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(trimmed)) {
+  if (!/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(normalized)) {
     return trimmed;
   }
 
   try {
-    const parsed = new URL(trimmed);
+    const parsed = new URL(normalized);
     if (parsed.protocol === 'http:' || parsed.protocol === 'https:' || parsed.protocol === 'mailto:') {
-      return trimmed;
+      return normalized;
     }
   } catch {
     return '';
