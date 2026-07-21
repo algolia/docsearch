@@ -44,13 +44,9 @@ renderer.image = ({ href, title, text }: Tokens.Image): string => {
   return `<img src="${safeHref}" alt="${escapeHtml(text)}"${titleAttr} />`;
 };
 
-// Escape raw HTML so LLM / markdown HTML is never executed in the DOM
 renderer.html = ({ text }: Tokens.HTML | Tokens.Tag): string => escapeHtml(text);
 
-/**
- * Parses markdown into HTML safe for `dangerouslySetInnerHTML`.
- * Escapes raw HTML and blocks unsafe link/image schemes (for example, javascript:).
- */
+/** Parses markdown into HTML safe for `dangerouslySetInnerHTML`. */
 export function parseMarkdownToSafeHtml(content: string): string {
   return marked.parse(content, {
     gfm: true,
