@@ -14,6 +14,33 @@ export function sanitizeUserInput(input: string): string {
   return escapeHtml(withoutTags);
 }
 
+function decodeUrlForSchemeCheck(value: string): string {
+  let current = value;
+  for (let i = 0; i < 3; i += 1) {
+    try {
+      const decoded = decodeURIComponent(current);
+      if (decoded === current) {
+        break;
+      }
+      current = decoded;
+    } catch {
+      break;
+    }
+  }
+  return current;
+}
+
+function stripControlsAndWhitespace(value: string): string {
+  let result = '';
+  for (let i = 0; i < value.length; i += 1) {
+    const code = value.charCodeAt(i);
+    if (code > 0x20 && code !== 0x7f) {
+      result += value[i];
+    }
+  }
+  return result;
+}
+
 /**
  * Returns a URL safe for href/src, or '' if unsafe.
  * Does not HTML-escape — callers building HTML strings must escape separately.
@@ -28,14 +55,7 @@ export function sanitizeUrl(url: string | null | undefined): string {
     return '';
   }
 
-  // Strip controls/whitespace so schemes like java\tscript: still get blocked
-  let normalized = '';
-  for (let i = 0; i < trimmed.length; i += 1) {
-    const code = trimmed.charCodeAt(i);
-    if (code > 0x20 && code !== 0x7f) {
-      normalized += trimmed[i];
-    }
-  }
+  const normalized = stripControlsAndWhitespace(decodeUrlForSchemeCheck(trimmed));
   if (!normalized) {
     return '';
   }

@@ -46,4 +46,12 @@ describe('sanitizeUrl', () => {
     expect(sanitizeUrl(`java script${':'}alert(1)`)).toBe('');
     expect(sanitizeUrl(`java\u0000script${':'}alert(1)`)).toBe('');
   });
+
+  it('blocks percent-encoded schemes', () => {
+    expect(sanitizeUrl('%6Aavascript:alert(1)')).toBe('');
+    expect(sanitizeUrl('%6aavascript:alert(1)')).toBe('');
+    expect(sanitizeUrl('java%09script:alert(1)')).toBe('');
+    expect(sanitizeUrl('java%0ascript:alert(1)')).toBe('');
+    expect(sanitizeUrl('%256Aavascript:alert(1)')).toBe('');
+  });
 });
