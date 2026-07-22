@@ -136,9 +136,9 @@ export default {
         ],
       },
       announcementBar: {
-        id: 'announcement-bar',
+        id: 'askai-agent-studio-migration',
         content:
-          'Ask AI is now part of <strong>Agent Studio</strong> - We\'re integrating Ask AI into Agent Studio, our centralized space to build and manage AI agents.<a target="_blank" rel="noopener noreferrer" href="https://www.algolia.com/doc/guides/algolia-ai/agent-studio">Explore Agent Studio</a>',
+          'You can migrate your Ask AI assistant to <strong>Agent Studio</strong>. <a href="/docs/v4/migrating-askai-to-agent-studio">See how to update DocSearch</a> · <a target="_blank" rel="noopener noreferrer" href="https://www.algolia.com/doc/guides/algolia-ai/agent-studio">Open Agent Studio docs</a>',
       },
       colorMode: {
         defaultMode: 'light',

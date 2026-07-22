@@ -1,0 +1,71 @@
+---
+title: Migrate Ask AI to Agent Studio
+---
+
+Ask AI is moving into [Algolia Agent Studio](https://www.algolia.com/doc/guides/algolia-ai/agent-studio), the place to build and manage AI agents. You can migrate your existing Ask AI assistant to Agent Studio, then update your DocSearch (or custom API) integration to use the new agent.
+
+## Migrate your assistant
+
+1. Open [Agent Studio](https://www.algolia.com/doc/guides/algolia-ai/agent-studio) in the Algolia dashboard.
+2. Migrate or recreate your Ask AI assistant as an Agent Studio agent.
+3. Copy the **agent ID** — you will use it in DocSearch (and custom API clients) below.
+
+## Update DocSearch
+
+### DocSearch v4
+
+Turn on the `agentStudio` flag and pass your Agent Studio **agent ID** as `assistantId`:
+
+```js
+docsearch({
+  appId: 'YOUR_APP_ID',
+  indexName: 'YOUR_INDEX_NAME',
+  apiKey: 'YOUR_SEARCH_API_KEY',
+  askAi: {
+    assistantId: 'YOUR_AGENT_ID',
+    agentStudio: true,
+  },
+});
+```
+
+```jsx
+<DocSearch
+  appId="YOUR_APP_ID"
+  indexName="YOUR_INDEX_NAME"
+  apiKey="YOUR_SEARCH_API_KEY"
+  askAi={{
+    assistantId: 'YOUR_AGENT_ID',
+    agentStudio: true,
+  }}
+/>
+```
+
+Notes for v4:
+
+- `agentStudio` lives inside the `askAi` object (not as a top-level prop on the modal).
+- When `agentStudio: true`, `searchParameters` must be keyed by index name. See [Using Agent Studio with DocSearch](/docs/docsearch#using-agent-studio-with-docsearch) and [`askAi.agentStudio`](/docs/api#askaiagentstudio).
+
+For the Sidepanel, set `agentStudio={true}` and pass the agent ID as `assistantId`. See the [Sidepanel API reference](/docs/sidepanel/api-reference#agentstudio).
+
+### DocSearch v5
+
+In DocSearch v5, Agent Studio is the default chat backend. Pass your Agent Studio **agent ID** directly (no `agentStudio` flag required). Exact prop names will be documented with the v5 release.
+
+## Custom Ask AI API integrations
+
+If you call the Ask AI HTTP API yourself (instead of using DocSearch), point your client at **Agent Studio** instead of the Ask AI chat API.
+
+Do not continue building new integrations against the Ask AI API endpoints. Use the Agent Studio APIs and guides:
+
+- [Agent Studio documentation](https://www.algolia.com/doc/guides/algolia-ai/agent-studio)
+- Completions are available under your application host, for example:  
+  `https://{APPLICATION_ID}.algolia.net/agent-studio/1/agents/{AGENT_ID}/completions`
+
+For DocSearch users, prefer the SDK configuration above — DocSearch wires the Agent Studio transport for you when `agentStudio: true`.
+
+## Related docs
+
+- [Get started with Ask AI](/docs/v4/askai) (legacy Ask AI setup)
+- [Ask AI API](/docs/v4/askai-api) (legacy; migrate to Agent Studio)
+- [DocSearch API — askAi.agentStudio](/docs/api#askaiagentstudio)
+- [Agent Studio on algolia.com](https://www.algolia.com/doc/guides/algolia-ai/agent-studio)

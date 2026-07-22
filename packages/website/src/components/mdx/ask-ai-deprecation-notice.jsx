@@ -4,12 +4,12 @@ import React from 'react';
 export default function AskAIDeprecationNotice() {
   return (
     <Admonition type="warning">
-      Ask AI is being migrated from a standalone DocSearch feature into Algolia's{' '}
+      Ask AI is being migrated into Algolia&apos;s{' '}
       <a href="https://www.algolia.com/doc/guides/algolia-ai/agent-studio" target="_blank" rel="noreferrer">
         Agent Studio
       </a>
-      . DocSearch v5 will fully support Agent Studio and transition to using it. A more detailed migration guide will be
-      published before the DocSearch v5 release.
+      . You can migrate your assistant now and update DocSearch to use your Agent Studio agent ID. See the{' '}
+      <a href="/docs/v4/migrating-askai-to-agent-studio">Ask AI → Agent Studio migration guide</a>.
     </Admonition>
   );
 }

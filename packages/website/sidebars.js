@@ -26,12 +26,18 @@ export default {
       label: 'Algolia Ask AI',
       items: [
         'v4/askai',
+        'v4/migrating-askai-to-agent-studio',
         'v4/askai-api',
         'v4/askai-prompts',
         'v4/askai-whitelisted-domains',
         'v4/askai-models',
         'v4/askai-markdown-indexing',
         'v4/askai-errors',
+        {
+          type: 'link',
+          label: 'Agent Studio',
+          href: 'https://www.algolia.com/doc/guides/algolia-ai/agent-studio',
+        },
         {
           type: 'link',
           label: 'Full Documentation',
