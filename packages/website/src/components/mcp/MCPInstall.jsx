@@ -1,6 +1,6 @@
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import { Code } from 'iconoir-react';
 import { track } from '@site/src/lib/segment';
-import { Code2 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import React, { useCallback, useState } from 'react';
 
@@ -551,7 +551,7 @@ function ClientLogo({ client, size = 'h-7 w-7' }) {
       <span
         className={`${size} flex items-center justify-center rounded-md bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200`}
       >
-        <Code2 aria-label={`${client.name} icon`} className="h-[70%] w-[70%]" />
+        <Code aria-label={`${client.name} icon`} className="h-[70%] w-[70%]" />
       </span>
     );
   }

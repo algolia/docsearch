@@ -48,7 +48,7 @@ export default {
           editUrl: 'https://github.com/algolia/docsearch/edit/main/packages/website/',
           versions: {
             current: {
-              label: 'Stable (v4.x)',
+              label: 'Latest (v4.x)',
             },
             v3: {
               label: 'Legacy (v3.x)',
@@ -115,11 +115,13 @@ export default {
             href: MCP_URL,
             target: '_self',
             position: 'left',
+            className: 'navbar-mcp-link',
           },
           {
-            label: 'Playground',
-            to: 'https://community.algolia.com/docsearch-playground/',
+            label: 'Sign up',
+            to: SIGNUP_LINK,
             position: 'left',
+            className: 'navbar-cta',
           },
           // right
           {
@@ -130,12 +132,6 @@ export default {
             href: 'https://github.com/algolia/docsearch',
             position: 'right',
             className: 'header-github-link',
-          },
-          {
-            label: 'Sign up',
-            to: SIGNUP_LINK,
-            position: 'right',
-            className: 'navbar-cta',
           },
         ],
       },

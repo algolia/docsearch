@@ -37,8 +37,8 @@ export default function Footer() {
   const { links = [], copyright } = footer;
 
   return (
-    <footer className="mt-16 border-t border-[var(--border)] bg-[var(--surface-raised)]">
-      <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
+    <footer className="pt-8 border-t border-[var(--border)] bg-[var(--surface-raised)]">
+      <div className="mx-auto w-full max-w-6xl px-4 py-12 md:px-0">
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
           {links.map((column, i) => (
             <div key={i}>

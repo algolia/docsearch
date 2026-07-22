@@ -12,7 +12,7 @@
      Neutral ramp is a warm h≈75 (not pure gray) so brand blue stays
      the only blue on the page. All color authored in OKLCH.
      ───────────────────────────────────────────────────────────── */
-  --bg: oklch(0.975 0.002 75);
+  --bg: white;
   --surface: oklch(0.995 0.001 75);
   --surface-raised: oklch(0.99 0.002 75);
   --border: oklch(0.905 0.005 75);
@@ -104,6 +104,7 @@
   --ifm-code-background: var(--surface-raised);
   --ifm-pre-background: var(--surface-raised);
   --ifm-code-border-radius: 6px;
+  --ifm-navbar-height: 4.5rem;
 
   --ifm-announcement-bar-background-color: var(--brand);
 
@@ -576,13 +577,9 @@ html[data-theme='dark'] .docsearch-logo {
   width: 24px;
   height: 24px;
   display: flex;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E")
-    no-repeat;
-}
-
-html[data-theme='dark'] .header-github-link::before {
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='white' d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E")
-    no-repeat;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHN0cm9rZS13aWR0aD0iMS41IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgY29sb3I9ImN1cnJlbnRDb2xvciI+PHBhdGggZD0iTTE2IDIyLjAyNjhWMTkuMTU2OEMxNi4wMzc1IDE4LjY4IDE1Ljk3MzEgMTguMjAwNiAxNS44MTEgMTcuNzUwNkMxNS42NDg5IDE3LjMwMDYgMTUuMzkyOSAxNi44OTAyIDE1LjA2IDE2LjU0NjhDMTguMiAxNi4xOTY4IDIxLjUgMTUuMDA2OCAyMS41IDkuNTQ2NzlDMjEuNDk5NyA4LjE1MDYyIDIwLjk2MjcgNi44MDc5OSAyMCA1Ljc5Njc5QzIwLjQ1NTggNC41NzUzIDIwLjQyMzYgMy4yMjUxNCAxOS45MSAyLjAyNjc5QzE5LjkxIDIuMDI2NzkgMTguNzMgMS42NzY3OSAxNiAzLjUwNjc5QzEzLjcwOCAyLjg4NTYxIDExLjI5MiAyLjg4NTYxIDguOTk5OTkgMy41MDY3OUM2LjI2OTk5IDEuNjc2NzkgNS4wODk5OSAyLjAyNjc5IDUuMDg5OTkgMi4wMjY3OUM0LjU3NjM2IDMuMjI1MTQgNC41NDQxMyA0LjU3NTMgNC45OTk5OSA1Ljc5Njc5QzQuMDMwMTEgNi44MTU0OSAzLjQ5MjUxIDguMTcwMjYgMy40OTk5OSA5LjU3Njc5QzMuNDk5OTkgMTQuOTk2OCA2Ljc5OTk4IDE2LjE4NjggOS45Mzk5OCAxNi41NzY4QzkuNjEwOTggMTYuOTE2OCA5LjM1NzI1IDE3LjMyMjIgOS4xOTUyOSAxNy43NjY3QzkuMDMzMzQgMTguMjExMiA4Ljk2Njc5IDE4LjY4NDkgOC45OTk5OSAxOS4xNTY4VjIyLjAyNjgiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48cGF0aCBkPSJNOSAyMC4wMjY3QzYgMjAuOTk5OSAzLjUgMjAuMDI2NyAyIDE3LjAyNjciIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48L3N2Zz4=") center / contain no-repeat;
+  mask: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHN0cm9rZS13aWR0aD0iMS41IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgY29sb3I9ImN1cnJlbnRDb2xvciI+PHBhdGggZD0iTTE2IDIyLjAyNjhWMTkuMTU2OEMxNi4wMzc1IDE4LjY4IDE1Ljk3MzEgMTguMjAwNiAxNS44MTEgMTcuNzUwNkMxNS42NDg5IDE3LjMwMDYgMTUuMzkyOSAxNi44OTAyIDE1LjA2IDE2LjU0NjhDMTguMiAxNi4xOTY4IDIxLjUgMTUuMDA2OCAyMS41IDkuNTQ2NzlDMjEuNDk5NyA4LjE1MDYyIDIwLjk2MjcgNi44MDc5OSAyMCA1Ljc5Njc5QzIwLjQ1NTggNC41NzUzIDIwLjQyMzYgMy4yMjUxNCAxOS45MSAyLjAyNjc5QzE5LjkxIDIuMDI2NzkgMTguNzMgMS42NzY3OSAxNiAzLjUwNjc5QzEzLjcwOCAyLjg4NTYxIDExLjI5MiAyLjg4NTYxIDguOTk5OTkgMy41MDY3OUM2LjI2OTk5IDEuNjc2NzkgNS4wODk5OSAyLjAyNjc5IDUuMDg5OTkgMi4wMjY3OUM0LjU3NjM2IDMuMjI1MTQgNC41NDQxMyA0LjU3NTMgNC45OTk5OSA1Ljc5Njc5QzQuMDMwMTEgNi44MTU0OSAzLjQ5MjUxIDguMTcwMjYgMy40OTk5OSA5LjU3Njc5QzMuNDk5OTkgMTQuOTk2OCA2Ljc5OTk4IDE2LjE4NjggOS45Mzk5OCAxNi41NzY4QzkuNjEwOTggMTYuOTE2OCA5LjM1NzI1IDE3LjMyMjIgOS4xOTUyOSAxNy43NjY3QzkuMDMzMzQgMTguMjExMiA4Ljk2Njc5IDE4LjY4NDkgOC45OTk5OSAxOS4xNTY4VjIyLjAyNjgiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48cGF0aCBkPSJNOSAyMC4wMjY3QzYgMjAuOTk5OSAzLjUgMjAuMDI2NyAyIDE3LjAyNjciIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48L3N2Zz4=") center / contain no-repeat;
 }
 
 [data-theme='light'] .shiki.github-light {
@@ -1058,15 +1055,17 @@ html[data-theme='dark'] .shimmer-effect {
   }
 }
 
-/* Install command chip (hero terminal): theme-aware pill */
+/* Install command chip: a dark "terminal" panel in both themes. Colors are
+   explicit (not derived from --text/--surface) so the pill reads the same on a
+   light page/card as it does in dark mode instead of collapsing into the card. */
 :root {
-  --term-bg: var(--text);
-  --term-border: var(--text);
-  --term-fg: var(--surface);
-  --term-fg-muted: color-mix(in oklch, var(--surface) 82%, transparent);
-  --term-btn-bg: color-mix(in oklch, white 10%, transparent);
-  --term-btn-bg-hover: color-mix(in oklch, white 20%, transparent);
-  --term-btn-border: color-mix(in oklch, white 16%, transparent);
+  --term-bg: white;
+  --term-border: oklch(0.87 0 0);
+  --term-fg: oklch(0.41 0 0);
+  --term-fg-muted: oklch(0.72 0.008 75);
+  --term-btn-bg: color-mix(in oklch, #a9abe7 50%, transparent);
+  --term-btn-bg-hover: color-mix(in oklch, #a9abe7 20%, transparent);
+  --term-btn-border: color-mix(in oklch, #a9abe7 16%, transparent);
 }
 [data-theme='dark'] {
   --term-bg: oklch(0.235 0.006 75);
@@ -1170,6 +1169,10 @@ html[data-theme='dark'] .shimmer-effect {
   max-width: 72rem;
   margin-inline: auto;
 }
+/* Homepage keeps the hero clean: hide the navbar search entry. */
+.homepage [class*='navbarSearchContainer'] {
+  display: none;
+}
 
 /* "Sign up" primary CTA (brand fill + inset highlight, like the MCP button) */
 .navbar-cta.navbar__link {
@@ -1177,6 +1180,7 @@ html[data-theme='dark'] .shimmer-effect {
   align-items: center;
   height: 2rem;
   padding-inline: 0.85rem;
+  margin: 0 1rem;
   border-radius: 8px;
   background: var(--brand);
   color: oklch(0.995 0.002 260) !important;
@@ -1195,6 +1199,33 @@ html[data-theme='dark'] .shimmer-effect {
 }
 [data-theme='dark'] .navbar-cta.navbar__link:hover {
   color: oklch(0.15 0.015 260) !important;
+}
+
+/* MCP is served at the same origin. */
+.navbar-mcp-link svg {
+  display: none;
+}
+
+/* Color-mode control: replace Docusaurus' light/dark/system SVGs with a single
+   Phosphor glyph (moon on light, sun on dark). The toggle is 3-state, so every
+   built-in icon — including the active `system` one — must be forced off. */
+button[class*='toggleButton'] {
+  --navbar-theme-icon: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHN0cm9rZS13aWR0aD0iMS41IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgY29sb3I9ImN1cnJlbnRDb2xvciI+PHBhdGggZD0iTTMgMTEuNTA2NkMzIDE2Ljc0OTcgNy4yNTAzNCAyMSAxMi40OTM0IDIxQzE2LjIyMDkgMjEgMTkuNDQ2NiAxOC44NTE4IDIxIDE1LjcyNTlDMTIuNDkzNCAxNS43MjU5IDguMjc0MTEgMTEuNTA2NiA4LjI3NDExIDNDNS4xNDgyMSA0LjU1MzQ0IDMgNy43NzkxNSAzIDExLjUwNjZaIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48L3BhdGg+PC9zdmc+");
+}
+html[data-theme='dark'] button[class*='toggleButton'] {
+  --navbar-theme-icon: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHN0cm9rZS13aWR0aD0iMS41IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgY29sb3I9ImN1cnJlbnRDb2xvciI+PHBhdGggZD0iTTEyIDE4QzE1LjMxMzcgMTggMTggMTUuMzEzNyAxOCAxMkMxOCA4LjY4NjI5IDE1LjMxMzcgNiAxMiA2QzguNjg2MjkgNiA2IDguNjg2MjkgNiAxMkM2IDE1LjMxMzcgOC42ODYyOSAxOCAxMiAxOFoiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48cGF0aCBkPSJNMjIgMTJMMjMgMTIiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48cGF0aCBkPSJNMTIgMlYxIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48L3BhdGg+PHBhdGggZD0iTTEyIDIzVjIyIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48L3BhdGg+PHBhdGggZD0iTTIwIDIwTDE5IDE5IiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48L3BhdGg+PHBhdGggZD0iTTIwIDRMMTkgNSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PC9wYXRoPjxwYXRoIGQ9Ik00IDIwTDUgMTkiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48cGF0aCBkPSJNNCA0TDUgNSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PC9wYXRoPjxwYXRoIGQ9Ik0xIDEyTDIgMTIiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48L3N2Zz4=");
+}
+button[class*='toggleButton'] svg[class*='toggleIcon'] {
+  display: none !important;
+}
+button[class*='toggleButton']::before {
+  content: '';
+  display: block;
+  width: 1.15rem;
+  height: 1.15rem;
+  background-color: currentColor;
+  -webkit-mask: var(--navbar-theme-icon) center / contain no-repeat;
+  mask: var(--navbar-theme-icon) center / contain no-repeat;
 }
 
 /* Sidebar */
@@ -1330,4 +1361,85 @@ pre code {
 }
 .pagination-nav__link:hover {
   border-color: var(--border-strong);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Trusted-by logo marquee — two rows drifting in opposite directions
+   ═══════════════════════════════════════════════════════════════════════ */
+.logo-marquee {
+  /* Single source of truth for spacing so the loop seam stays invisible:
+     the trailing gap after a group must equal the gap between logos. */
+  --logo-gap: clamp(2.5rem, 6vw, 4.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.logo-marquee-row {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.logo-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: logo-marquee-scroll var(--marquee-duration, 45s) linear infinite;
+}
+
+.logo-marquee-track--reverse {
+  animation-direction: reverse;
+}
+
+.logo-marquee-row:hover .logo-marquee-track {
+  animation-play-state: paused;
+}
+
+.logo-marquee-group {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--logo-gap);
+  padding-right: var(--logo-gap);
+}
+
+.logo-marquee-item {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  height: 3.5rem;
+}
+
+.logo-marquee-item img {
+  display: block;
+  height: 1.875rem;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.6;
+  transition: filter var(--dur-sm) var(--ease-out-quart),
+    opacity var(--dur-sm) var(--ease-out-quart);
+}
+
+.logo-marquee-item:hover img {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+@keyframes logo-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-marquee-track {
+    animation: none;
+    transform: none;
+  }
 }

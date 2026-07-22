@@ -38,33 +38,53 @@ const logos = [
   { alt: 'WebPack', src: 'img/usage-logos/webpack.svg', width: 158, href: 'https://webpack.js.org/concepts/' },
 ];
 
-export const Logos = () => {
+// Split the wall into two rows that drift in opposite directions.
+const half = Math.ceil(logos.length / 2);
+const rowOne = logos.slice(0, half);
+const rowTwo = logos.slice(half);
+
+function LogoLink({ alt, src, width, href, duplicate }) {
   return (
-    <div className="pt-4">
-      <div className="mx-auto max-w-5xl">
-        <div className="grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--border)] md:grid-cols-4">
-          {logos.map(({ alt, src, width, href }) => (
-            <a
-              key={alt}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex cursor-pointer flex-col items-center justify-center bg-[var(--surface)] p-6 transition-colors duration-200 !no-underline hover:bg-[var(--accent-light)] sm:p-10"
-            >
-              <img
-                alt={alt}
-                src={src}
-                width={width}
-                height={40}
-                className="max-h-10 w-full object-contain opacity-80 transition-opacity hover:opacity-100"
-              />
-              <span className="mt-4 text-sm font-medium text-[var(--text-tertiary)] !no-underline">
-                {alt}
-              </span>
-            </a>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      title={alt}
+      tabIndex={duplicate ? -1 : undefined}
+      className="logo-marquee-item no-underline!"
+    >
+      <img alt={alt} src={src} width={width} height={40} loading="lazy" />
+    </a>
+  );
+}
+
+function MarqueeRow({ items, duration, reverse }) {
+  return (
+    <div className="logo-marquee-row">
+      <div
+        className={`logo-marquee-track${reverse ? ' logo-marquee-track--reverse' : ''}`}
+        style={{ '--marquee-duration': duration }}
+      >
+        <div className="logo-marquee-group">
+          {items.map((logo) => (
+            <LogoLink key={logo.alt} {...logo} />
+          ))}
+        </div>
+        <div className="logo-marquee-group" aria-hidden="true">
+          {items.map((logo) => (
+            <LogoLink key={`${logo.alt}-dup`} {...logo} duplicate={true} />
           ))}
         </div>
       </div>
+    </div>
+  );
+}
+
+export const Logos = () => {
+  return (
+    <div className="logo-marquee mx-auto max-w-6xl pt-4">
+      <MarqueeRow items={rowOne} duration="40s" />
+      <MarqueeRow items={rowTwo} duration="55s" reverse={true} />
     </div>
   );
 };
