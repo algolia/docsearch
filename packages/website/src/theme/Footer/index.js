@@ -1,9 +1,8 @@
 import Link from '@docusaurus/Link';
 import { useThemeConfig } from '@docusaurus/theme-common';
 import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
-import React from 'react';
-
 import { DocSearchMark } from '@site/src/components/DocSearchMark';
+import React from 'react';
 
 /**
  * Footer (MCP vibe): hairline top border, raised surface, a column link grid
@@ -17,9 +16,7 @@ function FooterLink({ item }) {
   const isExternal = Boolean(href);
   // Normalize internal `to` against baseUrl so it resolves from the site root
   // (not relative to the current page, which would break on nested doc pages).
-  const props = isExternal
-    ? { href, target: '_blank', rel: 'noopener noreferrer' }
-    : { to: withBaseUrl(to) };
+  const props = isExternal ? { href, target: '_blank', rel: 'noopener noreferrer' } : { to: withBaseUrl(to) };
   return (
     <Link
       {...props}
@@ -40,14 +37,14 @@ export default function Footer() {
     <footer className="pt-8 border-t border-[var(--border)] bg-[var(--surface-raised)]">
       <div className="mx-auto w-full max-w-6xl px-4 py-12 md:px-0">
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
-          {links.map((column, i) => (
-            <div key={i}>
+          {links.map((column) => (
+            <div key={column.title}>
               <h3 className="font-display text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--text)]">
                 {column.title}
               </h3>
               <ul className="mt-4 list-none space-y-2.5 p-0">
-                {(column.items ?? []).map((item, j) => (
-                  <li key={j} className="m-0">
+                {(column.items ?? []).map((item) => (
+                  <li key={item.href ?? item.to ?? item.label} className="m-0">
                     <FooterLink item={item} />
                   </li>
                 ))}
@@ -63,11 +60,7 @@ export default function Footer() {
               <span className="ds-brand__word font-display">DOCSEARCH</span>
               <span className="ds-brand__by">
                 by
-                <img
-                  src={withBaseUrl('/img/Algolia-logo-blue.svg')}
-                  alt="Algolia"
-                  className="ds-brand__algolia"
-                />
+                <img src={withBaseUrl('/img/Algolia-logo-blue.svg')} alt="Algolia" className="ds-brand__algolia" />
               </span>
             </span>
           </Link>

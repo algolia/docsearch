@@ -34,10 +34,7 @@ const POINTER_RADIUS = 8;
 const POINTER_STIR_FULL = 3;
 const Y_ASPECT = CELL_H / CELL_W;
 
-const FIELD_GLYPHS =
-  'abcdefghijklmnopqrstuvwxyz0123456789' +
-  '{}[]()<>/=;:.+-*&|#$%_?!{}[]()<>/=;:.+-*&|#$%_?!' +
-  '~^\'"`\\@,λ';
+const FIELD_GLYPHS = 'abcdefghijklmnopqrstuvwxyz0123456789{}[]()<>/=;:.+-*&|#$%_?!{}[]()<>/=;:.+-*&|#$%_?!~^\'"`\\@,λ';
 const SAFE_GLYPHS = '{}<>/;=*&#';
 const DECODE_GLYPHS = 'docsearchmp';
 
@@ -65,6 +62,8 @@ const LOGO_GLOW_RADIUS = 12;
 const LOGO_GLOW = 0.55;
 const NO_HOME = 0xffff;
 
+/* Mulberry32 PRNG — bitwise ops are intentional. */
+/* eslint-disable no-bitwise */
 function mulberry32(seed) {
   let a = seed;
   return () => {
@@ -75,6 +74,7 @@ function mulberry32(seed) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
+/* eslint-enable no-bitwise */
 
 function auditionGlyphs(candidates, font) {
   const probe = document.createElement('canvas');
@@ -203,13 +203,14 @@ function createCursorWakeScene(fieldCount, decodeCount, logoGlyph) {
       for (let r = 0; r < logoH; r++) {
         const line = LOGO_ART[r];
         for (let c = 0; c < line.length; c++) {
-          if (line[c] === ' ') continue;
-          const i = (y0 + r) * cols + (x0 + c);
-          const g = logoGlyph(line[c]);
-          base[i] = LOGO_BASE + rng() * 0.08;
-          home[i] = g;
-          scene.glyph[i] = g;
-          scene.alpha[i] = base[i];
+          if (line[c] !== ' ') {
+            const i = (y0 + r) * cols + (x0 + c);
+            const g = logoGlyph(line[c]);
+            base[i] = LOGO_BASE + rng() * 0.08;
+            home[i] = g;
+            scene.glyph[i] = g;
+            scene.alpha[i] = base[i];
+          }
         }
       }
     }
@@ -224,11 +225,10 @@ function createCursorWakeScene(fieldCount, decodeCount, logoGlyph) {
     const dx = px - prevX;
     const dy = (py - prevY) * Y_ASPECT;
     const segLen2 = dx * dx + dy * dy;
-    const strength = pointerOn
-      ? Math.min(1, Math.sqrt(segLen2) / POINTER_STIR_FULL)
-      : 0;
+    const strength = pointerOn ? Math.min(1, Math.sqrt(segLen2) / POINTER_STIR_FULL) : 0;
     const pxa = px;
     const pya = py * Y_ASPECT;
+    /* eslint-disable no-continue -- hot path: skip empty / culled cells */
     for (let i = 0; i < count; i++) {
       if (base[i] === 0) continue;
       let a = base[i] * (0.85 + 0.15 * Math.sin(phase[i] + time * speed[i]));
@@ -241,9 +241,8 @@ function createCursorWakeScene(fieldCount, decodeCount, logoGlyph) {
         }
       }
       if (strength > 0) {
-        let t =
-          segLen2 > 0 ? ((cx[i] - sx) * dx + (cy[i] - sy) * dy) / segLen2 : 0;
-        t = t < 0 ? 0 : t > 1 ? 1 : t;
+        let t = segLen2 > 0 ? ((cx[i] - sx) * dx + (cy[i] - sy) * dy) / segLen2 : 0;
+        t = Math.min(1, Math.max(0, t));
         const qx = cx[i] - (sx + t * dx);
         const qy = cy[i] - (sy + t * dy);
         const d = Math.sqrt(qx * qx + qy * qy);
@@ -261,10 +260,7 @@ function createCursorWakeScene(fieldCount, decodeCount, logoGlyph) {
       if (flicker[i] > 0) {
         flicker[i] -= dt;
         if (accent[i] === 0) {
-          glyph[i] =
-            flicker[i] <= 0 && home[i] !== NO_HOME
-              ? home[i]
-              : Math.floor(roll() * fieldCount);
+          glyph[i] = flicker[i] <= 0 && home[i] !== NO_HOME ? home[i] : Math.floor(roll() * fieldCount);
         }
       }
       if (hot[i] > 0) {
@@ -275,8 +271,7 @@ function createCursorWakeScene(fieldCount, decodeCount, logoGlyph) {
         accentT[i] -= dt;
         if (accentT[i] <= 0) {
           accent[i] = 0;
-          glyph[i] =
-            home[i] !== NO_HOME ? home[i] : Math.floor(roll() * fieldCount);
+          glyph[i] = home[i] !== NO_HOME ? home[i] : Math.floor(roll() * fieldCount);
         } else {
           const p = 1 - accentT[i] / ACCENT_MS;
           a = Math.max(a, Math.sin(Math.PI * p) * 0.65);
@@ -284,6 +279,7 @@ function createCursorWakeScene(fieldCount, decodeCount, logoGlyph) {
       }
       alpha[i] = a > 1 ? 1 : a;
     }
+    /* eslint-enable no-continue */
     prevX = px;
     prevY = py;
   }
@@ -297,20 +293,15 @@ function createBackdropEngine(canvas) {
   const ctx = rawCtx;
 
   const root = document.documentElement;
-  const monoStack =
-    getComputedStyle(root).getPropertyValue('--font-mono').trim() || 'monospace';
+  const monoStack = getComputedStyle(root).getPropertyValue('--font-mono').trim() || 'monospace';
   const font = `400 ${FONT_SIZE}px ${monoStack}`;
 
   const fieldGlyphs = auditionGlyphs([...FIELD_GLYPHS], font);
   const glyphs = [...fieldGlyphs, ...DECODE_GLYPHS];
-  const scene = createCursorWakeScene(
-    fieldGlyphs.length,
-    DECODE_GLYPHS.length,
-    (ch) => {
-      const i = fieldGlyphs.indexOf(ch);
-      return i >= 0 ? i : Math.max(0, fieldGlyphs.indexOf('.'));
-    },
-  );
+  const scene = createCursorWakeScene(fieldGlyphs.length, DECODE_GLYPHS.length, (ch) => {
+    const i = fieldGlyphs.indexOf(ch);
+    return i >= 0 ? i : Math.max(0, fieldGlyphs.indexOf('.'));
+  });
 
   let dpr = 1;
   let cssW = 0;
@@ -332,8 +323,7 @@ function createBackdropEngine(canvas) {
   const reducedQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   let reduced = reducedQuery.matches;
 
-  const running = () =>
-    !disposed && !reduced && !hidden && intersecting && !contextLost;
+  const running = () => !disposed && !reduced && !hidden && intersecting && !contextLost;
 
   function scheduleFrame() {
     if (rafId === null && !disposed && !contextLost) {
@@ -355,10 +345,8 @@ function createBackdropEngine(canvas) {
     if (atlasDirty) {
       const styles = getComputedStyle(root);
       const colors = [
-        styles.getPropertyValue('--backdrop-glyph').trim() ||
-          'rgb(128 128 128 / 0.4)',
-        styles.getPropertyValue('--backdrop-glyph-accent').trim() ||
-          'rgb(84 104 255 / 0.6)',
+        styles.getPropertyValue('--backdrop-glyph').trim() || 'rgb(128 128 128 / 0.4)',
+        styles.getPropertyValue('--backdrop-glyph-accent').trim() || 'rgb(84 104 255 / 0.6)',
       ];
       atlas = buildAtlas(glyphs, font, colors, dpr);
       atlasDirty = false;
@@ -366,10 +354,7 @@ function createBackdropEngine(canvas) {
     if (active) {
       if (pointerDirty) {
         const rect = canvas.getBoundingClientRect();
-        scene.setPointer(
-          (pointerClientX - rect.left) / cellW,
-          (pointerClientY - rect.top) / cellH,
-        );
+        scene.setPointer((pointerClientX - rect.left) / cellW, (pointerClientY - rect.top) / cellH);
         pointerDirty = false;
       }
       const dt = lastTs < 0 ? 0 : Math.min(ts - lastTs, MAX_STEP_MS);
@@ -390,19 +375,20 @@ function createBackdropEngine(canvas) {
     const count = cols * rows;
     for (let i = 0; i < count; i++) {
       const a = alpha[i];
-      if (a <= ALPHA_CULL) continue;
-      ctx.globalAlpha = a > 1 ? 1 : a;
-      ctx.drawImage(
-        sprites,
-        glyph[i] * spriteW,
-        accent[i] * spriteH,
-        spriteW,
-        spriteH,
-        (i % cols) * cellW - SPRITE_PAD,
-        Math.floor(i / cols) * cellH - SPRITE_PAD,
-        dw,
-        dh,
-      );
+      if (a > ALPHA_CULL) {
+        ctx.globalAlpha = a > 1 ? 1 : a;
+        ctx.drawImage(
+          sprites,
+          glyph[i] * spriteW,
+          accent[i] * spriteH,
+          spriteW,
+          spriteH,
+          (i % cols) * cellW - SPRITE_PAD,
+          Math.floor(i / cols) * cellH - SPRITE_PAD,
+          dw,
+          dh,
+        );
+      }
     }
     ctx.globalAlpha = 1;
   }

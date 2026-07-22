@@ -93,9 +93,10 @@ function extractQuestion(init) {
     const messages = body?.messages ?? [];
     for (let i = messages.length - 1; i >= 0; i--) {
       const message = messages[i];
-      if (message?.role !== 'user') continue;
-      const textPart = (message.parts ?? []).find((p) => p.type === 'text');
-      if (textPart?.text) return textPart.text;
+      if (message?.role === 'user') {
+        const textPart = (message.parts ?? []).find((p) => p.type === 'text');
+        if (textPart?.text) return textPart.text;
+      }
     }
   } catch {
     // Ignore malformed bodies; fall back to the generic answer.
@@ -141,10 +142,14 @@ function buildStream(question, { signal } = {}) {
       const wait = (ms) =>
         new Promise((resolve) => {
           const timer = setTimeout(resolve, ms);
-          signal?.addEventListener('abort', () => {
-            clearTimeout(timer);
-            resolve();
-          }, { once: true });
+          signal?.addEventListener(
+            'abort',
+            () => {
+              clearTimeout(timer);
+              resolve();
+            },
+            { once: true },
+          );
         });
 
       send({ type: 'start', messageId: id, messageMetadata: {} });
@@ -185,8 +190,8 @@ function mockResponse(question, init) {
  * canned fixture while `isAutopilotActive()` is true. Returns a cleanup function
  * that restores the original `fetch`.
  *
- * @param {() => boolean} isAutopilotActive
- * @returns {() => void}
+ * @param {() => boolean} isAutopilotActive - Whether the demo autopilot is currently driving the UI.
+ * @returns {() => void} Cleanup that restores the original `window.fetch`.
  */
 export function installAskAiMock(isAutopilotActive) {
   if (typeof window === 'undefined') return () => {};
@@ -194,7 +199,7 @@ export function installAskAiMock(isAutopilotActive) {
   const originalFetch = window.fetch.bind(window);
 
   window.fetch = function patchedFetch(input, init) {
-    const url = typeof input === 'string' ? input : input?.url ?? '';
+    const url = typeof input === 'string' ? input : (input?.url ?? '');
     const isCompletions = COMPLETIONS_RE.test(url);
 
     if (isCompletions && isAutopilotActive()) {

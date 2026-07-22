@@ -1,6 +1,6 @@
 import useBaseUrl from '@docusaurus/useBaseUrl';
-import { Code } from 'iconoir-react';
 import { track } from '@site/src/lib/segment';
+import { Code } from 'iconoir-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import React, { useCallback, useState } from 'react';
 

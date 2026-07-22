@@ -16,7 +16,7 @@ export default function DemoEmbedPage() {
   return (
     <>
       <Head>
-        <html className="docsearch-demo-embed-html" />
+        <html lang="en" className="docsearch-demo-embed-html" />
         <body className="docsearch-demo-embed-body" />
         <meta name="robots" content="noindex, nofollow" />
         <title>DocSearch live demo</title>

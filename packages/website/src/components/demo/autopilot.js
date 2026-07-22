@@ -75,8 +75,8 @@ export function createAutopilot({ modalRef, sidepanelRef, indexName }) {
   }
 
   async function waitFor(selector, t, timeout = 4000) {
-    const start = Date.now();
-    while (Date.now() - start < timeout) {
+    const startedAt = Date.now();
+    while (Date.now() - startedAt < timeout) {
       if (t.cancelled) return null;
       const el = document.querySelector(selector);
       if (el) return el;
@@ -299,9 +299,7 @@ export function createAutopilot({ modalRef, sidepanelRef, indexName }) {
     if (reducedMotion || window.innerWidth < MIN_AUTOPLAY_WIDTH) {
       enabled = false;
     }
-    activityEvents.forEach((name) =>
-      document.addEventListener(name, onUserActivity, { capture: true, passive: true }),
-    );
+    activityEvents.forEach((name) => document.addEventListener(name, onUserActivity, { capture: true, passive: true }));
   }
 
   function stop() {
