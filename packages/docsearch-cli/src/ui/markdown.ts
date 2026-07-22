@@ -23,7 +23,9 @@ export function renderMarkdown(text: string): string {
   for (const line of lines) {
     const fence = line.match(CODE_FENCE);
     if (fence) {
-      output.push(inCodeBlock ? renderCodeBottom() : renderCodeTop(fence[1].trim()));
+      output.push(
+        inCodeBlock ? renderCodeBottom() : renderCodeTop(fence[1].trim())
+      );
       inCodeBlock = !inCodeBlock;
     } else if (inCodeBlock) {
       output.push(renderCodeLine(line));
@@ -46,12 +48,16 @@ function renderProseLine(line: string, width: number): string[] {
 
   const heading = line.match(HEADING);
   if (heading) {
-    return [`${color.magenta(symbols.accent)} ${color.bold(color.cyan(heading[2]))}`];
+    return [
+      `${color.magenta(symbols.accent)} ${color.bold(color.cyan(heading[2]))}`,
+    ];
   }
 
   const source = line.match(SOURCE);
   if (source) {
-    return [`  ${color.dim(symbols.link)} ${color.underline(color.blue(source[1]))}`];
+    return [
+      `  ${color.dim(symbols.link)} ${color.underline(color.blue(source[1]))}`,
+    ];
   }
 
   const bullet = line.match(BULLET);
@@ -78,7 +84,7 @@ function renderBullet(content: string, width: number): string[] {
 
   const marker = color.cyan(symbols.bullet);
   return wrap(content, width - 2).map((part, index) =>
-    index === 0 ? `${marker} ${styleInline(part)}` : `  ${styleInline(part)}`,
+    index === 0 ? `${marker} ${styleInline(part)}` : `  ${styleInline(part)}`
   );
 }
 
@@ -101,7 +107,9 @@ function renderMetaField(key: string, value: string, width: number): string[] {
 
   const indent = ' '.repeat(key.length + 4);
   return wrap(value, width - key.length - 4).map((part, index) =>
-    index === 0 ? `  ${color.dim(key)}  ${styleInline(part)}` : `${indent}${styleInline(part)}`,
+    index === 0
+      ? `  ${color.dim(key)}  ${styleInline(part)}`
+      : `${indent}${styleInline(part)}`
   );
 }
 
@@ -115,7 +123,8 @@ function renderScore(label: string, value: string): string {
 
   const clamped = Math.max(0, Math.min(100, score));
   const filled = Math.round((clamped / 100) * 10);
-  const bar = symbols.scoreOn.repeat(filled) + symbols.scoreOff.repeat(10 - filled);
+  const bar =
+    symbols.scoreOn.repeat(filled) + symbols.scoreOff.repeat(10 - filled);
   const tint = scoreTint(score);
 
   return `  ${paddedLabel} ${tint(bar)} ${tint(String(value))}`;
@@ -165,7 +174,8 @@ function styleInline(text: string): string {
   return text
     .replace(
       /\[([^\]]+)\]\(([^)]+)\)/g,
-      (_match, label: string, url: string) => `${color.underline(color.blue(label))}${color.dim(` (${url})`)}`,
+      (_match, label: string, url: string) =>
+        `${color.underline(color.blue(label))}${color.dim(` (${url})`)}`
     )
     .replace(/`([^`]+)`/g, (_match, code: string) => color.cyan(code))
     .replace(/\*\*([^*]+)\*\*/g, (_match, bold: string) => color.bold(bold));

@@ -31,8 +31,8 @@
   --docsearch-modal-radius: 12px;
   --docsearch-modal-variable-height: 60dvh;
   --docsearch-modal-background: rgba(255, 255, 255, 1);
-  --docsearch-modal-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px,
-    rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,
+  --docsearch-modal-shadow:
+    rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,
     rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
 
   /* searchbox */
@@ -58,8 +58,8 @@
   /* footer */
   --docsearch-footer-height: 52px;
   --docsearch-footer-background: #ffffffa6;
-  --docsearch-footer-shadow: 0 -1px 0 0 rgb(224, 227, 232),
-    0 -3px 6px 0 rgba(69, 98, 155, 0.12);
+  --docsearch-footer-shadow:
+    0 -1px 0 0 rgb(224, 227, 232), 0 -3px 6px 0 rgba(69, 98, 155, 0.12);
 
   /* animations */
   --fav-out-dur: 160ms;
@@ -77,19 +77,27 @@
   );
 
   --docsearch-dropdown-menu-background: var(--docsearch-hit-background);
-  --docsearch-dropdown-menu-item-hover-background: var(--docsearch-background-color);
+  --docsearch-dropdown-menu-item-hover-background: var(
+    --docsearch-background-color
+  );
 
   /* Chip */
   --docsearch-chip-text-color: var(--docsearch-primary-dark-color);
   --docsearch-chip-background: rgb(187, 209, 255);
 
   /* Menu */
-  --docsearch-menu-trigger-active-background: var(--docsearch-soft-primary-color);
-  --docsearch-menu-trigger-active-text-color: var(--docsearch-primary-dark-color);
+  --docsearch-menu-trigger-active-background: var(
+    --docsearch-soft-primary-color
+  );
+  --docsearch-menu-trigger-active-text-color: var(
+    --docsearch-primary-dark-color
+  );
 
   /* Popover */
   --docsearch-popover-background: #fff;
-  --docsearch-popover-shadow: 0px 0px 0px 1px rgba(33, 36, 61, 0.05), 0px 4px 8px -2px rgba(33, 36, 61, 0.25);
+  --docsearch-popover-shadow:
+    0px 0px 0px 1px rgba(33, 36, 61, 0.05),
+    0px 4px 8px -2px rgba(33, 36, 61, 0.25);
   --docsearch-popover-arrow-color: rgb(230, 230, 240);
 }
 
@@ -108,8 +116,8 @@ html[data-theme='dark'] {
   --docsearch-icon-color: rgba(182, 183, 213, 1);
   --docsearch-container-background: rgba(9, 10, 17, 0.8);
   --docsearch-modal-background: rgb(21, 23, 42);
-  --docsearch-modal-shadow: inset 1px 1px 0 0 rgb(44, 46, 64),
-    0 3px 8px 0 rgb(0, 3, 9);
+  --docsearch-modal-shadow:
+    inset 1px 1px 0 0 rgb(44, 46, 64), 0 3px 8px 0 rgb(0, 3, 9);
   --docsearch-searchbox-background: #000000a6;
   --docsearch-searchbox-focus-background: #000000a6;
   --docsearch-hit-color: rgb(190, 195, 201);
@@ -120,8 +128,8 @@ html[data-theme='dark'] {
   --docsearch-key-color: rgba(182, 183, 213, 1);
   --docsearch-key-pressed-shadow: inset 0 2px 4px rgba(12, 13, 20, 0.4);
   --docsearch-footer-background: #000000a6;
-  --docsearch-footer-shadow: inset 0 1px 0 0 rgba(73, 76, 106, 0.5),
-    0 -4px 8px 0 rgba(0, 0, 0, 0.2);
+  --docsearch-footer-shadow:
+    inset 0 1px 0 0 rgba(73, 76, 106, 0.5), 0 -4px 8px 0 rgba(0, 0, 0, 0.2);
   --docsearch-logo-color: rgb(255, 255, 255);
   --docsearch-muted-color: rgb(127, 132, 151);
   --shimmer-bg: linear-gradient(
@@ -132,7 +140,9 @@ html[data-theme='dark'] {
     rgb(224, 227, 232) 95%
   );
   --docsearch-dropdown-menu-background: var(--docsearch-hit-focus-background);
-  --docsearch-dropdown-menu-item-hover-background: var(--docsearch-modal-background);
+  --docsearch-dropdown-menu-item-hover-background: var(
+    --docsearch-modal-background
+  );
   --docsearch-search-button-background: var(--docsearch-modal-background);
   --docsearch-search-button-text-color: var(--docsearch-text-color);
 
@@ -141,11 +151,15 @@ html[data-theme='dark'] {
   --docsearch-chip-background: var(--docsearch-hit-focus-background);
 
   /* Menu */
-  --docsearch-menu-trigger-active-background: var(--docsearch-hit-focus-background);
+  --docsearch-menu-trigger-active-background: var(
+    --docsearch-hit-focus-background
+  );
   --docsearch-menu-trigger-active-text-color: var(--docsearch-text-color);
 
   /* Popover */
   --docsearch-popover-background: var(--docsearch-hit-focus-background);
-  --docsearch-popover-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.08), 0px 4px 8px -2px rgba(0, 0, 0, 0.55);
+  --docsearch-popover-shadow:
+    0px 0px 0px 1px rgba(255, 255, 255, 0.08),
+    0px 4px 8px -2px rgba(0, 0, 0, 0.55);
   --docsearch-popover-arrow-color: var(--docsearch-hit-focus-background);
 }

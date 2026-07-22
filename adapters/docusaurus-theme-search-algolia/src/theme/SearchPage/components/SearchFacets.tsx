@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. And its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file
+ * in the root directory of this source tree.
  */
 
 import { translate } from '@docusaurus/Translate';
@@ -23,10 +23,14 @@ type SearchFacetsProps = {
   versionHelpers: DocsSearchVersionsHelpers;
 };
 
-function VersionSelects({ versionHelpers }: { versionHelpers: DocsSearchVersionsHelpers }): ReactNode {
-  const versionedPluginEntries = Object.entries(versionHelpers.allDocsData).filter(
-    ([, docsData]) => docsData.versions.length > 1,
-  );
+function VersionSelects({
+  versionHelpers,
+}: {
+  versionHelpers: DocsSearchVersionsHelpers;
+}): ReactNode {
+  const versionedPluginEntries = Object.entries(
+    versionHelpers.allDocsData
+  ).filter(([, docsData]) => docsData.versions.length > 1);
 
   if (versionedPluginEntries.length === 0) {
     return null;
@@ -42,16 +46,23 @@ function VersionSelects({ versionHelpers }: { versionHelpers: DocsSearchVersions
         })}
       </h3>
       {versionedPluginEntries.map(([pluginId, docsData]) => {
-        const labelPrefix = versionedPluginEntries.length > 1 ? `${pluginId}: ` : '';
+        const labelPrefix =
+          versionedPluginEntries.length > 1 ? `${pluginId}: ` : '';
         return (
           <select
             key={pluginId}
             defaultValue={versionHelpers.searchVersions[pluginId]}
             className={styles.versionSelect}
-            onBlur={(event) => versionHelpers.setSearchVersion(pluginId, event.target.value)}
+            onBlur={(event) =>
+              versionHelpers.setSearchVersion(pluginId, event.target.value)
+            }
           >
             {docsData.versions.map((version) => (
-              <option key={version.name} label={`${labelPrefix}${version.label}`} value={version.name} />
+              <option
+                key={version.name}
+                label={`${labelPrefix}${version.label}`}
+                value={version.name}
+              />
             ))}
           </select>
         );
@@ -71,7 +82,10 @@ export function SearchFacets({
 }: SearchFacetsProps): ReactNode {
   const [open, setOpen] = useState(false);
 
-  const activeCount = Object.values(refinements).reduce((sum, values) => sum + values.length, 0);
+  const activeCount = Object.values(refinements).reduce(
+    (sum, values) => sum + values.length,
+    0
+  );
 
   return (
     <aside
@@ -95,9 +109,17 @@ export function SearchFacets({
             message: 'Filters',
             description: 'The label for the mobile filters toggle button',
           })}
-          {activeCount > 0 && <span className={styles.filtersToggleBadge}>{activeCount}</span>}
+          {activeCount > 0 && (
+            <span className={styles.filtersToggleBadge}>{activeCount}</span>
+          )}
         </span>
-        <svg className={styles.filtersToggleChevron} width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+        <svg
+          className={styles.filtersToggleChevron}
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          aria-hidden="true"
+        >
           <path
             d="M4 6l4 4 4-4"
             fill="none"
@@ -109,14 +131,22 @@ export function SearchFacets({
         </svg>
       </button>
 
-      <div id="search-page-filters-panel" className={clsx(styles.sidebarPanel, open && styles.sidebarPanelOpen)}>
+      <div
+        id="search-page-filters-panel"
+        className={clsx(styles.sidebarPanel, open && styles.sidebarPanelOpen)}
+      >
         {hasActiveRefinements && (
           <div className={styles.sidebarHeaderMobileClear}>
-            <button type="button" className={styles.clearFacetsButton} onClick={onClear}>
+            <button
+              type="button"
+              className={styles.clearFacetsButton}
+              onClick={onClear}
+            >
               {translate({
                 id: 'theme.SearchPage.clearFilters',
                 message: 'Clear all',
-                description: 'The label for the button that clears all active filters',
+                description:
+                  'The label for the button that clears all active filters',
               })}
             </button>
           </div>
@@ -131,24 +161,33 @@ export function SearchFacets({
             })}
           </span>
           {hasActiveRefinements && (
-            <button type="button" className={styles.clearFacetsButton} onClick={onClear}>
+            <button
+              type="button"
+              className={styles.clearFacetsButton}
+              onClick={onClear}
+            >
               {translate({
                 id: 'theme.SearchPage.clearFilters',
                 message: 'Clear all',
-                description: 'The label for the button that clears all active filters',
+                description:
+                  'The label for the button that clears all active filters',
               })}
             </button>
           )}
         </div>
 
-        {showVersionSelects && <VersionSelects versionHelpers={versionHelpers} />}
+        {showVersionSelects && (
+          <VersionSelects versionHelpers={versionHelpers} />
+        )}
 
         {facets.map((group) => (
           <div key={group.attribute} className={styles.facetGroup}>
             <h3 className={styles.facetLabel}>{group.label}</h3>
             <ul className={styles.facetList}>
               {group.items.map((value) => {
-                const isChecked = refinements[group.attribute]?.includes(value.name) ?? value.isRefined;
+                const isChecked =
+                  refinements[group.attribute]?.includes(value.name) ??
+                  value.isRefined;
                 return (
                   <li key={value.name}>
                     <label className={styles.facetItem}>

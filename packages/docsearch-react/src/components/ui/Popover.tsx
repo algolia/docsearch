@@ -7,7 +7,10 @@ export function Popover({ ...props }: PopoverPrimitive.Root.Props) {
   return <PopoverPrimitive.Root {...props} />;
 }
 
-function PopoverTrigger({ className, ...props }: PopoverPrimitive.Trigger.Props) {
+function PopoverTrigger({
+  className,
+  ...props
+}: PopoverPrimitive.Trigger.Props) {
   const cn = `DocSearch-Popover-Trigger${className ? ` ${className}` : ''}`;
   return <PopoverPrimitive.Trigger className={cn} {...props} />;
 }
@@ -56,7 +59,9 @@ function PopoverPopup({
 Popover.Popup = PopoverPopup;
 
 function PopoverTitle({ ...props }: PopoverPrimitive.Title.Props) {
-  return <PopoverPrimitive.Title className="DocSearch-Popover-Title" {...props} />;
+  return (
+    <PopoverPrimitive.Title className="DocSearch-Popover-Title" {...props} />
+  );
 }
 
 Popover.Title = PopoverTitle;

@@ -19,7 +19,9 @@ async function createTempDir(): Promise<string> {
 }
 
 afterEach(async () => {
-  await Promise.all(tempDirs.splice(0).map((path) => rm(path, { force: true, recursive: true })));
+  await Promise.all(
+    tempDirs.splice(0).map((path) => rm(path, { force: true, recursive: true }))
+  );
 });
 
 describe('setupDocSearch', () => {
@@ -43,18 +45,26 @@ describe('setupDocSearch', () => {
       skillStatus: 'installed',
     });
 
-    const mcp = JSON.parse(await readFile(join(cwd, '.cursor', 'mcp.json'), 'utf-8')) as {
+    const mcp = JSON.parse(
+      await readFile(join(cwd, '.cursor', 'mcp.json'), 'utf-8')
+    ) as {
       mcpServers: Record<string, { url: string }>;
     };
     expect(mcp.mcpServers[DOCSEARCH_MCP_SERVER_NAME]).toEqual({
       url: 'https://example.com/mcp',
     });
 
-    const rule = await readFile(join(cwd, '.cursor', 'rules', `${DOCSEARCH_MCP_SERVER_NAME}.mdc`), 'utf-8');
+    const rule = await readFile(
+      join(cwd, '.cursor', 'rules', `${DOCSEARCH_MCP_SERVER_NAME}.mdc`),
+      'utf-8'
+    );
     expect(rule).toContain('alwaysApply: true');
     expect(rule).toContain('algolia_docsearch_search_docs');
 
-    const skill = await readFile(join(cwd, '.cursor', 'skills', DOCSEARCH_MCP_SERVER_NAME, 'SKILL.md'), 'utf-8');
+    const skill = await readFile(
+      join(cwd, '.cursor', 'skills', DOCSEARCH_MCP_SERVER_NAME, 'SKILL.md'),
+      'utf-8'
+    );
     expect(skill).toMatch(/^---\nname: algolia-docsearch\ndescription:/);
     expect(skill).toContain('DocSearch MCP');
   });
@@ -88,7 +98,10 @@ describe('setupDocSearch', () => {
     const agentsFile = await readFile(join(cwd, 'AGENTS.md'), 'utf-8');
     expect(agentsFile.match(/algolia-docsearch:start/g)).toHaveLength(1);
 
-    const skill = await readFile(join(cwd, '.agents', 'skills', DOCSEARCH_MCP_SERVER_NAME, 'SKILL.md'), 'utf-8');
+    const skill = await readFile(
+      join(cwd, '.agents', 'skills', DOCSEARCH_MCP_SERVER_NAME, 'SKILL.md'),
+      'utf-8'
+    );
     expect(skill).toContain('Use this skill');
   });
 
@@ -105,10 +118,27 @@ describe('setupDocSearch', () => {
     };
 
     await setupDocSearch(options);
-    const rulePath = join(cwd, '.cursor', 'rules', `${DOCSEARCH_MCP_SERVER_NAME}.mdc`);
-    const skillPath = join(cwd, '.cursor', 'skills', DOCSEARCH_MCP_SERVER_NAME, 'SKILL.md');
-    await writeFile(rulePath, `${await readFile(rulePath, 'utf-8')}\nUser rule customization.\n`);
-    await writeFile(skillPath, `${await readFile(skillPath, 'utf-8')}\nUser skill customization.\n`);
+    const rulePath = join(
+      cwd,
+      '.cursor',
+      'rules',
+      `${DOCSEARCH_MCP_SERVER_NAME}.mdc`
+    );
+    const skillPath = join(
+      cwd,
+      '.cursor',
+      'skills',
+      DOCSEARCH_MCP_SERVER_NAME,
+      'SKILL.md'
+    );
+    await writeFile(
+      rulePath,
+      `${await readFile(rulePath, 'utf-8')}\nUser rule customization.\n`
+    );
+    await writeFile(
+      skillPath,
+      `${await readFile(skillPath, 'utf-8')}\nUser skill customization.\n`
+    );
 
     const [result] = await setupDocSearch(options);
 
@@ -116,8 +146,12 @@ describe('setupDocSearch', () => {
       ruleStatus: 'preserved',
       skillStatus: 'preserved',
     });
-    expect(await readFile(rulePath, 'utf-8')).toContain('User rule customization.');
-    expect(await readFile(skillPath, 'utf-8')).toContain('User skill customization.');
+    expect(await readFile(rulePath, 'utf-8')).toContain(
+      'User rule customization.'
+    );
+    expect(await readFile(skillPath, 'utf-8')).toContain(
+      'User skill customization.'
+    );
   });
 
   it('updates an existing OpenCode JSONC config in place', async () => {
@@ -130,7 +164,7 @@ describe('setupDocSearch', () => {
   // Existing OpenCode preferences.
   "theme": "system",
 }
-`,
+`
     );
 
     const [result] = await setupDocSearch({
@@ -143,9 +177,15 @@ describe('setupDocSearch', () => {
     });
 
     expect(result.mcpPath).toBe(configPath);
-    expect(await readFile(configPath, 'utf-8')).toContain('// Existing OpenCode preferences.');
-    expect(await readFile(configPath, 'utf-8')).toContain('"algolia-docsearch"');
-    await expect(readFile(join(cwd, 'opencode.json'), 'utf-8')).rejects.toMatchObject({ code: 'ENOENT' });
+    expect(await readFile(configPath, 'utf-8')).toContain(
+      '// Existing OpenCode preferences.'
+    );
+    expect(await readFile(configPath, 'utf-8')).toContain(
+      '"algolia-docsearch"'
+    );
+    await expect(
+      readFile(join(cwd, 'opencode.json'), 'utf-8')
+    ).rejects.toMatchObject({ code: 'ENOENT' });
   });
 });
 
@@ -230,25 +270,28 @@ const AGENT_PATH_CASES: AgentPathCase[] = [
   },
 ];
 
-describe.each(AGENT_PATH_CASES)('$agent $scope paths', ({ agent, mcp, rule, scope, skill }) => {
-  it('writes every artifact to the expected location', async () => {
-    const cwd = await createTempDir();
-    const homeDir = await createTempDir();
-    const [result] = await setupDocSearch({
-      agents: [agent],
-      cwd,
-      endpoint: 'https://example.com/mcp',
-      env: {},
-      homeDir,
-      scope,
-    });
-    const base = scope === 'project' ? cwd : homeDir;
+describe.each(AGENT_PATH_CASES)(
+  '$agent $scope paths',
+  ({ agent, mcp, rule, scope, skill }) => {
+    it('writes every artifact to the expected location', async () => {
+      const cwd = await createTempDir();
+      const homeDir = await createTempDir();
+      const [result] = await setupDocSearch({
+        agents: [agent],
+        cwd,
+        endpoint: 'https://example.com/mcp',
+        env: {},
+        homeDir,
+        scope,
+      });
+      const base = scope === 'project' ? cwd : homeDir;
 
-    expect(result.mcpPath).toBe(join(base, mcp));
-    expect(result.rulePath).toBe(join(base, rule));
-    expect(result.skillPath).toBe(join(base, skill));
-  });
-});
+      expect(result.mcpPath).toBe(join(base, mcp));
+      expect(result.rulePath).toBe(join(base, rule));
+      expect(result.skillPath).toBe(join(base, skill));
+    });
+  }
+);
 
 describe('findProjectRoot', () => {
   it('walks up to the nearest VCS root', async () => {
@@ -266,7 +309,10 @@ describe('findProjectRoot', () => {
     const root = join(home, 'repo');
     const pkg = join(root, 'packages', 'app');
     await mkdir(pkg, { recursive: true });
-    await writeFile(join(root, 'pnpm-workspace.yaml'), 'packages:\n  - packages/*\n');
+    await writeFile(
+      join(root, 'pnpm-workspace.yaml'),
+      'packages:\n  - packages/*\n'
+    );
     await writeFile(join(root, 'package.json'), '{}');
     await writeFile(join(pkg, 'package.json'), '{}');
 

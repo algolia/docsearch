@@ -1,28 +1,17 @@
 {
-  "plugins": [
-    "stylelint-prettier",
-    "stylelint-no-unsupported-browser-features"
-  ],
+  "plugins": ["stylelint-no-unsupported-browser-features"],
   "extends": [
     "stylelint-config-standard",
     "stylelint-config-sass-guidelines",
-    "stylelint-order",
-    "stylelint-prettier/recommended"
+    "stylelint-order"
   ],
   "rules": {
-    "selector-class-pattern": [
-      "^DocSearch-[A-Za-z0-9-]*$"
-    ],
-    "prettier/prettier": true,
+    "selector-class-pattern": ["^DocSearch-[A-Za-z0-9-]*$"],
     "max-nesting-depth": [
       2,
       {
-        "ignore": [
-          "pseudo-classes"
-        ],
-        "ignoreAtRules": [
-          "media"
-        ]
+        "ignore": ["pseudo-classes"],
+        "ignoreAtRules": ["media"]
       }
     ],
     "plugin/no-unsupported-browser-features": [

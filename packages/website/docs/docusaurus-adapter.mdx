@@ -53,6 +53,33 @@ Use `themeConfig.docsearch` as the only adapter configuration key.
 
 The adapter doesn't read `themeConfig.algolia`, which avoids built-in Docusaurus search-theme validation conflicts when you want newer DocSearch options like Agent Studio and the sidepanel.
 
+### Client Side Tools
+
+Docusaurus serializes `themeConfig` for the browser and removes function values. Configure `askAi.tools` and `sidePanel.tools` in a swizzled `@theme/SearchBar` component instead of `themeConfig.docsearch`:
+
+```tsx title="src/theme/SearchBar/index.tsx"
+import type { ToolCalls } from '@docsearch/react';
+import SearchBar from '@theme-original/SearchBar';
+import type { ReactNode } from 'react';
+
+const tools: ToolCalls = {
+  logMessage: {
+    render: () => 'Tool completed.',
+  },
+};
+
+export default function SearchBarWithTools(): ReactNode {
+  return (
+    <SearchBar
+      askAi={{ assistantId: 'YOUR_ASSISTANT_ID', tools }}
+      sidePanel={{ tools }}
+    />
+  );
+}
+```
+
+Pass `tools` through `askAi` to enable them in the modal, `sidePanel` to enable them in the side panel, or both for both interfaces. Include any other Ask AI or side-panel options when overriding the corresponding object.
+
 ## Search Page
 
 The adapter ships a full search page (enabled by default at `/search`) with faceted filtering, an accessible "Load more" pagination, recent searches, and "Browse by section" shortcuts. Disable it with `searchPage: false`, or change its path with `searchPage: { path: 'search' }`.

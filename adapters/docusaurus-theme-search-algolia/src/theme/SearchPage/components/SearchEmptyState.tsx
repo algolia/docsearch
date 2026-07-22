@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. And its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file
+ * in the root directory of this source tree.
  */
 
 import { translate } from '@docusaurus/Translate';
@@ -42,11 +42,16 @@ export function SearchEmptyState({
                 description: 'The heading for the list of recent searches',
               })}
             </h2>
-            <button type="button" className={styles.emptySectionAction} onClick={onClearRecent}>
+            <button
+              type="button"
+              className={styles.emptySectionAction}
+              onClick={onClearRecent}
+            >
               {translate({
                 id: 'theme.SearchPage.clearRecentSearches',
                 message: 'Clear',
-                description: 'The label for the button that clears recent searches',
+                description:
+                  'The label for the button that clears recent searches',
               })}
             </button>
           </div>
@@ -54,8 +59,17 @@ export function SearchEmptyState({
           <ul className={styles.recentList}>
             {recentSearches.map((query) => (
               <li key={query} className={styles.recentItem}>
-                <button type="button" className={styles.recentButton} onClick={() => onSelectRecent(query)}>
-                  <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true">
+                <button
+                  type="button"
+                  className={styles.recentButton}
+                  onClick={() => onSelectRecent(query)}
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 20 20"
+                    aria-hidden="true"
+                  >
                     <path
                       fill="none"
                       stroke="currentColor"
@@ -74,13 +88,19 @@ export function SearchEmptyState({
                     {
                       id: 'theme.SearchPage.removeRecentSearch',
                       message: 'Remove "{query}" from history',
-                      description: 'The label for the button that removes a recent search',
+                      description:
+                        'The label for the button that removes a recent search',
                     },
-                    { query },
+                    { query }
                   )}
                   onClick={() => onRemoveRecent(query)}
                 >
-                  <svg width="14" height="14" viewBox="0 0 20 20" aria-hidden="true">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 20 20"
+                    aria-hidden="true"
+                  >
                     <path
                       fill="none"
                       stroke="currentColor"
@@ -102,7 +122,8 @@ export function SearchEmptyState({
             {translate({
               id: 'theme.SearchPage.browseSections',
               message: 'Browse by section',
-              description: 'The heading for the list of documentation sections to browse',
+              description:
+                'The heading for the list of documentation sections to browse',
             })}
           </h2>
           <div className={styles.sectionChips}>
@@ -126,7 +147,8 @@ export function SearchEmptyState({
           {translate({
             id: 'theme.SearchPage.emptyHint',
             message: 'Start typing to search the documentation.',
-            description: 'The hint shown on the search page before the user types anything',
+            description:
+              'The hint shown on the search page before the user types anything',
           })}
         </p>
       )}

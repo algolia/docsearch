@@ -165,7 +165,7 @@ describe('useAskAi', () => {
             render: () => 'Custom action complete',
           },
         },
-      }),
+      })
     );
 
     getOnToolCall()({
@@ -181,7 +181,7 @@ describe('useAskAi', () => {
         input: { value: 'input value' },
         toolCallId: 'tool-call-id',
         toolName: 'customAction',
-      }),
+      })
     );
 
     if (!addToolOutput) {
@@ -213,7 +213,7 @@ describe('useAskAi', () => {
             render: () => 'Custom action complete',
           },
         },
-      }),
+      })
     );
 
     const result = getOnToolCall()({
@@ -237,7 +237,7 @@ describe('useAskAi', () => {
         indexName: 'index-name',
         tools: {},
         memory: { userToken: 'secure-user-token' },
-      }),
+      })
     );
 
     expect(getTransportHeaders()).toMatchObject({
@@ -253,10 +253,12 @@ describe('useAskAi', () => {
         assistantId: 'assistant-id',
         indexName: 'index-name',
         tools: {},
-      }),
+      })
     );
 
-    expect(getTransportHeaders()).not.toHaveProperty('x-algolia-secure-user-token');
+    expect(getTransportHeaders()).not.toHaveProperty(
+      'x-algolia-secure-user-token'
+    );
   });
 
   it('sends an empty transport body when no search parameters or indices are provided', () => {
@@ -267,7 +269,7 @@ describe('useAskAi', () => {
         assistantId: 'assistant-id',
         indexName: 'index-name',
         tools: {},
-      }),
+      })
     );
 
     expect(getTransportBody()).toEqual({ algolia: {} });
@@ -286,7 +288,7 @@ describe('useAskAi', () => {
         indexName: 'index-name',
         tools: {},
         searchParameters,
-      }),
+      })
     );
 
     expect(getTransportBody()).toEqual({
@@ -310,7 +312,7 @@ describe('useAskAi', () => {
         indexName: 'index-name',
         tools: {},
         indices,
-      }),
+      })
     );
 
     expect(getTransportBody()).toEqual({
@@ -338,7 +340,7 @@ describe('useAskAi', () => {
         tools: {},
         searchParameters,
         indices,
-      }),
+      })
     );
 
     expect(getTransportBody()).toEqual({
@@ -355,7 +357,7 @@ describe('useAskAi', () => {
         indexName: 'index-name',
         tools: {},
         indices: [],
-      }),
+      })
     );
 
     expect(getTransportBody()).toEqual({ algolia: {} });
@@ -370,7 +372,7 @@ describe('useAskAi', () => {
           assistantId: 'assistant-id',
           indexName: 'index-name',
           tools: {},
-        }),
+        })
       );
 
       expect(chatOptions?.id).toBe('generated-id-1');
@@ -384,7 +386,7 @@ describe('useAskAi', () => {
           assistantId: 'assistant-id',
           indexName: 'index-name',
           tools: {},
-        }),
+        })
       );
 
       const initialId = chatOptions?.id;
@@ -409,7 +411,7 @@ describe('useAskAi', () => {
           assistantId: 'assistant-id',
           indexName: 'index-name',
           tools: {},
-        }),
+        })
       );
 
       act(() => {
@@ -435,7 +437,7 @@ describe('useAskAi', () => {
           assistantId: 'assistant-id',
           indexName: 'index-name',
           tools: {},
-        }),
+        })
       );
 
       const storedMessages: ChatMessage[] = [
@@ -464,7 +466,7 @@ describe('useAskAi', () => {
           assistantId: 'assistant-id',
           indexName: 'index-name',
           tools: {},
-        }),
+        })
       );
 
       const storedMessages: ChatMessage[] = [
@@ -493,7 +495,7 @@ describe('useAskAi', () => {
           assistantId: 'assistant-id',
           indexName: 'index-name',
           tools: {},
-        }),
+        })
       );
 
       expect(chatOptions?.messages).toBeUndefined();
@@ -507,7 +509,7 @@ describe('useAskAi', () => {
           assistantId: 'assistant-id',
           indexName: 'index-name',
           tools: {},
-        }),
+        })
       );
 
       const storedMessages: ChatMessage[] = [
@@ -542,7 +544,7 @@ describe('useAskAi', () => {
           assistantId: 'assistant-id',
           indexName: 'index-name',
           tools: {},
-        }),
+        })
       );
 
       const initialId = chatOptions?.id;
@@ -589,7 +591,7 @@ describe('useAskAi', () => {
             },
             indices: [{ index: 'index-name', description: 'Test index' }],
           },
-        },
+        }
       );
 
       const startNewConversation = result.current.startNewConversation;

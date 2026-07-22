@@ -1,16 +1,18 @@
 /**
  * Copyright (c) Facebook, Inc. And its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file
+ * in the root directory of this source tree.
  */
 
+import type {
+  ThemeConfig,
+  UserThemeConfig,
+} from '@docsearch/docusaurus-adapter';
 import type Joi from 'joi';
 import { describe, expect, it } from 'vitest';
 
 import { DEFAULT_CONFIG, validateThemeConfig } from '../validateThemeConfig';
-
-import type { ThemeConfig, UserThemeConfig } from '@docsearch/docusaurus-adapter';
 
 type DocSearchInput = UserThemeConfig['docsearch'];
 
@@ -34,8 +36,13 @@ const askAiConfigWithIndices = {
   ],
 } satisfies NonNullable<DocSearchInput>['askAi'];
 
-function testValidateThemeConfigWithUserThemeConfig(themeConfig: UserThemeConfig): ThemeConfig {
-  function validate(schema: Joi.ObjectSchema<{ [key: string]: unknown }>, cfg: { [key: string]: unknown }) {
+function testValidateThemeConfigWithUserThemeConfig(
+  themeConfig: UserThemeConfig
+): ThemeConfig {
+  function validate(
+    schema: Joi.ObjectSchema<{ [key: string]: unknown }>,
+    cfg: { [key: string]: unknown }
+  ) {
     const { value, error } = schema.validate(cfg, {
       convert: false,
     });
@@ -52,7 +59,9 @@ function testValidateThemeConfigWithUserThemeConfig(themeConfig: UserThemeConfig
 }
 
 function testValidateThemeConfig(docsearch: DocSearchInput): ThemeConfig {
-  return testValidateThemeConfigWithUserThemeConfig(docsearch ? { docsearch } : {});
+  return testValidateThemeConfigWithUserThemeConfig(
+    docsearch ? { docsearch } : {}
+  );
 }
 
 function expectThrowMessage(fn: () => unknown, message: string): void {
@@ -79,7 +88,10 @@ describe('validateThemeConfig', () => {
   });
 
   it('rejects missing docsearch config', () => {
-    expectThrowMessage(() => testValidateThemeConfig(undefined), '"themeConfig.docsearch" is required');
+    expectThrowMessage(
+      () => testValidateThemeConfig(undefined),
+      '"themeConfig.docsearch" is required'
+    );
   });
 
   it('rejects unknown docsearch attributes', () => {
@@ -88,7 +100,10 @@ describe('validateThemeConfig', () => {
       unknownKey: 'unknownKey',
     } as unknown as DocSearchInput;
 
-    expectThrowMessage(() => testValidateThemeConfig(docsearch), '"docsearch.unknownKey" is not allowed');
+    expectThrowMessage(
+      () => testValidateThemeConfig(docsearch),
+      '"docsearch.unknownKey" is not allowed'
+    );
   });
 
   it('rejects missing indices config', () => {
@@ -97,7 +112,10 @@ describe('validateThemeConfig', () => {
       apiKey: 'apiKey',
     } as unknown as DocSearchInput;
 
-    expectThrowMessage(() => testValidateThemeConfig(docsearch), '"docsearch.indices" is required');
+    expectThrowMessage(
+      () => testValidateThemeConfig(docsearch),
+      '"docsearch.indices" is required'
+    );
   });
 
   it('accepts per-index searchParameters', () => {
@@ -287,6 +305,58 @@ describe('validateThemeConfig', () => {
       });
     });
 
+    it('accepts sidePanel Agent Studio indices', () => {
+      const docsearch: DocSearchInput = {
+        ...minimalDocSearchConfig,
+        askAi: minimalAskAiConfig,
+        sidePanel: {
+          indices: [
+            {
+              index: 'sidepanel-markdown-index',
+              description: 'Documentation content for the side panel.',
+            },
+          ],
+        },
+      };
+
+      expect(testValidateThemeConfig(docsearch)).toEqual({
+        docsearch: {
+          ...DEFAULT_CONFIG,
+          ...docsearch,
+        },
+      });
+    });
+
+    it('rejects empty sidePanel Agent Studio indices', () => {
+      const docsearch = {
+        ...minimalDocSearchConfig,
+        askAi: minimalAskAiConfig,
+        sidePanel: {
+          indices: [],
+        },
+      } as unknown as DocSearchInput;
+
+      expectThrowMessage(
+        () => testValidateThemeConfig(docsearch),
+        '"docsearch.sidePanel.indices" must contain at least 1 items'
+      );
+    });
+
+    it('rejects incomplete sidePanel Agent Studio indices', () => {
+      const docsearch = {
+        ...minimalDocSearchConfig,
+        askAi: minimalAskAiConfig,
+        sidePanel: {
+          indices: [{ index: 'sidepanel-markdown-index' }],
+        },
+      } as unknown as DocSearchInput;
+
+      expectThrowMessage(
+        () => testValidateThemeConfig(docsearch),
+        '"docsearch.sidePanel.indices[0].description" is required'
+      );
+    });
+
     it('rejects sidePanel without askAi', () => {
       const docsearch: DocSearchInput = {
         ...minimalDocSearchConfig,
@@ -295,7 +365,99 @@ describe('validateThemeConfig', () => {
 
       expectThrowMessage(
         () => testValidateThemeConfig(docsearch),
-        '`themeConfig.docsearch.sidePanel` requires `themeConfig.docsearch.askAi`.',
+        '`themeConfig.docsearch.sidePanel` requires `themeConfig.docsearch.askAi`.'
+      );
+    });
+
+    it('accepts askAi memory object', () => {
+      const docsearch: DocSearchInput = {
+        ...minimalDocSearchConfig,
+        askAi: {
+          ...minimalAskAiConfig,
+          memory: {
+            enabled: true,
+            userToken: 'b2916249-b172-4ca2-8d0f-663e0f37f85d',
+          },
+        },
+        sidePanel: {
+          variant: 'inline',
+          side: 'left',
+          width: 420,
+          expandedWidth: '60vw',
+          pushSelector: '#__docusaurus',
+          hideButton: true,
+          keyboardShortcuts: {
+            'Ctrl/Cmd+I': false,
+          },
+        },
+      };
+
+      expect(testValidateThemeConfig(docsearch)).toEqual({
+        docsearch: {
+          ...DEFAULT_CONFIG,
+          ...docsearch,
+        },
+      });
+    });
+
+    it('accepts askAi promptSuggestions object', () => {
+      const docsearch: DocSearchInput = {
+        ...minimalDocSearchConfig,
+        askAi: {
+          ...minimalAskAiConfig,
+          promptSuggestions: {
+            indexName: 'test-index',
+            hitsPerPage: 7,
+          },
+        },
+        sidePanel: {
+          variant: 'inline',
+          side: 'left',
+          width: 420,
+          expandedWidth: '60vw',
+          pushSelector: '#__docusaurus',
+          hideButton: true,
+          keyboardShortcuts: {
+            'Ctrl/Cmd+I': false,
+          },
+        },
+      };
+
+      expect(testValidateThemeConfig(docsearch)).toEqual({
+        docsearch: {
+          ...DEFAULT_CONFIG,
+          ...docsearch,
+        },
+      });
+    });
+
+    it('rejects askAi custom tools definitions', () => {
+      const docsearch = {
+        ...minimalDocSearchConfig,
+        askAi: {
+          ...minimalAskAiConfig,
+          tools: {},
+        },
+      } as unknown as DocSearchInput;
+
+      expectThrowMessage(
+        () => testValidateThemeConfig(docsearch),
+        '`themeConfig.docsearch.askAi.tools` is not supported because Docusaurus removes function values'
+      );
+    });
+
+    it('rejects sidePanel custom tools definitions', () => {
+      const docsearch = {
+        ...minimalDocSearchConfig,
+        askAi: minimalAskAiConfig,
+        sidePanel: {
+          tools: {},
+        },
+      } as unknown as DocSearchInput;
+
+      expectThrowMessage(
+        () => testValidateThemeConfig(docsearch),
+        '`themeConfig.docsearch.sidePanel.tools` is not supported because Docusaurus removes function values'
       );
     });
   });
@@ -307,7 +469,7 @@ describe('validateThemeConfig', () => {
           testValidateThemeConfigWithUserThemeConfig({
             algolia: minimalDocSearchConfig,
           } as unknown as UserThemeConfig),
-        '`themeConfig.algolia` is no longer supported',
+        '`themeConfig.algolia` is no longer supported'
       );
     });
 
@@ -317,7 +479,10 @@ describe('validateThemeConfig', () => {
         indexName: 'index',
       } as unknown as DocSearchInput;
 
-      expectThrowMessage(() => testValidateThemeConfig(docsearch), '`themeConfig.docsearch.indexName` was removed');
+      expectThrowMessage(
+        () => testValidateThemeConfig(docsearch),
+        '`themeConfig.docsearch.indexName` was removed'
+      );
     });
 
     it('rejects top-level searchParameters', () => {
@@ -330,7 +495,7 @@ describe('validateThemeConfig', () => {
 
       expectThrowMessage(
         () => testValidateThemeConfig(docsearch),
-        '`themeConfig.docsearch.searchParameters` was removed',
+        '`themeConfig.docsearch.searchParameters` was removed'
       );
     });
 
@@ -342,7 +507,7 @@ describe('validateThemeConfig', () => {
 
       expectThrowMessage(
         () => testValidateThemeConfig(docsearch),
-        '`themeConfig.docsearch.searchPagePath` was removed',
+        '`themeConfig.docsearch.searchPagePath` was removed'
       );
     });
 
@@ -352,7 +517,10 @@ describe('validateThemeConfig', () => {
         askAi: 'my-assistant-id',
       } as unknown as DocSearchInput;
 
-      expectThrowMessage(() => testValidateThemeConfig(docsearch), '`themeConfig.docsearch.askAi` must be an object');
+      expectThrowMessage(
+        () => testValidateThemeConfig(docsearch),
+        '`themeConfig.docsearch.askAi` must be an object'
+      );
     });
 
     it('rejects askAi.agentStudio', () => {
@@ -366,7 +534,7 @@ describe('validateThemeConfig', () => {
 
       expectThrowMessage(
         () => testValidateThemeConfig(docsearch),
-        '`themeConfig.docsearch.askAi.agentStudio` was removed',
+        '`themeConfig.docsearch.askAi.agentStudio` was removed'
       );
     });
 
@@ -383,7 +551,7 @@ describe('validateThemeConfig', () => {
 
       expectThrowMessage(
         () => testValidateThemeConfig(docsearch),
-        '`themeConfig.docsearch.askAi.indexName`, `apiKey`, and `appId` were removed',
+        '`themeConfig.docsearch.askAi.indexName`, `apiKey`, and `appId` were removed'
       );
     });
 
@@ -398,7 +566,7 @@ describe('validateThemeConfig', () => {
 
       expectThrowMessage(
         () => testValidateThemeConfig(docsearch),
-        '`themeConfig.docsearch.askAi.sidePanel` was removed',
+        '`themeConfig.docsearch.askAi.sidePanel` was removed'
       );
     });
   });

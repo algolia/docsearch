@@ -1,7 +1,12 @@
-import { render, act, fireEvent, screen, cleanup } from '@testing-library/react';
+import {
+  render,
+  act,
+  fireEvent,
+  screen,
+  cleanup,
+} from '@testing-library/react';
 import React, { type JSX } from 'react';
 import { describe, it, expect, afterEach, vi } from 'vitest';
-
 import '@testing-library/jest-dom/vitest';
 
 import { DocSearch as DocSearchComponent } from '../DocSearch';
@@ -10,11 +15,21 @@ import { DocSearchAI as DocSearchAIComponent } from '../DocSearchAI';
 import type { DocSearchAIProps } from '../DocSearchAI';
 
 function DocSearch(props: Partial<DocSearchProps>): JSX.Element {
-  return <DocSearchComponent appId="woo" apiKey="foo" indexName="bar" {...props} />;
+  return (
+    <DocSearchComponent appId="woo" apiKey="foo" indexName="bar" {...props} />
+  );
 }
 
 function DocSearchAI(props: Partial<DocSearchAIProps>): JSX.Element {
-  return <DocSearchAIComponent appId="woo" apiKey="foo" indexName="bar" askAi="assistant" {...props} />;
+  return (
+    <DocSearchAIComponent
+      appId="woo"
+      apiKey="foo"
+      indexName="bar"
+      askAi="assistant"
+      {...props}
+    />
+  );
 }
 
 // mock empty response
@@ -38,7 +53,10 @@ function noResultSearch(_queries: any, _requestOptions?: any): Promise<any> {
   });
 }
 
-function promptSuggestionsSearch(queries: any, _requestOptions?: any): Promise<any> {
+function promptSuggestionsSearch(
+  queries: any,
+  _requestOptions?: any
+): Promise<any> {
   const [request] = queries.requests;
 
   if (request.indexName === 'prompt-suggestions') {
@@ -88,11 +106,15 @@ describe('api', () => {
               buttonAriaLabel: 'Recherche',
             },
           }}
-        />,
+        />
       );
       expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
-      expect(document.querySelector('.DocSearch-Button-Placeholder')?.innerHTML).toBe('Recherche');
-      expect(document.querySelector('.DocSearch-Button')?.getAttribute('aria-label')).toBe('Recherche (Control+k)');
+      expect(
+        document.querySelector('.DocSearch-Button-Placeholder')?.innerHTML
+      ).toBe('Recherche');
+      expect(
+        document.querySelector('.DocSearch-Button')?.getAttribute('aria-label')
+      ).toBe('Recherche (Control+k)');
     });
 
     it('overrides the default DocSearchModal startScreen text', async () => {
@@ -105,7 +127,7 @@ describe('api', () => {
               },
             },
           }}
-        />,
+        />
       );
 
       expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
@@ -130,13 +152,14 @@ describe('api', () => {
             modal: {
               noResultsScreen: {
                 noResultsText: 'Pas de résultats pour',
-                reportMissingResultsText: 'Ouvrez une issue sur docsearch-configs',
+                reportMissingResultsText:
+                  'Ouvrez une issue sur docsearch-configs',
                 reportMissingResultsLinkText: 'Lien du repo',
               },
             },
           }}
           getMissingResultsUrl={() => 'algolia.com'}
-        />,
+        />
       );
 
       expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
@@ -152,11 +175,13 @@ describe('api', () => {
       });
 
       expect(screen.getByText(/Pas de résultats pour/)).toBeInTheDocument();
-      expect(screen.getByText(/Ouvrez une issue sur docsearch-configs/)).toBeInTheDocument();
+      expect(
+        screen.getByText(/Ouvrez une issue sur docsearch-configs/)
+      ).toBeInTheDocument();
       expect(
         screen.getByRole('link', {
           name: 'Lien du repo',
-        }),
+        })
       ).toBeInTheDocument();
     });
 
@@ -174,21 +199,31 @@ describe('api', () => {
               },
             },
           }}
-        />,
+        />
       );
 
       await act(async () => {
         fireEvent.click(await screen.findByText('Search'));
       });
 
-      const searchInputLabel = document.querySelector('.DocSearch-MagnifierLabel');
+      const searchInputLabel = document.querySelector(
+        '.DocSearch-MagnifierLabel'
+      );
 
       expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
 
-      expect(document.querySelector('.DocSearch-Clear')?.innerHTML).toBe('Effacer');
-      expect(document.querySelector('.DocSearch-Clear')?.getAttribute('aria-label')).toBe('Effacer');
-      expect(document.querySelector('.DocSearch-Close')?.getAttribute('title')).toBe('Fermer');
-      expect(document.querySelector('.DocSearch-Close')?.getAttribute('aria-label')).toBe('Fermer');
+      expect(document.querySelector('.DocSearch-Clear')?.innerHTML).toBe(
+        'Effacer'
+      );
+      expect(
+        document.querySelector('.DocSearch-Clear')?.getAttribute('aria-label')
+      ).toBe('Effacer');
+      expect(
+        document.querySelector('.DocSearch-Close')?.getAttribute('title')
+      ).toBe('Fermer');
+      expect(
+        document.querySelector('.DocSearch-Close')?.getAttribute('aria-label')
+      ).toBe('Fermer');
       expect(searchInputLabel?.textContent).toBe('Recherche');
     });
 
@@ -209,7 +244,7 @@ describe('api', () => {
               },
             },
           }}
-        />,
+        />
       );
 
       expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
@@ -225,13 +260,19 @@ describe('api', () => {
 
       expect(screen.getByLabelText("Touche d'échappement")).toBeInTheDocument();
       expect(
-        document.querySelector('.DocSearch-Commands-Key > svg[aria-label="Flèche vers le haut"]'),
+        document.querySelector(
+          '.DocSearch-Commands-Key > svg[aria-label="Flèche vers le haut"]'
+        )
       ).toBeInTheDocument();
       expect(
-        document.querySelector('.DocSearch-Commands-Key > svg[aria-label="Flèche vers le bas"]'),
+        document.querySelector(
+          '.DocSearch-Commands-Key > svg[aria-label="Flèche vers le bas"]'
+        )
       ).toBeInTheDocument();
       expect(
-        document.querySelector('.DocSearch-Commands-Key > svg[aria-label="Touche d\'entrée"]'),
+        document.querySelector(
+          '.DocSearch-Commands-Key > svg[aria-label="Touche d\'entrée"]'
+        )
       ).toBeInTheDocument();
     });
   });
@@ -246,7 +287,7 @@ describe('api', () => {
               search: noResultSearch,
             };
           }}
-        />,
+        />
       );
 
       expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
@@ -262,7 +303,9 @@ describe('api', () => {
       });
 
       expect(screen.getByText(/No results found for/)).toBeInTheDocument();
-      expect(document.querySelector('.DocSearch-Help a')).not.toBeInTheDocument();
+      expect(
+        document.querySelector('.DocSearch-Help a')
+      ).not.toBeInTheDocument();
     });
 
     it('render the link to the repository', async () => {
@@ -274,8 +317,10 @@ describe('api', () => {
               search: noResultSearch,
             };
           }}
-          getMissingResultsUrl={({ query }) => `https://github.com/algolia/docsearch/issues/new?title=${query}`}
-        />,
+          getMissingResultsUrl={({ query }) =>
+            `https://github.com/algolia/docsearch/issues/new?title=${query}`
+          }
+        />
       );
 
       await act(async () => {
@@ -291,7 +336,9 @@ describe('api', () => {
       expect(screen.getByText(/No results found for/)).toBeInTheDocument();
       const link = document.querySelector('.DocSearch-Help a');
       expect(link).toBeInTheDocument();
-      expect(link?.getAttribute('href')).toBe('https://github.com/algolia/docsearch/issues/new?title=q');
+      expect(link?.getAttribute('href')).toBe(
+        'https://github.com/algolia/docsearch/issues/new?title=q'
+      );
     });
   });
 
@@ -303,7 +350,9 @@ describe('api', () => {
         fireEvent.click(await screen.findByText('Search'));
       });
 
-      expect(screen.getByPlaceholderText('Search docs or ask AI a question')).toBeInTheDocument();
+      expect(
+        screen.getByPlaceholderText('Search docs or ask AI a question')
+      ).toBeInTheDocument();
     });
 
     it('opens ask AI screen and returns to search', async () => {
@@ -313,7 +362,7 @@ describe('api', () => {
             ...searchClient,
             search: noResultSearch,
           })}
-        />,
+        />
       );
 
       await act(async () => {
@@ -321,25 +370,33 @@ describe('api', () => {
       });
 
       await act(async () => {
-        fireEvent.input(await screen.findByPlaceholderText('Search docs or ask AI a question'), {
-          target: { value: 'hello' },
-        });
+        fireEvent.input(
+          await screen.findByPlaceholderText(
+            'Search docs or ask AI a question'
+          ),
+          {
+            target: { value: 'hello' },
+          }
+        );
       });
 
       await act(async () => {
         fireEvent.click(
           await screen.findByText('hello', {
             selector: '.DocSearch-Hit-AskAIButton-title-query',
-          }),
+          })
         );
       });
 
-      expect(document.querySelector('.DocSearch-AskAiScreen')).toBeInTheDocument();
+      expect(
+        document.querySelector('.DocSearch-AskAiScreen')
+      ).toBeInTheDocument();
 
       // could be "Answering..." or "Ask another question..."
       // where "Ask another question..." is actually an input's placeholder text
       expect(
-        screen.queryByText('Answering...') ?? screen.queryByPlaceholderText('Ask another question...'),
+        screen.queryByText('Answering...') ??
+          screen.queryByPlaceholderText('Ask another question...')
       ).toBeInTheDocument();
     });
 
@@ -348,7 +405,6 @@ describe('api', () => {
 
       render(
         <DocSearchAI
-          promptSuggestions={{ indexName: 'prompt-suggestions' }}
           transformSearchClient={(searchClient) => ({
             ...searchClient,
             search: promptSuggestionsSearch,
@@ -361,7 +417,13 @@ describe('api', () => {
               },
             },
           }}
-        />,
+          askAi={{
+            assistantId: '123',
+            promptSuggestions: {
+              indexName: 'prompt-suggestions',
+            },
+          }}
+        />
       );
 
       await act(async () => {
@@ -369,18 +431,27 @@ describe('api', () => {
       });
 
       await act(async () => {
-        fireEvent.input(await screen.findByPlaceholderText('Search docs or ask AI a question'), {
-          target: { value: 'configure' },
-        });
+        fireEvent.input(
+          await screen.findByPlaceholderText(
+            'Search docs or ask AI a question'
+          ),
+          {
+            target: { value: 'configure' },
+          }
+        );
       });
 
       const heading = await screen.findByRole('heading', {
         name: 'Suggested questions',
       });
-      const results = document.querySelector(`[aria-labelledby="${heading.id}"]`);
+      const results = document.querySelector(
+        `[aria-labelledby="${heading.id}"]`
+      );
 
       expect(results).toBeInTheDocument();
-      expect(await screen.findByText('How do I configure DocSearch?')).toBeInTheDocument();
+      expect(
+        await screen.findByText('How do I configure DocSearch?')
+      ).toBeInTheDocument();
       expect(screen.getByText('How do I add facets?')).toBeInTheDocument();
 
       act(() => {

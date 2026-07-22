@@ -12,37 +12,37 @@ export type FacetBarTranslations = Partial<{
   /**
    * Label displayed as the default (all) facet option.
    *
-   * @default "All"
+   * @default 'All'
    */
   defaultValueLabel: string;
   /**
    * Facet menu trigger aria label when a facet is selected.
    *
-   * @default "selected"
+   * @default 'selected'
    */
   facetMenuTriggerAriaLabel: string;
   /**
    * Label displayed for clearing all facets action.
    *
-   * @default "Clear all"
+   * @default 'Clear all'
    */
   clearAllLabel: string;
   /**
    * Aria label for the list of possible facets.
    *
-   * @default "Search filters"
+   * @default 'Search filters'
    */
   facetsAriaLabel: string;
   /**
    * Aria label for the list of selected facets.
    *
-   * @default "Selected search filters"
+   * @default 'Selected search filters'
    */
   selectedFacetsAriaLabel: string;
   /**
    * Aria label indicating to clear a selected facet.
    *
-   * @default "Clear filter:"
+   * @default 'Clear filter:'
    */
   clearFacetAriaLabel: string;
 }>;
@@ -73,13 +73,13 @@ const FacetMenu = React.memo(function FacetMenu({
     (value: string) => {
       onSelectionChange(facet.key, value);
     },
-    [facet.key, onSelectionChange],
+    [facet.key, onSelectionChange]
   );
   const triggerRef = React.useCallback(
     (el: HTMLButtonElement | null) => {
       registerTrigger(facet.key, el);
     },
-    [facet.key, registerTrigger],
+    [facet.key, registerTrigger]
   );
 
   return (
@@ -87,13 +87,20 @@ const FacetMenu = React.memo(function FacetMenu({
       <Menu.Trigger
         ref={triggerRef}
         data-has-selection={Boolean(selectedValue)}
-        aria-label={selectedValue ? `${label}, ${selectedValue} ${menuTriggerSelectedAriaLabel}` : label}
+        aria-label={
+          selectedValue
+            ? `${label}, ${selectedValue} ${menuTriggerSelectedAriaLabel}`
+            : label
+        }
       >
         <span>{capitalize(label)}</span>
         <ChevronIcon />
       </Menu.Trigger>
       <Menu.Popup>
-        <Menu.RadioGroup value={selectedValue} onValueChange={handleValueChange}>
+        <Menu.RadioGroup
+          value={selectedValue}
+          onValueChange={handleValueChange}
+        >
           <Menu.RadioItem value="" label={`${defaultValueLabel} ${label}`}>
             {defaultValueLabel}
           </Menu.RadioItem>
@@ -113,7 +120,10 @@ interface SelectedFacetChipProps {
   facetLabel: string;
   value: string;
   dismissAriaLabel: string;
-  onDismiss: (facetKey: string, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onDismiss: (
+    facetKey: string,
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => void;
 }
 
 const SelectedFacetChip = React.memo(function SelectedFacetChip({
@@ -127,7 +137,7 @@ const SelectedFacetChip = React.memo(function SelectedFacetChip({
     (e: React.MouseEvent<HTMLButtonElement>) => {
       onDismiss(facetKey, e);
     },
-    [facetKey, onDismiss],
+    [facetKey, onDismiss]
   );
 
   return (
@@ -170,30 +180,42 @@ export const FacetBar = React.memo(function FacetBar({
 
   const triggerRefs = React.useRef(new Map<string, HTMLButtonElement>());
 
-  const registerTrigger = React.useCallback((facetKey: string, el: HTMLButtonElement | null) => {
-    if (el) {
-      triggerRefs.current.set(facetKey, el);
-    } else {
-      triggerRefs.current.delete(facetKey);
-    }
-  }, []);
+  const registerTrigger = React.useCallback(
+    (facetKey: string, el: HTMLButtonElement | null) => {
+      if (el) {
+        triggerRefs.current.set(facetKey, el);
+      } else {
+        triggerRefs.current.delete(facetKey);
+      }
+    },
+    []
+  );
 
   const handleDismissFacet = React.useCallback(
     (facetKey: string, ev: React.MouseEvent<HTMLButtonElement>) => {
       const dismissButton = ev.currentTarget;
-      const selectionBar = dismissButton.closest('.DocSearch-FacetSelectionBar');
+      const selectionBar = dismissButton.closest(
+        '.DocSearch-FacetSelectionBar'
+      );
 
       if (selectionBar) {
-        const dismissButtons = Array.from(selectionBar.querySelectorAll<HTMLButtonElement>('.DocSearch-Chip-Dismiss'));
+        const dismissButtons = Array.from(
+          selectionBar.querySelectorAll<HTMLButtonElement>(
+            '.DocSearch-Chip-Dismiss'
+          )
+        );
         const index = dismissButtons.indexOf(dismissButton);
-        const target = dismissButtons[index + 1] ?? dismissButtons[index - 1] ?? triggerRefs.current.get(facetKey);
+        const target =
+          dismissButtons[index + 1] ??
+          dismissButtons[index - 1] ??
+          triggerRefs.current.get(facetKey);
 
         target?.focus();
       }
 
       onSelectionChange(facetKey, '');
     },
-    [onSelectionChange],
+    [onSelectionChange]
   );
 
   const handleClearAll = React.useCallback(() => {
@@ -201,7 +223,10 @@ export const FacetBar = React.memo(function FacetBar({
     clearSelections();
   }, [clearSelections]);
 
-  const facetLabels = React.useMemo(() => new Map(facets.map((f) => [f.key, getFacetLabel(f)])), [facets]);
+  const facetLabels = React.useMemo(
+    () => new Map(facets.map((f) => [f.key, getFacetLabel(f)])),
+    [facets]
+  );
 
   if (facets.length === 0) {
     return null;
@@ -209,7 +234,11 @@ export const FacetBar = React.memo(function FacetBar({
 
   return (
     <>
-      <div className="DocSearch-FacetBar" role="group" aria-label={facetsAriaLabel}>
+      <div
+        className="DocSearch-FacetBar"
+        role="group"
+        aria-label={facetsAriaLabel}
+      >
         {facets.map((facet) => {
           const selectedValue = selections[facet.key] ?? '';
 
@@ -227,7 +256,11 @@ export const FacetBar = React.memo(function FacetBar({
         })}
       </div>
       {selectionsToDisplay.length > 0 && (
-        <div className="DocSearch-FacetSelectionBar" role="group" aria-label={selectedFacetsAriaLabel}>
+        <div
+          className="DocSearch-FacetSelectionBar"
+          role="group"
+          aria-label={selectedFacetsAriaLabel}
+        >
           {selectionsToDisplay.map(([key, value]) => (
             <SelectedFacetChip
               key={key}
@@ -238,7 +271,11 @@ export const FacetBar = React.memo(function FacetBar({
               onDismiss={handleDismissFacet}
             />
           ))}
-          <button type="button" className="DocSearch-FacetSelectionBar-Action" onClick={handleClearAll}>
+          <button
+            type="button"
+            className="DocSearch-FacetSelectionBar-Action"
+            onClick={handleClearAll}
+          >
             {clearAllLabel}
           </button>
         </div>

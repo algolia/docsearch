@@ -1,7 +1,6 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-
 import '@testing-library/jest-dom/vitest';
 
 import { AskAiSearchBox } from '../components/AskAiSearchBox';
@@ -57,7 +56,7 @@ function renderSearchBoxForm(props = {}): ReturnType<typeof render> {
       searchInputLabel="Search"
       onClose={vi.fn()}
       {...props}
-    />,
+    />
   );
 }
 
@@ -74,8 +73,13 @@ describe('SearchBoxForm', () => {
 
     expect(document.querySelector('.DocSearch-Form')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Search docs')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Close' })).toHaveAttribute('title', 'Close');
-    expect(document.querySelector('.DocSearch-MagnifierLabel')).toHaveTextContent('Search');
+    expect(screen.getByRole('button', { name: 'Close' })).toHaveAttribute(
+      'title',
+      'Close'
+    );
+    expect(
+      document.querySelector('.DocSearch-MagnifierLabel')
+    ).toHaveTextContent('Search');
   });
 
   it('renders the loading indicator while keyword search is stalled', () => {
@@ -83,8 +87,12 @@ describe('SearchBoxForm', () => {
       state: createState({ status: 'stalled' }),
     });
 
-    expect(document.querySelector('.DocSearch-LoadingIndicator')).toBeInTheDocument();
-    expect(document.querySelector('.DocSearch-MagnifierLabel')).not.toBeInTheDocument();
+    expect(
+      document.querySelector('.DocSearch-LoadingIndicator')
+    ).toBeInTheDocument();
+    expect(
+      document.querySelector('.DocSearch-MagnifierLabel')
+    ).not.toBeInTheDocument();
   });
 
   it('allows scoped input props and slots to override base autocomplete props', () => {
@@ -137,12 +145,20 @@ describe('KeywordSearchBox', () => {
         isFromSelection={false}
         placeholder="Search docs"
         onClose={vi.fn()}
-      />,
+      />
     );
 
-    expect(document.querySelector('.DocSearch-Clear')).toHaveTextContent('Clear');
-    expect(screen.getByRole('button', { name: 'Close' })).toHaveAttribute('title', 'Close');
-    expect(screen.getByPlaceholderText('Search docs')).toHaveAttribute('enterkeyhint', 'search');
+    expect(document.querySelector('.DocSearch-Clear')).toHaveTextContent(
+      'Clear'
+    );
+    expect(screen.getByRole('button', { name: 'Close' })).toHaveAttribute(
+      'title',
+      'Close'
+    );
+    expect(screen.getByPlaceholderText('Search docs')).toHaveAttribute(
+      'enterkeyhint',
+      'search'
+    );
   });
 });
 
@@ -161,7 +177,10 @@ describe('AskAiSearchBox', () => {
           collections: [
             null,
             null,
-            { source: { sourceId: SOURCE_IDS.recentConversations }, items: [{ objectID: '1' }] },
+            {
+              source: { sourceId: SOURCE_IDS.recentConversations },
+              items: [{ objectID: '1' }],
+            },
           ],
         })}
         autoFocus={false}
@@ -179,14 +198,16 @@ describe('AskAiSearchBox', () => {
         onStopAskAiStreaming={vi.fn()}
         onViewConversationHistory={vi.fn()}
         {...props}
-      />,
+      />
     );
   }
 
   it('renders Ask AI-specific back action and conversation menu actions', () => {
     renderAskAiSearchBox();
 
-    expect(screen.getByRole('button', { name: 'Back to keyword search' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Back to keyword search' })
+    ).toBeInTheDocument();
     expect(screen.getByText('Start a new conversation')).toBeInTheDocument();
     expect(screen.getByText('Conversation history')).toBeInTheDocument();
   });
@@ -194,7 +215,9 @@ describe('AskAiSearchBox', () => {
   it('renders the stop streaming action and disables the input while streaming', () => {
     renderAskAiSearchBox({ askAiStatus: 'streaming' });
 
-    expect(document.querySelector('.DocSearch-StopStreaming')).toBeInTheDocument();
+    expect(
+      document.querySelector('.DocSearch-StopStreaming')
+    ).toBeInTheDocument();
     expect(screen.getByDisplayValue('')).toBeDisabled();
     expect(screen.getByText('Answering...')).toBeInTheDocument();
   });
@@ -204,7 +227,9 @@ describe('AskAiSearchBox', () => {
 
     renderAskAiSearchBox({ onAskAgain });
 
-    fireEvent.keyDown(screen.getByPlaceholderText('Ask another question...'), { key: 'Enter' });
+    fireEvent.keyDown(screen.getByPlaceholderText('Ask another question...'), {
+      key: 'Enter',
+    });
 
     expect(onAskAgain).toHaveBeenCalledWith('follow up');
   });
@@ -218,7 +243,9 @@ describe('AskAiSearchBox', () => {
 
     expect(input).toBeDisabled();
 
-    fireEvent.click(screen.getByRole('button', { name: 'Back to keyword search' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Back to keyword search' })
+    );
 
     expect(onNewConversation).toHaveBeenCalledTimes(1);
   });

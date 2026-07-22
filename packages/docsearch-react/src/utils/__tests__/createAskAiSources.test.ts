@@ -67,7 +67,9 @@ describe('buildAskAiActionSources', () => {
     searchClient.search.mockResolvedValue({
       results: [
         {
-          hits: [{ objectID: 'prompt-1', prompt: 'How do I configure DocSearch?' }],
+          hits: [
+            { objectID: 'prompt-1', prompt: 'How do I configure DocSearch?' },
+          ],
         },
       ],
     });
@@ -82,7 +84,10 @@ describe('buildAskAiActionSources', () => {
 
     sources[0].onSelect?.({ item: suggestion } as any);
 
-    expect(handleSelectAskAiQuestion).toHaveBeenCalledWith(true, 'How do I configure DocSearch?');
+    expect(handleSelectAskAiQuestion).toHaveBeenCalledWith(
+      true,
+      'How do I configure DocSearch?'
+    );
   });
 
   it('keeps the Ask AI action when prompt suggestion retrieval fails', async () => {
@@ -95,6 +100,8 @@ describe('buildAskAiActionSources', () => {
       searchClient,
     });
 
-    expect(sources[0].getItems({} as any)).toMatchObject([{ objectID: 'ask-ai-button', query: 'configure' }]);
+    expect(sources[0].getItems({} as any)).toMatchObject([
+      { objectID: 'ask-ai-button', query: 'configure' },
+    ]);
   });
 });

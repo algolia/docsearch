@@ -11,7 +11,7 @@ export function useTrapFocus({ container }: UseTrapFocusProps): void {
     }
 
     const focusableElements = container.querySelectorAll<HTMLElement>(
-      'a[href]:not([disabled]), button:not([disabled]), input:not([disabled])',
+      'a[href]:not([disabled]), button:not([disabled]), input:not([disabled])'
     );
     const firstElement = focusableElements[0];
     const lastElement = focusableElements[focusableElements.length - 1];

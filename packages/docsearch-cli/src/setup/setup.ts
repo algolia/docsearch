@@ -43,7 +43,9 @@ export interface SetupResult {
   skillStatus: string;
 }
 
-export function createPathContext(overrides: Partial<PathContext> = {}): PathContext {
+export function createPathContext(
+  overrides: Partial<PathContext> = {}
+): PathContext {
   return {
     cwd: overrides.cwd ?? process.cwd(),
     env: overrides.env ?? process.env,
@@ -75,7 +77,10 @@ const ROOT_MARKERS = [
 // Walks up from `startDir` (never crossing `homeDir` or the filesystem root)
 // and returns the best project root. Falls back to `startDir` when nothing is
 // found, so a directory-less invocation still installs into the current folder.
-export async function findProjectRoot(startDir: string, homeDir: string): Promise<string> {
+export async function findProjectRoot(
+  startDir: string,
+  homeDir: string
+): Promise<string> {
   const start = resolve(startDir);
   const home = resolve(homeDir);
   const stopBeforeHome = start !== home && isPathWithin(start, home);
@@ -92,7 +97,10 @@ export async function findProjectRoot(startDir: string, homeDir: string): Promis
     if (vcsRoot === undefined && (await hasAnyMarker(dir, VCS_MARKERS))) {
       vcsRoot = dir;
     }
-    if (rootMarkerDir === undefined && (await hasAnyMarker(dir, ROOT_MARKERS))) {
+    if (
+      rootMarkerDir === undefined &&
+      (await hasAnyMarker(dir, ROOT_MARKERS))
+    ) {
       rootMarkerDir = dir;
     }
     if (await pathExists(join(dir, 'package.json'))) {
@@ -108,7 +116,9 @@ export async function findProjectRoot(startDir: string, homeDir: string): Promis
 }
 
 async function hasAnyMarker(dir: string, markers: string[]): Promise<boolean> {
-  const found = await Promise.all(markers.map((marker) => pathExists(join(dir, marker))));
+  const found = await Promise.all(
+    markers.map((marker) => pathExists(join(dir, marker)))
+  );
   return found.some(Boolean);
 }
 
@@ -116,12 +126,16 @@ function isPathWithin(path: string, parent: string): boolean {
   const pathFromParent = relative(parent, path);
   return (
     pathFromParent !== '..' &&
-    !pathFromParent.startsWith(`..${process.platform === 'win32' ? '\\' : '/'}`) &&
+    !pathFromParent.startsWith(
+      `..${process.platform === 'win32' ? '\\' : '/'}`
+    ) &&
     !isAbsolute(pathFromParent)
   );
 }
 
-export async function setupDocSearch(options: SetupOptions): Promise<SetupResult[]> {
+export async function setupDocSearch(
+  options: SetupOptions
+): Promise<SetupResult[]> {
   const context = createPathContext({
     cwd: options.cwd,
     env: options.env,
@@ -134,19 +148,23 @@ export async function setupDocSearch(options: SetupOptions): Promise<SetupResult
       await setupAgent(getAgent(agentName, context), {
         endpoint: options.endpoint,
         scope: options.scope,
-      }),
+      })
     );
   }
 
   return results;
 }
 
-export async function detectAgents(scope: SetupScope, context: PathContext): Promise<SetupAgent[]> {
+export async function detectAgents(
+  scope: SetupScope,
+  context: PathContext
+): Promise<SetupAgent[]> {
   const detected: SetupAgent[] = [];
   const allAgents = getAllAgents(context);
 
   for (const agent of Object.values(allAgents)) {
-    const paths = scope === 'global' ? agent.detect.globalPaths : agent.detect.projectPaths;
+    const paths =
+      scope === 'global' ? agent.detect.globalPaths : agent.detect.projectPaths;
     for (const path of paths) {
       if (await pathExists(path)) {
         detected.push(agent.name);
@@ -158,7 +176,10 @@ export async function detectAgents(scope: SetupScope, context: PathContext): Pro
   return detected;
 }
 
-export function buildAgentChoices(context: PathContext, detected: SetupAgent[]): AgentChoice[] {
+export function buildAgentChoices(
+  context: PathContext,
+  detected: SetupAgent[]
+): AgentChoice[] {
   const detectedSet = new Set(detected);
 
   return Object.values(getAllAgents(context)).map((agent) => ({
@@ -168,10 +189,20 @@ export function buildAgentChoices(context: PathContext, detected: SetupAgent[]):
   }));
 }
 
-async function setupAgent(agent: AgentConfig, options: { endpoint: string; scope: SetupScope }): Promise<SetupResult> {
-  const mcpPath = await installMcpConfig(agent, options.endpoint, options.scope);
+async function setupAgent(
+  agent: AgentConfig,
+  options: { endpoint: string; scope: SetupScope }
+): Promise<SetupResult> {
+  const mcpPath = await installMcpConfig(
+    agent,
+    options.endpoint,
+    options.scope
+  );
   const rulePath = await installRule(agent, options.scope);
-  const skill = await writeSkill(agent.skill.dir(options.scope), getSkillContent());
+  const skill = await writeSkill(
+    agent.skill.dir(options.scope),
+    getSkillContent()
+  );
 
   return {
     agent: agent.displayName,
@@ -187,9 +218,10 @@ async function setupAgent(agent: AgentConfig, options: { endpoint: string; scope
 async function installMcpConfig(
   agent: AgentConfig,
   endpoint: string,
-  scope: SetupScope,
+  scope: SetupScope
 ): Promise<{ alreadyExists: boolean; path: string }> {
-  const candidates = scope === 'global' ? agent.mcp.globalPaths : agent.mcp.projectPaths;
+  const candidates =
+    scope === 'global' ? agent.mcp.globalPaths : agent.mcp.projectPaths;
   const mcpPath = await resolveConfigPath(candidates);
   const entry = agent.mcp.buildEntry(endpoint);
 
@@ -198,17 +230,27 @@ async function installMcpConfig(
     return { alreadyExists: result.alreadyExists, path: mcpPath };
   }
 
-  const result = await upsertJsonServerEntry(mcpPath, agent.mcp.configKey, entry);
+  const result = await upsertJsonServerEntry(
+    mcpPath,
+    agent.mcp.configKey,
+    entry
+  );
   return { alreadyExists: result.alreadyExists, path: mcpPath };
 }
 
-async function installRule(agent: AgentConfig, scope: SetupScope): Promise<{ path: string; status: string }> {
+async function installRule(
+  agent: AgentConfig,
+  scope: SetupScope
+): Promise<{ path: string; status: string }> {
   const content = getRuleContent(agent.name);
 
   if (agent.rule.kind === 'file') {
     const rulePath = join(agent.rule.dir(scope), agent.rule.filename);
     const result = await writeRuleFile(rulePath, content);
-    return { path: rulePath, status: result.alreadyExists ? 'preserved' : 'installed' };
+    return {
+      path: rulePath,
+      status: result.alreadyExists ? 'preserved' : 'installed',
+    };
   }
 
   const rulePath = agent.rule.file(scope);

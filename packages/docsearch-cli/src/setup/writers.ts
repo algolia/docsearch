@@ -1,8 +1,24 @@
 /* eslint-disable import/no-unresolved -- NodeNext source imports use runtime .js extensions. */
-import { access, mkdir, readFile, realpath, rename, rm, stat, writeFile } from 'node:fs/promises';
+import {
+  access,
+  mkdir,
+  readFile,
+  realpath,
+  rename,
+  rm,
+  stat,
+  writeFile,
+} from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 
-import { applyEdits, modify, parse, printParseErrorCode, type FormattingOptions, type ParseError } from 'jsonc-parser';
+import {
+  applyEdits,
+  modify,
+  parse,
+  printParseErrorCode,
+  type FormattingOptions,
+  type ParseError,
+} from 'jsonc-parser';
 
 import { DOCSEARCH_MCP_SERVER_NAME } from '../constants.js';
 import { UsageError } from '../errors.js';
@@ -35,7 +51,7 @@ export async function resolveConfigPath(candidates: string[]): Promise<string> {
 export async function upsertJsonServerEntry(
   filePath: string,
   configKey: string,
-  entry: Record<string, unknown>,
+  entry: Record<string, unknown>
 ): Promise<{ alreadyExists: boolean }> {
   const existing = await readTextFile(filePath);
   const source = existing.trim() === '' ? '{}\n' : existing;
@@ -48,21 +64,27 @@ export async function upsertJsonServerEntry(
   if (errors.length > 0) {
     const firstError = errors[0];
     throw new UsageError(
-      `Cannot update ${filePath}: invalid JSON/JSONC (${printParseErrorCode(firstError.error)} at offset ${firstError.offset}).`,
+      `Cannot update ${filePath}: invalid JSON/JSONC (${printParseErrorCode(firstError.error)} at offset ${firstError.offset}).`
     );
   }
   if (!isPlainObject(parsed)) {
-    throw new UsageError(`Cannot update ${filePath}: the configuration root must be an object.`);
+    throw new UsageError(
+      `Cannot update ${filePath}: the configuration root must be an object.`
+    );
   }
 
   const section = parsed[configKey];
   if (section !== undefined && !isPlainObject(section)) {
-    throw new UsageError(`Cannot update ${filePath}: "${configKey}" must be an object.`);
+    throw new UsageError(
+      `Cannot update ${filePath}: "${configKey}" must be an object.`
+    );
   }
 
   const serverEntry = section?.[DOCSEARCH_MCP_SERVER_NAME];
   if (serverEntry !== undefined && !isPlainObject(serverEntry)) {
-    throw new UsageError(`Cannot update ${filePath}: "${configKey}.${DOCSEARCH_MCP_SERVER_NAME}" must be an object.`);
+    throw new UsageError(
+      `Cannot update ${filePath}: "${configKey}.${DOCSEARCH_MCP_SERVER_NAME}" must be an object.`
+    );
   }
 
   const alreadyExists = serverEntry !== undefined;
@@ -70,9 +92,14 @@ export async function upsertJsonServerEntry(
     ...(serverEntry ?? {}),
     ...entry,
   };
-  const edits = modify(source, [configKey, DOCSEARCH_MCP_SERVER_NAME], mergedEntry, {
-    formattingOptions: inferFormatting(source),
-  });
+  const edits = modify(
+    source,
+    [configKey, DOCSEARCH_MCP_SERVER_NAME],
+    mergedEntry,
+    {
+      formattingOptions: inferFormatting(source),
+    }
+  );
   const updated = ensureFinalNewline(applyEdits(source, edits));
 
   await writeFileAtomic(filePath, updated);
@@ -82,22 +109,29 @@ export async function upsertJsonServerEntry(
 export function buildTomlServerBlock(entry: Record<string, unknown>): string {
   return [
     `[mcp_servers.${DOCSEARCH_MCP_SERVER_NAME}]`,
-    ...Object.entries(entry).map(([key, value]) => `${key} = ${JSON.stringify(value)}`),
+    ...Object.entries(entry).map(
+      ([key, value]) => `${key} = ${JSON.stringify(value)}`
+    ),
     '',
   ].join('\n');
 }
 
 export async function appendTomlServer(
   filePath: string,
-  entry: Record<string, unknown>,
+  entry: Record<string, unknown>
 ): Promise<{ alreadyExists: boolean }> {
   const existing = await readTextFile(filePath);
   const block = buildTomlServerBlock(entry);
   const sectionHeader = `[mcp_servers.${DOCSEARCH_MCP_SERVER_NAME}]`;
-  const headerRegex = new RegExp(`^${escapeRegExp(sectionHeader)}[ \\t]*$`, 'gm');
+  const headerRegex = new RegExp(
+    `^${escapeRegExp(sectionHeader)}[ \\t]*$`,
+    'gm'
+  );
   const matches = [...existing.matchAll(headerRegex)];
   if (matches.length > 1) {
-    throw new UsageError(`Cannot update ${filePath}: duplicate ${sectionHeader} sections.`);
+    throw new UsageError(
+      `Cannot update ${filePath}: duplicate ${sectionHeader} sections.`
+    );
   }
 
   const alreadyExists = matches.length === 1;
@@ -109,7 +143,10 @@ export async function appendTomlServer(
   return { alreadyExists };
 }
 
-export async function writeRuleFile(filePath: string, content: string): Promise<{ alreadyExists: boolean }> {
+export async function writeRuleFile(
+  filePath: string,
+  content: string
+): Promise<{ alreadyExists: boolean }> {
   const alreadyExists = await pathExists(filePath);
   if (!alreadyExists) {
     await writeFileAtomic(filePath, content);
@@ -117,24 +154,37 @@ export async function writeRuleFile(filePath: string, content: string): Promise<
   return { alreadyExists };
 }
 
-export async function appendRuleSection(filePath: string, content: string): Promise<void> {
+export async function appendRuleSection(
+  filePath: string,
+  content: string
+): Promise<void> {
   const existing = await readTextFile(filePath);
   const hasStart = existing.includes(SECTION_START);
   const hasEnd = existing.includes(SECTION_END);
   if (hasStart !== hasEnd) {
-    throw new UsageError(`Cannot update ${filePath}: incomplete DocSearch managed section.`);
+    throw new UsageError(
+      `Cannot update ${filePath}: incomplete DocSearch managed section.`
+    );
   }
 
   const section = `${SECTION_START}\n${content.trim()}\n${SECTION_END}`;
   const updated =
     hasStart && hasEnd
-      ? existing.replace(new RegExp(`${escapeRegExp(SECTION_START)}[\\s\\S]*?${escapeRegExp(SECTION_END)}`), section)
+      ? existing.replace(
+          new RegExp(
+            `${escapeRegExp(SECTION_START)}[\\s\\S]*?${escapeRegExp(SECTION_END)}`
+          ),
+          section
+        )
       : appendBlock(existing, `${section}\n`);
 
   await writeFileAtomic(filePath, updated);
 }
 
-export async function writeSkill(skillDir: string, content: string): Promise<{ alreadyExists: boolean; path: string }> {
+export async function writeSkill(
+  skillDir: string,
+  content: string
+): Promise<{ alreadyExists: boolean; path: string }> {
   const skillPath = join(skillDir, DOCSEARCH_MCP_SERVER_NAME, 'SKILL.md');
   const alreadyExists = await pathExists(skillPath);
   if (!alreadyExists) {
@@ -147,19 +197,27 @@ function mergeTomlSection(
   existing: string,
   headerMatch: RegExpMatchArray,
   entry: Record<string, unknown>,
-  filePath: string,
+  filePath: string
 ): string {
   const startIdx = headerMatch.index;
   if (startIdx === undefined) {
-    throw new UsageError(`Cannot update ${filePath}: failed to locate the DocSearch MCP section.`);
+    throw new UsageError(
+      `Cannot update ${filePath}: failed to locate the DocSearch MCP section.`
+    );
   }
 
   const lineBreak = existing.includes('\r\n') ? '\r\n' : '\n';
   const headerEnd = startIdx + headerMatch[0].length;
   const rest = existing.slice(headerEnd);
   const nextHeader = /^[ \t]*\[[^\]\r\n]+\][ \t]*(?:#.*)?$/m.exec(rest);
-  const endIdx = nextHeader?.index === undefined ? existing.length : headerEnd + nextHeader.index;
-  const lines = existing.slice(startIdx, endIdx).replace(/\s+$/, '').split(/\r?\n/);
+  const endIdx =
+    nextHeader?.index === undefined
+      ? existing.length
+      : headerEnd + nextHeader.index;
+  const lines = existing
+    .slice(startIdx, endIdx)
+    .replace(/\s+$/, '')
+    .split(/\r?\n/);
 
   for (const [key, value] of Object.entries(entry)) {
     const keyRegex = new RegExp(`^(\\s*)${escapeRegExp(key)}\\s*=`);
@@ -168,29 +226,40 @@ function mergeTomlSection(
       .filter((candidate) => candidate.match !== null);
 
     if (matchingLines.length > 1) {
-      throw new UsageError(`Cannot update ${filePath}: duplicate "${key}" values in the DocSearch MCP section.`);
+      throw new UsageError(
+        `Cannot update ${filePath}: duplicate "${key}" values in the DocSearch MCP section.`
+      );
     }
 
     const replacement = `${key} = ${toTomlValue(value, filePath)}`;
     const matchingLine = matchingLines[0];
     if (matchingLine?.match) {
       const comment = readTomlInlineComment(lines[matchingLine.index]);
-      lines[matchingLine.index] = `${matchingLine.match[1]}${replacement}${comment}`;
+      lines[matchingLine.index] =
+        `${matchingLine.match[1]}${replacement}${comment}`;
     } else {
       lines.push(replacement);
     }
   }
 
   const mergedSection = `${lines.join(lineBreak)}${lineBreak}`;
-  return ensureFinalNewline(`${existing.slice(0, startIdx)}${mergedSection}${existing.slice(endIdx)}`);
+  return ensureFinalNewline(
+    `${existing.slice(0, startIdx)}${mergedSection}${existing.slice(endIdx)}`
+  );
 }
 
 function toTomlValue(value: unknown, filePath: string): string {
-  if (typeof value === 'string' || typeof value === 'boolean' || typeof value === 'number') {
+  if (
+    typeof value === 'string' ||
+    typeof value === 'boolean' ||
+    typeof value === 'number'
+  ) {
     return JSON.stringify(value);
   }
 
-  throw new UsageError(`Cannot update ${filePath}: unsupported TOML value in the DocSearch MCP configuration.`);
+  throw new UsageError(
+    `Cannot update ${filePath}: unsupported TOML value in the DocSearch MCP configuration.`
+  );
 }
 
 function readTomlInlineComment(line: string): string {
@@ -220,12 +289,18 @@ function appendBlock(existing: string, block: string): string {
   const lineBreak = existing.includes('\r\n') ? '\r\n' : '\n';
   const normalizedBlock = block.replace(/\r?\n/g, lineBreak);
   if (!existing) {
-    return normalizedBlock.endsWith(lineBreak) ? normalizedBlock : `${normalizedBlock}${lineBreak}`;
+    return normalizedBlock.endsWith(lineBreak)
+      ? normalizedBlock
+      : `${normalizedBlock}${lineBreak}`;
   }
 
-  const separator = existing.endsWith(lineBreak) ? lineBreak : `${lineBreak}${lineBreak}`;
+  const separator = existing.endsWith(lineBreak)
+    ? lineBreak
+    : `${lineBreak}${lineBreak}`;
   return `${existing}${separator}${
-    normalizedBlock.endsWith(lineBreak) ? normalizedBlock : `${normalizedBlock}${lineBreak}`
+    normalizedBlock.endsWith(lineBreak)
+      ? normalizedBlock
+      : `${normalizedBlock}${lineBreak}`
   }`;
 }
 
@@ -267,7 +342,10 @@ async function readTextFile(filePath: string): Promise<string> {
   }
 }
 
-async function writeFileAtomic(filePath: string, content: string): Promise<void> {
+async function writeFileAtomic(
+  filePath: string,
+  content: string
+): Promise<void> {
   const targetPath = await resolveExistingPath(filePath);
   await mkdir(dirname(targetPath), { recursive: true });
 

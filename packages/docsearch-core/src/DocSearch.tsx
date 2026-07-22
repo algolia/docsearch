@@ -8,7 +8,11 @@ import type { KeyboardShortcuts } from './useKeyboardShortcuts.ts';
 import type { DocSearchTheme } from './useTheme';
 import { useTheme } from './useTheme';
 
-export type DocSearchState = 'modal-askai' | 'modal-search' | 'ready' | 'sidepanel';
+export type DocSearchState =
+  | 'modal-askai'
+  | 'modal-search'
+  | 'ready'
+  | 'sidepanel';
 
 export type View = 'modal' | 'sidepanel' | (Record<string, unknown> & string);
 
@@ -18,11 +22,12 @@ export type InitialAskAiMessage = {
   suggestedQuestionId?: string;
 };
 
-export type OnAskAiToggle = (active: boolean, initialMessage?: InitialAskAiMessage) => void;
+export type OnAskAiToggle = (
+  active: boolean,
+  initialMessage?: InitialAskAiMessage
+) => void;
 
-/**
- * Imperative handle exposed by the DocSearch provider for programmatic control.
- */
+/** Imperative handle exposed by the DocSearch provider for programmatic control. */
 export interface DocSearchRef {
   /** Opens the search modal. */
   open: () => void;
@@ -58,9 +63,7 @@ export interface DocSearchContext {
   isHybridModeSupported: boolean;
 }
 
-/**
- * Lifecycle callbacks for DocSearch.
- */
+/** Lifecycle callbacks for DocSearch. */
 export interface DocSearchCallbacks {
   /** Called once DocSearch is mounted and ready for interaction. */
   onReady?: () => void;
@@ -85,19 +88,36 @@ const Context = React.createContext<DocSearchContext | undefined>(undefined);
 Context.displayName = 'DocSearchContext';
 
 function DocSearchInner(
-  { children, theme, onReady, onOpen, onClose, onSidepanelOpen, onSidepanelClose, ...props }: DocSearchProps,
-  ref: React.ForwardedRef<DocSearchRef>,
+  {
+    children,
+    theme,
+    onReady,
+    onOpen,
+    onClose,
+    onSidepanelOpen,
+    onSidepanelClose,
+    ...props
+  }: DocSearchProps,
+  ref: React.ForwardedRef<DocSearchRef>
 ): JSX.Element {
-  const [docsearchState, setDocsearchState] = React.useState<DocSearchState>('ready');
-  const [initialQuery, setInitialQuery] = React.useState<string>(props.initialQuery || '');
+  const [docsearchState, setDocsearchState] =
+    React.useState<DocSearchState>('ready');
+  const [initialQuery, setInitialQuery] = React.useState<string>(
+    props.initialQuery || ''
+  );
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
   const keyboardShortcuts = useKeyboardShortcuts(props.keyboardShortcuts);
-  const [initialAskAiMessage, setInitialAskAiMessage] = React.useState<InitialAskAiMessage>();
-  const [registeredViews, setRegisteredViews] = React.useState(() => new Set<View>());
+  const [initialAskAiMessage, setInitialAskAiMessage] =
+    React.useState<InitialAskAiMessage>();
+  const [registeredViews, setRegisteredViews] = React.useState(
+    () => new Set<View>()
+  );
   const isMobile = useIsMobile();
   const prevStateRef = React.useRef<DocSearchState>('ready');
 
-  const isModalActive = ['modal-search', 'modal-askai'].includes(docsearchState);
+  const isModalActive = ['modal-search', 'modal-askai'].includes(
+    docsearchState
+  );
   const isAskAiActive = docsearchState === 'modal-askai';
   const isHybridModeSupported = !isMobile && registeredViews.has('sidepanel');
   const isSidepanelOpen = docsearchState === 'sidepanel';
@@ -122,7 +142,10 @@ function DocSearchInner(
     }
 
     // Modal closed
-    if (currentState === 'ready' && (prevState === 'modal-search' || prevState === 'modal-askai')) {
+    if (
+      currentState === 'ready' &&
+      (prevState === 'modal-search' || prevState === 'modal-askai')
+    ) {
       onClose?.();
     }
 
@@ -161,7 +184,7 @@ function DocSearchInner(
 
       setDocsearchState(active ? 'modal-askai' : 'modal-search');
     },
-    [setDocsearchState, isMobile, isHybridModeSupported],
+    [setDocsearchState, isMobile, isHybridModeSupported]
   );
 
   const openSidepanel = React.useCallback(
@@ -172,7 +195,7 @@ function DocSearchInner(
       setInitialAskAiMessage(initialMessage);
       setDocsearchState('sidepanel');
     },
-    [setDocsearchState, registeredViews],
+    [setDocsearchState, registeredViews]
   );
 
   const onInput = React.useCallback(
@@ -180,7 +203,7 @@ function DocSearchInner(
       setDocsearchState('modal-search');
       setInitialQuery(event.key);
     },
-    [setDocsearchState, setInitialQuery],
+    [setDocsearchState, setInitialQuery]
   );
 
   const registerView = React.useCallback(
@@ -193,7 +216,7 @@ function DocSearchInner(
         return newViews;
       });
     },
-    [registeredViews],
+    [registeredViews]
   );
 
   // Expose imperative handle for programmatic control
@@ -202,7 +225,8 @@ function DocSearchInner(
     () => ({
       open: openModal,
       close: closeModal,
-      openAskAi: (initialMessage?: InitialAskAiMessage): void => onAskAiToggle(true, initialMessage),
+      openAskAi: (initialMessage?: InitialAskAiMessage): void =>
+        onAskAiToggle(true, initialMessage),
       openSidepanel,
       get isReady(): boolean {
         return true;
@@ -217,7 +241,15 @@ function DocSearchInner(
         return isHybridModeSupported;
       },
     }),
-    [openModal, closeModal, onAskAiToggle, openSidepanel, isModalActive, isSidepanelOpen, isHybridModeSupported],
+    [
+      openModal,
+      closeModal,
+      onAskAiToggle,
+      openSidepanel,
+      isModalActive,
+      isSidepanelOpen,
+      isHybridModeSupported,
+    ]
   );
 
   useTheme({ theme });
@@ -262,7 +294,7 @@ function DocSearchInner(
       initialAskAiMessage,
       registerView,
       isHybridModeSupported,
-    ],
+    ]
   );
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
@@ -275,7 +307,9 @@ export function useDocSearch(): DocSearchContext {
   const ctx = React.useContext(Context);
 
   if (ctx === undefined) {
-    throw new Error('`useDocSearch` must be used within the `DocSearch` provider');
+    throw new Error(
+      '`useDocSearch` must be used within the `DocSearch` provider'
+    );
   }
 
   return ctx;

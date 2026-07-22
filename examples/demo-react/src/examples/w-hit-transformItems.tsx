@@ -21,7 +21,11 @@ import type { DemoTheme } from '../App';
   _highlightResult: any;
 }; */
 
-export default function WTransformItems({ theme }: { theme: DemoTheme }): JSX.Element {
+export default function WTransformItems({
+  theme,
+}: {
+  theme: DemoTheme;
+}): JSX.Element {
   return (
     <DocSearchAI
       indexName="crawler_doc"

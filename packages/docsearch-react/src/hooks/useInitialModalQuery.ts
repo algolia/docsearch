@@ -7,9 +7,13 @@ export function useInitialModalQuery(initialQueryFromProp: string): {
   initialQueryFromSelection: string;
 } {
   const initialQueryFromSelection = React.useRef(
-    typeof window !== 'undefined' ? window.getSelection()!.toString().slice(0, MAX_QUERY_SIZE) : '',
+    typeof window !== 'undefined'
+      ? window.getSelection()!.toString().slice(0, MAX_QUERY_SIZE)
+      : ''
   ).current;
-  const initialQuery = React.useRef(initialQueryFromProp || initialQueryFromSelection).current;
+  const initialQuery = React.useRef(
+    initialQueryFromProp || initialQueryFromSelection
+  ).current;
 
   return { initialQuery, initialQueryFromSelection };
 }

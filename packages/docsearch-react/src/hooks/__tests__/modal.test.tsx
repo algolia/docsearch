@@ -1,7 +1,6 @@
 import { render, cleanup } from '@testing-library/react';
 import React, { type JSX } from 'react';
 import { describe, it, expect, afterEach, vi } from 'vitest';
-
 import '@testing-library/jest-dom/vitest';
 
 import { MAX_QUERY_SIZE } from '../../constants';
@@ -34,7 +33,12 @@ describe('modal hooks', () => {
         toString: () => 'selected text',
       } as Selection);
 
-      render(<TestComponent initialQueryFromProp="explicit query" onResult={onResult} />);
+      render(
+        <TestComponent
+          initialQueryFromProp="explicit query"
+          onResult={onResult}
+        />
+      );
 
       expect(onResult).toHaveBeenCalledWith({
         initialQuery: 'explicit query',
@@ -59,7 +63,13 @@ describe('modal hooks', () => {
   });
 
   describe('useRefreshOnInitialQuery', () => {
-    function TestComponent({ initialQuery, refresh }: { initialQuery: string; refresh: () => void }): JSX.Element {
+    function TestComponent({
+      initialQuery,
+      refresh,
+    }: {
+      initialQuery: string;
+      refresh: () => void;
+    }): JSX.Element {
       const inputRef = React.useRef<HTMLInputElement | null>(null);
       useRefreshOnInitialQuery({ initialQuery, inputRef, refresh });
 
@@ -69,7 +79,9 @@ describe('modal hooks', () => {
     it('calls refresh and focuses input only when an initial query exists', () => {
       const refresh = vi.fn();
 
-      const { rerender } = render(<TestComponent initialQuery="" refresh={refresh} />);
+      const { rerender } = render(
+        <TestComponent initialQuery="" refresh={refresh} />
+      );
 
       expect(refresh).not.toHaveBeenCalled();
       expect(document.activeElement).toBe(document.body);
@@ -82,7 +94,11 @@ describe('modal hooks', () => {
   });
 
   describe('useModalRefs', () => {
-    function TestComponent({ onResult }: { onResult: (result: ReturnType<typeof useModalRefs>) => void }): null {
+    function TestComponent({
+      onResult,
+    }: {
+      onResult: (result: ReturnType<typeof useModalRefs>) => void;
+    }): null {
       onResult(useModalRefs());
 
       return null;
@@ -92,7 +108,9 @@ describe('modal hooks', () => {
       const onResult = vi.fn();
 
       const { rerender } = render(<TestComponent onResult={onResult} />);
-      const firstResult = onResult.mock.calls[0][0] as ReturnType<typeof useModalRefs>;
+      const firstResult = onResult.mock.calls[0][0] as ReturnType<
+        typeof useModalRefs
+      >;
 
       expect(firstResult.containerRef.current).toBeNull();
       expect(firstResult.modalRef.current).toBeNull();

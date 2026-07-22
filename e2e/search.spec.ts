@@ -1,5 +1,7 @@
 import { test, expect } from './fixtures';
 
+const MAX_KEYBOARD_NAVIGATION_STEPS = 10;
+
 test.describe('Start', () => {
   test.beforeEach(async ({ docSearch }) => {
     await docSearch.goto();
@@ -14,12 +16,18 @@ test.describe('Start', () => {
     await expect(docSearch.modal).toBeVisible();
   });
 
-  test('Open modal with key shortcut on Windows/Linux', async ({ docSearch, page }) => {
+  test('Open modal with key shortcut on Windows/Linux', async ({
+    docSearch,
+    page,
+  }) => {
     await page.keyboard.press('Control+k');
     await docSearch.expectModalVisibleAndFocused();
   });
 
-  test('Open modal with key shortcut on Windows/Linux when caps lock is on', async ({ docSearch, page }) => {
+  test('Open modal with key shortcut on Windows/Linux when caps lock is on', async ({
+    docSearch,
+    page,
+  }) => {
     await page.keyboard.press('Control+K');
     await docSearch.expectModalVisibleAndFocused();
   });
@@ -29,12 +37,18 @@ test.describe('Start', () => {
     await docSearch.expectModalVisibleAndFocused();
   });
 
-  test('Open modal with key shortcut on macOS when caps lock is on', async ({ docSearch, page }) => {
+  test('Open modal with key shortcut on macOS when caps lock is on', async ({
+    docSearch,
+    page,
+  }) => {
     await page.keyboard.press('Meta+K');
     await docSearch.expectModalVisibleAndFocused();
   });
 
-  test('Open modal with forward slash key shortcut', async ({ docSearch, page }) => {
+  test('Open modal with forward slash key shortcut', async ({
+    docSearch,
+    page,
+  }) => {
     await page.waitForTimeout(1000);
     await page.keyboard.press('/');
     await docSearch.expectModalVisibleAndFocused();
@@ -51,17 +65,26 @@ test.describe('End', () => {
     await docSearch.closeModal();
   });
 
-  test('Close modal by clicking outside its container', async ({ docSearch, page }) => {
+  test('Close modal by clicking outside its container', async ({
+    docSearch,
+    page,
+  }) => {
     await page.mouse.click(0, 0);
     await docSearch.expectModalNotVisible();
   });
 
-  test('Close modal with key shortcut on Windows/Linux', async ({ docSearch, page }) => {
+  test('Close modal with key shortcut on Windows/Linux', async ({
+    docSearch,
+    page,
+  }) => {
     await page.keyboard.press('Control+k');
     await docSearch.expectModalNotVisible();
   });
 
-  test('Close modal with key shortcut on macOS', async ({ docSearch, page }) => {
+  test('Close modal with key shortcut on macOS', async ({
+    docSearch,
+    page,
+  }) => {
     await page.keyboard.press('Meta+k');
     await docSearch.expectModalNotVisible();
   });
@@ -89,9 +112,31 @@ test.describe('Search', () => {
 
     await docSearch.typeQueryMatching();
     await expect(docSearch.hits).toBeVisible();
-    await page.keyboard.press('ArrowDown');
-    await page.keyboard.press('ArrowDown');
-    await page.keyboard.press('ArrowUp');
+    const firstHitOption = page
+      .locator('#docsearch-hits_docsearch-list')
+      .getByRole('option')
+      .first();
+    const firstHitOptionId = await firstHitOption.getAttribute('id');
+
+    expect(firstHitOptionId).not.toBeNull();
+
+    // Prompt suggestions precede document hits, but the number is not stable.
+    for (let index = 0; index < MAX_KEYBOARD_NAVIGATION_STEPS; index++) {
+      if (
+        (await docSearch.input.getAttribute('aria-activedescendant')) ===
+        firstHitOptionId
+      ) {
+        break;
+      }
+
+      await page.keyboard.press('ArrowDown');
+    }
+
+    await expect(docSearch.input).toHaveAttribute(
+      'aria-activedescendant',
+      firstHitOptionId!
+    );
+    await expect(firstHitOption).toHaveAttribute('aria-selected', 'true');
     await page.keyboard.press('Enter');
 
     await expect(page).not.toHaveURL(initialURL, { timeout: 10000 });
@@ -106,12 +151,17 @@ test.describe('Search', () => {
     await expect(page).not.toHaveURL(initialURL);
   });
 
-  test("No results are displayed if query doesn't match", async ({ docSearch, page }) => {
+  test("No results are displayed if query doesn't match", async ({
+    docSearch,
+    page,
+  }) => {
     await docSearch.typeQueryNotMatching();
     await expect(page.getByText('No results found for')).toBeVisible();
   });
 
-  test('Should not refer to Recent/Favorite in aria-controls', async ({ docSearch }) => {
+  test('Should not refer to Recent/Favorite in aria-controls', async ({
+    docSearch,
+  }) => {
     await expect(docSearch.input).not.toHaveAttribute('aria-controls');
   });
 });
@@ -127,26 +177,45 @@ test.describe('Recent and Favorites', () => {
     await expect(page.getByText('Recent')).toBeVisible();
   });
 
-  test('Recent search is displayed after visiting a result', async ({ docSearch, page }) => {
+  test('Recent search is displayed after visiting a result', async ({
+    docSearch,
+    page,
+  }) => {
     await docSearch.clearSearch();
-    await expect(page.locator('#docsearch-recentSearches-item-0')).toBeVisible();
+    await expect(
+      page.locator('#docsearch-recentSearches-item-0')
+    ).toBeVisible();
   });
 
   test('Recent search can be deleted', async ({ docSearch, page }) => {
-    await page.locator('#docsearch-recentSearches-item-0').locator('[title="Remove this search from history"]').click();
+    await page
+      .locator('#docsearch-recentSearches-item-0')
+      .locator('[title="Remove this search from history"]')
+      .click();
     await expect(docSearch.hits).not.toBeVisible();
   });
 
   test('Recent search can be pinned', async ({ page }) => {
-    await page.locator('#docsearch-recentSearches-item-0').locator('[title="Pin this search"]').click();
+    await page
+      .locator('#docsearch-recentSearches-item-0')
+      .locator('[title="Pin this search"]')
+      .click();
     await expect(page.getByText('Pinned')).toBeVisible();
-    await expect(page.locator('#docsearch-favoriteSearches-item-0')).toBeVisible();
+    await expect(
+      page.locator('#docsearch-favoriteSearches-item-0')
+    ).toBeVisible();
   });
 
   test('Pinned can be deleted', async ({ docSearch, page }) => {
-    await page.locator('#docsearch-recentSearches-item-0').locator('[title="Pin this search"]').click();
+    await page
+      .locator('#docsearch-recentSearches-item-0')
+      .locator('[title="Pin this search"]')
+      .click();
     await expect(page.getByText('Pinned')).toBeVisible();
-    await page.locator('#docsearch-favoriteSearches-item-0').locator('[title="Remove this saved search"]').click();
+    await page
+      .locator('#docsearch-favoriteSearches-item-0')
+      .locator('[title="Remove this saved search"]')
+      .click();
     await expect(docSearch.hits).not.toBeVisible();
   });
 });

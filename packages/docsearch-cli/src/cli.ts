@@ -11,8 +11,18 @@ import { UsageError } from './errors.js';
 import { callDocSearchTool } from './mcp/client.js';
 import { formatToolResult, getToolResultText } from './mcp/format.js';
 import type { SetupAgent, SetupScope } from './setup/agents.js';
-import { PromptCancelledError, promptAgents, promptScope } from './setup/prompt.js';
-import { buildAgentChoices, createPathContext, detectAgents, findProjectRoot, setupDocSearch } from './setup/setup.js';
+import {
+  PromptCancelledError,
+  promptAgents,
+  promptScope,
+} from './setup/prompt.js';
+import {
+  buildAgentChoices,
+  createPathContext,
+  detectAgents,
+  findProjectRoot,
+  setupDocSearch,
+} from './setup/setup.js';
 import { renderMarkdown } from './ui/markdown.js';
 import {
   renderError,
@@ -24,7 +34,9 @@ import {
 } from './ui/render.js';
 import { startSpinner } from './ui/spinner.js';
 
-export async function runCli(argv: string[] = process.argv.slice(2)): Promise<number> {
+export async function runCli(
+  argv: string[] = process.argv.slice(2)
+): Promise<number> {
   const [commandName, ...commandArgs] = argv;
 
   try {
@@ -33,12 +45,20 @@ export async function runCli(argv: string[] = process.argv.slice(2)): Promise<nu
       return 0;
     }
 
-    if (commandName === 'help' || commandName === '--help' || commandName === '-h') {
+    if (
+      commandName === 'help' ||
+      commandName === '--help' ||
+      commandName === '-h'
+    ) {
       process.stdout.write(renderHelp());
       return 0;
     }
 
-    if (commandName === 'version' || commandName === '--version' || commandName === '-v') {
+    if (
+      commandName === 'version' ||
+      commandName === '--version' ||
+      commandName === '-v'
+    ) {
       process.stdout.write(`${CLI_VERSION}\n`);
       return 0;
     }
@@ -60,7 +80,9 @@ export async function runCli(argv: string[] = process.argv.slice(2)): Promise<nu
     throw new UsageError(`Unknown command: ${commandName}.`);
   } catch (error) {
     if (error instanceof PromptCancelledError) {
-      process.stderr.write(renderNotice('Setup cancelled. No changes were made.'));
+      process.stderr.write(
+        renderNotice('Setup cancelled. No changes were made.')
+      );
       return error.exitCode;
     }
 
@@ -76,12 +98,19 @@ export async function runCli(argv: string[] = process.argv.slice(2)): Promise<nu
 async function runSetup(request: SetupRequest): Promise<number> {
   const baseContext = createPathContext();
   const scope = await resolveScope(request);
-  const cwd = scope === 'project' ? await findProjectRoot(baseContext.cwd, baseContext.homeDir) : baseContext.cwd;
+  const cwd =
+    scope === 'project'
+      ? await findProjectRoot(baseContext.cwd, baseContext.homeDir)
+      : baseContext.cwd;
   const context = { ...baseContext, cwd };
   const agents = await resolveSetupAgents(request, context, scope);
 
   if (agents.length === 0) {
-    process.stdout.write(renderNotice('No agents selected. Re-run `docsearch setup` and pick at least one agent.'));
+    process.stdout.write(
+      renderNotice(
+        'No agents selected. Re-run `docsearch setup` and pick at least one agent.'
+      )
+    );
     return 0;
   }
 
@@ -99,7 +128,7 @@ async function runSetup(request: SetupRequest): Promise<number> {
       endpoint: request.endpoint,
       location: scope === 'project' ? context.cwd : undefined,
       scope,
-    }),
+    })
   );
   return 0;
 }
@@ -119,7 +148,7 @@ function resolveScope(request: SetupRequest): Promise<SetupScope> {
 async function resolveSetupAgents(
   request: SetupRequest,
   context: ReturnType<typeof createPathContext>,
-  scope: SetupScope,
+  scope: SetupScope
 ): Promise<SetupAgent[]> {
   if (request.all) {
     return buildAgentChoices(context, []).map((choice) => choice.name);
@@ -132,7 +161,9 @@ async function resolveSetupAgents(
   const detected = await detectAgents(scope, context);
   if (request.yes) {
     if (detected.length === 0) {
-      throw new UsageError('No supported agents were detected. Pass an agent flag such as --cursor, or use --all.');
+      throw new UsageError(
+        'No supported agents were detected. Pass an agent flag such as --cursor, or use --all.'
+      );
     }
     return detected;
   }
@@ -140,7 +171,10 @@ async function resolveSetupAgents(
   return promptAgents(buildAgentChoices(context, detected));
 }
 
-async function runQuery(commandName: QueryCommandName, parsedArgs: ReturnType<typeof parseArgs>): Promise<number> {
+async function runQuery(
+  commandName: QueryCommandName,
+  parsedArgs: ReturnType<typeof parseArgs>
+): Promise<number> {
   const request = buildToolRequest(commandName, parsedArgs);
   const subject = describeQuery(commandName, parsedArgs.positionals);
 
@@ -154,7 +188,9 @@ async function runQuery(commandName: QueryCommandName, parsedArgs: ReturnType<ty
   try {
     const result = await callDocSearchTool(request);
     if (result.isError === true) {
-      throw new Error(getToolResultText(result) || 'DocSearch MCP returned an error.');
+      throw new Error(
+        getToolResultText(result) || 'DocSearch MCP returned an error.'
+      );
     }
     spinner.succeed(`Results for ${subject}`);
     process.stdout.write(renderResultHeader(commandName, subject));
@@ -166,7 +202,10 @@ async function runQuery(commandName: QueryCommandName, parsedArgs: ReturnType<ty
   }
 }
 
-function describeQuery(commandName: QueryCommandName, positionals: string[]): string {
+function describeQuery(
+  commandName: QueryCommandName,
+  positionals: string[]
+): string {
   if (commandName === 'docs') {
     const [library] = positionals;
     return library ?? 'docs';
@@ -176,5 +215,9 @@ function describeQuery(commandName: QueryCommandName, positionals: string[]): st
 }
 
 function isQueryCommand(commandName: string): commandName is QueryCommandName {
-  return commandName === 'docs' || commandName === 'resolve' || commandName === 'query';
+  return (
+    commandName === 'docs' ||
+    commandName === 'resolve' ||
+    commandName === 'query'
+  );
 }

@@ -22,8 +22,17 @@ import type { ScreenStateTranslations } from './ScreenState';
 import { ScreenState } from './ScreenState';
 import type { DocSearchState, InternalDocSearchHit } from './types';
 import { useSearchClient } from './useSearchClient';
-import { identity, isModifierEvent, noop, scrollTo as scrollToUtils } from './utils';
-import { buildNoQuerySources, buildQuerySources, type BuildQuerySourcesState } from './utils/createDocSearchSources';
+import {
+  identity,
+  isModifierEvent,
+  noop,
+  scrollTo as scrollToUtils,
+} from './utils';
+import {
+  buildNoQuerySources,
+  buildQuerySources,
+  type BuildQuerySourcesState,
+} from './utils/createDocSearchSources';
 import { normalizeDocSearchIndexes } from './utils/normalizeDocSearchIndexes';
 
 export type ModalTranslations = Partial<{
@@ -70,7 +79,9 @@ export function DocSearchModal({
     facets: facetBarTranslations,
     ...screenStateTranslations
   } = translations;
-  const [state, setState] = React.useState<DocSearchState<InternalDocSearchHit>>({
+  const [state, setState] = React.useState<
+    DocSearchState<InternalDocSearchHit>
+  >({
     query: '',
     collections: [],
     completion: null,
@@ -80,10 +91,21 @@ export function DocSearchModal({
     status: 'idle',
   });
 
-  const placeholder = translations?.searchBox?.placeholderText || props.placeholder || 'Search docs';
+  const placeholder =
+    translations?.searchBox?.placeholderText ||
+    props.placeholder ||
+    'Search docs';
 
-  const { containerRef, modalRef, formElementRef, dropdownRef, inputRef, snippetLength } = useModalRefs();
-  const { initialQuery, initialQueryFromSelection } = useInitialModalQuery(initialQueryFromProp);
+  const {
+    containerRef,
+    modalRef,
+    formElementRef,
+    dropdownRef,
+    inputRef,
+    snippetLength,
+  } = useModalRefs();
+  const { initialQuery, initialQueryFromSelection } =
+    useInitialModalQuery(initialQueryFromProp);
 
   const searchClient = useSearchClient(appId, apiKey, transformSearchClient);
 
@@ -94,7 +116,7 @@ export function DocSearchModal({
         indices,
         searchParameters,
       }),
-    [indexName, indices, searchParameters],
+    [indexName, indices, searchParameters]
   );
   const defaultIndexName = indexes[0].name;
 
@@ -110,13 +132,18 @@ export function DocSearchModal({
       >
     >(undefined);
 
-  const { visibleFacets, facetSelections, facetSelectionsRef, handleFacetSelectionChange, clearFacetSelections } =
-    useDocSearchFacets({
-      facets,
-      indexes,
-      searchClient,
-      onSelectionsChange: () => autocompleteRef.current?.refresh(),
-    });
+  const {
+    visibleFacets,
+    facetSelections,
+    facetSelectionsRef,
+    handleFacetSelectionChange,
+    clearFacetSelections,
+  } = useDocSearchFacets({
+    facets,
+    indexes,
+    searchClient,
+    onSelectionsChange: () => autocompleteRef.current?.refresh(),
+  });
 
   const { favoriteSearches, recentSearches } = useStoredDocSearches({
     defaultIndexName,
@@ -211,8 +238,14 @@ export function DocSearchModal({
 
   // hide the dropdown on idle and no collections
   let showDocsearchDropdown = true;
-  const hasCollections = state.collections.some((collection) => collection.items.length > 0);
-  if (state.status === 'idle' && hasCollections === false && state.query.length === 0) {
+  const hasCollections = state.collections.some(
+    (collection) => collection.items.length > 0
+  );
+  if (
+    state.status === 'idle' &&
+    hasCollections === false &&
+    state.query.length === 0
+  ) {
     showDocsearchDropdown = false;
   }
 
@@ -232,7 +265,9 @@ export function DocSearchModal({
           placeholder={placeholder || 'Search docs'}
           autoFocus={initialQuery.length === 0}
           inputRef={inputRef}
-          isFromSelection={Boolean(initialQuery) && initialQuery === initialQueryFromSelection}
+          isFromSelection={
+            Boolean(initialQuery) && initialQuery === initialQueryFromSelection
+          }
           translations={searchBoxTranslations}
           onClose={onClose}
         />

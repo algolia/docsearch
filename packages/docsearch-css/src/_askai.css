@@ -293,7 +293,10 @@
   font-family: inherit;
   font-size: 1em;
   cursor: pointer;
-  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .DocSearch-Feedback-Panel-Reason:hover {
@@ -841,11 +844,9 @@
 }
 
 .DocSearch-AskAi-Thinking-Skeleton {
-  --shimmer-gradient: rgb(170, 193, 250) 0%, rgb(245, 251, 255) 50%, rgb(170, 193, 250) 100%;
-  --shimmer-bg: linear-gradient(
-    95deg,
-    var(--shimmer-gradient)
-  );
+  --shimmer-gradient:
+    rgb(170, 193, 250) 0%, rgb(245, 251, 255) 50%, rgb(170, 193, 250) 100%;
+  --shimmer-bg: linear-gradient(95deg, var(--shimmer-gradient));
   display: block;
   height: 0.875rem;
   width: 100%;
@@ -854,7 +855,8 @@
 }
 
 html[data-theme='dark'] .DocSearch-AskAi-Thinking-Skeleton {
-  --shimmer-gradient: rgb(31, 64, 195) 0%, rgb(160, 185, 250) 50%, rgb(31, 64, 195) 100%;
+  --shimmer-gradient:
+    rgb(31, 64, 195) 0%, rgb(160, 185, 250) 50%, rgb(31, 64, 195) 100%;
 }
 
 .DocSearch-AskAi-Thinking-Skeleton.shimmer {
@@ -862,11 +864,9 @@ html[data-theme='dark'] .DocSearch-AskAi-Thinking-Skeleton {
 }
 
 .DocSearch-AskAiScreen-MessageContent-Thinking {
-  --shimmer-gradient: rgb(40, 55, 190) 0%, rgb(150, 162, 240) 50%, rgb(40, 55, 190) 100%;
-  --shimmer-bg: linear-gradient(
-    95deg,
-    var(--shimmer-gradient)
-  );
+  --shimmer-gradient:
+    rgb(40, 55, 190) 0%, rgb(150, 162, 240) 50%, rgb(40, 55, 190) 100%;
+  --shimmer-bg: linear-gradient(95deg, var(--shimmer-gradient));
   display: flex;
   flex-direction: column;
   gap: 0.875rem;
@@ -874,14 +874,17 @@ html[data-theme='dark'] .DocSearch-AskAi-Thinking-Skeleton {
 }
 
 html[data-theme='dark'] .DocSearch-AskAiScreen-MessageContent-Thinking {
-  --shimmer-gradient: rgb(108, 145, 255) 0%, rgb(200, 218, 255) 50%, rgb(108, 145, 255) 100%;
+  --shimmer-gradient:
+    rgb(108, 145, 255) 0%, rgb(200, 218, 255) 50%, rgb(108, 145, 255) 100%;
 }
 
-.DocSearch-AskAiScreen-MessageContent-Thinking .DocSearch-AskAi-Thinking-Skeleton {
+.DocSearch-AskAiScreen-MessageContent-Thinking
+  .DocSearch-AskAi-Thinking-Skeleton {
   max-width: 40%;
 }
 
-.DocSearch-AskAiScreen-MessageContent-Thinking .DocSearch-AskAi-Thinking-Skeleton--short {
+.DocSearch-AskAiScreen-MessageContent-Thinking
+  .DocSearch-AskAi-Thinking-Skeleton--short {
   max-width: 25%;
 }
 

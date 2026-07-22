@@ -25,78 +25,44 @@ import { AggregatedSearchBlock } from './AggregatedSearchBlock';
 
 export type ConversationScreenTranslations = Partial<
   ToolCallTranslations & {
-    /**
-     * Text shown as an LLM disclaimer.
-     */
+    /** Text shown as an LLM disclaimer. */
     conversationDisclaimer: string;
-    /**
-     * Text shown while assistant is reasoning.
-     */
+    /** Text shown while assistant is reasoning. */
     reasoningText: string;
-    /**
-     * Text show while assistant is thinking.
-     */
+    /** Text show while assistant is thinking. */
     thinkingText: string;
-    /**
-     * Text shown describing related sources.
-     */
+    /** Text shown describing related sources. */
     relatedSourcesText: string;
-    /**
-     * Message that's shown when user has stopped the streaming of a message.
-     */
+    /** Message that's shown when user has stopped the streaming of a message. */
     stoppedStreamingText: string;
-    /**
-     * Text shown for copy button on code snippets.
-     **/
+    /** Text shown for copy button on code snippets. */
     copyButtonText: string;
-    /**
-     * Message shown after clicking copy.
-     **/
+    /** Message shown after clicking copy. */
     copyButtonCopiedText: string;
-    /**
-     * Title for thumbs up feedback icon.
-     **/
+    /** Title for thumbs up feedback icon. */
     likeButtonTitle: string;
-    /**
-     * Title for thumbs down feedback icon.
-     **/
+    /** Title for thumbs down feedback icon. */
     dislikeButtonTitle: string;
-    /**
-     * Message displayed after feedback action.
-     **/
+    /** Message displayed after feedback action. */
     thanksForFeedbackText: string;
-    /**
-     * Title shown at the top of the negative feedback note panel.
-     **/
+    /** Title shown at the top of the negative feedback note panel. */
     feedbackPanelTitle: string;
-    /**
-     * Placeholder for the negative feedback details textarea.
-     **/
+    /** Placeholder for the negative feedback details textarea. */
     feedbackDetailsPlaceholder: string;
-    /**
-     * Disclaimer shown inside the negative feedback note panel.
-     **/
+    /** Disclaimer shown inside the negative feedback note panel. */
     feedbackDisclaimerText: string;
-    /**
-     * Submit button text for the negative feedback note panel.
-     **/
+    /** Submit button text for the negative feedback note panel. */
     feedbackSubmitButtonText: string;
-    /**
-     * Accessible title for the negative feedback note panel close button.
-     **/
+    /** Accessible title for the negative feedback note panel close button. */
     feedbackCloseButtonTitle: string;
-    /**
-     * Reason chip labels for the negative feedback note panel.
-     **/
+    /** Reason chip labels for the negative feedback note panel. */
     feedbackTagIncorrect: string;
     feedbackTagNotWhatIAsked: string;
     feedbackTagSlowOrBuggy: string;
     feedbackTagStyleOrTone: string;
     feedbackTagSafetyOrLegal: string;
     feedbackTagOther: string;
-    /**
-     * Error title shown if there is an error while chatting.
-     */
+    /** Error title shown if there is an error while chatting. */
     errorTitleText;
     suggestedPromptsTitleText: string;
   }
@@ -127,7 +93,10 @@ type ConversationnExchangeProps = {
   onSelectPromptSuggestion: (prompt: string) => void;
 };
 
-const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExchangeProps>(
+const ConversationExchange = React.forwardRef<
+  HTMLDivElement,
+  ConversationnExchangeProps
+>(
   (
     {
       exchange,
@@ -141,7 +110,7 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
       tools,
       onSelectPromptSuggestion,
     },
-    conversationRef,
+    conversationRef
   ): JSX.Element => {
     const { userMessage, assistantMessage } = exchange;
 
@@ -161,32 +130,50 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
       suggestedPromptsTitleText = 'Suggested prompts',
     } = translations;
 
-    const assistantContent = useMemo(() => getMessageContent(assistantMessage), [assistantMessage]);
-    const userContent = useMemo(() => getMessageContent(userMessage), [userMessage]);
+    const assistantContent = useMemo(
+      () => getMessageContent(assistantMessage),
+      [assistantMessage]
+    );
+    const userContent = useMemo(
+      () => getMessageContent(userMessage),
+      [userMessage]
+    );
 
     const assistantParts = useMemo(
       () => groupConsecutiveToolResults(assistantMessage?.parts || []),
-      [assistantMessage],
+      [assistantMessage]
     );
-    const urlsToDisplay = React.useMemo(() => extractLinksFromMessage(assistantMessage), [assistantMessage]);
+    const urlsToDisplay = React.useMemo(
+      () => extractLinksFromMessage(assistantMessage),
+      [assistantMessage]
+    );
     const suggestedPrompts = React.useMemo(() => {
       if (!isLastExchange) return [];
       return getAgentPromptSuggestions(assistantMessage?.parts || []);
     }, [assistantMessage, isLastExchange]);
 
-    const wasStopped = userMessage.metadata?.stopped || assistantMessage?.metadata?.stopped;
+    const wasStopped =
+      userMessage.metadata?.stopped || assistantMessage?.metadata?.stopped;
     const isThinking =
-      ['submitted', 'streaming'].includes(status) && !assistantParts.some((part) => part.type !== 'step-start');
+      ['submitted', 'streaming'].includes(status) &&
+      !assistantParts.some((part) => part.type !== 'step-start');
     const showActions =
-      !wasStopped && (!isLastExchange || (isLastExchange && status === 'ready' && Boolean(assistantMessage)));
+      !wasStopped &&
+      (!isLastExchange ||
+        (isLastExchange && status === 'ready' && Boolean(assistantMessage)));
 
     const messageId = assistantMessage?.id || exchange.id;
 
     return (
-      <div className="DocSearch-AskAiScreen-Response-Container" ref={conversationRef}>
+      <div
+        className="DocSearch-AskAiScreen-Response-Container"
+        ref={conversationRef}
+      >
         <div className="DocSearch-AskAiScreen-Response">
           <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--user">
-            <p className="DocSearch-AskAiScreen-Query">{userContent?.text ?? ''}</p>
+            <p className="DocSearch-AskAiScreen-Query">
+              {userContent?.text ?? ''}
+            </p>
           </div>
           <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--assistant">
             <div className="DocSearch-AskAiScreen-MessageContent">
@@ -194,7 +181,9 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
                 <div className="DocSearch-AskAiScreen-Error" role="alert">
                   <AlertIcon aria-hidden="true" />
                   <div className="DocSearch-AskAiScreen-Error-Content">
-                    <h4 className="DocSearch-AskAiScreen-Error-Title">{errorTitleText}</h4>
+                    <h4 className="DocSearch-AskAiScreen-Error-Title">
+                      {errorTitleText}
+                    </h4>
                     <MemoizedMarkdown
                       content={streamError.message}
                       copyButtonText=""
@@ -210,7 +199,10 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
 
                 if (part.type === 'reasoning' && part.state === 'streaming') {
                   return (
-                    <div key={index} className="DocSearch-AskAiScreen-MessageContent-Reasoning shimmer">
+                    <div
+                      key={index}
+                      className="DocSearch-AskAiScreen-MessageContent-Reasoning shimmer"
+                    >
                       <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
                       <span className="shimmer">{reasoningText}</span>
                     </div>
@@ -218,7 +210,9 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
                 }
 
                 if (part.type === 'aggregated-tool-call') {
-                  return <AggregatedSearchBlock key={index} queries={part.queries} />;
+                  return (
+                    <AggregatedSearchBlock key={index} queries={part.queries} />
+                  );
                 }
 
                 if (isAIToolPart(part)) {
@@ -267,7 +261,10 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
               })}
 
               {isThinking && isLastExchange && assistantParts.length === 0 && (
-                <div className="DocSearch-AskAiScreen-MessageContent-Thinking" role="status">
+                <div
+                  className="DocSearch-AskAiScreen-MessageContent-Thinking"
+                  role="status"
+                >
                   <span className="shimmer">{thinkingText}</span>
                   <span className="DocSearch-AskAi-Thinking-Skeleton shimmer" />
                   <span className="DocSearch-AskAi-Thinking-Skeleton DocSearch-AskAi-Thinking-Skeleton--short shimmer" />
@@ -275,11 +272,18 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
               )}
             </div>
 
-            {wasStopped && <p className="DocSearck-AskAiScreen-MessageContent-Stopped">{stoppedStreamingText}</p>}
+            {wasStopped && (
+              <p className="DocSearck-AskAiScreen-MessageContent-Stopped">
+                {stoppedStreamingText}
+              </p>
+            )}
           </div>
 
           <div className="DocSearch-AskAiScreen-Answer-Footer">
-            <SourcesPanel links={urlsToDisplay} titleText={relatedSourcesText} />
+            <SourcesPanel
+              links={urlsToDisplay}
+              titleText={relatedSourcesText}
+            />
             <FeedbackActions
               isSidepanel={true}
               id={messageId}
@@ -301,7 +305,7 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
         </div>
       </div>
     );
-  },
+  }
 );
 
 export const ConversationScreen = memo(
@@ -316,8 +320,9 @@ export const ConversationScreen = memo(
     memoryEnabled,
     onSelectPromptSuggestion,
   }: ConversationScreenProps): JSX.Element => {
-    const { conversationDisclaimer = 'Answers are generated with AI which can make mistakes. Verify responses.' } =
-      translations;
+    const {
+      conversationDisclaimer = 'Answers are generated with AI which can make mistakes. Verify responses.',
+    } = translations;
 
     const mostRecentExchangeRef = React.useRef<HTMLDivElement>(null);
     const totalExchanges = exchanges.length;
@@ -334,7 +339,9 @@ export const ConversationScreen = memo(
 
     return (
       <div className="DocSearch-Sidepanel-ConversationScreen">
-        <p className="DocSearch-Sidepanel-ConversationScreen-disclaimer">{conversationDisclaimer}</p>
+        <p className="DocSearch-Sidepanel-ConversationScreen-disclaimer">
+          {conversationDisclaimer}
+        </p>
 
         {exchanges.slice().map((exchange, idx) => {
           const isLastExchange = idx === exchanges.length - 1;
@@ -357,5 +364,5 @@ export const ConversationScreen = memo(
         })}
       </div>
     );
-  },
+  }
 );

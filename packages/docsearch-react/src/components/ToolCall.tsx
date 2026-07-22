@@ -2,31 +2,27 @@ import type { JSX } from 'react';
 import React, { useMemo } from 'react';
 
 import { LoadingIcon, MemoryIcon, SearchIcon, ToolIcon } from '../icons';
-import type { AIToolPart, MemoryToolPart, SearchToolPart, ToolCalls, ToolDefinition } from '../types/AskiAi';
+import type {
+  AIToolPart,
+  MemoryToolPart,
+  SearchToolPart,
+  ToolCalls,
+  ToolDefinition,
+} from '../types/AskiAi';
 import { isSearchToolPart } from '../utils/ai';
 
 import { ToolState } from './ui/ToolState';
 
 export type ToolCallTranslations = {
-  /**
-   * Text shown while assistant is preparing tool call.
-   */
+  /** Text shown while assistant is preparing tool call. */
   preToolCallText: string;
-  /**
-   * Text shown while assistant is performing search tool call.
-   */
+  /** Text shown while assistant is performing search tool call. */
   searchingText: string;
-  /**
-   * Text shown while assistant is finished performing tool call.
-   */
+  /** Text shown while assistant is finished performing tool call. */
   toolCallResultText: string;
-  /**
-   * Text shown when the agent saved related information to memory.
-   */
+  /** Text shown when the agent saved related information to memory. */
   savedMemoryToolResultText: string;
-  /**
-   * Text shown when the agent used the memory tool to enhance results.
-   */
+  /** Text shown when the agent used the memory tool to enhance results. */
   memoryToolResultText: string;
 };
 
@@ -44,7 +40,11 @@ interface SearchToolProps {
   onSearchQueryClick?: (query: string) => void;
 }
 
-function SearchTool({ part, translations, onSearchQueryClick }: SearchToolProps) {
+function SearchTool({
+  part,
+  translations,
+  onSearchQueryClick,
+}: SearchToolProps) {
   const { searchingText, preToolCallText, toolCallResultText } = translations;
 
   switch (part.state) {
@@ -52,7 +52,9 @@ function SearchTool({ part, translations, onSearchQueryClick }: SearchToolProps)
       return (
         <ToolState
           shimmer={true}
-          icon={<LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />}
+          icon={
+            <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
+          }
           variant="PartialCall"
         >
           <span>{searchingText}</span>
@@ -62,7 +64,9 @@ function SearchTool({ part, translations, onSearchQueryClick }: SearchToolProps)
       return (
         <ToolState
           shimmer={true}
-          icon={<LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />}
+          icon={
+            <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
+          }
           variant="Call"
         >
           <span>
@@ -71,7 +75,8 @@ function SearchTool({ part, translations, onSearchQueryClick }: SearchToolProps)
         </ToolState>
       );
     case 'output-available': {
-      const query = part.type === 'tool-searchIndex' ? part.output.query : part.input.query;
+      const query =
+        part.type === 'tool-searchIndex' ? part.output.query : part.input.query;
 
       return (
         <ToolState icon={<SearchIcon />} variant="Result">
@@ -94,7 +99,10 @@ function SearchTool({ part, translations, onSearchQueryClick }: SearchToolProps)
                 &quot;{query || ''}&quot;
               </span>
             ) : (
-              <span className="DocSearch-AskAiScreen-MessageContent-Tool-Query"> &quot;{query || ''}&quot;</span>
+              <span className="DocSearch-AskAiScreen-MessageContent-Tool-Query">
+                {' '}
+                &quot;{query || ''}&quot;
+              </span>
             )}
           </span>
         </ToolState>
@@ -140,7 +148,13 @@ function CustomTool({ tool, part }: CustomToolProps) {
   );
 }
 
-function MemoryTool({ part, translations }: { part: MemoryToolPart; translations: ToolCallTranslations }) {
+function MemoryTool({
+  part,
+  translations,
+}: {
+  part: MemoryToolPart;
+  translations: ToolCallTranslations;
+}) {
   const { savedMemoryToolResultText, memoryToolResultText } = translations;
 
   if (part.state === 'output-error') return null;
@@ -187,7 +201,13 @@ export function ToolCall({
   }
 
   if (isSearchToolPart(part)) {
-    return <SearchTool part={part} translations={translations} onSearchQueryClick={onSearchQueryClick} />;
+    return (
+      <SearchTool
+        part={part}
+        translations={translations}
+        onSearchQueryClick={onSearchQueryClick}
+      />
+    );
   }
 
   return null;

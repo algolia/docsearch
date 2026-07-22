@@ -1,4 +1,8 @@
-import type { AutocompleteApi, AutocompleteState, BaseItem } from '@algolia/autocomplete-core';
+import type {
+  AutocompleteApi,
+  AutocompleteState,
+  BaseItem,
+} from '@algolia/autocomplete-core';
 import React, { type JSX } from 'react';
 
 import type { HitResultBadgeTranslations } from './components/HitResultBadge';
@@ -17,8 +21,12 @@ export type ResultsTranslations = HitResultBadgeTranslations &
     recentConversationTimestampFallback: string;
     askAiResultsTitle: string;
   }>;
-interface ResultsProps<TItem extends BaseItem>
-  extends AutocompleteApi<TItem, React.FormEvent, React.MouseEvent, React.KeyboardEvent> {
+interface ResultsProps<TItem extends BaseItem> extends AutocompleteApi<
+  TItem,
+  React.FormEvent,
+  React.MouseEvent,
+  React.KeyboardEvent
+> {
   title?: string | null;
   translations?: ResultsTranslations;
   collection: AutocompleteState<TItem>['collections'][0];
@@ -31,7 +39,9 @@ interface ResultsProps<TItem extends BaseItem>
   sourceIcon?: JSX.Element;
 }
 
-export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TItem>): JSX.Element | null {
+export function Results<TItem extends StoredDocSearchHit>(
+  props: ResultsProps<TItem>
+): JSX.Element | null {
   const { askAiResultsTitle = 'Ask AI Assistant' } = props.translations || {};
 
   const askAiResultsId = React.useId();
@@ -61,7 +71,12 @@ export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TI
           aria-labelledby={askAiResultsId}
         >
           {props.collection.items.map((item) => (
-            <AskAiButton key={item.objectID} item={item} translations={props.translations} {...props} />
+            <AskAiButton
+              key={item.objectID}
+              item={item}
+              translations={props.translations}
+              {...props}
+            />
           ))}
         </ul>
       </section>
@@ -75,9 +90,19 @@ export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TI
           <SparklesIcon />
           {decodedTitle}
         </div>
-        <ul className="DocSearch-Hits-padded" {...props.getListProps({ source: props.collection.source })}>
+        <ul
+          className="DocSearch-Hits-padded"
+          {...props.getListProps({ source: props.collection.source })}
+        >
           {props.collection.items.map((item, index) => {
-            return <Result key={[props.title, item.objectID].join(':')} item={item} index={index} {...props} />;
+            return (
+              <Result
+                key={[props.title, item.objectID].join(':')}
+                item={item}
+                index={index}
+                {...props}
+              />
+            );
           })}
         </ul>
       </section>
@@ -91,9 +116,19 @@ export function Results<TItem extends StoredDocSearchHit>(props: ResultsProps<TI
         {decodedTitle}
       </div>
 
-      <ul className="DocSearch-Hits-padded" {...props.getListProps({ source: props.collection.source })}>
+      <ul
+        className="DocSearch-Hits-padded"
+        {...props.getListProps({ source: props.collection.source })}
+      >
         {props.collection.items.map((item, index) => {
-          return <Result key={[props.title, item.objectID].join(':')} item={item} index={index} {...props} />;
+          return (
+            <Result
+              key={[props.title, item.objectID].join(':')}
+              item={item}
+              index={index}
+              {...props}
+            />
+          );
         })}
       </ul>
     </section>
@@ -119,14 +154,16 @@ function Result<TItem extends StoredDocSearchHit>({
 }: ResultProps<TItem>): JSX.Element {
   const Hit = hitComponent!;
   const { recentConversationTimestampFallback = 'A while ago' } = translations;
-  const titleAttribute = item.type === 'content' ? 'content' : `hierarchy.${item.type}`;
+  const titleAttribute =
+    item.type === 'content' ? 'content' : `hierarchy.${item.type}`;
   const breadcrumbs = getHitItemBreadcrumbs(item);
 
   return (
     <li
       className={[
         'DocSearch-Hit',
-        (item as unknown as InternalDocSearchHit).__docsearch_parent && 'DocSearch-Hit--Child',
+        (item as unknown as InternalDocSearchHit).__docsearch_parent &&
+          'DocSearch-Hit--Child',
       ]
         .filter(Boolean)
         .join(' ')}
@@ -151,9 +188,15 @@ function Result<TItem extends StoredDocSearchHit>({
           )}
 
           {item.type === 'askAI' ? (
-            <AskAIResultContent item={item} relativeDateFallbackText={recentConversationTimestampFallback} />
+            <AskAIResultContent
+              item={item}
+              relativeDateFallbackText={recentConversationTimestampFallback}
+            />
           ) : (
-            <HitContent title={<Snippet hit={item} attribute={titleAttribute} />} subText={breadcrumbs} />
+            <HitContent
+              title={<Snippet hit={item} attribute={titleAttribute} />}
+              subText={breadcrumbs}
+            />
           )}
 
           {renderResultBadge?.({ item })}
@@ -216,7 +259,9 @@ function AskAiButton<TItem extends StoredDocSearchHit>({
             <SparklesIcon />
           </div>
           <div className="DocSearch-Hit-AskAIButton-title">
-            <span className="DocSearch-Hit-AskAIButton-title-query">{item.query}</span>
+            <span className="DocSearch-Hit-AskAIButton-title-query">
+              {item.query}
+            </span>
           </div>
         </div>
       </div>

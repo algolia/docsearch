@@ -1,15 +1,18 @@
 /**
  * Copyright (c) Facebook, Inc. And its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file
+ * in the root directory of this source tree.
  */
 
 import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 import { liteClient } from 'algoliasearch/lite';
 import { useEffect, useMemo, useState } from 'react';
 
-import { useAlgoliaContextualFacetFiltersIfEnabled, useAlgoliaThemeConfig } from '../../../client';
+import {
+  useAlgoliaContextualFacetFiltersIfEnabled,
+  useAlgoliaThemeConfig,
+} from '../../../client';
 import { TOP_SECTIONS_FACET, TOP_SECTIONS_LIMIT } from '../constants';
 import type { FacetValueItem } from '../types';
 import { getIndexName } from '../utils';
@@ -25,7 +28,10 @@ export function useTopSections(): FacetValueItem[] {
   const searchIndex = indices[0]!;
   const indexName = getIndexName(searchIndex);
 
-  const facetFiltersKey = useMemo(() => JSON.stringify(facetFilters ?? null), [facetFilters]);
+  const facetFiltersKey = useMemo(
+    () => JSON.stringify(facetFilters ?? null),
+    [facetFilters]
+  );
   const [sections, setSections] = useState<FacetValueItem[]>([]);
 
   useEffect(() => {
@@ -54,7 +60,9 @@ export function useTopSections(): FacetValueItem[] {
         if (cancelled) {
           return;
         }
-        const firstResult = response.results[0] as { facets?: { [facet: string]: { [value: string]: number } } };
+        const firstResult = response.results[0] as {
+          facets?: { [facet: string]: { [value: string]: number } };
+        };
         const values = firstResult?.facets?.[TOP_SECTIONS_FACET] ?? {};
         const items = Object.entries(values)
           .map(([name, count]) => ({ name, count, isRefined: false }))

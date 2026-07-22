@@ -1,0 +1,21 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "@docsearch/docusaurus-adapter": "4.6.0",
+    "@docsearch/js-example": "4.6.0",
+    "@docsearch/react-example": "4.6.0",
+    "@docsearch/cli": "0.0.2",
+    "@docsearch/core": "4.6.0",
+    "@docsearch/css": "4.6.0",
+    "@docsearch/js": "4.6.0",
+    "@docsearch/modal": "4.6.0",
+    "@docsearch/react": "4.6.0",
+    "@docsearch/sidepanel": "4.6.0",
+    "@docsearch/sidepanel-js": "4.6.0",
+    "@docsearch/website": "4.6.0"
+  },
+  "changesets": [
+    "vast-numbers-read"
+  ]
+}

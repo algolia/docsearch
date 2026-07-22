@@ -44,12 +44,15 @@ export function getAgent(name: SetupAgent, context: PathContext): AgentConfig {
   return agents(context)[name];
 }
 
-export function getAllAgents(context: PathContext): Record<SetupAgent, AgentConfig> {
+export function getAllAgents(
+  context: PathContext
+): Record<SetupAgent, AgentConfig> {
   return agents(context);
 }
 
 function agents(context: PathContext): Record<SetupAgent, AgentConfig> {
-  const claudeConfigDirectory = context.env.CLAUDE_CONFIG_DIR ?? join(context.homeDir, '.claude');
+  const claudeConfigDirectory =
+    context.env.CLAUDE_CONFIG_DIR ?? join(context.homeDir, '.claude');
   const claudeGlobalMcpPath = context.env.CLAUDE_CONFIG_DIR
     ? join(claudeConfigDirectory, '.claude.json')
     : join(context.homeDir, '.claude.json');
@@ -67,15 +70,22 @@ function agents(context: PathContext): Record<SetupAgent, AgentConfig> {
       rule: {
         kind: 'file',
         dir: (scope) =>
-          scope === 'global' ? join(claudeConfigDirectory, 'rules') : join(context.cwd, '.claude', 'rules'),
+          scope === 'global'
+            ? join(claudeConfigDirectory, 'rules')
+            : join(context.cwd, '.claude', 'rules'),
         filename: `${DOCSEARCH_MCP_SERVER_NAME}.md`,
       },
       skill: {
         dir: (scope) =>
-          scope === 'global' ? join(claudeConfigDirectory, 'skills') : join(context.cwd, '.claude', 'skills'),
+          scope === 'global'
+            ? join(claudeConfigDirectory, 'skills')
+            : join(context.cwd, '.claude', 'skills'),
       },
       detect: {
-        projectPaths: [join(context.cwd, '.mcp.json'), join(context.cwd, '.claude')],
+        projectPaths: [
+          join(context.cwd, '.mcp.json'),
+          join(context.cwd, '.claude'),
+        ],
         globalPaths: [claudeConfigDirectory, claudeGlobalMcpPath],
       },
     },
@@ -91,12 +101,16 @@ function agents(context: PathContext): Record<SetupAgent, AgentConfig> {
       rule: {
         kind: 'file',
         dir: (scope) =>
-          scope === 'global' ? join(context.homeDir, '.cursor', 'rules') : join(context.cwd, '.cursor', 'rules'),
+          scope === 'global'
+            ? join(context.homeDir, '.cursor', 'rules')
+            : join(context.cwd, '.cursor', 'rules'),
         filename: `${DOCSEARCH_MCP_SERVER_NAME}.mdc`,
       },
       skill: {
         dir: (scope) =>
-          scope === 'global' ? join(context.homeDir, '.cursor', 'skills') : join(context.cwd, '.cursor', 'skills'),
+          scope === 'global'
+            ? join(context.homeDir, '.cursor', 'skills')
+            : join(context.cwd, '.cursor', 'skills'),
       },
       detect: {
         projectPaths: [join(context.cwd, '.cursor')],
@@ -115,11 +129,15 @@ function agents(context: PathContext): Record<SetupAgent, AgentConfig> {
       rule: {
         kind: 'append',
         file: (scope) =>
-          scope === 'global' ? join(context.homeDir, '.codex', 'AGENTS.md') : join(context.cwd, 'AGENTS.md'),
+          scope === 'global'
+            ? join(context.homeDir, '.codex', 'AGENTS.md')
+            : join(context.cwd, 'AGENTS.md'),
       },
       skill: {
         dir: (scope) =>
-          scope === 'global' ? join(context.homeDir, '.agents', 'skills') : join(context.cwd, '.agents', 'skills'),
+          scope === 'global'
+            ? join(context.homeDir, '.agents', 'skills')
+            : join(context.cwd, '.agents', 'skills'),
       },
       detect: {
         projectPaths: [join(context.cwd, '.codex')],
@@ -130,13 +148,20 @@ function agents(context: PathContext): Record<SetupAgent, AgentConfig> {
       name: 'opencode',
       displayName: 'OpenCode',
       mcp: {
-        projectPaths: [join(context.cwd, 'opencode.json'), join(context.cwd, 'opencode.jsonc')],
+        projectPaths: [
+          join(context.cwd, 'opencode.json'),
+          join(context.cwd, 'opencode.jsonc'),
+        ],
         globalPaths: [
           join(context.homeDir, '.config', 'opencode', 'opencode.json'),
           join(context.homeDir, '.config', 'opencode', 'opencode.jsonc'),
         ],
         configKey: 'mcp',
-        buildEntry: (endpoint) => ({ type: 'remote', url: endpoint, enabled: true }),
+        buildEntry: (endpoint) => ({
+          type: 'remote',
+          url: endpoint,
+          enabled: true,
+        }),
       },
       rule: {
         kind: 'append',
@@ -147,10 +172,15 @@ function agents(context: PathContext): Record<SetupAgent, AgentConfig> {
       },
       skill: {
         dir: (scope) =>
-          scope === 'global' ? join(context.homeDir, '.agents', 'skills') : join(context.cwd, '.agents', 'skills'),
+          scope === 'global'
+            ? join(context.homeDir, '.agents', 'skills')
+            : join(context.cwd, '.agents', 'skills'),
       },
       detect: {
-        projectPaths: [join(context.cwd, 'opencode.json'), join(context.cwd, 'opencode.jsonc')],
+        projectPaths: [
+          join(context.cwd, 'opencode.json'),
+          join(context.cwd, 'opencode.jsonc'),
+        ],
         globalPaths: [join(context.homeDir, '.config', 'opencode')],
       },
     },
@@ -166,11 +196,15 @@ function agents(context: PathContext): Record<SetupAgent, AgentConfig> {
       rule: {
         kind: 'append',
         file: (scope) =>
-          scope === 'global' ? join(context.homeDir, '.gemini', 'GEMINI.md') : join(context.cwd, 'GEMINI.md'),
+          scope === 'global'
+            ? join(context.homeDir, '.gemini', 'GEMINI.md')
+            : join(context.cwd, 'GEMINI.md'),
       },
       skill: {
         dir: (scope) =>
-          scope === 'global' ? join(context.homeDir, '.gemini', 'skills') : join(context.cwd, '.gemini', 'skills'),
+          scope === 'global'
+            ? join(context.homeDir, '.gemini', 'skills')
+            : join(context.cwd, '.gemini', 'skills'),
       },
       detect: {
         projectPaths: [join(context.cwd, '.gemini')],

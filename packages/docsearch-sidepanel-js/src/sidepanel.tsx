@@ -1,11 +1,14 @@
 import type { DocSearchRef, InitialAskAiMessage } from '@docsearch/core';
 import type { DocSearchSidepanelProps } from '@docsearch/react/sidepanel';
 import { DocSearchSidepanel } from '@docsearch/react/sidepanel';
-import { render, createElement, unmountComponentAtNode, createRef } from 'preact/compat';
+import {
+  render,
+  createElement,
+  unmountComponentAtNode,
+  createRef,
+} from 'preact/compat';
 
-/**
- * Instance returned by sidepanel() for programmatic control.
- */
+/** Instance returned by sidepanel() for programmatic control. */
 export interface SidepanelInstance {
   /** Returns true once the component is mounted and ready. */
   readonly isReady: boolean;
@@ -19,9 +22,7 @@ export interface SidepanelInstance {
   destroy(): void;
 }
 
-/**
- * Lifecycle callbacks for the Sidepanel instance.
- */
+/** Lifecycle callbacks for the Sidepanel instance. */
 export interface SidepanelCallbacks {
   /** Called once Sidepanel is mounted and ready for interaction. */
   onReady?: () => void;
@@ -37,17 +38,32 @@ export type SidepanelProps = DocSearchSidepanelProps &
     environment?: typeof window;
   };
 
-function getHTMLElement(value: HTMLElement | string, env: typeof window | undefined): HTMLElement {
+function getHTMLElement(
+  value: HTMLElement | string,
+  env: typeof window | undefined
+): HTMLElement {
   if (typeof value !== 'string') return value;
-  if (!env) throw new Error('Cannot resolve a selector without a browser environment.');
+  if (!env)
+    throw new Error('Cannot resolve a selector without a browser environment.');
   const el = env.document.querySelector<HTMLElement>(value);
-  if (!el) throw new Error(`Container selector did not match any element: "${value}"`);
+  if (!el)
+    throw new Error(`Container selector did not match any element: "${value}"`);
   return el;
 }
 
 export function sidepanel(props: SidepanelProps): SidepanelInstance {
-  const { container, environment, onReady, onOpen, onClose, ...sidepanelProps } = props;
-  const containerEl = getHTMLElement(container, environment || (typeof window !== 'undefined' ? window : undefined));
+  const {
+    container,
+    environment,
+    onReady,
+    onOpen,
+    onClose,
+    ...sidepanelProps
+  } = props;
+  const containerEl = getHTMLElement(
+    container,
+    environment || (typeof window !== 'undefined' ? window : undefined)
+  );
   const ref = createRef<DocSearchRef>();
   let isReady = false;
 

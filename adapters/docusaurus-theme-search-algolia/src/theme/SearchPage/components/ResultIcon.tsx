@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. And its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file
+ * in the root directory of this source tree.
  */
 
 import React, { type ReactNode } from 'react';
@@ -18,7 +18,13 @@ function isContentType(type: string): boolean {
 export function ResultIcon({ type }: { type: string }): ReactNode {
   if (isContentType(type)) {
     return (
-      <svg className={styles.resultIcon} width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+      <svg
+        className={styles.resultIcon}
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        aria-hidden="true"
+      >
         <path
           fill="none"
           stroke="currentColor"
@@ -32,7 +38,13 @@ export function ResultIcon({ type }: { type: string }): ReactNode {
   }
 
   return (
-    <svg className={styles.resultIcon} width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+    <svg
+      className={styles.resultIcon}
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      aria-hidden="true"
+    >
       <path
         fill="none"
         stroke="currentColor"

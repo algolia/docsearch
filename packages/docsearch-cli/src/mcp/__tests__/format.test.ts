@@ -14,7 +14,9 @@ describe('formatToolResult', () => {
       ],
     };
 
-    expect(formatToolResult(result, false)).toBe('First result\n\nSecond result\n');
+    expect(formatToolResult(result, false)).toBe(
+      'First result\n\nSecond result\n'
+    );
   });
 
   it('prints the raw result for JSON output', () => {
@@ -22,6 +24,8 @@ describe('formatToolResult', () => {
       content: [{ type: 'text', text: 'Result' }],
     };
 
-    expect(formatToolResult(result, true)).toBe(`${JSON.stringify(result, null, 2)}\n`);
+    expect(formatToolResult(result, true)).toBe(
+      `${JSON.stringify(result, null, 2)}\n`
+    );
   });
 });

@@ -18,49 +18,58 @@ export type DocSearchButtonProps = React.ComponentProps<'button'> & {
   keyboardShortcuts?: DocSearchModalShortcuts;
 };
 
-export const DocSearchButton = React.forwardRef<HTMLButtonElement, DocSearchButtonProps>(
-  ({ translations = {}, keyboardShortcuts, ...props }, ref) => {
-    const { buttonText = 'Search', buttonAriaLabel = 'Search' } = translations;
-    const resolvedShortcuts = getKeyboardShortcuts(keyboardShortcuts);
-    const { actionKeyReactsTo, actionKeyAltText, actionKeyLabel, key } = usePlatformKeys();
+export const DocSearchButton = React.forwardRef<
+  HTMLButtonElement,
+  DocSearchButtonProps
+>(({ translations = {}, keyboardShortcuts, ...props }, ref) => {
+  const { buttonText = 'Search', buttonAriaLabel = 'Search' } = translations;
+  const resolvedShortcuts = getKeyboardShortcuts(keyboardShortcuts);
+  const { actionKeyReactsTo, actionKeyAltText, actionKeyLabel, key } =
+    usePlatformKeys();
 
-    useTheme({ theme: props.theme });
+  useTheme({ theme: props.theme });
 
-    const isCtrlCmdKEnabled = resolvedShortcuts['Ctrl/Cmd+K'];
-    const shortcut = `${actionKeyAltText}+k`;
+  const isCtrlCmdKEnabled = resolvedShortcuts['Ctrl/Cmd+K'];
+  const shortcut = `${actionKeyAltText}+k`;
 
-    return (
-      <button
-        type="button"
-        className="DocSearch DocSearch-Button"
-        aria-label={isCtrlCmdKEnabled ? `${buttonAriaLabel} (${shortcut})` : buttonAriaLabel}
-        aria-keyshortcuts={isCtrlCmdKEnabled ? shortcut : undefined}
-        {...props}
-        ref={ref}
-      >
-        <span className="DocSearch-Button-Container">
-          <SearchIcon />
-          <span className="DocSearch-Button-Placeholder">{buttonText}</span>
-        </span>
+  return (
+    <button
+      type="button"
+      className="DocSearch DocSearch-Button"
+      aria-label={
+        isCtrlCmdKEnabled ? `${buttonAriaLabel} (${shortcut})` : buttonAriaLabel
+      }
+      aria-keyshortcuts={isCtrlCmdKEnabled ? shortcut : undefined}
+      {...props}
+      ref={ref}
+    >
+      <span className="DocSearch-Button-Container">
+        <SearchIcon />
+        <span className="DocSearch-Button-Placeholder">{buttonText}</span>
+      </span>
 
-        <span className="DocSearch-Button-Keys">
-          {key !== null && isCtrlCmdKEnabled && (
-            <>
-              <DocSearchButtonKey reactsToKey={actionKeyReactsTo}>{actionKeyLabel}</DocSearchButtonKey>
-              <DocSearchButtonKey reactsToKey="k">K</DocSearchButtonKey>
-            </>
-          )}
-        </span>
-      </button>
-    );
-  },
-);
+      <span className="DocSearch-Button-Keys">
+        {key !== null && isCtrlCmdKEnabled && (
+          <>
+            <DocSearchButtonKey reactsToKey={actionKeyReactsTo}>
+              {actionKeyLabel}
+            </DocSearchButtonKey>
+            <DocSearchButtonKey reactsToKey="k">K</DocSearchButtonKey>
+          </>
+        )}
+      </span>
+    </button>
+  );
+});
 
 type DocSearchButtonKeyProps = {
   reactsToKey?: string;
 };
 
-function DocSearchButtonKey({ reactsToKey, children }: React.PropsWithChildren<DocSearchButtonKeyProps>): JSX.Element {
+function DocSearchButtonKey({
+  reactsToKey,
+  children,
+}: React.PropsWithChildren<DocSearchButtonKeyProps>): JSX.Element {
   const [isKeyDown, setIsKeyDown] = useState(false);
 
   useEffect(() => {
@@ -100,7 +109,8 @@ function DocSearchButtonKey({ reactsToKey, children }: React.PropsWithChildren<D
       className={
         isKeyDown
           ? 'DocSearch-Button-Key DocSearch-Button-Key--pressed'
-          : 'DocSearch-Button-Key' + (reactsToKey === 'Ctrl' ? ' DocSearch-Button-Key--ctrl' : '')
+          : 'DocSearch-Button-Key' +
+            (reactsToKey === 'Ctrl' ? ' DocSearch-Button-Key--ctrl' : '')
       }
     >
       {children}

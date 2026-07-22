@@ -9,7 +9,12 @@ const ENDPOINT = 'https://mcp.algolia.com/1/docsearch/mcp';
 const CLI_SETUP_PREFIX = 'npx @docsearch/cli setup';
 
 // Clients with a matching `docsearch setup` agent flag (see packages/docsearch-cli).
-const CLI_SUPPORTED_CLIENTS = new Set(['cursor', 'claude', 'codex', 'opencode']);
+const CLI_SUPPORTED_CLIENTS = new Set([
+  'cursor',
+  'claude',
+  'codex',
+  'opencode',
+]);
 
 // Base64 of {"url":"https://mcp.algolia.com/1/docsearch/mcp"} for the Cursor install link.
 const CURSOR_DEEPLINK =
@@ -25,9 +30,21 @@ const CLIENTS = [
     logo: 'cursor.svg',
     logoDark: 'cursor_dark.svg',
     plugin: [
-      { kind: 'installButton', href: CURSOR_DEEPLINK, label: 'Install in Cursor' },
-      { kind: 'text', content: 'Install the Cursor plugin package from the DocSearch repository:' },
-      { kind: 'code', caption: 'Plugin package', code: 'mcp/plugins/docsearch/cursor/algolia-docsearch' },
+      {
+        kind: 'installButton',
+        href: CURSOR_DEEPLINK,
+        label: 'Install in Cursor',
+      },
+      {
+        kind: 'text',
+        content:
+          'Install the Cursor plugin package from the DocSearch repository:',
+      },
+      {
+        kind: 'code',
+        caption: 'Plugin package',
+        code: 'mcp/plugins/docsearch/cursor/algolia-docsearch',
+      },
       {
         kind: 'text',
         content:
@@ -35,8 +52,16 @@ const CLIENTS = [
       },
     ],
     manual: [
-      { kind: 'installButton', href: CURSOR_DEEPLINK, label: 'Install in Cursor' },
-      { kind: 'text', content: 'Or add it to ~/.cursor/mcp.json (global) or .cursor/mcp.json (project):' },
+      {
+        kind: 'installButton',
+        href: CURSOR_DEEPLINK,
+        label: 'Install in Cursor',
+      },
+      {
+        kind: 'text',
+        content:
+          'Or add it to ~/.cursor/mcp.json (global) or .cursor/mcp.json (project):',
+      },
       {
         kind: 'code',
         caption: '~/.cursor/mcp.json',
@@ -57,7 +82,11 @@ const CLIENTS = [
     logo: 'claude.svg',
     plugin: [
       { kind: 'subhead', content: 'Claude Code' },
-      { kind: 'text', content: 'Add the marketplace and install the plugin from inside Claude Code:' },
+      {
+        kind: 'text',
+        content:
+          'Add the marketplace and install the plugin from inside Claude Code:',
+      },
       {
         kind: 'code',
         caption: 'In Claude Code',
@@ -72,7 +101,10 @@ const CLIENTS = [
     ],
     manual: [
       { kind: 'subhead', content: 'Claude Code' },
-      { kind: 'text', content: 'Add the remote server with the Claude Code CLI:' },
+      {
+        kind: 'text',
+        content: 'Add the remote server with the Claude Code CLI:',
+      },
       {
         kind: 'code',
         caption: 'Terminal',
@@ -81,7 +113,11 @@ const CLIENTS = [
       { kind: 'subhead', content: 'Claude Desktop' },
       {
         kind: 'steps',
-        items: ['Open Settings → Connectors.', 'Click Add custom connector.', 'Enter the name and URL, then save.'],
+        items: [
+          'Open Settings → Connectors.',
+          'Click Add custom connector.',
+          'Enter the name and URL, then save.',
+        ],
       },
       {
         kind: 'code',
@@ -98,7 +134,10 @@ URL: ${ENDPOINT}`,
     logo: 'codex.svg',
     logoDark: 'codex_dark.svg',
     manual: [
-      { kind: 'text', content: 'Add the remote MCP server with the Codex CLI:' },
+      {
+        kind: 'text',
+        content: 'Add the remote MCP server with the Codex CLI:',
+      },
       {
         kind: 'code',
         caption: 'Terminal',
@@ -106,7 +145,8 @@ URL: ${ENDPOINT}`,
       },
       {
         kind: 'text',
-        content: 'Or add the same URL under [mcp_servers.algolia-docsearch] in ~/.codex/config.toml.',
+        content:
+          'Or add the same URL under [mcp_servers.algolia-docsearch] in ~/.codex/config.toml.',
       },
     ],
   },
@@ -126,7 +166,11 @@ URL: ${ENDPOINT}`,
           'Paste the MCP endpoint shown above as the server URL and choose No Auth.',
         ],
       },
-      { kind: 'note', content: 'Custom connector availability depends on your ChatGPT plan and workspace settings.' },
+      {
+        kind: 'note',
+        content:
+          'Custom connector availability depends on your ChatGPT plan and workspace settings.',
+      },
     ],
   },
   {
@@ -136,7 +180,10 @@ URL: ${ENDPOINT}`,
     logo: 'opencode.svg',
     logoDark: 'opencode_dark.svg',
     manual: [
-      { kind: 'text', content: 'Add a remote MCP entry to your OpenCode config:' },
+      {
+        kind: 'text',
+        content: 'Add a remote MCP entry to your OpenCode config:',
+      },
       {
         kind: 'code',
         caption: 'opencode.json',
@@ -205,7 +252,10 @@ URL: ${ENDPOINT}`,
   }
 }`,
       },
-      { kind: 'note', content: 'DocSearch tools become available in Copilot Chat agent mode.' },
+      {
+        kind: 'note',
+        content: 'DocSearch tools become available in Copilot Chat agent mode.',
+      },
     ],
   },
   {
@@ -217,7 +267,8 @@ URL: ${ENDPOINT}`,
     manual: [
       {
         kind: 'text',
-        content: 'Edit ~/.codeium/windsurf/mcp_config.json. Windsurf uses serverUrl for remote servers.',
+        content:
+          'Edit ~/.codeium/windsurf/mcp_config.json. Windsurf uses serverUrl for remote servers.',
       },
       {
         kind: 'code',
@@ -240,7 +291,11 @@ URL: ${ENDPOINT}`,
     logo: 'zed.svg',
     logoDark: 'zed_dark.svg',
     manual: [
-      { kind: 'text', content: 'Add a context server in settings.json. Zed uses the context_servers key.' },
+      {
+        kind: 'text',
+        content:
+          'Add a context server in settings.json. Zed uses the context_servers key.',
+      },
       {
         kind: 'code',
         caption: 'settings.json',
@@ -279,7 +334,10 @@ URL: ${ENDPOINT}`,
     blurb: 'Google agent',
     logo: 'antigravity.svg',
     manual: [
-      { kind: 'text', content: 'Open Manage MCP Servers -> View raw config, then add:' },
+      {
+        kind: 'text',
+        content: 'Open Manage MCP Servers -> View raw config, then add:',
+      },
       {
         kind: 'code',
         caption: '~/.gemini/config/mcp_config.json',
@@ -291,7 +349,10 @@ URL: ${ENDPOINT}`,
   }
 }`,
       },
-      { kind: 'note', content: 'Save and refresh the Installed MCP Servers list.' },
+      {
+        kind: 'note',
+        content: 'Save and refresh the Installed MCP Servers list.',
+      },
     ],
   },
   {
@@ -302,7 +363,8 @@ URL: ${ENDPOINT}`,
     manual: [
       {
         kind: 'text',
-        content: 'Most clients that support remote HTTP MCP servers accept this shape. Keep the name and URL:',
+        content:
+          'Most clients that support remote HTTP MCP servers accept this shape. Keep the name and URL:',
       },
       {
         kind: 'code',
@@ -370,7 +432,9 @@ function CodeCard({ caption, code, onCopied }) {
   return (
     <div className="overflow-hidden rounded-xl ring-1 ring-neutral-200 dark:ring-neutral-700">
       <div className="flex items-center justify-between gap-3 border-b border-neutral-200 bg-neutral-50 px-4 py-2 dark:border-neutral-700 dark:bg-neutral-800/60">
-        <span className="font-mono text-xs text-neutral-500 dark:text-neutral-400">{caption}</span>
+        <span className="font-mono text-xs text-neutral-500 dark:text-neutral-400">
+          {caption}
+        </span>
         <CopyButton value={code} onCopied={onCopied} />
       </div>
       <pre className="m-0 overflow-x-auto bg-neutral-900 p-4 text-[13px] leading-relaxed text-neutral-100">
@@ -436,7 +500,11 @@ function Block({ block, client, mode }) {
         </div>
       );
     case 'text':
-      return <p className="my-0 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">{block.content}</p>;
+      return (
+        <p className="my-0 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
+          {block.content}
+        </p>
+      );
     case 'note':
       return (
         <p className="my-0 rounded-lg bg-blue-50 px-3 py-2 text-sm text-blue-900 ring-1 ring-blue-100 dark:bg-blue-950/40 dark:text-blue-200 dark:ring-blue-900/60">
@@ -448,14 +516,23 @@ function Block({ block, client, mode }) {
         <CodeCard
           caption={block.caption}
           code={block.code}
-          onCopied={() => track('Install Config Copied', { client, mode, caption: block.caption })}
+          onCopied={() =>
+            track('Install Config Copied', {
+              client,
+              mode,
+              caption: block.caption,
+            })
+          }
         />
       );
     case 'steps':
       return (
         <ol className="my-0 flex list-none flex-col gap-2 pl-0">
           {block.items.map((item, idx) => (
-            <li key={item} className="flex items-start gap-3 text-sm text-neutral-600 dark:text-neutral-300">
+            <li
+              key={item}
+              className="flex items-start gap-3 text-sm text-neutral-600 dark:text-neutral-300"
+            >
               <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-600 text-[11px] font-semibold text-white">
                 {idx + 1}
               </span>
@@ -535,7 +612,12 @@ function CliQuickInstall({ client, reduce }) {
             </AnimatePresence>
           </code>
         </pre>
-        <CopyButton value={command} onCopied={() => track('Install Command Copied', { client: client.id, command })} />
+        <CopyButton
+          value={command}
+          onCopied={() =>
+            track('Install Command Copied', { client: client.id, command })
+          }
+        />
       </div>
     </div>
   );
@@ -557,13 +639,28 @@ function ClientLogo({ client, size = 'h-7 w-7' }) {
   }
 
   if (!hasDark) {
-    return <img src={single} alt={`${client.name} logo`} className={`${size} object-contain`} />;
+    return (
+      <img
+        src={single}
+        alt={`${client.name} logo`}
+        className={`${size} object-contain`}
+      />
+    );
   }
 
   return (
     <>
-      <img src={single} alt={`${client.name} logo`} className={`${size} object-contain block dark:hidden`} />
-      <img aria-hidden={true} src={dark} alt="" className={`${size} object-contain hidden dark:block`} />
+      <img
+        src={single}
+        alt={`${client.name} logo`}
+        className={`${size} object-contain block dark:hidden`}
+      />
+      <img
+        aria-hidden={true}
+        src={dark}
+        alt=""
+        className={`${size} object-contain hidden dark:block`}
+      />
     </>
   );
 }
@@ -573,7 +670,8 @@ export default function MCPInstall() {
   const [mode, setMode] = useState('plugin');
   const reduce = useReducedMotion();
 
-  const selected = CLIENTS.find((client) => client.id === selectedId) ?? CLIENTS[0];
+  const selected =
+    CLIENTS.find((client) => client.id === selectedId) ?? CLIENTS[0];
   const hasPlugin = Array.isArray(selected.plugin);
   const activeMode = hasPlugin ? mode : 'manual';
   const blocks = activeMode === 'plugin' ? selected.plugin : selected.manual;
@@ -616,7 +714,12 @@ export default function MCPInstall() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.1 }}
-          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.018, delayChildren: 0.02 } } }}
+          variants={{
+            hidden: {},
+            show: {
+              transition: { staggerChildren: 0.018, delayChildren: 0.02 },
+            },
+          }}
         >
           {CLIENTS.map((client) => {
             const isActive = client.id === selectedId;
@@ -624,7 +727,10 @@ export default function MCPInstall() {
               <motion.button
                 key={client.id}
                 type="button"
-                variants={{ hidden: { opacity: 0, y: cardRise }, show: { opacity: 1, y: 0 } }}
+                variants={{
+                  hidden: { opacity: 0, y: cardRise },
+                  show: { opacity: 1, y: 0 },
+                }}
                 whileHover={reduce ? undefined : { y: -3 }}
                 whileTap={{ scale: 0.96 }}
                 transition={SPRING}
@@ -640,7 +746,9 @@ export default function MCPInstall() {
                 )}
                 <span className="relative z-10 flex flex-col items-center gap-2">
                   <ClientLogo client={client} />
-                  <span className="text-xs font-semibold text-neutral-800 dark:text-neutral-100">{client.name}</span>
+                  <span className="text-xs font-semibold text-neutral-800 dark:text-neutral-100">
+                    {client.name}
+                  </span>
                 </span>
               </motion.button>
             );
@@ -677,7 +785,9 @@ export default function MCPInstall() {
                 <span className="font-[Sora] text-sm font-semibold text-neutral-900 dark:text-white">
                   {selected.name}
                 </span>
-                <span className="text-xs text-neutral-400 dark:text-neutral-500">{selected.blurb}</span>
+                <span className="text-xs text-neutral-400 dark:text-neutral-500">
+                  {selected.blurb}
+                </span>
               </motion.div>
             </AnimatePresence>
 
@@ -719,15 +829,26 @@ export default function MCPInstall() {
               exit="exit"
               variants={{
                 hidden: { opacity: 0, y: reduce ? 0 : 6 },
-                show: { opacity: 1, y: 0, transition: { duration: 0.13, staggerChildren: 0.02 } },
-                exit: { opacity: 0, y: reduce ? 0 : -6, transition: { duration: 0.08 } },
+                show: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.13, staggerChildren: 0.02 },
+                },
+                exit: {
+                  opacity: 0,
+                  y: reduce ? 0 : -6,
+                  transition: { duration: 0.08 },
+                },
               }}
               className="flex flex-col gap-3"
             >
               {blocks.map((block) => (
                 <motion.div
                   key={`${selectedId}-${activeMode}-${getBlockKey(block)}`}
-                  variants={{ hidden: { opacity: 0, y: reduce ? 0 : 4 }, show: { opacity: 1, y: 0 } }}
+                  variants={{
+                    hidden: { opacity: 0, y: reduce ? 0 : 4 },
+                    show: { opacity: 1, y: 0 },
+                  }}
                 >
                   <Block block={block} client={selectedId} mode={activeMode} />
                 </motion.div>

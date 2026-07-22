@@ -8,14 +8,21 @@ import { RecentConversationsResults } from './ui/RecentConversationsResults';
 import type { StoredSearchesSectionsTranslations } from './ui/StoredSearchesSections';
 import { StoredSearchesSections } from './ui/StoredSearchesSections';
 
-export type AskAiStartScreenTranslations = RecentConversationsResultsTranslations & StoredSearchesSectionsTranslations;
+export type AskAiStartScreenTranslations =
+  RecentConversationsResultsTranslations & StoredSearchesSectionsTranslations;
 
-type AskAiStartScreenProps = Omit<AskAiScreenStateProps<InternalDocSearchHit>, 'translations'> & {
+type AskAiStartScreenProps = Omit<
+  AskAiScreenStateProps<InternalDocSearchHit>,
+  'translations'
+> & {
   hasCollections: boolean;
   translations?: AskAiStartScreenTranslations;
 };
 
-export function AskAiStartScreen({ translations = {}, ...props }: AskAiStartScreenProps): JSX.Element | null {
+export function AskAiStartScreen({
+  translations = {},
+  ...props
+}: AskAiStartScreenProps): JSX.Element | null {
   return (
     <div className="DocSearch-Dropdown-Container">
       <RecentConversationsResults {...props} translations={translations} />

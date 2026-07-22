@@ -10,7 +10,11 @@ export function Chip({ children }: ChipProps): JSX.Element {
   return <div className="DocSearch-Chip">{children}</div>;
 }
 
-function ChipDismiss({ className, type = 'button', ...props }: React.ComponentProps<'button'>): JSX.Element {
+function ChipDismiss({
+  className,
+  type = 'button',
+  ...props
+}: React.ComponentProps<'button'>): JSX.Element {
   const cn = `DocSearch-Chip-Dismiss${className ? ` ${className}` : ''}`;
 
   return (

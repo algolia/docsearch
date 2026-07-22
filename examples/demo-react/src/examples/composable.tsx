@@ -5,7 +5,11 @@ import { type JSX } from 'react';
 
 import type { DemoTheme } from '../App';
 
-export default function Composable({ theme }: { theme: DemoTheme }): JSX.Element {
+export default function Composable({
+  theme,
+}: {
+  theme: DemoTheme;
+}): JSX.Element {
   return (
     <DocSearch theme={theme}>
       <DocSearchButton translations={{ buttonText: 'Composable API' }} />

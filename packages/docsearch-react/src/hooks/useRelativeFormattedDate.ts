@@ -12,16 +12,22 @@ const UNITS: Array<[number, Intl.RelativeTimeFormatUnit]> = [
   [MS_IN_SECOND, 'second'],
 ];
 
-export function useRelativeFormattedDate(start: Date | null, end = Date.now()): string | null {
+export function useRelativeFormattedDate(
+  start: Date | null,
+  end = Date.now()
+): string | null {
   const [diff] = useState<[number, Intl.RelativeTimeFormatUnit]>(() => {
     const elapsed = Math.abs(Number(end) - Number(start));
-    const [ms, unit] = UNITS.find(([threshold]) => elapsed >= threshold) ?? UNITS[UNITS.length - 1];
+    const [ms, unit] =
+      UNITS.find(([threshold]) => elapsed >= threshold) ??
+      UNITS[UNITS.length - 1];
 
     return [Math.floor(elapsed / ms), unit];
   });
 
   const formattedDate = useMemo(() => {
-    const locale = typeof navigator !== 'undefined' ? navigator.language : undefined;
+    const locale =
+      typeof navigator !== 'undefined' ? navigator.language : undefined;
     const [elapsedTime, elapsedUnit] = diff;
 
     return new Intl.RelativeTimeFormat(locale, {

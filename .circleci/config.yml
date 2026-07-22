@@ -121,7 +121,7 @@ jobs:
       - run: *restore_dist_folders
       - run:
           name: Linting
-          command: bun run lint
+          command: bun run lint --quiet --format=stylish
   test_types:
     <<: *defaults
     steps:
@@ -162,7 +162,9 @@ jobs:
           name: Unit tests
           command: bun run test
   release:
-    <<: *defaults
+    working_directory: ~/docsearch
+    docker:
+      - image: cimg/node:24.16
     steps:
       - checkout
       - *attach_workspace
@@ -178,7 +180,9 @@ jobs:
             git config --global user.name "algolia-bot"
       - run:
           name: Release if needed
-          command: bun run release
+          command: |
+            export NPM_ID_TOKEN="$(circleci run oidc get --claims '{"aud": "npm:registry.npmjs.org"}')"
+            bun run release
   test_playwright:
     <<: *playwright
     steps:

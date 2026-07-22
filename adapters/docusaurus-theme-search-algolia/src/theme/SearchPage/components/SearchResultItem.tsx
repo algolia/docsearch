@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. And its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file
+ * in the root directory of this source tree.
  */
 
 import Link from '@docusaurus/Link';
@@ -19,10 +19,18 @@ type SearchResultItemProps = {
   onSelect: (item: SearchResultItemType, position: number) => void;
 };
 
-export function SearchResultItem({ item, position, onSelect }: SearchResultItemProps): ReactNode {
+export function SearchResultItem({
+  item,
+  position,
+  onSelect,
+}: SearchResultItemProps): ReactNode {
   return (
     <li className={styles.resultItem}>
-      <Link to={item.url} className={styles.resultLink} onClick={() => onSelect(item, position)}>
+      <Link
+        to={item.url}
+        className={styles.resultLink}
+        onClick={() => onSelect(item, position)}
+      >
         <span className={styles.resultIconWrapper}>
           <ResultIcon type={item.type} />
         </span>
@@ -34,7 +42,10 @@ export function SearchResultItem({ item, position, onSelect }: SearchResultItemP
                 // eslint-disable-next-line react/no-array-index-key
                 <React.Fragment key={index}>
                   {index > 0 && (
-                    <span className={styles.resultBreadcrumbSeparator} aria-hidden="true">
+                    <span
+                      className={styles.resultBreadcrumbSeparator}
+                      aria-hidden="true"
+                    >
                       ›
                     </span>
                   )}
@@ -48,15 +59,27 @@ export function SearchResultItem({ item, position, onSelect }: SearchResultItemP
 
           {/* Highlighted HTML comes from Algolia. */}
           {/* eslint-disable-next-line react/no-danger */}
-          <span className={styles.resultTitle} dangerouslySetInnerHTML={{ __html: item.title }} />
+          <span
+            className={styles.resultTitle}
+            dangerouslySetInnerHTML={{ __html: item.title }}
+          />
 
           {item.summary && (
             // eslint-disable-next-line react/no-danger
-            <span className={styles.resultSummary} dangerouslySetInnerHTML={{ __html: item.summary }} />
+            <span
+              className={styles.resultSummary}
+              dangerouslySetInnerHTML={{ __html: item.summary }}
+            />
           )}
         </span>
 
-        <svg className={styles.resultArrow} width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+        <svg
+          className={styles.resultArrow}
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          aria-hidden="true"
+        >
           <path
             fill="none"
             stroke="currentColor"

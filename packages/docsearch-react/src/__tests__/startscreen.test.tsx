@@ -1,7 +1,6 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import React, { type JSX } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-
 import '@testing-library/jest-dom/vitest';
 
 import { AskAiStartScreen } from '../components/AskAiStartScreen';
@@ -62,7 +61,10 @@ function createHit(objectID: string, title: string): InternalDocSearchHit {
   };
 }
 
-function createCollection(sourceId: string, items: InternalDocSearchHit[]): unknown {
+function createCollection(
+  sourceId: string,
+  items: InternalDocSearchHit[]
+): unknown {
   return {
     source: { sourceId },
     items,
@@ -132,7 +134,10 @@ describe('start screen components', () => {
   });
 
   it('renders recent conversations and removes them', () => {
-    const conversation = createHit('conversation', 'Conversation result') as InternalDocSearchHit & StoredAskAiState;
+    const conversation = createHit(
+      'conversation',
+      'Conversation result'
+    ) as InternalDocSearchHit & StoredAskAiState;
     const props = createProps([
       createCollection(SOURCE_IDS.recentSearches, []),
       createCollection(SOURCE_IDS.favoriteSearches, []),
@@ -152,7 +157,9 @@ describe('start screen components', () => {
     const props = createProps([
       createCollection(SOURCE_IDS.recentSearches, []),
       createCollection(SOURCE_IDS.favoriteSearches, []),
-      createCollection(SOURCE_IDS.recentConversations, [createHit('conversation', 'Conversation result')]),
+      createCollection(SOURCE_IDS.recentConversations, [
+        createHit('conversation', 'Conversation result'),
+      ]),
     ]);
 
     render(
@@ -162,7 +169,7 @@ describe('start screen components', () => {
           recentSearchesTitle: 'Search history',
           noRecentSearchesText: 'Nothing yet',
         }}
-      />,
+      />
     );
 
     expect(screen.queryByText('Recent conversations')).not.toBeInTheDocument();
@@ -172,7 +179,9 @@ describe('start screen components', () => {
     const props = createProps([
       createCollection(SOURCE_IDS.recentSearches, []),
       createCollection(SOURCE_IDS.favoriteSearches, []),
-      createCollection(SOURCE_IDS.recentConversations, [createHit('conversation', 'Conversation result')]),
+      createCollection(SOURCE_IDS.recentConversations, [
+        createHit('conversation', 'Conversation result'),
+      ]),
     ]);
 
     render(
@@ -183,7 +192,7 @@ describe('start screen components', () => {
           recentConversationsTitle: 'Recent chats',
           removeRecentConversationButtonTitle: 'Remove chat',
         }}
-      />,
+      />
     );
 
     expect(screen.getByText('Recent chats')).toBeInTheDocument();

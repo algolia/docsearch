@@ -27,15 +27,30 @@ interface CommandIconProps {
 
 function CommandIcon(props: CommandIconProps): JSX.Element {
   return (
-    <svg width="20" height="20" aria-label={props.ariaLabel} viewBox="0 0 24 24" role="img">
-      <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.4">
+    <svg
+      width="20"
+      height="20"
+      aria-label={props.ariaLabel}
+      viewBox="0 0 24 24"
+      role="img"
+    >
+      <g
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.4"
+      >
         {props.children}
       </g>
     </svg>
   );
 }
 
-export function Footer({ translations = {}, isAskAiActive = false }: FooterProps): JSX.Element {
+export function Footer({
+  translations = {},
+  isAskAiActive = false,
+}: FooterProps): JSX.Element {
   const {
     selectText = 'Select',
     selectKeyAriaLabel = 'Enter key',
@@ -77,7 +92,9 @@ export function Footer({ translations = {}, isAskAiActive = false }: FooterProps
               <path d="M20 4v7a4 4 0 0 1-4 4H4" />
             </CommandIcon>
           </kbd>
-          <span className="DocSearch-Label">{isAskAiActive ? submitQuestionText : selectText}</span>
+          <span className="DocSearch-Label">
+            {isAskAiActive ? submitQuestionText : selectText}
+          </span>
         </li>
         <li>
           <kbd className="DocSearch-Commands-Key">

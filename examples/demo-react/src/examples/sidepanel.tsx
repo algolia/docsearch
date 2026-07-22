@@ -5,7 +5,11 @@ import type { JSX } from 'react';
 
 import type { DemoTheme } from '../App';
 
-export default function SidepanelExample({ theme }: { theme: DemoTheme }): JSX.Element {
+export default function SidepanelExample({
+  theme,
+}: {
+  theme: DemoTheme;
+}): JSX.Element {
   return (
     <DocSearch theme={theme}>
       <SidepanelButton variant="inline" />

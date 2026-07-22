@@ -1,11 +1,23 @@
 import { DocSearch, useDocSearch } from '@docsearch/core';
-import type { DocSearchCallbacks, DocSearchRef, DocSearchTheme, SidepanelShortcuts } from '@docsearch/core';
+import type {
+  DocSearchCallbacks,
+  DocSearchRef,
+  DocSearchTheme,
+  SidepanelShortcuts,
+} from '@docsearch/core';
 import type { JSX } from 'react';
 import React from 'react';
 import { createPortal } from 'react-dom';
 
-import type { AgentStudioIndices, AgentStudioSearchParameters, Memory } from './DocSearchAI';
-import type { SidepanelButtonProps, SidepanelProps as SidepanelPanelProps } from './Sidepanel/index';
+import type {
+  AgentStudioIndices,
+  AgentStudioSearchParameters,
+  Memory,
+} from './DocSearchAI';
+import type {
+  SidepanelButtonProps,
+  SidepanelProps as SidepanelPanelProps,
+} from './Sidepanel/index';
 import { SidepanelButton, Sidepanel } from './Sidepanel/index';
 import type { ToolCalls } from './types/AskiAi';
 
@@ -13,36 +25,32 @@ export type { DocSearchRef, DocSearchCallbacks } from '@docsearch/core';
 
 export type SidepanelSearchParameters = {
   /**
-   * The search parameters to use for the ask AI feature.
-   * Keyed by the index name.
+   * The search parameters to use for the ask AI feature. Keyed by the index
+   * name.
    *
    * @example
-   * {
+   *   {
    *   "INDEX_NAME": { distinct: false }
-   * }
+   *   }
    */
   searchParameters?: AgentStudioSearchParameters;
 };
 
 export type DocSearchSidepanelProps = DocSearchCallbacks & {
-  /**
-   * The assistant ID to use for the ask AI feature.
-   */
+  /** The assistant ID to use for the ask AI feature. */
   assistantId: string;
-  /**
-   * Public api key with search permissions for the index.
-   */
+  /** Public api key with search permissions for the index. */
   apiKey: string;
-  /**
-   * Algolia application id used by the search client.
-   */
+  /** Algolia application id used by the search client. */
   appId: string;
   /**
-   * The index name to use for the ask AI feature. Your assistant will search this index for relevant documents.
+   * The index name to use for the ask AI feature. Your assistant will search
+   * this index for relevant documents.
    */
   indexName: string;
   /**
-   * Configuration for keyboard shortcuts. Allows enabling/disabling specific shortcuts.
+   * Configuration for keyboard shortcuts. Allows enabling/disabling specific
+   * shortcuts.
    *
    * @default `{ 'Ctrl/Cmd+I': true }`
    */
@@ -53,13 +61,9 @@ export type DocSearchSidepanelProps = DocSearchCallbacks & {
    * @default 'light'
    */
   theme?: DocSearchTheme;
-  /**
-   * Props specific to the Sidepanel button.
-   */
+  /** Props specific to the Sidepanel button. */
   button?: Omit<SidepanelButtonProps, 'keyboardShortcuts'>;
-  /**
-   * Props specific to the Sidepanel panel.
-   */
+  /** Props specific to the Sidepanel panel. */
   panel?: Omit<SidepanelPanelProps, 'keyboardShortcuts'>;
   /**
    * Use custom tools driven by Agent Studio.
@@ -67,23 +71,35 @@ export type DocSearchSidepanelProps = DocSearchCallbacks & {
    * For best performance, memoize this object with `useMemo` or define it
    * outside the component. Inline object literals will be recreated every
    * render but will not affect correctness.
-   **/
+   */
   tools?: ToolCalls;
   /**
    * Configuration for the Agent Studio memory feature.
+   *
+   * @example
+   *   { enabled: true, userToken: '{{SERVER_GENERATED_JWT_TOKEN}}' }
+   *
+   * @see https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/memory/overview
    */
   memory?: Memory;
-  /**
-   * List of dynamic indices for the Agent Studio search tool to use.
-   */
+  /** List of dynamic indices for the Agent Studio search tool to use. */
   indices?: AgentStudioIndices[];
 };
 
 type SidepanelProps = DocSearchSidepanelProps & SidepanelSearchParameters;
 
 function DocSearchSidepanelComponent(
-  { keyboardShortcuts, theme, onReady, onOpen, onClose, onSidepanelOpen, onSidepanelClose, ...props }: SidepanelProps,
-  ref: React.ForwardedRef<DocSearchRef>,
+  {
+    keyboardShortcuts,
+    theme,
+    onReady,
+    onOpen,
+    onClose,
+    onSidepanelOpen,
+    onSidepanelClose,
+    ...props
+  }: SidepanelProps,
+  ref: React.ForwardedRef<DocSearchRef>
 ): JSX.Element {
   return (
     <DocSearch
@@ -108,7 +124,13 @@ function DocSearchSidepanelComp({
   panel: { portalContainer, ...panelProps } = {},
   ...rootProps
 }: DocSearchSidepanelProps): JSX.Element {
-  const { docsearchState, setDocsearchState, keyboardShortcuts, registerView, initialAskAiMessage } = useDocSearch();
+  const {
+    docsearchState,
+    setDocsearchState,
+    keyboardShortcuts,
+    registerView,
+    initialAskAiMessage,
+  } = useDocSearch();
 
   const toggleSidepanelState = React.useCallback(() => {
     setDocsearchState(docsearchState === 'sidepanel' ? 'ready' : 'sidepanel');
@@ -122,20 +144,31 @@ function DocSearchSidepanelComp({
     setDocsearchState('sidepanel');
   };
 
-  const containerElement = React.useMemo(() => portalContainer ?? document.body, [portalContainer]);
+  const containerElement = React.useMemo(
+    () => portalContainer ?? document.body,
+    [portalContainer]
+  );
 
   React.useEffect(() => {
     registerView('sidepanel');
   }, [registerView]);
 
   const ButtonComp = React.useMemo(
-    () => <SidepanelButton keyboardShortcuts={keyboardShortcuts} onClick={toggleSidepanelState} {...buttonProps} />,
-    [keyboardShortcuts, toggleSidepanelState, buttonProps],
+    () => (
+      <SidepanelButton
+        keyboardShortcuts={keyboardShortcuts}
+        onClick={toggleSidepanelState}
+        {...buttonProps}
+      />
+    ),
+    [keyboardShortcuts, toggleSidepanelState, buttonProps]
   );
 
   return (
     <>
-      {buttonProps.variant === 'inline' ? ButtonComp : createPortal(ButtonComp, containerElement)}
+      {buttonProps.variant === 'inline'
+        ? ButtonComp
+        : createPortal(ButtonComp, containerElement)}
       {createPortal(
         <Sidepanel
           initialMessage={initialAskAiMessage}
@@ -146,7 +179,7 @@ function DocSearchSidepanelComp({
           {...panelProps}
           keyboardShortcuts={keyboardShortcuts}
         />,
-        containerElement,
+        containerElement
       )}
     </>
   );

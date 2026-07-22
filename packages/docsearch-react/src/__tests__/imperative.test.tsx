@@ -2,18 +2,30 @@ import type { DocSearchCallbacks } from '@docsearch/core';
 import { render, act, cleanup } from '@testing-library/react';
 import React, { type JSX, useRef, type RefObject } from 'react';
 import { describe, it, expect, afterEach, vi } from 'vitest';
-
 import '@testing-library/jest-dom/vitest';
 
-import { type DocSearchProps, DocSearch as DocSearchComponent, type DocSearchRef } from '../DocSearch';
+import {
+  type DocSearchProps,
+  DocSearch as DocSearchComponent,
+  type DocSearchRef,
+} from '../DocSearch';
 
-type TestDocSearchProps = DocSearchCallbacks & Partial<DocSearchProps> & { refObj?: RefObject<DocSearchRef | null> };
+type TestDocSearchProps = DocSearchCallbacks &
+  Partial<DocSearchProps> & { refObj?: RefObject<DocSearchRef | null> };
 
 function DocSearch(props: TestDocSearchProps): JSX.Element {
   const internalRef = useRef<DocSearchRef>(null);
   const ref = props.refObj ?? internalRef;
 
-  return <DocSearchComponent ref={ref} appId="woo" apiKey="foo" indexName="bar" {...props} />;
+  return (
+    <DocSearchComponent
+      ref={ref}
+      appId="woo"
+      apiKey="foo"
+      indexName="bar"
+      {...props}
+    />
+  );
 }
 
 describe('imperative handle', () => {
@@ -44,7 +56,9 @@ describe('imperative handle', () => {
 
       render(<DocSearch refObj={ref} />);
 
-      expect(document.querySelector('.DocSearch-Modal')).not.toBeInTheDocument();
+      expect(
+        document.querySelector('.DocSearch-Modal')
+      ).not.toBeInTheDocument();
 
       await act(() => {
         ref.current?.open();
@@ -69,7 +83,9 @@ describe('imperative handle', () => {
         ref.current?.close();
       });
 
-      expect(document.querySelector('.DocSearch-Modal')).not.toBeInTheDocument();
+      expect(
+        document.querySelector('.DocSearch-Modal')
+      ).not.toBeInTheDocument();
       expect(ref.current?.isOpen).toBe(false);
     });
   });

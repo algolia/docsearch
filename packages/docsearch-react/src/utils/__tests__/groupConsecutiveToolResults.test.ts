@@ -17,7 +17,7 @@ function searchIndexPart(query: string): AIMessagePart {
 
 function mcpSearchPart(
   query: string,
-  type: `tool-algolia_search_index${string}` = 'tool-algolia_search_index',
+  type: `tool-algolia_search_index${string}` = 'tool-algolia_search_index'
 ): AIMessagePart {
   const part: AIMessagePart = {
     type,
@@ -40,7 +40,9 @@ describe('groupConsecutiveToolResults', () => {
   it('aggregates consecutive algolia_search_index MCP calls', () => {
     const parts = [mcpSearchPart('foo'), mcpSearchPart('bar')];
 
-    expect(groupConsecutiveToolResults(parts)).toEqual([{ type: 'aggregated-tool-call', queries: ['foo', 'bar'] }]);
+    expect(groupConsecutiveToolResults(parts)).toEqual([
+      { type: 'aggregated-tool-call', queries: ['foo', 'bar'] },
+    ]);
   });
 
   it('aggregates consecutive algolia_search_index_* MCP calls', () => {
@@ -49,7 +51,9 @@ describe('groupConsecutiveToolResults', () => {
       mcpSearchPart('bar', 'tool-algolia_search_index_custom'),
     ];
 
-    expect(groupConsecutiveToolResults(parts)).toEqual([{ type: 'aggregated-tool-call', queries: ['foo', 'bar'] }]);
+    expect(groupConsecutiveToolResults(parts)).toEqual([
+      { type: 'aggregated-tool-call', queries: ['foo', 'bar'] },
+    ]);
   });
 
   it('does not aggregate custom tools that only share the algolia_search_index prefix', () => {
@@ -62,7 +66,11 @@ describe('groupConsecutiveToolResults', () => {
   });
 
   it('aggregates mixed searchIndex and MCP search calls together', () => {
-    const parts = [searchIndexPart('foo'), mcpSearchPart('bar'), searchIndexPart('baz')];
+    const parts = [
+      searchIndexPart('foo'),
+      mcpSearchPart('bar'),
+      searchIndexPart('baz'),
+    ];
 
     expect(groupConsecutiveToolResults(parts)).toEqual([
       { type: 'aggregated-tool-call', queries: ['foo', 'bar', 'baz'] },
@@ -83,15 +91,26 @@ describe('groupConsecutiveToolResults', () => {
   });
 
   it('ignores empty or whitespace-only MCP queries when aggregating', () => {
-    const parts = [mcpSearchPart('foo'), mcpSearchPart(''), mcpSearchPart('   '), mcpSearchPart('bar')];
+    const parts = [
+      mcpSearchPart('foo'),
+      mcpSearchPart(''),
+      mcpSearchPart('   '),
+      mcpSearchPart('bar'),
+    ];
 
-    expect(groupConsecutiveToolResults(parts)).toEqual([{ type: 'aggregated-tool-call', queries: ['foo', 'bar'] }]);
+    expect(groupConsecutiveToolResults(parts)).toEqual([
+      { type: 'aggregated-tool-call', queries: ['foo', 'bar'] },
+    ]);
   });
 
   it('preserves non-search parts and breaks grouping', () => {
     const text = textPart('hello');
     const parts = [mcpSearchPart('foo'), text, mcpSearchPart('bar')];
 
-    expect(groupConsecutiveToolResults(parts)).toEqual([mcpSearchPart('foo'), text, mcpSearchPart('bar')]);
+    expect(groupConsecutiveToolResults(parts)).toEqual([
+      mcpSearchPart('foo'),
+      text,
+      mcpSearchPart('bar'),
+    ]);
   });
 });

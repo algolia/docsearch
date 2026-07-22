@@ -1,10 +1,18 @@
 import type { UseChatHelpers } from '@ai-sdk/react';
 import { Chat, useChat } from '@ai-sdk/react';
 import type { ChatOnToolCallCallback } from 'ai';
-import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls, generateId } from 'ai';
+import {
+  DefaultChatTransport,
+  lastAssistantMessageIsCompleteWithToolCalls,
+  generateId,
+} from 'ai';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { agentStudioBaseUrl, getAgentStudioErrorMessage, postAgentStudioFeedback } from './askai';
+import {
+  agentStudioBaseUrl,
+  getAgentStudioErrorMessage,
+  postAgentStudioFeedback,
+} from './askai';
 import type { Exchange } from './AskAiScreen';
 import type { StoredSearchPlugin } from './stored-searches';
 import { createStoredConversations } from './stored-searches';
@@ -12,7 +20,12 @@ import { type AIMessage, type ToolCalls } from './types/AskiAi';
 import type { OnAskAiFeedback } from './types/Feedback';
 import { EMPTY_TOOLS, sanitizeMessagesForRequest } from './utils/ai';
 
-import type { AgentStudioIndices, AgentStudioSearchParameters, Memory, StoredAskAiState } from '.';
+import type {
+  AgentStudioIndices,
+  AgentStudioSearchParameters,
+  Memory,
+  StoredAskAiState,
+} from '.';
 
 type UseChat = UseChatHelpers<AIMessage>;
 
@@ -40,18 +53,26 @@ type UseAskAiReturn = {
   conversations: StoredSearchPlugin<StoredAskAiState>;
   sendFeedback: OnAskAiFeedback;
   /**
-   * Create's a new chat instance, clearing existing messages and generating a new conversation ID.
+   * Create's a new chat instance, clearing existing messages and generating a
+   * new conversation ID.
    */
   startNewConversation: () => void;
   /**
-   * Create's a new chat instance, seeded with an existing conversation's ID and its messages.
+   * Create's a new chat instance, seeded with an existing conversation's ID and
+   * its messages.
    */
-  restoreConversation: (restored: AIMessage[], existingConversationId?: string) => void;
+  restoreConversation: (
+    restored: AIMessage[],
+    existingConversationId?: string
+  ) => void;
 };
 
 type UseAskAi = (params: UseAskAiParams) => UseAskAiReturn;
 
-type AgentStudioTransportParams = Pick<UseAskAiParams, 'apiKey' | 'appId' | 'assistantId'> & {
+type AgentStudioTransportParams = Pick<
+  UseAskAiParams,
+  'apiKey' | 'appId' | 'assistantId'
+> & {
   searchParameters?: AgentStudioSearchParameters;
   userToken?: string;
   indices?: AgentStudioIndices[];
@@ -126,7 +147,7 @@ export const useAskAi: UseAskAi = ({
         userToken: memory?.userToken,
         indices,
       }),
-    [apiKey, appId, assistantId, searchParameters, memory?.userToken, indices],
+    [apiKey, appId, assistantId, searchParameters, memory?.userToken, indices]
   );
 
   // Store transport in a ref since it is dependent on unstable dependencies:
@@ -143,25 +164,28 @@ export const useAskAi: UseAskAi = ({
 
   const addToolOutputRef = useRef<UseChat['addToolOutput'] | null>(null);
 
-  const handleToolCall: ChatOnToolCallCallback<AIMessage> = useCallback(({ toolCall }) => {
-    const tool = toolsRef.current[toolCall.toolName];
-    if (!tool?.onToolCall) {
-      return;
-    }
+  const handleToolCall: ChatOnToolCallCallback<AIMessage> = useCallback(
+    ({ toolCall }) => {
+      const tool = toolsRef.current[toolCall.toolName];
+      if (!tool?.onToolCall) {
+        return;
+      }
 
-    tool.onToolCall({
-      ...toolCall,
-      addToolOutput: async ({ output }) => {
-        if (!addToolOutputRef.current) return;
+      tool.onToolCall({
+        ...toolCall,
+        addToolOutput: async ({ output }) => {
+          if (!addToolOutputRef.current) return;
 
-        await addToolOutputRef.current({
-          output,
-          tool: toolCall.toolName,
-          toolCallId: toolCall.toolCallId,
-        });
-      },
-    });
-  }, []);
+          await addToolOutputRef.current({
+            output,
+            tool: toolCall.toolName,
+            toolCallId: toolCall.toolCallId,
+          });
+        },
+      });
+    },
+    []
+  );
 
   const createChatInstance = useCallback(
     (messages?: AIMessage[], id = generateId()): Chat<AIMessage> =>
@@ -172,17 +196,21 @@ export const useAskAi: UseAskAi = ({
         transport: askAiTransportRef.current,
         onToolCall: handleToolCall,
       }),
-    [handleToolCall],
+    [handleToolCall]
   );
 
-  const [chatInstance, setChatInstance] = useState((): Chat<AIMessage> => createChatInstance());
+  const [chatInstance, setChatInstance] = useState(
+    (): Chat<AIMessage> => createChatInstance()
+  );
   // Keep a stable reference to the chat instance so reading messages are render safe
   const chatInstanceRef = useRef<Chat<AIMessage>>(chatInstance);
   chatInstanceRef.current = chatInstance;
 
-  const { messages, status, setMessages, error, stop, addToolOutput } = useChat({
-    chat: chatInstance,
-  });
+  const { messages, status, setMessages, error, stop, addToolOutput } = useChat(
+    {
+      chat: chatInstance,
+    }
+  );
 
   useEffect(() => {
     addToolOutputRef.current = addToolOutput;
@@ -192,7 +220,7 @@ export const useAskAi: UseAskAi = ({
     createStoredConversations<StoredAskAiState>({
       key: `__DOCSEARCH_ASKAI_CONVERSATIONS__${indexName}`,
       limit: 10,
-    }),
+    })
   ).current;
 
   const sendFeedback = useCallback<OnAskAiFeedback>(
@@ -211,9 +239,13 @@ export const useAskAi: UseAskAi = ({
       });
 
       if (res.status >= 300) throw new Error('Failed, try again later.');
-      conversations.addFeedback?.(messageId, thumbs === 1 ? 'like' : 'dislike', { tags, notes });
+      conversations.addFeedback?.(
+        messageId,
+        thumbs === 1 ? 'like' : 'dislike',
+        { tags, notes }
+      );
     },
-    [assistantId, appId, apiKey, conversations],
+    [assistantId, appId, apiKey, conversations]
   );
 
   const onStopStreaming = useCallback(async (): Promise<void> => {
@@ -227,7 +259,8 @@ export const useAskAi: UseAskAi = ({
     for (let i = 0; i < messages.length; i++) {
       if (messages[i].role === 'user') {
         const userMessage = messages[i];
-        const assistantMessage = messages[i + 1]?.role === 'assistant' ? messages[i + 1] : null;
+        const assistantMessage =
+          messages[i + 1]?.role === 'assistant' ? messages[i + 1] : null;
         grouped.push({ id: userMessage.id, userMessage, assistantMessage });
         if (assistantMessage) {
           i++;
@@ -248,11 +281,14 @@ export const useAskAi: UseAskAi = ({
 
   const updateChatInstance = useCallback(
     (restored?: AIMessage[], existingConversationId?: string): void => {
-      const newChatInstance = createChatInstance(restored, existingConversationId);
+      const newChatInstance = createChatInstance(
+        restored,
+        existingConversationId
+      );
       chatInstanceRef.current = newChatInstance;
       setChatInstance(newChatInstance);
     },
-    [createChatInstance],
+    [createChatInstance]
   );
 
   const startNewConversation = useCallback((): void => {
@@ -263,13 +299,13 @@ export const useAskAi: UseAskAi = ({
     (restored: AIMessage[], existingConversationId?: string): void => {
       updateChatInstance(restored, existingConversationId);
     },
-    [updateChatInstance],
+    [updateChatInstance]
   );
 
   // This is so that the public `sendMessage` is always pointed to a stable reference of the chat instance
   const sendMessageSafe = useCallback<UseChat['sendMessage']>(
     (...args): Promise<void> => chatInstanceRef.current!.sendMessage(...args),
-    [],
+    []
   );
 
   return {

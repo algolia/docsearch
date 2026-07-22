@@ -44,7 +44,9 @@ const ENTRIES: Entry[] = [
   },
 ];
 
-const targets = browserslistToTargets(browserslist(undefined, { path: import.meta.dirname }));
+const targets = browserslistToTargets(
+  browserslist(undefined, { path: import.meta.dirname })
+);
 
 function build({ input, outputs, bannerName }: Entry): void {
   const banner = getBundleBanner({

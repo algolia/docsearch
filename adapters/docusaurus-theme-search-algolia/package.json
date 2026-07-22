@@ -1,6 +1,6 @@
 {
   "name": "@docsearch/docusaurus-adapter",
-  "version": "4.6.0",
+  "version": "5.0.0-beta.0",
   "description": "Algolia search component for Docusaurus.",
   "main": "lib/index.js",
   "sideEffects": [
@@ -27,7 +27,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "bun x tsc --build --force && node ./scripts/copy-assets.mjs && node ./scripts/format-theme.mjs",
+    "build": "bun x tsc --build --force && node ./scripts/copy-assets.mjs && oxfmt --config ../../.oxfmtrc.json ./lib/theme/**/*",
     "build:clean": "bun run clean && bun run build",
     "clean": "rm -rf lib tsconfig.*.tsbuildinfo",
     "watch": "run-p -c copy:watch build:watch",
