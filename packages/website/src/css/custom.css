@@ -720,7 +720,7 @@ html[data-theme='dark'] .docsearch-logo {
 }
 
 .key__text {
-  font-family: 'Inter', sans-serif;
+  font-family: system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 300;

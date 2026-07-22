@@ -589,7 +589,7 @@ export default function MCPInstall() {
   return (
     <motion.div
       id="tailwind"
-      className="not-prose my-8 font-[Inter]"
+      className="not-prose my-8 font-sans"
       initial={{ opacity: 0, y: rise }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15 }}
