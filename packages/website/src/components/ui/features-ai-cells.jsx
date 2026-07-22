@@ -7,7 +7,8 @@ import { InstallCommand } from './install-command';
 const mediaClass =
   'flex h-56 shrink-0 items-center justify-center overflow-hidden border-b border-[var(--border)] bg-[var(--surface-raised)]';
 const contentClass = 'flex flex-1 flex-col p-10 pt-4';
-const eyebrowClass = 'font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--accent)] !mb-0';
+const eyebrowClass =
+  'font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--accent)] !mb-0';
 const titleClass = 'text-xl font-semibold font-display text-[var(--text)] my-4';
 const bodyClass = 'mt-2 max-w-lg text-base text-[var(--text-secondary)]';
 const primaryButtonClass =
@@ -17,7 +18,9 @@ const linkClass =
 
 export function AskAICell() {
   const handleTryAskAI = useCallback(() => {
-    const sidepanelButton = document.querySelector('.DocSearch-SidepanelButton');
+    const sidepanelButton = document.querySelector(
+      '.DocSearch-SidepanelButton'
+    );
     if (sidepanelButton) {
       sidepanelButton.click();
     }
@@ -44,12 +47,17 @@ export function AskAICell() {
           <p className={eyebrowClass}>Powered by Algolia Agent Studio</p>
           <p className={titleClass}>Ask AI</p>
           <p className={bodyClass}>
-            Instant AI answers straight from your own docs. Users ask natural-language questions and get context-aware
-            answers with real sources — with prompts and models you configure.
+            Instant AI answers straight from your own docs. Users ask
+            natural-language questions and get context-aware answers with real
+            sources — with prompts and models you configure.
           </p>
 
           <div className="mt-6 flex items-center gap-4">
-            <button type="button" className={primaryButtonClass} onClick={handleTryAskAI}>
+            <button
+              type="button"
+              className={primaryButtonClass}
+              onClick={handleTryAskAI}
+            >
               Try now
               <Sparks width={16} height={16} />
             </button>
@@ -85,8 +93,9 @@ export function MCPCell() {
           <p className={eyebrowClass}>Model Context Protocol</p>
           <p className={titleClass}>MCP Server</p>
           <p className={bodyClass}>
-            Make your docs neural-searchable by any AI agent — Claude, Cursor, Codex, and more — over the Model Context
-            Protocol, powered by Algolia neural search.
+            Make your docs neural-searchable by any AI agent — Claude, Cursor,
+            Codex, and more — over the Model Context Protocol, powered by
+            Algolia neural search.
           </p>
 
           <div className="mt-6 flex items-center gap-4">

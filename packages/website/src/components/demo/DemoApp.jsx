@@ -36,7 +36,8 @@ export default function DemoApp() {
     return {
       navigate: ({ itemUrl, item }) => openInNewTab(itemUrl ?? item?.url),
       navigateNewTab: ({ itemUrl, item }) => openInNewTab(itemUrl ?? item?.url),
-      navigateNewWindow: ({ itemUrl, item }) => openInNewTab(itemUrl ?? item?.url),
+      navigateNewWindow: ({ itemUrl, item }) =>
+        openInNewTab(itemUrl ?? item?.url),
     };
   }, []);
 
@@ -47,15 +48,23 @@ export default function DemoApp() {
   }, [theme]);
 
   useEffect(() => {
-    const autopilot = createAutopilot({ modalRef, sidepanelRef, indexName: INDEX_NAME });
+    const autopilot = createAutopilot({
+      modalRef,
+      sidepanelRef,
+      indexName: INDEX_NAME,
+    });
     const restoreFetch = installAskAiMock(() => autopilot.isAutopilotActive());
     autopilot.start();
 
     const onMessage = (event) => {
       const data = event.data;
       if (!data || typeof data !== 'object') return;
-      if (data.type === 'docsearch-demo-visibility') autopilot.setVisible(Boolean(data.visible));
-      if (data.type === 'docsearch-demo-theme' && (data.theme === 'light' || data.theme === 'dark')) {
+      if (data.type === 'docsearch-demo-visibility')
+        autopilot.setVisible(Boolean(data.visible));
+      if (
+        data.type === 'docsearch-demo-theme' &&
+        (data.theme === 'light' || data.theme === 'dark')
+      ) {
         setTheme(data.theme);
       }
     };
@@ -108,7 +117,9 @@ export default function DemoApp() {
         <h1 className="ds-demo-title">What can we help you find?</h1>
         <div className="ds-demo-search">
           <DocSearch ref={modalRef} theme={theme}>
-            <DocSearchButton translations={{ buttonText: 'Search or ask a question' }} />
+            <DocSearchButton
+              translations={{ buttonText: 'Search or ask a question' }}
+            />
             <DocSearchAskAiModal
               indexName={INDEX_NAME}
               appId={APP_ID}

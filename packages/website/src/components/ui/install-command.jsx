@@ -51,7 +51,11 @@ export function InstallCommand() {
         className="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md border border-[var(--term-btn-border)] bg-[var(--term-btn-bg)] px-2.5 py-1 text-[12px] font-medium text-[var(--term-fg)] transition-colors hover:bg-[var(--term-btn-bg-hover)]"
         onClick={copy}
       >
-        {copied ? <Check width={14} height={14} /> : <Copy width={14} height={14} />}
+        {copied ? (
+          <Check width={14} height={14} />
+        ) : (
+          <Copy width={14} height={14} />
+        )}
         {copied ? 'Copied' : 'Copy'}
       </button>
     </div>

@@ -16,7 +16,9 @@ function FooterLink({ item }) {
   const isExternal = Boolean(href);
   // Normalize internal `to` against baseUrl so it resolves from the site root
   // (not relative to the current page, which would break on nested doc pages).
-  const props = isExternal ? { href, target: '_blank', rel: 'noopener noreferrer' } : { to: withBaseUrl(to) };
+  const props = isExternal
+    ? { href, target: '_blank', rel: 'noopener noreferrer' }
+    : { to: withBaseUrl(to) };
   return (
     <Link
       {...props}
@@ -60,7 +62,11 @@ export default function Footer() {
               <span className="ds-brand__word font-display">DOCSEARCH</span>
               <span className="ds-brand__by">
                 by
-                <img src={withBaseUrl('/img/Algolia-logo-blue.svg')} alt="Algolia" className="ds-brand__algolia" />
+                <img
+                  src={withBaseUrl('/img/Algolia-logo-blue.svg')}
+                  alt="Algolia"
+                  className="ds-brand__algolia"
+                />
               </span>
             </span>
           </Link>

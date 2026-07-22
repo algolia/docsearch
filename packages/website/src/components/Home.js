@@ -20,7 +20,8 @@ function useGithubStars(repo, fallback = '9k') {
     fetch(`https://api.github.com/repos/${repo}`)
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
-        if (cancelled || !data || typeof data.stargazers_count !== 'number') return;
+        if (cancelled || !data || typeof data.stargazers_count !== 'number')
+          return;
         const n = data.stargazers_count;
         setStars(n >= 1000 ? `${(n / 1000).toFixed(1)}k` : String(n));
       })
@@ -49,14 +50,17 @@ function Hero() {
 
         <Reveal delay={200}>
           <p className="mt-5 max-w-xl text-[14px] leading-relaxed text-[var(--text-secondary)]">
-            DocSearch by Algolia makes your docs and blogs instantly searchable — fast, relevant, and AI-ready. Free for
-            open-source and technical docs.
+            DocSearch by Algolia makes your docs and blogs instantly searchable
+            — fast, relevant, and AI-ready. Free for open-source and technical
+            docs.
           </p>
         </Reveal>
 
         <Reveal delay={300}>
           <div className="mt-7 flex flex-wrap items-stretch gap-2.5">
-            <PrimaryButton href={SIGNUP_LINK}>Sign up — it's free</PrimaryButton>
+            <PrimaryButton href={SIGNUP_LINK}>
+              Sign up — it's free
+            </PrimaryButton>
           </div>
         </Reveal>
 
@@ -69,7 +73,9 @@ function Hero() {
               className="inline-flex items-center gap-1.5 text-[var(--text-tertiary)] no-underline! transition-colors hover:text-[var(--text)]"
             >
               <Github width={14} height={14} aria-hidden={true} />
-              <span className="tabular text-[var(--text-secondary)]">{stars} stars on GitHub</span>
+              <span className="tabular text-[var(--text-secondary)]">
+                {stars} stars on GitHub
+              </span>
             </a>
           </div>
         </Reveal>
@@ -82,12 +88,18 @@ function SectionHeading({ eyebrow, title, subtitle }) {
   return (
     <div className="mx-auto mb-12 max-w-3xl text-center">
       {eyebrow ? (
-        <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--accent)] !mb-0">{eyebrow}</p>
+        <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--accent)] !mb-0">
+          {eyebrow}
+        </p>
       ) : null}
       <h2 className="font-display text-[28px] font-semibold leading-tight tracking-[-0.02em] text-[var(--text)] md:text-[36px]">
         {title}
       </h2>
-      {subtitle ? <p className="mt-3 text-[15px] text-[var(--text-secondary)] md:text-[17px]">{subtitle}</p> : null}
+      {subtitle ? (
+        <p className="mt-3 text-[15px] text-[var(--text-secondary)] md:text-[17px]">
+          {subtitle}
+        </p>
+      ) : null}
     </div>
   );
 }
@@ -147,7 +159,15 @@ function Home() {
             Build{' '}
             <FlipWords
               className="text-[var(--accent)]"
-              words={['faster', 'smarter', 'freely', 'simpler', 'better', 'everything', 'NOW!']}
+              words={[
+                'faster',
+                'smarter',
+                'freely',
+                'simpler',
+                'better',
+                'everything',
+                'NOW!',
+              ]}
             />{' '}
             <br />
             with DocSearch

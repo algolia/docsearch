@@ -6,6 +6,7 @@ import DemoApp from '../components/demo/DemoApp';
 
 import '@docsearch/css/dist/style.css';
 import '@docsearch/css/dist/sidepanel.css';
+
 import '../components/demo/demo.css';
 
 // Bare, chrome-less page embedded in an iframe on the homepage. It hosts a live

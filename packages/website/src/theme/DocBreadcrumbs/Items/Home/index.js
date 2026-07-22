@@ -20,7 +20,12 @@ export default function HomeBreadcrumbItem() {
         className={`breadcrumbs__link ${styles.breadcrumbHomeLink}`}
         href={homeHref}
       >
-        <Home className={styles.breadcrumbHomeIcon} width={18} height={18} aria-hidden={true} />
+        <Home
+          className={styles.breadcrumbHomeIcon}
+          width={18}
+          height={18}
+          aria-hidden={true}
+        />
       </Link>
     </li>
   );

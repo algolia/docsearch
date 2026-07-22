@@ -148,7 +148,7 @@ function buildStream(question, { signal } = {}) {
               clearTimeout(timer);
               resolve();
             },
-            { once: true },
+            { once: true }
           );
         });
 
@@ -186,11 +186,12 @@ function mockResponse(question, init) {
 }
 
 /**
- * Patches `window.fetch` so Agent Studio completion requests are served from the
- * canned fixture while `isAutopilotActive()` is true. Returns a cleanup function
- * that restores the original `fetch`.
+ * Patches `window.fetch` so Agent Studio completion requests are served from
+ * the canned fixture while `isAutopilotActive()` is true. Returns a cleanup
+ * function that restores the original `fetch`.
  *
- * @param {() => boolean} isAutopilotActive - Whether the demo autopilot is currently driving the UI.
+ * @param {() => boolean} isAutopilotActive - Whether the demo autopilot is
+ *   currently driving the UI.
  * @returns {() => void} Cleanup that restores the original `window.fetch`.
  */
 export function installAskAiMock(isAutopilotActive) {

@@ -33,7 +33,15 @@ function hit(id, lvl1, lvl0, anchor) {
     url_without_anchor: url,
     type: 'lvl1',
     anchor,
-    hierarchy: { lvl0, lvl1, lvl2: null, lvl3: null, lvl4: null, lvl5: null, lvl6: null },
+    hierarchy: {
+      lvl0,
+      lvl1,
+      lvl2: null,
+      lvl3: null,
+      lvl4: null,
+      lvl5: null,
+      lvl6: null,
+    },
   };
 }
 
@@ -118,7 +126,8 @@ export function createAutopilot({ modalRef, sidepanelRef, indexName }) {
 
   // --- synthetic interactions -------------------------------------------
   async function moveAndClick(selector, t) {
-    const el = typeof selector === 'string' ? await waitFor(selector, t) : selector;
+    const el =
+      typeof selector === 'string' ? await waitFor(selector, t) : selector;
     if (!alive(t) || !el) return null;
     await moveCursorTo(el, t);
     if (!alive(t)) return null;
@@ -131,7 +140,10 @@ export function createAutopilot({ modalRef, sidepanelRef, indexName }) {
   }
 
   function setNativeValue(el, value) {
-    const proto = el instanceof HTMLTextAreaElement ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype;
+    const proto =
+      el instanceof HTMLTextAreaElement
+        ? HTMLTextAreaElement.prototype
+        : HTMLInputElement.prototype;
     const setter = Object.getOwnPropertyDescriptor(proto, 'value')?.set;
     if (setter) setter.call(el, value);
     else el.value = value;
@@ -153,7 +165,10 @@ export function createAutopilot({ modalRef, sidepanelRef, indexName }) {
   // --- storage seeding ---------------------------------------------------
   function seedRecentSearches() {
     try {
-      window.localStorage.setItem(RECENT_KEY, JSON.stringify(SEED_RECENT_SEARCHES));
+      window.localStorage.setItem(
+        RECENT_KEY,
+        JSON.stringify(SEED_RECENT_SEARCHES)
+      );
       window.localStorage.removeItem(FAVORITE_KEY);
     } catch {
       // localStorage may be unavailable; the tour still runs, just without the
@@ -197,8 +212,12 @@ export function createAutopilot({ modalRef, sidepanelRef, indexName }) {
 
     // 3. Unpin it again.
     const unpin =
-      document.querySelector('.DocSearch-Hit-action-button[title="Remove this saved search"]') ||
-      document.querySelector('.DocSearch-Hits .DocSearch-Hit-action-button:not(.DocSearch-Hit-action-button--pin)');
+      document.querySelector(
+        '.DocSearch-Hit-action-button[title="Remove this saved search"]'
+      ) ||
+      document.querySelector(
+        '.DocSearch-Hits .DocSearch-Hit-action-button:not(.DocSearch-Hit-action-button--pin)'
+      );
     if (unpin && alive(t)) {
       await moveAndClick(unpin, t);
       await sleep(900, t);
@@ -213,7 +232,9 @@ export function createAutopilot({ modalRef, sidepanelRef, indexName }) {
     if (!alive(t)) return;
 
     // 5. Ask AI, in the modal.
-    const askAiCta = document.querySelector('.DocSearch-Hit-AskAIButton, .DocSearch-Hit--AskAI');
+    const askAiCta = document.querySelector(
+      '.DocSearch-Hit-AskAIButton, .DocSearch-Hit--AskAI'
+    );
     if (askAiCta) {
       await moveAndClick(askAiCta, t);
     } else {
@@ -231,12 +252,20 @@ export function createAutopilot({ modalRef, sidepanelRef, indexName }) {
 
     // 7. Open the side panel.
     await moveAndClick('.DocSearch-SidepanelButton', t);
-    const sidepanelOpen = await waitFor('.DocSearch-Sidepanel-Container.is-open', t, 3000);
+    const sidepanelOpen = await waitFor(
+      '.DocSearch-Sidepanel-Container.is-open',
+      t,
+      3000
+    );
     if (!alive(t) || !sidepanelOpen) return;
     await sleep(900, t);
 
     // 8. Ask a question in the side panel.
-    const prompt = await waitFor('.DocSearch-Sidepanel-Prompt--textarea', t, 2000);
+    const prompt = await waitFor(
+      '.DocSearch-Sidepanel-Prompt--textarea',
+      t,
+      2000
+    );
     if (prompt && alive(t)) {
       await moveCursorTo(prompt, t);
       await typeInto(prompt, SIDEPANEL_QUESTION, t);
@@ -295,18 +324,27 @@ export function createAutopilot({ modalRef, sidepanelRef, indexName }) {
   // --- public API --------------------------------------------------------
   function start() {
     if (typeof window === 'undefined') return;
-    const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const reducedMotion = window.matchMedia?.(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
     if (reducedMotion || window.innerWidth < MIN_AUTOPLAY_WIDTH) {
       enabled = false;
     }
-    activityEvents.forEach((name) => document.addEventListener(name, onUserActivity, { capture: true, passive: true }));
+    activityEvents.forEach((name) =>
+      document.addEventListener(name, onUserActivity, {
+        capture: true,
+        passive: true,
+      })
+    );
   }
 
   function stop() {
     token.cancelled = true;
     running = false;
     if (idleTimer) clearTimeout(idleTimer);
-    activityEvents.forEach((name) => document.removeEventListener(name, onUserActivity, { capture: true }));
+    activityEvents.forEach((name) =>
+      document.removeEventListener(name, onUserActivity, { capture: true })
+    );
     if (cursorEl && cursorEl.isConnected) cursorEl.remove();
     cursorEl = null;
   }

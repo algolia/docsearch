@@ -89,7 +89,7 @@ export async function upsertJsonServerEntry(
 
   const alreadyExists = serverEntry !== undefined;
   const mergedEntry = {
-    ...(serverEntry ?? {}),
+    ...serverEntry,
     ...entry,
   };
   const edits = modify(

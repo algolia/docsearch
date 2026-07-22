@@ -15,7 +15,5 @@
     "@docsearch/sidepanel-js": "4.6.0",
     "@docsearch/website": "4.6.0"
   },
-  "changesets": [
-    "vast-numbers-read"
-  ]
+  "changesets": ["vast-numbers-read"]
 }

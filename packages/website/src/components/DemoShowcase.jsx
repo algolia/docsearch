@@ -38,9 +38,12 @@ export default function DemoShowcase() {
           loadedRef.current = true;
           setSrc(`${baseSrcRef.current}?theme=${colorModeRef.current}`);
         }
-        post({ type: 'docsearch-demo-visibility', visible: entry.intersectionRatio >= 0.35 });
+        post({
+          type: 'docsearch-demo-visibility',
+          visible: entry.intersectionRatio >= 0.35,
+        });
       },
-      { threshold: [0, 0.35, 0.7, 1], rootMargin: '300px 0px' },
+      { threshold: [0, 0.35, 0.7, 1], rootMargin: '300px 0px' }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -60,7 +63,9 @@ export default function DemoShowcase() {
       const el = wrapperRef.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
-      const visible = rect.top < window.innerHeight * 0.65 && rect.bottom > window.innerHeight * 0.35;
+      const visible =
+        rect.top < window.innerHeight * 0.65 &&
+        rect.bottom > window.innerHeight * 0.35;
       post({ type: 'docsearch-demo-visibility', visible });
     };
     window.addEventListener('message', onMessage);

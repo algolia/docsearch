@@ -4,8 +4,8 @@ import { DocSearchMark } from '@site/src/components/DocSearchMark';
 import React from 'react';
 
 /**
- * Navbar brand lockup (MCP vibe): swirl mark + DOCSEARCH wordmark + a small
- * "by <Algolia>" byline. Overrides the stock image logo.
+ * Navbar brand lockup (MCP vibe): swirl mark + DOCSEARCH wordmark + a small "by
+ * <Algolia>" byline. Overrides the stock image logo.
  */
 export default function NavbarLogo() {
   const { withBaseUrl } = useBaseUrlUtils();
@@ -16,7 +16,11 @@ export default function NavbarLogo() {
         <span className="ds-brand__word font-display">DOCSEARCH</span>
         <span className="ds-brand__by">
           by
-          <img src={withBaseUrl('/img/Algolia-logo-blue.svg')} alt="Algolia" className="ds-brand__algolia" />
+          <img
+            src={withBaseUrl('/img/Algolia-logo-blue.svg')}
+            alt="Algolia"
+            className="ds-brand__algolia"
+          />
         </span>
       </span>
     </Link>

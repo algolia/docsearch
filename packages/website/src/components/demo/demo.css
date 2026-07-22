@@ -20,7 +20,13 @@ body.docsearch-demo-embed-body {
   overflow: hidden;
   background: var(--surface, #fff);
   color: var(--text, #1c1e21);
-  font-family: var(--font-sans, ui-sans-serif, system-ui, -apple-system, sans-serif);
+  font-family: var(
+    --font-sans,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    sans-serif
+  );
 }
 
 /* Topbar ------------------------------------------------------------------ */
@@ -119,7 +125,8 @@ body.docsearch-demo-embed-body {
 
 .ds-demo-search .DocSearch-Button:hover {
   border-color: var(--accent, #5468ff);
-  box-shadow: 0 2px 10px color-mix(in srgb, var(--accent, #5468ff) 20%, transparent);
+  box-shadow: 0 2px 10px
+    color-mix(in srgb, var(--accent, #5468ff) 20%, transparent);
 }
 
 .ds-demo-search .DocSearch-Button-Placeholder {
@@ -167,7 +174,9 @@ body.docsearch-demo-embed-body {
   font-size: 13.5px;
   font-weight: 600;
   cursor: pointer;
-  transition: filter 150ms ease, transform 150ms ease;
+  transition:
+    filter 150ms ease,
+    transform 150ms ease;
 }
 
 .ds-demo .DocSearch-SidepanelButton.inline:hover {

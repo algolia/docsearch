@@ -1,8 +1,8 @@
 import React from 'react';
 
 /**
- * DocSearch logomark — concentric-arc swirl (Algolia blue).
- * Ported from the DocSearch MCP app (docsearch-logo.tsx). Sized via className.
+ * DocSearch logomark — concentric-arc swirl (Algolia blue). Ported from the
+ * DocSearch MCP app (docsearch-logo.tsx). Sized via className.
  */
 export function DocSearchMark({ className }) {
   return (
