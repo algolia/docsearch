@@ -47,6 +47,42 @@ export default function DemoApp() {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
+  // Keep all scrolling contained inside the iframe. Focusing an element (the
+  // search input / prompt on open) or `scrollIntoView` (streaming answers)
+  // otherwise scrolls ancestors across the iframe boundary, which yanks the
+  // parent page back to the demo. We default focus to `preventScroll` and make
+  // `scrollIntoView` only move the nearest scrollable ancestor within the frame.
+  useEffect(() => {
+    const nativeFocus = HTMLElement.prototype.focus;
+    const nativeScrollIntoView = Element.prototype.scrollIntoView;
+
+    HTMLElement.prototype.focus = function focusNoScroll(options) {
+      return nativeFocus.call(this, { preventScroll: true, ...(options ?? {}) });
+    };
+
+    Element.prototype.scrollIntoView = function containedScrollIntoView(arg) {
+      const behavior = typeof arg === 'object' && arg?.behavior ? arg.behavior : 'auto';
+      let ancestor = this.parentElement;
+      while (ancestor) {
+        const overflowY = getComputedStyle(ancestor).overflowY;
+        if ((overflowY === 'auto' || overflowY === 'scroll') && ancestor.scrollHeight > ancestor.clientHeight) {
+          const top =
+            this.getBoundingClientRect().top - ancestor.getBoundingClientRect().top + ancestor.scrollTop;
+          ancestor.scrollTo({ top, behavior });
+          return;
+        }
+        ancestor = ancestor.parentElement;
+      }
+      // No scrollable ancestor inside the frame → intentionally do nothing so we
+      // never scroll the parent document.
+    };
+
+    return () => {
+      HTMLElement.prototype.focus = nativeFocus;
+      Element.prototype.scrollIntoView = nativeScrollIntoView;
+    };
+  }, []);
+
   useEffect(() => {
     const autopilot = createAutopilot({
       modalRef,

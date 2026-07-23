@@ -87,7 +87,7 @@ export default function DemoShowcase() {
           docs.your-project.com
         </div>
       </div>
-      <div className="relative aspect-video w-full bg-[var(--surface)]">
+      <div className="relative aspect-[4/5] w-full bg-[var(--surface)] sm:aspect-[16/10]">
         {src ? (
           <iframe
             ref={iframeRef}

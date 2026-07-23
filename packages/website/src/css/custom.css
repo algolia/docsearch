@@ -1112,6 +1112,16 @@ html[data-theme='dark'] .shimmer-effect {
   backdrop-filter: saturate(1.1) blur(6px);
   background-color: color-mix(in oklch, var(--surface) 90%, transparent);
 }
+
+/* Mobile: the slide-in navbar sidebar is `position: fixed`, so any filter on
+   `.navbar` turns it into the sidebar's containing block and traps the panel
+   inside the ~4.5rem navbar box (hamburger appears to "do nothing"). Drop the
+   blur and lift above the announcement bar (z-index: 100) while it's open. */
+.navbar.navbar-sidebar--show {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  z-index: 200;
+}
 .navbar__link {
   font-family: var(--font-display);
   font-size: 0.82rem;

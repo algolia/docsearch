@@ -191,6 +191,53 @@ body.docsearch-demo-embed-body {
   color: #fff;
 }
 
+/* Mobile ------------------------------------------------------------------ */
+/* The iframe width equals the demo box width, so these fire on phones where
+   the box is narrow — keep the chrome from overflowing and the hero readable. */
+@media (max-width: 560px) {
+  .ds-demo-topbar {
+    gap: 10px;
+    padding: 0 14px;
+    height: 50px;
+  }
+
+  /* The middle nav is decorative; drop it so brand + Ask AI always fit. */
+  .ds-demo-nav {
+    display: none;
+  }
+
+  .ds-demo-hero {
+    gap: 12px;
+    padding: 18px 16px;
+  }
+
+  .ds-demo-title {
+    font-size: 22px;
+  }
+
+  .ds-demo-eyebrow {
+    font-size: 10px;
+  }
+
+  .ds-demo-search .DocSearch-Button {
+    height: 48px;
+  }
+
+  /* Trim the Ask AI CTA so the brand + button share the row comfortably. */
+  .ds-demo .DocSearch-SidepanelButton.inline {
+    height: 34px;
+    padding: 0 11px;
+    font-size: 13px;
+  }
+}
+
+/* Very narrow: the Ask AI label alone is enough, drop the brand wordmark. */
+@media (max-width: 380px) {
+  .ds-demo-brand-name {
+    display: none;
+  }
+}
+
 /* Ghost cursor ------------------------------------------------------------ */
 .ds-demo-cursor {
   position: fixed;
