@@ -1122,6 +1122,14 @@ html[data-theme='dark'] .shimmer-effect {
   -webkit-backdrop-filter: none;
   z-index: 200;
 }
+
+/* Full-width drawer on mobile so the open menu fully covers the header instead
+   of leaving a strip where the (overflowing) search + Ask AI buttons peek out. */
+@media (max-width: 996px) {
+  .navbar-sidebar {
+    width: 100%;
+  }
+}
 .navbar__link {
   font-family: var(--font-display);
   font-size: 0.82rem;

@@ -219,8 +219,18 @@ body.docsearch-demo-embed-body {
     font-size: 10px;
   }
 
+  /* Collapse the hero search bar into a compact icon button (the widget already
+     hides the placeholder + keys below 768px; we just undo our full-width look). */
+  .ds-demo-search {
+    width: auto;
+  }
+
   .ds-demo-search .DocSearch-Button {
+    width: 48px;
     height: 48px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 12px;
   }
 
   /* Trim the Ask AI CTA so the brand + button share the row comfortably. */
