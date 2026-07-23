@@ -2,29 +2,36 @@
 title: Ask AI API Reference
 ---
 
-import AskAIDeprecationNotice from '../../src/components/mdx/ask-ai-deprecation-notice.jsx'
+import AskAIDeprecationNotice from '../../src/components/mdx/ask-ai-deprecation-notice.jsx';
 
 <AskAIDeprecationNotice />
 
-The Ask AI API enables developers to build custom chat interfaces powered by Algolia's AI assistant. Use these endpoints to create tailored conversational experiences that search your Algolia index and generate contextual responses using your own LLM provider.
-
-:::info
-This API documentation is primarily for developers building custom Ask AI integrations. If you're using the DocSearch package, you typically won't need this information since DocSearch handles the Ask AI API integration automatically. For standard DocSearch usage, see the [DocSearch documentation](/docs/docsearch) instead.
+:::warning
+New and migrating integrations should use [Agent Studio](https://www.algolia.com/doc/guides/algolia-ai/agent-studio) instead of the Ask AI API.
+If you call these endpoints today, configure your client to use Agent Studio completions.
+For migration steps, see [Migrate Ask AI to Agent Studio](/docs/v4/migrating-askai-to-agent-studio).
 :::
 
-## API Documentation
+The Ask AI API lets you build custom chat interfaces powered by an Algolia Ask AI assistant.
+These endpoints search your Algolia index and generate contextual responses with your LLM provider.
 
-For complete API documentation including endpoints, authentication, request/response formats, and implementation examples, please visit the official Algolia Ask AI API Reference:
+Prefer Agent Studio for new work:
+
+- [Integrate Agent Studio](https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/integration)
+- [Agent Studio API](https://www.algolia.com/doc/rest-api/agent-studio)
+
+This page is mainly for developers who built custom Ask AI HTTP clients.
+If you use DocSearch, configure Agent Studio in DocSearch instead—
+see [Migrate Ask AI to Agent Studio](/docs/v4/migrating-askai-to-agent-studio).
+
+## Legacy Ask AI API
+
+Legacy Ask AI HTTP docs remain available for reference while you migrate:
 
 **[Algolia Ask AI API Reference](https://www.algolia.com/doc/guides/algolia-ai/askai/reference/api)**
 
-The official documentation includes:
+**Base URL:** `https://askai.algolia.com`
 
-- Authentication and token management
-- Chat endpoint with streaming responses
-- Search parameters and facet filtering
-- Feedback submission
-- Integration examples with Next.js and Vercel AI SDK
-- Error handling and best practices
+That reference covers the older Ask AI token, chat, and feedback endpoints. Prefer Agent Studio for all new work.
 
-For more information about Ask AI in general, see the [Ask AI documentation](/docs/v4/askai).
+For DocSearch SDK setup (including `agentStudio: true`), see [Migrate Ask AI to Agent Studio](/docs/v4/migrating-askai-to-agent-studio) and [Get started with Ask AI](/docs/v4/askai).

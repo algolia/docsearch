@@ -135,11 +135,6 @@ export default {
           },
         ],
       },
-      announcementBar: {
-        id: 'announcement-bar',
-        content:
-          'Ask AI is now part of <strong>Agent Studio</strong> - We\'re integrating Ask AI into Agent Studio, our centralized space to build and manage AI agents.<a target="_blank" rel="noopener noreferrer" href="https://www.algolia.com/doc/guides/algolia-ai/agent-studio">Explore Agent Studio</a>',
-      },
       colorMode: {
         defaultMode: 'light',
         disableSwitch: false,
