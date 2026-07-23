@@ -1,0 +1,302 @@
+/* Mini docs-site chrome for the homepage auto-demo (rendered inside the
+   /demo-embed iframe). Widget styles come from @docsearch/css; everything here
+   is the light "your docs" frame behind it. Colours + fonts reuse the site's
+   own design tokens from custom.css (theme-scoped on <html data-theme>), so the
+   demo always matches the surrounding page in both light and dark mode. */
+
+html.docsearch-demo-embed-html,
+body.docsearch-demo-embed-body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.ds-demo {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--surface, #fff);
+  color: var(--text, #1c1e21);
+  font-family: var(
+    --font-sans,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    sans-serif
+  );
+}
+
+/* Topbar ------------------------------------------------------------------ */
+.ds-demo-topbar {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 0 22px;
+  height: 54px;
+  border-bottom: 1px solid var(--border, #e6e8eb);
+  background: color-mix(in srgb, var(--surface, #fff) 80%, transparent);
+  flex-shrink: 0;
+}
+
+.ds-demo-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-display, var(--font-sans));
+  font-weight: 650;
+  font-size: 15px;
+}
+
+.ds-demo-logo {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, var(--accent, #5468ff), #9b5cff);
+}
+
+.ds-demo-nav {
+  display: flex;
+  gap: 20px;
+}
+
+.ds-demo-nav-link {
+  font-size: 13.5px;
+  color: var(--text-secondary, #6b7280);
+}
+
+.ds-demo-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Hero -------------------------------------------------------------------- */
+.ds-demo-hero {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 24px;
+  text-align: center;
+}
+
+.ds-demo-eyebrow {
+  margin: 0;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent, #5468ff);
+}
+
+.ds-demo-title {
+  margin: 0 0 6px;
+  font-family: var(--font-display, var(--font-sans));
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text, #1c1e21);
+}
+
+.ds-demo-search {
+  width: min(560px, 100%);
+}
+
+/* Make the search trigger read as a prominent hero search bar. */
+.ds-demo-search .DocSearch-Button {
+  width: 100%;
+  height: 52px;
+  margin: 0;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border-strong, #d0d3d7);
+  background: var(--surface-raised, #fafafa);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  font-size: 15px;
+}
+
+.ds-demo-search .DocSearch-Button:hover {
+  border-color: var(--accent, #5468ff);
+  box-shadow: 0 2px 10px
+    color-mix(in srgb, var(--accent, #5468ff) 20%, transparent);
+}
+
+.ds-demo-search .DocSearch-Button-Placeholder {
+  font-size: 15px;
+  color: var(--text-secondary, #6b7280);
+}
+
+.ds-demo-popular {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.ds-demo-popular-label {
+  font-size: 12px;
+  color: var(--text-tertiary, #9aa0a6);
+}
+
+.ds-demo-chip {
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border, #e6e8eb);
+  background: var(--surface-raised, #fafafa);
+  font-size: 12px;
+  color: var(--text-secondary, #6b7280);
+}
+
+/* Fix the Ask AI (inline sidepanel) button. The library rule sets `all: unset`
+   after its own styling, which wipes it — so we restyle it here into a clean
+   accent CTA. */
+.ds-demo .DocSearch-SidepanelButton.inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 36px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--accent, #5468ff);
+  color: #fff;
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    filter 150ms ease,
+    transform 150ms ease;
+}
+
+.ds-demo .DocSearch-SidepanelButton.inline:hover {
+  filter: brightness(1.05);
+  background: var(--accent, #5468ff);
+  border-color: transparent;
+}
+
+.ds-demo .DocSearch-SidepanelButton.inline svg {
+  width: 16px;
+  height: 16px;
+  color: #fff;
+}
+
+/* Mobile ------------------------------------------------------------------ */
+/* The iframe width equals the demo box width, so these fire on phones where
+   the box is narrow — keep the chrome from overflowing and the hero readable. */
+@media (max-width: 560px) {
+  .ds-demo-topbar {
+    gap: 10px;
+    padding: 0 14px;
+    height: 50px;
+  }
+
+  /* The middle nav is decorative; drop it so brand + Ask AI always fit. */
+  .ds-demo-nav {
+    display: none;
+  }
+
+  .ds-demo-hero {
+    gap: 12px;
+    padding: 18px 16px;
+  }
+
+  .ds-demo-title {
+    font-size: 22px;
+  }
+
+  .ds-demo-eyebrow {
+    font-size: 10px;
+  }
+
+  /* Collapse the hero search bar into a compact icon button (the widget already
+     hides the placeholder + keys below 768px; we just undo our full-width look). */
+  .ds-demo-search {
+    width: auto;
+  }
+
+  .ds-demo-search .DocSearch-Button {
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 12px;
+  }
+
+  /* Trim the Ask AI CTA so the brand + button share the row comfortably. */
+  .ds-demo .DocSearch-SidepanelButton.inline {
+    height: 34px;
+    padding: 0 11px;
+    font-size: 13px;
+  }
+}
+
+/* Very narrow: the Ask AI label alone is enough, drop the brand wordmark. */
+@media (max-width: 380px) {
+  .ds-demo-brand-name {
+    display: none;
+  }
+}
+
+/* Ghost cursor ------------------------------------------------------------ */
+.ds-demo-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2147483647;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-100px, -100px);
+  transition:
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.2s ease;
+  background-repeat: no-repeat;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M4 2l6.5 15.5 2.2-6 6-2.2z' fill='%23111' stroke='%23fff' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E");
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.ds-demo-cursor.is-visible {
+  opacity: 1;
+}
+
+.ds-demo-cursor.is-clicking::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--accent, #5468ff);
+  transform: translate(-50%, -50%);
+  animation: ds-demo-click 0.24s ease-out;
+}
+
+@keyframes ds-demo-click {
+  from {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.8);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-demo-cursor {
+    display: none;
+  }
+}

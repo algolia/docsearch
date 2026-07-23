@@ -176,7 +176,7 @@ export async function buildQuerySources({
           highlightPostTag: searchParams?.highlightPostTag ?? '</mark>',
           hitsPerPage: searchParams?.hitsPerPage ?? 20,
           clickAnalytics: searchParams?.clickAnalytics ?? insightsActive,
-          ...(searchParams ?? {}),
+          ...searchParams,
           ...(facetFilters ? { facetFilters } : {}),
         };
       }),

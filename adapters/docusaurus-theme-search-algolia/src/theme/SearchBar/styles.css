@@ -53,7 +53,7 @@
   );
 
   /* Sidepanel */
-  --docsearch-sidepanel-background: var(--ifm-color-emphasis-100);
+  --docsearch-sidepanel-background: var(--ifm-background-color);
   --docsearch-sidepanel-background-dark: var(--docsearch-searchbox-background);
   --docsearch-sidepanel-white: var(--ifm-background-color);
   --docsearch-sidepanel-primary: var(--docsearch-primary-color);
@@ -116,6 +116,10 @@
   .DocSearch-Sidepanel-Container.inline.side-left {
     border-radius: 0 !important;
   }
+}
+
+.DocSearch-AskAiScreen-Query {
+  margin-bottom: 0;
 }
 
 .DocSearch-Container {

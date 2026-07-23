@@ -172,7 +172,6 @@
   width: 100%;
   gap: 0.8125rem;
   font-size: 0.8em;
-  background: var(--docsearch-hit-background);
   padding: 16px;
   color: var(--docsearch-text-color);
   border-radius: 4px;

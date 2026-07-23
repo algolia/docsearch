@@ -148,33 +148,53 @@ const logos = [
   },
 ];
 
-export const Logos = () => {
+// Split the wall into two rows that drift in opposite directions.
+const half = Math.ceil(logos.length / 2);
+const rowOne = logos.slice(0, half);
+const rowTwo = logos.slice(half);
+
+function LogoLink({ alt, src, width, href, duplicate }) {
   return (
-    <div className="py-16">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="-mx-6 grid grid-cols-3 gap-0.5 overflow-hidden sm:mx-0 sm:rounded-2xl md:grid-cols-4">
-          {logos.map(({ alt, src, width, href }) => (
-            <a
-              key={alt}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-gray-400/7 dark:bg-xenon-900 p-6 sm:p-10 flex flex-col items-center justify-center transition-all duration-200 cursor-pointer inset-shadow-none hover:inset-shadow-sm hover:bg-blue-400/40 !no-underline"
-            >
-              <img
-                alt={alt}
-                src={src}
-                width={width}
-                height={48}
-                className="max-h-12 w-full object-contain"
-              />
-              <span className="mt-4 text-sm font-medium text-zinc-400 dark:text-slate-200 !no-underline">
-                {alt}
-              </span>
-            </a>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      title={alt}
+      tabIndex={duplicate ? -1 : undefined}
+      className="logo-marquee-item no-underline!"
+    >
+      <img alt={alt} src={src} width={width} height={40} loading="lazy" />
+    </a>
+  );
+}
+
+function MarqueeRow({ items, duration, reverse }) {
+  return (
+    <div className="logo-marquee-row">
+      <div
+        className={`logo-marquee-track${reverse ? ' logo-marquee-track--reverse' : ''}`}
+        style={{ '--marquee-duration': duration }}
+      >
+        <div className="logo-marquee-group">
+          {items.map((logo) => (
+            <LogoLink key={logo.alt} {...logo} />
+          ))}
+        </div>
+        <div className="logo-marquee-group" aria-hidden="true">
+          {items.map((logo) => (
+            <LogoLink key={`${logo.alt}-dup`} {...logo} duplicate={true} />
           ))}
         </div>
       </div>
+    </div>
+  );
+}
+
+export const Logos = () => {
+  return (
+    <div className="logo-marquee mx-auto max-w-6xl pt-4">
+      <MarqueeRow items={rowOne} duration="40s" />
+      <MarqueeRow items={rowTwo} duration="55s" reverse={true} />
     </div>
   );
 };

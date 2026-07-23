@@ -795,7 +795,7 @@
   stroke-width: var(--docsearch-icon-stroke-width);
   width: 24px;
   align-self: flex-start;
-  margin-block-start: 0.5em;
+  margin-block-start: 0.8em;
 }
 
 .DocSearch-Hit-icon svg {
