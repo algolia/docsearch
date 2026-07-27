@@ -73,13 +73,11 @@ type AskAiOptions = NonNullable<ThemeConfigDocSearch['askAi']> &
 type AdapterDocSearchProps = Omit<
   DocSearchAskAiModalProps,
   | 'askAi'
-  | 'indexName'
   | 'initialScrollY'
   | 'isAskAiActive'
   | 'isHybridModeSupported'
   | 'onAskAiToggle'
   | 'onClose'
-  | 'searchParameters'
 > & {
   askAi?: AskAiOptions;
   contextualSearch?: boolean;

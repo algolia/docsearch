@@ -98,9 +98,7 @@ export function DocSearchAskAiModal({
   isAskAiActive = false,
   recentSearchesLimit = 7,
   recentSearchesWithFavoritesLimit = 4,
-  indices = [],
-  indexName,
-  searchParameters,
+  indices,
   facets,
   isHybridModeSupported = false,
   ...props
@@ -173,11 +171,9 @@ export function DocSearchAskAiModal({
   const indexes = React.useMemo(
     () =>
       normalizeDocSearchIndexes({
-        indexName,
         indices,
-        searchParameters,
       }),
-    [indexName, indices, searchParameters]
+    [indices]
   );
   const defaultIndexName = indexes[0].name;
 

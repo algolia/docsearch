@@ -61,7 +61,7 @@ export interface AskAiScreenStateProps<
   canHandleAskAi: boolean;
   inputRef: React.MutableRefObject<HTMLInputElement | null>;
   hitComponent: DocSearchProps['hitComponent'];
-  indexName: DocSearchProps['indexName'];
+  indexName: string;
   messages: UseChatHelpers<AIMessage>['messages'];
   tools: ToolCalls;
   status: UseChatHelpers<AIMessage>['status'];

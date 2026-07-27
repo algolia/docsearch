@@ -92,7 +92,7 @@ function HybridMode() {
     <DocSearch>
       <DocSearchButton />
       <DocSearchModal
-        indexName="YOUR_INDEX_NAME"
+        indices={['YOUR_INDEX_NAME']}
         appId="YOUR_APP_ID"
         apiKey="YOUR_SEARCH_API_KEY"
         askAi="YOUR_ASSISTANT_ID" // Or configuration object
@@ -144,7 +144,7 @@ sidepanelInstance = sidepanel({
 
 docsearchInstance = docsearch({
   container: "#docsearch",
-  indexName: "YOUR_INDEX_NAME",
+  indices: ["YOUR_INDEX_NAME"],
   appId: "YOUR_APP_ID",
   apiKey: "YOUR_SEARCH_API_KEY",
   askAi: "YOUR_ASSISTANT_ID",  // Or configuration object

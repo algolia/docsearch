@@ -89,7 +89,7 @@ export function Search() {
     <DocSearch>
       <DocSearchButton />
       <DocSearchModal
-        indexName="YOUR_INDEX_NAME"
+        indices={['YOUR_INDEX_NAME']}
         appId="YOUR_APP_ID"
         apiKey="YOUR_SEARCH_API_KEY"
       />
@@ -123,7 +123,7 @@ export function Search() {
     <DocSearch>
       <DocSearchButton />
       <DocSearchModal
-        indexName="YOUR_INDEX_NAME"
+        indices={['YOUR_INDEX_NAME']}
         appId="YOUR_APP_ID"
         apiKey="YOUR_SEARCH_API_KEY"
         // With just a simple assistant ID
@@ -160,7 +160,7 @@ export default function AdvancedSearch(): JSX.Element {
         translations={{ buttonText: 'Advanced Search' }} // Change the displayed text on the DocSearchButton
       />
       <DocSearchModal
-        indexName="YOUR_INDEX_NAME"
+        indices={['YOUR_INDEX_NAME']}
         appId="YOUR_APP_ID"
         apiKey="YOUR_SEARCH_API_KEY"
         askAi={{ // Enable Ask AI
@@ -219,7 +219,7 @@ export default function DynamicModal() {
       <DocSearchButton onClick={loadModal} />
       {modalLoaded && DocSearchModal && (
         <DocSearchModal
-          indexName="YOUR_INDEX_NAME"
+          indices={['YOUR_INDEX_NAME']}
           appId="YOUR_APP_ID"
           apiKey="YOUR_SEARCH_API_KEY"
         />
@@ -289,17 +289,11 @@ interface DocSearchModalProps {
    */
   apiKey: string;
   /**
-   * Name of the algolia index to query.
-   *
-   * @deprecated `indexName` will be removed in a future version. Please use `indices` property going forward.
-   */
-  indexName?: string;
-  /**
    * List of indices and _optional_ searchParameters to be used for search.
    *
    * @see {@link https://docsearch.algolia.com/docs/api#indices}
    */
-  indices?: Array<DocSearchIndex | string>;
+  indices: Array<DocSearchIndex | string>;
   /**
    * Configuration or assistant id to enable ask ai mode. Pass a string assistant id or a full config object.
    */

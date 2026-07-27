@@ -28,18 +28,22 @@ export default function WTransformItems({
 }): JSX.Element {
   return (
     <DocSearchAI
-      indexName="crawler_doc"
+      indices={[
+        {
+          name: 'crawler_doc',
+          searchParameters: {
+            attributesToRetrieve: ['*'],
+            attributesToSnippet: ['*'],
+            hitsPerPage: 20,
+          },
+        },
+      ]}
       appId="PMZUYBQDAK"
       apiKey="24b09689d5b4223813d9b8e48563c8f6"
       askAi={{
         assistantId: 'ccdec697-e3fe-465b-a1c3-657e7bf18aef',
       }}
       insights={true}
-      searchParameters={{
-        attributesToRetrieve: ['*'],
-        attributesToSnippet: ['*'],
-        hitsPerPage: 20,
-      }}
       transformItems={(items) => {
         return items.map((item: any) => ({
           objectID: item.objectID,

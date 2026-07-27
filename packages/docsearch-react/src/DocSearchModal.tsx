@@ -67,9 +67,7 @@ export function DocSearchModal({
   insights = false,
   recentSearchesLimit = 7,
   recentSearchesWithFavoritesLimit = 4,
-  indices = [],
-  indexName,
-  searchParameters,
+  indices,
   facets,
   ...props
 }: DocSearchModalProps): JSX.Element {
@@ -112,11 +110,9 @@ export function DocSearchModal({
   const indexes = React.useMemo(
     () =>
       normalizeDocSearchIndexes({
-        indexName,
         indices,
-        searchParameters,
       }),
-    [indexName, indices, searchParameters]
+    [indices]
   );
   const defaultIndexName = indexes[0].name;
 

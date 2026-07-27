@@ -22,7 +22,7 @@ function DocSearch(props: TestDocSearchProps): JSX.Element {
       ref={ref}
       appId="woo"
       apiKey="foo"
-      indexName="bar"
+      indices={['bar']}
       {...props}
     />
   );

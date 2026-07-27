@@ -16,7 +16,7 @@ import type { DocSearchAIProps } from '../DocSearchAI';
 
 function DocSearch(props: Partial<DocSearchProps>): JSX.Element {
   return (
-    <DocSearchComponent appId="woo" apiKey="foo" indexName="bar" {...props} />
+    <DocSearchComponent appId="woo" apiKey="foo" indices={['bar']} {...props} />
   );
 }
 
@@ -25,7 +25,7 @@ function DocSearchAI(props: Partial<DocSearchAIProps>): JSX.Element {
     <DocSearchAIComponent
       appId="woo"
       apiKey="foo"
-      indexName="bar"
+      indices={['bar']}
       askAi="assistant"
       {...props}
     />

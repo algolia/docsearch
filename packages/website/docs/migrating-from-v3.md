@@ -36,7 +36,7 @@ DocSearch v4 introduces seamless support for Algolia's Ask AI feature. To enable
 
 ```javascript
 docsearch({
-  indexName: 'YOUR_INDEX_NAME',
+  indices: ['YOUR_INDEX_NAME'],
   apiKey: 'YOUR_SEARCH_API_KEY',
   appId: 'YOUR_APP_ID',
   askAi: 'YOUR_ALGOLIA_ASSISTANT_ID',
@@ -51,7 +51,7 @@ If you prefer to utilize Ask AI with a separate configuration from your main Doc
 
 ```javascript
 docsearch({
-  indexName: 'YOUR_INDEX_NAME',
+  indices: ['YOUR_INDEX_NAME'],
   apiKey: 'YOUR_SEARCH_API_KEY',
   appId: 'YOUR_APP_ID',
   askAi: {
