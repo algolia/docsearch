@@ -204,3 +204,27 @@ export function getAgentPromptSuggestions(parts: AIMessagePart[]): string[] {
 
   return suggestionsPart.data.suggestions;
 }
+
+export function getSearchToolQueries(part: SearchToolPart): string[] {
+  if (part.state !== 'input-available' && part.state !== 'output-available') {
+    return [];
+  }
+
+  if (part.type === 'tool-searchIndex') {
+    const query = (part.output?.query ?? part.input?.query ?? '').trim();
+    return query ? [query] : [];
+  }
+
+  if ('queries' in part.input && Array.isArray(part.input.queries)) {
+    return part.input.queries.map(({ query }) => query.trim()).filter(Boolean);
+  }
+
+  // There could be older stored MCP search tool calls,
+  // we should parse it's input properly
+  if ('query' in part.input && typeof part.input.query === 'string') {
+    const query = part.input.query.trim();
+    return query ? [query] : [];
+  }
+
+  return [];
+}

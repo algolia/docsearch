@@ -22,18 +22,33 @@ export interface SearchIndexTool {
   };
 }
 
+interface MCPSearchToolQuery {
+  query: string;
+  [key: string]: unknown;
+}
+
+interface MCPSearchToolInputV1 {
+  query: string;
+  index: string;
+  number_of_results?: number;
+  facet_filters?: string[];
+}
+
+interface MCPSearchToolInputV2 {
+  queries: MCPSearchToolQuery[];
+  clickAnalytics: boolean;
+  originalQuery: string;
+}
+
 export interface AlgoliaMCPSearchTool {
-  input: {
-    query: string;
-    index: string;
-    number_of_results?: number;
-    facet_filters?: string[];
-  };
-  output: {
-    hits?: any[];
-    nbHits?: number;
-    queryId?: string;
-  };
+  input: MCPSearchToolInputV1 | MCPSearchToolInputV2;
+  output:
+    | {
+        hits?: unknown[];
+        nbHits?: number;
+        queryId?: string;
+      }
+    | undefined;
 }
 
 export interface MemoryTool {

@@ -65,7 +65,7 @@ export function AggregatedSearchBlock({
               tabIndex={0}
               className="DocSearch-AskAiScreen-MessageContent-Tool-Query"
               onKeyDown={(e) => {
-                if (e.key === 'enter' || e.key === ' ') {
+                if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   onSearchQueryClick(q);
                 }
