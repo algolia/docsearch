@@ -11,12 +11,66 @@ The package fields `main`, `unpkg`, and `jsdelivr` all point to `dist/style.css`
 
 These imports load the same full search-and-modal bundle:
 
-```js
+```js title="app.js"
 import '@docsearch/css';
 import '@docsearch/css/dist/style.css';
 ```
 
 Use only one of them.
+
+## Choose imports by surface
+
+Each surface needs a different set of assets. See [Published assets](#published-assets) for the full file list.
+
+### Search button only
+
+```js title="app.js"
+import '@docsearch/css/dist/button.css';
+```
+
+### Keyword-search modal
+
+```js title="app.js"
+import '@docsearch/css/dist/button.css';
+import '@docsearch/css/dist/modal.css';
+```
+
+Use the root bundle instead if your modal can show Agent Studio responses.
+
+### Agent Studio modal
+
+```js title="app.js"
+import '@docsearch/css';
+```
+
+### Sidepanel
+
+```js title="app.js"
+import '@docsearch/css';
+import '@docsearch/css/dist/sidepanel.css';
+```
+
+The Sidepanel reuses Agent Studio response and Markdown classes from the root bundle, so `sidepanel.css` isn't the complete Sidepanel presentation by itself.
+
+## Load from a CDN
+
+```html title="index.html"
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@docsearch/css@^5.0.0-beta/dist/style.css"
+/>
+```
+
+Add the Sidepanel asset when needed:
+
+```html title="index.html"
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@docsearch/css@^5.0.0-beta/dist/sidepanel.css"
+/>
+```
+
+Use the caret beta range so compatible beta updates remain available.
 
 ## Published assets
 
@@ -27,41 +81,9 @@ Use only one of them.
 | `@docsearch/css/dist/button.css` | Variables and search-button styles. |
 | `@docsearch/css/dist/modal.css` | Variables and keyword-search modal styles. |
 | `@docsearch/css/dist/_askai.css` | Agent Studio modal response and Markdown styles. |
-| `@docsearch/css/dist/sidepanel.css` | Variables, sidepanel button, panel layout, and sidepanel-specific overrides. |
+| `@docsearch/css/dist/sidepanel.css` | Variables, Sidepanel button, panel layout, and Sidepanel-specific overrides. |
 
 Each asset also has an equivalent `.scss` file: `style.scss`, `_variables.scss`, `button.scss`, `modal.scss`, `_askai.scss`, and `sidepanel.scss`. The build writes the compiled bundle to both extensions; these aren't Sass source partials.
-
-## Choose imports by surface
-
-### Search button only
-
-```js
-import '@docsearch/css/dist/button.css';
-```
-
-### Keyword-search modal
-
-```js
-import '@docsearch/css/dist/button.css';
-import '@docsearch/css/dist/modal.css';
-```
-
-Use the root bundle instead if your modal can show Agent Studio responses.
-
-### Agent Studio modal
-
-```js
-import '@docsearch/css';
-```
-
-### Sidepanel
-
-```js
-import '@docsearch/css';
-import '@docsearch/css/dist/sidepanel.css';
-```
-
-The sidepanel reuses Agent Studio response and Markdown classes from the root bundle, so `sidepanel.css` isn't the complete sidepanel presentation by itself.
 
 ## React style bridge exports
 
@@ -77,23 +99,3 @@ The sidepanel reuses Agent Studio response and Markdown classes from the root bu
 | `@docsearch/react/style/sidepanel` | `@docsearch/css/dist/sidepanel.css`  |
 
 Prefer direct `@docsearch/css` imports when your bundler supports CSS package imports. They show which assets enter your bundle and work across the DocSearch React packages.
-
-## Load from a CDN
-
-```html
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@docsearch/css@^5.0.0-beta/dist/style.css"
-/>
-```
-
-Add the sidepanel asset when needed:
-
-```html
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@docsearch/css@^5.0.0-beta/dist/sidepanel.css"
-/>
-```
-
-Use the caret beta range so compatible beta updates remain available.

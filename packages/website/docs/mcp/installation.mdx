@@ -170,7 +170,7 @@ Manual configuration adds the server but doesn't install the rules and skills su
 
 Add this entry to `~/.cursor/mcp.json` for user-level configuration or `.cursor/mcp.json` for project configuration:
 
-```json
+```json title=".cursor/mcp.json"
 {
   "mcpServers": {
     "algolia-docsearch": {
@@ -205,7 +205,7 @@ You can also add the URL under `[mcp_servers.algolia-docsearch]` in `~/.codex/co
 
 Add this entry to `opencode.json` or `opencode.jsonc`:
 
-```json
+```json title="opencode.json"
 {
   "$schema": "https://opencode.ai/config.json",
   "mcp": {
@@ -223,7 +223,7 @@ Add this entry to `opencode.json` or `opencode.jsonc`:
 
 Add this entry to `.gemini/settings.json` for project configuration or `~/.gemini/settings.json` for user-level configuration:
 
-```json
+```json title=".gemini/settings.json"
 {
   "mcpServers": {
     "algolia-docsearch": {
@@ -238,18 +238,16 @@ Add this entry to `.gemini/settings.json` for project configuration or `~/.gemin
 
 ## Connect another MCP client
 
-You can also connect clients that support remote HTTP MCP servers. The existing MCP drafts document these connection methods:
+You can also connect clients that support remote HTTP MCP servers. Use these connection methods:
 
-| Client | Connection method |
-| --- | --- |
-| Claude Desktop | Add a custom connector named `Algolia DocSearch` with the endpoint URL. |
-| ChatGPT | Add a no-auth custom connector. Availability depends on the plan and workspace settings. |
-| Pi | Install an MCP extension or adapter before adding the server. |
-| VS Code | Add a remote server to the workspace or user MCP configuration. The tools are available in Copilot Chat agent mode. |
-| Windsurf | Add the endpoint to the Cascade MCP configuration, then restart Windsurf. |
-| Zed | Add the endpoint as a context server. |
-| Conductor | Configure the server in the selected Claude Code, Codex, or Cursor host. Conductor doesn't use a separate MCP configuration for those sessions. |
-| Antigravity | Add the endpoint through **Manage MCP Servers > View raw config**, then refresh the installed servers. |
+- **Claude Desktop**: Add a custom connector named `Algolia DocSearch` with the endpoint URL.
+- **ChatGPT**: Add a no-auth custom connector. Availability depends on the plan and workspace settings.
+- **Pi**: Install an MCP extension or adapter before adding the server.
+- **VS Code**: Add a remote server to the workspace or user MCP configuration. The tools are available in Copilot Chat agent mode.
+- **Windsurf**: Add the endpoint to the Cascade MCP configuration, then restart Windsurf.
+- **Zed**: Add the endpoint as a context server.
+- **Conductor**: Configure the server in the selected Claude Code, Codex, or Cursor host. Conductor doesn't use a separate MCP configuration for those sessions.
+- **Antigravity**: Add the endpoint through **Manage MCP Servers > View raw config**, then refresh the installed servers.
 
 Configuration keys differ by client. Follow the client's MCP documentation and keep the server name `algolia-docsearch` and the endpoint URL unchanged.
 

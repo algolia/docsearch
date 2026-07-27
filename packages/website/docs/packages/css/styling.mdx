@@ -6,7 +6,7 @@ description: Load and customize the DocSearch v5 beta CSS.
 import TabItem from '@theme/TabItem';
 import Tabs from '@theme/Tabs';
 
-`@docsearch/css` contains the styles for the search button, modal, Agent Studio responses, and sidepanel.
+`@docsearch/css` contains the styles for the search button, modal, Agent Studio responses, and Sidepanel.
 
 :::info v5 beta
 
@@ -49,15 +49,15 @@ bun add @docsearch/css@^5.0.0-beta
 
 For the search button and modal, import the package root:
 
-```js
+```js title="app.js"
 import '@docsearch/css';
 ```
 
-The root stylesheet includes variables, button styles, modal styles, and Agent Studio response styles. It doesn't include sidepanel layout styles.
+The root stylesheet includes variables, button styles, modal styles, and Agent Studio response styles. It doesn't include Sidepanel layout styles.
 
-For a sidepanel, add its stylesheet after the root stylesheet:
+For a Sidepanel, add its stylesheet after the root stylesheet:
 
-```js
+```js title="app.js"
 import '@docsearch/css';
 import '@docsearch/css/dist/sidepanel.css';
 ```
@@ -66,7 +66,7 @@ import '@docsearch/css/dist/sidepanel.css';
 
 Load your overrides after DocSearch CSS.
 
-```css
+```css title="custom.css"
 :root {
   --docsearch-primary-color: #2457d6;
   --docsearch-primary-dark-color: #173b99;
@@ -82,14 +82,12 @@ Prefer variables over selector overrides. Variables preserve focus, responsive, 
 
 Frequently used variables include:
 
-| Area | Variables |
-| --- | --- |
-| Brand and state | `--docsearch-primary-color`, `--docsearch-primary-dark-color`, `--docsearch-highlight-color`, `--docsearch-focus-color`, `--docsearch-error-color`, `--docsearch-success-color` |
-| Text and surfaces | `--docsearch-text-color`, `--docsearch-secondary-text-color`, `--docsearch-background-color`, `--docsearch-modal-background`, `--docsearch-subtle-color`, `--docsearch-muted-color` |
-| Modal | `--docsearch-modal-width`, `--docsearch-modal-height`, `--docsearch-modal-variable-height`, `--docsearch-modal-radius`, `--docsearch-modal-shadow` |
-| Search box and hits | `--docsearch-searchbox-height`, `--docsearch-searchbox-background`, `--docsearch-hit-height`, `--docsearch-hit-background`, `--docsearch-hit-focus-background` |
-| Button | `--docsearch-search-button-background`, `--docsearch-search-button-text-color` |
-| Sidepanel | `--docsearch-sidepanel-background`, `--docsearch-sidepanel-primary`, `--docsearch-sidepanel-border`, `--docsearch-sidepanel-text-base`, `--docsearch-sidepanel-text-muted` |
+- **Brand and state**: `--docsearch-primary-color`, `--docsearch-primary-dark-color`, `--docsearch-highlight-color`, `--docsearch-focus-color`, `--docsearch-error-color`, `--docsearch-success-color`
+- **Text and surfaces**: `--docsearch-text-color`, `--docsearch-secondary-text-color`, `--docsearch-background-color`, `--docsearch-modal-background`, `--docsearch-subtle-color`, `--docsearch-muted-color`
+- **Modal**: `--docsearch-modal-width`, `--docsearch-modal-height`, `--docsearch-modal-variable-height`, `--docsearch-modal-radius`, `--docsearch-modal-shadow`
+- **Search box and hits**: `--docsearch-searchbox-height`, `--docsearch-searchbox-background`, `--docsearch-hit-height`, `--docsearch-hit-background`, `--docsearch-hit-focus-background`
+- **Button**: `--docsearch-search-button-background`, `--docsearch-search-button-text-color`
+- **Sidepanel**: `--docsearch-sidepanel-background`, `--docsearch-sidepanel-primary`, `--docsearch-sidepanel-border`, `--docsearch-sidepanel-text-base`, `--docsearch-sidepanel-text-muted`
 
 ## Set dark theme values
 
@@ -97,7 +95,7 @@ DocSearch applies dark variables under `html[data-theme='dark']`. The `theme="da
 
 Override dark values with the same selector:
 
-```css
+```css title="custom.css"
 html[data-theme='dark'] {
   --docsearch-modal-background: #111827;
   --docsearch-background-color: #1f2937;
@@ -112,7 +110,7 @@ html[data-theme='dark'] {
 
 All component classes use the `DocSearch-` prefix. Scope selector overrides to a component and preserve visible focus states.
 
-```css
+```css title="custom.css"
 .DocSearch-Button {
   min-width: 15rem;
 }

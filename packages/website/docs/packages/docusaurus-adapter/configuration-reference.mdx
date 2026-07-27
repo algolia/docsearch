@@ -1,6 +1,7 @@
 ---
 title: Docusaurus adapter configuration
-description: Configure DocSearch v5 search, Ask AI, the side panel, and the search page in Docusaurus.
+description: Configure DocSearch v5 search, Ask AI, the Sidepanel, and the search page in Docusaurus.
+toc_max_heading_level: 2
 ---
 
 import Tabs from '@theme/Tabs';
@@ -33,37 +34,139 @@ Keep the adapter, Docusaurus, React, and React DOM within these ranges. Don't ru
 
 ## Root options
 
-| Option | Type and default | Description |
-| --- | --- | --- |
-| `appId` | `string`; required | Algolia application ID. |
-| `apiKey` | `string`; required | Public API key with search permission. |
-| `indices` | `Array<string \| DocSearchIndex>`; required | Nonempty list of keyword indices, in query order. |
-| `contextualSearch` | `boolean`; `true` | Whether to add the current Docusaurus locale, default tag, and docs-version tags to search. |
-| `externalUrlRegex` | `string`; none | Regular expression that identifies result URLs that require full-page navigation. |
-| `replaceSearchResultPathname` | `{ from: string \| RegExp, to: string }`; none | Replace a result pathname before adding the Docusaurus base URL. |
-| `facets` | `Array<{ key: string, label?: string }>`; `[]` | Facet controls in the search modal. |
-| `initialQuery` | `string`; `''` | Query placed in the modal when it opens. |
-| `insights` | `boolean \| object`; `false` | Whether to enable Algolia Insights or an object that configures it. |
-| `placeholder` | `string`; built-in translation | Search input placeholder. |
-| `translations` | `DocSearchTranslations`; Docusaurus translations | Search button and modal text overrides. |
-| `maxResultsPerGroup` | `number`; none | Maximum results shown in each modal result group. |
-| `disableUserPersonalization` | `boolean`; `false` | Whether to disable recent searches, favorites, and stored AI conversations. |
-| `getMissingResultsUrl` | `({ query }) => string`; none | Build the no-results report URL. |
-| `keyboardShortcuts` | `object`; enabled | Enable or disable `Ctrl/Cmd+K`, `/`, and `Ctrl/Cmd+I`. |
-| `recentSearchesLimit` | `number`; `7` | Maximum recent searches when no favorites exist. |
-| `recentSearchesWithFavoritesLimit` | `number`; `4` | Maximum recent searches when favorites exist. |
-| `resultBadgeKey` | `string`; none | Hit property rendered as a badge in modal results. |
-| `searchPage` | `false \| SearchPageConfig`; `{ path: 'search' }` | Configure or disable the search results page. |
-| `askAi` | `AskAiConfig`; none | Configure Agent Studio for the modal and side panel. |
-| `sidePanel` | `boolean \| SidePanelConfig`; `false` | Whether to enable the Ask AI side panel or an object that configures it. |
-
 The validator rejects unknown root options. Pass runtime functions such as custom Agent Studio tools through a swizzled `SearchBar` instead of `themeConfig`.
+
+### `appId`
+
+> `type: string` | **required**
+
+Algolia application ID.
+
+### `apiKey`
+
+> `type: string` | **required**
+
+Public API key with search permission.
+
+### `indices`
+
+> `type: Array<string | DocSearchIndex>` | **required**
+
+Nonempty list of keyword indices, in query order. See [Indices and search parameters](#indices-and-search-parameters).
+
+### `contextualSearch`
+
+> `type: boolean` | **optional**
+
+Whether to add the current Docusaurus locale, default tag, and docs-version tags to search. Defaults to `true`. See [Contextual search](#contextual-search).
+
+### `externalUrlRegex`
+
+> `type: string` | **optional**
+
+Regular expression that identifies result URLs that require full-page navigation. See [URL processing](#url-processing).
+
+### `replaceSearchResultPathname`
+
+> `type: { from: string | RegExp, to: string }` | **optional**
+
+Replace a result pathname before adding the Docusaurus base URL. See [URL processing](#url-processing).
+
+### `facets`
+
+> `type: Array<{ key: string, label?: string }>` | **optional**
+
+Facet controls in the search modal. Defaults to `[]`. See [Modal facets](#modal-facets).
+
+### `initialQuery`
+
+> `type: string` | **optional**
+
+Query placed in the modal when it opens. Defaults to `''`.
+
+### `insights`
+
+> `type: boolean | object` | **optional**
+
+Whether to enable Algolia Insights, or an object that configures it. Defaults to `false`.
+
+### `placeholder`
+
+> `type: string` | **optional**
+
+Search input placeholder. Defaults to the built-in translation.
+
+### `translations`
+
+> `type: DocSearchTranslations` | **optional**
+
+Search button and modal text overrides. Defaults to the Docusaurus translations.
+
+### `maxResultsPerGroup`
+
+> `type: number` | **optional**
+
+Maximum results shown in each modal result group.
+
+### `disableUserPersonalization`
+
+> `type: boolean` | **optional**
+
+Whether to disable recent searches, favorites, and stored AI conversations. Defaults to `false`.
+
+### `getMissingResultsUrl`
+
+> `type: ({ query }) => string` | **optional**
+
+Build the no-results report URL.
+
+### `keyboardShortcuts`
+
+> `type: object` | **optional**
+
+Enable or disable `Ctrl/Cmd+K`, `/`, and `Ctrl/Cmd+I`. All shortcuts are enabled by default.
+
+### `recentSearchesLimit`
+
+> `type: number` | **optional**
+
+Maximum recent searches when no favorites exist. Defaults to `7`.
+
+### `recentSearchesWithFavoritesLimit`
+
+> `type: number` | **optional**
+
+Maximum recent searches when favorites exist. Defaults to `4`.
+
+### `resultBadgeKey`
+
+> `type: string` | **optional**
+
+Hit property rendered as a badge in modal results. See [Result badges](#result-badges).
+
+### `searchPage`
+
+> `type: false | SearchPageConfig` | **optional**
+
+Configure or disable the search results page. Defaults to `{ path: 'search' }`. See [Search page](#search-page).
+
+### `askAi`
+
+> `type: AskAiConfig` | **optional**
+
+Configure Agent Studio for the modal and Sidepanel. See [Ask AI](#ask-ai).
+
+### `sidePanel`
+
+> `type: boolean | SidePanelConfig` | **optional**
+
+Whether to enable the Ask AI Sidepanel, or an object that configures it. Defaults to `false`. See [Sidepanel](#sidepanel).
 
 ## Indices and search parameters
 
 Define at least one keyword index. Use a string for its default settings or an object for per-index settings:
 
-```js
+```js title="docusaurus.config.mjs"
 indices: [
   'docs_en',
   {
@@ -97,7 +200,7 @@ Contextual search also applies to each `askAi.indices` item. Define dynamic Agen
 
 Set `contextualSearch: false` when your records don't contain Docusaurus `language` and `docusaurus_tag` attributes:
 
-```js
+```js title="docusaurus.config.mjs"
 docsearch: {
   // ...
   contextualSearch: false,
@@ -108,7 +211,7 @@ docsearch: {
 
 Use root `facets` to add filter controls to the modal:
 
-```js
+```js title="docusaurus.config.mjs"
 docsearch: {
   // ...
   facets: [
@@ -126,7 +229,7 @@ These controls don't configure the search page sidebar. Use `searchPage.facets` 
 
 Set `resultBadgeKey` to a property path returned by each keyword index:
 
-```js
+```js title="docusaurus.config.mjs"
 docsearch: {
   // ...
   indices: [
@@ -153,7 +256,7 @@ Dot paths and array indices work, including `hierarchy.lvl1`, `tags[2]`, and `ta
 
 The adapter creates `/search` by default. Change the path and sidebar facets with an object:
 
-```js
+```js title="docusaurus.config.mjs"
 searchPage: {
   path: 'find',
   facets: [
@@ -169,7 +272,7 @@ The page uses the first `indices` item and its `searchParameters`. It shows 15 r
 
 Disable the route, modal footer link, and OpenSearch metadata with:
 
-```js
+```js title="docusaurus.config.mjs"
 searchPage: false,
 ```
 
@@ -177,7 +280,7 @@ searchPage: false,
 
 Create an assistant by following [Get started with Agent Studio](/docs/agent-studio/getting-started). Set `askAi` to an object:
 
-```js
+```js title="docusaurus.config.mjs"
 askAi: {
   assistantId: 'YOUR_ASSISTANT_ID',
   suggestedQuestions: true,
@@ -199,20 +302,33 @@ askAi: {
 },
 ```
 
-| Option | Type and default | Description |
-| --- | --- | --- |
-| `assistantId` | `string`; required | Agent Studio assistant ID. |
-| `suggestedQuestions` | `boolean`; `false` | Whether to show published assistant questions on the new-conversation screen. |
-| `searchParameters` | `Record<string, AgentStudioSearchParameters>`; none | Search parameters keyed by index name. |
-| `indices` | `AgentStudioIndex[]`; none | Dynamic indices available to Agent Studio search tools. |
-| `memory` | `{ enabled?: boolean, userToken?: string }`; disabled | Show memory tool calls and send a user JWT. |
-| `promptSuggestions` | `{ indexName: string, hitsPerPage?: number }`; none | Show prompt suggestions with keyword results. `hitsPerPage` defaults to `3`. |
+### `assistantId`
 
-Root `askAi.searchParameters` supports `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`. Key it by index name. Don't add `facetFilters` at this level.
+> `type: string` | **required**
+
+Agent Studio assistant ID.
+
+### `suggestedQuestions`
+
+> `type: boolean` | **optional**
+
+Whether to show published assistant questions on the new-conversation screen. Defaults to `false`.
+
+### `searchParameters`
+
+> `type: Record<string, AgentStudioSearchParameters>` | **optional**
+
+Search parameters keyed by index name. Root `askAi.searchParameters` supports `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`. Don't add `facetFilters` at this level.
+
+### `indices`
+
+> `type: AgentStudioIndex[]` | **optional**
+
+Dynamic indices available to Agent Studio search tools. See [dynamic indices][1].
 
 Use `askAi.indices` to describe dynamic indices:
 
-```js
+```js title="docusaurus.config.mjs"
 askAi: {
   assistantId: 'YOUR_ASSISTANT_ID',
   indices: [
@@ -230,11 +346,23 @@ askAi: {
 
 Each item requires `index` and `description`. It can also include `enhancedDescription`, `searchParameters`, and `searchControls`. Search controls can configure `query`, `hits_per_page`, `page`, `attributesToRetrieve`, `responseFields`, `facets`, and custom properties.
 
-## Side panel
+### `memory`
 
-Set `sidePanel: true` for the default panel. `askAi` is required whenever the side panel is enabled.
+> `type: { enabled?: boolean, userToken?: string }` | **optional**
 
-```js
+Show memory tool calls and send a user JWT. Memory is disabled by default. See [user-scoped memory][2].
+
+### `promptSuggestions`
+
+> `type: { indexName: string, hitsPerPage?: number }` | **optional**
+
+Show prompt suggestions with keyword results. `hitsPerPage` defaults to `3`. See [Configure prompt suggestions](/docs/agent-studio/prompt-suggestions).
+
+## Sidepanel
+
+Set `sidePanel: true` for the default panel. `askAi` is required whenever the Sidepanel is enabled.
+
+```js title="docusaurus.config.mjs"
 sidePanel: {
   variant: 'inline',
   side: 'right',
@@ -249,24 +377,79 @@ sidePanel: {
 },
 ```
 
-| Option | Type and adapter default | Description |
-| --- | --- | --- |
-| `variant` | `'floating' \| 'inline'`; `'inline'` | Float above content or push selected content. |
-| `side` | `'left' \| 'right'`; `'right'` | Side where the panel opens. |
-| `width` | `number \| string`; `360px` | Collapsed panel width. Numbers represent pixels. |
-| `expandedWidth` | `number \| string`; `580px` | Expanded panel width. Numbers represent pixels. |
-| `pushSelector` | `string`; `#__docusaurus` | Element pushed by the inline panel. |
-| `suggestedQuestions` | `boolean`; `askAi.suggestedQuestions` | Whether to show suggested questions in the panel. |
-| `translations` | `SidepanelTranslations`; built-in strings | Panel text overrides. |
-| `hideButton` | `boolean`; `false` | Whether to hide the side panel button while keeping the panel registered. |
-| `portalContainer` | `DocumentFragment \| Element \| null`; `document.body` | Element that receives the panel portal. |
-| `keyboardShortcuts` | `{ 'Ctrl/Cmd+I'?: boolean }`; enabled | Enable or disable the panel shortcut. |
-| `indices` | `AgentStudioIndex[]`; `askAi.indices` | Override Agent Studio indices for the panel. |
-| `memory` | `{ enabled?: boolean, userToken?: string }`; `askAi.memory` | Override memory for the panel. |
-
-Pass `portalContainer` through a swizzled `SearchBar` because a DOM element isn't available while Docusaurus evaluates its server configuration.
-
 Review [hybrid mode](/docs/hybrid-mode) before changing panel behavior.
+
+### `variant`
+
+> `type: 'floating' | 'inline'` | **optional**
+
+Float above content or push selected content. Defaults to `'inline'`.
+
+### `side`
+
+> `type: 'left' | 'right'` | **optional**
+
+Side where the panel opens. Defaults to `'right'`.
+
+### `width`
+
+> `type: number | string` | **optional**
+
+Collapsed panel width. Numbers represent pixels. Defaults to `360px`.
+
+### `expandedWidth`
+
+> `type: number | string` | **optional**
+
+Expanded panel width. Numbers represent pixels. Defaults to `580px`.
+
+### `pushSelector`
+
+> `type: string` | **optional**
+
+Element pushed by the inline panel. Defaults to `#__docusaurus`.
+
+### `suggestedQuestions`
+
+> `type: boolean` | **optional**
+
+Whether to show suggested questions in the panel. Defaults to `askAi.suggestedQuestions`.
+
+### `translations`
+
+> `type: SidepanelTranslations` | **optional**
+
+Panel text overrides. Defaults to the built-in strings.
+
+### `hideButton`
+
+> `type: boolean` | **optional**
+
+Whether to hide the Sidepanel button while keeping the panel registered. Defaults to `false`.
+
+### `portalContainer`
+
+> `type: DocumentFragment | Element | null` | **optional**
+
+Element that receives the panel portal. Defaults to `document.body`. Pass this option through a swizzled `SearchBar` because a DOM element isn't available while Docusaurus evaluates its server configuration.
+
+### `keyboardShortcuts`
+
+> `type: { 'Ctrl/Cmd+I'?: boolean }` | **optional**
+
+Enable or disable the panel shortcut. The shortcut is enabled by default.
+
+### `indices`
+
+> `type: AgentStudioIndex[]` | **optional**
+
+Override Agent Studio indices for the panel. Defaults to `askAi.indices`. See [dynamic indices][1].
+
+### `memory`
+
+> `type: { enabled?: boolean, userToken?: string }` | **optional**
+
+Override memory for the panel. Defaults to `askAi.memory`. See [user-scoped memory][2].
 
 ## Custom tools
 
@@ -343,7 +526,7 @@ Passing `askAi` or `sidePanel` as a prop replaces that nested theme-config value
 
 Override only the modal strings you need:
 
-```js
+```js title="docusaurus.config.mjs"
 translations: {
   button: {
     buttonText: 'Search API docs',
@@ -363,13 +546,13 @@ translations: {
 },
 ```
 
-The adapter uses Docusaurus translation IDs for its default search button, modal, and search page strings. Run the Docusaurus `write-translations` command to localize built-in strings. Put side panel overrides under `sidePanel.translations`.
+The adapter uses Docusaurus translation IDs for its default search button, modal, and search page strings. Run the Docusaurus `write-translations` command to localize built-in strings. Put Sidepanel overrides under `sidePanel.translations`.
 
 ## URL processing
 
 The adapter parses each result URL. It leaves URLs matching `externalUrlRegex` unchanged and uses full-page navigation for them. For other URLs, it keeps the pathname, query, and hash, applies `replaceSearchResultPathname`, and adds the Docusaurus base URL.
 
-```js
+```js title="docusaurus.config.mjs"
 docsearch: {
   // ...
   externalUrlRegex: '^https://external\\.example\\.com/',
@@ -430,3 +613,6 @@ The schema also reports these messages for missing or invalid required configura
 ```
 
 Replace `unknownKey` with the rejected option name. Other invalid nested values use the same Joi path format.
+
+[1]: /docs/agent-studio/dynamic-indices
+[2]: /docs/agent-studio/memory

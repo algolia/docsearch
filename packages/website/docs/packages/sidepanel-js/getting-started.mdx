@@ -1,12 +1,12 @@
 ---
-title: Get started with the JavaScript sidepanel
-description: Mount and control the v5 beta Agent Studio sidepanel without React application code.
+title: Sidepanel JS package
+description: Mount and control the v5 beta Agent Studio Sidepanel without React application code.
 ---
 
 import TabItem from '@theme/TabItem';
 import Tabs from '@theme/Tabs';
 
-`@docsearch/sidepanel-js` mounts the Agent Studio sidepanel into an existing HTML element. It bundles its rendering dependencies and returns an imperative instance.
+`@docsearch/sidepanel-js` mounts the Agent Studio Sidepanel into an existing HTML element. It bundles its rendering dependencies and returns an imperative instance.
 
 :::info v5 beta
 
@@ -49,13 +49,13 @@ bun add @docsearch/sidepanel-js@^5.0.0-beta @docsearch/css@^5.0.0-beta
 
 Add a container to your page:
 
-```html
+```html title="index.html"
 <div id="docsearch-sidepanel"></div>
 ```
 
-Mount the sidepanel and retain the returned instance:
+Mount the Sidepanel and retain the returned instance:
 
-```js
+```js title="load-sidepanel.js"
 import sidepanel from '@docsearch/sidepanel-js';
 
 import '@docsearch/css';
@@ -83,17 +83,17 @@ Use a search-only API key. The `assistantId` is an Agent Studio agent ID. V5 doe
 
 Pass an initial message to `open`:
 
-```js
+```js title="load-sidepanel.js"
 assistant.open({
   query: 'How do I configure a search-only API key?',
 });
 ```
 
-Call `assistant.destroy()` before removing the container or remounting another sidepanel in it.
+Call `assistant.destroy()` before removing the container or remounting another Sidepanel in it.
 
 ## Load from a CDN
 
-```html
+```html title="index.html"
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/@docsearch/css@^5.0.0-beta/dist/style.css"
@@ -117,4 +117,4 @@ Call `assistant.destroy()` before removing the container or remounting another s
 </script>
 ```
 
-See the [JavaScript sidepanel API](./api) for configuration, Agent Studio options, callbacks, and instance methods.
+See the [JavaScript Sidepanel API](./api) for configuration, Agent Studio options, callbacks, and instance methods.

@@ -99,7 +99,7 @@ Move every keyword index into `indices`. Move root `searchParameters` onto the m
 <Tabs aria-label="Comparison">
   <TabItem value="before" label="Before: v4">
 
-```js
+```js title="docusaurus.config.mjs"
 docsearch: {
   appId: 'YOUR_APPLICATION_ID',
   apiKey: 'YOUR_SEARCH_API_KEY',
@@ -114,7 +114,7 @@ docsearch: {
   </TabItem>
   <TabItem value="after" label="After: v5">
 
-```js
+```js title="docusaurus.config.mjs"
 docsearch: {
   appId: 'YOUR_APPLICATION_ID',
   apiKey: 'YOUR_SEARCH_API_KEY',
@@ -142,14 +142,14 @@ V5 replaces the path value with an object that can also configure facets:
 <Tabs aria-label="Comparison">
   <TabItem value="before" label="Before: v4">
 
-```js
+```js title="docusaurus.config.mjs"
 searchPagePath: 'find',
 ```
 
   </TabItem>
   <TabItem value="after" label="After: v5">
 
-```js
+```js title="docusaurus.config.mjs"
 searchPage: {
   path: 'find',
   facets: [
@@ -171,7 +171,7 @@ Create an assistant by following [Get started with Agent Studio](/docs/agent-stu
 <Tabs aria-label="Comparison">
   <TabItem value="before" label="Before: v4">
 
-```js
+```js title="docusaurus.config.mjs"
 askAi: {
   assistantId: 'YOUR_ASSISTANT_ID',
   appId: 'ASK_AI_APPLICATION_ID',
@@ -183,14 +183,14 @@ askAi: {
 
 V4 also accepted this shorthand:
 
-```js
+```js title="docusaurus.config.mjs"
 askAi: 'YOUR_ASSISTANT_ID',
 ```
 
   </TabItem>
   <TabItem value="after" label="After: v5">
 
-```js
+```js title="docusaurus.config.mjs"
 askAi: {
   assistantId: 'YOUR_ASSISTANT_ID',
   indices: [
@@ -212,7 +212,7 @@ V4 supported flat search parameters for the legacy Ask AI backend. V5 requires A
 <Tabs aria-label="Comparison">
   <TabItem value="before" label="Before: v4">
 
-```js
+```js title="docusaurus.config.mjs"
 askAi: {
   assistantId: 'YOUR_ASSISTANT_ID',
   searchParameters: {
@@ -225,7 +225,7 @@ askAi: {
   </TabItem>
   <TabItem value="after" label="After: v5">
 
-```js
+```js title="docusaurus.config.mjs"
 askAi: {
   assistantId: 'YOUR_ASSISTANT_ID',
   searchParameters: {
@@ -242,14 +242,14 @@ askAi: {
 
 Root `askAi.searchParameters` supports `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`. Put `facetFilters` on a dynamic `askAi.indices` item's `searchParameters` instead.
 
-## 7. Move the side panel to the root
+## 7. Move the Sidepanel to the root
 
 Move `sidePanel` out of `askAi`:
 
 <Tabs aria-label="Comparison">
   <TabItem value="before" label="Before: v4">
 
-```js
+```js title="docusaurus.config.mjs"
 askAi: {
   assistantId: 'YOUR_ASSISTANT_ID',
   sidePanel: {
@@ -262,7 +262,7 @@ askAi: {
   </TabItem>
   <TabItem value="after" label="After: v5">
 
-```js
+```js title="docusaurus.config.mjs"
 askAi: {
   assistantId: 'YOUR_ASSISTANT_ID',
 },
@@ -342,7 +342,7 @@ Include every nested `askAi` and `sidePanel` option that you want to keep becaus
 
 Configure modal facets at the `docsearch` root:
 
-```js
+```js title="docusaurus.config.mjs"
 facets: [
   { key: 'language', label: 'Language' },
   { key: 'version', label: 'Version' },
@@ -353,7 +353,7 @@ Configure search-page facets separately under `searchPage.facets`. Configure eve
 
 Show a custom hit property in modal results with `resultBadgeKey`. Add that property to each index's `attributesToRetrieve`:
 
-```js
+```js title="docusaurus.config.mjs"
 indices: [
   {
     name: 'docs',
@@ -379,10 +379,10 @@ Run the production Docusaurus build, then verify these paths:
 - Search every configured index and apply each modal facet.
 - Open the search page, apply its facets, and check docs-version filtering.
 - Open Ask AI and submit a follow-up question.
-- Open the side panel with its button and `Ctrl/Cmd+I`.
+- Open the Sidepanel with its button and `Ctrl/Cmd+I`.
 - Check contextual results in every locale and docs version.
 - Follow internal, replaced, and external result URLs.
 - Check translated strings and result badges.
-- Test mobile behavior. Hybrid mode uses the modal instead of the side panel on mobile.
+- Test mobile behavior. Hybrid mode uses the modal instead of the Sidepanel on mobile.
 
 Use the [configuration reference](./configuration-reference) to resolve validation messages and review every v5 option.

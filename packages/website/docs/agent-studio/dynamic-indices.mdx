@@ -12,7 +12,7 @@ This property isn't the same as the top-level `indices` property:
 
 ## Define an index
 
-```tsx
+```tsx title="Search.tsx"
 <DocSearchAI
   appId="YOUR_APPLICATION_ID"
   apiKey="YOUR_SEARCH_API_KEY"
@@ -56,13 +56,35 @@ This property isn't the same as the top-level `indices` property:
 
 Each index accepts these properties:
 
-| Property | Required | Purpose |
-| --- | --- | --- |
-| `index` | Yes | Names the Algolia index. |
-| `description` | Yes | Tells the agent what the index contains. |
-| `enhancedDescription` | No | Gives the agent more guidance about when and how to use the index. |
-| `searchParameters` | No | Sets defaults for the internal, non-MCP search path. It accepts Algolia search parameters. |
-| `searchControls` | No | Configures parameters for the MCP-based search path. |
+### `index`
+
+> `type: string` | **required**
+
+Names the Algolia index.
+
+### `description`
+
+> `type: string` | **required**
+
+Tells the agent what the index contains.
+
+### `enhancedDescription`
+
+> `type: string` | **optional**
+
+Gives the agent more guidance about when and how to use the index.
+
+### `searchParameters`
+
+> `type: SearchParamsObject` | **optional**
+
+Sets defaults for the internal, non-MCP search path. It accepts Algolia search parameters.
+
+### `searchControls`
+
+> `type: AgentStudioSearchControls` | **optional**
+
+Configures parameters for the MCP-based search path.
 
 Write specific descriptions. Agent Studio uses them to select an index and plan a search. See [Algolia Search tool configuration](https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/tools/algolia-search) for guidance.
 
@@ -70,15 +92,47 @@ Write specific descriptions. Agent Studio uses them to select an index and plan 
 
 A search control describes whether the model can provide a value and which default or constraints apply.
 
-| Control | Shape | Default when omitted |
-| --- | --- | --- |
-| `query` | `{ exposed, default? }` | No DocSearch default |
-| `hits_per_page` | `{ exposed, default?, constraint?: { min?, max? } }` | `{ exposed: false, default: 7 }` |
-| `page` | `{ exposed, default?, constraint?: { min?, max? } }` | `{ exposed: false, default: 0 }` |
-| `attributesToRetrieve` | `{ exposed, default?, constraint?: { values? }, merge? }` | `{ exposed: false, default: ['*'] }` |
-| `responseFields` | `{ exposed, default?, constraint?: { values? }, merge? }` | `{ exposed: false, default: ['hits', 'nbHits', 'page', 'nbPages', 'hitsPerPage', 'facets'] }` |
-| `facets` | `{ exposed: false, default? }` | No DocSearch default |
-| `custom` | `Record<string, unknown>` | No DocSearch default |
+### `query`
+
+> `type: { exposed, default? }` | **optional**
+
+Sets the search query control. It has no DocSearch default when omitted.
+
+### `hits_per_page`
+
+> `type: { exposed, default?, constraint?: { min?, max? } }` | **optional**
+
+Sets the number of results per page. When omitted, DocSearch uses `{ exposed: false, default: 7 }`.
+
+### `page`
+
+> `type: { exposed, default?, constraint?: { min?, max? } }` | **optional**
+
+Sets the requested page. When omitted, DocSearch uses `{ exposed: false, default: 0 }`.
+
+### `attributesToRetrieve`
+
+> `type: { exposed, default?, constraint?: { values? }, merge? }` | **optional**
+
+Sets the attributes returned for each hit. When omitted, DocSearch uses `{ exposed: false, default: ['*'] }`.
+
+### `responseFields`
+
+> `type: { exposed, default?, constraint?: { values? }, merge? }` | **optional**
+
+Sets the fields returned in the search response. When omitted, DocSearch uses `{ exposed: false, default: ['hits', 'nbHits', 'page', 'nbPages', 'hitsPerPage', 'facets'] }`.
+
+### `facets`
+
+> `type: { exposed: false, default? }` | **optional**
+
+Sets the facets requested with the search. It has no DocSearch default when omitted.
+
+### `custom`
+
+> `type: Record<string, unknown>` | **optional**
+
+Sets extra tool parameters. It has no DocSearch default when omitted.
 
 Use `exposed: true` only for values the model should choose from conversation context. Use fixed defaults for business rules and response limits. For the distinction between runtime and predefined parameters, see [Agent Studio tools](https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/tools/overview#configure-runtime-parameters-for-dynamic-tool-execution).
 
@@ -86,7 +140,7 @@ Use `exposed: true` only for values the model should choose from conversation co
 
 `askAi.searchParameters` is keyed by index name:
 
-```js
+```js title="docsearch.js"
 askAi: {
   assistantId: 'YOUR_AGENT_ID',
   searchParameters: {

@@ -9,7 +9,7 @@ These examples build on the [React getting started guide](./getting-started). Re
 
 Pass strings or per-index objects. Results follow the array order.
 
-```jsx
+```jsx title="MultiIndexSearch.jsx"
 <DocSearch
   appId="YOUR_APP_ID"
   apiKey="YOUR_SEARCH_API_KEY"
@@ -29,7 +29,7 @@ Pass strings or per-index objects. Results follow the array order.
 
 Configure the attributes for faceting in Algolia, then expose up to five controls:
 
-```jsx
+```jsx title="FacetedSearch.jsx"
 <DocSearch
   appId="YOUR_APP_ID"
   apiKey="YOUR_SEARCH_API_KEY"
@@ -47,7 +47,7 @@ DocSearch loads available values from all configured indices and appends selecte
 
 Retrieve the property and pass its path to `resultBadgeKey`:
 
-```jsx
+```jsx title="ResultBadgeSearch.jsx"
 <DocSearch
   appId="YOUR_APP_ID"
   apiKey="YOUR_SEARCH_API_KEY"
@@ -88,7 +88,7 @@ Nested paths such as `hierarchy.lvl1` and `tags[2]` also work.
 
 Use `hitComponent` to change the link while preserving DocSearch's result content:
 
-```jsx
+```jsx title="SearchHit.jsx"
 function SearchHit({ hit, children }) {
   return (
     <a
@@ -113,7 +113,7 @@ function SearchHit({ hit, children }) {
 
 Use the Autocomplete state to show query-level information:
 
-```jsx
+```jsx title="ResultsFooter.jsx"
 function ResultsFooter({ state }) {
   const count = state.context.nbHits ?? 0;
 
@@ -132,7 +132,7 @@ function ResultsFooter({ state }) {
 
 Return the hits in the order you want DocSearch to group and render them:
 
-```jsx
+```jsx title="TransformedSearch.jsx"
 <DocSearch
   appId="YOUR_APP_ID"
   apiKey="YOUR_SEARCH_API_KEY"
@@ -145,7 +145,7 @@ Return the hits in the order you want DocSearch to group and render them:
 
 ## Open search from another control
 
-```tsx
+```tsx title="SearchTrigger.tsx"
 import { useRef } from 'react';
 import { DocSearch, type DocSearchRef } from '@docsearch/react';
 
@@ -172,7 +172,7 @@ function Search() {
 
 Use `DocSearchAI`. Key Ask AI search parameters by index name:
 
-```jsx
+```jsx title="AskAiSearch.jsx"
 <DocSearchAI
   appId="YOUR_APP_ID"
   apiKey="YOUR_SEARCH_API_KEY"
@@ -197,7 +197,7 @@ See [Get started with Agent Studio](/docs/agent-studio/getting-started) before c
 
 Describe each index so the agent can select the right source:
 
-```jsx
+```jsx title="DynamicIndicesSearch.jsx"
 const askAi = {
   assistantId: 'YOUR_ASSISTANT_ID',
   indices: [
@@ -233,7 +233,7 @@ Define stable objects outside the component, or memoize them, when they contain 
 
 Show matching prompts next to keyword results:
 
-```jsx
+```jsx title="PromptSuggestionsSearch.jsx"
 <DocSearchAI
   appId="YOUR_APP_ID"
   apiKey="YOUR_SEARCH_API_KEY"
@@ -255,7 +255,7 @@ Show matching prompts next to keyword results:
 
 Return `true` from `interceptAskAiEvent` after handling the message:
 
-```jsx
+```jsx title="InterceptAskAi.jsx"
 <DocSearchAI
   appId="YOUR_APP_ID"
   apiKey="YOUR_SEARCH_API_KEY"
@@ -268,4 +268,4 @@ Return `true` from `interceptAskAiEvent` after handling the message:
 />
 ```
 
-For the supported modal and sidepanel integration, use [hybrid mode](/docs/hybrid-mode).
+For the supported modal and Sidepanel integration, use [hybrid mode](/docs/hybrid-mode).

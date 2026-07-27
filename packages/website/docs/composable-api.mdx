@@ -146,10 +146,10 @@ The `askAi` prop also accepts an assistant ID string. Use the object form when y
 
 | State          | Meaning                          |
 | -------------- | -------------------------------- |
-| `ready`        | No modal or side panel is open.  |
+| `ready`        | No modal or Sidepanel is open.   |
 | `modal-search` | The keyword search view is open. |
 | `modal-askai`  | Ask AI is open in the modal.     |
-| `sidepanel`    | The Ask AI side panel is open.   |
+| `sidepanel`    | The Ask AI Sidepanel is open.    |
 
 The connected components manage these transitions for you:
 
@@ -238,22 +238,57 @@ export function ControlledSearch(props: ControlledSearchProps): JSX.Element {
 }
 ```
 
-The ref exposes these methods and read-only values:
-
-| Member | Behavior |
-| --- | --- |
-| `open()` | Opens keyword search. |
-| `close()` | Returns the provider to `ready`. |
-| `openAskAi(initialMessage?)` | Opens Ask AI in a registered side panel on desktop, or in the modal otherwise. |
-| `openSidepanel(initialMessage?)` | Opens a registered side panel. It does nothing when no side panel is registered. |
-| `isReady` | Reports whether the provider is mounted. |
-| `isOpen` | Reports whether a modal view is open. |
-| `isSidepanelOpen` | Reports whether the side panel is open. |
-| `isSidepanelSupported` | Reports whether desktop hybrid mode is available. |
-
-`initialMessage` has a required `query` and optional `messageId` and `suggestedQuestionId` fields.
+The ref exposes these methods and read-only values. `initialMessage` has a required `query` and optional `messageId` and `suggestedQuestionId` fields.
 
 The provider accepts `onReady`, `onOpen`, `onClose`, `onSidepanelOpen`, and `onSidepanelClose`. `onReady` runs after mount. The other callbacks run once when their corresponding view changes state, not every time React renders.
+
+### `open`
+
+> `type: () => void`
+
+Opens keyword search.
+
+### `close`
+
+> `type: () => void`
+
+Returns the provider to `ready`.
+
+### `openAskAi`
+
+> `type: (initialMessage?: InitialAskAiMessage) => void`
+
+Opens Ask AI in a registered Sidepanel on desktop, or in the modal otherwise.
+
+### `openSidepanel`
+
+> `type: (initialMessage?: InitialAskAiMessage) => void`
+
+Opens a registered Sidepanel. It does nothing when no Sidepanel is registered.
+
+### `isReady`
+
+> `type: readonly boolean`
+
+Reports whether the provider is mounted.
+
+### `isOpen`
+
+> `type: readonly boolean`
+
+Reports whether a modal view is open.
+
+### `isSidepanelOpen`
+
+> `type: readonly boolean`
+
+Reports whether the Sidepanel is open.
+
+### `isSidepanelSupported`
+
+> `type: readonly boolean`
+
+Reports whether desktop hybrid mode is available.
 
 ## Load the modal on demand
 
@@ -350,7 +385,7 @@ For either complete modal, import the combined stylesheet once:
 import '@docsearch/css/dist/style.css';
 ```
 
-The combined stylesheet contains variables, button styles, keyword modal styles, and Ask AI modal styles. It doesn't contain side panel styles.
+The combined stylesheet contains variables, button styles, keyword modal styles, and Ask AI modal styles. It doesn't contain Sidepanel styles.
 
 For a keyword-only CSS bundle, import the layers in this order:
 

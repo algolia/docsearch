@@ -51,7 +51,7 @@ Packages such as `@docsearch/modal` and `@docsearch/sidepanel` consume this prov
 
 ## Configure shared behavior
 
-```tsx
+```tsx title="SearchState.tsx"
 import { DocSearch } from '@docsearch/core';
 
 export function SearchState({ children }: { children: React.ReactNode }) {
@@ -80,7 +80,7 @@ The default shortcuts enable `Control/Command+K`, `/`, and `Control/Command+I`. 
 
 ## Use a ref
 
-```tsx
+```tsx title="SearchState.tsx"
 import { DocSearch, type DocSearchRef } from '@docsearch/core';
 import { useRef } from 'react';
 
@@ -104,7 +104,7 @@ The ref can open and close registered views and report their state. See the [cor
 
 Call `useDocSearch` only beneath `DocSearch`. The hook throws outside the provider.
 
-```tsx
+```tsx title="SearchStatus.tsx"
 import { useDocSearch } from '@docsearch/core';
 
 export function SearchStatus() {
@@ -121,4 +121,4 @@ export function SearchStatus() {
 }
 ```
 
-Use the higher-level modal and sidepanel packages for their standard triggers. Read context directly when your interface needs custom controls.
+Use the higher-level modal and Sidepanel packages for their standard triggers. Read context directly when your interface needs custom controls.

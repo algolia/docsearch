@@ -8,7 +8,7 @@ import Tabs from '@theme/Tabs';
 
 DocSearch v5 uses [Agent Studio](https://www.algolia.com/doc/guides/algolia-ai/agent-studio) as its only AI backend. The public option is still named `askAi`, so you can add AI without learning a second DocSearch configuration shape.
 
-Don't add an `agentStudio` flag. There is no AI backend selector in v5.
+Don't add an `agentStudio` flag. There's no AI backend selector in v5.
 
 ## Before you begin
 
@@ -57,7 +57,7 @@ bun add @docsearch/react@^5.0.0-beta @docsearch/css@^5.0.0-beta
 
 Render `DocSearchAI`, not the search-only `DocSearch` component:
 
-```tsx
+```tsx title="Search.tsx"
 import { DocSearchAI } from '@docsearch/react';
 import '@docsearch/css';
 
@@ -115,13 +115,13 @@ bun add @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
 
 Add a container to your page:
 
-```html
+```html title="index.html"
 <div id="docsearch"></div>
 ```
 
 Initialize DocSearch with your Agent Studio agent:
 
-```js
+```js title="load-docsearch.js"
 import docsearch from '@docsearch/js';
 import '@docsearch/css';
 

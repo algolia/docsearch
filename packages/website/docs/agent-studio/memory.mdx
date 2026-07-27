@@ -24,7 +24,7 @@ Protect the token flow:
 
 Fetch a token from your backend and pass it as `memory.userToken`:
 
-```js
+```js title="load-docsearch.js"
 const response = await fetch('/api/agent-studio-token', {
   credentials: 'include',
 });
@@ -47,11 +47,13 @@ docsearch({
 
 Use the same `askAi.memory` object with React's `DocSearchAI`.
 
-When `userToken` is present, DocSearch sends it in the `X-Algolia-Secure-User-Token` request header. When it is absent, DocSearch omits the header. Don't use unscoped memory for a multi-user application.
+When `userToken` is present, DocSearch sends it in the `X-Algolia-Secure-User-Token` request header. When it's absent, DocSearch omits the header. Don't use unscoped memory for a multi-user application.
 
-## Understand `enabled`
+## `memory.enabled`
 
-`memory.enabled` controls whether DocSearch displays Agent Studio's built-in memory tool activity:
+> `type: boolean` | **optional**
+
+Controls whether DocSearch displays Agent Studio's built-in memory tool activity:
 
 - `algolia_memorize` displays that information was saved.
 - `algolia_ponder` and `algolia_memory_search` display that memory was used.

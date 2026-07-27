@@ -5,17 +5,15 @@ description: Display suggested prompts for Agent Studio conversations.
 
 DocSearch v5 can show questions in three places. Each source has a different purpose and configuration.
 
-| Feature | When it appears and source | Configuration |
-| --- | --- | --- |
-| Suggested questions | On the new-conversation screen. Published records for the agent in the fixed suggested-questions index. | `suggestedQuestions: true` |
-| Keyword prompt suggestions | While the user types in keyword search. Your Algolia prompt-suggestions index. | `promptSuggestions` |
-| Streamed follow-ups | Below the latest completed answer. `data-suggestions` streamed by Agent Studio. | Configure suggestions on the agent |
+- **Suggested questions** appear on the new-conversation screen. They come from published records for the agent in the fixed suggested-questions index. Configure them with `suggestedQuestions: true`.
+- **Keyword prompt suggestions** appear while the user types in keyword search. They come from your Algolia prompt-suggestions index. Configure them with `promptSuggestions`.
+- **Streamed follow-ups** appear below the latest completed answer. They come from `data-suggestions` streamed by Agent Studio. Configure suggestions on the agent.
 
 ## Show suggested questions
 
 Enable curated starting questions with `suggestedQuestions`:
 
-```js
+```js title="docsearch.js"
 askAi: {
   assistantId: 'YOUR_AGENT_ID',
   suggestedQuestions: true,
@@ -44,7 +42,7 @@ When a user selects one, DocSearch sends its `objectID` as `suggestedQuestionId`
 
 Create an Algolia index whose records contain a `prompt` string, then configure its name:
 
-```js
+```js title="docsearch.js"
 askAi: {
   assistantId: 'YOUR_AGENT_ID',
   promptSuggestions: {
@@ -66,6 +64,6 @@ Configure contextual suggestions in the Agent Studio agent editor. See [write an
 
 Agent Studio streams these follow-ups in a `data-suggestions` part. DocSearch renders its `suggestions` array below the latest answer only. Selecting one sends it as the next user message in the same conversation.
 
-There is no DocSearch `askAi` option for streamed follow-ups. If Agent Studio doesn't stream `data-suggestions`, DocSearch doesn't show them.
+There's no DocSearch `askAi` option for streamed follow-ups. If Agent Studio doesn't stream `data-suggestions`, DocSearch doesn't show them.
 
 See the [JavaScript package reference](/docs/packages/js/api-reference) and [React package reference](/docs/packages/react/api-reference) for the suggestion options and translation keys.

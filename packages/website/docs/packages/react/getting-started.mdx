@@ -1,5 +1,5 @@
 ---
-title: Get started with DocSearch for React
+title: React package
 description: Add DocSearch v5 keyword search or Agent Studio answers to a React application.
 ---
 
@@ -98,7 +98,7 @@ export function Search() {
 
 Both components forward a `DocSearchRef`:
 
-```tsx
+```tsx title="Search.tsx"
 import { useRef } from 'react';
 import { DocSearchAI, type DocSearchRef } from '@docsearch/react';
 
@@ -129,7 +129,7 @@ export function Search() {
 }
 ```
 
-Use `open()` and `close()` for keyword search. Sidepanel methods become useful when you register a sidepanel through [hybrid mode](/docs/hybrid-mode).
+Use `open()` and `close()` for keyword search. Sidepanel methods become useful when you register a Sidepanel through [hybrid mode](/docs/hybrid-mode).
 
 ## Next steps
 

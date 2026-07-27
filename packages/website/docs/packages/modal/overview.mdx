@@ -53,7 +53,7 @@ bun add @docsearch/core@^5.0.0-beta @docsearch/modal@^5.0.0-beta @docsearch/css@
 
 Import the main stylesheet once, near your application entry point.
 
-```tsx
+```tsx title="Search.tsx"
 import { DocSearch } from '@docsearch/core';
 import { DocSearchButton, DocSearchModal } from '@docsearch/modal';
 
@@ -77,9 +77,9 @@ Use a search-only API key. Don't expose an Algolia Admin API key in browser code
 
 ## Add Agent Studio
 
-In v5, Ask AI uses Agent Studio. Pass an Agent Studio agent ID through `askAi.assistantId`. There is no `agentStudio` boolean in the v5 API.
+In v5, Ask AI uses Agent Studio. Pass an Agent Studio agent ID through `askAi.assistantId`. There's no `agentStudio` boolean in the v5 API.
 
-```tsx
+```tsx title="Search.tsx"
 import { DocSearch } from '@docsearch/core';
 import { DocSearchAskAiModal, DocSearchButton } from '@docsearch/modal';
 
@@ -108,7 +108,7 @@ The `askAi` object also supports custom tools, conversation memory, and dynamic 
 
 The modal package reads theme, keyboard shortcut, and lifecycle state from `DocSearch`.
 
-```tsx
+```tsx title="Search.tsx"
 <DocSearch
   theme="dark"
   keyboardShortcuts={{ 'Ctrl/Cmd+K': true, '/': false }}
@@ -130,7 +130,7 @@ See the [`@docsearch/core` API](../core/api) for provider props and refs.
 
 The package exposes component-specific entry points for code splitting:
 
-```tsx
+```tsx title="Search.tsx"
 import { DocSearchAskAiModal } from '@docsearch/modal/askai';
 import { DocSearchButton } from '@docsearch/modal/button';
 import { DocSearchModal } from '@docsearch/modal/modal';

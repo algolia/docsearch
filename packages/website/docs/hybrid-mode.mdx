@@ -1,12 +1,12 @@
 ---
 title: Hybrid mode
-description: Connect DocSearch keyword search and Ask AI side panel experiences in React, JavaScript, and Docusaurus.
+description: Connect DocSearch keyword search and Ask AI Sidepanel experiences in React, JavaScript, and Docusaurus.
 ---
 
 import TabItem from '@theme/TabItem';
 import Tabs from '@theme/Tabs';
 
-Hybrid mode starts in the DocSearch modal, then moves an Ask AI request into the side panel. Users can scan keyword results in a focused overlay and continue an AI conversation beside the page.
+Hybrid mode starts in the DocSearch modal, then moves an Ask AI request into the Sidepanel. Users can scan keyword results in a focused overlay and continue an AI conversation beside the page.
 
 The handoff carries the prompt and its identifiers. It doesn't submit the same prompt in both interfaces.
 
@@ -19,7 +19,7 @@ Before you add hybrid mode:
 - Create an assistant in [Agent Studio](/docs/agent-studio/getting-started).
 - Decide whether you need React, JavaScript, or the DocSearch Docusaurus adapter.
 
-Read the package references for [core](/docs/packages/core/overview), [modal](/docs/packages/modal/overview), [side panel](/docs/packages/sidepanel/getting-started), [JavaScript](/docs/packages/js/getting-started), [side panel JavaScript](/docs/packages/sidepanel-js/getting-started), and the [Docusaurus adapter](/docs/packages/docusaurus-adapter/getting-started) when you need options beyond this workflow.
+Read the package references for [core](/docs/packages/core/overview), [modal](/docs/packages/modal/overview), [Sidepanel](/docs/packages/sidepanel/getting-started), [JavaScript](/docs/packages/js/getting-started), [Sidepanel JavaScript](/docs/packages/sidepanel-js/getting-started), and the [Docusaurus adapter](/docs/packages/docusaurus-adapter/getting-started) when you need options beyond this workflow.
 
 ## Understand the handoff
 
@@ -37,9 +37,9 @@ interface InitialAskAiMessage {
 
 Preserve the complete object during a manual handoff:
 
-- `query` becomes the first prompt when the side panel starts a conversation.
+- `query` becomes the first prompt when the Sidepanel starts a conversation.
 - `suggestedQuestionId` is sent with the prompt so Agent Studio can identify the selected suggestion.
-- `messageId` lets the side panel restore a locally stored conversation. If it can't find that conversation, it starts a new one with `query`.
+- `messageId` lets the Sidepanel restore a locally stored conversation. If it can't find that conversation, it starts a new one with `query`.
 
 ## Add hybrid mode
 
@@ -81,7 +81,7 @@ bun add @docsearch/core@^5.0.0-beta @docsearch/modal@^5.0.0-beta @docsearch/side
   </TabItem>
 </Tabs>
 
-Render `DocSearchAskAiModal` and `Sidepanel` under the same `DocSearch` provider. The side panel registers itself with the provider after mount. From then on, desktop Ask AI actions move to the side panel automatically.
+Render `DocSearchAskAiModal` and `Sidepanel` under the same `DocSearch` provider. The Sidepanel registers itself with the provider after mount. From then on, desktop Ask AI actions move to the Sidepanel automatically.
 
 ```tsx title="HybridSearch.tsx"
 import { DocSearch } from '@docsearch/core';
@@ -151,24 +151,46 @@ Use the same index name for `keywordIndexName` and `askAiIndexName` when one ind
 
 #### React lifecycle callbacks
 
-Put lifecycle callbacks on `DocSearch` so they observe the shared state:
-
-| Callback           | Runs when                                  |
-| ------------------ | ------------------------------------------ |
-| `onReady`          | The provider mounts.                       |
-| `onOpen`           | A modal opens from `ready` or `sidepanel`. |
-| `onClose`          | A modal changes directly to `ready`.       |
-| `onSidepanelOpen`  | The state changes to `sidepanel`.          |
-| `onSidepanelClose` | The state leaves `sidepanel`.              |
+Put lifecycle callbacks on `DocSearch` so they observe the shared state.
 
 During the automatic React handoff, the state changes directly from `modal-askai` to `sidepanel`. That transition calls `onSidepanelOpen`; it doesn't call `onClose`.
+
+##### `onReady`
+
+> `type: () => void` | **optional**
+
+Runs when the provider mounts.
+
+##### `onOpen`
+
+> `type: () => void` | **optional**
+
+Runs when a modal opens from `ready` or `sidepanel`.
+
+##### `onClose`
+
+> `type: () => void` | **optional**
+
+Runs when a modal changes directly to `ready`.
+
+##### `onSidepanelOpen`
+
+> `type: () => void` | **optional**
+
+Runs when the state changes to `sidepanel`.
+
+##### `onSidepanelClose`
+
+> `type: () => void` | **optional**
+
+Runs when the state leaves `sidepanel`.
 
   </TabItem>
   <TabItem value="js" label="JavaScript">
 
 ### JavaScript
 
-The JavaScript packages create independent DocSearch and side panel instances. Connect them with `interceptAskAiEvent`.
+The JavaScript packages create independent DocSearch and Sidepanel instances. Connect them with `interceptAskAiEvent`.
 
 <Tabs groupId="package-manager" aria-label="Package manager">
   <TabItem value="npm" label="npm">
@@ -203,12 +225,12 @@ bun add @docsearch/js@^5.0.0-beta @docsearch/sidepanel-js@^5.0.0-beta @docsearch
 
 Add one mount element for each instance:
 
-```html
+```html title="index.html"
 <div id="docsearch"></div>
 <div id="docsearch-sidepanel"></div>
 ```
 
-Create the side panel first so the interceptor always has a target. The mobile check in this example matches the React integration: mobile users stay in the Ask AI modal, while desktop users move to the side panel.
+Create the Sidepanel first so the interceptor always has a target. The mobile check in this example matches the React integration: mobile users stay in the Ask AI modal, while desktop users move to the Sidepanel.
 
 ```ts title="search.ts"
 import docsearch, { type DocSearchInstance } from '@docsearch/js';
@@ -287,10 +309,8 @@ Keep the `onOpen` callbacks that close the other instance. They prevent two inte
 
 The JavaScript instances expose these lifecycle callbacks and controls:
 
-| Instance | Callbacks | Controls and state |
-| --- | --- | --- |
-| DocSearch | `onReady`, `onOpen`, `onClose` | `open()`, `close()`, `openAskAi()`, `destroy()`, `isReady`, `isOpen` |
-| Side panel | `onReady`, `onOpen`, `onClose` | `open()`, `close()`, `destroy()`, `isReady`, `isOpen` |
+- The DocSearch instance accepts the `onReady`, `onOpen`, and `onClose` callbacks, and exposes `open()`, `close()`, `openAskAi()`, `destroy()`, `isReady`, and `isOpen`.
+- The Sidepanel instance accepts the `onReady`, `onOpen`, and `onClose` callbacks, and exposes `open()`, `close()`, `destroy()`, `isReady`, and `isOpen`.
 
 Call both `destroy()` methods if your application removes the mount elements or tears down the page without a full navigation.
 
@@ -299,7 +319,7 @@ Call both `destroy()` methods if your application removes the mount elements or 
 
 ## Add hybrid mode to Docusaurus
 
-Hybrid mode is supported through `@docsearch/docusaurus-adapter`. The adapter loads the v5 modal and side panel, connects their state, and applies the mobile behavior described in this guide.
+Hybrid mode is supported through `@docsearch/docusaurus-adapter`. The adapter loads the v5 modal and Sidepanel, connects their state, and applies the mobile behavior described in this guide.
 
 Install the adapter and keep `@docusaurus/preset-classic`:
 
@@ -334,7 +354,7 @@ bun add @docsearch/docusaurus-adapter@^5.0.0-beta
   </TabItem>
 </Tabs>
 
-Configure DocSearch under `themeConfig.docsearch`. Set top-level `sidePanel` to `true` or to a side panel options object.
+Configure DocSearch under `themeConfig.docsearch`. Set top-level `sidePanel` to `true` or to a Sidepanel options object.
 
 ```js title="docusaurus.config.mjs"
 export default {
@@ -359,13 +379,13 @@ The adapter requires `askAi` to be an object with `assistantId`; it doesn't acce
 
 Don't put `sidePanel` inside `askAi`. Don't configure this adapter under `themeConfig.algolia`. If you need function-valued custom tools, pass them through a swizzled `@theme/SearchBar` component because Docusaurus removes functions while serializing theme configuration.
 
-The built-in `@docusaurus/theme-search-algolia` integration doesn't provide this v5 side panel configuration. Use the DocSearch adapter for this workflow.
+The built-in `@docusaurus/theme-search-algolia` integration doesn't provide this v5 Sidepanel configuration. Use the DocSearch adapter for this workflow.
 
 ## Mobile behavior
 
-The React provider treats viewports that match `(max-width: 768px)` as mobile. On those viewports, an Ask AI action stays in the modal even when a side panel is registered. This avoids moving the conversation into the desktop side panel layout.
+The React provider treats viewports that match `(max-width: 768px)` as mobile. On those viewports, an Ask AI action stays in the modal even when a Sidepanel is registered. This avoids moving the conversation into the desktop Sidepanel layout.
 
-The provider updates this decision on window resize. The side panel also avoids focusing its prompt automatically on mobile because opening the virtual keyboard can disrupt the layout.
+The provider updates this decision on window resize. The Sidepanel also avoids focusing its prompt automatically on mobile because opening the virtual keyboard can disrupt the layout.
 
 The JavaScript packages don't share a provider, so they don't apply the hybrid mobile decision to your interceptor. Add the `matchMedia` branch shown in the JavaScript example when you want the same behavior.
 
@@ -373,12 +393,12 @@ The JavaScript packages don't share a provider, so they don't apply the hybrid m
 
 Hybrid mode needs both style bundles:
 
-```ts
+```ts title="search.ts"
 import '@docsearch/css/dist/style.css';
 import '@docsearch/css/dist/sidepanel.css';
 ```
 
-`style.css` includes shared variables, the button, keyword modal, and Ask AI modal. `sidepanel.css` adds the side panel layout and imports the shared variables it needs.
+`style.css` includes shared variables, the button, keyword modal, and Ask AI modal. `sidepanel.css` adds the Sidepanel layout and imports the shared variables it needs.
 
 If your bundler resolves the React style entry points, `@docsearch/react/style` and `@docsearch/react/style/sidepanel` load the same bundles. Import each bundle once.
 
@@ -386,27 +406,27 @@ If your bundler resolves the React style entry points, `@docsearch/react/style` 
 
 ### Ask AI stays in the modal on desktop
 
-Confirm that `Sidepanel` is mounted under the same `DocSearch` provider before the Ask AI action. The provider enables automatic handoff only after the side panel registers. Also confirm that the viewport is wider than 768 pixels.
+Confirm that `Sidepanel` is mounted under the same `DocSearch` provider before the Ask AI action. The provider enables automatic handoff only after the Sidepanel registers. Also confirm that the viewport is wider than 768 pixels.
 
-### Both the modal and side panel submit the prompt
+### Both the modal and Sidepanel submit the prompt
 
 Return `true` from `interceptAskAiEvent` after calling `panel.open(initialMessage)`. Returning `false` or no value tells the modal to continue its default flow.
 
-### Mobile users open the side panel
+### Mobile users open the Sidepanel
 
 In JavaScript integrations, check `(max-width: 768px)` in the interceptor and return `false` on a match. React and the Docusaurus adapter already make this decision.
 
-### The side panel loses a suggestion or saved conversation
+### The Sidepanel loses a suggestion or saved conversation
 
 Pass the complete `initialMessage` object to `open()`. Rebuilding it with only `query` discards `suggestedQuestionId` and `messageId`.
 
 ### A callback doesn't run during React handoff
 
-Expect `onSidepanelOpen`, not `onClose`, when React changes directly from the modal to the side panel. Use the shared provider callbacks rather than treating modal close as the handoff signal.
+Expect `onSidepanelOpen`, not `onClose`, when React changes directly from the modal to the Sidepanel. Use the shared provider callbacks rather than treating modal close as the handoff signal.
 
 ### Two JavaScript interfaces remain open
 
-Close the search instance in the side panel's `onOpen`, and close the side panel in the search instance's `onOpen`. This also covers programmatic calls that bypass the interceptor.
+Close the search instance in the Sidepanel's `onOpen`, and close the Sidepanel in the search instance's `onOpen`. This also covers programmatic calls that bypass the interceptor.
 
 ### The interface is unstyled
 
@@ -418,4 +438,4 @@ Use `themeConfig.docsearch`, pass `askAi` as an object, and put `sidePanel` besi
 
 ### Server rendering fails with `window` or `document` errors
 
-Mount the composable React components only in the browser. The Docusaurus adapter handles this boundary and lazy-loads the modal and side panel client-side.
+Mount the composable React components only in the browser. The Docusaurus adapter handles this boundary and lazy-loads the modal and Sidepanel client-side.

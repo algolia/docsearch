@@ -11,7 +11,7 @@ See [Agent Studio tools](https://www.algolia.com/doc/guides/algolia-ai/agent-stu
 
 The key in `tools` must match the tool name configured in Agent Studio.
 
-```tsx
+```tsx title="Search.tsx"
 import { DocSearchAI, type ToolCalls } from '@docsearch/react';
 
 const tools: ToolCalls = {
@@ -73,7 +73,7 @@ For React, define `tools` outside the component or memoize it. Recreating the ob
 
 If Agent Studio executes a tool, omit `onToolCall` and provide `render` under the streamed tool name. DocSearch uses the output returned by Agent Studio.
 
-```js
+```js title="tools.js"
 const tools = {
   get_release_status: {
     render({ message: { output } }) {
@@ -101,6 +101,6 @@ To connect other MCP servers to an agent, see [MCP tools in Agent Studio](https:
 
 ## Use tools with Docusaurus
 
-Docusaurus removes functions while serializing theme configuration. The v5 adapter rejects `askAi.tools` and `sidePanel.tools` in `docusaurus.config`. Swizzle `@theme/SearchBar` and pass tools to the modal or side panel from React instead.
+Docusaurus removes functions while serializing theme configuration. The v5 adapter rejects `askAi.tools` and `sidePanel.tools` in `docusaurus.config`. Swizzle `@theme/SearchBar` and pass tools to the modal or Sidepanel from React instead.
 
 See the [Docusaurus adapter guide](/docs/packages/docusaurus-adapter/getting-started) for the supported configuration.

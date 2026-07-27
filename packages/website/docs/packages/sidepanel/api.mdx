@@ -1,55 +1,124 @@
 ---
-title: React sidepanel API reference
+title: React Sidepanel API reference
 description: API reference for @docsearch/sidepanel v5 beta.
+toc_max_heading_level: 2
 ---
-
-## Exports
-
-| Import path | Value exports | Type exports |
-| --- | --- | --- |
-| `@docsearch/sidepanel` | `Sidepanel`, `SidepanelButton` | `SidepanelProps`, `SidepanelButtonProps` |
-| `@docsearch/sidepanel/sidepanel` | `Sidepanel` | `SidepanelProps` |
-| `@docsearch/sidepanel/button` | `SidepanelButton` | `SidepanelButtonProps` |
 
 ## `Sidepanel`
 
 Render `Sidepanel` inside `DocSearch` from `@docsearch/core`.
 
+Set `theme` on `DocSearch`; `SidepanelProps` omits it. Set lifecycle callbacks such as `onSidepanelOpen` and `onSidepanelClose` on the provider. Don't pass inherited `onOpen` or `onClose` callbacks to `Sidepanel`, because they replace the wrapper's state handlers in this beta.
+
 ### Connection props
 
-| Prop | Type and default | Description |
-| --- | --- | --- |
-| `appId` | `string`; Required | Algolia application ID. |
-| `apiKey` | `string`; Required | Public API key with search permission. |
-| `assistantId` | `string`; Required | Agent Studio agent ID. |
-| `indexName` | `string`; Required | Primary index for Agent Studio and conversation storage. |
-| `searchParameters` | `Record<string, AgentStudioIndexSearchParameters>`; - | Search parameters keyed by index name. |
+#### `appId`
+
+> `type: string` | **required**
+
+Algolia application ID.
+
+#### `apiKey`
+
+> `type: string` | **required**
+
+Public API key with search permission.
+
+#### `assistantId`
+
+> `type: string` | **required**
+
+Agent Studio agent ID.
+
+#### `indexName`
+
+> `type: string` | **required**
+
+Primary index for Agent Studio and conversation storage.
+
+#### `searchParameters`
+
+> `type: Record<string, AgentStudioIndexSearchParameters>` | **optional**
+
+Search parameters keyed by index name.
 
 `AgentStudioIndexSearchParameters` supports `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`.
 
 ### Layout props
 
-| Prop | Type and default | Description |
-| --- | --- | --- |
-| `variant` | `'floating' \| 'inline'`; `'floating'` | Overlays the page or pushes matching page content on desktop. |
-| `side` | `'left' \| 'right'`; `'right'` | Sets the side from which the panel opens. |
-| `pushSelector` | `string`; `'#root, main, .app, body'` | Selects the first element pushed by the inline panel. |
-| `width` | `number \| string`; `360` | Sets the normal width. Numbers use pixels. |
-| `expandedWidth` | `number \| string`; `580` | Sets the expanded width. Numbers use pixels. |
-| `portalContainer` | `DocumentFragment \| Element \| null`; `document.body` | Receives the panel portal. |
+#### `variant`
+
+> `type: 'floating' | 'inline'` | **optional**
+
+Overlays the page or pushes matching page content on desktop. Defaults to `'floating'`.
+
+#### `side`
+
+> `type: 'left' | 'right'` | **optional**
+
+Sets the side from which the panel opens. Defaults to `'right'`.
+
+#### `pushSelector`
+
+> `type: string` | **optional**
+
+Selects the first element pushed by the inline panel. Defaults to `'#root, main, .app, body'`.
+
+#### `width`
+
+> `type: number | string` | **optional**
+
+Sets the normal width. Numbers use pixels. Defaults to `360`.
+
+#### `expandedWidth`
+
+> `type: number | string` | **optional**
+
+Sets the expanded width. Numbers use pixels. Defaults to `580`.
+
+#### `portalContainer`
+
+> `type: DocumentFragment | Element | null` | **optional**
+
+Receives the panel portal. Defaults to `document.body`.
 
 ### Behavior props
 
-| Prop | Type and default | Description |
-| --- | --- | --- |
-| `keyboardShortcuts` | `{ 'Ctrl/Cmd+I'?: boolean }`; Enabled | Enables or disables the sidepanel shortcut. |
-| `suggestedQuestions` | `boolean`; `false` | Whether to show Agent Studio suggested questions on the new-conversation screen. |
-| `translations` | `SidepanelTranslations`; `{}` | Supplies partial strings for `header`, `promptForm`, `conversationScreen`, `newConversationScreen`, and `logo`. |
-| `tools` | `Record<string, ToolDefinition>`; `{}` | Handles and renders custom Agent Studio tools. |
-| `memory` | `{ enabled?: boolean; userToken?: string }`; - | Configures Agent Studio memory rendering and authentication. |
-| `indices` | `AgentStudioIndices[]`; - | Defines dynamic indices available to Agent Studio. |
+#### `keyboardShortcuts`
 
-Set `theme` on `DocSearch`; `SidepanelProps` omits it. Set lifecycle callbacks such as `onSidepanelOpen` and `onSidepanelClose` on the provider. Don't pass inherited `onOpen` or `onClose` callbacks to `Sidepanel`, because they replace the wrapper's state handlers in this beta.
+> `type: { 'Ctrl/Cmd+I'?: boolean }` | **optional**
+
+Enables or disables the Sidepanel shortcut. The shortcut is enabled by default.
+
+#### `suggestedQuestions`
+
+> `type: boolean` | **optional**
+
+Whether to show Agent Studio suggested questions on the new-conversation screen. Defaults to `false`.
+
+#### `translations`
+
+> `type: SidepanelTranslations` | **optional**
+
+Supplies partial strings for `header`, `promptForm`, `conversationScreen`, `newConversationScreen`, and `logo`. Defaults to `{}`.
+
+#### `tools`
+
+> `type: Record<string, ToolDefinition>` | **optional**
+
+Handles and renders custom Agent Studio tools. Defaults to `{}`.
+
+#### `memory`
+
+> `type: { enabled?: boolean; userToken?: string }` | **optional**
+
+Configures Agent Studio memory rendering and authentication.
+
+#### `indices`
+
+> `type: AgentStudioIndices[]` | **optional**
+
+Defines dynamic indices available to Agent Studio.
 
 ### Translation groups
 
@@ -63,7 +132,7 @@ Set `theme` on `DocSearch`; `SidepanelProps` omits it. Set lifecycle callbacks s
 
 ## Agent Studio options
 
-V5 uses Agent Studio for sidepanel conversations. It doesn't expose an `agentStudio` prop.
+V5 uses Agent Studio for Sidepanel conversations. It doesn't expose an `agentStudio` prop.
 
 ### `AgentStudioIndices`
 
@@ -101,11 +170,23 @@ type ToolDefinition = {
 
 ## `SidepanelButton`
 
-| Prop | Type and default | Description |
-| --- | --- | --- |
-| `variant` | `'floating' \| 'inline'`; `'floating'` | Renders an icon-only floating button or an inline button with text. |
-| `translations` | `{ buttonText?: string; buttonAriaLabel?: string }`; English labels | Changes visible and accessible text. `buttonText` applies to the inline variant. |
-| `portalcontainer` | `DocumentFragment \| Element \| null`; `document.body` | Receives the floating button portal. This beta prop uses a lower-case `c`. |
+### `variant`
+
+> `type: 'floating' | 'inline'` | **optional**
+
+Renders an icon-only floating button or an inline button with text. Defaults to `'floating'`.
+
+### `translations`
+
+> `type: { buttonText?: string; buttonAriaLabel?: string }` | **optional**
+
+Changes visible and accessible text. `buttonText` applies to the inline variant. Defaults to the English labels.
+
+### `portalcontainer`
+
+> `type: DocumentFragment | Element | null` | **optional**
+
+Receives the floating button portal. Defaults to `document.body`. This beta prop uses a lower-case `c`.
 
 The wrapper supplies its click handler and keyboard shortcut configuration from `DocSearch`. An inline button renders at its position in the React tree.
 
@@ -113,11 +194,36 @@ The wrapper supplies its click handler and keyboard shortcut configuration from 
 
 `Sidepanel` doesn't expose its lower-level `SidepanelRef` directly. Attach a `DocSearchRef` to the provider and use:
 
-| Member | Type | Description |
-| --- | --- | --- |
-| `openSidepanel` | `(initialMessage?: InitialAskAiMessage) => void` | Opens a registered sidepanel. |
-| `close` | `() => void` | Returns the provider to its ready state. |
-| `isSidepanelOpen` | `boolean` | Whether the sidepanel is open. |
-| `isReady` | `boolean` | Whether the provider is mounted. |
+### `openSidepanel`
+
+> `type: (initialMessage?: InitialAskAiMessage) => void`
+
+Opens a registered Sidepanel.
+
+### `close`
+
+> `type: () => void`
+
+Returns the provider to its ready state.
+
+### `isSidepanelOpen`
+
+> `type: boolean`
+
+Whether the Sidepanel is open.
+
+### `isReady`
+
+> `type: boolean`
+
+Whether the provider is mounted.
 
 `InitialAskAiMessage` is `{ query: string; messageId?: string; suggestedQuestionId?: string }`. See the [`@docsearch/core` API](../core/api) for the full ref.
+
+## Exports
+
+| Import path | Value exports | Type exports |
+| --- | --- | --- |
+| `@docsearch/sidepanel` | `Sidepanel`, `SidepanelButton` | `SidepanelProps`, `SidepanelButtonProps` |
+| `@docsearch/sidepanel/sidepanel` | `Sidepanel` | `SidepanelProps` |
+| `@docsearch/sidepanel/button` | `SidepanelButton` | `SidepanelButtonProps` |

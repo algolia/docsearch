@@ -1,6 +1,6 @@
 ---
-title: Get started with the Sidepanel
-description: Add the v5 beta Agent Studio sidepanel to a React application.
+title: Sidepanel package
+description: Add the v5 beta Agent Studio Sidepanel to a React application.
 ---
 
 import TabItem from '@theme/TabItem';
@@ -47,11 +47,11 @@ bun add @docsearch/core@^5.0.0-beta @docsearch/sidepanel@^5.0.0-beta @docsearch/
   </TabItem>
 </Tabs>
 
-## Render the sidepanel
+## Render the Sidepanel
 
-Import both the main DocSearch stylesheet and the sidepanel stylesheet.
+Import both the main DocSearch stylesheet and the Sidepanel stylesheet.
 
-```tsx
+```tsx title="HelpAssistant.tsx"
 import { DocSearch } from '@docsearch/core';
 import { Sidepanel, SidepanelButton } from '@docsearch/sidepanel';
 
@@ -81,7 +81,7 @@ The default button and panel float over the page. Press `Control+I` or `Command+
 
 Set the theme and lifecycle callbacks on `DocSearch`.
 
-```tsx
+```tsx title="HelpAssistant.tsx"
 <DocSearch
   theme="dark"
   keyboardShortcuts={{ 'Ctrl/Cmd+I': true }}
@@ -98,4 +98,4 @@ Set the theme and lifecycle callbacks on `DocSearch`.
 </DocSearch>
 ```
 
-Continue with [advanced use cases](./advanced-use-cases) or review the [sidepanel API](./api). For a combined search and assistant experience, see [Hybrid Mode](/docs/hybrid-mode).
+Continue with [advanced use cases](./advanced-use-cases) or review the [Sidepanel API](./api). For a combined search and assistant experience, see [Hybrid Mode](/docs/hybrid-mode).

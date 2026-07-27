@@ -66,14 +66,15 @@ This is a test [Website][1]
   - exports/imports here are the rare occassion where tables ARE THE PREFERRED DISPLAY TYPE
 - Property definition as defined below is preferred over tables
 
-**EXAMPLE PROPERTY DEFINITION**:
-
+<property-definition>
 ## `PROPERTY_NAME`
 
-> `type <-- THIS IS A LITERAL STRING THAT SHOULD ALWAYS BE HERE: TYPE_PRIMITIVE|ROUGH_TYPE_DEFINITION_FROM_SOURCE` | **required** | **optional** | **experimental**
+> `type: TYPE_PRIMITIVE|ROUGH_TYPE_DEFINITION_FROM_SOURCE` | **required** | **optional** | **experimental**
 
 CONCISE DESCRIPTION OF THE PROPERTY
+</property-definition>
 
+"type" in the property definition is a static string that should always be included, it tells the reader that the following information is a type definition.
 The different tags (required/optional/experimental) are optional on their own, but MUST be used correctly
 
 ## Tables

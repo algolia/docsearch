@@ -50,7 +50,7 @@ export default {
             'https://github.com/algolia/docsearch/edit/main/packages/website/',
           versions: {
             current: {
-              label: 'Beta (v5.0.0-beta)',
+              label: 'Beta (v5.0.0-beta.x)',
             },
             v4: {
               label: 'Stable (v4.x)',

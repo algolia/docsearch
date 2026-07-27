@@ -13,7 +13,7 @@ In v4, the root `@docsearch/js` export rendered the combined component and allow
 
 Use the root entry when you configure Agent Studio:
 
-```js
+```js title="app.js"
 import docsearch from '@docsearch/js';
 ```
 
@@ -21,7 +21,7 @@ import docsearch from '@docsearch/js';
 
 Use the new subpath when you don't need Ask AI:
 
-```js
+```js title="app.js"
 import docsearch from '@docsearch/js/docsearch';
 ```
 
@@ -48,7 +48,7 @@ V4's `DocSearch` accepted `askAi` and `interceptAskAiEvent`. V5's `DocSearch` co
 
 Use `DocSearchAI` for keyword search and Ask AI:
 
-```jsx
+```jsx title="Search.jsx"
 import { DocSearchAI } from '@docsearch/react';
 ```
 
@@ -82,7 +82,7 @@ The staging endpoint switch isn't part of `DocSearchAskAi` in v5.
 
 `DocSearchAskAi.searchParameters` now always uses `AgentStudioSearchParameters`: an object keyed by index name.
 
-```js
+```js title="app.js"
 searchParameters: {
   docs: {
     filters: 'language:en',
@@ -187,13 +187,13 @@ V5's tsdown builds target ES2017. Provide transpilation or polyfills if your bro
 
 ## Public controls
 
-### JavaScript instances don't expose sidepanel state
+### JavaScript instances don't expose Sidepanel state
 
 `DocSearchInstance` exposes `open`, `close`, `openAskAi`, `destroy`, `isReady`, and `isOpen`. It doesn't expose `openSidepanel`, `isSidepanelOpen`, or `isSidepanelSupported`.
 
-### React refs include sidepanel controls
+### React refs include Sidepanel controls
 
-`DocSearchRef` exposes the JavaScript-style modal controls plus `openSidepanel`, `isSidepanelOpen`, and `isSidepanelSupported`. `openSidepanel` does nothing until a sidepanel view registers. On mobile, `openAskAi` and standard Ask AI actions fall back to the modal.
+`DocSearchRef` exposes the JavaScript-style modal controls plus `openSidepanel`, `isSidepanelOpen`, and `isSidepanelSupported`. `openSidepanel` does nothing until a Sidepanel view registers. On mobile, `openAskAi` and standard Ask AI actions fall back to the modal.
 
 See [hybrid mode](/docs/hybrid-mode) for the supported integration.
 
@@ -215,7 +215,7 @@ See [hybrid mode](/docs/hybrid-mode) for the supported integration.
 
 ### Package versions must match
 
-The `5.0.0-beta.0` packages depend on matching beta versions of the other DocSearch packages. Don't mix v4 and v5 packages in a Composable API or sidepanel tree.
+The `5.0.0-beta.0` packages depend on matching beta versions of the other DocSearch packages. Don't mix v4 and v5 packages in a Composable API or Sidepanel tree.
 
 ### CSS remains a separate install for top-level integrations
 

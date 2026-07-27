@@ -1,21 +1,8 @@
 ---
-title: JavaScript sidepanel API reference
+title: Sidepanel JS API reference
 description: API reference for @docsearch/sidepanel-js v5 beta.
+toc_max_heading_level: 2
 ---
-
-## Exports
-
-`@docsearch/sidepanel-js` has one value export: the default `sidepanel` function.
-
-It also exports the `SidepanelProps`, `SidepanelInstance`, and `SidepanelCallbacks` TypeScript types. It doesn't provide a named `sidepanel` export or package subpaths.
-
-```ts
-import sidepanel, {
-  type SidepanelCallbacks,
-  type SidepanelInstance,
-  type SidepanelProps,
-} from '@docsearch/sidepanel-js';
-```
 
 ## `sidepanel`
 
@@ -27,58 +14,123 @@ The function resolves `container`, mounts the component, and returns immediately
 
 ### Mounting props
 
-| Prop | Type and default | Description |
-| --- | --- | --- |
-| `container` | `HTMLElement \| string`; Required | Element or CSS selector that receives the sidepanel application. |
-| `environment` | `typeof window`; Browser `window` | Environment used to resolve a selector. A selector without a browser environment throws. |
+#### `container`
+
+> `type: HTMLElement | string` | **required**
+
+Element or CSS selector that receives the Sidepanel application.
+
+#### `environment`
+
+> `type: typeof window` | **optional**
+
+Environment used to resolve a selector. Defaults to the browser `window`. A selector without a browser environment throws.
 
 The function throws if a selector doesn't match an element.
 
 ### Connection props
 
-| Prop | Type and default | Description |
-| --- | --- | --- |
-| `appId` | `string`; Required | Algolia application ID. |
-| `apiKey` | `string`; Required | Public API key with search permission. |
-| `assistantId` | `string`; Required | Agent Studio agent ID. |
-| `indexName` | `string`; Required | Primary index for Agent Studio and conversation storage. |
+#### `appId`
 
-The public `SidepanelProps` type in `5.0.0-beta.0` doesn't include the React sidepanel's top-level `searchParameters` field.
+> `type: string` | **required**
+
+Algolia application ID.
+
+#### `apiKey`
+
+> `type: string` | **required**
+
+Public API key with search permission.
+
+#### `assistantId`
+
+> `type: string` | **required**
+
+Agent Studio agent ID.
+
+#### `indexName`
+
+> `type: string` | **required**
+
+Primary index for Agent Studio and conversation storage.
+
+The public `SidepanelProps` type in `5.0.0-beta.0` doesn't include the React Sidepanel's top-level `searchParameters` field.
 
 ### UI props
 
-| Prop | Type and default | Description |
-| --- | --- | --- |
-| `theme` | `'light' \| 'dark'`; - | Sets `data-theme` on the document root while mounted. |
-| `keyboardShortcuts` | `{ 'Ctrl/Cmd+I'?: boolean }`; Enabled | Enables or disables the sidepanel shortcut. |
-| `button` | `SidepanelButtonProps`; `{}` | Configures the built-in button. |
-| `panel` | `SidepanelPanelProps`; `{}` | Configures layout, suggested questions, and translations. |
+#### `theme`
+
+> `type: 'light' | 'dark'` | **optional**
+
+Sets `data-theme` on the document root while mounted.
+
+#### `keyboardShortcuts`
+
+> `type: { 'Ctrl/Cmd+I'?: boolean }` | **optional**
+
+Enables or disables the Sidepanel shortcut. The shortcut is enabled by default.
+
+#### `button`
+
+> `type: SidepanelButtonProps` | **optional**
+
+Configures the built-in button. Defaults to `{}`.
 
 `button` accepts `variant: 'floating' | 'inline'` and `translations.buttonText` or `translations.buttonAriaLabel`.
+
+#### `panel`
+
+> `type: SidepanelPanelProps` | **optional**
+
+Configures layout, suggested questions, and translations. Defaults to `{}`.
 
 `panel` accepts `variant`, `side`, `pushSelector`, `width`, `expandedWidth`, `portalContainer`, `suggestedQuestions`, `translations`, `tools`, `memory`, and `indices`. Panel-level `tools`, `memory`, and `indices` override their root values. Don't set `panel.keyboardShortcuts`; configure shortcuts at the root.
 
 ### Callbacks
 
-| Prop      | Type         | Description                           |
-| --------- | ------------ | ------------------------------------- |
-| `onReady` | `() => void` | Runs once after the component mounts. |
-| `onOpen`  | `() => void` | Runs when the sidepanel opens.        |
-| `onClose` | `() => void` | Runs when the sidepanel closes.       |
+#### `onReady`
 
-Use these sidepanel-specific callbacks rather than the inherited React provider callback names.
+> `type: () => void` | **optional**
+
+Runs once after the component mounts.
+
+#### `onOpen`
+
+> `type: () => void` | **optional**
+
+Runs when the Sidepanel opens.
+
+#### `onClose`
+
+> `type: () => void` | **optional**
+
+Runs when the Sidepanel closes.
+
+Use these Sidepanel-specific callbacks rather than the inherited React provider callback names.
 
 ## Agent Studio options
 
-| Prop | Type and default | Description |
-| --- | --- | --- |
-| `tools` | `Record<string, ToolDefinition>`; `{}` | Handles and renders custom Agent Studio tools. |
-| `memory` | `{ enabled?: boolean; userToken?: string }`; - | Configures memory-tool rendering and authentication. |
-| `indices` | `AgentStudioIndices[]`; - | Defines dynamic indices available to Agent Studio. |
+### `tools`
+
+> `type: Record<string, ToolDefinition>` | **optional**
+
+Handles and renders custom Agent Studio tools. Defaults to `{}`.
+
+### `memory`
+
+> `type: { enabled?: boolean; userToken?: string }` | **optional**
+
+Configures memory-tool rendering and authentication.
+
+### `indices`
+
+> `type: AgentStudioIndices[]` | **optional**
+
+Defines dynamic indices available to Agent Studio.
 
 These fields are root props:
 
-```js
+```js title="load-sidepanel.js"
 const assistant = sidepanel({
   container: '#docsearch-sidepanel',
   appId: 'YOUR_APPLICATION_ID',
@@ -121,17 +173,11 @@ Generate `memory.userToken` on your server. The package sends it as `x-algolia-s
 
 ## `SidepanelInstance`
 
-| Member | Type | Description |
-| --- | --- | --- |
-| `isReady` | `readonly boolean` | Whether the component is mounted. |
-| `isOpen` | `readonly boolean` | Whether the panel is open. |
-| `open` | `(initialMessage?: InitialAskAiMessage) => void` | Opens the panel, optionally with a question or stored-message IDs. |
-| `close` | `() => void` | Closes the panel. |
-| `destroy` | `() => void` | Unmounts the component and marks the instance not ready. |
+Calls to `open` and `close` before the internal ref is ready are no-ops.
 
 `InitialAskAiMessage` is:
 
-```ts
+```ts title="types.ts"
 type InitialAskAiMessage = {
   query: string;
   messageId?: string;
@@ -139,4 +185,46 @@ type InitialAskAiMessage = {
 };
 ```
 
-Calls to `open` and `close` before the internal ref is ready are no-ops.
+### `isReady`
+
+> `type: readonly boolean`
+
+Whether the component is mounted.
+
+### `isOpen`
+
+> `type: readonly boolean`
+
+Whether the panel is open.
+
+### `open`
+
+> `type: (initialMessage?: InitialAskAiMessage) => void`
+
+Opens the panel, optionally with a question or stored-message IDs.
+
+### `close`
+
+> `type: () => void`
+
+Closes the panel.
+
+### `destroy`
+
+> `type: () => void`
+
+Unmounts the component and marks the instance not ready.
+
+## Exports
+
+`@docsearch/sidepanel-js` has one value export: the default `sidepanel` function.
+
+It also exports the `SidepanelProps`, `SidepanelInstance`, and `SidepanelCallbacks` TypeScript types. It doesn't provide a named `sidepanel` export or package subpaths.
+
+```ts title="load-sidepanel.ts"
+import sidepanel, {
+  type SidepanelCallbacks,
+  type SidepanelInstance,
+  type SidepanelProps,
+} from '@docsearch/sidepanel-js';
+```

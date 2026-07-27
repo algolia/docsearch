@@ -1,5 +1,5 @@
 ---
-title: Get started with DocSearch for JavaScript
+title: JS package
 description: Add DocSearch v5 keyword search or Agent Studio answers to a JavaScript site.
 ---
 
@@ -47,7 +47,7 @@ bun add @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
 
 Add a container where you want the search button:
 
-```html
+```html title="index.html"
 <div id="docsearch"></div>
 ```
 
@@ -98,7 +98,7 @@ Load the complete stylesheet and one JavaScript bundle. Both UMD bundles expose 
 
 ### Keyword search and Ask AI
 
-```html
+```html title="index.html"
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/@docsearch/css@^5.0.0-beta/dist/style.css"
@@ -119,7 +119,7 @@ Load the complete stylesheet and one JavaScript bundle. Both UMD bundles expose 
 
 ### Keyword search only
 
-```html
+```html title="index.html"
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/@docsearch/css@^5.0.0-beta/dist/style.css"
@@ -141,7 +141,7 @@ Don't load both UMD bundles on the same page. The second bundle replaces the sam
 
 `docsearch()` returns a `DocSearchInstance`:
 
-```js
+```js title="app.js"
 const search = docsearch({
   container: '#docsearch',
   appId: 'YOUR_APP_ID',
@@ -165,4 +165,4 @@ Use `openAskAi()` only with the default AI-capable entry.
 - Review every option in the [JavaScript API reference](./api-reference).
 - Add multiple indices, facets, or result badges in the [React examples](../react/examples). The configuration options also apply to JavaScript.
 - Customize the design in [Styling](/docs/packages/css/styling).
-- Combine the modal and sidepanel in [hybrid mode](/docs/hybrid-mode).
+- Combine the modal and Sidepanel in [hybrid mode](/docs/hybrid-mode).

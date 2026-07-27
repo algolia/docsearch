@@ -262,4 +262,4 @@ Non-obvious caveats:
 
 ## Documentation
 
-- When writing or working on the documentation website (`packages/website`), MUST adhere to the guidelines in @STYLE_GUIDE.md
+- When writing or working on the documentation website (`packages/website`), MUST adhere to the writing guidelines in @packages/website/WRITING_GUIDE.md

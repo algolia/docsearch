@@ -7,7 +7,7 @@ description: Reference for the components, props, ref, and exports in @docsearch
 
 ### `DocSearch`
 
-> `React.ForwardRefExoticComponent<DocSearchProps>`
+> `type: React.ForwardRefExoticComponent<DocSearchProps>`
 
 Renders keyword search. It accepts the [common props](#common-props) and forwards a [`DocSearchRef`](#docsearchref).
 
@@ -17,7 +17,7 @@ import { DocSearch } from '@docsearch/react';
 
 ### `DocSearchAI`
 
-> `React.ForwardRefExoticComponent<DocSearchAIProps>`
+> `type: React.ForwardRefExoticComponent<DocSearchAIProps>`
 
 Renders keyword search and Ask AI. It accepts the [common props](#common-props), requires [`askAi`](#askai), and forwards a [`DocSearchRef`](#docsearchref).
 
@@ -29,19 +29,19 @@ import { DocSearchAI } from '@docsearch/react';
 
 ### `appId`
 
-> `string` | **required**
+> `type: string` | **required**
 
 Algolia application ID.
 
 ### `apiKey`
 
-> `string` | **required**
+> `type: string` | **required**
 
 Public API key with search permission.
 
 ### `indices`
 
-> `Array<string | DocSearchIndex>` | **optional**
+> `type: Array<string | DocSearchIndex>` | **optional**
 
 Indices to search in display order. Provide `indices` or the deprecated [`indexName`](#indexname).
 
@@ -63,13 +63,13 @@ Indices to search in display order. Provide `indices` or the deprecated [`indexN
 
 ### `indexName`
 
-> `string` | **optional** | **deprecated**
+> `type: string` | **optional** | **deprecated**
 
 Single index to search. Use [`indices`](#indices) instead. If you pass both options, DocSearch queries `indexName` first.
 
 ### `facets`
 
-> `DocSearchFacet[]` | **optional**
+> `type: DocSearchFacet[]` | **optional**
 
 Facet controls populated from the configured indices. Defaults to `[]`.
 
@@ -77,37 +77,37 @@ DocSearch supports up to five facets. It ignores empty and duplicate keys, merge
 
 ### `theme`
 
-> `'light' | 'dark'` | **optional**
+> `type: 'light' | 'dark'` | **optional**
 
 Theme written to `document.documentElement.dataset.theme`. By default, DocSearch doesn't change the current theme.
 
 ### `placeholder`
 
-> `string` | **optional**
+> `type: string` | **optional**
 
 Search input placeholder. The active experience supplies the default.
 
 ### `searchParameters`
 
-> `SearchParamsObject` | **optional** | **deprecated**
+> `type: SearchParamsObject` | **optional** | **deprecated**
 
 Search parameters for `indexName`. Set `searchParameters` on an [`indices`](#indices) item instead.
 
 ### `maxResultsPerGroup`
 
-> `number` | **optional**
+> `type: number` | **optional**
 
 Maximum results to show in each result group.
 
 ### `transformItems`
 
-> `(items: DocSearchHit[]) => DocSearchHit[]` | **optional**
+> `type: (items: DocSearchHit[]) => DocSearchHit[]` | **optional**
 
 Transforms hits before DocSearch groups and renders them. Defaults to the identity function.
 
 ### `hitComponent`
 
-> `React.ComponentType<HitProps>` | **optional**
+> `type: React.ComponentType<HitProps>` | **optional**
 
 Renders one result link. The default component renders the standard result content.
 
@@ -125,37 +125,37 @@ Preserve `children` to retain the default hit content. `hit` is an `InternalDocS
 
 ### `resultsFooterComponent`
 
-> `React.ComponentType<ResultsFooterProps>` | **optional**
+> `type: React.ComponentType<ResultsFooterProps>` | **optional**
 
 Renders below result collections. It receives the current Autocomplete state. By default, DocSearch doesn't render a footer.
 
 ### `transformSearchClient`
 
-> `(client: SearchClient) => SearchClient` | **optional**
+> `type: (client: SearchClient) => SearchClient` | **optional**
 
 Wraps or replaces the Algolia search client. Defaults to the identity function.
 
 ### `disableUserPersonalization`
 
-> `boolean` | **optional**
+> `type: boolean` | **optional**
 
 Disables recent searches, favorites, and stored AI conversations. Defaults to `false`.
 
 ### `initialQuery`
 
-> `string` | **optional**
+> `type: string` | **optional**
 
 Query to place in the input when the modal opens. Defaults to an empty string.
 
 ### `navigator`
 
-> `AutocompleteOptions['navigator']` | **optional**
+> `type: AutocompleteOptions['navigator']` | **optional**
 
 Autocomplete navigation implementation. Defaults to the Autocomplete navigator.
 
 ### `translations`
 
-> `DocSearchTranslations` | **optional**
+> `type: DocSearchTranslations` | **optional**
 
 Overrides button and modal text. Defaults to English strings.
 
@@ -182,43 +182,43 @@ Overrides button and modal text. Defaults to English strings.
 
 ### `getMissingResultsUrl`
 
-> `({ query }: { query: string }) => string` | **optional**
+> `type: ({ query }: { query: string }) => string` | **optional**
 
 Builds the no-results report URL.
 
 ### `insights`
 
-> `AutocompleteOptions['insights']` | **optional**
+> `type: AutocompleteOptions['insights']` | **optional**
 
 Configures Algolia Insights. Defaults to `false`.
 
 ### `portalContainer`
 
-> `DocumentFragment | Element` | **optional**
+> `type: DocumentFragment | Element` | **optional**
 
 Element that receives the modal portal. Defaults to `document.body`.
 
 ### `recentSearchesLimit`
 
-> `number` | **optional**
+> `type: number` | **optional**
 
 Maximum recent searches when the user has no favorites. Defaults to `7`.
 
 ### `recentSearchesWithFavoritesLimit`
 
-> `number` | **optional**
+> `type: number` | **optional**
 
 Maximum recent searches when the user has favorites. Defaults to `4`.
 
 ### `keyboardShortcuts`
 
-> `DocSearchModalShortcuts` | **optional**
+> `type: DocSearchModalShortcuts` | **optional**
 
 Enables `Ctrl/Cmd+K` and `/` to open the modal. Both shortcuts are enabled by default. Escape always closes the modal.
 
 ### `resultBadgeKey`
 
-> `string` | **optional**
+> `type: string` | **optional**
 
 Property path for a value on each hit. Paths support dot and array-index notation, such as `hierarchy.lvl1`, `tags[2]`, and `tags.2`.
 
@@ -246,43 +246,43 @@ Primitive values render as text and arrays of primitives render as a comma-separ
 
 ### `askAi`
 
-> `string | DocSearchAskAi` | **required**
+> `type: string | DocSearchAskAi` | **required**
 
 Agent Studio assistant ID or configuration. This prop is required by `DocSearchAI`.
 
 #### `assistantId`
 
-> `string` | **required**
+> `type: string` | **required**
 
 Agent Studio assistant ID.
 
 #### `appId`
 
-> `string` | **optional**
+> `type: string` | **optional**
 
 Application ID for Agent Studio. Defaults to the root `appId`.
 
 #### `apiKey`
 
-> `string` | **optional**
+> `type: string` | **optional**
 
 API key for Agent Studio. Defaults to the root `apiKey`.
 
 #### `indexName`
 
-> `string` | **optional**
+> `type: string` | **optional**
 
 Index for Agent Studio. Defaults to the first normalized keyword index.
 
 #### `suggestedQuestions`
 
-> `boolean` | **optional**
+> `type: boolean` | **optional**
 
 Shows published assistant questions on the new-conversation screen. Defaults to `false`.
 
 #### `searchParameters`
 
-> `AgentStudioSearchParameters` | **optional**
+> `type: AgentStudioSearchParameters` | **optional**
 
 Search parameters keyed by index name. Each value supports `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`.
 
@@ -303,7 +303,7 @@ Search parameters keyed by index name. Each value supports `filters`, `attribute
 
 #### `indices`
 
-> `AgentStudioIndices[]` | **optional**
+> `type: AgentStudioIndices[]` | **optional**
 
 Dynamic indices for Agent Studio. Each item requires `index` and `description`. It can also define `enhancedDescription`, `searchParameters`, and `searchControls`.
 
@@ -311,25 +311,25 @@ Dynamic indices for Agent Studio. Each item requires `index` and `description`. 
 
 #### `tools`
 
-> `ToolCalls` | **optional**
+> `type: ToolCalls` | **optional**
 
 Custom Agent Studio tool renderers and handlers. Defaults to `{}`. Each `ToolDefinition` requires `render({ message })`; `onToolCall` can handle client-side work and call `addToolOutput({ output })`.
 
 #### `memory`
 
-> `Memory` | **optional**
+> `type: Memory` | **optional**
 
 Agent Studio memory display and user token. Memory is disabled by default. `Memory.userToken` is the user JWT sent to Agent Studio.
 
 #### `promptSuggestions`
 
-> `PromptSuggestions` | **optional**
+> `type: PromptSuggestions` | **optional**
 
 Prompt suggestions displayed with keyword results. `indexName` selects an index whose records contain a `prompt` attribute. `hitsPerPage` defaults to `3`.
 
 ### `interceptAskAiEvent`
 
-> `(initialMessage: InitialAskAiMessage) => boolean | void` | **optional**
+> `type: (initialMessage: InitialAskAiMessage) => boolean | void` | **optional**
 
 Runs before DocSearch starts an Ask AI request. Return `true` to prevent the modal from toggling or sending the message. Use it to route Ask AI to another view.
 
@@ -339,53 +339,62 @@ Ref interface for `DocSearch` and `DocSearchAI`.
 
 ### `isReady`
 
-> `readonly boolean`
+> `type: readonly boolean`
 
 Whether the provider is mounted.
 
 ### `isOpen`
 
-> `readonly boolean`
+> `type: readonly boolean`
 
 Whether the modal is open.
 
 ### `isSidepanelOpen`
 
-> `readonly boolean`
+> `type: readonly boolean`
 
-Whether the registered side panel is open.
+Whether the registered Sidepanel is open.
 
 ### `isSidepanelSupported`
 
-> `readonly boolean`
+> `type: readonly boolean`
 
-Whether a side panel is registered and the viewport isn't mobile.
+Whether a Sidepanel is registered and the viewport isn't mobile.
 
 ### `open`
 
-> `() => void`
+> `type: () => void`
 
 Opens keyword search.
 
 ### `close`
 
-> `() => void`
+> `type: () => void`
 
 Closes the modal.
 
 ### `openAskAi`
 
-> `(initialMessage?: InitialAskAiMessage) => void`
+> `type: (initialMessage?: InitialAskAiMessage) => void`
 
-Opens Ask AI in the side panel when hybrid mode is available, or in the modal otherwise.
+Opens Ask AI in the Sidepanel when hybrid mode is available, or in the modal otherwise.
 
 ### `openSidepanel`
 
-> `(initialMessage?: InitialAskAiMessage) => void`
+> `type: (initialMessage?: InitialAskAiMessage) => void`
 
-Opens a registered side panel. Does nothing when no side panel is registered.
+Opens a registered Sidepanel. Does nothing when no Sidepanel is registered.
 
 `InitialAskAiMessage` requires `query` and can include `messageId` or `suggestedQuestionId`.
+
+## Compatibility and deprecations
+
+- `react`, `react-dom`, and `@types/react` support versions `>=16.8.0 <20.0.0`.
+- `search-insights` supports versions `>=1 <3` and is optional.
+- The browser build targets ES2017.
+- `indexName` and root `searchParameters` remain supported but are deprecated. Move to `indices`.
+- `UseDocSearchKeyboardEventsProps.onInput` and `searchButtonRef` remain accepted for compatibility but are deprecated.
+- `DocSearch` is keyword-only in v5. Use `DocSearchAI` for Ask AI.
 
 ## Package exports
 
@@ -397,22 +406,13 @@ The root package exports `DocSearch`, `DocSearchAI`, `DocSearchAskAiModal`, `Doc
 | `@docsearch/react/button` | `DocSearchButton` |
 | `@docsearch/react/docsearchAi` | `DocSearchAI` and AI types |
 | `@docsearch/react/modal` | `DocSearchModal` |
-| `@docsearch/react/sidepanel` | `DocSearchSidepanel` and side panel components |
+| `@docsearch/react/sidepanel` | `DocSearchSidepanel` and Sidepanel components |
 | `@docsearch/react/useDocSearchKeyboardEvents` | `useDocSearchKeyboardEvents` |
 | `@docsearch/react/useTheme` | `useTheme` |
 | `@docsearch/react/version` | `version` |
 
-For provider and modal composition, see [Composable API](/docs/composable-api). For modal and side panel composition, see [hybrid mode](/docs/hybrid-mode).
+For provider and modal composition, see [Composable API](/docs/composable-api). For modal and Sidepanel composition, see [hybrid mode](/docs/hybrid-mode).
 
 ## Style exports
 
 Import `@docsearch/css` for the complete modal stylesheet. The React package also exports `@docsearch/react/style` and split `style/variables`, `style/button`, `style/modal`, `style/askai`, and `style/sidepanel` entries for component-level builds. See [Styling](/docs/packages/css/styling).
-
-## Compatibility and deprecations
-
-- `react`, `react-dom`, and `@types/react` support versions `>=16.8.0 <20.0.0`.
-- `search-insights` supports versions `>=1 <3` and is optional.
-- The browser build targets ES2017.
-- `indexName` and root `searchParameters` remain supported but are deprecated. Move to `indices`.
-- `UseDocSearchKeyboardEventsProps.onInput` and `searchButtonRef` remain accepted for compatibility but are deprecated.
-- `DocSearch` is keyword-only in v5. Use `DocSearchAI` for Ask AI.
