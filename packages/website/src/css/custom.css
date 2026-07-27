@@ -1,7 +1,8 @@
 /* stylelint-disable selector-max-id */
 
 /* tailwindcss */
-@import url('tailwindcss');
+/* stylelint-disable-next-line import-notation */
+@import 'tailwindcss';
 
 /* fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sora:wght@100..800&display=swap');
