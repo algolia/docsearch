@@ -59,6 +59,9 @@ bun run lint --format=agent
 
 # Perform oxfmt formatting
 bun run fmt
+
+# Lint CSS
+bun run lint:css
 ```
 
 ## E2E Testing (Playwright)
@@ -122,7 +125,7 @@ function createStorage<TItem>(key: string): StorageInterface<TItem> {
 - **Utilities**: camelCase (`removeHighlightTags.ts`)
 - **Types**: PascalCase (`InternalDocSearchHit`)
 - **Constants**: SCREAMING_SNAKE_CASE (`MAX_QUERY_SIZE`)
-- **CSS classes**: `DocSearch-` prefix with PascalCase (`DocSearch-Modal`)
+- **CSS classes**: `DocSearch-` prefix
 
 ### React Components
 
