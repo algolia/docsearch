@@ -1,3 +1,26 @@
+# [4.7.0](https://github.com/algolia/docsearch/compare/v4.6.3...v4.7.0) (2026-07-27)
+
+
+### Bug Fixes
+
+* **agentStudio:** thread depth error message ([#2881](https://github.com/algolia/docsearch/issues/2881)) ([f68e522](https://github.com/algolia/docsearch/commit/f68e52251ce464e199f12b7a1ac907de61982993))
+* **askai:** copy the full answer instead of the first text part ([#2910](https://github.com/algolia/docsearch/issues/2910)) ([96476dd](https://github.com/algolia/docsearch/commit/96476dd6f152b0aea134112f5e25afe6b1cc84f8))
+* **core:** prevent search button from intercepting browser shortcuts when focused ([#2871](https://github.com/algolia/docsearch/issues/2871)) ([0e41a78](https://github.com/algolia/docsearch/commit/0e41a78c44e9f731d825a75957e5668aeae30d69))
+* **docs:** fix spelling, grammar, and formatting across docs ([#2882](https://github.com/algolia/docsearch/issues/2882)) ([047a769](https://github.com/algolia/docsearch/commit/047a769791fddc31d4d6d3c535f41901a7fcd4c5))
+* increase line height to avoid overlap ([#2908](https://github.com/algolia/docsearch/issues/2908)) ([2f63848](https://github.com/algolia/docsearch/commit/2f638487804d9a1e753231dba4c02634c79be217))
+* **modal:** stop over-truncating snippets on mobile and wrap long hits ([#2907](https://github.com/algolia/docsearch/issues/2907)) ([9ad6d16](https://github.com/algolia/docsearch/commit/9ad6d169fee62cb9558e40aa8475f99ecd41e7fe))
+* sanitize Ask AI markdown HTML to prevent XSS ([#2929](https://github.com/algolia/docsearch/issues/2929)) ([681cbfe](https://github.com/algolia/docsearch/commit/681cbfec03d742cd61b9dfa47b9dbd113f6bce8e))
+* **sidepanel-js:** expose Agent Studio types in SidepanelProps ([#2906](https://github.com/algolia/docsearch/issues/2906)) ([4710d0c](https://github.com/algolia/docsearch/commit/4710d0ca77e0f12adc720a7a94b0c65a1c01b029))
+
+
+### Features
+
+* **askai:** Ask AI deprecation warning ([#2885](https://github.com/algolia/docsearch/issues/2885)) ([60a2c7b](https://github.com/algolia/docsearch/commit/60a2c7b918a39dfa31f8a540408fc4113420e5dd))
+* **chore:** one trust cookie consent ([#2887](https://github.com/algolia/docsearch/issues/2887)) ([17751d3](https://github.com/algolia/docsearch/commit/17751d3bc95cf92d0feab5c7781c2ae311c67bfc))
+* show page path breadcrumbs in Docusaurus search ([#2790](https://github.com/algolia/docsearch/issues/2790)) ([d3d707d](https://github.com/algolia/docsearch/commit/d3d707d8752e054daff1c1e9c559a582ce4d8ee5))
+
+
+
 ## [4.6.3](https://github.com/algolia/docsearch/compare/v4.6.2...v4.6.3) (2026-04-27)
 
 
