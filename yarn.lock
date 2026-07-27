@@ -2376,13 +2376,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docsearch/css@npm:4.6.0":
-  version: 4.6.0
-  resolution: "@docsearch/css@npm:4.6.0"
-  checksum: 10c0/bba5290efbfd408d4acbe4f6a6d582be57daf682b4f8ea6acf326a24df2d4ac2e257b30e2eacf2ff34fd23b829531a97e69f1accf526506441ac8d390453efcf
-  languageName: node
-  linkType: hard
-
 "@docsearch/css@npm:4.7.0, @docsearch/css@workspace:*, @docsearch/css@workspace:packages/docsearch-css":
   version: 0.0.0-use.local
   resolution: "@docsearch/css@workspace:packages/docsearch-css"
@@ -2424,21 +2417,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docsearch/js-example@workspace:examples/demo-js"
   dependencies:
-    "@docsearch/css": "npm:4.6.0"
-    "@docsearch/js": "npm:4.6.0"
-    "@docsearch/sidepanel-js": "npm:4.6.0"
+    "@docsearch/css": "workspace:*"
+    "@docsearch/js": "workspace:*"
+    "@docsearch/sidepanel-js": "workspace:*"
     vite: "npm:^6.0.7"
   languageName: unknown
   linkType: soft
 
-"@docsearch/js@npm:4.6.0":
-  version: 4.6.0
-  resolution: "@docsearch/js@npm:4.6.0"
-  checksum: 10c0/664a39deca6a1d538ef5ce9193e4cc70db0ce5a85499ac2eb3ab7af7b12bfad2edfe44ebd3e48d65e92b94bece545cb69e9e90e28b351927ac248220c7007a60
-  languageName: node
-  linkType: hard
-
-"@docsearch/js@workspace:packages/docsearch-js":
+"@docsearch/js@workspace:*, @docsearch/js@workspace:packages/docsearch-js":
   version: 0.0.0-use.local
   resolution: "@docsearch/js@workspace:packages/docsearch-js"
   dependencies:
@@ -2617,14 +2603,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docsearch/sidepanel-js@npm:4.6.0":
-  version: 4.6.0
-  resolution: "@docsearch/sidepanel-js@npm:4.6.0"
-  checksum: 10c0/967e52a205cc890646ab49eb31137ea1fa41b45d454b787280307ea71d652d01b16d66ce6b3e9f853787f43960ce671e31ef6dd38d1d63067cbcc99733fb826f
-  languageName: node
-  linkType: hard
-
-"@docsearch/sidepanel-js@workspace:packages/docsearch-sidepanel-js":
+"@docsearch/sidepanel-js@workspace:*, @docsearch/sidepanel-js@workspace:packages/docsearch-sidepanel-js":
   version: 0.0.0-use.local
   resolution: "@docsearch/sidepanel-js@workspace:packages/docsearch-sidepanel-js"
   dependencies:
