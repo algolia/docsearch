@@ -47,7 +47,7 @@ Your Algolia Search API key.
 
 ## `indices`
 
-> `type: Array<string | DocSearchIndex>`
+> `type: Array<string | DocSearchIndex>` | **required**
 
 The list of indices and their _optional_ `searchParameters` to be used for keyword search.
 
@@ -58,8 +58,6 @@ The list of indices and their _optional_ `searchParameters` to be used for keywo
 The ordering matters in the list, as results are ordered based on `indices` order.
 
 :::
-
-> While `indexName` is in deprecation, it is required to pass either `indices` or `indexName`. Not passing either will result in an `Error` being thrown.
 
 <Tabs
   groupId="language"
@@ -129,20 +127,6 @@ in case you want to use custom `searchParameters` for the index
 
 </TabItem>
 </Tabs>
-
-## `indexName`
-
-> `type: string` | **deprecated**
-
-:::warning[Deprecation warning]
-
-`indexName` is currently being planned for deprecation. The new recommended property to use is `indices`.
-
-:::
-
-Your Algolia index name.
-
-> While `indexName` is in deprecation, it is required to pass either `indices` or `indexName`. Not passing either will result in an `Error` being thrown.
 
 ## `placeholder`
 
@@ -272,18 +256,6 @@ These parameters provide the essential functionality for Ask AI while keeping th
 :::
 
 If `agentStudio` is true, the Ask AI chat will use Algolia's [Agent Studio][12] as the chat backend instead of the Ask AI backend. Learn more on [Algolia Agent Studio Docs][13].
-
-## `searchParameters`
-
-> `type: SearchParameters` | **optional** | **deprecated**
-
-:::warning[Deprecation warning]
-
-`searchParameters` is currently being planned for deprecation. The new recommended property to use is `indices`.
-
-:::
-
-The [Algolia Search Parameters][7].
 
 ## `transformItems`
 
@@ -872,7 +844,7 @@ const portalEl = document.getElementById('modal-root');
 <DocSearch
   appId="YOUR_APP_ID"
   apiKey="YOUR_SEARCH_API_KEY"
-  indexName="YOUR_INDEX_NAME"
+  indices={['YOUR_INDEX_NAME']}
   // render the modal inside #modal-root instead of document.body
   portalContainer={portalEl}
 />;
@@ -888,7 +860,7 @@ docsearch({
   container: '#modal-root',
   appId: 'YOUR_APP_ID',
   apiKey: 'YOUR_SEARCH_API_KEY',
-  indexName: 'YOUR_INDEX_NAME',
+  indices: ['YOUR_INDEX_NAME'],
 });
 ```
 

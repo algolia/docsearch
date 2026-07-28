@@ -49,18 +49,11 @@ export interface DocSearchProps {
   /** Public api key with search permissions for the index. */
   apiKey: string;
   /**
-   * Name of the algolia index to query.
-   *
-   * @deprecated `indexName` will be removed in a future version. Please use
-   *   `indices` property going forward.
-   */
-  indexName?: string;
-  /**
    * List of indices and _optional_ searchParameters to be used for search.
    *
    * @see {@link https://docsearch.algolia.com/docs/api#indices}
    */
-  indices?: Array<DocSearchIndex | string>;
+  indices: Array<DocSearchIndex | string>;
   /**
    * Facets to display as keyword-search filter controls. Values are read
    * dynamically from the configured Algolia indices.
@@ -72,13 +65,6 @@ export interface DocSearchProps {
   theme?: DocSearchTheme;
   /** Placeholder text for the search input. */
   placeholder?: string;
-  /**
-   * Additional algolia search parameters to merge into each query.
-   *
-   * @deprecated `searchParameters` will be removed in a future version. Please
-   *   use `indices` property going forward.
-   */
-  searchParameters?: SearchParamsObject;
   /** Maximum number of hits to display per source/group. */
   maxResultsPerGroup?: number;
   /** Hook to post-process hits before rendering. */
