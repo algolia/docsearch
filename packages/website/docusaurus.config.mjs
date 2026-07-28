@@ -119,12 +119,6 @@ export default {
             position: 'left',
             className: 'navbar-mcp-link',
           },
-          {
-            label: 'Sign up',
-            to: SIGNUP_LINK,
-            position: 'left',
-            className: 'navbar-cta',
-          },
           // right
           {
             type: 'docsVersionDropdown',
@@ -134,6 +128,12 @@ export default {
             href: 'https://github.com/algolia/docsearch',
             position: 'right',
             className: 'header-github-link',
+          },
+          {
+            label: 'Sign up',
+            to: SIGNUP_LINK,
+            position: 'right',
+            className: 'navbar-cta',
           },
         ],
       },

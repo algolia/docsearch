@@ -47,16 +47,39 @@ export default function DemoApp() {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
-  // Keep all scrolling contained inside the iframe. Focusing an element (the
-  // search input / prompt on open) or `scrollIntoView` (streaming answers)
-  // otherwise scrolls ancestors across the iframe boundary, which yanks the
-  // parent page back to the demo. We default focus to `preventScroll` and make
-  // `scrollIntoView` only move the nearest scrollable ancestor within the frame.
+  // Keep scrolling — and the keyboard — contained inside the iframe. Focusing an
+  // element (the search input / prompt on open) or `scrollIntoView` (streaming
+  // answers) otherwise scrolls ancestors across the iframe boundary, which yanks
+  // the parent page back to the demo. So `focus` defaults to `preventScroll` and
+  // is gated on real user intent (see below), and `scrollIntoView` only moves
+  // the nearest scrollable ancestor within the frame.
   useEffect(() => {
     const nativeFocus = HTMLElement.prototype.focus;
     const nativeScrollIntoView = Element.prototype.scrollIntoView;
 
+    // The widget focuses its input when the modal opens. Inside an iframe that
+    // pulls document focus off the host page, so the site's own ⌘K handler
+    // never sees the keystroke and this demo answers it instead — the demo
+    // looks like it has trapped the keyboard. So programmatic focus only lands
+    // once the visitor has actually reached into the demo; the autopilot drives
+    // the widget with synthetic `input` events, which don't require focus.
+    let userEngaged = false;
+    const engage = (event) => {
+      if (event.isTrusted) userEngaged = true;
+    };
+    // Focus left the frame (the visitor clicked back out onto the page), so the
+    // demo has to earn it again rather than grabbing it on the next tour loop.
+    const disengage = () => {
+      userEngaged = false;
+    };
+    const engageEvents = ['pointerdown', 'keydown', 'touchstart'];
+    engageEvents.forEach((name) =>
+      document.addEventListener(name, engage, { capture: true, passive: true })
+    );
+    window.addEventListener('blur', disengage);
+
     HTMLElement.prototype.focus = function focusNoScroll(options) {
+      if (!userEngaged) return undefined;
       return nativeFocus.call(this, { preventScroll: true, ...(options ?? {}) });
     };
 
@@ -80,6 +103,10 @@ export default function DemoApp() {
     return () => {
       HTMLElement.prototype.focus = nativeFocus;
       Element.prototype.scrollIntoView = nativeScrollIntoView;
+      engageEvents.forEach((name) =>
+        document.removeEventListener(name, engage, { capture: true })
+      );
+      window.removeEventListener('blur', disengage);
     };
   }, []);
 
@@ -123,8 +150,7 @@ export default function DemoApp() {
   return (
     <div className="ds-demo" data-theme={theme}>
       <header className="ds-demo-topbar">
-        <div className="ds-demo-brand">
-          <span className="ds-demo-logo" aria-hidden="true" />
+        <div className="ds-demo-brand" aria-hidden="true">
           <span className="ds-demo-brand-name">Acme Docs</span>
         </div>
         <nav className="ds-demo-nav" aria-label="Docs">

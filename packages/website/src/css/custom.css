@@ -103,6 +103,8 @@
   --ifm-color-emphasis-200: var(--border);
   --ifm-color-emphasis-300: var(--border-strong);
 
+  --ifm-container-width-xl: 1415px;
+
   --ifm-code-background: var(--surface-raised);
   --ifm-pre-background: var(--surface-raised);
   --ifm-code-border-radius: 6px;
@@ -926,6 +928,15 @@ html[data-theme='dark'] .shimmer-effect {
 }
 
 /* Hairline underline, grows from left on hover */
+/* Footer column lists. Tailwind utilities sit in `@layer utilities`, which the
+   cascade ranks below Infima's unlayered `ul { padding-left: … }` — so `p-0`
+   never applies and the links sit indented from their column heading. */
+.ds-footer-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .link-underline {
   background-image: linear-gradient(currentColor, currentColor);
   background-position: 0 100%;
@@ -1124,10 +1135,13 @@ html[data-theme='dark'] .shimmer-effect {
 }
 
 /* Full-width drawer on mobile so the open menu fully covers the header instead
-   of leaving a strip where the (overflowing) search + Ask AI buttons peek out. */
+   of leaving a strip where the (overflowing) search + Ask AI buttons peek out.
+   Override the Infima variable (not just `width`) — panel widths and the
+   secondary-menu translate both use `--ifm-navbar-sidebar-width`, so setting
+   `width: 100%` alone leaves the "← Back to main menu" panel peeking ~17vw. */
 @media (max-width: 996px) {
-  .navbar-sidebar {
-    width: 100%;
+  :root {
+    --ifm-navbar-sidebar-width: 100%;
   }
 }
 .navbar__link {
@@ -1227,6 +1241,26 @@ html[data-theme='dark'] .shimmer-effect {
 }
 [data-theme='dark'] .navbar-cta.navbar__link:hover {
   color: oklch(0.15 0.015 260) !important;
+}
+
+/* Homepage only: keep Sign up visible + right-aligned in the mobile header.
+   Docs pages already pack Search + Ask AI into that slot — forcing the CTA
+   there overlaps them. Infima's mobile hide is `.navbar__item`, which loses to
+   the two-class `display` rule above, so restate it here before re-showing the
+   CTA on the homepage (the only place the navbar search is hidden). */
+@media (max-width: 996px) {
+  .navbar-cta.navbar__link {
+    display: none;
+  }
+  .homepage .navbar__item.navbar-cta {
+    display: inline-flex;
+    order: 1;
+    margin: 0;
+    margin-inline-start: 0.5rem;
+  }
+  .homepage .navbar-cta.navbar__link {
+    margin: 0;
+  }
 }
 
 /* MCP is served at the same origin. */
@@ -1467,6 +1501,40 @@ pre code {
 
 .logo-marquee-item:hover img {
   filter: grayscale(0);
+  opacity: 1;
+}
+
+/* Dark mode: the dark-ink marks (Vite, Vue, Remix, Markdoc, Expo, Homebrew…)
+   vanish against the dark surface, and inverting them is not an option because
+   several rely on knocked-out white shapes that flatten into solid blobs. Sit
+   each logo on a light chip instead so every mark keeps its real artwork and
+   the grayscale/hover treatment behaves exactly as it does in light mode. */
+[data-theme='dark'] .logo-marquee {
+  /* Chips carry their own padding, so tighten the run. Driving this through the
+     variable keeps the gap and the group's trailing gap in sync (loop seam). */
+  --logo-gap: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+[data-theme='dark'] .logo-marquee-item {
+  height: 3.25rem;
+  padding-inline: 1.125rem;
+  border: 1px solid oklch(1 0 0 / 0.05);
+  border-radius: 14px;
+  /* Dim enough to recede into the section, still light enough that the
+     dark-ink marks keep their contrast. Hover lifts it toward white. */
+  background: oklch(0.88 0.003 75 / 0.42);
+}
+
+[data-theme='dark'] .logo-marquee-item:hover {
+  background: oklch(0.97 0.002 75 / 0.9);
+}
+
+/* The dimmer chip needs a touch more ink to stay legible. */
+[data-theme='dark'] .logo-marquee-item img {
+  opacity: 0.72;
+}
+
+[data-theme='dark'] .logo-marquee-item:hover img {
   opacity: 1;
 }
 

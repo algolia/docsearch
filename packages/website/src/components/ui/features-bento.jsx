@@ -34,33 +34,7 @@ export const FeaturesBento = () => {
           <AskAICell />
           <MCPCell />
 
-          {/* Row 2 — Made for docs (full width) */}
-          <div className="relative lg:col-span-6">
-            <div className="absolute inset-0 rounded-lg bg-[var(--surface)]" />
-            <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:min-h-80 lg:flex-row">
-              <img
-                alt=""
-                src="/img/resources/docs.png"
-                className="h-64 w-full object-cover object-left lg:h-auto lg:w-1/2 lg:object-center"
-              />
-
-              <div className="p-10 pt-4 lg:flex lg:w-1/2 lg:flex-col lg:justify-center lg:pt-10">
-                <p className="text-xl font-semibold font-display text-[var(--text)] my-4">
-                  Made for docs
-                </p>
-                <p className="mt-2 max-w-lg text-base text-[var(--text-secondary)]">
-                  DocSearch’s crawler automatically indexes your docs on a
-                  schedule — no manual reindexing, no stale results. A visual
-                  config editor lets you tune exactly what gets picked up, and
-                  it understands code snippets, tables, markdown structure, and
-                  API references so your users get pinpoint answers every time.
-                </p>
-              </div>
-            </div>
-            <div className="pointer-events-none absolute inset-0 rounded-lg outline outline-[var(--border)]" />
-          </div>
-
-          {/* Row 3 — Works everywhere / Customizable / A11y */}
+          {/* Row 2 — Works everywhere / Made for docs / A11y */}
           <div className="relative lg:col-span-2">
             <div className="absolute inset-0 rounded-lg bg-[var(--surface)]" />
             <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)]">
@@ -95,24 +69,20 @@ export const FeaturesBento = () => {
             <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)]">
               <img
                 alt=""
-                src="img/resources/customizable-light.png"
-                className="h-56 object-cover object-left hidden dark:block"
-              />
-              <img
-                alt=""
-                src="img/resources/customizable-dark.png"
-                className="h-56 object-cover object-left dark:hidden"
+                src="/img/resources/docs.png"
+                className="h-56 object-cover object-left"
               />
 
               <div className="p-10 pt-4">
                 <p className="text-xl font-semibold font-display text-[var(--text)] my-4">
-                  Customizable
+                  Made for docs
                 </p>
                 <p className="mt-2 max-w-lg text-base text-[var(--text-secondary)]">
-                  Tailor DocSearch to match your brand and UX needs—colors,
-                  fonts, layouts, and even search behaviors are under your
-                  control. Drop-in CSS variables and simple JS hooks make it
-                  effortless to blend search seamlessly into any docs site.
+                  DocSearch’s crawler automatically indexes your docs on a
+                  schedule — no manual reindexing, no stale results. A visual
+                  config editor lets you tune exactly what gets picked up, and
+                  it understands code snippets, tables, markdown structure, and
+                  API references so your users get pinpoint answers every time.
                 </p>
               </div>
             </div>
@@ -143,13 +113,13 @@ export const FeaturesBento = () => {
             <div className="pointer-events-none absolute inset-0 rounded-lg outline outline-[var(--border)]" />
           </div>
 
-          {/* Row 4 — Powered by Algolia (slim supporting stat strip) */}
+          {/* Row 3 — Powered by Algolia (slim supporting stat strip) */}
           <div className="relative lg:col-span-6">
             <div className="absolute inset-0 rounded-lg bg-[var(--surface)] rounded-b-4xl" />
             <div className="relative flex h-full flex-col gap-6 overflow-hidden rounded-[calc(var(--radius-lg)+1px)] rounded-b-[calc(2rem+1px)] p-8 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
               <div className="lg:max-w-xs">
                 <p className="text-xl font-semibold font-display text-[var(--text)]">
-                  Powered by Algolia
+                  Search Powered by Algolia
                 </p>
                 <p className="mt-2 text-sm text-[var(--text-secondary)]">
                   Running on Algolia’s global search infrastructure — fast,

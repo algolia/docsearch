@@ -78,7 +78,7 @@ export default function DemoShowcase() {
       className="mx-auto w-full max-w-6xl overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-sm"
     >
       <div className="flex items-center gap-3 border-b border-[var(--border)] px-4 py-2.5">
-        <span className="flex gap-1.5">
+        <span className="hidden gap-1.5 sm:flex" aria-hidden="true">
           <span className="h-3 w-3 rounded-full bg-[var(--border-strong,#d0d3d7)]" />
           <span className="h-3 w-3 rounded-full bg-[var(--border-strong,#d0d3d7)]" />
           <span className="h-3 w-3 rounded-full bg-[var(--border-strong,#d0d3d7)]" />

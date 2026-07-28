@@ -28,8 +28,8 @@ export function AskAICell() {
 
   return (
     <div className="relative lg:col-span-3">
-      <div className="absolute inset-0 rounded-lg bg-[var(--surface)] max-lg:rounded-t-4xl lg:rounded-tl-4xl" />
-      <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)] lg:rounded-tl-[calc(2rem+1px)]">
+      <div className="absolute inset-0 rounded-lg bg-[var(--surface)] lg:rounded-tl-4xl" />
+      <div className="relative flex h-full flex-col overflow-hidden rounded-lg lg:rounded-tl-4xl">
         <div className={mediaClass}>
           <video
             autoPlay={true}

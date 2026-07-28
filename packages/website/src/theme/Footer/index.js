@@ -44,7 +44,7 @@ export default function Footer() {
               <h3 className="font-display text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--text)]">
                 {column.title}
               </h3>
-              <ul className="mt-4 list-none space-y-2.5 p-0">
+              <ul className="ds-footer-list mt-4 space-y-2.5">
                 {(column.items ?? []).map((item) => (
                   <li key={item.href ?? item.to ?? item.label} className="m-0">
                     <FooterLink item={item} />

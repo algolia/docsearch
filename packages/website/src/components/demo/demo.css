@@ -44,17 +44,13 @@ body.docsearch-demo-embed-body {
 .ds-demo-brand {
   display: flex;
   align-items: center;
-  gap: 9px;
   font-family: var(--font-display, var(--font-sans));
-  font-weight: 650;
-  font-size: 15px;
-}
-
-.ds-demo-logo {
-  width: 20px;
-  height: 20px;
-  border-radius: 6px;
-  background: linear-gradient(135deg, var(--accent, #5468ff), #9b5cff);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  color: var(--text-tertiary, #9aa0a6);
+  pointer-events: none;
+  user-select: none;
 }
 
 .ds-demo-nav {

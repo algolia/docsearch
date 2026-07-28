@@ -114,7 +114,11 @@ function Home() {
     <>
       <Hero />
 
-      <section className="px-4 pb-10 md:px-0">
+      <section className="px-4 pt-16 pb-10 md:px-0">
+        <SectionHeading
+            eyebrow="Interactive demo"
+            title="See DocSearch in action"
+          />
         <DemoShowcase />
       </section>
 
