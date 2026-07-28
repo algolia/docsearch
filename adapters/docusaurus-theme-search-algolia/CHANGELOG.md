@@ -1,31 +1,5 @@
 # @docsearch/docusaurus-adapter
 
-## 5.0.0-beta.1
-
-### Patch Changes
-
-- 09861c8: Align CSS class and animation names with the `DocSearch-` naming convention.
-
-  - The `shimmer` utility class is now `DocSearch-shimmer`
-  - Fixed a typo in `DocSearck-AskAiScreen-MessageContent-Stopped`, now
-    `DocSearch-AskAiScreen-MessageContent-Stopped`
-  - Keyframes renamed to kebab-case: `shimmerText` → `shimmer-text`,
-    `slideDown` → `slide-down`, `fadeIn` → `fade-in`
-  - Dark theme selectors use `:root[data-theme='dark']` instead of
-    `html[data-theme='dark']`
-  - Dropped redundant type qualifiers from `.DocSearch-Hits-padded` and
-    `.DocSearch-Hit-Select-Icon` selectors, slightly lowering their specificity
-
-  If you override these classes or keyframes in custom styles, update your
-  selectors accordingly.
-
-- Updated dependencies [f8e0678]
-- Updated dependencies [09861c8]
-  - @docsearch/react@5.0.0-beta.1
-  - @docsearch/modal@5.0.0-beta.1
-  - @docsearch/sidepanel@5.0.0-beta.1
-  - @docsearch/core@5.0.0-beta.1
-
 ## 5.0.0-beta.0
 
 ### Major Changes

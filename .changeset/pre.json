@@ -16,8 +16,6 @@
     "@docsearch/website": "4.6.0"
   },
   "changesets": [
-    "sharp-donkeys-search",
-    "tidy-moons-argue",
     "vast-numbers-read"
   ]
 }

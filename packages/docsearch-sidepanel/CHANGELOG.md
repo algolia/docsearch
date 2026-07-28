@@ -1,15 +1,5 @@
 # @docsearch/sidepanel
 
-## 5.0.0-beta.1
-
-### Patch Changes
-
-- Updated dependencies [f8e0678]
-- Updated dependencies [09861c8]
-  - @docsearch/react@5.0.0-beta.1
-  - @docsearch/css@5.0.0-beta.1
-  - @docsearch/core@5.0.0-beta.1
-
 ## 5.0.0-beta.0
 
 ### Major Changes
