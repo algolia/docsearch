@@ -201,12 +201,13 @@ const buildQuerySources = async ({
 
       // We store the `lvl0`s to display them as search suggestions
       // in the "no results" screen.
-      if ((sourcesState.context.searchSuggestions as any[]).length < Object.keys(sources).length) {
+      const existingSearchSuggestions = Array.isArray(sourcesState.context.searchSuggestions)
+        ? sourcesState.context.searchSuggestions
+        : [];
+
+      if (existingSearchSuggestions.length < Object.keys(sources).length) {
         setContext({
-          searchSuggestions: {
-            ...(sourcesState.context.searchSuggestions ?? []),
-            ...Object.keys(sources),
-          },
+          searchSuggestions: [...existingSearchSuggestions, ...Object.keys(sources)],
         });
       }
 

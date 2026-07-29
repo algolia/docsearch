@@ -1,35 +1,34 @@
 import { render, act, fireEvent, screen, cleanup } from '@testing-library/react';
+import type { Hit, LiteClient, SearchResponse, SearchResponses } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 import { describe, it, expect, afterEach } from 'vitest';
 
 import '@testing-library/jest-dom/vitest';
 
 import { DocSearch as DocSearchComponent } from '../DocSearch';
-import type { DocSearchProps } from '../DocSearch';
+import type { DocSearchProps, DocSearchTransformClient } from '../DocSearch';
 
 function DocSearch(props: Partial<DocSearchProps>): JSX.Element {
   return <DocSearchComponent appId="woo" apiKey="foo" indexName="bar" {...props} />;
 }
 
 // mock empty response
-function noResultSearch(_queries: any, _requestOptions?: any): Promise<any> {
-  return new Promise((resolve) => {
-    resolve({
-      results: [
-        {
-          hits: [],
-          hitsPerPage: 0,
-          nbHits: 0,
-          nbPages: 0,
-          page: 0,
-          processingTimeMS: 0,
-          exhaustiveNbHits: true,
-          params: '',
-          query: '',
-        },
-      ],
-    });
-  });
+function noResultSearch<T = Record<string, unknown>>(
+  _queries: Parameters<LiteClient['search']>[0],
+  _requestOptions?: Parameters<LiteClient['search']>[1],
+): Promise<SearchResponses<T>> {
+  const emptyResult: SearchResponse<T> = {
+    hits: [] as Array<Hit<T>>,
+    hitsPerPage: 0,
+    nbHits: 0,
+    nbPages: 0,
+    page: 0,
+    processingTimeMS: 0,
+    exhaustiveNbHits: true,
+    params: '',
+    query: '',
+  };
+  return Promise.resolve({ results: [emptyResult] });
 }
 
 describe('api', () => {
@@ -262,6 +261,85 @@ describe('api', () => {
     });
   });
 
+  it('renders no-results suggestions from previous successful searches', async () => {
+    let shouldReturnResults = true;
+
+    const search = <T = Record<string, unknown>,>(
+      _queries: Parameters<LiteClient['search']>[0],
+      _requestOptions?: Parameters<LiteClient['search']>[1],
+    ): Promise<SearchResponses<T>> => {
+      const successResult: SearchResponse<T> = {
+        hits: [
+          {
+            hierarchy: { lvl0: 'React' },
+            objectID: '1',
+            url: 'https://react.dev',
+            content: 'React content',
+            type: 'lvl0',
+          } as unknown as Hit<T>,
+          {
+            hierarchy: { lvl0: 'Hooks' },
+            objectID: '2',
+            url: 'https://react.dev/hooks',
+            content: 'Hooks content',
+            type: 'lvl0',
+          } as unknown as Hit<T>,
+        ],
+        hitsPerPage: 20,
+        nbHits: 2,
+        nbPages: 1,
+        page: 0,
+        processingTimeMS: 0,
+        exhaustiveNbHits: true,
+        params: '',
+        query: 'react',
+      };
+      const emptyResult: SearchResponse<T> = {
+        hits: [],
+        hitsPerPage: 0,
+        nbHits: 0,
+        nbPages: 0,
+        page: 0,
+        processingTimeMS: 0,
+        exhaustiveNbHits: true,
+        params: '',
+        query: 'nothing',
+      };
+      const resultsResponse: SearchResponses<T> = {
+        results: shouldReturnResults ? [successResult] : [emptyResult],
+      };
+      return Promise.resolve(resultsResponse);
+    };
+
+    const transformSearchClient = (searchClient: DocSearchTransformClient): DocSearchTransformClient => ({
+      ...searchClient,
+      search,
+    });
+
+    render(<DocSearch transformSearchClient={transformSearchClient} />);
+
+    await act(async () => {
+      fireEvent.click(await screen.findByText('Search'));
+    });
+
+    await act(async () => {
+      fireEvent.input(await screen.findByPlaceholderText('Search docs'), {
+        target: { value: 'react' },
+      });
+    });
+
+    await act(async () => {
+      shouldReturnResults = false;
+      fireEvent.input(await screen.findByPlaceholderText('Search docs'), {
+        target: { value: 'nothing' },
+      });
+    });
+
+    expect(await screen.findByText(/Try searching for/)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'React' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Hooks' })).toBeInTheDocument();
+  });
+
   describe('ask AI integration', () => {
     it('updates placeholder when ask AI is available', async () => {
       render(<DocSearch askAi="assistant" />);
@@ -274,15 +352,12 @@ describe('api', () => {
     });
 
     it('opens ask AI screen and returns to search', async () => {
-      render(
-        <DocSearch
-          askAi="assistant"
-          transformSearchClient={(searchClient) => ({
-            ...searchClient,
-            search: noResultSearch,
-          })}
-        />,
-      );
+      const transformAiSearchClient = (searchClient: DocSearchTransformClient): DocSearchTransformClient => ({
+        ...searchClient,
+        search: noResultSearch,
+      });
+
+      render(<DocSearch askAi="assistant" transformSearchClient={transformAiSearchClient} />);
 
       await act(async () => {
         fireEvent.click(await screen.findByText('Search'));
