@@ -198,9 +198,9 @@ test.describe('Recent and Favorites', () => {
   test('Recent search can be pinned', async ({ page }) => {
     await page
       .locator('#docsearch-recentSearches-item-0')
-      .locator('[title="Pin this search"]')
+      .locator('[title="Save this search"]')
       .click();
-    await expect(page.getByText('Pinned')).toBeVisible();
+    await expect(page.getByText('Favorite')).toBeVisible();
     await expect(
       page.locator('#docsearch-favoriteSearches-item-0')
     ).toBeVisible();
@@ -208,13 +208,15 @@ test.describe('Recent and Favorites', () => {
 
   test('Pinned can be deleted', async ({ docSearch, page }) => {
     await page
-      .locator('#docsearch-recentSearches-item-0')
-      .locator('[title="Pin this search"]')
+      .locator('#docsearch-recentSearches-list .DocSearch-Hit')
+      .first()
+      .locator('[title="Save this search"]')
       .click();
-    await expect(page.getByText('Pinned')).toBeVisible();
+    await expect(page.getByText('Favorite')).toBeVisible();
     await page
-      .locator('#docsearch-favoriteSearches-item-0')
-      .locator('[title="Remove this saved search"]')
+      .locator('#docsearch-favoriteSearches-list .DocSearch-Hit')
+      .first()
+      .locator('[title="Remove this search from favorites"]')
       .click();
     await expect(docSearch.hits).not.toBeVisible();
   });

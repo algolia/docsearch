@@ -19,7 +19,9 @@ export class DocSearchPage {
     this.searchButton = page.locator('.DocSearch-Button');
     this.modal = page.locator('.DocSearch-Modal');
     this.input = page.locator('.DocSearch-Input');
-    this.hits = page.locator('.DocSearch-Hits').first();
+    this.hits = page
+      .locator('.DocSearch-Hits #docsearch-hits_docsearch-list')
+      .first();
     this.clearButton = page.locator('.DocSearch-Clear');
     this.firstHit = page
       .locator('#docsearch-hits_docsearch-list .DocSearch-Hit a')
