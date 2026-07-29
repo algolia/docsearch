@@ -9,7 +9,7 @@ import type {
   ToolCalls,
   ToolDefinition,
 } from '../types/AskiAi';
-import { isSearchToolPart } from '../utils/ai';
+import { getSearchToolQueries, isSearchToolPart } from '../utils/ai';
 
 import { ToolState } from './ui/ToolState';
 
@@ -60,52 +60,69 @@ function SearchTool({
           <span>{searchingText}</span>
         </ToolState>
       );
-    case 'input-available':
-      return (
-        <ToolState
-          shimmer={true}
-          icon={
-            <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-          }
-          variant="Call"
-        >
-          <span>
-            {preToolCallText} {`"${part.input.query || ''}" ...`}
-          </span>
-        </ToolState>
-      );
-    case 'output-available': {
-      const query =
-        part.type === 'tool-searchIndex' ? part.output.query : part.input.query;
+    case 'input-available': {
+      const queries = getSearchToolQueries(part);
 
       return (
-        <ToolState icon={<SearchIcon />} variant="Result">
-          <span>
-            {toolCallResultText}{' '}
-            {onSearchQueryClick ? (
-              <span
-                role="button"
-                tabIndex={0}
-                className="DocSearch-AskAiScreen-MessageContent-Tool-Query"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    onSearchQueryClick(query || '');
-                  }
-                }}
-                onClick={() => onSearchQueryClick(query || '')}
-              >
-                {' '}
-                &quot;{query || ''}&quot;
+        <>
+          {queries.map((q, index) => (
+            <ToolState
+              // oxlint-disable-next-line react/no-array-index-key
+              key={`${part.toolCallId}-call-${index}`}
+              shimmer={true}
+              icon={
+                <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
+              }
+              variant="Call"
+            >
+              <span>
+                {preToolCallText} {`"${q}" ...`}
               </span>
-            ) : (
-              <span className="DocSearch-AskAiScreen-MessageContent-Tool-Query">
-                {' '}
-                &quot;{query || ''}&quot;
+            </ToolState>
+          ))}
+        </>
+      );
+    }
+    case 'output-available': {
+      const queries = getSearchToolQueries(part);
+
+      return (
+        <>
+          {queries.map((q, index) => (
+            <ToolState
+              // oxlint-disable-next-line react/no-array-index-key
+              key={`${part.toolCallId}-result-${index}`}
+              icon={<SearchIcon />}
+              variant="Result"
+            >
+              <span>
+                {toolCallResultText}{' '}
+                {onSearchQueryClick ? (
+                  <span
+                    role="button"
+                    tabIndex={0}
+                    className="DocSearch-AskAiScreen-MessageContent-Tool-Query"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        onSearchQueryClick(q);
+                      }
+                    }}
+                    onClick={() => onSearchQueryClick(q)}
+                  >
+                    {' '}
+                    &quot;{q}&quot;
+                  </span>
+                ) : (
+                  <span className="DocSearch-AskAiScreen-MessageContent-Tool-Query">
+                    {' '}
+                    &quot;{q}&quot;
+                  </span>
+                )}
               </span>
-            )}
-          </span>
-        </ToolState>
+            </ToolState>
+          ))}
+        </>
       );
     }
     default:

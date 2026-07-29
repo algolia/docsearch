@@ -14,7 +14,7 @@ import type { DocSearchProps } from '../DocSearch';
 
 function DocSearch(props: Partial<DocSearchProps>): JSX.Element {
   return (
-    <DocSearchComponent appId="woo" apiKey="foo" indexName="bar" {...props} />
+    <DocSearchComponent appId="woo" apiKey="foo" indices={['bar']} {...props} />
   );
 }
 

@@ -165,7 +165,7 @@ Configure DocSearch to use both your main keyword index and your markdown index 
 
 ```js
 docsearch({
-  indexName: 'YOUR_INDEX_NAME', // Main DocSearch keyword index
+  indices: ['YOUR_INDEX_NAME'], // Main DocSearch keyword index
   apiKey: 'YOUR_SEARCH_API_KEY',
   appId: 'YOUR_APP_ID',
   askAi: {
@@ -186,7 +186,7 @@ docsearch({
 
 ```jsx
 <DocSearch
-  indexName="YOUR_INDEX_NAME" // Main DocSearch keyword index
+  indices={['YOUR_INDEX_NAME']} // Main DocSearch keyword index
   apiKey="YOUR_SEARCH_API_KEY"
   appId="YOUR_APP_ID"
   askAi={{
@@ -205,7 +205,7 @@ docsearch({
 
 </Tabs>
 
-- `indexName`: Your main DocSearch index for keyword search.
+- `indices`: Your main DocSearch index or indices for keyword search.
 - `askAi.indexName`: The markdown index you created for Ask AI context.
 - `assistantId`: The ID of your configured Ask AI assistant.
 - `searchParameters.facetFilters`: Optional filters to limit Ask AI context (useful for multi-language sites).

@@ -21,7 +21,7 @@ const INDEX_NAME = 'test_index';
 const DEFAULT_PROPS: DocSearchModalProps = {
   appId: APP_ID,
   apiKey: API_KEY,
-  indexName: INDEX_NAME,
+  indices: [INDEX_NAME],
   transformSearchClient(searchClient) {
     return {
       ...searchClient,

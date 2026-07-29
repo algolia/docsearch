@@ -34,7 +34,7 @@ import '@docsearch/css';
 docsearch({
   container: '#docsearch',
   appId: 'YOUR_APP_ID',
-  indexName: 'YOUR_INDEX_NAME',
+  indices: ['YOUR_INDEX_NAME'],
   apiKey: 'YOUR_SEARCH_API_KEY',
 });
 ```
@@ -53,7 +53,7 @@ import '@docsearch/css';
 docsearch({
   container: '#docsearch',
   appId: 'YOUR_APP_ID',
-  indexName: 'YOUR_INDEX_NAME',
+  indices: ['YOUR_INDEX_NAME'],
   apiKey: 'YOUR_SEARCH_API_KEY',
 });
 ```
@@ -66,7 +66,7 @@ For a standalone keyword-only script, load the explicit UMD file:
   window.docsearch({
     container: '#docsearch',
     appId: 'YOUR_APP_ID',
-    indexName: 'YOUR_INDEX_NAME',
+    indices: ['YOUR_INDEX_NAME'],
     apiKey: 'YOUR_SEARCH_API_KEY',
   });
 </script>

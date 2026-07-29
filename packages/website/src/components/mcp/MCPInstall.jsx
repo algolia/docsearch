@@ -91,12 +91,13 @@ const CLIENTS = [
         kind: 'code',
         caption: 'In Claude Code',
         code: `/plugin marketplace add algolia/docsearch
-/plugin install algolia-docsearch@algolia-docsearch-marketplace`,
+/plugin install algolia-docsearch@algolia-docsearch-marketplace
+/reload-plugins`,
       },
       {
         kind: 'text',
         content:
-          'The plugin adds the MCP server, a skill, and the /algolia-docsearch:docs command. Plugins are a Claude Code feature — Claude Desktop connects via a custom connector (see Manual).',
+          'The plugin adds the MCP server, a skill, and the /algolia-docsearch:docs command. /reload-plugins activates it in the current session. Plugins are a Claude Code feature — Claude Desktop connects via a custom connector (see Manual).',
       },
     ],
     manual: [

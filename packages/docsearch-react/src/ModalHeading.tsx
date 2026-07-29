@@ -11,7 +11,9 @@ export function ModalHeading({
   shimmer = false,
 }: ModalHeadingProps): JSX.Element {
   return (
-    <span className={`DocSearch-Modal-heading${shimmer ? ' shimmer' : ''}`}>
+    <span
+      className={`DocSearch-Modal-heading${shimmer ? ' DocSearch-shimmer' : ''}`}
+    >
       {heading}
     </span>
   );

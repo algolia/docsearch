@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "algolia-docsearch": {
+      "type": "http",
+      "url": "https://mcp.algolia.com/1/docsearch/mcp"
+    }
+  }
+}

@@ -15,5 +15,9 @@
     "@docsearch/sidepanel-js": "4.6.0",
     "@docsearch/website": "4.6.0"
   },
-  "changesets": ["vast-numbers-read"]
+  "changesets": [
+    "sharp-donkeys-search",
+    "tidy-moons-argue",
+    "vast-numbers-read"
+  ]
 }

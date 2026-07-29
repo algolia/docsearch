@@ -1,36 +1,17 @@
-import type { SearchParamsObject } from 'algoliasearch/lite';
-
 import type { DocSearchIndex } from '../DocSearch';
 
 export function normalizeDocSearchIndexes({
-  indexName,
-  indices = [],
-  searchParameters,
+  indices,
 }: {
-  indexName?: string;
-  indices?: Array<DocSearchIndex | string>;
-  searchParameters?: SearchParamsObject;
+  indices: Array<DocSearchIndex | string>;
 }): DocSearchIndex[] {
-  const indexes: DocSearchIndex[] = [];
-
-  if (indexName && indexName !== '') {
-    indexes.push({
-      name: indexName,
-      searchParameters,
-    });
+  if (!Array.isArray(indices) || indices.length < 1) {
+    throw new Error('Must supply at least one `indices` entry for DocSearch');
   }
 
-  if (indices.length > 0) {
-    indices.forEach((index) => {
-      indexes.push(typeof index === 'string' ? { name: index } : index);
-    });
-  }
-
-  if (indexes.length < 1) {
-    throw new Error(
-      'Must supply either `indexName` or `indices` for DocSearch to work'
-    );
-  }
+  const indexes = indices.map((index) =>
+    typeof index === 'string' ? { name: index } : index
+  );
 
   return indexes;
 }
