@@ -41,7 +41,7 @@ export function useFacetValues({
     searchClient
       .search<DocSearchHit>({
         requests: indexes.map((index) => ({
-          ...(index.searchParameters ?? {}),
+          ...index.searchParameters,
           indexName: index.name,
           query: '',
           hitsPerPage: 0,

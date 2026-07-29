@@ -1,0 +1,18 @@
+.breadcrumbHomeLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Infima aligns breadcrumb items on the text baseline, which pushes an
+     icon-only item above the row. Centre it against the adjacent labels. */
+  vertical-align: middle;
+}
+
+.breadcrumbHomeIcon {
+  display: block;
+  width: 1.1rem;
+  height: 1.1rem;
+
+  /* iconoir icons are stroke based and inherit the link colour */
+  color: currentColor;
+}
