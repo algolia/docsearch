@@ -183,7 +183,7 @@ export default function DemoApp() {
               translations={{ buttonText: 'Search or ask a question' }}
             />
             <DocSearchAskAiModal
-              indexName={INDEX_NAME}
+              indices={[INDEX_NAME]}
               appId={APP_ID}
               apiKey={API_KEY}
               askAi={{ assistantId: ASSISTANT_ID }}
