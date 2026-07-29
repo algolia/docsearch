@@ -113,7 +113,7 @@ export default App;
 
 ## MCP plugins
 
-Client plugins for the public DocSearch MCP endpoint are in [`mcp/plugins/docsearch`](mcp/plugins/docsearch). They connect Cursor and Claude Code to `https://mcp.algolia.com/1/docsearch/mcp` for current public developer documentation.
+Client plugins for the public DocSearch MCP endpoint are in [`mcp/plugins/docsearch`](mcp/plugins/docsearch). They connect ChatGPT, Codex, Cursor, and Claude Code to `https://mcp.algolia.com/1/docsearch/mcp` for current public developer documentation.
 
 ## Related projects
 

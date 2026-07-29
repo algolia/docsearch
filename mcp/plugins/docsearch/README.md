@@ -10,6 +10,7 @@ The plugins connect AI coding clients to the public DocSearch documentation corp
 
 ## Packages
 
+- `mcp/plugins/docsearch/chatgpt/algolia-docsearch` - Universal ChatGPT and Codex plugin package with manifest, MCP config, skill, assets, and submission materials.
 - `mcp/plugins/docsearch/cursor/algolia-docsearch` - Cursor plugin package with MCP config, rule, skill, and README.
 - `mcp/plugins/docsearch/claude/algolia-docsearch` - Claude Code plugin package with MCP config, skill, command, and README.
 
