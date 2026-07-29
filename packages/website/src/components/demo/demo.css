@@ -4,8 +4,8 @@
    own design tokens from custom.css (theme-scoped on <html data-theme>), so the
    demo always matches the surrounding page in both light and dark mode. */
 
-html.docsearch-demo-embed-html,
-body.docsearch-demo-embed-body {
+.docsearch-demo-embed-html,
+.docsearch-demo-embed-body {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -20,13 +20,7 @@ body.docsearch-demo-embed-body {
   overflow: hidden;
   background: var(--surface, #fff);
   color: var(--text, #1c1e21);
-  font-family: var(
-    --font-sans,
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    sans-serif
-  );
+  font-family: var(--font-sans, ui-sans-serif, system-ui, -apple-system, sans-serif);
 }
 
 /* Topbar ------------------------------------------------------------------ */
@@ -115,7 +109,7 @@ body.docsearch-demo-embed-body {
   border-radius: 12px;
   border: 1px solid var(--border-strong, #d0d3d7);
   background: var(--surface-raised, #fafafa);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
   font-size: 15px;
 }
 
@@ -188,9 +182,10 @@ body.docsearch-demo-embed-body {
 }
 
 /* Mobile ------------------------------------------------------------------ */
+
 /* The iframe width equals the demo box width, so these fire on phones where
    the box is narrow — keep the chrome from overflowing and the hero readable. */
-@media (max-width: 560px) {
+@media (width <= 560px) {
   .ds-demo-topbar {
     gap: 10px;
     padding: 0 14px;
@@ -238,7 +233,7 @@ body.docsearch-demo-embed-body {
 }
 
 /* Very narrow: the Ask AI label alone is enough, drop the brand wordmark. */
-@media (max-width: 380px) {
+@media (width <= 380px) {
   .ds-demo-brand-name {
     display: none;
   }
@@ -260,7 +255,7 @@ body.docsearch-demo-embed-body {
     opacity 0.2s ease;
   background-repeat: no-repeat;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M4 2l6.5 15.5 2.2-6 6-2.2z' fill='%23111' stroke='%23fff' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E");
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0 2px 4px rgb(0 0 0 / 30%));
 }
 
 .ds-demo-cursor.is-visible {
@@ -285,6 +280,7 @@ body.docsearch-demo-embed-body {
     opacity: 0.9;
     transform: translate(-50%, -50%) scale(0.4);
   }
+
   to {
     opacity: 0;
     transform: translate(-50%, -50%) scale(1.8);
