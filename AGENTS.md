@@ -78,27 +78,6 @@ bun run pw:run:webkit
 
 ## Code Style Guidelines
 
-### Imports
-
-Imported modules must be ordered alphabetically with newlines between groups:
-
-1. Built-in modules
-2. External dependencies
-3. Parent directory imports
-4. Sibling imports
-5. Index imports
-
-Internal `@/**/*` paths go before parent imports.
-
-```typescript
-// Correct order
-import type { AutocompleteOptions } from '@algolia/autocomplete-core';
-import React, { type JSX } from 'react';
-
-import { DocSearchButton } from './DocSearchButton';
-import type { DocSearchHit } from './types';
-```
-
 ### TypeScript
 
 - Use `type` imports for type-only imports: `import type { Foo } from './types'`
@@ -137,9 +116,8 @@ function createStorage<TItem>(key: string): StorageInterface<TItem> {
 
 ### React Component Structure
 
-- `src/components/ui/` contains reusable rendering components.
+- `src/components/ui/` contains small, composable, building block components that are used to construct larger components (Button, Popover, Menu, etc...).
 - Prefer domain-light primitives in `src/components/ui/` when possible.
-- Feature-scoped UI components may live in `src/components/ui/` when their feature scope is explicit in the filename, such as `RecentConversationsResults.tsx`.
 - `src/components/` contains scoped composition components that own feature flow, branching, and state orchestration.
 - Keep AI-specific behavior out of generic UI primitives. If a UI component is AI-specific, make that scope clear in its name.
 

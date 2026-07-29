@@ -371,6 +371,13 @@ function DocSearch({
   const panelOptions = getSidePanelPanelOptions(
     typeof sidePanel === 'object' ? sidePanel : undefined
   );
+  const sidepanelTranslations = {
+    ...panelOptions.translations,
+    byAlgoliaAriaLabel:
+      panelOptions.translations?.byAlgoliaAriaLabel ??
+      props.translations?.modal?.footer?.byAlgoliaAriaLabel ??
+      translations.modal?.footer?.byAlgoliaAriaLabel ?? 'DocSearch by Algolia',
+  };
 
   return (
     <>
@@ -420,6 +427,7 @@ function DocSearch({
         DocSearchSidepanel && (
           <DocSearchSidepanel
             {...panelOptions}
+            translations={sidepanelTranslations}
             variant={panelOptions.variant ?? 'inline'}
             pushSelector={panelOptions.pushSelector ?? '#__docusaurus'}
             assistantId={sidePanelAskAi.assistantId}

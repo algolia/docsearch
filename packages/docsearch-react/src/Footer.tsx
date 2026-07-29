@@ -1,6 +1,7 @@
 import React, { type JSX } from 'react';
 
-import { AlgoliaLogo } from './AlgoliaLogo';
+import { DocSearchByAlgolia } from './components/DocSearchByAlgolia';
+import { DocsMCPAction } from './components/DocsMCPAction';
 
 export type FooterTranslations = Partial<{
   selectText: string;
@@ -12,12 +13,24 @@ export type FooterTranslations = Partial<{
   closeText: string;
   backToSearchText: string;
   closeKeyAriaLabel: string;
-  poweredByText: string;
+  /**
+   * Text displayed for the add Docs MCP CTA.
+   *
+   * @default 'Add Docs MCP'
+   */
+  addDocsMCPText: string;
+  /**
+   * Aria label for the DocSearch by Algolia lockup.
+   *
+   * @default 'DocSearch by Algolia'
+   */
+  byAlgoliaAriaLabel: string;
 }>;
 
 type FooterProps = Partial<{
   translations: FooterTranslations;
   isAskAiActive: boolean;
+  hideMCPCallout: boolean;
 }>;
 
 interface CommandIconProps {
@@ -50,6 +63,7 @@ function CommandIcon(props: CommandIconProps): JSX.Element {
 export function Footer({
   translations = {},
   isAskAiActive = false,
+  hideMCPCallout = false,
 }: FooterProps): JSX.Element {
   const {
     selectText = 'Select',
@@ -61,14 +75,12 @@ export function Footer({
     closeText = 'Close',
     backToSearchText = 'Back to search',
     closeKeyAriaLabel = 'Escape key',
-    poweredByText = 'Powered by',
+    addDocsMCPText = 'Add Docs MCP',
+    byAlgoliaAriaLabel = 'DocSearch by Algolia',
   } = translations;
 
   return (
     <>
-      <div className="DocSearch-Logo">
-        <AlgoliaLogo translations={{ poweredByText }} />
-      </div>
       <ul className="DocSearch-Commands">
         <li>
           <kbd className="DocSearch-Commands-Key">
@@ -105,6 +117,14 @@ export function Footer({
           </span>
         </li>
       </ul>
+      <div className="DocSearch-Footer-Actions">
+        {!hideMCPCallout && (
+          <div className="DocSearch-DocsMCPAction">
+            <DocsMCPAction addDocsMCPText={addDocsMCPText} />
+          </div>
+        )}
+        <DocSearchByAlgolia byAlgoliaAriaLabel={byAlgoliaAriaLabel} />
+      </div>
     </>
   );
 }

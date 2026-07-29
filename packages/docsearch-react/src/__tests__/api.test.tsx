@@ -238,7 +238,7 @@ describe('api', () => {
                 navigateText: 'Pour naviguer',
                 navigateUpKeyAriaLabel: 'Flèche vers le haut',
                 navigateDownKeyAriaLabel: 'Flèche vers le bas',
-                poweredByText: 'Propulsé par',
+                byAlgoliaAriaLabel: 'Propulsé par',
                 selectText: 'Pour sélectionner',
                 selectKeyAriaLabel: "Touche d'entrée",
               },
@@ -253,7 +253,7 @@ describe('api', () => {
         fireEvent.click(await screen.findByText('Search'));
       });
 
-      await screen.findByText('Propulsé par');
+      expect(await screen.findByLabelText('Propulsé par')).toBeInTheDocument();
       await screen.findByText('Pour fermer');
       await screen.findByText('Pour naviguer');
       await screen.findByText('Pour sélectionner');
@@ -339,6 +339,85 @@ describe('api', () => {
       expect(link?.getAttribute('href')).toBe(
         'https://github.com/algolia/docsearch/issues/new?title=q'
       );
+    });
+  });
+
+  describe('footer callout', () => {
+    it('renders the Docs MCP callout by default', async () => {
+      render(<DocSearch />);
+
+      await act(async () => {
+        fireEvent.click(await screen.findByText('Search'));
+      });
+
+      const mcpLink = await screen.findByRole('link', {
+        name: 'Add Docs MCP',
+      });
+
+      expect(mcpLink).toHaveAttribute(
+        'href',
+        expect.stringContaining('https://docsearch.algolia.com/mcp/install')
+      );
+      expect(mcpLink).toHaveAttribute('target', '_blank');
+      expect(mcpLink).toHaveAttribute('rel', 'noopener noreferrer');
+    });
+
+    it('overrides the Docs MCP callout text', async () => {
+      render(
+        <DocSearch
+          translations={{
+            modal: {
+              footer: {
+                addDocsMCPText: 'Ajouter Docs MCP',
+              },
+            },
+          }}
+        />
+      );
+
+      await act(async () => {
+        fireEvent.click(await screen.findByText('Search'));
+      });
+
+      expect(
+        await screen.findByRole('link', { name: 'Ajouter Docs MCP' })
+      ).toBeInTheDocument();
+    });
+
+    it('disables the Docs MCP callout', async () => {
+      render(<DocSearch hideMCPCallout={true} />);
+
+      await act(async () => {
+        fireEvent.click(await screen.findByText('Search'));
+      });
+
+      expect(
+        screen.queryByRole('link', { name: 'Add Docs MCP' })
+      ).not.toBeInTheDocument();
+    });
+
+    it('renders the Docs MCP callout in the Ask AI modal', async () => {
+      render(<DocSearchAI />);
+
+      await act(async () => {
+        fireEvent.click(await screen.findByText('Search'));
+      });
+
+      expect(
+        await screen.findByRole('link', { name: 'Add Docs MCP' })
+      ).toBeInTheDocument();
+    });
+
+    it('disables the Docs MCP callout in the Ask AI modal', async () => {
+      render(<DocSearchAI hideMCPCallout={true} />);
+
+      await act(async () => {
+        fireEvent.click(await screen.findByText('Search'));
+      });
+
+      expect(
+        screen.queryByRole('link', { name: 'Add Docs MCP' })
+      ).not.toBeInTheDocument();
     });
   });
 

@@ -69,6 +69,7 @@ export function DocSearchModal({
   recentSearchesWithFavoritesLimit = 4,
   indices,
   facets,
+  hideMCPCallout,
   ...props
 }: DocSearchModalProps): JSX.Element {
   const {
@@ -303,7 +304,12 @@ export function DocSearchModal({
           }}
         />
       }
-      footer={<Footer translations={footerTranslations} />}
+      footer={
+        <Footer
+          translations={footerTranslations}
+          hideMCPCallout={hideMCPCallout}
+        />
+      }
       onClose={onClose}
     />
   );

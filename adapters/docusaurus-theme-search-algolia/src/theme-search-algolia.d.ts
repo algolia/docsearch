@@ -76,6 +76,7 @@ declare module '@docsearch/docusaurus-adapter' {
     | 'recentSearchesWithFavoritesLimit'
     | 'resultBadgeKey'
     | 'translations'
+    | 'hideMCPCallout'
   > & {
     indices: NonNullable<DocSearchProps['indices']>;
     askAi?: AskAiConfig;

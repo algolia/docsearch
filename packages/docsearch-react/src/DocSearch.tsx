@@ -154,6 +154,12 @@ export interface DocSearchProps {
    * @default undefined
    */
   resultBadgeKey?: string;
+  /**
+   * Hides the Docs MCP callout in the Footer.
+   *
+   * @default false
+   */
+  hideMCPCallout?: boolean;
 }
 
 function DocSearchComponent(

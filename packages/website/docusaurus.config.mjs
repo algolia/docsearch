@@ -86,11 +86,6 @@ export default {
           button: {
             buttonText: 'Go on, give it a search...',
           },
-          modal: {
-            footer: {
-              poweredByText: 'Powered by',
-            },
-          },
         },
       },
       metadata: [

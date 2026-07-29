@@ -63,9 +63,9 @@ const translations: DocSearchTranslations & {
     };
     footer: {
       submitQuestionText: string;
-      poweredByText: string;
       backToSearchText: string;
-      searchByText: string;
+      addDocsMCPText: string;
+      byAlgoliaAriaLabel: string;
     };
   };
 } = {
@@ -393,20 +393,20 @@ const translations: DocSearchTranslations & {
         message: 'Escape key',
         description: 'The ARIA label for close key in footer',
       }),
-      poweredByText: translate({
-        id: 'theme.SearchModal.footer.searchByText',
-        message: 'Powered by',
-        description: "The 'Powered by' text for footer",
-      }),
-      searchByText: translate({
-        id: 'theme.SearchModal.footer.searchByText',
-        message: 'Powered by',
-        description: "The 'Powered by' text for footer",
-      }),
       backToSearchText: translate({
         id: 'theme.SearchModal.footer.backToSearchText',
         message: 'Back to search',
         description: 'The back to search text for footer',
+      }),
+      addDocsMCPText: translate({
+        id: 'theme.SearchModal.footer.addDocsMCPText',
+        message: 'Add Docs MCP',
+        description: 'The callout text for linking to Docs MCP',
+      }),
+      byAlgoliaAriaLabel: translate({
+        id: 'theme.SearchModal.footer.byAlgoliaAriaLabel',
+        message: 'DocSearch by Algolia',
+        description: 'The ARIA label text for the DocSearch by Algolia lockup',
       }),
     },
     noResultsScreen: {

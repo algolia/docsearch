@@ -552,10 +552,6 @@
   padding: 0.75rem 1rem 1rem;
 }
 
-.DocSearch-Sidepanel--powered-by {
-  align-self: flex-end;
-}
-
 .DocSearch-Sidepanel-Screen--title {
   font-size: 1.625rem;
   font-weight: 600;
@@ -741,6 +737,53 @@
 
 .DocSearch-Sidepanel .DocSearch-Menu-content {
   right: -4rem;
+}
+
+.DocSearch-Sidepanel .DocSearch-ByAlgolia {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 131px;
+  color: var(--docsearch-text-color);
+
+  .DocSearch-ByAlgolia-mark {
+    color: var(--docsearch-logo-color);
+    height: 1rem;
+    width: auto;
+    flex-shrink: 0;
+  }
+
+  .DocSearch-ByAlgolia-Lockup {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .DocSearch-ByAlgolia-Lockup-title {
+    font-size: 0.9em;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .DocSearch-ByAlgolia-Lockup-by {
+    margin-block-start: 0.125rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75em;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    color: oklch(64% 0.008 75deg);
+    border-inline-start: 2px solid var(--docsearch-subtle-color);
+    padding-inline-start: 0.25rem;
+
+    svg {
+      height: 0.85rem;
+      width: auto;
+      max-width: 100%;
+    }
+  }
 }
 
 .sr-only {

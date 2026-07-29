@@ -664,13 +664,74 @@
   font-weight: 500;
 }
 
-.DocSearch-Logo a {
-  display: flex;
+.DocSearch-ByAlgolia {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 131px;
+  color: var(--docsearch-text-color);
 }
 
-.DocSearch-Logo svg {
+.DocSearch-ByAlgolia-mark {
   color: var(--docsearch-logo-color);
-  margin-inline-start: 8px;
+  height: 1.5rem;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.DocSearch-ByAlgolia-Lockup {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.DocSearch-ByAlgolia-Lockup-title {
+  font-size: 0.9375em;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.DocSearch-ByAlgolia-Lockup-by {
+  margin-block-start: 0.125rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.625em;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  color: oklch(64% 0.008 75deg);
+
+  svg {
+    height: 0.75rem;
+    width: auto;
+    max-width: 100%;
+  }
+}
+
+.DocSearch-DocsMCPAction {
+  a {
+    font-size: 0.875em;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--docsearch-text-color);
+    padding-inline: 0.5rem;
+    padding-block: 0.25rem;
+    border-radius: var(--docsearch-border-radius);
+    background-color: var(--docsearch-hit-focus-background);
+    min-block-size: 1.5rem;
+
+    &:hover,
+    &:focus-visible {
+      outline: 2px solid var(--docsearch-highlight-color);
+    }
+  }
+
+  svg {
+    height: 1rem;
+    width: 1rem;
+    color: var(--docsearch-highlight-color);
+  }
 }
 
 /* Hit */
@@ -1039,15 +1100,30 @@
   border-block-start: 1px solid var(--docsearch-subtle-color);
   border-radius: 0 0 var(--docsearch-modal-radius) var(--docsearch-modal-radius);
   display: flex;
-  flex-direction: row-reverse;
   flex-shrink: 0;
   height: var(--docsearch-footer-height);
-  justify-content: space-between;
   padding: 0 var(--docsearch-spacing);
   position: relative;
   user-select: none;
   width: 100%;
   z-index: 300;
+
+  @media screen and (width >= 768px) {
+    justify-content: space-between;
+  }
+}
+
+.DocSearch-Footer-Actions {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  justify-content: space-between;
+  width: 100%;
+
+  @media screen and (width >= 768px) {
+    justify-content: unset;
+    width: auto;
+  }
 }
 
 .DocSearch-Commands {

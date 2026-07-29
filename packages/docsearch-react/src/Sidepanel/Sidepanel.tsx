@@ -2,7 +2,7 @@ import type { SidepanelShortcuts, InitialAskAiMessage } from '@docsearch/core';
 import React, { useCallback } from 'react';
 import type { JSX } from 'react';
 
-import { AlgoliaLogo, type AlgoliaLogoTranslations } from '../AlgoliaLogo';
+import { DocSearchByAlgolia } from '../components/DocSearchByAlgolia';
 import type {
   DocSearchSidepanelProps,
   SidepanelSearchParameters,
@@ -52,8 +52,12 @@ export type SidepanelTranslations = Partial<{
   conversationScreen: ConversationScreenTranslations;
   /** Translation texts for the new conversation/starting screen. */
   newConversationScreen: NewConversationScreenTranslations;
-  /** Translation text for the Algolia logo. */
-  logo: AlgoliaLogoTranslations;
+  /**
+   * Aria label for the DocSearch by Algolia lockup.
+   *
+   * @default 'DocSearch by Algolia'
+   */
+  byAlgoliaAriaLabel: string;
 }>;
 
 export type SidepanelProps = Pick<
@@ -161,6 +165,7 @@ function SidepanelInner(
   const sidepanelContainerRef = React.useRef<HTMLDivElement>(null);
   const promptInputRef = React.useRef<HTMLTextAreaElement>(null);
   const isMobile = useIsMobile();
+  const { byAlgoliaAriaLabel = 'DocSearch by Algolia' } = translations;
 
   const expectedWidth = useSidepanelWidth({
     isExpanded,
@@ -438,9 +443,7 @@ function SidepanelInner(
           onStopStreaming={handleStopStreaming}
         />
         <footer className="DocSearch-Sidepanel-Footer">
-          <span className="DocSearch-Logo DocSearch-Sidepanel--powered-by">
-            <AlgoliaLogo translations={translations.logo} />
-          </span>
+          <DocSearchByAlgolia byAlgoliaAriaLabel={byAlgoliaAriaLabel} />
         </footer>
       </aside>
     </div>

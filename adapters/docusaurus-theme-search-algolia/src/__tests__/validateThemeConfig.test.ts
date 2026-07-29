@@ -87,6 +87,20 @@ describe('validateThemeConfig', () => {
     });
   });
 
+  it('accepts hideMCPCallout', () => {
+    const docsearch: DocSearchInput = {
+      ...minimalDocSearchConfig,
+      hideMCPCallout: true,
+    };
+
+    expect(testValidateThemeConfig(docsearch)).toEqual({
+      docsearch: {
+        ...DEFAULT_CONFIG,
+        ...docsearch,
+      },
+    });
+  });
+
   it('rejects missing docsearch config', () => {
     expectThrowMessage(
       () => testValidateThemeConfig(undefined),

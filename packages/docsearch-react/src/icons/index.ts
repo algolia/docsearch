@@ -1,3 +1,4 @@
+export * from './DocSearchMarkIcon';
 export * from './GoToExternalIcon';
 export * from './LoadingIcon';
 export * from './SparklesIcon';
@@ -22,6 +23,7 @@ export * from './ToolIcon';
 export * from './MemoryIcon';
 export * from './MessageIcon';
 export * from './PinIcon';
+export * from './PlusIcon';
 export * from './BackIcon';
 export * from './ChevronIcon';
 export * from './CheckIcon';

@@ -205,6 +205,7 @@ const DocSearchSchema = Joi.object<ThemeConfigDocSearch>({
   searchPage: SearchPageSchema,
   askAi: AskAiSchema.optional(),
   sidePanel: Joi.alternatives().try(Joi.boolean(), SidePanelSchema).optional(),
+  hideMCPCallout: Joi.boolean().optional(),
 })
   .label('themeConfig.docsearch')
   .unknown(false);
