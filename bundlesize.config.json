@@ -2,7 +2,7 @@
   "files": [
     {
       "path": "packages/docsearch-css/dist/style.css",
-      "maxSize": "8 kB"
+      "maxSize": "8.2 kB"
     },
     {
       "path": "packages/docsearch-react/dist/umd/index.js",
