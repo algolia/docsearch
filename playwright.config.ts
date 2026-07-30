@@ -11,6 +11,11 @@ export default defineConfig({
     baseURL: 'http://localhost:3000',
     trace: 'on-first-retry',
   },
+  webServer: {
+    command: 'bun run website:test',
+    reuseExistingServer: !process.env.CI,
+    url: 'http://localhost:3000',
+  },
   projects: [
     {
       name: 'chromium',
