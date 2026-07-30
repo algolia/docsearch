@@ -1,0 +1,69 @@
+---
+title: Configure prompt suggestions
+description: Display suggested prompts for Agent Studio conversations.
+---
+
+DocSearch v5 can show questions in three places. Each source has a different purpose and configuration.
+
+- **Suggested questions** appear on the new-conversation screen. They come from published records for the agent in the fixed suggested-questions index. Configure them with `suggestedQuestions: true`.
+- **Keyword prompt suggestions** appear while the user types in keyword search. They come from your Algolia prompt-suggestions index. Configure them with `promptSuggestions`.
+- **Streamed follow-ups** appear below the latest completed answer. They come from `data-suggestions` streamed by Agent Studio. Configure suggestions on the agent.
+
+## Show suggested questions
+
+Enable curated starting questions with `suggestedQuestions`:
+
+```js title="docsearch.js"
+askAi: {
+  assistantId: 'YOUR_AGENT_ID',
+  suggestedQuestions: true,
+}
+```
+
+DocSearch queries the `algolia_ask_ai_suggested_questions` index for records where `state` is `published` and `assistantId` matches the configured agent. It requests up to three records.
+
+A suggested-question record has this shape, plus its Algolia `objectID`:
+
+```ts
+{
+  appId: string;
+  assistantId: string;
+  question: string;
+  locale?: string;
+  state: 'published';
+  source: string;
+  order: number;
+}
+```
+
+When a user selects one, DocSearch sends its `objectID` as `suggestedQuestionId` with the question.
+
+## Show prompt suggestions during keyword search
+
+Create an Algolia index whose records contain a `prompt` string, then configure its name:
+
+```js title="docsearch.js"
+askAi: {
+  assistantId: 'YOUR_AGENT_ID',
+  promptSuggestions: {
+    indexName: 'docs_prompt_suggestions',
+    hitsPerPage: 3,
+  },
+}
+```
+
+As the user types, DocSearch searches this index with the entered query and retrieves only the `prompt` attribute. It places matching prompts after the action that asks the entered text directly.
+
+`hitsPerPage` defaults to `3`. The Docusaurus adapter requires a positive value. If this search fails, DocSearch keeps the direct Ask AI action and omits the suggestions.
+
+Selecting a prompt starts Agent Studio with that prompt. It doesn't send a `suggestedQuestionId`.
+
+## Show streamed follow-ups
+
+Configure contextual suggestions in the Agent Studio agent editor. See [write and configure agent prompts](https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/dashboard#write-and-configure-agent-prompts).
+
+Agent Studio streams these follow-ups in a `data-suggestions` part. DocSearch renders its `suggestions` array below the latest answer only. Selecting one sends it as the next user message in the same conversation.
+
+There's no DocSearch `askAi` option for streamed follow-ups. If Agent Studio doesn't stream `data-suggestions`, DocSearch doesn't show them.
+
+See the [JavaScript package reference](/docs/packages/js/api-reference) and [React package reference](/docs/packages/react/api-reference) for the suggestion options and translation keys.

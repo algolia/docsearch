@@ -60,6 +60,7 @@
     "sync:docsearch-version": "bun scripts/updateDocsearchVersion.ts"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
     "@changesets/cli": "^2.29.7",
     "@eslint-community/eslint-plugin-eslint-comments": "4.4.1",
     "@playwright/test": "1.49.1",
@@ -73,7 +74,6 @@
     "oxlint": "^1.74.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "start-server-and-test": "2.0.10",
     "stylelint": "17.14.0",
     "stylelint-config-sass-guidelines": "13.0.0",
     "stylelint-config-standard": "40.0.0",

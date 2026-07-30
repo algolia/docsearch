@@ -115,6 +115,7 @@ export default function Keyboard() {
             <button
               type="button"
               key={k.id}
+              aria-label={k.label}
               className={[
                 'key',
                 k.double ? 'keypad__double' : 'keypad__single',

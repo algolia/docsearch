@@ -39,7 +39,7 @@ The easiest way to set up markdown indexing is through the Crawler UI, which aut
    - **Content Tag**: Specify the HTML content selector (typically `main`)
    - **Template**: Choose the template that matches your documentation framework:
      - **Docusaurus** - For Docusaurus sites
-     - **VitePress** - For VitePress sites  
+     - **VitePress** - For VitePress sites
      - **Astro/Starlight** - For Astro/Starlight sites
      - **Non-DocSearch (Generic)** - For custom sites or other frameworks
 
@@ -245,7 +245,7 @@ class CustomAskAI {
 
   async sendMessage(conversationId, messages, searchParameters = {}) {
     const token = await this.getToken();
-    
+
     const response = await fetch(`${this.baseUrl}/chat`, {
       method: 'POST',
       headers: {
@@ -270,14 +270,14 @@ class CustomAskAI {
     // Handle streaming response
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
-    
+
     return {
       async *[Symbol.asyncIterator]() {
         try {
           while (true) {
             const { done, value } = await reader.read();
             if (done) break;
-            
+
             const chunk = decoder.decode(value, { stream: true });
             if (chunk.trim()) {
               yield chunk;
@@ -323,7 +323,7 @@ for await (const chunk of stream) {
 - Integration with existing chat systems
 - Custom analytics and monitoring
 
-> **📚 Learn More:** For complete API documentation, authentication details, advanced examples, and more integration patterns, see the [Ask AI API Reference](/docs/v4/askai-api).
+> **📚 Learn More:** For complete API documentation, authentication details, advanced examples, and more integration patterns, see the [Ask AI API Reference](/docs/v4/v4/askai-api).
 
 **Using Facet Filters with Your Markdown Index:**
 

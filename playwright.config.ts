@@ -13,8 +13,8 @@ export default defineConfig({
   },
   webServer: {
     command: 'bun run website:test',
-    reuseExistingServer: true,
-    port: 3000,
+    reuseExistingServer: !process.env.CI,
+    url: 'http://localhost:3000',
   },
   projects: [
     {

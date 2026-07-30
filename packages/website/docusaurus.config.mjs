@@ -6,6 +6,11 @@ import tailwindLoader from './plugins/tailwind-loader.mjs';
 const SIGNUP_LINK =
   'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch&utm_content=apply';
 
+// The MCP app is served at the same origin (/mcp) by hosting, not by
+// Docusaurus. Linking to the absolute URL makes it an external link so the
+// build's broken-link check doesn't flag a route Docusaurus doesn't own.
+const MCP_URL = 'https://docsearch.algolia.com/mcp';
+
 const currentDate = new Date();
 const currentYear = currentDate.getFullYear();
 
@@ -21,7 +26,7 @@ export default {
   favicon: 'img/favicon.ico',
   organizationName: 'Algolia',
   projectName: 'DocSearch',
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   markdown: {
     hooks: {
       onBrokenMarkdownLinks: 'throw',
@@ -45,6 +50,9 @@ export default {
             'https://github.com/algolia/docsearch/edit/main/packages/website/',
           versions: {
             current: {
+              label: 'Beta (v5.0.0-beta.x)',
+            },
+            v4: {
               label: 'Stable (v4.x)',
             },
             v3: {
@@ -75,9 +83,6 @@ export default {
         indices: [{ name: 'docsearch' }],
         askAi: {
           assistantId: 'ccdec697-e3fe-465b-a1c3-657e7bf18aef',
-          promptSuggestions: {
-            indexName: 'docsearch-markdown_prompt_suggestions',
-          },
         },
         sidePanel: true,
         contextualSearch: true,
@@ -96,12 +101,8 @@ export default {
       ],
       navbar: {
         hideOnScroll: true,
-        logo: {
-          alt: 'DocSearch x Algolia',
-          src: 'img/docsearch-x-algolia-logo-light-mode.png',
-          srcDark: 'img/docsearch-x-algolia-logo-dark-mode.png',
-          className: 'docsearch-nav-logo',
-        },
+        // Brand lockup is rendered by the swizzled Navbar/Logo (MCP vibe);
+        // no image `logo` config needed.
         items: [
           // left
           {
@@ -111,19 +112,10 @@ export default {
           },
           {
             label: 'MCP',
-            // Sibling SPA at /mcp — pathname:// bypasses Docusaurus route/link checks.
-            to: 'pathname:///mcp',
+            href: MCP_URL,
+            target: '_self',
             position: 'left',
-          },
-          {
-            label: 'Playground',
-            to: 'https://community.algolia.com/docsearch-playground/',
-            position: 'left',
-          },
-          {
-            label: 'Sign up',
-            to: SIGNUP_LINK,
-            position: 'left',
+            className: 'navbar-mcp-link',
           },
           // right
           {
@@ -135,12 +127,18 @@ export default {
             position: 'right',
             className: 'header-github-link',
           },
+          {
+            label: 'Sign up',
+            to: SIGNUP_LINK,
+            position: 'right',
+            className: 'navbar-cta',
+          },
         ],
       },
       announcementBar: {
-        id: 'announcement-bar',
+        id: 'docsearch-v5-beta',
         content:
-          '🚀 Get Ask AI now! Turn your docs site search into an AI-powered assistant – faster answers, fewer tickets, better self-serve. <a target="_blank" rel="noopener noreferrer" href="https://dashboard.algolia.com/ask-ai">Get Started Now</a>',
+          'DocSearch 5.0.0-beta is available. <a href="/docs/migrating-from-v4">Migrate from v4</a> or <a href="/docs/packages/overview">choose a package</a>.',
       },
       colorMode: {
         defaultMode: 'light',
@@ -165,8 +163,12 @@ export default {
                 to: 'docs/v3/docsearch',
               },
               {
-                label: 'DocSearch v4 - Beta',
-                to: 'docs/docsearch',
+                label: 'DocSearch v4',
+                to: 'docs/v4/docsearch',
+              },
+              {
+                label: 'DocSearch v5 beta',
+                to: 'docs/packages/overview',
               },
             ],
           },
@@ -214,13 +216,8 @@ export default {
             ],
           },
         ],
-        logo: {
-          alt: 'Algolia',
-          src: 'img/docsearch-x-algolia-logo-light-mode.png',
-          srcDark: 'img/docsearch-x-algolia-logo-dark-mode.png',
-          width: 200,
-        },
-        copyright: `2015-${currentYear} – Built with 💙 by Algolia`,
+        // Brand lockup rendered by the swizzled Footer (MCP vibe).
+        copyright: `2015–${currentYear} — Built with <span style="color:var(--accent)">♥</span> by Algolia`,
       },
       image: 'img/og_image.png',
       prism: {

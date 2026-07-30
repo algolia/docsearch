@@ -8,7 +8,7 @@
     {
       "name": "algolia-docsearch",
       "source": ".",
-      "description": "up-to-date public developer documentation from the DocSearch corpus.",
+      "description": "Fresh, chunked and ranked excerpts from up-to-date public developer documentation from the DocSearch corpus.",
       "version": "1.0.0"
     }
   ]
