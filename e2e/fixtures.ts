@@ -1,3 +1,5 @@
+// oxlint-disable max-classes-per-file react-hooks/rules-of-hooks
+import AxeBuilder from '@axe-core/playwright';
 import {
   test as base,
   expect,
@@ -89,11 +91,49 @@ export class DocSearchPage {
   }
 }
 
-export const test = base.extend<{ docSearch: DocSearchPage }>({
+export class SidepanelPage {
+  readonly page: Page;
+  readonly sidepanelButton: Locator;
+  readonly sidepanel: Locator;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.sidepanelButton = page.locator('.DocSearch-SidepanelButton');
+    this.sidepanel = page.locator('.DocSearch-Sidepanel-Container');
+  }
+
+  async openSidepanel(): Promise<void> {
+    await this.sidepanelButton.click();
+    await expect(this.sidepanel).toHaveClass(/is-open/, {
+      timeout: 10000,
+    });
+  }
+}
+
+export const test = base.extend<{
+  docSearch: DocSearchPage;
+  sidepanel: SidepanelPage;
+  axe: () => AxeBuilder;
+}>({
   docSearch: async ({ page }, use) => {
     const docSearch = new DocSearchPage(page);
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     await use(docSearch);
+  },
+  sidepanel: async ({ page }, use) => {
+    const sidepanel = new SidepanelPage(page);
+    await use(sidepanel);
+  },
+  axe: async ({ page }, use) => {
+    const makeBuilder = () =>
+      new AxeBuilder({ page }).withTags([
+        'wcag2a',
+        'wcag2aa',
+        'wcag21a',
+        'wcag21aa',
+        'wcag22a',
+        'wcag22aa',
+      ]);
+    await use(makeBuilder);
   },
 });
 
