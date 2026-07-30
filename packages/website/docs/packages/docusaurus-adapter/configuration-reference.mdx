@@ -1,0 +1,618 @@
+---
+title: Docusaurus adapter configuration
+description: Configure DocSearch v5 search, Ask AI, the Sidepanel, and the search page in Docusaurus.
+toc_max_heading_level: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Add supported options under `themeConfig.docsearch`. The adapter doesn't read `themeConfig.algolia`.
+
+```js title="docusaurus.config.mjs"
+export default {
+  plugins: ['@docsearch/docusaurus-adapter'],
+  themeConfig: {
+    docsearch: {
+      appId: 'YOUR_APPLICATION_ID',
+      apiKey: 'YOUR_SEARCH_API_KEY',
+      indices: ['YOUR_INDEX_NAME'],
+    },
+  },
+};
+```
+
+## Compatibility
+
+| Dependency          | Supported version                       |
+| ------------------- | --------------------------------------- |
+| Node.js             | 20 or later                             |
+| Docusaurus          | 3.10.2 or later in the 3.x release line |
+| React and React DOM | 18 or 19                                |
+
+Keep the adapter, Docusaurus, React, and React DOM within these ranges. Don't run the adapter beside `@docusaurus/theme-search-algolia`.
+
+## Root options
+
+The validator rejects unknown root options. Pass runtime functions such as custom Agent Studio tools through a swizzled `SearchBar` instead of `themeConfig`.
+
+### `appId`
+
+> `type: string` | **required**
+
+Algolia application ID.
+
+### `apiKey`
+
+> `type: string` | **required**
+
+Public API key with search permission.
+
+### `indices`
+
+> `type: Array<string | DocSearchIndex>` | **required**
+
+Nonempty list of keyword indices, in query order. See [Indices and search parameters](#indices-and-search-parameters).
+
+### `contextualSearch`
+
+> `type: boolean` | **optional**
+
+Whether to add the current Docusaurus locale, default tag, and docs-version tags to search. Defaults to `true`. See [Contextual search](#contextual-search).
+
+### `externalUrlRegex`
+
+> `type: string` | **optional**
+
+Regular expression that identifies result URLs that require full-page navigation. See [URL processing](#url-processing).
+
+### `replaceSearchResultPathname`
+
+> `type: { from: string | RegExp, to: string }` | **optional**
+
+Replace a result pathname before adding the Docusaurus base URL. See [URL processing](#url-processing).
+
+### `facets`
+
+> `type: Array<{ key: string, label?: string }>` | **optional**
+
+Facet controls in the search modal. Defaults to `[]`. See [Modal facets](#modal-facets).
+
+### `initialQuery`
+
+> `type: string` | **optional**
+
+Query placed in the modal when it opens. Defaults to `''`.
+
+### `insights`
+
+> `type: boolean | object` | **optional**
+
+Whether to enable Algolia Insights, or an object that configures it. Defaults to `false`.
+
+### `placeholder`
+
+> `type: string` | **optional**
+
+Search input placeholder. Defaults to the built-in translation.
+
+### `translations`
+
+> `type: DocSearchTranslations` | **optional**
+
+Search button and modal text overrides. Defaults to the Docusaurus translations.
+
+### `maxResultsPerGroup`
+
+> `type: number` | **optional**
+
+Maximum results shown in each modal result group.
+
+### `disableUserPersonalization`
+
+> `type: boolean` | **optional**
+
+Whether to disable recent searches, favorites, and stored AI conversations. Defaults to `false`.
+
+### `getMissingResultsUrl`
+
+> `type: ({ query }) => string` | **optional**
+
+Build the no-results report URL.
+
+### `keyboardShortcuts`
+
+> `type: object` | **optional**
+
+Enable or disable `Ctrl/Cmd+K`, `/`, and `Ctrl/Cmd+I`. All shortcuts are enabled by default.
+
+### `recentSearchesLimit`
+
+> `type: number` | **optional**
+
+Maximum recent searches when no favorites exist. Defaults to `7`.
+
+### `recentSearchesWithFavoritesLimit`
+
+> `type: number` | **optional**
+
+Maximum recent searches when favorites exist. Defaults to `4`.
+
+### `resultBadgeKey`
+
+> `type: string` | **optional**
+
+Hit property rendered as a badge in modal results. See [Result badges](#result-badges).
+
+### `searchPage`
+
+> `type: false | SearchPageConfig` | **optional**
+
+Configure or disable the search results page. Defaults to `{ path: 'search' }`. See [Search page](#search-page).
+
+### `askAi`
+
+> `type: AskAiConfig` | **optional**
+
+Configure Agent Studio for the modal and Sidepanel. See [Ask AI](#ask-ai).
+
+### `sidePanel`
+
+> `type: boolean | SidePanelConfig` | **optional**
+
+Whether to enable the Ask AI Sidepanel, or an object that configures it. Defaults to `false`. See [Sidepanel](#sidepanel).
+
+## Indices and search parameters
+
+Define at least one keyword index. Use a string for its default settings or an object for per-index settings:
+
+```js title="docusaurus.config.mjs"
+indices: [
+  'docs_en',
+  {
+    name: 'api_reference',
+    searchParameters: {
+      facetFilters: ['version:v5'],
+      filters: 'visibility:public',
+      attributesToRetrieve: [
+        'content',
+        'hierarchy',
+        'type',
+        'url',
+        'version',
+      ],
+      restrictSearchableAttributes: ['hierarchy', 'content'],
+      distinct: true,
+    },
+  },
+],
+```
+
+`searchParameters` accepts Algolia search parameters. The validator explicitly accepts `facetFilters`, `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`, and preserves other Algolia parameters.
+
+The modal queries every index in array order. The search page queries only the first index.
+
+## Contextual search
+
+Keep `contextualSearch: true` to limit results to the current locale and Docusaurus docs versions. The adapter merges these conditions into each index's `facetFilters` instead of replacing your filters.
+
+Contextual search also applies to each `askAi.indices` item. Define dynamic Agent Studio indices if Ask AI must receive these facet filters.
+
+Set `contextualSearch: false` when your records don't contain Docusaurus `language` and `docusaurus_tag` attributes:
+
+```js title="docusaurus.config.mjs"
+docsearch: {
+  // ...
+  contextualSearch: false,
+},
+```
+
+## Modal facets
+
+Use root `facets` to add filter controls to the modal:
+
+```js title="docusaurus.config.mjs"
+docsearch: {
+  // ...
+  facets: [
+    { key: 'language', label: 'Language' },
+    { key: 'version', label: 'Version' },
+  ],
+},
+```
+
+Configure each attribute as an Algolia facet. The modal supports up to five unique, nonempty facet keys. It merges facet values from every keyword index and hides facets with no values.
+
+These controls don't configure the search page sidebar. Use `searchPage.facets` for that page.
+
+## Result badges
+
+Set `resultBadgeKey` to a property path returned by each keyword index:
+
+```js title="docusaurus.config.mjs"
+docsearch: {
+  // ...
+  indices: [
+    {
+      name: 'docs',
+      searchParameters: {
+        attributesToRetrieve: [
+          'content',
+          'hierarchy',
+          'type',
+          'url',
+          'version',
+        ],
+      },
+    },
+  ],
+  resultBadgeKey: 'version',
+},
+```
+
+Dot paths and array indices work, including `hierarchy.lvl1`, `tags[2]`, and `tags.2`. The adapter displays the badge in modal results. The built-in search page doesn't render result badges.
+
+## Search page
+
+The adapter creates `/search` by default. Change the path and sidebar facets with an object:
+
+```js title="docusaurus.config.mjs"
+searchPage: {
+  path: 'find',
+  facets: [
+    { attribute: 'hierarchy.lvl0', label: 'Section' },
+    { attribute: 'version', label: 'Version' },
+  ],
+},
+```
+
+Each facet requires `attribute`; `label` defaults to the attribute name. If `facets` is missing or empty, the page shows `hierarchy.lvl0` with the label `Section`.
+
+The page uses the first `indices` item and its `searchParameters`. It shows 15 results per request, stores refinements in the URL, and adds docs-version controls when contextual search and Docusaurus versioning are active. Configure every sidebar attribute as an Algolia facet.
+
+Disable the route, modal footer link, and OpenSearch metadata with:
+
+```js title="docusaurus.config.mjs"
+searchPage: false,
+```
+
+## Ask AI
+
+Create an assistant by following [Get started with Agent Studio](/docs/agent-studio/getting-started). Set `askAi` to an object:
+
+```js title="docusaurus.config.mjs"
+askAi: {
+  assistantId: 'YOUR_ASSISTANT_ID',
+  suggestedQuestions: true,
+  searchParameters: {
+    docs: {
+      filters: 'visibility:public',
+      attributesToRetrieve: ['title', 'content', 'url'],
+      distinct: true,
+    },
+  },
+  memory: {
+    enabled: true,
+    userToken: 'SERVER_GENERATED_JWT',
+  },
+  promptSuggestions: {
+    indexName: 'docs_prompt_suggestions',
+    hitsPerPage: 3,
+  },
+},
+```
+
+### `assistantId`
+
+> `type: string` | **required**
+
+Agent Studio assistant ID.
+
+### `suggestedQuestions`
+
+> `type: boolean` | **optional**
+
+Whether to show published assistant questions on the new-conversation screen. Defaults to `false`.
+
+### `searchParameters`
+
+> `type: Record<string, AgentStudioSearchParameters>` | **optional**
+
+Search parameters keyed by index name. Root `askAi.searchParameters` supports `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`. Don't add `facetFilters` at this level.
+
+### `indices`
+
+> `type: AgentStudioIndex[]` | **optional**
+
+Dynamic indices available to Agent Studio search tools. See [dynamic indices][1].
+
+Use `askAi.indices` to describe dynamic indices:
+
+```js title="docusaurus.config.mjs"
+askAi: {
+  assistantId: 'YOUR_ASSISTANT_ID',
+  indices: [
+    {
+      index: 'docs_markdown',
+      description: 'Product documentation.',
+      enhancedDescription: 'Use for setup and API questions.',
+      searchParameters: {
+        facetFilters: ['language:en'],
+      },
+    },
+  ],
+},
+```
+
+Each item requires `index` and `description`. It can also include `enhancedDescription`, `searchParameters`, and `searchControls`. Search controls can configure `query`, `hits_per_page`, `page`, `attributesToRetrieve`, `responseFields`, `facets`, and custom properties.
+
+### `memory`
+
+> `type: { enabled?: boolean, userToken?: string }` | **optional**
+
+Show memory tool calls and send a user JWT. Memory is disabled by default. See [user-scoped memory][2].
+
+### `promptSuggestions`
+
+> `type: { indexName: string, hitsPerPage?: number }` | **optional**
+
+Show prompt suggestions with keyword results. `hitsPerPage` defaults to `3`. See [Configure prompt suggestions](/docs/agent-studio/prompt-suggestions).
+
+## Sidepanel
+
+Set `sidePanel: true` for the default panel. `askAi` is required whenever the Sidepanel is enabled.
+
+```js title="docusaurus.config.mjs"
+sidePanel: {
+  variant: 'inline',
+  side: 'right',
+  width: 420,
+  expandedWidth: '60vw',
+  pushSelector: '#__docusaurus',
+  suggestedQuestions: true,
+  hideButton: false,
+  keyboardShortcuts: {
+    'Ctrl/Cmd+I': true,
+  },
+},
+```
+
+Review [hybrid mode](/docs/hybrid-mode) before changing panel behavior.
+
+### `variant`
+
+> `type: 'floating' | 'inline'` | **optional**
+
+Float above content or push selected content. Defaults to `'inline'`.
+
+### `side`
+
+> `type: 'left' | 'right'` | **optional**
+
+Side where the panel opens. Defaults to `'right'`.
+
+### `width`
+
+> `type: number | string` | **optional**
+
+Collapsed panel width. Numbers represent pixels. Defaults to `360px`.
+
+### `expandedWidth`
+
+> `type: number | string` | **optional**
+
+Expanded panel width. Numbers represent pixels. Defaults to `580px`.
+
+### `pushSelector`
+
+> `type: string` | **optional**
+
+Element pushed by the inline panel. Defaults to `#__docusaurus`.
+
+### `suggestedQuestions`
+
+> `type: boolean` | **optional**
+
+Whether to show suggested questions in the panel. Defaults to `askAi.suggestedQuestions`.
+
+### `translations`
+
+> `type: SidepanelTranslations` | **optional**
+
+Panel text overrides. Defaults to the built-in strings.
+
+### `hideButton`
+
+> `type: boolean` | **optional**
+
+Whether to hide the Sidepanel button while keeping the panel registered. Defaults to `false`.
+
+### `portalContainer`
+
+> `type: DocumentFragment | Element | null` | **optional**
+
+Element that receives the panel portal. Defaults to `document.body`. Pass this option through a swizzled `SearchBar` because a DOM element isn't available while Docusaurus evaluates its server configuration.
+
+### `keyboardShortcuts`
+
+> `type: { 'Ctrl/Cmd+I'?: boolean }` | **optional**
+
+Enable or disable the panel shortcut. The shortcut is enabled by default.
+
+### `indices`
+
+> `type: AgentStudioIndex[]` | **optional**
+
+Override Agent Studio indices for the panel. Defaults to `askAi.indices`. See [dynamic indices][1].
+
+### `memory`
+
+> `type: { enabled?: boolean, userToken?: string }` | **optional**
+
+Override memory for the panel. Defaults to `askAi.memory`. See [user-scoped memory][2].
+
+## Custom tools
+
+Docusaurus can't serialize tool functions in `themeConfig`. The adapter rejects both `askAi.tools` and `sidePanel.tools` there.
+
+Swizzle `SearchBar` from `@docsearch/docusaurus-adapter`, then pass tools as component props:
+
+```bash
+npm run swizzle -- @docsearch/docusaurus-adapter SearchBar --eject
+```
+
+Replace the generated component with one of these examples:
+
+<Tabs groupId="language" aria-label="Programming language">
+  <TabItem value="react" label="React">
+
+```tsx title="src/theme/SearchBar/index.tsx"
+import type { DocusaurusSearchBarProps } from '@docsearch/docusaurus-adapter';
+import type { ToolCalls } from '@docsearch/react';
+import OriginalSearchBar from '@theme-original/SearchBar';
+
+const tools: ToolCalls = {
+  getReleaseStatus: {
+    render: ({ message }) => JSON.stringify(message.output),
+  },
+};
+
+export default function SearchBar(props: DocusaurusSearchBarProps) {
+  return (
+    <OriginalSearchBar
+      {...props}
+      askAi={{
+        assistantId: 'YOUR_ASSISTANT_ID',
+        tools,
+      }}
+      sidePanel={{ tools }}
+    />
+  );
+}
+```
+
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+
+```jsx title="src/theme/SearchBar/index.js"
+import OriginalSearchBar from '@theme-original/SearchBar';
+
+const tools = {
+  getReleaseStatus: {
+    render: ({ message }) => JSON.stringify(message.output),
+  },
+};
+
+export default function SearchBar(props) {
+  return (
+    <OriginalSearchBar
+      {...props}
+      askAi={{
+        assistantId: 'YOUR_ASSISTANT_ID',
+        tools,
+      }}
+      sidePanel={{ tools }}
+    />
+  );
+}
+```
+
+  </TabItem>
+</Tabs>
+
+Passing `askAi` or `sidePanel` as a prop replaces that nested theme-config value. Include every nested option that you want to keep in the prop object. See [Agent Studio tools](/docs/agent-studio/tools) for tool renderers and client-side handlers.
+
+## Translations
+
+Override only the modal strings you need:
+
+```js title="docusaurus.config.mjs"
+translations: {
+  button: {
+    buttonText: 'Search API docs',
+    buttonAriaLabel: 'Search API docs',
+  },
+  modal: {
+    searchBox: {
+      placeholderText: 'Search API docs',
+    },
+    facets: {
+      clearAllLabel: 'Reset filters',
+    },
+    resultsScreen: {
+      resultBadgeLabelText: 'Version',
+    },
+  },
+},
+```
+
+The adapter uses Docusaurus translation IDs for its default search button, modal, and search page strings. Run the Docusaurus `write-translations` command to localize built-in strings. Put Sidepanel overrides under `sidePanel.translations`.
+
+## URL processing
+
+The adapter parses each result URL. It leaves URLs matching `externalUrlRegex` unchanged and uses full-page navigation for them. For other URLs, it keeps the pathname, query, and hash, applies `replaceSearchResultPathname`, and adds the Docusaurus base URL.
+
+```js title="docusaurus.config.mjs"
+docsearch: {
+  // ...
+  externalUrlRegex: '^https://external\\.example\\.com/',
+  replaceSearchResultPathname: {
+    from: '/legacy-docs/',
+    to: '/docs/',
+  },
+},
+```
+
+A string `from` value is treated literally. A `RegExp` is converted to its source during validation.
+
+## Validation errors
+
+The adapter reports dedicated errors for removed or unsupported v4 options. Use the replacement named in each message:
+
+```text
+`themeConfig.algolia` is no longer supported by @docsearch/docusaurus-adapter v5. Move the configuration to `themeConfig.docsearch`.
+
+`themeConfig.docsearch.indexName` was removed. Use `themeConfig.docsearch.indices` instead.
+
+`themeConfig.docsearch.searchParameters` was removed. Configure `searchParameters` on each `themeConfig.docsearch.indices` entry instead.
+
+`themeConfig.docsearch.searchPagePath` was removed. Use `themeConfig.docsearch.searchPage` instead.
+
+`themeConfig.docsearch.askAi` must be an object with `assistantId`.
+
+`themeConfig.docsearch.askAi.agentStudio` was removed. The adapter now only supports Agent Studio.
+
+`themeConfig.docsearch.askAi.indexName`, `apiKey`, and `appId` were removed. Use the top-level DocSearch credentials instead.
+
+`themeConfig.docsearch.askAi.sidePanel` was removed. Use `themeConfig.docsearch.sidePanel` instead.
+
+`themeConfig.docsearch.sidePanel` requires `themeConfig.docsearch.askAi`.
+```
+
+Tool definitions report these errors:
+
+```text
+`themeConfig.docsearch.askAi.tools` is not supported because Docusaurus removes function values when serializing theme config. Pass custom tools through a swizzled `@theme/SearchBar` component instead: use `askAi` for the modal and `sidePanel` for the side panel.
+
+`themeConfig.docsearch.sidePanel.tools` is not supported because Docusaurus removes function values when serializing theme config. Pass custom tools through a swizzled `@theme/SearchBar` component instead: use `askAi` for the modal and `sidePanel` for the side panel.
+```
+
+The schema also reports these messages for missing or invalid required configuration:
+
+```text
+"themeConfig.docsearch" is required
+"docsearch.appId" is required. If you haven't migrated to the new DocSearch infra, please refer to the blog post for instructions: https://docusaurus.io/blog/2021/11/21/algolia-docsearch-migration
+"docsearch.apiKey" is required
+"docsearch.indices" is required
+"docsearch.indices" must contain at least 1 items
+"docsearch.unknownKey" is not allowed
+"docsearch.askAi.indices" must contain at least 1 items
+"docsearch.askAi.indices[0].description" is required
+"docsearch.sidePanel.indices" must contain at least 1 items
+"docsearch.sidePanel.indices[0].description" is required
+```
+
+Replace `unknownKey` with the rejected option name. Other invalid nested values use the same Joi path format.
+
+[1]: /docs/agent-studio/dynamic-indices
+[2]: /docs/agent-studio/memory

@@ -50,7 +50,10 @@ export default {
             'https://github.com/algolia/docsearch/edit/main/packages/website/',
           versions: {
             current: {
-              label: 'Latest (v4.x)',
+              label: 'Beta (v5.0.0-beta.x)',
+            },
+            v4: {
+              label: 'Stable (v4.x)',
             },
             v3: {
               label: 'Legacy (v3.x)',
@@ -138,9 +141,9 @@ export default {
         ],
       },
       announcementBar: {
-        id: 'announcement-bar',
+        id: 'docsearch-v5-beta',
         content:
-          '🚀 Get Ask AI now! Turn your docs site search into an AI-powered assistant – faster answers, fewer tickets, better self-serve. <a target="_blank" rel="noopener noreferrer" href="https://dashboard.algolia.com/ask-ai">Get Started Now</a>',
+          'DocSearch 5.0.0-beta is available. <a href="/docs/migrating-from-v4">Migrate from v4</a> or <a href="/docs/packages/overview">choose a package</a>.',
       },
       colorMode: {
         defaultMode: 'light',
@@ -165,8 +168,12 @@ export default {
                 to: 'docs/v3/docsearch',
               },
               {
-                label: 'DocSearch v4 - Beta',
-                to: 'docs/docsearch',
+                label: 'DocSearch v4',
+                to: 'docs/v4/docsearch',
+              },
+              {
+                label: 'DocSearch v5 beta',
+                to: 'docs/packages/overview',
               },
             ],
           },
