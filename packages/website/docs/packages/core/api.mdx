@@ -1,0 +1,284 @@
+---
+title: Core API reference
+description: API reference for @docsearch/core v5 beta.
+toc_max_heading_level: 2
+---
+
+## `DocSearch`
+
+`DocSearch` is a ref-forwarding React provider.
+
+### `children`
+
+> `type: React.ReactNode` | **required**
+
+Views and controls that consume DocSearch state.
+
+### `theme`
+
+> `type: 'dark' | 'light'` | **optional**
+
+Sets `document.documentElement.dataset.theme` while mounted.
+
+### `initialQuery`
+
+> `type: string` | **optional**
+
+Initial modal query and reset value after close. Defaults to `''`.
+
+### `keyboardShortcuts`
+
+> `type: KeyboardShortcuts` | **optional**
+
+Overrides individual shortcut defaults. All shortcuts are enabled by default.
+
+### `onReady`
+
+> `type: () => void` | **optional**
+
+Runs after the provider mounts.
+
+### `onOpen`
+
+> `type: () => void` | **optional**
+
+Runs when a modal opens.
+
+### `onClose`
+
+> `type: () => void` | **optional**
+
+Runs when a modal closes to the ready state.
+
+### `onSidepanelOpen`
+
+> `type: () => void` | **optional**
+
+Runs when the Sidepanel opens.
+
+### `onSidepanelClose`
+
+> `type: () => void` | **optional**
+
+Runs when the Sidepanel closes.
+
+### `KeyboardShortcuts`
+
+```ts
+interface KeyboardShortcuts {
+  'Ctrl/Cmd+K'?: boolean;
+  '/'?: boolean;
+  'Ctrl/Cmd+I'?: boolean;
+}
+```
+
+`DEFAULT_KEYBOARD_SHORTCUTS` sets all three fields to `true`.
+
+## `DocSearchRef`
+
+Attach this ref to `DocSearch`.
+
+### `open`
+
+> `type: () => void`
+
+Opens the search modal.
+
+### `close`
+
+> `type: () => void`
+
+Returns to the ready state and focuses the registered search button.
+
+### `openAskAi`
+
+> `type: (message?: InitialAskAiMessage) => void`
+
+Opens Ask AI in a registered view. See [Hybrid Mode][1].
+
+### `openSidepanel`
+
+> `type: (message?: InitialAskAiMessage) => void`
+
+Opens the Sidepanel; it does nothing until that view registers.
+
+### `isReady`
+
+> `type: readonly boolean`
+
+Whether the provider is mounted.
+
+### `isOpen`
+
+> `type: readonly boolean`
+
+Whether a modal is open.
+
+### `isSidepanelOpen`
+
+> `type: readonly boolean`
+
+Whether the Sidepanel is open.
+
+### `isSidepanelSupported`
+
+> `type: readonly boolean`
+
+Whether Sidepanel support is registered. See [Hybrid Mode][1].
+
+```ts
+type InitialAskAiMessage = {
+  query: string;
+  messageId?: string;
+  suggestedQuestionId?: string;
+};
+```
+
+## `useDocSearch`
+
+```ts
+function useDocSearch(): DocSearchContext;
+```
+
+The hook returns the nearest provider value.
+
+`DocSearchState` is `'modal-askai' | 'modal-search' | 'ready' | 'sidepanel'`.
+
+`View` is `'modal' | 'sidepanel' | (Record<string, unknown> & string)`, so integrations can register another string view.
+
+### `docsearchState`
+
+> `type: DocSearchState`
+
+Active state.
+
+### `setDocsearchState`
+
+> `type: (state: DocSearchState) => void`
+
+Sets active state directly.
+
+### `searchButtonRef`
+
+> `type: React.RefObject<HTMLButtonElement | null>`
+
+Ref used to restore focus after close.
+
+### `initialQuery`
+
+> `type: string`
+
+Query for a modal opening.
+
+### `keyboardShortcuts`
+
+> `type: Required<KeyboardShortcuts>`
+
+User options merged with defaults.
+
+### `openModal`
+
+> `type: () => void`
+
+Opens keyword search.
+
+### `closeModal`
+
+> `type: () => void`
+
+Closes the modal and resets its query.
+
+### `isAskAiActive`
+
+> `type: boolean`
+
+Whether the modal is in Ask AI state.
+
+### `isModalActive`
+
+> `type: boolean`
+
+Whether either modal state is active.
+
+### `onAskAiToggle`
+
+> `type: OnAskAiToggle`
+
+Changes the active Ask AI state. See [Hybrid Mode][1].
+
+### `initialAskAiMessage`
+
+> `type: InitialAskAiMessage | undefined` | **optional**
+
+Initial Sidepanel message.
+
+### `registerView`
+
+> `type: (view: View) => void`
+
+Registers an available view.
+
+### `isHybridModeSupported`
+
+> `type: boolean`
+
+Whether cross-view support is available. See [Hybrid Mode][1].
+
+## `useKeyboardShortcuts`
+
+```ts
+function useKeyboardShortcuts(
+  userShortcuts?: KeyboardShortcuts
+): Required<KeyboardShortcuts>;
+```
+
+Returns the defaults merged with the supplied fields.
+
+## `useTheme`
+
+```ts
+function useTheme(props: { theme?: 'dark' | 'light' }): void;
+```
+
+When `theme` differs from the document's existing `data-theme`, the hook sets it and restores the previous value on cleanup. It makes no change when `theme` is omitted.
+
+## `useDocSearchKeyboardEvents`
+
+```ts
+interface UseDocSearchKeyboardEventsProps {
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+  isAskAiActive: boolean;
+  onAskAiToggle: (active: boolean) => void;
+  keyboardShortcuts?: KeyboardShortcuts;
+  onInput?: (event: KeyboardEvent) => void;
+  searchButtonRef?: React.RefObject<HTMLButtonElement | null>;
+}
+```
+
+The hook registers a window `keydown` listener. `Escape` leaves Ask AI first, then closes an open modal. `Control/Command+K` toggles the modal. `/` opens it when the user isn't editing content.
+
+`onInput` and `searchButtonRef` remain in the type for compatibility but are deprecated and aren't used by the hook.
+
+## Exports
+
+The root `@docsearch/core` entry exports:
+
+| Kind | Exports |
+| --- | --- |
+| Components and hooks | `DocSearch`, `useDocSearch`, `useDocSearchKeyboardEvents`, `useKeyboardShortcuts`, `useTheme` |
+| Constants | `DEFAULT_KEYBOARD_SHORTCUTS` |
+| Types | `DocSearchState`, `View`, `InitialAskAiMessage`, `OnAskAiToggle`, `DocSearchRef`, `DocSearchContext`, `DocSearchCallbacks`, `DocSearchProps`, `DocSearchTheme`, `UseThemeProps`, `UseDocSearchKeyboardEventsProps`, `DocSearchModalShortcuts`, `SidepanelShortcuts`, `KeyboardShortcuts` |
+
+The package also exposes these subpaths:
+
+| Import path | Exports |
+| --- | --- |
+| `@docsearch/core/useDocSearchKeyboardEvents` | `useDocSearchKeyboardEvents`, `UseDocSearchKeyboardEventsProps` |
+| `@docsearch/core/useKeyboardShortcuts` | `useKeyboardShortcuts`, `DEFAULT_KEYBOARD_SHORTCUTS`, shortcut types |
+| `@docsearch/core/useTheme` | `useTheme`, `DocSearchTheme`, `UseThemeProps` |
+
+`useIsMobile` is internal and isn't a package export.
+
+[1]: /docs/hybrid-mode
