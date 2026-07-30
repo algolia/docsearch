@@ -1,9 +1,9 @@
 import { Github } from 'iconoir-react';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { AsciiBackdrop } from './AsciiBackdrop';
 import DemoShowcase from './DemoShowcase';
-import { PrimaryButton } from './ui/button';
+import { Button, PrimaryButton } from './ui/button';
 import { FeaturesBento } from './ui/features-bento';
 import { FlipWords } from './ui/flip-words';
 import Keyboard from './ui/keyboard';
@@ -13,10 +13,14 @@ import { Reveal } from './ui/reveal';
 const SIGNUP_LINK =
   'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch&utm_content=apply';
 
-function useGithubStars(repo, fallback = '9k') {
-  const [stars, setStars] = useState(fallback);
+function useGithubStars(repo) {
+  const [stars, setStars] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     let cancelled = false;
+    setIsLoading(true);
+
     fetch(`https://api.github.com/repos/${repo}`)
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
@@ -25,16 +29,21 @@ function useGithubStars(repo, fallback = '9k') {
         const n = data.stargazers_count;
         setStars(n >= 1000 ? `${(n / 1000).toFixed(1)}k` : String(n));
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+
     return () => {
       cancelled = true;
     };
   }, [repo]);
-  return stars;
+
+  return { isLoading, stars };
 }
 
 function Hero() {
-  const stars = useGithubStars('algolia/docsearch');
+  const { isLoading, stars } = useGithubStars('algolia/docsearch');
 
   return (
     <section className="relative isolate">
@@ -73,9 +82,19 @@ function Hero() {
               className="inline-flex items-center gap-1.5 text-[var(--text-tertiary)] no-underline! transition-colors hover:text-[var(--text)]"
             >
               <Github width={14} height={14} aria-hidden={true} />
-              <span className="tabular text-[var(--text-secondary)]">
-                {stars} stars on GitHub
-              </span>
+              {isLoading ? (
+                <output className="inline-flex items-center">
+                  <span
+                    aria-hidden={true}
+                    className="size-3 animate-spin rounded-full border-2 border-[var(--text-tertiary)] border-t-transparent"
+                  />
+                  <span className="sr-only">Loading GitHub star count</span>
+                </output>
+              ) : (
+                <span className="tabular text-[var(--text-secondary)]">
+                  {stars ?? '—'} stars on GitHub
+                </span>
+              )}
             </a>
           </div>
         </Reveal>
@@ -104,6 +123,33 @@ function SectionHeading({ eyebrow, title, subtitle }) {
   );
 }
 
+function MobileSearchDemo() {
+  const openSearch = useCallback(() => {
+    document
+      .querySelector("[class*='navbarSearchContainer'] .DocSearch-Button")
+      ?.click();
+  }, []);
+  const openAskAi = useCallback(() => {
+    document.querySelector('.DocSearch-SidepanelButton')?.click();
+  }, []);
+
+  return (
+    <div className="mx-auto max-w-md rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm md:hidden">
+      <p className="mb-5 text-center text-[14px] text-[var(--text-secondary)]">
+        Search the docs or ask AI a question.
+      </p>
+      <div className="flex flex-col gap-3">
+        <Button className="h-12 w-full text-[15px]" onClick={openSearch}>
+          Search documentation
+        </Button>
+        <PrimaryButton className="h-12 w-full text-[15px]" onClick={openAskAi}>
+          Ask AI
+        </PrimaryButton>
+      </div>
+    </div>
+  );
+}
+
 function Home() {
   useEffect(() => {
     document.body.classList.add('homepage');
@@ -119,7 +165,10 @@ function Home() {
             eyebrow="Interactive demo"
             title="See DocSearch in action"
           />
-        <DemoShowcase />
+        <MobileSearchDemo />
+        <div className="hidden md:block">
+          <DemoShowcase />
+        </div>
       </section>
 
       {/* Trusted by */}
