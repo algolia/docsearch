@@ -113,10 +113,14 @@ export const buildDummyAskAiHit = (
   };
 };
 
-export const getMessageContent = (
-  message: AIMessage | null
-): TextUIPart | undefined =>
-  message?.parts.find((part) => part.type === 'text');
+// answers can interleave text with tool calls, so join every text part
+// instead of stopping at the first one
+// see https://github.com/algolia/docsearch/issues/2782
+export const getMessageContent = (message: AIMessage | null): string =>
+  (message?.parts ?? [])
+    .filter((part): part is TextUIPart => part.type === 'text')
+    .map((part) => part.text)
+    .join('\n\n');
 
 /** Helper function to check if error is a thread depth error (AI-217). */
 export function isThreadDepthError(error?: Error): boolean {

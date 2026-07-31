@@ -156,9 +156,20 @@ describe('FeedbackActions', () => {
     const { onFeedback } = renderComponent();
 
     fireEvent.click(screen.getByTitle('Dislike'));
-    const tag = screen.getByText('Incorrect or incomplete');
+    const tag = screen.getByRole('button', {
+      name: 'Incorrect or incomplete',
+    });
+
+    expect(tag).toHaveAttribute('aria-pressed', 'false');
+
     fireEvent.click(tag);
+
+    expect(tag).toHaveAttribute('aria-pressed', 'true');
+
     fireEvent.click(tag);
+
+    expect(tag).toHaveAttribute('aria-pressed', 'false');
+
     fireEvent.click(screen.getByText('Submit'));
 
     await waitFor(() =>

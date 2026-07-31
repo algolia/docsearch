@@ -7,6 +7,8 @@
   --docsearch-subtle-color: rgb(214 214 231);
   --docsearch-text-color: rgb(35 38 59 / 100%);
   --docsearch-error-color: #ef5350;
+  --docsearch-error-soft-color: rgb(254 189 197);
+  --docsearch-error-text-color: rgb(122 28 43);
   --docsearch-success-color: #e8f5e9;
   --docsearch-secondary-text-color: rgb(90 94 154 / 100%);
   --docsearch-background-color: rgb(245 245 250);
@@ -88,6 +90,9 @@
     0 0 0 1px rgb(33 36 61 / 5%),
     0 4px 8px -2px rgb(33 36 61 / 25%);
   --docsearch-popover-arrow-color: rgb(230 230 240);
+
+  /* markdown */
+  --docsearch-code-block-background: rgb(235 235 240);
 }
 
 /* Darkmode */
@@ -143,4 +148,7 @@
     0 0 0 1px rgb(255 255 255 / 8%),
     0 4px 8px -2px rgb(0 0 0 / 55%);
   --docsearch-popover-arrow-color: var(--docsearch-hit-focus-background);
+
+  /* markdown */
+  --docsearch-code-block-background: rgb(33 33 57);
 }

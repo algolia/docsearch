@@ -1,5 +1,6 @@
 import { Popover as PopoverPrimitive } from '@base-ui/react/popover';
 import React from 'react';
+import type { JSX } from 'react';
 
 import { CloseIcon } from '../../icons';
 
@@ -7,13 +8,13 @@ export function Popover({ ...props }: PopoverPrimitive.Root.Props) {
   return <PopoverPrimitive.Root {...props} />;
 }
 
-function PopoverTrigger({
-  className,
-  ...props
-}: PopoverPrimitive.Trigger.Props) {
+const PopoverTrigger = React.forwardRef<
+  HTMLButtonElement,
+  PopoverPrimitive.Trigger.Props
+>(({ className, ...props }, ref): JSX.Element => {
   const cn = `DocSearch-Popover-Trigger${className ? ` ${className}` : ''}`;
-  return <PopoverPrimitive.Trigger className={cn} {...props} />;
-}
+  return <PopoverPrimitive.Trigger className={cn} ref={ref} {...props} />;
+});
 
 Popover.Trigger = PopoverTrigger;
 

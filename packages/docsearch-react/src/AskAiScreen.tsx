@@ -241,9 +241,7 @@ function AskAiExchangeCard({
     <div className="DocSearch-AskAiScreen-Response-Container">
       <div className="DocSearch-AskAiScreen-Response">
         <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--user">
-          <p className="DocSearch-AskAiScreen-Query">
-            {userContent?.text ?? ''}
-          </p>
+          <p className="DocSearch-AskAiScreen-Query">{userContent ?? ''}</p>
         </div>
         <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--assistant">
           <div className="DocSearch-AskAiScreen-MessageContent">
@@ -361,7 +359,7 @@ function AskAiExchangeCard({
           <FeedbackActions
             id={messageId}
             showActions={showActions}
-            latestAssistantMessageContent={assistantContent?.text || null}
+            latestAssistantMessageContent={assistantContent || null}
             translations={translations}
             conversations={conversations}
             onFeedback={onFeedback}

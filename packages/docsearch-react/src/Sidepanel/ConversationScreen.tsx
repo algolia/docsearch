@@ -63,7 +63,7 @@ export type ConversationScreenTranslations = Partial<
     feedbackTagSafetyOrLegal: string;
     feedbackTagOther: string;
     /** Error title shown if there is an error while chatting. */
-    errorTitleText;
+    errorTitleText: string;
     suggestedPromptsTitleText: string;
   }
 >;
@@ -171,9 +171,7 @@ const ConversationExchange = React.forwardRef<
       >
         <div className="DocSearch-AskAiScreen-Response">
           <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--user">
-            <p className="DocSearch-AskAiScreen-Query">
-              {userContent?.text ?? ''}
-            </p>
+            <p className="DocSearch-AskAiScreen-Query">{userContent ?? ''}</p>
           </div>
           <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--assistant">
             <div className="DocSearch-AskAiScreen-MessageContent">
@@ -288,7 +286,7 @@ const ConversationExchange = React.forwardRef<
               isSidepanel={true}
               id={messageId}
               showActions={showActions}
-              latestAssistantMessageContent={assistantContent?.text || null}
+              latestAssistantMessageContent={assistantContent || null}
               translations={translations}
               conversations={conversations}
               onFeedback={onFeedback}

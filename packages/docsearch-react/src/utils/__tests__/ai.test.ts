@@ -11,6 +11,7 @@ import {
   isAIToolPart,
   isAlgoliaMCPSearchOutputPart,
   sanitizeMessagesForRequest,
+  getMessageContent,
 } from '../ai';
 
 function message(id: string, parts: AIMessagePart[]): AIMessage {
@@ -245,5 +246,52 @@ describe('getSearchToolQueries', () => {
     };
 
     expect(getSearchToolQueries(part)).toEqual(['foo']);
+  });
+});
+
+describe('getMessageContent', () => {
+  it('joins the text parts around tool calls so copying returns the full answer', () => {
+    expect(
+      getMessageContent(
+        message('a1', [
+          { type: 'text', text: 'Let me look that up.', state: 'done' },
+          {
+            type: 'tool-algolia_search_index',
+            toolCallId: 't1',
+            state: 'output-available',
+            input: {
+              query: 'foo',
+              index: 'bar',
+            },
+            output: { hits: [] },
+          },
+          {
+            type: 'text',
+            text: 'Docusaurus is a static site generator.',
+            state: 'done',
+          },
+        ])
+      )
+    ).toBe('Let me look that up.\n\nDocusaurus is a static site generator.');
+  });
+
+  it('returns an empty string without a message or text parts', () => {
+    expect(getMessageContent(null)).toBe('');
+    expect(
+      getMessageContent(
+        message('a2', [
+          {
+            type: 'tool-algolia_search_index',
+            toolCallId: 't2',
+            state: 'output-available',
+            input: {
+              query: 'foo',
+              index: 'bar',
+            },
+            output: { hits: [] },
+          },
+        ])
+      )
+    ).toBe('');
   });
 });

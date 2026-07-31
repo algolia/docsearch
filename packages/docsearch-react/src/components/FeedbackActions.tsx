@@ -214,7 +214,7 @@ export function FeedbackActions({
   );
 
   return (
-    <div className="DocSearch-AskAiScreen-Actions">
+    <>
       <div className="DocSearch-AskAiScreen-Actions-Controls">
         {isSidepanel ? copyButton : null}
 
@@ -259,7 +259,7 @@ export function FeedbackActions({
           onClose={handleCloseNote}
         />
       ) : null}
-    </div>
+    </>
   );
 }
 
@@ -286,6 +286,7 @@ function NegativeFeedbackPanel({
   onSubmit,
   onClose,
 }: NegativeFeedbackPanelProps): JSX.Element {
+  const feedbackTitleId = React.useId();
   const {
     feedbackPanelTitle = 'What went wrong? (optional)',
     feedbackDetailsPlaceholder = 'Share some details...',
@@ -297,10 +298,12 @@ function NegativeFeedbackPanel({
     <div
       className="DocSearch-Feedback-Panel"
       role="group"
-      aria-label={feedbackPanelTitle}
+      aria-labelledby={feedbackTitleId}
     >
       <div className="DocSearch-Feedback-Panel-Header">
-        <p className="DocSearch-Feedback-Panel-Title">{feedbackPanelTitle}</p>
+        <p className="DocSearch-Feedback-Panel-Title" id={feedbackTitleId}>
+          {feedbackPanelTitle}
+        </p>
       </div>
 
       <div className="DocSearch-Feedback-Panel-Reasons">
@@ -310,9 +313,7 @@ function NegativeFeedbackPanel({
             <button
               key={reason.value}
               type="button"
-              className={`DocSearch-Feedback-Panel-Reason${
-                isSelected ? ' DocSearch-Feedback-Panel-Reason--selected' : ''
-              }`}
+              className="DocSearch-Feedback-Panel-Reason"
               aria-pressed={isSelected}
               onClick={() => onToggleTag(reason.value)}
             >
