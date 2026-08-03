@@ -31,8 +31,10 @@ export type ConversationScreenTranslations = Partial<
     reasoningText: string;
     /** Text show while assistant is thinking. */
     thinkingText: string;
-    /** Text shown describing related sources. */
+    /** Text shown describing a singular related source. */
     relatedSourcesText: string;
+    /** Text shown describing multiple related sources. */
+    relatedSourcesTextPlural: string;
     /** Message that's shown when user has stopped the streaming of a message. */
     stoppedStreamingText: string;
     /** Text shown for copy button on code snippets. */
@@ -119,6 +121,7 @@ const ConversationExchange = React.forwardRef<
       thinkingText = 'Thinking...',
       searchingText = 'Searching...',
       relatedSourcesText,
+      relatedSourcesTextPlural,
       stoppedStreamingText = 'You stopped this response',
       preToolCallText = 'Searching...',
       toolCallResultText = 'Searched for',
@@ -281,6 +284,7 @@ const ConversationExchange = React.forwardRef<
             <SourcesPanel
               links={urlsToDisplay}
               titleText={relatedSourcesText}
+              pluralTitleText={relatedSourcesTextPlural}
             />
             <FeedbackActions
               isSidepanel={true}

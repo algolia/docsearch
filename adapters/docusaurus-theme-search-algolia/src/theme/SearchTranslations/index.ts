@@ -39,6 +39,7 @@ const translations: DocSearchTranslations & {
     askAiScreen: {
       disclaimerText: string;
       relatedSourcesText: string;
+      relatedSourcesTextPlural: string;
       thinkingText: string;
       copyButtonText: string;
       copyButtonCopiedText: string;
@@ -237,8 +238,13 @@ const translations: DocSearchTranslations & {
       }),
       relatedSourcesText: translate({
         id: 'theme.SearchModal.askAiScreen.relatedSourcesText',
-        message: 'Related sources',
-        description: 'The text for related sources',
+        message: 'Source',
+        description: 'Text shown describing a singular related source',
+      }),
+      relatedSourcesTextPlural: translate({
+        id: 'theme.SearchModal.askAiScreen.relatedSourcesTextPlural',
+        message: 'Sources',
+        description: 'Text shown describing multiple related sources',
       }),
       thinkingText: translate({
         id: 'theme.SearchModal.askAiScreen.thinkingText',

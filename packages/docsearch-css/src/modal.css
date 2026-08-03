@@ -50,6 +50,7 @@
   margin: 60px auto auto;
   max-width: var(--docsearch-modal-width);
   position: relative;
+  font-family: var(--docsearch-font-family);
 }
 
 .DocSearch-Popover-Positioner {
@@ -442,7 +443,7 @@
   color: var(--docsearch-text-color);
   flex: 1;
   font: inherit;
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 400;
   height: 100%;
   outline: none;
@@ -656,8 +657,9 @@
   color: var(--docsearch-text-color);
   vertical-align: middle;
   font-size: 1.1em;
-  line-height: 0.5em;
+  line-height: 1.5em;
   font-weight: 300;
+  overflow-wrap: anywhere;
 }
 
 .DocSearch-Title strong {
@@ -777,23 +779,16 @@
   height: 24px;
   stroke-width: var(--docsearch-icon-stroke-width);
   width: 24px;
+
+  svg {
+    height: 20px;
+    width: 20px;
+  }
+}
+
+.DocSearch-Hit-icon--start {
   align-self: flex-start;
-  margin-block-start: 0.8em;
-}
-
-.DocSearch-Hit-icon svg {
-  height: 20px;
-  width: 20px;
-}
-
-.DocSearch-Hit-icon--small {
-  height: 1rem;
-  width: 1rem;
-}
-
-.DocSearch-Hit-icon--small svg {
-  height: 1rem;
-  width: 1rem;
+  margin-block-start: 0.5em;
 }
 
 .DocSearch-Hit-action,
@@ -1112,10 +1107,6 @@ assistive tech users */
   :root {
     --docsearch-spacing: 10px;
     --docsearch-footer-height: 48px;
-  }
-
-  .DocSearch-Input {
-    font-size: 1rem;
   }
 
   /* Prevent body scroll on modal-open for mobile */

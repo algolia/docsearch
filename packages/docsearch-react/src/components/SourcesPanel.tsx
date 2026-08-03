@@ -8,15 +8,19 @@ import { Popover } from './ui/Popover';
 interface SourcesProps {
   links: ExtractedLink[];
   titleText?: string;
+  pluralTitleText?: string;
 }
 
 export function SourcesPanel({
   links,
-  titleText = 'Sources',
+  titleText = 'Source',
+  pluralTitleText = 'Sources',
 }: SourcesProps): JSX.Element | null {
   const [open, setOpen] = React.useState(false);
   const triggerRef = React.useRef<HTMLButtonElement>(null);
   const [boundary, setBoundary] = React.useState<HTMLElement | null>(null);
+
+  const sourcesTitle = links.length > 1 ? pluralTitleText : titleText;
 
   useEffect(() => {
     if (!open) {
@@ -73,7 +77,7 @@ export function SourcesPanel({
           <ContentIcon />
         </span>
         <span className="DocSearch-AskAiScreen-Sources-Action-text">
-          {links.length} sources
+          {links.length} {sourcesTitle}
         </span>
       </Popover.Trigger>
       <Popover.Popup
@@ -83,7 +87,7 @@ export function SourcesPanel({
         alignOffset={-16}
         collisionBoundary={boundary ?? 'clipping-ancestors'}
       >
-        <Popover.Title>{titleText}</Popover.Title>
+        <Popover.Title>{sourcesTitle}</Popover.Title>
         <ul className="DocSearch-AskAiScreen-Sources">
           {links.map((l) => (
             <li key={l.url} className="DocSearch-AskAiScreen-Sources-source">
