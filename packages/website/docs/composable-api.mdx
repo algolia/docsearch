@@ -64,7 +64,7 @@ bun add @docsearch/core@^5.0.0-beta @docsearch/modal@^5.0.0-beta @docsearch/css@
 
 ## Add keyword search
 
-Wrap the button and keyword modal in one `DocSearch` provider. Pass a public search-only API key. Prefer `indices` over the deprecated `indexName` and `searchParameters` props.
+Wrap the button and keyword modal in one `DocSearch` provider. Pass a public search-only API key.
 
 ```tsx title="KeywordSearch.tsx"
 import { DocSearch } from '@docsearch/core';
@@ -115,14 +115,14 @@ interface SearchWithAskAiProps {
   appId: string;
   apiKey: string;
   indexName: string;
-  assistantId: string;
+  agentId: string;
 }
 
 export function SearchWithAskAi({
   appId,
   apiKey,
   indexName,
-  assistantId,
+  agentId,
 }: SearchWithAskAiProps): JSX.Element {
   return (
     <DocSearch>
@@ -131,7 +131,7 @@ export function SearchWithAskAi({
         appId={appId}
         apiKey={apiKey}
         indices={[indexName]}
-        askAi={{ assistantId }}
+        askAi={agentId}
       />
     </DocSearch>
   );
@@ -200,7 +200,7 @@ interface ControlledSearchProps {
   appId: string;
   apiKey: string;
   indexName: string;
-  assistantId: string;
+  agentId: string;
   onReady?: () => void;
   onOpen?: () => void;
   onClose?: () => void;
@@ -231,7 +231,7 @@ export function ControlledSearch(props: ControlledSearchProps): JSX.Element {
         appId={props.appId}
         apiKey={props.apiKey}
         indices={[props.indexName]}
-        askAi={{ assistantId: props.assistantId }}
+        askAi={props.agentId}
       />
     </DocSearch>
   );
@@ -339,7 +339,7 @@ interface LazySearchProps {
   appId: string;
   apiKey: string;
   indexName: string;
-  assistantId: string;
+  agentId: string;
 }
 
 export function LazySearch(props: LazySearchProps): JSX.Element {
@@ -354,7 +354,7 @@ export function LazySearch(props: LazySearchProps): JSX.Element {
         appId={props.appId}
         apiKey={props.apiKey}
         indices={[props.indexName]}
-        askAi={{ assistantId: props.assistantId }}
+        askAi={props.agentId}
       />
     </DocSearch>
   );

@@ -44,11 +44,6 @@ export type DocSearchSidepanelProps = DocSearchCallbacks & {
   /** Algolia application id used by the search client. */
   appId: string;
   /**
-   * The index name to use for the ask AI feature. Your assistant will search
-   * this index for relevant documents.
-   */
-  indexName: string;
-  /**
    * Configuration for keyboard shortcuts. Allows enabling/disabling specific
    * shortcuts.
    *

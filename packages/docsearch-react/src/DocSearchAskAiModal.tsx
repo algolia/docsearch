@@ -227,7 +227,6 @@ export function DocSearchAskAiModal({
     agentId: askAiConfigurationId,
     apiKey: askAiConfig?.apiKey || apiKey,
     appId: askAiConfig?.appId || appId,
-    indexName: askAiConfig?.indexName || defaultIndexName,
     searchParameters: askAiSearchParameters,
     tools,
     memory: askAiConfig?.memory,

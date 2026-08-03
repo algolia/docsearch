@@ -31,7 +31,7 @@ npm install @docsearch/react@4 @docsearch/css@4
 import { DocSearch } from '@docsearch/react';
 import '@docsearch/css';
 
-<DocSearch appId="YOUR_APP_ID" indexName="YOUR_INDEX" apiKey="YOUR_SEARCH_KEY" />
+<DocSearch appId="YOUR_APP_ID" indices=["YOUR_INDEX"] apiKey="YOUR_SEARCH_KEY" />
 \`\`\`
 
 ### Docusaurus (recommended)
@@ -47,7 +47,7 @@ themeConfig: {
   docsearch: {
     appId: 'YOUR_APP_ID',
     apiKey: 'YOUR_SEARCH_KEY',
-    indexName: 'YOUR_INDEX',
+    indices: ['YOUR_INDEX'],
   },
 },
 \`\`\`

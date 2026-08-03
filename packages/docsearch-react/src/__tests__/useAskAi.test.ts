@@ -158,7 +158,6 @@ describe('useAskAi', () => {
         apiKey: 'api-key',
         appId: 'app-id',
         agentId: 'assistant-id',
-        indexName: 'index-name',
         tools: {
           customAction: {
             onToolCall,
@@ -206,7 +205,6 @@ describe('useAskAi', () => {
         apiKey: 'api-key',
         appId: 'app-id',
         agentId: 'assistant-id',
-        indexName: 'index-name',
         tools: {
           customAction: {
             onToolCall,
@@ -234,9 +232,8 @@ describe('useAskAi', () => {
         apiKey: 'api-key',
         appId: 'app-id',
         agentId: 'assistant-id',
-        indexName: 'index-name',
-        tools: {},
         memory: { userToken: 'secure-user-token' },
+        tools: {},
       })
     );
 
@@ -251,7 +248,6 @@ describe('useAskAi', () => {
         apiKey: 'api-key',
         appId: 'app-id',
         agentId: 'assistant-id',
-        indexName: 'index-name',
         tools: {},
       })
     );
@@ -267,7 +263,6 @@ describe('useAskAi', () => {
         apiKey: 'api-key',
         appId: 'app-id',
         agentId: 'assistant-id',
-        indexName: 'index-name',
         tools: {},
       })
     );
@@ -285,7 +280,6 @@ describe('useAskAi', () => {
         apiKey: 'api-key',
         appId: 'app-id',
         agentId: 'assistant-id',
-        indexName: 'index-name',
         tools: {},
         searchParameters,
       })
@@ -309,7 +303,6 @@ describe('useAskAi', () => {
         apiKey: 'api-key',
         appId: 'app-id',
         agentId: 'assistant-id',
-        indexName: 'index-name',
         tools: {},
         indices,
       })
@@ -336,7 +329,6 @@ describe('useAskAi', () => {
         apiKey: 'api-key',
         appId: 'app-id',
         agentId: 'assistant-id',
-        indexName: 'index-name',
         tools: {},
         searchParameters,
         indices,
@@ -354,7 +346,6 @@ describe('useAskAi', () => {
         apiKey: 'api-key',
         appId: 'app-id',
         agentId: 'assistant-id',
-        indexName: 'index-name',
         tools: {},
         indices: [],
       })
@@ -370,7 +361,6 @@ describe('useAskAi', () => {
           apiKey: 'api-key',
           appId: 'app-id',
           agentId: 'assistant-id',
-          indexName: 'index-name',
           tools: {},
         })
       );
@@ -384,7 +374,6 @@ describe('useAskAi', () => {
           apiKey: 'api-key',
           appId: 'app-id',
           agentId: 'assistant-id',
-          indexName: 'index-name',
           tools: {},
         })
       );
@@ -409,7 +398,6 @@ describe('useAskAi', () => {
           apiKey: 'api-key',
           appId: 'app-id',
           agentId: 'assistant-id',
-          indexName: 'index-name',
           tools: {},
         })
       );
@@ -435,7 +423,6 @@ describe('useAskAi', () => {
           apiKey: 'api-key',
           appId: 'app-id',
           agentId: 'assistant-id',
-          indexName: 'index-name',
           tools: {},
         })
       );
@@ -464,7 +451,6 @@ describe('useAskAi', () => {
           apiKey: 'api-key',
           appId: 'app-id',
           agentId: 'assistant-id',
-          indexName: 'index-name',
           tools: {},
         })
       );
@@ -493,7 +479,6 @@ describe('useAskAi', () => {
           apiKey: 'api-key',
           appId: 'app-id',
           agentId: 'assistant-id',
-          indexName: 'index-name',
           tools: {},
         })
       );
@@ -507,7 +492,6 @@ describe('useAskAi', () => {
           apiKey: 'api-key',
           appId: 'app-id',
           agentId: 'assistant-id',
-          indexName: 'index-name',
           tools: {},
         })
       );
@@ -542,7 +526,6 @@ describe('useAskAi', () => {
           apiKey: 'api-key',
           appId: 'app-id',
           agentId: 'assistant-id',
-          indexName: 'index-name',
           tools: {},
         })
       );
@@ -579,7 +562,6 @@ describe('useAskAi', () => {
             apiKey: 'api-key',
             appId: 'app-id',
             agentId: 'assistant-id',
-            indexName: 'index-name',
             searchParameters,
             indices,
             tools: {},

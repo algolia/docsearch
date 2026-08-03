@@ -43,7 +43,7 @@ Public API key with search permission.
 
 > `type: Array<string | DocSearchIndex>` | **optional**
 
-Indices to search in display order. Provide `indices` or the deprecated [`indexName`](#indexname).
+Indices to search in display order.
 
 ```tsx title="Search.tsx"
 <DocSearch
@@ -60,12 +60,6 @@ Indices to search in display order. Provide `indices` or the deprecated [`indexN
   ]}
 />
 ```
-
-### `indexName`
-
-> `type: string` | **optional** | **deprecated**
-
-Single index to search. Use [`indices`](#indices) instead. If you pass both options, DocSearch queries `indexName` first.
 
 ### `facets`
 
@@ -86,12 +80,6 @@ Theme written to `document.documentElement.dataset.theme`. By default, DocSearch
 > `type: string` | **optional**
 
 Search input placeholder. The active experience supplies the default.
-
-### `searchParameters`
-
-> `type: SearchParamsObject` | **optional** | **deprecated**
-
-Search parameters for `indexName`. Set `searchParameters` on an [`indices`](#indices) item instead.
 
 ### `maxResultsPerGroup`
 
@@ -250,11 +238,11 @@ Primitive values render as text and arrays of primitives render as a comma-separ
 
 Agent Studio assistant ID or configuration. This prop is required by `DocSearchAI`.
 
-#### `assistantId`
+#### `agentId`
 
 > `type: string` | **required**
 
-Agent Studio assistant ID.
+Agent Studio agent ID.
 
 #### `appId`
 
@@ -267,12 +255,6 @@ Application ID for Agent Studio. Defaults to the root `appId`.
 > `type: string` | **optional**
 
 API key for Agent Studio. Defaults to the root `apiKey`.
-
-#### `indexName`
-
-> `type: string` | **optional**
-
-Index for Agent Studio. Defaults to the first normalized keyword index.
 
 #### `suggestedQuestions`
 
@@ -289,7 +271,7 @@ Search parameters keyed by index name. Each value supports `filters`, `attribute
 ```tsx title="Search.tsx"
 <DocSearchAI
   askAi={{
-    assistantId: 'YOUR_ASSISTANT_ID',
+    agentId: 'YOUR_AGENT_ID',
     searchParameters: {
       docs: {
         filters: 'language:en',
@@ -392,7 +374,6 @@ Opens a registered Sidepanel. Does nothing when no Sidepanel is registered.
 - `react`, `react-dom`, and `@types/react` support versions `>=16.8.0 <20.0.0`.
 - `search-insights` supports versions `>=1 <3` and is optional.
 - The browser build targets ES2017.
-- `indexName` and root `searchParameters` remain supported but are deprecated. Move to `indices`.
 - `UseDocSearchKeyboardEventsProps.onInput` and `searchButtonRef` remain accepted for compatibility but are deprecated.
 - `DocSearch` is keyword-only in v5. Use `DocSearchAI` for Ask AI.
 

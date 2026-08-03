@@ -155,11 +155,6 @@ export interface PromptSuggestions {
 
 export interface DocSearchAskAi {
   /**
-   * The index name to use for the Ask AI feature. Your assistant will search
-   * for relevant documents. If not provided, the root index name will be used.
-   */
-  indexName?: string;
-  /**
    * The API key to use for the ask AI feature. Your assistant will use this API
    * key to search the index. If not provided, the API key will be used.
    */

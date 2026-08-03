@@ -137,7 +137,6 @@ function SidepanelInner(
     agentId,
     apiKey,
     appId,
-    indexName,
     variant = 'floating',
     searchParameters,
     pushSelector,
@@ -194,7 +193,6 @@ function SidepanelInner(
     restoreConversation,
   } = useAskAi({
     appId,
-    indexName,
     agentId,
     apiKey,
     searchParameters,

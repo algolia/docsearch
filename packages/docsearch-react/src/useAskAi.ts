@@ -33,7 +33,6 @@ type UseAskAiParams = {
   agentId: string;
   apiKey: string;
   appId: string;
-  indexName: string;
   searchParameters?: AgentStudioSearchParameters;
   tools: ToolCalls;
   memory?: Memory;

@@ -425,7 +425,6 @@ function DocSearch({
             agentId={sidePanelAskAi.agentId}
             apiKey={sidePanelAskAi.apiKey}
             appId={sidePanelAskAi.appId}
-            indexName={sidePanelAskAi.indexName}
             searchParameters={sidePanelAskAi.searchParameters}
             indices={panelOptions.indices ?? sidePanelAskAi.indices}
             suggestedQuestions={
