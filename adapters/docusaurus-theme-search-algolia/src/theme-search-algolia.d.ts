@@ -47,7 +47,7 @@ declare module '@docsearch/docusaurus-adapter' {
       };
 
   export type AskAiConfig = {
-    assistantId: DocSearchAskAi['assistantId'];
+    agentId: DocSearchAskAi['agentId'];
     suggestedQuestions?: DocSearchAskAi['suggestedQuestions'];
     searchParameters?: AgentStudioSearchParameters;
     indices?: AgentStudioIndices[];

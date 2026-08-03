@@ -38,7 +38,7 @@ export type SidepanelSearchParameters = {
 
 export type DocSearchSidepanelProps = DocSearchCallbacks & {
   /** The assistant ID to use for the ask AI feature. */
-  assistantId: string;
+  agentId: string;
   /** Public api key with search permissions for the index. */
   apiKey: string;
   /** Algolia application id used by the search client. */

@@ -169,8 +169,8 @@ export interface DocSearchAskAi {
    * ID to search the index. If not provided, the app ID will be used.
    */
   appId?: string;
-  /** The assistant ID to use for the ask AI feature. */
-  assistantId: string;
+  /** The Agent Studio Agent ID to use for the Ask AI feature. */
+  agentId: string;
   /**
    * Enables displaying suggested questions on Ask AI's new conversation screen.
    *

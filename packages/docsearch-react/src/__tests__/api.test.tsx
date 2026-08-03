@@ -445,7 +445,7 @@ describe('api', () => {
             },
           }}
           askAi={{
-            assistantId: '123',
+            agentId: '123',
             promptSuggestions: {
               indexName: 'prompt-suggestions',
             },

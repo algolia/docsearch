@@ -10,13 +10,13 @@ import type {
 } from '.';
 
 type UseSuggestedQuestionsProps = {
-  assistantId: string | null;
+  agentId: string | null;
   searchClient: DocSearchTransformClient;
   suggestedQuestionsEnabled?: boolean;
 };
 
 export const useSuggestedQuestions = ({
-  assistantId,
+  agentId,
   searchClient,
   suggestedQuestionsEnabled = false,
 }: UseSuggestedQuestionsProps): SuggestedQuestionHit[] => {
@@ -30,7 +30,7 @@ export const useSuggestedQuestions = ({
         requests: [
           {
             indexName: SUGGESTED_QUETIONS_INDEX_NAME,
-            filters: `state:published AND assistantId:${assistantId}`,
+            filters: `state:published AND assistantId:${agentId}`,
             hitsPerPage: 3,
           },
         ],
@@ -41,10 +41,10 @@ export const useSuggestedQuestions = ({
       setSuggestedQuestions(result.hits);
     };
 
-    if (suggestedQuestionsEnabled && assistantId && assistantId !== '') {
+    if (suggestedQuestionsEnabled && agentId && agentId !== '') {
       getSuggestedQuestions();
     }
-  }, [suggestedQuestionsEnabled, assistantId, searchClient]);
+  }, [suggestedQuestionsEnabled, agentId, searchClient]);
 
   return suggestedQuestions;
 };

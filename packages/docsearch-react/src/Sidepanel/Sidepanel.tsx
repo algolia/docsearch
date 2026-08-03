@@ -134,7 +134,7 @@ function SidepanelInner(
     isOpen = false,
     onOpen,
     onClose,
-    assistantId,
+    agentId,
     apiKey,
     appId,
     indexName,
@@ -195,7 +195,7 @@ function SidepanelInner(
   } = useAskAi({
     appId,
     indexName,
-    assistantId,
+    agentId,
     apiKey,
     searchParameters,
     tools,
@@ -204,7 +204,7 @@ function SidepanelInner(
   });
 
   const suggestedQuestions = useSuggestedQuestions({
-    assistantId,
+    agentId,
     suggestedQuestionsEnabled,
     searchClient,
   });

@@ -157,12 +157,12 @@ export function DocSearchAskAiModal({
 
   const askAiConfig = typeof askAi === 'object' ? askAi : null;
   const askAiConfigurationId = askAiConfig
-    ? askAiConfig.assistantId
+    ? askAiConfig.agentId
     : (askAi as string);
   const askAiSearchParameters = askAiConfig?.searchParameters;
   const [askAiState, setAskAiState] = React.useState<AskAiState>('initial');
   const suggestedQuestions = useSuggestedQuestions({
-    assistantId: askAiConfigurationId,
+    agentId: askAiConfigurationId,
     searchClient,
     suggestedQuestionsEnabled: askAiConfig?.suggestedQuestions,
   });
@@ -224,7 +224,7 @@ export function DocSearchAskAiModal({
     startNewConversation,
     restoreConversation,
   } = useAskAi({
-    assistantId: askAiConfigurationId,
+    agentId: askAiConfigurationId,
     apiKey: askAiConfig?.apiKey || apiKey,
     appId: askAiConfig?.appId || appId,
     indexName: askAiConfig?.indexName || defaultIndexName,

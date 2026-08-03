@@ -23,7 +23,7 @@ const minimalDocSearchConfig = {
 } satisfies DocSearchInput;
 
 const minimalAskAiConfig = {
-  assistantId: 'my-assistant-id',
+  agentId: 'my-assistant-id',
 } satisfies NonNullable<DocSearchInput>['askAi'];
 
 const askAiConfigWithIndices = {

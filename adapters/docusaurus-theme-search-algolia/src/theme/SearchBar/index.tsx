@@ -422,7 +422,7 @@ function DocSearch({
             {...panelOptions}
             variant={panelOptions.variant ?? 'inline'}
             pushSelector={panelOptions.pushSelector ?? '#__docusaurus'}
-            assistantId={sidePanelAskAi.assistantId}
+            agentId={sidePanelAskAi.agentId}
             apiKey={sidePanelAskAi.apiKey}
             appId={sidePanelAskAi.appId}
             indexName={sidePanelAskAi.indexName}
