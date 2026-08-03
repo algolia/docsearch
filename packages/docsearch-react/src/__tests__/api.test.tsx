@@ -342,6 +342,33 @@ describe('api', () => {
     });
   });
 
+  describe('whitespace-only queries', () => {
+    it('does not trigger a keyword search', async () => {
+      const search = vi.fn(noResultSearch);
+
+      render(
+        <DocSearch
+          transformSearchClient={(searchClient) => ({
+            ...searchClient,
+            search,
+          })}
+        />
+      );
+
+      await act(async () => {
+        fireEvent.click(await screen.findByText('Search'));
+      });
+
+      await act(async () => {
+        fireEvent.input(await screen.findByPlaceholderText('Search docs'), {
+          target: { value: ' \t\n ' },
+        });
+      });
+
+      expect(search).not.toHaveBeenCalled();
+    });
+  });
+
   describe('ask AI integration', () => {
     it('updates placeholder when ask AI is available', async () => {
       render(<DocSearchAI />);

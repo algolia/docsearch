@@ -16,7 +16,7 @@ import { Menu } from '../Menu';
 import { ModalHeading } from '../ModalHeading';
 import type { InternalDocSearchHit } from '../types';
 import type { AIMessage, AskAiState } from '../types/AskiAi';
-import { getCollection } from '../utils';
+import { getCollection, isQueryEmpty } from '../utils';
 
 import { SearchBoxForm } from './ui/SearchBoxForm';
 
@@ -162,7 +162,11 @@ export function AskAiSearchBox({
       // block these up, down, enter listeners when Ask AI is active
       if (props.isAskAiActive && blockedKeys.has(e.key)) {
         // enter key asks another question
-        if (e.key === 'Enter' && !isAskAiStreaming && props.state.query) {
+        if (
+          e.key === 'Enter' &&
+          !isAskAiStreaming &&
+          !isQueryEmpty(props.state.query)
+        ) {
           props.onAskAgain(props.state.query);
         }
 

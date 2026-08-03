@@ -6,6 +6,7 @@ export * from './getNestedValue';
 export * from './groupBy';
 export * from './identity';
 export * from './isModifierEvent';
+export * from './isQueryEmpty';
 export * from './keyboard';
 export * from './noop';
 export * from './removeHighlightTags';
