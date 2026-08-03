@@ -2,7 +2,11 @@ import type {
   AutocompleteSource,
   AutocompleteState,
 } from '@algolia/autocomplete-core';
-import type { SearchParamsObject, SearchResponse } from 'algoliasearch/lite';
+import type {
+  FacetFilters,
+  SearchParamsObject,
+  SearchResponse,
+} from 'algoliasearch/lite';
 import type React from 'react';
 
 import type { DocSearchIndex, DocSearchProps } from '../DocSearch';
@@ -34,19 +38,43 @@ export function createFacetFilters(
   searchParametersFacetFilters: SearchParamsObject['facetFilters'],
   facetSelections: FacetSelections
 ): SearchParamsObject['facetFilters'] {
-  const dynamicFacetFilters = Object.entries(facetSelections)
-    .filter(([, value]) => value)
-    .map(([facet, value]) => `${facet}:${value}`);
+  const selections = Object.entries(facetSelections);
+  const selectedFacets = new Set(selections.map(([facet]) => facet));
+  const dynamicFacetFilters: string[] = [];
 
-  if (dynamicFacetFilters.length === 0) {
+  for (const [facet, selection] of selections) {
+    if (selection !== '') {
+      dynamicFacetFilters.push(`${facet}:${selection}`);
+    }
+  }
+
+  if (selectedFacets.size === 0) {
     return searchParametersFacetFilters;
   }
 
-  if (!searchParametersFacetFilters) {
-    return dynamicFacetFilters;
+  let configuredFacetFilters: FacetFilters = [];
+
+  if (
+    searchParametersFacetFilters &&
+    Array.isArray(searchParametersFacetFilters)
+  ) {
+    configuredFacetFilters = searchParametersFacetFilters;
+  } else if (searchParametersFacetFilters) {
+    configuredFacetFilters = [searchParametersFacetFilters];
   }
 
-  return [...searchParametersFacetFilters, ...dynamicFacetFilters];
+  const remainingFacetFilters = configuredFacetFilters.filter((facetFilter) => {
+    if (typeof facetFilter !== 'string') {
+      return true;
+    }
+
+    const separatorIndex = facetFilter.indexOf(':');
+    const facet = facetFilter.slice(0, separatorIndex);
+
+    return separatorIndex <= 0 || !selectedFacets.has(facet);
+  });
+
+  return [...remainingFacetFilters, ...dynamicFacetFilters];
 }
 
 export function buildNoQuerySources({

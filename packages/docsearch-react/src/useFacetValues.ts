@@ -32,7 +32,6 @@ export function useFacetValues({
     const facetKeys = stableFacetKeys ? stableFacetKeys.split(',') : [];
 
     if (facetKeys.length === 0 || indexes.length === 0) {
-      setFacetValues({});
       return () => {
         isMounted = false;
       };
@@ -41,7 +40,6 @@ export function useFacetValues({
     searchClient
       .search<DocSearchHit>({
         requests: indexes.map((index) => ({
-          ...index.searchParameters,
           indexName: index.name,
           query: '',
           hitsPerPage: 0,
