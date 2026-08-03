@@ -201,17 +201,10 @@
 
 .DocSearch-AskAiScreen-Answer-Footer {
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-}
-
-.DocSearch-AskAiScreen-Actions {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: var(--docsearch-spacing);
 }
 
 .DocSearch-AskAiScreen-Actions-Controls {
@@ -226,13 +219,16 @@
 .DocSearch-Feedback-Panel {
   flex-basis: 100%;
   width: 100%;
-  padding: var(--docsearch-spacing);
+  padding-block: var(--docsearch-spacing);
+  padding-inline: var(--docsearch-spacing);
+  margin-block-start: var(--docsearch-spacing);
   border-top: 1px solid var(--docsearch-subtle-color);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0.75rem;
   text-align: start;
   animation: fade-in 0.2s ease-in forwards;
+  font-size: 0.875rem;
 }
 
 .DocSearch-Feedback-Panel-Header {
@@ -253,7 +249,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px;
+  padding-inline: 0.25rem;
+  padding-block: 0.25rem;
   border: 0;
   background: none;
   cursor: pointer;
@@ -267,8 +264,8 @@
 }
 
 .DocSearch-Feedback-Panel-Close svg {
-  width: 16px;
-  height: 16px;
+  width: 1rem;
+  height: 1rem;
 }
 
 .DocSearch-Feedback-Panel-Reasons {
@@ -280,8 +277,9 @@
 .DocSearch-Feedback-Panel-Reason {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
+  gap: 0.375rem;
+  padding-block: 0.375rem;
+  padding-inline: 0.75rem;
   border-radius: var(--docsearch-border-radius);
   border: 1px solid var(--docsearch-subtle-color);
   background: var(--docsearch-hit-background);
@@ -293,18 +291,13 @@
     border-color 0.2s ease,
     background-color 0.2s ease,
     color 0.2s ease;
-}
 
-.DocSearch-Feedback-Panel-Reason:hover {
-  border-color: var(--docsearch-highlight-color);
-  background: var(--docsearch-hit-highlight-color);
-}
-
-.DocSearch-Feedback-Panel-Reason--selected {
-  border-color: var(--docsearch-highlight-color);
-  background: var(--docsearch-soft-primary-color);
-  color: var(--docsearch-highlight-color);
-  font-weight: 500;
+  &:hover,
+  &[aria-pressed='true'] {
+    border-color: var(--docsearch-highlight-color);
+    background: var(--docsearch-hit-highlight-color);
+    color: var(--docsearch-highlight-color);
+  }
 }
 
 .DocSearch-Feedback-Panel-Reason svg {
@@ -365,8 +358,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 36px;
-  padding: 6px 15px;
+  padding-block: 0.5em;
+  padding-inline: 1em;
   border: 0;
   border-radius: var(--docsearch-border-radius);
   font-family: inherit;
@@ -502,9 +495,9 @@
   padding-inline: 1em;
   padding-block: 1em;
   gap: 8px;
-  background-color: var(--docsearch-background-color);
-  border-radius: var(--docsearch-modal-radius);
-  color: var(--docsearch-text-color);
+  background-color: var(--docsearch-error-soft-color);
+  border-radius: var(--docsearch-border-radius);
+  color: var(--docsearch-error-text-color);
   font-size: 1em;
   font-weight: 400;
   flex-direction: row;
@@ -525,6 +518,7 @@
 
 .DocSearch-AskAiScreen-Error p {
   margin: 0;
+  color: var(--docsearch-error-text-color);
 }
 
 .DocSearch-AskAiScreen-Error-Content {
@@ -543,7 +537,7 @@
   margin: 12px 0 8px;
   color: var(--docsearch-text-color);
   font-size: 12px;
-  border: 1px solid #febdc5;
+  border: 1px solid var(--docsearch-error-soft-color);
   animation: slide-down 0.3s ease-out;
   width: 100%;
 }
@@ -679,7 +673,8 @@
 }
 
 .DocSearch-Markdown-Content p {
-  margin: 1em 0;
+  margin-block: 1em;
+  margin-inline: 0;
 }
 
 .DocSearch-Markdown-Content p:last-child {
@@ -691,11 +686,12 @@
 }
 
 .DocSearch-Markdown-Content code {
-  background-color: var(--docsearch-key-background);
+  background-color: var(--docsearch-code-block-background);
   color: var(--docsearch-text-color);
-  padding: 0.2em 0;
+  padding-block: 0.2em;
+  padding-inline: 0;
   margin: 0;
-  border-radius: 3px;
+  border-radius: var(--docsearch-border-radius);
   font-family:
     ui-monospace,
     SFMono-Regular,
@@ -704,17 +700,19 @@
     Consolas,
     'Liberation Mono',
     monospace;
-  font-size: 0.9em;
+  font-size: 0.9rem;
   letter-spacing: normal;
 }
 
 .DocSearch-Markdown-Content pre {
-  background-color: var(--docsearch-key-background);
+  background-color: var(--docsearch-code-block-background);
   color: var(--docsearch-text-color);
-  padding: 1.2em;
-  border-radius: 6px;
+  padding-block: 1.2em;
+  padding-inline: 1.2em;
+  border-radius: var(--docsearch-border-radius);
   overflow-x: auto;
-  margin: 1.5em 0;
+  margin-block: 1.5em;
+  margin-inline: 0;
 }
 
 .DocSearch-Markdown-Content pre code {
@@ -722,7 +720,6 @@
   color: inherit;
   padding: 0;
   margin: 0;
-  font-size: 0.8em;
   border-radius: 0;
   white-space: pre-wrap;
   overflow-wrap: break-word;
@@ -1059,7 +1056,8 @@
 
 .DocSearch-AskAiScreen-Sources {
   padding-inline: 0;
-  margin-top: 0.5rem;
+  margin-block: 0;
+  margin-block-start: 0.5rem;
   color: var(--docsearch-text-color);
   list-style-type: none;
   display: flex;
@@ -1100,11 +1098,12 @@
   position: absolute;
   inset-block-start: 8px;
   inset-inline-end: 8px;
-  background: var(--docsearch-key-background);
+  background: var(--docsearch-code-block-background);
   color: var(--docsearch-text-color);
   border: 0;
-  padding: 0.2em 0.6em;
-  font-size: 0.75em;
+  padding-block: 0.2em;
+  padding-inline: 0.6em;
+  font-size: 0.95em;
   border-radius: 4px;
   cursor: pointer;
   transition: opacity 0.2s ease;

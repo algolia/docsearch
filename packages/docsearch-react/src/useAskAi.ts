@@ -129,7 +129,6 @@ export const useAskAi: UseAskAi = ({
   assistantId,
   apiKey,
   appId,
-  indexName,
   tools = EMPTY_TOOLS,
   searchParameters,
   memory,
@@ -218,7 +217,7 @@ export const useAskAi: UseAskAi = ({
 
   const conversations = useRef(
     createStoredConversations<StoredAskAiState>({
-      key: `__DOCSEARCH_ASKAI_CONVERSATIONS__${indexName}`,
+      key: `__DOCSEARCH_ASKAI_CONVERSATIONS__${appId}`,
       limit: 10,
     })
   ).current;

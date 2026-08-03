@@ -717,6 +717,14 @@
   margin: 0.5em 0;
 }
 
+.DocSearch-Sidepanel .DocSearch-Markdown-Content code {
+  font-size: 0.8rem;
+}
+
+.DocSearch-Sidepanel .DocSearch-CodeSnippet pre {
+  padding-block-start: 2.4em;
+}
+
 .DocSearch-Sidepanel .DocSearch-AskAiScreen-MessageContent-Tool-Query:hover {
   cursor: unset;
   box-shadow: none;

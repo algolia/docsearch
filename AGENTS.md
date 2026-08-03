@@ -78,27 +78,6 @@ bun run pw:run:webkit
 
 ## Code Style Guidelines
 
-### Imports
-
-Imported modules must be ordered alphabetically with newlines between groups:
-
-1. Built-in modules
-2. External dependencies
-3. Parent directory imports
-4. Sibling imports
-5. Index imports
-
-Internal `@/**/*` paths go before parent imports.
-
-```typescript
-// Correct order
-import type { AutocompleteOptions } from '@algolia/autocomplete-core';
-import React, { type JSX } from 'react';
-
-import { DocSearchButton } from './DocSearchButton';
-import type { DocSearchHit } from './types';
-```
-
 ### TypeScript
 
 - Use `type` imports for type-only imports: `import type { Foo } from './types'`
