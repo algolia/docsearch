@@ -79,6 +79,8 @@ type AdapterDocSearchProps = Omit<
   | 'onAskAiToggle'
   | 'onClose'
 > & {
+  appId: DocSearchProps['appId'];
+  apiKey: DocSearchProps['apiKey'];
   askAi?: AskAiOptions;
   contextualSearch?: boolean;
   externalUrlRegex?: string;
@@ -453,6 +455,8 @@ export default function SearchBar(
 
   return (
     <DocSearchProvider
+      appId={docSearchProps.appId}
+      apiKey={docSearchProps.apiKey}
       initialQuery={docSearchProps.initialQuery}
       keyboardShortcuts={docSearchProps.keyboardShortcuts}
     >

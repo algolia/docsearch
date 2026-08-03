@@ -67,6 +67,18 @@ describe('@docsearch/core', () => {
       expect(screen.getByText('State: ready')).toBeInTheDocument();
     });
 
+    it('provides credential defaults to children', () => {
+      const { result } = renderCustomHook({
+        appId: 'app-id',
+        apiKey: 'api-key',
+      });
+
+      expect(result.current).toMatchObject({
+        appId: 'app-id',
+        apiKey: 'api-key',
+      });
+    });
+
     it('updates state from children', async () => {
       const Comp = (): JSX.Element => {
         const { docsearchState, openModal } = useDocSearch();

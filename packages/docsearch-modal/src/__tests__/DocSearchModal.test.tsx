@@ -47,6 +47,11 @@ const DEFAULT_PROPS: DocSearchModalProps = {
   },
 };
 
+const PROVIDER_DEFAULT_PROPS: DocSearchModalProps = {
+  indices: [INDEX_NAME],
+  transformSearchClient: DEFAULT_PROPS.transformSearchClient,
+};
+
 const renderComponent = (
   props: DocSearchModalProps = DEFAULT_PROPS,
   docsearchProps: Omit<DocSearchProps, 'children'> = {}
@@ -65,6 +70,22 @@ describe('@docsearch/modal', () => {
   describe('DocSearchModal', () => {
     it('renders modal component', () => {
       renderComponent();
+    });
+
+    it('uses credentials configured on the provider', () => {
+      renderComponent(PROVIDER_DEFAULT_PROPS, {
+        appId: APP_ID,
+        apiKey: API_KEY,
+      });
+
+      act(() => {
+        fireEvent.keyDown(document, {
+          key: 'k',
+          ctrlKey: true,
+        });
+      });
+
+      expect(screen.getByText('Search')).toBeInTheDocument();
     });
 
     it('opens modal on keyboard shortcut', () => {

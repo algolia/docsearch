@@ -37,11 +37,11 @@ export type SidepanelSearchParameters = {
 };
 
 export type DocSearchSidepanelProps = DocSearchCallbacks & {
-  /** The assistant ID to use for the ask AI feature. */
+  /** The Agent Studio agent ID to use for Ask AI. */
   agentId: string;
-  /** Public api key with search permissions for the index. */
+  /** Search only API key. */
   apiKey: string;
-  /** Algolia application id used by the search client. */
+  /** Algolia application ID that hosts the Agent Studio agent. */
   appId: string;
   /**
    * Configuration for keyboard shortcuts. Allows enabling/disabling specific
@@ -98,6 +98,8 @@ function DocSearchSidepanelComponent(
 ): JSX.Element {
   return (
     <DocSearch
+      appId={props.appId}
+      apiKey={props.apiKey}
       keyboardShortcuts={keyboardShortcuts}
       theme={theme}
       ref={ref}
@@ -125,7 +127,15 @@ function DocSearchSidepanelComp({
     keyboardShortcuts,
     registerView,
     initialAskAiMessage,
+    appId,
+    apiKey,
   } = useDocSearch();
+
+  if (!appId || !apiKey) {
+    throw new Error(
+      '`Sidepanel` requires `appId` and `apiKey` props or values configured on the `DocSearch` provider.'
+    );
+  }
 
   const toggleSidepanelState = React.useCallback(() => {
     setDocsearchState(docsearchState === 'sidepanel' ? 'ready' : 'sidepanel');

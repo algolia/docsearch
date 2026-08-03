@@ -4,6 +4,7 @@ import { DocSearchButton, DocSearchAskAiModal } from '@docsearch/modal';
 import { type JSX } from 'react';
 
 import type { DemoTheme } from '../App';
+import { AGENT_ID, API_KEY, APP_ID, SEARCH_INDEX_NAME } from '../constants';
 
 export default function Composable({
   theme,
@@ -11,14 +12,9 @@ export default function Composable({
   theme: DemoTheme;
 }): JSX.Element {
   return (
-    <DocSearch theme={theme}>
+    <DocSearch appId={APP_ID} apiKey={API_KEY} theme={theme}>
       <DocSearchButton translations={{ buttonText: 'Composable API' }} />
-      <DocSearchAskAiModal
-        indices={['docsearch']}
-        appId="PMZUYBQDAK"
-        apiKey="24b09689d5b4223813d9b8e48563c8f6"
-        askAi="ccdec697-e3fe-465b-a1c3-657e7bf18aef"
-      />
+      <DocSearchAskAiModal askAi={AGENT_ID} indices={[SEARCH_INDEX_NAME]} />
     </DocSearch>
   );
 }

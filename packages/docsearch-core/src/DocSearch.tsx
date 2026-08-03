@@ -48,6 +48,10 @@ export interface DocSearchRef {
 }
 
 export interface DocSearchContext {
+  /** Default Algolia application ID for child DocSearch/Sidepanel components. */
+  appId?: string;
+  /** Default Algolia API key for child DocSearch/Sidepanel components. */
+  apiKey?: string;
   docsearchState: DocSearchState;
   setDocsearchState: (newState: DocSearchState) => void;
   searchButtonRef: React.RefObject<HTMLButtonElement | null>;
@@ -79,6 +83,10 @@ export interface DocSearchCallbacks {
 
 export interface DocSearchProps extends DocSearchCallbacks {
   children: Array<JSX.Element | null> | JSX.Element | React.ReactNode | null;
+  /** Default Algolia application id for descendant DocSearch views. */
+  appId?: string;
+  /** Default Algolia API key for descendant DocSearch views. */
+  apiKey?: string;
   theme?: DocSearchTheme;
   initialQuery?: string;
   keyboardShortcuts?: KeyboardShortcuts;
@@ -90,6 +98,8 @@ Context.displayName = 'DocSearchContext';
 function DocSearchInner(
   {
     children,
+    appId,
+    apiKey,
     theme,
     onReady,
     onOpen,
@@ -267,6 +277,8 @@ function DocSearchInner(
 
   const value: DocSearchContext = React.useMemo(
     () => ({
+      appId,
+      apiKey,
       docsearchState,
       setDocsearchState,
       searchButtonRef,
@@ -282,6 +294,8 @@ function DocSearchInner(
       isHybridModeSupported,
     }),
     [
+      appId,
+      apiKey,
       docsearchState,
       searchButtonRef,
       initialQuery,

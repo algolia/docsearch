@@ -231,11 +231,16 @@ export interface DocSearchAIProps extends DocSearchProps {
 }
 
 function DocSearchAIComponent(
-  props: DocSearchAIProps,
+  { appId, apiKey, ...props }: DocSearchAIProps,
   ref: React.ForwardedRef<DocSearchRef>
 ): JSX.Element {
   return (
-    <DocSearchProvider {...props} ref={ref}>
+    <DocSearchProvider
+      {...props}
+      appId={appId}
+      apiKey={apiKey}
+      ref={ref}
+    >
       <DocSearchAIInner {...props} />
     </DocSearchProvider>
   );
@@ -243,7 +248,9 @@ function DocSearchAIComponent(
 
 export const DocSearchAI = React.forwardRef(DocSearchAIComponent);
 
-export function DocSearchAIInner(props: DocSearchAIProps): JSX.Element {
+export function DocSearchAIInner(
+  props: Omit<DocSearchAIProps, 'appId' | 'apiKey'>
+): JSX.Element {
   const {
     searchButtonRef,
     keyboardShortcuts,
@@ -254,7 +261,13 @@ export function DocSearchAIInner(props: DocSearchAIProps): JSX.Element {
     openModal,
     closeModal,
     isHybridModeSupported,
+    appId,
+    apiKey,
   } = useDocSearch();
+
+  if (!appId || !apiKey) {
+    throw new Error('`DocSearchAI` requires `appId` and `apiKey` props.');
+  }
 
   return (
     <>
@@ -268,6 +281,8 @@ export function DocSearchAIInner(props: DocSearchAIProps): JSX.Element {
         createPortal(
           <DocSearchAskAiModal
             {...props}
+            appId={appId}
+            apiKey={apiKey}
             initialScrollY={window.scrollY}
             initialQuery={initialQuery}
             translations={props?.translations?.modal}

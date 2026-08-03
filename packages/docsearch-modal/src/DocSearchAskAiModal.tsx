@@ -7,6 +7,8 @@ import { createPortal } from 'react-dom';
 
 export type DocSearchAskAiModalProps = Omit<
   ReactDocSearchAskAiModalProps,
+  | 'appId'
+  | 'apiKey'
   | 'initialScrollY'
   | 'isAskAiActive'
   | 'isHybridModeSupported'
@@ -14,12 +16,15 @@ export type DocSearchAskAiModalProps = Omit<
   | 'onAskAiToggle'
   | 'onClose'
   | 'theme'
->;
+> &
+  Partial<Pick<ReactDocSearchAskAiModalProps, 'appId' | 'apiKey'>>;
 
 export function DocSearchAskAiModal(
   props: DocSearchAskAiModalProps
 ): JSX.Element | null {
   const {
+    appId: providerAppId,
+    apiKey: providerApiKey,
     isModalActive,
     onAskAiToggle,
     closeModal,
@@ -28,6 +33,15 @@ export function DocSearchAskAiModal(
     registerView,
     isHybridModeSupported,
   } = useDocSearch();
+
+  const appId = props.appId ?? providerAppId;
+  const apiKey = props.apiKey ?? providerApiKey;
+
+  if (!appId || !apiKey) {
+    throw new Error(
+      '`DocSearchAskAiModal` requires `appId` and `apiKey` props or values configured on the `DocSearch` provider.'
+    );
+  }
 
   const containerElement = React.useMemo(
     () => props.portalContainer ?? document.body,
@@ -43,6 +57,8 @@ export function DocSearchAskAiModal(
   const modalProps: ReactDocSearchAskAiModalProps = React.useMemo(
     () => ({
       ...props,
+      appId,
+      apiKey,
       isAskAiActive,
       initialQuery: props.initialQuery ?? initialQuery,
       initialScrollY: initialScroll,
@@ -52,6 +68,8 @@ export function DocSearchAskAiModal(
     }),
     [
       props,
+      appId,
+      apiKey,
       isAskAiActive,
       initialQuery,
       initialScroll,

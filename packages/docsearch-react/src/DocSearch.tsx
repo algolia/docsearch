@@ -157,11 +157,11 @@ export interface DocSearchProps {
 }
 
 function DocSearchComponent(
-  props: DocSearchProps,
+  { appId, apiKey, ...props }: DocSearchProps,
   ref: React.ForwardedRef<DocSearchRef>
 ): JSX.Element {
   return (
-    <DocSearchProvider {...props} ref={ref}>
+    <DocSearchProvider {...props} appId={appId} apiKey={apiKey} ref={ref}>
       <DocSearchInner {...props} />
     </DocSearchProvider>
   );
@@ -169,7 +169,9 @@ function DocSearchComponent(
 
 export const DocSearch = React.forwardRef(DocSearchComponent);
 
-export function DocSearchInner(props: DocSearchProps): JSX.Element {
+export function DocSearchInner(
+  props: Omit<DocSearchProps, 'appId' | 'apiKey'>
+): JSX.Element {
   const {
     searchButtonRef,
     keyboardShortcuts,
@@ -177,7 +179,13 @@ export function DocSearchInner(props: DocSearchProps): JSX.Element {
     initialQuery,
     openModal,
     closeModal,
+    appId,
+    apiKey,
   } = useDocSearch();
+
+  if (!appId || !apiKey) {
+    throw new Error('`DocSearch` requires `appId` and `apiKey` props.');
+  }
 
   return (
     <>
@@ -191,6 +199,8 @@ export function DocSearchInner(props: DocSearchProps): JSX.Element {
         createPortal(
           <DocSearchModal
             {...props}
+            appId={appId}
+            apiKey={apiKey}
             initialScrollY={window.scrollY}
             initialQuery={initialQuery}
             translations={props?.translations?.modal}
