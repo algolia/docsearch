@@ -30,6 +30,7 @@ import type {
   SuggestedQuestionHit,
 } from './types';
 import type { AIMessage, AskAiState, ToolCalls } from './types/AskiAi';
+import { isQueryEmpty } from './utils';
 
 export type AskAiScreenStateTranslations = Partial<{
   errorScreen: ErrorScreenTranslations;
@@ -141,7 +142,7 @@ export const AskAiScreenState = React.memo(
       return <ErrorScreen translations={translations?.errorScreen} />;
     }
 
-    if (!props.state.query) {
+    if (isQueryEmpty(props.state.query)) {
       return (
         <AskAiStartScreen
           {...props}
@@ -175,14 +176,27 @@ export const AskAiScreenState = React.memo(
       </>
     );
   },
-  function areEqual(_prevProps, nextProps) {
-    // We don't update the screen when Autocomplete is loading or stalled to
-    // avoid UI flashes:
-    //  - Empty screen → Results screen
-    //  - NoResults screen → NoResults screen with another query
-    return (
+  function areEqual(prevProps, nextProps) {
+    const askAiStateChanged =
+      prevProps.isAskAiActive !== nextProps.isAskAiActive ||
+      prevProps.askAiState !== nextProps.askAiState ||
+      prevProps.canHandleAskAi !== nextProps.canHandleAskAi;
+
+    // Something triggered an Ask AI related state change, perform a new render
+    if (askAiStateChanged) {
+      return false;
+    }
+
+    const isLoading =
       nextProps.state.status === 'loading' ||
-      nextProps.state.status === 'stalled'
-    );
+      nextProps.state.status === 'stalled';
+
+    const isWaitingForCollections =
+      nextProps.state.status === 'idle' &&
+      !isQueryEmpty(nextProps.state.query) &&
+      prevProps.state.query !== nextProps.state.query &&
+      prevProps.state.collections === nextProps.state.collections;
+
+    return isLoading || isWaitingForCollections;
   }
 );

@@ -38,6 +38,7 @@ import { useSuggestedQuestions } from './useSuggestedQuestions';
 import {
   identity,
   isModifierEvent,
+  isQueryEmpty,
   noop,
   scrollTo as scrollToUtils,
   SOURCE_IDS,
@@ -386,7 +387,7 @@ export function DocSearchAskAiModal({
         setState(changes.state);
       },
       async getSources({ query, state: sourcesState, setContext, setStatus }) {
-        if (!query) {
+        if (isQueryEmpty(query)) {
           const noQuerySources = buildNoQuerySources({
             recentSearches,
             favoriteSearches,
@@ -526,7 +527,7 @@ export function DocSearchAskAiModal({
   if (
     state.status === 'idle' &&
     hasCollections === false &&
-    state.query.length === 0 &&
+    isQueryEmpty(state.query) &&
     !isAskAiActive
   ) {
     showDocsearchDropdown = false;
@@ -546,7 +547,7 @@ export function DocSearchAskAiModal({
           {...autocomplete}
           state={state}
           placeholder={placeholder || 'Search docs'}
-          autoFocus={initialQuery.length === 0}
+          autoFocus={isQueryEmpty(initialQuery)}
           inputRef={inputRef}
           isFromSelection={
             Boolean(initialQuery) && initialQuery === initialQueryFromSelection
@@ -571,7 +572,7 @@ export function DocSearchAskAiModal({
         />
       }
       filterBar={
-        !isAskAiActive && state.query !== '' ? (
+        !isAskAiActive && !isQueryEmpty(state.query) ? (
           <FacetBar
             facets={visibleFacets}
             selections={facetSelections}

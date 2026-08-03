@@ -25,6 +25,7 @@ import { useSearchClient } from './useSearchClient';
 import {
   identity,
   isModifierEvent,
+  isQueryEmpty,
   noop,
   scrollTo as scrollToUtils,
 } from './utils';
@@ -170,7 +171,7 @@ export function DocSearchModal({
         setState(changes.state);
       },
       getSources({ query, state: sourcesState, setContext, setStatus }) {
-        if (!query) {
+        if (isQueryEmpty(query)) {
           const noQuerySources = buildNoQuerySources({
             recentSearches,
             favoriteSearches,
@@ -240,7 +241,7 @@ export function DocSearchModal({
   if (
     state.status === 'idle' &&
     hasCollections === false &&
-    state.query.length === 0
+    isQueryEmpty(state.query)
   ) {
     showDocsearchDropdown = false;
   }
@@ -259,7 +260,7 @@ export function DocSearchModal({
           {...autocomplete}
           state={state}
           placeholder={placeholder || 'Search docs'}
-          autoFocus={initialQuery.length === 0}
+          autoFocus={isQueryEmpty(initialQuery)}
           inputRef={inputRef}
           isFromSelection={
             Boolean(initialQuery) && initialQuery === initialQueryFromSelection
@@ -269,7 +270,7 @@ export function DocSearchModal({
         />
       }
       filterBar={
-        state.query !== '' ? (
+        !isQueryEmpty(state.query) ? (
           <FacetBar
             facets={visibleFacets}
             selections={facetSelections}

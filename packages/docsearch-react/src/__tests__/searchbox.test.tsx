@@ -234,6 +234,21 @@ describe('AskAiSearchBox', () => {
     expect(onAskAgain).toHaveBeenCalledWith('follow up');
   });
 
+  it('does not submit a whitespace-only follow-up question', () => {
+    const onAskAgain = vi.fn();
+
+    renderAskAiSearchBox({
+      state: createState({ query: ' \t\n ' }),
+      onAskAgain,
+    });
+
+    fireEvent.keyDown(screen.getByPlaceholderText('Ask another question...'), {
+      key: 'Enter',
+    });
+
+    expect(onAskAgain).not.toHaveBeenCalled();
+  });
+
   it('uses thread-depth behavior in Ask AI mode', () => {
     const onNewConversation = vi.fn();
 

@@ -7,13 +7,13 @@ export function Menu({ ...props }: MenuPrimitive.Root.Props): JSX.Element {
   return <MenuPrimitive.Root {...props} />;
 }
 
-function MenuTrigger({
-  className,
-  ...props
-}: MenuPrimitive.Trigger.Props): JSX.Element {
+const MenuTrigger = React.forwardRef<
+  HTMLButtonElement,
+  MenuPrimitive.Trigger.Props
+>(({ className, ...props }, ref): JSX.Element => {
   const cn = `DocSearch-Menu-Trigger${className ? ` ${className}` : ''}`;
-  return <MenuPrimitive.Trigger className={cn} {...props} />;
-}
+  return <MenuPrimitive.Trigger className={cn} ref={ref} {...props} />;
+});
 
 Menu.Trigger = MenuTrigger;
 

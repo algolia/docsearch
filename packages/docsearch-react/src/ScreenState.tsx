@@ -16,6 +16,7 @@ import type { ResultsScreenTranslations } from './ResultsScreen';
 import { ResultsScreen } from './ResultsScreen';
 import type { StoredSearchPlugin } from './stored-searches';
 import type { InternalDocSearchHit, StoredDocSearchHit } from './types';
+import { isQueryEmpty } from './utils';
 
 export type ScreenStateTranslations = Partial<{
   errorScreen: ErrorScreenTranslations;
@@ -56,7 +57,7 @@ export const ScreenState = React.memo(
       return <ErrorScreen translations={translations?.errorScreen} />;
     }
 
-    if (!props.state.query) {
+    if (isQueryEmpty(props.state.query)) {
       return (
         <KeywordStartScreen
           {...props}
@@ -79,14 +80,17 @@ export const ScreenState = React.memo(
       <ResultsScreen {...props} translations={translations?.resultsScreen} />
     );
   },
-  function areEqual(_prevProps, nextProps) {
-    // We don't update the screen when Autocomplete is loading or stalled to
-    // avoid UI flashes:
-    //  - Empty screen → Results screen
-    //  - NoResults screen → NoResults screen with another query
-    return (
+  function areEqual(prevProps, nextProps) {
+    const isLoading =
       nextProps.state.status === 'loading' ||
-      nextProps.state.status === 'stalled'
-    );
+      nextProps.state.status === 'stalled';
+
+    const isWaitingForCollections =
+      nextProps.state.status === 'idle' &&
+      !isQueryEmpty(nextProps.state.query) &&
+      prevProps.state.query !== nextProps.state.query &&
+      prevProps.state.collections === nextProps.state.collections;
+
+    return isLoading || isWaitingForCollections;
   }
 );
