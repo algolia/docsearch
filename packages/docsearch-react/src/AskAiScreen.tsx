@@ -31,7 +31,10 @@ export type AskAiScreenTranslations = Partial<
   Omit<ToolCallTranslations, 'searchingText' | 'toolCallResultText'> & {
     // Misc texts
     disclaimerText: string;
+    /** Text shown describing a singular related source. */
     relatedSourcesText: string;
+    /** Text shown describing multiple related sources. */
+    relatedSourcesTextPlural: string;
     thinkingText: string;
     copyButtonText: string;
     copyButtonCopiedText: string;
@@ -187,6 +190,7 @@ function AskAiExchangeCard({
     stoppedStreamingText = 'You stopped this response',
     errorTitleText = 'Chat error',
     relatedSourcesText,
+    relatedSourcesTextPlural,
     suggestedPromptsTitleText = 'Suggested prompts',
   } = translations;
 
@@ -355,7 +359,11 @@ function AskAiExchangeCard({
           )}
         </div>
         <div className="DocSearch-AskAiScreen-Answer-Footer">
-          <SourcesPanel links={urlsToDisplay} titleText={relatedSourcesText} />
+          <SourcesPanel
+            links={urlsToDisplay}
+            titleText={relatedSourcesText}
+            pluralTitleText={relatedSourcesTextPlural}
+          />
           <FeedbackActions
             id={messageId}
             showActions={showActions}

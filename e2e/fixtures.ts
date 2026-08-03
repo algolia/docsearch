@@ -102,6 +102,10 @@ export class SidepanelPage {
     this.sidepanel = page.locator('.DocSearch-Sidepanel-Container');
   }
 
+  async waitForLoad(): Promise<void> {
+    await expect(this.sidepanelButton).toBeVisible({ timeout: 10000 });
+  }
+
   async openSidepanel(): Promise<void> {
     await this.sidepanelButton.click();
     await expect(this.sidepanel).toHaveClass(/is-open/, {
@@ -137,4 +141,10 @@ export const test = base.extend<{
   },
 });
 
-export { expect };
+type AxeScanResults = Awaited<ReturnType<AxeBuilder['analyze']>>;
+
+function gatherA11yViolations(violations: AxeScanResults['violations']) {
+  return violations.flatMap((v) => v.nodes);
+}
+
+export { expect, gatherA11yViolations };

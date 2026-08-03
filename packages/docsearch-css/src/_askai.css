@@ -84,14 +84,13 @@
 /* Ask AI Button */
 
 .DocSearch-Hit-AskAIButton {
-  align-items: center;
   height: 40px;
 }
 
 .DocSearch-Hit-AskAIButton-icon {
+  display: inline-flex;
+  align-items: center;
   margin-inline-end: 8px;
-  margin-block-start: 0;
-  align-self: unset;
 }
 
 .DocSearch-Hit-AskAIButton-title {
@@ -1011,20 +1010,23 @@
   gap: 1ch;
   border-radius: 100vw;
   border: 1px solid var(--docsearch-subtle-color);
-  background: transparent;
+  background-color: transparent;
   padding-inline: 0.75em;
   padding-block: 0.375em;
   cursor: pointer;
   user-select: none;
   color: var(--docsearch-text-color);
-  transition: all 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
 
   @media (prefers-reduced-motion: reduce) {
     transition: none;
   }
 
   &:hover {
-    background: var(--docsearch-soft-primary-color);
+    background-color: var(--docsearch-soft-primary-color);
     color: var(--docsearch-highlight-color);
     border-color: var(--docsearch-soft-primary-color);
   }
@@ -1047,7 +1049,6 @@
 }
 
 .DocSearch-AskAiScreen-Sources-Action-text {
-  margin-block-start: 2px;
   font-size: 1em;
   line-height: 1.15em;
   white-space: nowrap;

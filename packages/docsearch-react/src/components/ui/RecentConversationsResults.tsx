@@ -38,7 +38,7 @@ export function RecentConversationsResults({
       title={recentConversationsTitle}
       collection={recentConversations}
       renderIcon={() => (
-        <div className="DocSearch-Hit-icon DocSearch-Hit-icon--small">
+        <div className="DocSearch-Hit-icon DocSearch-Hit-icon--start">
           <MessageIcon />
         </div>
       )}
