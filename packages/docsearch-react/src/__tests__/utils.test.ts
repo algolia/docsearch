@@ -248,6 +248,23 @@ describe('utils', () => {
         { url: 'https://docsearch.algolia.com', title: 'DocSearch' },
       ]);
     });
+
+    it('drops unsafe markdown link schemes', () => {
+      const message: AIMessage = {
+        id: '123',
+        role: 'assistant',
+        parts: [
+          {
+            type: 'text',
+            text: `See [safe](https://docsearch.algolia.com) and [bad](javascript${':'}alert(1))`,
+          },
+        ],
+      };
+
+      expect(extractLinksFromMessage(message)).toEqual([
+        { url: 'https://docsearch.algolia.com', title: 'safe' },
+      ]);
+    });
   });
 
   describe('createObjectStorage', () => {

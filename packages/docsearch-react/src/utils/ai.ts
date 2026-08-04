@@ -13,7 +13,7 @@ import type {
   ToolCalls,
 } from '../types/AskiAi';
 
-import { sanitizeUserInput } from './sanitize';
+import { sanitizeUrl, sanitizeUserInput } from './sanitize';
 
 export interface ExtractedLink {
   url: string;
@@ -56,9 +56,9 @@ export function extractLinksFromMessage(
     // Parses the title and url from the found links
     for (const match of markdownMatches) {
       const title = match[1].trim();
-      const url = match[2];
+      const url = sanitizeUrl(match[2]);
 
-      if (!seen.has(url)) {
+      if (url && !seen.has(url)) {
         seen.add(url);
         links.push({ url, title: title || undefined });
       }
@@ -69,9 +69,9 @@ export function extractLinksFromMessage(
 
     for (const match of plainUrls) {
       // Strip any extra punctuation
-      const cleanUrl = match[0].replace(/[.,;:!?]+$/, '');
+      const cleanUrl = sanitizeUrl(match[0].replace(/[.,;:!?]+$/, ''));
 
-      if (!seen.has(cleanUrl)) {
+      if (cleanUrl && !seen.has(cleanUrl)) {
         seen.add(cleanUrl);
         links.push({ url: cleanUrl });
       }
