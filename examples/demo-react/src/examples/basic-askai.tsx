@@ -50,6 +50,9 @@ export default function BasicAskAI({
       translations={{ button: { buttonText: 'Search with Ask AI' } }}
       theme={theme}
       resultBadgeKey="type"
+      footerAction={() => {
+        return <span>Hello world!</span>;
+      }}
     />
   );
 }

@@ -1,7 +1,4 @@
-import docsearch, {
-  type DocSearchInstance,
-  type TemplateHelpers,
-} from '@docsearch/js';
+import docsearch, { type DocSearchInstance } from '@docsearch/js';
 import sidepanel, { type SidepanelInstance } from '@docsearch/sidepanel-js';
 
 import './app.css';
@@ -91,10 +88,7 @@ docsearchInstance = docsearch({
     // eslint-disable-next-line no-console
     console.log('[demo-js] docsearch onClose()');
   },
-  resultsFooterComponent: ({ state }, helpers?: TemplateHelpers) => {
-    const { html } = helpers || {};
-    if (!html) return null;
-
+  resultsFooterComponent: ({ state }, { html }) => {
     return html`
       <div class="DocSearch-HitsFooter">
         <a href="https://docsearch.algolia.com/apply" target="_blank">

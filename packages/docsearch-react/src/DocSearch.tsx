@@ -43,6 +43,15 @@ export interface DocSearchFacet {
   label?: string;
 }
 
+export interface HitComponentProps {
+  hit: InternalDocSearchHit | StoredDocSearchHit;
+  children: React.ReactNode;
+}
+
+export interface ResultsFooterComponentProps {
+  state: AutocompleteState<InternalDocSearchHit>;
+}
+
 export interface DocSearchProps {
   /** Algolia application id used by the search client. */
   appId: string;
@@ -69,38 +78,18 @@ export interface DocSearchProps {
   maxResultsPerGroup?: number;
   /** Hook to post-process hits before rendering. */
   transformItems?: (items: DocSearchHit[]) => DocSearchHit[];
-  /**
-   * Custom component to render an individual hit. Supports template patterns:
-   *
-   * - HTML strings with html helper: (props, { html }) => html`<div>...</div>`
-   * - JSX templates: (props) => <div>...</div>
-   * - Function-based templates: (props) => string | JSX.Element | Function.
-   */
-  hitComponent?: (
-    props: {
-      hit: InternalDocSearchHit | StoredDocSearchHit;
-      children: React.ReactNode;
-    },
-    helpers?: {
-      html: (template: TemplateStringsArray, ...values: any[]) => any;
-    }
-  ) => JSX.Element;
-  /**
-   * Custom component rendered at the bottom of the results panel. Supports
-   * template patterns:
-   *
-   * - HTML strings with html helper: (props, { html }) => html`<div>...</div>`
-   * - JSX templates: (props) => <div>...</div>
-   * - Function-based templates: (props) => string | JSX.Element | Function.
-   */
+  /** Custom component to render an individual hit. */
+  hitComponent?: (props: HitComponentProps) => JSX.Element;
+  /** Custom component rendered at the bottom of the results panel. */
   resultsFooterComponent?: (
-    props: {
-      state: AutocompleteState<InternalDocSearchHit>;
-    },
-    helpers?: {
-      html: (template: TemplateStringsArray, ...values: any[]) => any;
-    }
+    props: ResultsFooterComponentProps
   ) => JSX.Element | null;
+  /**
+   * A custom action that can be rendered in the Modal's footer before the
+   * Algolia logo. The component will be rendered as a child of `<div
+   * className="DocSearch-Footer-Action" />`.
+   */
+  footerAction?: () => JSX.Element | null;
   /** Hook to wrap or modify the algolia search client. */
   transformSearchClient?: (
     searchClient: DocSearchTransformClient

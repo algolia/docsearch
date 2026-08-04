@@ -32,6 +32,14 @@ function DocSearchAI(props: Partial<DocSearchAIProps>): JSX.Element {
   );
 }
 
+function FooterAction(): JSX.Element {
+  return <button type="button">Footer action</button>;
+}
+
+function EmptyFooterAction(): null {
+  return null;
+}
+
 // mock empty response
 function noResultSearch(_queries: any, _requestOptions?: any): Promise<any> {
   return new Promise((resolve) => {
@@ -94,6 +102,44 @@ describe('api', () => {
     render(<DocSearch />);
 
     expect(document.querySelector(docSearchSelector)).toBeInTheDocument();
+  });
+
+  describe('footerAction', () => {
+    it('renders the action in the standard modal', async () => {
+      render(<DocSearch footerAction={FooterAction} />);
+
+      await act(async () => {
+        fireEvent.click(await screen.findByText('Search'));
+      });
+
+      expect(
+        await screen.findByRole('button', { name: 'Footer action' })
+      ).toBeInTheDocument();
+    });
+
+    it('does not render an empty action', async () => {
+      render(<DocSearch footerAction={EmptyFooterAction} />);
+
+      await act(async () => {
+        fireEvent.click(await screen.findByText('Search'));
+      });
+
+      expect(
+        screen.queryByRole('button', { name: 'Footer action' })
+      ).not.toBeInTheDocument();
+    });
+
+    it('renders the action in the Ask AI modal', async () => {
+      render(<DocSearchAI footerAction={FooterAction} />);
+
+      await act(async () => {
+        fireEvent.click(await screen.findByText('Search'));
+      });
+
+      expect(
+        await screen.findByRole('button', { name: 'Footer action' })
+      ).toBeInTheDocument();
+    });
   });
 
   describe('translations', () => {

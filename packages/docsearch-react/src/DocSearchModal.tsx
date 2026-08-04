@@ -304,7 +304,12 @@ export function DocSearchModal({
           }}
         />
       }
-      footer={<Footer translations={footerTranslations} />}
+      footer={
+        <Footer
+          translations={footerTranslations}
+          footerAction={props.footerAction}
+        />
+      }
       onClose={onClose}
     />
   );

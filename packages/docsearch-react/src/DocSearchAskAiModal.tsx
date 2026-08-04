@@ -653,6 +653,7 @@ export function DocSearchAskAiModal({
         <Footer
           translations={footerTranslations}
           isAskAiActive={isAskAiActive}
+          footerAction={props.footerAction}
         />
       }
       onClose={onClose}
