@@ -1,5 +1,17 @@
 # @docsearch/core
 
+## 5.0.0-beta.2
+
+### Patch Changes
+
+- 4f6b5b1: feat(v5): UI and DX updates
+
+  - Rename the Ask AI assistantId option to agentId (adapter theme.SearchModal.askAi.assistantId → agentId)
+  - appId and apiKey moved up into @docsearch/core, so they're configured once and shared
+  - Removed the indexName prop from the Sidepanel
+  - Facet defaults can now be read from the index searchParameters
+  - Restored nested grouping of search results
+
 ## 5.0.0-beta.1
 
 ## 5.0.0-beta.0
