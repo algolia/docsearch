@@ -37,15 +37,15 @@ export default function BasicAskAI({
         agentId: AGENT_ID,
         suggestedQuestions: true,
         tools: customTools,
-        promptSuggestions: {
-          indexName: 'docsearch-markdown_prompt_suggestions',
-        },
+        // promptSuggestions: {
+        //   indexName: 'docsearch-markdown_prompt_suggestions',
+        // },
       }}
-      facets={[
-        { key: 'language', label: 'Language' },
-        { key: 'version', label: 'Version' },
-        { key: 'type', label: 'Content type' },
-      ]}
+      // facets={[
+      //   { key: 'language', label: 'Language' },
+      //   { key: 'version', label: 'Version' },
+      //   { key: 'type', label: 'Content type' },
+      // ]}
       insights={true}
       translations={{ button: { buttonText: 'Search with Ask AI' } }}
       theme={theme}

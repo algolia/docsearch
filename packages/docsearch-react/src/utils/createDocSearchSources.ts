@@ -249,10 +249,8 @@ export async function buildQuerySources({
         };
       }
 
-      const items = Object.values(sources).flat();
-
-      return {
-        sourceId: `hits_${result.index}`,
+      return Object.values<DocSearchHit[]>(sources).map((items, index) => ({
+        sourceId: `hits_${result.index}_${index}`,
         onSelect({ item, event }): void {
           saveRecentSearch(item);
           if (!isModifierEvent(event)) {
@@ -262,36 +260,34 @@ export async function buildQuerySources({
         getItemUrl({ item }): string {
           return item.url;
         },
-        getItems() {
+        getItems(): InternalDocSearchHit[] {
           return Object.values(
             groupBy(items, (item) => item.hierarchy.lvl1, maxResultsPerGroup)
           )
             .map((groupedHits) =>
-              groupedHits
-                .map((item) => {
-                  let parent: InternalDocSearchHit | null = null;
+              groupedHits.map((item) => {
+                let parent: InternalDocSearchHit | null = null;
 
-                  const potentialParent = groupedHits.find(
-                    (siblingItem) =>
-                      siblingItem.type === 'lvl1' &&
-                      siblingItem.hierarchy.lvl1 === item.hierarchy.lvl1
-                  ) as InternalDocSearchHit | undefined;
+                const potentialParent = groupedHits.find(
+                  (siblingItem) =>
+                    siblingItem.type === 'lvl1' &&
+                    siblingItem.hierarchy.lvl1 === item.hierarchy.lvl1
+                ) as InternalDocSearchHit | undefined;
 
-                  if (item.type !== 'lvl1' && potentialParent) {
-                    parent = potentialParent;
-                  }
+                if (item.type !== 'lvl1' && potentialParent) {
+                  parent = potentialParent;
+                }
 
-                  return {
-                    ...item,
-                    __docsearch_parent: parent,
-                    ...insightsParams,
-                  };
-                })
-                .flat()
+                return {
+                  ...item,
+                  __docsearch_parent: parent,
+                  ...insightsParams,
+                };
+              })
             )
             .flat();
         },
-      };
+      }));
     });
   } catch (error) {
     if ((error as Error).name === 'RetryError') {

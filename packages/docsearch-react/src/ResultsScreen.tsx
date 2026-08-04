@@ -6,6 +6,7 @@ import type { ResultsTranslations } from './Results';
 import { Results } from './Results';
 import type { ScreenStateProps } from './ScreenState';
 import type { InternalDocSearchHit } from './types';
+import { removeHighlightTags } from './utils';
 
 export type ResultsScreenTranslations = Partial<{
   askAiPlaceholder: string;
@@ -27,19 +28,6 @@ export function ResultsScreen({
   resultBadgeKey,
   ...props
 }: ResultsScreenProps): JSX.Element {
-  const { resultsSectionTitle = 'Results' } = translations;
-
-  const renderIcon = React.useCallback(
-    ({ item }: { item: InternalDocSearchHit }) => {
-      return (
-        <div className="DocSearch-Hit-icon">
-          <SourceIcon type={item.type} />
-        </div>
-      );
-    },
-    []
-  );
-
   const renderAction = React.useCallback(() => {
     return (
       <div className="DocSearch-Hit-action">
@@ -70,14 +58,40 @@ export function ResultsScreen({
           return null;
         }
 
+        const title = removeHighlightTags(collection.items[0]);
+
         return (
           <Results
             {...props}
             key={collection.source.sourceId}
             translations={translations}
-            title={resultsSectionTitle}
+            title={title}
             collection={collection}
-            renderIcon={renderIcon}
+            renderIcon={({ item, index }) => (
+              <>
+                {item.__docsearch_parent && (
+                  <svg className="DocSearch-Hit-Tree" viewBox="0 0 24 54">
+                    <g
+                      stroke="currentColor"
+                      fill="none"
+                      fillRule="evenodd"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      {item.__docsearch_parent !==
+                      collection.items[index + 1]?.__docsearch_parent ? (
+                        <path d="M8 6v21M20 27H8.3" />
+                      ) : (
+                        <path d="M8 6v42M20 27H8.3" />
+                      )}
+                    </g>
+                  </svg>
+                )}
+                <div className="DocSearch-Hit-icon">
+                  <SourceIcon type={item.type} />
+                </div>
+              </>
+            )}
             renderAction={renderAction}
             renderResultBadge={renderResultBadge}
           />
