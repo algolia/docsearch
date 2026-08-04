@@ -9,6 +9,7 @@ import type {
 } from 'algoliasearch/lite';
 import type React from 'react';
 
+import { SNIPPET_LENGTH } from '../constants';
 import type { DocSearchIndex, DocSearchProps } from '../DocSearch';
 import type {
   DocSearchHit,
@@ -135,7 +136,6 @@ export async function buildQuerySources({
   setStatus,
   searchClient,
   indexes,
-  snippetLength,
   insights,
   appId,
   apiKey,
@@ -153,7 +153,6 @@ export async function buildQuerySources({
   setStatus: (status: DocSearchState<InternalDocSearchHit>['status']) => void;
   searchClient: ReturnType<typeof useSearchClient>;
   indexes: DocSearchIndex[];
-  snippetLength: React.MutableRefObject<number>;
   insights: boolean;
   appId?: string;
   apiKey?: string;
@@ -191,13 +190,13 @@ export async function buildQuerySources({
             'url',
           ],
           attributesToSnippet: searchParams?.attributesToSnippet ?? [
-            `hierarchy.lvl1:${snippetLength.current}`,
-            `hierarchy.lvl2:${snippetLength.current}`,
-            `hierarchy.lvl3:${snippetLength.current}`,
-            `hierarchy.lvl4:${snippetLength.current}`,
-            `hierarchy.lvl5:${snippetLength.current}`,
-            `hierarchy.lvl6:${snippetLength.current}`,
-            `content:${snippetLength.current}`,
+            `hierarchy.lvl1:${SNIPPET_LENGTH}`,
+            `hierarchy.lvl2:${SNIPPET_LENGTH}`,
+            `hierarchy.lvl3:${SNIPPET_LENGTH}`,
+            `hierarchy.lvl4:${SNIPPET_LENGTH}`,
+            `hierarchy.lvl5:${SNIPPET_LENGTH}`,
+            `hierarchy.lvl6:${SNIPPET_LENGTH}`,
+            `content:${SNIPPET_LENGTH}`,
           ],
           snippetEllipsisText: searchParams?.snippetEllipsisText ?? '…',
           highlightPreTag: searchParams?.highlightPreTag ?? '<mark>',

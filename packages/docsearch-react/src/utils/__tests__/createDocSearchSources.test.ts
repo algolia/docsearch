@@ -63,53 +63,69 @@ function createHit({
 
 describe('buildQuerySources', () => {
   it('creates a source per lvl0 group and scopes parents to that group', async () => {
+    const search = vi.fn().mockResolvedValue({
+      results: [
+        {
+          index: 'docs',
+          nbHits: 4,
+          hits: [
+            createHit({
+              objectID: 'guide-install',
+              lvl0: 'Guides',
+              lvl1: 'Installation',
+              type: 'lvl1',
+            }),
+            createHit({
+              objectID: 'guide-install-content',
+              lvl0: 'Guides',
+              lvl1: 'Installation',
+              type: 'content',
+            }),
+            createHit({
+              objectID: 'reference-install',
+              lvl0: 'Reference',
+              lvl1: 'Installation',
+              type: 'lvl1',
+            }),
+            createHit({
+              objectID: 'reference-install-content',
+              lvl0: 'Reference',
+              lvl1: 'Installation',
+              type: 'content',
+            }),
+          ],
+        },
+      ],
+    });
     const sources = await buildQuerySources({
       query: 'install',
       state: { context: { searchSuggestions: [] } },
       setContext: vi.fn(),
       setStatus: vi.fn(),
       searchClient: {
-        search: vi.fn().mockResolvedValue({
-          results: [
-            {
-              index: 'docs',
-              nbHits: 4,
-              hits: [
-                createHit({
-                  objectID: 'guide-install',
-                  lvl0: 'Guides',
-                  lvl1: 'Installation',
-                  type: 'lvl1',
-                }),
-                createHit({
-                  objectID: 'guide-install-content',
-                  lvl0: 'Guides',
-                  lvl1: 'Installation',
-                  type: 'content',
-                }),
-                createHit({
-                  objectID: 'reference-install',
-                  lvl0: 'Reference',
-                  lvl1: 'Installation',
-                  type: 'lvl1',
-                }),
-                createHit({
-                  objectID: 'reference-install-content',
-                  lvl0: 'Reference',
-                  lvl1: 'Installation',
-                  type: 'content',
-                }),
-              ],
-            },
-          ],
-        }),
+        search,
       } as any,
       indexes: [{ name: 'docs' }],
-      snippetLength: { current: 15 },
       insights: false,
       saveRecentSearch: vi.fn(),
       onClose: vi.fn(),
       facetSelections: { current: {} },
+    });
+
+    expect(search).toHaveBeenCalledWith({
+      requests: [
+        expect.objectContaining({
+          attributesToSnippet: [
+            'hierarchy.lvl1:15',
+            'hierarchy.lvl2:15',
+            'hierarchy.lvl3:15',
+            'hierarchy.lvl4:15',
+            'hierarchy.lvl5:15',
+            'hierarchy.lvl6:15',
+            'content:15',
+          ],
+        }),
+      ],
     });
 
     expect(sources.map((source) => source.sourceId)).toEqual([

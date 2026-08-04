@@ -7,12 +7,10 @@ import { manageLocalStorageQuota } from '../utils/storage';
 export function useDocSearchModalEffects({
   initialScrollY,
   modalRef,
-  snippetLength,
   theme,
 }: {
   initialScrollY: number;
   modalRef: React.RefObject<HTMLDivElement | null>;
-  snippetLength: React.MutableRefObject<number>;
   theme?: DocSearchTheme;
 }): void {
   useTheme({ theme });
@@ -38,12 +36,6 @@ export function useDocSearchModalEffects({
       document.body.style.marginInlineEnd = '0px';
     };
   }, []);
-
-  React.useEffect(() => {
-    if (window.matchMedia('(max-width: 768px)').matches) {
-      snippetLength.current = 5;
-    }
-  }, [snippetLength]);
 
   React.useEffect(() => {
     function setFullViewportHeight(): void {

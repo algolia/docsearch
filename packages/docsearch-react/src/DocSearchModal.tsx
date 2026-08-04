@@ -95,14 +95,8 @@ export function DocSearchModal({
     props.placeholder ||
     'Search docs';
 
-  const {
-    containerRef,
-    modalRef,
-    formElementRef,
-    dropdownRef,
-    inputRef,
-    snippetLength,
-  } = useModalRefs();
+  const { containerRef, modalRef, formElementRef, dropdownRef, inputRef } =
+    useModalRefs();
   const { initialQuery, initialQueryFromSelection } =
     useInitialModalQuery(initialQueryFromProp);
 
@@ -193,7 +187,6 @@ export function DocSearchModal({
           setStatus,
           searchClient,
           indexes,
-          snippetLength,
           insights: Boolean(insights),
           appId,
           apiKey,
@@ -221,7 +214,6 @@ export function DocSearchModal({
     inputRef,
     initialScrollY,
     modalRef,
-    snippetLength,
     theme,
   });
 

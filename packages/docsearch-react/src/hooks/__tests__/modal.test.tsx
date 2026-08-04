@@ -117,7 +117,6 @@ describe('modal hooks', () => {
       expect(firstResult.formElementRef.current).toBeNull();
       expect(firstResult.dropdownRef.current).toBeNull();
       expect(firstResult.inputRef.current).toBeNull();
-      expect(firstResult.snippetLength.current).toBe(15);
 
       rerender(<TestComponent onResult={onResult} />);
 
