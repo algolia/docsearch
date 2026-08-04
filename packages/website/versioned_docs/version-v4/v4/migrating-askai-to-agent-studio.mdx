@@ -80,9 +80,9 @@ For the Sidepanel, set `agentStudio={true}` and pass the agent ID as `assistantI
 
 ### DocSearch v5
 
-In DocSearch v5, Agent Studio is the default chat backend.
-Pass your Agent Studio **agent ID** directly as `askAi`.
-You don't need an `agentStudio` flag:
+In DocSearch v5, Agent Studio is the only chat backend.
+Pass your Agent Studio **agent ID** as `askAi.agentId`, or as the `askAi` string shorthand.
+Rename `assistantId` to `agentId`. You don't need an `agentStudio` flag:
 
 ```js
 docsearch({
@@ -90,7 +90,9 @@ docsearch({
   appId: 'YourApplicationID',
   apiKey: 'YourSearchOnlyAPIKey',
   indices: ['YourIndexName'],
-  askAi: 'YOUR_AGENT_ID',
+  askAi: {
+    agentId: 'YOUR_AGENT_ID',
+  },
 });
 ```
 
@@ -99,7 +101,7 @@ docsearch({
   appId="YourApplicationID"
   apiKey="YourSearchOnlyAPIKey"
   indices={['YourIndexName']}
-  askAi="YOUR_AGENT_ID"
+  askAi={{ agentId: 'YOUR_AGENT_ID' }}
 />
 ```
 

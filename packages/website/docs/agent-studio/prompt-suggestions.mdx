@@ -15,7 +15,7 @@ Enable curated starting questions with `suggestedQuestions`:
 
 ```js title="docsearch.js"
 askAi: {
-  assistantId: 'YOUR_AGENT_ID',
+  agentId: 'YOUR_AGENT_ID',
   suggestedQuestions: true,
 }
 ```
@@ -44,7 +44,7 @@ Create an Algolia index whose records contain a `prompt` string, then configure 
 
 ```js title="docsearch.js"
 askAi: {
-  assistantId: 'YOUR_AGENT_ID',
+  agentId: 'YOUR_AGENT_ID',
   promptSuggestions: {
     indexName: 'docs_prompt_suggestions',
     hitsPerPage: 3,

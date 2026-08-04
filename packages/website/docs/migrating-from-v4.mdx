@@ -122,7 +122,7 @@ docsearch({
   apiKey: 'YOUR_SEARCH_API_KEY',
   indices: ['YOUR_INDEX_NAME'],
   askAi: {
-    assistantId: 'YOUR_ASSISTANT_ID',
+    agentId: 'YOUR_AGENT_ID',
   },
 });
 ```
@@ -156,25 +156,26 @@ Replace `DocSearch` with `DocSearchAI`:
    appId="YOUR_APP_ID"
    apiKey="YOUR_SEARCH_API_KEY"
    indices={['YOUR_INDEX_NAME']}
-   askAi={{ assistantId: 'YOUR_ASSISTANT_ID' }}
+   askAi={{ agentId: 'YOUR_AGENT_ID' }}
  />
 ```
 
 `DocSearchAI` requires `askAi`. The string shorthand remains supported:
 
 ```jsx title="Search.jsx"
-<DocSearchAI askAi="YOUR_ASSISTANT_ID" {...searchProps} />
+<DocSearchAI askAi="YOUR_AGENT_ID" {...searchProps} />
 ```
 
 ## 3. Move Ask AI to Agent Studio
 
 V5 removes the legacy Ask AI token and chat transport. Create the assistant in [Agent Studio](/docs/agent-studio/getting-started) before switching production traffic. If you already have an Ask AI assistant, follow [Migrate Ask AI to Agent Studio](/docs/agent-studio/migrate-to-agent-studio).
 
-Remove `agentStudio` and `useStagingEnv` from `askAi`. Agent Studio is the only Ask AI backend in v5.
+Rename `assistantId` to `agentId`. Remove `agentStudio` and `useStagingEnv` from `askAi`. Agent Studio is the only Ask AI backend in v5.
 
 ```diff title="app.js"
  askAi: {
-   assistantId: 'YOUR_ASSISTANT_ID',
+-  assistantId: 'YOUR_ASSISTANT_ID',
++  agentId: 'YOUR_AGENT_ID',
 -  agentStudio: true,
 -  useStagingEnv: false,
  }
@@ -184,7 +185,8 @@ The v4 Agent Studio form keyed search parameters by index name. V5 keeps that sh
 
 ```diff title="app.js"
  askAi: {
-   assistantId: 'YOUR_ASSISTANT_ID',
+-  assistantId: 'YOUR_ASSISTANT_ID',
++  agentId: 'YOUR_AGENT_ID',
    searchParameters: {
 -    filters: 'language:en',
 -    attributesToRetrieve: ['title', 'content', 'url'],

@@ -28,7 +28,7 @@ The wizard creates a draft Agent Studio agent from your assistant configuration,
 2. Review the migrated agent.
 3. Publish the agent when you're ready to go live.
 
-Copy the **agent ID**. DocSearch calls this value `assistantId` in its public API.
+Copy the **agent ID**. DocSearch calls this value `agentId` in its public API.
 
 ### 3. Update your integration
 
@@ -41,7 +41,7 @@ Your existing Ask AI assistant keeps serving traffic until Ask AI is fully retir
 
 ## Update DocSearch v5
 
-Pass the Agent Studio **agent ID** as `askAi.assistantId`, or as the `askAi` string shorthand. Don't add `agentStudio` or `useStagingEnv`.
+Pass the Agent Studio **agent ID** as `askAi.agentId`, or as the `askAi` string shorthand. Rename any `assistantId` field to `agentId`.
 
 <Tabs groupId="language" aria-label="Programming language">
   <TabItem value="react" label="React">
@@ -59,7 +59,7 @@ export function Search() {
       apiKey="YOUR_SEARCH_API_KEY"
       indices={['YOUR_DOCSEARCH_INDEX']}
       askAi={{
-        assistantId: 'YOUR_AGENT_ID',
+        agentId: 'YOUR_AGENT_ID',
       }}
     />
   );
@@ -92,7 +92,7 @@ docsearch({
   apiKey: 'YOUR_SEARCH_API_KEY',
   indices: ['YOUR_DOCSEARCH_INDEX'],
   askAi: {
-    assistantId: 'YOUR_AGENT_ID',
+    agentId: 'YOUR_AGENT_ID',
   },
 });
 ```
@@ -106,7 +106,8 @@ Agent Studio search parameters are keyed by index name. Move any flat Ask AI `se
 
 ```diff title="app.js"
  askAi: {
-   assistantId: 'YOUR_AGENT_ID',
+-  assistantId: 'YOUR_ASSISTANT_ID',
++  agentId: 'YOUR_AGENT_ID',
    searchParameters: {
 -    filters: 'language:en',
 -    attributesToRetrieve: ['title', 'content', 'url'],
@@ -122,7 +123,7 @@ Supported keys are `filters`, `attributesToRetrieve`, `restrictSearchableAttribu
 
 ### Docusaurus adapter
 
-The adapter requires `themeConfig.docsearch.askAi` as an object with `assistantId`. It rejects the string shorthand and the removed `agentStudio` property. See the [Docusaurus adapter guide](/docs/packages/docusaurus-adapter/getting-started).
+The adapter requires `themeConfig.docsearch.askAi` as an object with `agentId`. It rejects the string shorthand and the removed `agentStudio` property. See the [Docusaurus adapter guide](/docs/packages/docusaurus-adapter/getting-started).
 
 ## Custom Ask AI API integrations
 

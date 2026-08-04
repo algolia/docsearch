@@ -18,7 +18,7 @@ This property isn't the same as the top-level `indices` property:
   apiKey="YOUR_SEARCH_API_KEY"
   indices={['docs']}
   askAi={{
-    assistantId: 'YOUR_AGENT_ID',
+    agentId: 'YOUR_AGENT_ID',
     indices: [
       {
         index: 'docs_markdown',
@@ -142,7 +142,7 @@ Use `exposed: true` only for values the model should choose from conversation co
 
 ```js title="docsearch.js"
 askAi: {
-  assistantId: 'YOUR_AGENT_ID',
+  agentId: 'YOUR_AGENT_ID',
   searchParameters: {
     docs_markdown: {
       filters: 'visibility:public',
