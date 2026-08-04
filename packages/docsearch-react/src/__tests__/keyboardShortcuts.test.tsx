@@ -62,6 +62,18 @@ describe('keyboard shortcuts', () => {
 
       expect(document.querySelector('.DocSearch-Modal')).toBeInTheDocument();
     });
+
+    it('does not respond to / from the search button', () => {
+      render(<DocSearch />);
+
+      const button = screen.getByRole('button', { name: /Search/ });
+      button.focus();
+      fireEvent.keyDown(button, { key: '/', code: 'Slash' });
+
+      expect(
+        document.querySelector('.DocSearch-Modal')
+      ).not.toBeInTheDocument();
+    });
   });
 
   describe('custom keyboard shortcuts configuration', () => {
