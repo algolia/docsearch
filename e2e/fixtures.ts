@@ -24,7 +24,7 @@ export class DocSearchPage {
     this.hits = page.locator('.DocSearch-Hits').first();
     this.clearButton = page.locator('.DocSearch-Clear');
     this.firstHit = page
-      .locator('#docsearch-hits_docsearch-list .DocSearch-Hit a')
+      .locator('#docsearch-hits_docsearch_0-list .DocSearch-Hit a')
       .first();
   }
 

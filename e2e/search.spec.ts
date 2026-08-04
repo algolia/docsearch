@@ -113,7 +113,7 @@ test.describe('Search', () => {
     await docSearch.typeQueryMatching();
     await expect(docSearch.hits).toBeVisible();
     const firstHitOption = page
-      .locator('#docsearch-hits_docsearch-list')
+      .locator('#docsearch-hits_docsearch_0-list')
       .getByRole('option')
       .first();
     const firstHitOptionId = await firstHitOption.getAttribute('id');
