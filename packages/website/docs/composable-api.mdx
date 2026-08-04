@@ -64,7 +64,7 @@ bun add @docsearch/core@^5.0.0-beta @docsearch/modal@^5.0.0-beta @docsearch/css@
 
 ## Add keyword search
 
-Wrap the button and keyword modal in one `DocSearch` provider. Pass a public search-only API key. Prefer `indices` over the deprecated `indexName` and `searchParameters` props.
+Wrap the button and keyword modal in one `DocSearch` provider. Pass a public search-only API key to the provider; its descendants use these credentials by default.
 
 ```tsx title="KeywordSearch.tsx"
 import { DocSearch } from '@docsearch/core';
@@ -85,14 +85,14 @@ export function KeywordSearch({
   indexName,
 }: KeywordSearchProps): JSX.Element {
   return (
-    <DocSearch>
+    <DocSearch appId={appId} apiKey={apiKey}>
       <DocSearchButton
         translations={{
           buttonText: 'Search docs',
           buttonAriaLabel: 'Search documentation',
         }}
       />
-      <DocSearchModal appId={appId} apiKey={apiKey} indices={[indexName]} />
+      <DocSearchModal indices={[indexName]} />
     </DocSearch>
   );
 }
@@ -102,7 +102,7 @@ The provider opens the modal when a user selects the button, presses <kbd>Ctrl</
 
 ## Add keyword search and Ask AI
 
-Replace `DocSearchModal` with `DocSearchAskAiModal`. Create the assistant in [Agent Studio](/docs/agent-studio/getting-started), then pass its ID through `askAi`.
+Replace `DocSearchModal` with `DocSearchAskAiModal`. Create the assistant in [Agent Studio](/docs/agent-studio/getting-started), then configure its ID on the provider.
 
 ```tsx title="SearchWithAskAi.tsx"
 import { DocSearch } from '@docsearch/core';
@@ -115,30 +115,28 @@ interface SearchWithAskAiProps {
   appId: string;
   apiKey: string;
   indexName: string;
-  assistantId: string;
+  agentId: string;
 }
 
 export function SearchWithAskAi({
   appId,
   apiKey,
   indexName,
-  assistantId,
+  agentId,
 }: SearchWithAskAiProps): JSX.Element {
   return (
-    <DocSearch>
+    <DocSearch appId={appId} apiKey={apiKey}>
       <DocSearchButton />
       <DocSearchAskAiModal
-        appId={appId}
-        apiKey={apiKey}
         indices={[indexName]}
-        askAi={{ assistantId }}
+        askAi={agentId}
       />
     </DocSearch>
   );
 }
 ```
 
-The `askAi` prop also accepts an assistant ID string. Use the object form when you need options such as `indices`, `searchParameters`, `suggestedQuestions`, `promptSuggestions`, `tools`, or `memory`. See the [React package reference](/docs/packages/react/api-reference) for those option types.
+The `askAi` prop accepts an assistant ID string or an object with `agentId`. Use the object form when you need options such as `indices`, `searchParameters`, `suggestedQuestions`, `promptSuggestions`, `tools`, or `memory`. Set `appId` and `apiKey` on an individual modal or Sidepanel only when they must override the provider's defaults.
 
 ## Understand the shared state
 
@@ -200,7 +198,7 @@ interface ControlledSearchProps {
   appId: string;
   apiKey: string;
   indexName: string;
-  assistantId: string;
+  agentId: string;
   onReady?: () => void;
   onOpen?: () => void;
   onClose?: () => void;
@@ -231,7 +229,7 @@ export function ControlledSearch(props: ControlledSearchProps): JSX.Element {
         appId={props.appId}
         apiKey={props.apiKey}
         indices={[props.indexName]}
-        askAi={{ assistantId: props.assistantId }}
+        askAi={props.agentId}
       />
     </DocSearch>
   );
@@ -339,7 +337,7 @@ interface LazySearchProps {
   appId: string;
   apiKey: string;
   indexName: string;
-  assistantId: string;
+  agentId: string;
 }
 
 export function LazySearch(props: LazySearchProps): JSX.Element {
@@ -354,7 +352,7 @@ export function LazySearch(props: LazySearchProps): JSX.Element {
         appId={props.appId}
         apiKey={props.apiKey}
         indices={[props.indexName]}
-        askAi={{ assistantId: props.assistantId }}
+        askAi={props.agentId}
       />
     </DocSearch>
   );
@@ -401,12 +399,12 @@ Add `@docsearch/css/dist/_askai.css` when you use `DocSearchAskAiModal`. Bundler
 
 | API | Required configuration | Provider-managed behavior |
 | --- | --- | --- |
-| `DocSearch` | `children` | State, theme, initial query, shortcuts, focus restoration, lifecycle callbacks, and `DocSearchRef` |
+| `DocSearch` | `children` | State, credentials defaults, theme, initial query, shortcuts, focus restoration, lifecycle callbacks, and `DocSearchRef` |
 | `DocSearchButton` | None | Button ref, theme, shortcuts, and opening keyword search |
-| `DocSearchModal` | `appId`, `apiKey`, and at least one `indices` entry or deprecated `indexName` | Open state, close action, initial scroll position, initial query, theme, and shortcuts |
+| `DocSearchModal` | At least one `indices` entry or deprecated `indexName`; `appId` and `apiKey` must be set here or on `DocSearch` | Open state, close action, initial scroll position, initial query, theme, and shortcuts |
 | `DocSearchAskAiModal` | The keyword modal configuration plus `askAi` | Keyword modal behavior, Ask AI state, Ask AI transitions, and hybrid detection |
 | `useDocSearch` | A parent `DocSearch` provider | Reads the context and throws when used outside the provider |
 
 `DocSearchButton` accepts native React button props and `translations`. The connected wrapper doesn't accept `theme` or `keyboardShortcuts`; set those on `DocSearch`.
 
-Both connected modal wrappers accept the corresponding low-level modal options, except the state and lifecycle fields supplied by the provider. Consult the [modal API](/docs/packages/modal/api) before adding options.
+Both connected modal wrappers accept the corresponding low-level modal options, except the state and lifecycle fields supplied by the provider. Explicit `appId` and `apiKey` props override their respective provider values. Consult the [modal API](/docs/packages/modal/api) before adding options.

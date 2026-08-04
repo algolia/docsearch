@@ -79,6 +79,8 @@ type AdapterDocSearchProps = Omit<
   | 'onAskAiToggle'
   | 'onClose'
 > & {
+  appId: DocSearchProps['appId'];
+  apiKey: DocSearchProps['apiKey'];
   askAi?: AskAiOptions;
   contextualSearch?: boolean;
   externalUrlRegex?: string;
@@ -422,10 +424,9 @@ function DocSearch({
             {...panelOptions}
             variant={panelOptions.variant ?? 'inline'}
             pushSelector={panelOptions.pushSelector ?? '#__docusaurus'}
-            assistantId={sidePanelAskAi.assistantId}
+            agentId={sidePanelAskAi.agentId}
             apiKey={sidePanelAskAi.apiKey}
             appId={sidePanelAskAi.appId}
-            indexName={sidePanelAskAi.indexName}
             searchParameters={sidePanelAskAi.searchParameters}
             indices={panelOptions.indices ?? sidePanelAskAi.indices}
             suggestedQuestions={
@@ -454,6 +455,8 @@ export default function SearchBar(
 
   return (
     <DocSearchProvider
+      appId={docSearchProps.appId}
+      apiKey={docSearchProps.apiKey}
       initialQuery={docSearchProps.initialQuery}
       keyboardShortcuts={docSearchProps.keyboardShortcuts}
     >

@@ -157,8 +157,7 @@ describe('useAskAi', () => {
       useAskAi({
         apiKey: 'api-key',
         appId: 'app-id',
-        assistantId: 'assistant-id',
-        indexName: 'index-name',
+        agentId: 'assistant-id',
         tools: {
           customAction: {
             onToolCall,
@@ -205,8 +204,7 @@ describe('useAskAi', () => {
       useAskAi({
         apiKey: 'api-key',
         appId: 'app-id',
-        assistantId: 'assistant-id',
-        indexName: 'index-name',
+        agentId: 'assistant-id',
         tools: {
           customAction: {
             onToolCall,
@@ -233,10 +231,9 @@ describe('useAskAi', () => {
       useAskAi({
         apiKey: 'api-key',
         appId: 'app-id',
-        assistantId: 'assistant-id',
-        indexName: 'index-name',
-        tools: {},
+        agentId: 'assistant-id',
         memory: { userToken: 'secure-user-token' },
+        tools: {},
       })
     );
 
@@ -250,8 +247,7 @@ describe('useAskAi', () => {
       useAskAi({
         apiKey: 'api-key',
         appId: 'app-id',
-        assistantId: 'assistant-id',
-        indexName: 'index-name',
+        agentId: 'assistant-id',
         tools: {},
       })
     );
@@ -266,8 +262,7 @@ describe('useAskAi', () => {
       useAskAi({
         apiKey: 'api-key',
         appId: 'app-id',
-        assistantId: 'assistant-id',
-        indexName: 'index-name',
+        agentId: 'assistant-id',
         tools: {},
       })
     );
@@ -284,8 +279,7 @@ describe('useAskAi', () => {
       useAskAi({
         apiKey: 'api-key',
         appId: 'app-id',
-        assistantId: 'assistant-id',
-        indexName: 'index-name',
+        agentId: 'assistant-id',
         tools: {},
         searchParameters,
       })
@@ -308,8 +302,7 @@ describe('useAskAi', () => {
       useAskAi({
         apiKey: 'api-key',
         appId: 'app-id',
-        assistantId: 'assistant-id',
-        indexName: 'index-name',
+        agentId: 'assistant-id',
         tools: {},
         indices,
       })
@@ -335,8 +328,7 @@ describe('useAskAi', () => {
       useAskAi({
         apiKey: 'api-key',
         appId: 'app-id',
-        assistantId: 'assistant-id',
-        indexName: 'index-name',
+        agentId: 'assistant-id',
         tools: {},
         searchParameters,
         indices,
@@ -353,8 +345,7 @@ describe('useAskAi', () => {
       useAskAi({
         apiKey: 'api-key',
         appId: 'app-id',
-        assistantId: 'assistant-id',
-        indexName: 'index-name',
+        agentId: 'assistant-id',
         tools: {},
         indices: [],
       })
@@ -369,8 +360,7 @@ describe('useAskAi', () => {
         useAskAi({
           apiKey: 'api-key',
           appId: 'app-id',
-          assistantId: 'assistant-id',
-          indexName: 'index-name',
+          agentId: 'assistant-id',
           tools: {},
         })
       );
@@ -383,8 +373,7 @@ describe('useAskAi', () => {
         useAskAi({
           apiKey: 'api-key',
           appId: 'app-id',
-          assistantId: 'assistant-id',
-          indexName: 'index-name',
+          agentId: 'assistant-id',
           tools: {},
         })
       );
@@ -408,8 +397,7 @@ describe('useAskAi', () => {
         useAskAi({
           apiKey: 'api-key',
           appId: 'app-id',
-          assistantId: 'assistant-id',
-          indexName: 'index-name',
+          agentId: 'assistant-id',
           tools: {},
         })
       );
@@ -434,8 +422,7 @@ describe('useAskAi', () => {
         useAskAi({
           apiKey: 'api-key',
           appId: 'app-id',
-          assistantId: 'assistant-id',
-          indexName: 'index-name',
+          agentId: 'assistant-id',
           tools: {},
         })
       );
@@ -463,8 +450,7 @@ describe('useAskAi', () => {
         useAskAi({
           apiKey: 'api-key',
           appId: 'app-id',
-          assistantId: 'assistant-id',
-          indexName: 'index-name',
+          agentId: 'assistant-id',
           tools: {},
         })
       );
@@ -492,8 +478,7 @@ describe('useAskAi', () => {
         useAskAi({
           apiKey: 'api-key',
           appId: 'app-id',
-          assistantId: 'assistant-id',
-          indexName: 'index-name',
+          agentId: 'assistant-id',
           tools: {},
         })
       );
@@ -506,8 +491,7 @@ describe('useAskAi', () => {
         useAskAi({
           apiKey: 'api-key',
           appId: 'app-id',
-          assistantId: 'assistant-id',
-          indexName: 'index-name',
+          agentId: 'assistant-id',
           tools: {},
         })
       );
@@ -541,8 +525,7 @@ describe('useAskAi', () => {
         useAskAi({
           apiKey: 'api-key',
           appId: 'app-id',
-          assistantId: 'assistant-id',
-          indexName: 'index-name',
+          agentId: 'assistant-id',
           tools: {},
         })
       );
@@ -578,8 +561,7 @@ describe('useAskAi', () => {
           useAskAi({
             apiKey: 'api-key',
             appId: 'app-id',
-            assistantId: 'assistant-id',
-            indexName: 'index-name',
+            agentId: 'assistant-id',
             searchParameters,
             indices,
             tools: {},

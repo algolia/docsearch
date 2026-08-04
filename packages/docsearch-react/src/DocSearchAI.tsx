@@ -155,11 +155,6 @@ export interface PromptSuggestions {
 
 export interface DocSearchAskAi {
   /**
-   * The index name to use for the Ask AI feature. Your assistant will search
-   * for relevant documents. If not provided, the root index name will be used.
-   */
-  indexName?: string;
-  /**
    * The API key to use for the ask AI feature. Your assistant will use this API
    * key to search the index. If not provided, the API key will be used.
    */
@@ -169,8 +164,8 @@ export interface DocSearchAskAi {
    * ID to search the index. If not provided, the app ID will be used.
    */
   appId?: string;
-  /** The assistant ID to use for the ask AI feature. */
-  assistantId: string;
+  /** The Agent Studio Agent ID to use for the Ask AI feature. */
+  agentId: string;
   /**
    * Enables displaying suggested questions on Ask AI's new conversation screen.
    *
@@ -236,11 +231,16 @@ export interface DocSearchAIProps extends DocSearchProps {
 }
 
 function DocSearchAIComponent(
-  props: DocSearchAIProps,
+  { appId, apiKey, ...props }: DocSearchAIProps,
   ref: React.ForwardedRef<DocSearchRef>
 ): JSX.Element {
   return (
-    <DocSearchProvider {...props} ref={ref}>
+    <DocSearchProvider
+      {...props}
+      appId={appId}
+      apiKey={apiKey}
+      ref={ref}
+    >
       <DocSearchAIInner {...props} />
     </DocSearchProvider>
   );
@@ -248,7 +248,9 @@ function DocSearchAIComponent(
 
 export const DocSearchAI = React.forwardRef(DocSearchAIComponent);
 
-export function DocSearchAIInner(props: DocSearchAIProps): JSX.Element {
+export function DocSearchAIInner(
+  props: Omit<DocSearchAIProps, 'appId' | 'apiKey'>
+): JSX.Element {
   const {
     searchButtonRef,
     keyboardShortcuts,
@@ -259,7 +261,13 @@ export function DocSearchAIInner(props: DocSearchAIProps): JSX.Element {
     openModal,
     closeModal,
     isHybridModeSupported,
+    appId,
+    apiKey,
   } = useDocSearch();
+
+  if (!appId || !apiKey) {
+    throw new Error('`DocSearchAI` requires `appId` and `apiKey` props.');
+  }
 
   return (
     <>
@@ -273,6 +281,8 @@ export function DocSearchAIInner(props: DocSearchAIProps): JSX.Element {
         createPortal(
           <DocSearchAskAiModal
             {...props}
+            appId={appId}
+            apiKey={apiKey}
             initialScrollY={window.scrollY}
             initialQuery={initialQuery}
             translations={props?.translations?.modal}

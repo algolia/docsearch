@@ -202,7 +202,7 @@ V5 adds `askAi.indices`, `askAi.tools`, `askAi.memory`, and `askAi.promptSuggest
 
 ## 4. Move keyword configuration to `indices`
 
-`indexName` and root `searchParameters` still work in v5, but both are deprecated.
+`indexName` and root `searchParameters` both have been removed in `v5`.
 
 ```diff title="app.js"
  docsearch({
@@ -223,7 +223,7 @@ V5 adds `askAi.indices`, `askAi.tools`, `askAi.memory`, and `askAi.promptSuggest
  });
 ```
 
-Use one item per index. DocSearch queries them in array order. If you temporarily pass both `indexName` and `indices`, it queries `indexName` first, so remove the old option to avoid duplicate requests.
+Use one item per index. DocSearch queries them in array order.
 
 ## 5. Update result customization
 

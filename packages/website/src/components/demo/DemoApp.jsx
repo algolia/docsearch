@@ -80,17 +80,26 @@ export default function DemoApp() {
 
     HTMLElement.prototype.focus = function focusNoScroll(options) {
       if (!userEngaged) return undefined;
-      return nativeFocus.call(this, { preventScroll: true, ...(options ?? {}) });
+      return nativeFocus.call(this, {
+        preventScroll: true,
+        ...(options ?? {}),
+      });
     };
 
     Element.prototype.scrollIntoView = function containedScrollIntoView(arg) {
-      const behavior = typeof arg === 'object' && arg?.behavior ? arg.behavior : 'auto';
+      const behavior =
+        typeof arg === 'object' && arg?.behavior ? arg.behavior : 'auto';
       let ancestor = this.parentElement;
       while (ancestor) {
         const overflowY = getComputedStyle(ancestor).overflowY;
-        if ((overflowY === 'auto' || overflowY === 'scroll') && ancestor.scrollHeight > ancestor.clientHeight) {
+        if (
+          (overflowY === 'auto' || overflowY === 'scroll') &&
+          ancestor.scrollHeight > ancestor.clientHeight
+        ) {
           const top =
-            this.getBoundingClientRect().top - ancestor.getBoundingClientRect().top + ancestor.scrollTop;
+            this.getBoundingClientRect().top -
+            ancestor.getBoundingClientRect().top +
+            ancestor.scrollTop;
           ancestor.scrollTo({ top, behavior });
           return;
         }
@@ -164,10 +173,9 @@ export default function DemoApp() {
           <DocSearchSidepanel
             ref={sidepanelRef}
             theme={theme}
-            indexName={INDEX_NAME}
             appId={APP_ID}
             apiKey={API_KEY}
-            assistantId={ASSISTANT_ID}
+            agentId={ASSISTANT_ID}
             button={{ variant: 'inline' }}
             panel={{ suggestedQuestions: true }}
           />
@@ -186,7 +194,7 @@ export default function DemoApp() {
               indices={[INDEX_NAME]}
               appId={APP_ID}
               apiKey={API_KEY}
-              askAi={{ assistantId: ASSISTANT_ID }}
+              askAi={ASSISTANT_ID}
               navigator={navigator}
             />
           </DocSearch>

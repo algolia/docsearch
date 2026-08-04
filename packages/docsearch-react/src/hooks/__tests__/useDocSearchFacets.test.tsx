@@ -103,8 +103,8 @@ describe('useDocSearchFacets', () => {
       result.current.clearFacetSelections();
     });
 
-    expect(result.current.facetSelections).toEqual({});
-    expect(result.current.facetSelectionsRef.current).toEqual({});
+    expect(result.current.facetSelections).toEqual({ language: '' });
+    expect(result.current.facetSelectionsRef.current).toEqual({ language: '' });
     expect(onSelectionsChange).toHaveBeenCalledTimes(2);
   });
 

@@ -9,7 +9,11 @@ import type { JSX } from 'react';
 import { createPortal } from 'react-dom';
 
 export type SidepanelProps = DocSearchSidepanelProps['panel'] &
-  Omit<DocSearchSidepanelProps, 'button' | 'panel' | 'theme'> &
+  Omit<
+    DocSearchSidepanelProps,
+    'appId' | 'apiKey' | 'button' | 'panel' | 'theme'
+  > &
+  Partial<Pick<DocSearchSidepanelProps, 'appId' | 'apiKey'>> &
   SidepanelSearchParameters;
 
 export function Sidepanel({
@@ -17,12 +21,23 @@ export function Sidepanel({
   ...props
 }: SidepanelProps): JSX.Element {
   const {
+    appId: providerAppId,
+    apiKey: providerApiKey,
     docsearchState,
     setDocsearchState,
     keyboardShortcuts,
     registerView,
     initialAskAiMessage,
   } = useDocSearch();
+
+  const appId = props.appId ?? providerAppId;
+  const apiKey = props.apiKey ?? providerApiKey;
+
+  if (!appId || !apiKey) {
+    throw new Error(
+      '`Sidepanel` requires `appId` and `apiKey` props or values configured on the `DocSearch` provider.'
+    );
+  }
 
   const handleOpen = React.useCallback((): void => {
     setDocsearchState('sidepanel');
@@ -49,12 +64,16 @@ export function Sidepanel({
       keyboardShortcuts,
       initialMessage: initialAskAiMessage,
       ...props,
+      appId,
+      apiKey,
     }),
     [
       docsearchState,
       handleOpen,
       handleClose,
       props,
+      appId,
+      apiKey,
       keyboardShortcuts,
       initialAskAiMessage,
     ]

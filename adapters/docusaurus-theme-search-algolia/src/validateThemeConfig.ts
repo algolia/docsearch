@@ -131,7 +131,7 @@ const AskAiPromptSuggestionsSchema = Joi.object({
 }).unknown(false);
 
 const AskAiSchema = Joi.object({
-  assistantId: Joi.string().required(),
+  agentId: Joi.string().required(),
   suggestedQuestions: Joi.boolean().optional(),
   searchParameters: Joi.object()
     .pattern(Joi.string(), SearchParametersSchema)
@@ -261,7 +261,7 @@ function assertNoRemovedKeys(themeConfig: ThemeConfig): void {
   const askAi = docsearchRecord.askAi;
   if (typeof askAi === 'string') {
     throw new Error(
-      '`themeConfig.docsearch.askAi` must be an object with `assistantId`.'
+      '`themeConfig.docsearch.askAi` must be an object with `agentId`.'
     );
   }
 

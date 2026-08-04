@@ -134,10 +134,9 @@ function SidepanelInner(
     isOpen = false,
     onOpen,
     onClose,
-    assistantId,
+    agentId,
     apiKey,
     appId,
-    indexName,
     variant = 'floating',
     searchParameters,
     pushSelector,
@@ -194,8 +193,7 @@ function SidepanelInner(
     restoreConversation,
   } = useAskAi({
     appId,
-    indexName,
-    assistantId,
+    agentId,
     apiKey,
     searchParameters,
     tools,
@@ -204,7 +202,7 @@ function SidepanelInner(
   });
 
   const suggestedQuestions = useSuggestedQuestions({
-    assistantId,
+    agentId,
     suggestedQuestionsEnabled,
     searchClient,
   });

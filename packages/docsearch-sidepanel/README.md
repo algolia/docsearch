@@ -36,9 +36,8 @@ function App() {
       <SidepanelButton />
       <Sidepanel
         appId="YOUR_APP_ID"
-        indexName="YOUR_INDEX_NAME"
         apiKey="YOUR_SEARCH_API_KEY"
-        assistantId="YOUR_ASK_AI_ASSISTANT_ID"
+        agentId="YOUR_ASK_AI_ASSISTANT_ID"
       />
     </DocSearch>
   );

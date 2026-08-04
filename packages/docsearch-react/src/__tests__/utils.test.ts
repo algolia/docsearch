@@ -3,7 +3,11 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import type { AIMessage } from '../types/AskiAi';
 import { extractLinksFromMessage } from '../utils/ai';
 import { createFacetFilters } from '../utils/createDocSearchSources';
-import { getFacetLabel, normalizeFacets } from '../utils/facets';
+import {
+  deriveDefaultSelectedFacetsFromIndex,
+  getFacetLabel,
+  normalizeFacets,
+} from '../utils/facets';
 import {
   createObjectStorage,
   createStorage,
@@ -66,6 +70,34 @@ describe('utils', () => {
       );
     });
 
+    it('derives default selections from index facet filters', () => {
+      expect(
+        deriveDefaultSelectedFacetsFromIndex([
+          { name: 'docs' },
+          {
+            name: 'blog',
+            searchParameters: {
+              facetFilters: [
+                'language:en',
+                'version:v2',
+                'invalid',
+                'empty:',
+                ':value',
+              ],
+            },
+          },
+          {
+            name: 'api',
+            searchParameters: { facetFilters: ['language:fr'] },
+          },
+          {
+            name: 'guides',
+            searchParameters: { facetFilters: 'format:guide' as never },
+          },
+        ])
+      ).toEqual({ language: 'fr', version: 'v2', format: 'guide' });
+    });
+
     it('returns configured facetFilters when no dynamic facets are selected', () => {
       expect(createFacetFilters(['language:en'], {})).toEqual(['language:en']);
     });
@@ -79,10 +111,21 @@ describe('utils', () => {
       ).toEqual(['docusaurus_tag:default', 'language:en', 'version:v2']);
     });
 
-    it('ignores empty dynamic facet selections', () => {
+    it('overrides configured filters with dynamic selections for the same facet', () => {
       expect(
-        createFacetFilters(undefined, { language: '', version: 'v2' })
-      ).toEqual(['version:v2']);
+        createFacetFilters(['language:en', 'version:v2'], {
+          language: 'fr',
+        })
+      ).toEqual(['version:v2', 'language:fr']);
+    });
+
+    it('removes configured filters for cleared facet selections', () => {
+      expect(
+        createFacetFilters(['language:en', 'version:v2'], {
+          language: '',
+          type: 'guide',
+        })
+      ).toEqual(['version:v2', 'type:guide']);
     });
   });
 

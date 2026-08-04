@@ -30,7 +30,7 @@ test.describe('a11y > Modal', () => {
     await expect(docSearch.hits).toBeVisible();
 
     const scanResults = await axe()
-      .include('#docsearch-hits_docsearch-list')
+      .include('#docsearch-hits_docsearch_0-list')
       .analyze();
 
     await testInfo.attach('a11y-scan-results-modal-search-results', {

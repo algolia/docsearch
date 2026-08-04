@@ -3,6 +3,7 @@ import React, { type JSX } from 'react';
 import type { DocSearchFacet } from '../DocSearch';
 import { ChevronIcon } from '../icons';
 import { capitalize } from '../utils';
+import type { FacetSelections } from '../utils/createDocSearchSources';
 import { getFacetLabel } from '../utils/facets';
 
 import { Chip } from './ui/Chip';
@@ -132,7 +133,7 @@ const SelectedFacetChip = React.memo(function SelectedFacetChip({
   value,
   dismissAriaLabel,
   onDismiss,
-}: SelectedFacetChipProps): JSX.Element {
+}: SelectedFacetChipProps): JSX.Element | null {
   const handleDismissFacet = React.useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       onDismiss(facetKey, e);
@@ -153,7 +154,7 @@ const SelectedFacetChip = React.memo(function SelectedFacetChip({
 
 interface FacetBarProps {
   facets: FacetBarFacet[];
-  selections: Record<string, string>;
+  selections: FacetSelections;
   onSelectionChange: (facet: string, value: string) => void;
   clearSelections: () => void;
   translations?: FacetBarTranslations;
@@ -174,9 +175,15 @@ export const FacetBar = React.memo(function FacetBar({
     selectedFacetsAriaLabel = 'Selected search filters',
     clearFacetAriaLabel = 'Clear filter:',
   } = translations;
+  const visibleFacetKeys = React.useMemo(
+    () => new Set(facets.map((f) => f.key)),
+    [facets]
+  );
   const selectionsToDisplay = React.useMemo(() => {
-    return Object.entries(selections).filter(([_, value]) => Boolean(value));
-  }, [selections]);
+    return Object.entries(selections).filter(
+      ([key, value]) => Boolean(value) && visibleFacetKeys.has(key)
+    );
+  }, [selections, visibleFacetKeys]);
 
   const triggerRefs = React.useRef(new Map<string, HTMLButtonElement>());
 

@@ -4,6 +4,7 @@ import { SidepanelButton, Sidepanel } from '@docsearch/sidepanel';
 import type { JSX } from 'react';
 
 import type { DemoTheme } from '../App';
+import { AGENT_ID, API_KEY, APP_ID } from '../constants';
 
 export default function SidepanelExample({
   theme,
@@ -11,13 +12,10 @@ export default function SidepanelExample({
   theme: DemoTheme;
 }): JSX.Element {
   return (
-    <DocSearch theme={theme}>
+    <DocSearch appId={APP_ID} apiKey={API_KEY} theme={theme}>
       <SidepanelButton variant="inline" />
       <Sidepanel
-        indexName="docsearch"
-        appId="PMZUYBQDAK"
-        apiKey="24b09689d5b4223813d9b8e48563c8f6"
-        assistantId="ccdec697-e3fe-465b-a1c3-657e7bf18aef"
+        agentId={AGENT_ID}
         variant="floating"
         tools={{
           printConsoleMessage: {

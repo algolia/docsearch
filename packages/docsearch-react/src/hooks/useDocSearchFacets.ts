@@ -5,7 +5,10 @@ import type { DocSearchFacet, DocSearchIndex } from '../DocSearch';
 import { useFacetValues } from '../useFacetValues';
 import type { useSearchClient } from '../useSearchClient';
 import type { FacetSelections } from '../utils/createDocSearchSources';
-import { normalizeFacets } from '../utils/facets';
+import {
+  deriveDefaultSelectedFacetsFromIndex,
+  normalizeFacets,
+} from '../utils/facets';
 
 export interface UseDocSearchFacetsProps {
   facets?: DocSearchFacet[];
@@ -38,18 +41,18 @@ export function useDocSearchFacets({
     () => normalizeFacets(facets),
     [facets]
   );
+  const normalizedFacetsRef = React.useRef(normalizedFacets);
   const facetValues = useFacetValues({
     facets: normalizedFacets,
     indexes,
     searchClient,
   });
   const [facetSelections, setFacetSelections] = React.useState<FacetSelections>(
-    {}
+    () => deriveDefaultSelectedFacetsFromIndex(indexes)
   );
   const facetSelectionsRef = React.useRef(facetSelections);
 
   const onSelectionsChangeRef = React.useRef(onSelectionsChange);
-  onSelectionsChangeRef.current = onSelectionsChange;
 
   const visibleFacets = React.useMemo(
     () =>
@@ -59,6 +62,11 @@ export function useDocSearchFacets({
     [facetValues, normalizedFacets]
   );
 
+  React.useLayoutEffect(() => {
+    normalizedFacetsRef.current = normalizedFacets;
+    onSelectionsChangeRef.current = onSelectionsChange;
+  });
+
   const applySelections = React.useCallback((next: FacetSelections): void => {
     facetSelectionsRef.current = next;
     setFacetSelections(next);
@@ -67,15 +75,13 @@ export function useDocSearchFacets({
 
   const handleFacetSelectionChange = React.useCallback(
     (facet: string, value: string): void => {
-      if (facetSelectionsRef.current[facet] === value) return;
+      const existing = facetSelectionsRef.current[facet];
+
+      if (existing === value) return;
 
       const next = { ...facetSelectionsRef.current };
 
-      if (value === '') {
-        delete next[facet];
-      } else {
-        next[facet] = value;
-      }
+      next[facet] = value;
 
       applySelections(next);
     },
@@ -84,7 +90,15 @@ export function useDocSearchFacets({
 
   const clearFacetSelections = React.useCallback(() => {
     if (Object.keys(facetSelectionsRef.current).length === 0) return;
-    applySelections({});
+    const next = {};
+
+    for (const facet of normalizedFacetsRef.current) {
+      if (facetSelectionsRef.current[facet.key]) {
+        next[facet.key] = '';
+      }
+    }
+
+    applySelections(next);
   }, [applySelections]);
 
   return {

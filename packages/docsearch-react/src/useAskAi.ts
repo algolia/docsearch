@@ -30,10 +30,9 @@ import type {
 type UseChat = UseChatHelpers<AIMessage>;
 
 type UseAskAiParams = {
-  assistantId: string;
+  agentId: string;
   apiKey: string;
   appId: string;
-  indexName: string;
   searchParameters?: AgentStudioSearchParameters;
   tools: ToolCalls;
   memory?: Memory;
@@ -71,7 +70,7 @@ type UseAskAi = (params: UseAskAiParams) => UseAskAiReturn;
 
 type AgentStudioTransportParams = Pick<
   UseAskAiParams,
-  'apiKey' | 'appId' | 'assistantId'
+  'apiKey' | 'appId' | 'agentId'
 > & {
   searchParameters?: AgentStudioSearchParameters;
   userToken?: string;
@@ -81,7 +80,7 @@ type AgentStudioTransportParams = Pick<
 const getAgentStudioTransport = ({
   appId,
   apiKey,
-  assistantId,
+  agentId,
   searchParameters,
   userToken,
   indices,
@@ -100,7 +99,7 @@ const getAgentStudioTransport = ({
   }
 
   return new DefaultChatTransport({
-    api: `${agentStudioBaseUrl(appId)}/agents/${assistantId}/completions?stream=true&compatibilityMode=ai-sdk-5`,
+    api: `${agentStudioBaseUrl(appId)}/agents/${agentId}/completions?stream=true&compatibilityMode=ai-sdk-5`,
     headers: {
       'x-algolia-application-id': appId,
       'x-algolia-api-key': apiKey,
@@ -126,7 +125,7 @@ const getAgentStudioTransport = ({
 };
 
 export const useAskAi: UseAskAi = ({
-  assistantId,
+  agentId,
   apiKey,
   appId,
   tools = EMPTY_TOOLS,
@@ -141,12 +140,12 @@ export const useAskAi: UseAskAi = ({
       getAgentStudioTransport({
         apiKey,
         appId,
-        assistantId,
+        agentId,
         searchParameters,
         userToken: memory?.userToken,
         indices,
       }),
-    [apiKey, appId, assistantId, searchParameters, memory?.userToken, indices]
+    [apiKey, appId, agentId, searchParameters, memory?.userToken, indices]
   );
 
   // Store transport in a ref since it is dependent on unstable dependencies:
@@ -224,10 +223,10 @@ export const useAskAi: UseAskAi = ({
 
   const sendFeedback = useCallback<OnAskAiFeedback>(
     async (messageId, { thumbs, tags, notes }): Promise<void> => {
-      if (!assistantId) return;
+      if (!agentId) return;
 
       const res = await postAgentStudioFeedback({
-        agentId: assistantId,
+        agentId,
         vote: thumbs,
         messageId,
         appId,
@@ -244,7 +243,7 @@ export const useAskAi: UseAskAi = ({
         { tags, notes }
       );
     },
-    [assistantId, appId, apiKey, conversations]
+    [agentId, appId, apiKey, conversations]
   );
 
   const onStopStreaming = useCallback(async (): Promise<void> => {
