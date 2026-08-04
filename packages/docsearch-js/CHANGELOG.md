@@ -1,5 +1,15 @@
 # @docsearch/js
 
+## 5.0.0-beta.2
+
+### Patch Changes
+
+- Updated dependencies [5eac1fd]
+- Updated dependencies [4f6b5b1]
+- Updated dependencies [9fe6738]
+  - @docsearch/react@5.0.0-beta.2
+  - @docsearch/core@5.0.0-beta.2
+
 ## 5.0.0-beta.1
 
 ### Patch Changes
