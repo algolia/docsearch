@@ -80,6 +80,7 @@
     "stylelint-no-unsupported-browser-features": "8.1.1",
     "stylelint-order": "8.1.1",
     "typescript": "5.7.3",
+    "unrun": "^0.3.1",
     "vitest": "3.0.2",
     "watch": "1.0.2"
   }

@@ -89,6 +89,7 @@ export default {
       label: 'Agent Studio',
       items: [
         'agent-studio/getting-started',
+        'agent-studio/migrate-to-agent-studio',
         'agent-studio/dynamic-indices',
         'agent-studio/tools',
         'agent-studio/memory',
