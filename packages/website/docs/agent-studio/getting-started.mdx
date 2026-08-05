@@ -10,10 +10,12 @@ DocSearch v5 uses [Agent Studio](https://www.algolia.com/doc/guides/algolia-ai/a
 
 Don't add an `agentStudio` flag. There's no AI backend selector in v5.
 
+If you already have an Ask AI assistant, see [Migrate Ask AI to Agent Studio](/docs/agent-studio/migrate-to-agent-studio).
+
 ## Before you begin
 
 1. [Create and publish an Agent Studio agent](https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/quickstart).
-2. Copy its agent ID. DocSearch calls this value `assistantId` in its public API.
+2. Copy its agent ID. DocSearch calls this value `agentId` in its public API.
 3. Create a Search API key that can search the indices used by DocSearch and Agent Studio. Don't expose an Admin API key.
 4. Note your Algolia application ID and DocSearch index name.
 
@@ -68,7 +70,7 @@ export function Search() {
       apiKey="YOUR_SEARCH_API_KEY"
       indices={['YOUR_DOCSEARCH_INDEX']}
       askAi={{
-        assistantId: 'YOUR_AGENT_ID',
+        agentId: 'YOUR_AGENT_ID',
       }}
     />
   );
@@ -131,7 +133,7 @@ docsearch({
   apiKey: 'YOUR_SEARCH_API_KEY',
   indices: ['YOUR_DOCSEARCH_INDEX'],
   askAi: {
-    assistantId: 'YOUR_AGENT_ID',
+    agentId: 'YOUR_AGENT_ID',
   },
 });
 ```
@@ -145,7 +147,7 @@ See the [JavaScript package reference](/docs/packages/js/api-reference) for the 
 
 Use the `askAi` object to add:
 
-- [Dynamic indices and search controls](/docs/agent-studio/dynamic-indices)
+- [Dynamic indices](/docs/agent-studio/dynamic-indices)
 - [Client-side and MCP tools](/docs/agent-studio/tools)
 - [User-scoped memory](/docs/agent-studio/memory)
 - [Suggested prompts and follow-ups](/docs/agent-studio/prompt-suggestions)
@@ -153,6 +155,6 @@ Use the `askAi` object to add:
 
 ## Use the Docusaurus adapter
 
-The v5 Docusaurus adapter requires `themeConfig.docsearch.askAi` to be an object with `assistantId`. It rejects the string shorthand and the removed `agentStudio` property. Keep `appId`, `apiKey`, and keyword-search `indices` at the top level.
+The v5 Docusaurus adapter requires `themeConfig.docsearch.askAi` to be an object with `agentId`. It rejects the string shorthand and the removed `agentStudio` property. Keep `appId`, `apiKey`, and keyword-search `indices` at the top level.
 
 See the [Docusaurus adapter guide](/docs/packages/docusaurus-adapter/getting-started) for its full configuration and validation rules.

@@ -1,0 +1,150 @@
+---
+title: Migrate Ask AI to Agent Studio
+description: Move an existing Ask AI assistant into Agent Studio and point DocSearch v5 at the new agent.
+---
+
+import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs';
+
+Ask AI is now part of [Agent Studio](https://www.algolia.com/doc/guides/algolia-ai/agent-studio). Migrate your existing Ask AI assistant, publish the new agent, then point DocSearch at the agent ID.
+
+DocSearch v5 uses Agent Studio as its only AI backend. There's no `agentStudio` flag.
+
+If you're still on DocSearch v4, follow the [v4 migration guide](/docs/v4/v4/migrating-askai-to-agent-studio). To upgrade packages at the same time, see [Migrate from DocSearch v4](/docs/migrating-from-v4).
+
+## Migrate your assistant
+
+### 1. Start the migration in the dashboard
+
+1. Sign in to the [Algolia dashboard](https://dashboard.algolia.com/users/sign_in).
+2. Open [Ask AI](https://dashboard.algolia.com/ask-ai).
+3. Select your assistant and click **Migrate to Agent Studio**.
+
+The wizard creates a draft Agent Studio agent from your assistant configuration, including the prompt, model, indices, and related settings. After migration, the assistant and agent are independent and don't stay in sync.
+
+### 2. Review and publish the agent
+
+1. Open [Agents](https://dashboard.algolia.com/generativeAi/agent-studio/agents) in Agent Studio.
+2. Review the migrated agent.
+3. Publish the agent when you're ready to go live.
+
+Copy the **agent ID**. DocSearch calls this value `agentId` in its public API.
+
+### 3. Update your integration
+
+Choose the path that matches how you embed Ask AI today:
+
+- [DocSearch v5](#update-docsearch-v5)
+- [Custom Ask AI API](#custom-ask-ai-api-integrations)
+
+Your existing Ask AI assistant keeps serving traffic until Ask AI is fully retired. Switch your client to the Agent Studio agent when you're ready.
+
+## Update DocSearch v5
+
+Pass the Agent Studio **agent ID** as `askAi.agentId`, or as the `askAi` string shorthand. Rename any `assistantId` field to `agentId`.
+
+<Tabs groupId="language" aria-label="Programming language">
+  <TabItem value="react" label="React">
+
+Use `DocSearchAI`. Keyword-only `DocSearch` doesn't accept `askAi`.
+
+```tsx title="Search.tsx"
+import { DocSearchAI } from '@docsearch/react';
+import '@docsearch/css';
+
+export function Search() {
+  return (
+    <DocSearchAI
+      appId="YOUR_APPLICATION_ID"
+      apiKey="YOUR_SEARCH_API_KEY"
+      indices={['YOUR_DOCSEARCH_INDEX']}
+      askAi={{
+        agentId: 'YOUR_AGENT_ID',
+      }}
+    />
+  );
+}
+```
+
+The string shorthand remains supported:
+
+```tsx title="Search.tsx"
+<DocSearchAI
+  appId="YOUR_APPLICATION_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  indices={['YOUR_DOCSEARCH_INDEX']}
+  askAi="YOUR_AGENT_ID"
+/>
+```
+
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+
+Keep the root `@docsearch/js` import. It renders the AI-capable component:
+
+```js title="load-docsearch.js"
+import docsearch from '@docsearch/js';
+import '@docsearch/css';
+
+docsearch({
+  container: '#docsearch',
+  appId: 'YOUR_APPLICATION_ID',
+  apiKey: 'YOUR_SEARCH_API_KEY',
+  indices: ['YOUR_DOCSEARCH_INDEX'],
+  askAi: {
+    agentId: 'YOUR_AGENT_ID',
+  },
+});
+```
+
+  </TabItem>
+</Tabs>
+
+### Update `searchParameters`
+
+Agent Studio search parameters are keyed by index name. Move any flat Ask AI `searchParameters` under the index:
+
+```diff title="app.js"
+ askAi: {
+-  assistantId: 'YOUR_ASSISTANT_ID',
++  agentId: 'YOUR_AGENT_ID',
+   searchParameters: {
+-    filters: 'language:en',
+-    attributesToRetrieve: ['title', 'content', 'url'],
++    docs: {
++      filters: 'language:en',
++      attributesToRetrieve: ['title', 'content', 'url'],
++    },
+   },
+ }
+```
+
+Supported keys are `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`. Don't put `facetFilters` in this object. Put fixed facet conditions in `filters`. For per-request index selection, see [dynamic indices](/docs/agent-studio/dynamic-indices).
+
+### Docusaurus adapter
+
+The adapter requires `themeConfig.docsearch.askAi` as an object with `agentId`. It rejects the string shorthand and the removed `agentStudio` property. See the [Docusaurus adapter guide](/docs/packages/docusaurus-adapter/getting-started).
+
+## Custom Ask AI API integrations
+
+If you call the Ask AI HTTP API yourself instead of using DocSearch, configure your client for Agent Studio instead of `https://askai.algolia.com`.
+
+Don't build new integrations against the Ask AI chat API. Use the Agent Studio APIs:
+
+- [Integrate Agent Studio](https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/integration)
+- [Agent Studio API](https://www.algolia.com/doc/rest-api/agent-studio)
+- Completions endpoint example:  
+  `https://{APPLICATION_ID}.algolia.net/agent-studio/1/agents/{AGENT_ID}/completions`
+
+Authenticate with your application ID and a search-only API key. Prefer the DocSearch configuration above when you embed DocSearch—the SDK wires the Agent Studio transport for you.
+
+## Next steps
+
+After the agent ID is live in DocSearch:
+
+- [Get started with Agent Studio](/docs/agent-studio/getting-started)
+- [Dynamic indices](/docs/agent-studio/dynamic-indices)
+- [Tools](/docs/agent-studio/tools)
+- [Memory](/docs/agent-studio/memory)
+- [Prompt suggestions](/docs/agent-studio/prompt-suggestions)
+- [Feedback](/docs/agent-studio/feedback)
