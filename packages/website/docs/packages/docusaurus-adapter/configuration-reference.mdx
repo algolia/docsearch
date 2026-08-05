@@ -196,7 +196,7 @@ The modal queries every index in array order. The search page queries only the f
 
 Keep `contextualSearch: true` to limit results to the current locale and Docusaurus docs versions. The adapter merges these conditions into each index's `facetFilters` instead of replacing your filters.
 
-Contextual search also applies to each `askAi.indices` item. Define dynamic Agent Studio indices if Ask AI must receive these facet filters.
+Contextual search also applies to Ask AI when you set `askAi.indices`. The adapter merges version and language filters into `askAi.searchParameters[index].filters` for each dynamic index name.
 
 Set `contextualSearch: false` when your records don't contain Docusaurus `language` and `docusaurus_tag` attributes:
 
@@ -322,29 +322,21 @@ Search parameters keyed by index name. Root `askAi.searchParameters` supports `f
 
 ### `indices`
 
-> `type: AgentStudioIndex[]` | **optional**
+> `type: string[]` | **optional**
 
-Dynamic indices available to Agent Studio search tools. See [dynamic indices][1].
-
-Use `askAi.indices` to describe dynamic indices:
+Index names available to Agent Studio search tools. See [dynamic indices][1].
 
 ```js title="docusaurus.config.mjs"
 askAi: {
-  assistantId: 'YOUR_ASSISTANT_ID',
-  indices: [
-    {
-      index: 'docs_markdown',
-      description: 'Product documentation.',
-      enhancedDescription: 'Use for setup and API questions.',
-      searchParameters: {
-        facetFilters: ['language:en'],
-      },
+  agentId: 'YOUR_ASSISTANT_ID',
+  indices: ['docs_markdown'],
+  searchParameters: {
+    docs_markdown: {
+      filters: 'language:en',
     },
-  ],
+  },
 },
 ```
-
-Each item requires `index` and `description`. It can also include `enhancedDescription`, `searchParameters`, and `searchControls`. Search controls can configure `query`, `hits_per_page`, `page`, `attributesToRetrieve`, `responseFields`, `facets`, and custom properties.
 
 ### `memory`
 
@@ -441,7 +433,7 @@ Enable or disable the panel shortcut. The shortcut is enabled by default.
 
 ### `indices`
 
-> `type: AgentStudioIndex[]` | **optional**
+> `type: string[]` | **optional**
 
 Override Agent Studio indices for the panel. Defaults to `askAi.indices`. See [dynamic indices][1].
 
@@ -607,9 +599,9 @@ The schema also reports these messages for missing or invalid required configura
 "docsearch.indices" must contain at least 1 items
 "docsearch.unknownKey" is not allowed
 "docsearch.askAi.indices" must contain at least 1 items
-"docsearch.askAi.indices[0].description" is required
+"docsearch.askAi.indices[0]" must be a string
 "docsearch.sidePanel.indices" must contain at least 1 items
-"docsearch.sidePanel.indices[0].description" is required
+"docsearch.sidePanel.indices[0]" must be a string
 ```
 
 Replace `unknownKey` with the rejected option name. Other invalid nested values use the same Joi path format.

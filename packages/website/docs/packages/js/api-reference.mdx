@@ -387,35 +387,21 @@ askAi: {
 
 #### `indices`
 
-> `type: AgentStudioIndices[]` | **optional**
+> `type: string[]` | **optional**
 
-Dynamic indices available to the Agent Studio search tool. There's no default.
+Index names for the Agent Studio search tool on this request. There's no default.
 
-Each `AgentStudioIndices` item requires `index` and `description`. It can also define `enhancedDescription`, `searchParameters`, and `searchControls`.
-
-`searchControls` supports `query`, `hits_per_page`, `page`, `attributesToRetrieve`, `responseFields`, `facets`, and `custom`. The `exposed` flag controls whether the model can set a value. Constraints set allowed numeric ranges or string-array values.
+Put descriptions and tool defaults on the agent configuration. Put per-index runtime overrides in `searchParameters`.
 
 ```js title="docsearch-options.js"
 askAi: {
-  assistantId: 'YOUR_ASSISTANT_ID',
-  indices: [
-    {
-      index: 'api_reference',
-      description: 'API symbols and parameter reference',
-      enhancedDescription: 'Use for questions about methods and options.',
-      searchControls: {
-        hits_per_page: {
-          exposed: true,
-          default: 7,
-          constraint: { min: 1, max: 10 },
-        },
-        facets: {
-          exposed: false,
-          default: ['version'],
-        },
-      },
+  agentId: 'YOUR_ASSISTANT_ID',
+  indices: ['api_reference', 'docs_markdown'],
+  searchParameters: {
+    api_reference: {
+      filters: 'version:latest',
     },
-  ],
+  },
 }
 ```
 

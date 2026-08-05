@@ -1,6 +1,5 @@
 import { DocSearch as DocSearchProvider, useDocSearch } from '@docsearch/core';
 import type { DocSearchRef, InitialAskAiMessage } from '@docsearch/core';
-import type { SearchParamsObject } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -21,111 +20,6 @@ export type AgentStudioSearchParameters = Record<
   string,
   Omit<AskAiSearchParameters, 'facetFilters'>
 >;
-
-interface IndexTextParam {
-  exposed: boolean;
-  default?: string;
-}
-
-interface NumberConstraint {
-  min?: number;
-  max?: number;
-}
-
-interface IndexNumberParam {
-  exposed: boolean;
-  default?: number;
-  constraint?: NumberConstraint;
-}
-
-interface StringArrayConstraints {
-  values?: string[];
-}
-
-interface IndexStringArrayParam {
-  exposed: boolean;
-  default?: string[];
-  constraint?: StringArrayConstraints;
-  merge?: boolean;
-}
-
-interface IndexFacetParam {
-  exposed: false;
-  default?: string[];
-}
-
-export interface AgentStudioSearchControls {
-  /**
-   * Augmented query for the MCP search tool to use.
-   *
-   * @default undefined
-   */
-  query?: IndexTextParam;
-  /**
-   * Number of hits for the MCP to return per page.
-   *
-   * @default { exposed: false, default: 7 }
-   */
-  hits_per_page?: IndexNumberParam;
-  /**
-   * The page number the MCP should pull results from.
-   *
-   * @default { exposed: false, default: 0 }
-   */
-  page?: IndexNumberParam;
-  /**
-   * List of attributes that the MCP can retrieve from the index.
-   *
-   * @default { exposed: false, default: ['*'] }
-   */
-  attributesToRetrieve?: IndexStringArrayParam;
-  /**
-   * List of fields that the MCP will return to the Agent.
-   *
-   * @default { exposed: false, default: ["hits", "nbHits", "page", "nbPages", "hitsPerPage", "facets"] }
-   */
-  responseFields?: IndexStringArrayParam;
-  /**
-   * Defined facets the MCP will use when querying the index.
-   *
-   * @default undefined
-   */
-  facets?: IndexFacetParam;
-  /**
-   * Any other custom properties the MCP should send when querying the index.
-   *
-   * @default undefined
-   */
-  custom?: Record<string, unknown>;
-}
-
-export interface AgentStudioIndices {
-  /** The name of the index used by the search tool. */
-  index: string;
-  /** A brief description for the search tool. */
-  description: string;
-  /**
-   * A description used to steer the agent on how/when to use the search tool.
-   *
-   * @default ''
-   */
-  enhancedDescription?: string;
-  /**
-   * Default search parameters for the internal (non-MCP) search tool path.
-   *
-   * @default undefined
-   */
-  searchParameters?: SearchParamsObject;
-  /**
-   * Structured search parameters for the MCP-based search tool path.
-   *
-   * Each parameter controls whether it is exposed to the LLM and it's default
-   * value.
-   *
-   * @default undefined
-   */
-  searchControls?: AgentStudioSearchControls;
-}
 
 export interface Memory {
   /**
@@ -182,8 +76,14 @@ export interface DocSearchAskAi {
    *   }
    */
   searchParameters?: AgentStudioSearchParameters;
-  /** List of dynamic indices for the Agent Studio search tool to use. */
-  indices?: AgentStudioIndices[];
+  /**
+   * Index names for the Agent Studio search tool on this request.
+   *
+   * Agent Studio expects names only. Put descriptions and tool defaults on the
+   * agent configuration. Put per-index runtime overrides in
+   * `searchParameters`.
+   */
+  indices?: string[];
   /**
    * Use custom tools driven by Agent Studio.
    *
@@ -235,12 +135,7 @@ function DocSearchAIComponent(
   ref: React.ForwardedRef<DocSearchRef>
 ): JSX.Element {
   return (
-    <DocSearchProvider
-      {...props}
-      appId={appId}
-      apiKey={apiKey}
-      ref={ref}
-    >
+    <DocSearchProvider {...props} appId={appId} apiKey={apiKey} ref={ref}>
       <DocSearchAIInner {...props} />
     </DocSearchProvider>
   );

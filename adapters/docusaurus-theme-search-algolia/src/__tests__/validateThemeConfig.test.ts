@@ -28,12 +28,7 @@ const minimalAskAiConfig = {
 
 const askAiConfigWithIndices = {
   ...minimalAskAiConfig,
-  indices: [
-    {
-      index: 'markdown-index',
-      description: 'Documentation content.',
-    },
-  ],
+  indices: ['markdown-index'],
 } satisfies NonNullable<DocSearchInput>['askAi'];
 
 function testValidateThemeConfigWithUserThemeConfig(
@@ -240,20 +235,16 @@ describe('validateThemeConfig', () => {
       });
     });
 
-    it('accepts Agent Studio index searchParameters', () => {
+    it('accepts Agent Studio searchParameters keyed by index', () => {
       const docsearch: DocSearchInput = {
         ...minimalDocSearchConfig,
         askAi: {
           ...askAiConfigWithIndices,
-          indices: [
-            {
-              index: 'markdown-index',
-              description: 'Documentation content.',
-              searchParameters: {
-                facetFilters: ['language:en', 'version:1.0'],
-              },
+          searchParameters: {
+            'markdown-index': {
+              filters: 'language:en AND version:1.0',
             },
-          ],
+          },
         },
       };
 
@@ -310,12 +301,7 @@ describe('validateThemeConfig', () => {
         ...minimalDocSearchConfig,
         askAi: minimalAskAiConfig,
         sidePanel: {
-          indices: [
-            {
-              index: 'sidepanel-markdown-index',
-              description: 'Documentation content for the side panel.',
-            },
-          ],
+          indices: ['sidepanel-markdown-index'],
         },
       };
 
@@ -342,7 +328,7 @@ describe('validateThemeConfig', () => {
       );
     });
 
-    it('rejects incomplete sidePanel Agent Studio indices', () => {
+    it('rejects non-string sidePanel Agent Studio indices', () => {
       const docsearch = {
         ...minimalDocSearchConfig,
         askAi: minimalAskAiConfig,
@@ -353,7 +339,7 @@ describe('validateThemeConfig', () => {
 
       expectThrowMessage(
         () => testValidateThemeConfig(docsearch),
-        '"docsearch.sidePanel.indices[0].description" is required'
+        '"docsearch.sidePanel.indices[0]" must be a string'
       );
     });
 

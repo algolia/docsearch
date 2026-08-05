@@ -124,9 +124,9 @@ Configures memory-tool rendering and authentication.
 
 ### `indices`
 
-> `type: AgentStudioIndices[]` | **optional**
+> `type: string[]` | **optional**
 
-Defines dynamic indices available to Agent Studio.
+Index names available to Agent Studio. Put descriptions and tool defaults on the agent configuration. Put per-index runtime overrides in `searchParameters`.
 
 These fields are root props:
 
@@ -141,16 +141,11 @@ const assistant = sidepanel({
     enabled: true,
     userToken: userMemoryToken,
   },
-  indices: [
-    {
-      index: 'docs',
-      description: 'Product documentation and API references.',
-    },
-    {
-      index: 'support_articles',
-      description: 'Troubleshooting and support articles.',
-    },
-  ],
+  indices: ['docs', 'support_articles'],
+  searchParameters: {
+    docs: { filters: 'version:v5' },
+    support_articles: { filters: 'visibility:public' },
+  },
   tools: {
     getReleaseChannel: {
       async onToolCall({ input, addToolOutput }) {
@@ -164,8 +159,6 @@ const assistant = sidepanel({
   },
 });
 ```
-
-`AgentStudioIndices` requires `index` and `description`. It also accepts `enhancedDescription`, `searchParameters`, and `searchControls`.
 
 `ToolDefinition` requires `render({ message: { input, output } })`, which returns a string. It can also define `onToolCall` and `translations.callingToolText`. If you handle a client-side tool, call `addToolOutput`.
 

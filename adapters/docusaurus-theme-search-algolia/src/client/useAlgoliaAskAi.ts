@@ -6,16 +6,11 @@
  */
 
 import type { AskAiConfig } from '@docsearch/docusaurus-adapter';
-import type {
-  AgentStudioIndices,
-  DocSearchAskAi,
-  DocSearchProps,
-} from '@docsearch/react';
+import type { DocSearchAskAi, DocSearchProps } from '@docsearch/react';
 import type { FacetFilters } from 'algoliasearch/lite';
 import { useMemo } from 'react';
 
 import { useAlgoliaContextualFacetFiltersIfEnabled } from './useAlgoliaContextualFacetFilters';
-import { mergeFacetFilters } from './utils';
 
 type AskAiOptions = AskAiConfig & Pick<DocSearchAskAi, 'tools'>;
 // The minimal props the hook needs from DocSearch
@@ -45,44 +40,49 @@ function getAskAiIndexName(
   askAi: AskAiConfig,
   indices: NonNullable<DocSearchProps['indices']>
 ): string {
-  return askAi.indices?.[0]?.index ?? getIndexName(indices[0]!);
+  return askAi.indices?.[0] ?? getIndexName(indices[0]!);
 }
 
-function applyContextualSearchToAgentStudioIndex(
-  index: AgentStudioIndices,
-  contextualSearchFilters: FacetFilters
-): AgentStudioIndices {
-  return {
-    ...index,
-    searchParameters: {
-      ...index.searchParameters,
-      facetFilters: mergeFacetFilters(
-        index.searchParameters?.facetFilters,
-        contextualSearchFilters
-      ),
-    },
-  };
+function facetFiltersToFilterString(facetFilters: FacetFilters): string {
+  const items = Array.isArray(facetFilters) ? facetFilters : [facetFilters];
+
+  return items
+    .map((item) =>
+      Array.isArray(item) ? `(${item.join(' OR ')})` : String(item)
+    )
+    .join(' AND ');
+}
+
+function mergeFilters(existing: string | undefined, added: string): string {
+  return existing ? `(${existing}) AND (${added})` : added;
 }
 
 // We need to apply contextualSearch facetFilters to AskAI filters
 // This can't be done at config normalization time because contextual filters
-// can only be determined at runtime
+// can only be determined at runtime. Agent Studio accepts them via
+// askAi.searchParameters[index].filters, keyed by dynamic index names.
 function applyAskAiContextualSearch(
   askAi: AskAiOptions | undefined,
   contextualSearchFilters: FacetFilters | undefined
 ): AskAiOptions | undefined {
-  if (!askAi) {
-    return undefined;
-  }
-  if (!contextualSearchFilters) {
+  if (!askAi || !contextualSearchFilters || !askAi.indices?.length) {
     return askAi;
+  }
+
+  const contextualFilters = facetFiltersToFilterString(contextualSearchFilters);
+  const searchParameters = { ...askAi.searchParameters };
+
+  for (const indexName of askAi.indices) {
+    const current = searchParameters[indexName] ?? {};
+    searchParameters[indexName] = {
+      ...current,
+      filters: mergeFilters(current.filters, contextualFilters),
+    };
   }
 
   return {
     ...askAi,
-    indices: askAi.indices?.map((index) =>
-      applyContextualSearchToAgentStudioIndex(index, contextualSearchFilters)
-    ),
+    searchParameters,
   };
 }
 

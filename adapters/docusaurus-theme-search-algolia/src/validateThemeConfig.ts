@@ -37,56 +37,6 @@ const SearchParametersSchema = Joi.object({
     .optional(),
 }).unknown();
 
-const SearchControlTextParamSchema = Joi.object({
-  exposed: Joi.boolean().required(),
-  default: Joi.string().optional(),
-}).unknown(false);
-
-const SearchControlNumberParamSchema = Joi.object({
-  exposed: Joi.boolean().required(),
-  default: Joi.number().optional(),
-  constraint: Joi.object({
-    min: Joi.number().optional(),
-    max: Joi.number().optional(),
-  })
-    .unknown(false)
-    .optional(),
-}).unknown(false);
-
-const SearchControlStringArrayParamSchema = Joi.object({
-  exposed: Joi.boolean().required(),
-  default: Joi.array().items(Joi.string()).optional(),
-  constraint: Joi.object({
-    values: Joi.array().items(Joi.string()).optional(),
-  })
-    .unknown(false)
-    .optional(),
-  merge: Joi.boolean().optional(),
-}).unknown(false);
-
-const SearchControlFacetParamSchema = Joi.object({
-  exposed: Joi.boolean().valid(false).required(),
-  default: Joi.array().items(Joi.string()).optional(),
-}).unknown(false);
-
-const AgentStudioSearchControlsSchema = Joi.object({
-  query: SearchControlTextParamSchema.optional(),
-  hits_per_page: SearchControlNumberParamSchema.optional(),
-  page: SearchControlNumberParamSchema.optional(),
-  attributesToRetrieve: SearchControlStringArrayParamSchema.optional(),
-  responseFields: SearchControlStringArrayParamSchema.optional(),
-  facets: SearchControlFacetParamSchema.optional(),
-  custom: Joi.object().unknown().optional(),
-}).unknown(false);
-
-const AskAiIndexSchema = Joi.object({
-  index: Joi.string().required(),
-  description: Joi.string().required(),
-  enhancedDescription: Joi.string().optional(),
-  searchParameters: SearchParametersSchema.optional(),
-  searchControls: AgentStudioSearchControlsSchema.optional(),
-}).unknown(false);
-
 const AskAiMemorySchema = Joi.object({
   enabled: Joi.bool().optional().default(false),
   userToken: Joi.string().optional(),
@@ -107,7 +57,7 @@ const SidePanelSchema = Joi.object({
   translations: Joi.object().optional().unknown(),
   hideButton: Joi.boolean().optional(),
   portalContainer: Joi.object().optional().unknown(),
-  indices: Joi.array().items(AskAiIndexSchema).min(1).optional(),
+  indices: Joi.array().items(Joi.string().min(1)).min(1).optional(),
   memory: AskAiMemorySchema.optional(),
 }).unknown(false);
 
@@ -136,7 +86,7 @@ const AskAiSchema = Joi.object({
   searchParameters: Joi.object()
     .pattern(Joi.string(), SearchParametersSchema)
     .optional(),
-  indices: Joi.array().items(AskAiIndexSchema).min(1).optional(),
+  indices: Joi.array().items(Joi.string().min(1)).min(1).optional(),
   memory: AskAiMemorySchema.optional(),
   promptSuggestions: AskAiPromptSuggestionsSchema.optional(),
 }).unknown(false);

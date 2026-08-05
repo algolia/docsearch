@@ -20,12 +20,7 @@ import { type AIMessage, type ToolCalls } from './types/AskiAi';
 import type { OnAskAiFeedback } from './types/Feedback';
 import { EMPTY_TOOLS, sanitizeMessagesForRequest } from './utils/ai';
 
-import type {
-  AgentStudioIndices,
-  AgentStudioSearchParameters,
-  Memory,
-  StoredAskAiState,
-} from '.';
+import type { AgentStudioSearchParameters, Memory, StoredAskAiState } from '.';
 
 type UseChat = UseChatHelpers<AIMessage>;
 
@@ -36,7 +31,7 @@ type UseAskAiParams = {
   searchParameters?: AgentStudioSearchParameters;
   tools: ToolCalls;
   memory?: Memory;
-  indices?: AgentStudioIndices[];
+  indices?: string[];
 };
 
 type UseAskAiReturn = {
@@ -74,7 +69,7 @@ type AgentStudioTransportParams = Pick<
 > & {
   searchParameters?: AgentStudioSearchParameters;
   userToken?: string;
-  indices?: AgentStudioIndices[];
+  indices?: string[];
 };
 
 const getAgentStudioTransport = ({
@@ -94,9 +89,8 @@ const getAgentStudioTransport = ({
     algoliaParams.searchParameters = searchParameters;
   }
 
-  // Agent Studio completions expect index name strings, not full index configs.
   if (indices && indices.length > 0) {
-    algoliaParams.indices = indices.map((index) => index.index);
+    algoliaParams.indices = indices;
   }
 
   return new DefaultChatTransport({
