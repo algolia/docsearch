@@ -1,21 +1,16 @@
 import { createElement, type JSX } from 'preact';
 import { afterEach, describe, expect, it } from 'vitest';
 
-import { createDocSearch, type DocSearchInstance } from './createDocSearch';
-import type { FooterActionFn as KeywordFooterActionFn } from './docsearch';
-
-import type { FooterActionFn as AskAiFooterActionFn } from './index';
+import { createDocSearch, type DocSearchInstance } from '../createDocSearch';
+import type { FooterActionFn as KeywordFooterActionFn } from '../docsearch';
+import type { FooterActionFn as AskAiFooterActionFn } from '../index';
 
 interface TestComponentProps {
-  footerAction?: () => JSX.Element | null;
+  footerAction?: JSX.Element | null;
 }
 
 function TestComponent({ footerAction }: TestComponentProps): JSX.Element {
-  return createElement(
-    'div',
-    null,
-    footerAction && createElement(footerAction, null)
-  );
+  return createElement('div', null, footerAction);
 }
 
 const askAiFooterAction: AskAiFooterActionFn = (_props, { html }) =>

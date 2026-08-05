@@ -29,7 +29,7 @@ export interface DocSearchCallbacks {
   interceptAskAiEvent?: (initialMessage: InitialAskAiMessage) => boolean | void;
 }
 
-export type TemplateHelpers = Record<string, unknown> & { html: typeof html };
+export type TemplateHelpers = { html: typeof html };
 
 // Defines the public facing interface for each "template" function
 type TemplateFnReturnType = JSX.Element | string | (() => JSX.Element) | null;
@@ -45,7 +45,7 @@ export type ResultsFooterComponentFn = (
 ) => TemplateFnReturnType;
 
 export type FooterActionFn = (
-  props: unknown,
+  props: never,
   helpers: TemplateHelpers
 ) => TemplateFnReturnType;
 
@@ -114,7 +114,7 @@ function createTemplateFunction<
   R = TemplateFnReturnType,
 >(
   original: ((props: P, helpers: TemplateHelpers) => R) | undefined
-): ((props: P) => JSX.Element) | undefined {
+): ((props: P) => JSX.Element | null) | undefined {
   if (!original) return undefined;
 
   return (props: P) => {
@@ -157,6 +157,8 @@ export function createDocSearch<TComponentProps, TInputProps = TComponentProps>(
     const ref = createRef<DocSearchRef>();
     let isReady = false;
 
+    const FooterAction = createTemplateFunction(footerAction);
+
     const props: TComponentProps = {
       ...rest,
       ref,
@@ -165,7 +167,9 @@ export function createDocSearch<TComponentProps, TInputProps = TComponentProps>(
         createTemplateFunction<ResultsFooterComponentProps>(
           resultsFooterComponent
         ),
-      footerAction: createTemplateFunction(footerAction),
+      footerAction: FooterAction
+        ? createElement(FooterAction, null)
+        : undefined,
       transformSearchClient: (searchClient: unknown): unknown => {
         if (
           typeof searchClient === 'object' &&

@@ -70,6 +70,7 @@ export function DocSearchModal({
   recentSearchesWithFavoritesLimit = 4,
   indices,
   facets,
+  footerAction,
   ...props
 }: DocSearchModalProps): JSX.Element {
   const {
@@ -305,10 +306,7 @@ export function DocSearchModal({
         />
       }
       footer={
-        <Footer
-          translations={footerTranslations}
-          footerAction={props.footerAction}
-        />
+        <Footer translations={footerTranslations} footerAction={footerAction} />
       }
       onClose={onClose}
     />

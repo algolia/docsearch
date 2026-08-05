@@ -1,7 +1,6 @@
 import React, { type JSX } from 'react';
 
 import { AlgoliaLogo } from './AlgoliaLogo';
-import type { DocSearchProps } from './DocSearch';
 
 export type FooterTranslations = Partial<{
   selectText: string;
@@ -19,7 +18,7 @@ export type FooterTranslations = Partial<{
 type FooterProps = Partial<{
   translations: FooterTranslations;
   isAskAiActive: boolean;
-  footerAction: DocSearchProps['footerAction'];
+  footerAction: React.ReactNode;
 }>;
 
 interface CommandIconProps {
@@ -52,7 +51,7 @@ function CommandIcon(props: CommandIconProps): JSX.Element {
 export function Footer({
   translations = {},
   isAskAiActive = false,
-  footerAction: FooterAction,
+  footerAction,
 }: FooterProps): JSX.Element {
   const {
     selectText = 'Select',
@@ -66,6 +65,11 @@ export function Footer({
     closeKeyAriaLabel = 'Escape key',
     poweredByText = 'Powered by',
   } = translations;
+
+  const hasFooterAction =
+    footerAction !== null &&
+    footerAction !== undefined &&
+    typeof footerAction !== 'boolean';
 
   return (
     <>
@@ -106,10 +110,8 @@ export function Footer({
         </li>
       </ul>
       <div className="DocSearch-Footer-Actions">
-        {FooterAction && (
-          <div className="DocSearch-Footer-Action">
-            <FooterAction />
-          </div>
+        {hasFooterAction && (
+          <div className="DocSearch-Footer-Action">{footerAction}</div>
         )}
         <div className="DocSearch-Logo">
           <AlgoliaLogo translations={{ poweredByText }} />

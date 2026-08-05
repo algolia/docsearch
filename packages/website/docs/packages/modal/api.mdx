@@ -121,15 +121,21 @@ Receives the modal portal. Defaults to `document.body`.
 
 #### `hitComponent`
 
-> `type: (props, helpers?) => JSX.Element` | **optional**
+> `type: (props) => JSX.Element` | **optional**
 
 Renders an individual result. Defaults to the built-in hit component.
 
 #### `resultsFooterComponent`
 
-> `type: (props, helpers?) => JSX.Element | null` | **optional**
+> `type: (props) => JSX.Element | null` | **optional**
 
 Renders content below the results. Defaults to `null`.
+
+#### `footerAction`
+
+> `type: React.ReactNode` | **optional**
+
+Renders a custom element in the modal footer, before the "Powered by Algolia" logo. Passing `null` renders nothing.
 
 #### `disableUserPersonalization`
 

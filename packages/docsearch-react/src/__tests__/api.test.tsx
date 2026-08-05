@@ -106,7 +106,7 @@ describe('api', () => {
 
   describe('footerAction', () => {
     it('renders the action in the standard modal', async () => {
-      render(<DocSearch footerAction={FooterAction} />);
+      render(<DocSearch footerAction={<FooterAction />} />);
 
       await act(async () => {
         fireEvent.click(await screen.findByText('Search'));
@@ -118,7 +118,7 @@ describe('api', () => {
     });
 
     it('does not render an empty action', async () => {
-      render(<DocSearch footerAction={EmptyFooterAction} />);
+      render(<DocSearch footerAction={<EmptyFooterAction />} />);
 
       await act(async () => {
         fireEvent.click(await screen.findByText('Search'));
@@ -129,8 +129,44 @@ describe('api', () => {
       ).not.toBeInTheDocument();
     });
 
+    it('does not render an action wrapper when no action is provided', async () => {
+      render(<DocSearch />);
+
+      await act(async () => {
+        fireEvent.click(await screen.findByText('Search'));
+      });
+
+      expect(
+        document.querySelector('.DocSearch-Footer-Action')
+      ).not.toBeInTheDocument();
+    });
+
+    it('does not render an action wrapper for a boolean action', async () => {
+      render(<DocSearch footerAction={false} />);
+
+      await act(async () => {
+        fireEvent.click(await screen.findByText('Search'));
+      });
+
+      expect(
+        document.querySelector('.DocSearch-Footer-Action')
+      ).not.toBeInTheDocument();
+    });
+
+    it('renders numeric footer actions', async () => {
+      render(<DocSearch footerAction={0} />);
+
+      await act(async () => {
+        fireEvent.click(await screen.findByText('Search'));
+      });
+
+      expect(document.querySelector('.DocSearch-Footer-Action')).toHaveTextContent(
+        '0'
+      );
+    });
+
     it('renders the action in the Ask AI modal', async () => {
-      render(<DocSearchAI footerAction={FooterAction} />);
+      render(<DocSearchAI footerAction={<FooterAction />} />);
 
       await act(async () => {
         fireEvent.click(await screen.findByText('Search'));

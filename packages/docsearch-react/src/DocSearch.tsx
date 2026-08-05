@@ -89,7 +89,7 @@ export interface DocSearchProps {
    * Algolia logo. The component will be rendered as a child of `<div
    * className="DocSearch-Footer-Action" />`.
    */
-  footerAction?: () => JSX.Element | null;
+  footerAction?: React.ReactNode;
   /** Hook to wrap or modify the algolia search client. */
   transformSearchClient?: (
     searchClient: DocSearchTransformClient
