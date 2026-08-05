@@ -85,6 +85,8 @@
   --ifm-color-primary-light: #7c8aff;
   --ifm-color-primary-lighter: #a3acff;
   --ifm-color-primary-lightest: #cacfff;
+  --ifm-color-secondary: rgb(245 245 250);
+  --ifm-color-secondary-darker: rgb(90 94 154 / 100%);
   --ifm-link-color: var(--brand-ink);
   --ifm-link-hover-color: var(--brand);
   --ifm-menu-color-active: var(--brand-ink);
@@ -246,6 +248,8 @@ html[data-theme='dark'] {
   --ifm-color-primary-light: #a3acff;
   --ifm-color-primary-lighter: #b6bdff;
   --ifm-color-primary-lightest: #cacfff;
+  --ifm-color-secondary: var(--surface-raised);
+  --ifm-color-secondary-darker: var(--text-secondary);
   --ifm-font-base-color: var(--text);
 
   /* shadcn shim (dark) */
@@ -557,8 +561,8 @@ html[data-theme='dark'] .docsearch-logo {
 
 .header-github-link::before {
   content: '';
-  width: 24px;
-  height: 24px;
+  width: 1.25rem;
+  height: 1.25rem;
   display: flex;
   background-color: currentcolor;
   mask: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHN0cm9rZS13aWR0aD0iMS41IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgY29sb3I9ImN1cnJlbnRDb2xvciI+PHBhdGggZD0iTTE2IDIyLjAyNjhWMTkuMTU2OEMxNi4wMzc1IDE4LjY4IDE1Ljk3MzEgMTguMjAwNiAxNS44MTEgMTcuNzUwNkMxNS42NDg5IDE3LjMwMDYgMTUuMzkyOSAxNi44OTAyIDE1LjA2IDE2LjU0NjhDMTguMiAxNi4xOTY4IDIxLjUgMTUuMDA2OCAyMS41IDkuNTQ2NzlDMjEuNDk5NyA4LjE1MDYyIDIwLjk2MjcgNi44MDc5OSAyMCA1Ljc5Njc5QzIwLjQ1NTggNC41NzUzIDIwLjQyMzYgMy4yMjUxNCAxOS45MSAyLjAyNjc5QzE5LjkxIDIuMDI2NzkgMTguNzMgMS42NzY3OSAxNiAzLjUwNjc5QzEzLjcwOCAyLjg4NTYxIDExLjI5MiAyLjg4NTYxIDguOTk5OTkgMy41MDY3OUM2LjI2OTk5IDEuNjc2NzkgNS4wODk5OSAyLjAyNjc5IDUuMDg5OTkgMi4wMjY3OUM0LjU3NjM2IDMuMjI1MTQgNC41NDQxMyA0LjU3NTMgNC45OTk5OSA1Ljc5Njc5QzQuMDMwMTEgNi44MTU0OSAzLjQ5MjUxIDguMTcwMjYgMy40OTk5OSA5LjU3Njc5QzMuNDk5OTkgMTQuOTk2OCA2Ljc5OTk4IDE2LjE4NjggOS45Mzk5OCAxNi41NzY4QzkuNjEwOTggMTYuOTE2OCA5LjM1NzI1IDE3LjMyMjIgOS4xOTUyOSAxNy43NjY3QzkuMDMzMzQgMTguMjExMiA4Ljk2Njc5IDE4LjY4NDkgOC45OTk5OSAxOS4xNTY4VjIyLjAyNjgiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48cGF0aCBkPSJNOSAyMC4wMjY3QzYgMjAuOTk5OSAzLjUgMjAuMDI2NyAyIDE3LjAyNjciIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48L3N2Zz4=')
@@ -1141,6 +1145,11 @@ html[data-theme='dark'] .shimmer-effect {
   color: var(--text);
 }
 
+/* Optically center the dropdown menu's caret */
+.dropdown > .navbar__link::after {
+  top: 0;
+}
+
 /* Brand lockup (swizzled Navbar/Logo) */
 .ds-brand {
   display: inline-flex;
@@ -1199,15 +1208,18 @@ html[data-theme='dark'] .shimmer-effect {
   margin-inline-end: 1rem;
 }
 
-/* Center the navbar row on the MCP content width */
-.navbar__inner {
-  max-width: 72rem;
-  margin-inline: auto;
+/* Homepage keeps the hero clean: hide the navbar search entry on Desktop. */
+@media (width > 768px) {
+  .homepage [class*='navbarSearchContainer'] {
+    display: none;
+  }
 }
 
-/* Homepage keeps the hero clean: hide the navbar search entry. */
-.homepage [class*='navbarSearchContainer'] {
-  display: none;
+/* Position sign up CTA as last item in navbar, remove absolute positioning */
+.navbar__inner [class*='navbarSearchContainer'] {
+  order: 1;
+  position: static;
+  right: 0;
 }
 
 /* "Sign up" primary CTA (brand fill + inset highlight, like the MCP button) */
@@ -1216,7 +1228,8 @@ html[data-theme='dark'] .shimmer-effect {
   align-items: center;
   height: 2rem;
   padding-inline: 0.85rem;
-  margin: 0 1rem;
+  margin-block: 0;
+  margin-inline: 0.75rem 0;
   border-radius: 8px;
   background: var(--brand);
   color: oklch(99.5% 0.002 260deg) !important;
@@ -1225,6 +1238,7 @@ html[data-theme='dark'] .shimmer-effect {
     0 1px 0 0 rgb(255 255 255 / 8%) inset,
     0 1px 2px 0 rgb(16 24 40 / 12%);
   transition: background var(--dur-xs) var(--ease-out-quart);
+  order: 1;
 }
 
 .navbar-cta.navbar__link:hover {
@@ -1267,15 +1281,24 @@ html[data-theme='dark'] .shimmer-effect {
   display: none;
 }
 
+/* Add spacing now that toggle is not treated as last child */
+[class*="colorModeToggle"] {
+  margin-inline: 0.75rem;
+}
+
 /* Color-mode control: replace Docusaurus' light/dark/system SVGs with a single
-   Phosphor glyph (moon on light, sun on dark). The toggle is 3-state, so every
+   Phosphor glyph (sun on light, moon on dark, theme circle on system). The toggle is 3-state, so every
    built-in icon — including the active `system` one — must be forced off. */
 button[class*='toggleButton'] {
-  --navbar-theme-icon: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHN0cm9rZS13aWR0aD0iMS41IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgY29sb3I9ImN1cnJlbnRDb2xvciI+PHBhdGggZD0iTTMgMTEuNTA2NkMzIDE2Ljc0OTcgNy4yNTAzNCAyMSAxMi40OTM0IDIxQzE2LjIyMDkgMjEgMTkuNDQ2NiAxOC44NTE4IDIxIDE1LjcyNTlDMTIuNDkzNCAxNS43MjU5IDguMjc0MTEgMTEuNTA2NiA4LjI3NDExIDNDNS4xNDgyMSA0LjU1MzQ0IDMgNy43NzkxNSAzIDExLjUwNjZaIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48L3BhdGg+PC9zdmc+');
+  --navbar-theme-icon: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHN0cm9rZS13aWR0aD0iMS41IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgY29sb3I9ImN1cnJlbnRDb2xvciI+PHBhdGggZD0iTTEyIDE4QzE1LjMxMzcgMTggMTggMTUuMzEzNyAxOCAxMkMxOCA4LjY4NjI5IDE1LjMxMzcgNiAxMiA2QzguNjg2MjkgNiA2IDguNjg2MjkgNiAxMkM2IDE1LjMxMzcgOC42ODYyOSAxOCAxMiAxOFoiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48cGF0aCBkPSJNMjIgMTJMMjMgMTIiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48cGF0aCBkPSJNMTIgMlYxIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48L3BhdGg+PHBhdGggZD0iTTEyIDIzVjIyIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48L3BhdGg+PHBhdGggZD0iTTIwIDIwTDE5IDE5IiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48L3BhdGg+PHBhdGggZD0iTTIwIDRMMTkgNSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PC9wYXRoPjxwYXRoIGQ9Ik00IDIwTDUgMTkiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48cGF0aCBkPSJNNCA0TDUgNSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PC9wYXRoPjxwYXRoIGQ9Ik0xIDEyTDIgMTIiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48L3N2Zz4=');
 }
 
 html[data-theme='dark'] button[class*='toggleButton'] {
-  --navbar-theme-icon: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHN0cm9rZS13aWR0aD0iMS41IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgY29sb3I9ImN1cnJlbnRDb2xvciI+PHBhdGggZD0iTTEyIDE4QzE1LjMxMzcgMTggMTggMTUuMzEzNyAxOCAxMkMxOCA4LjY4NjI5IDE1LjMxMzcgNiAxMiA2QzguNjg2MjkgNiA2IDguNjg2MjkgNiAxMkM2IDE1LjMxMzcgOC42ODYyOSAxOCAxMiAxOFoiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48cGF0aCBkPSJNMjIgMTJMMjMgMTIiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48cGF0aCBkPSJNMTIgMlYxIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48L3BhdGg+PHBhdGggZD0iTTEyIDIzVjIyIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48L3BhdGg+PHBhdGggZD0iTTIwIDIwTDE5IDE5IiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48L3BhdGg+PHBhdGggZD0iTTIwIDRMMTkgNSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PC9wYXRoPjxwYXRoIGQ9Ik00IDIwTDUgMTkiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48cGF0aCBkPSJNNCA0TDUgNSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PC9wYXRoPjxwYXRoIGQ9Ik0xIDEyTDIgMTIiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48L3N2Zz4=');
+  --navbar-theme-icon: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHN0cm9rZS13aWR0aD0iMS41IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgY29sb3I9ImN1cnJlbnRDb2xvciI+PHBhdGggZD0iTTMgMTEuNTA2NkMzIDE2Ljc0OTcgNy4yNTAzNCAyMSAxMi40OTM0IDIxQzE2LjIyMDkgMjEgMTkuNDQ2NiAxOC44NTE4IDIxIDE1LjcyNTlDMTIuNDkzNCAxNS43MjU5IDguMjc0MTEgMTEuNTA2NiA4LjI3NDExIDNDNS4xNDgyMSA0LjU1MzQ0IDMgNy43NzkxNSAzIDExLjUwNjZaIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48L3BhdGg+PC9zdmc+');
+}
+
+html[data-theme-choice='system'] button[class*='toggleButton'] {
+  --navbar-theme-icon: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0iIzAwMDAwMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik0xMjgsMjRBMTA0LDEwNCwwLDEsMCwyMzIsMTI4LDEwNC4xMSwxMDQuMTEsMCwwLDAsMTI4LDI0Wm04LDE2LjM3YTg2LjQsODYuNCwwLDAsMSwxNiwzVjIxMi42N2E4Ni40LDg2LjQsMCwwLDEtMTYsM1ptMzIsOS4yNmE4Ny44MSw4Ny44MSwwLDAsMSwxNiwxMC41NFYxOTUuODNhODcuODEsODcuODEsMCwwLDEtMTYsMTAuNTRaTTQwLDEyOGE4OC4xMSw4OC4xMSwwLDAsMSw4MC04Ny42M1YyMTUuNjNBODguMTEsODguMTEsMCwwLDEsNDAsMTI4Wm0xNjAsNTAuNTRWNzcuNDZhODcuODIsODcuODIsMCwwLDEsMCwxMDEuMDhaIj48L3BhdGg+PC9zdmc+');
 }
 
 button[class*='toggleButton'] svg[class*='toggleIcon'] {
@@ -1574,4 +1597,8 @@ pre code {
     animation: none;
     transform: none;
   }
+}
+
+.dropdown__menu {
+  box-shadow: var(--ifm-global-shadow-lw);
 }

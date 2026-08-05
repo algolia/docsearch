@@ -50,10 +50,10 @@ export default {
             'https://github.com/algolia/docsearch/edit/main/packages/website/',
           versions: {
             current: {
-              label: 'Beta (v5.0.0-beta.x)',
+              label: 'Stable (v5.x)',
             },
             v4: {
-              label: 'Stable (v4.x)',
+              label: 'Legacy (v4.x)',
             },
             v3: {
               label: 'Legacy (v3.x)',
@@ -83,6 +83,10 @@ export default {
         indices: [{ name: 'docsearch' }],
         askAi: {
           agentId: 'ccdec697-e3fe-465b-a1c3-657e7bf18aef',
+          promptSuggestions: {
+            indexName: 'docsearch-markdown_prompt_suggestions',
+            hitsPerPage: 2,
+          },
         },
         sidePanel: true,
         contextualSearch: true,
@@ -133,6 +137,10 @@ export default {
             className: 'header-github-link',
           },
           {
+            type: 'search',
+            position: 'right',
+          },
+          {
             label: 'Sign up',
             to: SIGNUP_LINK,
             position: 'right',
@@ -141,9 +149,9 @@ export default {
         ],
       },
       announcementBar: {
-        id: 'docsearch-v5-beta',
+        id: 'docsearch-v5',
         content:
-          'DocSearch 5.0.0-beta is available. <a href="/docs/migrating-from-v4">Migrate from v4</a> or <a href="/docs/packages/overview">choose a package</a>.',
+          'DocSearch 5.0.0 is available. <a href="/docs/migrating-from-v4">Migrate from v4</a> or <a href="/docs/packages/overview">choose a package</a>',
       },
       colorMode: {
         defaultMode: 'light',
