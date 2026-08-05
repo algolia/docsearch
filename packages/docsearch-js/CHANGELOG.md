@@ -1,5 +1,27 @@
 # @docsearch/js
 
+## 5.0.0-beta.3
+
+### Patch Changes
+
+- b28bc84: feat(v5): add customizable footer action
+
+  - New `footerAction` prop renders a custom action in the modal footer,
+    before the Algolia logo, inside `.DocSearch-Footer-Action`
+  - `@docsearch/js` supports `footerAction` via template patterns (html helper,
+    JSX, or function-based)
+  - Fixes typing differences between `@docsearch/react` and `@docsearch/js`
+  - Restyle the footer with a `.DocSearch-Footer-Actions` wrapper
+
+- Updated dependencies [3f74c33]
+- Updated dependencies [b33a7f7]
+- Updated dependencies [fe4d0c2]
+- Updated dependencies [4e44b55]
+- Updated dependencies [9a1b3e4]
+- Updated dependencies [b28bc84]
+  - @docsearch/core@5.0.0-beta.3
+  - @docsearch/react@5.0.0-beta.3
+
 ## 5.0.0-beta.2
 
 ### Patch Changes

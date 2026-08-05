@@ -1,5 +1,29 @@
 # @docsearch/react
 
+## 5.0.0-beta.3
+
+### Patch Changes
+
+- 3f74c33: Prevent the slash search shortcut from intercepting key events on focused buttons.
+- b33a7f7: Recognize current Agent Studio conversation-depth error messages.
+- fe4d0c2: Align Ask AI dynamic indices with Agent Studio completions: `askAi.indices` is now `string[]` (index names only). Use `askAi.searchParameters` for per-index runtime overrides.
+- 4e44b55: Stop over-truncating mobile snippets and allow long search hits to wrap.
+- 9a1b3e4: Sanitize Ask AI Markdown HTML and URLs before rendering to prevent XSS.
+- b28bc84: feat(v5): add customizable footer action
+
+  - New `footerAction` prop renders a custom action in the modal footer,
+    before the Algolia logo, inside `.DocSearch-Footer-Action`
+  - `@docsearch/js` supports `footerAction` via template patterns (html helper,
+    JSX, or function-based)
+  - Fixes typing differences between `@docsearch/react` and `@docsearch/js`
+  - Restyle the footer with a `.DocSearch-Footer-Actions` wrapper
+
+- Updated dependencies [3f74c33]
+- Updated dependencies [4e44b55]
+- Updated dependencies [b28bc84]
+  - @docsearch/core@5.0.0-beta.3
+  - @docsearch/css@5.0.0-beta.3
+
 ## 5.0.0-beta.2
 
 ### Patch Changes
