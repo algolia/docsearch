@@ -122,11 +122,11 @@ export const getMessageContent = (message: AIMessage | null): string =>
     .map((part) => part.text)
     .join('\n\n');
 
-/** Helper function to check if error is a thread depth error (AI-217). */
+/** Helper function to check if an error reports the conversation depth limit. */
 export function isThreadDepthError(error?: Error): boolean {
   if (!error) return false;
 
-  return error.message?.includes('AI-217') || false;
+  return /(?:ai-217|conversation\s+depth)/i.test(error.message ?? '');
 }
 
 export const EMPTY_TOOLS: Readonly<ToolCalls> = Object.freeze({});

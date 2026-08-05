@@ -10,9 +10,46 @@ import {
   getSearchToolQueries,
   isAIToolPart,
   isAlgoliaMCPSearchOutputPart,
+  isThreadDepthError,
   sanitizeMessagesForRequest,
   getMessageContent,
 } from '../ai';
+
+describe('isThreadDepthError', () => {
+  it('detects AI-217 regardless of casing', () => {
+    expect(isThreadDepthError(new Error('AI-217: limit reached'))).toBe(true);
+    expect(isThreadDepthError(new Error('prefix ai-217 suffix'))).toBe(true);
+  });
+
+  it('detects conversation depth phrasing', () => {
+    expect(
+      isThreadDepthError(
+        new Error(
+          "You've hit the max conversation depth (4 messages), start a new conversation."
+        )
+      )
+    ).toBe(true);
+    expect(
+      isThreadDepthError(new Error('Maximum conversation depth reached.'))
+    ).toBe(true);
+  });
+
+  it('detects conversation depth in a JSON-shaped error message', () => {
+    expect(
+      isThreadDepthError(
+        new Error(
+          JSON.stringify({ message: 'Maximum conversation depth reached.' })
+        )
+      )
+    ).toBe(true);
+  });
+
+  it('ignores unrelated errors', () => {
+    expect(isThreadDepthError()).toBe(false);
+    expect(isThreadDepthError(new Error('Network failed'))).toBe(false);
+    expect(isThreadDepthError(new Error('AI-214: rate limit'))).toBe(false);
+  });
+});
 
 function message(id: string, parts: AIMessagePart[]): AIMessage {
   return {
