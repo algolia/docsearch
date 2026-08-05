@@ -245,9 +245,9 @@ Sends search parameters keyed by index name. `AgentStudioIndexSearchParameters` 
 
 ### `indices`
 
-> `type: AgentStudioIndices[]` | **optional**
+> `type: string[]` | **optional**
 
-Defines dynamic indices available to Agent Studio search tools.
+Index names available to Agent Studio search tools. Put descriptions and tool defaults on the agent configuration. Put per-index runtime overrides in `searchParameters`.
 
 ### `tools`
 
@@ -266,40 +266,6 @@ Displays memory tool activity and sends a secure user token.
 > `type: { indexName: string; hitsPerPage?: number }` | **optional**
 
 Configures prompt suggestions in keyword search. `hitsPerPage` defaults to `3`.
-
-## Dynamic indices
-
-Each dynamic index accepts the following fields:
-
-### `index`
-
-> `type: string` | **required**
-
-Index available to Agent Studio search tools.
-
-### `description`
-
-> `type: string` | **required**
-
-Describes the index contents to Agent Studio.
-
-### `enhancedDescription`
-
-> `type: string` | **optional**
-
-Provides more context about the index contents.
-
-### `searchParameters`
-
-> `type: SearchParamsObject` | **optional**
-
-Sets search parameters for the dynamic index.
-
-### `searchControls`
-
-> `type: AgentStudioSearchControls` | **optional**
-
-Configures `query`, `hits_per_page`, `page`, `attributesToRetrieve`, `responseFields`, `facets`, and `custom` controls. Text, number, and string-array controls use an `exposed` flag and can define defaults or constraints.
 
 ## Custom tools
 

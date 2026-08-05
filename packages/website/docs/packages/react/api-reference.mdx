@@ -285,11 +285,9 @@ Search parameters keyed by index name. Each value supports `filters`, `attribute
 
 #### `indices`
 
-> `type: AgentStudioIndices[]` | **optional**
+> `type: string[]` | **optional**
 
-Dynamic indices for Agent Studio. Each item requires `index` and `description`. It can also define `enhancedDescription`, `searchParameters`, and `searchControls`.
-
-`searchControls` supports `query`, `hits_per_page`, `page`, `attributesToRetrieve`, `responseFields`, `facets`, and `custom`.
+Index names for the Agent Studio search tool on this request. Put descriptions and tool defaults on the agent configuration. Put per-index runtime overrides in `searchParameters`.
 
 #### `tools`
 

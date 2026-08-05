@@ -3,14 +3,18 @@ title: Configure dynamic indices
 description: Select Agent Studio search indices dynamically at runtime.
 ---
 
-Pass `askAi.indices` when the Agent Studio search tool needs index definitions at request time. This lets your application choose indices, descriptions, fixed search parameters, and model-controlled parameters for each DocSearch instance.
+Pass `askAi.indices` when Agent Studio should search a specific set of indices for this request. This lets each DocSearch instance choose which indices the agent can use.
 
 This property isn't the same as the top-level `indices` property:
 
 - Top-level `indices` configures DocSearch keyword search. Entries are index names or objects with a `name` property.
-- `askAi.indices` configures Agent Studio search. Entries use an `index` property and require a `description`.
+- `askAi.indices` configures Agent Studio search. Entries are index name strings.
 
-## Define an index
+Agent Studio completions accept index names only. Put index descriptions and tool defaults on the agent configuration in Agent Studio. Put per-index runtime overrides in `askAi.searchParameters`.
+
+The agent's Algolia Search tool must use `mode: "dynamic"`. If the tool's static index list is empty, also enable `allowUnlistedIndices`.
+
+## Select indices
 
 ```tsx title="Search.tsx"
 <DocSearchAI
@@ -19,122 +23,25 @@ This property isn't the same as the top-level `indices` property:
   indices={['docs']}
   askAi={{
     agentId: 'YOUR_AGENT_ID',
-    indices: [
-      {
-        index: 'docs_markdown',
-        description: 'Published product documentation.',
-        enhancedDescription:
-          'Use this index for installation, configuration, and API questions.',
-        searchParameters: {
-          filters: 'visibility:public',
-          attributesToRetrieve: ['title', 'content', 'url'],
-        },
-        searchControls: {
-          query: { exposed: true },
-          hits_per_page: {
-            exposed: false,
-            default: 7,
-            constraint: { min: 1, max: 10 },
-          },
-          attributesToRetrieve: {
-            exposed: false,
-            default: ['title', 'content', 'url'],
-            constraint: {
-              values: ['title', 'content', 'url'],
-            },
-          },
-          facets: {
-            exposed: false,
-            default: ['language', 'version'],
-          },
-        },
+    indices: ['docs_markdown', 'api_reference'],
+    searchParameters: {
+      docs_markdown: {
+        filters: 'visibility:public',
+        attributesToRetrieve: ['title', 'content', 'url'],
       },
-    ],
+      api_reference: {
+        distinct: false,
+      },
+    },
   }}
 />
 ```
 
-Each index accepts these properties:
+### `indices`
 
-### `index`
+> `type: string[]` | **optional**
 
-> `type: string` | **required**
-
-Names the Algolia index.
-
-### `description`
-
-> `type: string` | **required**
-
-Tells the agent what the index contains.
-
-### `enhancedDescription`
-
-> `type: string` | **optional**
-
-Gives the agent more guidance about when and how to use the index.
-
-### `searchParameters`
-
-> `type: SearchParamsObject` | **optional**
-
-Sets defaults for the internal, non-MCP search path. It accepts Algolia search parameters.
-
-### `searchControls`
-
-> `type: AgentStudioSearchControls` | **optional**
-
-Configures parameters for the MCP-based search path.
-
-Write specific descriptions. Agent Studio uses them to select an index and plan a search. See [Algolia Search tool configuration](https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/tools/algolia-search) for guidance.
-
-## Configure search controls
-
-A search control describes whether the model can provide a value and which default or constraints apply.
-
-### `query`
-
-> `type: { exposed, default? }` | **optional**
-
-Sets the search query control. It has no DocSearch default when omitted.
-
-### `hits_per_page`
-
-> `type: { exposed, default?, constraint?: { min?, max? } }` | **optional**
-
-Sets the number of results per page. When omitted, DocSearch uses `{ exposed: false, default: 7 }`.
-
-### `page`
-
-> `type: { exposed, default?, constraint?: { min?, max? } }` | **optional**
-
-Sets the requested page. When omitted, DocSearch uses `{ exposed: false, default: 0 }`.
-
-### `attributesToRetrieve`
-
-> `type: { exposed, default?, constraint?: { values? }, merge? }` | **optional**
-
-Sets the attributes returned for each hit. When omitted, DocSearch uses `{ exposed: false, default: ['*'] }`.
-
-### `responseFields`
-
-> `type: { exposed, default?, constraint?: { values? }, merge? }` | **optional**
-
-Sets the fields returned in the search response. When omitted, DocSearch uses `{ exposed: false, default: ['hits', 'nbHits', 'page', 'nbPages', 'hitsPerPage', 'facets'] }`.
-
-### `facets`
-
-> `type: { exposed: false, default? }` | **optional**
-
-Sets the facets requested with the search. It has no DocSearch default when omitted.
-
-### `custom`
-
-> `type: Record<string, unknown>` | **optional**
-
-Sets extra tool parameters. It has no DocSearch default when omitted.
-
-Use `exposed: true` only for values the model should choose from conversation context. Use fixed defaults for business rules and response limits. For the distinction between runtime and predefined parameters, see [Agent Studio tools](https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/tools/overview#configure-runtime-parameters-for-dynamic-tool-execution).
+Index names available to the Agent Studio search tool for this request. When omitted, Agent Studio uses the indices configured on the agent tool.
 
 ## Set request-wide search parameters
 
@@ -143,6 +50,7 @@ Use `exposed: true` only for values the model should choose from conversation co
 ```js title="docsearch.js"
 askAi: {
   agentId: 'YOUR_AGENT_ID',
+  indices: ['docs_markdown'],
   searchParameters: {
     docs_markdown: {
       filters: 'visibility:public',
@@ -153,10 +61,12 @@ askAi: {
 }
 ```
 
+Supported override fields are `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, `distinct`, `userToken`, `enablePersonalization`, `personalizationImpact`, and `optionalFilters`.
+
 Don't use the flat search-parameter shape from earlier DocSearch AI integrations.
 
 ## Docusaurus validation
 
-The v5 Docusaurus adapter requires at least one entry when you set `askAi.indices`. Every entry must include `index` and `description`. It rejects unknown `searchControls` properties, except values nested under `custom`.
+The v5 Docusaurus adapter requires at least one string when you set `askAi.indices`. Contextual search merges version/language filters into `askAi.searchParameters[index].filters` for each dynamic index name.
 
 See the [React package reference](/docs/packages/react/api-reference) and [Docusaurus adapter guide](/docs/packages/docusaurus-adapter/getting-started) for the complete types.

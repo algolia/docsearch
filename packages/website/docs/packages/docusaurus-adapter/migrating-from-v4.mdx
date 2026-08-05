@@ -192,13 +192,8 @@ askAi: 'YOUR_ASSISTANT_ID',
 
 ```js title="docusaurus.config.mjs"
 askAi: {
-  assistantId: 'YOUR_ASSISTANT_ID',
-  indices: [
-    {
-      index: 'docs_markdown',
-      description: 'Product documentation.',
-    },
-  ],
+  agentId: 'YOUR_ASSISTANT_ID',
+  indices: ['docs_markdown'],
 },
 ```
 
@@ -240,7 +235,7 @@ askAi: {
   </TabItem>
 </Tabs>
 
-Root `askAi.searchParameters` supports `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`. Put `facetFilters` on a dynamic `askAi.indices` item's `searchParameters` instead.
+Root `askAi.searchParameters` supports `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`.
 
 ## 7. Move the Sidepanel to the root
 

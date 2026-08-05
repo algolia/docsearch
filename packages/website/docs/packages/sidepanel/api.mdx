@@ -116,9 +116,9 @@ Configures Agent Studio memory rendering and authentication.
 
 #### `indices`
 
-> `type: AgentStudioIndices[]` | **optional**
+> `type: string[]` | **optional**
 
-Defines dynamic indices available to Agent Studio.
+Index names available to Agent Studio. Put descriptions and tool defaults on the agent configuration. Put per-index runtime overrides in `searchParameters`.
 
 ### Translation groups
 
@@ -133,20 +133,6 @@ Defines dynamic indices available to Agent Studio.
 ## Agent Studio options
 
 V5 uses Agent Studio for Sidepanel conversations. It doesn't expose an `agentStudio` prop.
-
-### `AgentStudioIndices`
-
-```ts
-interface AgentStudioIndices {
-  index: string;
-  description: string;
-  enhancedDescription?: string;
-  searchParameters?: SearchParamsObject;
-  searchControls?: AgentStudioSearchControls;
-}
-```
-
-`searchControls` accepts `query`, `hits_per_page`, `page`, `attributesToRetrieve`, `responseFields`, `facets`, and `custom`. Controls specify whether Agent Studio may expose a value to the model and can include defaults and constraints.
 
 ### `ToolDefinition`
 

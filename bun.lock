@@ -25,14 +25,13 @@
         "stylelint-no-unsupported-browser-features": "8.1.1",
         "stylelint-order": "8.1.1",
         "typescript": "5.7.3",
-        "unrun": "^0.3.1",
         "vitest": "3.0.2",
         "watch": "1.0.2",
       },
     },
     "adapters/docusaurus-theme-search-algolia": {
       "name": "@docsearch/docusaurus-adapter",
-      "version": "5.0.0-beta.1",
+      "version": "5.0.0-beta.2",
       "dependencies": {
         "@algolia/autocomplete-core": "1.19.2",
         "@docsearch/core": "workspace:*",
@@ -116,7 +115,7 @@
     },
     "packages/docsearch-core": {
       "name": "@docsearch/core",
-      "version": "5.0.0-beta.1",
+      "version": "5.0.0-beta.2",
       "devDependencies": {
         "@testing-library/jest-dom": "6.6.3",
         "@testing-library/react": "16.2.0",
@@ -138,7 +137,7 @@
     },
     "packages/docsearch-css": {
       "name": "@docsearch/css",
-      "version": "5.0.0-beta.1",
+      "version": "5.0.0-beta.2",
       "devDependencies": {
         "browserslist": "4.28.2",
         "lightningcss": "1.32.0",
@@ -147,7 +146,7 @@
     },
     "packages/docsearch-js": {
       "name": "@docsearch/js",
-      "version": "5.0.0-beta.1",
+      "version": "5.0.0-beta.2",
       "dependencies": {
         "@docsearch/core": "4.6.0",
         "@docsearch/react": "4.6.0",
@@ -161,7 +160,7 @@
     },
     "packages/docsearch-modal": {
       "name": "@docsearch/modal",
-      "version": "5.0.0-beta.1",
+      "version": "5.0.0-beta.2",
       "dependencies": {
         "@docsearch/core": "4.6.0",
         "@docsearch/react": "4.6.0",
@@ -186,13 +185,13 @@
     },
     "packages/docsearch-react": {
       "name": "@docsearch/react",
-      "version": "5.0.0-beta.1",
+      "version": "5.0.0-beta.2",
       "dependencies": {
         "@ai-sdk/react": "^2.0.30",
         "@algolia/autocomplete-core": "1.19.2",
         "@base-ui/react": "^1.5.0",
-        "@docsearch/core": "5.0.0-beta.1",
-        "@docsearch/css": "5.0.0-beta.1",
+        "@docsearch/core": "5.0.0-beta.2",
+        "@docsearch/css": "5.0.0-beta.2",
         "ai": "^5.0.30",
         "algoliasearch": "^5.28.0",
         "marked": "^16.3.0",
@@ -200,7 +199,7 @@
       },
       "devDependencies": {
         "@algolia/autocomplete-core": "1.19.2",
-        "@docsearch/core": "5.0.0-beta.1",
+        "@docsearch/core": "5.0.0-beta.2",
         "@testing-library/jest-dom": "6.6.3",
         "@testing-library/react": "16.2.0",
         "preact": "11.0.0-beta.0",
@@ -223,7 +222,7 @@
     },
     "packages/docsearch-sidepanel": {
       "name": "@docsearch/sidepanel",
-      "version": "5.0.0-beta.1",
+      "version": "5.0.0-beta.2",
       "dependencies": {
         "@docsearch/core": "4.6.0",
         "@docsearch/css": "4.6.0",
@@ -249,7 +248,7 @@
     },
     "packages/docsearch-sidepanel-js": {
       "name": "@docsearch/sidepanel-js",
-      "version": "5.0.0-beta.1",
+      "version": "5.0.0-beta.2",
       "dependencies": {
         "@docsearch/core": "4.6.0",
         "@docsearch/react": "4.6.0",
@@ -3705,8 +3704,6 @@
     "universalify": ["universalify@2.0.1", "", {}, "sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw=="],
 
     "unpipe": ["unpipe@1.0.0", "", {}, "sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ=="],
-
-    "unrun": ["unrun@0.3.1", "", { "dependencies": { "rolldown": "^1.0.0" }, "peerDependencies": { "synckit": "^0.11.11" }, "optionalPeers": ["synckit"], "bin": { "unrun": "./dist/cli.mjs" } }, "sha512-onIck/oNnCaytwths1ZVp1LK2Gq2hPoyFhiHebObuUXqR3S0uHuLLaBK8K6mRRgV7Ptip8AnNvaUsgzwWwBZuA=="],
 
     "update-browserslist-db": ["update-browserslist-db@1.2.3", "", { "dependencies": { "escalade": "^3.2.0", "picocolors": "^1.1.1" }, "peerDependencies": { "browserslist": ">= 4.21.0" }, "bin": { "update-browserslist-db": "cli.js" } }, "sha512-Js0m9cx+qOgDxo0eMiFGEueWztz+d4+M3rGlmKPT+T4IS/jP4ylw3Nwpu6cpTTP8R1MAC1kF4VbdLt3ARf209w=="],
 

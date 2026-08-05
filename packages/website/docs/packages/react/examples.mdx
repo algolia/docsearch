@@ -195,28 +195,17 @@ See [Get started with Agent Studio](/docs/agent-studio/getting-started) before c
 
 ## Add dynamic Agent Studio indices
 
-Describe each index so the agent can select the right source:
+Pass the index names Agent Studio should search for this request:
 
 ```jsx title="DynamicIndicesSearch.jsx"
 const askAi = {
-  assistantId: 'YOUR_ASSISTANT_ID',
-  indices: [
-    {
-      index: 'product_docs',
-      description: 'Product guides and conceptual documentation',
-      searchControls: {
-        hits_per_page: {
-          exposed: true,
-          default: 7,
-          constraint: { min: 1, max: 10 },
-        },
-      },
+  agentId: 'YOUR_ASSISTANT_ID',
+  indices: ['product_docs', 'api_reference'],
+  searchParameters: {
+    product_docs: {
+      filters: 'language:en',
     },
-    {
-      index: 'api_reference',
-      description: 'API symbols, options, and return values',
-    },
-  ],
+  },
 };
 
 <DocSearchAI
