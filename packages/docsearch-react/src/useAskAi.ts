@@ -87,15 +87,16 @@ const getAgentStudioTransport = ({
 }: AgentStudioTransportParams): DefaultChatTransport<AIMessage> => {
   const algoliaParams: {
     searchParameters?: AgentStudioSearchParameters;
-    indices?: AgentStudioIndices[];
+    indices?: string[];
   } = {};
 
   if (searchParameters) {
     algoliaParams.searchParameters = searchParameters;
   }
 
+  // Agent Studio completions expect index name strings, not full index configs.
   if (indices && indices.length > 0) {
-    algoliaParams.indices = indices;
+    algoliaParams.indices = indices.map((index) => index.index);
   }
 
   return new DefaultChatTransport({

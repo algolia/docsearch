@@ -309,7 +309,7 @@ describe('useAskAi', () => {
     );
 
     expect(getTransportBody()).toEqual({
-      algolia: { indices },
+      algolia: { indices: ['docsearch-markdown'] },
     });
   });
 
@@ -336,7 +336,7 @@ describe('useAskAi', () => {
     );
 
     expect(getTransportBody()).toEqual({
-      algolia: { searchParameters, indices },
+      algolia: { searchParameters, indices: ['docsearch-markdown'] },
     });
   });
 
