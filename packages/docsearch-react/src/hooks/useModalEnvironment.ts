@@ -15,7 +15,6 @@ export function useModalEnvironment({
   inputRef,
   initialScrollY,
   modalRef,
-  snippetLength,
   theme,
 }: {
   getEnvironmentProps: AutocompleteApi<
@@ -30,7 +29,6 @@ export function useModalEnvironment({
   inputRef: React.RefObject<HTMLInputElement | null>;
   initialScrollY: number;
   modalRef: React.RefObject<HTMLDivElement | null>;
-  snippetLength: React.MutableRefObject<number>;
   theme?: DocSearchTheme;
 }): void {
   useTouchEvents({
@@ -40,5 +38,5 @@ export function useModalEnvironment({
     inputElement: inputRef.current,
   });
   useTrapFocus({ container: containerRef.current });
-  useDocSearchModalEffects({ initialScrollY, modalRef, snippetLength, theme });
+  useDocSearchModalEffects({ initialScrollY, modalRef, theme });
 }

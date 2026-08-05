@@ -6,14 +6,12 @@ export function useModalRefs(): {
   formElementRef: React.RefObject<HTMLDivElement | null>;
   dropdownRef: React.RefObject<HTMLDivElement | null>;
   inputRef: React.RefObject<HTMLInputElement | null>;
-  snippetLength: React.MutableRefObject<number>;
 } {
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const modalRef = React.useRef<HTMLDivElement | null>(null);
   const formElementRef = React.useRef<HTMLDivElement | null>(null);
   const dropdownRef = React.useRef<HTMLDivElement | null>(null);
   const inputRef = React.useRef<HTMLInputElement | null>(null);
-  const snippetLength = React.useRef<number>(15);
 
   return {
     containerRef,
@@ -21,6 +19,5 @@ export function useModalRefs(): {
     formElementRef,
     dropdownRef,
     inputRef,
-    snippetLength,
   };
 }

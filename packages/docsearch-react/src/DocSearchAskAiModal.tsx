@@ -142,14 +142,8 @@ export function DocSearchAskAiModal({
       'Ask another question...';
   }
 
-  const {
-    containerRef,
-    modalRef,
-    formElementRef,
-    dropdownRef,
-    inputRef,
-    snippetLength,
-  } = useModalRefs();
+  const { containerRef, modalRef, formElementRef, dropdownRef, inputRef } =
+    useModalRefs();
   const { initialQuery, initialQueryFromSelection } =
     useInitialModalQuery(initialQueryFromProp);
 
@@ -417,7 +411,6 @@ export function DocSearchAskAiModal({
           setStatus,
           searchClient,
           indexes,
-          snippetLength,
           insights: Boolean(insights),
           appId,
           apiKey,
@@ -460,7 +453,6 @@ export function DocSearchAskAiModal({
     inputRef,
     initialScrollY,
     modalRef,
-    snippetLength,
     theme,
   });
 
