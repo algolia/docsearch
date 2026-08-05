@@ -23,10 +23,6 @@ const customTools: ToolCalls = {
   },
 };
 
-const FooterAction = (): JSX.Element => {
-  return <span>Bonjour</span>;
-};
-
 export default function BasicAskAI({
   theme,
 }: {
@@ -54,7 +50,6 @@ export default function BasicAskAI({
       translations={{ button: { buttonText: 'Search with Ask AI' } }}
       theme={theme}
       resultBadgeKey="type"
-      footerAction={<FooterAction />}
     />
   );
 }
