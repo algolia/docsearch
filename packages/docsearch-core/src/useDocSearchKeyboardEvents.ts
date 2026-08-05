@@ -34,7 +34,8 @@ function isEditingContent(event: KeyboardEvent): boolean {
     element.isContentEditable ||
     tagName === 'INPUT' ||
     tagName === 'SELECT' ||
-    tagName === 'TEXTAREA'
+    tagName === 'TEXTAREA' ||
+    tagName === 'BUTTON'
   );
 }
 

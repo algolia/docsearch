@@ -138,6 +138,21 @@ describe('@docsearch/core', () => {
       expect(screen.getByText('State: modal-search')).toBeInTheDocument();
     });
 
+    it('does not open search with / from a focused button', () => {
+      renderWithProvider(
+        <>
+          <StateRender />
+          <button type="button">Action</button>
+        </>
+      );
+
+      const button = screen.getByRole('button', { name: 'Action' });
+      button.focus();
+      fireEvent.keyDown(button, { key: '/', code: 'Slash' });
+
+      expect(screen.getByText('State: ready')).toBeInTheDocument();
+    });
+
     it('respects keyboard shortcuts', () => {
       renderWithProvider(<StateRender />, {
         keyboardShortcuts: {
