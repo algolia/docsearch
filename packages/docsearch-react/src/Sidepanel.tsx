@@ -9,11 +9,7 @@ import type { JSX } from 'react';
 import React from 'react';
 import { createPortal } from 'react-dom';
 
-import type {
-  AgentStudioIndices,
-  AgentStudioSearchParameters,
-  Memory,
-} from './DocSearchAI';
+import type { AgentStudioSearchParameters, Memory } from './DocSearchAI';
 import type {
   SidepanelButtonProps,
   SidepanelProps as SidepanelPanelProps,
@@ -77,8 +73,14 @@ export type DocSearchSidepanelProps = DocSearchCallbacks & {
    * @see https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/memory/overview
    */
   memory?: Memory;
-  /** List of dynamic indices for the Agent Studio search tool to use. */
-  indices?: AgentStudioIndices[];
+  /**
+   * Index names for the Agent Studio search tool on this request.
+   *
+   * Agent Studio expects names only. Put descriptions and tool defaults on the
+   * agent configuration. Put per-index runtime overrides in
+   * `searchParameters`.
+   */
+  indices?: string[];
 };
 
 type SidepanelProps = DocSearchSidepanelProps & SidepanelSearchParameters;

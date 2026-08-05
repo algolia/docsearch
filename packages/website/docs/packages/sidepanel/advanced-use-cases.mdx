@@ -133,7 +133,7 @@ Don't generate or sign the token in the browser.
 
 ## Provide dynamic indices
 
-Use `indices` to describe the indices Agent Studio can select at request time. This list is separate from the required `indexName`, which remains the Sidepanel's primary index.
+Use `indices` to select the indices Agent Studio can search at request time. This list is separate from the required `indexName`, which remains the Sidepanel's primary index.
 
 ```tsx title="DynamicIndices.tsx"
 <Sidepanel
@@ -145,17 +145,7 @@ Use `indices` to describe the indices Agent Studio can select at request time. T
     docs: { filters: 'version:v5' },
     support_articles: { filters: 'visibility:public' },
   }}
-  indices={[
-    {
-      index: 'docs',
-      description: 'Product documentation and API references.',
-    },
-    {
-      index: 'support_articles',
-      description: 'Troubleshooting and support articles.',
-      enhancedDescription: 'Use for errors and operational incidents.',
-    },
-  ]}
+  indices={['docs', 'support_articles']}
 />
 ```
 

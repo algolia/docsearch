@@ -291,12 +291,7 @@ describe('useAskAi', () => {
   });
 
   it('includes indices under the algolia body when provided', () => {
-    const indices = [
-      {
-        index: 'docsearch-markdown',
-        description: 'Use this to gather specific results.',
-      },
-    ];
+    const indices = ['docsearch-markdown'];
 
     renderHook(() =>
       useAskAi({
@@ -317,12 +312,7 @@ describe('useAskAi', () => {
     const searchParameters = {
       'index-name': { distinct: false },
     };
-    const indices = [
-      {
-        index: 'docsearch-markdown',
-        description: 'Use this to gather specific results.',
-      },
-    ];
+    const indices = ['docsearch-markdown'];
 
     renderHook(() =>
       useAskAi({
@@ -571,7 +561,7 @@ describe('useAskAi', () => {
             searchParameters: {
               'index-name': { distinct: false },
             },
-            indices: [{ index: 'index-name', description: 'Test index' }],
+            indices: ['index-name'],
           },
         }
       );
@@ -583,7 +573,7 @@ describe('useAskAi', () => {
         searchParameters: {
           'index-name': { distinct: false },
         },
-        indices: [{ index: 'index-name', description: 'Test index' }],
+        indices: ['index-name'],
       });
 
       expect(result.current.startNewConversation).toBe(startNewConversation);

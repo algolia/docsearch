@@ -7,7 +7,6 @@
 
 declare module '@docsearch/docusaurus-adapter' {
   import type {
-    AgentStudioIndices,
     AgentStudioSearchParameters,
     DocSearchAskAi,
     DocSearchProps,
@@ -50,7 +49,7 @@ declare module '@docsearch/docusaurus-adapter' {
     agentId: DocSearchAskAi['agentId'];
     suggestedQuestions?: DocSearchAskAi['suggestedQuestions'];
     searchParameters?: AgentStudioSearchParameters;
-    indices?: AgentStudioIndices[];
+    indices?: string[];
     memory?: DocSearchAskAi['memory'];
     promptSuggestions?: DocSearchAskAi['promptSuggestions'];
   };
