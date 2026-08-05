@@ -1,4 +1,8 @@
 import type { DocSearchRef, InitialAskAiMessage } from '@docsearch/core';
+import type {
+  ResultsFooterComponentProps,
+  HitComponentProps,
+} from '@docsearch/react';
 import htm from 'htm';
 import type { ComponentType, JSX, Attributes } from 'preact';
 import {
@@ -25,10 +29,64 @@ export interface DocSearchCallbacks {
   interceptAskAiEvent?: (initialMessage: InitialAskAiMessage) => boolean | void;
 }
 
+export type TemplateHelpers = { html: typeof html };
+
+// Defines the public facing interface for each "template" function
+type TemplateFnReturnType = JSX.Element | string | (() => JSX.Element) | null;
+
+export type HitComponentFn = (
+  props: HitComponentProps,
+  helpers: TemplateHelpers
+) => TemplateFnReturnType;
+
+export type ResultsFooterComponentFn = (
+  props: ResultsFooterComponentProps,
+  helpers: TemplateHelpers
+) => TemplateFnReturnType;
+
+export type FooterActionFn = (
+  props: never,
+  helpers: TemplateHelpers
+) => TemplateFnReturnType;
+
 export type DocSearchProps<TProps> = DocSearchCallbacks &
-  Omit<TProps, 'onSidepanelClose' | 'onSidepanelOpen'> & {
+  Omit<
+    TProps,
+    | 'onSidepanelClose'
+    | 'onSidepanelOpen'
+    | 'hitComponent'
+    | 'resultsFooterComponent'
+    | 'footerAction'
+  > & {
     container: HTMLElement | string;
     environment?: typeof window;
+    /**
+     * Custom component to render an individual hit. Supports template patterns:
+     *
+     * - HTML strings with html helper: (props, { html }) => html`<div>...</div>`
+     * - JSX templates: (props) => <div>...</div>
+     * - Function-based templates: (props) => string | JSX.Element | Function.
+     */
+    hitComponent?: HitComponentFn;
+    /**
+     * Custom component rendered at the bottom of the results panel. Supports
+     * template patterns:
+     *
+     * - HTML strings with html helper: (props, { html }) => html`<div>...</div>`
+     * - JSX templates: (props) => <div>...</div>
+     * - Function-based templates: (props) => string | JSX.Element | Function.
+     */
+    resultsFooterComponent?: ResultsFooterComponentFn;
+    /**
+     * A custom action that can be rendered in the Modal's footer before the
+     * Algolia logo. The component will be rendered as a child of `<div
+     * className="DocSearch-Footer-Action" />`. Supports template patterns:
+     *
+     * - HTML strings with html helper: (props, { html }) => html`<div>...</div>`
+     * - JSX templates: (props) => <div>...</div>
+     * - Function-based templates: (props) => string | JSX.Element | Function.
+     */
+    footerAction?: FooterActionFn;
   };
 
 function getHTMLElement(
@@ -51,14 +109,12 @@ const html = htm.bind(createElement) as unknown as (
   ...values: unknown[]
 ) => JSX.Element;
 
-export type TemplateHelpers = Record<string, unknown> & { html: typeof html };
-
 function createTemplateFunction<
-  P extends Record<string, unknown>,
-  R = JSX.Element | string | (() => JSX.Element),
+  P = Record<string, unknown>,
+  R = TemplateFnReturnType,
 >(
-  original: ((props: P, helpers?: TemplateHelpers) => R) | undefined
-): ((props: P) => JSX.Element) | undefined {
+  original: ((props: P, helpers: TemplateHelpers) => R) | undefined
+): ((props: P) => JSX.Element | null) | undefined {
   if (!original) return undefined;
 
   return (props: P) => {
@@ -73,15 +129,10 @@ function createTemplateFunction<
 }
 
 interface ComponentProps {
-  hitComponent?: (
-    props: Record<string, unknown>,
-    helpers?: TemplateHelpers
-  ) => JSX.Element;
-  resultsFooterComponent?: (
-    props: Record<string, unknown>,
-    helpers?: TemplateHelpers
-  ) => JSX.Element | null;
+  hitComponent?: HitComponentFn;
+  resultsFooterComponent?: ResultsFooterComponentFn;
   transformSearchClient?: (searchClient: unknown) => unknown;
+  footerAction?: FooterActionFn;
 }
 
 export function createDocSearch<TComponentProps, TInputProps = TComponentProps>(
@@ -96,6 +147,7 @@ export function createDocSearch<TComponentProps, TInputProps = TComponentProps>(
       transformSearchClient,
       hitComponent,
       resultsFooterComponent,
+      footerAction,
       ...rest
     } = input;
     const containerElement = getHTMLElement(
@@ -105,11 +157,19 @@ export function createDocSearch<TComponentProps, TInputProps = TComponentProps>(
     const ref = createRef<DocSearchRef>();
     let isReady = false;
 
+    const FooterAction = createTemplateFunction(footerAction);
+
     const props: TComponentProps = {
       ...rest,
       ref,
-      hitComponent: createTemplateFunction(hitComponent),
-      resultsFooterComponent: createTemplateFunction(resultsFooterComponent),
+      hitComponent: createTemplateFunction<HitComponentProps>(hitComponent),
+      resultsFooterComponent:
+        createTemplateFunction<ResultsFooterComponentProps>(
+          resultsFooterComponent
+        ),
+      footerAction: FooterAction
+        ? createElement(FooterAction, null)
+        : undefined,
       transformSearchClient: (searchClient: unknown): unknown => {
         if (
           typeof searchClient === 'object' &&

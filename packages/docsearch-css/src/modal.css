@@ -1034,7 +1034,6 @@
   border-block-start: 1px solid var(--docsearch-subtle-color);
   border-radius: 0 0 var(--docsearch-modal-radius) var(--docsearch-modal-radius);
   display: flex;
-  flex-direction: row-reverse;
   flex-shrink: 0;
   height: var(--docsearch-footer-height);
   justify-content: space-between;
@@ -1089,6 +1088,23 @@
   letter-spacing: normal;
   text-align: center;
   text-transform: uppercase;
+}
+
+.DocSearch-Footer-Actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+  width: 100%;
+
+  @media screen and (width > 768px) {
+    justify-content: unset;
+    width: auto;
+  }
+
+  &:not(:has(.DocSearch-Footer-Action)) .DocSearch-Logo {
+    margin-inline-start: auto;
+  }
 }
 
 /* Hide element accessibly, so that it is still accessible to

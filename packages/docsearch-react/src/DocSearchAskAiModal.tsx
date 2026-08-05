@@ -102,6 +102,7 @@ export function DocSearchAskAiModal({
   indices,
   facets,
   isHybridModeSupported = false,
+  footerAction,
   ...props
 }: DocSearchAskAiModalProps): JSX.Element {
   const {
@@ -645,6 +646,7 @@ export function DocSearchAskAiModal({
         <Footer
           translations={footerTranslations}
           isAskAiActive={isAskAiActive}
+          footerAction={footerAction}
         />
       }
       onClose={onClose}

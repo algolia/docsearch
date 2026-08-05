@@ -95,12 +95,12 @@ Transforms hits before DocSearch groups and renders them. Defaults to the identi
 
 ### `hitComponent`
 
-> `type: React.ComponentType<HitProps>` | **optional**
+> `type: ({ hit, children }: HitComponentProps) => JSX.Element` | **optional**
 
 Renders one result link. The default component renders the standard result content.
 
 ```tsx title="Hit.tsx"
-function Hit({ hit, children }: HitProps): JSX.Element {
+function Hit({ hit, children }: HitComponentProps): JSX.Element {
   return (
     <a href={hit.url} data-result-type={hit.type}>
       {children}
@@ -113,9 +113,34 @@ Preserve `children` to retain the default hit content. `hit` is an `InternalDocS
 
 ### `resultsFooterComponent`
 
-> `type: React.ComponentType<ResultsFooterProps>` | **optional**
+> `type: ({ state }: ResultsFooterComponentProps) => JSX.Element | null` | **optional**
 
 Renders below result collections. It receives the current Autocomplete state. By default, DocSearch doesn't render a footer.
+
+### `footerAction`
+
+> `type: React.ReactNode` | **optional**
+
+Renders a custom element in the modal footer, before the "Powered by Algolia" logo. Passing `null` renders nothing.
+
+```tsx title="Search.tsx"
+function FooterAction(): JSX.Element {
+  return (
+    <a href="https://algolia.com">
+      Our other project
+    </a>
+  );
+}
+
+function Search() {
+  return (
+    <DocSearch
+      // ...
+      footerAction={<FooterAction />}
+    />
+  );
+}
+```
 
 ### `transformSearchClient`
 

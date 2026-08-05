@@ -176,15 +176,21 @@ Function that transforms hits before grouping and rendering. Defaults to the ide
 
 ### `hitComponent`
 
-> `type: template function` | **optional**
+> `type: ({ hit, children }, { html }) => JSX.Element` | **optional**
 
 Template for a result link. Defaults to the built-in hit template. See [Templates](#templates).
 
 ### `resultsFooterComponent`
 
-> `type: template function` | **optional**
+> `type: ({ state }, { html }) => JSX.Element | null` | **optional**
 
 Template below the result collections. There's no default. See [Templates](#templates).
+
+### `footerAction`
+
+> `type: (_, { html }) => JSX.Element | null` | **optional**
+
+Optional function to render a custom action in the Modal's footer. It will be rendered in line with the Algolia "powered by" logo. See [Templates](#templates).
 
 ### `transformSearchClient`
 
@@ -290,15 +296,25 @@ Set `translations.modal.resultsScreen.resultBadgeLabelText` to describe the badg
 
 ### Templates
 
-`hitComponent` receives `{ hit, children }`. `resultsFooterComponent` receives `{ state }`. JavaScript templates can return a Preact element, a string, or a component function. The optional second argument provides an `html` tagged-template helper.
+- `hitComponent` receives `{ hit, children }`.
+- `resultsFooterComponent` receives `{ state }`.
+- `footerAction` currently does not receive any extra props.
+
+JavaScript templates can return a Preact element, a string, or a component function. The optional second argument provides an `html` tagged-template helper.
 
 ```js title="docsearch-options.js"
-hitComponent({ hit, children }, { html }) {
-  return html`<a href=${hit.url} data-result-type=${hit.type}>${children}</a>`;
-}
+docsearch({
+  hitComponent({ hit, children }, { html }) {
+    return html`<a href=${hit.url} data-result-type=${hit.type}>${children}</a>`;
+  },
+  resultsFooterComponent({ state }, { html }) {
+    return html`<p>No results found for query: ${state.query}</p>`;
+  },
+  footerAction(_, { html }) {
+    return html`<a href="https://algolia.com">Our other project</a>`;
+  },
+});
 ```
-
-String returns render as text, not HTML.
 
 ## Ask AI options
 

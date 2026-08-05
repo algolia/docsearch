@@ -18,6 +18,7 @@ export type FooterTranslations = Partial<{
 type FooterProps = Partial<{
   translations: FooterTranslations;
   isAskAiActive: boolean;
+  footerAction: React.ReactNode;
 }>;
 
 interface CommandIconProps {
@@ -50,6 +51,7 @@ function CommandIcon(props: CommandIconProps): JSX.Element {
 export function Footer({
   translations = {},
   isAskAiActive = false,
+  footerAction,
 }: FooterProps): JSX.Element {
   const {
     selectText = 'Select',
@@ -64,11 +66,13 @@ export function Footer({
     poweredByText = 'Powered by',
   } = translations;
 
+  const hasFooterAction =
+    footerAction !== null &&
+    footerAction !== undefined &&
+    typeof footerAction !== 'boolean';
+
   return (
     <>
-      <div className="DocSearch-Logo">
-        <AlgoliaLogo translations={{ poweredByText }} />
-      </div>
       <ul className="DocSearch-Commands">
         <li>
           <kbd className="DocSearch-Commands-Key">
@@ -105,6 +109,14 @@ export function Footer({
           </span>
         </li>
       </ul>
+      <div className="DocSearch-Footer-Actions">
+        {hasFooterAction && (
+          <div className="DocSearch-Footer-Action">{footerAction}</div>
+        )}
+        <div className="DocSearch-Logo">
+          <AlgoliaLogo translations={{ poweredByText }} />
+        </div>
+      </div>
     </>
   );
 }

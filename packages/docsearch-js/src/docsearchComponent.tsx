@@ -7,11 +7,7 @@ import {
   type DocSearchProps as CreateDocSearchProps,
 } from './createDocSearch';
 
-export type {
-  DocSearchCallbacks,
-  DocSearchInstance,
-  TemplateHelpers,
-} from './createDocSearch';
+export type { DocSearchCallbacks, DocSearchInstance } from './createDocSearch';
 export type DocSearchProps = CreateDocSearchProps<DocSearchComponentProps>;
 
 export const docsearch: (allProps: DocSearchProps) => DocSearchInstance =
