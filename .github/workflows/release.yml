@@ -1,0 +1,68 @@
+name: 🚀 Release
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+      - 'v*'
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  select-mode:
+    runs-on: ubuntu-latest
+    outputs:
+      mode: ${{ steps.select-mode.outputs.mode }}
+      publish-plan-artifact-id: ${{ steps.select-mode.outputs.publish-plan-artifact-id }}
+    permissions:
+      contents: read # to check out repo (actions/checkout)
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false # recommended: do not persist git credentials on disk
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .tool-versions
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Select Changesets mode
+        id: select-mode
+        uses: changesets/action/select-mode@v2.0.0-next.4
+
+  version:
+    # if: needs.select-mode.outputs.mode == 'version'
+    needs: select-mode
+    runs-on: ubuntu-latest
+    outputs:
+      version-dir-artifact-id: ${{ steps.version.outputs.version-dir-artifact-id }}
+    permissions:
+      contents: write # to check out repo (actions/checkout) and commit version changes (changesets/action/version)
+      pull-requests: write # to create pull request (changesets/action/version)
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false # recommended: do not persist git credentials on disk
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .tool-versions
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Version packages
+        id: version
+        uses: changesets/action/version@v2.0.0-next.4

@@ -61,7 +61,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
-    "@changesets/cli": "^2.29.7",
+    "@changesets/cli": "^3.0.0-next.11",
     "@eslint-community/eslint-plugin-eslint-comments": "4.4.1",
     "@playwright/test": "1.49.1",
     "@stylistic/eslint-plugin": "2.13.0",
