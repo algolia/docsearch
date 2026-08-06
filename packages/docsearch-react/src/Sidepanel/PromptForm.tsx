@@ -16,6 +16,9 @@ export type PromptFormTranslations = Partial<{
   promptDisclaimerText: string;
   promptLabelText: string;
   promptAriaLabelText: string;
+  startNewConversationButtonText: string;
+  blockingErrorContinueText: string;
+  blockingErrorFallbackText: string;
 }>;
 
 type Props = {
@@ -24,18 +27,33 @@ type Props = {
   translations?: PromptFormTranslations;
   onSend: (prompt: string) => void;
   onStopStreaming: () => void;
+  blockingErrorMessage?: string;
+  showBlockingError?: boolean;
+  showNewConversationLink?: boolean;
+  onStartNewConversation: () => void;
 };
 
 const MAX_PROMPT_ROWS = 8;
 
 export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
   (
-    { exchanges, isStreaming, translations = {}, onSend, onStopStreaming },
+    {
+      exchanges,
+      isStreaming,
+      translations = {},
+      onSend,
+      onStopStreaming,
+      blockingErrorMessage,
+      showBlockingError = false,
+      showNewConversationLink = true,
+      onStartNewConversation,
+    },
     ref
   ): JSX.Element => {
     const isMobile = useIsMobile();
     const [userPrompt, setUserPrompt] = React.useState('');
     const promptRef = React.useRef<HTMLTextAreaElement>(null);
+    const blockingErrorId = React.useId();
 
     React.useImperativeHandle(
       ref,
@@ -49,6 +67,9 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
       promptDisclaimerText = 'Answers are generated with AI which can make mistakes.',
       promptLabelText = 'Press Enter to send, or Shift and Enter for new line.',
       promptAriaLabelText = 'Prompt input',
+      startNewConversationButtonText = 'Start a new conversation',
+      blockingErrorContinueText = 'to continue.',
+      blockingErrorFallbackText = 'This conversation cannot continue.',
     } = translations;
 
     const managePromptHeight = (): void => {
@@ -72,7 +93,7 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
     };
 
     const handleSend = (): void => {
-      if (isStreaming) return;
+      if (isStreaming || showBlockingError) return;
 
       const prompt = userPrompt.trim();
 
@@ -93,7 +114,7 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
       e: React.KeyboardEvent<HTMLTextAreaElement>
     ): void => {
       // Allow Enter to work normally (new line) when streaming
-      if (isStreaming) return;
+      if (isStreaming || showBlockingError) return;
 
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
@@ -116,12 +137,31 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
 
     return (
       <div className="DocSearch-Sidepanel-Prompt">
+        <div id={blockingErrorId} role="alert">
+          {showBlockingError && (
+            <div className="DocSearch-Sidepanel-PromptBlockingBanner">
+              <p>{blockingErrorMessage ?? blockingErrorFallbackText}</p>
+              {showNewConversationLink && (
+                <p>
+                  <button
+                    type="button"
+                    className="DocSearch-ThreadDepthError-Link"
+                    onClick={onStartNewConversation}
+                  >
+                    {startNewConversationButtonText}
+                  </button>{' '}
+                  {blockingErrorContinueText}
+                </p>
+              )}
+            </div>
+          )}
+        </div>
         <form
           className="DocSearch-Sidepanel-Prompt--form"
           onSubmit={(e) => {
             e.preventDefault();
 
-            if (isStreaming) return;
+            if (isStreaming || showBlockingError) return;
 
             handleSend();
           }}
@@ -133,6 +173,9 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
             value={userPrompt}
             aria-label={promptAriaLabelText}
             aria-labelledby="prompt-label"
+            aria-describedby={showBlockingError ? blockingErrorId : undefined}
+            aria-disabled={showBlockingError}
+            readOnly={showBlockingError}
             autoComplete="off"
             translate="no"
             rows={isMobile ? 1 : 2}
@@ -161,6 +204,7 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
                 title="Send question"
                 className="DocSearch-Sidepanel-Prompt--submit"
                 aria-disabled={userPrompt === ''}
+                disabled={showBlockingError}
               >
                 <SendIcon />
               </button>

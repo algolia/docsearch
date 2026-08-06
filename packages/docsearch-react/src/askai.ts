@@ -1,3 +1,5 @@
+import { readStringField } from './utils/askAiBlockingMatchers';
+
 export const agentStudioBaseUrl = (appId: string): string =>
   `https://${appId}.algolia.net/agent-studio/1`;
 
@@ -8,26 +10,64 @@ interface AgentStudioValidationError extends Error {
 
 // Parse Agent Studio errors as they are returned as JSON rather than Markdown/text
 export const getAgentStudioErrorMessage = (error: Error): Error => {
-  let errorMessage = error.message;
+  const raw = error.message;
+  let parsed: unknown;
 
   try {
-    const parsedError = JSON.parse(error.message) as Error;
-
-    // Check for known errors that we know how to parse
-    if (parsedError.name === 'ValidationError') {
-      const validationError = parsedError as AgentStudioValidationError;
-
-      if (validationError.detail && validationError.detail.length > 0) {
-        const { msg, loc } = validationError.detail[0];
-        const field = loc.at(-1);
-
-        errorMessage = `${msg}: ${field}`;
-      }
-    } else {
-      errorMessage = parsedError.message;
-    }
+    parsed = JSON.parse(raw);
   } catch {
-    // We don't care about this catch, we default to the error.message above
+    return new Error(raw);
+  }
+
+  let iterations = 0;
+
+  while (typeof parsed === 'string' && iterations < 10) {
+    iterations += 1;
+    const serializedError = parsed.trim();
+
+    try {
+      parsed = JSON.parse(serializedError);
+    } catch {
+      return new Error(serializedError);
+    }
+  }
+
+  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+    return new Error(raw);
+  }
+
+  const parsedRecord = parsed as Record<string, unknown>;
+  const parsedError = parsed as Error & {
+    code?: string;
+    errorCode?: string;
+    error?: string;
+  };
+  let errorMessage = raw;
+
+  if (parsedError.name === 'ValidationError') {
+    const validationError = parsedError as AgentStudioValidationError;
+
+    if (validationError.detail && validationError.detail.length > 0) {
+      const { msg, loc } = validationError.detail[0];
+      const field = loc.at(-1);
+
+      errorMessage = `${msg}: ${field}`;
+    }
+  } else {
+    errorMessage =
+      readStringField(parsedRecord, 'message') ??
+      readStringField(parsedRecord, 'error') ??
+      raw;
+  }
+
+  const code = parsedError.code ?? parsedError.errorCode;
+
+  if (
+    typeof code === 'string' &&
+    code.trim() &&
+    !errorMessage.toUpperCase().includes(code.trim().toUpperCase())
+  ) {
+    errorMessage = `${errorMessage} (${code.trim()})`;
   }
 
   return new Error(errorMessage);

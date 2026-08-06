@@ -405,6 +405,28 @@
   gap: 0.5rem;
 }
 
+.DocSearch-Sidepanel-PromptBlockingBanner {
+  padding: 0.75rem;
+  color: var(--docsearch-sidepanel-text-base);
+  font-size: 0.75rem;
+  border: 1px solid var(--docsearch-error-soft-color);
+  border-radius: 0.25rem;
+  background: var(--docsearch-sidepanel-background);
+}
+
+.DocSearch-Sidepanel-PromptBlockingBanner p {
+  margin: 0;
+}
+
+.DocSearch-Sidepanel-PromptBlockingBanner p + p {
+  margin-top: 0.5rem;
+}
+
+.DocSearch-Sidepanel-PromptBlockingBanner .DocSearch-ThreadDepthError-Link:focus-visible {
+  outline: 2px solid var(--docsearch-sidepanel-primary);
+  outline-offset: 2px;
+}
+
 .DocSearch-Sidepanel-Prompt--form:focus-within {
   border-color: var(--docsearch-sidepanel-primary);
 }

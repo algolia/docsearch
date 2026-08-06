@@ -18,8 +18,11 @@ import type {
 import { type AIMessage, type ToolCalls } from './types/AskiAi';
 import {
   extractLinksFromMessage,
+  getAskAiBlockingBannerMessage,
   getMessageContent,
+  isAskAiPromptBlockingError,
   isThreadDepthError,
+  showAskAiBlockingBannerNewConversationLink,
   isAIToolPart,
   getAgentPromptSuggestions,
 } from './utils/ai';
@@ -199,7 +202,7 @@ function AskAiExchangeCard({
     [translations]
   );
 
-  const isThreadDepth = isThreadDepthError(askAiError);
+  const isPromptBlockingError = isAskAiPromptBlockingError(askAiError);
 
   const assistantContent = useMemo(
     () => getMessageContent(assistantMessage),
@@ -252,7 +255,7 @@ function AskAiExchangeCard({
             {loadingStatus === 'error' &&
               askAiError &&
               isLastExchange &&
-              !isThreadDepth && (
+              !isPromptBlockingError && (
                 <div className="DocSearch-AskAiScreen-Error" role="alert">
                   <AlertIcon aria-hidden="true" />
                   <div className="DocSearch-AskAiScreen-Error-Content">
@@ -398,10 +401,15 @@ export function AskAiScreen({
 
   const { messages, tools, askAiError, status, memoryEnabled } = props;
 
-  // Check if there's a thread depth error
-  const hasThreadDepthError = useMemo(() => {
-    return status === 'error' && isThreadDepthError(askAiError);
+  const hasPromptBlockingError = useMemo(() => {
+    return status === 'error' && isAskAiPromptBlockingError(askAiError);
   }, [status, askAiError]);
+  const blockingMessage = useMemo(
+    () => getAskAiBlockingBannerMessage(askAiError),
+    [askAiError]
+  );
+  const showNewConversationLink =
+    showAskAiBlockingBannerNewConversationLink(askAiError);
 
   // Group messages into exchanges (user + assistant pairs)
   const exchanges: Exchange[] = useMemo(() => {
@@ -418,48 +426,47 @@ export function AskAiScreen({
       }
     }
 
-    // If there's a thread depth error, remove the last exchange (the one that triggered the error)
-    // We only want to show successful exchanges
-    if (hasThreadDepthError && grouped.length > 0) {
-      // Check if the last exchange has no assistant message (failed to complete)
-      const lastExchange = grouped[grouped.length - 1];
-      if (!lastExchange.assistantMessage) {
-        grouped.pop();
-      }
-    }
-
     return grouped;
-  }, [messages, hasThreadDepthError]);
+  }, [messages]);
 
   const handleSearchQueryClick = (query: string): void => {
     props.onAskAiToggle(false);
     props.setQuery(query);
   };
 
-  // Only show the thread depth error if we have assistant messages
-  const showThreadDepthError =
-    hasThreadDepthError && messages.some((m) => m.role === 'assistant');
+  const showBlockingBanner =
+    hasPromptBlockingError &&
+    (!isThreadDepthError(askAiError) ||
+      messages.some((message) => message.role === 'assistant'));
 
   return (
     <div className="DocSearch-AskAiScreen DocSearch-AskAiScreen-Container">
-      {/* Thread Depth Error */}
-      {showThreadDepthError && (
-        <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error DocSearch-AskAiScreen-Error--ThreadDepth">
-          <div className="DocSearch-AskAiScreen-Error-Content">
-            <p>
-              {threadDepthExceededMessage}{' '}
-              <button
-                type="button"
-                className="DocSearch-ThreadDepthError-Link"
-                onClick={props.onNewConversation}
-              >
-                {startNewConversationButtonText}
-              </button>{' '}
-              to continue.
-            </p>
+      <div id={props.promptBlockingErrorId} role="alert">
+        {showBlockingBanner && (
+          <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error DocSearch-AskAiScreen-Error--ThreadDepth">
+            <div className="DocSearch-AskAiScreen-Error-Content">
+              <p className="DocSearch-AskAiScreen-Error-Title">
+                {blockingMessage ??
+                  (isThreadDepthError(askAiError)
+                    ? threadDepthExceededMessage
+                    : 'This conversation cannot continue.')}
+              </p>
+              {showNewConversationLink && (
+                <p>
+                  <button
+                    type="button"
+                    className="DocSearch-ThreadDepthError-Link"
+                    onClick={props.onNewConversation}
+                  >
+                    {startNewConversationButtonText}
+                  </button>{' '}
+                  to continue.
+                </p>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       <AskAiScreenDisclaimer disclaimerText={disclaimerText} />
 

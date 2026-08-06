@@ -249,19 +249,38 @@ describe('AskAiSearchBox', () => {
     expect(onAskAgain).not.toHaveBeenCalled();
   });
 
-  it('uses thread-depth behavior in Ask AI mode', () => {
+  it('uses prompt-blocking behavior in Ask AI mode', () => {
     const onNewConversation = vi.fn();
+    const onAskAgain = vi.fn();
 
-    renderAskAiSearchBox({ isThreadDepthError: true, onNewConversation });
+    renderAskAiSearchBox({
+      promptBlockingChrome: 'full',
+      promptBlockingErrorId: 'blocking-error',
+      onNewConversation,
+      onAskAgain,
+    });
 
     const input = screen.getByPlaceholderText('Conversation limit reached');
 
-    expect(input).toBeDisabled();
+    expect(input).toHaveAttribute('readonly');
+    expect(input).toHaveAttribute('aria-disabled', 'true');
+    expect(input).toHaveAttribute('aria-describedby', 'blocking-error');
+    expect(fireEvent.keyDown(input, { key: 'Tab' })).toBe(true);
+    expect(fireEvent.keyDown(input, { key: 'Enter' })).toBe(false);
+    expect(onAskAgain).not.toHaveBeenCalled();
 
     fireEvent.click(
-      screen.getByRole('button', { name: 'Back to keyword search' })
+      screen.getAllByRole('button', { name: 'Start a new conversation' })[0]
     );
 
     expect(onNewConversation).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps the regular placeholder with minimal blocking chrome', () => {
+    renderAskAiSearchBox({ promptBlockingChrome: 'minimal' });
+
+    expect(
+      screen.getByPlaceholderText('Ask another question...')
+    ).toHaveAttribute('readonly');
   });
 });

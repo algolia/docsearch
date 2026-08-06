@@ -12,7 +12,14 @@ import { useAskAi } from '../useAskAi';
 import { useIsMobile } from '../useIsMobile';
 import { useSearchClient } from '../useSearchClient';
 import { useSuggestedQuestions } from '../useSuggestedQuestions';
-import { EMPTY_TOOLS, buildDummyAskAiHit } from '../utils/ai';
+import {
+  EMPTY_TOOLS,
+  buildDummyAskAiHit,
+  getAskAiBlockingBannerMessage,
+  isAskAiPromptBlockingError,
+  isThreadDepthError,
+  showAskAiBlockingBannerNewConversationLink,
+} from '../utils/ai';
 
 import { ConversationHistoryScreen } from './ConversationHistoryScreen';
 import type { ConversationScreenTranslations } from './ConversationScreen';
@@ -208,6 +215,12 @@ function SidepanelInner(
   });
 
   const prevStatus = React.useRef(status);
+  const showPromptBlockingError =
+    sidepanelState === 'conversation' &&
+    status === 'error' &&
+    isAskAiPromptBlockingError(askAiError) &&
+    (!isThreadDepthError(askAiError) ||
+      messages.some((message) => message.role === 'assistant'));
 
   const handleSend = React.useCallback(
     (prompt: string): void => {
@@ -434,6 +447,12 @@ function SidepanelInner(
           translations={translations.promptForm}
           onSend={handleSend}
           onStopStreaming={handleStopStreaming}
+          blockingErrorMessage={getAskAiBlockingBannerMessage(askAiError)}
+          showBlockingError={showPromptBlockingError}
+          showNewConversationLink={showAskAiBlockingBannerNewConversationLink(
+            askAiError
+          )}
+          onStartNewConversation={handleStartNewConversation}
         />
         <footer className="DocSearch-Sidepanel-Footer">
           <span className="DocSearch-Logo DocSearch-Sidepanel--powered-by">
