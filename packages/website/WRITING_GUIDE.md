@@ -19,7 +19,6 @@
 
 ## Version references
 
-- When referencing installing a `v5` package, MUST use the caret (`^`) based versioning: `@^5.0.0-beta`
 - When displaying install commands, ONLY include `@docsearch/*` packages, there's no need to include any other packages unless specified
 
 ## Pages

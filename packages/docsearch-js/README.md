@@ -76,4 +76,4 @@ Both UMD entries expose callable `window.docsearch`. Load only one of them: the 
 
 ## Documentation
 
-[Read documentation →](https://docsearch.algolia.com/docs/docsearch-v3)
+[Read documentation →](https://docsearch.algolia.com/docs/packages/js/getting-started)

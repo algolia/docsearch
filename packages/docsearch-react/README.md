@@ -5,13 +5,13 @@ React package for [DocSearch](http://docsearch.algolia.com/), the best search ex
 ## Installation
 
 ```bash
-npm install @docsearch/react@4
+npm install @docsearch/react@5
 ```
 
 If you don’t want to use a package manager, you can use a standalone endpoint:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/react@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/react@5"></script>
 ```
 
 ## Get started
@@ -38,4 +38,4 @@ export default App;
 
 ## Documentation
 
-[Read documentation →](https://docsearch.algolia.com/docs/docsearch-v3)
+[Read documentation →](https://docsearch.algolia.com/docs/packages/react/getting-started)

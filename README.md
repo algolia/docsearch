@@ -33,15 +33,15 @@ DocSearch crawls your documentation, pushes the content to an Algolia index and 
 #### Installation
 
 ```sh
-bun add @docsearch/js@4
+bun add @docsearch/js@5
 # or
-npm install @docsearch/js@4
+npm install @docsearch/js@5
 ```
 
 If you don’t want to use a package manager, you can use a standalone endpoint:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@5"></script>
 ```
 
 #### Get started
@@ -74,15 +74,15 @@ docsearch({
 #### Installation
 
 ```bash
-bun add @docsearch/react@4
+bun add @docsearch/react@5
 # or
-npm install @docsearch/react@4
+npm install @docsearch/react@5
 ```
 
 If you don’t want to use a package manager, you can use a standalone endpoint:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/react@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/react@5"></script>
 ```
 
 #### Get started

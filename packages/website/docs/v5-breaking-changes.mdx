@@ -3,7 +3,7 @@ title: v5 breaking changes
 description: Complete user-facing breaking changes and compatibility notes for DocSearch v5.
 ---
 
-This page lists the user-facing changes between the v4.6.0 package source and `5.0.0-beta.0`. Use it with the [v4 migration guide](./migrating-from-v4).
+This page lists the user-facing changes between the v4.6.0 package source and `5`. Use it with the [v4 migration guide](./migrating-from-v4).
 
 ## JavaScript entry points
 
@@ -73,10 +73,6 @@ Create and configure an assistant in [Agent Studio](/docs/agent-studio/getting-s
 ### `askAi.agentStudio` is removed
 
 The backend switch is no longer needed because Agent Studio is the only backend. Remove both `agentStudio: true` and `agentStudio: false`.
-
-### `askAi.useStagingEnv` is removed
-
-The staging endpoint switch isn't part of `DocSearchAskAi` in v5.
 
 ### Flat Ask AI search parameters are removed
 
@@ -215,11 +211,11 @@ See [hybrid mode](/docs/hybrid-mode) for the supported integration.
 
 ### Package versions must match
 
-The `5.0.0-beta.0` packages depend on matching beta versions of the other DocSearch packages. Don't mix v4 and v5 packages in a Composable API or Sidepanel tree.
+The `5` packages depend on matching beta versions of the other DocSearch packages. Don't mix v4 and v5 packages in a Composable API or Sidepanel tree.
 
 ### CSS remains a separate install for top-level integrations
 
-Install `@docsearch/css@^5.0.0-beta`, then import `@docsearch/css`. For a CDN integration, load `dist/style.css` from the same caret beta range.
+Install `@docsearch/css@^5`, then import `@docsearch/css`. For a CDN integration, load `dist/style.css` from the same caret beta range.
 
 ## Additive v5 APIs
 
