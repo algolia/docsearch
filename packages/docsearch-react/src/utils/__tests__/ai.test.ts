@@ -1,16 +1,20 @@
 import { describe, it, expect } from 'vitest';
 
+import { getAgentStudioErrorMessage } from '../../askai';
 import type {
   AIMessage,
   AIMessagePart,
   SearchToolPart,
 } from '../../types/AskiAi';
 import {
+  getAskAiBlockingBannerMessage,
   getAgentPromptSuggestions,
   getSearchToolQueries,
   isAIToolPart,
   isAlgoliaMCPSearchOutputPart,
   isThreadDepthError,
+  isAskAiPromptBlockingError,
+  showAskAiBlockingBannerNewConversationLink,
   sanitizeMessagesForRequest,
   getMessageContent,
 } from '../ai';
@@ -48,6 +52,101 @@ describe('isThreadDepthError', () => {
     expect(isThreadDepthError()).toBe(false);
     expect(isThreadDepthError(new Error('Network failed'))).toBe(false);
     expect(isThreadDepthError(new Error('AI-214: rate limit'))).toBe(false);
+  });
+});
+
+describe('Agent Studio prompt-blocking errors', () => {
+  it.each(['AI-203', 'AI-205', 'AI-224', 'AI-225'])(
+    'blocks error code %s',
+    (code) => {
+      expect(isAskAiPromptBlockingError(new Error(`Failed (${code})`))).toBe(
+        true
+      );
+    }
+  );
+
+  it.each([
+    'Rate limit exceeded',
+    'Domain is not whitelisted',
+    'Maximum token limit reached',
+    'Maximum agent steps exceeded',
+  ])('blocks matching message: %s', (errorMessage) => {
+    expect(isAskAiPromptBlockingError(new Error(errorMessage))).toBe(true);
+  });
+
+  it('does not block unrelated errors', () => {
+    expect(isAskAiPromptBlockingError(new Error('Network failed'))).toBe(false);
+  });
+
+  it('hides recovery when a new conversation cannot resolve the error', () => {
+    expect(
+      showAskAiBlockingBannerNewConversationLink(
+        new Error('Request blocked for this domain')
+      )
+    ).toBe(false);
+    expect(
+      showAskAiBlockingBannerNewConversationLink(
+        new Error('Could not complete response due to token output limits')
+      )
+    ).toBe(false);
+    expect(
+      showAskAiBlockingBannerNewConversationLink(
+        new Error('Rate limit exceeded')
+      )
+    ).toBe(true);
+  });
+
+  it('uses the human message from JSON errors', () => {
+    const error = new Error(
+      JSON.stringify({
+        error: 'TOO_MANY_REQUESTS',
+        message: 'Rate limit exceeded. Retry after 60 seconds.',
+      })
+    );
+
+    expect(getAskAiBlockingBannerMessage(error)).toBe(
+      'Rate limit exceeded. Retry after 60 seconds.'
+    );
+  });
+
+  it('matches retry-after messages and case-insensitive JSON fields', () => {
+    const error = new Error(
+      JSON.stringify({ Message: 'Please retry after 60 seconds' })
+    );
+
+    expect(isAskAiPromptBlockingError(error)).toBe(true);
+    expect(getAskAiBlockingBannerMessage(error)).toBe(
+      'Please retry after 60 seconds'
+    );
+  });
+
+  it('provides a fallback for code-only conversation limits', () => {
+    const error = new Error(JSON.stringify({ code: 'AI-217' }));
+
+    expect(getAskAiBlockingBannerMessage(error)).toBeUndefined();
+  });
+
+  it('normalizes nested JSON while preserving the error code', () => {
+    const error = getAgentStudioErrorMessage(
+      new Error(
+        JSON.stringify(
+          JSON.stringify({ message: 'Too many requests', code: 'AI-205' })
+        )
+      )
+    );
+
+    expect(error.message).toBe('Too many requests (AI-205)');
+    expect(isAskAiPromptBlockingError(error)).toBe(true);
+    expect(getAskAiBlockingBannerMessage(error)).toBe('Too many requests');
+  });
+
+  it('uses a fallback for type-only token output errors', () => {
+    const error = new Error(JSON.stringify({ type: 'TokenOutputLimitError' }));
+
+    expect(isAskAiPromptBlockingError(error)).toBe(true);
+    expect(getAskAiBlockingBannerMessage(error)).toBe(
+      'Could not complete response due to token output limits'
+    );
   });
 });
 

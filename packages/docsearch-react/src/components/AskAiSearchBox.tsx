@@ -63,7 +63,8 @@ interface AskAiSearchBoxProps extends AutocompleteApi<
   setAskAiState: (state: AskAiState) => void;
   onNewConversation: () => void;
   onViewConversationHistory: () => void;
-  isThreadDepthError?: boolean;
+  promptBlockingChrome?: 'minimal' | 'full';
+  promptBlockingErrorId?: string;
 }
 
 export function AskAiSearchBox({
@@ -111,16 +112,14 @@ export function AskAiSearchBox({
   const renderMoreOptions =
     props.isAskAiActive && askAiState !== 'conversation-history';
 
-  // Use the thread depth error state passed from parent
-  const isThreadDepthError = props.isThreadDepthError || false;
+  const isPromptBlocked = Boolean(props.promptBlockingChrome);
   let searchPlaceholder = props.placeholder;
 
   if (askAiState === 'new-conversation') {
     searchPlaceholder = newConversationPlaceholder;
   }
 
-  // Override placeholder when thread depth error occurs (only in Ask AI mode)
-  if (isThreadDepthError && props.isAskAiActive) {
+  if (props.promptBlockingChrome === 'full' && props.isAskAiActive) {
     searchPlaceholder = threadDepthErrorPlaceholder;
   }
 
@@ -158,6 +157,12 @@ export function AskAiSearchBox({
       ? ('enter' as const)
       : ('search' as const),
     onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>): void => {
+      if (isPromptBlocked && props.isAskAiActive && blockedKeys.has(e.key)) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+
       let askAiHandled = false;
       // block these up, down, enter listeners when Ask AI is active
       if (props.isAskAiActive && blockedKeys.has(e.key)) {
@@ -182,6 +187,11 @@ export function AskAiSearchBox({
       origOnKeyDown?.(e);
     },
     onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
+      if (isPromptBlocked && props.isAskAiActive) {
+        e.preventDefault();
+        return;
+      }
+
       if (props.isAskAiActive) {
         props.setQuery(e.currentTarget.value);
         // block search when Ask AI is active
@@ -193,12 +203,17 @@ export function AskAiSearchBox({
       }
       origOnChange?.(e);
     },
-    disabled: isAskAiStreaming || (isThreadDepthError && props.isAskAiActive),
+    disabled: isAskAiStreaming,
+    readOnly: isPromptBlocked && props.isAskAiActive,
+    'aria-disabled': isPromptBlocked && props.isAskAiActive,
+    'aria-describedby':
+      isPromptBlocked && props.isAskAiActive
+        ? props.promptBlockingErrorId
+        : undefined,
   };
 
   const handleAskAiBackClick = React.useCallback((): void => {
-    // If there's a thread depth error, start a new conversation instead of exiting
-    if (isThreadDepthError) {
+    if (isPromptBlocked) {
       props.onNewConversation();
       return;
     }
@@ -210,15 +225,23 @@ export function AskAiSearchBox({
     }
 
     onAskAiToggle(false);
-  }, [askAiState, isThreadDepthError, onAskAiToggle, setAskAiState, props]);
+  }, [askAiState, isPromptBlocked, onAskAiToggle, setAskAiState, props]);
 
   const leadingElement = props.isAskAiActive ? (
     <button
       type="button"
       tabIndex={0}
       className="DocSearch-Action DocSearch-AskAi-Return"
-      title={backToKeywordSearchButtonText}
-      aria-label={backToKeywordSearchButtonAriaLabel}
+      title={
+        isPromptBlocked
+          ? startNewConversationText
+          : backToKeywordSearchButtonText
+      }
+      aria-label={
+        isPromptBlocked
+          ? startNewConversationText
+          : backToKeywordSearchButtonAriaLabel
+      }
       onClick={handleAskAiBackClick}
     >
       <BackIcon />

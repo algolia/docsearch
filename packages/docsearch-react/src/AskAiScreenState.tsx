@@ -80,6 +80,7 @@ export interface AskAiScreenStateProps<
   onNewConversation: () => void;
   memoryEnabled?: boolean;
   resultBadgeKey?: string;
+  promptBlockingErrorId?: string;
 }
 
 export const AskAiScreenState = React.memo(

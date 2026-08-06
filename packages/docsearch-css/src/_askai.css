@@ -537,8 +537,13 @@
   color: var(--docsearch-text-color);
   font-size: 12px;
   border: 1px solid var(--docsearch-error-soft-color);
-  animation: slide-down 0.3s ease-out;
   width: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .DocSearch-AskAiScreen-Error--ThreadDepth {
+    animation: slide-down 0.3s ease-out;
+  }
 }
 
 @keyframes slide-down {
@@ -570,6 +575,11 @@
 
 .DocSearch-ThreadDepthError-Link:active {
   color: rgb(153 27 27);
+}
+
+.DocSearch-ThreadDepthError-Link:focus-visible {
+  outline: 2px solid var(--docsearch-focus-color);
+  outline-offset: 2px;
 }
 
 .DocSearch-AskAiScreen-FeedbackText {

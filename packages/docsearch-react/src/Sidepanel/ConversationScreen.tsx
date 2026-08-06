@@ -18,6 +18,7 @@ import {
   EMPTY_TOOLS,
   isAIToolPart,
   getAgentPromptSuggestions,
+  isAskAiPromptBlockingError,
 } from '../utils/ai';
 import { groupConsecutiveToolResults } from '../utils/groupConsecutiveToolResults';
 
@@ -178,22 +179,25 @@ const ConversationExchange = React.forwardRef<
           </div>
           <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--assistant">
             <div className="DocSearch-AskAiScreen-MessageContent">
-              {status === 'error' && streamError && isLastExchange && (
-                <div className="DocSearch-AskAiScreen-Error" role="alert">
-                  <AlertIcon aria-hidden="true" />
-                  <div className="DocSearch-AskAiScreen-Error-Content">
-                    <h4 className="DocSearch-AskAiScreen-Error-Title">
-                      {errorTitleText}
-                    </h4>
-                    <MemoizedMarkdown
-                      content={streamError.message}
-                      copyButtonText=""
-                      copyButtonCopiedText=""
-                      isStreaming={false}
-                    />
+              {status === 'error' &&
+                streamError &&
+                isLastExchange &&
+                !isAskAiPromptBlockingError(streamError) && (
+                  <div className="DocSearch-AskAiScreen-Error" role="alert">
+                    <AlertIcon aria-hidden="true" />
+                    <div className="DocSearch-AskAiScreen-Error-Content">
+                      <h4 className="DocSearch-AskAiScreen-Error-Title">
+                        {errorTitleText}
+                      </h4>
+                      <MemoizedMarkdown
+                        content={streamError.message}
+                        copyButtonText=""
+                        copyButtonCopiedText=""
+                        isStreaming={false}
+                      />
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
               {assistantParts.map((part, idx) => {
                 const index = idx;

@@ -45,6 +45,8 @@ import {
 } from './utils';
 import {
   buildDummyAskAiHit,
+  isAgentStudioTokenOutputLimitError,
+  isAskAiPromptBlockingError,
   isThreadDepthError,
   EMPTY_TOOLS,
 } from './utils/ai';
@@ -145,6 +147,7 @@ export function DocSearchAskAiModal({
 
   const { containerRef, modalRef, formElementRef, dropdownRef, inputRef } =
     useModalRefs();
+  const promptBlockingErrorId = React.useId();
   const { initialQuery, initialQueryFromSelection } =
     useInitialModalQuery(initialQueryFromProp);
 
@@ -258,12 +261,30 @@ export function DocSearchAskAiModal({
     chatId,
   ]);
 
-  // Check if there's a thread depth error (AI-217)
-  const hasThreadDepthError = React.useMemo(() => {
+  const hasPromptBlockingError = React.useMemo(() => {
     return (
-      status === 'error' && isThreadDepthError(askAiError as Error | undefined)
+      status === 'error' &&
+      isAskAiPromptBlockingError(askAiError as Error | undefined)
     );
   }, [status, askAiError]);
+  const shouldBlockPrompt =
+    hasPromptBlockingError &&
+    (!isThreadDepthError(askAiError) ||
+      messages.some((message) => message.role === 'assistant'));
+
+  const promptBlockingChrome = React.useMemo(() => {
+    if (
+      !shouldBlockPrompt ||
+      askAiState === 'new-conversation' ||
+      askAiState === 'conversation-history'
+    ) {
+      return undefined;
+    }
+
+    return isAgentStudioTokenOutputLimitError(askAiError)
+      ? ('minimal' as const)
+      : ('full' as const);
+  }, [askAiError, askAiState, shouldBlockPrompt]);
 
   const saveRecentSearch = useSaveRecentSearch({
     favoriteSearches,
@@ -550,9 +571,8 @@ export function DocSearchAskAiModal({
           askAiError={askAiError}
           askAiState={askAiState}
           setAskAiState={setAskAiState}
-          isThreadDepthError={
-            hasThreadDepthError && askAiState !== 'new-conversation'
-          }
+          promptBlockingChrome={promptBlockingChrome}
+          promptBlockingErrorId={promptBlockingErrorId}
           onClose={onClose}
           onAskAiToggle={onAskAiToggle}
           onAskAgain={(query) => {
@@ -601,6 +621,7 @@ export function DocSearchAskAiModal({
           selectSuggestedQuestion={selectSuggestedQuestion}
           memoryEnabled={memoryEnabled}
           resultBadgeKey={props.resultBadgeKey}
+          promptBlockingErrorId={promptBlockingErrorId}
           onAskAiToggle={onAskAiToggle}
           onNewConversation={handleNewConversation}
           onItemClick={(item, event) => {
