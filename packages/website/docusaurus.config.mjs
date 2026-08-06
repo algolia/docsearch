@@ -23,7 +23,7 @@ export default {
     'The best search experience for docs, integrated in minutes, for free.',
   url: 'https://docsearch.algolia.com',
   baseUrl: '/',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon.svg',
   organizationName: 'Algolia',
   projectName: 'DocSearch',
   onBrokenLinks: 'warn',
@@ -72,7 +72,17 @@ export default {
       }),
     ],
   ],
-  plugins: [myLoaders, tailwindLoader, '@docsearch/docusaurus-adapter'],
+  plugins: [
+    myLoaders,
+    tailwindLoader,
+    [
+      './plugins/analytics-loader.mjs',
+      {
+        apiKey: 'nPDHxKLCr5n23QOyG11zRsICHC5TqzHe',
+      },
+    ],
+    '@docsearch/docusaurus-adapter',
+  ],
   themeConfig:
     /** @type {import('@docsearch/docusaurus-adapter').ThemeConfig} */
     ({

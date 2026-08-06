@@ -1,6 +1,7 @@
 import Link from '@docusaurus/Link';
 import { useThemeConfig } from '@docusaurus/theme-common';
 import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
+import { CookieSettingsButton } from '@site/src/components/CookieSettingsButton';
 import { DocSearchMark } from '@site/src/components/DocSearchMark';
 import React from 'react';
 
@@ -70,13 +71,16 @@ export default function Footer() {
               </span>
             </span>
           </Link>
-          {copyright ? (
-            <p
-              className="m-0 text-[12px] text-[var(--text-tertiary)]"
-              // Copyright may contain markup (e.g. a brand-colored heart).
-              dangerouslySetInnerHTML={{ __html: copyright }}
-            />
-          ) : null}
+          <div className="footer__copyright flex flex-wrap items-center justify-center gap-y-[0.75rem] gap-x-[1.5rem]">
+            {copyright ? (
+              <p
+                className="!m-0 text-[12px] text-[var(--text-tertiary)]"
+                // Copyright may contain markup (e.g. a brand-colored heart).
+                dangerouslySetInnerHTML={{ __html: copyright }}
+              />
+            ) : null}
+            <CookieSettingsButton />
+          </div>
         </div>
       </div>
     </footer>

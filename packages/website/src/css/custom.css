@@ -4,8 +4,7 @@
 /* stylelint-disable-next-line import-notation */
 @import 'tailwindcss';
 
-/* fonts — MCP design system: Switzer (body), Sora (display), Fraunces (editorial), JetBrains Mono (code) */
-@import url('https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&f[]=switzer-italic@400&display=swap');
+/* fonts — MCP design system: Sora (display), Fraunces (editorial), JetBrains Mono (code) */
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @custom-variant dark (&:is([data-theme='dark'] *));
@@ -68,9 +67,9 @@
   --ifm-font-size-base: 15px;
   --ifm-code-font-size: 90%;
   --ifm-font-family-base:
-    'Switzer', ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont,
+    ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont,
     'Segoe UI', sans-serif;
-  --ifm-heading-font-family: 'Sora', 'Switzer', ui-sans-serif, system-ui, sans-serif;
+  --ifm-heading-font-family: 'Sora', ui-sans-serif, system-ui, sans-serif;
   --ifm-font-family-monospace:
     'JetBrains Mono', ui-monospace, sfmono-regular, menlo, monaco, consolas,
     monospace;
@@ -260,9 +259,9 @@ html[data-theme='dark'] {
 
 @theme {
   --font-sans:
-    'Switzer', ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont,
+    ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont,
     'Segoe UI', sans-serif;
-  --font-display: 'Sora', 'Switzer', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Sora', ui-sans-serif, system-ui, sans-serif;
   --font-editorial:
     'Fraunces', 'Iowan Old Style', 'Apple Garamond', georgia, 'Times New Roman',
     serif;
@@ -845,6 +844,10 @@ html[data-theme='dark'] .shimmer-effect {
   border-color: #2563eb !important;
 }
 
+.badge--secondary {
+  color: var(--foreground);
+}
+
 @keyframes search-badge-glow {
   0%,
   100% {
@@ -1232,7 +1235,7 @@ html[data-theme='dark'] .shimmer-effect {
   margin-inline: 0.75rem 0;
   border-radius: 8px;
   background: var(--brand);
-  color: oklch(99.5% 0.002 260deg) !important;
+  color: var(--white);
   font-weight: 600;
   box-shadow:
     0 1px 0 0 rgb(255 255 255 / 8%) inset,
@@ -1244,14 +1247,6 @@ html[data-theme='dark'] .shimmer-effect {
 .navbar-cta.navbar__link:hover {
   background: var(--brand-ink);
   color: oklch(99.5% 0.002 260deg) !important;
-}
-
-[data-theme='dark'] .navbar-cta.navbar__link {
-  color: oklch(15% 0.015 260deg) !important;
-}
-
-[data-theme='dark'] .navbar-cta.navbar__link:hover {
-  color: oklch(15% 0.015 260deg) !important;
 }
 
 /* Homepage only: keep Sign up visible + right-aligned in the mobile header.
@@ -1601,4 +1596,26 @@ pre code {
 
 .dropdown__menu {
   box-shadow: var(--ifm-global-shadow-lw);
+}
+
+/* Footer copyright */
+
+.footer__copyright #ot-sdk-btn.ot-sdk-show-settings {
+  background-color: transparent;
+  border: 0;
+  color: var(--ifm-footer-link-color);
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.footer__copyright #ot-sdk-btn.ot-sdk-show-settings:hover {
+  color: var(--ifm-footer-link-hover-color);
+  text-decoration: underline;
+}
+
+.footer__copyright #ot-sdk-btn.ot-sdk-show-settings:active {
+  background-color: transparent;
+  color: var(--ifm-footer-link-hover-color);
+  border: 0;
 }
