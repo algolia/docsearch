@@ -1,25 +1,34 @@
+/* eslint-disable import/dynamic-import-chunkname */
 /**
  * Copyright (c) Facebook, Inc. And its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file
+ * in the root directory of this source tree.
  */
 
 import type { AutocompleteState } from '@algolia/autocomplete-core';
-import type { ThemeConfigAlgolia } from '@docsearch/docusaurus-adapter';
+import { DocSearch as DocSearchProvider, useDocSearch } from '@docsearch/core';
 import type {
-  InternalDocSearchHit,
-  DocSearchModal as DocSearchModalType,
-  DocSearchModalProps,
-  StoredDocSearchHit,
-  DocSearchTransformClient,
+  DocusaurusSearchBarAskAiProps,
+  ThemeConfigDocSearch,
+} from '@docsearch/docusaurus-adapter';
+import type { DocSearchAskAiModal as DocSearchAskAiModalType } from '@docsearch/modal/askai';
+import { DocSearchButton } from '@docsearch/modal/button';
+import type { DocSearchModal as DocSearchModalType } from '@docsearch/modal/modal';
+import type {
+  DocSearchAskAiModalProps,
   DocSearchHit,
+  DocSearchModalProps,
+  DocSearchProps,
+  DocSearchTransformClient,
   DocSearchTranslations,
+  InternalDocSearchHit,
+  StoredDocSearchHit,
+  ToolCalls,
 } from '@docsearch/react';
-import { DocSearchButton } from '@docsearch/react/button';
-import { SidepanelButton } from '@docsearch/react/sidepanel';
-import type { Sidepanel as SidepanelType } from '@docsearch/react/sidepanel';
-import { useDocSearchKeyboardEvents } from '@docsearch/react/useDocSearchKeyboardEvents';
+import { SidepanelButton } from '@docsearch/sidepanel/button';
+import type { Sidepanel as SidepanelType } from '@docsearch/sidepanel/sidepanel';
+import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 import Head from '@docusaurus/Head';
 import Link from '@docusaurus/Link';
 import { useHistory } from '@docusaurus/router';
@@ -28,74 +37,100 @@ import Translate from '@docusaurus/Translate';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import translations from '@theme/SearchTranslations';
-import type { FacetFilters } from 'algoliasearch/lite';
-import React, { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import { createPortal } from 'react-dom';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type JSX,
+  type ReactNode,
+} from 'react';
 
 import {
+  mergeFacetFilters,
+  useAlgoliaAskAi,
+  useAlgoliaAskAiSidepanel,
   useAlgoliaContextualFacetFilters,
   useAlgoliaThemeConfig,
   useSearchResultUrlProcessor,
-  useAlgoliaAskAi,
-  useAlgoliaAskAiSidepanel,
-  mergeFacetFilters,
 } from '../../client';
 
-type DocSearchProps = Omit<DocSearchModalProps, 'initialScrollY' | 'onClose'> & {
-  contextualSearch?: string;
+type NavigatorNavigateParams = Parameters<
+  NonNullable<NonNullable<DocSearchModalProps['navigator']>['navigate']>
+>[0];
+
+type SidePanelOptions = Exclude<
+  NonNullable<ThemeConfigDocSearch['sidePanel']>,
+  boolean
+> & { tools?: ToolCalls };
+type SidePanelPanelOptions = Omit<
+  SidePanelOptions,
+  'hideButton' | 'keyboardShortcuts'
+>;
+type AskAiOptions = NonNullable<ThemeConfigDocSearch['askAi']> &
+  Pick<DocusaurusSearchBarAskAiProps, 'tools'>;
+
+type AdapterDocSearchProps = Omit<
+  DocSearchAskAiModalProps,
+  | 'askAi'
+  | 'initialScrollY'
+  | 'isAskAiActive'
+  | 'isHybridModeSupported'
+  | 'onAskAiToggle'
+  | 'onClose'
+> & {
+  appId: DocSearchProps['appId'];
+  apiKey: DocSearchProps['apiKey'];
+  askAi?: AskAiOptions;
+  contextualSearch?: boolean;
   externalUrlRegex?: string;
-  searchPagePath: boolean | string;
-  askAi?: Exclude<(DocSearchModalProps & { askAi: unknown })['askAi'], string | undefined>;
-};
-
-type AskAiTogglePayload = {
-  query: string;
-  messageId?: string;
-  suggestedQuestionId?: string;
-};
-
-type OnAskAiToggle = (toggle: boolean, payload?: AskAiTogglePayload) => void;
-type NavigatorNavigateParams = Parameters<NonNullable<NonNullable<DocSearchModalProps['navigator']>['navigate']>>[0];
-
-interface AlgoliaSearchBarProps extends Omit<DocSearchProps, 'askAi'> {
-  indexName: string;
-  askAi?: ThemeConfigAlgolia['askAi'];
+  indices: NonNullable<DocSearchProps['indices']>;
+  searchPage: ThemeConfigDocSearch['searchPage'];
+  sidePanel?: SidePanelOptions | boolean;
   translations?: DocSearchTranslations;
-}
+};
 
 let DocSearchModal: typeof DocSearchModalType | null = null;
+let DocSearchAskAiModal: typeof DocSearchAskAiModalType | null = null;
 let DocSearchSidepanel: typeof SidepanelType | null = null;
 
 function importDocSearchModalIfNeeded(): Promise<void> {
-  if (DocSearchModal) {
+  if (DocSearchModal && DocSearchAskAiModal) {
     return Promise.resolve();
   }
 
-  // eslint-disable-next-line import/dynamic-import-chunkname
-  return Promise.all([import('@docsearch/react/modal'), import('@docsearch/react/style'), import('./styles.css')]).then(
-    ([{ DocSearchModal: Modal }]) => {
+  return Promise.all([
+    import('@docsearch/modal/modal'),
+    import('@docsearch/modal/askai'),
+    import('@docsearch/react/style'),
+    import('./styles.css'),
+  ]).then(
+    ([{ DocSearchModal: Modal }, { DocSearchAskAiModal: AskAiModal }]) => {
       DocSearchModal = Modal;
-    },
+      DocSearchAskAiModal = AskAiModal;
+    }
   );
 }
 
-async function importDocSearchSidepanelIfNeeded(): Promise<void> {
-  await importDocSearchModalIfNeeded();
+function importDocSearchSidepanelIfNeeded(): Promise<void> {
   if (DocSearchSidepanel) {
     return Promise.resolve();
   }
 
-  // eslint-disable-next-line import/dynamic-import-chunkname
-  return Promise.all([import('@docsearch/react/sidepanel'), import('@docsearch/react/style/sidepanel')]).then(
-    ([{ Sidepanel }]) => {
-      DocSearchSidepanel = Sidepanel;
-    },
-  );
+  return Promise.all([
+    import('@docsearch/sidepanel/sidepanel'),
+    import('@docsearch/react/style/sidepanel'),
+  ]).then(([{ Sidepanel }]) => {
+    DocSearchSidepanel = Sidepanel;
+  });
 }
 
 function useNavigator({
   externalUrlRegex,
-}: Pick<DocSearchProps, 'externalUrlRegex'>): DocSearchModalProps['navigator'] {
+}: Pick<
+  AdapterDocSearchProps,
+  'externalUrlRegex'
+>): DocSearchModalProps['navigator'] {
   const history = useHistory();
   const [navigator] = useState<DocSearchModalProps['navigator']>(() => {
     return {
@@ -122,23 +157,27 @@ function useTransformSearchClient(): DocSearchModalProps['transformSearchClient'
       searchClient.addAlgoliaAgent('docusaurus', docusaurusVersion);
       return searchClient;
     },
-    [docusaurusVersion],
+    [docusaurusVersion]
   );
 }
 
-function useTransformItems(props: Pick<DocSearchProps, 'transformItems'>) {
+function useTransformItems(
+  props: Pick<AdapterDocSearchProps, 'transformItems'>
+): DocSearchModalProps['transformItems'] {
   const processSearchResultUrl = useSearchResultUrlProcessor();
-  const [transformItems] = useState<DocSearchModalProps['transformItems']>(() => {
-    return (items: DocSearchHit[]) =>
-      props.transformItems
-        ? // Custom transformItems
-          props.transformItems(items)
-        : // Default transformItems
-          items.map((item) => ({
-            ...item,
-            url: processSearchResultUrl(item.url),
-          }));
-  });
+  const [transformItems] = useState<DocSearchModalProps['transformItems']>(
+    () => {
+      return (items: DocSearchHit[]) =>
+        props.transformItems
+          ? // Custom transformItems
+            props.transformItems(items)
+          : // Default transformItems
+            items.map((item) => ({
+              ...item,
+              url: processSearchResultUrl(item.url),
+            }));
+    }
+  );
   return transformItems;
 }
 
@@ -148,17 +187,29 @@ function useResultsFooterComponent({
 }: {
   closeModal: () => void;
   searchPagePath?: string;
-}): DocSearchProps['resultsFooterComponent'] {
+}): DocSearchModalProps['resultsFooterComponent'] {
   return useMemo(
     () =>
       searchPagePath
-        ? ({ state }) => <ResultsFooter state={state} searchPagePath={searchPagePath} onClose={closeModal} />
+        ? ({ state }) => (
+            <ResultsFooter
+              state={state}
+              searchPagePath={searchPagePath}
+              onClose={closeModal}
+            />
+          )
         : undefined,
-    [closeModal, searchPagePath],
+    [closeModal, searchPagePath]
   );
 }
 
-function Hit({ hit, children }: { hit: InternalDocSearchHit | StoredDocSearchHit; children: ReactNode }) {
+function Hit({
+  hit,
+  children,
+}: {
+  hit: InternalDocSearchHit | StoredDocSearchHit;
+  children: ReactNode;
+}): JSX.Element {
   return <Link to={hit.url}>{children}</Link>;
 }
 
@@ -168,7 +219,11 @@ type ResultsFooterProps = {
   searchPagePath: string;
 };
 
-function ResultsFooter({ state, onClose, searchPagePath }: ResultsFooterProps) {
+function ResultsFooter({
+  state,
+  onClose,
+  searchPagePath,
+}: ResultsFooterProps): JSX.Element {
   const searchPageLink = useBaseUrl(searchPagePath);
   const nbHits = (state.context as { nbHits?: number }).nbHits ?? 0;
   const searchLink = state.query
@@ -184,125 +239,140 @@ function ResultsFooter({ state, onClose, searchPagePath }: ResultsFooterProps) {
   );
 }
 
-function useSearchParameters({ contextualSearch, ...props }: DocSearchProps): DocSearchProps['searchParameters'] {
+function useSearchIndices({
+  contextualSearch,
+  indices,
+}: Pick<
+  AdapterDocSearchProps,
+  'contextualSearch' | 'indices'
+>): AdapterDocSearchProps['indices'] {
   const contextualSearchFacetFilters = useAlgoliaContextualFacetFilters();
 
-  const configFacetFilters: FacetFilters = props.searchParameters?.facetFilters ?? [];
+  return useMemo(() => {
+    if (!contextualSearch) {
+      return indices;
+    }
 
-  const facetFilters: FacetFilters = contextualSearch
-    ? // Merge contextual search filters with config filters
-      mergeFacetFilters(contextualSearchFacetFilters, configFacetFilters)
-    : // ... or use config facetFilters
-      configFacetFilters;
+    return indices.map((index) => {
+      if (typeof index === 'string') {
+        return {
+          name: index,
+          searchParameters: {
+            facetFilters: contextualSearchFacetFilters,
+          },
+        };
+      }
 
-  // We let users override default searchParameters if they want to
-  return {
-    ...props.searchParameters,
-    facetFilters,
-  };
+      return {
+        ...index,
+        searchParameters: {
+          ...index.searchParameters,
+          facetFilters: mergeFacetFilters(
+            index.searchParameters?.facetFilters,
+            contextualSearchFacetFilters
+          ),
+        },
+      };
+    });
+  }, [contextualSearch, contextualSearchFacetFilters, indices]);
 }
 
-function DocSearch({ externalUrlRegex, ...props }: AlgoliaSearchBarProps) {
+function getSearchPagePath(
+  searchPage: ThemeConfigDocSearch['searchPage']
+): string | undefined {
+  return searchPage === false ? undefined : searchPage.path;
+}
+
+function getSidePanelPanelOptions(
+  sidePanelOptions?: SidePanelOptions
+): SidePanelPanelOptions {
+  if (!sidePanelOptions) {
+    return {};
+  }
+
+  const {
+    hideButton: _hideButton,
+    keyboardShortcuts: _keyboardShortcuts,
+    ...panelOptions
+  } = sidePanelOptions;
+  return panelOptions;
+}
+
+function DocSearch({
+  askAi,
+  contextualSearch,
+  externalUrlRegex,
+  searchPage,
+  sidePanel,
+  ...props
+}: AdapterDocSearchProps) {
   const navigator = useNavigator({ externalUrlRegex });
-  const searchParameters = useSearchParameters({ ...props } as DocSearchProps);
+  const indices = useSearchIndices({
+    contextualSearch,
+    indices: props.indices,
+  });
   const transformItems = useTransformItems(props);
   const transformSearchClient = useTransformSearchClient();
-
-  const searchContainer = useRef<HTMLDivElement | null>(null);
-  const searchButtonRef = useRef<HTMLButtonElement | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const [initialQuery, setInitialQuery] = useState<string | undefined>(undefined);
-
-  const { isAskAiActive, currentPlaceholder, onAskAiToggle, extraAskAiProps, askAi } = useAlgoliaAskAi(props);
-  const {
-    sidePanelEnabled,
-    showSidepanelButton,
-    sidePanelOptions,
-    sidePanelAgentStudio,
-    sidepanelPortalContainer,
-    isSidepanelOpen,
-    sidepanelInitialMessage,
-    openSidepanel,
-    closeSidepanel,
-    toggleSidepanel,
-    handleSidepanelOpen,
-    loadSidepanel,
-  } = useAlgoliaAskAiSidepanel({
-    askAiConfig: askAi,
-    importSidepanel: importDocSearchSidepanelIfNeeded,
+  const { closeModal, isModalActive } = useDocSearch();
+  const [modalLoaded, setModalLoaded] = useState(
+    Boolean(DocSearchModal && DocSearchAskAiModal)
+  );
+  const [sidepanelLoaded, setSidepanelLoaded] = useState(
+    Boolean(DocSearchSidepanel)
+  );
+  const { modalAskAi, sidePanelAskAi } = useAlgoliaAskAi({
+    appId: props.appId,
+    apiKey: props.apiKey,
+    indices: props.indices,
+    askAi,
   });
-
-  const prepareSearchContainer = useCallback(() => {
-    if (!searchContainer.current) {
-      const divElement = document.createElement('div');
-      searchContainer.current = divElement;
-      document.body.insertBefore(divElement, document.body.firstChild);
-    }
-  }, []);
-
-  const openModal = useCallback(() => {
-    prepareSearchContainer();
-    importDocSearchModalIfNeeded().then(() => setIsOpen(true));
-  }, [prepareSearchContainer]);
-
-  const closeModal = useCallback(() => {
-    setIsOpen(false);
-    searchButtonRef.current?.focus();
-    setInitialQuery(undefined);
-    onAskAiToggle(false);
-  }, [onAskAiToggle]);
-
-  const handleAskAiToggle = useCallback<OnAskAiToggle>(
-    (active, payload) => {
-      if (active && sidePanelEnabled) {
-        closeModal();
-        openSidepanel(payload);
-        return;
-      }
-      onAskAiToggle(active);
-    },
-    [closeModal, onAskAiToggle, openSidepanel, sidePanelEnabled],
-  );
-
-  // cleanup search container
-  useEffect(() => {
-    return () => {
-      if (searchContainer.current) {
-        searchContainer.current.remove();
-        searchContainer.current = null;
-      }
-    };
-  }, []);
-
-  const handleInput = useCallback(
-    (event: KeyboardEvent) => {
-      if (event.key === 'f' && (event.metaKey || event.ctrlKey)) {
-        // ignore browser's ctrl+f
-        return;
-      }
-      // prevents duplicate key insertion in the modal input
-      event.preventDefault();
-      setInitialQuery(event.key);
-      openModal();
-    },
-    [openModal],
-  );
-
-  const resultsFooterSearchPagePath = typeof props.searchPagePath === 'string' ? props.searchPagePath : undefined;
+  const { sidePanelEnabled, showSidepanelButton, sidePanelOptions } =
+    useAlgoliaAskAiSidepanel({
+      sidePanel,
+    });
+  const searchPagePath = getSearchPagePath(searchPage);
   const resultsFooterComponent = useResultsFooterComponent({
     closeModal,
-    searchPagePath: resultsFooterSearchPagePath,
+    searchPagePath,
   });
 
-  useDocSearchKeyboardEvents({
-    isOpen,
-    onOpen: openModal,
-    onClose: closeModal,
-    onInput: handleInput,
-    searchButtonRef,
-    isAskAiActive: isAskAiActive ?? false,
-    onAskAiToggle: onAskAiToggle ?? (() => {}),
-  });
+  const loadModal = useCallback(() => {
+    return importDocSearchModalIfNeeded().then(() => setModalLoaded(true));
+  }, []);
+
+  const loadSidepanel = useCallback(() => {
+    return importDocSearchSidepanelIfNeeded().then(() =>
+      setSidepanelLoaded(true)
+    );
+  }, []);
+
+  useEffect(() => {
+    if (isModalActive) {
+      loadModal();
+    }
+  }, [isModalActive, loadModal]);
+
+  useEffect(() => {
+    if (sidePanelEnabled && sidePanelAskAi) {
+      loadSidepanel();
+    }
+  }, [loadSidepanel, sidePanelAskAi, sidePanelEnabled]);
+
+  const modalProps = {
+    ...props,
+    navigator,
+    transformItems,
+    hitComponent: Hit,
+    transformSearchClient,
+    ...(searchPagePath && {
+      resultsFooterComponent,
+    }),
+    translations: props.translations?.modal ?? translations.modal,
+    indices,
+  };
+  const panelOptions = getSidePanelPanelOptions(
+    typeof sidePanel === 'object' ? sidePanel : undefined
+  );
 
   return (
     <>
@@ -310,103 +380,87 @@ function DocSearch({ externalUrlRegex, ...props }: AlgoliaSearchBarProps) {
         {/* This hints the browser that the website will load data from Algolia,
         and allows it to preconnect to the DocSearch cluster. It makes the first
         query faster, especially on mobile. */}
-        <link rel="preconnect" href={`https://${props.appId}-dsn.algolia.net`} crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href={`https://${props.appId}-dsn.algolia.net`}
+          crossOrigin="anonymous"
+        />
       </Head>
 
       <div className="DocSearch-SearchBar">
         <DocSearchButton
-          ref={searchButtonRef}
           translations={props.translations?.button ?? translations.button}
-          onTouchStart={importDocSearchModalIfNeeded}
-          onFocus={importDocSearchModalIfNeeded}
-          onMouseOver={importDocSearchModalIfNeeded}
-          onClick={openModal}
+          onTouchStart={loadModal}
+          onFocus={loadModal}
+          onMouseOver={loadModal}
         />
-        {showSidepanelButton && (
-          <SidepanelButton
-            translations={{
-              buttonText: '',
-              buttonAriaLabel: 'Ask AI',
-            }}
-            variant={sidePanelOptions?.variant ?? 'inline'}
-            keyboardShortcuts={sidePanelOptions?.keyboardShortcuts}
-            onTouchStart={loadSidepanel}
-            onFocus={loadSidepanel}
-            onMouseOver={loadSidepanel}
-            onClick={toggleSidepanel}
-          />
-        )}
+        {ExecutionEnvironment.canUseDOM &&
+          showSidepanelButton &&
+          sidePanelAskAi && (
+            <SidepanelButton
+              translations={{
+                buttonText: '',
+                buttonAriaLabel: 'Ask AI',
+              }}
+              variant={sidePanelOptions?.variant ?? 'inline'}
+              keyboardShortcuts={sidePanelOptions?.keyboardShortcuts}
+            />
+          )}
       </div>
 
-      {isOpen &&
-        DocSearchModal &&
-        searchContainer.current &&
-        createPortal(
-          <DocSearchModal
-            initialScrollY={window.scrollY}
-            initialQuery={initialQuery}
-            navigator={navigator}
-            transformItems={transformItems}
-            hitComponent={Hit}
-            transformSearchClient={transformSearchClient}
-            interceptAskAiEvent={(payload) => {
-              if (!sidePanelEnabled) {
-                return false;
-              }
-              closeModal();
-              openSidepanel(payload);
-              return true;
-            }}
-            onClose={closeModal}
-            {...(resultsFooterSearchPagePath && {
-              resultsFooterComponent,
-            })}
-            placeholder={currentPlaceholder}
-            {...(props as DocSearchProps)}
-            translations={props.translations?.modal ?? translations.modal}
-            searchParameters={searchParameters}
-            {...extraAskAiProps}
-            isHybridModeSupported={sidePanelEnabled}
-            onAskAiToggle={handleAskAiToggle as DocSearchModalProps['onAskAiToggle']}
-          />,
-          searchContainer.current,
-        )}
+      {modalLoaded &&
+        (modalAskAi && DocSearchAskAiModal ? (
+          <DocSearchAskAiModal {...modalProps} askAi={modalAskAi} />
+        ) : (
+          DocSearchModal && <DocSearchModal {...modalProps} />
+        ))}
 
-      {sidePanelEnabled &&
-        DocSearchSidepanel &&
-        askAi &&
-        sidepanelPortalContainer &&
-        createPortal(
+      {ExecutionEnvironment.canUseDOM &&
+        sidePanelEnabled &&
+        sidepanelLoaded &&
+        sidePanelAskAi &&
+        DocSearchSidepanel && (
           <DocSearchSidepanel
-            {...sidePanelOptions}
-            variant={sidePanelOptions?.variant ?? 'inline'}
-            pushSelector={sidePanelOptions?.pushSelector ?? '#__docusaurus'}
-            assistantId={askAi.assistantId}
-            apiKey={askAi.apiKey}
-            appId={askAi.appId}
-            indexName={askAi.indexName}
-            agentStudio={sidePanelAgentStudio}
-            suggestedQuestions={sidePanelOptions?.suggestedQuestions ?? askAi.suggestedQuestions}
-            isOpen={isSidepanelOpen}
-            initialMessage={sidepanelInitialMessage}
-            onOpen={handleSidepanelOpen}
-            onClose={closeSidepanel}
-          />,
-          sidepanelPortalContainer,
+            {...panelOptions}
+            variant={panelOptions.variant ?? 'inline'}
+            pushSelector={panelOptions.pushSelector ?? '#__docusaurus'}
+            agentId={sidePanelAskAi.agentId}
+            apiKey={sidePanelAskAi.apiKey}
+            appId={sidePanelAskAi.appId}
+            searchParameters={sidePanelAskAi.searchParameters}
+            indices={panelOptions.indices ?? sidePanelAskAi.indices}
+            suggestedQuestions={
+              panelOptions.suggestedQuestions ??
+              sidePanelAskAi.suggestedQuestions
+            }
+            tools={panelOptions.tools ?? sidePanelAskAi.tools}
+            memory={panelOptions.memory ?? sidePanelAskAi.memory}
+          />
         )}
     </>
   );
 }
 
-export default function SearchBar(props: Partial<AlgoliaSearchBarProps>): ReactNode {
+export default function SearchBar(
+  props: Partial<AdapterDocSearchProps>
+): ReactNode {
   const themeConfig = useAlgoliaThemeConfig();
 
-  const docSearchProps: AlgoliaSearchBarProps = {
-    ...(themeConfig as unknown as AlgoliaSearchBarProps),
+  const docSearchProps: AdapterDocSearchProps = {
+    ...(themeConfig as AdapterDocSearchProps),
     // Let props override theme config
     // See https://github.com/facebook/docusaurus/pull/11581
     ...props,
   };
 
-  return <DocSearch {...docSearchProps} />;
+  return (
+    <DocSearchProvider
+      appId={docSearchProps.appId}
+      apiKey={docSearchProps.apiKey}
+      initialQuery={docSearchProps.initialQuery}
+      keyboardShortcuts={docSearchProps.keyboardShortcuts}
+    >
+      <DocSearch {...docSearchProps} />
+    </DocSearchProvider>
+  );
 }

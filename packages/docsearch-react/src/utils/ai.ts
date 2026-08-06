@@ -1,22 +1,34 @@
 import type { TextUIPart } from 'ai';
 
 import type { StoredAskAiState } from '../types';
-import type { AIMessage } from '../types/AskiAi';
+import type {
+  AggregatedToolCallPart,
+  AIMessage,
+  AIMessagePart,
+  AIToolPart,
+  AlgoliaMCPSearchOutputPart,
+  SearchIndexOutputPart,
+  SearchOutputPart,
+  SearchToolPart,
+  ToolCalls,
+} from '../types/AskiAi';
 
 import {
-  matchesThreadDepthLimitError,
-  readAgentStudioJsonStringField,
-  resolveAgentStudioPromptBlocking,
+  isTokenOutputLimitError,
+  readStringField,
+  resolvePromptBlockingError,
 } from './askAiBlockingMatchers';
 import { sanitizeUrl, sanitizeUserInput } from './sanitize';
 
-type ExtractedLink = {
+export interface ExtractedLink {
   url: string;
   title?: string;
-};
+}
 
 // utility to extract links (markdown and bare urls) from a string
-export function extractLinksFromMessage(message: AIMessage | null): ExtractedLink[] {
+export function extractLinksFromMessage(
+  message: AIMessage | null
+): ExtractedLink[] {
   const links: ExtractedLink[] = [];
   // Used to dedupe multiple urls
   const seen = new Set<string>();
@@ -74,13 +86,18 @@ export function extractLinksFromMessage(message: AIMessage | null): ExtractedLin
   return links;
 }
 
-export const buildDummyAskAiHit = (query: string, messages: AIMessage[]): StoredAskAiState => {
+export const buildDummyAskAiHit = (
+  query: string,
+  messages: AIMessage[],
+  chatId?: string
+): StoredAskAiState => {
   const textPart = messages[0].parts.find((part) => part.type === 'text');
   const sanitizedText = textPart?.text ? sanitizeUserInput(textPart.text) : '';
 
   return {
     query,
     objectID: sanitizedText,
+    chatId,
     messages,
     type: 'askAI',
     anchor: 'stored',
@@ -90,7 +107,7 @@ export const buildDummyAskAiHit = (query: string, messages: AIMessage[]): Stored
     hierarchy: {
       lvl0: 'askAI',
       lvl1: sanitizedText, // use first message as hit name (sanitized to prevent XSS)
-      lvl2: null,
+      lvl2: new Date().toISOString(),
       lvl3: null,
       lvl4: null,
       lvl5: null,
@@ -110,206 +127,213 @@ export const getMessageContent = (message: AIMessage | null): string =>
     .map((part) => part.text)
     .join('\n\n');
 
-type ExchangeWithOptionalAssistant = {
-  assistantMessage: AIMessage | null;
-};
-
-/**
- * Pass-through: keep all exchanges when thread depth fails so the last user message stays visible
- * (there is often no assistant reply for that turn).
- */
-export function filterExchangesForThreadDepthError<T extends ExchangeWithOptionalAssistant>(
-  exchanges: T[],
-  _hasThreadDepthError: boolean,
-): T[] {
-  return exchanges;
-}
-
-function threadDepthFromPlainText(message: string): boolean {
-  if (!message) return false;
-  return matchesThreadDepthLimitError(message.toLowerCase());
-}
-
-function messageLooksLikeThreadDepth(message: string): boolean {
-  if (threadDepthFromPlainText(message)) return true;
-
-  try {
-    const parsed = JSON.parse(message) as {
-      code?: string;
-      errorCode?: string;
-      message?: string;
-    };
-    const code = parsed.code ?? parsed.errorCode;
-    if (typeof code === 'string' && code.toUpperCase() === 'AI-217') {
-      return true;
-    }
-    const nested = typeof parsed.message === 'string' ? parsed.message : '';
-    return threadDepthFromPlainText(nested);
-  } catch {
-    return false;
-  }
-}
-
-/**
- * Whether the error is conversation depth exceeded (AI-217), including JSON-shaped Agent Studio payloads.
- */
+/** Helper function to check if an error reports the conversation depth limit. */
 export function isThreadDepthError(error?: Error): boolean {
   if (!error) return false;
 
-  return messageLooksLikeThreadDepth(error.message ?? '');
+  return /(?:ai-217|conversation\s+depth)/i.test(error.message ?? '');
 }
 
-function messageLooksLikeAgentStudioCostControl(error: Error): boolean {
-  return resolveAgentStudioPromptBlocking(error).blocking;
+export function isAskAiPromptBlockingError(error?: Error): boolean {
+  return Boolean(
+    error &&
+    (isThreadDepthError(error) || resolvePromptBlockingError(error).blocking)
+  );
 }
 
-/**
- * Whether further prompts should be blocked: thread depth (all backends) or Agent Studio cost controls.
- */
-export function isAskAiPromptBlockingError(error: Error | undefined, agentStudio: boolean): boolean {
-  if (!error) return false;
-  if (isThreadDepthError(error)) return true;
-  if (!agentStudio) return false;
-  return messageLooksLikeAgentStudioCostControl(error);
-}
-
-/**
- * Agent Studio stream hit the completion token ceiling (`TokenOutputLimitError`).
- * This case uses a message-only banner (no “Start a new conversation” row).
- */
 export function isAgentStudioTokenOutputLimitError(error?: Error): boolean {
-  if (!error) return false;
-  const msg = error.message ?? '';
-  if (/TokenOutputLimitError/i.test(msg)) return true;
-  if (/could not complete response due to token output limits/i.test(msg)) return true;
-  try {
-    const p = JSON.parse(msg) as { type?: string; error?: string };
-    if (typeof p.type === 'string' && /^TokenOutputLimitError$/i.test(p.type.trim())) {
-      return true;
-    }
-    if (typeof p.error === 'string' && /token output limits/i.test(p.error)) {
-      return true;
-    }
-  } catch {
-    // not JSON
+  return isTokenOutputLimitError(error);
+}
+
+export function showAskAiBlockingBannerNewConversationLink(
+  error?: Error
+): boolean {
+  if (!error || isThreadDepthError(error)) {
+    return true;
   }
-  return false;
+
+  return resolvePromptBlockingError(error).showNewConversationLink;
 }
 
-/**
- * Whether the blocking banner should include “Start a new conversation … to continue”.
- * Thread depth and most Agent Studio limits keep it; token output limit and “request blocked for this domain” omit it.
- */
-export function showAskAiBlockingBannerNewConversationLink(error: Error | undefined, agentStudio: boolean): boolean {
-  if (!error) return true;
-  if (isAgentStudioTokenOutputLimitError(error)) return false;
-  if (isThreadDepthError(error)) return true;
-  if (!agentStudio) return true;
-  return resolveAgentStudioPromptBlocking(error).showNewConversationLink;
-}
+function extractAgentStudioErrorFieldMessage(raw: string): string | undefined {
+  let value = raw.trim();
 
-function stripTrailingAiCodeSuffix(message: string): string {
-  return message.replace(/\s*\(AI-\d{3}\)\s*$/i, '').trim();
-}
-
-/**
- * Pulls `message` or `error` from Agent Studio JSON payloads, including double-encoded JSON
- * and objects serialized with escaped quotes (`{\"error\": \"...\"}`).
- */
-export function extractAgentStudioErrorFieldMessage(raw: string): string | undefined {
-  let s = raw.trim();
-  if (!s) return undefined;
-
-  let iterations = 0;
-  while (iterations < 10) {
-    iterations += 1;
+  for (let iteration = 0; iteration < 10 && value; iteration++) {
     try {
-      const v: unknown = JSON.parse(s);
-      if (typeof v === 'string') {
-        const next = v.trim();
-        if (!next) return undefined;
-        s = next;
-      } else if (v && typeof v === 'object' && !Array.isArray(v)) {
-        const o = v as Record<string, unknown>;
-        const msg = readAgentStudioJsonStringField(o, 'message');
-        if (msg) {
-          return msg;
-        }
-        const err = readAgentStudioJsonStringField(o, 'error');
-        if (err) {
-          return err;
-        }
-        return undefined;
-      } else {
-        return undefined;
+      const parsed: unknown = JSON.parse(value);
+
+      if (typeof parsed === 'string') {
+        value = parsed.trim();
+        continue;
       }
+
+      if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+        const record = parsed as Record<string, unknown>;
+        const message = readStringField(record, 'message');
+        const error = readStringField(record, 'error');
+
+        if (message) {
+          return message;
+        }
+
+        if (error) {
+          return error;
+        }
+      }
+
+      const fieldMatch =
+        /"message"\s*:\s*"((?:[^"\\]|\\.)*)"/.exec(value) ??
+        /"error"\s*:\s*"((?:[^"\\]|\\.)*)"/.exec(value);
+
+      return fieldMatch?.[1]
+        ?.replace(/\\"/g, '"')
+        .replace(/\\\\/g, '\\')
+        .trim();
     } catch {
-      if (/\\"/.test(s)) {
-        s = s.replace(/\\"/g, '"').replace(/\\\\/g, '\\').trim();
-      } else {
-        const mMsg = /"message"\s*:\s*"((?:[^"\\]|\\.)*)"/.exec(s);
-        if (mMsg?.[1]) {
-          return mMsg[1].replace(/\\"/g, '"').replace(/\\\\/g, '\\').trim();
-        }
-        const mErr = /"error"\s*:\s*"((?:[^"\\]|\\.)*)"/.exec(s);
-        if (mErr?.[1]) {
-          return mErr[1].replace(/\\"/g, '"').replace(/\\\\/g, '\\').trim();
-        }
-        return undefined;
+      if (value.includes('\\"')) {
+        value = value.replace(/\\"/g, '"').replace(/\\\\/g, '\\').trim();
+        continue;
       }
+
+      return undefined;
     }
   }
 
   return undefined;
 }
 
-/**
- * Prefer the API `message` when the body was JSON; otherwise the thrown message (without a trailing `(AI-xxx)` suffix).
- * Only meaningful when {@link isAskAiPromptBlockingError} would return true for this error.
- */
-export function getAskAiPromptBlockingUserFacingMessage(error?: Error): string | undefined {
-  if (!error) return undefined;
-
-  const raw = error.message ?? '';
-  const extracted = extractAgentStudioErrorFieldMessage(raw);
-  if (extracted) {
-    return extracted;
+export function getAskAiBlockingBannerMessage(
+  error?: Error
+): string | undefined {
+  if (!error) {
+    return undefined;
   }
 
-  const stripped = stripTrailingAiCodeSuffix(raw.trim());
-  return stripped !== '' ? stripped : undefined;
-}
+  const extracted = extractAgentStudioErrorFieldMessage(error.message ?? '');
+  const isCodeOnlyThreadDepthError =
+    isThreadDepthError(error) &&
+    (/^\s*AI-217\s*$/i.test(error.message) ||
+      (/^\s*\{.*\}\s*$/.test(error.message) && !extracted));
 
-const TOKEN_OUTPUT_LIMIT_FALLBACK = 'Could not complete response due to token output limits';
+  if (isCodeOnlyThreadDepthError) {
+    return undefined;
+  }
 
-function looksLikeJsonObjectString(s: string): boolean {
-  const t = s.trim();
-  return t.startsWith('{') && t.endsWith('}');
-}
+  const message = (
+    extracted ?? error.message.replace(/\s*\(AI-\d{3}\)\s*$/i, '')
+  ).trim();
 
-/**
- * Message shown in the top blocking banner (parsed API text, never raw JSON when avoidable).
- */
-export function getAskAiBlockingBannerMessage(error?: Error): string | undefined {
-  if (!error) return undefined;
+  if (message && !(message.startsWith('{') && message.endsWith('}'))) {
+    return message;
+  }
 
   if (isAgentStudioTokenOutputLimitError(error)) {
-    const m = getAskAiPromptBlockingUserFacingMessage(error);
-    if (m && !looksLikeJsonObjectString(m)) {
-      return m;
-    }
-    return TOKEN_OUTPUT_LIMIT_FALLBACK;
+    return 'Could not complete response due to token output limits';
   }
 
-  return getAskAiPromptBlockingUserFacingMessage(error);
+  return undefined;
 }
 
-/**
- * Prefer the API `message` field when the error body is JSON; otherwise the thrown message string.
- * Only meaningful when {@link isThreadDepthError} is true.
- */
-export function getThreadDepthErrorUserFacingMessage(error?: Error): string | undefined {
-  if (!error || !isThreadDepthError(error)) return undefined;
+export const EMPTY_TOOLS: Readonly<ToolCalls> = Object.freeze({});
 
-  return getAskAiPromptBlockingUserFacingMessage(error);
+export function isAIToolPart(
+  part: AggregatedToolCallPart | AIMessagePart
+): part is AIToolPart {
+  return part.type.startsWith('tool-');
+}
+
+export function isSearchToolPart(part: AIToolPart): part is SearchToolPart {
+  return (
+    part.type === 'tool-searchIndex' ||
+    part.type === 'tool-algolia_search_index' ||
+    part.type.startsWith('tool-algolia_search_index_')
+  );
+}
+
+export function isSearchIndexOutputPart(
+  part: AIMessagePart
+): part is SearchIndexOutputPart {
+  return part.type === 'tool-searchIndex' && part.state === 'output-available';
+}
+
+export function isAlgoliaMCPSearchOutputPart(
+  part: AIMessagePart
+): part is AlgoliaMCPSearchOutputPart {
+  return (
+    isAIToolPart(part) &&
+    (part.type === 'tool-algolia_search_index' ||
+      part.type.startsWith('tool-algolia_search_index_')) &&
+    part.state === 'output-available'
+  );
+}
+
+export function isSearchOutputPart(
+  part: AIMessagePart
+): part is SearchOutputPart {
+  return (
+    isAIToolPart(part) &&
+    isSearchToolPart(part) &&
+    part.state === 'output-available'
+  );
+}
+
+export function sanitizeMessagesForRequest(messages: AIMessage[]): AIMessage[] {
+  let sanitizedMessages: AIMessage[] | undefined;
+
+  messages.forEach((message, index) => {
+    // Filter out `data-*` part types since Agent Studio does not currently support them on the request
+    const parts = message.parts.filter(
+      (part) => !part.type.startsWith('data-')
+    );
+
+    if (parts.length === message.parts.length) {
+      sanitizedMessages?.push(message);
+      return;
+    }
+
+    if (!sanitizedMessages) {
+      sanitizedMessages = messages.slice(0, index);
+    }
+
+    sanitizedMessages.push({
+      ...message,
+      parts,
+    });
+  });
+
+  return sanitizedMessages ?? messages;
+}
+
+export function getAgentPromptSuggestions(parts: AIMessagePart[]): string[] {
+  const suggestionsPart = parts.find(
+    (part) => part.type === 'data-suggestions'
+  );
+
+  if (!suggestionsPart) return [];
+
+  return suggestionsPart.data.suggestions;
+}
+
+export function getSearchToolQueries(part: SearchToolPart): string[] {
+  if (part.state !== 'input-available' && part.state !== 'output-available') {
+    return [];
+  }
+
+  if (part.type === 'tool-searchIndex') {
+    const query = (part.output?.query ?? part.input?.query ?? '').trim();
+    return query ? [query] : [];
+  }
+
+  if ('queries' in part.input && Array.isArray(part.input.queries)) {
+    return part.input.queries.map(({ query }) => query.trim()).filter(Boolean);
+  }
+
+  // There could be older stored MCP search tool calls,
+  // we should parse it's input properly
+  if ('query' in part.input && typeof part.input.query === 'string') {
+    const query = part.input.query.trim();
+    return query ? [query] : [];
+  }
+
+  return [];
 }

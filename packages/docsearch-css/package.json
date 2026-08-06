@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/css",
   "description": "Styles for DocSearch.",
-  "version": "4.7.0",
+  "version": "5.0.0-beta.4",
   "license": "MIT",
   "homepage": "https://docsearch.algolia.com",
   "repository": {
@@ -21,11 +21,16 @@
   "jsdelivr": "dist/style.css",
   "scripts": {
     "build:clean": "rm -rf ./dist",
-    "build:css": "node build-css.js",
-    "build": "yarn build:clean && mkdir dist && yarn build:css",
-    "watch": "nodemon --watch 'src/**/*.css' --exec 'yarn build:css' --ext css"
+    "build:css": "bun build-css.ts",
+    "build": "bun run build:clean && mkdir dist && bun run build:css",
+    "watch": "nodemon --watch 'src/**/*.css' --exec 'bun run build:css' --ext css"
   },
   "devDependencies": {
+    "browserslist": "4.28.2",
+    "lightningcss": "1.32.0",
     "nodemon": "^3.1.9"
-  }
+  },
+  "browserslist": [
+    "defaults"
+  ]
 }

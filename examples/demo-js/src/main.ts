@@ -1,6 +1,4 @@
-import type { AutocompleteState } from '@algolia/autocomplete-core';
-import type { InitialAskAiMessage } from '@docsearch/core';
-import docsearch, { type DocSearchInstance, type TemplateHelpers } from '@docsearch/js';
+import docsearch, { type DocSearchInstance } from '@docsearch/js';
 import sidepanel, { type SidepanelInstance } from '@docsearch/sidepanel-js';
 
 import './app.css';
@@ -30,12 +28,14 @@ function logSidepanelState(instance: SidepanelInstance, label: string): void {
   });
 }
 
-const sidepanelInstance = sidepanel({
+let docsearchInstance: DocSearchInstance | undefined = undefined;
+let sidepanelInstance: SidepanelInstance | undefined = undefined;
+
+sidepanelInstance = sidepanel({
   container: '#docsearch-sidepanel',
-  indexName: 'docsearch',
   appId: 'PMZUYBQDAK',
   apiKey: '24b09689d5b4223813d9b8e48563c8f6',
-  assistantId: 'askAIDemo',
+  agentId: 'ccdec697-e3fe-465b-a1c3-657e7bf18aef',
   onReady: () => {
     // eslint-disable-next-line no-console
     console.log('[demo-js] sidepanel onReady()');
@@ -43,6 +43,7 @@ const sidepanelInstance = sidepanel({
   onOpen: () => {
     // eslint-disable-next-line no-console
     console.log('[demo-js] sidepanel onOpen()');
+    docsearchInstance?.close();
   },
   onClose: () => {
     // eslint-disable-next-line no-console
@@ -63,14 +64,14 @@ console.log('[demo-js] sidepanel try:', {
 });
 logSidepanelState(sidepanelInstance, 'sidepanel initial state');
 
-const docsearchInstance = docsearch({
+docsearchInstance = docsearch({
   container: '#docsearch',
-  indexName: 'docsearch',
+  indices: ['docsearch'],
   appId: 'PMZUYBQDAK',
   apiKey: '24b09689d5b4223813d9b8e48563c8f6',
-  askAi: 'askAIDemo',
-  interceptAskAiEvent: (initialMessage: InitialAskAiMessage) => {
-    docsearchInstance.close();
+  askAi: 'ccdec697-e3fe-465b-a1c3-657e7bf18aef',
+  interceptAskAiEvent: (initialMessage) => {
+    docsearchInstance?.close();
     sidepanelInstance.open(initialMessage);
     return true;
   },
@@ -81,15 +82,13 @@ const docsearchInstance = docsearch({
   onOpen: () => {
     // eslint-disable-next-line no-console
     console.log('[demo-js] docsearch onOpen()');
+    sidepanelInstance.close();
   },
   onClose: () => {
     // eslint-disable-next-line no-console
     console.log('[demo-js] docsearch onClose()');
   },
-  resultsFooterComponent: ({ state }: { state: AutocompleteState<any> }, helpers?: TemplateHelpers) => {
-    const { html } = helpers || {};
-    if (!html) return null;
-
+  resultsFooterComponent: ({ state }, { html }) => {
     return html`
       <div class="DocSearch-HitsFooter">
         <a href="https://docsearch.algolia.com/apply" target="_blank">

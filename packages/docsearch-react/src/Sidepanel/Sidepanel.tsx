@@ -3,19 +3,22 @@ import React, { useCallback } from 'react';
 import type { JSX } from 'react';
 
 import { AlgoliaLogo, type AlgoliaLogoTranslations } from '../AlgoliaLogo';
-import type { DocSearchSidepanelProps, SidepanelSearchParameters } from '../Sidepanel';
+import type {
+  DocSearchSidepanelProps,
+  SidepanelSearchParameters,
+} from '../Sidepanel';
 import type { StoredAskAiState, SuggestedQuestionHit } from '../types';
 import { useAskAi } from '../useAskAi';
 import { useIsMobile } from '../useIsMobile';
 import { useSearchClient } from '../useSearchClient';
 import { useSuggestedQuestions } from '../useSuggestedQuestions';
 import {
+  EMPTY_TOOLS,
   buildDummyAskAiHit,
-  filterExchangesForThreadDepthError,
   getAskAiBlockingBannerMessage,
   isAskAiPromptBlockingError,
-  showAskAiBlockingBannerNewConversationLink,
   isThreadDepthError,
+  showAskAiBlockingBannerNewConversationLink,
 } from '../utils/ai';
 
 import { ConversationHistoryScreen } from './ConversationHistoryScreen';
@@ -33,7 +36,8 @@ import { useSidepanelKeyboardEvents } from './useSidepanelKeyboardEvents';
 import { useSidepanelWidth } from './useSidepanelWidth';
 
 /**
- * Imperative handle exposed by the Sidepanel component for programmatic control.
+ * Imperative handle exposed by the Sidepanel component for programmatic
+ * control.
  */
 export interface SidepanelRef {
   /** Opens the sidepanel. */
@@ -47,29 +51,22 @@ export interface SidepanelRef {
 }
 
 export type SidepanelTranslations = Partial<{
-  /**
-   * Translation texts for the Sidepanel header.
-   **/
+  /** Translation texts for the Sidepanel header. */
   header: HeaderTranslations;
-  /**
-   * Translation texts for the prompt form.
-   **/
+  /** Translation texts for the prompt form. */
   promptForm: PromptFormTranslations;
-  /**
-   * Translation texts for the conversation screen.
-   **/
+  /** Translation texts for the conversation screen. */
   conversationScreen: ConversationScreenTranslations;
-  /**
-   * Translation texts for the new conversation/starting screen.
-   **/
+  /** Translation texts for the new conversation/starting screen. */
   newConversationScreen: NewConversationScreenTranslations;
-  /**
-   * Translation text for the Algolia logo.
-   **/
+  /** Translation text for the Algolia logo. */
   logo: AlgoliaLogoTranslations;
 }>;
 
-export type SidepanelProps = {
+export type SidepanelProps = Pick<
+  DocSearchSidepanelProps,
+  'indices' | 'memory' | 'tools'
+> & {
   /**
    * Variant of the Sidepanel positioning.
    *
@@ -86,7 +83,8 @@ export type SidepanelProps = {
    */
   side?: PanelSide;
   /**
-   * The selector of the element to push when Sidepanel opens with `inline` variant.
+   * The selector of the element to push when Sidepanel opens with `inline`
+   * variant.
    *
    * @default `'#root, main, .app, body'`
    */
@@ -95,13 +93,13 @@ export type SidepanelProps = {
    * Width of the Sidepanel (px or any CSS width).
    *
    * @default `360px`
-   **/
+   */
   width?: number | string;
   /**
    * Width when expanded (px or any CSS width).
    *
    * @default `580px`
-   **/
+   */
   expandedWidth?: number | string;
   /**
    * The container element where the panel should be portaled to.
@@ -115,21 +113,21 @@ export type SidepanelProps = {
    * @default false
    */
   suggestedQuestions?: boolean;
-  /**
-   * Translations specific to the Sidepanel panel.
-   **/
+  /** Translations specific to the Sidepanel panel. */
   translations?: SidepanelTranslations;
   /**
-   * Configuration for keyboard shortcuts. Allows enabling/disabling specific shortcuts.
+   * Configuration for keyboard shortcuts. Allows enabling/disabling specific
+   * shortcuts.
    *
    * @default `{ 'Ctrl/Cmd+I': true }`
    */
   keyboardShortcuts?: SidepanelShortcuts;
-  // HACK: This is a hack for testing staging, remove before releasing
-  useStagingEnv?: boolean;
 };
 
-type Props = Omit<DocSearchSidepanelProps, 'button' | 'panel'> &
+type Props = Omit<
+  DocSearchSidepanelProps,
+  'button' | 'indices' | 'memory' | 'panel' | 'tools'
+> &
   SidepanelProps &
   SidepanelSearchParameters & {
     isOpen?: boolean;
@@ -143,10 +141,9 @@ function SidepanelInner(
     isOpen = false,
     onOpen,
     onClose,
-    assistantId,
+    agentId,
     apiKey,
     appId,
-    indexName,
     variant = 'floating',
     searchParameters,
     pushSelector,
@@ -157,13 +154,15 @@ function SidepanelInner(
     keyboardShortcuts,
     side = 'right',
     initialMessage,
-    useStagingEnv = false,
-    agentStudio = false,
+    tools = EMPTY_TOOLS,
+    memory,
+    indices,
   }: Props,
-  ref: React.ForwardedRef<SidepanelRef>,
+  ref: React.ForwardedRef<SidepanelRef>
 ): JSX.Element {
   const [isExpanded, setIsExpanded] = React.useState(false);
-  const [sidepanelState, setSidepanelState] = React.useState<SidepanelState>('new-conversation');
+  const [sidepanelState, setSidepanelState] =
+    React.useState<SidepanelState>('new-conversation');
   const [stoppedStreaming, setStoppedStreaming] = React.useState(false);
   const sidepanelContainerRef = React.useRef<HTMLDivElement>(null);
   const promptInputRef = React.useRef<HTMLTextAreaElement>(null);
@@ -175,7 +174,10 @@ function SidepanelInner(
     expandedWidth,
   });
 
-  const selectors = React.useMemo(() => pushSelector ?? '#root, main, .app, body', [pushSelector]);
+  const selectors = React.useMemo(
+    () => pushSelector ?? '#root, main, .app, body',
+    [pushSelector]
+  );
 
   const toggleIsExpanded = useCallback((): void => {
     setIsExpanded(!isExpanded);
@@ -184,88 +186,68 @@ function SidepanelInner(
   const searchClient = useSearchClient(appId, apiKey, setSidepanelSearchClient);
 
   const {
+    chatId,
     status,
     sendMessage,
     stopAskAiStreaming,
     isStreaming,
     exchanges,
-    clearError,
-    resetAskAiChatSession,
     conversations,
     messages,
     sendFeedback,
     askAiError,
+    startNewConversation,
+    restoreConversation,
   } = useAskAi({
     appId,
-    indexName,
-    assistantId,
+    agentId,
     apiKey,
     searchParameters,
-    useStagingEnv,
-    agentStudio,
+    tools,
+    memory,
+    indices,
   });
 
   const suggestedQuestions = useSuggestedQuestions({
-    assistantId,
+    agentId,
     suggestedQuestionsEnabled,
     searchClient,
   });
 
-  const hasAskAiPromptBlockingError = React.useMemo(
-    () => status === 'error' && isAskAiPromptBlockingError(askAiError, agentStudio),
-    [status, askAiError, agentStudio],
-  );
-
-  const displayExchanges = React.useMemo(
-    () => filterExchangesForThreadDepthError(exchanges, hasAskAiPromptBlockingError),
-    [exchanges, hasAskAiPromptBlockingError],
-  );
-
-  const showThreadDepthBanner =
-    sidepanelState === 'conversation' &&
-    hasAskAiPromptBlockingError &&
-    (isThreadDepthError(askAiError) ? messages.some((m) => m.role === 'assistant') : true);
-
-  const threadDepthApiMessage = React.useMemo(() => getAskAiBlockingBannerMessage(askAiError), [askAiError]);
-
-  const promptFormTranslations = React.useMemo(
-    () => ({
-      ...translations.promptForm,
-      ...(translations.conversationScreen?.startNewConversationButtonText !== undefined
-        ? { startNewConversationButtonText: translations.conversationScreen.startNewConversationButtonText }
-        : {}),
-    }),
-    [translations.promptForm, translations.conversationScreen],
-  );
-
   const prevStatus = React.useRef(status);
+  const showPromptBlockingError =
+    sidepanelState === 'conversation' &&
+    status === 'error' &&
+    isAskAiPromptBlockingError(askAiError) &&
+    (!isThreadDepthError(askAiError) ||
+      messages.some((message) => message.role === 'assistant'));
 
-  const handleSend = (prompt: string): void => {
-    setStoppedStreaming(false);
-    clearError();
+  const handleSend = React.useCallback(
+    (prompt: string): void => {
+      setStoppedStreaming(false);
 
-    sendMessage({ text: prompt });
-    setSidepanelState('conversation');
-  };
+      sendMessage({ text: prompt });
+      setSidepanelState('conversation');
+    },
+    [sendMessage]
+  );
 
   const handleStartNewConversation = (): void => {
-    clearError();
-    resetAskAiChatSession();
+    startNewConversation();
     setSidepanelState('new-conversation');
   };
 
   const handleSelectQuestion = (question: SuggestedQuestionHit): void => {
     setStoppedStreaming(false);
-    clearError();
-    resetAskAiChatSession({
-      kind: 'sendText',
-      text: question.question,
-      requestOptions: {
+    startNewConversation();
+    sendMessage(
+      { text: question.question },
+      {
         body: {
           suggestedQuestionId: question.objectID,
         },
-      },
-    });
+      }
+    );
     setSidepanelState('conversation');
   };
 
@@ -276,16 +258,15 @@ function SidepanelInner(
 
   const handleSelectConversation = React.useCallback(
     (conversation: StoredAskAiState): void => {
-      clearError();
       if (conversation.messages) {
-        resetAskAiChatSession({ kind: 'setMessages', messages: conversation.messages });
+        restoreConversation(conversation.messages, conversation.chatId);
       } else if (conversation.query) {
-        resetAskAiChatSession({ kind: 'sendText', text: conversation.query });
+        sendMessage({ text: conversation.query });
       }
 
       setSidepanelState('conversation');
     },
-    [clearError, resetAskAiChatSession],
+    [sendMessage, restoreConversation]
   );
 
   useManageSidepanelLayout({
@@ -316,7 +297,7 @@ function SidepanelInner(
         return isOpen;
       },
     }),
-    [onOpen, onClose, isOpen],
+    [onOpen, onClose, isOpen]
   );
 
   React.useEffect(() => {
@@ -327,18 +308,15 @@ function SidepanelInner(
         };
       }
 
-      const first = messages[0];
-      if (first?.parts) {
-        for (const part of first.parts) {
-          if (part.type === 'text') {
-            conversations.add(buildDummyAskAiHit(part.text, messages));
-          }
+      for (const part of messages[0].parts) {
+        if (part.type === 'text') {
+          conversations.add(buildDummyAskAiHit(part.text, messages, chatId));
         }
       }
     }
 
     prevStatus.current = status;
-  }, [conversations, status, messages, stoppedStreaming]);
+  }, [conversations, status, messages, stoppedStreaming, chatId]);
 
   React.useEffect(() => {
     function setFullViewportHeight(): void {
@@ -357,57 +335,42 @@ function SidepanelInner(
     };
   }, []);
 
-  // Only re-run when `initialMessage` changes. Other handlers (e.g. `sendMessage`) can change every
-  // render; listing them here was re-firing the effect and repeatedly clearing the chat.
-  const initialMessageHandlingRef = React.useRef({
-    clearError,
-    resetAskAiChatSession,
-    conversations,
-    handleSelectConversation,
-  });
-  initialMessageHandlingRef.current = {
-    clearError,
-    resetAskAiChatSession,
-    conversations,
-    handleSelectConversation,
-  };
-
   React.useEffect(() => {
     if (!initialMessage) return;
-
-    const {
-      clearError: clr,
-      resetAskAiChatSession: resetSession,
-      conversations: convs,
-      handleSelectConversation: selectConv,
-    } = initialMessageHandlingRef.current;
 
     let selectedConversation: StoredAskAiState | undefined;
 
     if (initialMessage.messageId) {
-      selectedConversation = convs.getConversation?.(initialMessage.messageId);
+      selectedConversation = conversations.getConversation?.(
+        initialMessage.messageId
+      );
     }
 
     if (selectedConversation) {
-      selectConv(selectedConversation);
+      handleSelectConversation(selectedConversation);
     } else {
-      clr();
-      resetSession(
+      startNewConversation();
+      sendMessage(
+        {
+          text: initialMessage.query,
+        },
         initialMessage.suggestedQuestionId
           ? {
-              kind: 'sendText',
-              text: initialMessage.query,
-              requestOptions: {
-                body: {
-                  suggestedQuestionId: initialMessage.suggestedQuestionId,
-                },
+              body: {
+                suggestedQuestionId: initialMessage.suggestedQuestionId,
               },
             }
-          : { kind: 'sendText', text: initialMessage.query },
+          : {}
       );
       setSidepanelState('conversation');
     }
-  }, [initialMessage]);
+  }, [
+    initialMessage,
+    sendMessage,
+    conversations,
+    handleSelectConversation,
+    startNewConversation,
+  ]);
 
   // Autofocus the prompt input when the sidepanel opens and blur it when
   // it closes. Disabled on mobile because focusing the textarea triggers the
@@ -435,10 +398,13 @@ function SidepanelInner(
       tabIndex={-1}
       ref={sidepanelContainerRef}
     >
-      <aside id="docsearch-sidepanel" className={`DocSearch-Sidepanel ${sidepanelState}`}>
+      <aside
+        id="docsearch-sidepanel"
+        className={`DocSearch-Sidepanel ${sidepanelState}`}
+      >
         <SidepanelHeader
           sidepanelState={sidepanelState}
-          exchanges={displayExchanges}
+          exchanges={exchanges}
           setSidepanelState={setSidepanelState}
           hasConversations={conversations.getAll().length > 0}
           isStreaming={isStreaming}
@@ -456,33 +422,37 @@ function SidepanelInner(
           )}
           {sidepanelState === 'conversation' && (
             <ConversationScreen
-              exchanges={displayExchanges}
+              exchanges={exchanges}
               status={status}
               conversations={conversations}
               handleFeedback={sendFeedback}
               translations={translations.conversationScreen}
               streamError={askAiError}
-              agentStudio={agentStudio}
+              memoryEnabled={memory?.enabled ?? false}
+              tools={tools}
+              onSelectPromptSuggestion={handleSend}
             />
           )}
           {sidepanelState === 'conversation-history' && (
-            <ConversationHistoryScreen conversations={conversations} selectConversation={handleSelectConversation} />
+            <ConversationHistoryScreen
+              conversations={conversations}
+              selectConversation={handleSelectConversation}
+            />
           )}
         </div>
         <PromptForm
           ref={promptInputRef}
-          exchanges={displayExchanges}
+          exchanges={exchanges}
           isStreaming={isStreaming}
-          showThreadDepthBanner={showThreadDepthBanner}
-          threadDepthApiMessage={threadDepthApiMessage}
-          showBlockingBannerNewConversationLink={showAskAiBlockingBannerNewConversationLink(
-            askAiError,
-            Boolean(agentStudio),
-          )}
-          translations={promptFormTranslations}
+          translations={translations.promptForm}
           onSend={handleSend}
-          onStartNewConversation={handleStartNewConversation}
           onStopStreaming={handleStopStreaming}
+          blockingErrorMessage={getAskAiBlockingBannerMessage(askAiError)}
+          showBlockingError={showPromptBlockingError}
+          showNewConversationLink={showAskAiBlockingBannerNewConversationLink(
+            askAiError
+          )}
+          onStartNewConversation={handleStartNewConversation}
         />
         <footer className="DocSearch-Sidepanel-Footer">
           <span className="DocSearch-Logo DocSearch-Sidepanel--powered-by">

@@ -37,7 +37,8 @@ export function useManageSidepanelLayout({
       }
 
       const candidates = Array.from(document.querySelectorAll(selectors));
-      const nextTarget: HTMLElement | null = (candidates[0] as HTMLElement) || document.body;
+      const nextTarget: HTMLElement | null =
+        (candidates[0] as HTMLElement) || document.body;
       targetRef.current = nextTarget;
       lastSelectorRef.current = selectors;
 

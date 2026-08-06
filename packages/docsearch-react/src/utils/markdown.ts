@@ -44,7 +44,8 @@ renderer.image = ({ href, title, text }: Tokens.Image): string => {
   return `<img src="${safeHref}" alt="${escapeHtml(text)}"${titleAttr} />`;
 };
 
-renderer.html = ({ text }: Tokens.HTML | Tokens.Tag): string => escapeHtml(text);
+renderer.html = ({ text }: Tokens.HTML | Tokens.Tag): string =>
+  escapeHtml(text);
 
 /** Parses markdown into HTML safe for `dangerouslySetInnerHTML`. */
 export function parseMarkdownToSafeHtml(content: string): string {

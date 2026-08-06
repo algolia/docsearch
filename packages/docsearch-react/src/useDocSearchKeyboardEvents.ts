@@ -55,7 +55,9 @@ export function useDocSearchKeyboardEvents({
       }
 
       const isCmdK =
-        resolvedShortcuts['Ctrl/Cmd+K'] && event.key?.toLowerCase() === 'k' && (event.metaKey || event.ctrlKey);
+        resolvedShortcuts['Ctrl/Cmd+K'] &&
+        event.key?.toLowerCase() === 'k' &&
+        (event.metaKey || event.ctrlKey);
       const isSlash = resolvedShortcuts['/'] && event.key === '/';
 
       if (
@@ -86,5 +88,12 @@ export function useDocSearchKeyboardEvents({
     return (): void => {
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [isOpen, onOpen, onClose, isAskAiActive, onAskAiToggle, resolvedShortcuts]);
+  }, [
+    isOpen,
+    onOpen,
+    onClose,
+    isAskAiActive,
+    onAskAiToggle,
+    resolvedShortcuts,
+  ]);
 }

@@ -31,7 +31,9 @@ describe('parseMarkdownToSafeHtml', () => {
   });
 
   it('keeps safe markdown links and formatting', () => {
-    const html = parseMarkdownToSafeHtml('See [DocSearch](https://docsearch.algolia.com) and **bold**');
+    const html = parseMarkdownToSafeHtml(
+      'See [DocSearch](https://docsearch.algolia.com) and **bold**'
+    );
     expect(html).toContain('href="https://docsearch.algolia.com"');
     expect(html).toContain('target="_blank"');
     expect(html).toContain('rel="noopener noreferrer"');
@@ -46,7 +48,9 @@ describe('parseMarkdownToSafeHtml', () => {
   });
 
   it('does not allow HTML breakout via fenced-code lang', () => {
-    const html = parseMarkdownToSafeHtml('```"><img src=x onerror=alert(1)>\nx\n```');
+    const html = parseMarkdownToSafeHtml(
+      '```"><img src=x onerror=alert(1)>\nx\n```'
+    );
     expect(html).not.toMatch(/<img\b/i);
     expect(html).not.toContain('onerror=alert');
     expect(html).not.toContain('language-">');

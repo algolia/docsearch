@@ -33,7 +33,7 @@ DocSearch crawls your documentation, pushes the content to an Algolia index and 
 #### Installation
 
 ```sh
-yarn add @docsearch/js@4
+bun add @docsearch/js@4
 # or
 npm install @docsearch/js@4
 ```
@@ -64,7 +64,7 @@ import '@docsearch/css';
 docsearch({
   container: '#docsearch',
   appId: 'YOUR_APP_ID',
-  indexName: 'YOUR_INDEX_NAME',
+  indices: ['YOUR_INDEX_NAME'],
   apiKey: 'YOUR_SEARCH_API_KEY',
 });
 ```
@@ -74,7 +74,7 @@ docsearch({
 #### Installation
 
 ```bash
-yarn add @docsearch/react@4
+bun add @docsearch/react@4
 # or
 npm install @docsearch/react@4
 ```
@@ -110,6 +110,10 @@ export default App;
 ## Styling
 
 [Read documentation →](https://docsearch.algolia.com/docs/styling)
+
+## MCP plugins
+
+Client plugins for the public DocSearch MCP endpoint are in [`mcp/plugins/docsearch`](mcp/plugins/docsearch). They connect ChatGPT, Codex, Cursor, and Claude Code to `https://mcp.algolia.com/1/docsearch/mcp` for current public developer documentation.
 
 ## Related projects
 

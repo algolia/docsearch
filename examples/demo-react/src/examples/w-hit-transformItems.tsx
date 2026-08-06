@@ -1,6 +1,8 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { DocSearch } from '@docsearch/react';
+import { DocSearchAI } from '@docsearch/react';
 import type { JSX } from 'react';
+
+import type { DemoTheme } from '../App';
 
 // this type matches the structure of the provided example hit
 /* type _DocSearchCustomHit = {
@@ -19,21 +21,27 @@ import type { JSX } from 'react';
   _highlightResult: any;
 }; */
 
-export default function WTransformItems(): JSX.Element {
+export default function WTransformItems({
+  theme,
+}: {
+  theme: DemoTheme;
+}): JSX.Element {
   return (
-    <DocSearch
-      indexName="crawler_doc"
+    <DocSearchAI
+      indices={[
+        {
+          name: 'crawler_doc',
+          searchParameters: {
+            attributesToRetrieve: ['*'],
+            attributesToSnippet: ['*'],
+            hitsPerPage: 20,
+          },
+        },
+      ]}
       appId="PMZUYBQDAK"
       apiKey="24b09689d5b4223813d9b8e48563c8f6"
-      askAi={{
-        assistantId: 'askAIDemo',
-      }}
+      askAi="ccdec697-e3fe-465b-a1c3-657e7bf18aef"
       insights={true}
-      searchParameters={{
-        attributesToRetrieve: ['*'],
-        attributesToSnippet: ['*'],
-        hitsPerPage: 20,
-      }}
       transformItems={(items) => {
         return items.map((item: any) => ({
           objectID: item.objectID,
@@ -56,6 +64,7 @@ export default function WTransformItems(): JSX.Element {
         }));
       }}
       translations={{ button: { buttonText: 'Search with transformItems' } }}
+      theme={theme}
     />
   );
 }

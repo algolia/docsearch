@@ -1,26 +1,42 @@
 import type { RenderHookResult, RenderResult } from '@testing-library/react';
-import { render, screen, cleanup, renderHook, act, fireEvent } from '@testing-library/react';
+import {
+  render,
+  screen,
+  cleanup,
+  renderHook,
+  act,
+  fireEvent,
+} from '@testing-library/react';
 import type { JSX } from 'react';
 import React, { useRef } from 'react';
 import { describe, it, expect, afterEach, vi } from 'vitest';
-
 import '@testing-library/jest-dom/vitest';
 
-import { DocSearch, useDocSearch, type DocSearchContext, type DocSearchProps } from '../DocSearch';
+import {
+  DocSearch,
+  useDocSearch,
+  type DocSearchContext,
+  type DocSearchProps,
+} from '../DocSearch';
 import { useDocSearchKeyboardEvents } from '../useDocSearchKeyboardEvents';
 import { useKeyboardShortcuts } from '../useKeyboardShortcuts';
 import { useTheme } from '../useTheme';
 
 type DocSearchPropsNoChildren = Omit<DocSearchProps, 'children'>;
 
-const renderWithProvider = (comp: React.ReactNode, props: DocSearchPropsNoChildren = {}): RenderResult =>
+const renderWithProvider = (
+  comp: React.ReactNode,
+  props: DocSearchPropsNoChildren = {}
+): RenderResult =>
   render(comp, {
     wrapper({ children }) {
       return <DocSearch {...props}>{children}</DocSearch>;
     },
   });
 
-const renderCustomHook = (props: DocSearchPropsNoChildren = {}): RenderHookResult<DocSearchContext, never> =>
+const renderCustomHook = (
+  props: DocSearchPropsNoChildren = {}
+): RenderHookResult<DocSearchContext, never> =>
   renderHook(() => useDocSearch(), {
     wrapper({ children }) {
       return <DocSearch {...props}>{children}</DocSearch>;
@@ -49,6 +65,18 @@ describe('@docsearch/core', () => {
       renderWithProvider(<StateRender />);
 
       expect(screen.getByText('State: ready')).toBeInTheDocument();
+    });
+
+    it('provides credential defaults to children', () => {
+      const { result } = renderCustomHook({
+        appId: 'app-id',
+        apiKey: 'api-key',
+      });
+
+      expect(result.current).toMatchObject({
+        appId: 'app-id',
+        apiKey: 'api-key',
+      });
     });
 
     it('updates state from children', async () => {
@@ -108,6 +136,21 @@ describe('@docsearch/core', () => {
       });
 
       expect(screen.getByText('State: modal-search')).toBeInTheDocument();
+    });
+
+    it('does not open search with / from a focused button', () => {
+      renderWithProvider(
+        <>
+          <StateRender />
+          <button type="button">Action</button>
+        </>
+      );
+
+      const button = screen.getByRole('button', { name: 'Action' });
+      button.focus();
+      fireEvent.keyDown(button, { key: '/', code: 'Slash' });
+
+      expect(screen.getByText('State: ready')).toBeInTheDocument();
     });
 
     it('respects keyboard shortcuts', () => {

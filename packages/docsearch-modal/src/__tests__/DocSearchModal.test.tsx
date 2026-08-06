@@ -1,10 +1,15 @@
 import type { DocSearchProps } from '@docsearch/core';
 import { DocSearch } from '@docsearch/core';
 import type { RenderResult } from '@testing-library/react';
-import { render, screen, cleanup, act, fireEvent } from '@testing-library/react';
+import {
+  render,
+  screen,
+  cleanup,
+  act,
+  fireEvent,
+} from '@testing-library/react';
 import React from 'react';
 import { describe, it, expect, afterEach } from 'vitest';
-
 import '@testing-library/jest-dom/vitest';
 
 import { DocSearchModal, type DocSearchModalProps } from '../DocSearchModal';
@@ -16,7 +21,7 @@ const INDEX_NAME = 'test_index';
 const DEFAULT_PROPS: DocSearchModalProps = {
   appId: APP_ID,
   apiKey: API_KEY,
-  indexName: INDEX_NAME,
+  indices: [INDEX_NAME],
   transformSearchClient(searchClient) {
     return {
       ...searchClient,
@@ -42,9 +47,14 @@ const DEFAULT_PROPS: DocSearchModalProps = {
   },
 };
 
+const PROVIDER_DEFAULT_PROPS: DocSearchModalProps = {
+  indices: [INDEX_NAME],
+  transformSearchClient: DEFAULT_PROPS.transformSearchClient,
+};
+
 const renderComponent = (
   props: DocSearchModalProps = DEFAULT_PROPS,
-  docsearchProps: Omit<DocSearchProps, 'children'> = {},
+  docsearchProps: Omit<DocSearchProps, 'children'> = {}
 ): RenderResult =>
   render(<DocSearchModal {...props} />, {
     wrapper({ children }) {
@@ -60,6 +70,22 @@ describe('@docsearch/modal', () => {
   describe('DocSearchModal', () => {
     it('renders modal component', () => {
       renderComponent();
+    });
+
+    it('uses credentials configured on the provider', () => {
+      renderComponent(PROVIDER_DEFAULT_PROPS, {
+        appId: APP_ID,
+        apiKey: API_KEY,
+      });
+
+      act(() => {
+        fireEvent.keyDown(document, {
+          key: 'k',
+          ctrlKey: true,
+        });
+      });
+
+      expect(screen.getByText('Search')).toBeInTheDocument();
     });
 
     it('opens modal on keyboard shortcut', () => {
@@ -106,7 +132,8 @@ describe('@docsearch/modal', () => {
         });
       });
 
-      const inputEl = screen.getByPlaceholderText<HTMLInputElement>('Search docs');
+      const inputEl =
+        screen.getByPlaceholderText<HTMLInputElement>('Search docs');
 
       expect(inputEl).toBeInTheDocument();
       expect(inputEl.value).toBe('hitComponent');
@@ -124,7 +151,8 @@ describe('@docsearch/modal', () => {
         });
       });
 
-      const inputEl = screen.getByPlaceholderText<HTMLInputElement>('Search docs');
+      const inputEl =
+        screen.getByPlaceholderText<HTMLInputElement>('Search docs');
 
       expect(inputEl).toBeInTheDocument();
       expect(inputEl.value).toBe('hitComponent');

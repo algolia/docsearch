@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. And its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file
+ * in the root directory of this source tree.
  */
 
 /**
@@ -10,7 +10,8 @@
  * joins them into a reasonable URL.
  *
  * - `["file:", "/home", "/user/", "website"]` => `file:///home/user/website`
- * - `["file://", "home", "/user/", "website"]` => `file://home/user/website` (relative!)
+ * - `["file://", "home", "/user/", "website"]` => `file://home/user/website`
+ *   (relative!)
  * - Remove trailing slash before parameters or hash.
  * - Replace `?` in query parameters with `&`.
  * - Dedupe forward slashes in the entire path, avoiding protocol slashes.
@@ -24,7 +25,8 @@ export function normalizeUrl(rawUrls: string[]): string {
   let hasStartingSlash = false;
   let hasEndingSlash = false;
 
-  const isNonEmptyArray = (arr: string[]): arr is [string, ...string[]] => arr.length > 0;
+  const isNonEmptyArray = (arr: string[]): arr is [string, ...string[]] =>
+    arr.length > 0;
 
   if (!isNonEmptyArray(urls)) {
     return '';
@@ -69,7 +71,7 @@ export function normalizeUrl(rawUrls: string[]): string {
           /^\/+/,
           // Special case where the first element of rawUrls is empty
           // ["", "/hello"] => /hello
-          component.startsWith('/') && !hasStartingSlash ? '/' : '',
+          component.startsWith('/') && !hasStartingSlash ? '/' : ''
         );
       }
 

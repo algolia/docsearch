@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/react-example",
   "description": "DocSearch v4 React example",
-  "version": "4.7.0",
+  "version": "4.6.0",
   "private": true,
   "license": "MIT",
   "type": "module",
@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@algolia/autocomplete-core": "1.19.2",
     "@docsearch/core": "workspace:*",
     "@docsearch/css": "workspace:*",
     "@docsearch/modal": "workspace:*",
@@ -21,6 +22,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "5.7.3",
     "vite": "^6.0.7"
   }
 }

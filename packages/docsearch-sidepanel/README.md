@@ -5,7 +5,6 @@ React package for [DocSearch Sidepanel](http://docsearch.algolia.com/), a standa
 ## Installation
 
 ```bash
-yarn add @docsearch/core@4 @docsearch/sidepanel@4 @docsearch/css@4
 # or
 npm install @docsearch/core@4 @docsearch/sidepanel@4 @docsearch/css@4
 ```
@@ -37,9 +36,8 @@ function App() {
       <SidepanelButton />
       <Sidepanel
         appId="YOUR_APP_ID"
-        indexName="YOUR_INDEX_NAME"
         apiKey="YOUR_SEARCH_API_KEY"
-        assistantId="YOUR_ASK_AI_ASSISTANT_ID"
+        agentId="YOUR_ASK_AI_ASSISTANT_ID"
       />
     </DocSearch>
   );

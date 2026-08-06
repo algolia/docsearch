@@ -2,14 +2,23 @@
 import { DocSearch } from '@docsearch/react';
 import type { JSX } from 'react';
 
-export default function Basic(): JSX.Element {
+import type { DemoTheme } from '../App';
+import { API_KEY, APP_ID, SEARCH_INDEX_NAME } from '../constants';
+
+export default function Basic({ theme }: { theme: DemoTheme }): JSX.Element {
   return (
     <DocSearch
-      indexName="docsearch"
-      appId="PMZUYBQDAK"
-      apiKey="24b09689d5b4223813d9b8e48563c8f6"
+      indices={[SEARCH_INDEX_NAME]}
+      appId={APP_ID}
+      apiKey={API_KEY}
       translations={{ button: { buttonText: 'Keyword search' } }}
       insights={true}
+      theme={theme}
+      facets={[
+        { key: 'language', label: 'Language' },
+        { key: 'version', label: 'Version' },
+        { key: 'type', label: 'Content type' },
+      ]}
     />
   );
 }

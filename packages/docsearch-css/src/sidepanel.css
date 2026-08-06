@@ -1,16 +1,17 @@
+@import url('./_variables.css');
+
 :root {
   /* Theme colors */
-  /* Pulls variables from ./_variables.css at build */
   --docsearch-sidepanel-background: var(--docsearch-modal-background);
   --docsearch-sidepanel-background-dark: var(--docsearch-searchbox-background);
   --docsearch-sidepanel-white: #fff;
   --docsearch-sidepanel-primary: var(--docsearch-primary-color);
-  --docsearch-sidepanel-primary-dark: rgba(2, 46, 185, 1);
-  --docsearch-sidepanel-primary-disabled: rgba(187, 209, 255, 1);
+  --docsearch-sidepanel-primary-dark: rgb(2 46 185 / 100%);
+  --docsearch-sidepanel-primary-disabled: rgb(187 209 255 / 100%);
   --docsearch-sidepanel-accent: var(--docsearch-highlight-color);
-  --docsearch-sidepanel-accent-muted: rgba(187, 209, 255, 1);
+  --docsearch-sidepanel-accent-muted: rgb(187 209 255 / 100%);
   --docsearch-sidepanel-border: var(--docsearch-subtle-color);
-  --docsearch-sidepanel-text-base: rgba(35, 38, 59, 1);
+  --docsearch-sidepanel-text-base: rgb(35 38 59 / 100%);
   --docsearch-sidepanel-text-muted: var(--docsearch-secondary-text-color);
   --docsearch-sidepanel-scrollbar-color: var(--docsearch-muted-color);
   --docsearch-sidepanel-scrollbar-bg: var(--docsearch-modal-background);
@@ -19,16 +20,12 @@
   --docsearch-sidepanel-hit-highlight-color: var(--docsearch-hit-highlight-color);
   --docsearch-sidepanel-button-background: var(--docsearch-sidepanel-background);
   --docsearch-sidepanel-button-background-dark: var(--docsearch-sidepanel-background);
-  --docsearch-sidepanel-thread-depth-banner-bg: #fff1f2;
-  --docsearch-sidepanel-thread-depth-banner-border: #fecdd3;
 }
 
-html[data-theme='dark'] {
+:root[data-theme='dark'] {
   --docsearch-sidepanel-text-base: var(--docsearch-text-color);
-  --docsearch-sidepanel-primary-disabled: rgba(1, 45, 186, 0.60);
-  --docsearch-sidepanel-button-background-dark: rgba(4, 4, 8, 1);
-  --docsearch-sidepanel-thread-depth-banner-bg: rgb(239 83 80 / 12%);
-  --docsearch-sidepanel-thread-depth-banner-border: rgb(254 205 211 / 35%);
+  --docsearch-sidepanel-primary-disabled: rgb(1 45 186 / 60%);
+  --docsearch-sidepanel-button-background-dark: rgb(4 4 8 / 100%);
 }
 
 .DocSearch-SidepanelButton {
@@ -36,8 +33,9 @@ html[data-theme='dark'] {
   cursor: pointer;
   display: inline-flex;
   user-select: none;
-  border: none;
+  border: 0;
   transition: all 150ms ease-in-out;
+  font-family: var(--docsearch-font-family);
 }
 
 .DocSearch-SidepanelButton.floating {
@@ -65,7 +63,7 @@ html[data-theme='dark'] {
   stroke-width: 1.4;
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (width >= 769px) {
   .DocSearch-SidepanelButton.floating {
     border-radius: 1rem;
     width: 4rem;
@@ -93,7 +91,7 @@ html[data-theme='dark'] {
   all: unset;
   cursor: pointer;
   transition: all 150ms ease-in-out;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: var(--docsearch-font-family);
   line-height: normal;
 }
 
@@ -101,7 +99,7 @@ html[data-theme='dark'] {
   border-color: var(--docsearch-sidepanel-accent);
 }
 
-html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
+:root[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   background-color: var(--docsearch-sidepanel-button-background-dark);
 }
 
@@ -113,19 +111,14 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
 
 .DocSearch-Sidepanel-Container {
   position: fixed;
-  min-width: 0px;
-  will-change: transform, width, opacity;
+  min-width: 0;
   overflow: hidden;
-  box-shadow: 0px 0px 0px 1px rgba(35, 38, 59, 0.05), 0px 4px 8px -2px rgba(35, 38, 59, 0.25);
+  box-shadow:
+    0 0 0 1px rgb(35 38 59 / 5%),
+    0 4px 8px -2px rgb(35 38 59 / 25%);
   opacity: 0;
   z-index: 999;
   width: 100svw;
-}
-
-@media screen and (prefers-reduced-motion: reduce) {
-  .DocSearch-Sidepanel-Container {
-    transition: none;
-  }
 }
 
 .DocSearch-Sidepanel-Container.inline,
@@ -145,7 +138,7 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   opacity: 1;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (width <= 768px) {
   html:has(.DocSearch-Sidepanel-Container.is-open),
   body:has(.DocSearch-Sidepanel-Container.is-open) {
     overflow: hidden;
@@ -153,10 +146,13 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   }
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (width >= 769px) {
   .DocSearch-Sidepanel-Container {
     width: var(--sp-width);
-    transition: all 280ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition:
+      transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 280ms cubic-bezier(0.22, 1, 0.36, 1),
+      width 280ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .DocSearch-Sidepanel-Container.floating {
@@ -199,6 +195,12 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   }
 }
 
+@media screen and (prefers-reduced-motion: reduce) {
+  .DocSearch-Sidepanel-Container {
+    transition: none;
+  }
+}
+
 .DocSearch-Sidepanel-Container.is-open {
   opacity: 1;
 }
@@ -223,11 +225,19 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   display: flex;
   flex-direction: column;
   background-color: var(--docsearch-sidepanel-background);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: var(--docsearch-font-family);
   overflow: hidden;
   box-sizing: border-box;
   height: 100%;
   position: relative;
+
+  @media screen and (width >= 768px) {
+    .DocSearch-PromptSuggestions-Content {
+      align-items: start;
+      justify-content: start;
+      flex-flow: column nowrap;
+    }
+  }
 }
 
 .DocSearch-Sidepanel * {
@@ -270,7 +280,7 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   right: 1rem;
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (width >= 769px) {
   .DocSearch-Sidepanel-Header {
     justify-content: flex-start;
   }
@@ -304,7 +314,7 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   background-color: transparent;
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (width >= 769px) {
   .DocSearch-Sidepanel-Action-menu,
   .DocSearch-Sidepanel-Action-expand {
     display: flex;
@@ -315,11 +325,13 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   display: none;
 }
 
-.DocSearch-Sidepanel.conversation-history .DocSearch-Action.DocSearch-Sidepanel-Action-back.mobile {
+.DocSearch-Sidepanel.conversation-history
+/* stylelint-disable-next-line selector-class-pattern */
+.DocSearch-Action.DocSearch-Sidepanel-Action-back.mobile {
   display: inline-flex;
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (width >= 769px) {
   .DocSearch-Sidepanel.conversation-history .DocSearch-Sidepanel-Action-back {
     display: inline-flex;
   }
@@ -332,8 +344,9 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   color: var(--docsearch-sidepanel-primary);
 }
 
-@media screen and (min-width: 769px) {
-  .DocSearch-Sidepanel.conversation-history .DocSearch-Sidepanel-Header-TitleIcon {
+@media screen and (width >= 769px) {
+  .DocSearch-Sidepanel.conversation-history
+  .DocSearch-Sidepanel-Header-TitleIcon {
     display: none;
   }
 }
@@ -350,9 +363,10 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   flex: 1;
   padding: 0 1rem;
   overflow-y: auto;
-  overflow-y: overlay;
-  scrollbar-color: var(--docsearch-sidepanel-scrollbar-color) var(--docsearch-sidepanel-scrollbar-bg);
+  scrollbar-color: var(--docsearch-sidepanel-scrollbar-color)
+    var(--docsearch-sidepanel-scrollbar-bg);
   scrollbar-width: thin;
+  scrollbar-gutter: stable;
 }
 
 .DocSearch-Sidepanel-Content::-webkit-scrollbar {
@@ -381,7 +395,8 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
 
 .DocSearch-Sidepanel-Prompt--form {
   --prompt-form-padding: 0.75rem;
-  border: 1px solid #777AAF;
+
+  border: 1px solid #777aaf;
   padding: var(--prompt-form-padding);
   border-radius: 0.25rem;
   display: flex;
@@ -390,12 +405,34 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   gap: 0.5rem;
 }
 
+.DocSearch-Sidepanel-PromptBlockingBanner {
+  padding: 0.75rem;
+  color: var(--docsearch-sidepanel-text-base);
+  font-size: 0.75rem;
+  border: 1px solid var(--docsearch-error-soft-color);
+  border-radius: 0.25rem;
+  background: var(--docsearch-sidepanel-background);
+}
+
+.DocSearch-Sidepanel-PromptBlockingBanner p {
+  margin: 0;
+}
+
+.DocSearch-Sidepanel-PromptBlockingBanner p + p {
+  margin-top: 0.5rem;
+}
+
+.DocSearch-Sidepanel-PromptBlockingBanner .DocSearch-ThreadDepthError-Link:focus-visible {
+  outline: 2px solid var(--docsearch-sidepanel-primary);
+  outline-offset: 2px;
+}
+
 .DocSearch-Sidepanel-Prompt--form:focus-within {
   border-color: var(--docsearch-sidepanel-primary);
 }
 
 .DocSearch-Sidepanel-Prompt--textarea {
-  border: none;
+  border: 0;
   width: 100%;
   resize: none;
   color: var(--docsearch-sidepanel-text-base);
@@ -408,7 +445,7 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   min-height: 1.5rem;
   height: 1.5rem;
   overflow: hidden;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: var(--docsearch-font-family);
 }
 
 .DocSearch-Sidepanel-Prompt--textarea::placeholder {
@@ -448,7 +485,7 @@ html[data-theme='dark'] .DocSearch-SidepanelButton.inline:hover {
   color: var(--docsearch-sidepanel-text-muted);
 }
 
-html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop {
+:root[data-theme='dark'] .DocSearch-Sidepanel-Prompt--stop {
   background-color: var(--docsearch-sidepanel-background);
 }
 
@@ -456,7 +493,7 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop {
   background-color: var(--docsearch-sidepanel-background);
 }
 
-html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
+:root[data-theme='dark'] .DocSearch-Sidepanel-Prompt--stop:hover {
   background-color: var(--docsearch-sidepanel-background-dark);
 }
 
@@ -467,7 +504,7 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
 
 .DocSearch-Sidepanel-Prompt--submit {
   background-color: var(--docsearch-sidepanel-primary);
-  border: none;
+  border: 0;
   color: var(--docsearch-sidepanel-white);
 }
 
@@ -491,7 +528,7 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
   display: none;
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (width >= 769px) {
   .DocSearch-Sidepanel-Prompt--disclaimer {
     display: block;
     font-size: 0.75rem;
@@ -504,7 +541,7 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
   display: flex;
   justify-content: flex-end;
   background-color: var(--docsearch-sidepanel-background-dark);
-  padding: 0.75rem 1rem 1rem 1rem;
+  padding: 0.75rem 1rem 1rem;
 }
 
 .DocSearch-Sidepanel--powered-by {
@@ -572,9 +609,11 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
   background-color: var(--docsearch-hit-highlight-color);
 }
 
-.DocSearch-Sidepanel-RecentConversation:focus-within .DocSearch-Sidepanel-RecentConversation-icon,
+.DocSearch-Sidepanel-RecentConversation:focus-within
+.DocSearch-Sidepanel-RecentConversation-icon,
 .DocSearch-Sidepanel-RecentConversation:focus-within .DocSearch-Hit-action,
-.DocSearch-Sidepanel-RecentConversation:hover .DocSearch-Sidepanel-RecentConversation-icon,
+.DocSearch-Sidepanel-RecentConversation:hover
+.DocSearch-Sidepanel-RecentConversation-icon,
 .DocSearch-Sidepanel-RecentConversation:hover .DocSearch-Hit-action {
   color: var(--docsearch-sidepanel-accent);
 }
@@ -627,46 +666,7 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
   flex-direction: column;
 }
 
-@keyframes docsearch-sidepanel-thread-depth-banner-enter {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.DocSearch-Sidepanel .DocSearch-Sidepanel-ThreadDepthBanner {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  flex-shrink: 0;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-  background-color: var(--docsearch-sidepanel-thread-depth-banner-bg);
-  border: 1px solid var(--docsearch-sidepanel-thread-depth-banner-border);
-  box-sizing: border-box;
-  color: var(--docsearch-sidepanel-text-base);
-  font-size: 0.75rem;
-  line-height: 1rem;
-  font-weight: 400;
-  width: 100%;
-  animation: docsearch-sidepanel-thread-depth-banner-enter 0.3s ease-out;
-}
-
-.DocSearch-Sidepanel .DocSearch-Sidepanel-ThreadDepthBanner p {
-  margin: 0;
-}
-
-.DocSearch-Sidepanel .DocSearch-Sidepanel-ThreadDepthBanner-apiMessage {
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-@media screen and (min-width: 769px) {
+@media screen and (width >= 769px) {
   .DocSearch-Sidepanel-ConversationScreen {
     padding: 1rem 0;
   }
@@ -680,19 +680,19 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
   font-weight: 400;
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (width >= 769px) {
   .DocSearch-Sidepanel-ConversationScreen-disclaimer {
     display: none;
   }
 }
 
-.DocSearch-Sidepanel .DocSearch-AskAiScreen-Response {
-  padding: 1rem;
-  font-size: 0.95em;
+.DocSearch-Sidepanel .DocSearch-AskAiScreen-Response-Container {
+  margin-block: 1rem;
 }
 
-.DocSearch-Sidepanel .DocSearch-AskAiScreen-Query {
-  font-size: 1.25rem;
+.DocSearch-Sidepanel .DocSearch-AskAiScreen-Response {
+  padding: 0;
+  font-size: 0.95em;
 }
 
 .DocSearch-Sidepanel .DocSearch-Markdown-Content {
@@ -709,18 +709,30 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
   margin: 0.5em 0;
 }
 
+.DocSearch-Sidepanel .DocSearch-Markdown-Content code {
+  font-size: 0.8rem;
+}
+
+.DocSearch-Sidepanel .DocSearch-CodeSnippet pre {
+  padding-block-start: 2.4em;
+}
+
 .DocSearch-Sidepanel .DocSearch-AskAiScreen-MessageContent-Tool-Query:hover {
   cursor: unset;
   box-shadow: none;
   color: var(--docsearch-muted-color);
 }
 
-.DocSearch-Sidepanel .DocSearch-AskAiScreen-Actions {
-  margin-left: 0;
+.DocSearch-Sidepanel .DocSearch-AskAiScreen-Actions-Controls {
+  align-self: flex-start;
 }
 
 .DocSearch-Sidepanel .DocSearch-AskAiScreen-CopyButton {
   order: -1;
+}
+
+.DocSearch-Sidepanel .DocSearch-Feedback-Panel {
+  padding: 0.75em;
 }
 
 .DocSearch-Sidepanel .DocSearch-AskAiScreen-RelatedSources {
@@ -732,7 +744,7 @@ html[data-theme="dark"] .DocSearch-Sidepanel-Prompt--stop:hover {
 }
 
 .sr-only {
-  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
   white-space: nowrap;
   border-width: 0;
   width: 1px;

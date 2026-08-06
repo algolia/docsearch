@@ -2,69 +2,72 @@ import type { UseChatHelpers } from '@ai-sdk/react';
 import type { JSX } from 'react';
 import React, { memo, useMemo } from 'react';
 
-import { AskAiSourcesPanel, type Exchange } from '../AskAiScreen';
+import { type Exchange } from '../AskAiScreen';
+import { ConversationPromptSuggestions } from '../components/ConversationPromptSuggestions';
+import { FeedbackActions } from '../components/FeedbackActions';
+import { SourcesPanel } from '../components/SourcesPanel';
+import { ToolCall, type ToolCallTranslations } from '../components/ToolCall';
 import { AlertIcon, LoadingIcon } from '../icons';
 import { MemoizedMarkdown } from '../MemoizedMarkdown';
 import type { StoredSearchPlugin } from '../stored-searches';
-import { ToolCall, type ToolCallTranslations } from '../ToolCall';
-import type { StoredAskAiState } from '../types';
-import { isAIToolPart, type AIMessage } from '../types/AskiAi';
-import { extractLinksFromMessage, getMessageContent, isAskAiPromptBlockingError } from '../utils/ai';
+import type { OnAskAiFeedback, StoredAskAiState } from '../types';
+import { type AIMessage, type ToolCalls } from '../types/AskiAi';
+import {
+  extractLinksFromMessage,
+  getMessageContent,
+  EMPTY_TOOLS,
+  isAIToolPart,
+  getAgentPromptSuggestions,
+  isAskAiPromptBlockingError,
+} from '../utils/ai';
 import { groupConsecutiveToolResults } from '../utils/groupConsecutiveToolResults';
 
 import { AggregatedSearchBlock } from './AggregatedSearchBlock';
-import { ConversationActions } from './ConversationActions';
 
 export type ConversationScreenTranslations = Partial<
   ToolCallTranslations & {
-    /**
-     * Text shown as an LLM disclaimer.
-     */
+    /** Text shown as an LLM disclaimer. */
     conversationDisclaimer: string;
-    /**
-     * Text shown while assistant is reasoning.
-     */
+    /** Text shown while assistant is reasoning. */
     reasoningText: string;
-    /**
-     * Text show while assistant is thinking.
-     */
+    /** Text show while assistant is thinking. */
     thinkingText: string;
-    /**
-     * Text shown describing related sources.
-     */
+    /** Text shown describing a singular related source. */
     relatedSourcesText: string;
-    /**
-     * Message that's shown when user has stopped the streaming of a message.
-     */
+    /** Text shown describing multiple related sources. */
+    relatedSourcesTextPlural: string;
+    /** Message that's shown when user has stopped the streaming of a message. */
     stoppedStreamingText: string;
-    /**
-     * Text shown for copy button on code snippets.
-     **/
+    /** Text shown for copy button on code snippets. */
     copyButtonText: string;
-    /**
-     * Message shown after clicking copy.
-     **/
+    /** Message shown after clicking copy. */
     copyButtonCopiedText: string;
-    /**
-     * Title for thumbs up feedback icon.
-     **/
+    /** Title for thumbs up feedback icon. */
     likeButtonTitle: string;
-    /**
-     * Title for thumbs down feedback icon.
-     **/
+    /** Title for thumbs down feedback icon. */
     dislikeButtonTitle: string;
-    /**
-     * Message displayed after feedback action.
-     **/
+    /** Message displayed after feedback action. */
     thanksForFeedbackText: string;
-    /**
-     * Error title shown if there is an error while chatting.
-     */
+    /** Title shown at the top of the negative feedback note panel. */
+    feedbackPanelTitle: string;
+    /** Placeholder for the negative feedback details textarea. */
+    feedbackDetailsPlaceholder: string;
+    /** Disclaimer shown inside the negative feedback note panel. */
+    feedbackDisclaimerText: string;
+    /** Submit button text for the negative feedback note panel. */
+    feedbackSubmitButtonText: string;
+    /** Accessible title for the negative feedback note panel close button. */
+    feedbackCloseButtonTitle: string;
+    /** Reason chip labels for the negative feedback note panel. */
+    feedbackTagIncorrect: string;
+    feedbackTagNotWhatIAsked: string;
+    feedbackTagSlowOrBuggy: string;
+    feedbackTagStyleOrTone: string;
+    feedbackTagSafetyOrLegal: string;
+    feedbackTagOther: string;
+    /** Error title shown if there is an error while chatting. */
     errorTitleText: string;
-    /**
-     * Button label to start a new conversation after a blocking Ask AI error.
-     */
-    startNewConversationButtonText: string;
+    suggestedPromptsTitleText: string;
   }
 >;
 
@@ -73,9 +76,11 @@ export type ConversationScreenProps = {
   conversations: StoredSearchPlugin<StoredAskAiState>;
   translations?: ConversationScreenTranslations;
   status: UseChatHelpers<AIMessage>['status'];
-  handleFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
+  handleFeedback?: OnAskAiFeedback;
   streamError?: Error;
-  agentStudio?: boolean;
+  memoryEnabled?: boolean;
+  tools?: ToolCalls;
+  onSelectPromptSuggestion: (prompt: string) => void;
 };
 
 type ConversationnExchangeProps = {
@@ -86,13 +91,29 @@ type ConversationnExchangeProps = {
   translations?: ConversationScreenTranslations;
   onFeedback?: ConversationScreenProps['handleFeedback'];
   streamError?: ConversationScreenProps['streamError'];
-  agentStudio?: boolean;
+  memoryEnabled?: boolean;
+  tools: ToolCalls;
+  onSelectPromptSuggestion: (prompt: string) => void;
 };
 
-const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExchangeProps>(
+const ConversationExchange = React.forwardRef<
+  HTMLDivElement,
+  ConversationnExchangeProps
+>(
   (
-    { exchange, translations = {}, isLastExchange, conversations, onFeedback, status, streamError, agentStudio },
-    conversationRef,
+    {
+      exchange,
+      translations = {},
+      isLastExchange,
+      conversations,
+      onFeedback,
+      status,
+      streamError,
+      memoryEnabled,
+      tools,
+      onSelectPromptSuggestion,
+    },
+    conversationRef
   ): JSX.Element => {
     const { userMessage, assistantMessage } = exchange;
 
@@ -100,71 +121,103 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
       reasoningText = 'Reasoning...',
       thinkingText = 'Thinking...',
       searchingText = 'Searching...',
-      relatedSourcesText = 'Related sources',
+      relatedSourcesText,
+      relatedSourcesTextPlural,
       stoppedStreamingText = 'You stopped this response',
       preToolCallText = 'Searching...',
       toolCallResultText = 'Searched for',
       copyButtonText = 'Copy',
       copyButtonCopiedText = 'Copied!',
       errorTitleText = 'Chat error',
+      savedMemoryToolResultText = 'Saved to memory',
+      memoryToolResultText = 'Used memory to enhance results',
+      suggestedPromptsTitleText = 'Suggested prompts',
     } = translations;
 
-    const isPromptBlockingError = isAskAiPromptBlockingError(streamError, Boolean(agentStudio));
-
-    const assistantContent = useMemo(() => getMessageContent(assistantMessage), [assistantMessage]);
-    const userContent = useMemo(() => getMessageContent(userMessage), [userMessage]);
+    const assistantContent = useMemo(
+      () => getMessageContent(assistantMessage),
+      [assistantMessage]
+    );
+    const userContent = useMemo(
+      () => getMessageContent(userMessage),
+      [userMessage]
+    );
 
     const assistantParts = useMemo(
       () => groupConsecutiveToolResults(assistantMessage?.parts || []),
-      [assistantMessage],
+      [assistantMessage]
     );
-    const urlsToDisplay = React.useMemo(() => extractLinksFromMessage(assistantMessage), [assistantMessage]);
+    const urlsToDisplay = React.useMemo(
+      () => extractLinksFromMessage(assistantMessage),
+      [assistantMessage]
+    );
+    const suggestedPrompts = React.useMemo(() => {
+      if (!isLastExchange) return [];
+      return getAgentPromptSuggestions(assistantMessage?.parts || []);
+    }, [assistantMessage, isLastExchange]);
 
-    const wasStopped = userMessage.metadata?.stopped || assistantMessage?.metadata?.stopped;
+    const wasStopped =
+      userMessage.metadata?.stopped || assistantMessage?.metadata?.stopped;
     const isThinking =
-      ['submitted', 'streaming'].includes(status) && !assistantParts.some((part) => part.type !== 'step-start');
+      ['submitted', 'streaming'].includes(status) &&
+      !assistantParts.some((part) => part.type !== 'step-start');
     const showActions =
-      !wasStopped && (!isLastExchange || (isLastExchange && status === 'ready' && Boolean(assistantMessage)));
+      !wasStopped &&
+      (!isLastExchange ||
+        (isLastExchange && status === 'ready' && Boolean(assistantMessage)));
 
-    const messageId = agentStudio ? assistantMessage?.id || exchange.id : userMessage?.id || exchange.id;
+    const messageId = assistantMessage?.id || exchange.id;
 
     return (
-      <div className="DocSearch-AskAiScreen-Response-Container" ref={conversationRef}>
+      <div
+        className="DocSearch-AskAiScreen-Response-Container"
+        ref={conversationRef}
+      >
         <div className="DocSearch-AskAiScreen-Response">
           <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--user">
-            <p className="DocSearch-AskAiScreen-Query">{userContent}</p>
+            <p className="DocSearch-AskAiScreen-Query">{userContent ?? ''}</p>
           </div>
           <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--assistant">
             <div className="DocSearch-AskAiScreen-MessageContent">
-              {status === 'error' && streamError && isLastExchange && !isPromptBlockingError && (
-                <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error">
-                  <AlertIcon />
-                  <div className="DocSearch-AskAiScreen-Error-Content">
-                    <h4 className="DocSearch-AskAiScreen-Error-Title">{errorTitleText}</h4>
-                    <MemoizedMarkdown
-                      content={streamError.message}
-                      copyButtonText=""
-                      copyButtonCopiedText=""
-                      isStreaming={false}
-                    />
+              {status === 'error' &&
+                streamError &&
+                isLastExchange &&
+                !isAskAiPromptBlockingError(streamError) && (
+                  <div className="DocSearch-AskAiScreen-Error" role="alert">
+                    <AlertIcon aria-hidden="true" />
+                    <div className="DocSearch-AskAiScreen-Error-Content">
+                      <h4 className="DocSearch-AskAiScreen-Error-Title">
+                        {errorTitleText}
+                      </h4>
+                      <MemoizedMarkdown
+                        content={streamError.message}
+                        copyButtonText=""
+                        copyButtonCopiedText=""
+                        isStreaming={false}
+                      />
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
               {assistantParts.map((part, idx) => {
                 const index = idx;
 
                 if (part.type === 'reasoning' && part.state === 'streaming') {
                   return (
-                    <div key={index} className="DocSearch-AskAiScreen-MessageContent-Reasoning shimmer">
+                    <div
+                      key={index}
+                      className="DocSearch-AskAiScreen-MessageContent-Reasoning DocSearch-shimmer"
+                    >
                       <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-                      <span className="shimmer">{reasoningText}</span>
+                      <span className="DocSearch-shimmer">{reasoningText}</span>
                     </div>
                   );
                 }
 
                 if (part.type === 'aggregated-tool-call') {
-                  return <AggregatedSearchBlock key={index} queries={part.queries} />;
+                  return (
+                    <AggregatedSearchBlock key={index} queries={part.queries} />
+                  );
                 }
 
                 if (isAIToolPart(part)) {
@@ -176,7 +229,11 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
                         preToolCallText,
                         searchingText,
                         toolCallResultText,
+                        savedMemoryToolResultText,
+                        memoryToolResultText,
                       }}
+                      tools={tools}
+                      memoryEnabled={memoryEnabled}
                     />
                   );
                 }
@@ -209,17 +266,32 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
               })}
 
               {isThinking && isLastExchange && assistantParts.length === 0 && (
-                <div className="DocSearch-AskAiScreen-MessageContent-Reasoning">
-                  <span className="shimmer">{thinkingText}</span>
+                <div
+                  className="DocSearch-AskAiScreen-MessageContent-Thinking"
+                  role="status"
+                >
+                  <span className="DocSearch-shimmer">{thinkingText}</span>
+                  <span className="DocSearch-AskAi-Thinking-Skeleton DocSearch-shimmer" />
+                  <span className="DocSearch-AskAi-Thinking-Skeleton DocSearch-AskAi-Thinking-Skeleton--short DocSearch-shimmer" />
                 </div>
               )}
             </div>
 
-            {wasStopped && <p className="DocSearck-AskAiScreen-MessageContent-Stopped">{stoppedStreamingText}</p>}
+            {wasStopped && (
+              <p className="DocSearch-AskAiScreen-MessageContent-Stopped">
+                {stoppedStreamingText}
+              </p>
+            )}
           </div>
 
           <div className="DocSearch-AskAiScreen-Answer-Footer">
-            <ConversationActions
+            <SourcesPanel
+              links={urlsToDisplay}
+              titleText={relatedSourcesText}
+              pluralTitleText={relatedSourcesTextPlural}
+            />
+            <FeedbackActions
+              isSidepanel={true}
               id={messageId}
               showActions={showActions}
               latestAssistantMessageContent={assistantContent || null}
@@ -228,20 +300,35 @@ const ConversationExchange = React.forwardRef<HTMLDivElement, ConversationnExcha
               onFeedback={onFeedback}
             />
           </div>
-        </div>
 
-        {urlsToDisplay.length > 0 ? (
-          <AskAiSourcesPanel urlsToDisplay={urlsToDisplay} relatedSourcesText={relatedSourcesText} />
-        ) : null}
+          {suggestedPrompts.length > 0 && (
+            <ConversationPromptSuggestions
+              title={suggestedPromptsTitleText}
+              suggestions={suggestedPrompts}
+              onSelectPromptSuggestion={onSelectPromptSuggestion}
+            />
+          )}
+        </div>
       </div>
     );
-  },
+  }
 );
 
 export const ConversationScreen = memo(
-  ({ exchanges, translations = {}, handleFeedback, ...props }: ConversationScreenProps): JSX.Element => {
-    const { conversationDisclaimer = 'Answers are generated with AI which can make mistakes. Verify responses.' } =
-      translations;
+  ({
+    exchanges,
+    translations = {},
+    handleFeedback,
+    tools = EMPTY_TOOLS,
+    status,
+    conversations,
+    streamError,
+    memoryEnabled,
+    onSelectPromptSuggestion,
+  }: ConversationScreenProps): JSX.Element => {
+    const {
+      conversationDisclaimer = 'Answers are generated with AI which can make mistakes. Verify responses.',
+    } = translations;
 
     const mostRecentExchangeRef = React.useRef<HTMLDivElement>(null);
     const totalExchanges = exchanges.length;
@@ -258,7 +345,9 @@ export const ConversationScreen = memo(
 
     return (
       <div className="DocSearch-Sidepanel-ConversationScreen">
-        <p className="DocSearch-Sidepanel-ConversationScreen-disclaimer">{conversationDisclaimer}</p>
+        <p className="DocSearch-Sidepanel-ConversationScreen-disclaimer">
+          {conversationDisclaimer}
+        </p>
 
         {exchanges.slice().map((exchange, idx) => {
           const isLastExchange = idx === exchanges.length - 1;
@@ -269,12 +358,17 @@ export const ConversationScreen = memo(
               translations={translations}
               isLastExchange={isLastExchange}
               ref={isLastExchange ? mostRecentExchangeRef : null}
+              tools={tools}
+              status={status}
+              conversations={conversations}
+              streamError={streamError}
+              memoryEnabled={memoryEnabled}
               onFeedback={handleFeedback}
-              {...props}
+              onSelectPromptSuggestion={onSelectPromptSuggestion}
             />
           );
         })}
       </div>
     );
-  },
+  }
 );

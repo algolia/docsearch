@@ -1,17 +1,22 @@
 import type { DocSearchProps } from '@docsearch/core';
 import { DocSearch } from '@docsearch/core';
 import type { RenderResult } from '@testing-library/react';
-import { render, screen, cleanup, act, fireEvent } from '@testing-library/react';
+import {
+  render,
+  screen,
+  cleanup,
+  act,
+  fireEvent,
+} from '@testing-library/react';
 import React from 'react';
 import { describe, it, expect, afterEach, vi } from 'vitest';
-
 import '@testing-library/jest-dom/vitest';
 
 import { DocSearchButton, type DocSearchButtonProps } from '../DocSearchButton';
 
 const renderComponent = (
   props: DocSearchButtonProps = {},
-  docsearchProps: Omit<DocSearchProps, 'children'> = {},
+  docsearchProps: Omit<DocSearchProps, 'children'> = {}
 ): RenderResult =>
   render(<DocSearchButton {...props} />, {
     wrapper({ children }) {
@@ -28,7 +33,9 @@ describe('@docsearch/modal', () => {
     it('renders the button', () => {
       renderComponent();
 
-      expect(screen.getByRole('button', { name: /Search/ })).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: /Search/ })
+      ).toBeInTheDocument();
     });
 
     it('renders with translations', () => {
@@ -39,7 +46,9 @@ describe('@docsearch/modal', () => {
         },
       });
 
-      expect(screen.getByRole('button', { name: /Test Aria/ })).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: /Test Aria/ })
+      ).toBeInTheDocument();
       // Look for text because `name` on button points to the aria-label
       expect(screen.getByText('Test Button Text')).toBeInTheDocument();
     });

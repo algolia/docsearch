@@ -1,0 +1,87 @@
+---
+title: Migrating from the legacy scraper
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## Introduction
+
+With the new version of the [DocSearch UI][1], we wanted to go further and provide better tooling for you to create and maintain your config file, and some extra Algolia features that you all have been requesting for a long time!
+
+## What's new?
+
+### Scraper
+
+The DocSearch infrastructure now leverages the [Algolia Crawler][2]. We've teamed up with our friends and created a new [DocSearch helper][4], that extracts records as we were previously doing with our beloved [DocSearch scraper][3]!
+
+The best part is that you no longer need to install any tooling on your side if you want to maintain or update your index!
+
+We now provide a web interface **[legacy][7]** or **[new](https://dashboard.algolia.com/crawler)** that will allow you to:
+
+- Start, schedule and monitor your crawls
+- Edit your config file from our live editor
+- Test your results directly with [DocSearch v3][1] or [DocSearch v4][32]
+
+### Algolia application and credentials
+
+We've received a lot of requests asking for:
+
+- A way to manage team members
+- Browse and see how Algolia records are indexed
+- See and subscribe to other Algolia features
+
+They are now all available, in **your own Algolia application**, for free :D
+
+## FAQ
+
+You can find answers related to the DocSearch migration in our [Crawler FAQ page](/docs/crawler).
+
+### Useful links
+
+- [Docusaurus blog post](https://docusaurus.io/blog/2021/11/21/algolia-docsearch-migration)
+- [Algolia Dev chat 11-23-2021](https://www.youtube.com/watch?v=htsjpojpKtc&t=2404s)
+
+## Config file key mapping
+
+Below are the keys that can be found in the [`legacy` DocSearch configs][14] and their translation to an [Algolia Crawler config][16]. For more detailed information on the Algolia Crawler, see [the official documentation][15].
+
+| `legacy` | `current` | description |
+| --- | --- | --- |
+| `start_urls` | [`startUrls`][20] | Now accepts URLs only, see [`helpers.docsearch`][30] to handle custom variables |
+| `page_rank` | [`pageRank`][31] | Can be added to the `recordProps` in [`helpers.docsearch`][30], should be passed as a **string** |
+| `js_render` | [`renderJavaScript`][21] | Unchanged |
+| `js_wait` | [`renderJavascript.waitTime`][22] | See documentation of [`renderJavaScript`][21] |
+| `index_name` | **removed**, see [`actions`][23] | Handled directly in the [`actions`][23] |
+| `sitemap_urls` | [`sitemaps`][24] | Unchanged |
+| `stop_urls` | [`exclusionPatterns`][25] | Supports [`micromatch`][27] |
+| `selectors_exclude` | **removed** | Should be handled in the [`recordExtractor`][28] and [`helpers.docsearch`][29] |
+| `custom_settings` | [`initialIndexSettings`][26] | Unchanged |
+| `scrape_start_urls` | **removed** | Can be handled with [`exclusionPatterns`][25] |
+| `strip_chars` | **removed** | `#` are removed automatically from anchor links, edge cases should be handled in the [`recordExtractor`][28] and [`helpers.docsearch`][29] |
+| `conversation_id` | **removed** | Not needed anymore |
+| `nb_hits` | **removed** | Not needed anymore |
+| `sitemap_alternate_links` | **removed** | Not needed anymore |
+| `stop_content` | **removed** | Should be handled in the [`recordExtractor`][28] and [`helpers.docsearch`][29] |
+
+[1]: /docs/v3/docsearch
+[2]: https://www.algolia.com/products/search-and-discovery/crawler/
+[3]: /docs/legacy/run-your-own
+[4]: /docs/record-extractor
+[7]: https://crawler.algolia.com/
+[14]: /docs/legacy/config-file
+[15]: https://www.algolia.com/doc/tools/crawler/getting-started/overview/
+[16]: https://www.algolia.com/doc/tools/crawler/apis/configuration/
+[20]: https://www.algolia.com/doc/tools/crawler/apis/configuration/start-urls/
+[21]: https://www.algolia.com/doc/tools/crawler/apis/configuration/render-java-script/
+[22]: https://www.algolia.com/doc/tools/crawler/apis/configuration/render-java-script/#parameter-param-waittime
+[23]: https://www.algolia.com/doc/tools/crawler/apis/configuration/actions/#parameter-param-indexname
+[24]: https://www.algolia.com/doc/tools/crawler/apis/configuration/sitemaps/
+[25]: https://www.algolia.com/doc/tools/crawler/apis/configuration/exclusion-patterns/
+[26]: https://www.algolia.com/doc/tools/crawler/apis/configuration/initial-index-settings/
+[27]: https://github.com/micromatch/micromatch
+[28]: https://www.algolia.com/doc/tools/crawler/apis/configuration/actions/#parameter-param-recordextractor
+[29]: /docs/record-extractor
+[30]: /docs/record-extractor#introduction
+[31]: /docs/record-extractor#pagerank
+[32]: /docs/docsearch

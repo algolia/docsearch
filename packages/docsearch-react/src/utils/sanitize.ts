@@ -42,8 +42,8 @@ function stripControlsAndWhitespace(value: string): string {
 }
 
 /**
- * Returns a URL safe for href/src, or '' if unsafe.
- * Does not HTML-escape — callers building HTML strings must escape separately.
+ * Returns a URL safe for href/src, or '' if unsafe. Does not HTML-escape —
+ * callers building HTML strings must escape separately.
  */
 export function sanitizeUrl(url: string | null | undefined): string {
   if (!url) {
@@ -55,7 +55,9 @@ export function sanitizeUrl(url: string | null | undefined): string {
     return '';
   }
 
-  const normalized = stripControlsAndWhitespace(decodeUrlForSchemeCheck(trimmed));
+  const normalized = stripControlsAndWhitespace(
+    decodeUrlForSchemeCheck(trimmed)
+  );
   if (!normalized) {
     return '';
   }
@@ -70,7 +72,11 @@ export function sanitizeUrl(url: string | null | undefined): string {
 
   try {
     const parsed = new URL(normalized);
-    if (parsed.protocol === 'http:' || parsed.protocol === 'https:' || parsed.protocol === 'mailto:') {
+    if (
+      parsed.protocol === 'http:' ||
+      parsed.protocol === 'https:' ||
+      parsed.protocol === 'mailto:'
+    ) {
       return normalized;
     }
   } catch {
