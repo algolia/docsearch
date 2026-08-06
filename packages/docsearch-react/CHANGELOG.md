@@ -1,5 +1,14 @@
 # @docsearch/react
 
+## 5.0.0-beta.4
+
+### Patch Changes
+
+- ee9fddb: Surface Agent Studio cost-control errors and block prompts until the user can recover. [#2878](https://github.com/algolia/docsearch/pull/2878)
+- Updated dependencies [ee9fddb]
+  - @docsearch/css@5.0.0-beta.4
+  - @docsearch/core@5.0.0-beta.4
+
 ## 5.0.0-beta.3
 
 ### Patch Changes
