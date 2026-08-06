@@ -4,137 +4,20 @@ description: Install and configure the DocSearch MCP server.
 sidebar_label: Installation
 ---
 
+import MCPInstall from '@site/src/components/mcp/MCPInstall';
 import TabItem from '@theme/TabItem';
 import Tabs from '@theme/Tabs';
 
-DocSearch MCP is a hosted remote MCP server. It doesn't require authentication:
+DocSearch MCP is a remote MCP server. Point any MCP-compatible client at this endpoint — no authentication required:
+
 
 ```text
 https://mcp.algolia.com/1/docsearch/mcp
 ```
 
-Use `@docsearch/cli` to configure a supported coding agent, or add the endpoint to another MCP client manually.
+The fastest path to getting started is the **DocSearch CLI** — one command that configures your client for you. Prefer to set things up yourself? Install it as a **plugin** (ships the MCP server plus client guidance like rules, skills, and commands) or **manually** (just the MCP server config). Pick your client below.
 
-## Install with `@docsearch/cli`
-
-The DocSearch CLI requires Node.js 20 or later. Run the interactive installer without installing the package globally:
-
-<Tabs groupId="package-manager" aria-label="Package manager">
-  <TabItem value="npm" label="npm">
-
-```sh
-npx @docsearch/cli@^0.0.2 setup
-```
-
-  </TabItem>
-  <TabItem value="yarn" label="Yarn">
-
-```sh
-yarn dlx @docsearch/cli@^0.0.2 setup
-```
-
-  </TabItem>
-  <TabItem value="pnpm" label="pnpm">
-
-```sh
-pnpm dlx @docsearch/cli@^0.0.2 setup
-```
-
-  </TabItem>
-  <TabItem value="bun" label="Bun">
-
-```sh
-bunx @docsearch/cli@^0.0.2 setup
-```
-
-  </TabItem>
-</Tabs>
-
-The installer asks whether to update the current project or your user-level settings. It detects and configures these clients:
-
-- Cursor
-- Claude Code
-- Codex
-- OpenCode
-- Gemini CLI
-
-For each selected client, the installer adds the `algolia-docsearch` server, a rule that describes when to search documentation, and a skill that describes the tool workflow. Project setup finds the repository root before writing files. You can run setup again without removing unrelated configuration.
-
-Pass a scope and client flags to skip the prompts:
-
-<Tabs groupId="package-manager" aria-label="Package manager">
-  <TabItem value="npm" label="npm">
-
-```sh
-npx @docsearch/cli@^0.0.2 setup --project --cursor --claude --yes
-npx @docsearch/cli@^0.0.2 setup --global --all --yes
-```
-
-  </TabItem>
-  <TabItem value="yarn" label="Yarn">
-
-```sh
-yarn dlx @docsearch/cli@^0.0.2 setup --project --cursor --claude --yes
-yarn dlx @docsearch/cli@^0.0.2 setup --global --all --yes
-```
-
-  </TabItem>
-  <TabItem value="pnpm" label="pnpm">
-
-```sh
-pnpm dlx @docsearch/cli@^0.0.2 setup --project --cursor --claude --yes
-pnpm dlx @docsearch/cli@^0.0.2 setup --global --all --yes
-```
-
-  </TabItem>
-  <TabItem value="bun" label="Bun">
-
-```sh
-bunx @docsearch/cli@^0.0.2 setup --project --cursor --claude --yes
-bunx @docsearch/cli@^0.0.2 setup --global --all --yes
-```
-
-  </TabItem>
-</Tabs>
-
-Use `--cursor`, `--claude`, `--codex`, `--opencode`, or `--gemini` to select clients. Use either `--project` or `--global`, not both.
-
-To install the `docsearch` command globally, run:
-
-<Tabs groupId="package-manager" aria-label="Package manager">
-  <TabItem value="npm" label="npm">
-
-```sh
-npm install --global @docsearch/cli@^0.0.2
-docsearch setup
-```
-
-  </TabItem>
-  <TabItem value="yarn" label="Yarn">
-
-```sh
-yarn global add @docsearch/cli@^0.0.2
-docsearch setup
-```
-
-  </TabItem>
-  <TabItem value="pnpm" label="pnpm">
-
-```sh
-pnpm add --global @docsearch/cli@^0.0.2
-docsearch setup
-```
-
-  </TabItem>
-  <TabItem value="bun" label="Bun">
-
-```sh
-bun add --global @docsearch/cli@^0.0.2
-docsearch setup
-```
-
-  </TabItem>
-</Tabs>
+<MCPInstall />
 
 ## Install a client plugin
 
