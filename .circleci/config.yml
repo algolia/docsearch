@@ -185,7 +185,6 @@ jobs:
           command: |
             export NPM_ID_TOKEN="$(circleci run oidc get --claims '{"aud": "npm:registry.npmjs.org"}')"
             bun run release
-            git push --follow-tags origin "HEAD:${CIRCLE_BRANCH}"
   test_playwright:
     <<: *playwright
     steps:
