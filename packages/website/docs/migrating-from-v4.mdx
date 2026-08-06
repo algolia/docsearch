@@ -1,6 +1,6 @@
 ---
 title: Migrate from DocSearch v4
-description: Move a DocSearch v4 integration to the 5.0.0 beta packages and Agent Studio APIs.
+description: Move a DocSearch v4 integration to the v5 and Agent Studio APIs.
 ---
 
 import TabItem from '@theme/TabItem';
@@ -12,7 +12,7 @@ Review the complete [v5 breaking changes](./v5-breaking-changes) before releasin
 
 ## 1. Upgrade the beta packages
 
-Upgrade every DocSearch package in the integration together with the `^5.0.0-beta` range.
+Upgrade every DocSearch package in the integration together with the `^5` range.
 
 <Tabs groupId="language" aria-label="Programming language">
   <TabItem value="react" label="React">
@@ -21,28 +21,28 @@ Upgrade every DocSearch package in the integration together with the `^5.0.0-bet
   <TabItem value="npm" label="npm">
 
 ```bash
-npm install @docsearch/react@^5.0.0-beta @docsearch/css@^5.0.0-beta
+npm install @docsearch/react@^5 @docsearch/css@^5
 ```
 
   </TabItem>
   <TabItem value="yarn" label="Yarn">
 
 ```bash
-yarn add @docsearch/react@^5.0.0-beta @docsearch/css@^5.0.0-beta
+yarn add @docsearch/react@^5 @docsearch/css@^5
 ```
 
   </TabItem>
   <TabItem value="pnpm" label="pnpm">
 
 ```bash
-pnpm add @docsearch/react@^5.0.0-beta @docsearch/css@^5.0.0-beta
+pnpm add @docsearch/react@^5 @docsearch/css@^5
 ```
 
   </TabItem>
   <TabItem value="bun" label="Bun">
 
 ```bash
-bun add @docsearch/react@^5.0.0-beta @docsearch/css@^5.0.0-beta
+bun add @docsearch/react@^5 @docsearch/css@^5
 ```
 
   </TabItem>
@@ -55,28 +55,28 @@ bun add @docsearch/react@^5.0.0-beta @docsearch/css@^5.0.0-beta
   <TabItem value="npm" label="npm">
 
 ```bash
-npm install @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+npm install @docsearch/js@^5 @docsearch/css@^5
 ```
 
   </TabItem>
   <TabItem value="yarn" label="Yarn">
 
 ```bash
-yarn add @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+yarn add @docsearch/js@^5 @docsearch/css@^5
 ```
 
   </TabItem>
   <TabItem value="pnpm" label="pnpm">
 
 ```bash
-pnpm add @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+pnpm add @docsearch/js@^5 @docsearch/css@^5
 ```
 
   </TabItem>
   <TabItem value="bun" label="Bun">
 
 ```bash
-bun add @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
+bun add @docsearch/js@^5 @docsearch/css@^5
 ```
 
   </TabItem>
@@ -85,7 +85,7 @@ bun add @docsearch/js@^5.0.0-beta @docsearch/css@^5.0.0-beta
   </TabItem>
 </Tabs>
 
-If you use the Composable API or Sidepanel, also upgrade `@docsearch/core@^5.0.0-beta`, `@docsearch/modal@^5.0.0-beta`, `@docsearch/sidepanel@^5.0.0-beta`, or `@docsearch/sidepanel-js@^5.0.0-beta`.
+If you use the Composable API or Sidepanel, also upgrade `@docsearch/core@^5`, `@docsearch/modal@^5`, `@docsearch/sidepanel@^5`, or `@docsearch/sidepanel-js@^5`.
 
 ## 2. Choose keyword-only or AI-capable search
 
@@ -106,7 +106,7 @@ For a CDN integration, replace the root bundle with the keyword-only UMD file:
 
 ```diff title="index.html"
 -<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@4"></script>
-+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@^5.0.0-beta/dist/umd/docsearch.js"></script>
++<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@^5/dist/umd/docsearch.js"></script>
 ```
 
 ### JavaScript with Ask AI
@@ -168,16 +168,15 @@ Replace `DocSearch` with `DocSearchAI`:
 
 ## 3. Move Ask AI to Agent Studio
 
-V5 removes the legacy Ask AI token and chat transport. Create the assistant in [Agent Studio](/docs/agent-studio/getting-started) before switching production traffic. If you already have an Ask AI assistant, follow [Migrate Ask AI to Agent Studio](/docs/agent-studio/migrate-to-agent-studio).
+V5 removes the legacy Ask AI token and chat transport. Create the agent in [Agent Studio](/docs/agent-studio/getting-started) before switching production traffic. If you already have an Ask AI assistant, follow [Migrate Ask AI to Agent Studio](/docs/agent-studio/migrate-to-agent-studio).
 
-Rename `assistantId` to `agentId`. Remove `agentStudio` and `useStagingEnv` from `askAi`. Agent Studio is the only Ask AI backend in v5.
+Rename `assistantId` to `agentId`. Remove `agentStudio` from `askAi`. Agent Studio is the only Ask AI backend in v5.
 
 ```diff title="app.js"
  askAi: {
 -  assistantId: 'YOUR_ASSISTANT_ID',
 +  agentId: 'YOUR_AGENT_ID',
 -  agentStudio: true,
--  useStagingEnv: false,
  }
 ```
 
