@@ -1,5 +1,11 @@
 # @docsearch/core
 
+## 5.0.0-beta.3
+
+### Patch Changes
+
+- 3f74c33: Prevent the slash search shortcut from intercepting key events on focused buttons.
+
 ## 5.0.0-beta.2
 
 ### Patch Changes

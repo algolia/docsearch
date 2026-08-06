@@ -1,5 +1,22 @@
 # @docsearch/docusaurus-adapter
 
+## 5.0.0-beta.3
+
+### Patch Changes
+
+- fe4d0c2: Align Ask AI dynamic indices with Agent Studio completions: `askAi.indices` is now `string[]` (index names only). Use `askAi.searchParameters` for per-index runtime overrides.
+- c6a1ce1: fix(docusaurus-adapter): Docusaurus styling cleanup
+- Updated dependencies [3f74c33]
+- Updated dependencies [b33a7f7]
+- Updated dependencies [fe4d0c2]
+- Updated dependencies [4e44b55]
+- Updated dependencies [9a1b3e4]
+- Updated dependencies [b28bc84]
+  - @docsearch/core@5.0.0-beta.3
+  - @docsearch/react@5.0.0-beta.3
+  - @docsearch/modal@5.0.0-beta.3
+  - @docsearch/sidepanel@5.0.0-beta.3
+
 ## 5.0.0-beta.2
 
 ### Patch Changes

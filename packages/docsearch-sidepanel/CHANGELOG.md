@@ -1,5 +1,19 @@
 # @docsearch/sidepanel
 
+## 5.0.0-beta.3
+
+### Patch Changes
+
+- Updated dependencies [3f74c33]
+- Updated dependencies [b33a7f7]
+- Updated dependencies [fe4d0c2]
+- Updated dependencies [4e44b55]
+- Updated dependencies [9a1b3e4]
+- Updated dependencies [b28bc84]
+  - @docsearch/core@5.0.0-beta.3
+  - @docsearch/react@5.0.0-beta.3
+  - @docsearch/css@5.0.0-beta.3
+
 ## 5.0.0-beta.2
 
 ### Patch Changes

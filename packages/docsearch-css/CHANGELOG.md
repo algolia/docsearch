@@ -1,5 +1,19 @@
 # @docsearch/css
 
+## 5.0.0-beta.3
+
+### Patch Changes
+
+- 4e44b55: Stop over-truncating mobile snippets and allow long search hits to wrap.
+- b28bc84: feat(v5): add customizable footer action
+
+  - New `footerAction` prop renders a custom action in the modal footer,
+    before the Algolia logo, inside `.DocSearch-Footer-Action`
+  - `@docsearch/js` supports `footerAction` via template patterns (html helper,
+    JSX, or function-based)
+  - Fixes typing differences between `@docsearch/react` and `@docsearch/js`
+  - Restyle the footer with a `.DocSearch-Footer-Actions` wrapper
+
 ## 5.0.0-beta.2
 
 ### Patch Changes
