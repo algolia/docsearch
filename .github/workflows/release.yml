@@ -1,0 +1,59 @@
+name: 🚀 Release
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+      - 'v*'
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  FORCE_COLOR: true
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  changesets:
+    name: 🦋 Changesets
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version-file: .tool-versions
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build
+        run: bun run build
+
+      - name: Set git user
+        run: |
+            git config --global user.email "accounts+algolia-api-client-bot@algolia.com"
+            git config --global user.name "algolia-bot"
+
+      - name: Publish release
+        id: changesets
+        uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d
+        with:
+          setupGitUser: false
+          version: bun run version
+          publish: bun run release
+          title: 🚀 Release
+        env:
+          NPM_TOKEN: ''

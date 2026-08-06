@@ -55,13 +55,14 @@
     "website:serve": "bun --filter @docsearch/website serve -- --host 0.0.0.0",
     "website:test": "bun --filter @docsearch/website start -- --no-open",
     "changeset": "changeset",
-    "version": "changeset version && bun run sync:docsearch-version",
+    "version": "changeset version && bun run sync:docsearch-version && bun install",
     "release": "changeset publish",
     "sync:docsearch-version": "bun scripts/updateDocsearchVersion.ts"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
-    "@changesets/cli": "^2.29.7",
+    "@changesets/changelog-github": "0.7.0",
+    "@changesets/cli": "2.31.1",
     "@eslint-community/eslint-plugin-eslint-comments": "4.4.1",
     "@playwright/test": "1.49.1",
     "@stylistic/eslint-plugin": "2.13.0",
