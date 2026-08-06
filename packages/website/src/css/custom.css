@@ -1,11 +1,11 @@
 /* stylelint-disable @stylistic/function-parentheses-space-inside, @stylistic/indentation, @stylistic/string-quotes, declaration-block-no-duplicate-properties, no-duplicate-selectors, selector-max-compound-selectors, selector-max-id, selector-no-qualifying-type */
 
+/* fonts — MCP design system: Sora (display), Fraunces (editorial), JetBrains Mono (code) */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=JetBrains+Mono:wght@400;500&display=swap');
+
 /* tailwindcss */
 /* stylelint-disable-next-line import-notation */
 @import 'tailwindcss';
-
-/* fonts — MCP design system: Sora (display), Fraunces (editorial), JetBrains Mono (code) */
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @custom-variant dark (&:is([data-theme='dark'] *));
 
