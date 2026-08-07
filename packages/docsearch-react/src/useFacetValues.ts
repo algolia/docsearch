@@ -65,7 +65,9 @@ export function useFacetValues({
 
             valuesByFacet[facet] = Array.from(
               new Set([...valuesByFacet[facet], ...Object.keys(values)])
-            ).sort();
+            ).sort((a, b) =>
+              a.localeCompare(b, undefined, { sensitivity: 'base' })
+            );
           });
         });
 
