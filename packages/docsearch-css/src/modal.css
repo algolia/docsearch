@@ -242,7 +242,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     svg {
-      transition: none;
+      transition-duration: 0;
     }
   }
 }
@@ -846,12 +846,10 @@
 .DocSearch-Hit[aria-selected='true'] .DocSearch-Hit-Select-Icon {
   display: block;
 }
-
 @media (prefers-reduced-motion: reduce) {
   .DocSearch-Hit-action-button:hover,
   .DocSearch-Hit-action-button:focus {
-    background: rgb(0 0 0 / 20%);
-    transition: none;
+    transition-duration: 0;
   }
 }
 
@@ -920,14 +918,6 @@
 
 .DocSearch-Hit[aria-selected='true'] mark {
   color: var(--docsearch-highlight-color);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .DocSearch-Hit-action-button:hover,
-  .DocSearch-Hit-action-button:focus {
-    background: rgb(0 0 0 / 20%);
-    transition: none;
-  }
 }
 
 .DocSearch-Hit-badge {
