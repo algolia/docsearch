@@ -3,7 +3,13 @@ import React from 'react';
 
 export const ExpandIcon = (): JSX.Element => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 13 13" fill="none">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="14"
+      height="14"
+      viewBox="0 0 13 13"
+      fill="none"
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"

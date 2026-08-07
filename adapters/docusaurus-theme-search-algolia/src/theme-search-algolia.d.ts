@@ -1,97 +1,120 @@
 /**
  * Copyright (c) Facebook, Inc. And its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file
+ * in the root directory of this source tree.
  */
 
 declare module '@docsearch/docusaurus-adapter' {
-  import type { DocSearchProps } from '@docsearch/react';
+  import type {
+    AgentStudioSearchParameters,
+    DocSearchAskAi,
+    DocSearchProps,
+    ToolCalls,
+  } from '@docsearch/react';
   import type { SidepanelProps } from '@docsearch/react/sidepanel';
-  import type { FacetFilters } from 'algoliasearch/lite';
-  import type { DeepPartial, Overwrite, Optional } from 'utility-types';
 
-  type AskAiSearchParameters = {
-    facetFilters?: FacetFilters;
-    filters?: string;
-    attributesToRetrieve?: string[];
-    restrictSearchableAttributes?: string[];
-    distinct?: boolean | number | string;
+  type DocusaurusSidePanelConfig =
+    | boolean
+    | (Omit<SidepanelProps, 'tools'> & { hideButton?: boolean });
+  type DocusaurusSearchBarSidePanelProps =
+    | boolean
+    | (Omit<SidepanelProps, 'tools'> & {
+        hideButton?: boolean;
+        tools?: ToolCalls;
+      });
+
+  type SearchPageFacetConfig = {
+    /**
+     * Algolia attribute to build a refinement list from (e.g.
+     * `hierarchy.lvl0`).
+     */
+    attribute: string;
+    /** Human-readable label displayed above the refinement list. */
+    label?: string;
   };
 
-  type AgentStudioSearchParameters = Record<string, Omit<AskAiSearchParameters, 'facetFilters'>>;
+  type SearchPageConfig =
+    | false
+    | {
+        path?: string;
+        /**
+         * Facets exposed as refinement lists in the search page sidebar.
+         * Defaults to a single "Section" facet built from `hierarchy.lvl0`.
+         */
+        facets?: SearchPageFacetConfig[];
+      };
 
-  // The config after normalization (e.g. AskAI string -> object)
-  // This matches DocSearch v4.3+ AskAi configuration
   export type AskAiConfig = {
-    indexName: string;
-    apiKey: string;
-    appId: string;
-    assistantId: string;
-    suggestedQuestions?: boolean;
-    useStagingEnv?: boolean;
-    sidePanel?: boolean | (SidepanelProps & { hideButton?: boolean });
-  } & (
-    | {
-        agentStudio: false;
-        searchParameters?: AskAiSearchParameters;
-      }
-    | {
-        agentStudio: true;
-        searchParameters?: AgentStudioSearchParameters;
-      }
-    | {
-        agentStudio?: never;
-        searchParameters?: AskAiSearchParameters;
-      }
-  );
+    agentId: DocSearchAskAi['agentId'];
+    suggestedQuestions?: DocSearchAskAi['suggestedQuestions'];
+    searchParameters?: AgentStudioSearchParameters;
+    indices?: string[];
+    memory?: DocSearchAskAi['memory'];
+    promptSuggestions?: DocSearchAskAi['promptSuggestions'];
+  };
+
+  export type DocusaurusSearchBarAskAiProps = AskAiConfig &
+    Pick<DocSearchAskAi, 'tools'>;
 
   // DocSearch props that Docusaurus exposes directly through props forwarding
   type DocusaurusDocSearchProps = Pick<
     DocSearchProps,
-    'apiKey' | 'appId' | 'indexName' | 'initialQuery' | 'insights' | 'placeholder' | 'searchParameters' | 'translations'
+    | 'apiKey'
+    | 'appId'
+    | 'disableUserPersonalization'
+    | 'facets'
+    | 'getMissingResultsUrl'
+    | 'indices'
+    | 'initialQuery'
+    | 'insights'
+    | 'keyboardShortcuts'
+    | 'maxResultsPerGroup'
+    | 'placeholder'
+    | 'recentSearchesLimit'
+    | 'recentSearchesWithFavoritesLimit'
+    | 'resultBadgeKey'
+    | 'translations'
   > & {
-    // Docusaurus normalizes the AskAI config to an object
+    indices: NonNullable<DocSearchProps['indices']>;
     askAi?: AskAiConfig;
+    sidePanel?: DocusaurusSidePanelConfig;
   };
 
-  export type ThemeConfigAlgolia = DocusaurusDocSearchProps & {
-    indexName: string;
-
+  export type ThemeConfigDocSearch = DocusaurusDocSearchProps & {
     // Docusaurus custom options, not coming from DocSearch
     contextualSearch: boolean;
     externalUrlRegex?: string;
-    searchPagePath: string | false | null;
+    searchPage: SearchPageConfig;
     replaceSearchResultPathname?: {
       from: string;
       to: string;
     };
   };
 
-  type UserDocSearchConfig = Overwrite<
-    DeepPartial<ThemeConfigAlgolia>,
-    {
-      // Required fields:
-      appId: ThemeConfigAlgolia['appId'];
-      apiKey: ThemeConfigAlgolia['apiKey'];
-      indexName: ThemeConfigAlgolia['indexName'];
-      // askAi also accepts a shorter string form
-      askAi?: Optional<AskAiConfig, 'apiKey' | 'appId' | 'indexName'> | string;
+  export type DocusaurusSearchBarProps = Partial<
+    Omit<ThemeConfigDocSearch, 'askAi' | 'sidePanel'> & {
+      askAi?: DocusaurusSearchBarAskAiProps;
+      sidePanel?: DocusaurusSearchBarSidePanelProps;
     }
   >;
 
+  type UserDocSearchConfig = Omit<
+    Partial<ThemeConfigDocSearch>,
+    'apiKey' | 'appId' | 'askAi' | 'indices'
+  > & {
+    appId: ThemeConfigDocSearch['appId'];
+    apiKey: ThemeConfigDocSearch['apiKey'];
+    indices: ThemeConfigDocSearch['indices'];
+    askAi?: AskAiConfig;
+  };
+
   export type ThemeConfig = {
-    // Preferred key.
-    docsearch?: ThemeConfigAlgolia;
-    // Backward-compatible alias.
-    algolia?: ThemeConfigAlgolia;
+    docsearch?: ThemeConfigDocSearch;
   };
 
   export type UserThemeConfig = {
-    // Preferred key.
     docsearch?: UserDocSearchConfig;
-    // Backward-compatible alias.
-    algolia?: UserDocSearchConfig;
   };
 }
 
@@ -102,9 +125,12 @@ declare module '@theme/SearchPage' {
 }
 
 declare module '@theme/SearchBar' {
+  import type { DocusaurusSearchBarProps } from '@docsearch/docusaurus-adapter';
   import type { ReactNode } from 'react';
 
-  export default function SearchBar(): ReactNode;
+  export default function SearchBar(
+    props?: DocusaurusSearchBarProps
+  ): ReactNode;
 }
 
 declare module '@theme/SearchTranslations' {

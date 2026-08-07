@@ -1,71 +1,47 @@
 import { DocSearch, useDocSearch } from '@docsearch/core';
-import type { DocSearchCallbacks, DocSearchRef, DocSearchTheme, SidepanelShortcuts } from '@docsearch/core';
+import type {
+  DocSearchCallbacks,
+  DocSearchRef,
+  DocSearchTheme,
+  SidepanelShortcuts,
+} from '@docsearch/core';
 import type { JSX } from 'react';
 import React from 'react';
 import { createPortal } from 'react-dom';
 
-import type { AgentStudioSearchParameters, AskAiSearchParameters } from './DocSearch';
-import type { SidepanelButtonProps, SidepanelProps as SidepanelPanelProps } from './Sidepanel/index';
+import type { AgentStudioSearchParameters, Memory } from './DocSearchAI';
+import type {
+  SidepanelButtonProps,
+  SidepanelProps as SidepanelPanelProps,
+} from './Sidepanel/index';
 import { SidepanelButton, Sidepanel } from './Sidepanel/index';
+import type { ToolCalls } from './types/AskiAi';
 
 export type { DocSearchRef, DocSearchCallbacks } from '@docsearch/core';
 
-export type SidepanelSearchParameters =
-  | {
-      /**
-       * **Experimental:** Whether to use Agent Studio as the chat backend.
-       *
-       * This is an experimental feature and its API may change without notice in future releases.
-       * Use with caution in production environments.
-       *
-       * @default false
-       */
-      agentStudio?: never;
-      /**
-       * The search parameters to use for the ask AI feature.
-       *
-       * **NOTE**: If using `agentStudio = true`, the `searchParameters` object is
-       * keyed by the index name.
-       */
-      searchParameters?: AskAiSearchParameters;
-    }
-  | {
-      agentStudio: false;
-      searchParameters?: AskAiSearchParameters;
-    }
-  | {
-      agentStudio: true;
-      /**
-       * The search parameters to use for the ask AI feature.
-       * Keyed by the index name.
-       *
-       * @example
-       * {
-       *   "INDEX_NAME": { distinct: false }
-       * }
-       */
-      searchParameters?: AgentStudioSearchParameters;
-    };
+export type SidepanelSearchParameters = {
+  /**
+   * The search parameters to use for the ask AI feature. Keyed by the index
+   * name.
+   *
+   * @example
+   *   {
+   *   "INDEX_NAME": { distinct: false }
+   *   }
+   */
+  searchParameters?: AgentStudioSearchParameters;
+};
 
 export type DocSearchSidepanelProps = DocSearchCallbacks & {
-  /**
-   * The assistant ID to use for the ask AI feature.
-   */
-  assistantId: string;
-  /**
-   * Public api key with search permissions for the index.
-   */
+  /** The Agent Studio agent ID to use for Ask AI. */
+  agentId: string;
+  /** Search only API key. */
   apiKey: string;
-  /**
-   * Algolia application id used by the search client.
-   */
+  /** Algolia application ID that hosts the Agent Studio agent. */
   appId: string;
   /**
-   * The index name to use for the ask AI feature. Your assistant will search this index for relevant documents.
-   */
-  indexName: string;
-  /**
-   * Configuration for keyboard shortcuts. Allows enabling/disabling specific shortcuts.
+   * Configuration for keyboard shortcuts. Allows enabling/disabling specific
+   * shortcuts.
    *
    * @default `{ 'Ctrl/Cmd+I': true }`
    */
@@ -76,24 +52,56 @@ export type DocSearchSidepanelProps = DocSearchCallbacks & {
    * @default 'light'
    */
   theme?: DocSearchTheme;
-  /**
-   * Props specific to the Sidepanel button.
-   */
+  /** Props specific to the Sidepanel button. */
   button?: Omit<SidepanelButtonProps, 'keyboardShortcuts'>;
-  /**
-   * Props specific to the Sidepanel panel.
-   */
+  /** Props specific to the Sidepanel panel. */
   panel?: Omit<SidepanelPanelProps, 'keyboardShortcuts'>;
+  /**
+   * Use custom tools driven by Agent Studio.
+   *
+   * For best performance, memoize this object with `useMemo` or define it
+   * outside the component. Inline object literals will be recreated every
+   * render but will not affect correctness.
+   */
+  tools?: ToolCalls;
+  /**
+   * Configuration for the Agent Studio memory feature.
+   *
+   * @example
+   *   { enabled: true, userToken: '{{SERVER_GENERATED_JWT_TOKEN}}' }
+   *
+   * @see https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/memory/overview
+   */
+  memory?: Memory;
+  /**
+   * Index names for the Agent Studio search tool on this request.
+   *
+   * Agent Studio expects names only. Put descriptions and tool defaults on the
+   * agent configuration. Put per-index runtime overrides in
+   * `searchParameters`.
+   */
+  indices?: string[];
 };
 
 type SidepanelProps = DocSearchSidepanelProps & SidepanelSearchParameters;
 
 function DocSearchSidepanelComponent(
-  { keyboardShortcuts, theme, onReady, onOpen, onClose, onSidepanelOpen, onSidepanelClose, ...props }: SidepanelProps,
-  ref: React.ForwardedRef<DocSearchRef>,
+  {
+    keyboardShortcuts,
+    theme,
+    onReady,
+    onOpen,
+    onClose,
+    onSidepanelOpen,
+    onSidepanelClose,
+    ...props
+  }: SidepanelProps,
+  ref: React.ForwardedRef<DocSearchRef>
 ): JSX.Element {
   return (
     <DocSearch
+      appId={props.appId}
+      apiKey={props.apiKey}
       keyboardShortcuts={keyboardShortcuts}
       theme={theme}
       ref={ref}
@@ -121,15 +129,21 @@ function DocSearchSidepanelComp({
     keyboardShortcuts,
     registerView,
     initialAskAiMessage,
-    clearInitialAskAiMessage,
+    appId,
+    apiKey,
   } = useDocSearch();
+
+  if (!appId || !apiKey) {
+    throw new Error(
+      '`Sidepanel` requires `appId` and `apiKey` props or values configured on the `DocSearch` provider.'
+    );
+  }
 
   const toggleSidepanelState = React.useCallback(() => {
     setDocsearchState(docsearchState === 'sidepanel' ? 'ready' : 'sidepanel');
   }, [docsearchState, setDocsearchState]);
 
   const handleClose = (): void => {
-    clearInitialAskAiMessage();
     setDocsearchState('ready');
   };
 
@@ -137,20 +151,31 @@ function DocSearchSidepanelComp({
     setDocsearchState('sidepanel');
   };
 
-  const containerElement = React.useMemo(() => portalContainer ?? document.body, [portalContainer]);
+  const containerElement = React.useMemo(
+    () => portalContainer ?? document.body,
+    [portalContainer]
+  );
 
   React.useEffect(() => {
     registerView('sidepanel');
   }, [registerView]);
 
   const ButtonComp = React.useMemo(
-    () => <SidepanelButton keyboardShortcuts={keyboardShortcuts} onClick={toggleSidepanelState} {...buttonProps} />,
-    [keyboardShortcuts, toggleSidepanelState, buttonProps],
+    () => (
+      <SidepanelButton
+        keyboardShortcuts={keyboardShortcuts}
+        onClick={toggleSidepanelState}
+        {...buttonProps}
+      />
+    ),
+    [keyboardShortcuts, toggleSidepanelState, buttonProps]
   );
 
   return (
     <>
-      {buttonProps.variant === 'inline' ? ButtonComp : createPortal(ButtonComp, containerElement)}
+      {buttonProps.variant === 'inline'
+        ? ButtonComp
+        : createPortal(ButtonComp, containerElement)}
       {createPortal(
         <Sidepanel
           initialMessage={initialAskAiMessage}
@@ -161,7 +186,7 @@ function DocSearchSidepanelComp({
           {...panelProps}
           keyboardShortcuts={keyboardShortcuts}
         />,
-        containerElement,
+        containerElement
       )}
     </>
   );

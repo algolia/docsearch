@@ -1,0 +1,489 @@
+---
+title: JS package API reference
+description: Configure @docsearch/js 5 and control its returned instance.
+toc_max_heading_level: 2
+---
+
+## `docsearch(options)`
+
+Renders DocSearch in `options.container` and returns a `DocSearchInstance`.
+
+```ts title="load-docsearch.ts"
+import docsearch from '@docsearch/js';
+
+const instance = docsearch(options);
+```
+
+The default export from `@docsearch/js` is AI-capable and uses `DocSearchAI`. The default export from `@docsearch/js/docsearch` is keyword-only and uses `DocSearch`.
+
+## JavaScript options
+
+### `container`
+
+> `type: HTMLElement | string` | **required**
+
+Container element or CSS selector for the search button. A selector resolves against `environment.document` and must match an element.
+
+### `environment`
+
+> `type: typeof window` | **optional**
+
+Browser-like environment used to resolve a string `container`. Defaults to `window`.
+
+### `onReady`
+
+> `type: () => void` | **optional**
+
+Callback after DocSearch mounts.
+
+### `onOpen`
+
+> `type: () => void` | **optional**
+
+Callback when the modal opens.
+
+### `onClose`
+
+> `type: () => void` | **optional**
+
+Callback when the modal closes.
+
+### `interceptAskAiEvent`
+
+> `type: (initialMessage: InitialAskAiMessage) => boolean | void` | **optional**
+
+Callback before DocSearch starts an Ask AI request. Return `true` to prevent the modal from toggling or sending the message. Use this option to route the request to another view, such as the Sidepanel.
+
+`InitialAskAiMessage` contains `query` and can contain `messageId` or `suggestedQuestionId`.
+
+## Search options
+
+These options apply to both package entries.
+
+### `appId`
+
+> `type: string` | **required**
+
+Algolia application ID.
+
+### `apiKey`
+
+> `type: string` | **required**
+
+Public API key with search permission.
+
+### `indices`
+
+> `type: Array<string | DocSearchIndex>` | **optional**
+
+Indices used for keyword search, in display order. There's no default, and at least `indices` or `indexName` is required.
+
+Use a string for default search parameters or a `DocSearchIndex` for per-index parameters:
+
+```ts
+interface DocSearchIndex {
+  name: string;
+  searchParameters?: SearchParamsObject;
+}
+```
+
+```js title="docsearch-options.js"
+indices: [
+  {
+    name: 'docs_en',
+    searchParameters: {
+      facetFilters: ['version:v5'],
+      attributesToRetrieve: [
+        'hierarchy.lvl0',
+        'hierarchy.lvl1',
+        'hierarchy.lvl2',
+        'hierarchy.lvl3',
+        'hierarchy.lvl4',
+        'hierarchy.lvl5',
+        'hierarchy.lvl6',
+        'content',
+        'type',
+        'url',
+        'version',
+      ],
+    },
+  },
+  'docs_fr',
+];
+```
+
+If you pass both `indexName` and `indices`, DocSearch queries `indexName` first, then each `indices` item. `indexName` and the root `searchParameters` remain available for v4 compatibility but are deprecated.
+
+### `indexName`
+
+> `type: string` | **optional**
+
+Deprecated index name. There's no default. Use `indices`.
+
+### `facets`
+
+> `type: DocSearchFacet[]` | **optional**
+
+Facet controls populated from the configured indices. Defaults to `[]`.
+
+```ts
+interface DocSearchFacet {
+  key: string;
+  label?: string;
+}
+```
+
+DocSearch supports up to five facets. It compares trimmed, lowercase keys to ignore duplicates and empty keys, fetches values from all configured indices, and displays only facets that have values. Selecting a value adds a `facetFilters` entry to every index query while retaining that index's configured filters.
+
+```js title="docsearch-options.js"
+facets: [
+  { key: 'language', label: 'Language' },
+  { key: 'version', label: 'Version' },
+];
+```
+
+Configure each attribute for faceting in the Algolia index before exposing it here.
+
+### `theme`
+
+> `type: 'light' | 'dark'` | **optional**
+
+Theme written to `document.documentElement.dataset.theme`. By default, DocSearch leaves the current theme unchanged.
+
+### `placeholder`
+
+> `type: string` | **optional**
+
+Search input placeholder. The default is experience-specific.
+
+### `searchParameters`
+
+> `type: SearchParamsObject` | **optional**
+
+Deprecated search parameters for `indexName`. There's no default. Put them on an `indices` item.
+
+### `maxResultsPerGroup`
+
+> `type: number` | **optional**
+
+Maximum results in each result group. There's no default.
+
+### `transformItems`
+
+> `type: (items: DocSearchHit[]) => DocSearchHit[]` | **optional**
+
+Function that transforms hits before grouping and rendering. Defaults to the identity function.
+
+### `hitComponent`
+
+> `type: ({ hit, children }, { html }) => JSX.Element` | **optional**
+
+Template for a result link. Defaults to the built-in hit template. See [Templates](#templates).
+
+### `resultsFooterComponent`
+
+> `type: ({ state }, { html }) => JSX.Element | null` | **optional**
+
+Template below the result collections. There's no default. See [Templates](#templates).
+
+### `footerAction`
+
+> `type: (_, { html }) => JSX.Element | null` | **optional**
+
+Optional function to render a custom action in the Modal's footer. It will be rendered in line with the Algolia "powered by" logo. See [Templates](#templates).
+
+### `transformSearchClient`
+
+> `type: (client) => client` | **optional**
+
+Function that wraps or replaces the Algolia search client. Defaults to the identity function.
+
+### `disableUserPersonalization`
+
+> `type: boolean` | **optional**
+
+Whether to disable recent searches, favorites, and stored AI conversations. Defaults to `false`.
+
+### `initialQuery`
+
+> `type: string` | **optional**
+
+Query placed in the input when the modal opens. Defaults to `''`.
+
+### `navigator`
+
+> `type: AutocompleteOptions['navigator']` | **optional**
+
+Autocomplete navigation implementation. Defaults to the default navigator.
+
+### `translations`
+
+> `type: DocSearchTranslations` | **optional**
+
+Button and modal text overrides. Defaults to the English strings.
+
+### `getMissingResultsUrl`
+
+> `type: ({ query }) => string` | **optional**
+
+Function that builds the no-results report URL. There's no default.
+
+### `insights`
+
+> `type: AutocompleteOptions['insights']` | **optional**
+
+Algolia Insights integration options. Defaults to `false`.
+
+### `portalContainer`
+
+> `type: DocumentFragment | Element` | **optional**
+
+Element that receives the modal portal. Defaults to `document.body`.
+
+### `recentSearchesLimit`
+
+> `type: number` | **optional**
+
+Maximum recent searches without favorites. Defaults to `7`.
+
+### `recentSearchesWithFavoritesLimit`
+
+> `type: number` | **optional**
+
+Maximum recent searches when favorites exist. Defaults to `4`.
+
+### `keyboardShortcuts`
+
+> `type: DocSearchModalShortcuts` | **optional**
+
+Whether `Ctrl/Cmd+K` and `/` open the modal. Both shortcuts are enabled by default. Escape always closes it.
+
+### `resultBadgeKey`
+
+> `type: string` | **optional**
+
+Hit property rendered as a result badge. There's no default.
+
+The key supports property paths such as `version`, `hierarchy.lvl1`, `tags[2]`, and `tags.2`. Primitive values render as text. Arrays of primitive values render as a comma-separated list.
+
+Add custom badge data to `attributesToRetrieve`. Otherwise the property isn't present in the hit:
+
+```js title="docsearch-options.js"
+indices: [
+  {
+    name: 'docs',
+    searchParameters: {
+      attributesToRetrieve: [
+        'hierarchy.lvl0',
+        'hierarchy.lvl1',
+        'hierarchy.lvl2',
+        'hierarchy.lvl3',
+        'hierarchy.lvl4',
+        'hierarchy.lvl5',
+        'hierarchy.lvl6',
+        'content',
+        'type',
+        'url',
+        'version',
+      ],
+    },
+  },
+],
+resultBadgeKey: 'version',
+```
+
+Set `translations.modal.resultsScreen.resultBadgeLabelText` to describe the badge to screen-reader users. Its default is `Category`.
+
+### Templates
+
+- `hitComponent` receives `{ hit, children }`.
+- `resultsFooterComponent` receives `{ state }`.
+- `footerAction` currently does not receive any extra props.
+
+JavaScript templates can return a Preact element, a string, or a component function. The optional second argument provides an `html` tagged-template helper.
+
+```js title="docsearch-options.js"
+docsearch({
+  hitComponent({ hit, children }, { html }) {
+    return html`<a href=${hit.url} data-result-type=${hit.type}>${children}</a>`;
+  },
+  resultsFooterComponent({ state }, { html }) {
+    return html`<p>No results found for query: ${state.query}</p>`;
+  },
+  footerAction(_, { html }) {
+    return html`<a href="https://algolia.com">Our other project</a>`;
+  },
+});
+```
+
+## Ask AI options
+
+Ask AI is available from the default `@docsearch/js` entry. Its `askAi` option is required by that entry's `DocSearchProps` type.
+
+### `askAi`
+
+> `type: string | DocSearchAskAi` | **required**
+
+Assistant ID or Agent Studio configuration. The default entry requires it.
+
+```js title="docsearch-options.js"
+askAi: 'YOUR_ASSISTANT_ID';
+```
+
+Use an object for additional controls.
+
+Follow [Get started with Agent Studio](/docs/agent-studio/getting-started) to create the assistant and [hybrid mode](/docs/hybrid-mode) to route AI requests to a Sidepanel.
+
+#### `assistantId`
+
+> `type: string` | **required**
+
+Agent Studio assistant ID.
+
+#### `appId`
+
+> `type: string` | **optional**
+
+Application ID used by Ask AI. Defaults to the root `appId`.
+
+#### `apiKey`
+
+> `type: string` | **optional**
+
+API key used by Ask AI. Defaults to the root `apiKey`.
+
+#### `indexName`
+
+> `type: string` | **optional**
+
+Index used by Ask AI. Defaults to the first normalized keyword index.
+
+#### `suggestedQuestions`
+
+> `type: boolean` | **optional**
+
+Whether to show published assistant questions on the new-conversation screen. Defaults to `false`.
+
+#### `searchParameters`
+
+> `type: AgentStudioSearchParameters` | **optional**
+
+Search parameters keyed by index name. There's no default.
+
+Each value supports `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, and `distinct`. This Agent Studio shape doesn't accept `facetFilters`.
+
+```js title="docsearch-options.js"
+askAi: {
+  assistantId: 'YOUR_ASSISTANT_ID',
+  searchParameters: {
+    docs: {
+      filters: 'language:en',
+      attributesToRetrieve: ['title', 'content', 'url'],
+      distinct: true,
+    },
+  },
+}
+```
+
+#### `indices`
+
+> `type: string[]` | **optional**
+
+Index names for the Agent Studio search tool on this request. There's no default.
+
+Put descriptions and tool defaults on the agent configuration. Put per-index runtime overrides in `searchParameters`.
+
+```js title="docsearch-options.js"
+askAi: {
+  agentId: 'YOUR_ASSISTANT_ID',
+  indices: ['api_reference', 'docs_markdown'],
+  searchParameters: {
+    api_reference: {
+      filters: 'version:latest',
+    },
+  },
+}
+```
+
+#### `tools`
+
+> `type: ToolCalls` | **optional**
+
+Custom Agent Studio tool renderers and handlers. Defaults to `{}`.
+
+`ToolCalls` maps Agent Studio tool names to `ToolDefinition` objects. `render` converts the tool input and output to displayed text. `onToolCall` handles a client-side tool and must call `addToolOutput` when it produces a result. `translations.callingToolText` changes the pending label.
+
+#### `memory`
+
+> `type: Memory` | **optional**
+
+Agent Studio memory display and user token. Memory is disabled by default.
+
+```js title="docsearch-options.js"
+memory: {
+  enabled: true,
+  userToken: 'SERVER_GENERATED_JWT_TOKEN',
+}
+```
+
+`enabled` controls whether memory tool calls appear. `userToken` is the JWT sent in the `x-algolia-secure-user-token` header.
+
+#### `promptSuggestions`
+
+> `type: PromptSuggestions` | **optional**
+
+Prompt suggestions displayed with keyword results. There's no default.
+
+```js title="docsearch-options.js"
+promptSuggestions: {
+  indexName: 'docsearch_prompt_suggestions',
+  hitsPerPage: 3,
+}
+```
+
+The index records must contain a `prompt` attribute. `hitsPerPage` defaults to `3`.
+
+## `DocSearchInstance`
+
+### `isReady`
+
+> `type: readonly boolean`
+
+Whether the instance is mounted.
+
+### `isOpen`
+
+> `type: readonly boolean`
+
+Whether the modal is open.
+
+### `open`
+
+> `type: () => void`
+
+Opens keyword search.
+
+### `close`
+
+> `type: () => void`
+
+Closes the modal.
+
+### `openAskAi`
+
+> `type: (initialMessage?: InitialAskAiMessage) => void`
+
+Opens Ask AI with an optional query. Use with the AI-capable entry.
+
+### `destroy`
+
+> `type: () => void`
+
+Unmounts DocSearch and marks the instance not ready.
+
+## Compatibility and deprecations
+
+- The bundles target ES2017 browsers.
+- `indexName` and root `searchParameters` remain supported but are deprecated. Move to `indices`.
+- The default entry uses Agent Studio. The v4 Ask AI transport and `askAi.agentStudio` switch aren't available.
+- The keyword-only `/docsearch` export is the smaller choice when you don't configure Ask AI.

@@ -25,8 +25,12 @@ export function NewConversationScreen({
 
   return (
     <div className="DocSearch-NewConversationScreen">
-      <h3 className="DocSearch-NewConversationScreen-Title">{newConversationTitle}</h3>
-      <p className="DocSearch-NewConversationScreen-Description">{newConversationDescription}</p>
+      <h3 className="DocSearch-NewConversationScreen-Title">
+        {newConversationTitle}
+      </h3>
+      <p className="DocSearch-NewConversationScreen-Description">
+        {newConversationDescription}
+      </p>
 
       <div className="DocSearch-NewConversationScreen-SuggestedQuestions">
         {suggestedQuestions.map((question) => (

@@ -1,23 +1,20 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { DocSearch } from '@docsearch/core';
-import { DocSearchButton, DocSearchModal } from '@docsearch/modal';
+import { DocSearchButton, DocSearchAskAiModal } from '@docsearch/modal';
 import { type JSX } from 'react';
 
-export default function Composable(): JSX.Element {
+import type { DemoTheme } from '../App';
+import { AGENT_ID, API_KEY, APP_ID, SEARCH_INDEX_NAME } from '../constants';
+
+export default function Composable({
+  theme,
+}: {
+  theme: DemoTheme;
+}): JSX.Element {
   return (
-    <DocSearch>
+    <DocSearch appId={APP_ID} apiKey={API_KEY} theme={theme}>
       <DocSearchButton translations={{ buttonText: 'Composable API' }} />
-      <DocSearchModal
-        indexName="docsearch"
-        appId="PMZUYBQDAK"
-        apiKey="24b09689d5b4223813d9b8e48563c8f6"
-        askAi={{
-          assistantId: 'askAIDemo',
-          searchParameters: {
-            facetFilters: ['language:en'],
-          },
-        }}
-      />
+      <DocSearchAskAiModal askAi={AGENT_ID} indices={[SEARCH_INDEX_NAME]} />
     </DocSearch>
   );
 }

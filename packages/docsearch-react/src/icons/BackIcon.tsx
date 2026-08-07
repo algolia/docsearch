@@ -5,7 +5,10 @@ interface BackIconProps {
   color?: string;
 }
 
-export function BackIcon({ size = 20, color = 'currentColor' }: BackIconProps): JSX.Element {
+export function BackIcon({
+  size = 20,
+  color = 'currentColor',
+}: BackIconProps): JSX.Element {
   return (
     <svg
       width={size}

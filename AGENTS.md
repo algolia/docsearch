@@ -4,7 +4,7 @@ This document provides guidelines for AI agents working on the DocSearch codebas
 
 ## Project Overview
 
-DocSearch is an Algolia-powered search widget for documentation sites. It's a TypeScript/React monorepo using Yarn workspaces with Lerna for orchestration.
+DocSearch is an Algolia-powered search widget for documentation sites. It's a TypeScript/React monorepo using Bun workspaces.
 
 ### Packages
 
@@ -21,98 +21,72 @@ DocSearch is an Algolia-powered search widget for documentation sites. It's a Ty
 
 ```bash
 # Install dependencies
-yarn install
+bun install
 
 # Build all packages
-yarn build
+bun run build
 
 # Build specific package
-yarn workspace @docsearch/react build
+bun run --filter @docsearch/react build
 
 # Watch mode (all packages)
-yarn watch
-
-# Clean builds
-yarn build:clean
+bun run watch
 ```
 
 ## Test Commands
 
 ```bash
 # Run all unit tests
-yarn test
+bun run test
 
 # Run a single test file
-yarn test packages/docsearch-react/src/__tests__/utils.test.ts
-
-# Run tests matching a pattern
-yarn test --testNamePattern="extractLinksFromText"
-
-# Run tests in watch mode
-yarn test --watch
+bun run test --run packages/docsearch-react/src/__tests__/utils.test.ts
 
 # Type checking
-yarn test:types
+bun run test:types
 
 # Bundle size check
-yarn test:size
+bun run test:size
 ```
+
+When running tests, prefer to run specific files with the `--run` flag to prevent running with watch mode.
 
 ## Lint Commands
 
 ```bash
-# Run ESLint
-yarn lint
+# Run oxlint
+bun run lint --format=agent
 
-# Run CSS linting
-yarn lint:css
+# Perform oxfmt formatting
+bun run fmt
+
+# Lint CSS
+bun run lint:css
 ```
 
-## E2E Testing (Cypress)
+## E2E Testing (Playwright)
 
 ```bash
 # Run Cypress tests
-yarn cy:run
+bun run pw:run
 
 # Run with specific browser
-yarn cy:run:chrome
-yarn cy:run:firefox
+bun run pw:run:chromium
+bun run pw:run:firefox
+bun run pw:run:webkit
 ```
 
 ## Code Style Guidelines
-
-### Imports
-
-Imports must be ordered alphabetically with newlines between groups:
-
-1. Built-in modules
-2. External dependencies
-3. Parent directory imports
-4. Sibling imports
-5. Index imports
-
-Internal `@/**/*` paths go before parent imports.
-
-```typescript
-// Correct order
-import type { AutocompleteOptions } from '@algolia/autocomplete-core';
-import React, { type JSX } from 'react';
-
-import { DocSearchButton } from './DocSearchButton';
-import type { DocSearchHit } from './types';
-```
 
 ### TypeScript
 
 - Use `type` imports for type-only imports: `import type { Foo } from './types'`
 - Prefer interfaces for object shapes, types for unions/primitives
-- Explicit return types on exported functions
-- Use `declare type` for exported type declarations
 - Avoid `any`; use `unknown` when type is truly unknown
 
 ```typescript
 // Good
-export declare type DocSearchHit = {
+export type DocSearchHit = {
   objectID: string;
   content: string | null;
 };
@@ -130,7 +104,7 @@ function createStorage<TItem>(key: string): StorageInterface<TItem> {
 - **Utilities**: camelCase (`removeHighlightTags.ts`)
 - **Types**: PascalCase (`InternalDocSearchHit`)
 - **Constants**: SCREAMING_SNAKE_CASE (`MAX_QUERY_SIZE`)
-- **CSS classes**: `DocSearch-` prefix with PascalCase (`DocSearch-Modal`)
+- **CSS classes**: `DocSearch-` prefix
 
 ### React Components
 
@@ -139,6 +113,14 @@ function createStorage<TItem>(key: string): StorageInterface<TItem> {
 - Use `React.useCallback` for callbacks passed as props
 - Use `React.useMemo` for expensive computations
 - Prefer destructuring props in function signature
+
+### React Component Structure
+
+- `src/components/ui/` contains reusable rendering components.
+- Prefer domain-light primitives in `src/components/ui/` when possible.
+- Feature-scoped UI components may live in `src/components/ui/` when their feature scope is explicit in the filename, such as `RecentConversationsResults.tsx`.
+- `src/components/` contains scoped composition components that own feature flow, branching, and state orchestration.
+- Keep AI-specific behavior out of generic UI primitives. If a UI component is AI-specific, make that scope clear in its name.
 
 ```typescript
 function DocSearchComponent(
@@ -169,7 +151,7 @@ try {
 }
 ```
 
-### Formatting (Prettier)
+### Formatting (oxfmt)
 
 - Single quotes for strings
 - Trailing commas (ES5 style)
@@ -226,6 +208,8 @@ describe('ComponentName', () => {
 packages/
   docsearch-react/
     src/
+      components/         # Scoped React composition components
+        ui/               # Reusable rendering components and explicitly scoped UI pieces
       __tests__/          # Test files
       icons/              # Icon components
       types/              # Type definitions
@@ -243,3 +227,17 @@ packages/
 - `marked` - Markdown rendering
 - `rollup` - Build bundling
 - `vitest` - Test runner
+
+## Cursor Cloud specific instructions
+
+Toolchain is pinned in `.tool-versions`: Node `24.13.1` (managed via `fnm`) and Bun `1.3.10`. These are preinstalled in the Cloud VM and available on `PATH` in new shells; the startup update script only runs `bun install`.
+
+Non-obvious caveats:
+
+- **To run/demo the widget, use the React playground:** `bun run playground:start` serves at `http://localhost:5173` (Vite). `bun run playground-js:start` serves the vanilla-JS demo. These connect to Algolia's hosted index using public credentials baked into the demo, so **outbound internet is required** for live search results.
+- Run unit tests non-interactively with `bun run test --run` (plain `bun run test` starts Vitest watch mode).
+- `bun run lint:css` reports many pre-existing CSS lint violations in the repo; these are not environment problems.
+
+## Documentation
+
+- When writing or working on the documentation website (`packages/website`), MUST adhere to the writing guidelines in @packages/website/WRITING_GUIDE.md

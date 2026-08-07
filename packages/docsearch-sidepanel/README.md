@@ -5,9 +5,8 @@ React package for [DocSearch Sidepanel](http://docsearch.algolia.com/), a standa
 ## Installation
 
 ```bash
-yarn add @docsearch/core@4 @docsearch/sidepanel@4 @docsearch/css@4
 # or
-npm install @docsearch/core@4 @docsearch/sidepanel@4 @docsearch/css@4
+npm install @docsearch/core@5 @docsearch/sidepanel@5 @docsearch/css@5
 ```
 
 If you don’t want to use a package manager, you can use a standalone endpoint:
@@ -37,9 +36,8 @@ function App() {
       <SidepanelButton />
       <Sidepanel
         appId="YOUR_APP_ID"
-        indexName="YOUR_INDEX_NAME"
         apiKey="YOUR_SEARCH_API_KEY"
-        assistantId="YOUR_ASK_AI_ASSISTANT_ID"
+        agentId="YOUR_AGENT_ID"
       />
     </DocSearch>
   );
@@ -48,4 +46,4 @@ function App() {
 
 ## Documentation
 
-[Read documentation →](https://docsearch.algolia.com)
+[Read documentation →](https://docsearch.algolia.com/docs/packages/sidepanel/getting-started)

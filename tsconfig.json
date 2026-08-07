@@ -12,14 +12,15 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ESNEXT"
+    "target": "ESNEXT",
+    "allowImportingTsExtensions": true
   },
   "exclude": [
     "**/__fixtures__/**/*",
     "**/__mocks__/**/*",
     "**/dist",
     "**/node_modules",
-    "cypress",
+    "e2e",
     "examples"
   ]
 }

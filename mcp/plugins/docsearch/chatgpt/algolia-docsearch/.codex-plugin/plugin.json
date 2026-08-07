@@ -1,0 +1,44 @@
+{
+  "name": "algolia-docsearch",
+  "version": "1.0.0",
+  "description": "Search current public developer documentation from the Algolia DocSearch corpus.",
+  "author": {
+    "name": "Algolia",
+    "url": "https://www.algolia.com"
+  },
+  "homepage": "https://docsearch.algolia.com/docs/mcp/overview",
+  "repository": "https://github.com/algolia/docsearch",
+  "license": "MIT",
+  "keywords": [
+    "algolia",
+    "developer-docs",
+    "documentation",
+    "docsearch",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Algolia DocSearch",
+    "shortDescription": "Current public developer documentation from the DocSearch corpus",
+    "longDescription": "Search current public documentation for libraries, frameworks, SDKs, APIs, CLIs, and cloud services. DocSearch resolves the relevant documentation set, returns ranked excerpts, and provides source URLs for grounded answers.",
+    "developerName": "Algolia",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read"
+    ],
+    "websiteURL": "https://docsearch.algolia.com/docs/mcp/overview",
+    "privacyPolicyURL": "https://www.algolia.com/policies/privacy",
+    "termsOfServiceURL": "https://www.algolia.com/policies/terms",
+    "defaultPrompt": [
+      "Explain middleware matchers from the current Next.js docs.",
+      "Show how React's useTransition hook works.",
+      "Find Algolia guidance for searchable attributes."
+    ],
+    "brandColor": "#5468FF",
+    "composerIcon": "./assets/docsearch-monogram.svg",
+    "logo": "./assets/docsearch-monogram.svg",
+    "screenshots": []
+  }
+}

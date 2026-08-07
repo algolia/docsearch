@@ -1,79 +1,143 @@
 import type { UseChatHelpers } from '@ai-sdk/react';
-import React, { type JSX, useMemo, useState, useEffect } from 'react';
+import React, { type JSX, useMemo } from 'react';
 
 import { AggregatedSearchBlock } from './AggregatedSearchBlock';
-import { AlertIcon, LoadingIcon } from './icons';
+import type { AskAiScreenStateProps } from './AskAiScreenState';
+import { ConversationPromptSuggestions } from './components/ConversationPromptSuggestions';
+import { FeedbackActions } from './components/FeedbackActions';
+import { SourcesPanel } from './components/SourcesPanel';
+import { ToolCall, type ToolCallTranslations } from './components/ToolCall';
+import { AlertIcon, LoadingIcon, SparklesIcon } from './icons';
 import { MemoizedMarkdown } from './MemoizedMarkdown';
-import type { ScreenStateProps } from './ScreenState';
 import type { StoredSearchPlugin } from './stored-searches';
-import { ToolCall } from './ToolCall';
-import type { InternalDocSearchHit, StoredAskAiState } from './types';
-import type { AIMessage } from './types/AskiAi';
+import type {
+  InternalDocSearchHit,
+  OnAskAiFeedback,
+  StoredAskAiState,
+} from './types';
+import { type AIMessage, type ToolCalls } from './types/AskiAi';
 import {
   extractLinksFromMessage,
-  filterExchangesForThreadDepthError,
   getAskAiBlockingBannerMessage,
   getMessageContent,
   isAskAiPromptBlockingError,
-  showAskAiBlockingBannerNewConversationLink,
   isThreadDepthError,
+  showAskAiBlockingBannerNewConversationLink,
+  isAIToolPart,
+  getAgentPromptSuggestions,
 } from './utils/ai';
 import { groupConsecutiveToolResults } from './utils/groupConsecutiveToolResults';
 
-export type AskAiScreenTranslations = Partial<{
-  // Misc texts
-  disclaimerText: string;
-  relatedSourcesText: string;
-  thinkingText: string;
-  copyButtonText: string;
-  copyButtonCopiedText: string;
-  // Feedback buttons
-  copyButtonTitle: string;
-  likeButtonTitle: string;
-  dislikeButtonTitle: string;
-  thanksForFeedbackText: string;
-  // Tool call texts
-  preToolCallText: string;
-  duringToolCallText: string;
-  afterToolCallText: string;
-  /**
-   * Build the full jsx element for the aggregated search block.
-   * If provided, completely overrides the default english renderer.
-   */
-  aggregatedToolCallNode?: (queries: string[], onSearchQueryClick: (query: string) => void) => React.ReactNode;
+export type AskAiScreenTranslations = Partial<
+  // Inherit the shared tool-call translations, but expose the search-related
+  // keys under AskAiScreen's own public names (see mapping below).
+  Omit<ToolCallTranslations, 'searchingText' | 'toolCallResultText'> & {
+    // Misc texts
+    disclaimerText: string;
+    /** Text shown describing a singular related source. */
+    relatedSourcesText: string;
+    /** Text shown describing multiple related sources. */
+    relatedSourcesTextPlural: string;
+    thinkingText: string;
+    copyButtonText: string;
+    copyButtonCopiedText: string;
+    // Feedback buttons
+    copyButtonTitle: string;
+    likeButtonTitle: string;
+    dislikeButtonTitle: string;
+    thanksForFeedbackText: string;
+    // Negative feedback note panel
+    feedbackPanelTitle: string;
+    feedbackDetailsPlaceholder: string;
+    feedbackDisclaimerText: string;
+    feedbackSubmitButtonText: string;
+    feedbackCloseButtonTitle: string;
+    feedbackTagIncorrect: string;
+    feedbackTagNotWhatIAsked: string;
+    feedbackTagSlowOrBuggy: string;
+    feedbackTagStyleOrTone: string;
+    feedbackTagSafetyOrLegal: string;
+    feedbackTagOther: string;
+    // Tool call texts
+    /**
+     * Text shown while assistant is performing search tool call. Maps to
+     * `ToolCallTranslations.searchingText`.
+     */
+    duringToolCallText: string;
+    /**
+     * Text shown while assistant is finished performing tool call. Maps to
+     * `ToolCallTranslations.toolCallResultText`.
+     */
+    afterToolCallText: string;
+    /**
+     * Build the full jsx element for the aggregated search block. If provided,
+     * completely overrides the default english renderer.
+     */
+    aggregatedToolCallNode?: (
+      queries: string[],
+      onSearchQueryClick: (query: string) => void
+    ) => React.ReactNode;
+    /**
+     * Generate the list connective parts only (backwards compatibility).
+     * Receives full list of queries and should return translation parts for
+     * before/after/separators. Example: (qs) => ({ before: 'searched for ',
+     * separator: ', ', lastSeparator: ' and ', after: '' }).
+     */
+    aggregatedToolCallText?: (queries: string[]) => {
+      before?: string;
+      separator?: string;
+      lastSeparator?: string;
+      after?: string;
+    };
+    /** Message that's shown when user has stopped the streaming of a message. */
+    stoppedStreamingText: string;
+    /** Error title shown if there is an error while chatting. */
+    errorTitleText: string;
+    /** Message shown when thread depth limit is exceeded (AI-217 error). */
+    threadDepthExceededMessage: string;
+    /** Button text for starting a new conversation after thread depth error. */
+    startNewConversationButtonText: string;
+    suggestedPromptsTitleText: string;
+  }
+>;
 
-  /**
-   * Generate the list connective parts only (backwards compatibility).
-   * Receives full list of queries and should return translation parts for before/after/separators.
-   * Example: (qs) => ({ before: 'searched for ', separator: ', ', lastSeparator: ' and ', after: '' }).
-   */
-  aggregatedToolCallText?: (queries: string[]) => {
-    before?: string;
-    separator?: string;
-    lastSeparator?: string;
-    after?: string;
+/**
+ * Maps AskAiScreen's public translation keys to the shared
+ * `ToolCallTranslations` shape consumed by the `ToolCall` component, applying
+ * default English values.
+ */
+function toToolCallTranslations(
+  translations: AskAiScreenTranslations
+): ToolCallTranslations {
+  const {
+    preToolCallText = 'Searching...',
+    duringToolCallText = 'Searching...',
+    afterToolCallText = 'Searched for',
+    savedMemoryToolResultText = 'Saved to memory',
+    memoryToolResultText = 'Used memory to enhance results',
+  } = translations;
+
+  return {
+    preToolCallText,
+    searchingText: duringToolCallText,
+    toolCallResultText: afterToolCallText,
+    savedMemoryToolResultText,
+    memoryToolResultText,
   };
-  /**
-   * Message that's shown when user has stopped the streaming of a message.
-   */
-  stoppedStreamingText: string;
-  /**
-   * Error title shown if there is an error while chatting.
-   */
-  errorTitleText: string;
-  /**
-   * Button text for starting a new conversation after a blocking Ask AI error.
-   */
-  startNewConversationButtonText: string;
-}>;
+}
 
-type AskAiScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
+type AskAiScreenProps = Omit<
+  AskAiScreenStateProps<InternalDocSearchHit>,
+  'translations'
+> & {
   messages: AIMessage[];
+  tools: ToolCalls;
   status: UseChatHelpers<AIMessage>['status'];
   askAiError?: Error;
   translations?: AskAiScreenTranslations;
   onNewConversation: () => void;
-  agentStudio?: boolean;
+  onSelectPromptSuggestion: (prompt: string) => void;
+  memoryEnabled?: boolean;
 };
 
 interface AskAiScreenHeaderProps {
@@ -86,8 +150,14 @@ export interface Exchange {
   assistantMessage: AIMessage | null;
 }
 
-function AskAiScreenHeader({ disclaimerText }: AskAiScreenHeaderProps): JSX.Element {
-  return <p className="DocSearch-AskAiScreen-Disclaimer">{disclaimerText}</p>;
+function AskAiScreenDisclaimer({
+  disclaimerText,
+}: AskAiScreenHeaderProps): JSX.Element {
+  return (
+    <p className="DocSearch-AskAiScreen-Disclaimer">
+      <SparklesIcon /> {disclaimerText}
+    </p>
+  );
 }
 
 interface AskAiExchangeCardProps {
@@ -97,9 +167,11 @@ interface AskAiExchangeCardProps {
   loadingStatus: UseChatHelpers<AIMessage>['status'];
   onSearchQueryClick: (query: string) => void;
   translations: AskAiScreenTranslations;
+  tools: ToolCalls;
   conversations: StoredSearchPlugin<StoredAskAiState>;
-  onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
-  agentStudio?: boolean;
+  onFeedback?: OnAskAiFeedback;
+  memoryEnabled?: boolean;
+  onSelectPromptSuggestion: (prompt: string) => void;
 }
 
 function AskAiExchangeCard({
@@ -109,68 +181,106 @@ function AskAiExchangeCard({
   loadingStatus,
   onSearchQueryClick,
   translations,
+  tools,
   conversations,
   onFeedback,
-  agentStudio,
+  memoryEnabled,
+  onSelectPromptSuggestion,
 }: AskAiExchangeCardProps): JSX.Element {
   const { userMessage, assistantMessage } = exchange;
 
   const {
     stoppedStreamingText = 'You stopped this response',
     errorTitleText = 'Chat error',
-    preToolCallText = 'Searching...',
-    afterToolCallText = 'Searched for',
-    duringToolCallText = 'Searching...',
+    relatedSourcesText,
+    relatedSourcesTextPlural,
+    suggestedPromptsTitleText = 'Suggested prompts',
   } = translations;
 
-  const isPromptBlockingError = isAskAiPromptBlockingError(askAiError, Boolean(agentStudio));
+  const toolCallTranslations = useMemo(
+    () => toToolCallTranslations(translations),
+    [translations]
+  );
 
-  const assistantContent = useMemo(() => getMessageContent(assistantMessage), [assistantMessage]);
-  const userContent = useMemo(() => getMessageContent(userMessage), [userMessage]);
+  const isPromptBlockingError = isAskAiPromptBlockingError(askAiError);
 
-  const urlsToDisplay = React.useMemo(() => extractLinksFromMessage(assistantMessage), [assistantMessage]);
+  const assistantContent = useMemo(
+    () => getMessageContent(assistantMessage),
+    [assistantMessage]
+  );
+  const userContent = useMemo(
+    () => getMessageContent(userMessage),
+    [userMessage]
+  );
+
+  const urlsToDisplay = React.useMemo(
+    () => extractLinksFromMessage(assistantMessage),
+    [assistantMessage]
+  );
 
   const displayParts = React.useMemo(() => {
     return groupConsecutiveToolResults(assistantMessage?.parts || []);
   }, [assistantMessage]);
 
-  const wasStopped = userMessage.metadata?.stopped || assistantMessage?.metadata?.stopped;
+  const promptSuggestions = useMemo(() => {
+    if (!isLastExchange) return [];
+    return getAgentPromptSuggestions(assistantMessage?.parts || []);
+  }, [assistantMessage, isLastExchange]);
+
+  const wasStopped =
+    userMessage.metadata?.stopped || assistantMessage?.metadata?.stopped;
 
   const showActions =
-    !wasStopped && (!isLastExchange || (isLastExchange && loadingStatus === 'ready' && Boolean(assistantMessage)));
+    !wasStopped &&
+    (!isLastExchange ||
+      (isLastExchange &&
+        loadingStatus === 'ready' &&
+        Boolean(assistantMessage)));
 
   const isThinking =
     ['submitted', 'streaming'].includes(loadingStatus) &&
     isLastExchange &&
     !displayParts.some((part) => part.type !== 'step-start');
 
-  const messageId = agentStudio ? assistantMessage?.id || exchange.id : userMessage?.id || exchange.id;
+  const messageId = assistantMessage?.id || exchange.id;
 
   return (
     <div className="DocSearch-AskAiScreen-Response-Container">
       <div className="DocSearch-AskAiScreen-Response">
         <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--user">
-          <p className="DocSearch-AskAiScreen-Query">{userContent?.text ?? ''}</p>
+          <p className="DocSearch-AskAiScreen-Query">{userContent ?? ''}</p>
         </div>
         <div className="DocSearch-AskAiScreen-Message DocSearch-AskAiScreen-Message--assistant">
           <div className="DocSearch-AskAiScreen-MessageContent">
-            {loadingStatus === 'error' && askAiError && isLastExchange && !isPromptBlockingError && (
-              <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error">
-                <AlertIcon />
-                <div className="DocSearch-AskAiScreen-Error-Content">
-                  <h4 className="DocSearch-AskAiScreen-Error-Title">{errorTitleText}</h4>
-                  <MemoizedMarkdown
-                    content={askAiError.message}
-                    copyButtonText=""
-                    copyButtonCopiedText=""
-                    isStreaming={false}
-                  />
+            {loadingStatus === 'error' &&
+              askAiError &&
+              isLastExchange &&
+              !isPromptBlockingError && (
+                <div className="DocSearch-AskAiScreen-Error" role="alert">
+                  <AlertIcon aria-hidden="true" />
+                  <div className="DocSearch-AskAiScreen-Error-Content">
+                    <h4 className="DocSearch-AskAiScreen-Error-Title">
+                      {errorTitleText}
+                    </h4>
+                    <MemoizedMarkdown
+                      content={askAiError.message}
+                      copyButtonText=""
+                      copyButtonCopiedText=""
+                      isStreaming={false}
+                    />
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
             {isThinking && (
-              <div className="DocSearch-AskAiScreen-MessageContent-Reasoning">
-                <span className="shimmer">{translations.thinkingText || 'Thinking...'}</span>
+              <div
+                className="DocSearch-AskAiScreen-MessageContent-Thinking"
+                role="status"
+              >
+                <span className="DocSearch-shimmer">
+                  {translations.thinkingText || 'Thinking...'}
+                </span>
+                <span className="DocSearch-AskAi-Thinking-Skeleton DocSearch-shimmer" />
+                <span className="DocSearch-AskAi-Thinking-Skeleton DocSearch-AskAi-Thinking-Skeleton--short DocSearch-shimmer" />
               </div>
             )}
             {displayParts.map((part, idx) => {
@@ -182,8 +292,23 @@ function AskAiExchangeCard({
                     key={index}
                     content={part}
                     copyButtonText={translations.copyButtonText || 'Copy'}
-                    copyButtonCopiedText={translations.copyButtonCopiedText || 'Copied!'}
+                    copyButtonCopiedText={
+                      translations.copyButtonCopiedText || 'Copied!'
+                    }
                     isStreaming={loadingStatus === 'streaming'}
+                  />
+                );
+              }
+
+              if (isAIToolPart(part)) {
+                return (
+                  <ToolCall
+                    key={index}
+                    translations={toolCallTranslations}
+                    part={part}
+                    tools={tools}
+                    memoryEnabled={memoryEnabled}
+                    onSearchQueryClick={onSearchQueryClick}
                   />
                 );
               }
@@ -201,9 +326,12 @@ function AskAiExchangeCard({
 
               if (part.type === 'reasoning' && part.state === 'streaming') {
                 return (
-                  <div key={index} className="DocSearch-AskAiScreen-MessageContent-Reasoning shimmer">
+                  <div
+                    key={index}
+                    className="DocSearch-AskAiScreen-MessageContent-Reasoning DocSearch-shimmer"
+                  >
                     <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-                    <span className="shimmer">Reasoning...</span>
+                    <span className="DocSearch-shimmer">Reasoning...</span>
                   </div>
                 );
               }
@@ -214,178 +342,74 @@ function AskAiExchangeCard({
                     key={index}
                     content={part.text}
                     copyButtonText={translations.copyButtonText || 'Copy'}
-                    copyButtonCopiedText={translations.copyButtonCopiedText || 'Copied!'}
+                    copyButtonCopiedText={
+                      translations.copyButtonCopiedText || 'Copied!'
+                    }
                     isStreaming={part.state === 'streaming'}
                   />
                 );
               }
-              if (part.type === 'tool-searchIndex' || part.type === 'tool-algolia_search_index') {
-                return (
-                  <ToolCall
-                    key={index}
-                    translations={{
-                      preToolCallText,
-                      searchingText: duringToolCallText,
-                      toolCallResultText: afterToolCallText,
-                    }}
-                    part={part}
-                    onSearchQueryClick={onSearchQueryClick}
-                  />
-                );
-              }
+
               // fallback for unknown part type
               return null;
             })}
           </div>
 
-          {wasStopped && <p className="DocSearck-AskAiScreen-MessageContent-Stopped">{stoppedStreamingText}</p>}
+          {wasStopped && (
+            <p className="DocSearch-AskAiScreen-MessageContent-Stopped">
+              {stoppedStreamingText}
+            </p>
+          )}
         </div>
         <div className="DocSearch-AskAiScreen-Answer-Footer">
-          <AskAiScreenFooterActions
+          <SourcesPanel
+            links={urlsToDisplay}
+            titleText={relatedSourcesText}
+            pluralTitleText={relatedSourcesTextPlural}
+          />
+          <FeedbackActions
             id={messageId}
             showActions={showActions}
-            latestAssistantMessageContent={assistantContent?.text || null}
+            latestAssistantMessageContent={assistantContent || null}
             translations={translations}
             conversations={conversations}
             onFeedback={onFeedback}
           />
         </div>
-      </div>
 
-      {/* Sources for this exchange */}
-      {urlsToDisplay.length > 0 ? (
-        <AskAiSourcesPanel urlsToDisplay={urlsToDisplay} relatedSourcesText={translations.relatedSourcesText} />
-      ) : null}
-    </div>
-  );
-}
-
-interface AskAiScreenFooterActionsProps {
-  id: string;
-  showActions: boolean;
-  latestAssistantMessageContent: string | null;
-  translations: AskAiScreenTranslations;
-  conversations: StoredSearchPlugin<StoredAskAiState>;
-  onFeedback?: (messageId: string, thumbs: 0 | 1) => Promise<void>;
-}
-
-export function AskAiScreenFooterActions({
-  id,
-  showActions,
-  latestAssistantMessageContent,
-  translations,
-  conversations,
-  onFeedback,
-}: AskAiScreenFooterActionsProps): JSX.Element | null {
-  // local state for feedback, initialised from stored conversations
-  const initialFeedback = React.useMemo(() => {
-    const message = conversations.getOne?.(id);
-    return message?.feedback ?? null;
-  }, [conversations, id]);
-
-  const [feedback, setFeedback] = React.useState<'dislike' | 'like' | null>(initialFeedback);
-  const [saving, setSaving] = React.useState(false);
-  const [savingError, setSavingError] = React.useState<Error | null>(null);
-
-  const handleFeedback = async (value: 'dislike' | 'like'): Promise<void> => {
-    if (saving) return;
-    setSavingError(null);
-    setSaving(true);
-    try {
-      await onFeedback?.(id, value === 'like' ? 1 : 0);
-      setFeedback(value);
-    } catch (error) {
-      setSavingError(error as Error);
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const {
-    likeButtonTitle = 'Like',
-    dislikeButtonTitle = 'Dislike',
-    thanksForFeedbackText = 'Thanks for your feedback!',
-  } = translations;
-
-  if (!showActions || !latestAssistantMessageContent) {
-    return null;
-  }
-
-  return (
-    <div className="DocSearch-AskAiScreen-Actions">
-      {feedback === null ? (
-        <>
-          {saving ? (
-            <LoadingIcon className="DocSearch-AskAiScreen-SmallerLoadingIcon" />
-          ) : (
-            <>
-              <LikeButton title={likeButtonTitle} onClick={() => handleFeedback('like')} />
-              <DislikeButton title={dislikeButtonTitle} onClick={() => handleFeedback('dislike')} />
-            </>
-          )}
-          {savingError && (
-            <p className="DocSearch-AskAiScreen-FeedbackText">{savingError.message || 'An error occured'}</p>
-          )}
-        </>
-      ) : (
-        <p className="DocSearch-AskAiScreen-FeedbackText DocSearch-AskAiScreen-FeedbackText--visible">
-          {thanksForFeedbackText}
-        </p>
-      )}
-      <CopyButton
-        translations={translations}
-        onClick={() => navigator.clipboard.writeText(latestAssistantMessageContent)}
-      />
-    </div>
-  );
-}
-
-interface AskAiSourcesPanelProps {
-  urlsToDisplay: Array<{ url: string; title?: string }>;
-  relatedSourcesText?: string;
-}
-
-export function AskAiSourcesPanel({ urlsToDisplay, relatedSourcesText }: AskAiSourcesPanelProps): JSX.Element {
-  return (
-    <div className="DocSearch-AskAiScreen-RelatedSources">
-      <p className="DocSearch-AskAiScreen-RelatedSources-Title">{relatedSourcesText || 'Related sources'}</p>
-      <div className="DocSearch-AskAiScreen-RelatedSources-List">
-        {urlsToDisplay.length > 0 &&
-          urlsToDisplay.map((link) => (
-            <a
-              key={link.url}
-              href={link.url}
-              className="DocSearch-AskAiScreen-RelatedSources-Item-Link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <RelatedSourceIcon />
-              <span>{link.title || link.url}</span>
-            </a>
-          ))}
+        {promptSuggestions.length > 0 && (
+          <ConversationPromptSuggestions
+            title={suggestedPromptsTitleText}
+            suggestions={promptSuggestions}
+            onSelectPromptSuggestion={onSelectPromptSuggestion}
+          />
+        )}
       </div>
     </div>
   );
 }
 
-export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): JSX.Element | null {
+export function AskAiScreen({
+  translations = {},
+  ...props
+}: AskAiScreenProps): JSX.Element | null {
   const {
-    disclaimerText = 'Answers are generated with AI which can make mistakes. Verify responses.',
+    disclaimerText = 'Answers are generated with AI which can make mistakes.',
+    threadDepthExceededMessage = 'This conversation is now closed to keep responses accurate.',
     startNewConversationButtonText = 'Start a new conversation',
   } = translations;
 
-  const { messages, askAiError, status, agentStudio } = props;
+  const { messages, tools, askAiError, status, memoryEnabled } = props;
 
   const hasPromptBlockingError = useMemo(() => {
-    return status === 'error' && isAskAiPromptBlockingError(askAiError, Boolean(agentStudio));
-  }, [status, askAiError, agentStudio]);
-
-  const blockingApiMessage = useMemo(() => getAskAiBlockingBannerMessage(askAiError), [askAiError]);
-
-  const showBlockingBannerNewConversationLink = showAskAiBlockingBannerNewConversationLink(
-    askAiError,
-    Boolean(agentStudio),
+    return status === 'error' && isAskAiPromptBlockingError(askAiError);
+  }, [status, askAiError]);
+  const blockingMessage = useMemo(
+    () => getAskAiBlockingBannerMessage(askAiError),
+    [askAiError]
   );
+  const showNewConversationLink =
+    showAskAiBlockingBannerNewConversationLink(askAiError);
 
   // Group messages into exchanges (user + assistant pairs)
   const exchanges: Exchange[] = useMemo(() => {
@@ -393,7 +417,8 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
     for (let i = 0; i < messages.length; i++) {
       if (messages[i].role === 'user') {
         const userMessage = messages[i];
-        const assistantMessage = messages[i + 1]?.role === 'assistant' ? messages[i + 1] : null;
+        const assistantMessage =
+          messages[i + 1]?.role === 'assistant' ? messages[i + 1] : null;
         grouped.push({ id: userMessage.id, userMessage, assistantMessage });
         if (assistantMessage) {
           i++;
@@ -401,40 +426,49 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
       }
     }
 
-    return filterExchangesForThreadDepthError(grouped, hasPromptBlockingError);
-  }, [messages, hasPromptBlockingError]);
+    return grouped;
+  }, [messages]);
 
   const handleSearchQueryClick = (query: string): void => {
     props.onAskAiToggle(false);
     props.setQuery(query);
   };
 
-  /** Thread depth only appears after at least one assistant reply;
-   * other Agent Studio blocks can occur on the first turn.
-   * */
   const showBlockingBanner =
-    hasPromptBlockingError && (isThreadDepthError(askAiError) ? messages.some((m) => m.role === 'assistant') : true);
+    hasPromptBlockingError &&
+    (!isThreadDepthError(askAiError) ||
+      messages.some((message) => message.role === 'assistant'));
 
   return (
     <div className="DocSearch-AskAiScreen DocSearch-AskAiScreen-Container">
-      {/* Agent Studio cost-control errors */}
-      {showBlockingBanner && (
-        <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error DocSearch-AskAiScreen-Error--ThreadDepth">
-          <div className="DocSearch-AskAiScreen-Error-Content">
-            {blockingApiMessage ? <p className="DocSearch-AskAiScreen-Error-Title">{blockingApiMessage}</p> : null}
-            {showBlockingBannerNewConversationLink ? (
-              <p>
-                <button type="button" className="DocSearch-ThreadDepthError-Link" onClick={props.onNewConversation}>
-                  {startNewConversationButtonText}
-                </button>{' '}
-                to continue.
+      <div id={props.promptBlockingErrorId} role="alert">
+        {showBlockingBanner && (
+          <div className="DocSearch-AskAiScreen-MessageContent DocSearch-AskAiScreen-Error DocSearch-AskAiScreen-Error--ThreadDepth">
+            <div className="DocSearch-AskAiScreen-Error-Content">
+              <p className="DocSearch-AskAiScreen-Error-Title">
+                {blockingMessage ??
+                  (isThreadDepthError(askAiError)
+                    ? threadDepthExceededMessage
+                    : 'This conversation cannot continue.')}
               </p>
-            ) : null}
+              {showNewConversationLink && (
+                <p>
+                  <button
+                    type="button"
+                    className="DocSearch-ThreadDepthError-Link"
+                    onClick={props.onNewConversation}
+                  >
+                    {startNewConversationButtonText}
+                  </button>{' '}
+                  to continue.
+                </p>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
-      <AskAiScreenHeader disclaimerText={disclaimerText} />
+      <AskAiScreenDisclaimer disclaimerText={disclaimerText} />
 
       <div className="DocSearch-AskAiScreen-Body">
         <div className="DocSearch-AskAiScreen-ExchangesList">
@@ -449,160 +483,16 @@ export function AskAiScreen({ translations = {}, ...props }: AskAiScreenProps): 
                 isLastExchange={index === 0}
                 loadingStatus={props.status}
                 translations={translations}
+                tools={tools}
                 conversations={props.conversations}
-                agentStudio={agentStudio}
+                memoryEnabled={memoryEnabled}
                 onSearchQueryClick={handleSearchQueryClick}
                 onFeedback={props.onFeedback}
+                onSelectPromptSuggestion={props.onSelectPromptSuggestion}
               />
             ))}
         </div>
       </div>
     </div>
-  );
-}
-
-function RelatedSourceIcon(): JSX.Element {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="4" x2="20" y1="9" y2="9" />
-      <line x1="4" x2="20" y1="15" y2="15" />
-      <line x1="10" x2="8" y1="3" y2="21" />
-      <line x1="16" x2="14" y1="3" y2="21" />
-    </svg>
-  );
-}
-
-export function CopyButton({
-  onClick,
-  translations,
-}: {
-  onClick: () => void;
-  translations: AskAiScreenTranslations;
-}): JSX.Element {
-  const { copyButtonTitle = 'Copy', copyButtonCopiedText = 'Copied!' } = translations;
-
-  const [isCopied, setIsCopied] = useState(false);
-
-  useEffect(() => {
-    if (isCopied) {
-      const timer = setTimeout(() => {
-        setIsCopied(false);
-      }, 1500); // reset after 1.5 seconds
-      return (): void => clearTimeout(timer);
-    }
-    return undefined;
-  }, [isCopied]);
-
-  const handleClick = (): void => {
-    onClick();
-    setIsCopied(true);
-  };
-
-  return (
-    <button
-      type="button"
-      className={`DocSearch-AskAiScreen-ActionButton DocSearch-AskAiScreen-CopyButton ${
-        isCopied ? 'DocSearch-AskAiScreen-CopyButton--copied' : ''
-      }`}
-      disabled={isCopied} // disable button briefly after copy
-      title={isCopied ? copyButtonCopiedText : copyButtonTitle}
-      onClick={handleClick}
-    >
-      {isCopied ? (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="lucide lucide-check-icon lucide-check"
-        >
-          <path d="M20 6 9 17l-5-5" />
-        </svg>
-      ) : (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="lucide lucide-copy-icon lucide-copy"
-        >
-          <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
-          <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
-        </svg>
-      )}
-    </button>
-  );
-}
-
-export function LikeButton({ title, onClick }: { title: string; onClick: () => void }): JSX.Element {
-  return (
-    <button
-      type="button"
-      className="DocSearch-AskAiScreen-ActionButton DocSearch-AskAiScreen-LikeButton"
-      title={title}
-      onClick={onClick}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="lucide lucide-thumbs-up-icon lucide-thumbs-up"
-      >
-        <path d="M7 10v12" />
-        <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z" />
-      </svg>
-    </button>
-  );
-}
-
-export function DislikeButton({ title, onClick }: { title: string; onClick: () => void }): JSX.Element {
-  return (
-    <button
-      type="button"
-      className="DocSearch-AskAiScreen-ActionButton DocSearch-AskAiScreen-DislikeButton"
-      title={title}
-      onClick={onClick}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="lucide lucide-thumbs-down-icon lucide-thumbs-down"
-      >
-        <path d="M17 14V2" />
-        <path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z" />
-      </svg>
-    </button>
   );
 }

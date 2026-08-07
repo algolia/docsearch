@@ -1,6 +1,8 @@
 import React, { type JSX } from 'react';
 
+import { HitResultBadge } from './components/HitResultBadge';
 import { SelectIcon, SourceIcon } from './icons';
+import type { ResultsTranslations } from './Results';
 import { Results } from './Results';
 import type { ScreenStateProps } from './ScreenState';
 import type { InternalDocSearchHit } from './types';
@@ -9,13 +11,46 @@ import { removeHighlightTags } from './utils';
 export type ResultsScreenTranslations = Partial<{
   askAiPlaceholder: string;
   noResultsAskAiPlaceholder: string;
-}>;
+  resultsSectionTitle: string;
+  askAiResultsTitle: string;
+}> &
+  ResultsTranslations;
 
-type ResultsScreenProps = Omit<ScreenStateProps<InternalDocSearchHit>, 'translations'> & {
+type ResultsScreenProps = Omit<
+  ScreenStateProps<InternalDocSearchHit>,
+  'translations'
+> & {
   translations?: ResultsScreenTranslations;
 };
 
-export function ResultsScreen({ translations = {}, ...props }: ResultsScreenProps): JSX.Element {
+export function ResultsScreen({
+  translations = {},
+  resultBadgeKey,
+  ...props
+}: ResultsScreenProps): JSX.Element {
+  const renderAction = React.useCallback(() => {
+    return (
+      <div className="DocSearch-Hit-action">
+        <SelectIcon />
+      </div>
+    );
+  }, []);
+
+  const renderResultBadge = React.useCallback(
+    ({ item }: { item: InternalDocSearchHit }) => {
+      return (
+        <HitResultBadge
+          item={item}
+          resultBadgeKey={resultBadgeKey}
+          translations={{
+            resultBadgeLabelText: translations.resultBadgeLabelText,
+          }}
+        />
+      );
+    },
+    [resultBadgeKey, translations.resultBadgeLabelText]
+  );
+
   return (
     <div className="DocSearch-Dropdown-Container">
       {props.state.collections.map((collection) => {
@@ -43,7 +78,8 @@ export function ResultsScreen({ translations = {}, ...props }: ResultsScreenProp
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     >
-                      {item.__docsearch_parent !== collection.items[index + 1]?.__docsearch_parent ? (
+                      {item.__docsearch_parent !==
+                      collection.items[index + 1]?.__docsearch_parent ? (
                         <path d="M8 6v21M20 27H8.3" />
                       ) : (
                         <path d="M8 6v42M20 27H8.3" />
@@ -51,17 +87,13 @@ export function ResultsScreen({ translations = {}, ...props }: ResultsScreenProp
                     </g>
                   </svg>
                 )}
-
                 <div className="DocSearch-Hit-icon">
                   <SourceIcon type={item.type} />
                 </div>
               </>
             )}
-            renderAction={() => (
-              <div className="DocSearch-Hit-action">
-                <SelectIcon />
-              </div>
-            )}
+            renderAction={renderAction}
+            renderResultBadge={renderResultBadge}
           />
         );
       })}

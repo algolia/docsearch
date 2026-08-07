@@ -1,25 +1,32 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useDocSearchKeyboardEvents } from '@docsearch/core/useDocSearchKeyboardEvents';
+import type { DocSearchAskAiModal as DocSearchAskAiModalType } from '@docsearch/react/askaiModal';
 import { DocSearchButton } from '@docsearch/react/button';
-import type { DocSearchModal as DocSearchModalType } from '@docsearch/react/modal';
 import { useCallback, useRef, useState, type JSX } from 'react';
 import { createPortal } from 'react-dom';
 
-let DocSearchModal: typeof DocSearchModalType | null = null;
+import type { DemoTheme } from '../App';
+import { AGENT_ID, API_KEY, APP_ID, SEARCH_INDEX_NAME } from '../constants';
+
+let DocSearchModal: typeof DocSearchAskAiModalType | null = null;
 
 function importDocSearchModalIfNeeded(): Promise<void> {
   if (DocSearchModal) {
     return Promise.resolve();
   }
   // eslint-disable-next-line import/dynamic-import-chunkname
-  return Promise.all([import('@docsearch/react/modal')]).then(([{ DocSearchModal: Modal }]) => {
-    DocSearchModal = Modal;
-  });
+  return Promise.all([import('@docsearch/react/askaiModal')]).then(
+    ([{ DocSearchAskAiModal: Modal }]) => {
+      DocSearchModal = Modal;
+    }
+  );
 }
 
-function DocSearch(): JSX.Element {
+function DocSearch({ theme }: { theme: DemoTheme }): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
-  const [initialQuery, setInitialQuery] = useState<string | undefined>(undefined);
+  const [initialQuery, setInitialQuery] = useState<string | undefined>(
+    undefined
+  );
   const [isAskAiActive, setIsAskAiActive] = useState(false);
   const searchContainer = useRef<HTMLDivElement | null>(null);
   const searchButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -54,7 +61,7 @@ function DocSearch(): JSX.Element {
       setInitialQuery(event.key);
       openModal();
     },
-    [openModal],
+    [openModal]
   );
 
   const toggleAskAi = (active: boolean): void => {
@@ -76,6 +83,7 @@ function DocSearch(): JSX.Element {
       <DocSearchButton
         ref={searchButtonRef}
         translations={{ buttonText: 'Dynamic modal search' }}
+        theme={theme}
         onTouchStart={importDocSearchModalIfNeeded}
         onFocus={importDocSearchModalIfNeeded}
         onMouseOver={importDocSearchModalIfNeeded}
@@ -87,27 +95,27 @@ function DocSearch(): JSX.Element {
         searchContainer.current &&
         createPortal(
           <DocSearchModal
-            indexName="docsearch"
-            appId="PMZUYBQDAK"
-            apiKey="24b09689d5b4223813d9b8e48563c8f6"
-            askAi={{
-              assistantId: 'askAIDemo',
-              searchParameters: {
-                facetFilters: ['language:en'],
-              },
-            }}
+            indices={[SEARCH_INDEX_NAME]}
+            appId={APP_ID}
+            apiKey={API_KEY}
+            askAi={AGENT_ID}
             initialScrollY={window.scrollY}
             initialQuery={initialQuery}
             isAskAiActive={isAskAiActive}
+            theme={theme}
             onClose={closeModal}
             onAskAiToggle={toggleAskAi}
           />,
-          searchContainer.current,
+          searchContainer.current
         )}
     </>
   );
 }
 
-export default function DynamicImportModal(): JSX.Element {
-  return <DocSearch />;
+export default function DynamicImportModal({
+  theme,
+}: {
+  theme: DemoTheme;
+}): JSX.Element {
+  return <DocSearch theme={theme} />;
 }

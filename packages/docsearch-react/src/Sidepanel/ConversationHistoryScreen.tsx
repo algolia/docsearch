@@ -26,7 +26,10 @@ export const ConversationHistoryScreen = ({
     <div className="DocSearch-Sidepanel-ConversationHistoryScreen">
       <ul>
         {items.map((item) => (
-          <li key={item.objectID} className="DocSearch-Sidepanel-RecentConversation">
+          <li
+            key={item.objectID}
+            className="DocSearch-Sidepanel-RecentConversation"
+          >
             <a
               href={item.url}
               onClick={(e) => {
@@ -42,7 +45,9 @@ export const ConversationHistoryScreen = ({
                 </div>
 
                 <div className="DocSearch-Sidepanel-RecentConversation-content">
-                  <span className="DocSearch-Sidepanel-RecentConversation-title">{item.hierarchy.lvl1}</span>
+                  <span className="DocSearch-Sidepanel-RecentConversation-title">
+                    {item.hierarchy.lvl1}
+                  </span>
                 </div>
 
                 <div className="DocSearch-Hit-action">

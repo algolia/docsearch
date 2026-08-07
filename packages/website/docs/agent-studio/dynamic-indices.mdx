@@ -1,0 +1,72 @@
+---
+title: Configure dynamic indices
+description: Select Agent Studio search indices dynamically at runtime.
+---
+
+Pass `askAi.indices` when Agent Studio should search a specific set of indices for this request. This lets each DocSearch instance choose which indices the agent can use.
+
+This property isn't the same as the top-level `indices` property:
+
+- Top-level `indices` configures DocSearch keyword search. Entries are index names or objects with a `name` property.
+- `askAi.indices` configures Agent Studio search. Entries are index name strings.
+
+Agent Studio completions accept index names only. Put index descriptions and tool defaults on the agent configuration in Agent Studio. Put per-index runtime overrides in `askAi.searchParameters`.
+
+The agent's Algolia Search tool must use `mode: "dynamic"`. If the tool's static index list is empty, also enable `allowUnlistedIndices`.
+
+## Select indices
+
+```tsx title="Search.tsx"
+<DocSearchAI
+  appId="YOUR_APPLICATION_ID"
+  apiKey="YOUR_SEARCH_API_KEY"
+  indices={['docs']}
+  askAi={{
+    agentId: 'YOUR_AGENT_ID',
+    indices: ['docs_markdown', 'api_reference'],
+    searchParameters: {
+      docs_markdown: {
+        filters: 'visibility:public',
+        attributesToRetrieve: ['title', 'content', 'url'],
+      },
+      api_reference: {
+        distinct: false,
+      },
+    },
+  }}
+/>
+```
+
+### `indices`
+
+> `type: string[]` | **optional**
+
+Index names available to the Agent Studio search tool for this request. When omitted, Agent Studio uses the indices configured on the agent tool.
+
+## Set request-wide search parameters
+
+`askAi.searchParameters` is keyed by index name:
+
+```js title="docsearch.js"
+askAi: {
+  agentId: 'YOUR_AGENT_ID',
+  indices: ['docs_markdown'],
+  searchParameters: {
+    docs_markdown: {
+      filters: 'visibility:public',
+      attributesToRetrieve: ['title', 'content', 'url'],
+      distinct: false,
+    },
+  },
+}
+```
+
+Supported override fields are `filters`, `attributesToRetrieve`, `restrictSearchableAttributes`, `distinct`, `userToken`, `enablePersonalization`, `personalizationImpact`, and `optionalFilters`.
+
+Don't use the flat search-parameter shape from earlier DocSearch AI integrations.
+
+## Docusaurus validation
+
+The v5 Docusaurus adapter requires at least one string when you set `askAi.indices`. Contextual search merges version/language filters into `askAi.searchParameters[index].filters` for each dynamic index name.
+
+See the [React package reference](/docs/packages/react/api-reference) and [Docusaurus adapter guide](/docs/packages/docusaurus-adapter/getting-started) for the complete types.

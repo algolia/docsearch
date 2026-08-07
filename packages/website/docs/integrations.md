@@ -1,15 +1,16 @@
 ---
-title: Supported Integrations
+title: Supported integrations
+description: Find supported framework integrations for DocSearch.
 ---
 
-We worked with **documentation website generators** to have DocSearch directly embedded as a first class citizen in the websites they produce.
+Documentation frameworks can embed DocSearch in the websites they generate. A framework integration configures the frontend; your Algolia Crawler and index remain separate.
 
-## Our great integrations
+## Framework integrations
 
-So, if you're using one of the following tools, check out their documentation to see how to enable DocSearch on your website:
+If you use one of the following tools, follow its documentation to enable DocSearch. Framework documentation can target a different DocSearch frontend release, so check its package compatibility before adopting v5.
 
 - [Docusaurus v1][1] - [How to enable search][2]
-- [Docusaurus v2 & v3][3] - [DocSearch adapter (recommended)][23] / [Using Algolia DocSearch][4]
+- [Docusaurus v2 and v3][3] - [DocSearch v5 adapter][23] / [Using Algolia DocSearch][4]
 - [VuePress][5] - [Algolia Search][6]
 - [VitePress][21] - [Search][22]
 - [Starlight][7] - [Algolia Search][8]
@@ -20,7 +21,7 @@ So, if you're using one of the following tools, check out their documentation to
 - [Lotus Docs][19] - [Enabling the DocSearch Plugin][20]
 - [Sphinx](https://www.sphinx-doc.org/en/master/) - [Algolia DocSearch for Sphinx](https://sphinx-docsearch.readthedocs.io/)
 
-If you're maintaining a similar tool and want us to add you to the list, [feel free to make a pull request](https://github.com/algolia/docsearch/edit/main/packages/website/docs/integrations.md) and [contribute to Code Exchange](https://www.algolia.com/developers/code-exchange/contribute/). We're happy to help.
+If you maintain a similar tool and want us to add it to the list, [open a pull request](https://github.com/algolia/docsearch/edit/main/packages/website/docs/integrations.md) and [contribute to Code Exchange](https://www.algolia.com/developers/code-exchange/contribute/).
 
 [1]: https://v1.docusaurus.io/
 [2]: https://v1.docusaurus.io/docs/en/search
@@ -42,4 +43,4 @@ If you're maintaining a similar tool and want us to add you to the list, [feel f
 [20]: https://lotusdocs.dev/docs/guides/features/docsearch/#enabling-the-docsearch-plugin
 [21]: https://vitepress.dev/
 [22]: https://vitepress.dev/reference/default-theme-search#algolia-search
-[23]: /docs/docusaurus-adapter
+[23]: /docs/packages/docusaurus-adapter/getting-started

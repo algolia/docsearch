@@ -1,49 +1,136 @@
-/* fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sora:wght@100..800&display=swap');
+/* stylelint-disable @stylistic/function-parentheses-space-inside, @stylistic/indentation, @stylistic/string-quotes, declaration-block-no-duplicate-properties, no-duplicate-selectors, selector-max-compound-selectors, selector-max-id, selector-no-qualifying-type */
 
-@custom-variant dark (&:is([data-theme="dark"] *));
+/* fonts — MCP design system: Sora (display), Fraunces (editorial), JetBrains Mono (code) */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* tailwindcss */
+/* stylelint-disable-next-line import-notation */
+@import 'tailwindcss';
+
+@custom-variant dark (&:is([data-theme='dark'] *));
 
 :root {
-  --ifm-font-size-base: 16px;
+  color-scheme: light;
+
+  /* ─────────────────────────────────────────────────────────────
+     MCP design tokens (source: docsearch-mcp-crawler apps/docsearch).
+     Neutral ramp is a warm h≈75 (not pure gray) so brand blue stays
+     the only blue on the page. All color authored in OKLCH.
+     ───────────────────────────────────────────────────────────── */
+  --bg: #fff;
+  --surface: oklch(99.5% 0.001 75deg);
+  --surface-raised: oklch(99% 0.002 75deg);
+  --border: oklch(90.5% 0.005 75deg);
+  --border-strong: oklch(84.5% 0.008 75deg);
+
+  /* Public landing background: faint cool tint up top fading to white */
+  --page-grad-top: oklch(97.5% 0.007 265deg);
+  --page-grad-bottom: oklch(100% 0 0deg);
+  --text: oklch(20.5% 0.015 75deg);
+  --text-secondary: oklch(52% 0.012 75deg);
+  --text-tertiary: oklch(64% 0.008 75deg);
+
+  /* Home ambient glyph backdrop — alpha is the per-theme master strength */
+  --backdrop-glyph: oklch(55% 0.012 75deg / 40%);
+  --backdrop-glyph-accent: oklch(59.07% 0.2231 272deg / 85%);
+
+  /* Algolia blue #5468FF, authored in-gamut so it renders identically. */
+  --accent: oklch(59.07% 0.2231 272deg);
+  --accent-hover: oklch(26% 0.045 260deg);
+  --accent-light: oklch(94% 0.02 272deg);
+  --accent-text: oklch(99.5% 0.002 260deg);
+  --brand: oklch(59.07% 0.2231 272deg);
+  --brand-soft: oklch(94% 0.05 268deg);
+  --brand-ink: oklch(50.6% 0.095 279.5deg);
+  --success: oklch(52% 0.14 155deg);
+  --success-light: #e7f6ee;
+  --warning: oklch(62% 0.14 85deg);
+  --warning-light: oklch(95.5% 0.04 85deg);
+  --danger: oklch(52% 0.18 25deg);
+  --danger-light: oklch(96% 0.03 25deg);
+  --info: oklch(52% 0.14 245deg);
+  --info-light: oklch(95.5% 0.04 245deg);
+  --sidebar-bg: oklch(98.5% 0.002 75deg);
+  --sidebar-border: oklch(91.5% 0.005 75deg);
+  --dur-xs: 120ms;
+  --dur-sm: 200ms;
+  --dur-md: 320ms;
+  --dur-lg: 520ms;
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft-inout: cubic-bezier(0.4, 0, 0.2, 1);
+  --container: clamp(61rem, 54vw, 61rem);
+
+  /* ─────────────────────────────────────────────────────────────
+     Infima remap → MCP tokens (drives all Docusaurus chrome + docs)
+     ───────────────────────────────────────────────────────────── */
+  --ifm-font-size-base: 15px;
   --ifm-code-font-size: 90%;
-  --ifm-background-color: var(--white);
-  --ifm-color-primary: var(--nebula-500);
-  --ifm-footer-background-color: var(--grey-100);
-  --ifm-menu-color-background-active: var(--ifm-color-emphasis-200);
-  --ifm-announcement-bar-background-color: #21243d;
-  --background: var(--ifm-background-color);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  --ifm-font-family-base:
+    ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont,
+    'Segoe UI', sans-serif;
+  --ifm-heading-font-family: 'Sora', ui-sans-serif, system-ui, sans-serif;
+  --ifm-font-family-monospace:
+    'JetBrains Mono', ui-monospace, sfmono-regular, menlo, monaco, consolas,
+    monospace;
+  --ifm-background-color: var(--bg);
+  --ifm-background-surface-color: var(--surface);
+  --ifm-navbar-background-color: var(--surface);
+  --ifm-footer-background-color: var(--surface-raised);
+  --ifm-color-primary: #5468ff;
+  --ifm-color-primary-dark: #3c4fe0;
+  --ifm-color-primary-darker: #2b3cbb;
+  --ifm-color-primary-darkest: #1e2b8f;
+  --ifm-color-primary-light: #7c8aff;
+  --ifm-color-primary-lighter: #a3acff;
+  --ifm-color-primary-lightest: #cacfff;
+  --ifm-color-secondary: rgb(245 245 250);
+  --ifm-color-secondary-darker: rgb(90 94 154 / 100%);
+  --ifm-link-color: var(--brand-ink);
+  --ifm-link-hover-color: var(--brand);
+  --ifm-menu-color-active: var(--brand-ink);
+  --ifm-menu-color-background-active: var(--accent-light);
+  --ifm-navbar-link-hover-color: var(--text);
+  --ifm-heading-color: var(--text);
+  --ifm-font-color-base: var(--text);
+  --ifm-toc-border-color: var(--border);
+  --ifm-hr-border-color: var(--border);
+  --ifm-table-border-color: var(--border);
+  --ifm-color-emphasis-200: var(--border);
+  --ifm-color-emphasis-300: var(--border-strong);
+  --ifm-container-width-xl: 1415px;
+  --ifm-code-background: var(--surface-raised);
+  --ifm-pre-background: var(--surface-raised);
+  --ifm-code-border-radius: 6px;
+  --ifm-navbar-height: 4.5rem;
+  --ifm-announcement-bar-background-color: var(--brand);
+
+  /* shadcn / Tailwind token shim → mapped to MCP tokens (see @theme inline) */
+  --background: var(--bg);
+  --foreground: var(--text);
+  --card: var(--surface);
+  --card-foreground: var(--text);
+  --popover: var(--surface);
+  --popover-foreground: var(--text);
+  --primary: var(--brand);
+  --primary-foreground: oklch(99.5% 0.002 260deg);
+  --secondary: var(--surface-raised);
+  --secondary-foreground: var(--text);
+  --muted: var(--surface-raised);
+  --muted-foreground: var(--text-secondary);
+  --accent-foreground: oklch(99.5% 0.002 260deg);
+  --destructive: var(--danger);
+  --destructive-foreground: oklch(99.5% 0.002 75deg);
+  --input: var(--border);
+  --ring: var(--brand);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: var(--sidebar-bg);
+  --sidebar-foreground: var(--text);
+  --sidebar-primary: var(--brand);
+  --sidebar-primary-foreground: oklch(99.5% 0.002 260deg);
+  --sidebar-accent: var(--accent-light);
+  --sidebar-accent-foreground: var(--text);
+  --sidebar-ring: var(--brand);
   --transparent: transparent;
   --white: #fff;
   --grey-900: #23263b;
@@ -114,57 +201,81 @@
 }
 
 html[data-theme='dark'] {
-  --ifm-font-base-color: #dee0f2;
-  --ifm-navbar-link-hover-color: #8b9dff;
-  --ifm-link-color: #8b9dff;
-  --ifm-menu-color-active: #8b9dff;
-  --ifm-background-color: #0a141c;
-  --ifm-footer-background-color: #0a141c;
-  --ifm-navbar-background-color: #21243d;
-  --ifm-menu-color-background-active: #21243d;
-  --ifm-announcement-bar-background-color: var(--ifm-color-primary);
-  --background: var(--ifm-background-color);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+  color-scheme: dark;
+
+  /* Near-neutral warm ramp (same h≈75 family as light) — brand blue stays
+     the only blue. */
+  --bg: oklch(15.2% 0.004 75deg);
+  --surface: oklch(18.5% 0.005 75deg);
+  --surface-raised: oklch(21.5% 0.006 75deg);
+  --border: oklch(27% 0.006 75deg);
+  --border-strong: oklch(34% 0.008 75deg);
+  --page-grad-top: oklch(19.2% 0.005 75deg);
+  --page-grad-bottom: oklch(15.2% 0.004 75deg);
+  --text: oklch(93% 0.01 75deg);
+  --text-secondary: oklch(67% 0.012 75deg);
+  --text-tertiary: oklch(55% 0.01 75deg);
+  --backdrop-glyph: oklch(68% 0.012 75deg / 40%);
+  --backdrop-glyph-accent: oklch(71.47% 0.1579 271.9deg / 80%);
+  --accent: oklch(71.47% 0.1579 271.9deg);
+  --accent-hover: oklch(79% 0.12 271deg);
+  --accent-light: oklch(25% 0.05 272deg);
+  --accent-text: oklch(15% 0.015 260deg);
+  --brand: oklch(71.47% 0.1579 271.9deg);
+  --brand-soft: oklch(27% 0.08 270deg);
+  --brand-ink: oklch(73% 0.12 275deg);
+  --success: oklch(72% 0.15 155deg);
+  --success-light: oklch(26% 0.05 155deg);
+  --warning: oklch(78% 0.13 85deg);
+  --warning-light: oklch(26% 0.05 85deg);
+  --danger: oklch(72% 0.17 25deg);
+  --danger-light: oklch(26% 0.05 25deg);
+  --info: oklch(72% 0.13 245deg);
+  --info-light: oklch(26% 0.04 245deg);
+  --sidebar-bg: oklch(14% 0.004 75deg);
+  --sidebar-border: oklch(24% 0.005 75deg);
+
+  /* Infima dark remap */
+  --ifm-background-color: var(--bg);
+  --ifm-background-surface-color: var(--surface);
+  --ifm-navbar-background-color: var(--surface);
+  --ifm-footer-background-color: var(--surface-raised);
+  --ifm-color-primary: #8b9dff;
+  --ifm-color-primary-dark: #7c8aff;
+  --ifm-color-primary-darker: #6b7aff;
+  --ifm-color-primary-darkest: #5468ff;
+  --ifm-color-primary-light: #a3acff;
+  --ifm-color-primary-lighter: #b6bdff;
+  --ifm-color-primary-lightest: #cacfff;
+  --ifm-color-secondary: var(--surface-raised);
+  --ifm-color-secondary-darker: var(--text-secondary);
+  --ifm-font-base-color: var(--text);
+
+  /* shadcn shim (dark) */
+  --primary-foreground: oklch(15% 0.015 260deg);
+  --accent-foreground: oklch(15% 0.015 260deg);
+  --destructive-foreground: oklch(99.5% 0.002 75deg);
+}
+
+@theme {
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont,
+    'Segoe UI', sans-serif;
+  --font-display: 'Sora', ui-sans-serif, system-ui, sans-serif;
+  --font-editorial:
+    'Fraunces', 'Iowan Old Style', 'Apple Garamond', georgia, 'Times New Roman',
+    serif;
+  --font-mono:
+    'JetBrains Mono', ui-monospace, sfmono-regular, menlo, monaco, consolas,
+    monospace;
 }
 
 @theme inline {
-  /* Configure your theme variables here */
-  --font-display: 'Inter', 'sans-serif';
-  --font-title: 'Sora', 'sans-serif';
+  /* MCP display/title aliases kept for components that reference them */
+  --font-title: 'Sora', sans-serif;
   --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
-  --color-primary-500: oklch(0.84 0.18 117.33);
   --spacing: 0.25rem;
-  --color-background: var(--ifm-background-color);
+  --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
@@ -183,11 +294,10 @@ html[data-theme='dark'] {
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -207,6 +317,7 @@ html[data-theme='dark'] {
     opacity: 0;
     transform: translate(-72%, -62%) scale(0.5);
   }
+
   100% {
     opacity: 1;
     transform: translate(-50%, -40%) scale(1);
@@ -217,6 +328,7 @@ html[data-theme='dark'] {
   * {
     @apply border-border outline-ring/50;
   }
+
   article ul {
     list-style-type: disc;
   }
@@ -228,13 +340,31 @@ html[data-theme='dark'] {
   article li {
     margin-block-end: 0.5rem;
   }
+
   body {
     @apply bg-background text-foreground;
   }
 }
 
 html {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
+  font-feature-settings: 'ss01', 'cv11', 'cv01', 'ss02';
+}
+
+body {
+  font-feature-settings: 'ss01', 'cv11', 'cv01', 'ss02';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizelegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  letter-spacing: -0.02em;
 }
 
 /* override to fix some logo placement issues due to flex auto */
@@ -245,7 +375,7 @@ html {
 }
 
 /* DocSearch x Algolia logo */
-@media (max-width: 565px) {
+@media (width <= 565px) {
   .navbar__logo .docsearch-nav-logo {
     width: 15em;
     height: auto;
@@ -254,26 +384,26 @@ html {
 
   .theme-announcement-bar {
     font-size: 0.95rem !important;
-    padding: 0.5rem 0.5rem !important;
+    padding: 0.5rem !important;
   }
 }
 
 /* DocSearch x Algolia logo in sidebar */
-@media (min-width: 997px) {
+@media (width >= 997px) {
   .theme-doc-sidebar-container .docsearch-nav-logo {
     height: auto;
   }
 }
 
 .docusaurus-highlight-code-line {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgb(0 0 0 / 10%);
   display: block;
   margin: 0 calc(-1 * var(--ifm-pre-padding));
   padding: 0 var(--ifm-pre-padding);
 }
 
 html[data-theme='dark'] .docusaurus-highlight-code-line {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgb(0 0 0 / 30%);
 }
 
 .diagonal-box {
@@ -287,12 +417,12 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 /* hide on mobile */
 .theme-announcement-bar {
   z-index: 100;
-  min-height: 4rem !important;
+  min-height: 3rem !important;
   font-size: 1.1rem !important;
-  font-family: 'Sora', sans-serif !important;
+  font-family: Sora, sans-serif !important;
   font-weight: 400 !important;
   line-height: 1.5;
-  padding: 0.75rem 1rem !important;
+  padding: 0.5rem 1rem !important;
   background-color: var(--ifm-announcement-bar-background-color) !important;
   color: #fff !important;
   white-space: normal !important; /* Allow text to wrap */
@@ -304,7 +434,6 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   display: inline-block;
   white-space: nowrap;
   text-decoration: none !important;
-  border-radius: 0.5rem;
   margin-inline-start: 0.5rem;
   background-color: #fff !important;
   color: #21243d !important;
@@ -337,19 +466,19 @@ html[data-theme='dark'] .showcase {
 }
 
 .showcase-border {
-  border-color: rgba(243, 244, 246, 1);
+  border-color: rgb(243 244 246 / 100%);
 }
 
 html[data-theme='dark'] .showcase-border {
-  border-color: rgba(55, 65, 81, 1);
+  border-color: rgb(55 65 81 / 100%);
 }
 
 .text-description {
-  color: rgba(107, 114, 128, 1);
+  color: rgb(107 114 128 / 100%);
 }
 
 html[data-theme='dark'] .text-description {
-  color: rgba(209, 213, 219, 1);
+  color: rgb(209 213 219 / 100%);
 }
 
 .navbar--fixed-top {
@@ -359,17 +488,13 @@ html[data-theme='dark'] .text-description {
 /* apply */
 #hero-apply {
   z-index: -1;
-  background-image: linear-gradient(
-    var(--ifm-footer-background-color),
-    var(--ifm-navbar-background-color)
-  );
+  background-image: linear-gradient(var(--ifm-footer-background-color),
+  var(--ifm-navbar-background-color));
 }
 
 html[data-theme='dark'] #hero-apply {
-  background-image: linear-gradient(
-    var(--ifm-navbar-background-color),
-    var(--ifm-background-color)
-  );
+  background-image: linear-gradient(var(--ifm-navbar-background-color),
+  var(--ifm-background-color));
 }
 
 html[data-theme='dark'] #hero-apply > div:first-child {
@@ -382,11 +507,9 @@ html[data-theme='dark'] #hero-apply > div:first-child {
 }
 
 html[data-theme='dark'] .apply-form {
-  background-image: radial-gradient(
-    circle at 50% 0,
-    rgb(72, 76, 122),
-    rgb(35, 38, 59)
-  );
+  background-image: radial-gradient(circle at 50% 0,
+  rgb(72 76 122),
+  rgb(35 38 59));
 }
 
 .apply-text {
@@ -399,17 +522,13 @@ html[data-theme='dark'] .apply-text {
 
 /* index */
 #hero {
-  background-image: linear-gradient(
-    var(--ifm-footer-background-color),
-    var(--ifm-navbar-background-color)
-  );
+  background-image: linear-gradient(var(--ifm-footer-background-color),
+  var(--ifm-navbar-background-color));
 }
 
 html[data-theme='dark'] #hero {
-  background-image: linear-gradient(
-    var(--ifm-navbar-background-color),
-    var(--ifm-background-color)
-  );
+  background-image: linear-gradient(var(--ifm-navbar-background-color),
+  var(--ifm-background-color));
 }
 
 html[data-theme='dark'] #hero > div:first-child {
@@ -420,12 +539,12 @@ html[data-theme='dark'] #hero > div:first-child {
   * Hero component title overrides to match other heading styles
   */
 .hero-title {
-  color: rgb(28, 30, 33);
+  color: rgb(28 30 33);
   font-family: var(--ifm-heading-font-family);
 }
 
 html[data-theme='dark'] .hero-title {
-  color: rgb(227, 227, 227);
+  color: rgb(227 227 227);
 }
 
 .docsearch-logo {
@@ -447,16 +566,14 @@ html[data-theme='dark'] .docsearch-logo {
 
 .header-github-link::before {
   content: '';
-  width: 24px;
-  height: 24px;
+  width: 1.25rem;
+  height: 1.25rem;
   display: flex;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E")
-    no-repeat;
-}
-
-html[data-theme='dark'] .header-github-link::before {
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='white' d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E")
-    no-repeat;
+  background-color: currentcolor;
+  mask: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHN0cm9rZS13aWR0aD0iMS41IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgY29sb3I9ImN1cnJlbnRDb2xvciI+PHBhdGggZD0iTTE2IDIyLjAyNjhWMTkuMTU2OEMxNi4wMzc1IDE4LjY4IDE1Ljk3MzEgMTguMjAwNiAxNS44MTEgMTcuNzUwNkMxNS42NDg5IDE3LjMwMDYgMTUuMzkyOSAxNi44OTAyIDE1LjA2IDE2LjU0NjhDMTguMiAxNi4xOTY4IDIxLjUgMTUuMDA2OCAyMS41IDkuNTQ2NzlDMjEuNDk5NyA4LjE1MDYyIDIwLjk2MjcgNi44MDc5OSAyMCA1Ljc5Njc5QzIwLjQ1NTggNC41NzUzIDIwLjQyMzYgMy4yMjUxNCAxOS45MSAyLjAyNjc5QzE5LjkxIDIuMDI2NzkgMTguNzMgMS42NzY3OSAxNiAzLjUwNjc5QzEzLjcwOCAyLjg4NTYxIDExLjI5MiAyLjg4NTYxIDguOTk5OTkgMy41MDY3OUM2LjI2OTk5IDEuNjc2NzkgNS4wODk5OSAyLjAyNjc5IDUuMDg5OTkgMi4wMjY3OUM0LjU3NjM2IDMuMjI1MTQgNC41NDQxMyA0LjU3NTMgNC45OTk5OSA1Ljc5Njc5QzQuMDMwMTEgNi44MTU0OSAzLjQ5MjUxIDguMTcwMjYgMy40OTk5OSA5LjU3Njc5QzMuNDk5OTkgMTQuOTk2OCA2Ljc5OTk4IDE2LjE4NjggOS45Mzk5OCAxNi41NzY4QzkuNjEwOTggMTYuOTE2OCA5LjM1NzI1IDE3LjMyMjIgOS4xOTUyOSAxNy43NjY3QzkuMDMzMzQgMTguMjExMiA4Ljk2Njc5IDE4LjY4NDkgOC45OTk5OSAxOS4xNTY4VjIyLjAyNjgiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48cGF0aCBkPSJNOSAyMC4wMjY3QzYgMjAuOTk5OSAzLjUgMjAuMDI2NyAyIDE3LjAyNjciIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48L3N2Zz4=')
+    center / contain no-repeat;
+  mask: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHN0cm9rZS13aWR0aD0iMS41IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgY29sb3I9ImN1cnJlbnRDb2xvciI+PHBhdGggZD0iTTE2IDIyLjAyNjhWMTkuMTU2OEMxNi4wMzc1IDE4LjY4IDE1Ljk3MzEgMTguMjAwNiAxNS44MTEgMTcuNzUwNkMxNS42NDg5IDE3LjMwMDYgMTUuMzkyOSAxNi44OTAyIDE1LjA2IDE2LjU0NjhDMTguMiAxNi4xOTY4IDIxLjUgMTUuMDA2OCAyMS41IDkuNTQ2NzlDMjEuNDk5NyA4LjE1MDYyIDIwLjk2MjcgNi44MDc5OSAyMCA1Ljc5Njc5QzIwLjQ1NTggNC41NzUzIDIwLjQyMzYgMy4yMjUxNCAxOS45MSAyLjAyNjc5QzE5LjkxIDIuMDI2NzkgMTguNzMgMS42NzY3OSAxNiAzLjUwNjc5QzEzLjcwOCAyLjg4NTYxIDExLjI5MiAyLjg4NTYxIDguOTk5OTkgMy41MDY3OUM2LjI2OTk5IDEuNjc2NzkgNS4wODk5OSAyLjAyNjc5IDUuMDg5OTkgMi4wMjY3OUM0LjU3NjM2IDMuMjI1MTQgNC41NDQxMyA0LjU3NTMgNC45OTk5OSA1Ljc5Njc5QzQuMDMwMTEgNi44MTU0OSAzLjQ5MjUxIDguMTcwMjYgMy40OTk5OSA5LjU3Njc5QzMuNDk5OTkgMTQuOTk2OCA2Ljc5OTk4IDE2LjE4NjggOS45Mzk5OCAxNi41NzY4QzkuNjEwOTggMTYuOTE2OCA5LjM1NzI1IDE3LjMyMjIgOS4xOTUyOSAxNy43NjY3QzkuMDMzMzQgMTguMjExMiA4Ljk2Njc5IDE4LjY4NDkgOC45OTk5OSAxOS4xNTY4VjIyLjAyNjgiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48cGF0aCBkPSJNOSAyMC4wMjY3QzYgMjAuOTk5OSAzLjUgMjAuMDI2NyAyIDE3LjAyNjciIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48L3N2Zz4=')
+    center / contain no-repeat;
 }
 
 [data-theme='light'] .shiki.github-light {
@@ -507,8 +624,8 @@ html[data-theme='dark'] .header-github-link::before {
   background: linear-gradient(
     135deg,
     #5468ff 0%,
-    /* lighten brand colour */ color-mix(in srgb, #5468ff 70%, white) 50%,
-    /* soft highlight */ color-mix(in srgb, #5468ff 30%, white) 100%
+    color-mix(in srgb, #5468ff 70%, #fff) 50%,
+    color-mix(in srgb, #5468ff 30%, #fff) 100%
   );
 }
 
@@ -529,9 +646,9 @@ html[data-theme='dark'] .header-github-link::before {
   /* dark theme: deeper brand gradient */
   background: linear-gradient(
     135deg,
-    /* deep base */ color-mix(in srgb, #5468ff 80%, black) 0%,
-    /* mid tone */ color-mix(in srgb, #5468ff 60%, black) 50%,
-    /* highlight */ #5468ff 100%
+    color-mix(in srgb, #5468ff 80%, #000) 0%,
+    color-mix(in srgb, #5468ff 60%, #000) 50%,
+     #5468ff 100%
   );
 }
 
@@ -573,6 +690,7 @@ html[data-theme='dark'] .header-github-link::before {
 
 .key {
   --travel: 20; /* how far key travels when “pressed” */
+
   border: 0;
   background: transparent;
   padding: 0;
@@ -580,6 +698,7 @@ html[data-theme='dark'] .header-github-link::before {
   position: absolute;
   transform-style: preserve-3d;
   outline: none;
+
   --hue: 0;
   --saturate: 1;
   --bright: 1;
@@ -603,7 +722,7 @@ html[data-theme='dark'] .header-github-link::before {
 }
 
 .key__text {
-  font-family: 'Inter', sans-serif;
+  font-family: system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 300;
@@ -615,7 +734,7 @@ html[data-theme='dark'] .header-github-link::before {
   height: 70%;
   font-size: 2.2rem;
   z-index: 5;
-  color: hsl(0 0% 94%);
+  color: hsl(0deg 0% 94%);
   text-align: start;
   transform: rotateX(36deg) rotateY(45deg) rotateX(-90deg);
   pointer-events: none;
@@ -646,18 +765,16 @@ html[data-theme='dark'] .header-github-link::before {
   height: 46%;
   inset-block-end: 36%;
   inset-inline-start: 54%;
-  clip-path: polygon(
-    0 0,
-    54% 0,
-    89% 24%,
-    100% 70%,
-    54% 100%,
-    46% 100%,
-    0 69%,
-    12% 23%,
-    47% 0%
-  );
-  mask: url(https://assets.codepen.io/605876/keypad-single.png?format=auto&quality=100)
+  clip-path: polygon(0 0,
+  54% 0,
+  89% 24%,
+  100% 70%,
+  54% 100%,
+  46% 100%,
+  0 69%,
+  12% 23%,
+  47% 0%);
+  mask: url("https://assets.codepen.io/605876/keypad-single.png?format=auto&quality=100")
     50% 50% / 100% 100%;
 }
 
@@ -677,18 +794,16 @@ html[data-theme='dark'] .header-github-link::before {
   height: 65%;
   inset-inline-start: 6%;
   inset-block-end: 17.85%;
-  clip-path: polygon(
-    34% 0,
-    93% 44%,
-    101% 78%,
-    71% 100%,
-    66% 100%,
-    0 52%,
-    0 44%,
-    7% 17%,
-    30% 0
-  );
-  mask: url(https://assets.codepen.io/605876/keypad-double.png?format=auto&quality=100)
+  clip-path: polygon(34% 0,
+  93% 44%,
+  101% 78%,
+  71% 100%,
+  66% 100%,
+  0 52%,
+  0 44%,
+  7% 17%,
+  30% 0);
+  mask: url("https://assets.codepen.io/605876/keypad-double.png?format=auto&quality=100")
     50% 50% / 100% 100%;
 }
 
@@ -701,12 +816,11 @@ html[data-theme='dark'] .header-github-link::before {
 }
 
 /* fragments */
-@import 'tailwindcss';
 
 html[data-theme='light'] .shimmer-effect {
   background: linear-gradient(90deg, #3c4fe0 25%, #60a5fa 50%, #3c4fe0 75%);
   background-size: 200% 100%;
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shimmer 2s infinite linear;
 }
@@ -714,7 +828,7 @@ html[data-theme='light'] .shimmer-effect {
 html[data-theme='dark'] .shimmer-effect {
   background: linear-gradient(90deg, #3c4fe0 25%, #60a5fa 50%, #3c4fe0 75%);
   background-size: 200% 100%;
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shimmer 2s infinite linear;
 }
@@ -729,6 +843,7 @@ html[data-theme='dark'] .shimmer-effect {
   0% {
     background-position: 200% 0;
   }
+
   100% {
     background-position: -200% 0;
   }
@@ -738,36 +853,17 @@ html[data-theme='dark'] .shimmer-effect {
   @apply bg-neutral-100 dark:bg-zinc-800 py-16 rounded-2xl ring-1 ring-neutral-200 dark:ring-neutral-700 ring-offset-3 dark:ring-offset-neutral-900;
 }
 
-.footer__copyright--with-cookie-settings {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem 1.5rem;
-}
-
-.footer__copyright--with-cookie-settings .ot-sdk-show-settings {
-  background: transparent;
-  border: none;
-  color: var(--ifm-footer-link-color);
-  cursor: pointer;
-  font-size: var(--ifm-footer-link-font-size);
-  padding: 0;
-  text-decoration: underline;
-}
-
-.footer__copyright--with-cookie-settings .ot-sdk-show-settings:hover {
-  color: var(--ifm-footer-link-hover-color);
-  text-decoration: underline;
-}
-
 .DocSearch-Button:focus,
 .DocSearch-Button:hover {
   box-shadow:
-    rgba(0, 0, 0, 0.2) 0px 12px 28px 0px,
-    rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,
-    rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+    rgb(0 0 0 / 20%) 0 12px 28px 0,
+    rgb(0 0 0 / 10%) 0 2px 4px 0,
+    rgb(255 255 255 / 5%) 0 0 0 1px inset;
   border-color: #2563eb !important;
+}
+
+.badge--secondary {
+  color: var(--foreground);
 }
 
 @keyframes search-badge-glow {
@@ -775,6 +871,7 @@ html[data-theme='dark'] .shimmer-effect {
   100% {
     box-shadow: 0 2px 8px #2563eb33;
   }
+
   50% {
     box-shadow: 0 2px 16px #60a5fa88;
   }
@@ -797,4 +894,746 @@ html[data-theme='dark'] .shimmer-effect {
 /* SIDEPANEL */
 .DocSearch-Sidepanel-Title {
   margin-bottom: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   MCP DESIGN SYSTEM — utility classes, keyframes, terminal tokens
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+.font-editorial {
+  font-family: var(--font-editorial);
+  font-feature-settings: 'liga', 'dlig', 'kern', 'ss01';
+  font-variation-settings:
+    'SOFT' 100,
+    'WONK' 1,
+    'opsz' 144;
+  letter-spacing: -0.015em;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum', 'zero', 'cv11';
+}
+
+.app-container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2.25rem);
+}
+
+/* Hairline underline, grows from left on hover */
+
+/* Footer column lists. Tailwind utilities sit in `@layer utilities`, which the
+   cascade ranks below Infima's unlayered `ul { padding-left: … }` — so `p-0`
+   never applies and the links sit indented from their column heading. */
+.ds-footer-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link-underline {
+  background-image: linear-gradient(currentcolor, currentcolor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  transition: background-size var(--dur-xs) var(--ease-out-quart);
+}
+
+.link-underline:hover {
+  background-size: 100% 1px;
+}
+
+/* Focus ring uses Algolia brand blue — the single signature moment */
+.brand-focus:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--surface),
+    0 0 0 3px var(--brand);
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reveal-mask {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+  }
+
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 -2% 0);
+  }
+}
+
+@keyframes hairline-draw {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(0.85);
+  }
+}
+
+.reveal-up {
+  opacity: 0;
+  animation: reveal-up var(--dur-md) var(--ease-out-expo) forwards;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-mask {
+  opacity: 0;
+  animation: reveal-mask var(--dur-md) var(--ease-out-expo) forwards;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+.hairline-draw {
+  transform-origin: left center;
+  animation: hairline-draw var(--dur-lg) var(--ease-out-expo) 240ms forwards;
+}
+
+/* Hero shimmer + ring (editorial accent word) */
+.hero-ring {
+  border-radius: 50%;
+  border: 1px solid var(--brand);
+  animation: hero-ring-pulse 5s ease-in-out infinite;
+}
+
+@keyframes hero-ring-pulse {
+  0%,
+  100% {
+    opacity: 0;
+  }
+
+  35% {
+    opacity: 0.07;
+  }
+}
+
+.hero-fresh {
+  background: linear-gradient(105deg,
+  var(--brand-ink) 0%,
+  var(--brand) 50%,
+  var(--brand-ink) 100%);
+  background-size: 200% auto;
+  background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: hero-shimmer 5s linear 0.5s infinite;
+}
+
+[data-theme='dark'] .hero-fresh {
+  background-image: linear-gradient(105deg,
+  var(--brand) 0%,
+  oklch(86% 0.09 272deg) 50%,
+  var(--brand) 100%);
+}
+
+@keyframes hero-shimmer {
+  from {
+    background-position: 0% center;
+  }
+
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Install command chip: a dark "terminal" panel in both themes. Colors are
+   explicit (not derived from --text/--surface) so the pill reads the same on a
+   light page/card as it does in dark mode instead of collapsing into the card. */
+:root {
+  --term-bg: #fff;
+  --term-border: oklch(87% 0 0deg);
+  --term-fg: oklch(41% 0 0deg);
+  --term-fg-muted: oklch(72% 0.008 75deg);
+  --term-btn-bg: color-mix(in oklch, #a9abe7 50%, transparent);
+  --term-btn-bg-hover: color-mix(in oklch, #a9abe7 20%, transparent);
+  --term-btn-border: color-mix(in oklch, #a9abe7 16%, transparent);
+}
+
+[data-theme='dark'] {
+  --term-bg: oklch(23.5% 0.006 75deg);
+  --term-border: var(--border-strong);
+  --term-fg: var(--text);
+  --term-fg-muted: var(--text-secondary);
+  --term-btn-bg: color-mix(in oklch, #fff 6%, transparent);
+  --term-btn-bg-hover: color-mix(in oklch, #fff 12%, transparent);
+  --term-btn-border: var(--border-strong);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+  }
+
+  .animate-spin {
+    animation-duration: 1s !important;
+    animation-iteration-count: infinite !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   FULL DOCS RESTYLE — chrome + reading experience via Infima + component CSS
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Navbar: hairline + soft blur to match MCP header */
+.navbar {
+  border-bottom: 1px solid var(--border);
+  box-shadow: none;
+  backdrop-filter: saturate(1.1) blur(6px);
+  background-color: color-mix(in oklch, var(--surface) 90%, transparent);
+}
+
+/* Mobile: the slide-in navbar sidebar is `position: fixed`, so any filter on
+   `.navbar` turns it into the sidebar's containing block and traps the panel
+   inside the ~4.5rem navbar box (hamburger appears to "do nothing"). Drop the
+   blur and lift above the announcement bar (z-index: 100) while it's open. */
+.navbar.navbar-sidebar--show {
+  backdrop-filter: none;
+  backdrop-filter: none;
+  z-index: 200;
+}
+
+/* Full-width drawer on mobile so the open menu fully covers the header instead
+   of leaving a strip where the (overflowing) search + Ask AI buttons peek out.
+   Override the Infima variable (not just `width`) — panel widths and the
+   secondary-menu translate both use `--ifm-navbar-sidebar-width`, so setting
+   `width: 100%` alone leaves the "← Back to main menu" panel peeking ~17vw. */
+@media (width <= 996px) {
+  :root {
+    --ifm-navbar-sidebar-width: 100%;
+  }
+}
+
+.navbar__link {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  letter-spacing: -0.01em;
+  color: var(--text-secondary);
+}
+
+.navbar__link:hover,
+.navbar__link--active {
+  color: var(--text);
+}
+
+/* Optically center the dropdown menu's caret */
+.dropdown > .navbar__link::after {
+  top: 0;
+}
+
+/* Brand lockup (swizzled Navbar/Logo) */
+.ds-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 131px;
+  color: var(--text);
+}
+
+.ds-brand:hover {
+  color: var(--text);
+}
+
+.ds-brand__mark {
+  height: 1.5rem;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.ds-brand__lockup {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.ds-brand__word {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.ds-brand__by {
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--text-tertiary);
+}
+
+.ds-brand__algolia {
+  height: 10px;
+  width: auto;
+}
+
+/* Algolia wordmark is a fixed blue; invert nothing but lift slightly in dark */
+[data-theme='dark'] .ds-brand__algolia {
+  filter: brightness(1.35);
+}
+
+/* Neutralize legacy full-width logo flex now that the lockup renders inline */
+.navbar__brand.ds-brand {
+  flex: 0 0 auto;
+  margin-inline-end: 1rem;
+}
+
+/* Homepage keeps the hero clean: hide the navbar search entry on Desktop. */
+@media (width > 768px) {
+  .homepage [class*='navbarSearchContainer'] {
+    display: none;
+  }
+}
+
+/* Position sign up CTA as last item in navbar, remove absolute positioning */
+.navbar__inner [class*='navbarSearchContainer'] {
+  order: 1;
+  position: static;
+  right: 0;
+}
+
+/* "Sign up" primary CTA (brand fill + inset highlight, like the MCP button) */
+.navbar-cta.navbar__link {
+  display: inline-flex;
+  align-items: center;
+  height: 2rem;
+  padding-inline: 0.85rem;
+  margin-block: 0;
+  margin-inline: 0.75rem 0;
+  border-radius: 8px;
+  background: var(--brand);
+  color: var(--white);
+  font-weight: 600;
+  box-shadow:
+    0 1px 0 0 rgb(255 255 255 / 8%) inset,
+    0 1px 2px 0 rgb(16 24 40 / 12%);
+  transition: background var(--dur-xs) var(--ease-out-quart);
+  order: 1;
+}
+
+.navbar-cta.navbar__link:hover {
+  background: var(--brand-ink);
+  color: oklch(99.5% 0.002 260deg) !important;
+}
+
+/* Homepage only: keep Sign up visible + right-aligned in the mobile header.
+   Docs pages already pack Search + Ask AI into that slot — forcing the CTA
+   there overlaps them. Infima's mobile hide is `.navbar__item`, which loses to
+   the two-class `display` rule above, so restate it here before re-showing the
+   CTA on the homepage (the only place the navbar search is hidden). */
+@media (width <= 996px) {
+  .navbar-cta.navbar__link {
+    display: none;
+  }
+
+  .homepage .navbar__item.navbar-cta {
+    display: inline-flex;
+    order: 1;
+    margin: 0;
+    margin-inline-start: 0.5rem;
+  }
+
+  .homepage .navbar-cta.navbar__link {
+    margin: 0;
+  }
+}
+
+/* MCP is served at the same origin. */
+.navbar-mcp-link svg {
+  display: none;
+}
+
+/* Add spacing now that toggle is not treated as last child */
+[class*="colorModeToggle"] {
+  margin-inline: 0.75rem;
+}
+
+/* Color-mode control: replace Docusaurus' light/dark/system SVGs with a single
+   Phosphor glyph (sun on light, moon on dark, theme circle on system). The toggle is 3-state, so every
+   built-in icon — including the active `system` one — must be forced off. */
+button[class*='toggleButton'] {
+  --navbar-theme-icon: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHN0cm9rZS13aWR0aD0iMS41IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgY29sb3I9ImN1cnJlbnRDb2xvciI+PHBhdGggZD0iTTEyIDE4QzE1LjMxMzcgMTggMTggMTUuMzEzNyAxOCAxMkMxOCA4LjY4NjI5IDE1LjMxMzcgNiAxMiA2QzguNjg2MjkgNiA2IDguNjg2MjkgNiAxMkM2IDE1LjMxMzcgOC42ODYyOSAxOCAxMiAxOFoiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48cGF0aCBkPSJNMjIgMTJMMjMgMTIiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48cGF0aCBkPSJNMTIgMlYxIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48L3BhdGg+PHBhdGggZD0iTTEyIDIzVjIyIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48L3BhdGg+PHBhdGggZD0iTTIwIDIwTDE5IDE5IiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48L3BhdGg+PHBhdGggZD0iTTIwIDRMMTkgNSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PC9wYXRoPjxwYXRoIGQ9Ik00IDIwTDUgMTkiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48cGF0aCBkPSJNNCA0TDUgNSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PC9wYXRoPjxwYXRoIGQ9Ik0xIDEyTDIgMTIiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvcGF0aD48L3N2Zz4=');
+}
+
+html[data-theme='dark'] button[class*='toggleButton'] {
+  --navbar-theme-icon: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHN0cm9rZS13aWR0aD0iMS41IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgY29sb3I9ImN1cnJlbnRDb2xvciI+PHBhdGggZD0iTTMgMTEuNTA2NkMzIDE2Ljc0OTcgNy4yNTAzNCAyMSAxMi40OTM0IDIxQzE2LjIyMDkgMjEgMTkuNDQ2NiAxOC44NTE4IDIxIDE1LjcyNTlDMTIuNDkzNCAxNS43MjU5IDguMjc0MTEgMTEuNTA2NiA4LjI3NDExIDNDNS4xNDgyMSA0LjU1MzQ0IDMgNy43NzkxNSAzIDExLjUwNjZaIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48L3BhdGg+PC9zdmc+');
+}
+
+html[data-theme-choice='system'] button[class*='toggleButton'] {
+  --navbar-theme-icon: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0iIzAwMDAwMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik0xMjgsMjRBMTA0LDEwNCwwLDEsMCwyMzIsMTI4LDEwNC4xMSwxMDQuMTEsMCwwLDAsMTI4LDI0Wm04LDE2LjM3YTg2LjQsODYuNCwwLDAsMSwxNiwzVjIxMi42N2E4Ni40LDg2LjQsMCwwLDEtMTYsM1ptMzIsOS4yNmE4Ny44MSw4Ny44MSwwLDAsMSwxNiwxMC41NFYxOTUuODNhODcuODEsODcuODEsMCwwLDEtMTYsMTAuNTRaTTQwLDEyOGE4OC4xMSw4OC4xMSwwLDAsMSw4MC04Ny42M1YyMTUuNjNBODguMTEsODguMTEsMCwwLDEsNDAsMTI4Wm0xNjAsNTAuNTRWNzcuNDZhODcuODIsODcuODIsMCwwLDEsMCwxMDEuMDhaIj48L3BhdGg+PC9zdmc+');
+}
+
+button[class*='toggleButton'] svg[class*='toggleIcon'] {
+  display: none !important;
+}
+
+button[class*='toggleButton']::before {
+  content: '';
+  display: block;
+  width: 1.15rem;
+  height: 1.15rem;
+  background-color: currentcolor;
+  mask: var(--navbar-theme-icon) center / contain no-repeat;
+  mask: var(--navbar-theme-icon) center / contain no-repeat;
+}
+
+/* Sidebar */
+.theme-doc-sidebar-container {
+  border-right: 1px solid var(--border) !important;
+  background-color: var(--sidebar-bg);
+}
+
+.menu {
+  font-size: 0.86rem;
+}
+
+.menu__link {
+  border-radius: 8px;
+  color: var(--text-secondary);
+  transition:
+    color var(--dur-xs) var(--ease-out-quart),
+    background-color var(--dur-xs) var(--ease-out-quart);
+}
+
+.menu__link:hover {
+  background-color: var(--surface-raised);
+  color: var(--text);
+}
+
+.menu__link--active {
+  color: var(--brand-ink);
+  background-color: var(--accent-light);
+  font-weight: 600;
+}
+
+.menu__list-item-collapsible:hover {
+  background-color: var(--surface-raised);
+}
+
+/* Article prose (adapted from MCP .knowledge-prose) */
+.theme-doc-markdown .markdown h1,
+.theme-doc-markdown .markdown h2,
+.theme-doc-markdown .markdown h3,
+.theme-doc-markdown .markdown h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.theme-doc-markdown .markdown a:not(.card, .button) {
+  color: var(--brand-ink);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklch, var(--brand-ink) 35%, transparent);
+  text-underline-offset: 2px;
+}
+
+.theme-doc-markdown .markdown a:not(.card, .button):hover {
+  text-decoration-color: var(--brand-ink);
+}
+
+.theme-doc-markdown .markdown blockquote {
+  border-left: 2px solid var(--border-strong);
+  background: transparent;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.theme-doc-markdown .markdown table th {
+  background: var(--bg);
+  font-weight: 600;
+}
+
+.theme-doc-markdown .markdown table th,
+.theme-doc-markdown .markdown table td {
+  border: 1px solid var(--border);
+}
+
+.theme-doc-markdown .markdown img {
+  border-radius: 8px;
+}
+
+/* Inline + block code */
+code {
+  font-family: var(--font-mono);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface-raised);
+}
+
+.theme-code-block,
+div[class*='codeBlockContainer'] {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.theme-code-block pre,
+div[class*='codeBlockContainer'] pre {
+  border-radius: 0;
+}
+
+pre code {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+/* Admonitions → tone-tinted MCP cards */
+.theme-admonition {
+  border-radius: 10px;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.theme-admonition-note,
+.theme-admonition-info {
+  border-color: color-mix(in oklch, var(--info) 30%, transparent);
+  background: var(--info-light);
+}
+
+.theme-admonition-tip,
+.theme-admonition-success {
+  border-color: color-mix(in oklch, var(--success) 30%, transparent);
+  background: var(--success-light);
+}
+
+.theme-admonition-warning,
+.theme-admonition-caution {
+  border-color: color-mix(in oklch, var(--warning) 30%, transparent);
+  background: var(--warning-light);
+}
+
+.theme-admonition-danger {
+  border-color: color-mix(in oklch, var(--danger) 30%, transparent);
+  background: var(--danger-light);
+}
+
+/* Table of contents */
+.table-of-contents {
+  font-size: 0.78rem;
+  border-left: 1px solid var(--border);
+}
+
+.table-of-contents__link {
+  color: var(--text-tertiary);
+}
+
+.table-of-contents__link:hover,
+.table-of-contents__link--active {
+  color: var(--brand-ink);
+}
+
+/* Pagination cards */
+.pagination-nav__link {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: border-color var(--dur-xs) var(--ease-out-quart);
+}
+
+.pagination-nav__link:hover {
+  border-color: var(--border-strong);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Trusted-by logo marquee — two rows drifting in opposite directions
+   ═══════════════════════════════════════════════════════════════════════ */
+.logo-marquee {
+  /* Single source of truth for spacing so the loop seam stays invisible:
+     the trailing gap after a group must equal the gap between logos. */
+  --logo-gap: clamp(2.5rem, 6vw, 4.5rem);
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.logo-marquee-row {
+  overflow: hidden;
+  mask-image: linear-gradient(to right,
+  transparent,
+    #000 10%,
+    #000 90%,
+  transparent);
+  mask-image: linear-gradient(to right,
+  transparent,
+    #000 10%,
+    #000 90%,
+  transparent);
+}
+
+.logo-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: logo-marquee-scroll var(--marquee-duration, 45s) linear infinite;
+}
+
+.logo-marquee-track--reverse {
+  animation-direction: reverse;
+}
+
+.logo-marquee-row:hover .logo-marquee-track {
+  animation-play-state: paused;
+}
+
+.logo-marquee-group {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--logo-gap);
+  padding-right: var(--logo-gap);
+}
+
+.logo-marquee-item {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  height: 3.5rem;
+}
+
+.logo-marquee-item img {
+  display: block;
+  height: 1.875rem;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.6;
+  transition:
+    filter var(--dur-sm) var(--ease-out-quart),
+    opacity var(--dur-sm) var(--ease-out-quart);
+}
+
+.logo-marquee-item:hover img {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+/* Dark mode: the dark-ink marks (Vite, Vue, Remix, Markdoc, Expo, Homebrew…)
+   vanish against the dark surface, and inverting them is not an option because
+   several rely on knocked-out white shapes that flatten into solid blobs. Sit
+   each logo on a light chip instead so every mark keeps its real artwork and
+   the grayscale/hover treatment behaves exactly as it does in light mode. */
+[data-theme='dark'] .logo-marquee {
+  /* Chips carry their own padding, so tighten the run. Driving this through the
+     variable keeps the gap and the group's trailing gap in sync (loop seam). */
+  --logo-gap: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+[data-theme='dark'] .logo-marquee-item {
+  height: 3.25rem;
+  padding-inline: 1.125rem;
+  border: 1px solid oklch(100% 0 0deg / 5%);
+  border-radius: 14px;
+
+  /* Dim enough to recede into the section, still light enough that the
+     dark-ink marks keep their contrast. Hover lifts it toward white. */
+  background: oklch(88% 0.003 75deg / 42%);
+}
+
+[data-theme='dark'] .logo-marquee-item:hover {
+  background: oklch(97% 0.002 75deg / 90%);
+}
+
+/* The dimmer chip needs a touch more ink to stay legible. */
+[data-theme='dark'] .logo-marquee-item img {
+  opacity: 0.72;
+}
+
+[data-theme='dark'] .logo-marquee-item:hover img {
+  opacity: 1;
+}
+
+@keyframes logo-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-marquee-track {
+    animation: none;
+    transform: none;
+  }
+}
+
+.dropdown__menu {
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+/* Footer copyright */
+
+.footer__copyright #ot-sdk-btn.ot-sdk-show-settings {
+  background-color: transparent;
+  border: 0;
+  color: var(--ifm-footer-link-color);
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.footer__copyright #ot-sdk-btn.ot-sdk-show-settings:hover {
+  color: var(--ifm-footer-link-hover-color);
+  text-decoration: underline;
+}
+
+.footer__copyright #ot-sdk-btn.ot-sdk-show-settings:active {
+  background-color: transparent;
+  color: var(--ifm-footer-link-hover-color);
+  border: 0;
 }
