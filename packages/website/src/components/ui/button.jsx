@@ -1,7 +1,7 @@
 import React from 'react';
 
 const BASE =
-  'relative inline-flex h-10 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-4 text-sm font-medium no-underline! transition-all duration-150 active:scale-[0.97]';
+  'relative inline-flex h-10 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-4 text-sm font-medium no-underline! transition-all duration-150 motion-reduce:duration-0 active:scale-[0.97]';
 
 // Outline / secondary
 export const Button = ({ children, href, className = '', ...props }) => {

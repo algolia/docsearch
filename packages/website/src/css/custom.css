@@ -442,6 +442,12 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   transition: all 0.2s ease-in-out;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .theme-announcement-bar a {
+    transition-duration: 0s;
+  }
+}
+
 .theme-announcement-bar a:hover,
 .theme-announcement-bar a:focus-visible {
   background-color: var(--ifm-color-primary);
@@ -712,6 +718,12 @@ html[data-theme='dark'] .docsearch-logo {
   transition: translate 0.12s ease-out;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .key__content {
+    transition-duration: 0s;
+  }
+}
+
 .key__text {
   font-family: system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -822,6 +834,12 @@ html[data-theme='dark'] .shimmer-effect {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shimmer 2s infinite linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmer-effect {
+    animation-duration: 0s;
+  }
 }
 
 @keyframes shimmer {
