@@ -1,6 +1,6 @@
 ---
 title: Modal API reference
-description: API reference for @docsearch/modal v5 beta.
+description: API reference for @docsearch/modal v5.
 ---
 
 ## `DocSearchButton`
@@ -41,15 +41,9 @@ Public API key with search permission.
 
 > `type: Array<string | DocSearchIndex>` | **required**
 
-Indices to search. You can omit this prop only if you use the deprecated [`indexName`](#indexname).
+The list of indices and their optional configuration used for search.
 
 ### Search props
-
-#### `indexName`
-
-> `type: string` | **optional** | **deprecated**
-
-Sets one index to search. Use [`indices`](#indices) instead.
 
 #### `facets`
 
@@ -62,12 +56,6 @@ Adds filter controls that use facet values from the configured indices. Defaults
 > `type: string` | **optional**
 
 Sets the search input placeholder. Defaults to `Search docs`. A translation can override this value.
-
-#### `searchParameters`
-
-> `type: SearchParamsObject` | **optional** | **deprecated**
-
-Merges parameters into search requests. Set parameters on each [`indices`](#indices) entry instead.
 
 #### `maxResultsPerGroup`
 
@@ -213,7 +201,7 @@ The component receives its active state and close behavior from `DocSearch`. It 
 
 The object form of [`askAi`](#askai). It accepts the following fields.
 
-### `assistantId`
+### `agentId`
 
 > `type: string` | **required**
 
@@ -230,12 +218,6 @@ Overrides the root `appId` for Agent Studio.
 > `type: string` | **optional**
 
 Overrides the root `apiKey` for Agent Studio.
-
-### `indexName`
-
-> `type: string` | **optional**
-
-Sets the index for conversation storage and Agent Studio requests. Defaults to the first root index.
 
 ### `suggestedQuestions`
 

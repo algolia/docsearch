@@ -1,18 +1,12 @@
 ---
 title: Sidepanel package
-description: Add the v5 beta Agent Studio Sidepanel to a React application.
+description: Add the DocSearch Sidepanel to a React application.
 ---
 
 import TabItem from '@theme/TabItem';
 import Tabs from '@theme/Tabs';
 
 `@docsearch/sidepanel` provides composable React components for an Agent Studio chat panel.
-
-:::info v5 beta
-
-These instructions use the `^5` range. Use the same range for every DocSearch package.
-
-:::
 
 ## Install
 
@@ -65,15 +59,14 @@ export function HelpAssistant() {
       <Sidepanel
         appId="YOUR_APPLICATION_ID"
         apiKey="YOUR_SEARCH_API_KEY"
-        assistantId="YOUR_AGENT_ID"
-        indexName="YOUR_INDEX_NAME"
+        agentId="YOUR_AGENT_ID"
       />
     </DocSearch>
   );
 }
 ```
 
-Use a search-only API key. The `assistantId` is an Agent Studio agent ID. V5 doesn't provide the legacy Ask AI backend or an `agentStudio` switch.
+Use a search-only API key. The `agentId` is an Agent Studio agent ID. V5 doesn't provide the legacy Ask AI backend or an `agentStudio` switch.
 
 The default button and panel float over the page. Press `Control+I` or `Command+I` to toggle the panel, and press `Escape` to close it.
 
@@ -92,8 +85,7 @@ Set the theme and lifecycle callbacks on `DocSearch`.
   <Sidepanel
     appId="YOUR_APPLICATION_ID"
     apiKey="YOUR_SEARCH_API_KEY"
-    assistantId="YOUR_AGENT_ID"
-    indexName="YOUR_INDEX_NAME"
+    agentId="YOUR_AGENT_ID"
   />
 </DocSearch>
 ```

@@ -117,22 +117,6 @@ The v5 adapter reads `themeConfig.docsearch` and rejects the former `themeConfig
 
 Replace `searchPagePath` with `searchPage`. Move `askAi.sidePanel` to the root `sidePanel` option. Remove legacy Ask AI credentials and the `askAi.agentStudio` switch. Follow [Migrate the Docusaurus adapter from v4](/docs/packages/docusaurus-adapter/migrating-from-v4) for before-and-after configurations.
 
-### At least one index is required at runtime
-
-Pass `indices` or `indexName`. V5 throws this error when neither produces an index:
-
-```text
-Must supply either `indexName` or `indices` for DocSearch to work
-```
-
-### `indexName` remains deprecated
-
-`indexName` still works; it isn't removed in v5. If present, DocSearch places it before all `indices` entries. Passing the same index through both options sends duplicate requests.
-
-### Root `searchParameters` remains deprecated
-
-The root option applies only to `indexName`. Move search parameters to each `DocSearchIndex` in `indices`.
-
 ### Multiple indices share one result flow
 
 V5 creates one source for each index response and combines hit totals across responses. Result order follows the normalized index order. Review code that assumes one index or source identifier.
@@ -211,11 +195,11 @@ See [hybrid mode](/docs/hybrid-mode) for the supported integration.
 
 ### Package versions must match
 
-The `5` packages depend on matching beta versions of the other DocSearch packages. Don't mix v4 and v5 packages in a Composable API or Sidepanel tree.
+The `v5` packages depend on matching versions of the other DocSearch packages. Don't mix v4 and v5 packages in a Composable API or Sidepanel tree.
 
 ### CSS remains a separate install for top-level integrations
 
-Install `@docsearch/css@^5`, then import `@docsearch/css`. For a CDN integration, load `dist/style.css` from the same caret beta range.
+Install `@docsearch/css@^5`, then import `@docsearch/css`. For a CDN integration, load `@docsearch/css/dist/style.css`.
 
 ## Additive v5 APIs
 

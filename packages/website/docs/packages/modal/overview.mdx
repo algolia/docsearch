@@ -8,13 +8,7 @@ import Tabs from '@theme/Tabs';
 
 `@docsearch/modal` provides the DocSearch search button, keyword-search modal, and Agent Studio-enabled modal for React. Render these components inside the `DocSearch` provider from `@docsearch/core`.
 
-:::info v5 beta
-
-These instructions use the `^5` range. Use the same range for every DocSearch package.
-
-:::
-
-For the complete component workflow, see the [Composable API guide](/docs/composable-api).
+For the complete component workflow, see the [Composable API guide](../../composable-api).
 
 ## Install
 
@@ -77,7 +71,7 @@ Use a search-only API key. Don't expose an Algolia Admin API key in browser code
 
 ## Add Agent Studio
 
-In v5, Ask AI uses Agent Studio. Pass an Agent Studio agent ID through `askAi.assistantId`. There's no `agentStudio` boolean in the v5 API.
+In v5, Ask AI uses Agent Studio. Pass an Agent Studio agent ID through `askAi`. There's no `agentStudio` boolean in the v5 API.
 
 ```tsx title="Search.tsx"
 import { DocSearch } from '@docsearch/core';
@@ -93,9 +87,7 @@ export function Search() {
         appId="YOUR_APPLICATION_ID"
         apiKey="YOUR_SEARCH_API_KEY"
         indices={['YOUR_INDEX_NAME']}
-        askAi={{
-          assistantId: 'YOUR_AGENT_ID',
-        }}
+        askAi="YOUR_AGENT_ID"
       />
     </DocSearch>
   );

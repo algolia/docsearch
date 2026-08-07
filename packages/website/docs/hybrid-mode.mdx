@@ -96,8 +96,7 @@ interface HybridSearchProps {
   appId: string;
   apiKey: string;
   keywordIndexName: string;
-  askAiIndexName: string;
-  assistantId: string;
+  agentId: string;
   onReady?: () => void;
   onOpen?: () => void;
   onClose?: () => void;
@@ -109,8 +108,7 @@ export function HybridSearch({
   appId,
   apiKey,
   keywordIndexName,
-  askAiIndexName,
-  assistantId,
+  agentId,
   onReady,
   onOpen,
   onClose,
@@ -130,15 +128,14 @@ export function HybridSearch({
         appId={appId}
         apiKey={apiKey}
         indices={[keywordIndexName]}
-        askAi={{ assistantId }}
+        askAi={{ agentId }}
       />
 
       <SidepanelButton />
       <Sidepanel
         appId={appId}
         apiKey={apiKey}
-        indexName={askAiIndexName}
-        assistantId={assistantId}
+        agentId={agentId}
       />
     </DocSearch>
   );
@@ -146,8 +143,6 @@ export function HybridSearch({
 ```
 
 `SidepanelButton` gives users a direct Ask AI entry point. You can omit it without disabling hybrid handoff. Keep `Sidepanel` mounted so it can register before a user submits an Ask AI request.
-
-Use the same index name for `keywordIndexName` and `askAiIndexName` when one index serves both experiences. Pass different names when your Agent Studio setup uses a dedicated content index.
 
 #### React lifecycle callbacks
 
@@ -242,8 +237,7 @@ import '@docsearch/css/dist/sidepanel.css';
 const appId = 'YOUR_APP_ID';
 const apiKey = 'YOUR_SEARCH_API_KEY';
 const keywordIndexName = 'YOUR_KEYWORD_INDEX_NAME';
-const askAiIndexName = 'YOUR_ASK_AI_INDEX_NAME';
-const assistantId = 'YOUR_ASSISTANT_ID';
+const agentId = 'YOUR_AGENT_ID';
 const mobileQuery = window.matchMedia('(max-width: 768px)');
 
 let search: DocSearchInstance | undefined;
@@ -253,8 +247,7 @@ panel = sidepanel({
   container: '#docsearch-sidepanel',
   appId,
   apiKey,
-  indexName: askAiIndexName,
-  assistantId,
+  agentId,
   onReady: () => {
     document.body.setAttribute('data-sidepanel-ready', '');
   },
@@ -272,7 +265,7 @@ search = docsearch({
   appId,
   apiKey,
   indices: [keywordIndexName],
-  askAi: { assistantId },
+  askAi: agentId,
   interceptAskAiEvent: (initialMessage) => {
     if (mobileQuery.matches) {
       return false;
@@ -365,7 +358,7 @@ export default {
       apiKey: 'YOUR_SEARCH_API_KEY',
       indices: [{ name: 'YOUR_INDEX_NAME' }],
       askAi: {
-        assistantId: 'YOUR_ASSISTANT_ID',
+        agentId: 'YOUR_AGENT_ID',
       },
       sidePanel: true,
       contextualSearch: true,
@@ -375,7 +368,7 @@ export default {
 };
 ```
 
-The adapter requires `askAi` to be an object with `assistantId`; it doesn't accept the string shorthand in Docusaurus configuration. It also requires `askAi` whenever `sidePanel` is set.
+The adapter requires `askAi` to be an object with `agentId`; it doesn't accept the string shorthand in Docusaurus configuration. It also requires `askAi` whenever `sidePanel` is set.
 
 Don't put `sidePanel` inside `askAi`. Don't configure this adapter under `themeConfig.algolia`. If you need function-valued custom tools, pass them through a swizzled `@theme/SearchBar` component because Docusaurus removes functions while serializing theme configuration.
 
