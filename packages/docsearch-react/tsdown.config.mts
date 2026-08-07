@@ -25,6 +25,7 @@ export default defineConfig([
   {
     entry: {
       index: 'src/index.ts',
+      docsearch: 'src/DocSearch.tsx',
       docsearchAi: 'src/DocSearchAI.tsx',
       askaiModal: 'src/DocSearchAskAiModal.tsx',
       button: 'src/DocSearchButton.tsx',
