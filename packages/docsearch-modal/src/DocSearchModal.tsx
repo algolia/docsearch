@@ -7,20 +7,38 @@ import { createPortal } from 'react-dom';
 
 export type DocSearchModalProps = Omit<
   ReactDocSearchModalProps,
+  | 'appId'
+  | 'apiKey'
   | 'initialScrollY'
-  | 'isAskAiActive'
-  | 'isHybridModeSupported'
   | 'keyboardShortcuts'
-  | 'onAskAiToggle'
   | 'onClose'
   | 'theme'
->;
+> &
+  Partial<Pick<ReactDocSearchModalProps, 'appId' | 'apiKey'>>;
 
 export function DocSearchModal(props: DocSearchModalProps): JSX.Element | null {
-  const { isModalActive, onAskAiToggle, closeModal, isAskAiActive, initialQuery, registerView, isHybridModeSupported } =
-    useDocSearch();
+  const {
+    appId: providerAppId,
+    apiKey: providerApiKey,
+    isModalActive,
+    closeModal,
+    initialQuery,
+    registerView,
+  } = useDocSearch();
 
-  const containerElement = React.useMemo(() => props.portalContainer ?? document.body, [props.portalContainer]);
+  const appId = props.appId ?? providerAppId;
+  const apiKey = props.apiKey ?? providerApiKey;
+
+  if (!appId || !apiKey) {
+    throw new Error(
+      '`DocSearchModal` requires `appId` and `apiKey` props or values configured on the `DocSearch` provider.'
+    );
+  }
+
+  const containerElement = React.useMemo(
+    () => props.portalContainer ?? document.body,
+    [props.portalContainer]
+  );
 
   const initialScroll = React.useMemo(() => window.scrollY, []);
 
@@ -31,15 +49,16 @@ export function DocSearchModal(props: DocSearchModalProps): JSX.Element | null {
   const modalProps: ReactDocSearchModalProps = React.useMemo(
     () => ({
       ...props,
-      isAskAiActive,
+      appId,
+      apiKey,
       initialQuery: props.initialQuery ?? initialQuery,
       initialScrollY: initialScroll,
-      onAskAiToggle,
       onClose: closeModal,
-      isHybridModeSupported,
     }),
-    [props, isAskAiActive, initialQuery, initialScroll, onAskAiToggle, closeModal, isHybridModeSupported],
+    [props, appId, apiKey, initialQuery, initialScroll, closeModal]
   );
 
-  return isModalActive ? createPortal(<Modal {...modalProps} />, containerElement) : null;
+  return isModalActive
+    ? createPortal(<Modal {...modalProps} />, containerElement)
+    : null;
 }

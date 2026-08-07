@@ -6,42 +6,19 @@ import { SendIcon, StopIcon } from '../icons';
 import { useIsMobile } from '../useIsMobile';
 
 export type PromptFormTranslations = Partial<{
-  /**
-   * Initial placeholder for the prompt input.
-   **/
+  /** Initial placeholder for the prompt input. */
   promptPlaceholderText: string;
-  /**
-   * Placeholder text for wile a conversation is streaming.
-   **/
+  /** Placeholder text for wile a conversation is streaming. */
   promptAnsweringText: string;
-  /**
-   * Placeholder text for after a question has already been asked.
-   **/
+  /** Placeholder text for after a question has already been asked. */
   promptAskAnotherQuestionText: string;
-  /**
-   * Disclaimer text displayed beneath the prompt form.
-   **/
+  /** Disclaimer text displayed beneath the prompt form. */
   promptDisclaimerText: string;
-  /**
-   * Visually hidden label text (`aria-labelledby`); usually keyboard hints for the textarea.
-   **/
   promptLabelText: string;
-  /**
-   * Accessible name for the textarea (`aria-label`).
-   **/
   promptAriaLabelText: string;
-  /**
-   * Placeholder when the conversation hit the thread depth limit (AI-217).
-   **/
-  threadDepthErrorPlaceholder: string;
-  /**
-   * Button label in the blocking-error banner to start a new conversation.
-   **/
   startNewConversationButtonText: string;
-  /**
-   * Trailing sentence fragment after the button in the thread-depth banner (e.g. "to continue.").
-   **/
-  threadDepthBannerContinueText: string;
+  blockingErrorContinueText: string;
+  blockingErrorFallbackText: string;
 }>;
 
 type Props = {
@@ -50,10 +27,9 @@ type Props = {
   translations?: PromptFormTranslations;
   onSend: (prompt: string) => void;
   onStopStreaming: () => void;
-  showThreadDepthBanner: boolean;
-  threadDepthApiMessage?: string;
-  /** If false, the banner shows only the API message (for example, token output limit). */
-  showBlockingBannerNewConversationLink?: boolean;
+  blockingErrorMessage?: string;
+  showBlockingError?: boolean;
+  showNewConversationLink?: boolean;
   onStartNewConversation: () => void;
 };
 
@@ -67,18 +43,22 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
       translations = {},
       onSend,
       onStopStreaming,
-      showThreadDepthBanner,
-      threadDepthApiMessage,
-      showBlockingBannerNewConversationLink = true,
+      blockingErrorMessage,
+      showBlockingError = false,
+      showNewConversationLink = true,
       onStartNewConversation,
     },
-    ref,
+    ref
   ): JSX.Element => {
     const isMobile = useIsMobile();
     const [userPrompt, setUserPrompt] = React.useState('');
     const promptRef = React.useRef<HTMLTextAreaElement>(null);
+    const blockingErrorId = React.useId();
 
-    React.useImperativeHandle(ref, () => promptRef.current as HTMLTextAreaElement);
+    React.useImperativeHandle(
+      ref,
+      () => promptRef.current as HTMLTextAreaElement
+    );
 
     const {
       promptPlaceholderText = 'Ask a question',
@@ -87,9 +67,9 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
       promptDisclaimerText = 'Answers are generated with AI which can make mistakes.',
       promptLabelText = 'Press Enter to send, or Shift and Enter for new line.',
       promptAriaLabelText = 'Prompt input',
-      threadDepthErrorPlaceholder = 'Conversation limit reached',
       startNewConversationButtonText = 'Start a new conversation',
-      threadDepthBannerContinueText = 'to continue.',
+      blockingErrorContinueText = 'to continue.',
+      blockingErrorFallbackText = 'This conversation cannot continue.',
     } = translations;
 
     const managePromptHeight = (): void => {
@@ -113,7 +93,7 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
     };
 
     const handleSend = (): void => {
-      if (isStreaming || showThreadDepthBanner) return;
+      if (isStreaming || showBlockingError) return;
 
       const prompt = userPrompt.trim();
 
@@ -130,9 +110,11 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
       });
     };
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
+    const handleKeyDown = (
+      e: React.KeyboardEvent<HTMLTextAreaElement>
+    ): void => {
       // Allow Enter to work normally (new line) when streaming
-      if (isStreaming || showThreadDepthBanner) return;
+      if (isStreaming || showBlockingError) return;
 
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
@@ -147,9 +129,7 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
 
     let promptPlaceholder = promptPlaceholderText;
 
-    if (showThreadDepthBanner) {
-      promptPlaceholder = threadDepthErrorPlaceholder;
-    } else if (isStreaming) {
+    if (isStreaming) {
       promptPlaceholder = promptAnsweringText;
     } else if (exchanges.length > 0) {
       promptPlaceholder = promptAskAnotherQuestionText;
@@ -157,76 +137,84 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
 
     return (
       <div className="DocSearch-Sidepanel-Prompt">
-        {showThreadDepthBanner ? (
-          <div className="DocSearch-Sidepanel-ThreadDepthBanner">
-            {threadDepthApiMessage ? (
-              <p className="DocSearch-Sidepanel-ThreadDepthBanner-apiMessage">{threadDepthApiMessage}</p>
-            ) : null}
-            {showBlockingBannerNewConversationLink ? (
-              <p>
-                <button type="button" className="DocSearch-ThreadDepthError-Link" onClick={onStartNewConversation}>
-                  {startNewConversationButtonText}
-                </button>{' '}
-                {threadDepthBannerContinueText}
-              </p>
-            ) : null}
-          </div>
-        ) : null}
-        {!showThreadDepthBanner ? (
-          <form
-            className="DocSearch-Sidepanel-Prompt--form"
-            onSubmit={(e) => {
-              e.preventDefault();
-
-              if (isStreaming) return;
-
-              handleSend();
-            }}
-          >
-            <textarea
-              ref={promptRef}
-              placeholder={promptPlaceholder}
-              className="DocSearch-Sidepanel-Prompt--textarea"
-              value={userPrompt}
-              aria-label={promptAriaLabelText}
-              aria-labelledby="prompt-label"
-              autoComplete="off"
-              translate="no"
-              rows={isMobile ? 1 : 2}
-              onKeyDown={handleKeyDown}
-              onInput={managePromptHeight}
-              onChange={(e) => setUserPrompt(e.target.value)}
-            />
-            <span id="prompt-label" className="sr-only">
-              {promptLabelText}
-            </span>
-            <div className="DocSearch-Sidepanel-Prompt--actions">
-              {isStreaming && (
-                <button
-                  type="button"
-                  title="Stop streaming"
-                  className="DocSearch-Sidepanel-Prompt--stop"
-                  onClick={onStopStreaming}
-                >
-                  <StopIcon />
-                </button>
-              )}
-              {!isStreaming && (
-                <button
-                  type="submit"
-                  aria-label="Send question"
-                  title="Send question"
-                  className="DocSearch-Sidepanel-Prompt--submit"
-                  aria-disabled={userPrompt === ''}
-                >
-                  <SendIcon />
-                </button>
+        <div id={blockingErrorId} role="alert">
+          {showBlockingError && (
+            <div className="DocSearch-Sidepanel-PromptBlockingBanner">
+              <p>{blockingErrorMessage ?? blockingErrorFallbackText}</p>
+              {showNewConversationLink && (
+                <p>
+                  <button
+                    type="button"
+                    className="DocSearch-ThreadDepthError-Link"
+                    onClick={onStartNewConversation}
+                  >
+                    {startNewConversationButtonText}
+                  </button>{' '}
+                  {blockingErrorContinueText}
+                </p>
               )}
             </div>
-          </form>
-        ) : null}
-        <p className="DocSearch-Sidepanel-Prompt--disclaimer">{promptDisclaimerText}</p>
+          )}
+        </div>
+        <form
+          className="DocSearch-Sidepanel-Prompt--form"
+          onSubmit={(e) => {
+            e.preventDefault();
+
+            if (isStreaming || showBlockingError) return;
+
+            handleSend();
+          }}
+        >
+          <textarea
+            ref={promptRef}
+            placeholder={promptPlaceholder}
+            className="DocSearch-Sidepanel-Prompt--textarea"
+            value={userPrompt}
+            aria-label={promptAriaLabelText}
+            aria-labelledby="prompt-label"
+            aria-describedby={showBlockingError ? blockingErrorId : undefined}
+            aria-disabled={showBlockingError}
+            readOnly={showBlockingError}
+            autoComplete="off"
+            translate="no"
+            rows={isMobile ? 1 : 2}
+            onKeyDown={handleKeyDown}
+            onInput={managePromptHeight}
+            onChange={(e) => setUserPrompt(e.target.value)}
+          />
+          <span id="prompt-label" className="sr-only">
+            {promptLabelText}
+          </span>
+          <div className="DocSearch-Sidepanel-Prompt--actions">
+            {isStreaming && (
+              <button
+                type="button"
+                title="Stop streaming"
+                className="DocSearch-Sidepanel-Prompt--stop"
+                onClick={onStopStreaming}
+              >
+                <StopIcon />
+              </button>
+            )}
+            {!isStreaming && (
+              <button
+                type="submit"
+                aria-label="Send question"
+                title="Send question"
+                className="DocSearch-Sidepanel-Prompt--submit"
+                aria-disabled={userPrompt === ''}
+                disabled={showBlockingError}
+              >
+                <SendIcon />
+              </button>
+            )}
+          </div>
+        </form>
+        <p className="DocSearch-Sidepanel-Prompt--disclaimer">
+          {promptDisclaimerText}
+        </p>
       </div>
     );
-  },
+  }
 );

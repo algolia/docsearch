@@ -1,22 +1,55 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { DocSearch } from '@docsearch/react';
+import { DocSearchAI, type ToolCalls } from '@docsearch/react';
 import type { JSX } from 'react';
 
-export default function BasicAskAI(): JSX.Element {
+import type { DemoTheme } from '../App';
+import { AGENT_ID, API_KEY, APP_ID, SEARCH_INDEX_NAME } from '../constants';
+
+const customTools: ToolCalls = {
+  printConsoleMessage: {
+    render({ message: { output } }) {
+      if (!output) return '';
+
+      return output as string;
+    },
+    async onToolCall({ input, addToolOutput }) {
+      // eslint-disable-next-line no-console
+      console.log((input as any).message);
+
+      await addToolOutput({
+        output: 'Check your console for a nice message :)',
+      });
+    },
+  },
+};
+
+export default function BasicAskAI({
+  theme,
+}: {
+  theme: DemoTheme;
+}): JSX.Element {
   return (
-    <DocSearch
-      indexName="docsearch"
-      appId="PMZUYBQDAK"
-      apiKey="24b09689d5b4223813d9b8e48563c8f6"
+    <DocSearchAI
+      indices={[SEARCH_INDEX_NAME]}
+      appId={APP_ID}
+      apiKey={API_KEY}
       askAi={{
-        assistantId: 'askAIDemo',
-        searchParameters: {
-          facetFilters: ['language:en'],
-        },
+        agentId: AGENT_ID,
         suggestedQuestions: true,
+        tools: customTools,
+        promptSuggestions: {
+          indexName: 'docsearch-markdown_prompt_suggestions',
+        },
       }}
+      facets={[
+        { key: 'language', label: 'Language' },
+        { key: 'version', label: 'Version' },
+        { key: 'type', label: 'Content type' },
+      ]}
       insights={true}
       translations={{ button: { buttonText: 'Search with Ask AI' } }}
+      theme={theme}
+      resultBadgeKey="type"
     />
   );
 }

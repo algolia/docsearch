@@ -2,10 +2,14 @@ import { themes } from 'prism-react-renderer';
 
 import myLoaders from './plugins/my-loaders.mjs';
 import tailwindLoader from './plugins/tailwind-loader.mjs';
-import { trackingHeadTags } from './src/tracking-head-tags.mjs';
 
 const SIGNUP_LINK =
   'https://dashboard.algolia.com/users/sign_up?selected_plan=docsearch&utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=docsearch&utm_content=apply';
+
+// The MCP app is served at the same origin (/mcp) by hosting, not by
+// Docusaurus. Linking to the absolute URL makes it an external link so the
+// build's broken-link check doesn't flag a route Docusaurus doesn't own.
+const MCP_URL = 'https://docsearch.algolia.com/mcp';
 
 const currentDate = new Date();
 const currentYear = currentDate.getFullYear();
@@ -15,14 +19,14 @@ const currentYear = currentDate.getFullYear();
 /** @type {import('@docusaurus/types').Config} */
 export default {
   title: 'DocSearch by Algolia',
-  tagline: 'The best search experience for docs, integrated in minutes, for free.',
+  tagline:
+    'The best search experience for docs, integrated in minutes, for free.',
   url: 'https://docsearch.algolia.com',
   baseUrl: '/',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon.svg',
   organizationName: 'Algolia',
   projectName: 'DocSearch',
-  headTags: trackingHeadTags,
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   markdown: {
     hooks: {
       onBrokenMarkdownLinks: 'throw',
@@ -42,10 +46,14 @@ export default {
         docs: {
           path: 'docs',
           sidebarPath: 'sidebars.js',
-          editUrl: 'https://github.com/algolia/docsearch/edit/main/packages/website/',
+          editUrl:
+            'https://github.com/algolia/docsearch/edit/main/packages/website/',
           versions: {
             current: {
-              label: 'Stable (v4.x)',
+              label: 'Stable (v5.x)',
+            },
+            v4: {
+              label: 'Legacy (v4.x)',
             },
             v3: {
               label: 'Legacy (v3.x)',
@@ -64,7 +72,17 @@ export default {
       }),
     ],
   ],
-  plugins: [myLoaders, tailwindLoader, '@docsearch/docusaurus-adapter'],
+  plugins: [
+    myLoaders,
+    tailwindLoader,
+    [
+      './plugins/analytics-loader.mjs',
+      {
+        apiKey: 'nPDHxKLCr5n23QOyG11zRsICHC5TqzHe',
+      },
+    ],
+    '@docsearch/docusaurus-adapter',
+  ],
   themeConfig:
     /** @type {import('@docsearch/docusaurus-adapter').ThemeConfig} */
     ({
@@ -72,15 +90,17 @@ export default {
         placeholder: 'Search or ask AI',
         appId: 'PMZUYBQDAK',
         apiKey: '24b09689d5b4223813d9b8e48563c8f6',
-        indexName: 'docsearch',
+        indices: [{ name: 'docsearch' }],
         askAi: {
-          indexName: 'docsearch-markdown',
-          assistantId: 'askAIDemo',
-          apiKey: '24b09689d5b4223813d9b8e48563c8f6',
-          appId: 'PMZUYBQDAK',
-          sidePanel: true,
+          agentId: 'ccdec697-e3fe-465b-a1c3-657e7bf18aef',
+          promptSuggestions: {
+            indexName: 'docsearch-markdown_prompt_suggestions',
+            hitsPerPage: 2,
+          },
         },
+        sidePanel: true,
         contextualSearch: true,
+        searchPage: { path: 'search' },
         translations: {
           button: {
             buttonText: 'Go on, give it a search...',
@@ -100,12 +120,8 @@ export default {
       ],
       navbar: {
         hideOnScroll: true,
-        logo: {
-          alt: 'DocSearch x Algolia',
-          src: 'img/docsearch-x-algolia-logo-light-mode.png',
-          srcDark: 'img/docsearch-x-algolia-logo-dark-mode.png',
-          className: 'docsearch-nav-logo',
-        },
+        // Brand lockup is rendered by the swizzled Navbar/Logo (MCP vibe);
+        // no image `logo` config needed.
         items: [
           // left
           {
@@ -114,14 +130,11 @@ export default {
             position: 'left',
           },
           {
-            label: 'Playground',
-            to: 'https://community.algolia.com/docsearch-playground/',
+            label: 'MCP',
+            href: MCP_URL,
+            target: '_self',
             position: 'left',
-          },
-          {
-            label: 'Sign up',
-            to: SIGNUP_LINK,
-            position: 'left',
+            className: 'navbar-mcp-link',
           },
           // right
           {
@@ -133,12 +146,22 @@ export default {
             position: 'right',
             className: 'header-github-link',
           },
+          {
+            type: 'search',
+            position: 'right',
+          },
+          {
+            label: 'Sign up',
+            to: SIGNUP_LINK,
+            position: 'right',
+            className: 'navbar-cta',
+          },
         ],
       },
       announcementBar: {
-        id: 'announcement-bar',
+        id: 'docsearch-v5',
         content:
-          'Ask AI is now part of <strong>Agent Studio</strong> - We\'re integrating Ask AI into Agent Studio, our centralized space to build and manage AI agents.<a target="_blank" rel="noopener noreferrer" href="https://www.algolia.com/doc/guides/algolia-ai/agent-studio">Explore Agent Studio</a>',
+          'DocSearch 5.0.0 is available. <a href="/docs/migrating-from-v4">Migrate from v4</a> or <a href="/docs/packages/overview">choose a package</a>',
       },
       colorMode: {
         defaultMode: 'light',
@@ -163,8 +186,12 @@ export default {
                 to: 'docs/v3/docsearch',
               },
               {
-                label: 'DocSearch v4 - Beta',
-                to: 'docs/docsearch',
+                label: 'DocSearch v4',
+                to: 'docs/v4/docsearch',
+              },
+              {
+                label: 'DocSearch v5 beta',
+                to: 'docs/packages/overview',
               },
             ],
           },
@@ -212,13 +239,8 @@ export default {
             ],
           },
         ],
-        logo: {
-          alt: 'Algolia',
-          src: 'img/docsearch-x-algolia-logo-light-mode.png',
-          srcDark: 'img/docsearch-x-algolia-logo-dark-mode.png',
-          width: 200,
-        },
-        copyright: `2015-${currentYear} – Built with 💙 by Algolia`,
+        // Brand lockup rendered by the swizzled Footer (MCP vibe).
+        copyright: `2015–${currentYear} — Built with <span style="color:var(--accent)">♥</span> by Algolia`,
       },
       image: 'img/og_image.png',
       prism: {

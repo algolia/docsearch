@@ -1,30 +1,24 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { DocSearch } from '@docsearch/core';
-import { DocSearchButton, DocSearchModal } from '@docsearch/modal';
+import { DocSearchButton, DocSearchAskAiModal } from '@docsearch/modal';
 import { Sidepanel, SidepanelButton } from '@docsearch/sidepanel';
 import type { JSX } from 'react';
 
-export default function BasicHybrid(): JSX.Element {
+import type { DemoTheme } from '../App';
+import { AGENT_ID, API_KEY, APP_ID } from '../constants';
+
+export default function BasicHybrid({
+  theme,
+}: {
+  theme: DemoTheme;
+}): JSX.Element {
   return (
-    <DocSearch>
+    <DocSearch appId={APP_ID} apiKey={API_KEY} theme={theme}>
       <DocSearchButton />
-      <DocSearchModal
-        indexName="docsearch"
-        appId="beta3G7FSQDJR3"
-        apiKey="0faad3eae2ba413c16355a0f8670c201"
-        askAi={{
-          assistantId: 'e3Kl4lTCBlSA',
-          indexName: 'docsearch-markdown',
-        }}
-      />
+      <DocSearchAskAiModal askAi={AGENT_ID} indices={['docsearch']} />
 
       <SidepanelButton />
-      <Sidepanel
-        indexName="docsearch-markdown"
-        appId="beta3G7FSQDJR3"
-        apiKey="0faad3eae2ba413c16355a0f8670c201"
-        assistantId="e3Kl4lTCBlSA"
-      />
+      <Sidepanel agentId={AGENT_ID} />
     </DocSearch>
   );
 }

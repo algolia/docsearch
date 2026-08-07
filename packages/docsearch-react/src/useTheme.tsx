@@ -13,7 +13,8 @@ export const useTheme = ({ theme }: UseThemeProps): void => {
       if (theme !== previousTheme) {
         document.documentElement.dataset.theme = theme;
         return (): void => {
-          if (previousTheme === undefined) delete document.documentElement.dataset.theme;
+          if (previousTheme === undefined)
+            delete document.documentElement.dataset.theme;
           else document.documentElement.dataset.theme = previousTheme;
         };
       }

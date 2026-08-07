@@ -5,8 +5,6 @@ JavaScript package for [DocSearch Sidepanel](http://docsearch.algolia.com/), a s
 ## Installation
 
 ```bash
-yarn add @docsearch/sidepanel-js
-# or
 npm install @docsearch/sidepanel-js
 ```
 
@@ -15,7 +13,7 @@ npm install @docsearch/sidepanel-js
 If you don’t want to use a package manager, you can use a standalone endpoint:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/sidepanel-js@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/sidepanel-js@5"></script>
 ```
 
 To get started, you need a [`container`](https://docsearch.algolia.com/docs/api#container) for your DocSearch Sidepanel component to go in. If you don’t have one already, you can insert one into your markup:
@@ -38,10 +36,10 @@ sidepanel({
   indexName: 'YOUR_INDEX_NAME',
   appId: 'YOUR_APP_ID',
   apiKey: 'YOUR_SEARCH_API_KEY',
-  assistantId: 'YOUR_ASSISTANT_ID',
+  agentId: 'YOUR_AGENT_ID',
 });
 ```
 
 ## Documentation
 
-[Read documentation →](https://docsearch.algolia.com)
+[Read documentation →](https://docsearch.algolia.com/docs/packages/sidepanel-js/getting-started)

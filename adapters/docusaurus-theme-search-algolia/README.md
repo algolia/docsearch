@@ -14,14 +14,14 @@ export default {
     docsearch: {
       appId: 'APP_ID',
       apiKey: 'SEARCH_API_KEY',
-      indexName: 'INDEX_NAME',
+      indices: [{ name: 'INDEX_NAME' }],
       askAi: {
         assistantId: 'ASSISTANT_ID',
-        sidePanel: true,
       },
+      sidePanel: true,
     },
   },
 };
 ```
 
-`themeConfig.algolia` is still supported as a backward-compatible alias.
+Only `themeConfig.docsearch` is supported.

@@ -1,15 +1,23 @@
-import type { AutocompleteOptions, AutocompleteState } from '@algolia/autocomplete-core';
+import type {
+  AutocompleteOptions,
+  AutocompleteState,
+} from '@algolia/autocomplete-core';
 import { DocSearch as DocSearchProvider, useDocSearch } from '@docsearch/core';
-import type { DocSearchModalShortcuts, DocSearchRef, InitialAskAiMessage } from '@docsearch/core';
+import type { DocSearchModalShortcuts, DocSearchRef } from '@docsearch/core';
 import type { LiteClient, SearchParamsObject } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
 
 import { DocSearchButton } from './DocSearchButton';
+import type { ButtonTranslations } from './DocSearchButton';
 import { DocSearchModal } from './DocSearchModal';
-import type { DocSearchHit, DocSearchTheme, InternalDocSearchHit, StoredDocSearchHit } from './types';
-
-import type { ButtonTranslations, ModalTranslations } from '.';
+import type { ModalTranslations } from './DocSearchModal';
+import type {
+  DocSearchHit,
+  DocSearchTheme,
+  InternalDocSearchHit,
+  StoredDocSearchHit,
+} from './types';
 
 export type { DocSearchRef } from '@docsearch/core';
 
@@ -25,205 +33,82 @@ export type DocSearchTransformClient = {
   transporter: Pick<LiteClient['transporter'], 'algoliaAgent'>;
 };
 
-// Define the specific search parameters allowed for Ask AI
-export type AskAiSearchParameters = {
-  facetFilters?: string[];
-  filters?: string;
-  attributesToRetrieve?: string[];
-  restrictSearchableAttributes?: string[];
-  distinct?: boolean | number | string;
-};
-
-export type AgentStudioSearchParameters = Record<string, Omit<AskAiSearchParameters, 'facetFilters'>>;
-
-export type DocSearchAskAi = {
-  /**
-   * The index name to use for the ask AI feature. Your assistant will search this index for relevant documents.
-   * If not provided, the index name will be used.
-   */
-  indexName?: string;
-  /**
-   * The API key to use for the ask AI feature. Your assistant will use this API key to search the index.
-   * If not provided, the API key will be used.
-   */
-  apiKey?: string;
-  /**
-   * The app ID to use for the ask AI feature. Your assistant will use this app ID to search the index.
-   * If not provided, the app ID will be used.
-   */
-  appId?: string;
-  /**
-   * The assistant ID to use for the ask AI feature.
-   */
-  assistantId: string;
-  /**
-   * Enables displaying suggested questions on Ask AI's new conversation screen.
-   *
-   * @default false
-   */
-  suggestedQuestions?: boolean;
-  // HACK: This is a hack for testing staging, remove before releasing
-  useStagingEnv?: boolean;
-} & (
-  | {
-      /**
-       * **Experimental:** Whether to use Agent Studio as the chat backend.
-       *
-       * This is an experimental feature and its API may change without notice in future releases.
-       * Use with caution in production environments.
-       *
-       * @default false
-       */
-      agentStudio?: never;
-      /**
-       * The search parameters to use for the ask AI feature.
-       *
-       * **NOTE**: If using `agentStudio = true`, the `searchParameters` object is
-       * keyed by the index name.
-       */
-      searchParameters?: AskAiSearchParameters;
-    }
-  | {
-      agentStudio: false;
-      searchParameters?: AskAiSearchParameters;
-    }
-  | {
-      agentStudio: true;
-      /**
-       * The search parameters to use for the ask AI feature.
-       * Keyed by the index name.
-       *
-       * @example
-       * {
-       *   "INDEX_NAME": { distinct: false }
-       * }
-       */
-      searchParameters?: AgentStudioSearchParameters;
-    }
-);
-
 export interface DocSearchIndex {
   name: string;
   searchParameters?: SearchParamsObject;
 }
 
+export interface DocSearchFacet {
+  key: string;
+  label?: string;
+}
+
+export interface HitComponentProps {
+  hit: InternalDocSearchHit | StoredDocSearchHit;
+  children: React.ReactNode;
+}
+
+export interface ResultsFooterComponentProps {
+  state: AutocompleteState<InternalDocSearchHit>;
+}
+
 export interface DocSearchProps {
-  /**
-   * Algolia application id used by the search client.
-   */
+  /** Algolia application id used by the search client. */
   appId: string;
-  /**
-   * Public api key with search permissions for the index.
-   */
+  /** Public api key with search permissions for the index. */
   apiKey: string;
-  /**
-   * Name of the algolia index to query.
-   *
-   * @deprecated `indexName` will be removed in a future version. Please use `indices` property going forward.
-   */
-  indexName?: string;
   /**
    * List of indices and _optional_ searchParameters to be used for search.
    *
    * @see {@link https://docsearch.algolia.com/docs/api#indices}
    */
-  indices?: Array<DocSearchIndex | string>;
+  indices: Array<DocSearchIndex | string>;
   /**
-   * Configuration or assistant id to enable ask ai mode. Pass a string assistant id or a full config object.
+   * Facets to display as keyword-search filter controls. Values are read
+   * dynamically from the configured Algolia indices.
    *
-   * @deprecated Ask AI is being migrated from a standalone DocSearch feature into Algolia's Agent Studio. The `askAi` prop will be removed in DocSearch v5.
+   * @default [ ]
    */
-  askAi?: DocSearchAskAi | string;
-  /**
-   * Intercept Ask AI requests (e.g. Submitting a prompt or selecting a suggested question).
-   *
-   * Return `true` to prevent the default modal Ask AI flow (no toggle, no sendMessage).
-   * Useful to route Ask AI into a different UI (e.g. `@docsearch/sidepanel-js`) without flicker.
-   */
-  interceptAskAiEvent?: (initialMessage: InitialAskAiMessage) => boolean | void;
-  /**
-   * Theme overrides applied to the modal and related components.
-   */
+  facets?: DocSearchFacet[];
+  /** Theme overrides applied to the modal and related components. */
   theme?: DocSearchTheme;
-  /**
-   * Placeholder text for the search input.
-   */
+  /** Placeholder text for the search input. */
   placeholder?: string;
-  /**
-   * Additional algolia search parameters to merge into each query.
-   *
-   * @deprecated `searchParameters` will be removed in a future version. Please use `indices` property going forward.
-   */
-  searchParameters?: SearchParamsObject;
-  /**
-   * Maximum number of hits to display per source/group.
-   */
+  /** Maximum number of hits to display per source/group. */
   maxResultsPerGroup?: number;
-  /**
-   * Hook to post-process hits before rendering.
-   */
+  /** Hook to post-process hits before rendering. */
   transformItems?: (items: DocSearchHit[]) => DocSearchHit[];
-  /**
-   * Custom component to render an individual hit.
-   * Supports template patterns:
-   * - HTML strings with html helper: (props, { html }) => html`<div>...</div>`
-   * - JSX templates: (props) => <div>...</div>
-   * - Function-based templates: (props) => string | JSX.Element | Function.
-   */
-  hitComponent?: (
-    props: {
-      hit: InternalDocSearchHit | StoredDocSearchHit;
-      children: React.ReactNode;
-    },
-    helpers?: {
-      html: (template: TemplateStringsArray, ...values: any[]) => any;
-    },
-  ) => JSX.Element;
-  /**
-   * Custom component rendered at the bottom of the results panel.
-   * Supports template patterns:
-   * - HTML strings with html helper: (props, { html }) => html`<div>...</div>`
-   * - JSX templates: (props) => <div>...</div>
-   * - Function-based templates: (props) => string | JSX.Element | Function.
-   */
+  /** Custom component to render an individual hit. */
+  hitComponent?: (props: HitComponentProps) => JSX.Element;
+  /** Custom component rendered at the bottom of the results panel. */
   resultsFooterComponent?: (
-    props: {
-      state: AutocompleteState<InternalDocSearchHit>;
-    },
-    helpers?: {
-      html: (template: TemplateStringsArray, ...values: any[]) => any;
-    },
+    props: ResultsFooterComponentProps
   ) => JSX.Element | null;
   /**
-   * Hook to wrap or modify the algolia search client.
+   * A custom action that can be rendered in the Modal's footer before the
+   * Algolia logo. The component will be rendered as a child of `<div
+   * className="DocSearch-Footer-Action" />`.
    */
-  transformSearchClient?: (searchClient: DocSearchTransformClient) => DocSearchTransformClient;
-  /**
-   * Disable storage and usage of recent and favorite searches.
-   */
+  footerAction?: React.ReactNode;
+  /** Hook to wrap or modify the algolia search client. */
+  transformSearchClient?: (
+    searchClient: DocSearchTransformClient
+  ) => DocSearchTransformClient;
+  /** Disable storage and usage of recent and favorite searches. */
   disableUserPersonalization?: boolean;
-  /**
-   * Query string to prefill when opening the modal.
-   */
+  /** Query string to prefill when opening the modal. */
   initialQuery?: string;
-  /**
-   * Custom navigator for controlling link navigation.
-   */
+  /** Custom navigator for controlling link navigation. */
   navigator?: AutocompleteOptions<InternalDocSearchHit>['navigator'];
-  /**
-   * Localized strings for the button and modal ui.
-   */
+  /** Localized strings for the button and modal ui. */
   translations?: DocSearchTranslations;
-  /**
-   * Builds a url to report missing results for a given query.
-   */
+  /** Builds a url to report missing results for a given query. */
   getMissingResultsUrl?: ({ query }: { query: string }) => string;
-  /**
-   * Insights client integration options to send analytics events.
-   */
+  /** Insights client integration options to send analytics events. */
   insights?: AutocompleteOptions<InternalDocSearchHit>['insights'];
   /**
-   * The container element where the modal should be portaled to. Defaults to document.body.
+   * The container element where the modal should be portaled to. Defaults to
+   * document.body.
    */
   portalContainer?: DocumentFragment | Element;
   /**
@@ -233,22 +118,39 @@ export interface DocSearchProps {
    */
   recentSearchesLimit?: number;
   /**
-   * Limit of how many recent searches should be saved/displayed when there are favorited searches..
+   * Limit of how many recent searches should be saved/displayed when there are
+   * favorited searches..
    *
    * @default 4
    */
   recentSearchesWithFavoritesLimit?: number;
   /**
-   * Configuration for keyboard shortcuts. Allows enabling/disabling specific shortcuts.
+   * Configuration for keyboard shortcuts. Allows enabling/disabling specific
+   * shortcuts.
    *
    * @default `{ 'Ctrl/Cmd+K': true, '/': true }`
    */
   keyboardShortcuts?: DocSearchModalShortcuts;
+  /**
+   * The key used to render a custom badge for each hit. Key must match a
+   * property returned in `searchParameters.attributesToRetrieve`.
+   *
+   * @example
+   *   'version';
+   *   'hierarchy.lvl1';
+   *   'tags[2]';
+   *
+   * @default undefined
+   */
+  resultBadgeKey?: string;
 }
 
-function DocSearchComponent(props: DocSearchProps, ref: React.ForwardedRef<DocSearchRef>): JSX.Element {
+function DocSearchComponent(
+  { appId, apiKey, ...props }: DocSearchProps,
+  ref: React.ForwardedRef<DocSearchRef>
+): JSX.Element {
   return (
-    <DocSearchProvider {...props} ref={ref}>
+    <DocSearchProvider {...props} appId={appId} apiKey={apiKey} ref={ref}>
       <DocSearchInner {...props} />
     </DocSearchProvider>
   );
@@ -256,17 +158,23 @@ function DocSearchComponent(props: DocSearchProps, ref: React.ForwardedRef<DocSe
 
 export const DocSearch = React.forwardRef(DocSearchComponent);
 
-export function DocSearchInner(props: DocSearchProps): JSX.Element {
+export function DocSearchInner(
+  props: Omit<DocSearchProps, 'appId' | 'apiKey'>
+): JSX.Element {
   const {
     searchButtonRef,
     keyboardShortcuts,
     isModalActive,
-    isAskAiActive,
     initialQuery,
-    onAskAiToggle,
     openModal,
     closeModal,
+    appId,
+    apiKey,
   } = useDocSearch();
+
+  if (!appId || !apiKey) {
+    throw new Error('`DocSearch` requires `appId` and `apiKey` props.');
+  }
 
   return (
     <>
@@ -280,14 +188,14 @@ export function DocSearchInner(props: DocSearchProps): JSX.Element {
         createPortal(
           <DocSearchModal
             {...props}
+            appId={appId}
+            apiKey={apiKey}
             initialScrollY={window.scrollY}
             initialQuery={initialQuery}
             translations={props?.translations?.modal}
-            isAskAiActive={isAskAiActive}
-            onAskAiToggle={onAskAiToggle}
             onClose={closeModal}
           />,
-          props.portalContainer ?? document.body,
+          props.portalContainer ?? document.body
         )}
     </>
   );

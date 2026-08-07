@@ -2,12 +2,19 @@
 import { DocSearch } from '@docsearch/react';
 import type { JSX } from 'react';
 
-export default function MultiIndex(): JSX.Element {
+import type { DemoTheme } from '../App';
+import { API_KEY, APP_ID, SEARCH_INDEX_NAME } from '../constants';
+
+export default function MultiIndex({
+  theme,
+}: {
+  theme: DemoTheme;
+}): JSX.Element {
   return (
     <DocSearch
       indices={[
         {
-          name: 'docsearch',
+          name: SEARCH_INDEX_NAME,
         },
         {
           name: 'tailwindcss',
@@ -16,10 +23,11 @@ export default function MultiIndex(): JSX.Element {
           name: 'kubernetes',
         },
       ]}
-      appId="PMZUYBQDAK"
-      apiKey="24b09689d5b4223813d9b8e48563c8f6"
+      appId={APP_ID}
+      apiKey={API_KEY}
       translations={{ button: { buttonText: 'Multi index search' } }}
       insights={true}
+      theme={theme}
     />
   );
 }

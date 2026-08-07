@@ -28,7 +28,13 @@ function isEditingContent(event: KeyboardEvent): boolean {
   const element = event.composedPath()[0] as HTMLElement;
   const tagName = element.tagName;
 
-  return element.isContentEditable || tagName === 'INPUT' || tagName === 'SELECT' || tagName === 'TEXTAREA' || tagName === 'BUTTON';
+  return (
+    element.isContentEditable ||
+    tagName === 'INPUT' ||
+    tagName === 'SELECT' ||
+    tagName === 'TEXTAREA' ||
+    tagName === 'BUTTON'
+  );
 }
 
 export function useDocSearchKeyboardEvents({
@@ -49,7 +55,9 @@ export function useDocSearchKeyboardEvents({
       }
 
       const isCmdK =
-        resolvedShortcuts['Ctrl/Cmd+K'] && event.key?.toLowerCase() === 'k' && (event.metaKey || event.ctrlKey);
+        resolvedShortcuts['Ctrl/Cmd+K'] &&
+        event.key?.toLowerCase() === 'k' &&
+        (event.metaKey || event.ctrlKey);
       const isSlash = resolvedShortcuts['/'] && event.key === '/';
 
       if (
@@ -80,5 +88,12 @@ export function useDocSearchKeyboardEvents({
     return (): void => {
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [isOpen, onOpen, onClose, isAskAiActive, onAskAiToggle, resolvedShortcuts]);
+  }, [
+    isOpen,
+    onOpen,
+    onClose,
+    isAskAiActive,
+    onAskAiToggle,
+    resolvedShortcuts,
+  ]);
 }

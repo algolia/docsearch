@@ -1,121 +1,112 @@
 /**
  * Copyright (c) Facebook, Inc. And its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file
+ * in the root directory of this source tree.
  */
 
 import type { AskAiConfig } from '@docsearch/docusaurus-adapter';
-import type { DocSearchModalProps, DocSearchTranslations } from '@docsearch/react';
-import translations from '@theme/SearchTranslations';
+import type { DocSearchAskAi, DocSearchProps } from '@docsearch/react';
 import type { FacetFilters } from 'algoliasearch/lite';
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import { useAlgoliaContextualFacetFiltersIfEnabled } from './useAlgoliaContextualFacetFilters';
-import { mergeFacetFilters } from './utils';
 
+type AskAiOptions = AskAiConfig & Pick<DocSearchAskAi, 'tools'>;
 // The minimal props the hook needs from DocSearch
 interface DocSearchPropsLite {
-  indexName: string;
   apiKey: string;
   appId: string;
-  placeholder?: string;
-  translations?: DocSearchTranslations;
-  searchParameters?: DocSearchModalProps['searchParameters'];
-  askAi?: AskAiConfig;
+  indices: NonNullable<DocSearchProps['indices']>;
+  askAi?: AskAiOptions;
 }
 
-type OnAskAiToggle = NonNullable<DocSearchModalProps['onAskAiToggle']>;
-type AskAiConfigWithoutSidePanel = Omit<AskAiConfig, 'sidePanel'>;
-type DocSearchAskAi = Exclude<DocSearchModalProps['askAi'], string | undefined>;
-type DocSearchModalPropsLite = Partial<Omit<DocSearchModalProps, 'askAi'>>;
-
 type UseAskAiResult = {
-  canHandleAskAi: boolean;
-  isAskAiActive: boolean;
-  currentPlaceholder: string | undefined;
-  onAskAiToggle: OnAskAiToggle;
-  askAi?: AskAiConfig;
-  extraAskAiProps: DocSearchModalPropsLite & {
-    askAi?: DocSearchAskAi;
-    canHandleAskAi?: boolean;
-    isAskAiActive?: boolean;
-    onAskAiToggle?: OnAskAiToggle;
+  modalAskAi?: DocSearchAskAi;
+  sidePanelAskAi?: DocSearchAskAi & {
+    apiKey: string;
+    appId: string;
+    indexName: string;
   };
 };
 
+function getIndexName(
+  index: NonNullable<DocSearchProps['indices']>[number]
+): string {
+  return typeof index === 'string' ? index : index.name;
+}
+
+function getAskAiIndexName(
+  askAi: AskAiConfig,
+  indices: NonNullable<DocSearchProps['indices']>
+): string {
+  return askAi.indices?.[0] ?? getIndexName(indices[0]!);
+}
+
+function facetFiltersToFilterString(facetFilters: FacetFilters): string {
+  const items = Array.isArray(facetFilters) ? facetFilters : [facetFilters];
+
+  return items
+    .map((item) =>
+      Array.isArray(item) ? `(${item.join(' OR ')})` : String(item)
+    )
+    .join(' AND ');
+}
+
+function mergeFilters(existing: string | undefined, added: string): string {
+  return existing ? `(${existing}) AND (${added})` : added;
+}
+
 // We need to apply contextualSearch facetFilters to AskAI filters
 // This can't be done at config normalization time because contextual filters
-// can only be determined at runtime
+// can only be determined at runtime. Agent Studio accepts them via
+// askAi.searchParameters[index].filters, keyed by dynamic index names.
 function applyAskAiContextualSearch(
-  askAi: AskAiConfig | undefined,
-  contextualSearchFilters: FacetFilters | undefined,
-): AskAiConfig | undefined {
-  if (!askAi) {
-    return undefined;
-  }
-  if (askAi.agentStudio === true) {
+  askAi: AskAiOptions | undefined,
+  contextualSearchFilters: FacetFilters | undefined
+): AskAiOptions | undefined {
+  if (!askAi || !contextualSearchFilters || !askAi.indices?.length) {
     return askAi;
   }
-  if (!contextualSearchFilters) {
-    return askAi;
+
+  const contextualFilters = facetFiltersToFilterString(contextualSearchFilters);
+  const searchParameters = { ...askAi.searchParameters };
+
+  for (const indexName of askAi.indices) {
+    const current = searchParameters[indexName] ?? {};
+    searchParameters[indexName] = {
+      ...current,
+      filters: mergeFilters(current.filters, contextualFilters),
+    };
   }
-  const askAiFacetFilters = askAi.searchParameters?.facetFilters;
+
   return {
     ...askAi,
-    searchParameters: {
-      ...askAi.searchParameters,
-      facetFilters: mergeFacetFilters(askAiFacetFilters, contextualSearchFilters),
-    },
+    searchParameters,
   };
 }
 
 export function useAlgoliaAskAi(props: DocSearchPropsLite): UseAskAiResult {
-  const [isAskAiActive, setIsAskAiActive] = useState(false);
   const contextualSearchFilters = useAlgoliaContextualFacetFiltersIfEnabled();
 
   const askAi = useMemo(() => {
     return applyAskAiContextualSearch(props.askAi, contextualSearchFilters);
   }, [props.askAi, contextualSearchFilters]);
 
-  const askAiWithoutSidePanel = useMemo<AskAiConfigWithoutSidePanel | undefined>(() => {
+  const resolvedAskAi = useMemo<UseAskAiResult['sidePanelAskAi']>(() => {
     if (!askAi) {
       return undefined;
     }
-    const { sidePanel: _sidePanel, ...docsearchAskAi } = askAi;
-    return docsearchAskAi;
-  }, [askAi]);
-
-  const modalAskAi = useMemo<DocSearchAskAi | undefined>(() => {
-    if (!askAiWithoutSidePanel) {
-      return undefined;
-    }
-    return askAiWithoutSidePanel as DocSearchAskAi;
-  }, [askAiWithoutSidePanel]);
-
-  const canHandleAskAi = Boolean(askAi);
-
-  const currentPlaceholder = isAskAiActive
-    ? translations.modal?.searchBox?.placeholderTextAskAi
-    : translations.modal?.searchBox?.placeholderText || props?.placeholder;
-
-  const onAskAiToggle = useCallback<OnAskAiToggle>((askAiToggle: boolean) => {
-    setIsAskAiActive(askAiToggle);
-  }, []);
-
-  const extraAskAiProps: UseAskAiResult['extraAskAiProps'] = {
-    askAi: modalAskAi,
-    canHandleAskAi,
-    isAskAiActive,
-    onAskAiToggle,
-  };
+    return {
+      ...askAi,
+      apiKey: props.apiKey,
+      appId: props.appId,
+      indexName: getAskAiIndexName(askAi, props.indices),
+    };
+  }, [askAi, props.apiKey, props.appId, props.indices]);
 
   return {
-    canHandleAskAi,
-    isAskAiActive,
-    currentPlaceholder,
-    onAskAiToggle,
-    askAi,
-    extraAskAiProps,
+    modalAskAi: resolvedAskAi,
+    sidePanelAskAi: resolvedAskAi,
   };
 }

@@ -1,264 +1,259 @@
 import type { UseChatHelpers } from '@ai-sdk/react';
-import { useChat } from '@ai-sdk/react';
-import type { ChatRequestOptions } from 'ai';
-import { DefaultChatTransport, generateId, lastAssistantMessageIsCompleteWithToolCalls } from 'ai';
+import { Chat, useChat } from '@ai-sdk/react';
+import type { ChatOnToolCallCallback } from 'ai';
+import {
+  DefaultChatTransport,
+  lastAssistantMessageIsCompleteWithToolCalls,
+  generateId,
+} from 'ai';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { MutableRefObject } from 'react';
 
 import {
   agentStudioBaseUrl,
   getAgentStudioErrorMessage,
-  getValidToken,
   postAgentStudioFeedback,
-  postFeedback,
 } from './askai';
 import type { Exchange } from './AskAiScreen';
-import { ASK_AI_API_URL, BETA_ASK_AI_API_URL } from './constants';
 import type { StoredSearchPlugin } from './stored-searches';
 import { createStoredConversations } from './stored-searches';
-import type { AIMessage } from './types/AskiAi';
+import { type AIMessage, type ToolCalls } from './types/AskiAi';
+import type { OnAskAiFeedback } from './types/Feedback';
+import { EMPTY_TOOLS, sanitizeMessagesForRequest } from './utils/ai';
 
-import type { AgentStudioSearchParameters, AskAiSearchParameters, StoredAskAiState } from '.';
+import type { AgentStudioSearchParameters, Memory, StoredAskAiState } from '.';
 
 type UseChat = UseChatHelpers<AIMessage>;
 
-/**
- * After rotating `useChat` `id`, run this on the **new** chat (see `resetAskAiChatSession`).
- */
-export type AskAiPendingAfterSessionReset =
-  | {
-      kind: 'sendUserMessage';
-      message: {
-        role: 'user';
-        parts: Array<{ type: 'text'; text: string }>;
-      };
-      requestOptions?: ChatRequestOptions;
-    }
-  | { kind: 'sendText'; text: string; requestOptions?: ChatRequestOptions }
-  | { kind: 'setMessages'; messages: AIMessage[] };
-
 type UseAskAiParams = {
-  assistantId?: string | null;
+  agentId: string;
   apiKey: string;
   appId: string;
-  indexName: string;
-  useStagingEnv?: boolean;
-  searchParameters?: AskAiSearchParameters;
-  agentStudio: boolean;
-} & (
-  | {
-      agentStudio: false;
-      searchParameters?: AskAiSearchParameters;
-    }
-  | {
-      agentStudio: true;
-      searchParameters?: AgentStudioSearchParameters;
-    }
-);
+  searchParameters?: AgentStudioSearchParameters;
+  tools: ToolCalls;
+  memory?: Memory;
+  indices?: string[];
+};
 
 type UseAskAiReturn = {
+  chatId: string;
   messages: AIMessage[];
   status: UseChat['status'];
   sendMessage: UseChat['sendMessage'];
   setMessages: UseChat['setMessages'];
-  clearError: UseChat['clearError'];
-  resetAskAiAbortScope: () => void;
-  resetAskAiChatSession: (pending?: AskAiPendingAfterSessionReset) => void;
   stopAskAiStreaming: UseChat['stop'];
   askAiError?: Error;
   isStreaming: boolean;
   exchanges: Exchange[];
   conversations: StoredSearchPlugin<StoredAskAiState>;
-  sendFeedback: (messageId: string, thumbs: 0 | 1) => Promise<void>;
+  sendFeedback: OnAskAiFeedback;
+  /**
+   * Create's a new chat instance, clearing existing messages and generating a
+   * new conversation ID.
+   */
+  startNewConversation: () => void;
+  /**
+   * Create's a new chat instance, seeded with an existing conversation's ID and
+   * its messages.
+   */
+  restoreConversation: (
+    restored: AIMessage[],
+    existingConversationId?: string
+  ) => void;
 };
 
 type UseAskAi = (params: UseAskAiParams) => UseAskAiReturn;
 
-type AgentStudioTransportParams = Pick<UseAskAiParams, 'apiKey' | 'appId' | 'assistantId'> & {
+type AgentStudioTransportParams = Pick<
+  UseAskAiParams,
+  'apiKey' | 'appId' | 'agentId'
+> & {
   searchParameters?: AgentStudioSearchParameters;
+  userToken?: string;
+  indices?: string[];
 };
 
 const getAgentStudioTransport = ({
   appId,
   apiKey,
-  assistantId,
+  agentId,
   searchParameters,
+  userToken,
+  indices,
 }: AgentStudioTransportParams): DefaultChatTransport<AIMessage> => {
+  const algoliaParams: {
+    searchParameters?: AgentStudioSearchParameters;
+    indices?: string[];
+  } = {};
+
+  if (searchParameters) {
+    algoliaParams.searchParameters = searchParameters;
+  }
+
+  if (indices && indices.length > 0) {
+    algoliaParams.indices = indices;
+  }
+
   return new DefaultChatTransport({
-    api: `${agentStudioBaseUrl(appId)}/agents/${assistantId}/completions?stream=true&compatibilityMode=ai-sdk-5`,
+    api: `${agentStudioBaseUrl(appId)}/agents/${agentId}/completions?stream=true&compatibilityMode=ai-sdk-5`,
     headers: {
       'x-algolia-application-id': appId,
       'x-algolia-api-key': apiKey,
+      ...(userToken ? { 'x-algolia-secure-user-token': userToken } : {}),
     },
-    body: searchParameters ? { algolia: { searchParameters } } : {},
-  });
-};
-
-const getAskAiTransport = ({
-  assistantId,
-  apiKey,
-  indexName,
-  searchParameters,
-  appId,
-  abortControllerRef,
-  useStagingEnv,
-}: Pick<UseAskAiParams, 'apiKey' | 'appId' | 'assistantId' | 'indexName' | 'searchParameters' | 'useStagingEnv'> & {
-  abortControllerRef: MutableRefObject<AbortController>;
-}): DefaultChatTransport<AIMessage> => {
-  return new DefaultChatTransport({
-    api: useStagingEnv ? BETA_ASK_AI_API_URL : ASK_AI_API_URL,
-    headers: async (): Promise<Record<string, string>> => {
-      if (!assistantId) {
-        throw new Error('Ask AI assistant ID is required');
-      }
-
-      const token = await getValidToken({
-        assistantId,
-        abortSignal: abortControllerRef.current.signal,
-        useStagingEnv,
-      });
+    body: {
+      algolia: algoliaParams,
+    },
+    prepareSendMessagesRequest({ id, messages, body, ...rest }) {
+      // Filter out `data-*` part types since Agent Studio does not currently support them on the request
+      const sanitizedMessages = sanitizeMessagesForRequest(messages);
 
       return {
-        ...(token ? { authorization: `TOKEN ${token}` } : {}),
-        'X-Algolia-API-Key': apiKey,
-        'X-Algolia-Application-Id': appId,
-        'X-Algolia-Index-Name': indexName,
-        'X-Algolia-Assistant-Id': assistantId || '',
-        'X-AI-SDK-Version': 'v5',
+        ...rest,
+        body: {
+          id,
+          messages: sanitizedMessages,
+          ...body,
+        },
       };
     },
-    body: searchParameters ? { searchParameters } : {},
   });
 };
 
-export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, useStagingEnv = false, ...params }) => {
+export const useAskAi: UseAskAi = ({
+  agentId,
+  apiKey,
+  appId,
+  tools = EMPTY_TOOLS,
+  searchParameters,
+  memory,
+  indices,
+}) => {
   const abortControllerRef = useRef(new AbortController());
-  const [chatSessionId, setChatSessionId] = useState(() => generateId());
-  const pendingAfterChatSessionResetRef = useRef<AskAiPendingAfterSessionReset | null>(null);
-  const sendMessageRef = useRef<UseChat['sendMessage'] | null>(null);
-  const setMessagesRef = useRef<UseChat['setMessages'] | null>(null);
 
   const askAiTransport = useMemo(
     () =>
-      params.agentStudio
-        ? getAgentStudioTransport({
-            apiKey,
-            appId,
-            assistantId: assistantId ?? '',
-            searchParameters: params.searchParameters,
-          })
-        : getAskAiTransport({
-            assistantId: assistantId ?? '',
-            apiKey,
-            appId,
-            indexName,
-            searchParameters: params.searchParameters,
-            abortControllerRef,
-            useStagingEnv,
-          }),
-    [apiKey, appId, assistantId, indexName, useStagingEnv, params],
+      getAgentStudioTransport({
+        apiKey,
+        appId,
+        agentId,
+        searchParameters,
+        userToken: memory?.userToken,
+        indices,
+      }),
+    [apiKey, appId, agentId, searchParameters, memory?.userToken, indices]
   );
 
-  const chatOptions = useMemo(
-    () => ({
-      id: chatSessionId,
-      sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
-      transport: askAiTransport,
-    }),
-    [chatSessionId, askAiTransport],
-  );
+  // Store transport in a ref since it is dependent on unstable dependencies:
+  // - searchParameters, an object whose changed values trigger a new transport
+  // - indices, an array whose changed values trigger a new transport
+  const askAiTransportRef = useRef(askAiTransport);
+  askAiTransportRef.current = askAiTransport;
 
-  const { messages, sendMessage, status, setMessages, error, stop, clearError } = useChat(chatOptions);
+  // Sync ref during render so the stable `handleToolCall` (registered once
+  // by useChat) always sees the latest `tools` without re-creating itself.
+  // Safe because tool calls only fire after a commit, and writes are idempotent.
+  const toolsRef = useRef(tools);
+  toolsRef.current = tools;
 
-  sendMessageRef.current = sendMessage;
-  setMessagesRef.current = setMessages;
+  const addToolOutputRef = useRef<UseChat['addToolOutput'] | null>(null);
 
-  const conversations = useRef(
-    createStoredConversations<StoredAskAiState>({
-      key: `__DOCSEARCH_ASKAI_CONVERSATIONS__${indexName}`,
-      limit: 10,
-    }),
-  ).current;
+  const handleToolCall: ChatOnToolCallCallback<AIMessage> = useCallback(
+    ({ toolCall }) => {
+      const tool = toolsRef.current[toolCall.toolName];
+      if (!tool?.onToolCall) {
+        return;
+      }
 
-  const sendFeedback = useCallback(
-    async (messageId: string, thumbs: 0 | 1): Promise<void> => {
-      if (!assistantId) return;
+      tool.onToolCall({
+        ...toolCall,
+        addToolOutput: async ({ output }) => {
+          if (!addToolOutputRef.current) return;
 
-      const res = await (params.agentStudio
-        ? postAgentStudioFeedback({
-            agentId: assistantId,
-            vote: thumbs,
-            messageId,
-            appId,
-            apiKey,
-            abortSignal: abortControllerRef.current.signal,
-          })
-        : postFeedback({
-            assistantId,
-            thumbs,
-            messageId,
-            appId,
-            abortSignal: abortControllerRef.current.signal,
-            useStagingEnv,
-          }));
-
-      if (res.status >= 300) throw new Error('Failed, try again later.');
-      conversations.addFeedback?.(messageId, thumbs === 1 ? 'like' : 'dislike');
+          await addToolOutputRef.current({
+            output,
+            tool: toolCall.toolName,
+            toolCallId: toolCall.toolCallId,
+          });
+        },
+      });
     },
-    [assistantId, params.agentStudio, appId, apiKey, useStagingEnv, conversations],
+    []
   );
 
-  const resetAskAiAbortScope = useCallback((): void => {
-    abortControllerRef.current.abort();
-    abortControllerRef.current = new AbortController();
-  }, []);
+  const createChatInstance = useCallback(
+    (messages?: AIMessage[], id = generateId()): Chat<AIMessage> =>
+      new Chat<AIMessage>({
+        id,
+        messages,
+        sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
+        transport: askAiTransportRef.current,
+        onToolCall: handleToolCall,
+      }),
+    [handleToolCall]
+  );
 
-  const resetAskAiChatSession = useCallback(
-    (pending?: AskAiPendingAfterSessionReset): void => {
-      resetAskAiAbortScope();
-      pendingAfterChatSessionResetRef.current = pending ?? null;
-      setChatSessionId(generateId());
-    },
-    [resetAskAiAbortScope],
+  const [chatInstance, setChatInstance] = useState(
+    (): Chat<AIMessage> => createChatInstance()
+  );
+  // Keep a stable reference to the chat instance so reading messages are render safe
+  const chatInstanceRef = useRef<Chat<AIMessage>>(chatInstance);
+  chatInstanceRef.current = chatInstance;
+
+  const { messages, status, setMessages, error, stop, addToolOutput } = useChat(
+    {
+      chat: chatInstance,
+    }
   );
 
   useEffect(() => {
-    const pending = pendingAfterChatSessionResetRef.current;
-    if (pending === null) return;
+    addToolOutputRef.current = addToolOutput;
+  }, [addToolOutput]);
 
-    const send = sendMessageRef.current;
-    const setMsgs = setMessagesRef.current;
+  const conversations = useRef(
+    createStoredConversations<StoredAskAiState>({
+      key: `__DOCSEARCH_ASKAI_CONVERSATIONS__${appId}`,
+      limit: 10,
+    })
+  ).current;
 
-    if (pending.kind === 'sendText') {
-      if (!send) return;
-      pendingAfterChatSessionResetRef.current = null;
-      send({ text: pending.text }, pending.requestOptions ?? {});
-      return;
-    }
-    if (pending.kind === 'sendUserMessage') {
-      if (!send) return;
-      pendingAfterChatSessionResetRef.current = null;
-      send(pending.message, pending.requestOptions ?? {});
-      return;
-    }
-    if (!setMsgs) return;
-    pendingAfterChatSessionResetRef.current = null;
-    setMsgs(pending.messages);
-  }, [chatSessionId]);
+  const sendFeedback = useCallback<OnAskAiFeedback>(
+    async (messageId, { thumbs, tags, notes }): Promise<void> => {
+      if (!agentId) return;
 
-  const onStopStreaming = async (): Promise<void> => {
+      const res = await postAgentStudioFeedback({
+        agentId,
+        vote: thumbs,
+        messageId,
+        appId,
+        apiKey,
+        abortSignal: abortControllerRef.current.signal,
+        notes,
+        tags,
+      });
+
+      if (res.status >= 300) throw new Error('Failed, try again later.');
+      conversations.addFeedback?.(
+        messageId,
+        thumbs === 1 ? 'like' : 'dislike',
+        { tags, notes }
+      );
+    },
+    [agentId, appId, apiKey, conversations]
+  );
+
+  const onStopStreaming = useCallback(async (): Promise<void> => {
     abortControllerRef.current.abort();
     await stop();
-    abortControllerRef.current = new AbortController();
-  };
+  }, [stop]);
 
-  const exchanges = useMemo(() => {
+  const exchanges = useMemo((): Exchange[] => {
     const grouped: Exchange[] = [];
 
     for (let i = 0; i < messages.length; i++) {
       if (messages[i].role === 'user') {
         const userMessage = messages[i];
-        const assistantMessage = messages[i + 1]?.role === 'assistant' ? messages[i + 1] : null;
+        const assistantMessage =
+          messages[i + 1]?.role === 'assistant' ? messages[i + 1] : null;
         grouped.push({ id: userMessage.id, userMessage, assistantMessage });
         if (assistantMessage) {
           i++;
@@ -274,24 +269,51 @@ export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, useS
   const askAiError = useMemo((): Error | undefined => {
     if (!error) return undefined;
 
-    if (!params.agentStudio) return error;
-
     return getAgentStudioErrorMessage(error);
-  }, [error, params.agentStudio]);
+  }, [error]);
+
+  const updateChatInstance = useCallback(
+    (restored?: AIMessage[], existingConversationId?: string): void => {
+      const newChatInstance = createChatInstance(
+        restored,
+        existingConversationId
+      );
+      chatInstanceRef.current = newChatInstance;
+      setChatInstance(newChatInstance);
+    },
+    [createChatInstance]
+  );
+
+  const startNewConversation = useCallback((): void => {
+    updateChatInstance();
+  }, [updateChatInstance]);
+
+  const restoreConversation = useCallback(
+    (restored: AIMessage[], existingConversationId?: string): void => {
+      updateChatInstance(restored, existingConversationId);
+    },
+    [updateChatInstance]
+  );
+
+  // This is so that the public `sendMessage` is always pointed to a stable reference of the chat instance
+  const sendMessageSafe = useCallback<UseChat['sendMessage']>(
+    (...args): Promise<void> => chatInstanceRef.current!.sendMessage(...args),
+    []
+  );
 
   return {
+    chatId: chatInstance.id,
     messages,
-    sendMessage,
+    sendMessage: sendMessageSafe,
     status,
     setMessages,
-    clearError,
-    resetAskAiAbortScope,
-    resetAskAiChatSession,
     askAiError,
     stopAskAiStreaming: onStopStreaming,
     isStreaming,
     exchanges,
     conversations,
     sendFeedback,
+    startNewConversation,
+    restoreConversation,
   };
 };

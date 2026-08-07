@@ -1,0 +1,203 @@
+import type { UseChatHelpers } from '@ai-sdk/react';
+import type {
+  AutocompleteApi,
+  AutocompleteState,
+  BaseItem,
+} from '@algolia/autocomplete-core';
+import type { JSX } from 'react';
+import React from 'react';
+
+import type { AskAiScreenTranslations } from './AskAiScreen';
+import { AskAiScreen } from './AskAiScreen';
+import type { AskAiStartScreenTranslations } from './components/AskAiStartScreen';
+import { AskAiStartScreen } from './components/AskAiStartScreen';
+import { ConversationHistoryScreen } from './ConversationHistoryScreen';
+import type { DocSearchProps } from './DocSearch';
+import type { ErrorScreenTranslations } from './ErrorScreen';
+import { ErrorScreen } from './ErrorScreen';
+import type { NewConversationTranslations } from './NewConversationScreen';
+import { NewConversationScreen } from './NewConversationScreen';
+import type { NoResultsScreenTranslations } from './NoResultsScreen';
+import { NoResultsScreen } from './NoResultsScreen';
+import type { ResultsScreenTranslations } from './ResultsScreen';
+import { ResultsScreen } from './ResultsScreen';
+import type { StoredSearchPlugin } from './stored-searches';
+import type {
+  InternalDocSearchHit,
+  OnAskAiFeedback,
+  StoredAskAiState,
+  StoredDocSearchHit,
+  SuggestedQuestionHit,
+} from './types';
+import type { AIMessage, AskAiState, ToolCalls } from './types/AskiAi';
+import { isQueryEmpty } from './utils';
+
+export type AskAiScreenStateTranslations = Partial<{
+  errorScreen: ErrorScreenTranslations;
+  startScreen: AskAiStartScreenTranslations;
+  noResultsScreen: NoResultsScreenTranslations;
+  resultsScreen: ResultsScreenTranslations;
+  askAiScreen: AskAiScreenTranslations;
+  newConversation: NewConversationTranslations;
+}>;
+
+export interface AskAiScreenStateProps<
+  TItem extends BaseItem,
+> extends AutocompleteApi<
+  TItem,
+  React.FormEvent,
+  React.MouseEvent,
+  React.KeyboardEvent
+> {
+  state: AutocompleteState<TItem>;
+  recentSearches: StoredSearchPlugin<StoredDocSearchHit>;
+  favoriteSearches: StoredSearchPlugin<StoredDocSearchHit>;
+  conversations: StoredSearchPlugin<StoredAskAiState>;
+  onItemClick: (
+    item: InternalDocSearchHit,
+    event: KeyboardEvent | MouseEvent
+  ) => void;
+  onAskAiToggle: (toggle: boolean) => void;
+  isAskAiActive: boolean;
+  canHandleAskAi: boolean;
+  inputRef: React.MutableRefObject<HTMLInputElement | null>;
+  hitComponent: DocSearchProps['hitComponent'];
+  indexName: string;
+  messages: UseChatHelpers<AIMessage>['messages'];
+  tools: ToolCalls;
+  status: UseChatHelpers<AIMessage>['status'];
+  askAiError?: Error;
+  disableUserPersonalization: boolean;
+  resultsFooterComponent: DocSearchProps['resultsFooterComponent'];
+  translations: AskAiScreenStateTranslations;
+  getMissingResultsUrl?: DocSearchProps['getMissingResultsUrl'];
+  hasCollections: boolean;
+  onFeedback?: OnAskAiFeedback;
+  askAiState: AskAiState;
+  selectAskAiQuestion: (toggle: boolean, query: string) => void;
+  suggestedQuestions: SuggestedQuestionHit[];
+  selectSuggestedQuestion: (question: SuggestedQuestionHit) => void;
+  onNewConversation: () => void;
+  memoryEnabled?: boolean;
+  resultBadgeKey?: string;
+  promptBlockingErrorId?: string;
+}
+
+export const AskAiScreenState = React.memo(
+  ({
+    translations = {},
+    selectAskAiQuestion,
+    ...props
+  }: AskAiScreenStateProps<InternalDocSearchHit>): JSX.Element => {
+    const handleSelectPromptSuggestion = React.useCallback(
+      (prompt: string) => {
+        selectAskAiQuestion(true, prompt);
+      },
+      [selectAskAiQuestion]
+    );
+
+    if (
+      props.canHandleAskAi &&
+      props.isAskAiActive &&
+      props.askAiState === 'conversation-history'
+    ) {
+      return (
+        <ConversationHistoryScreen
+          selectAskAiQuestion={selectAskAiQuestion}
+          {...props}
+        />
+      );
+    }
+
+    if (
+      props.canHandleAskAi &&
+      props.isAskAiActive &&
+      props.askAiState === 'new-conversation'
+    ) {
+      return (
+        <NewConversationScreen
+          translations={translations?.newConversation}
+          selectSuggestedQuestion={props.selectSuggestedQuestion}
+          suggestedQuestions={props.suggestedQuestions}
+        />
+      );
+    }
+
+    if (props.isAskAiActive && props.canHandleAskAi) {
+      return (
+        <AskAiScreen
+          {...props}
+          messages={props.messages}
+          tools={props.tools}
+          status={props.status}
+          askAiError={props.askAiError}
+          translations={translations?.askAiScreen}
+          memoryEnabled={props.memoryEnabled}
+          selectAskAiQuestion={selectAskAiQuestion}
+          onSelectPromptSuggestion={handleSelectPromptSuggestion}
+        />
+      );
+    }
+
+    if (props.state?.status === 'error') {
+      return <ErrorScreen translations={translations?.errorScreen} />;
+    }
+
+    if (isQueryEmpty(props.state.query)) {
+      return (
+        <AskAiStartScreen
+          {...props}
+          hasCollections={props.hasCollections}
+          translations={translations?.startScreen}
+          selectAskAiQuestion={selectAskAiQuestion}
+        />
+      );
+    }
+
+    if (!props.hasCollections && !props.canHandleAskAi) {
+      return (
+        <NoResultsScreen
+          {...props}
+          translations={translations?.noResultsScreen}
+        />
+      );
+    }
+
+    return (
+      <>
+        <ResultsScreen {...props} translations={translations?.resultsScreen} />
+        {props.canHandleAskAi &&
+          !props.hasCollections && (
+            // if there's one collection it is the ask ai action, show the no results screen
+            <NoResultsScreen
+              {...props}
+              translations={translations?.noResultsScreen}
+            />
+          )}
+      </>
+    );
+  },
+  function areEqual(prevProps, nextProps) {
+    const askAiStateChanged =
+      prevProps.isAskAiActive !== nextProps.isAskAiActive ||
+      prevProps.askAiState !== nextProps.askAiState ||
+      prevProps.canHandleAskAi !== nextProps.canHandleAskAi;
+
+    // Something triggered an Ask AI related state change, perform a new render
+    if (askAiStateChanged) {
+      return false;
+    }
+
+    const isLoading =
+      nextProps.state.status === 'loading' ||
+      nextProps.state.status === 'stalled';
+
+    const isWaitingForCollections =
+      nextProps.state.status === 'idle' &&
+      !isQueryEmpty(nextProps.state.query) &&
+      prevProps.state.query !== nextProps.state.query &&
+      prevProps.state.collections === nextProps.state.collections;
+
+    return isLoading || isWaitingForCollections;
+  }
+);

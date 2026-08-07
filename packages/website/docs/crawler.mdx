@@ -1,16 +1,17 @@
 ---
 title: DocSearch x Algolia Crawler
+description: Resolve common DocSearch crawler questions and migration tasks.
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-If you're not finding the answer to your question on this website, this page will help you. If you're still unsure, don't hesitate to connect with us on [Discord][1] or let our [support][3] team know.
+Use this page to resolve common crawler questions. If you need more help, contact us on [Discord][1] or through [Algolia support][3].
 
-You can also read our [Crawler FAQ](https://www.algolia.com/doc/tools/crawler/troubleshooting/crawl-status/), to understand how it behaves:
+For more troubleshooting guidance, read the [Crawler FAQ][4]:
 
-- [One of my pages wasn't crawled](https://www.algolia.com/doc/tools/crawler/troubleshooting/extraction-issues/#a-page-wasnt-crawled)
-- [Why are my pages skipped?](https://www.algolia.com/doc/tools/crawler/troubleshooting/fetching-issues/)
+- [One of my pages wasn't crawled][5]
+- [Why are my pages skipped?][6]
 
 For questions related to the DocSearch program, please see our [DocSearch program FAQ](/docs/docsearch-program).
 
@@ -22,61 +23,61 @@ Crawls are scheduled at a random time once a week. You can [configure this sched
 
 This can happen when you have more than one URL pointing to the same content, for example with `./docs`, `./docs/` and `./docs/index.html`.
 
-We recommend configuring canonical URLs on your website, you can read more on the ["Consolidate duplicate URLs" guide by Google](https://developers.google.com/search/docs/advanced/crawling/consolidate-duplicate-urls).
+Configure canonical URLs on your website. For more information, read Google's [Consolidate duplicate URLs][7] guide.
 
-Ultimately, it is possible to set the [`exclusionPatterns`](https://www.algolia.com/doc/tools/crawler/apis/configuration/exclusion-patterns/) to all the patterns you want to exclude.
+Use [`exclusionPatterns`][8] to exclude duplicate URL patterns.
 
-## Are the [`docsearch-scraper`](https://github.com/algolia/docsearch-scraper) and [`docsearch-configs`](https://github.com/algolia/docsearch-configs) repository still maintained?
+## Are the [`docsearch-scraper`][9] and [`docsearch-configs`][10] repositories still maintained?
 
-We've deprecated our legacy infrastructure, but you can still use it to [run your own instance](/docs/legacy/run-your-own) and plug it to [DocSearch v3](/docs/v3/docsearch)!
+The legacy scraper infrastructure is deprecated. You can still [run a legacy scraper instance][12] and use its index with the historical [DocSearch v3 UI][13]. For current frontend integrations, choose a [DocSearch v5 package][14]. The scraper or crawler version doesn't determine the frontend package version.
 
-## How to migrate
+## How do I migrate?
 
 > Every owner should have received a migration email from Algolia with the details. If you were not part of the previous `index` owners, or the maintainer has changed, you can request access via [our support page](https://www.algolia.com/support/).
 
-All the steps are detailed in the email you've received, but in order to use the new infrastructure you need to:
+Use the migration email to complete these steps:
 
 - Join the Algolia application with the invite included in the email
-- Update your frontend integration with the credentials received in the email.
+- Update your frontend integration with the credentials received in the email. For v5, follow the [JavaScript][15] or [React][16] guide.
 
 <Tabs
   groupId="language"
-  defaultValue="js"
+  aria-label="Programming language"
+  defaultValue="react"
   values={[
+    { label: 'React', value: 'react', },
     { label: 'JavaScript', value: 'js', },
-    { label: 'React', value: 'react', }
   ]
 }>
-<TabItem value="js">
-
-```js app.js
-docsearch({
-  container: '#docsearch',
-  appId: 'YOUR_NEW_ALGOLIA_APP_ID',
-  apiKey: 'YOUR_NEW_ALGOLIA_SEARCH_API_KEY',
-  indexName: 'YOUR_INDEX_NAME', // it does not change
-});
-```
-
-</TabItem>
-
 <TabItem value="react">
 
-```jsx App.js
+```jsx title="Search.tsx"
 <DocSearch
   appId="YOUR_NEW_ALGOLIA_APP_ID"
   apiKey="YOUR_NEW_ALGOLIA_SEARCH_API_KEY"
-  indexName="YOUR_INDEX_NAME" // it does not change
+  indices={['YOUR_INDEX_NAME']} // The index name doesn't change.
 />
 ```
 
 </TabItem>
 
+<TabItem value="js">
+
+```js title="search.js"
+docsearch({
+  container: '#docsearch',
+  appId: 'YOUR_NEW_ALGOLIA_APP_ID',
+  apiKey: 'YOUR_NEW_ALGOLIA_SEARCH_API_KEY',
+  indices: ['YOUR_INDEX_NAME'], // The index name doesn't change.
+});
+```
+
+</TabItem>
 </Tabs>
 
 ## What should I do with my legacy config and credentials?
 
-You can forget about them, we will do the cleaning once all of our users have migrated to the new infrastructure!
+Use the credentials for your current Algolia application. Don't use legacy credentials for new frontend integrations.
 
 You should use [the dedicated web interface][2] to make any changes to your index.
 
@@ -88,27 +89,27 @@ We did not remove access to the legacy DocSearch application (`BH4D9OD16A`) to g
 
 If your search does not yield any results, but there is no error in [your browser developer tools](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_are_browser_developer_tools), there might be an issue with your index.
 
-Make sure that:
+Check the following settings:
 
-1. [Your Crawler config](/docs/record-extractor) matches your website structure
+1. Confirm that [your crawler configuration][17] matches your website structure.
 
-We provide [config templates](/docs/templates) for many website generators, but you can also use them as a base. To debug your selectors, we recommend using [the URL tester](/docs/manage-your-crawls/#url-tester).
+   Use a [configuration template][18] for your website generator as a starting point. Test your selectors with [the URL tester][19].
 
-2. Your index settings are up to date (you'll see a banner in [the search preview](/docs/manage-your-crawls/#search-preview) if not)
+2. Confirm that your index settings are current. If they aren't, [the search preview][20] displays a banner.
 
-The Crawler only applies `index settings` at index creation time, to keep the Algolia dashboard as the source of truth. If you have drastically changed your config, or moved to a website generator, we recommend you to delete your index from the Algolia dashboard before starting a new crawl.
+   The crawler applies `index settings` only when it creates an index, which keeps the Algolia dashboard as the source of truth. If you changed your configuration significantly or moved to a different website generator, delete the index from the Algolia dashboard before starting a new crawl.
 
 ## Can I delete my crawler?
 
-No. Well, you can but once you do things will not work correctly. We automatically create a default crawler that is associated with your DocSearch application and deleting it with the intention of creating a new one will not work as expected.
+Don't delete the default crawler associated with your DocSearch application. Creating a replacement might not preserve the program configuration.
 
 ## What if I delete my DocSearch Crawler?
 
-The fastest way will be to connect with us on our [Discord](https://alg.li/discord). Alternatively, email us at the address below and we will get to it as soon as we can.
+Contact us on [Discord][1] or email us at the address below.
 
-## Can I use the Crawler on password protected sites?
+## Can I use the crawler on password-protected sites?
 
-The Crawler as used with DocSearch applications cannot be used for password protected sites that require a login. If you need this functionality, you need to utilize a regular Algolia plan https://www.algolia.com/pricing and add a crawler to it. Note that while it is free to add a pay-as-you-go crawler, the free tier does have limitations.
+The crawler included with DocSearch applications can't access password-protected sites that require a login. To crawl these sites, choose an [Algolia plan][11] and add a crawler. Pay-as-you-go plans include a crawler, but the free tier has usage limits.
 
 ## Links related to the migration
 
@@ -118,3 +119,20 @@ The Crawler as used with DocSearch applications cannot be used for password prot
 [1]: https://alg.li/discord
 [2]: https://dashboard.algolia.com/crawler
 [3]: https://support.algolia.com/
+[4]: https://www.algolia.com/doc/tools/crawler/troubleshooting/crawl-status/
+[5]: https://www.algolia.com/doc/tools/crawler/troubleshooting/extraction-issues/#a-page-wasnt-crawled
+[6]: https://www.algolia.com/doc/tools/crawler/troubleshooting/fetching-issues/
+[7]: https://developers.google.com/search/docs/advanced/crawling/consolidate-duplicate-urls
+[8]: https://www.algolia.com/doc/tools/crawler/apis/configuration/exclusion-patterns/
+[9]: https://github.com/algolia/docsearch-scraper
+[10]: https://github.com/algolia/docsearch-configs
+[11]: https://www.algolia.com/pricing
+[12]: /docs/legacy/run-your-own
+[13]: /docs/v3/docsearch
+[14]: /docs/packages/overview
+[15]: /docs/packages/js/getting-started
+[16]: /docs/packages/react/getting-started
+[17]: /docs/record-extractor
+[18]: /docs/templates
+[19]: /docs/manage-your-crawls/#url-tester
+[20]: /docs/manage-your-crawls/#search-preview

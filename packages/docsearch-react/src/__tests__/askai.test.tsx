@@ -1,10 +1,11 @@
-import { render, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import type { UIMessage } from 'ai';
 import React from 'react';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 
 import { AskAiScreen } from '../AskAiScreen';
+import { PromptForm } from '../Sidepanel/PromptForm';
 
 const baseProps = {
   indexName: 'idx',
@@ -17,6 +18,7 @@ const baseProps = {
   setQuery: (): void => {},
   messages: [],
   status: 'ready' as const,
+  tools: {},
   disableUserPersonalization: false,
   resultsFooterComponent: null,
 } as any;
@@ -37,52 +39,60 @@ describe('AskAiScreen', () => {
     ];
 
     const { getByText } = render(
-      <AskAiScreen {...baseProps} messages={messages} status="error" askAiError={new Error('oh no')} />,
+      <AskAiScreen
+        {...baseProps}
+        messages={messages}
+        status="error"
+        askAiError={new Error('oh no')}
+      />
     );
 
     expect(getByText('oh no')).toBeInTheDocument();
   });
 
-  it('surfaces thread depth (AI-217) with a banner and hides the generic chat error', () => {
+  it('copies all assistant text parts around tool calls', () => {
+    const writeText = vi.fn();
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: { writeText },
+    });
     const messages: UIMessage[] = [
       {
-        id: '1',
+        id: 'user-1',
         role: 'user',
-        parts: [{ type: 'text', text: 'first' }],
+        parts: [{ type: 'text', text: 'What is Docusaurus?' }],
       },
       {
-        id: '2',
+        id: 'assistant-1',
         role: 'assistant',
-        parts: [{ type: 'text', text: 'answer' }],
-      },
-      {
-        id: '3',
-        role: 'user',
-        parts: [{ type: 'text', text: 'follow-up' }],
+        parts: [
+          { type: 'text', text: 'Let me look that up.', state: 'done' },
+          {
+            type: 'tool-algolia_search_index',
+            toolCallId: 'tool-1',
+            state: 'output-available',
+            input: { query: 'Docusaurus', index: 'docs' },
+            output: { hits: [] },
+          },
+          {
+            type: 'text',
+            text: 'Docusaurus is a static site generator.',
+            state: 'done',
+          },
+        ],
       },
     ];
 
-    const onNewConversation = (): void => {};
+    render(<AskAiScreen {...baseProps} messages={messages} />);
 
-    const { container } = render(
-      <AskAiScreen
-        {...baseProps}
-        messages={messages}
-        status="error"
-        askAiError={new Error('AI-217 - Thread depth exceeded')}
-        onNewConversation={onNewConversation}
-      />,
+    fireEvent.click(screen.getByTitle('Copy'));
+
+    expect(writeText).toHaveBeenCalledWith(
+      'Let me look that up.\n\nDocusaurus is a static site generator.'
     );
-
-    expect(within(container).getByText('AI-217 - Thread depth exceeded')).toBeInTheDocument();
-    expect(within(container).getByText('Start a new conversation')).toBeInTheDocument();
-    expect(within(container).getByText(/to continue\./i)).toBeInTheDocument();
-    // Bound queries from `render()` use `baseElement` (often `document.body`), so a prior test can still
-    // match. Restrict to this instance's root so we only assert on this tree.
-    expect(within(container).queryByText('Chat error')).not.toBeInTheDocument();
   });
 
-  it('for Agent Studio cost-control errors, shows the blocking banner (message + start new conversation), not inline Chat error', () => {
+  it('shows cost-control errors in a blocking banner', () => {
     const messages: UIMessage[] = [
       {
         id: '1',
@@ -90,61 +100,117 @@ describe('AskAiScreen', () => {
         parts: [{ type: 'text', text: 'hello' }],
       },
     ];
-
+    const onNewConversation = vi.fn();
     const { container } = render(
       <AskAiScreen
         {...baseProps}
-        agentStudio={true}
         messages={messages}
         status="error"
         askAiError={new Error('Too many requests (AI-205)')}
-        onNewConversation={(): void => {}}
-      />,
+        onNewConversation={onNewConversation}
+      />
     );
 
-    expect(within(container).getByText('Too many requests')).toBeInTheDocument();
-    expect(within(container).getByText('Start a new conversation')).toBeInTheDocument();
-    expect(within(container).getByText(/to continue\./i)).toBeInTheDocument();
     expect(
-      within(container).queryByText('This conversation is now closed to keep responses accurate.', { exact: false }),
-    ).not.toBeInTheDocument();
+      within(container).getByText('Too many requests')
+    ).toBeInTheDocument();
+    expect(within(container).queryByText('Chat error')).not.toBeInTheDocument();
+    expect(within(container).getByText('hello')).toBeInTheDocument();
+
+    fireEvent.click(
+      within(container).getByRole('button', {
+        name: 'Start a new conversation',
+      })
+    );
+    expect(onNewConversation).toHaveBeenCalledTimes(1);
   });
 
-  it('for Agent Studio token output limit, banner shows only the human message without start-new-conversation', () => {
+  it('does not offer a new conversation for token output errors', () => {
     const messages: UIMessage[] = [
       {
         id: '1',
         role: 'user',
-        parts: [{ type: 'text', text: 'Hello' }],
-      },
-      {
-        id: '2',
-        role: 'assistant',
-        parts: [{ type: 'text', text: 'Hello! How can I assist' }],
+        parts: [{ type: 'text', text: 'hello' }],
       },
     ];
-
-    const raw = JSON.stringify({
-      error: 'Could not complete response due to token output limits',
-      type: 'TokenOutputLimitError',
-      statusCode: 400,
-    });
-
+    const error = new Error(
+      JSON.stringify({
+        error: 'Could not complete response due to token output limits',
+        type: 'TokenOutputLimitError',
+      })
+    );
     const { container } = render(
       <AskAiScreen
         {...baseProps}
-        agentStudio={true}
         messages={messages}
         status="error"
-        askAiError={new Error(raw)}
-        onNewConversation={(): void => {}}
-      />,
+        askAiError={error}
+      />
     );
 
-    expect(within(container).getByText('Could not complete response due to token output limits')).toBeInTheDocument();
-    expect(within(container).queryByText('Start a new conversation')).not.toBeInTheDocument();
-    expect(within(container).queryByText(/to continue\./i)).not.toBeInTheDocument();
-    expect(within(container).queryByText('Chat error')).not.toBeInTheDocument();
-    expect(within(container).queryByText(/\{"error":/)).not.toBeInTheDocument();
+    expect(
+      within(container).getByText(
+        'Could not complete response due to token output limits'
+      )
+    ).toBeInTheDocument();
+    expect(
+      within(container).queryByRole('button', {
+        name: 'Start a new conversation',
+      })
+    ).not.toBeInTheDocument();
+  });
+});
+
+describe('Sidepanel PromptForm', () => {
+  it('shows a blocking error and recovery action', () => {
+    const onStartNewConversation = vi.fn();
+
+    const { container } = render(
+      <PromptForm
+        exchanges={[]}
+        isStreaming={false}
+        blockingErrorMessage="Rate limit exceeded"
+        showBlockingError={true}
+        onSend={vi.fn()}
+        onStopStreaming={vi.fn()}
+        onStartNewConversation={onStartNewConversation}
+      />
+    );
+
+    expect(within(container).getByRole('alert')).toHaveTextContent(
+      'Rate limit exceeded'
+    );
+    expect(within(container).getByRole('textbox')).toHaveAttribute('readonly');
+    expect(within(container).getByRole('textbox')).toHaveAttribute(
+      'aria-disabled',
+      'true'
+    );
+
+    fireEvent.click(
+      within(container).getByRole('button', {
+        name: 'Start a new conversation',
+      })
+    );
+    expect(onStartNewConversation).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not submit a draft while blocked', () => {
+    const onSend = vi.fn();
+    const props = {
+      exchanges: [],
+      isStreaming: false,
+      onSend,
+      onStopStreaming: vi.fn(),
+      onStartNewConversation: vi.fn(),
+    };
+    const { container, rerender } = render(<PromptForm {...props} />);
+    const input = within(container).getByRole('textbox');
+
+    fireEvent.change(input, { target: { value: 'draft question' } });
+    rerender(<PromptForm {...props} showBlockingError={true} />);
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    expect(onSend).not.toHaveBeenCalled();
+    expect(input).toHaveValue('draft question');
   });
 });

@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/js",
   "description": "JavaScript package for DocSearch, the best search experience for docs.",
-  "version": "4.6.3",
+  "version": "5.0.0",
   "license": "MIT",
   "homepage": "https://docsearch.algolia.com",
   "repository": {
@@ -17,6 +17,10 @@
   "files": [
     "dist/"
   ],
+  "exports": {
+    ".": "./dist/esm/index.js",
+    "./docsearch": "./dist/esm/docsearch.js"
+  },
   "source": "src/index.ts",
   "types": "dist/esm/index.d.ts",
   "module": "dist/esm/index.js",
@@ -25,22 +29,18 @@
   "unpkg": "dist/umd/index.js",
   "jsdelivr": "dist/umd/index.js",
   "scripts": {
-    "build:clean": "rm -rf ./dist",
-    "build:types": "tsc -p ./tsconfig.declaration.json --outDir ./dist/esm/types",
-    "build:clean-types": "rm -rf ./dist/esm/types",
-    "build:source": "rollup --config --bundleConfigAsCjs",
-    "build:dts": "rollup --config rollup.dts.config.js --bundleConfigAsCjs",
-    "build": "yarn build:clean && yarn build:types && yarn build:source && yarn build:dts && yarn build:clean-types",
-    "on:change": "yarn build",
-    "watch": "nodemon --watch src --exec \"yarn on:change\" --ignore dist/ --ext ts,tsx"
+    "build": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "dependencies": {
+    "@docsearch/core": "5.0.0",
+    "@docsearch/react": "5.0.0"
   },
   "devDependencies": {
-    "@docsearch/react": "4.6.3",
-    "@rollup/plugin-replace": "6.0.3",
     "htm": "3.1.1",
-    "nodemon": "^3.1.11",
     "preact": "11.0.0-beta.0",
-    "rollup-plugin-dts": "^6.3.0"
+    "tsdown": "0.22.7",
+    "typescript": "5.7.3"
   },
   "nx": {
     "implicitDependencies": [

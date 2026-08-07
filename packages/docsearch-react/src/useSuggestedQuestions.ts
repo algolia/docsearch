@@ -3,20 +3,26 @@ import { useEffect, useState } from 'react';
 
 import { SUGGESTED_QUETIONS_INDEX_NAME } from './constants';
 
-import type { DocSearchTransformClient, SuggestedQuestion, SuggestedQuestionHit } from '.';
+import type {
+  DocSearchTransformClient,
+  SuggestedQuestion,
+  SuggestedQuestionHit,
+} from '.';
 
 type UseSuggestedQuestionsProps = {
-  assistantId: string | null;
+  agentId: string | null;
   searchClient: DocSearchTransformClient;
   suggestedQuestionsEnabled?: boolean;
 };
 
 export const useSuggestedQuestions = ({
-  assistantId,
+  agentId,
   searchClient,
   suggestedQuestionsEnabled = false,
 }: UseSuggestedQuestionsProps): SuggestedQuestionHit[] => {
-  const [suggestedQuestions, setSuggestedQuestions] = useState<SuggestedQuestionHit[]>([]);
+  const [suggestedQuestions, setSuggestedQuestions] = useState<
+    SuggestedQuestionHit[]
+  >([]);
 
   useEffect(() => {
     const getSuggestedQuestions = async (): Promise<void> => {
@@ -24,7 +30,7 @@ export const useSuggestedQuestions = ({
         requests: [
           {
             indexName: SUGGESTED_QUETIONS_INDEX_NAME,
-            filters: `state:published AND assistantId:${assistantId}`,
+            filters: `state:published AND assistantId:${agentId}`,
             hitsPerPage: 3,
           },
         ],
@@ -35,10 +41,10 @@ export const useSuggestedQuestions = ({
       setSuggestedQuestions(result.hits);
     };
 
-    if (suggestedQuestionsEnabled && assistantId && assistantId !== '') {
+    if (suggestedQuestionsEnabled && agentId && agentId !== '') {
       getSuggestedQuestions();
     }
-  }, [suggestedQuestionsEnabled, assistantId, searchClient]);
+  }, [suggestedQuestionsEnabled, agentId, searchClient]);
 
   return suggestedQuestions;
 };
