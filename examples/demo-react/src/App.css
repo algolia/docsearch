@@ -214,7 +214,8 @@ main {
   }
 }
 
-.search-wrapper .DocSearch-Button:hover {
+.search-wrapper .DocSearch-Button:hover,
+.search-wrapper .DocSearch-Button:focus-visible {
   border-color: var(--demo-docsearch-button-hover-border) !important;
   box-shadow: 0 4px 12px var(--demo-docsearch-button-hover-shadow) !important;
   transform: translateY(-1px) !important;
