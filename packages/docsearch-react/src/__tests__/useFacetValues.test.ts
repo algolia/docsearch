@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { DocSearchFacet, DocSearchIndex } from '../DocSearch';
 import { useFacetValues } from '../useFacetValues';
@@ -22,6 +22,10 @@ describe('useFacetValues', () => {
     });
   });
 
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it('fetches facet values once and merges them per facet', async () => {
     const facets: DocSearchFacet[] = [{ key: 'language' }, { key: 'version' }];
     const indexes: DocSearchIndex[] = [{ name: 'docs' }];
@@ -38,6 +42,39 @@ describe('useFacetValues', () => {
     });
 
     expect(search).toHaveBeenCalledTimes(1);
+  });
+
+  it('sorts facet values without case or accent sensitivity', async () => {
+    const localeCompare = vi.spyOn(String.prototype, 'localeCompare');
+    search.mockResolvedValue({
+      results: [
+        {
+          facets: {
+            language: { zulu: 1, Éclair: 1, eclair: 1, alpha: 1 },
+          },
+        },
+      ],
+    });
+
+    const { result } = renderHook(() =>
+      useFacetValues({
+        facets: [{ key: 'language' }],
+        indexes: [{ name: 'docs' }],
+        searchClient,
+      })
+    );
+
+    await waitFor(() => {
+      expect(result.current.language).toEqual([
+        'alpha',
+        'Éclair',
+        'eclair',
+        'zulu',
+      ]);
+    });
+    expect(localeCompare).toHaveBeenCalledWith(expect.any(String), undefined, {
+      sensitivity: 'base',
+    });
   });
 
   it('does not re-fetch when facet/index props are recreated with identical content', async () => {
