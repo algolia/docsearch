@@ -816,11 +816,13 @@
   transition: all 0.2s ease;
 }
 
-.DocSearch-AskAiScreen-Sources-source a:hover {
+.DocSearch-AskAiScreen-Sources-source a:hover,
+.DocSearch-AskAiScreen-Sources-source a:focus-visible {
   text-decoration: underline;
 }
 
-.DocSearch-Markdown-Content a:hover {
+.DocSearch-Markdown-Content a:hover,
+.DocSearch-Markdown-Content a:focus-visible {
   text-decoration: underline;
   opacity: 0.9;
 }

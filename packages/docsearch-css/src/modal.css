@@ -145,7 +145,8 @@
   color: var(--docsearch-text-color);
 }
 
-.DocSearch-Popover-Close:hover {
+.DocSearch-Popover-Close:hover,
+.DocSearch-Popover-Close:focus-visible {
   color: var(--docsearch-highlight-color);
   background: var(--docsearch-soft-primary-color);
 }
@@ -550,7 +551,8 @@
   display: none;
 }
 
-.DocSearch-Action:hover {
+.DocSearch-Action:hover,
+.DocSearch-Action:focus-visible {
   color: var(--docsearch-highlight-color);
   background: var(--docsearch-soft-primary-color);
 }
