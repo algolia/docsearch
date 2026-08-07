@@ -243,7 +243,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     svg {
-      transition: none;
+      transition-duration: 0s;
     }
   }
 }
@@ -530,7 +530,7 @@
   justify-content: center;
 }
 
-@media screen and (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {
   .DocSearch-Action {
     animation: none;
   }
@@ -543,6 +543,13 @@
 
   100% {
     opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .DocSearch-Action,
+  .DocSearch-AskAi-Return {
+    animation-duration: 0s;
   }
 }
 
@@ -842,11 +849,10 @@
   display: block;
 }
 
-@media screen and (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {
   .DocSearch-Hit-action-button:hover,
   .DocSearch-Hit-action-button:focus {
-    background: rgb(0 0 0 / 20%);
-    transition: none;
+    transition-duration: 0s;
   }
 }
 
@@ -915,14 +921,6 @@
 
 .DocSearch-Hit[aria-selected='true'] mark {
   color: var(--docsearch-highlight-color);
-}
-
-@media screen and (prefers-reduced-motion: reduce) {
-  .DocSearch-Hit-action-button:hover,
-  .DocSearch-Hit-action-button:focus {
-    background: rgb(0 0 0 / 20%);
-    transition: none;
-  }
 }
 
 .DocSearch-Hit-badge {

@@ -195,7 +195,7 @@
   }
 }
 
-@media screen and (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {
   .DocSearch-Sidepanel-Container {
     transition: none;
   }
@@ -472,7 +472,7 @@
   transition: all 150ms ease-in-out;
 }
 
-@media screen and (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {
   .DocSearch-Sidepanel-Prompt--stop,
   .DocSearch-Sidepanel-Prompt--submit {
     transition: none;
