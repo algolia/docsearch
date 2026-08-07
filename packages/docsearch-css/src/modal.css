@@ -846,6 +846,7 @@
 .DocSearch-Hit[aria-selected='true'] .DocSearch-Hit-Select-Icon {
   display: block;
 }
+
 @media (prefers-reduced-motion: reduce) {
   .DocSearch-Hit-action-button:hover,
   .DocSearch-Hit-action-button:focus {
