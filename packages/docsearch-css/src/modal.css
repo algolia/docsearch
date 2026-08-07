@@ -146,7 +146,7 @@
 }
 
 .DocSearch-Popover-Close:hover,
-.DocSearch-Popover-Close:focus {
+.DocSearch-Popover-Close:focus-visible {
   color: var(--docsearch-highlight-color);
   background: var(--docsearch-soft-primary-color);
 }
