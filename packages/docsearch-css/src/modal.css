@@ -242,7 +242,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     svg {
-      transition-duration: 0;
+      transition-duration: 0s;
     }
   }
 }
@@ -548,7 +548,7 @@
 @media (prefers-reduced-motion: reduce) {
   .DocSearch-Action,
   .DocSearch-AskAi-Return {
-    animation-duration: 0;
+    animation-duration: 0s;
   }
 }
 
@@ -849,7 +849,7 @@
 @media (prefers-reduced-motion: reduce) {
   .DocSearch-Hit-action-button:hover,
   .DocSearch-Hit-action-button:focus {
-    transition-duration: 0;
+    transition-duration: 0s;
   }
 }
 

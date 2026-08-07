@@ -70,7 +70,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .DocSearch-Button-Key {
-    transition-duration: 0;
+    transition-duration: 0s;
   }
 }
 

@@ -444,7 +444,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 
 @media (prefers-reduced-motion: reduce) {
   .theme-announcement-bar a {
-    transition-duration: 0;
+    transition-duration: 0s;
   }
 }
 
@@ -717,7 +717,7 @@ html[data-theme='dark'] .docsearch-logo {
 
 @media (prefers-reduced-motion: reduce) {
   .key__content {
-    transition-duration: 0;
+    transition-duration: 0s;
   }
 }
 
@@ -835,7 +835,7 @@ html[data-theme='dark'] .shimmer-effect {
 
 @media (prefers-reduced-motion: reduce) {
   .shimmer-effect {
-    animation-duration: 0;
+    animation-duration: 0s;
   }
 }
 

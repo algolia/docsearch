@@ -210,7 +210,7 @@ main {
 
 @media (prefers-reduced-motion: reduce) {
   .search-wrapper .DocSearch-Button {
-    transition-duration: 0;
+    transition-duration: 0s;
   }
 }
 
@@ -239,7 +239,7 @@ main {
 
 @media (prefers-reduced-motion: reduce) {
   .demo-section {
-    animation-duration: 0;
+    animation-duration: 0s;
   }
 
   .demo-section:nth-child(2) {
