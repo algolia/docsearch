@@ -552,9 +552,7 @@
 }
 
 .DocSearch-Action:hover,
-.DocSearch-Action:focus-visible,
-.DocSearch-AskAi-Return:hover,
-.DocSearch-AskAi-Return:focus-visible {
+.DocSearch-Action:focus-visible {
   color: var(--docsearch-highlight-color);
   background: var(--docsearch-soft-primary-color);
 }
