@@ -22,6 +22,7 @@
     ".": "./dist/esm/index.js",
     "./askaiModal": "./dist/esm/askaiModal.js",
     "./button": "./dist/esm/button.js",
+    "./docsearch": "./dist/esm/docsearch.js",
     "./docsearchAi": "./dist/esm/docsearchAi.js",
     "./modal": "./dist/esm/modal.js",
     "./sidepanel": "./dist/esm/sidepanel.js",
