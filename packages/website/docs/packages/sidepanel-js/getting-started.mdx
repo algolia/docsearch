@@ -1,18 +1,12 @@
 ---
 title: Sidepanel JS package
-description: Mount and control the v5 beta Agent Studio Sidepanel without React application code.
+description: Mount and control the v5 Sidepanel without React application code.
 ---
 
 import TabItem from '@theme/TabItem';
 import Tabs from '@theme/Tabs';
 
 `@docsearch/sidepanel-js` mounts the Agent Studio Sidepanel into an existing HTML element. It bundles its rendering dependencies and returns an imperative instance.
-
-:::info v5 beta
-
-These instructions use the `^5` range.
-
-:::
 
 ## Install
 
@@ -65,19 +59,14 @@ const assistant = sidepanel({
   container: '#docsearch-sidepanel',
   appId: 'YOUR_APPLICATION_ID',
   apiKey: 'YOUR_SEARCH_API_KEY',
-  assistantId: 'YOUR_AGENT_ID',
-  indexName: 'YOUR_INDEX_NAME',
+  agentId: 'YOUR_AGENT_ID',
   onReady() {
     console.info('DocSearch sidepanel is ready');
   },
 });
-
-document.querySelector('#ask-docs').addEventListener('click', () => {
-  assistant.open();
-});
 ```
 
-Use a search-only API key. The `assistantId` is an Agent Studio agent ID. V5 doesn't provide an `agentStudio` switch.
+Use a search-only API key. The `agentId` is an Agent Studio agent ID.
 
 ## Open with a question
 
@@ -111,8 +100,7 @@ Call `assistant.destroy()` before removing the container or remounting another S
     container: '#docsearch-sidepanel',
     appId: 'YOUR_APPLICATION_ID',
     apiKey: 'YOUR_SEARCH_API_KEY',
-    assistantId: 'YOUR_AGENT_ID',
-    indexName: 'YOUR_INDEX_NAME',
+    agentId: 'YOUR_AGENT_ID',
   });
 </script>
 ```

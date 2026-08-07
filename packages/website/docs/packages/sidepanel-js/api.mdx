@@ -1,6 +1,6 @@
 ---
 title: Sidepanel JS API reference
-description: API reference for @docsearch/sidepanel-js v5 beta.
+description: API reference for @docsearch/sidepanel-js v5.
 toc_max_heading_level: 2
 ---
 
@@ -42,19 +42,11 @@ Algolia application ID.
 
 Public API key with search permission.
 
-#### `assistantId`
+#### `agentId`
 
 > `type: string` | **required**
 
 Agent Studio agent ID.
-
-#### `indexName`
-
-> `type: string` | **required**
-
-Primary index for Agent Studio and conversation storage.
-
-The public `SidepanelProps` type in `5` doesn't include the React Sidepanel's top-level `searchParameters` field.
 
 ### UI props
 
@@ -135,8 +127,7 @@ const assistant = sidepanel({
   container: '#docsearch-sidepanel',
   appId: 'YOUR_APPLICATION_ID',
   apiKey: 'YOUR_SEARCH_API_KEY',
-  assistantId: 'YOUR_AGENT_ID',
-  indexName: 'docs',
+  agentId: 'YOUR_AGENT_ID',
   memory: {
     enabled: true,
     userToken: userMemoryToken,

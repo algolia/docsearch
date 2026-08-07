@@ -1,6 +1,6 @@
 ---
 title: React Sidepanel API reference
-description: API reference for @docsearch/sidepanel v5 beta.
+description: API reference for @docsearch/sidepanel.
 toc_max_heading_level: 2
 ---
 
@@ -8,7 +8,7 @@ toc_max_heading_level: 2
 
 Render `Sidepanel` inside `DocSearch` from `@docsearch/core`.
 
-Set `theme` on `DocSearch`; `SidepanelProps` omits it. Set lifecycle callbacks such as `onSidepanelOpen` and `onSidepanelClose` on the provider. Don't pass inherited `onOpen` or `onClose` callbacks to `Sidepanel`, because they replace the wrapper's state handlers in this beta.
+Set `theme` on `DocSearch`; `SidepanelProps` omits it. Set lifecycle callbacks such as `onSidepanelOpen` and `onSidepanelClose` on the provider. Don't pass inherited `onOpen` or `onClose` callbacks to `Sidepanel`, because they replace the wrapper's state handlers.
 
 ### Connection props
 
@@ -24,17 +24,11 @@ Algolia application ID.
 
 Public API key with search permission.
 
-#### `assistantId`
+#### `agentId`
 
 > `type: string` | **required**
 
 Agent Studio agent ID.
-
-#### `indexName`
-
-> `type: string` | **required**
-
-Primary index for Agent Studio and conversation storage.
 
 #### `searchParameters`
 
@@ -172,7 +166,7 @@ Changes visible and accessible text. `buttonText` applies to the inline variant.
 
 > `type: DocumentFragment | Element | null` | **optional**
 
-Receives the floating button portal. Defaults to `document.body`. This beta prop uses a lower-case `c`.
+Receives the floating button portal. Defaults to `document.body`.
 
 The wrapper supplies its click handler and keyboard shortcut configuration from `DocSearch`. An inline button renders at its position in the React tree.
 

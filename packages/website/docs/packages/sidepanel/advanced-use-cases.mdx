@@ -12,8 +12,7 @@ Use the `inline` panel variant to add a margin to the first element that matches
 <Sidepanel
   appId="YOUR_APPLICATION_ID"
   apiKey="YOUR_SEARCH_API_KEY"
-  assistantId="YOUR_AGENT_ID"
-  indexName="YOUR_INDEX_NAME"
+  agentId="YOUR_AGENT_ID"
   variant="inline"
   side="left"
   pushSelector="#documentation"
@@ -26,7 +25,7 @@ Keep `pushSelector` narrow enough to identify one layout container. The implemen
 
 ## Render into another container
 
-Both the floating button and panel default to `document.body`. Set `portalContainer` on the panel and `portalcontainer` on the button to use another element. The button prop is lower-case in the v5 beta API.
+Both the floating button and panel default to `document.body`. Set `portalContainer` on the panel and `portalcontainer` on the button to use another element.
 
 ```tsx title="AssistantPortal.tsx"
 const assistantRoot = document.getElementById('assistant-root');
@@ -36,8 +35,7 @@ const assistantRoot = document.getElementById('assistant-root');
   <Sidepanel
     appId="YOUR_APPLICATION_ID"
     apiKey="YOUR_SEARCH_API_KEY"
-    assistantId="YOUR_AGENT_ID"
-    indexName="YOUR_INDEX_NAME"
+    agentId="YOUR_AGENT_ID"
     portalContainer={assistantRoot}
   />
 </DocSearch>;
@@ -72,8 +70,7 @@ export function Support() {
       <Sidepanel
         appId="YOUR_APPLICATION_ID"
         apiKey="YOUR_SEARCH_API_KEY"
-        assistantId="YOUR_AGENT_ID"
-        indexName="YOUR_INDEX_NAME"
+        agentId="YOUR_AGENT_ID"
       />
     </DocSearch>
   );
@@ -104,8 +101,7 @@ const tools = {
 <Sidepanel
   appId="YOUR_APPLICATION_ID"
   apiKey="YOUR_SEARCH_API_KEY"
-  assistantId="YOUR_AGENT_ID"
-  indexName="YOUR_INDEX_NAME"
+  agentId="YOUR_AGENT_ID"
   tools={tools}
 />;
 ```
@@ -120,8 +116,7 @@ Pass a server-generated Agent Studio user JWT. `enabled` controls whether memory
 <Sidepanel
   appId="YOUR_APPLICATION_ID"
   apiKey="YOUR_SEARCH_API_KEY"
-  assistantId="YOUR_AGENT_ID"
-  indexName="YOUR_INDEX_NAME"
+  agentId="YOUR_AGENT_ID"
   memory={{
     enabled: true,
     userToken: userMemoryToken,
@@ -133,14 +128,13 @@ Don't generate or sign the token in the browser.
 
 ## Provide dynamic indices
 
-Use `indices` to select the indices Agent Studio can search at request time. This list is separate from the required `indexName`, which remains the Sidepanel's primary index.
+Use `indices` to select the indices Agent Studio can search at request time.
 
 ```tsx title="DynamicIndices.tsx"
 <Sidepanel
   appId="YOUR_APPLICATION_ID"
   apiKey="YOUR_SEARCH_API_KEY"
-  assistantId="YOUR_AGENT_ID"
-  indexName="docs"
+  agentId="YOUR_AGENT_ID"
   searchParameters={{
     docs: { filters: 'version:v5' },
     support_articles: { filters: 'visibility:public' },

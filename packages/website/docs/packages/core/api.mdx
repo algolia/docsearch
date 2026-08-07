@@ -1,12 +1,24 @@
 ---
 title: Core API reference
-description: API reference for @docsearch/core v5 beta.
+description: API reference for @docsearch/core v5.
 toc_max_heading_level: 2
 ---
 
 ## `DocSearch`
 
 `DocSearch` is a ref-forwarding React provider.
+
+### `appId`
+
+> `type: string` | **optional**
+
+Optional parent level application ID. If this is set, `appId` won't need to be set on the child Modal/Sidepanel.
+
+### `apiKey`
+
+> `type: string` | **optional**
+
+Optional parent level search API key. If this is set, `apiKey` won't need to be set on the child Modal/Sidepanel.
 
 ### `children`
 

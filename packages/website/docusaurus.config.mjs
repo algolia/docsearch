@@ -190,7 +190,7 @@ export default {
                 to: 'docs/v4/docsearch',
               },
               {
-                label: 'DocSearch v5 beta',
+                label: 'DocSearch v5',
                 to: 'docs/packages/overview',
               },
             ],
