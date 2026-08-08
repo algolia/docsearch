@@ -43,8 +43,8 @@
   },
   "devDependencies": {
     "@rollup/plugin-replace": "6.0.3",
-    "@testing-library/jest-dom": "6.8.0",
-    "@testing-library/react": "16.3.0",
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/react": "16.3.2",
     "vitest": "3.2.7"
   },
   "peerDependencies": {
