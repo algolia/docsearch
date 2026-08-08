@@ -3708,7 +3708,7 @@ __metadata:
     eslint-plugin-react-refresh: "npm:0.4.20"
     jsdom: "npm:26.1.0"
     lerna: "npm:8.2.4"
-    postcss: "npm:8.5.23"
+    postcss: "npm:8.5.26"
     prettier: "npm:3.6.2"
     react: "npm:^18.0.0"
     react-dom: "npm:^18.0.0"
@@ -3808,7 +3808,7 @@ __metadata:
     "@docusaurus/preset-classic": "npm:3.8.1"
     "@mdx-js/react": "npm:^3.1.0"
     file-loader: "npm:6.2.0"
-    postcss: "npm:8.5.23"
+    postcss: "npm:8.5.26"
     postcss-import: "npm:16.1.1"
     postcss-preset-env: "npm:10.3.1"
     prism-react-renderer: "npm:2.4.1"
@@ -18436,12 +18436,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.3.16":
-  version: 3.3.17
-  resolution: "nanoid@npm:3.3.17"
+"nanoid@npm:^3.3.17":
+  version: 3.3.18
+  resolution: "nanoid@npm:3.3.18"
   bin:
     nanoid: bin/nanoid.cjs
-  checksum: 10c0/06f7949c7cce5c92c6aea66022f29a1eae7f56e05acbfddf1e049e819b4bf234c44a765cc44da7163482b111677948514012e27acdfa56f95309295768bdae32
+  checksum: 10c0/b994b4e396730f8be2520923284e2040d61eaee55cc6d4935ef6d38d34bafdc46133eda4d3faea5073bda545aa6079d82b886caeac5c731cf9ac18bcc1301425
   languageName: node
   linkType: hard
 
@@ -21647,14 +21647,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:8.5.23":
-  version: 8.5.23
-  resolution: "postcss@npm:8.5.23"
+"postcss@npm:8.5.26":
+  version: 8.5.26
+  resolution: "postcss@npm:8.5.26"
   dependencies:
-    nanoid: "npm:^3.3.16"
+    nanoid: "npm:^3.3.17"
     picocolors: "npm:^1.1.1"
     source-map-js: "npm:^1.2.1"
-  checksum: 10c0/ed714e635b330bb42666ecdd0c0b4f30224ded15b0b0052d6bc2b92832f2cf17d1c1141359453f96f0a84f8fbf4c405a74df187f559163b8f31131b2535455aa
+  checksum: 10c0/2bdafc00d96bd57b6649a52e458864a4bf58ee56cfdbe4aea1472b5cccc127e6c1ad653bd0bec50d211e650eb0b9270c80e1e72aff2e2fa40d9e7363234d6e43
   languageName: node
   linkType: hard
 
