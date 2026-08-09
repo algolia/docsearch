@@ -35,7 +35,7 @@
     "@babel/plugin-transform-react-jsx": "7.29.7",
     "@babel/preset-env": "7.29.7",
     "@babel/preset-typescript": "7.29.7",
-    "@eslint-community/eslint-plugin-eslint-comments": "4.5.0",
+    "@eslint-community/eslint-plugin-eslint-comments": "4.7.2",
     "@rollup/plugin-babel": "6.0.4",
     "@rollup/plugin-json": "6.1.0",
     "@rollup/plugin-node-resolve": "16.0.3",
