@@ -1,6 +1,6 @@
 {
   "name": "@docsearch/docusaurus-adapter",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Algolia search component for Docusaurus.",
   "main": "lib/index.js",
   "sideEffects": [
