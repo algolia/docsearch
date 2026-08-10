@@ -13,7 +13,8 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "ESNEXT",
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "types": ["bun"]
   },
   "exclude": [
     "**/__fixtures__/**/*",
