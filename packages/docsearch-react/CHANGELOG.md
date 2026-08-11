@@ -1,5 +1,13 @@
 # @docsearch/react
 
+## 5.0.1
+
+### Patch Changes
+
+- 4ac53c4: Fixes missing published export for keyword only `<DocSearch />` that was missed in [#2884](https://github.com/algolia/docsearch/pull/2884).
+  - @docsearch/css@5.0.1
+  - @docsearch/core@5.0.1
+
 ## 5.0.0
 
 ### Major Changes
