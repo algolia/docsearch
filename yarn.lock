@@ -3826,7 +3826,7 @@ __metadata:
     "@mdx-js/react": "npm:^3.1.0"
     file-loader: "npm:6.2.0"
     postcss: "npm:8.5.26"
-    postcss-import: "npm:16.1.1"
+    postcss-import: "npm:16.2.0"
     postcss-preset-env: "npm:10.3.1"
     prism-react-renderer: "npm:2.4.1"
     react: "npm:^18.0.0"
@@ -20812,16 +20812,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-import@npm:16.1.1":
-  version: 16.1.1
-  resolution: "postcss-import@npm:16.1.1"
+"postcss-import@npm:16.2.0":
+  version: 16.2.0
+  resolution: "postcss-import@npm:16.2.0"
   dependencies:
     postcss-value-parser: "npm:^4.0.0"
     read-cache: "npm:^1.0.0"
     resolve: "npm:^1.1.7"
   peerDependencies:
     postcss: ^8.0.0
-  checksum: 10c0/b91245971564891110cb407c7459bd470893ccbdd3328fdd384ef2be4d0e5f304e5834acbb8b537ad562c001db34bee1c29b55994bead5ab5a53b1edc2a687b9
+  checksum: 10c0/f7773cf3be4ea450e2e809b1bf3aeb0dfa113c81d2f51e50e49a471eab91855f1b142313ae0322a543d030bd01887189c4d66a23b33b0377b76613c4c05916bd
   languageName: node
   linkType: hard
 
