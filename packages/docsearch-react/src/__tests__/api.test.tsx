@@ -500,6 +500,7 @@ describe('api', () => {
       expect(
         document.querySelector('.DocSearch-AskAiScreen')
       ).toBeInTheDocument();
+      expect(await screen.findByText('hello')).toBeInTheDocument();
 
       // could be "Answering..." or "Ask another question..."
       // where "Ask another question..." is actually an input's placeholder text
