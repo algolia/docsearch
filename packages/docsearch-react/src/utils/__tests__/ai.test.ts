@@ -286,6 +286,82 @@ describe('sanitizeMessagesForRequest', () => {
     expect(result[1]).not.toBe(sanitizedMessage);
     expect(result[1].parts).toEqual([{ type: 'text', text: 'Hi' }]);
   });
+
+  it('removes an aborted tool call from the assistant message', () => {
+    const initialQuestion: AIMessage = {
+      id: 'message-1',
+      role: 'user',
+      parts: [{ type: 'text', text: 'Find installation instructions' }],
+    };
+    const assistantMessage = message('message-2', [
+      { type: 'step-start' },
+      {
+        type: 'tool-algolia_search_index',
+        toolCallId: 'tool-1',
+        state: 'input-streaming',
+        input: undefined,
+      },
+    ]);
+    const followUpQuestion: AIMessage = {
+      id: 'message-3',
+      role: 'user',
+      parts: [{ type: 'text', text: 'What are the prerequisites?' }],
+    };
+
+    expect(
+      sanitizeMessagesForRequest([
+        initialQuestion,
+        assistantMessage,
+        followUpQuestion,
+      ])
+    ).toEqual([
+      initialQuestion,
+      message('message-2', [{ type: 'step-start' }]),
+      followUpQuestion,
+    ]);
+  });
+
+  it('keeps streamed text while removing an incomplete tool call', () => {
+    const result = sanitizeMessagesForRequest([
+      message('message-1', [
+        { type: 'text', text: 'Let me look that up.' },
+        {
+          type: 'tool-searchIndex',
+          toolCallId: 'tool-1',
+          state: 'input-available',
+          input: { query: 'installation' },
+        },
+      ]),
+    ]);
+
+    expect(result).toEqual([
+      message('message-1', [{ type: 'text', text: 'Let me look that up.' }]),
+    ]);
+  });
+
+  it.each([
+    {
+      state: 'output-available' as const,
+      output: { hits: [] },
+    },
+    {
+      state: 'output-error' as const,
+      errorText: 'Search failed',
+    },
+  ])('keeps a $state tool call', (toolPart) => {
+    const messages = [
+      message('message-1', [
+        {
+          type: 'tool-searchIndex',
+          toolCallId: 'tool-1',
+          input: { query: 'installation' },
+          ...toolPart,
+        },
+      ]),
+    ];
+
+    expect(sanitizeMessagesForRequest(messages)).toBe(messages);
+  });
 });
 
 describe('getAgentPromptSuggestions', () => {
