@@ -1,4 +1,4 @@
-import type { TextUIPart } from 'ai';
+import { isDataUIPart, isToolOrDynamicToolUIPart, type TextUIPart } from 'ai';
 
 import type { StoredAskAiState } from '../types';
 import type {
@@ -281,10 +281,18 @@ export function sanitizeMessagesForRequest(messages: AIMessage[]): AIMessage[] {
   let sanitizedMessages: AIMessage[] | undefined;
 
   messages.forEach((message, index) => {
-    // Filter out `data-*` part types since Agent Studio does not currently support them on the request
-    const parts = message.parts.filter(
-      (part) => !part.type.startsWith('data-')
-    );
+    // Remove parts that Agent Studio does not support during a request, including incomplete tool calls
+    const parts = message.parts.filter((part) => {
+      if (isDataUIPart(part)) {
+        return false;
+      }
+
+      if (isToolOrDynamicToolUIPart(part) && part.state.startsWith('input-')) {
+        return false;
+      }
+
+      return true;
+    });
 
     if (parts.length === message.parts.length) {
       sanitizedMessages?.push(message);

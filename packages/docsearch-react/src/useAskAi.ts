@@ -104,7 +104,6 @@ const getAgentStudioTransport = ({
       algolia: algoliaParams,
     },
     prepareSendMessagesRequest({ id, messages, body, ...rest }) {
-      // Filter out `data-*` part types since Agent Studio does not currently support them on the request
       const sanitizedMessages = sanitizeMessagesForRequest(messages);
 
       return {
