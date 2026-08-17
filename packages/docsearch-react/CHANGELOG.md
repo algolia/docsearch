@@ -1,5 +1,14 @@
 # @docsearch/react
 
+## 5.0.2
+
+### Patch Changes
+
+- 1508196: Fix Ask AI conversations breaking after stopping a stream mid-tool-call. Incomplete tool parts (`input-streaming`/`input-available`) are now pruned before resending, so the dangling `tool_use` no longer causes the provider to reject every subsequent question.
+- 59c575f: fix(askai): preserve the conversation when opening Ask AI from the results row [#3010](https://github.com/algolia/docsearch/issues/3010)
+  - @docsearch/css@5.0.2
+  - @docsearch/core@5.0.2
+
 ## 5.0.1
 
 ### Patch Changes

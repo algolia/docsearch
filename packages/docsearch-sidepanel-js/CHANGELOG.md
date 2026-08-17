@@ -1,5 +1,11 @@
 # @docsearch/sidepanel-js
 
+## 5.0.2
+
+### Patch Changes
+
+- 29c23e2: Move bundled DocSearch packages to development dependencies to reduce consumers' install footprint.
+
 ## 5.0.1
 
 ### Patch Changes
