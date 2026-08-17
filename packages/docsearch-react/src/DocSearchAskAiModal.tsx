@@ -487,14 +487,20 @@ export function DocSearchAskAiModal({
   useRefreshOnInitialQuery({ initialQuery, inputRef, refresh });
 
   const hasCurrentMessages = messages.length > 0;
+  const previousIsAskAiActive = React.useRef(isAskAiActive);
 
   // Refresh the autocomplete results when ask ai is toggled off
   // helps return to the previous ac state and start screen
   React.useEffect(() => {
+    const wasAskAiActive = previousIsAskAiActive.current;
+    previousIsAskAiActive.current = isAskAiActive;
+
     if (!isAskAiActive) {
       autocomplete.refresh();
 
-      if (hasCurrentMessages) {
+      // Reset only after leaving Ask AI, not when its first message arrives
+      // before the parent toggle update commits.
+      if (wasAskAiActive && hasCurrentMessages) {
         startNewConversation();
       }
     }
