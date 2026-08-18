@@ -77,8 +77,7 @@ export default function analyticsLoader(_, options) {
   function loadSegment() {
     if (loaded || pending || !hasConsent()) return;
     pending = true;
-    var settled = fetch('https://dashboard.algolia.com/static/anonymous_id_cookie', { credentials: 'include' })
-      .catch(function () {});     // response unreadable (no CORS), only the Set-Cookie matters
+    var settled = fetch('https://dashboard.algolia.com/static/anonymous_id_cookie', { credentials: 'include', mode: 'no-cors' }).catch(function () {});
     var timeout = new Promise(function (resolve) { setTimeout(resolve, TIMEOUT_MS); });
     Promise.race([settled, timeout]).then(function () {
       pending = false;

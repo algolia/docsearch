@@ -8,6 +8,7 @@ export function createSearchTracker(trackedIndexNames) {
   let timer = null;
   let sequenceCounter = 0;
   let highestObservedSequence = 0;
+  let lastObservedSignature = null;
 
   function flush() {
     timer = null;
@@ -15,11 +16,10 @@ export function createSearchTracker(trackedIndexNames) {
 
     const { query, results_count, no_results } = pendingObservation;
     pendingObservation = null;
-    track('search_performed', {
+    track('Search Performed', {
       query,
       results_count,
       surface: 'docsearch',
-      no_results,
     });
   }
 
@@ -43,8 +43,17 @@ export function createSearchTracker(trackedIndexNames) {
     const query = matches[0].request.query;
     if (typeof query !== 'string' || query.trim() === '') return;
 
-    // DocSearch shows a single result list across its indices, so the count the
-    // user sees is the sum of their nbHits.
+    const signature = JSON.stringify(
+      matches.map(({ request }) => [
+        request.indexName,
+        request.query,
+        request.facetFilters ?? null,
+        request.filters ?? null,
+      ])
+    );
+    if (signature === lastObservedSignature) return;
+    lastObservedSignature = signature;
+
     const resultsCount = matches.reduce(
       (total, { result }) =>
         total + (typeof result.nbHits === 'number' ? result.nbHits : 0),
@@ -72,9 +81,7 @@ export function createSearchTracker(trackedIndexNames) {
         (response) => {
           try {
             observe(args, response, sequence);
-          } catch {
-            // tracking must never surface as a search failure
-          }
+          } catch {}
         },
         () => {}
       );
