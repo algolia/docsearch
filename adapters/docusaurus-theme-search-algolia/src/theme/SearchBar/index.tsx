@@ -148,16 +148,23 @@ function useNavigator({
   return navigator;
 }
 
-function useTransformSearchClient(): DocSearchModalProps['transformSearchClient'] {
+function useTransformSearchClient({
+  transformSearchClient,
+}: Pick<
+  AdapterDocSearchProps,
+  'transformSearchClient'
+>): DocSearchModalProps['transformSearchClient'] {
   const {
     siteMetadata: { docusaurusVersion },
   } = useDocusaurusContext();
   return useCallback(
     (searchClient: DocSearchTransformClient) => {
       searchClient.addAlgoliaAgent('docusaurus', docusaurusVersion);
-      return searchClient;
+      return transformSearchClient
+        ? transformSearchClient(searchClient)
+        : searchClient;
     },
-    [docusaurusVersion]
+    [docusaurusVersion, transformSearchClient]
   );
 }
 
@@ -312,7 +319,7 @@ function DocSearch({
     indices: props.indices,
   });
   const transformItems = useTransformItems(props);
-  const transformSearchClient = useTransformSearchClient();
+  const transformSearchClient = useTransformSearchClient(props);
   const { closeModal, isModalActive } = useDocSearch();
   const [modalLoaded, setModalLoaded] = useState(
     Boolean(DocSearchModal && DocSearchAskAiModal)
