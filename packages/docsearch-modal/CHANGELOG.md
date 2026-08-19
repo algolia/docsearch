@@ -1,5 +1,13 @@
 # @docsearch/modal
 
+## 5.0.3
+
+### Patch Changes
+
+- Updated dependencies [537afaa]
+  - @docsearch/react@5.0.3
+  - @docsearch/core@5.0.3
+
 ## 5.0.2
 
 ### Patch Changes
