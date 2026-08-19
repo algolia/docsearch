@@ -14,8 +14,9 @@ export function createSearchTracker(trackedIndexNames) {
     timer = null;
     if (!pendingObservation) return;
 
-    const { query, results_count, no_results } = pendingObservation;
+    const { query, results_count } = pendingObservation;
     pendingObservation = null;
+    lastObservedSignature = null;
     track('Search Performed', {
       query,
       results_count,
@@ -64,7 +65,6 @@ export function createSearchTracker(trackedIndexNames) {
     pendingObservation = {
       query,
       results_count: resultsCount,
-      no_results: resultsCount === 0,
     };
     clearTimeout(timer);
     timer = setTimeout(flush, DEBOUNCE_MS);
