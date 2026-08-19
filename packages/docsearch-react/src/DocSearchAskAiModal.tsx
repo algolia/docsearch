@@ -27,7 +27,6 @@ import type {
   DocSearchState,
   InternalDocSearchHit,
   OnAskAiFeedback,
-  StoredAskAiMessage,
   StoredAskAiState,
   SuggestedQuestionHit,
 } from './types';
@@ -213,7 +212,6 @@ export function DocSearchAskAiModal({
     chatId,
     messages,
     status,
-    setMessages,
     sendMessage,
     stopAskAiStreaming,
     askAiError,
@@ -385,6 +383,39 @@ export function DocSearchAskAiModal({
     [askAiConfigurationId, appId, sendFeedback]
   );
 
+  const handleSelectStoredConversation = React.useCallback(
+    (item: StoredAskAiState, event: KeyboardEvent | MouseEvent) => {
+      if (
+        isQueryEmpty(item.query) ||
+        !item.messages ||
+        item.messages.length < 1
+      ) {
+        return;
+      }
+
+      const hitMessages = item.messages;
+
+      const initialMessage: InitialAskAiMessage = {
+        // Using `!` here for types, but `item.query` existence is checked above
+        query: item.query!,
+        messageId: hitMessages[0].id,
+      };
+
+      restoreConversation(hitMessages, item.chatId);
+
+      if (interceptAskAiEvent?.(initialMessage)) {
+        if (autocompleteRef.current) {
+          autocompleteRef.current.setQuery('');
+        }
+        event.preventDefault();
+        return;
+      }
+
+      onAskAiToggle(true, initialMessage);
+    },
+    [interceptAskAiEvent, restoreConversation, onAskAiToggle]
+  );
+
   if (!autocompleteRef.current) {
     autocompleteRef.current = createAutocomplete({
       id: 'docsearch',
@@ -415,8 +446,7 @@ export function DocSearchAskAiModal({
             ? buildRecentConversationSources({
                 conversations,
                 disableUserPersonalization,
-                setMessages,
-                onAskAiToggle,
+                handleSelectStoredConversation,
               })
             : [];
           return [...recentConversationSource, ...noQuerySources];
@@ -632,26 +662,8 @@ export function DocSearchAskAiModal({
           onNewConversation={handleNewConversation}
           onItemClick={(item, event) => {
             if (item.type === 'askAI' && item.query) {
-              if (item.anchor === 'stored' && 'messages' in item) {
-                const hitMessages = item.messages as StoredAskAiMessage[];
-                restoreConversation(
-                  hitMessages,
-                  (item as StoredAskAiState).chatId
-                );
-                const initialMessage: InitialAskAiMessage = {
-                  query: item.query,
-                  messageId: hitMessages[0].id,
-                };
-
-                if (interceptAskAiEvent?.(initialMessage)) {
-                  if (autocompleteRef.current) {
-                    autocompleteRef.current.setQuery('');
-                  }
-                  event.preventDefault();
-                  return;
-                }
-
-                onAskAiToggle(true, initialMessage);
+              if (item.anchor === 'stored') {
+                handleSelectStoredConversation(item, event);
               } else {
                 handleSelectAskAiQuestion(true, item.query);
               }
