@@ -1,5 +1,13 @@
 # @docsearch/react
 
+## 5.0.3
+
+### Patch Changes
+
+- 537afaa: fix(askai): Fixes `interceptAskAiEvent` not being called when selecting an Ask AI item with keyboard (`Enter`)
+  - @docsearch/css@5.0.3
+  - @docsearch/core@5.0.3
+
 ## 5.0.2
 
 ### Patch Changes
