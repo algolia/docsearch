@@ -1,5 +1,5 @@
 // oxlint-disable no-console
-import { resolve } from 'node:path';
+import path, { resolve } from 'node:path';
 import { exit } from 'node:process';
 import { parseArgs } from 'util';
 
@@ -91,6 +91,10 @@ function getChangelogEntry(changelog: string, version: string) {
     }
   }
 
+  if (headingStartInfo === undefined) {
+    throw new Error(`Cannot find CHANGELOG heading for version: ${version}`);
+  }
+
   return changelog.slice(headingStartInfo?.index, endIndex).trim();
 }
 
@@ -110,7 +114,7 @@ async function getPkg(tag: string): Promise<Pkg | null> {
     if (tag.startsWith(`${pkgJson.name}@`)) {
       pkg = {
         tagName: tag,
-        path: file.replace(/\package\.json$/, ''),
+        path: path.dirname(file),
         packageJson: pkgJson,
       };
 
@@ -173,6 +177,29 @@ async function createRelease({
 
   try {
     const octokit = new Octokit({ auth: token });
+    let existingRelease = false;
+
+    try {
+      await octokit.rest.repos.getReleaseByTag({
+        owner: 'algolia',
+        repo: 'docsearch',
+        tag: tagName,
+      });
+
+      existingRelease = true;
+    } catch (e) {
+      const err = e as unknown as { status?: number };
+
+      // 404 means the release does not exist yet, and we need to create it
+      if (err.status !== 404) {
+        throw e;
+      }
+    }
+
+    if (existingRelease) {
+      log.warn(`GitHub release already exists for ${tagName}, skipping...`);
+      return;
+    }
 
     await octokit.rest.repos.createRelease({
       owner: 'algolia',
@@ -189,7 +216,7 @@ async function createRelease({
 }
 
 async function getTagsForVersion(version: string) {
-  const { stdout } = await $`git tag --list '*${version}'`.quiet();
+  const { stdout } = await $`git tag --list '*@${version}'`.quiet();
   const tags = stdout.toString().trim().split('\n').filter(Boolean);
 
   return tags;
@@ -213,10 +240,10 @@ async function getPackages(tags: string[]) {
 
 async function runFlow({
   dryRun,
-  version: wantedVersion,
+  wantedVersion,
 }: {
   dryRun?: boolean;
-  version?: string;
+  wantedVersion?: string;
 }) {
   const githubToken = process.env.GITHUB_TOKEN;
 
@@ -230,7 +257,7 @@ async function runFlow({
 
   if (tags.length === 0) {
     log.info(
-      `No tags found to publish version v${wantedVersion} with, exiting`
+      `No tags found to publish version v${publishVersion} with, exiting`
     );
     exit(0);
   }
@@ -247,6 +274,7 @@ async function runFlow({
   log.line();
 
   const publishedPackages: string[] = [];
+  const failedPackages: string[] = [];
 
   for (const pkg of pkgs) {
     log.section(pkg.packageJson.name);
@@ -279,12 +307,13 @@ async function runFlow({
         tagName: pkg.tagName,
         changelog: changelogEntry,
         prerelease: pkg.packageJson.version.includes('-'),
-        latest: pkg.tagName.includes('@docsearch/react'),
+        latest: pkg.tagName.startsWith('@docsearch/react@'),
       });
 
       publishedPackages.push(pkg.packageJson.name);
     } catch (e) {
       log.error(Error.isError(e) ? e.message : String(e));
+      failedPackages.push(pkg.packageJson.name);
     }
     log.line();
   }
@@ -302,12 +331,20 @@ async function runFlow({
   publishedPackages.forEach((pkg) => {
     log.log(`   -  ${pkg}`);
   });
+
+  if (failedPackages.length > 0) {
+    log.error('Some packages failed to be released on GitHub:');
+    failedPackages.forEach((pkg) => {
+      log.log(`   -  ${pkg}`);
+    });
+    exit(1);
+  }
 }
 
 const { values } = parseArgs({
-  args: Bun.argv,
+  args: Bun.argv.slice(2),
   options: {
-    dryRun: {
+    'dry-run': {
       type: 'boolean',
       short: 'd',
     },
@@ -317,7 +354,11 @@ const { values } = parseArgs({
     },
   },
   strict: true,
-  allowPositionals: true,
 });
 
-runFlow(values);
+runFlow({ dryRun: values['dry-run'], wantedVersion: values.version }).catch(
+  (e) => {
+    log.error(String(e));
+    exit(1);
+  }
+);
