@@ -56,13 +56,15 @@
     "website:test": "bun --filter @docsearch/website start -- --no-open",
     "changeset": "changeset",
     "version": "changeset version && bun run sync:docsearch-version && bun install",
-    "release": "changeset publish",
-    "sync:docsearch-version": "bun scripts/updateDocsearchVersion.ts"
+    "release": "changeset publish && bun run gh:release",
+    "sync:docsearch-version": "bun scripts/updateDocsearchVersion.ts",
+    "gh:relase": "bun scripts/generate-github-releases.ts"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
     "@changesets/cli": "^2.29.7",
     "@eslint-community/eslint-plugin-eslint-comments": "4.4.1",
+    "@octokit/rest": "^22.0.1",
     "@playwright/test": "1.49.1",
     "@stylistic/eslint-plugin": "2.13.0",
     "@testing-library/dom": "10.4.0",
@@ -83,9 +85,5 @@
     "typescript": "5.7.3",
     "vitest": "3.0.2",
     "watch": "1.0.2"
-  },
-  "dependencies": {
-    "@octokit/core": "^7.0.7",
-    "@octokit/rest": "^22.0.1"
   }
 }

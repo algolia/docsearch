@@ -1,15 +1,12 @@
 // oxlint-disable no-console
 import { resolve } from 'node:path';
 import { exit } from 'node:process';
+import { parseArgs } from 'util';
 
 import { Octokit } from '@octokit/rest';
 import { $, Glob } from 'bun';
 
 const CHANGELOG_NAME = 'CHANGELOG.md';
-const RELEASE_NOTES_NAME = 'RELEASE_NOTES.md';
-
-const DRY_RUN = true;
-const PUBLISH_VERSION = process.env.PUBLISH_VERSION;
 
 const log = {
   colors: {
@@ -45,9 +42,9 @@ const log = {
   },
 };
 
-async function getPublishVersion() {
-  if (PUBLISH_VERSION && PUBLISH_VERSION.trim().length > 0) {
-    return PUBLISH_VERSION;
+async function getPublishVersion(wantedVersion: string | undefined) {
+  if (wantedVersion && wantedVersion.trim().length > 0) {
+    return wantedVersion;
   }
 
   const { version } = await import('../packages/docsearch-react/src/version');
@@ -125,8 +122,14 @@ async function getPkg(tag: string): Promise<Pkg | null> {
 }
 
 // Push git tag
-async function pushTag(tagName: string) {
-  if (DRY_RUN) {
+async function pushTag({
+  tagName,
+  dryRun,
+}: {
+  dryRun?: boolean;
+  tagName: string;
+}) {
+  if (dryRun) {
     log.log(`[DRY_RUN] - Pushing tag ${tagName}`);
     return;
   }
@@ -140,19 +143,21 @@ async function pushTag(tagName: string) {
 
 // Create GH release
 async function createRelease({
+  dryRun,
   token,
   tagName,
   changelog,
   prerelease = false,
 }: {
+  dryRun?: boolean;
   token?: string;
   tagName: string;
   changelog: string;
   prerelease?: boolean;
 }): Promise<void> {
-  if (DRY_RUN) {
+  if (dryRun) {
     log.log(`[DRY_RUN] - Creating release for ${tagName}:`);
-    log.log(`             - Prerelease: ${prerelease}`);
+    log.log(`[DRY_RUN] - Prerelease: ${prerelease}`);
     log.line();
     return;
   }
@@ -197,19 +202,27 @@ async function getPackages(tags: string[]) {
   return pkgs;
 }
 
-async function runFlow() {
+async function runFlow({
+  dryRun,
+  version: wantedVersion,
+}: {
+  dryRun?: boolean;
+  version?: string;
+}) {
   const githubToken = process.env.GITHUB_TOKEN;
 
-  if (!DRY_RUN && (!githubToken || githubToken.trim() === '')) {
+  if (!dryRun && (!githubToken || githubToken.trim() === '')) {
     log.error('A `GITHUB_TOKEN` is required');
     exit(1);
   }
 
-  const version = await getPublishVersion();
-  const tags = await getTagsForVersion(version);
+  const publishVersion = await getPublishVersion(wantedVersion);
+  const tags = await getTagsForVersion(publishVersion);
 
   if (tags.length === 0) {
-    log.info(`No tags found to publish version v${version} with, exiting`);
+    log.info(
+      `No tags found to publish version v${wantedVersion} with, exiting`
+    );
     exit(0);
   }
 
@@ -221,7 +234,7 @@ async function runFlow() {
   }
 
   log.line();
-  log.log(`🚀 Generating package releases for v${version}`);
+  log.log(`🚀 Generating package releases for v${publishVersion}`);
   log.line();
 
   const publishedPackages: string[] = [];
@@ -230,7 +243,7 @@ async function runFlow() {
     log.section(pkg.packageJson.name);
     log.info(`Creating release for: ${pkg.packageJson.name}`);
 
-    if (DRY_RUN) {
+    if (dryRun) {
       log.warn('DRY_RUN enabled - no actual changes will be published');
     }
 
@@ -246,19 +259,18 @@ async function runFlow() {
 
       const changelogEntry = getChangelogEntry(
         changelog,
-        PUBLISH_VERSION ? PUBLISH_VERSION : pkg.packageJson.version
+        publishVersion ? publishVersion : pkg.packageJson.version
       );
 
-      await Bun.write(resolve(pkg.path, RELEASE_NOTES_NAME), changelogEntry);
+      await pushTag({ tagName: pkg.tagName, dryRun });
 
-      // await pushTag(pkg.tagName);
-
-      // await createRelease({
-      //   token: githubToken,
-      //   tagName: pkg.tagName,
-      //   changelog: changelogEntry,
-      //   prerelease: pkg.packageJson.version.includes('-'),
-      // });
+      await createRelease({
+        dryRun,
+        token: githubToken,
+        tagName: pkg.tagName,
+        changelog: changelogEntry,
+        prerelease: pkg.packageJson.version.includes('-'),
+      });
 
       publishedPackages.push(pkg.packageJson.name);
     } catch (e) {
@@ -267,7 +279,7 @@ async function runFlow() {
     log.line();
   }
 
-  if (!DRY_RUN) {
+  if (!dryRun) {
     log.line();
   }
 
@@ -282,4 +294,20 @@ async function runFlow() {
   });
 }
 
-runFlow();
+const { values } = parseArgs({
+  args: Bun.argv,
+  options: {
+    dryRun: {
+      type: 'boolean',
+      short: 'd',
+    },
+    version: {
+      type: 'string',
+      short: 'v',
+    },
+  },
+  strict: true,
+  allowPositionals: true,
+});
+
+runFlow(values);
