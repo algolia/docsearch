@@ -1,5 +1,13 @@
 # @docsearch/react
 
+## 5.0.4
+
+### Patch Changes
+
+- f29b541: fix: Allow `DocSearchAI` to accept Ask AI-specific modal translations.
+  - @docsearch/css@5.0.4
+  - @docsearch/core@5.0.4
+
 ## 5.0.3
 
 ### Patch Changes

@@ -1,5 +1,16 @@
 # @docsearch/docusaurus-adapter
 
+## 5.0.4
+
+### Patch Changes
+
+- 46f1096: Respect a caller-supplied `transformSearchClient` instead of discarding it.
+- Updated dependencies [f29b541]
+  - @docsearch/react@5.0.4
+  - @docsearch/modal@5.0.4
+  - @docsearch/sidepanel@5.0.4
+  - @docsearch/core@5.0.4
+
 ## 5.0.3
 
 ### Patch Changes
