@@ -3,8 +3,11 @@ import type { DocSearchRef, InitialAskAiMessage } from '@docsearch/core';
 import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
 
-import type { DocSearchProps } from './DocSearch';
-import { DocSearchAskAiModal } from './DocSearchAskAiModal';
+import type { DocSearchProps, DocSearchTranslations } from './DocSearch';
+import {
+  DocSearchAskAiModal,
+  type DocSearchAskAiModalTranslations,
+} from './DocSearchAskAiModal';
 import { DocSearchButton } from './DocSearchButton';
 import type { ToolCalls } from './types/AskiAi';
 
@@ -113,7 +116,12 @@ export interface DocSearchAskAi {
   promptSuggestions?: PromptSuggestions;
 }
 
-export interface DocSearchAIProps extends DocSearchProps {
+export type DocSearchAITranslations = Partial<{
+  button: DocSearchTranslations['button'];
+  modal: DocSearchAskAiModalTranslations;
+}>;
+
+export interface DocSearchAIProps extends Omit<DocSearchProps, 'translations'> {
   /**
    * Configuration or assistant id to enable ask ai mode. Pass a string
    * assistant id or a full config object.
@@ -128,6 +136,7 @@ export interface DocSearchAIProps extends DocSearchProps {
    * `@docsearch/sidepanel-js`) without flicker.
    */
   interceptAskAiEvent?: (initialMessage: InitialAskAiMessage) => boolean | void;
+  translations?: DocSearchAITranslations;
 }
 
 function DocSearchAIComponent(
