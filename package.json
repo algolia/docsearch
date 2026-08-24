@@ -58,7 +58,7 @@
     "version": "changeset version && bun run sync:docsearch-version && bun install",
     "release": "changeset publish && bun run gh:release",
     "sync:docsearch-version": "bun scripts/updateDocsearchVersion.ts",
-    "gh:relase": "bun scripts/generate-github-releases.ts"
+    "gh:release": "bun scripts/generate-github-releases.ts"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
