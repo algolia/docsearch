@@ -3783,7 +3783,7 @@ __metadata:
     cssnano: "npm:7.1.9"
     cypress: "npm:13.17.0"
     eslint: "npm:8.57.1"
-    eslint-config-algolia: "npm:23.2.1"
+    eslint-config-algolia: "npm:24.0.0"
     eslint-config-prettier: "npm:10.1.8"
     eslint-plugin-cypress: "npm:4.3.0"
     eslint-plugin-import: "npm:2.32.0"
@@ -13066,14 +13066,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-algolia@npm:23.2.1":
-  version: 23.2.1
-  resolution: "eslint-config-algolia@npm:23.2.1"
+"eslint-config-algolia@npm:24.0.0":
+  version: 24.0.0
+  resolution: "eslint-config-algolia@npm:24.0.0"
   peerDependencies:
-    "@stylistic/eslint-plugin": ^2.6.4
+    "@stylistic/eslint-plugin": ^5.0.0
     eslint: ^5.16.0 || ^6.8.0 || ^7.2.0 || ^8.0.0 || ^9.0.0
     prettier: ^3.0.0
-  checksum: 10c0/b5bbdee1a6f372195676674fbf94e7d701010ff628d50bbcab1f41af5922f175e7c980626196435a139dde60b85025208c051dcdf1d93a81850fbf80a47383d3
+  checksum: 10c0/5b20f06667f2689e1fe3c1172cc5ff2e129da73168eb4f9154eebf3eb2a124fe72d4f38bc62e01c32776285fb5efe1f9c3d1334d0a83e0887537053ef4fc9ebc
   languageName: node
   linkType: hard
 
