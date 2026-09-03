@@ -1,5 +1,12 @@
 # @docsearch/modal
 
+## 5.0.5
+
+### Patch Changes
+
+- @docsearch/core@5.0.5
+- @docsearch/react@5.0.5
+
 ## 5.0.4
 
 ### Patch Changes

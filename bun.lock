@@ -33,7 +33,7 @@
     },
     "adapters/docusaurus-theme-search-algolia": {
       "name": "@docsearch/docusaurus-adapter",
-      "version": "5.0.4",
+      "version": "5.0.5",
       "dependencies": {
         "@algolia/autocomplete-core": "1.19.2",
         "@docsearch/core": "5.0.4",
@@ -117,7 +117,7 @@
     },
     "packages/docsearch-core": {
       "name": "@docsearch/core",
-      "version": "5.0.4",
+      "version": "5.0.5",
       "devDependencies": {
         "@testing-library/jest-dom": "6.6.3",
         "@testing-library/react": "16.2.0",
@@ -139,7 +139,7 @@
     },
     "packages/docsearch-css": {
       "name": "@docsearch/css",
-      "version": "5.0.4",
+      "version": "5.0.5",
       "devDependencies": {
         "browserslist": "4.28.2",
         "lightningcss": "1.32.0",
@@ -148,7 +148,7 @@
     },
     "packages/docsearch-js": {
       "name": "@docsearch/js",
-      "version": "5.0.4",
+      "version": "5.0.5",
       "devDependencies": {
         "@docsearch/core": "5.0.1",
         "@docsearch/react": "5.0.1",
@@ -160,7 +160,7 @@
     },
     "packages/docsearch-modal": {
       "name": "@docsearch/modal",
-      "version": "5.0.4",
+      "version": "5.0.5",
       "dependencies": {
         "@docsearch/core": "5.0.0-beta.3",
         "@docsearch/react": "5.0.0-beta.3",
@@ -185,13 +185,13 @@
     },
     "packages/docsearch-react": {
       "name": "@docsearch/react",
-      "version": "5.0.4",
+      "version": "5.0.5",
       "dependencies": {
         "@ai-sdk/react": "^2.0.30",
         "@algolia/autocomplete-core": "1.19.2",
         "@base-ui/react": "^1.5.0",
-        "@docsearch/core": "5.0.4",
-        "@docsearch/css": "5.0.4",
+        "@docsearch/core": "5.0.5",
+        "@docsearch/css": "5.0.5",
         "ai": "^5.0.30",
         "algoliasearch": "^5.28.0",
         "marked": "^16.3.0",
@@ -199,7 +199,7 @@
       },
       "devDependencies": {
         "@algolia/autocomplete-core": "1.19.2",
-        "@docsearch/core": "5.0.4",
+        "@docsearch/core": "5.0.5",
         "@testing-library/jest-dom": "6.6.3",
         "@testing-library/react": "16.2.0",
         "preact": "11.0.0-beta.0",
@@ -222,7 +222,7 @@
     },
     "packages/docsearch-sidepanel": {
       "name": "@docsearch/sidepanel",
-      "version": "5.0.4",
+      "version": "5.0.5",
       "dependencies": {
         "@docsearch/core": "5.0.0-beta.3",
         "@docsearch/css": "5.0.0-beta.3",
@@ -248,7 +248,7 @@
     },
     "packages/docsearch-sidepanel-js": {
       "name": "@docsearch/sidepanel-js",
-      "version": "5.0.4",
+      "version": "5.0.5",
       "devDependencies": {
         "@docsearch/core": "5.0.1",
         "@docsearch/react": "5.0.1",
