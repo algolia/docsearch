@@ -1,7 +1,7 @@
 {
   "name": "@docsearch/sidepanel",
   "description": "DocSearch Sidepanel package for Ask AI.",
-  "version": "5.0.4",
+  "version": "5.0.5",
   "license": "MIT",
   "homepage": "https://docsearch.algolia.com",
   "repository": {
@@ -38,9 +38,9 @@
     "watch": "tsdown --watch"
   },
   "dependencies": {
-    "@docsearch/core": "5.0.4",
-    "@docsearch/css": "5.0.4",
-    "@docsearch/react": "5.0.4"
+    "@docsearch/core": "5.0.5",
+    "@docsearch/css": "5.0.5",
+    "@docsearch/react": "5.0.5"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "6.6.3",

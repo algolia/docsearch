@@ -1,5 +1,13 @@
 # @docsearch/sidepanel
 
+## 5.0.5
+
+### Patch Changes
+
+- @docsearch/css@5.0.5
+- @docsearch/core@5.0.5
+- @docsearch/react@5.0.5
+
 ## 5.0.4
 
 ### Patch Changes
