@@ -3792,7 +3792,7 @@ __metadata:
     eslint-plugin-prettier: "npm:5.5.6"
     eslint-plugin-react: "npm:7.37.5"
     eslint-plugin-react-hooks: "npm:5.2.0"
-    eslint-plugin-react-refresh: "npm:0.4.20"
+    eslint-plugin-react-refresh: "npm:0.5.6"
     jsdom: "npm:26.1.0"
     lerna: "npm:8.2.4"
     postcss: "npm:8.5.26"
@@ -13225,12 +13225,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-refresh@npm:0.4.20":
-  version: 0.4.20
-  resolution: "eslint-plugin-react-refresh@npm:0.4.20"
+"eslint-plugin-react-refresh@npm:0.5.6":
+  version: 0.5.6
+  resolution: "eslint-plugin-react-refresh@npm:0.5.6"
   peerDependencies:
-    eslint: ">=8.40"
-  checksum: 10c0/2ccf4ba28f1dcbcb9e773e46eae1e61e568bba69281a700eb26fd762152e4e90a78c991f9c8173342a7cd2a82f3f52fedb40a1e81360cef9c40ea5b814fa3613
+    eslint: ^9 || ^10
+  checksum: 10c0/4b5a91495392d629047718727163e5282bb4908ce7e83c2f95be890a356b123ec73a3fc5dd3f82e0623cbcc1091345de69053c971db2bbd06e3775b64600452f
   languageName: node
   linkType: hard
 
