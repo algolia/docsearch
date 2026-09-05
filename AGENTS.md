@@ -67,7 +67,7 @@ bun run lint:css
 ## E2E Testing (Playwright)
 
 ```bash
-# Run Cypress tests
+# Run all Playwright tests
 bun run pw:run
 
 # Run with specific browser
@@ -75,6 +75,38 @@ bun run pw:run:chromium
 bun run pw:run:firefox
 bun run pw:run:webkit
 ```
+
+Only the `chromium` project is currently enabled in `playwright.config.ts`; `firefox` and `webkit` will not run until those projects are uncommented, even though their `pw:run:*` scripts exist.
+
+Playwright auto-starts the Docusaurus site (`bun run website:test`) on `http://localhost:3000` and reuses an already-running server locally (not in CI). Tests hit the live Algolia index for the docs site, so outbound network access is required.
+
+### Accessibility Tests (axe + Playwright)
+
+- **When to run:** For changes to widget markup, styles, keyboard handling, focus management, or ARIA attributes. Add or extend coverage when introducing new interactive behavior.
+- **Where tests live:**
+  - `e2e/a11y.test.ts` - dedicated axe scans (modal smoke test, modal search results, sidepanel smoke test)
+  - `e2e/fixtures.ts` - shared fixtures, page-ready helpers, and the `gatherA11yViolations` / `axe()` helper (WCAG 2.0/2.1/2.2 A & AA tags)
+  - `e2e/search.spec.ts` - keyboard, focus, and ARIA state assertions (shortcuts, arrow navigation, `aria-activedescendant`, `aria-selected`)
+
+```bash
+# Install the Chromium browser binary (first run only)
+bunx playwright install chromium
+
+# Build workspace packages before running e2e
+bun run build
+
+# Run the dedicated accessibility scans
+bun run pw:run e2e/a11y.test.ts --project=chromium
+
+# Run accessibility scans plus keyboard/focus/ARIA regression tests
+bun run pw:run e2e/a11y.test.ts e2e/search.spec.ts --project=chromium
+
+# Run a single accessibility test by name
+bun run pw:run e2e/a11y.test.ts --project=chromium --grep 'Modal Search results'
+```
+
+- **Test-authoring pattern:** Reuse the shared `axe()` fixture instead of instantiating `AxeBuilder` directly, wait for the target UI state (modal focused, sidepanel open, results rendered) before scanning, scope `.include()` to the relevant container, and attach `scanResults.violations` via `testInfo.attach` for debugging.
+- **Interpreting results:** Existing tests assert a maximum violation-node count per scan (currently 6/24/4), not zero violations. `gatherA11yViolations` flattens `violations[].nodes`, so the count reflects affected elements, not unique rules. Passing means staying within the existing budget — it is not a full accessibility certification, and automated axe checks don't replace manual keyboard traversal and screen-reader verification. Don't raise a threshold or add `.exclude()`/`disableRules()` just to make a failing test pass; investigate the regression, fix it, and only adjust the budget with an explicit justification.
 
 ## Code Style Guidelines
 
