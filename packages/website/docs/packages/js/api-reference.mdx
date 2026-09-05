@@ -133,7 +133,9 @@ interface DocSearchFacet {
 }
 ```
 
-DocSearch supports up to five facets. It compares trimmed, lowercase keys to ignore duplicates and empty keys, fetches values from all configured indices, and displays only facets that have values. Selecting a value adds a `facetFilters` entry to every index query while retaining that index's configured filters.
+DocSearch supports up to five facets. It compares trimmed, lowercase keys to ignore duplicates and empty keys, fetches values from all configured indices, and displays only facets that have values.
+
+Users can select multiple values per facet. DocSearch combines values of the same facet with OR and different facets with AND when it builds `facetFilters` for each index. A selection replaces the index's configured `facetFilters` entries for that facet key and keeps entries for other keys. DocSearch also replaces a configured OR group when the user has a selection for every key in the group.
 
 ```js title="docsearch-options.js"
 facets: [

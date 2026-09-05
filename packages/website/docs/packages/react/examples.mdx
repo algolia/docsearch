@@ -41,7 +41,7 @@ Configure the attributes for faceting in Algolia, then expose up to five control
 />
 ```
 
-DocSearch loads available values from all configured indices and appends selected values to each index's `facetFilters`.
+DocSearch loads available values from all configured indices. When a user selects values, DocSearch replaces each index's configured `facetFilters` entries for that facet key with the selection and keeps entries for other keys. Users can select multiple values per facet. DocSearch combines them with OR, for example `[['language:en', 'language:fr'], 'version:v2']`.
 
 ## Show a result badge
 

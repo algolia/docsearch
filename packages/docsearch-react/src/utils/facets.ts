@@ -43,6 +43,41 @@ export function getFacetLabel(facet: DocSearchFacet): string {
     .replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
+/**
+ * Extracts the facet key from an Algolia `facetFilters` string entry such as
+ * `language:en`. Returns `null` when the entry doesn't have a `key:value`
+ * shape.
+ */
+export function getFacetFilterKey(facetFilter: string): string | null {
+  const separatorIndex = facetFilter.indexOf(':');
+
+  return separatorIndex <= 0 ? null : facetFilter.slice(0, separatorIndex);
+}
+
+function parseFacetFilter(
+  facetFilter: string
+): { key: string; value: string } | null {
+  const key = getFacetFilterKey(facetFilter);
+
+  if (key === null) {
+    return null;
+  }
+
+  const value = facetFilter.slice(key.length + 1);
+
+  return value ? { key, value } : null;
+}
+
+/**
+ * Reads the initial facet selections from the configured `facetFilters` of each
+ * index. Later indices override earlier ones for the same facet key.
+ *
+ * - A `key:value` string selects a single value.
+ * - A nested OR group whose entries all share the same key (for example
+ *   `['docusaurus_tag:default', 'docusaurus_tag:docs-default-current']`)
+ *   selects every value in the group.
+ * - OR groups that mix facet keys can't map to a single facet and are ignored.
+ */
 export function deriveDefaultSelectedFacetsFromIndex(
   indices: DocSearchIndex[]
 ): FacetSelections {
@@ -54,21 +89,38 @@ export function deriveDefaultSelectedFacetsFromIndex(
     for (const facetFilter of Array.isArray(facetFilters)
       ? facetFilters
       : [facetFilters]) {
-      if (typeof facetFilter !== 'string') {
+      if (typeof facetFilter === 'string') {
+        const parsed = parseFacetFilter(facetFilter);
+
+        if (parsed) {
+          defaultFacets[parsed.key] = [parsed.value];
+        }
+
         continue;
       }
 
-      const separatorIndex = facetFilter.indexOf(':');
-
-      if (separatorIndex <= 0) {
+      if (!Array.isArray(facetFilter) || facetFilter.length === 0) {
         continue;
       }
 
-      const key = facetFilter.slice(0, separatorIndex);
-      const value = facetFilter.slice(separatorIndex + 1);
+      let groupKey: string | null = null;
+      const groupValues: string[] = [];
 
-      if (key && value) {
-        defaultFacets[key] = value;
+      for (const entry of facetFilter) {
+        const parsed =
+          typeof entry === 'string' ? parseFacetFilter(entry) : null;
+
+        if (!parsed || (groupKey !== null && parsed.key !== groupKey)) {
+          groupKey = null;
+          break;
+        }
+
+        groupKey = parsed.key;
+        groupValues.push(parsed.value);
+      }
+
+      if (groupKey !== null) {
+        defaultFacets[groupKey] = groupValues;
       }
     }
   }
