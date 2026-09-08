@@ -168,6 +168,27 @@ jobs:
     docker:
       - image: cimg/node:24.16
     steps:
+      - run:
+          name: Only release when a releases/* branch was merged
+          command: |
+            set -euo pipefail
+            head_ref="$(curl -sSf \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "https://api.github.com/repos/algolia/docsearch/commits/${CIRCLE_SHA1}/pulls" \
+              | jq -r --arg sha "$CIRCLE_SHA1" --arg base "$CIRCLE_BRANCH" '
+                  [ .[]
+                    | select(.merged_at != null)
+                    | select(.base.ref == $base)
+                    | select(.merge_commit_sha == $sha)
+                    | .head.ref
+                  ] | first // empty')"
+            echo "Merged from: ${head_ref:-<no merged PR found>}"
+            case "$head_ref" in
+              releases/*) echo "Release branch detected, continuing" ;;
+              *) echo "Not a release merge, skipping"; circleci-agent step halt ;;
+            esac
       - checkout
       - *attach_workspace
       - run: *install_bun
