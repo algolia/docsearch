@@ -1,4 +1,4 @@
-import { isDataUIPart, isToolOrDynamicToolUIPart, type TextUIPart } from 'ai';
+import { isDataUIPart, isToolUIPart, type TextUIPart } from 'ai';
 
 import type { StoredAskAiState } from '../types';
 import type {
@@ -287,7 +287,7 @@ export function sanitizeMessagesForRequest(messages: AIMessage[]): AIMessage[] {
         return false;
       }
 
-      if (isToolOrDynamicToolUIPart(part) && part.state.startsWith('input-')) {
+      if (isToolUIPart(part) && part.state.startsWith('input-')) {
         return false;
       }
 
