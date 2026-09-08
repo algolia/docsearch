@@ -24,16 +24,16 @@ const log = {
     this.log('');
   },
   info(message: string) {
-    this.log(`${this.colors.info}• ${message}${this.colors.reset}`);
+    this.log(`${this.colors.info}\u2022 ${message}${this.colors.reset}`);
   },
   success(message: string) {
-    this.log(`${this.colors.success} ${message}${this.colors.reset}`);
+    this.log(`${this.colors.success}\u2713 ${message}${this.colors.reset}`);
   },
   warn(message: string) {
     this.log(`${this.colors.warn}! ${message} !${this.colors.reset}`);
   },
   error(message: string) {
-    this.log(`${this.colors.error} ${message}${this.colors.reset}`);
+    this.log(`${this.colors.error}\u2717 ${message}${this.colors.reset}`);
   },
   section(title: string) {
     this.log(
@@ -125,26 +125,6 @@ async function getPkg(tag: string): Promise<Pkg | null> {
   return pkg;
 }
 
-// Push git tag
-async function pushTag({
-  tagName,
-  dryRun,
-}: {
-  dryRun?: boolean;
-  tagName: string;
-}) {
-  if (dryRun) {
-    log.log(`[DRY_RUN] - Pushing tag ${tagName}`);
-    return;
-  }
-
-  try {
-    await $`git push origin ${tagName}`.quiet();
-  } catch (e) {
-    throw new Error(`Error pushing tag ${tagName}: ${e}`);
-  }
-}
-
 // Create GH release
 async function createRelease({
   dryRun,
@@ -153,6 +133,7 @@ async function createRelease({
   changelog,
   prerelease = false,
   latest,
+  commitSha,
 }: {
   dryRun?: boolean;
   token?: string;
@@ -160,6 +141,7 @@ async function createRelease({
   changelog: string;
   prerelease?: boolean;
   latest: boolean;
+  commitSha: string;
 }): Promise<void> {
   let makeLatest: 'true' | 'false' = 'false';
 
@@ -171,6 +153,7 @@ async function createRelease({
     log.log(`[DRY_RUN] - Creating release for ${tagName}:`);
     log.log(`[DRY_RUN] - Latest: ${makeLatest}`);
     log.log(`[DRY_RUN] - Prerelease: ${prerelease}`);
+    log.log(`[DRY_RUN] - Commit: ${commitSha}`);
     log.line();
     return;
   }
@@ -209,6 +192,7 @@ async function createRelease({
       body: changelog,
       prerelease,
       make_latest: makeLatest,
+      target_commitish: commitSha,
     });
   } catch (e) {
     throw new Error(`Error creating release for ${tagName}: ${e}`);
@@ -216,10 +200,17 @@ async function createRelease({
 }
 
 async function getTagsForVersion(version: string) {
-  const { stdout } = await $`git tag --list '*@${version}'`.quiet();
-  const tags = stdout.toString().trim().split('\n').filter(Boolean);
+  const { stdout, stderr, exitCode } = await $`git tag --list '*@${version}'`
+    .quiet()
+    .nothrow();
 
-  return tags;
+  if (exitCode !== 0) {
+    throw new Error(
+      `Failed to list git tags for version ${version} (exit ${exitCode}): ${stderr.toString().trim()}`
+    );
+  }
+
+  return stdout.toString().trim().split('\n').filter(Boolean);
 }
 
 async function getPackages(tags: string[]) {
@@ -269,8 +260,15 @@ async function runFlow({
     exit(0);
   }
 
+  const commitSha = await $`git rev-parse HEAD`
+    .quiet()
+    .text()
+    .then((sha) => sha.trim());
+
   log.line();
-  log.log(`🚀 Generating package releases for v${publishVersion}`);
+  log.log(
+    `🚀 Generating package releases for v${publishVersion} and commit ${commitSha}`
+  );
   log.line();
 
   const publishedPackages: string[] = [];
@@ -299,8 +297,6 @@ async function runFlow({
         publishVersion ? publishVersion : pkg.packageJson.version
       );
 
-      await pushTag({ tagName: pkg.tagName, dryRun });
-
       await createRelease({
         dryRun,
         token: githubToken,
@@ -308,6 +304,7 @@ async function runFlow({
         changelog: changelogEntry,
         prerelease: pkg.packageJson.version.includes('-'),
         latest: pkg.tagName.startsWith('@docsearch/react@'),
+        commitSha,
       });
 
       publishedPackages.push(pkg.packageJson.name);
