@@ -1,5 +1,7 @@
 # @docsearch/sidepanel-js
 
+## 5.1.0
+
 ## 5.0.5
 
 ## 5.0.4
