@@ -51,6 +51,16 @@ function MenuPopup({
 
 Menu.Popup = MenuPopup;
 
+function MenuItem({
+  className,
+  ...props
+}: MenuPrimitive.Item.Props): JSX.Element {
+  const cn = `DocSearch-Menu-Item${className ? ` ${className}` : ''}`;
+  return <MenuPrimitive.Item className={cn} {...props} />;
+}
+
+Menu.Item = MenuItem;
+
 function MenuRadioGroup({
   ...props
 }: MenuPrimitive.RadioGroup.Props): JSX.Element {
@@ -78,6 +88,26 @@ function MenuRadioItem({
 }
 
 Menu.RadioItem = MenuRadioItem;
+
+function MenuCheckboxItem({
+  className,
+  children,
+  ...props
+}: MenuPrimitive.CheckboxItem.Props): JSX.Element {
+  const cn = `DocSearch-Menu-Item DocSearch-Menu-CheckboxItem${className ? ` ${className}` : ''}`;
+  return (
+    <MenuPrimitive.CheckboxItem className={cn} {...props}>
+      <span className="DocSearch-Menu-CheckboxItem-Indicator">
+        <MenuPrimitive.CheckboxItemIndicator>
+          <CheckIcon />
+        </MenuPrimitive.CheckboxItemIndicator>
+      </span>
+      {children}
+    </MenuPrimitive.CheckboxItem>
+  );
+}
+
+Menu.CheckboxItem = MenuCheckboxItem;
 
 function MenuGroupLabel({
   className,

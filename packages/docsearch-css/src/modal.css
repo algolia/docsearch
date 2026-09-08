@@ -288,16 +288,29 @@
     background: var(--docsearch-dropdown-menu-item-hover-background);
   }
 
+  /* Keyboard focus needs a cue distinct from the shared hover/highlight background. */
+  &:focus-visible {
+    outline: 2px solid var(--docsearch-focus-color);
+    outline-offset: -2px;
+  }
+
   svg {
     flex-shrink: 0;
   }
 }
 
-.DocSearch-Menu-RadioItem[data-checked] {
+.DocSearch-Menu-RadioItem[data-checked],
+.DocSearch-Menu-CheckboxItem[data-checked] {
   color: var(--docsearch-highlight-color);
 }
 
-.DocSearch-Menu-RadioItem-Indicator {
+/* Aligns the reset item's label with sibling items that render an indicator. */
+.DocSearch-Menu-ResetItem {
+  padding-inline-start: calc(1.14em + 1rem + 0.25rem);
+}
+
+.DocSearch-Menu-RadioItem-Indicator,
+.DocSearch-Menu-CheckboxItem-Indicator {
   --indicator-size: 1rem;
 
   pointer-events: none;

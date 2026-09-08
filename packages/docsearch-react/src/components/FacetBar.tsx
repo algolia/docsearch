@@ -3,7 +3,10 @@ import React, { type JSX } from 'react';
 import type { DocSearchFacet } from '../DocSearch';
 import { ChevronIcon } from '../icons';
 import { capitalize } from '../utils';
-import type { FacetSelections } from '../utils/createDocSearchSources';
+import type {
+  FacetSelections,
+  FacetSelectionUpdate,
+} from '../utils/createDocSearchSources';
 import { getFacetLabel } from '../utils/facets';
 
 import { Chip } from './ui/Chip';
@@ -17,7 +20,8 @@ export type FacetBarTranslations = Partial<{
    */
   defaultValueLabel: string;
   /**
-   * Facet menu trigger aria label when a facet is selected.
+   * Facet menu trigger aria label suffix when one or more values are selected,
+   * for example `Language, en, fr selected`.
    *
    * @default 'selected'
    */
@@ -52,30 +56,83 @@ export interface FacetBarFacet extends DocSearchFacet {
   values: string[];
 }
 
+const EMPTY_SELECTION: string[] = [];
+
+interface FacetValueItemProps {
+  facetKey: string;
+  value: string;
+  checked: boolean;
+  onToggle: (facetKey: string, value: string) => void;
+}
+
+const FacetValueItem = React.memo(function FacetValueItem({
+  facetKey,
+  value,
+  checked,
+  onToggle,
+}: FacetValueItemProps): JSX.Element {
+  const handleCheckedChange = React.useCallback(() => {
+    onToggle(facetKey, value);
+  }, [facetKey, onToggle, value]);
+
+  return (
+    <Menu.CheckboxItem
+      checked={checked}
+      label={value}
+      onCheckedChange={handleCheckedChange}
+    >
+      {capitalize(value)}
+    </Menu.CheckboxItem>
+  );
+});
+
+function toggleValue(value: string) {
+  return (currentValues: string[]): string[] =>
+    currentValues.includes(value)
+      ? currentValues.filter((selected) => selected !== value)
+      : [...currentValues, value];
+}
+
+function removeValue(value: string) {
+  return (currentValues: string[]): string[] =>
+    currentValues.filter((selected) => selected !== value);
+}
+
 interface FacetMenuProps {
   facet: FacetBarFacet;
-  selectedValue: string;
+  selectedValues: string[];
   defaultValueLabel: string;
   menuTriggerSelectedAriaLabel: string;
-  onSelectionChange: (facet: string, value: string) => void;
+  onSelectionChange: (facet: string, update: FacetSelectionUpdate) => void;
   registerTrigger: (facetKey: string, el: HTMLButtonElement | null) => void;
 }
 
 const FacetMenu = React.memo(function FacetMenu({
   facet,
-  selectedValue,
+  selectedValues,
   defaultValueLabel,
   onSelectionChange,
   registerTrigger,
   menuTriggerSelectedAriaLabel,
 }: FacetMenuProps): JSX.Element {
   const label = getFacetLabel(facet);
-  const handleValueChange = React.useCallback(
-    (value: string) => {
-      onSelectionChange(facet.key, value);
-    },
-    [facet.key, onSelectionChange]
+  const hasSelection = selectedValues.length > 0;
+  const selectedSet = React.useMemo(
+    () => new Set(selectedValues),
+    [selectedValues]
   );
+
+  const handleToggleValue = React.useCallback(
+    (facetKey: string, value: string) => {
+      onSelectionChange(facetKey, toggleValue(value));
+    },
+    [onSelectionChange]
+  );
+
+  const handleSelectAll = React.useCallback(() => {
+    onSelectionChange(facet.key, EMPTY_SELECTION);
+  }, [facet.key, onSelectionChange]);
+
   const triggerRef = React.useCallback(
     (el: HTMLButtonElement | null) => {
       registerTrigger(facet.key, el);
@@ -87,10 +144,10 @@ const FacetMenu = React.memo(function FacetMenu({
     <Menu>
       <Menu.Trigger
         ref={triggerRef}
-        data-has-selection={Boolean(selectedValue)}
+        data-has-selection={hasSelection}
         aria-label={
-          selectedValue
-            ? `${label}, ${selectedValue} ${menuTriggerSelectedAriaLabel}`
+          hasSelection
+            ? `${label}, ${selectedValues.join(', ')} ${menuTriggerSelectedAriaLabel}`
             : label
         }
       >
@@ -98,19 +155,22 @@ const FacetMenu = React.memo(function FacetMenu({
         <ChevronIcon />
       </Menu.Trigger>
       <Menu.Popup>
-        <Menu.RadioGroup
-          value={selectedValue}
-          onValueChange={handleValueChange}
+        <Menu.Item
+          className="DocSearch-Menu-ResetItem"
+          label={`${defaultValueLabel} ${label}`}
+          onClick={handleSelectAll}
         >
-          <Menu.RadioItem value="" label={`${defaultValueLabel} ${label}`}>
-            {defaultValueLabel}
-          </Menu.RadioItem>
-          {facet.values.map((value) => (
-            <Menu.RadioItem key={value} value={value} label={value}>
-              {capitalize(value)}
-            </Menu.RadioItem>
-          ))}
-        </Menu.RadioGroup>
+          {defaultValueLabel}
+        </Menu.Item>
+        {facet.values.map((value) => (
+          <FacetValueItem
+            key={value}
+            facetKey={facet.key}
+            value={value}
+            checked={selectedSet.has(value)}
+            onToggle={handleToggleValue}
+          />
+        ))}
       </Menu.Popup>
     </Menu>
   );
@@ -123,6 +183,7 @@ interface SelectedFacetChipProps {
   dismissAriaLabel: string;
   onDismiss: (
     facetKey: string,
+    value: string,
     event: React.MouseEvent<HTMLButtonElement>
   ) => void;
 }
@@ -136,9 +197,9 @@ const SelectedFacetChip = React.memo(function SelectedFacetChip({
 }: SelectedFacetChipProps): JSX.Element | null {
   const handleDismissFacet = React.useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
-      onDismiss(facetKey, e);
+      onDismiss(facetKey, value, e);
     },
-    [facetKey, onDismiss]
+    [facetKey, onDismiss, value]
   );
 
   return (
@@ -155,7 +216,7 @@ const SelectedFacetChip = React.memo(function SelectedFacetChip({
 interface FacetBarProps {
   facets: FacetBarFacet[];
   selections: FacetSelections;
-  onSelectionChange: (facet: string, value: string) => void;
+  onSelectionChange: (facet: string, update: FacetSelectionUpdate) => void;
   clearSelections: () => void;
   translations?: FacetBarTranslations;
 }
@@ -180,9 +241,17 @@ export const FacetBar = React.memo(function FacetBar({
     [facets]
   );
   const selectionsToDisplay = React.useMemo(() => {
-    return Object.entries(selections).filter(
-      ([key, value]) => Boolean(value) && visibleFacetKeys.has(key)
-    );
+    const entries: Array<[key: string, value: string]> = [];
+
+    for (const [key, values] of Object.entries(selections)) {
+      if (!visibleFacetKeys.has(key)) continue;
+
+      for (const value of values) {
+        entries.push([key, value]);
+      }
+    }
+
+    return entries;
   }, [selections, visibleFacetKeys]);
 
   const triggerRefs = React.useRef(new Map<string, HTMLButtonElement>());
@@ -199,7 +268,11 @@ export const FacetBar = React.memo(function FacetBar({
   );
 
   const handleDismissFacet = React.useCallback(
-    (facetKey: string, ev: React.MouseEvent<HTMLButtonElement>) => {
+    (
+      facetKey: string,
+      value: string,
+      ev: React.MouseEvent<HTMLButtonElement>
+    ) => {
       const dismissButton = ev.currentTarget;
       const selectionBar = dismissButton.closest(
         '.DocSearch-FacetSelectionBar'
@@ -220,7 +293,7 @@ export const FacetBar = React.memo(function FacetBar({
         target?.focus();
       }
 
-      onSelectionChange(facetKey, '');
+      onSelectionChange(facetKey, removeValue(value));
     },
     [onSelectionChange]
   );
@@ -246,21 +319,17 @@ export const FacetBar = React.memo(function FacetBar({
         role="group"
         aria-label={facetsAriaLabel}
       >
-        {facets.map((facet) => {
-          const selectedValue = selections[facet.key] ?? '';
-
-          return (
-            <FacetMenu
-              key={facet.key}
-              facet={facet}
-              selectedValue={selectedValue}
-              defaultValueLabel={defaultValueLabel}
-              registerTrigger={registerTrigger}
-              menuTriggerSelectedAriaLabel={facetMenuTriggerAriaLabel}
-              onSelectionChange={onSelectionChange}
-            />
-          );
-        })}
+        {facets.map((facet) => (
+          <FacetMenu
+            key={facet.key}
+            facet={facet}
+            selectedValues={selections[facet.key] ?? EMPTY_SELECTION}
+            defaultValueLabel={defaultValueLabel}
+            registerTrigger={registerTrigger}
+            menuTriggerSelectedAriaLabel={facetMenuTriggerAriaLabel}
+            onSelectionChange={onSelectionChange}
+          />
+        ))}
       </div>
       {selectionsToDisplay.length > 0 && (
         <div
@@ -270,7 +339,7 @@ export const FacetBar = React.memo(function FacetBar({
         >
           {selectionsToDisplay.map(([key, value]) => (
             <SelectedFacetChip
-              key={key}
+              key={`${key}:${value}`}
               facetKey={key}
               facetLabel={facetLabels.get(key) ?? key}
               value={value}

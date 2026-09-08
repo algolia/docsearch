@@ -95,7 +95,46 @@ describe('utils', () => {
             searchParameters: { facetFilters: 'format:guide' as never },
           },
         ])
-      ).toEqual({ language: 'fr', version: 'v2', format: 'guide' });
+      ).toEqual({ language: ['fr'], version: ['v2'], format: ['guide'] });
+    });
+
+    it('derives multiple selections from a single-key OR group', () => {
+      expect(
+        deriveDefaultSelectedFacetsFromIndex([
+          {
+            name: 'docs',
+            searchParameters: {
+              facetFilters: [
+                'language:en',
+                [
+                  'docusaurus_tag:default',
+                  'docusaurus_tag:docs-default-current',
+                ],
+              ],
+            },
+          },
+        ])
+      ).toEqual({
+        language: ['en'],
+        docusaurus_tag: ['default', 'docs-default-current'],
+      });
+    });
+
+    it('ignores OR groups that mix facet keys or contain invalid entries', () => {
+      expect(
+        deriveDefaultSelectedFacetsFromIndex([
+          {
+            name: 'docs',
+            searchParameters: {
+              facetFilters: [
+                ['language:en', 'type:guide'],
+                ['version:v1', 'invalid'],
+                [],
+              ],
+            },
+          },
+        ])
+      ).toEqual({});
     });
 
     it('returns configured facetFilters when no dynamic facets are selected', () => {
@@ -105,16 +144,25 @@ describe('utils', () => {
     it('merges configured and dynamic facetFilters', () => {
       expect(
         createFacetFilters(['docusaurus_tag:default'], {
-          language: 'en',
-          version: 'v2',
+          language: ['en'],
+          version: ['v2'],
         })
       ).toEqual(['docusaurus_tag:default', 'language:en', 'version:v2']);
+    });
+
+    it('combines multiple values of the same facet into an OR group', () => {
+      expect(
+        createFacetFilters(undefined, {
+          language: ['en', 'fr'],
+          version: ['v2'],
+        })
+      ).toEqual([['language:en', 'language:fr'], 'version:v2']);
     });
 
     it('overrides configured filters with dynamic selections for the same facet', () => {
       expect(
         createFacetFilters(['language:en', 'version:v2'], {
-          language: 'fr',
+          language: ['fr'],
         })
       ).toEqual(['version:v2', 'language:fr']);
     });
@@ -122,10 +170,30 @@ describe('utils', () => {
     it('removes configured filters for cleared facet selections', () => {
       expect(
         createFacetFilters(['language:en', 'version:v2'], {
-          language: '',
-          type: 'guide',
+          language: [],
+          type: ['guide'],
         })
       ).toEqual(['version:v2', 'type:guide']);
+    });
+
+    it('replaces a configured OR group when every key in it is selected', () => {
+      expect(
+        createFacetFilters(
+          [
+            'language:en',
+            ['docusaurus_tag:default', 'docusaurus_tag:docs-default-current'],
+          ],
+          { docusaurus_tag: ['docs-default-next'] }
+        )
+      ).toEqual(['language:en', 'docusaurus_tag:docs-default-next']);
+    });
+
+    it('keeps a configured OR group when only some of its keys are selected', () => {
+      expect(
+        createFacetFilters([['language:en', 'type:guide']], {
+          language: ['fr'],
+        })
+      ).toEqual([['language:en', 'type:guide'], 'language:fr']);
     });
   });
 

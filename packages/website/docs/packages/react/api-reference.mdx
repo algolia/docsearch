@@ -69,6 +69,8 @@ Facet controls populated from the configured indices. Defaults to `[]`.
 
 DocSearch supports up to five facets. It ignores empty and duplicate keys, merges sorted values from all configured indices, and hides facets with no values. Configure each attribute for faceting in the Algolia index.
 
+Users can select multiple values per facet. DocSearch combines values of the same facet with OR and different facets with AND when it builds `facetFilters` for each index. A selection replaces the index's configured `facetFilters` entries for that facet key and keeps entries for other keys. DocSearch also replaces a configured OR group, such as `['docusaurus_tag:default', 'docusaurus_tag:docs-default-current']`, when the user has a selection for every key in the group.
+
 ### `theme`
 
 > `type: 'light' | 'dark'` | **optional**
