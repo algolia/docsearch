@@ -34,6 +34,8 @@ export default defineConfig([
       useTheme: 'src/useTheme.tsx',
       version: 'src/version.ts',
       sidepanel: 'src/Sidepanel.tsx',
+      sidepanelPanel: 'src/Sidepanel/Sidepanel.tsx',
+      sidepanelButton: 'src/Sidepanel/SidepanelButton.tsx',
     },
     ...sharedConfig,
     dts: true,

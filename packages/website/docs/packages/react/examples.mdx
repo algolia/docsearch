@@ -258,3 +258,69 @@ Return `true` from `interceptAskAiEvent` after handling the message:
 ```
 
 For the supported modal and Sidepanel integration, use [hybrid mode](/docs/hybrid-mode).
+
+## Lazy-load the Sidepanel
+
+Import the trigger from `@docsearch/react/sidepanelButton`, then dynamically import `Sidepanel` from `@docsearch/react/sidepanelPanel`. The button entry excludes the panel and its Ask AI dependencies. Dynamically importing the panel entry defers those dependencies until needed.
+
+Don't statically import the button from `@docsearch/react/sidepanel` when you need this boundary. Tree shaking depends on the bundler: a production Bun build with both a static button import and a dynamic panel import from the shared `@docsearch/react/sidepanel` entry includes the AI SDK and Markdown renderer in the initial chunks. Using the dedicated `sidepanelButton`/`sidepanelPanel` entries keeps those dependencies deferred and avoids bundling the button twice.
+
+```tsx title="LazyAssistant.tsx"
+import { lazy, Suspense, useRef, useState } from 'react';
+import type { JSX } from 'react';
+import { SidepanelButton } from '@docsearch/react/sidepanelButton';
+import '@docsearch/css/dist/sidepanel.css';
+
+const loadSidepanel = () => import('@docsearch/react/sidepanelPanel');
+const LazySidepanel = lazy(() =>
+  loadSidepanel().then(({ Sidepanel }) => ({ default: Sidepanel }))
+);
+const keyboardShortcuts = { 'Ctrl/Cmd+I': false };
+
+function preloadSidepanel() {
+  // Let activation retry if this speculative preload fails.
+  loadSidepanel().catch(() => {});
+}
+
+export function LazyAssistant(): JSX.Element {
+  const [isOpen, setIsOpen] = useState(false);
+  const trigger = useRef<HTMLButtonElement | null>(null);
+
+  return (
+    <>
+      <SidepanelButton
+        variant="inline"
+        keyboardShortcuts={keyboardShortcuts}
+        aria-expanded={isOpen}
+        onMouseEnter={preloadSidepanel}
+        onFocus={preloadSidepanel}
+        onTouchStart={preloadSidepanel}
+        onClick={(event) => {
+          trigger.current = event.currentTarget;
+          setIsOpen(true);
+        }}
+      />
+      {isOpen && (
+        <Suspense fallback={<output>Loading assistant…</output>}>
+          <LazySidepanel
+            appId="YOUR_APP_ID"
+            apiKey="YOUR_SEARCH_API_KEY"
+            agentId="YOUR_AGENT_ID"
+            isOpen={isOpen}
+            onOpen={() => setIsOpen(true)}
+            onClose={() => {
+              setIsOpen(false);
+              trigger.current?.focus();
+            }}
+            keyboardShortcuts={keyboardShortcuts}
+          />
+        </Suspense>
+      )}
+    </>
+  );
+}
+```
+
+Hover, focus, and touch start preload the module without opening the panel. Activation also loads it if preloading hasn't finished. This example disables the global shortcut because the panel's keyboard listener isn't mounted before activation, and unmounts the panel on close. To preserve an in-progress conversation, keep it mounted after the first activation and control visibility with `isOpen`.
+
+For provider-based composition, `@docsearch/sidepanel/button` also uses the lightweight trigger entry. Keep the panel mounted when you need provider refs, keyboard shortcuts, or [hybrid handoff](/docs/hybrid-mode) before a user activates the trigger.

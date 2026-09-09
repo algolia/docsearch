@@ -26,6 +26,8 @@
     "./docsearchAi": "./dist/esm/docsearchAi.js",
     "./modal": "./dist/esm/modal.js",
     "./sidepanel": "./dist/esm/sidepanel.js",
+    "./sidepanelButton": "./dist/esm/sidepanelButton.js",
+    "./sidepanelPanel": "./dist/esm/sidepanelPanel.js",
     "./useDocSearchKeyboardEvents": "./dist/esm/useDocSearchKeyboardEvents.js",
     "./useTheme": "./dist/esm/useTheme.js",
     "./version": "./dist/esm/version.js",
