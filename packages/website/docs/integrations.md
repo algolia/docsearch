@@ -15,7 +15,6 @@ If you use one of the following tools, follow its documentation to enable DocSea
 - [VitePress][21] - [Search][22]
 - [Starlight][7] - [Algolia Search][8]
 - [LaRecipe][9] - [Algolia Search][10]
-- [Orchid][11] - [Algolia Search][12]
 - [Smooth DOC][13] - [DocSearch][14]
 - [Docsy][15] - [Configure Algolia DocSearch][16]
 - [Lotus Docs][19] - [Enabling the DocSearch Plugin][20]
@@ -33,8 +32,6 @@ If you maintain a similar tool and want us to add it to the list, [open a pull r
 [8]: https://starlight.astro.build/guides/site-search/#algolia-docsearch
 [9]: https://larecipe.saleem.dev/docs/2.2/overview
 [10]: https://larecipe.saleem.dev/docs/2.2/search#available-engines
-[11]: https://orchid.run
-[12]: https://orchid.run/plugins/orchidsearch#algolia-docsearch
 [13]: https://next-smooth-doc.vercel.app/
 [14]: https://next-smooth-doc.vercel.app/docs/docsearch/
 [15]: https://www.docsy.dev/
