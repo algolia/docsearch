@@ -1,5 +1,26 @@
 # @docsearch/react
 
+## 5.1.0
+
+### Minor Changes
+
+- 977cf17: feat(facets): Support selecting multiple values per facet
+
+  `FacetBar` now renders checkbox items instead of a radio group, so users can
+  select more than one value per facet. Selected values for the same facet are
+  combined into an Algolia `facetFilters` OR group; different facets are still
+  combined with AND. Configured `facetFilters` OR groups that share a single
+  facet key (for example `['lang:en', 'lang:fr']`) are now recognized as the
+  default selection for that facet, in addition to single `key:value` entries.
+
+- 3914a42: Upgrade `ai` to v6 and `@ai-sdk/react` to v3
+
+### Patch Changes
+
+- Updated dependencies [977cf17]
+  - @docsearch/css@5.1.0
+  - @docsearch/core@5.1.0
+
 ## 5.0.5
 
 ### Patch Changes
