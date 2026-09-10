@@ -207,3 +207,5 @@ Whether the provider is mounted.
 | `@docsearch/sidepanel` | `Sidepanel`, `SidepanelButton` | `SidepanelProps`, `SidepanelButtonProps` |
 | `@docsearch/sidepanel/sidepanel` | `Sidepanel` | `SidepanelProps` |
 | `@docsearch/sidepanel/button` | `SidepanelButton` | `SidepanelButtonProps` |
+
+Import `@docsearch/sidepanel/button` and dynamically import `@docsearch/sidepanel/sidepanel` to defer the panel and its Ask AI dependencies, the same way as the [React lazy-load example](/docs/packages/react/examples#lazy-load-the-sidepanel). Internally, these entries build on the equivalent `@docsearch/react/sidepanelButton` and `@docsearch/react/sidepanelPanel` entries, so no further split is needed.

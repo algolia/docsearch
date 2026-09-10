@@ -38,4 +38,6 @@ export default App;
 
 ## Documentation
 
+[Lazy-load the Sidepanel](https://docsearch.algolia.com/docs/packages/react/examples#lazy-load-the-sidepanel) with a static `SidepanelButton` import from `@docsearch/react/sidepanelButton` and a dynamic panel import from `@docsearch/react/sidepanelPanel`.
+
 [Read documentation →](https://docsearch.algolia.com/docs/packages/react/getting-started)
