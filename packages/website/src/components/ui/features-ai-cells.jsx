@@ -62,7 +62,7 @@ export function AskAICell() {
               <Sparks width={16} height={16} />
             </button>
             <a
-              href="/docs/v4/askai?utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=askai"
+              href="/docs/agent-studio/getting-started?utm_source=docsearch.algolia.com&utm_medium=referral&utm_campaign=askai"
               className={linkClass}
             >
               Learn more
@@ -94,8 +94,8 @@ export function MCPCell() {
           <p className={titleClass}>MCP Server</p>
           <p className={bodyClass}>
             Make your docs neural-searchable by any AI agent — Claude, Cursor,
-            Codex, and more — over the Model Context Protocol, powered by
-            Algolia neural search.
+            Codex, and more — over the DocSearch MCP, powered by
+            Algolia NeuralSearch.
           </p>
 
           <div className="mt-6 flex items-center gap-4">
