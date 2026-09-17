@@ -66,7 +66,7 @@
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.2.0",
     "preact": "11.0.0-beta.0",
-    "tsdown": "0.22.7",
+    "tsdown": "catalog:dev",
     "typescript": "5.7.3",
     "vitest": "3.0.2"
   },

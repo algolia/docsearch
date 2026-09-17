@@ -47,7 +47,7 @@ export function extractLinksFromMessage(
     }
 
     const markdownLinkRegex = /\[([^\]]*)\]\(([^)]+)\)/g;
-    const plainLinkRegex = /(?<!\]\()https?:\/\/[^\s<>"{}|\\^`[\]]+/g;
+    const plainLinkRegex = /https?:\/\/[^\s<>"{}|\\^`[\]]+/g;
 
     // Strip out all code blocks e.g. ```
     const textWithoutCodeBlocks = part.text.replace(/```[\s\S]*?```/g, '');
@@ -69,8 +69,10 @@ export function extractLinksFromMessage(
       }
     }
 
+    const textWithoutMarkdownLinks = cleanText.replace(markdownLinkRegex, ' ');
+
     // Get all "plain" links e.g. https://algolia.com/doc
-    const plainUrls = cleanText.matchAll(plainLinkRegex);
+    const plainUrls = textWithoutMarkdownLinks.matchAll(plainLinkRegex);
 
     for (const match of plainUrls) {
       // Strip any extra punctuation

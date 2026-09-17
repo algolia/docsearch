@@ -22,7 +22,7 @@
     },
     {
       "path": "packages/docsearch-modal/dist/umd/index.js",
-      "maxSize": "113.5 kB"
+      "maxSize": "2 kB"
     },
     {
       "path": "packages/docsearch-sidepanel/dist/umd/index.js",

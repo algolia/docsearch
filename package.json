@@ -1,11 +1,18 @@
 {
   "name": "@docsearch/monorepo",
   "private": true,
-  "workspaces": [
-    "adapters/*",
-    "packages/*",
-    "examples/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "adapters/*",
+      "packages/*",
+      "examples/*"
+    ],
+    "catalogs": {
+      "dev": {
+        "tsdown": "0.23.0"
+      }
+    }
+  },
   "type": "module",
   "scripts": {
     "build": "bun run --sequential build:stage:base build:stage:react build:stage:consumers build:stage:adapter build:pkg:cli website:build",
