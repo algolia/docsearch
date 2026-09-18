@@ -231,6 +231,30 @@ describe('utils', () => {
       ]);
     });
 
+    it('does not treat markdown destinations as bare URLs', () => {
+      const message: AIMessage = {
+        id: '123',
+        role: 'assistant',
+        parts: [
+          {
+            type: 'text',
+            text: '[DocSearch](https://docsearch.algolia.com) https://example.com/docs',
+          },
+          {
+            type: 'text',
+            text: '[Algolia](https://algolia.com)https://google.com',
+          },
+        ],
+      };
+
+      expect(extractLinksFromMessage(message)).toEqual([
+        { url: 'https://docsearch.algolia.com', title: 'DocSearch' },
+        { url: 'https://example.com/docs' },
+        { url: 'https://algolia.com', title: 'Algolia' },
+        { url: 'https://google.com' },
+      ]);
+    });
+
     it('deduplicates repeated links and trims punctuation', () => {
       const text = 'Check https://algolia.com, https://algolia.com!';
       const message: AIMessage = {

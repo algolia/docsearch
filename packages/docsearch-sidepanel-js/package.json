@@ -35,7 +35,7 @@
     "@docsearch/core": "5.1.0",
     "@docsearch/react": "5.1.0",
     "preact": "11.0.0-beta.0",
-    "tsdown": "0.22.7",
+    "tsdown": "catalog:dev",
     "typescript": "5.7.3"
   },
   "nx": {
