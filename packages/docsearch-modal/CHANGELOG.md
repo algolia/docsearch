@@ -1,5 +1,16 @@
 # @docsearch/modal
 
+## 5.2.0
+
+### Patch Changes
+
+- 1775a18: Fix a crash on Safari 14 when importing DocSearch bundles. Marked's lookbehind feature detection was being incorrectly optimized away by the build tool, causing it to always pick a regex pattern that Safari 14 can't parse. Upgraded tsdown/rolldown to pick up the upstream fix, and removed an unrelated lookbehind from the Ask AI link extractor for the same reason.
+- Updated dependencies [ff16bf6]
+- Updated dependencies [1775a18]
+- Updated dependencies [0e5bde9]
+  - @docsearch/react@5.2.0
+  - @docsearch/core@5.2.0
+
 ## 5.1.0
 
 ### Patch Changes
