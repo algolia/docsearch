@@ -1,5 +1,17 @@
 # @docsearch/docusaurus-adapter
 
+## 5.1.1
+
+### Patch Changes
+
+- Updated dependencies [ff16bf6]
+- Updated dependencies [1775a18]
+- Updated dependencies [0e5bde9]
+  - @docsearch/sidepanel@5.1.1
+  - @docsearch/react@5.1.1
+  - @docsearch/modal@5.1.1
+  - @docsearch/core@5.1.1
+
 ## 5.1.0
 
 ### Patch Changes
