@@ -1,5 +1,16 @@
 # @docsearch/react
 
+## 5.1.1
+
+### Patch Changes
+
+- ff16bf6: Add `@docsearch/react/sidepanelButton` and `@docsearch/react/sidepanelPanel` entry points so consumers can statically import the Sidepanel trigger while dynamically importing the panel (and its Ask AI/Markdown dependencies) only when needed. `@docsearch/sidepanel` now uses these split entries internally.
+- 1775a18: Fix a crash on Safari 14 when importing DocSearch bundles. Marked's lookbehind feature detection was being incorrectly optimized away by the build tool, causing it to always pick a regex pattern that Safari 14 can't parse. Upgraded tsdown/rolldown to pick up the upstream fix, and removed an unrelated lookbehind from the Ask AI link extractor for the same reason.
+- 0e5bde9: Make closed Sidepanels inert so their content is excluded from keyboard navigation and the accessibility tree while preserving conversation state.
+- Updated dependencies [1775a18]
+  - @docsearch/core@5.1.1
+  - @docsearch/css@5.1.1
+
 ## 5.1.0
 
 ### Minor Changes
