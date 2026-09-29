@@ -1,7 +1,12 @@
-import type { UseChatHelpers } from '@ai-sdk/react';
+import type { UseChatHelpers, UseChatOptions } from '@ai-sdk/react';
 import { useChat } from '@ai-sdk/react';
 import type { ChatRequestOptions } from 'ai';
-import { DefaultChatTransport, generateId, lastAssistantMessageIsCompleteWithToolCalls } from 'ai';
+import {
+  DefaultChatTransport,
+  generateId,
+  lastAssistantMessageIsCompleteWithToolCalls,
+  isToolOrDynamicToolUIPart,
+} from 'ai';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { MutableRefObject } from 'react';
 
@@ -16,7 +21,7 @@ import type { Exchange } from './AskAiScreen';
 import { ASK_AI_API_URL, BETA_ASK_AI_API_URL } from './constants';
 import type { StoredSearchPlugin } from './stored-searches';
 import { createStoredConversations } from './stored-searches';
-import type { AIMessage } from './types/AskiAi';
+import { type AIMessage } from './types/AskiAi';
 
 import type { AgentStudioSearchParameters, AskAiSearchParameters, StoredAskAiState } from '.';
 
@@ -131,6 +136,30 @@ const getAskAiTransport = ({
   });
 };
 
+// Copied from instantsearch implementation: https://github.com/algolia/instantsearch/blob/master/packages/instantsearch.js/src/lib/ai-lite/utils.ts#L23
+export const shouldSendAutomaticallyForAgentStudio = ({ messages }: { messages: AIMessage[] }): boolean => {
+  if (messages.length === 0) return false;
+
+  const lastMessage = messages[messages.length - 1];
+  if (!lastMessage || lastMessage.role !== 'assistant') return false;
+
+  if (!lastMessage.parts || lastMessage.parts.length === 0) return false;
+
+  const lastStepPartIndex = lastMessage.parts.reduce(
+    (lastIndex, part, index) => (part.type === 'step-start' ? index : lastIndex),
+    -1,
+  );
+
+  const toolParts = lastMessage.parts
+    .slice(lastStepPartIndex + 1)
+    .filter(isToolOrDynamicToolUIPart)
+    .filter((p) => !p.providerExecuted);
+
+  if (toolParts.length === 0) return false;
+
+  return toolParts.every((p) => p.state === 'output-available' || p.state === 'output-error');
+};
+
 export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, useStagingEnv = false, ...params }) => {
   const abortControllerRef = useRef(new AbortController());
   const [chatSessionId, setChatSessionId] = useState(() => generateId());
@@ -160,12 +189,14 @@ export const useAskAi: UseAskAi = ({ assistantId, apiKey, appId, indexName, useS
   );
 
   const chatOptions = useMemo(
-    () => ({
+    (): UseChatOptions<AIMessage> => ({
       id: chatSessionId,
-      sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
+      sendAutomaticallyWhen: params.agentStudio
+        ? shouldSendAutomaticallyForAgentStudio
+        : lastAssistantMessageIsCompleteWithToolCalls,
       transport: askAiTransport,
     }),
-    [chatSessionId, askAiTransport],
+    [chatSessionId, askAiTransport, params.agentStudio],
   );
 
   const { messages, sendMessage, status, setMessages, error, stop, clearError } = useChat(chatOptions);
