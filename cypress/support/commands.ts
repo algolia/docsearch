@@ -37,7 +37,7 @@ Cypress.Commands.add('typeQueryMatching', () => {
 });
 
 Cypress.Commands.add('typeQueryNotMatching', () => {
-  cy.search('zzz');
+  cy.search('eirghuierge');
 });
 
 Cypress.Commands.add('clearSearch', () => {

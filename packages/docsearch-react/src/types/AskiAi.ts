@@ -13,35 +13,42 @@ export interface SearchIndexTool {
   };
 }
 
-export interface AgentStudioSearchTool {
-  input: {
-    index: string;
-    query: string;
-    number_of_results: number;
-    facet_filters: any | null;
-  };
-  output: {
-    hits?: any[];
-    nbHits?: number;
-    queryID?: string;
-  };
+interface MCPSearchToolQuery {
+  query: string;
+  [key: string]: unknown;
 }
 
-export interface AlgoliaMCPSearchTool {
-  input: {
-    query: string;
-  };
-  output: {
-    hits?: any[];
-    nbHits?: number;
-  };
+interface MCPSearchToolInputV1 {
+  query: string;
+  index: string;
+  number_of_results?: number;
+  facet_filters?: string[];
 }
+
+interface MCPSearchToolInputV2 {
+  queries: MCPSearchToolQuery[];
+  clickAnalytics: boolean;
+  originalQuery: string;
+}
+
+export interface AlgoliaMCPSearchToolOutput {
+  hits?: unknown[];
+  nbHits?: number;
+  queryId?: string;
+}
+
+export type AlgoliaMCPSearchTool =
+  | {
+      input: MCPSearchToolInputV2;
+      output: AlgoliaMCPSearchToolOutput | undefined;
+    }
+  | { input: MCPSearchToolInputV1; output: AlgoliaMCPSearchToolOutput };
 
 type Tools = {
   [K in `algolia_search_index_${string}`]: AlgoliaMCPSearchTool;
 } & {
   searchIndex: SearchIndexTool;
-  algolia_search_index: AgentStudioSearchTool;
+  algolia_search_index: AlgoliaMCPSearchTool;
 };
 
 export type AIMessage = UIMessage<{ stopped?: boolean }, UIDataTypes, Tools>;
