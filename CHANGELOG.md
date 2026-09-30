@@ -1,3 +1,17 @@
+## [4.7.1](https://github.com/algolia/docsearch/compare/v4.7.0...v4.7.1) (2026-09-30)
+
+
+### Bug Fixes
+
+* **askai:** Fix search tool results and sending tool calls ([#3056](https://github.com/algolia/docsearch/issues/3056)) ([1955fb8](https://github.com/algolia/docsearch/commit/1955fb8dfd84ab7b69ebd68df9bf66d78dbfc107))
+
+
+### Features
+
+* **mcp:** add MCP plugin packages for DocSearch ([9378e83](https://github.com/algolia/docsearch/commit/9378e839418dda9e0083b7f92ffcd00917344fd3))
+
+
+
 # [4.7.0](https://github.com/algolia/docsearch/compare/v4.6.3...v4.7.0) (2026-07-27)
 
 
