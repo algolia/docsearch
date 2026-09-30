@@ -19,8 +19,8 @@ export default {
     packagesToBump: [],
     packagesToPublish: packages,
   },
-  publishCommand({ tag }) {
-    return `npm publish --tag ${tag} --access public`;
+  publishCommand() {
+    return `npm publish --access public`;
   },
   versionUpdated({ exec, dir, version }) {
     // Update package dependencies
