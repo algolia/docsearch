@@ -14,7 +14,7 @@ const surfaces = [
 const algoliaStats = [
   { value: '<20 ms', label: 'Search latency' },
   { value: '99.99%', label: 'Uptime SLA' },
-  { value: '9,000+', label: 'Projects' },
+  { value: '12,000+', label: 'Projects' },
   { value: 'Free', label: 'For OSS & technical docs' },
 ];
 
