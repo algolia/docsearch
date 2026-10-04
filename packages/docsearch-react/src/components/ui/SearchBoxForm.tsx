@@ -7,6 +7,7 @@ import React, { type JSX, type RefObject } from 'react';
 import { MAX_QUERY_SIZE } from '../../constants';
 import { CloseIcon, LoadingIcon, SearchIcon } from '../../icons';
 import type { InternalDocSearchHit } from '../../types';
+import { isComposingKey } from '../../utils/isComposingKey';
 
 interface SearchBoxFormProps extends AutocompleteApi<
   InternalDocSearchHit,
@@ -72,6 +73,28 @@ export function SearchBoxForm({
     autoFocus,
     maxLength: MAX_QUERY_SIZE,
   });
+  const { onKeyDown: providedOnKeyDown, ...restInputProps } = inputProps ?? {};
+
+  const handleInputKeyDown = (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ): void => {
+    // Keys pressed during IME composition belong to the candidate list.
+    // Enter confirms the conversion and must not select a hit or send an
+    // Ask AI prompt. Autocomplete already ignores `isComposing`, but Ask AI
+    // replaces that handler, and Safari reports keyCode 229 with
+    // `isComposing` false.
+    // https://github.com/algolia/docsearch/issues/1304
+    if (isComposingKey(event)) {
+      return;
+    }
+
+    if (providedOnKeyDown) {
+      providedOnKeyDown(event);
+      return;
+    }
+
+    baseInputProps.onKeyDown?.(event);
+  };
 
   const isKeywordSearchLoading = state.status === 'stalled';
 
@@ -106,7 +129,8 @@ export function SearchBoxForm({
         className="DocSearch-Input"
         ref={inputRef}
         {...baseInputProps}
-        {...inputProps}
+        {...restInputProps}
+        onKeyDown={handleInputKeyDown}
         placeholder={placeholder}
         hidden={hideInput}
       />
