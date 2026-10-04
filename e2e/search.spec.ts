@@ -2,6 +2,33 @@ import { test, expect } from './fixtures';
 
 const MAX_KEYBOARD_NAVIGATION_STEPS = 10;
 
+test('Control key feedback keeps the keycap width stable', async ({
+  docSearch,
+  page,
+}) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'platform', { get: () => 'Win32' });
+  });
+  await docSearch.goto();
+  await docSearch.waitForLoad();
+
+  const controlKey = page.locator('.DocSearch-Button-Key--ctrl').first();
+  await expect(controlKey).toHaveText('Ctrl');
+  const width = await controlKey.evaluate((element) => element.clientWidth);
+
+  await page.keyboard.down('Control');
+  await expect(controlKey).toHaveClass(/DocSearch-Button-Key--pressed/);
+  expect(await controlKey.evaluate((element) => element.clientWidth)).toBe(
+    width
+  );
+
+  await page.keyboard.up('Control');
+  await expect(controlKey).not.toHaveClass(/DocSearch-Button-Key--pressed/);
+  expect(await controlKey.evaluate((element) => element.clientWidth)).toBe(
+    width
+  );
+});
+
 test.describe('Start', () => {
   test.beforeEach(async ({ docSearch }) => {
     await docSearch.goto();
