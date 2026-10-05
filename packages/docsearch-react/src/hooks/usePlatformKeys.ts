@@ -15,7 +15,7 @@ export function usePlatformKeys() {
 
   const [actionKeyReactsTo, actionKeyAltText, actionKeyLabel] =
     key === ACTION_KEY_DEFAULT
-      ? ([ACTION_KEY_DEFAULT, 'Control', 'Ctrl'] as const)
+      ? (['Control', 'Control', 'Ctrl'] as const)
       : (['Meta', 'Meta', '⌘'] as const);
 
   return {
