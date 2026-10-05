@@ -127,6 +127,33 @@ describe('SearchBoxForm', () => {
     expect(onKeyDown).toHaveBeenCalledTimes(1);
     expect(onChange).toHaveBeenCalledTimes(1);
   });
+
+  it('does not select a result when Enter confirms an IME composition', () => {
+    const onKeyDown = vi.fn();
+
+    renderSearchBoxForm({
+      getInputProps: vi.fn(() => ({
+        'aria-autocomplete': 'list',
+        onChange: vi.fn(),
+        onKeyDown,
+      })),
+    });
+
+    const input = screen.getByPlaceholderText('Search docs');
+
+    expect(fireEvent.keyDown(input, { key: 'Enter', isComposing: true })).toBe(
+      true
+    );
+    expect(fireEvent.keyDown(input, { key: 'Enter', keyCode: 229 })).toBe(true);
+    expect(
+      fireEvent.keyDown(input, { key: 'ArrowDown', isComposing: true })
+    ).toBe(true);
+    expect(onKeyDown).not.toHaveBeenCalled();
+
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    expect(onKeyDown).toHaveBeenCalledTimes(1);
+  });
 });
 
 describe('KeywordSearchBox', () => {
@@ -231,6 +258,28 @@ describe('AskAiSearchBox', () => {
       key: 'Enter',
     });
 
+    expect(onAskAgain).toHaveBeenCalledWith('follow up');
+  });
+
+  it('does not ask again when Enter confirms an IME composition', () => {
+    const onAskAgain = vi.fn();
+
+    renderAskAiSearchBox({ onAskAgain });
+
+    const input = screen.getByPlaceholderText('Ask another question...');
+
+    expect(fireEvent.keyDown(input, { key: 'Enter', isComposing: true })).toBe(
+      true
+    );
+    expect(fireEvent.keyDown(input, { key: 'Enter', keyCode: 229 })).toBe(true);
+    expect(
+      fireEvent.keyDown(input, { key: 'ArrowDown', isComposing: true })
+    ).toBe(true);
+    expect(onAskAgain).not.toHaveBeenCalled();
+
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    expect(onAskAgain).toHaveBeenCalledTimes(1);
     expect(onAskAgain).toHaveBeenCalledWith('follow up');
   });
 
