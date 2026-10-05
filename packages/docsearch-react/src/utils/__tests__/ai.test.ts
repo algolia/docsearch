@@ -5,6 +5,7 @@ import type {
   AIMessage,
   AIMessagePart,
   SearchToolPart,
+  ToolCalls,
 } from '../../types/AskiAi';
 import {
   getAskAiBlockingBannerMessage,
@@ -16,6 +17,7 @@ import {
   isAskAiPromptBlockingError,
   showAskAiBlockingBannerNewConversationLink,
   sanitizeMessagesForRequest,
+  shouldSendAutomatically,
   getMessageContent,
 } from '../ai';
 
@@ -505,5 +507,129 @@ describe('getMessageContent', () => {
         ])
       )
     ).toBe('');
+  });
+});
+
+describe('shouldSendAutomatically', () => {
+  const tools: ToolCalls = {
+    clientTool: { render: () => '', onToolCall: () => {} },
+    renderOnlyTool: { render: () => '' },
+  };
+  const done = (type: string, extra = {}) =>
+    ({
+      type,
+      toolCallId: type,
+      state: 'output-available',
+      input: {},
+      output: {},
+      ...extra,
+    }) as unknown as AIMessagePart;
+  const text: AIMessagePart = { type: 'text', text: 'Answer' };
+  const step: AIMessagePart = { type: 'step-start' };
+
+  it.each([
+    {
+      description: 'there are no messages',
+      messages: [],
+      expected: false,
+    },
+    {
+      description: 'the last message is from the user',
+      messages: [
+        {
+          id: 'u',
+          role: 'user',
+          parts: [{ type: 'text', text: 'Hi' }],
+        } satisfies AIMessage,
+      ],
+      expected: false,
+    },
+    {
+      description: 'only a server-run search tool completed',
+      messages: [message('m', [step, done('tool-algolia_search_index')])],
+      expected: false,
+    },
+    {
+      description: 'a server-run search tool is followed by text in its step',
+      messages: [message('m', [step, done('tool-algolia_search_index'), text])],
+      expected: false,
+    },
+    {
+      description: 'a legacy searchIndex tool completed',
+      messages: [message('m', [step, done('tool-searchIndex')])],
+      expected: false,
+    },
+    {
+      description: 'a memory tool completed',
+      messages: [message('m', [step, done('tool-algolia_memory_search')])],
+      expected: false,
+    },
+    {
+      description: 'a render-only tool completed',
+      messages: [message('m', [step, done('tool-renderOnlyTool')])],
+      expected: false,
+    },
+    {
+      description: 'a dynamic tool completed',
+      messages: [message('m', [step, done('dynamic-tool')])],
+      expected: false,
+    },
+    {
+      description: 'a client tool completed',
+      messages: [message('m', [step, done('tool-clientTool')])],
+      expected: true,
+    },
+    {
+      description: 'a client tool errored',
+      messages: [
+        message('m', [
+          step,
+          done('tool-clientTool', { state: 'output-error' }),
+        ]),
+      ],
+      expected: true,
+    },
+    {
+      description: 'a client tool is still pending',
+      messages: [
+        message('m', [
+          step,
+          done('tool-clientTool', { state: 'input-available' }),
+        ]),
+      ],
+      expected: false,
+    },
+    {
+      description: 'a client tool is provider executed',
+      messages: [
+        message('m', [
+          step,
+          done('tool-clientTool', { providerExecuted: true }),
+        ]),
+      ],
+      expected: false,
+    },
+    {
+      description: 'a client tool completes alongside a search tool',
+      messages: [
+        message('m', [
+          step,
+          done('tool-algolia_search_index'),
+          done('tool-clientTool'),
+        ]),
+      ],
+      expected: true,
+    },
+    {
+      description: 'a client tool completed in an earlier step',
+      messages: [message('m', [step, done('tool-clientTool'), step, text])],
+      expected: false,
+    },
+  ] satisfies Array<{
+    description: string;
+    messages: AIMessage[];
+    expected: boolean;
+  }>)('returns $expected when $description', ({ messages, expected }) => {
+    expect(shouldSendAutomatically(messages, tools)).toBe(expected);
   });
 });

@@ -2,6 +2,7 @@
 import { act, renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import type { ToolCalls } from '../types/AskiAi';
 import { useAskAi } from '../useAskAi';
 
 interface ToolCall {
@@ -20,6 +21,7 @@ interface ChatOptions {
   id?: string;
   messages?: ChatMessage[];
   onToolCall: (params: { toolCall: ToolCall }) => unknown;
+  sendAutomaticallyWhen: (params: { messages: unknown[] }) => boolean;
   transport: {
     options: {
       headers?: Record<string, string>;
@@ -78,7 +80,6 @@ vi.mock('ai', () => ({
       this.options = options;
     }
   },
-  lastAssistantMessageIsCompleteWithToolCalls: vi.fn(() => false),
   generateId: mocks.generateId,
 }));
 
@@ -342,6 +343,39 @@ describe('useAskAi', () => {
     );
 
     expect(getTransportBody()).toEqual({ algolia: {} });
+  });
+
+  it('auto-sends only for tools registered with onToolCall, following rerenders', () => {
+    const messages = [
+      {
+        id: 'a',
+        role: 'assistant',
+        parts: [
+          { type: 'step-start' },
+          {
+            type: 'tool-clientTool',
+            toolCallId: 't',
+            state: 'output-available',
+            input: {},
+            output: {},
+          },
+        ],
+      },
+    ];
+    const noTools: ToolCalls = {};
+    const params = { apiKey: 'k', appId: 'a', agentId: 'id' };
+    const { rerender } = renderHook(
+      ({ tools }) => useAskAi({ ...params, tools }),
+      { initialProps: { tools: noTools } }
+    );
+
+    expect(chatOptions?.sendAutomaticallyWhen({ messages })).toBe(false);
+
+    rerender({
+      tools: { clientTool: { render: () => '', onToolCall: () => {} } },
+    });
+
+    expect(chatOptions?.sendAutomaticallyWhen({ messages })).toBe(true);
   });
 
   describe('conversation id rotation', () => {

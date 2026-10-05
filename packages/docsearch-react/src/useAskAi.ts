@@ -1,11 +1,7 @@
 import type { UseChatHelpers } from '@ai-sdk/react';
 import { Chat, useChat } from '@ai-sdk/react';
 import type { ChatOnToolCallCallback } from 'ai';
-import {
-  DefaultChatTransport,
-  lastAssistantMessageIsCompleteWithToolCalls,
-  generateId,
-} from 'ai';
+import { DefaultChatTransport, generateId } from 'ai';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import {
@@ -18,7 +14,11 @@ import type { StoredSearchPlugin } from './stored-searches';
 import { createStoredConversations } from './stored-searches';
 import { type AIMessage, type ToolCalls } from './types/AskiAi';
 import type { OnAskAiFeedback } from './types/Feedback';
-import { EMPTY_TOOLS, sanitizeMessagesForRequest } from './utils/ai';
+import {
+  EMPTY_TOOLS,
+  sanitizeMessagesForRequest,
+  shouldSendAutomatically,
+} from './utils/ai';
 
 import type { AgentStudioSearchParameters, Memory, StoredAskAiState } from '.';
 
@@ -184,7 +184,8 @@ export const useAskAi: UseAskAi = ({
       new Chat<AIMessage>({
         id,
         messages,
-        sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
+        sendAutomaticallyWhen: ({ messages: chatMessages }) =>
+          shouldSendAutomatically(chatMessages, toolsRef.current),
         transport: askAiTransportRef.current,
         onToolCall: handleToolCall,
       }),

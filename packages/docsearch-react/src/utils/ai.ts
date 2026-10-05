@@ -279,6 +279,40 @@ export function isSearchOutputPart(
   );
 }
 
+// Agent Studio runs search and memory tools server-side without flagging them
+// `providerExecuted`. Resending after those is rejected by the API, so only
+// auto-send once every client-resolved tool (registered with `onToolCall`) is done.
+export function shouldSendAutomatically(
+  messages: AIMessage[],
+  tools: ToolCalls
+): boolean {
+  const last = messages[messages.length - 1];
+  if (last?.role !== 'assistant') return false;
+
+  // No findLastIndex: unsupported on older Safari (see the Safari 14 fix)
+  const lastStepStart = last.parts.reduce(
+    (found, part, index) => (part.type === 'step-start' ? index : found),
+    -1
+  );
+  const clientToolParts = last.parts
+    .slice(lastStepStart + 1)
+    .filter(
+      (part) =>
+        isAIToolPart(part) &&
+        !part.providerExecuted &&
+        tools[part.type.slice('tool-'.length)]?.onToolCall
+    ) as AIToolPart[];
+
+  return (
+    clientToolParts.length > 0 &&
+    clientToolParts.every(
+      (part) =>
+        part.state === 'output-available' || part.state === 'output-error'
+    )
+  );
+}
+
+// Agent Studio rejects `data-*` parts and unfinished tool calls in a request.
 export function sanitizeMessagesForRequest(messages: AIMessage[]): AIMessage[] {
   let sanitizedMessages: AIMessage[] | undefined;
 
