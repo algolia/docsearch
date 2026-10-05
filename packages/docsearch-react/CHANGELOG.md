@@ -1,5 +1,15 @@
 # @docsearch/react
 
+## 5.1.2
+
+### Patch Changes
+
+- e98f0f7: Fix the Control key hint's pressed feedback on Windows and Linux while preserving its width.
+- 12ab5da: Ignore Enter while an IME composition is in progress, so confirming a Japanese, Chinese, or Korean conversion no longer selects a search result or sends an Ask AI prompt.
+- 439328e: Fix Ask AI resending the conversation after server-executed tool calls (search, memory), which Agent Studio rejected with "Conversation must end with a user message or resolved tool results". Automatic sends now only happen after client-executed tools (`onToolCall`) complete.
+  - @docsearch/css@5.1.2
+  - @docsearch/core@5.1.2
+
 ## 5.1.1
 
 ### Patch Changes
