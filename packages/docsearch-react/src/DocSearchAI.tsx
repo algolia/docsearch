@@ -19,10 +19,7 @@ export interface AskAiSearchParameters {
   distinct?: boolean | number | string;
 }
 
-export type AgentStudioSearchParameters = Record<
-  string,
-  Omit<AskAiSearchParameters, 'facetFilters'>
->;
+export type AgentStudioSearchParameters = Record<string, AskAiSearchParameters>;
 
 export interface Memory {
   /**
