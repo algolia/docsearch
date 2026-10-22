@@ -1,5 +1,6 @@
 import { DocSearch as DocSearchProvider, useDocSearch } from '@docsearch/core';
 import type { DocSearchRef, InitialAskAiMessage } from '@docsearch/core';
+import type { FacetFilters } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -12,7 +13,7 @@ import { DocSearchButton } from './DocSearchButton';
 import type { ToolCalls } from './types/AskiAi';
 
 export interface AskAiSearchParameters {
-  facetFilters?: string[];
+  facetFilters?: FacetFilters;
   filters?: string;
   attributesToRetrieve?: string[];
   restrictSearchableAttributes?: string[];
