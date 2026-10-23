@@ -867,17 +867,6 @@
   }
 }
 
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.3;
-  }
-
-  50% {
-    opacity: 0.6;
-  }
-}
-
 /* Responsive */
 @media (width <= 768px) {
   .DocSearch-Hit-AskAIButton-icon {
