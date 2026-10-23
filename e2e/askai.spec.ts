@@ -13,7 +13,7 @@ test.describe.skip('Ask AI', () => {
 
   test('Shows Ask AI as a hit on search', async ({ docSearch, page }) => {
     await docSearch.typeQueryMatching();
-    await expect(page.locator('.DocSearch-AskAi-Section')).toBeVisible();
+    await expect(page.locator('#docsearch-askAI-item-0')).toBeVisible();
   });
 
   test('Opens Ask AI on enter key', async ({ docSearch, page }) => {
