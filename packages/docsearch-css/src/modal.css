@@ -30,17 +30,6 @@
   text-decoration: none;
 }
 
-.DocSearch-Link {
-  appearance: none;
-  background: none;
-  border: 0;
-  color: var(--docsearch-highlight-color);
-  cursor: pointer;
-  font: inherit;
-  margin: 0;
-  padding: 0;
-}
-
 .DocSearch-Modal {
   background: var(--docsearch-modal-background);
   border-radius: var(--docsearch-modal-radius);
@@ -372,10 +361,6 @@
   display: flex;
 }
 
-.DocSearch-SearchBar-Magnifier {
-  color: var(--docsearch-highlight-color);
-}
-
 /* Facet bar */
 
 .DocSearch-FacetBar {
@@ -657,15 +642,6 @@
   font-weight: 400;
 }
 
-.DocSearch-NoResults-Help {
-  color: var(--docsearch-secondary-text-color);
-  font-size: 0.8em;
-  margin: 0;
-  user-select: none;
-  line-height: 1.5em;
-  font-weight: 300;
-}
-
 .DocSearch-Help {
   color: var(--docsearch-secondary-text-color);
   font-size: 0.8em;
@@ -923,7 +899,6 @@
 }
 
 .DocSearch-Hit[aria-selected='true'] .DocSearch-Hit-title,
-.DocSearch-Hit[aria-selected='true'] .DocSearch-Hit-text,
 .DocSearch-Hit[aria-selected='true'] .DocSearch-Hit-Tree {
   color: var(--docsearch-text-color);
 }
