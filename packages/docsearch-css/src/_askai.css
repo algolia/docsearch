@@ -594,80 +594,11 @@
   animation: fade-in 0.3s ease-in forwards;
 }
 
-.DocSearch-AskAiScreen-RelatedSources {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 4px;
-}
-
-.DocSearch-AskAiScreen-RelatedSources-List {
-  display: flex;
-  flex-flow: row wrap;
-  width: 100%;
-  gap: 12px;
-}
-
-.DocSearch-AskAiScreen-RelatedSources-Title {
-  font-size: 0.7em;
-  font-weight: 400;
-  color: var(--docsearch-secondary-text-color);
-  padding: 6px 0;
-  margin: 0;
-}
-
-.DocSearch-AskAiScreen-RelatedSources-NoResults {
-  font-size: 0.8rem;
-  font-weight: 400;
-  margin: 0;
-  color: var(--docsearch-text-color);
-}
-
-.DocSearch-AskAiScreen-RelatedSources-Error {
-  font-size: 0.8rem;
-  font-weight: 400;
-  margin: 0;
-  color: var(--docsearch-error-color);
-}
-
-.DocSearch-AskAiScreen-RelatedSources-Item-Link {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 12px 8px;
-  background: var(--docsearch-hit-background);
-  border-radius: 4px;
-  color: var(--docsearch-text-color);
-  font-size: 0.75em;
-  max-width: 70%;
-  text-decoration: none;
-  transition: background-color 0.2s ease;
-}
-
-.DocSearch-AskAiScreen-RelatedSources-Item-Link svg {
-  flex-shrink: 0;
-  color: var(--docsearch-icon-color);
-  stroke-width: 1.2;
-}
-
-.DocSearch-AskAiScreen-RelatedSources-Item-Link span {
-  flex: 1 1 0;
-  min-width: 0;
-  font-weight: 500;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .DocSearch-AskAiScreen-ExchangesList {
   gap: 12px;
   margin: 8px 0;
   display: flex;
   flex-direction: column;
-}
-
-.DocSearch-AskAiScreen-RelatedSources-Item-Link:hover {
-  background: var(--docsearch-hit-highlight-color);
 }
 
 .DocSearch-Markdown-Content {
@@ -1008,10 +939,6 @@
   }
 
   .DocSearch-AskAiScreen-Response {
-    width: 100%;
-  }
-
-  .DocSearch-AskAiScreen-RelatedSources {
     width: 100%;
   }
 }
