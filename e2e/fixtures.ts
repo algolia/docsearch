@@ -87,7 +87,7 @@ export class DocSearchPage {
 
   async goToAskAi(): Promise<void> {
     await this.typeQueryMatching();
-    await this.page.locator('#docsearch-AskAi-Section').click();
+    await this.page.locator('#docsearch-askAI-item-0').click();
   }
 }
 
