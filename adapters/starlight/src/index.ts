@@ -17,7 +17,29 @@ export default function docsearch(options: StarlightDocSearchOptions): Starlight
   return {
     name: '@docsearch/starlight-adapter',
     hooks: {
-      'config:setup'({ addIntegration, logger }) {
+      'config:setup'({ addIntegration, config, logger, updateConfig }) {
+        logger.info('DocSearch adapter loaded');
+
+        /* Check if the user has already defined a custom Search component. If so, warn them.
+          Otherwise, update the config to use the DocSearch Search component. */
+        if (config.components?.Search) {
+          logger.warn(
+            'An existing Search override was preserved. Remove components.Search to render DocSearch.'
+          );
+        } else {
+          logger.warn(
+            'No custom Search component found. Using DocSearch Search component.'
+          );
+
+          updateConfig({
+            pagefind: false,
+            components: {
+              ...config.components,
+              Search: '@docsearch/starlight-adapter/Search.astro',
+            },
+          });
+        }
+
         addIntegration({
           name: '@docsearch/starlight-adapter',
           hooks: {
@@ -30,7 +52,6 @@ export default function docsearch(options: StarlightDocSearchOptions): Starlight
             },
           },
         });
-        logger.info('DocSearch adapter loaded');
       },
     },
   };
