@@ -114,6 +114,7 @@
       "version": "0.0.1",
       "dependencies": {
         "@astrojs/starlight": "^0.42.7",
+        "@docsearch/starlight-adapter": "workspace:*",
         "astro": "^7.2.10",
         "sharp": "^0.35.3",
       },
