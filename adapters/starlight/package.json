@@ -1,0 +1,24 @@
+{
+  "name": "@docsearch/starlight-adapter",
+  "version": "5.1.2",
+  "type": "module",
+  "files": ["lib"],
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "watch": "tsc --build --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@astrojs/starlight": "^0.42.7",
+    "astro": "^7.2.10"
+  },
+  "devDependencies": {
+    "typescript": "5.7.3"
+  }
+}
