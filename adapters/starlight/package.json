@@ -7,10 +7,11 @@
     ".": {
       "types": "./lib/index.d.ts",
       "import": "./lib/index.js"
-    }
+    },
+    "./Search.astro": "./lib/Search.astro"
   },
   "scripts": {
-    "build": "tsc --build",
+    "build": "tsc --build && node scripts/copy-assets.mjs",
     "watch": "tsc --build --watch",
     "typecheck": "tsc --noEmit"
   },

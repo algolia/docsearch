@@ -1,0 +1,21 @@
+---
+import '@docsearch/css';
+---
+
+
+<div id="docsearch"></div>
+
+<script>
+  /// <reference path="./virtual.d.ts" />
+  import docsearch from '@docsearch/js/docsearch';
+  import config from 'virtual:docsearch-starlight-config';
+
+  const container = document.querySelector<HTMLElement>('#docsearch');
+
+  if (container) {
+    docsearch({
+      ...config,
+      container,
+    });
+  }
+</script>
