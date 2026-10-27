@@ -4,6 +4,7 @@ import { describe, it, expect, afterEach, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 
 import { MAX_QUERY_SIZE } from '../../constants';
+import { useDocSearchModalEffects } from '../useDocSearchModalEffects';
 import { useInitialModalQuery } from '../useInitialModalQuery';
 import { useModalRefs } from '../useModalRefs';
 import { useRefreshOnInitialQuery } from '../useRefreshOnInitialQuery';
@@ -121,6 +122,49 @@ describe('modal hooks', () => {
       rerender(<TestComponent onResult={onResult} />);
 
       expect(onResult.mock.calls[1][0]).toEqual(firstResult);
+    });
+  });
+
+  describe('useDocSearchModalEffects', () => {
+    function TestComponent(): JSX.Element {
+      const modalRef = React.useRef<HTMLDivElement | null>(null);
+      useDocSearchModalEffects({ initialScrollY: 0, modalRef });
+
+      return <div ref={modalRef} />;
+    }
+
+    afterEach(() => {
+      document.documentElement.style.removeProperty('scrollbar-gutter');
+      document.body.style.removeProperty('margin-inline-end');
+    });
+
+    it('compensates for the scrollbar width while the modal is open', () => {
+      vi.spyOn(document.body, 'clientWidth', 'get').mockReturnValue(
+        window.innerWidth - 15
+      );
+
+      const { unmount } = render(<TestComponent />);
+
+      expect(document.body.style.marginInlineEnd).toBe('15px');
+
+      unmount();
+
+      expect(document.body.style.marginInlineEnd).toBe('0px');
+    });
+
+    it('does not compensate when the page reserves the scrollbar gutter', () => {
+      document.documentElement.style.setProperty('scrollbar-gutter', 'stable');
+      vi.spyOn(document.body, 'clientWidth', 'get').mockReturnValue(
+        window.innerWidth - 15
+      );
+
+      const { unmount } = render(<TestComponent />);
+
+      expect(document.body.style.marginInlineEnd).toBe('');
+
+      unmount();
+
+      expect(document.body.style.marginInlineEnd).toBe('');
     });
   });
 });
