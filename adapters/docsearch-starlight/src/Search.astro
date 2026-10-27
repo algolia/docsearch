@@ -1,0 +1,59 @@
+---
+import '@docsearch/css';
+
+const searchLabel = Astro.locals.t('search.label');
+---
+
+
+<div id="docsearch" data-search-label={searchLabel}></div>
+
+<script>
+  /// <reference path="./virtual.d.ts" />
+  import docsearch from '@docsearch/js/docsearch';
+  import config from 'virtual:docsearch-starlight-config';
+
+  const container = document.querySelector<HTMLElement>('#docsearch');
+
+  if (container) {
+    const searchLabel = container.dataset.searchLabel;
+
+    docsearch({
+      ...config,
+      container,
+      placeholder: config.placeholder ?? searchLabel,
+      translations: {
+        ...config.translations,
+        button: {
+          buttonText: searchLabel,
+          buttonAriaLabel: searchLabel,
+          ...config.translations?.button,
+        },
+      },
+    });
+  }
+</script>
+
+<style>
+  #docsearch {
+    min-width: 0;
+    width: 100%;
+    max-width: 22rem;
+  }
+
+  #docsearch :global(.DocSearch-Button) {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+  }
+
+  #docsearch :global(.DocSearch-Button:focus-visible) {
+    outline: 2px solid var(--sl-color-accent);
+    outline-offset: 3px;
+  }
+
+  @media (max-width < 50rem) {
+    #docsearch {
+      width: auto;
+    }
+  }
+</style>
