@@ -14,6 +14,10 @@
     "watch": "tsc --build --watch",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "@docsearch/js": "5.1.2",
+    "@docsearch/css": "5.1.2"
+  },
   "peerDependencies": {
     "@astrojs/starlight": "^0.42.7",
     "astro": "^7.2.10"
