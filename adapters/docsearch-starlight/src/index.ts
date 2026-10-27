@@ -46,6 +46,9 @@ export default function docsearch(options: StarlightDocSearchOptions): Starlight
             'astro:config:setup'({ updateConfig }) {
               updateConfig({
                 vite: {
+                  ssr: {
+                    noExternal: ['@docsearch/css'],
+                  },
                   plugins: [vitePluginDocSearch(options)],
                 },
               });

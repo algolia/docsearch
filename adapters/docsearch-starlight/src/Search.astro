@@ -10,14 +10,29 @@ const searchLabel = Astro.locals.t('search.label');
 <script>
   /// <reference path="./virtual.d.ts" />
   import docsearch from '@docsearch/js/docsearch';
+  import type { DocSearchInstance } from '@docsearch/js/docsearch';
   import config from 'virtual:docsearch-starlight-config';
 
-  const container = document.querySelector<HTMLElement>('#docsearch');
+  let instance: DocSearchInstance | undefined;
+  let mountedContainer: HTMLElement | undefined;
 
-  if (container) {
+  function unmountSearch() {
+    instance?.destroy();
+    instance = undefined;
+    mountedContainer = undefined;
+  }
+
+  function mountSearch() {
+    const container = document.querySelector<HTMLElement>('#docsearch');
+
+    if (container && container === mountedContainer && instance) return;
+
+    unmountSearch();
+    if (!container) return;
+
     const searchLabel = container.dataset.searchLabel;
 
-    docsearch({
+    instance = docsearch({
       ...config,
       container,
       placeholder: config.placeholder ?? searchLabel,
@@ -29,6 +44,21 @@ const searchLabel = Astro.locals.t('search.label');
           ...config.translations?.button,
         },
       },
+    });
+    mountedContainer = container;
+  }
+
+  // Astro keeps this script loaded across client-side navigation.
+  document.addEventListener('astro:page-load', mountSearch);
+  document.addEventListener('astro:before-swap', unmountSearch);
+  mountSearch();
+
+  // Release this module's listeners and instance before a hot replacement.
+  if (import.meta.hot) {
+    import.meta.hot.dispose(() => {
+      document.removeEventListener('astro:page-load', mountSearch);
+      document.removeEventListener('astro:before-swap', unmountSearch);
+      unmountSearch();
     });
   }
 </script>
@@ -51,7 +81,7 @@ const searchLabel = Astro.locals.t('search.label');
     outline-offset: 3px;
   }
 
-  @media (max-width < 50rem) {
+  @media (width < 50rem) {
     #docsearch {
       width: auto;
     }
