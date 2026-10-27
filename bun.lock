@@ -31,6 +31,22 @@
         "watch": "1.0.2",
       },
     },
+    "adapters/docsearch-starlight": {
+      "name": "@docsearch/starlight-adapter",
+      "version": "5.1.2",
+      "dependencies": {
+        "@docsearch/css": "5.1.2",
+        "@docsearch/js": "5.1.2",
+      },
+      "devDependencies": {
+        "@astrojs/check": "^0.9.12",
+        "typescript": "5.7.3",
+      },
+      "peerDependencies": {
+        "@astrojs/starlight": "^0.42.7",
+        "astro": "^7.2.10",
+      },
+    },
     "adapters/docusaurus-theme-search-algolia": {
       "name": "@docsearch/docusaurus-adapter",
       "version": "5.1.2",
@@ -65,22 +81,6 @@
       "peerDependencies": {
         "react": "^18.0.0 || ^19.0.0",
         "react-dom": "^18.0.0 || ^19.0.0",
-      },
-    },
-    "adapters/starlight": {
-      "name": "@docsearch/starlight-adapter",
-      "version": "5.1.2",
-      "dependencies": {
-        "@docsearch/css": "5.1.2",
-        "@docsearch/js": "5.1.2",
-      },
-      "devDependencies": {
-        "@astrojs/check": "^0.9.12",
-        "typescript": "5.7.3",
-      },
-      "peerDependencies": {
-        "@astrojs/starlight": "^0.42.7",
-        "astro": "^7.2.10",
       },
     },
     "examples/demo-js": {
@@ -825,7 +825,7 @@
 
     "@docsearch/sidepanel-js": ["@docsearch/sidepanel-js@workspace:packages/docsearch-sidepanel-js"],
 
-    "@docsearch/starlight-adapter": ["@docsearch/starlight-adapter@workspace:adapters/starlight"],
+    "@docsearch/starlight-adapter": ["@docsearch/starlight-adapter@workspace:adapters/docsearch-starlight"],
 
     "@docsearch/starlight-example": ["@docsearch/starlight-example@workspace:examples/demo-starlight"],
 
