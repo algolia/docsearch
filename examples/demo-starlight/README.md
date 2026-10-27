@@ -1,49 +1,54 @@
-# Starlight Starter Kit: Basics
+# DocSearch v5 Starlight Demo
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+Local demo of the workspace package `@docsearch/starlight-adapter`. The current baseline replaces Starlight's Pagefind search with DocSearch v5 keyword search, with responsive header styling and localized button labels. 
 
-```
-bun create astro@latest -- --template starlight
-```
+TODO: AI support and Astro client-navigation lifecycle handling are not implemented yet.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Local Setup
 
-## 🚀 Project Structure
+Use Node.js **24.13.1** and Bun **1.3.10**, as pinned in the repository's `.tool-versions`. Run all commands below from the **DocSearch repository root**:
 
-Inside of your Astro + Starlight project, you'll see the following folders and files:
-
-```
-.
-├── public/
-├── src/
-│   ├── assets/
-│   ├── content/
-│   │   └── docs/
-│   └── content.config.ts
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
+```sh
+bun install
+bun run build:stage:base
+bun run build:stage:react
+bun run build:stage:consumers
+bun run build:pkg:starlight-adapter
+bun run playground-starlight:build
+bun run playground-starlight:preview
 ```
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+Optional adapter checks:
 
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
+```sh
+bun --filter @docsearch/starlight-adapter typecheck
+bun --filter @docsearch/starlight-adapter typecheck:astro
+```
 
-Static assets, like favicons, can be placed in the `public/` directory.
+Open the URL printed by preview, normally <http://localhost:4321>. 
 
-## 🧞 Commands
+The demo already includes public search-only credentials in [astro.config.mjs](./astro.config.mjs). It queries the hosted DocSearch index, so result links may leave the demo. To use another index, change `appId`, `apiKey`, and `indices` in the `docsearch({...})` call.
 
-All commands are run from the root of the project, from a terminal:
+Click the header search button or press `Cmd+K` / `Ctrl+K`, then try searching for `installation`. Escape closes the modal.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
+This is a work-in-progress integration. Use ordinary full-page navigation for now; client-side navigation cleanup/remounting, optional AI, automated adapter tests, and release validation are follow-up work.
 
-## 👀 Want to learn more?
+## References
 
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+### Starlight
+
+- [Getting started](https://starlight.astro.build/getting-started/): demo scaffolding.
+- [Plugin API](https://starlight.astro.build/reference/plugins/): `config:setup`, `addIntegration`, and configuration updates.
+- [Search component override](https://starlight.astro.build/reference/overrides/#search): replacing the header search component.
+- [Site search](https://starlight.astro.build/guides/site-search/): Pagefind and alternative search integrations.
+- [Official DocSearch plugin entry point](https://github.com/withastro/starlight/blob/main/packages/docsearch/src/index.ts): plugin registration, virtual configuration, and override conflict handling.
+- [Official DocSearch component](https://github.com/withastro/starlight/blob/main/packages/docsearch/src/DocSearch.astro): Astro component structure, header styling, and localized labels.
+- [Official plugin configuration schema](https://github.com/withastro/starlight/blob/main/packages/docsearch/src/config.ts): reference for future runtime validation, not implemented yet.
+- [Official plugin package exports](https://github.com/withastro/starlight/blob/main/packages/docsearch/package.json): exporting the Astro component.
+
+### Astro
+
+- [Astro integration setup hook](https://docs.astro.build/en/reference/integrations-reference/#astroconfigsetup): registering the Vite plugin.
+- [Astro browser scripts](https://docs.astro.build/en/guides/client-side-scripts/#script-processing): processed scripts and browser imports.
+- [Astro ambient declarations](https://docs.astro.build/en/guides/typescript/#using-imports): typing the virtual configuration module.
+- [Astro type checking](https://docs.astro.build/en/guides/typescript/#type-checking): checking Astro components separately from library compilation.
