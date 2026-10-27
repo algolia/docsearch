@@ -13,7 +13,8 @@
   "scripts": {
     "build": "tsc --build && node scripts/copy-assets.mjs",
     "watch": "tsc --build --watch",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "typecheck:astro": "astro check --tsconfig ./tsconfig.astro.json"
   },
   "dependencies": {
     "@docsearch/js": "5.1.2",
@@ -24,6 +25,7 @@
     "astro": "^7.2.10"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.12",
     "typescript": "5.7.3"
   }
 }
