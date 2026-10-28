@@ -21,10 +21,6 @@ export default function docsearch(options: StarlightDocSearchOptions): Starlight
     name: '@docsearch/starlight-adapter',
     hooks: {
       'config:setup'({ addIntegration, config, logger, updateConfig }) {
-        logger.info('DocSearch adapter loaded');
-
-        /* Check if the user has already defined a custom Search component. If so, warn them.
-          Otherwise, update the config to use the DocSearch Search component. */
         if (config.components?.Search) {
           logger.warn(
             'An existing Search override was preserved. Remove components.Search to render DocSearch.'
@@ -42,8 +38,8 @@ export default function docsearch(options: StarlightDocSearchOptions): Starlight
         addIntegration({
           name: '@docsearch/starlight-adapter',
           hooks: {
-            'astro:config:setup'({ updateConfig }) {
-              updateConfig({
+            'astro:config:setup'({ updateConfig: updateAstroConfig }) {
+              updateAstroConfig({
                 vite: {
                   ssr: {
                     noExternal: ['@docsearch/css'],
@@ -58,7 +54,6 @@ export default function docsearch(options: StarlightDocSearchOptions): Starlight
     },
   };
 }
-
 
 /** Vite plugin that exposes the DocSearch config via virtual modules. */
 function vitePluginDocSearch(
