@@ -15,8 +15,8 @@
   },
   "type": "module",
   "scripts": {
-    "build": "bun run --sequential build:stage:base build:stage:react build:stage:consumers build:stage:adapter build:pkg:cli website:build",
-    "build:all": "bun run --sequential build website:build",
+    "build": "bun run --sequential build:packages website:build",
+    "build:packages": "bun run --sequential build:stage:base build:stage:react build:stage:consumers build:stage:adapter build:pkg:cli",
     "build:pkg:core": "bun --filter @docsearch/core build",
     "build:pkg:css": "bun --filter @docsearch/css build",
     "build:pkg:react": "bun --filter @docsearch/react build",

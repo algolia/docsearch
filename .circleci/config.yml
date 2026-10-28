@@ -167,6 +167,8 @@ jobs:
     working_directory: ~/docsearch
     docker:
       - image: cimg/node:24.16
+    environment:
+      DOCSEARCH_RELEASE: "true"
     steps:
       - run:
           name: Only release when a releases/* branch was merged
@@ -190,12 +192,13 @@ jobs:
               *) echo "Not a release merge, skipping"; circleci-agent step halt ;;
             esac
       - checkout
-      - *attach_workspace
       - run: *install_bun
       - restore_cache: *restore_bun_cache
       - run: *run_bun_install
       - save_cache: *save_bun_cache
-      - run: *restore_dist_folders
+      - run:
+          name: Build fresh packages
+          command: env -u GITHUB_TOKEN bun run build:packages
       - run:
           name: Setup git user
           command: |
