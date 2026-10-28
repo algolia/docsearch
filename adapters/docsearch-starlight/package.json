@@ -12,7 +12,9 @@
     "access": "public"
   },
   "type": "module",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "exports": {
     ".": {
       "types": "./lib/index.d.ts",
