@@ -50,13 +50,13 @@ export interface PromptSuggestions {
 
 export interface DocSearchAskAi {
   /**
-   * The API key to use for the ask AI feature. Your assistant will use this API
-   * key to search the index. If not provided, the API key will be used.
+   * The API key to use for the ask AI feature. Your agent will use this API key
+   * to search the index. If not provided, the API key will be used.
    */
   apiKey?: string;
   /**
-   * The app ID to use for the ask AI feature. Your assistant will use this app
-   * ID to search the index. If not provided, the app ID will be used.
+   * The app ID to use for the ask AI feature. Your agent will use this app ID
+   * to search the index. If not provided, the app ID will be used.
    */
   appId?: string;
   /** The Agent Studio Agent ID to use for the Ask AI feature. */
@@ -121,8 +121,8 @@ export type DocSearchAITranslations = Partial<{
 
 export interface DocSearchAIProps extends Omit<DocSearchProps, 'translations'> {
   /**
-   * Configuration or assistant id to enable ask ai mode. Pass a string
-   * assistant id or a full config object.
+   * Configuration or agent id to enable ask ai mode. Pass a string agent id or
+   * a full config object.
    */
   askAi: DocSearchAskAi | string;
   /**
