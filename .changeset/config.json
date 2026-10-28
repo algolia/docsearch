@@ -22,6 +22,7 @@
     "@docsearch/website",
     "@docsearch/react-example",
     "@docsearch/js-example",
-    "@docsearch/starlight-adapter"
+    "@docsearch/starlight-adapter",
+    "@docsearch/starlight-example"
   ]
 }
