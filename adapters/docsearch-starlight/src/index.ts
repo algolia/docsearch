@@ -1,6 +1,7 @@
 import type { StarlightPlugin } from '@astrojs/starlight/types';
 import type { DocSearchProps } from '@docsearch/js/docsearch';
 import type { ViteUserConfig } from 'astro';
+import { validateOptions } from './config.js';
 
 const CONFIG_MODULE_ID = 'virtual:docsearch-starlight-config';
 const RESOLVED_CONFIG_MODULE_ID = `\0${CONFIG_MODULE_ID}`;
@@ -14,6 +15,8 @@ export type StarlightDocSearchOptions = Pick<
 
 
 export default function docsearch(options: StarlightDocSearchOptions): StarlightPlugin {
+  validateOptions(options);
+
   return {
     name: '@docsearch/starlight-adapter',
     hooks: {
