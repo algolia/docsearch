@@ -36,6 +36,7 @@ export default defineConfig([
       sidepanel: 'src/Sidepanel.tsx',
       sidepanelPanel: 'src/Sidepanel/Sidepanel.tsx',
       sidepanelButton: 'src/Sidepanel/SidepanelButton.tsx',
+      utils: 'src/docsearchUtils.ts',
     },
     ...sharedConfig,
     dts: true,
