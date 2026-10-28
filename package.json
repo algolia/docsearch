@@ -29,7 +29,7 @@
     "build:stage:base": "bun run --parallel build:pkg:core build:pkg:css",
     "build:stage:react": "bun run build:pkg:react",
     "build:stage:consumers": "bun run --parallel build:pkg:js build:pkg:sidepanel build:pkg:sidepanel-js build:pkg:modal",
-    "build:stage:adapter": "bun run --parallel build:pkg:adapter build:pkg:starlight-adapter",
+    "build:stage:adapter": "bun run build:pkg:adapter",
     "build:pkg:starlight-adapter": "bun --filter @docsearch/starlight-adapter build",
     "build:examples": "bun --filter './examples/*' build",
     "fmt": "oxfmt --config ./.oxfmtrc.json .",
