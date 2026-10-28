@@ -8,6 +8,7 @@ const searchLabel = Astro.locals.t('search.label');
 <div id="docsearch" data-search-label={searchLabel}></div>
 
 <script>
+  // oxlint-disable-next-line typescript/triple-slash-reference -- Include the packaged ambient virtual-module declaration without a runtime import.
   /// <reference path="./virtual.d.ts" />
   import docsearch from '@docsearch/js/docsearch';
   import type { DocSearchInstance } from '@docsearch/js/docsearch';
