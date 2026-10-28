@@ -7,18 +7,23 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   integrations: [
     starlight({
-      title: 'My Docs',
+      title: 'DocSearch + Starlight',
       social: [
         {
           icon: 'github',
           label: 'GitHub',
-          href: 'https://github.com/withastro/starlight',
+          href: 'https://github.com/algolia/docsearch',
         },
       ],
       sidebar: [
+        { label: 'Overview', slug: '' },
         {
           label: 'Guides',
           items: [{ autogenerate: { directory: 'guides' } }],
+        },
+        {
+          label: 'Reference',
+          items: [{ autogenerate: { directory: 'reference' } }],
         },
       ],
       plugins: [
