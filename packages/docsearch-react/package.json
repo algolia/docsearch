@@ -30,6 +30,7 @@
     "./sidepanelPanel": "./dist/esm/sidepanelPanel.js",
     "./useDocSearchKeyboardEvents": "./dist/esm/useDocSearchKeyboardEvents.js",
     "./useTheme": "./dist/esm/useTheme.js",
+    "./utils": "./dist/esm/utils.js",
     "./version": "./dist/esm/version.js",
     "./style": "./style/index.js",
     "./style/askai": "./style/askai.js",
