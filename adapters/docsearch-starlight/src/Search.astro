@@ -64,6 +64,39 @@ const searchLabel = Astro.locals.t('search.label');
 </script>
 
 <style>
+  :global(:root),
+  :global(:root[data-theme='dark']) {
+    --docsearch-primary-color: var(--sl-color-text-accent);
+    --docsearch-primary-dark-color: var(--sl-color-text-accent);
+    --docsearch-soft-primary-color: var(--sl-color-accent-low);
+    --docsearch-highlight-color: var(--sl-color-text-accent);
+    --docsearch-focus-color: var(--sl-color-accent);
+    --docsearch-text-color: var(--sl-color-text);
+    --docsearch-secondary-text-color: var(--sl-color-gray-2);
+    --docsearch-muted-color: var(--sl-color-gray-3);
+    --docsearch-icon-color: var(--sl-color-gray-2);
+    --docsearch-subtle-color: var(--sl-color-gray-5);
+    --docsearch-background-color: var(--sl-color-gray-6);
+    --docsearch-container-background: var(--sl-color-backdrop-overlay);
+    --docsearch-search-button-background: var(--sl-color-bg);
+    --docsearch-search-button-text-color: var(--sl-color-gray-2);
+    --docsearch-modal-background: var(--sl-color-bg);
+    --docsearch-modal-shadow: var(--sl-shadow-lg);
+    --docsearch-searchbox-background: var(--sl-color-gray-6);
+    --docsearch-searchbox-focus-background: var(--sl-color-bg);
+    --docsearch-popover-background: var(--sl-color-bg);
+    --docsearch-popover-shadow: var(--sl-shadow-md);
+    --docsearch-popover-arrow-color: var(--sl-color-hairline-light);
+    --docsearch-hit-color: var(--sl-color-text);
+    --docsearch-hit-background: var(--sl-color-bg);
+    --docsearch-hit-focus-background: var(--sl-color-gray-6);
+    --docsearch-hit-highlight-color: var(--sl-color-accent-low);
+    --docsearch-key-background: var(--sl-color-gray-6);
+    --docsearch-key-color: var(--sl-color-gray-2);
+    --docsearch-footer-background: var(--sl-color-bg);
+    --docsearch-footer-shadow: 0 -1px 0 0 var(--sl-color-hairline-light);
+  }
+
   #docsearch {
     min-width: 0;
     width: 100%;
