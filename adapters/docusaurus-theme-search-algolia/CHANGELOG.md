@@ -1,5 +1,20 @@
 # @docsearch/docusaurus-adapter
 
+## 5.2.0
+
+### Patch Changes
+
+- 084a151: Publish license banners without the `UNRELEASED` marker. The release job now builds the packages itself, so the banner is set during the release build.
+- Updated dependencies [854a42a]
+- Updated dependencies [084a151]
+- Updated dependencies [b81d381]
+- Updated dependencies [b339636]
+- Updated dependencies [4cf99d5]
+  - @docsearch/react@5.2.0
+  - @docsearch/core@5.2.0
+  - @docsearch/modal@5.2.0
+  - @docsearch/sidepanel@5.2.0
+
 ## 5.1.2
 
 ### Patch Changes

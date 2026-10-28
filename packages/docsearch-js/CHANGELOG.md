@@ -1,5 +1,11 @@
 # @docsearch/js
 
+## 5.2.0
+
+### Patch Changes
+
+- 084a151: Publish license banners without the `UNRELEASED` marker. The release job now builds the packages itself, so the banner is set during the release build.
+
 ## 5.1.2
 
 ## 5.1.1

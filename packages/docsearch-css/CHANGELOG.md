@@ -1,5 +1,12 @@
 # @docsearch/css
 
+## 5.2.0
+
+### Patch Changes
+
+- 084a151: Publish license banners without the `UNRELEASED` marker. The release job now builds the packages itself, so the banner is set during the release build.
+- 854f9d3: Remove styles for elements DocSearch no longer renders (the v3 start screen, Ask AI related sources, and a few other selectors that no component uses), plus an unused keyframe and unused internal animation variables. No visual change to DocSearch.
+
 ## 5.1.2
 
 ## 5.1.1
