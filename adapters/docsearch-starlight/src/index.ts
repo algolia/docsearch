@@ -1,6 +1,7 @@
 import type { StarlightPlugin } from '@astrojs/starlight/types';
 import type { DocSearchProps } from '@docsearch/js/docsearch';
 import type { ViteUserConfig } from 'astro';
+
 import { validateOptions } from './config.js';
 
 const CONFIG_MODULE_ID = 'virtual:docsearch-starlight-config';
@@ -13,8 +14,9 @@ export type StarlightDocSearchOptions = Pick<
   indices: NonNullable<DocSearchProps['indices']>;
 };
 
-
-export default function docsearch(options: StarlightDocSearchOptions): StarlightPlugin {
+export default function docsearch(
+  options: StarlightDocSearchOptions
+): StarlightPlugin {
   validateOptions(options);
 
   return {
@@ -71,10 +73,10 @@ function vitePluginDocSearch(
   return {
     name: 'vite-plugin-docsearch-starlight-config',
     resolveId(id) {
-      if (id === CONFIG_MODULE_ID) return RESOLVED_CONFIG_MODULE_ID;
+      return id === CONFIG_MODULE_ID ? RESOLVED_CONFIG_MODULE_ID : undefined;
     },
     load(id) {
-      if (id === RESOLVED_CONFIG_MODULE_ID) return moduleSource;
+      return id === RESOLVED_CONFIG_MODULE_ID ? moduleSource : undefined;
     },
   };
 }

@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const clientAstroConfig = '../../adapters/docsearch-starlight/e2e/client-navigation/astro.config.mjs';
+const clientAstroConfig =
+  '../../adapters/docsearch-starlight/e2e/client-navigation/astro.config.mjs';
 
 export default defineConfig({
   testDir: './adapters/docsearch-starlight/e2e',
