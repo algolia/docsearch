@@ -19,3 +19,22 @@ export const configSchema = z.strictObject({
   placeholder: z.string().optional(),
   translations: z.record(z.string(), z.json()).optional(),
 });
+
+// Validates the provided DocSearch options against the schema and ensures they are JSON-safe.
+export function validateOptions(options: unknown): void {
+  try {
+    JSON.stringify(options);
+  } catch {
+    throw new Error(
+      '[@docsearch/starlight-adapter] Configuration must be JSON-safe and contain no circular references.'
+    );
+  }
+
+  const result = configSchema.safeParse(options);
+
+  if (!result.success) {
+    throw new Error(
+      `[@docsearch/starlight-adapter] Invalid configuration:\n${z.prettifyError(result.error)}`
+    );
+  }
+}
