@@ -30,10 +30,6 @@ export default function docsearch(options: StarlightDocSearchOptions): Starlight
             'An existing Search override was preserved. Remove components.Search to render DocSearch.'
           );
         } else {
-          logger.warn(
-            'No custom Search component found. Using DocSearch Search component.'
-          );
-
           updateConfig({
             pagefind: false,
             components: {
