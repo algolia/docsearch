@@ -1,5 +1,28 @@
 # @docsearch/react
 
+## 5.2.0
+
+### Minor Changes
+
+- 854a42a: ---
+
+  ## "@docsearch/react": minor
+
+  feat(react): add `mergeFacetFilters` helper, exported from `@docsearch/react/utils`
+
+  Merges `facetFilters` the way faceted search does: values for the same facet across inputs are ORed, and different facets are ANDed. Negated values (`facet:-value`) are always ANDed.
+
+### Patch Changes
+
+- 084a151: Publish license banners without the `UNRELEASED` marker. The release job now builds the packages itself, so the banner is set during the release build.
+- b81d381: Allow `facetFilters` types for Agent Studio `searchParameters`
+- b339636: Skip the scrollbar width compensation when the page sets `scrollbar-gutter: stable`, so opening the modal no longer shifts the page.
+- 4cf99d5: Update the Ask AI `apiKey`, `appId`, and `askAi` prop docs to say "agent" instead of "assistant" to match Agent Studio naming.
+- Updated dependencies [084a151]
+- Updated dependencies [854f9d3]
+  - @docsearch/core@5.2.0
+  - @docsearch/css@5.2.0
+
 ## 5.1.2
 
 ### Patch Changes
