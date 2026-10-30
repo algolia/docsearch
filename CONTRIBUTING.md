@@ -92,11 +92,57 @@ Select the packages affected by your change, choose the version bump type (major
 
 ## Release
 
-When changesets are merged to `main`, a "Version Packages" PR will be automatically created (or updated). Merging that PR triggers the release workflow:
+Releases are prepared locally by a maintainer and published by CircleCI when the release PR is merged.
 
-1. Package versions are bumped
-2. CHANGELOGs are updated
-3. Packages are published to npm
-4. Git tags are created
+### 1. Add changesets
 
-All `@docsearch/*` packages share the same version number (fixed versioning).
+Every PR with changes that should be released includes a changeset (see [Changesets](#changesets)). Changesets stay in `.changeset/` on `main` until the next release.
+
+### 2. Open the release PR
+
+Requirements:
+
+- You're listed in [`CODEOWNERS`](CODEOWNERS) and can push to the repository.
+- The [GitHub CLI](https://cli.github.com) is installed and authenticated (`gh auth login`).
+- You're on `main`, your working tree is clean, and `main` is up to date with `origin/main`.
+
+Preview the release:
+
+```sh
+bun run version --dry-run
+```
+
+This prints the release branch, PR title and PR description without changing anything.
+
+Then create the release PR:
+
+```sh
+bun run version
+```
+
+The script asks for confirmation, then:
+
+1. Bumps package versions and updates the CHANGELOGs (`changeset version`).
+2. Syncs the version in `@docsearch/react` and refreshes `bun.lock`.
+3. Commits the changes to a `releases/<name>` branch and pushes it.
+4. Opens a PR against `main` that lists each change and the version of each package.
+
+The release name is the `@docsearch/react` version (for example `releases/v5.2.0`). If only packages outside the shared version are released, the name is built from those packages (for example `releases/cli-v0.0.3`).
+
+### 3. Merge the release PR
+
+Review the version bumps and CHANGELOG entries in the PR, then merge it.
+
+### 4. Publish
+
+When a PR from a `releases/*` branch is merged into `main`, the CircleCI `release` job:
+
+1. Builds the packages.
+2. Publishes them to npm and creates the git tags (`changeset publish`).
+3. Creates a GitHub release for each package that shares the `@docsearch/react` version, using its CHANGELOG entry. GitHub releases are not created for `@docsearch/cli`, which is only published to npm.
+
+Merges from other branches skip this job, so nothing is published until a release PR is merged.
+
+### Versioning
+
+All `@docsearch/*` packages except `@docsearch/cli` share the same version number (fixed versioning). `@docsearch/cli` is versioned on its own.
