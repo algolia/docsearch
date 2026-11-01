@@ -186,4 +186,36 @@ describe('DocSearchAskAiModal', () => {
     });
     expect(props.onAskAiToggle).not.toHaveBeenCalled();
   });
+
+  it('prevents the default mousedown action on the results panel outside Ask AI', async () => {
+    storedConversations = [createStoredConversation()];
+
+    render(<DocSearchAskAiModal {...createProps()} isAskAiActive={false} />);
+
+    await screen.findByText('What is DocSearch?');
+
+    expect(
+      fireEvent.mouseDown(document.querySelector('.DocSearch-Hit-source')!)
+    ).toBe(false);
+    expect(
+      fireEvent.mouseDown(document.querySelector('.DocSearch-Footer')!)
+    ).toBe(false);
+  });
+
+  it('does not prevent selecting text in an Ask AI conversation', async () => {
+    messages = [
+      {
+        id: 'message-id',
+        parts: [{ text: 'Question', type: 'text' }],
+        role: 'user',
+      },
+    ];
+
+    render(<DocSearchAskAiModal {...createProps()} isAskAiActive={true} />);
+
+    expect(fireEvent.mouseDown(await screen.findByText('Question'))).toBe(true);
+    expect(
+      fireEvent.mouseDown(document.querySelector('.DocSearch-Dropdown')!)
+    ).toBe(true);
+  });
 });
