@@ -1,6 +1,6 @@
 {
   "name": "@docsearch/starlight-adapter",
-  "version": "5.1.2",
+  "version": "5.2.0",
   "description": "Algolia DocSearch integration for Astro Starlight.",
   "license": "MIT",
   "repository": {
@@ -29,8 +29,8 @@
     "typecheck:astro": "astro check --tsconfig ./tsconfig.astro.json"
   },
   "dependencies": {
-    "@docsearch/js": "5.1.2",
-    "@docsearch/css": "5.1.2"
+    "@docsearch/js": "5.2.0",
+    "@docsearch/css": "5.2.0"
   },
   "peerDependencies": {
     "@astrojs/starlight": "^0.42.7",
