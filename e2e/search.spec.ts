@@ -169,6 +169,35 @@ test.describe('Search', () => {
     await expect(page).not.toHaveURL(initialURL, { timeout: 10000 });
   });
 
+  test('Keyboard navigation keeps working after clicking a group title or the footer', async ({
+    docSearch,
+    page,
+  }) => {
+    await docSearch.typeQueryMatching();
+    await expect(docSearch.firstHit).toBeVisible();
+
+    for (const target of [
+      page.locator('.DocSearch-Hit-source').first(),
+      page.locator('.DocSearch-Commands'),
+    ]) {
+      await target.click();
+      await expect(docSearch.input).toBeFocused();
+
+      const activeItemId = await docSearch.input.getAttribute(
+        'aria-activedescendant'
+      );
+      await page.keyboard.press('ArrowDown');
+      await expect(docSearch.input).toHaveAttribute(
+        'aria-activedescendant',
+        /.+/
+      );
+      await expect(docSearch.input).not.toHaveAttribute(
+        'aria-activedescendant',
+        activeItemId ?? ''
+      );
+    }
+  });
+
   test('Pointer navigation leads to result', async ({ docSearch, page }) => {
     const initialURL = page.url();
 

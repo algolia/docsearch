@@ -591,6 +591,9 @@ export function DocSearchAskAiModal({
       dropdownRef={dropdownRef}
       getRootProps={getRootProps}
       showDropdown={showDocsearchDropdown}
+      // Ask AI screens (conversation, history, new conversation) keep the default
+      // mouse behavior so answers stay selectable.
+      keepInputFocus={!(isAskAiActive && canHandleAskAi)}
       searchBox={
         <AskAiSearchBox
           {...autocomplete}

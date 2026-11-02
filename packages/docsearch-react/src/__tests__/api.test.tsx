@@ -451,6 +451,38 @@ describe('api', () => {
     });
   });
 
+  describe('search input focus', () => {
+    it('prevents the default mousedown action on the results panel and the footer', async () => {
+      render(
+        <DocSearch
+          transformSearchClient={(searchClient) => ({
+            ...searchClient,
+            search: noResultSearch,
+          })}
+        />
+      );
+
+      await act(async () => {
+        fireEvent.click(await screen.findByText('Search'));
+      });
+
+      await act(async () => {
+        fireEvent.input(await screen.findByPlaceholderText('Search docs'), {
+          target: { value: 'q' },
+        });
+      });
+
+      await screen.findByText(/No results found for/);
+
+      expect(
+        fireEvent.mouseDown(document.querySelector('.DocSearch-Dropdown')!)
+      ).toBe(false);
+      expect(
+        fireEvent.mouseDown(document.querySelector('.DocSearch-Footer')!)
+      ).toBe(false);
+    });
+  });
+
   describe('ask AI integration', () => {
     it('updates placeholder when ask AI is available', async () => {
       render(<DocSearchAI />);
