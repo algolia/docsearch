@@ -3,10 +3,10 @@
 When starting the dev server, use background mode:
 
 ```
-astro dev --background
+bun run astro dev --background
 ```
 
-Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
+Manage the background server with `bun run astro dev stop`, `bun run astro dev status`, and `bun run astro dev logs`.
 
 ## Documentation
 
