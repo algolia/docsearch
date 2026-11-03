@@ -36,6 +36,7 @@ aliases:
       mkdir -p packages/docsearch-sidepanel-js/dist
       mkdir -p packages/docsearch-cli/dist
       mkdir -p adapters/docusaurus-theme-search-algolia/lib
+      mkdir -p adapters/docsearch-starlight/lib
 
       cp -R /tmp/workspace/packages/docsearch-react/dist packages/docsearch-react
       cp -R /tmp/workspace/packages/docsearch-js/dist packages/docsearch-js
@@ -46,6 +47,7 @@ aliases:
       cp -R /tmp/workspace/packages/docsearch-sidepanel-js/dist packages/docsearch-sidepanel-js
       cp -R /tmp/workspace/packages/docsearch-cli/dist packages/docsearch-cli
       cp -R /tmp/workspace/adapters/docusaurus-theme-search-algolia/lib adapters/docusaurus-theme-search-algolia
+      cp -R /tmp/workspace/adapters/docsearch-starlight/lib adapters/docsearch-starlight
 
 defaults: &defaults
   working_directory: ~/docsearch
@@ -94,6 +96,7 @@ jobs:
             mkdir -p /tmp/workspace/packages/docsearch-sidepanel-js/dist
             mkdir -p /tmp/workspace/packages/docsearch-cli/dist
             mkdir -p /tmp/workspace/adapters/docusaurus-theme-search-algolia/lib
+            mkdir -p /tmp/workspace/adapters/docsearch-starlight/lib
 
             cp -R packages/docsearch-react/dist /tmp/workspace/packages/docsearch-react
             cp -R packages/docsearch-js/dist /tmp/workspace/packages/docsearch-js
@@ -104,6 +107,7 @@ jobs:
             cp -R packages/docsearch-sidepanel-js/dist /tmp/workspace/packages/docsearch-sidepanel-js
             cp -R packages/docsearch-cli/dist /tmp/workspace/packages/docsearch-cli
             cp -R adapters/docusaurus-theme-search-algolia/lib /tmp/workspace/adapters/docusaurus-theme-search-algolia
+            cp -R adapters/docsearch-starlight/lib /tmp/workspace/adapters/docsearch-starlight
       - persist_to_workspace:
           root: *workspace_root
           paths:
@@ -228,6 +232,28 @@ jobs:
       - store_artifacts:
           path: test-results
           destination: test-results
+  test_playwright_starlight:
+    <<: *playwright
+    steps:
+      - checkout
+      - *attach_workspace
+      - run: *install_bun
+      - restore_cache: *restore_bun_cache
+      - run: *run_bun_install
+      - save_cache: *save_bun_cache
+      - run: *restore_dist_folders
+      - run:
+          name: Starlight Playwright E2E tests (default)
+          command: bun run pw:starlight --project=chromium
+      - run:
+          name: Starlight Playwright E2E tests (ClientRouter)
+          command: bun run pw:starlight:router --project=chromium
+      - store_artifacts:
+          path: playwright-report
+          destination: playwright-report
+      - store_artifacts:
+          path: test-results
+          destination: test-results
 
 workflows:
   version: 2
@@ -247,6 +273,9 @@ workflows:
           requires:
             - build
       - test_playwright:
+          requires:
+            - build
+      - test_playwright_starlight:
           requires:
             - build
       - release:
