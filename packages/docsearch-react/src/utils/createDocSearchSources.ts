@@ -19,6 +19,7 @@ import type {
 import type { useSearchClient } from '../useSearchClient';
 
 import { SOURCE_IDS } from './collections';
+import { getFacetFilterKey } from './facets';
 import { groupBy } from './groupBy';
 import { identity } from './identity';
 import { isModifierEvent } from './isModifierEvent';
@@ -33,24 +34,66 @@ export type StoredSearchesLike<TItem> = {
   getAll: () => TItem[];
 };
 
-export type FacetSelections = Record<string, string>;
+/**
+ * Selected values per facet key. An empty array means the facet was explicitly
+ * cleared: any configured `facetFilters` entry for that key is dropped from the
+ * request and no dynamic filter is added.
+ */
+export type FacetSelections = Record<string, string[]>;
 
+/**
+ * Next selected values for a facet, or an updater that receives the current
+ * values. Updaters are resolved against the always-current selections so
+ * toggles can't lose selections to stale props.
+ */
+export type FacetSelectionUpdate =
+  | string[]
+  | ((currentValues: string[]) => string[]);
+
+function isFacetFilterOverridden(
+  facetFilter: FacetFilters,
+  selectedFacets: Set<string>
+): boolean {
+  if (typeof facetFilter === 'string') {
+    const key = getFacetFilterKey(facetFilter);
+
+    return key !== null && selectedFacets.has(key);
+  }
+
+  // A nested array is an OR group. Only drop it when the user's selections
+  // cover every key in the group; otherwise keep the configured filter as-is.
+  return (
+    facetFilter.length > 0 &&
+    facetFilter.every((entry) => isFacetFilterOverridden(entry, selectedFacets))
+  );
+}
+
+/**
+ * Merges configured `facetFilters` with the user's facet selections.
+ *
+ * Multiple values selected for the same facet are combined into an OR group
+ * (nested array). Different facets are combined with AND (top-level entries),
+ * following Algolia `facetFilters` semantics.
+ */
 export function createFacetFilters(
   searchParametersFacetFilters: SearchParamsObject['facetFilters'],
   facetSelections: FacetSelections
 ): SearchParamsObject['facetFilters'] {
   const selections = Object.entries(facetSelections);
-  const selectedFacets = new Set(selections.map(([facet]) => facet));
-  const dynamicFacetFilters: string[] = [];
 
-  for (const [facet, selection] of selections) {
-    if (selection !== '') {
-      dynamicFacetFilters.push(`${facet}:${selection}`);
-    }
+  if (selections.length === 0) {
+    return searchParametersFacetFilters;
   }
 
-  if (selectedFacets.size === 0) {
-    return searchParametersFacetFilters;
+  const selectedFacets = new Set(selections.map(([facet]) => facet));
+  const dynamicFacetFilters: FacetFilters = [];
+
+  for (const [facet, values] of selections) {
+    if (values.length === 1) {
+      dynamicFacetFilters.push(`${facet}:${values[0]}`);
+    } else if (values.length > 1) {
+      dynamicFacetFilters.push(values.map((value) => `${facet}:${value}`));
+    }
   }
 
   let configuredFacetFilters: FacetFilters = [];
@@ -64,16 +107,9 @@ export function createFacetFilters(
     configuredFacetFilters = [searchParametersFacetFilters];
   }
 
-  const remainingFacetFilters = configuredFacetFilters.filter((facetFilter) => {
-    if (typeof facetFilter !== 'string') {
-      return true;
-    }
-
-    const separatorIndex = facetFilter.indexOf(':');
-    const facet = facetFilter.slice(0, separatorIndex);
-
-    return separatorIndex <= 0 || !selectedFacets.has(facet);
-  });
+  const remainingFacetFilters = configuredFacetFilters.filter(
+    (facetFilter) => !isFacetFilterOverridden(facetFilter, selectedFacets)
+  );
 
   return [...remainingFacetFilters, ...dynamicFacetFilters];
 }

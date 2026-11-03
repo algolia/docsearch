@@ -5,6 +5,7 @@ export * from './getHitItemBreadcrumbs';
 export * from './getNestedValue';
 export * from './groupBy';
 export * from './identity';
+export * from './isComposingKey';
 export * from './isModifierEvent';
 export * from './isQueryEmpty';
 export * from './keyboard';

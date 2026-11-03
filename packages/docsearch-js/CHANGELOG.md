@@ -1,5 +1,41 @@
 # @docsearch/js
 
+## 5.2.0
+
+### Patch Changes
+
+- 084a151: Publish license banners without the `UNRELEASED` marker. The release job now builds the packages itself, so the banner is set during the release build.
+
+## 5.1.2
+
+## 5.1.1
+
+### Patch Changes
+
+- 1775a18: Fix a crash on Safari 14 when importing DocSearch bundles. Marked's lookbehind feature detection was being incorrectly optimized away by the build tool, causing it to always pick a regex pattern that Safari 14 can't parse. Upgraded tsdown/rolldown to pick up the upstream fix, and removed an unrelated lookbehind from the Ask AI link extractor for the same reason.
+
+## 5.1.0
+
+## 5.0.5
+
+## 5.0.4
+
+## 5.0.3
+
+## 5.0.2
+
+### Patch Changes
+
+- 29c23e2: Move bundled DocSearch packages to development dependencies to reduce consumers' install footprint.
+
+## 5.0.1
+
+### Patch Changes
+
+- Updated dependencies [4ac53c4]
+  - @docsearch/react@5.0.1
+  - @docsearch/core@5.0.1
+
 ## 5.0.0
 
 ### Major Changes

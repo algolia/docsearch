@@ -3,8 +3,12 @@ import type { SearchResponse } from 'algoliasearch/lite';
 
 import type { DocSearchTransformClient } from '../DocSearch';
 import type { PromptSuggestions } from '../DocSearchAI';
-import type { InternalDocSearchHit } from '../types';
-import type { AIMessage, PromptSuggestion } from '../types/AskiAi';
+import type {
+  InternalDocSearchHit,
+  StoredAskAiMessage,
+  StoredAskAiState,
+} from '../types';
+import type { PromptSuggestion } from '../types/AskiAi';
 
 import { SOURCE_IDS } from './collections';
 
@@ -38,15 +42,16 @@ const EMPTY_SNIPPET_RESULT: InternalDocSearchHit['_snippetResult'] = {
 export function buildRecentConversationSources({
   conversations,
   disableUserPersonalization,
-  setMessages,
-  onAskAiToggle,
+  handleSelectStoredConversation,
 }: {
-  conversations: { getAll: () => unknown[] };
+  conversations: { getAll: () => StoredAskAiState[] };
   disableUserPersonalization: boolean;
-  setMessages: (messages: AIMessage[]) => void;
-  onAskAiToggle: (toggle: boolean) => void;
+  handleSelectStoredConversation: (
+    item: StoredAskAiState,
+    event: KeyboardEvent | MouseEvent
+  ) => void;
 }): Array<
-  AutocompleteSource<InternalDocSearchHit & { messages?: AIMessage[] }>
+  AutocompleteSource<InternalDocSearchHit & { messages?: StoredAskAiMessage[] }>
 > {
   return [
     {
@@ -59,11 +64,12 @@ export function buildRecentConversationSources({
           conversations.getAll() as unknown as InternalDocSearchHit[]
         ).slice(0, MAX_RECENT_CONVERSATIONS_DISPLAYED);
       },
-      onSelect({ item }): void {
-        if (item.messages) {
-          setMessages(item.messages);
-          onAskAiToggle(true);
+      onSelect({ item, event }): void {
+        if (item.type !== 'askAI') {
+          return;
         }
+
+        handleSelectStoredConversation(item, event);
       },
     },
   ];

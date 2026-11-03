@@ -56,6 +56,8 @@ export default defineConfig([
         'react-dom': 'ReactDOM',
         '@docsearch/core': 'DocSearchCore',
         '@docsearch/react/sidepanel': 'DocSearchReact',
+        '@docsearch/react/sidepanelPanel': 'DocSearchReact',
+        '@docsearch/react/sidepanelButton': 'DocSearchReact',
       },
     },
     format: 'umd',

@@ -1,3 +1,4 @@
+import type { SearchClient } from 'algoliasearch';
 import { describe, expect, it, vi } from 'vitest';
 
 import type { DocSearchHit, InternalDocSearchHit } from '../../types';
@@ -102,9 +103,7 @@ describe('buildQuerySources', () => {
       state: { context: { searchSuggestions: [] } },
       setContext: vi.fn(),
       setStatus: vi.fn(),
-      searchClient: {
-        search,
-      } as any,
+      searchClient: { search } as unknown as SearchClient,
       indexes: [{ name: 'docs' }],
       insights: false,
       saveRecentSearch: vi.fn(),
@@ -153,5 +152,62 @@ describe('buildQuerySources', () => {
     expect(referenceItems[1].__docsearch_parent?.objectID).toBe(
       'reference-install'
     );
+  });
+
+  it('applies facet selections as facetFilters on every index request', async () => {
+    const search = vi.fn().mockResolvedValue({
+      results: [
+        { index: 'docs', nbHits: 0, hits: [] },
+        { index: 'blog', nbHits: 0, hits: [] },
+      ],
+    });
+
+    await buildQuerySources({
+      query: 'install',
+      state: { context: { searchSuggestions: [] } },
+      setContext: vi.fn(),
+      setStatus: vi.fn(),
+      searchClient: { search } as unknown as SearchClient,
+      indexes: [
+        {
+          name: 'docs',
+          searchParameters: {
+            facetFilters: [
+              'language:en',
+              ['docusaurus_tag:default', 'docusaurus_tag:docs-default-current'],
+              'type:guide',
+            ],
+          },
+        },
+        { name: 'blog' },
+      ],
+      insights: false,
+      saveRecentSearch: vi.fn(),
+      onClose: vi.fn(),
+      facetSelections: {
+        current: {
+          language: ['fr', 'de'],
+          docusaurus_tag: ['docs-default-next'],
+        },
+      },
+    });
+
+    expect(search).toHaveBeenCalledTimes(1);
+
+    const { requests } = search.mock.calls[0][0];
+
+    // Configured filters for selected keys (including the fully-covered OR
+    // group) are replaced; unrelated configured filters are kept. Multiple
+    // values for one facet become an OR group.
+    expect(requests[0].facetFilters).toEqual([
+      'type:guide',
+      ['language:fr', 'language:de'],
+      'docusaurus_tag:docs-default-next',
+    ]);
+    // Indices without configured filters receive only the selections.
+    expect(requests[1].facetFilters).toEqual([
+      ['language:fr', 'language:de'],
+      'docusaurus_tag:docs-default-next',
+    ]);
   });
 });

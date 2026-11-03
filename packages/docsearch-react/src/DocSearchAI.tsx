@@ -1,25 +1,26 @@
 import { DocSearch as DocSearchProvider, useDocSearch } from '@docsearch/core';
 import type { DocSearchRef, InitialAskAiMessage } from '@docsearch/core';
+import type { FacetFilters } from 'algoliasearch/lite';
 import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
 
-import type { DocSearchProps } from './DocSearch';
-import { DocSearchAskAiModal } from './DocSearchAskAiModal';
+import type { DocSearchProps, DocSearchTranslations } from './DocSearch';
+import {
+  DocSearchAskAiModal,
+  type DocSearchAskAiModalTranslations,
+} from './DocSearchAskAiModal';
 import { DocSearchButton } from './DocSearchButton';
 import type { ToolCalls } from './types/AskiAi';
 
 export interface AskAiSearchParameters {
-  facetFilters?: string[];
+  facetFilters?: FacetFilters;
   filters?: string;
   attributesToRetrieve?: string[];
   restrictSearchableAttributes?: string[];
   distinct?: boolean | number | string;
 }
 
-export type AgentStudioSearchParameters = Record<
-  string,
-  Omit<AskAiSearchParameters, 'facetFilters'>
->;
+export type AgentStudioSearchParameters = Record<string, AskAiSearchParameters>;
 
 export interface Memory {
   /**
@@ -49,13 +50,13 @@ export interface PromptSuggestions {
 
 export interface DocSearchAskAi {
   /**
-   * The API key to use for the ask AI feature. Your assistant will use this API
-   * key to search the index. If not provided, the API key will be used.
+   * The API key to use for the ask AI feature. Your agent will use this API key
+   * to search the index. If not provided, the API key will be used.
    */
   apiKey?: string;
   /**
-   * The app ID to use for the ask AI feature. Your assistant will use this app
-   * ID to search the index. If not provided, the app ID will be used.
+   * The app ID to use for the ask AI feature. Your agent will use this app ID
+   * to search the index. If not provided, the app ID will be used.
    */
   appId?: string;
   /** The Agent Studio Agent ID to use for the Ask AI feature. */
@@ -113,10 +114,15 @@ export interface DocSearchAskAi {
   promptSuggestions?: PromptSuggestions;
 }
 
-export interface DocSearchAIProps extends DocSearchProps {
+export type DocSearchAITranslations = Partial<{
+  button: DocSearchTranslations['button'];
+  modal: DocSearchAskAiModalTranslations;
+}>;
+
+export interface DocSearchAIProps extends Omit<DocSearchProps, 'translations'> {
   /**
-   * Configuration or assistant id to enable ask ai mode. Pass a string
-   * assistant id or a full config object.
+   * Configuration or agent id to enable ask ai mode. Pass a string agent id or
+   * a full config object.
    */
   askAi: DocSearchAskAi | string;
   /**
@@ -128,6 +134,7 @@ export interface DocSearchAIProps extends DocSearchProps {
    * `@docsearch/sidepanel-js`) without flicker.
    */
   interceptAskAiEvent?: (initialMessage: InitialAskAiMessage) => boolean | void;
+  translations?: DocSearchAITranslations;
 }
 
 function DocSearchAIComponent(

@@ -5,6 +5,7 @@ import type {
   AIMessage,
   AIMessagePart,
   SearchToolPart,
+  ToolCalls,
 } from '../../types/AskiAi';
 import {
   getAskAiBlockingBannerMessage,
@@ -16,6 +17,7 @@ import {
   isAskAiPromptBlockingError,
   showAskAiBlockingBannerNewConversationLink,
   sanitizeMessagesForRequest,
+  shouldSendAutomatically,
   getMessageContent,
 } from '../ai';
 
@@ -286,6 +288,82 @@ describe('sanitizeMessagesForRequest', () => {
     expect(result[1]).not.toBe(sanitizedMessage);
     expect(result[1].parts).toEqual([{ type: 'text', text: 'Hi' }]);
   });
+
+  it('removes an aborted tool call from the assistant message', () => {
+    const initialQuestion: AIMessage = {
+      id: 'message-1',
+      role: 'user',
+      parts: [{ type: 'text', text: 'Find installation instructions' }],
+    };
+    const assistantMessage = message('message-2', [
+      { type: 'step-start' },
+      {
+        type: 'tool-algolia_search_index',
+        toolCallId: 'tool-1',
+        state: 'input-streaming',
+        input: undefined,
+      },
+    ]);
+    const followUpQuestion: AIMessage = {
+      id: 'message-3',
+      role: 'user',
+      parts: [{ type: 'text', text: 'What are the prerequisites?' }],
+    };
+
+    expect(
+      sanitizeMessagesForRequest([
+        initialQuestion,
+        assistantMessage,
+        followUpQuestion,
+      ])
+    ).toEqual([
+      initialQuestion,
+      message('message-2', [{ type: 'step-start' }]),
+      followUpQuestion,
+    ]);
+  });
+
+  it('keeps streamed text while removing an incomplete tool call', () => {
+    const result = sanitizeMessagesForRequest([
+      message('message-1', [
+        { type: 'text', text: 'Let me look that up.' },
+        {
+          type: 'tool-searchIndex',
+          toolCallId: 'tool-1',
+          state: 'input-available',
+          input: { query: 'installation' },
+        },
+      ]),
+    ]);
+
+    expect(result).toEqual([
+      message('message-1', [{ type: 'text', text: 'Let me look that up.' }]),
+    ]);
+  });
+
+  it.each([
+    {
+      state: 'output-available' as const,
+      output: { hits: [] },
+    },
+    {
+      state: 'output-error' as const,
+      errorText: 'Search failed',
+    },
+  ])('keeps a $state tool call', (toolPart) => {
+    const messages = [
+      message('message-1', [
+        {
+          type: 'tool-searchIndex',
+          toolCallId: 'tool-1',
+          input: { query: 'installation' },
+          ...toolPart,
+        },
+      ]),
+    ];
+
+    expect(sanitizeMessagesForRequest(messages)).toBe(messages);
+  });
 });
 
 describe('getAgentPromptSuggestions', () => {
@@ -429,5 +507,129 @@ describe('getMessageContent', () => {
         ])
       )
     ).toBe('');
+  });
+});
+
+describe('shouldSendAutomatically', () => {
+  const tools: ToolCalls = {
+    clientTool: { render: () => '', onToolCall: () => {} },
+    renderOnlyTool: { render: () => '' },
+  };
+  const done = (type: string, extra = {}) =>
+    ({
+      type,
+      toolCallId: type,
+      state: 'output-available',
+      input: {},
+      output: {},
+      ...extra,
+    }) as unknown as AIMessagePart;
+  const text: AIMessagePart = { type: 'text', text: 'Answer' };
+  const step: AIMessagePart = { type: 'step-start' };
+
+  it.each([
+    {
+      description: 'there are no messages',
+      messages: [],
+      expected: false,
+    },
+    {
+      description: 'the last message is from the user',
+      messages: [
+        {
+          id: 'u',
+          role: 'user',
+          parts: [{ type: 'text', text: 'Hi' }],
+        } satisfies AIMessage,
+      ],
+      expected: false,
+    },
+    {
+      description: 'only a server-run search tool completed',
+      messages: [message('m', [step, done('tool-algolia_search_index')])],
+      expected: false,
+    },
+    {
+      description: 'a server-run search tool is followed by text in its step',
+      messages: [message('m', [step, done('tool-algolia_search_index'), text])],
+      expected: false,
+    },
+    {
+      description: 'a legacy searchIndex tool completed',
+      messages: [message('m', [step, done('tool-searchIndex')])],
+      expected: false,
+    },
+    {
+      description: 'a memory tool completed',
+      messages: [message('m', [step, done('tool-algolia_memory_search')])],
+      expected: false,
+    },
+    {
+      description: 'a render-only tool completed',
+      messages: [message('m', [step, done('tool-renderOnlyTool')])],
+      expected: false,
+    },
+    {
+      description: 'a dynamic tool completed',
+      messages: [message('m', [step, done('dynamic-tool')])],
+      expected: false,
+    },
+    {
+      description: 'a client tool completed',
+      messages: [message('m', [step, done('tool-clientTool')])],
+      expected: true,
+    },
+    {
+      description: 'a client tool errored',
+      messages: [
+        message('m', [
+          step,
+          done('tool-clientTool', { state: 'output-error' }),
+        ]),
+      ],
+      expected: true,
+    },
+    {
+      description: 'a client tool is still pending',
+      messages: [
+        message('m', [
+          step,
+          done('tool-clientTool', { state: 'input-available' }),
+        ]),
+      ],
+      expected: false,
+    },
+    {
+      description: 'a client tool is provider executed',
+      messages: [
+        message('m', [
+          step,
+          done('tool-clientTool', { providerExecuted: true }),
+        ]),
+      ],
+      expected: false,
+    },
+    {
+      description: 'a client tool completes alongside a search tool',
+      messages: [
+        message('m', [
+          step,
+          done('tool-algolia_search_index'),
+          done('tool-clientTool'),
+        ]),
+      ],
+      expected: true,
+    },
+    {
+      description: 'a client tool completed in an earlier step',
+      messages: [message('m', [step, done('tool-clientTool'), step, text])],
+      expected: false,
+    },
+  ] satisfies Array<{
+    description: string;
+    messages: AIMessage[];
+    expected: boolean;
+  }>)('returns $expected when $description', ({ messages, expected }) => {
+    expect(shouldSendAutomatically(messages, tools)).toBe(expected);
   });
 });

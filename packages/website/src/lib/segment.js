@@ -6,6 +6,15 @@ function getAnalytics() {
   return window.analytics;
 }
 
+export function hasConsent() {
+  if (typeof window === 'undefined') return false;
+  if (typeof window.OnetrustActiveGroups !== 'string') return false;
+
+  return window.OnetrustActiveGroups.split(',').includes('C0002');
+}
+
 export function track(event, properties) {
+  if (!hasConsent()) return;
+
   getAnalytics()?.track(event, properties);
 }

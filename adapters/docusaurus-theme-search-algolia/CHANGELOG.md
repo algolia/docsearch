@@ -1,5 +1,107 @@
 # @docsearch/docusaurus-adapter
 
+## 5.2.0
+
+### Patch Changes
+
+- 084a151: Publish license banners without the `UNRELEASED` marker. The release job now builds the packages itself, so the banner is set during the release build.
+- Updated dependencies [854a42a]
+- Updated dependencies [084a151]
+- Updated dependencies [b81d381]
+- Updated dependencies [b339636]
+- Updated dependencies [4cf99d5]
+  - @docsearch/react@5.2.0
+  - @docsearch/core@5.2.0
+  - @docsearch/modal@5.2.0
+  - @docsearch/sidepanel@5.2.0
+
+## 5.1.2
+
+### Patch Changes
+
+- Updated dependencies [e98f0f7]
+- Updated dependencies [12ab5da]
+- Updated dependencies [439328e]
+  - @docsearch/react@5.1.2
+  - @docsearch/modal@5.1.2
+  - @docsearch/sidepanel@5.1.2
+  - @docsearch/core@5.1.2
+
+## 5.1.1
+
+### Patch Changes
+
+- Updated dependencies [ff16bf6]
+- Updated dependencies [1775a18]
+- Updated dependencies [0e5bde9]
+  - @docsearch/sidepanel@5.1.1
+  - @docsearch/react@5.1.1
+  - @docsearch/modal@5.1.1
+  - @docsearch/core@5.1.1
+
+## 5.1.0
+
+### Patch Changes
+
+- Updated dependencies [977cf17]
+- Updated dependencies [3914a42]
+  - @docsearch/react@5.1.0
+  - @docsearch/modal@5.1.0
+  - @docsearch/sidepanel@5.1.0
+  - @docsearch/core@5.1.0
+
+## 5.0.5
+
+### Patch Changes
+
+- 472239b: Fix workspace definitions in package.json
+  - @docsearch/core@5.0.5
+  - @docsearch/modal@5.0.5
+  - @docsearch/react@5.0.5
+  - @docsearch/sidepanel@5.0.5
+
+## 5.0.4
+
+### Patch Changes
+
+- 46f1096: Respect a caller-supplied `transformSearchClient` instead of discarding it.
+- Updated dependencies [f29b541]
+  - @docsearch/react@5.0.4
+  - @docsearch/modal@5.0.4
+  - @docsearch/sidepanel@5.0.4
+  - @docsearch/core@5.0.4
+
+## 5.0.3
+
+### Patch Changes
+
+- Updated dependencies [537afaa]
+  - @docsearch/react@5.0.3
+  - @docsearch/modal@5.0.3
+  - @docsearch/sidepanel@5.0.3
+  - @docsearch/core@5.0.3
+
+## 5.0.2
+
+### Patch Changes
+
+- Updated dependencies [1508196]
+- Updated dependencies [59c575f]
+  - @docsearch/react@5.0.2
+  - @docsearch/modal@5.0.2
+  - @docsearch/sidepanel@5.0.2
+  - @docsearch/core@5.0.2
+
+## 5.0.1
+
+### Patch Changes
+
+- Updated dependencies [4ac53c4]
+  - @docsearch/react@5.0.1
+  - @docsearch/modal@5.0.1
+  - @docsearch/sidepanel@5.0.1
+  - @docsearch/core@5.0.1
+
 ## 5.0.0
 
 ### Major Changes

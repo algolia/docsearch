@@ -79,6 +79,47 @@ export function Support() {
 
 Call the method after the Sidepanel has mounted and registered its view. Check `isSidepanelOpen` to read its open state. See [Hybrid Mode](/docs/hybrid-mode) for cross-view ref behavior.
 
+## Keep a controlled panel mounted
+
+The low-level `Sidepanel` from `@docsearch/react/sidepanel` accepts `isOpen`, `onOpen`, and `onClose`. Unlike `Sidepanel` from `@docsearch/sidepanel`, it doesn't require a `DocSearch` provider. Render it on the client and keep it mounted when closed to preserve the current conversation, draft prompt, and panel state. Unmounting discards that in-memory state; saved conversation history is separate.
+
+The component owns closed-state visibility and interaction: its stylesheet hides the panel, and the closed root is `inert`, excluding its descendants from keyboard navigation and the accessibility tree. Reopening restores interaction without resetting the conversation. Closing doesn't stop an active response.
+
+The panel focuses its prompt when opened on desktop and blurs the prompt when closed. It doesn't autofocus on mobile or restore focus to your trigger. Your integration owns `isOpen` and focus restoration. Route close actions through a handler that returns focus to the trigger, or another appropriate element if the trigger no longer exists.
+
+```tsx title="ControlledAssistant.tsx"
+import { Sidepanel } from '@docsearch/react/sidepanel';
+import { useCallback, useRef, useState, type JSX } from 'react';
+import '@docsearch/react/style';
+import '@docsearch/react/style/sidepanel';
+
+export function ControlledAssistant(): JSX.Element {
+  const [isOpen, setIsOpen] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const open = useCallback(() => setIsOpen(true), []);
+  const close = useCallback(() => {
+    triggerRef.current?.focus();
+    setIsOpen(false);
+  }, []);
+
+  return (
+    <>
+      <button type="button" ref={triggerRef} aria-expanded={isOpen} onClick={open}>
+        Ask AI
+      </button>
+      <Sidepanel
+        appId="YOUR_APPLICATION_ID"
+        apiKey="YOUR_SEARCH_API_KEY"
+        agentId="YOUR_AGENT_ID"
+        isOpen={isOpen}
+        onOpen={open}
+        onClose={close}
+      />
+    </>
+  );
+}
+```
+
 ## Handle Agent Studio tools
 
 Key each client tool by the name emitted by your agent. Always return tool output through `addToolOutput` when you provide `onToolCall`.

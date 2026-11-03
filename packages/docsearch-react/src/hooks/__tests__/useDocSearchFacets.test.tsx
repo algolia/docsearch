@@ -57,14 +57,119 @@ describe('useDocSearchFacets', () => {
     );
 
     act(() => {
-      result.current.handleFacetSelectionChange('language', 'en');
+      result.current.handleFacetSelectionChange('language', ['en']);
     });
 
-    expect(result.current.facetSelections).toEqual({ language: 'en' });
+    expect(result.current.facetSelections).toEqual({ language: ['en'] });
     expect(result.current.facetSelectionsRef.current).toEqual({
-      language: 'en',
+      language: ['en'],
     });
     expect(onSelectionsChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('supports multiple selected values per facet', () => {
+    const onSelectionsChange = vi.fn();
+    const { result } = renderHook(() =>
+      useDocSearchFacets({
+        facets: [{ key: 'language' }],
+        indexes,
+        searchClient,
+        onSelectionsChange,
+      })
+    );
+
+    act(() => {
+      result.current.handleFacetSelectionChange('language', ['en', 'fr']);
+    });
+
+    expect(result.current.facetSelections).toEqual({ language: ['en', 'fr'] });
+    expect(onSelectionsChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('resolves functional updates against the current selections', () => {
+    const { result } = renderHook(() =>
+      useDocSearchFacets({
+        facets: [{ key: 'language' }],
+        indexes,
+        searchClient,
+      })
+    );
+
+    // Two toggles in the same act: the second must see the first's result.
+    act(() => {
+      result.current.handleFacetSelectionChange('language', (current) => [
+        ...current,
+        'en',
+      ]);
+      result.current.handleFacetSelectionChange('language', (current) => [
+        ...current,
+        'fr',
+      ]);
+    });
+
+    expect(result.current.facetSelections).toEqual({ language: ['en', 'fr'] });
+  });
+
+  it('does not notify when the selected values are unchanged', () => {
+    const onSelectionsChange = vi.fn();
+    const { result } = renderHook(() =>
+      useDocSearchFacets({
+        facets: [{ key: 'language' }],
+        indexes,
+        searchClient,
+        onSelectionsChange,
+      })
+    );
+
+    act(() => {
+      result.current.handleFacetSelectionChange('language', ['en', 'fr']);
+    });
+    act(() => {
+      result.current.handleFacetSelectionChange('language', ['en', 'fr']);
+    });
+
+    expect(onSelectionsChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not notify when clearing a facet that has no selection', () => {
+    const onSelectionsChange = vi.fn();
+    const { result } = renderHook(() =>
+      useDocSearchFacets({
+        facets: [{ key: 'language' }],
+        indexes,
+        searchClient,
+        onSelectionsChange,
+      })
+    );
+
+    act(() => {
+      result.current.handleFacetSelectionChange('language', []);
+    });
+
+    expect(result.current.facetSelections).toEqual({});
+    expect(onSelectionsChange).not.toHaveBeenCalled();
+  });
+
+  it('derives initial selections from configured facetFilters', () => {
+    const { result } = renderHook(() =>
+      useDocSearchFacets({
+        facets: [{ key: 'language' }],
+        indexes: [
+          {
+            name: 'docs',
+            searchParameters: {
+              facetFilters: ['language:en', ['version:v1', 'version:v2']],
+            },
+          },
+        ],
+        searchClient,
+      })
+    );
+
+    expect(result.current.facetSelections).toEqual({
+      language: ['en'],
+      version: ['v1', 'v2'],
+    });
   });
 
   it('updates the ref synchronously so getSources closures read fresh selections', () => {
@@ -76,13 +181,13 @@ describe('useDocSearchFacets', () => {
       })
     );
 
-    let refValueDuringChange: Record<string, string> | undefined;
+    let refValueDuringChange: Record<string, string[]> | undefined;
     act(() => {
-      result.current.handleFacetSelectionChange('language', 'fr');
+      result.current.handleFacetSelectionChange('language', ['fr']);
       refValueDuringChange = { ...result.current.facetSelectionsRef.current };
     });
 
-    expect(refValueDuringChange).toEqual({ language: 'fr' });
+    expect(refValueDuringChange).toEqual({ language: ['fr'] });
   });
 
   it('clears all selections and notifies', () => {
@@ -97,14 +202,72 @@ describe('useDocSearchFacets', () => {
     );
 
     act(() => {
-      result.current.handleFacetSelectionChange('language', 'en');
+      result.current.handleFacetSelectionChange('language', ['en', 'fr']);
     });
     act(() => {
       result.current.clearFacetSelections();
     });
 
-    expect(result.current.facetSelections).toEqual({ language: '' });
-    expect(result.current.facetSelectionsRef.current).toEqual({ language: '' });
+    expect(result.current.facetSelections).toEqual({ language: [] });
+    expect(result.current.facetSelectionsRef.current).toEqual({ language: [] });
+    expect(onSelectionsChange).toHaveBeenCalledTimes(2);
+  });
+
+  it('keeps individually cleared facets cleared when clearing all', () => {
+    const onSelectionsChange = vi.fn();
+    const { result } = renderHook(() =>
+      useDocSearchFacets({
+        facets: [{ key: 'language' }, { key: 'version' }],
+        indexes: [
+          {
+            name: 'docs',
+            searchParameters: { facetFilters: ['language:en', 'version:v1'] },
+          },
+        ],
+        searchClient,
+        onSelectionsChange,
+      })
+    );
+
+    // Clear one facet, then clear all while the other still has a value.
+    act(() => {
+      result.current.handleFacetSelectionChange('language', []);
+    });
+    act(() => {
+      result.current.clearFacetSelections();
+    });
+
+    // `language` must stay overridden, otherwise its configured
+    // `language:en` filter would silently come back.
+    expect(result.current.facetSelections).toEqual({
+      language: [],
+      version: [],
+    });
+    expect(onSelectionsChange).toHaveBeenCalledTimes(2);
+  });
+
+  it('does not notify when clearing all with no selected values', () => {
+    const onSelectionsChange = vi.fn();
+    const { result } = renderHook(() =>
+      useDocSearchFacets({
+        facets: [{ key: 'language' }],
+        indexes,
+        searchClient,
+        onSelectionsChange,
+      })
+    );
+
+    act(() => {
+      result.current.handleFacetSelectionChange('language', ['en']);
+    });
+    act(() => {
+      result.current.handleFacetSelectionChange('language', []);
+    });
+    act(() => {
+      result.current.clearFacetSelections();
+    });
+
+    expect(result.current.facetSelections).toEqual({ language: [] });
     expect(onSelectionsChange).toHaveBeenCalledTimes(2);
   });
 
@@ -131,7 +294,7 @@ describe('useDocSearchFacets', () => {
 
     // the latest callback is invoked, not the one from the first render
     act(() => {
-      result.current.handleFacetSelectionChange('language', 'en');
+      result.current.handleFacetSelectionChange('language', ['en']);
     });
     expect(latestOnSelectionsChange).toHaveBeenCalledTimes(1);
   });

@@ -2,6 +2,33 @@ import { test, expect } from './fixtures';
 
 const MAX_KEYBOARD_NAVIGATION_STEPS = 10;
 
+test('Control key feedback keeps the keycap width stable', async ({
+  docSearch,
+  page,
+}) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'platform', { get: () => 'Win32' });
+  });
+  await docSearch.goto();
+  await docSearch.waitForLoad();
+
+  const controlKey = page.locator('.DocSearch-Button-Key--ctrl').first();
+  await expect(controlKey).toHaveText('Ctrl');
+  const width = await controlKey.evaluate((element) => element.clientWidth);
+
+  await page.keyboard.down('Control');
+  await expect(controlKey).toHaveClass(/DocSearch-Button-Key--pressed/);
+  expect(await controlKey.evaluate((element) => element.clientWidth)).toBe(
+    width
+  );
+
+  await page.keyboard.up('Control');
+  await expect(controlKey).not.toHaveClass(/DocSearch-Button-Key--pressed/);
+  expect(await controlKey.evaluate((element) => element.clientWidth)).toBe(
+    width
+  );
+});
+
 test.describe('Start', () => {
   test.beforeEach(async ({ docSearch }) => {
     await docSearch.goto();
@@ -140,6 +167,35 @@ test.describe('Search', () => {
     await page.keyboard.press('Enter');
 
     await expect(page).not.toHaveURL(initialURL, { timeout: 10000 });
+  });
+
+  test('Keyboard navigation keeps working after clicking a group title or the footer', async ({
+    docSearch,
+    page,
+  }) => {
+    await docSearch.typeQueryMatching();
+    await expect(docSearch.firstHit).toBeVisible();
+
+    for (const target of [
+      page.locator('.DocSearch-Hit-source').first(),
+      page.locator('.DocSearch-Commands'),
+    ]) {
+      await target.click();
+      await expect(docSearch.input).toBeFocused();
+
+      const activeItemId = await docSearch.input.getAttribute(
+        'aria-activedescendant'
+      );
+      await page.keyboard.press('ArrowDown');
+      await expect(docSearch.input).toHaveAttribute(
+        'aria-activedescendant',
+        /.+/
+      );
+      await expect(docSearch.input).not.toHaveAttribute(
+        'aria-activedescendant',
+        activeItemId ?? ''
+      );
+    }
   });
 
   test('Pointer navigation leads to result', async ({ docSearch, page }) => {

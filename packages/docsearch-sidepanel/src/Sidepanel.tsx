@@ -1,9 +1,9 @@
 import { useDocSearch } from '@docsearch/core';
-import {
-  Sidepanel as SidepanelComp,
-  type DocSearchSidepanelProps,
-  type SidepanelSearchParameters,
+import type {
+  DocSearchSidepanelProps,
+  SidepanelSearchParameters,
 } from '@docsearch/react/sidepanel';
+import { Sidepanel as SidepanelComp } from '@docsearch/react/sidepanelPanel';
 import React from 'react';
 import type { JSX } from 'react';
 import { createPortal } from 'react-dom';

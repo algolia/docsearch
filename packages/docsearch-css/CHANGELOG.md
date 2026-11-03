@@ -1,5 +1,39 @@
 # @docsearch/css
 
+## 5.2.0
+
+### Patch Changes
+
+- 084a151: Publish license banners without the `UNRELEASED` marker. The release job now builds the packages itself, so the banner is set during the release build.
+- 854f9d3: Remove styles for elements DocSearch no longer renders (the v3 start screen, Ask AI related sources, and a few other selectors that no component uses), plus an unused keyframe and unused internal animation variables. No visual change to DocSearch.
+
+## 5.1.2
+
+## 5.1.1
+
+## 5.1.0
+
+### Minor Changes
+
+- 977cf17: feat(facets): Support selecting multiple values per facet
+
+  `FacetBar` now renders checkbox items instead of a radio group, so users can
+  select more than one value per facet. Selected values for the same facet are
+  combined into an Algolia `facetFilters` OR group; different facets are still
+  combined with AND. Configured `facetFilters` OR groups that share a single
+  facet key (for example `['lang:en', 'lang:fr']`) are now recognized as the
+  default selection for that facet, in addition to single `key:value` entries.
+
+## 5.0.5
+
+## 5.0.4
+
+## 5.0.3
+
+## 5.0.2
+
+## 5.0.1
+
 ## 5.0.0
 
 ### Major Changes

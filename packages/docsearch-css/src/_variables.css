@@ -65,11 +65,6 @@
   --docsearch-footer-shadow: 0 -1px 0 0 rgb(224 227 232), 0 -3px 6px 0 rgb(69 98 155 / 12%);
 
   /* animations */
-  --fav-out-dur: 160ms;
-  --del-dur: 150ms;
-  --ease-smooth: cubic-bezier(0.25, 0.8, 0.4, 1);
-  --ease-fast: cubic-bezier(0.45, 0.15, 0.6, 0.9);
-  --shadow-pop: 0 4px 12px rgb(0 0 0 / 6%);
   --shimmer-bg: linear-gradient(90deg,
   rgb(224 227 232) 0%,
   var(--docsearch-muted-color) 20%,

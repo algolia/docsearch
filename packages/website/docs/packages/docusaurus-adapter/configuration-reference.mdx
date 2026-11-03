@@ -223,6 +223,8 @@ docsearch: {
 
 Configure each attribute as an Algolia facet. The modal supports up to five unique, nonempty facet keys. It merges facet values from every keyword index and hides facets with no values.
 
+Users can select multiple values per facet. The modal combines values of the same facet with OR and different facets with AND. When `contextualSearch` is on, the modal uses the contextual filters as initial selections. Expose `language` to let users change the current locale filter, or `docusaurus_tag` to let users change the default and docs version tags.
+
 These controls don't configure the search page sidebar. Use `searchPage.facets` for that page.
 
 ## Result badges

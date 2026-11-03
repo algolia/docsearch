@@ -29,6 +29,13 @@ export function useDocSearchModalEffects({
   }, []);
 
   React.useLayoutEffect(() => {
+    // With `scrollbar-gutter: stable`, the browser keeps the scrollbar space
+    // reserved when scrolling is locked, so adding a margin would shift the page.
+    const scrollbarGutter = window
+      .getComputedStyle(document.documentElement)
+      .getPropertyValue('scrollbar-gutter');
+    if (scrollbarGutter.includes('stable')) return;
+
     const scrollBarWidth = window.innerWidth - document.body.clientWidth;
     document.body.style.marginInlineEnd = `${scrollBarWidth}px`;
 

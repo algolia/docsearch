@@ -4,6 +4,7 @@ import type { JSX } from 'react';
 import type { Exchange } from '../AskAiScreen';
 import { SendIcon, StopIcon } from '../icons';
 import { useIsMobile } from '../useIsMobile';
+import { isComposingKey } from '../utils/isComposingKey';
 
 export type PromptFormTranslations = Partial<{
   /** Initial placeholder for the prompt input. */
@@ -113,6 +114,12 @@ export const PromptForm = React.forwardRef<HTMLTextAreaElement, Props>(
     const handleKeyDown = (
       e: React.KeyboardEvent<HTMLTextAreaElement>
     ): void => {
+      // Confirming an IME conversion is an Enter keydown. Leave it to the
+      // IME instead of sending the prompt. keyCode 229 covers Safari, which
+      // ends composition before keydown.
+      // https://github.com/algolia/docsearch/issues/1304
+      if (isComposingKey(e)) return;
+
       // Allow Enter to work normally (new line) when streaming
       if (isStreaming || showBlockingError) return;
 

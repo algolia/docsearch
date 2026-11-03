@@ -1,0 +1,329 @@
+// oxlint-disable no-console
+import path, { resolve } from 'node:path';
+import { exit } from 'node:process';
+import { parseArgs } from 'util';
+
+import { Octokit } from '@octokit/rest';
+import { $, Glob } from 'bun';
+
+import { log } from './log';
+
+const CHANGELOG_NAME = 'CHANGELOG.md';
+
+async function getPublishVersion(wantedVersion: string | undefined) {
+  if (wantedVersion && wantedVersion.trim().length > 0) {
+    return wantedVersion;
+  }
+
+  const { version } = await import('../packages/docsearch-react/src/version');
+
+  return version;
+}
+
+function getChangelogEntry(changelog: string, version: string) {
+  let headingStartInfo: { index: number; depth: number } | undefined;
+  let endIndex: number | undefined;
+
+  // Iterate through each headings and code blocks (for skipping its contents)
+  const regex = /^(#{1,6})\s(.*)$|^(`{3,})/gm;
+  let match: RegExpExecArray | null;
+  while ((match = regex.exec(changelog)) !== null) {
+    // Skip over code blocks so we don't match any headings inside of them
+    if (match[3]) {
+      const endOfCodeBlockRegex = new RegExp(`^${match[3]}`, 'gm');
+      endOfCodeBlockRegex.lastIndex = regex.lastIndex;
+      const endMatch = endOfCodeBlockRegex.exec(changelog);
+      if (endMatch) {
+        // Start next search for headings after the end of the code block
+        regex.lastIndex = endOfCodeBlockRegex.lastIndex;
+        continue;
+      } else {
+        // Can't find end of code block, probably malformed
+        break;
+      }
+    }
+
+    const headingDepth = match[1].length;
+    const headingText = match[2].trim();
+
+    // Search for heading of the entry
+    if (headingText === version) {
+      headingStartInfo = { index: regex.lastIndex, depth: headingDepth };
+      continue;
+    }
+
+    // If we've found the entry heading, search for the closing heading with the same depth
+    if (headingStartInfo && headingDepth === headingStartInfo.depth) {
+      endIndex = match.index;
+      break;
+    }
+  }
+
+  if (headingStartInfo === undefined) {
+    throw new Error(`Cannot find CHANGELOG heading for version: ${version}`);
+  }
+
+  return changelog.slice(headingStartInfo?.index, endIndex).trim();
+}
+
+interface Pkg {
+  tagName: string;
+  path: string;
+  packageJson: { version: string } & Record<string, any>;
+}
+
+async function getPkg(tag: string): Promise<Pkg | null> {
+  const pkgJsonFiles = new Glob('{packages,adapters}/**/package.json');
+  let pkg: Pkg | null = null;
+
+  for await (const file of pkgJsonFiles.scan('.')) {
+    const pkgJson = await Bun.file(file).json();
+
+    if (tag.startsWith(`${pkgJson.name}@`)) {
+      pkg = {
+        tagName: tag,
+        path: path.dirname(file),
+        packageJson: pkgJson,
+      };
+
+      break;
+    }
+  }
+
+  return pkg;
+}
+
+// Create GH release
+async function createRelease({
+  dryRun,
+  token,
+  tagName,
+  changelog,
+  prerelease = false,
+  latest,
+  commitSha,
+}: {
+  dryRun?: boolean;
+  token?: string;
+  tagName: string;
+  changelog: string;
+  prerelease?: boolean;
+  latest: boolean;
+  commitSha: string;
+}): Promise<void> {
+  let makeLatest: 'true' | 'false' = 'false';
+
+  if (latest && !prerelease) {
+    makeLatest = 'true';
+  }
+
+  if (dryRun) {
+    log.log(`[DRY_RUN] - Creating release for ${tagName}:`);
+    log.log(`[DRY_RUN] - Latest: ${makeLatest}`);
+    log.log(`[DRY_RUN] - Prerelease: ${prerelease}`);
+    log.log(`[DRY_RUN] - Commit: ${commitSha}`);
+    log.line();
+    return;
+  }
+
+  try {
+    const octokit = new Octokit({ auth: token });
+    let existingRelease = false;
+
+    try {
+      await octokit.rest.repos.getReleaseByTag({
+        owner: 'algolia',
+        repo: 'docsearch',
+        tag: tagName,
+      });
+
+      existingRelease = true;
+    } catch (e) {
+      const err = e as unknown as { status?: number };
+
+      // 404 means the release does not exist yet, and we need to create it
+      if (err.status !== 404) {
+        throw e;
+      }
+    }
+
+    if (existingRelease) {
+      log.warn(`GitHub release already exists for ${tagName}, skipping...`);
+      return;
+    }
+
+    await octokit.rest.repos.createRelease({
+      owner: 'algolia',
+      repo: 'docsearch',
+      name: tagName,
+      tag_name: tagName,
+      body: changelog,
+      prerelease,
+      make_latest: makeLatest,
+      target_commitish: commitSha,
+    });
+  } catch (e) {
+    throw new Error(`Error creating release for ${tagName}: ${e}`);
+  }
+}
+
+async function getTagsForVersion(version: string) {
+  const { stdout, stderr, exitCode } = await $`git tag --list '*@${version}'`
+    .quiet()
+    .nothrow();
+
+  if (exitCode !== 0) {
+    throw new Error(
+      `Failed to list git tags for version ${version} (exit ${exitCode}): ${stderr.toString().trim()}`
+    );
+  }
+
+  return stdout.toString().trim().split('\n').filter(Boolean);
+}
+
+async function getPackages(tags: string[]) {
+  const pkgs: Pkg[] = [];
+
+  for (const t of tags) {
+    const pkg = await getPkg(t);
+
+    if (!pkg) {
+      continue;
+    }
+
+    pkgs.push(pkg);
+  }
+
+  return pkgs;
+}
+
+async function runFlow({
+  dryRun,
+  wantedVersion,
+}: {
+  dryRun?: boolean;
+  wantedVersion?: string;
+}) {
+  const githubToken = process.env.GITHUB_TOKEN;
+
+  if (!dryRun && (!githubToken || githubToken.trim() === '')) {
+    log.error('A `GITHUB_TOKEN` is required');
+    exit(1);
+  }
+
+  const publishVersion = await getPublishVersion(wantedVersion);
+  const tags = await getTagsForVersion(publishVersion);
+
+  if (tags.length === 0) {
+    log.info(
+      `No tags found to publish version v${publishVersion} with, exiting`
+    );
+    exit(0);
+  }
+
+  const pkgs = await getPackages(tags);
+
+  if (pkgs.length === 0) {
+    log.info(`No packages found to create releases for, exiting`);
+    exit(0);
+  }
+
+  const commitSha = await $`git rev-parse HEAD`
+    .quiet()
+    .text()
+    .then((sha) => sha.trim());
+
+  log.line();
+  log.log(
+    `🚀 Generating package releases for v${publishVersion} and commit ${commitSha}`
+  );
+  log.line();
+
+  const publishedPackages: string[] = [];
+  const failedPackages: string[] = [];
+
+  for (const pkg of pkgs) {
+    log.section(pkg.packageJson.name);
+    log.info(`Creating release for: ${pkg.packageJson.name}`);
+
+    if (dryRun) {
+      log.warn('DRY_RUN enabled - no actual changes will be published');
+    }
+
+    if (!pkg.path) {
+      log.error(`No path found for ${pkg.tagName}`);
+      continue;
+    }
+
+    try {
+      const changelog = await Bun.file(
+        resolve(pkg.path, CHANGELOG_NAME)
+      ).text();
+
+      const changelogEntry = getChangelogEntry(
+        changelog,
+        publishVersion ? publishVersion : pkg.packageJson.version
+      );
+
+      await createRelease({
+        dryRun,
+        token: githubToken,
+        tagName: pkg.tagName,
+        changelog: changelogEntry,
+        prerelease: pkg.packageJson.version.includes('-'),
+        latest: pkg.tagName.startsWith('@docsearch/react@'),
+        commitSha,
+      });
+
+      publishedPackages.push(pkg.packageJson.name);
+    } catch (e) {
+      log.error(Error.isError(e) ? e.message : String(e));
+      failedPackages.push(pkg.packageJson.name);
+    }
+    log.line();
+  }
+
+  if (!dryRun) {
+    log.line();
+  }
+
+  if (publishedPackages.length === 0) {
+    log.error('Failed to generate releases on GitHub');
+    exit(1);
+  }
+
+  log.success('GitHub releases generated for the following packages:');
+  publishedPackages.forEach((pkg) => {
+    log.log(`   -  ${pkg}`);
+  });
+
+  if (failedPackages.length > 0) {
+    log.error('Some packages failed to be released on GitHub:');
+    failedPackages.forEach((pkg) => {
+      log.log(`   -  ${pkg}`);
+    });
+    exit(1);
+  }
+}
+
+const { values } = parseArgs({
+  args: Bun.argv.slice(2),
+  options: {
+    'dry-run': {
+      type: 'boolean',
+      short: 'd',
+    },
+    version: {
+      type: 'string',
+      short: 'v',
+    },
+  },
+  strict: true,
+});
+
+runFlow({ dryRun: values['dry-run'], wantedVersion: values.version }).catch(
+  (e) => {
+    log.error(String(e));
+    exit(1);
+  }
+);

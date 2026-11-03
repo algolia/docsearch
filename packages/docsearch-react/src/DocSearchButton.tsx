@@ -107,10 +107,9 @@ function DocSearchButtonKey({
   return (
     <kbd
       className={
-        isKeyDown
-          ? 'DocSearch-Button-Key DocSearch-Button-Key--pressed'
-          : 'DocSearch-Button-Key' +
-            (reactsToKey === 'Ctrl' ? ' DocSearch-Button-Key--ctrl' : '')
+        'DocSearch-Button-Key' +
+        (reactsToKey === 'Control' ? ' DocSearch-Button-Key--ctrl' : '') +
+        (isKeyDown ? ' DocSearch-Button-Key--pressed' : '')
       }
     >
       {children}

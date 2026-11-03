@@ -4,11 +4,16 @@ import type { FacetBarFacet } from '../components/FacetBar';
 import type { DocSearchFacet, DocSearchIndex } from '../DocSearch';
 import { useFacetValues } from '../useFacetValues';
 import type { useSearchClient } from '../useSearchClient';
-import type { FacetSelections } from '../utils/createDocSearchSources';
+import type {
+  FacetSelections,
+  FacetSelectionUpdate,
+} from '../utils/createDocSearchSources';
 import {
   deriveDefaultSelectedFacetsFromIndex,
   normalizeFacets,
 } from '../utils/facets';
+
+const EMPTY_SELECTION: string[] = [];
 
 export interface UseDocSearchFacetsProps {
   facets?: DocSearchFacet[];
@@ -27,8 +32,33 @@ export interface UseDocSearchFacetsResult {
   facetSelections: FacetSelections;
   /** Always-current selections, for consumption inside `getSources` closures. */
   facetSelectionsRef: React.MutableRefObject<FacetSelections>;
-  handleFacetSelectionChange: (facet: string, value: string) => void;
+  /**
+   * Replaces the selected values of a facet. An empty array clears the facet,
+   * which also drops any configured `facetFilters` entry for that key.
+   */
+  handleFacetSelectionChange: (
+    facet: string,
+    update: FacetSelectionUpdate
+  ) => void;
   clearFacetSelections: () => void;
+}
+
+/**
+ * Compares two selections for a facet. A missing entry and an empty array are
+ * both "nothing selected" so clearing an untouched facet doesn't trigger a
+ * refresh.
+ */
+function areSelectionsEqual(
+  a: string[] | undefined,
+  b: string[] | undefined
+): boolean {
+  const left = a ?? EMPTY_SELECTION;
+  const right = b ?? EMPTY_SELECTION;
+
+  if (left === right) return true;
+  if (left.length !== right.length) return false;
+
+  return left.every((value, index) => value === right[index]);
 }
 
 export function useDocSearchFacets({
@@ -74,29 +104,41 @@ export function useDocSearchFacets({
   }, []);
 
   const handleFacetSelectionChange = React.useCallback(
-    (facet: string, value: string): void => {
+    (facet: string, update: FacetSelectionUpdate): void => {
       const existing = facetSelectionsRef.current[facet];
+      const values =
+        typeof update === 'function'
+          ? update(existing ?? EMPTY_SELECTION)
+          : update;
 
-      if (existing === value) return;
+      if (areSelectionsEqual(existing, values)) return;
 
-      const next = { ...facetSelectionsRef.current };
-
-      next[facet] = value;
-
-      applySelections(next);
+      applySelections({ ...facetSelectionsRef.current, [facet]: values });
     },
     [applySelections]
   );
 
   const clearFacetSelections = React.useCallback(() => {
-    if (Object.keys(facetSelectionsRef.current).length === 0) return;
-    const next = {};
+    const current = facetSelectionsRef.current;
+    const next: FacetSelections = {};
+    let hasSelectedValues = false;
 
+    // Keep an explicit empty override for every exposed facet that already
+    // has an entry, including facets the user cleared individually. Dropping
+    // those entries would silently re-apply their configured `facetFilters`.
     for (const facet of normalizedFacetsRef.current) {
-      if (facetSelectionsRef.current[facet.key]) {
-        next[facet.key] = '';
+      const values = current[facet.key];
+
+      if (values === undefined) continue;
+
+      if (values.length > 0) {
+        hasSelectedValues = true;
       }
+
+      next[facet.key] = EMPTY_SELECTION;
     }
+
+    if (!hasSelectedValues) return;
 
     applySelections(next);
   }, [applySelections]);

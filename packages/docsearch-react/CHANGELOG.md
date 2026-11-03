@@ -1,5 +1,110 @@
 # @docsearch/react
 
+## 5.2.0
+
+### Minor Changes
+
+- 854a42a: ---
+
+  ## "@docsearch/react": minor
+
+  feat(react): add `mergeFacetFilters` helper, exported from `@docsearch/react/utils`
+
+  Merges `facetFilters` the way faceted search does: values for the same facet across inputs are ORed, and different facets are ANDed. Negated values (`facet:-value`) are always ANDed.
+
+### Patch Changes
+
+- 084a151: Publish license banners without the `UNRELEASED` marker. The release job now builds the packages itself, so the banner is set during the release build.
+- b81d381: Allow `facetFilters` types for Agent Studio `searchParameters`
+- b339636: Skip the scrollbar width compensation when the page sets `scrollbar-gutter: stable`, so opening the modal no longer shifts the page.
+- 4cf99d5: Update the Ask AI `apiKey`, `appId`, and `askAi` prop docs to say "agent" instead of "assistant" to match Agent Studio naming.
+- Updated dependencies [084a151]
+- Updated dependencies [854f9d3]
+  - @docsearch/core@5.2.0
+  - @docsearch/css@5.2.0
+
+## 5.1.2
+
+### Patch Changes
+
+- e98f0f7: Fix the Control key hint's pressed feedback on Windows and Linux while preserving its width.
+- 12ab5da: Ignore Enter while an IME composition is in progress, so confirming a Japanese, Chinese, or Korean conversion no longer selects a search result or sends an Ask AI prompt.
+- 439328e: Fix Ask AI resending the conversation after server-executed tool calls (search, memory), which Agent Studio rejected with "Conversation must end with a user message or resolved tool results". Automatic sends now only happen after client-executed tools (`onToolCall`) complete.
+  - @docsearch/css@5.1.2
+  - @docsearch/core@5.1.2
+
+## 5.1.1
+
+### Patch Changes
+
+- ff16bf6: Add `@docsearch/react/sidepanelButton` and `@docsearch/react/sidepanelPanel` entry points so consumers can statically import the Sidepanel trigger while dynamically importing the panel (and its Ask AI/Markdown dependencies) only when needed. `@docsearch/sidepanel` now uses these split entries internally.
+- 1775a18: Fix a crash on Safari 14 when importing DocSearch bundles. Marked's lookbehind feature detection was being incorrectly optimized away by the build tool, causing it to always pick a regex pattern that Safari 14 can't parse. Upgraded tsdown/rolldown to pick up the upstream fix, and removed an unrelated lookbehind from the Ask AI link extractor for the same reason.
+- 0e5bde9: Make closed Sidepanels inert so their content is excluded from keyboard navigation and the accessibility tree while preserving conversation state.
+- Updated dependencies [1775a18]
+  - @docsearch/core@5.1.1
+  - @docsearch/css@5.1.1
+
+## 5.1.0
+
+### Minor Changes
+
+- 977cf17: feat(facets): Support selecting multiple values per facet
+
+  `FacetBar` now renders checkbox items instead of a radio group, so users can
+  select more than one value per facet. Selected values for the same facet are
+  combined into an Algolia `facetFilters` OR group; different facets are still
+  combined with AND. Configured `facetFilters` OR groups that share a single
+  facet key (for example `['lang:en', 'lang:fr']`) are now recognized as the
+  default selection for that facet, in addition to single `key:value` entries.
+
+- 3914a42: Upgrade `ai` to v6 and `@ai-sdk/react` to v3
+
+### Patch Changes
+
+- Updated dependencies [977cf17]
+  - @docsearch/css@5.1.0
+  - @docsearch/core@5.1.0
+
+## 5.0.5
+
+### Patch Changes
+
+- @docsearch/css@5.0.5
+- @docsearch/core@5.0.5
+
+## 5.0.4
+
+### Patch Changes
+
+- f29b541: fix: Allow `DocSearchAI` to accept Ask AI-specific modal translations.
+  - @docsearch/css@5.0.4
+  - @docsearch/core@5.0.4
+
+## 5.0.3
+
+### Patch Changes
+
+- 537afaa: fix(askai): Fixes `interceptAskAiEvent` not being called when selecting an Ask AI item with keyboard (`Enter`)
+  - @docsearch/css@5.0.3
+  - @docsearch/core@5.0.3
+
+## 5.0.2
+
+### Patch Changes
+
+- 1508196: Fix Ask AI conversations breaking after stopping a stream mid-tool-call. Incomplete tool parts (`input-streaming`/`input-available`) are now pruned before resending, so the dangling `tool_use` no longer causes the provider to reject every subsequent question.
+- 59c575f: fix(askai): preserve the conversation when opening Ask AI from the results row [#3010](https://github.com/algolia/docsearch/issues/3010)
+  - @docsearch/css@5.0.2
+  - @docsearch/core@5.0.2
+
+## 5.0.1
+
+### Patch Changes
+
+- 4ac53c4: Fixes missing published export for keyword only `<DocSearch />` that was missed in [#2884](https://github.com/algolia/docsearch/pull/2884).
+  - @docsearch/css@5.0.1
+  - @docsearch/core@5.0.1
+
 ## 5.0.0
 
 ### Major Changes
