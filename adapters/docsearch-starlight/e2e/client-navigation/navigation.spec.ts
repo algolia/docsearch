@@ -2,8 +2,6 @@ import { expect, test } from '@playwright/test';
 
 import { mockInstallationSearch } from '../fixtures';
 
-test.use({ baseURL: 'http://127.0.0.1:4323' });
-
 test('cleans up an open search and remounts after client navigation', async ({
   page,
 }) => {
