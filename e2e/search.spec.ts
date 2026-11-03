@@ -169,6 +169,43 @@ test.describe('Search', () => {
     await expect(page).not.toHaveURL(initialURL, { timeout: 10000 });
   });
 
+  test('Only the selected hit shows the select icon', async ({
+    docSearch,
+    page,
+  }) => {
+    await docSearch.typeQueryMatching();
+    await expect(docSearch.hits).toBeVisible();
+    const firstHitOption = page
+      .locator('#docsearch-hits_docsearch_0-list')
+      .getByRole('option')
+      .first();
+    const firstHitOptionId = await firstHitOption.getAttribute('id');
+
+    for (let index = 0; index < MAX_KEYBOARD_NAVIGATION_STEPS; index++) {
+      if (
+        (await docSearch.input.getAttribute('aria-activedescendant')) ===
+        firstHitOptionId
+      ) {
+        break;
+      }
+
+      await page.keyboard.press('ArrowDown');
+    }
+
+    await expect(firstHitOption).toHaveAttribute('aria-selected', 'true');
+    await expect(
+      firstHitOption.locator('.DocSearch-Hit-Select-Icon')
+    ).toBeVisible();
+
+    const unselectedIcons = page.locator(
+      ".DocSearch-Hit:not([aria-selected='true']) .DocSearch-Hit-Select-Icon"
+    );
+    expect(await unselectedIcons.count()).toBeGreaterThan(0);
+    for (const icon of await unselectedIcons.all()) {
+      await expect(icon).toBeHidden();
+    }
+  });
+
   test('Keyboard navigation keeps working after clicking a group title or the footer', async ({
     docSearch,
     page,
