@@ -1,0 +1,4 @@
+lib
+libtmp
+*.tsbuildinfo
+.astro/
