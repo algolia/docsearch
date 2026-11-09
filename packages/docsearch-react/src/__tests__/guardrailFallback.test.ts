@@ -29,16 +29,23 @@ describe('guardrail fallback', () => {
     const original = message('Please ask about the documentation.');
     const resolved = resolveGuardrailFallback(original);
     expect(resolved.parts.filter((part) => part.type === 'text')).toEqual([
-      { type: 'text', text: 'Please ask about the documentation.', state: 'done' },
+      {
+        type: 'text',
+        text: 'Please ask about the documentation.',
+        state: 'done',
+      },
     ]);
     expect(original.parts[0]).toEqual({ type: 'text', text: 'I' });
     expect(resolveGuardrailFallback(resolved)).toEqual(resolved);
   });
 
-  it.each([undefined, ''])('preserves text when the fallback is %j', (fallback) => {
-    const original = message(fallback);
-    expect(resolveGuardrailFallback(original)).toBe(original);
-  });
+  it.each([undefined, ''])(
+    'preserves text when the fallback is %j',
+    (fallback) => {
+      const original = message(fallback);
+      expect(resolveGuardrailFallback(original)).toBe(original);
+    }
+  );
 
   it('sends the fallback as conversation context without the data event', () => {
     expect(sanitizeMessagesForRequest([message('Fallback')])[0].parts).toEqual([
