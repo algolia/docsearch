@@ -101,6 +101,11 @@ type CustomTools = {
 type Tools = AgentStudioMemoryTools & CustomTools & SearchTools;
 
 type DataParts = {
+  'guardrail-violation': {
+    category: string;
+    guardrailType: string;
+    fallbackResponse?: string;
+  };
   suggestions: {
     suggestions: string[];
   };

@@ -20,6 +20,31 @@ import {
 } from './askAiBlockingMatchers';
 import { sanitizeUrl, sanitizeUserInput } from './sanitize';
 
+// Guardrails can interrupt a response after text has already been streamed.
+// Use the complete fallback for rendering, feedback, and conversation storage.
+export function resolveGuardrailFallback(message: AIMessage): AIMessage {
+  if (message.role !== 'assistant') return message;
+
+  const violation = message.parts.findLast(
+    (part) =>
+      part.type === 'data-guardrail-violation' &&
+      typeof part.data.fallbackResponse === 'string' &&
+      part.data.fallbackResponse.length > 0
+  );
+
+  if (violation?.type !== 'data-guardrail-violation') return message;
+  const fallbackResponse = violation.data.fallbackResponse;
+  if (!fallbackResponse) return message;
+
+  return {
+    ...message,
+    parts: [
+      ...message.parts.filter((part) => part.type !== 'text'),
+      { type: 'text', text: fallbackResponse, state: 'done' },
+    ],
+  };
+}
+
 export interface ExtractedLink {
   url: string;
   title?: string;
@@ -316,7 +341,8 @@ export function shouldSendAutomatically(
 export function sanitizeMessagesForRequest(messages: AIMessage[]): AIMessage[] {
   let sanitizedMessages: AIMessage[] | undefined;
 
-  messages.forEach((message, index) => {
+  messages.forEach((originalMessage, index) => {
+    const message = resolveGuardrailFallback(originalMessage);
     // Remove parts that Agent Studio does not support during a request, including incomplete tool calls
     const parts = message.parts.filter((part) => {
       if (isDataUIPart(part)) {
