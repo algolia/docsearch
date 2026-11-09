@@ -26,7 +26,8 @@ export function resolveGuardrailFallback(message: AIMessage): AIMessage {
   if (message.role !== 'assistant') return message;
 
   // No findLast: unsupported on older Safari (see shouldSendAutomatically)
-  const violation = message.parts.reduce<AIMessage['parts'][number] | undefined>(
+  type Part = AIMessage['parts'][number];
+  const violation = message.parts.reduce<Part | undefined>(
     (found, part) =>
       part.type === 'data-guardrail-violation' &&
       typeof part.data.fallbackResponse === 'string' &&
