@@ -16,8 +16,33 @@ export const configSchema = z.strictObject({
   appId: nonBlankString,
   apiKey: nonBlankString,
   indices: z.array(indexSchema).min(1),
+  facets: z
+    .array(
+      z.strictObject({ key: nonBlankString, label: z.string().optional() })
+    )
+    .optional(),
   placeholder: z.string().optional(),
+  maxResultsPerGroup: z.number().int().positive().optional(),
+  disableUserPersonalization: z.boolean().optional(),
+  initialQuery: z.string().optional(),
   translations: z.record(z.string(), z.json()).optional(),
+  insights: z
+    .union([
+      z.boolean(),
+      z.strictObject({
+        insightsInitParams: z.record(z.string(), z.json()).optional(),
+      }),
+    ])
+    .optional(),
+  recentSearchesLimit: z.number().int().nonnegative().optional(),
+  recentSearchesWithFavoritesLimit: z.number().int().nonnegative().optional(),
+  keyboardShortcuts: z
+    .strictObject({
+      'Ctrl/Cmd+K': z.boolean().optional(),
+      '/': z.boolean().optional(),
+    })
+    .optional(),
+  resultBadgeKey: z.string().optional(),
 });
 
 // Validates the provided DocSearch options against the schema and ensures they are JSON-safe.

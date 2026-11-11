@@ -48,6 +48,15 @@ Use a public search-only API key. These options are included in your site's brow
 | `indices` | Yes | One or more indices to search. Each entry is an index name or an object with `name` and optional `searchParameters`. |
 | `placeholder` | No | Search input placeholder. Defaults to Starlight's localized search label. |
 | `translations` | No | Overrides for DocSearch button and modal text. |
+| `facets` | No | Facets to show as filter controls, as `{ key, label? }` objects. |
+| `maxResultsPerGroup` | No | Maximum number of hits per group. |
+| `disableUserPersonalization` | No | Disables recent and favorite searches. |
+| `initialQuery` | No | Query prefilled when the modal opens. |
+| `insights` | No | `true`, or `{ insightsInitParams }` to send analytics events. |
+| `recentSearchesLimit` | No | Number of recent searches to keep. |
+| `recentSearchesWithFavoritesLimit` | No | Number of recent searches to keep when favorites exist. |
+| `keyboardShortcuts` | No | Enable or disable the `Ctrl/Cmd+K` and `/` shortcuts. |
+| `resultBadgeKey` | No | Hit attribute shown as a badge on each result. |
 
 This example sets search parameters for an index and customizes the placeholder and button text:
 

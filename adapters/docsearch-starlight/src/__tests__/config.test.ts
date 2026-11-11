@@ -43,6 +43,41 @@ describe('validateOptions', () => {
     expect(() => validateOptions(options)).toThrow('askAi');
   });
 
+  it('accepts JSON-safe DocSearch props', () => {
+    const options = {
+      ...createOptions(),
+      facets: [{ key: 'lang', label: 'Language' }],
+      maxResultsPerGroup: 5,
+      disableUserPersonalization: true,
+      initialQuery: 'hello',
+      insights: true,
+      recentSearchesLimit: 3,
+      recentSearchesWithFavoritesLimit: 2,
+      keyboardShortcuts: { 'Ctrl/Cmd+K': false, '/': true },
+      resultBadgeKey: 'version',
+    };
+
+    expect(() => validateOptions(options)).not.toThrow();
+  });
+
+  it('rejects invalid values for DocSearch props', () => {
+    expect(() =>
+      validateOptions({ ...createOptions(), theme: 'dark' })
+    ).toThrow('theme');
+    expect(() =>
+      validateOptions({ ...createOptions(), insights: { insightsClient: 'x' } })
+    ).toThrow('insights');
+    expect(() =>
+      validateOptions({ ...createOptions(), maxResultsPerGroup: 0 })
+    ).toThrow('maxResultsPerGroup');
+    expect(() =>
+      validateOptions({
+        ...createOptions(),
+        keyboardShortcuts: { 'Ctrl/Cmd+I': true },
+      })
+    ).toThrow('keyboardShortcuts');
+  });
+
   it('rejects unsupported index options', () => {
     const options = {
       ...createOptions(),

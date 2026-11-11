@@ -9,7 +9,19 @@ const RESOLVED_CONFIG_MODULE_ID = `\0${CONFIG_MODULE_ID}`;
 
 export type StarlightDocSearchOptions = Pick<
   DocSearchProps,
-  'appId' | 'apiKey' | 'placeholder' | 'translations'
+  | 'appId'
+  | 'apiKey'
+  | 'facets'
+  | 'placeholder'
+  | 'maxResultsPerGroup'
+  | 'disableUserPersonalization'
+  | 'initialQuery'
+  | 'translations'
+  | 'insights'
+  | 'recentSearchesLimit'
+  | 'recentSearchesWithFavoritesLimit'
+  | 'keyboardShortcuts'
+  | 'resultBadgeKey'
 > & {
   indices: NonNullable<DocSearchProps['indices']>;
 };
@@ -61,14 +73,7 @@ export default function docsearch(
 function vitePluginDocSearch(
   options: StarlightDocSearchOptions
 ): NonNullable<ViteUserConfig['plugins']>[number] {
-  const { appId, apiKey, indices, placeholder, translations } = options;
-  const moduleSource = `export default ${JSON.stringify({
-    appId,
-    apiKey,
-    indices,
-    placeholder,
-    translations,
-  })};`;
+  const moduleSource = `export default ${JSON.stringify(options)};`;
 
   return {
     name: 'vite-plugin-docsearch-starlight-config',
