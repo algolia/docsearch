@@ -1,4 +1,7 @@
+import type { DocSearchProps } from '@docsearch/js/docsearch';
 import { z } from 'astro/zod';
+
+import { searchParametersSchema } from './searchParameters.js';
 
 const nonBlankString = z.string().refine((value) => value.trim().length > 0, {
   message: 'Must not be empty or whitespace-only',
@@ -8,9 +11,9 @@ const indexSchema = z.union([
   nonBlankString,
   z.strictObject({
     name: nonBlankString,
-    searchParameters: z.record(z.string(), z.json()).optional(),
+    searchParameters: searchParametersSchema.optional(),
   }),
-]);
+]) satisfies z.ZodType<DocSearchProps['indices'][number]>;
 
 export const configSchema = z.strictObject({
   appId: nonBlankString,

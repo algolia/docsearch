@@ -78,6 +78,23 @@ describe('validateOptions', () => {
     ).toThrow('keyboardShortcuts');
   });
 
+  it('rejects unknown or mistyped search parameters', () => {
+    const withParams = (searchParameters: unknown) => ({
+      ...createOptions(),
+      indices: [{ name: 'docs', searchParameters }],
+    });
+
+    expect(() => validateOptions(withParams({ hitsPerPag: 8 }))).toThrow(
+      'indices'
+    );
+    expect(() => validateOptions(withParams({ hitsPerPage: 'eight' }))).toThrow(
+      'indices'
+    );
+    expect(() =>
+      validateOptions(withParams({ queryType: 'prefixSome' }))
+    ).toThrow('indices');
+  });
+
   it('rejects unsupported index options', () => {
     const options = {
       ...createOptions(),
