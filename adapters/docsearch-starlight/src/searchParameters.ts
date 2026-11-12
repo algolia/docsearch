@@ -1,6 +1,7 @@
+import type { DocSearchProps } from '@docsearch/js/docsearch';
 import { z } from 'astro/zod';
 
-// Mirrors the `searchParameters` type of DocSearch indices; see the type check in config.ts.
+// Mirrors the `searchParameters` type of DocSearch indices; checked at the end of this file and in config.ts.
 
 type NestedFilter = string | NestedFilter[];
 
@@ -224,3 +225,22 @@ export const searchParametersSchema = z.strictObject({
   enableReRanking: z.boolean().optional(),
   reRankingApplyFilter: z.union([nestedFilter, z.null()]).optional(),
 });
+
+type RealKeys = keyof NonNullable<
+  Extract<
+    DocSearchProps['indices'][number],
+    { name: string }
+  >['searchParameters']
+>;
+type SchemaKeys = keyof z.infer<typeof searchParametersSchema>;
+
+// `satisfies` in config.ts misses parameters added by an algoliasearch upgrade; this fails the build and names them.
+export const _searchParametersKeysMatch: [
+  Exclude<RealKeys, SchemaKeys>,
+  Exclude<SchemaKeys, RealKeys>,
+] extends [never, never]
+  ? true
+  : {
+      missing: Exclude<RealKeys, SchemaKeys>;
+      extra: Exclude<SchemaKeys, RealKeys>;
+    } = true;
