@@ -6,17 +6,21 @@ const searchLabel = Astro.locals.t('search.label');
 
 
 <div id="docsearch" data-search-label={searchLabel}></div>
+<div id="docsearch-sidepanel-button"></div>
 
 <script>
   // oxlint-disable-next-line typescript/triple-slash-reference -- Include the packaged ambient virtual-module declaration without a runtime import.
   /// <reference path="./virtual.d.ts" />
   import docsearch from '@docsearch/js/docsearch';
   import type { DocSearchInstance, DocSearchProps } from '@docsearch/js/docsearch';
+  import type { SidepanelInstance } from '@docsearch/sidepanel-js';
   import config from 'virtual:docsearch-starlight-config';
 
-  const { askAi, ...keywordConfig } = config;
+  const { askAi, sidePanel, ...keywordConfig } = config;
+  type AskAiConfig = NonNullable<typeof askAi>;
 
   let instance: DocSearchInstance | undefined;
+  let panel: SidepanelInstance | undefined;
   let mountedContainer: HTMLElement | undefined;
   // Lets a pending Ask AI import detect that it was unmounted or superseded.
   let mountId = 0;
@@ -24,22 +28,72 @@ const searchLabel = Astro.locals.t('search.label');
   function unmountSearch() {
     mountId++;
     instance?.destroy();
+    panel?.destroy();
     instance = undefined;
+    panel = undefined;
     mountedContainer = undefined;
   }
 
   // Lazy-loaded so keyword-only sites don't ship the Ask AI bundle.
   async function createAskAiSearch(
     props: DocSearchProps,
-    askAiConfig: NonNullable<typeof askAi>
+    askAiConfig: AskAiConfig
   ): Promise<DocSearchInstance> {
     try {
       const { default: docsearchAi } = await import('@docsearch/js');
-      return docsearchAi({ ...props, askAi: askAiConfig });
+      return docsearchAi({
+        ...props,
+        askAi: askAiConfig,
+        // Without a mounted panel, Ask AI stays in the modal.
+        interceptAskAiEvent: (initialMessage) => {
+          if (!panel) return false;
+          instance?.close();
+          panel.open(initialMessage);
+          return true;
+        },
+        onOpen: () => panel?.close(),
+      });
     } catch (error) {
       // oxlint-disable-next-line no-console -- Explain why Ask AI is missing while keyword search keeps working.
       console.error('DocSearch Ask AI failed to load. Using keyword search.', error);
       return docsearch(props);
+    }
+  }
+
+  async function createSidePanel(
+    container: HTMLElement,
+    askAiConfig: AskAiConfig
+  ): Promise<SidepanelInstance | undefined> {
+    try {
+      const [{ default: sidepanel }] = await Promise.all([
+        import('@docsearch/sidepanel-js'),
+        import('@docsearch/css/dist/sidepanel.css'),
+      ]);
+      const agent =
+        typeof askAiConfig === 'string' ? { agentId: askAiConfig } : askAiConfig;
+      const { keyboardShortcuts, ...panelOptions } =
+        typeof sidePanel === 'object' ? sidePanel : {};
+
+      return sidepanel({
+        container,
+        agentId: agent.agentId,
+        appId: agent.appId ?? config.appId,
+        apiKey: agent.apiKey ?? config.apiKey,
+        indices: agent.indices,
+        searchParameters: agent.searchParameters,
+        keyboardShortcuts,
+        button: { variant: 'inline', translations: { buttonText: '' } },
+        panel: {
+          pushSelector: '.main-frame',
+          suggestedQuestions: agent.suggestedQuestions,
+          ...panelOptions,
+        },
+        onOpen: () => instance?.close(),
+      });
+    } catch (error) {
+      // oxlint-disable-next-line no-console -- Explain why the side panel is missing while search keeps working.
+      console.error('DocSearch side panel failed to load.', error);
+      return undefined;
     }
   }
 
@@ -78,6 +132,18 @@ const searchLabel = Astro.locals.t('search.label');
 
     instance = created;
     mountedContainer = container;
+
+    const panelContainer = document.querySelector<HTMLElement>(
+      '#docsearch-sidepanel-button'
+    );
+    if (!askAi || !sidePanel || !panelContainer) return;
+
+    const createdPanel = await createSidePanel(panelContainer, askAi);
+    if (currentMountId !== mountId) {
+      createdPanel?.destroy();
+      return;
+    }
+    panel = createdPanel;
   }
 
   // Astro keeps this script loaded across client-side navigation.
@@ -144,6 +210,16 @@ const searchLabel = Astro.locals.t('search.label');
   #docsearch :global(.DocSearch-Button:focus-visible) {
     outline: 2px solid var(--sl-color-accent);
     outline-offset: 3px;
+  }
+
+  #docsearch-sidepanel-button {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+  }
+
+  #docsearch-sidepanel-button:not(:empty) {
+    margin-inline-start: 0.5rem;
   }
 
   @media (width < 50rem) {
