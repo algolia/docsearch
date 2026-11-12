@@ -2,7 +2,11 @@ import type { StarlightPlugin } from '@astrojs/starlight/types';
 import type { DocSearchProps } from '@docsearch/js/docsearch';
 import type { ViteUserConfig } from 'astro';
 
-import { type AskAiOptions, validateOptions } from './config.js';
+import {
+  type AskAiOptions,
+  type SidePanelOptions,
+  validateOptions,
+} from './config.js';
 
 const CONFIG_MODULE_ID = 'virtual:docsearch-starlight-config';
 const RESOLVED_CONFIG_MODULE_ID = `\0${CONFIG_MODULE_ID}`;
@@ -26,6 +30,8 @@ export type StarlightDocSearchOptions = Pick<
   indices: NonNullable<DocSearchProps['indices']>;
   /** Agent ID, or a JSON-safe Ask AI configuration. */
   askAi?: string | AskAiOptions;
+  /** Ask AI side panel; requires `askAi`. */
+  sidePanel?: boolean | SidePanelOptions;
 };
 
 export default function docsearch(

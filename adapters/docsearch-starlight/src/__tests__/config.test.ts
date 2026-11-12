@@ -38,9 +38,56 @@ describe('validateOptions', () => {
   });
 
   it('rejects unsupported root options', () => {
-    const options = { ...createOptions(), sidePanel: true };
+    const options = { ...createOptions(), hitComponent: 'x' };
 
-    expect(() => validateOptions(options)).toThrow('sidePanel');
+    expect(() => validateOptions(options)).toThrow('hitComponent');
+  });
+
+  it('accepts a side panel alongside Ask AI', () => {
+    const withSidePanel = (sidePanel: unknown) => ({
+      ...createOptions(),
+      askAi: 'agent-id',
+      sidePanel,
+    });
+
+    expect(() => validateOptions(withSidePanel(true))).not.toThrow();
+    expect(() =>
+      validateOptions(
+        withSidePanel({
+          variant: 'floating',
+          side: 'left',
+          width: 400,
+          expandedWidth: '60vw',
+          suggestedQuestions: true,
+          indices: ['docs'],
+          keyboardShortcuts: { 'Ctrl/Cmd+I': false },
+        })
+      )
+    ).not.toThrow();
+  });
+
+  it('rejects a side panel without Ask AI', () => {
+    expect(() =>
+      validateOptions({ ...createOptions(), sidePanel: true })
+    ).toThrow('`sidePanel` requires `askAi`');
+  });
+
+  it('rejects invalid side panel options', () => {
+    const withSidePanel = (sidePanel: unknown) => ({
+      ...createOptions(),
+      askAi: 'agent-id',
+      sidePanel,
+    });
+
+    expect(() => validateOptions(withSidePanel({ variant: 'docked' }))).toThrow(
+      'sidePanel'
+    );
+    expect(() => validateOptions(withSidePanel({ tools: {} }))).toThrow(
+      'sidePanel'
+    );
+    expect(() =>
+      validateOptions(withSidePanel({ memory: { userToken: 'jwt' } }))
+    ).toThrow('sidePanel');
   });
 
   it('accepts an Ask AI agent id or configuration', () => {

@@ -1,5 +1,6 @@
 import type { DocSearchProps as DocSearchAIProps } from '@docsearch/js';
 import type { DocSearchProps } from '@docsearch/js/docsearch';
+import type { SidepanelProps } from '@docsearch/sidepanel-js';
 import { z } from 'astro/zod';
 
 import { nestedFilter, searchParametersSchema } from './searchParameters.js';
@@ -51,39 +52,71 @@ const askAiSchema = z.union([
   }),
 ]) satisfies z.ZodType<string | AskAiOptions>;
 
-export const configSchema = z.strictObject({
-  appId: nonBlankString,
-  apiKey: nonBlankString,
-  indices: z.array(indexSchema).min(1),
-  facets: z
-    .array(
-      z.strictObject({ key: nonBlankString, label: z.string().optional() })
-    )
-    .optional(),
-  placeholder: z.string().optional(),
-  maxResultsPerGroup: z.number().int().positive().optional(),
-  disableUserPersonalization: z.boolean().optional(),
-  initialQuery: z.string().optional(),
-  translations: z.record(z.string(), z.json()).optional(),
-  insights: z
-    .union([
-      z.boolean(),
-      z.strictObject({
-        insightsInitParams: z.record(z.string(), z.json()).optional(),
-      }),
-    ])
-    .optional(),
-  recentSearchesLimit: z.number().int().nonnegative().optional(),
-  recentSearchesWithFavoritesLimit: z.number().int().nonnegative().optional(),
-  keyboardShortcuts: z
-    .strictObject({
-      'Ctrl/Cmd+K': z.boolean().optional(),
-      '/': z.boolean().optional(),
-    })
-    .optional(),
-  resultBadgeKey: z.string().optional(),
-  askAi: askAiSchema.optional(),
-});
+// Panel layout options; the agent and credentials come from `askAi`.
+export type SidePanelOptions = Omit<
+  NonNullable<SidepanelProps['panel']>,
+  'tools' | 'memory' | 'portalContainer'
+> &
+  Pick<SidepanelProps, 'keyboardShortcuts'>;
+
+const cssWidth = z.union([z.number().positive(), nonBlankString]);
+
+const sidePanelSchema = z.union([
+  z.boolean(),
+  z.strictObject({
+    variant: z.enum(['floating', 'inline']).optional(),
+    side: z.enum(['left', 'right']).optional(),
+    width: cssWidth.optional(),
+    expandedWidth: cssWidth.optional(),
+    pushSelector: nonBlankString.optional(),
+    suggestedQuestions: z.boolean().optional(),
+    indices: z.array(nonBlankString).optional(),
+    translations: z.record(z.string(), z.json()).optional(),
+    keyboardShortcuts: z
+      .strictObject({ 'Ctrl/Cmd+I': z.boolean().optional() })
+      .optional(),
+  }),
+]) satisfies z.ZodType<boolean | SidePanelOptions>;
+
+export const configSchema = z
+  .strictObject({
+    appId: nonBlankString,
+    apiKey: nonBlankString,
+    indices: z.array(indexSchema).min(1),
+    facets: z
+      .array(
+        z.strictObject({ key: nonBlankString, label: z.string().optional() })
+      )
+      .optional(),
+    placeholder: z.string().optional(),
+    maxResultsPerGroup: z.number().int().positive().optional(),
+    disableUserPersonalization: z.boolean().optional(),
+    initialQuery: z.string().optional(),
+    translations: z.record(z.string(), z.json()).optional(),
+    insights: z
+      .union([
+        z.boolean(),
+        z.strictObject({
+          insightsInitParams: z.record(z.string(), z.json()).optional(),
+        }),
+      ])
+      .optional(),
+    recentSearchesLimit: z.number().int().nonnegative().optional(),
+    recentSearchesWithFavoritesLimit: z.number().int().nonnegative().optional(),
+    keyboardShortcuts: z
+      .strictObject({
+        'Ctrl/Cmd+K': z.boolean().optional(),
+        '/': z.boolean().optional(),
+      })
+      .optional(),
+    resultBadgeKey: z.string().optional(),
+    askAi: askAiSchema.optional(),
+    sidePanel: sidePanelSchema.optional(),
+  })
+  .refine((config) => !config.sidePanel || config.askAi, {
+    message: '`sidePanel` requires `askAi`',
+    path: ['sidePanel'],
+  });
 
 // Validates the provided DocSearch options against the schema and ensures they are JSON-safe.
 export function validateOptions(options: unknown): void {
