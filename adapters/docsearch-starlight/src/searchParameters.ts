@@ -4,7 +4,7 @@ import { z } from 'astro/zod';
 
 type NestedFilter = string | NestedFilter[];
 
-const nestedFilter: z.ZodType<NestedFilter> = z.lazy(() =>
+export const nestedFilter: z.ZodType<NestedFilter> = z.lazy(() =>
   z.union([z.string(), z.array(nestedFilter)])
 );
 

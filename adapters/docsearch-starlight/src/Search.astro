@@ -11,19 +11,39 @@ const searchLabel = Astro.locals.t('search.label');
   // oxlint-disable-next-line typescript/triple-slash-reference -- Include the packaged ambient virtual-module declaration without a runtime import.
   /// <reference path="./virtual.d.ts" />
   import docsearch from '@docsearch/js/docsearch';
-  import type { DocSearchInstance } from '@docsearch/js/docsearch';
+  import type { DocSearchInstance, DocSearchProps } from '@docsearch/js/docsearch';
   import config from 'virtual:docsearch-starlight-config';
+
+  const { askAi, ...keywordConfig } = config;
 
   let instance: DocSearchInstance | undefined;
   let mountedContainer: HTMLElement | undefined;
+  // Lets a pending Ask AI import detect that it was unmounted or superseded.
+  let mountId = 0;
 
   function unmountSearch() {
+    mountId++;
     instance?.destroy();
     instance = undefined;
     mountedContainer = undefined;
   }
 
-  function mountSearch() {
+  // Lazy-loaded so keyword-only sites don't ship the Ask AI bundle.
+  async function createAskAiSearch(
+    props: DocSearchProps,
+    askAiConfig: NonNullable<typeof askAi>
+  ): Promise<DocSearchInstance> {
+    try {
+      const { default: docsearchAi } = await import('@docsearch/js');
+      return docsearchAi({ ...props, askAi: askAiConfig });
+    } catch (error) {
+      // oxlint-disable-next-line no-console -- Explain why Ask AI is missing while keyword search keeps working.
+      console.error('DocSearch Ask AI failed to load. Using keyword search.', error);
+      return docsearch(props);
+    }
+  }
+
+  async function mountSearch() {
     const container = document.querySelector<HTMLElement>('#docsearch');
 
     if (container && container === mountedContainer && instance) return;
@@ -31,10 +51,10 @@ const searchLabel = Astro.locals.t('search.label');
     unmountSearch();
     if (!container) return;
 
+    const currentMountId = mountId;
     const searchLabel = container.dataset.searchLabel;
-
-    instance = docsearch({
-      ...config,
+    const props: DocSearchProps = {
+      ...keywordConfig,
       container,
       placeholder: config.placeholder ?? searchLabel,
       translations: {
@@ -45,7 +65,18 @@ const searchLabel = Astro.locals.t('search.label');
           ...config.translations?.button,
         },
       },
-    });
+    };
+
+    const created = askAi
+      ? await createAskAiSearch(props, askAi)
+      : docsearch(props);
+
+    if (currentMountId !== mountId) {
+      created.destroy();
+      return;
+    }
+
+    instance = created;
     mountedContainer = container;
   }
 

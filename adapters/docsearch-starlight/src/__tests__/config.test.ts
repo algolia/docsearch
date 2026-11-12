@@ -38,9 +38,42 @@ describe('validateOptions', () => {
   });
 
   it('rejects unsupported root options', () => {
-    const options = { ...createOptions(), askAi: 'agent-id' };
+    const options = { ...createOptions(), sidePanel: true };
 
-    expect(() => validateOptions(options)).toThrow('askAi');
+    expect(() => validateOptions(options)).toThrow('sidePanel');
+  });
+
+  it('accepts an Ask AI agent id or configuration', () => {
+    expect(() =>
+      validateOptions({ ...createOptions(), askAi: 'agent-id' })
+    ).not.toThrow();
+    expect(() =>
+      validateOptions({
+        ...createOptions(),
+        askAi: {
+          agentId: 'agent-id',
+          suggestedQuestions: true,
+          indices: ['docs'],
+          searchParameters: {
+            docs: { facetFilters: ['lang:en'], distinct: false },
+          },
+          promptSuggestions: { indexName: 'prompts', hitsPerPage: 3 },
+        },
+      })
+    ).not.toThrow();
+  });
+
+  it('rejects invalid Ask AI options', () => {
+    const withAskAi = (askAi: unknown) => ({ ...createOptions(), askAi });
+
+    expect(() => validateOptions(withAskAi('  '))).toThrow('askAi');
+    expect(() => validateOptions(withAskAi({}))).toThrow('askAi');
+    expect(() =>
+      validateOptions(withAskAi({ agentId: 'a', tools: {} }))
+    ).toThrow('askAi');
+    expect(() =>
+      validateOptions(withAskAi({ agentId: 'a', memory: { userToken: 'jwt' } }))
+    ).toThrow('askAi');
   });
 
   it('accepts JSON-safe DocSearch props', () => {

@@ -1,7 +1,8 @@
+import type { DocSearchProps as DocSearchAIProps } from '@docsearch/js';
 import type { DocSearchProps } from '@docsearch/js/docsearch';
 import { z } from 'astro/zod';
 
-import { searchParametersSchema } from './searchParameters.js';
+import { nestedFilter, searchParametersSchema } from './searchParameters.js';
 
 const nonBlankString = z.string().refine((value) => value.trim().length > 0, {
   message: 'Must not be empty or whitespace-only',
@@ -14,6 +15,41 @@ const indexSchema = z.union([
     searchParameters: searchParametersSchema.optional(),
   }),
 ]) satisfies z.ZodType<DocSearchProps['indices'][number]>;
+
+// `tools` needs functions; `memory` needs a per-user token, which a static config would leak.
+export type AskAiOptions = Omit<
+  Exclude<DocSearchAIProps['askAi'], string>,
+  'tools' | 'memory'
+>;
+
+const askAiSchema = z.union([
+  nonBlankString,
+  z.strictObject({
+    agentId: nonBlankString,
+    apiKey: nonBlankString.optional(),
+    appId: nonBlankString.optional(),
+    suggestedQuestions: z.boolean().optional(),
+    indices: z.array(nonBlankString).optional(),
+    searchParameters: z
+      .record(
+        nonBlankString,
+        z.strictObject({
+          facetFilters: nestedFilter.optional(),
+          filters: z.string().optional(),
+          attributesToRetrieve: z.array(z.string()).optional(),
+          restrictSearchableAttributes: z.array(z.string()).optional(),
+          distinct: z.union([z.boolean(), z.number(), z.string()]).optional(),
+        })
+      )
+      .optional(),
+    promptSuggestions: z
+      .strictObject({
+        indexName: nonBlankString,
+        hitsPerPage: z.number().int().positive().optional(),
+      })
+      .optional(),
+  }),
+]) satisfies z.ZodType<string | AskAiOptions>;
 
 export const configSchema = z.strictObject({
   appId: nonBlankString,
@@ -46,6 +82,7 @@ export const configSchema = z.strictObject({
     })
     .optional(),
   resultBadgeKey: z.string().optional(),
+  askAi: askAiSchema.optional(),
 });
 
 // Validates the provided DocSearch options against the schema and ensures they are JSON-safe.
