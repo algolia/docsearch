@@ -13,6 +13,7 @@ test('opens the side panel from the floating button', async ({ page }) => {
 
   const panelButton = page.locator('.DocSearch-SidepanelButton.floating');
   await expect(panelButton).toBeVisible();
+  await expect(page.locator('link[href*="sidepanel" i]')).toHaveCount(1);
 
   await panelButton.click();
   await expect(page.locator('.DocSearch-Sidepanel-Container')).toHaveClass(

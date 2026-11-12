@@ -14,6 +14,8 @@ const searchLabel = Astro.locals.t('search.label');
   import docsearch from '@docsearch/js/docsearch';
   import type { DocSearchInstance, DocSearchProps } from '@docsearch/js/docsearch';
   import type { SidepanelInstance } from '@docsearch/sidepanel-js';
+  // A `?url` import, unlike a CSS import, isn't added to every page's head.
+  import sidepanelStylesUrl from '@docsearch/css/dist/sidepanel.css?url';
   import config from 'virtual:docsearch-starlight-config';
 
   const { askAi, sidePanel, ...keywordConfig } = config;
@@ -60,6 +62,21 @@ const searchLabel = Astro.locals.t('search.label');
     }
   }
 
+  function loadSidePanelStyles(): Promise<void> {
+    const id = 'docsearch-sidepanel-styles';
+    if (document.getElementById(id)) return Promise.resolve();
+
+    return new Promise((resolve) => {
+      const link = document.createElement('link');
+      link.id = id;
+      link.rel = 'stylesheet';
+      link.href = sidepanelStylesUrl;
+      link.addEventListener('load', () => resolve(), { once: true });
+      link.addEventListener('error', () => resolve(), { once: true });
+      document.head.append(link);
+    });
+  }
+
   async function createSidePanel(
     container: HTMLElement,
     askAiConfig: AskAiConfig
@@ -67,7 +84,7 @@ const searchLabel = Astro.locals.t('search.label');
     try {
       const [{ default: sidepanel }] = await Promise.all([
         import('@docsearch/sidepanel-js'),
-        import('@docsearch/css/dist/sidepanel.css'),
+        loadSidePanelStyles(),
       ]);
       const agent =
         typeof askAiConfig === 'string' ? { agentId: askAiConfig } : askAiConfig;
@@ -107,11 +124,13 @@ const searchLabel = Astro.locals.t('search.label');
   async function mountSearch() {
     const container = document.querySelector<HTMLElement>('#docsearch');
 
-    if (container && container === mountedContainer && instance) return;
+    if (container && container === mountedContainer) return;
 
     unmountSearch();
     if (!container) return;
 
+    // Set before any await so a repeated `astro:page-load` reuses this mount.
+    mountedContainer = container;
     const currentMountId = mountId;
     const searchLabel = container.dataset.searchLabel;
     const props: DocSearchProps = {
@@ -128,9 +147,16 @@ const searchLabel = Astro.locals.t('search.label');
       },
     };
 
-    const created = askAi
-      ? await createAskAiSearch(props, askAi)
-      : docsearch(props);
+    let created: DocSearchInstance;
+    try {
+      created = askAi
+        ? await createAskAiSearch(props, askAi)
+        : docsearch(props);
+    } catch (error) {
+      // Let the next `astro:page-load` retry instead of treating this container as mounted.
+      if (currentMountId === mountId) mountedContainer = undefined;
+      throw error;
+    }
 
     if (currentMountId !== mountId) {
       created.destroy();
@@ -138,7 +164,6 @@ const searchLabel = Astro.locals.t('search.label');
     }
 
     instance = created;
-    mountedContainer = container;
 
     const panelContainer = document.querySelector<HTMLElement>(
       '#docsearch-sidepanel-button'
