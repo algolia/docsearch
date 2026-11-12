@@ -57,13 +57,16 @@ export type SidePanelOptions = Omit<
   NonNullable<SidepanelProps['panel']>,
   'tools' | 'memory' | 'portalContainer'
 > &
-  Pick<SidepanelProps, 'keyboardShortcuts'>;
+  Pick<SidepanelProps, 'keyboardShortcuts'> & {
+    buttonVariant?: NonNullable<SidepanelProps['button']>['variant'];
+  };
 
 const cssWidth = z.union([z.number().positive(), nonBlankString]);
 
 const sidePanelSchema = z.union([
   z.boolean(),
   z.strictObject({
+    buttonVariant: z.enum(['floating', 'inline']).optional(),
     variant: z.enum(['floating', 'inline']).optional(),
     side: z.enum(['left', 'right']).optional(),
     width: cssWidth.optional(),

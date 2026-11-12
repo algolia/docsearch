@@ -71,8 +71,12 @@ const searchLabel = Astro.locals.t('search.label');
       ]);
       const agent =
         typeof askAiConfig === 'string' ? { agentId: askAiConfig } : askAiConfig;
-      const { keyboardShortcuts, ...panelOptions } =
-        typeof sidePanel === 'object' ? sidePanel : {};
+      const {
+        keyboardShortcuts,
+        // A centred Starlight search leaves no natural spot for an inline button.
+        buttonVariant = 'floating',
+        ...panelOptions
+      } = typeof sidePanel === 'object' ? sidePanel : {};
 
       return sidepanel({
         container,
@@ -82,7 +86,10 @@ const searchLabel = Astro.locals.t('search.label');
         indices: agent.indices,
         searchParameters: agent.searchParameters,
         keyboardShortcuts,
-        button: { variant: 'inline', translations: { buttonText: '' } },
+        button:
+          buttonVariant === 'inline'
+            ? { variant: 'inline', translations: { buttonText: '' } }
+            : { variant: 'floating' },
         panel: {
           pushSelector: '.main-frame',
           suggestedQuestions: agent.suggestedQuestions,

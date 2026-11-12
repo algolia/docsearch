@@ -54,6 +54,7 @@ describe('validateOptions', () => {
     expect(() =>
       validateOptions(
         withSidePanel({
+          buttonVariant: 'inline',
           variant: 'floating',
           side: 'left',
           width: 400,
