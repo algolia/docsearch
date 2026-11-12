@@ -791,6 +791,13 @@ html[data-theme='dark'] .docsearch-logo {
   font-size: 2rem;
 }
 
+/* "Ctrl" on Windows/Linux are wider than "⌘" or "K",
+   so it needs its own offset */
+.keypad__single .key__text--wide {
+  font-size: 1.8rem;
+  translate: -27% -16%;
+}
+
 /* Double-width (bottom) key */
 .keypad__double {
   width: 64%;
