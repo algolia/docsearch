@@ -45,3 +45,15 @@ test('routes Ask AI from the modal to the side panel', async ({ page }) => {
     /is-open/
   );
 });
+
+test('skips the side panel when its styles fail to load', async ({ page }) => {
+  await page.route('**/sidepanel*.css', (route) => route.abort());
+  await page.goto('/');
+
+  await expect(page.locator('.DocSearch-Button')).toHaveCount(1);
+  await expect(page.locator('.DocSearch-SidepanelButton')).toHaveCount(0);
+  await expect(page.locator('link[href*="sidepanel" i]')).toHaveCount(0);
+
+  await page.getByRole('button', { name: /^Search\b/ }).click();
+  await expect(page.locator('.DocSearch-Modal')).toBeVisible();
+});

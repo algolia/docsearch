@@ -66,13 +66,21 @@ const searchLabel = Astro.locals.t('search.label');
     const id = 'docsearch-sidepanel-styles';
     if (document.getElementById(id)) return Promise.resolve();
 
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       const link = document.createElement('link');
       link.id = id;
       link.rel = 'stylesheet';
       link.href = sidepanelStylesUrl;
       link.addEventListener('load', () => resolve(), { once: true });
-      link.addEventListener('error', () => resolve(), { once: true });
+      link.addEventListener(
+        'error',
+        () => {
+          // Remove the failed link so a later mount retries instead of skipping on the id check.
+          link.remove();
+          reject(new Error('DocSearch side panel styles failed to load.'));
+        },
+        { once: true }
+      );
       document.head.append(link);
     });
   }
