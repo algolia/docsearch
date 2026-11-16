@@ -4,7 +4,7 @@ import starlight from '@astrojs/starlight';
 import docsearch from '@docsearch/starlight-adapter';
 import { defineConfig } from 'astro/config';
 
-// E2E-only build of the demo with Astro's ClientRouter enabled (via Head.astro)
+// E2E-only build of the demo with Astro's ClientRouter enabled (via Head.astro), Ask AI and the side panel
 export default defineConfig({
   root: fileURLToPath(
     new URL('../../../../examples/demo-starlight/', import.meta.url)
@@ -23,6 +23,8 @@ export default defineConfig({
           apiKey: '24b09689d5b4223813d9b8e48563c8f6',
           indices: ['docsearch'],
           placeholder: 'Search documentation',
+          askAi: 'ccdec697-e3fe-465b-a1c3-657e7bf18aef',
+          sidePanel: true,
         }),
       ],
     }),
