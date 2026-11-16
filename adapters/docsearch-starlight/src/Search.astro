@@ -194,8 +194,9 @@ const searchLabel = Astro.locals.t('search.label');
 </script>
 
 <style>
-  :global(:root),
-  :global(:root[data-theme='dark']) {
+  /* Doubled for specificity: the side panel stylesheet loads later and redeclares these variables. */
+  :global(:root:root),
+  :global(:root:root[data-theme='dark']) {
     --docsearch-primary-color: var(--sl-color-text-accent);
     --docsearch-primary-dark-color: var(--sl-color-text-accent);
     --docsearch-soft-primary-color: var(--sl-color-accent-low);
