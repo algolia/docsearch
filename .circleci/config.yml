@@ -255,6 +255,26 @@ jobs:
           path: test-results
           destination: test-results
 
+  test_playwright_docusaurus:
+    <<: *playwright
+    steps:
+      - checkout
+      - *attach_workspace
+      - run: *install_bun
+      - restore_cache: *restore_bun_cache
+      - run: *run_bun_install
+      - save_cache: *save_bun_cache
+      - run: *restore_dist_folders
+      - run:
+          name: Docusaurus Playwright E2E tests
+          command: bun run pw:docusaurus --project=chromium
+      - store_artifacts:
+          path: playwright-report
+          destination: playwright-report
+      - store_artifacts:
+          path: test-results
+          destination: test-results
+
 workflows:
   version: 2
   ci:
@@ -276,6 +296,9 @@ workflows:
           requires:
             - build
       - test_playwright_starlight:
+          requires:
+            - build
+      - test_playwright_docusaurus:
           requires:
             - build
       - release:

@@ -5,12 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+/* Keep these first: the overrides below must come after DocSearch's own variables. */
+@import url('@docsearch/css/dist/style.css');
+@import url('@docsearch/css/dist/sidepanel.css');
+
 :root {
   --docsearch-font-family: var(--ifm-font-family-base);
+  --docsearch-border-radius: var(--ifm-global-radius);
+  --docsearch-container-background: rgb(0 0 0 / 60%);
+}
+
+/* The dark selector matches DocSearch's own `:root[data-theme='dark']` palette; it wins by coming later. */
+:root,
+:root[data-theme='dark'] {
   --docsearch-primary-color: var(--ifm-color-primary);
   --docsearch-text-color: var(--ifm-font-color-base);
-  --docsearch-border-radius: var(--ifm-global-radius);
-  --docsearch-highlight-color: var(--ifm-color-primary);
+  --docsearch-highlight-color: var(--ifm-color-primary-darker);
   --docsearch-soft-primary-color: color-mix(
     in srgb,
     var(--ifm-color-primary) 12%,
@@ -18,23 +28,22 @@
   );
   --docsearch-focus-color: var(--ifm-color-primary-dark);
   --docsearch-subtle-color: var(--ifm-color-emphasis-200);
-  --docsearch-secondary-text-color: var(--ifm-color-secondary-darker);
-  --docsearch-icon-color: var(--ifm-color-secondary-darker);
-  --docsearch-muted-color: var(--ifm-color-secondary-darker);
-  --docsearch-container-background: rgb(0 0 0 / 60%);
-  --docsearch-background-color: var(--ifm-color-secondary);
+  --docsearch-secondary-text-color: var(--ifm-color-emphasis-700);
+  --docsearch-icon-color: var(--ifm-color-emphasis-700);
+  --docsearch-muted-color: var(--ifm-color-emphasis-700);
+  --docsearch-background-color: var(--ifm-color-emphasis-200);
 
   /* Modal */
-  --docsearch-modal-background: var(--ifm-background-color);
+  --docsearch-modal-background: var(--ifm-background-surface-color);
   --docsearch-modal-shadow: var(--ifm-global-shadow-md);
 
   /* Button */
-  --docsearch-search-button-background: var(--ifm-background-color);
-  --docsearch-search-button-text-color: var(--ifm-color-secondary-darker);
+  --docsearch-search-button-background: var(--ifm-background-surface-color);
+  --docsearch-search-button-text-color: var(--ifm-color-emphasis-700);
 
   /* Search box */
-  --docsearch-searchbox-background: var(--ifm-background-color);
-  --docsearch-searchbox-focus-background: var(--ifm-background-color);
+  --docsearch-searchbox-background: var(--ifm-background-surface-color);
+  --docsearch-searchbox-focus-background: var(--ifm-background-surface-color);
 
   /* Hit */
   --docsearch-hit-color: var(--ifm-font-color-base);
@@ -43,41 +52,53 @@
     var(--ifm-color-primary) 12%,
     transparent
   );
-  --docsearch-hit-background: var(--ifm-background-color);
-  --docsearch-hit-focus-background: var(--ifm-color-secondary);
-  --docsearch-hit-active-color: var(--ifm-color-white);
+  --docsearch-hit-background: var(--ifm-background-surface-color);
+  --docsearch-hit-focus-background: var(--ifm-color-emphasis-200);
   --docsearch-key-background: var(--ifm-color-emphasis-200);
-  --docsearch-key-color: var(--ifm-color-secondary-darker);
+  --docsearch-key-color: var(--ifm-color-emphasis-700);
   --docsearch-key-pressed-shadow: inset 0 2px 4px rgb(0 0 0 / 12%);
 
   /* Footer */
-  --docsearch-footer-background: var(--ifm-background-color);
+  --docsearch-footer-background: var(--ifm-background-surface-color);
   --docsearch-footer-shadow: 0 -1px 0 0 var(--ifm-color-emphasis-200);
-  --docsearch-key-gradient: linear-gradient(
-    -26.5deg,
-    var(--ifm-color-emphasis-300) 0%,
-    var(--ifm-color-emphasis-200) 100%
+
+  /* Menu and popover: set directly so sites can override them on .DocSearch */
+  --docsearch-dropdown-menu-background: var(--ifm-background-surface-color);
+  --docsearch-dropdown-menu-item-hover-background: var(
+    --ifm-color-emphasis-200
   );
+  --docsearch-menu-trigger-active-background: var(--ifm-color-emphasis-200);
+  --docsearch-menu-trigger-active-text-color: var(--ifm-font-color-base);
+  --docsearch-popover-background: var(--ifm-background-surface-color);
+  --docsearch-popover-arrow-color: var(--ifm-color-emphasis-300);
+  --docsearch-popover-shadow: var(--ifm-global-shadow-md);
 
   /* Sidepanel */
-  --docsearch-sidepanel-background: var(--ifm-background-color);
-  --docsearch-sidepanel-background-dark: var(--docsearch-searchbox-background);
-  --docsearch-sidepanel-white: var(--ifm-background-color);
-  --docsearch-sidepanel-primary: var(--docsearch-primary-color);
+  --docsearch-sidepanel-background: var(--ifm-background-surface-color);
+  --docsearch-sidepanel-background-dark: var(--ifm-background-surface-color);
+  --docsearch-sidepanel-white: var(--ifm-background-surface-color);
+  --docsearch-sidepanel-primary: var(--ifm-color-primary);
   --docsearch-sidepanel-primary-dark: var(--ifm-color-primary-dark);
   --docsearch-sidepanel-primary-disabled: var(--ifm-color-primary-lightest);
-  --docsearch-sidepanel-accent: var(--docsearch-highlight-color);
+  --docsearch-sidepanel-accent: var(--ifm-color-primary);
   --docsearch-sidepanel-accent-muted: var(--ifm-color-primary-lightest);
   --docsearch-sidepanel-border: var(--ifm-color-emphasis-200);
-  --docsearch-sidepanel-text-base: var(--docsearch-text-color);
-  --docsearch-sidepanel-text-muted: var(--docsearch-secondary-text-color);
-  --docsearch-sidepanel-scrollbar-color: var(--docsearch-muted-color);
-  --docsearch-sidepanel-scrollbar-bg: var(--docsearch-modal-background);
-  --docsearch-sidepanel-hit-background: var(--docsearch-hit-background);
-  --docsearch-sidepanel-hit-color: var(--docsearch-hit-color);
-  --docsearch-sidepanel-hit-highlight-color: var(
-    --docsearch-hit-highlight-color
+  --docsearch-sidepanel-text-base: var(--ifm-font-color-base);
+  --docsearch-sidepanel-text-muted: var(--ifm-color-emphasis-700);
+  --docsearch-sidepanel-scrollbar-color: var(--ifm-color-emphasis-700);
+  --docsearch-sidepanel-scrollbar-bg: var(--ifm-background-surface-color);
+  --docsearch-sidepanel-hit-background: var(--ifm-background-surface-color);
+  --docsearch-sidepanel-hit-color: var(--ifm-font-color-base);
+  --docsearch-sidepanel-hit-highlight-color: color-mix(
+    in srgb,
+    var(--ifm-color-primary) 12%,
+    transparent
   );
+}
+
+:root[data-theme='dark'] {
+  --docsearch-highlight-color: var(--ifm-color-primary-lightest);
+  --docsearch-focus-color: var(--ifm-color-primary-lightest);
 }
 
 .DocSearch-SearchBar {
@@ -107,7 +128,7 @@
 }
 
 .DocSearch-SidepanelButton.inline {
-  background-color: var(--ifm-background-color);
+  background-color: var(--ifm-background-surface-color);
 }
 
 /* Match inline panel borders with app borders */

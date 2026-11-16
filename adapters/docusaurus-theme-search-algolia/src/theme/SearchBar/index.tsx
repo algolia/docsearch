@@ -102,7 +102,6 @@ function importDocSearchModalIfNeeded(): Promise<void> {
   return Promise.all([
     import('@docsearch/modal/modal'),
     import('@docsearch/modal/askai'),
-    import('@docsearch/react/style'),
     import('./styles.css'),
   ]).then(
     ([{ DocSearchModal: Modal }, { DocSearchAskAiModal: AskAiModal }]) => {
@@ -119,7 +118,7 @@ function importDocSearchSidepanelIfNeeded(): Promise<void> {
 
   return Promise.all([
     import('@docsearch/sidepanel/sidepanel'),
-    import('@docsearch/react/style/sidepanel'),
+    import('./styles.css'),
   ]).then(([{ Sidepanel }]) => {
     DocSearchSidepanel = Sidepanel;
   });
