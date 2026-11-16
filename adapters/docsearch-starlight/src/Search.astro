@@ -11,7 +11,6 @@ const searchLabel = Astro.locals.t('search.label');
 <script>
   // oxlint-disable-next-line typescript/triple-slash-reference -- Include the packaged ambient virtual-module declaration without a runtime import.
   /// <reference path="./virtual.d.ts" />
-  import docsearch from '@docsearch/js/docsearch';
   import type { DocSearchInstance, DocSearchProps } from '@docsearch/js/docsearch';
   import type { SidepanelInstance } from '@docsearch/sidepanel-js';
   // A `?url` import, unlike a CSS import, isn't added to every page's head.
@@ -36,7 +35,13 @@ const searchLabel = Astro.locals.t('search.label');
     mountedContainer = undefined;
   }
 
-  // Lazy-loaded so keyword-only sites don't ship the Ask AI bundle.
+  async function createKeywordSearch(
+    props: DocSearchProps
+  ): Promise<DocSearchInstance> {
+    const { default: docsearch } = await import('@docsearch/js/docsearch');
+    return docsearch(props);
+  }
+
   async function createAskAiSearch(
     props: DocSearchProps,
     askAiConfig: AskAiConfig
@@ -58,7 +63,7 @@ const searchLabel = Astro.locals.t('search.label');
     } catch (error) {
       // oxlint-disable-next-line no-console -- Explain why Ask AI is missing while keyword search keeps working.
       console.error('DocSearch Ask AI failed to load. Using keyword search.', error);
-      return docsearch(props);
+      return createKeywordSearch(props);
     }
   }
 
@@ -159,7 +164,7 @@ const searchLabel = Astro.locals.t('search.label');
     try {
       created = askAi
         ? await createAskAiSearch(props, askAi)
-        : docsearch(props);
+        : await createKeywordSearch(props);
     } catch (error) {
       // Let the next `astro:page-load` retry instead of treating this container as mounted.
       if (currentMountId === mountId) mountedContainer = undefined;
