@@ -137,7 +137,13 @@ export default function Keyboard() {
               <span className="key__mask">
                 <span className="key__content">
                   <span
-                    className={`key__text ${k.id === 'search' ? 'key__text--search' : ''}`}
+                    className={[
+                      'key__text',
+                      k.id === 'search' ? 'key__text--search' : '',
+                      !k.double && k.label.length > 1 ? 'key__text--wide' : '',
+                    ]
+                      .filter(Boolean)
+                      .join(' ')}
                   >
                     {k.label}
                   </span>

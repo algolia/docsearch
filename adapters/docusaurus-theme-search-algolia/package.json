@@ -37,6 +37,7 @@
   "dependencies": {
     "@algolia/autocomplete-core": "1.19.2",
     "@docsearch/core": "5.2.0",
+    "@docsearch/css": "5.2.0",
     "@docsearch/modal": "5.2.0",
     "@docsearch/react": "5.2.0",
     "@docsearch/sidepanel": "5.2.0",

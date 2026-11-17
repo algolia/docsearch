@@ -29,13 +29,20 @@ export default function analyticsLoader(_, options) {
       return {
         headTags: [
           {
+            // Skip OneTrust in the demo iframe so the banner doesn't show twice
             tagName: 'script',
             attributes: {
-              src: 'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js',
               type: 'text/javascript',
-              charset: 'UTF-8',
-              'data-domain-script': '5e9f5149-bde8-4a13-b973-b7a9385e8ebb',
             },
+            innerHTML: `(function () {
+  if (/(^|\\/)demo-embed(\\/|$)/.test(window.location.pathname)) return;
+  var s = document.createElement('script');
+  s.src = 'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js';
+  s.type = 'text/javascript';
+  s.charset = 'UTF-8';
+  s.setAttribute('data-domain-script', '5e9f5149-bde8-4a13-b973-b7a9385e8ebb');
+  document.head.appendChild(s);
+})();`,
           },
           {
             tagName: 'script',
