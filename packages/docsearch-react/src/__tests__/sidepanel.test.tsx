@@ -75,6 +75,48 @@ describe('Sidepanel closed state', () => {
     expect(screen.getByText('My conversation history')).toBeInTheDocument();
   });
 
+  it.each(['I', ''])(
+    'shows the guardrail fallback instead of the truncated response %j',
+    async (delta) => {
+      const fallbackResponse =
+        "I'm sorry, I can only answer documentation questions.";
+      vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+        new Response(
+          [
+            { type: 'start', messageId: 'guardrail-answer' },
+            { type: 'start-step' },
+            { type: 'text-start', id: 'answer' },
+            { type: 'text-delta', id: 'answer', delta },
+            { type: 'text-end', id: 'answer' },
+            { type: 'finish-step' },
+            {
+              type: 'data-guardrail-violation',
+              data: {
+                category: 'off_topic_questions',
+                guardrailType: 'input',
+                fallbackResponse,
+              },
+            },
+            { type: 'finish' },
+          ]
+            .map((event) => `data: ${JSON.stringify(event)}\n\n`)
+            .join('') + 'data: [DONE]\n\n',
+          { headers: { 'content-type': 'text/event-stream' } }
+        )
+      );
+      const { rerender } = render(<Sidepanel {...props} isOpen={true} />);
+      const prompt = screen.getByRole('textbox');
+      fireEvent.change(prompt, { target: { value: 'An off-topic question' } });
+      fireEvent.submit(prompt.closest('form')!);
+
+      await screen.findByText(fallbackResponse);
+      expect(screen.queryByText('I', { exact: true })).not.toBeInTheDocument();
+      rerender(<Sidepanel {...props} isOpen={false} />);
+      rerender(<Sidepanel {...props} isOpen={true} />);
+      expect(screen.getByText(fallbackResponse)).toBeInTheDocument();
+    }
+  );
+
   it('preserves conversation messages across close and reopen', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(
       new Response(
