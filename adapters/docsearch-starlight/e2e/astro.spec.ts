@@ -15,6 +15,20 @@ test('renders DocSearch instead of the default Pagefind search', async ({
   expect(pagefind.status()).toBe(404);
 });
 
+test('loads no side panel assets without Ask AI', async ({ page }) => {
+  const sidePanelRequests: string[] = [];
+  page.on('request', (request) => {
+    if (/sidepanel/i.test(request.url())) sidePanelRequests.push(request.url());
+  });
+
+  await page.goto('/');
+  await expect(page.locator('.DocSearch-Button')).toHaveCount(1);
+
+  await expect(page.locator('link[href*="sidepanel" i]')).toHaveCount(0);
+  await expect(page.locator('.DocSearch-SidepanelButton')).toHaveCount(0);
+  expect(sidePanelRequests).toEqual([]);
+});
+
 test('passes the configured options to DocSearch', async ({ page }) => {
   await mockInstallationSearch(page);
   await page.goto('/');

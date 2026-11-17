@@ -1,6 +1,8 @@
 ---
 title: Getting Started
 description: Register the DocSearch adapter in an Astro Starlight site.
+sidebar:
+  order: 1
 ---
 
 ## Requirements
@@ -50,6 +52,6 @@ Start your site's development server. DocSearch replaces Pagefind and queries th
 
 ## Next Steps
 
-Continue to [Search Configuration](../search-configuration/) for per-index parameters and text overrides, or consult the [Adapter Reference](../../reference/example/).
+Continue to [Search Configuration](../search-configuration/) for per-index parameters and text overrides, [Ask AI](../ask-ai/) to add an Agent Studio agent, or consult the [Adapter Reference](../../reference/example/).
 
 Return to [Installation](#installation).

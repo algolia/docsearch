@@ -1,14 +1,28 @@
 import { defineConfig, devices } from '@playwright/test';
 
-// STARLIGHT_ROUTER=1 runs the navigation tests against a demo build with Astro's ClientRouter enabled.
-const router = process.env.STARLIGHT_ROUTER === '1';
-const astroConfig =
-  '../../adapters/docsearch-starlight/e2e/client-navigation/astro.config.mjs';
-const configFlag = router ? ` --config "${astroConfig}"` : '';
+// STARLIGHT_SUITE picks the demo build: keyword-only (default), `router` (ClientRouter), or `askai` (the demo as-is).
+const e2eDir = '../../adapters/docsearch-starlight/e2e';
+const suites = {
+  keyword: {
+    astroConfig: `${e2eDir}/keyword/astro.config.mjs`,
+    testMatch: '**/astro.spec.ts',
+  },
+  router: {
+    astroConfig: `${e2eDir}/client-navigation/astro.config.mjs`,
+    testMatch: '**/client-navigation/*.spec.ts',
+  },
+  askai: { astroConfig: undefined, testMatch: '**/ask-ai.spec.ts' },
+};
+const suite =
+  suites[(process.env.STARLIGHT_SUITE ?? 'keyword') as keyof typeof suites];
+if (!suite) {
+  throw new Error(`Unknown STARLIGHT_SUITE: ${process.env.STARLIGHT_SUITE}`);
+}
+const configFlag = suite.astroConfig ? ` --config "${suite.astroConfig}"` : '';
 
 export default defineConfig({
   testDir: './adapters/docsearch-starlight/e2e',
-  testMatch: router ? '**/client-navigation/*.spec.ts' : '**/astro.spec.ts',
+  testMatch: suite.testMatch,
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,

@@ -1,6 +1,8 @@
 ---
 title: Search Configuration
 description: Configure indices, search parameters, and DocSearch text overrides.
+sidebar:
+  order: 2
 ---
 
 ## Keyword Search
@@ -51,4 +53,5 @@ Options must be JSON-serializable.
 ## Related Pages
 
 - [Getting Started](../getting-started/)
+- [Ask AI](../ask-ai/)
 - [Adapter Reference](../../reference/example/)

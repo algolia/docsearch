@@ -1,6 +1,6 @@
 # DocSearch v5 Starlight Demo
 
-Demo of `@docsearch/starlight-adapter` with DocSearch v5 keyword search and Starlight's theme. This demo uses ordinary page loads; the adapter also supports Astro client-side navigation. AI support is not included yet.
+Demo of `@docsearch/starlight-adapter` with DocSearch v5 keyword search, Ask AI, the Ask AI side panel, and Starlight's theme. This demo uses ordinary page loads; the adapter also supports Astro client-side navigation.
 
 See the [adapter guide](../../adapters/docsearch-starlight/README.md) for configuration and supported options.
 
@@ -19,9 +19,11 @@ bun run playground-starlight:start
 
 Open the URL printed by the server, normally <http://localhost:4321>.
 
-The demo already includes public search-only credentials in [astro.config.mjs](./astro.config.mjs). The hosted DocSearch index returns its own documents, not local demo pages, so result links may leave the demo. To use another index, change `appId`, `apiKey`, and `indices` in the `docsearch({...})` call.
+The demo already includes public search-only credentials and a public Ask AI agent ID in [astro.config.mjs](./astro.config.mjs). The hosted DocSearch index returns its own documents, not local demo pages, so result links may leave the demo. To use another index, change `appId`, `apiKey`, and `indices` in the `docsearch({...})` call. Remove `askAi` and `sidePanel` to try keyword search only.
 
 Click the header search button or press `Cmd+K` / `Ctrl+K`, then try searching for `installation`. Escape closes the modal.
+
+To try Ask AI, click the floating sparkle button in the bottom corner or press `Cmd+I` / `Ctrl+I` to open the side panel. Choosing Ask AI in the search modal also opens the side panel with your question.
 
 ## Adapter Development
 

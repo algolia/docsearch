@@ -30,7 +30,8 @@
   },
   "dependencies": {
     "@docsearch/js": "5.2.0",
-    "@docsearch/css": "5.2.0"
+    "@docsearch/css": "5.2.0",
+    "@docsearch/sidepanel-js": "5.2.0"
   },
   "peerDependencies": {
     "@astrojs/starlight": "^0.42.7",

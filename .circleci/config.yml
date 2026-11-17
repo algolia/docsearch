@@ -248,6 +248,9 @@ jobs:
       - run:
           name: Starlight Playwright E2E tests (ClientRouter)
           command: bun run pw:starlight:router --project=chromium
+      - run:
+          name: Starlight Playwright E2E tests (Ask AI)
+          command: bun run pw:starlight:askai --project=chromium
       - store_artifacts:
           path: playwright-report
           destination: playwright-report
