@@ -13,6 +13,8 @@ The plugins connect AI coding clients to the public DocSearch documentation corp
 - `mcp/plugins/docsearch/chatgpt/algolia-docsearch` - Universal ChatGPT and Codex plugin package with manifest, MCP config, skill, assets, and submission materials.
 - `mcp/plugins/docsearch/cursor/algolia-docsearch` - Cursor plugin package with MCP config, rule, skill, and README.
 - `mcp/plugins/docsearch/claude/algolia-docsearch` - Claude Code plugin package with MCP config, skill, command, and README.
+- [Antigravity plugin](antigravity/algolia-docsearch) with MCP config and a documentation lookup skill.
+- [Kiro Power](kiro/algolia-docsearch) with MCP config and a documentation lookup skill.
 
 ## Public MCP Tools
 
@@ -70,3 +72,11 @@ Claude Desktop and claude.ai can connect directly to the same remote MCP endpoin
 ```
 
 No user authentication is required for the public DocSearch MCP endpoint.
+
+## Arcade
+
+In your Arcade project, open **Servers** and choose **Add Server → Remote MCP**. Enter `algolia-docsearch` as the ID and `https://docsearch-mcp.algolia.com/mcp` as the URI. The endpoint uses Streamable HTTP and requires no authentication.
+
+After saving, check that all three DocSearch tools appear in the project. In Arcade's Playground, use the DocSearch search tool with `Stripe` as the library and ask `How do I verify a Stripe webhook signature in Node.js?`. Check that the result includes a source link to the Stripe documentation.
+
+[Arcade remote MCP setup](https://docs.arcade.dev/en/operate/governance/remote-mcp-servers)
