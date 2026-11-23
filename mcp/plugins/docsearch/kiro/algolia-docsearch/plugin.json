@@ -1,0 +1,14 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "algolia-docsearch",
+  "version": "1.0.0",
+  "description": "Search current public developer documentation and get relevant excerpts with source links.",
+  "author": {
+    "name": "Algolia",
+    "url": "https://www.algolia.com/"
+  },
+  "keywords": ["docsearch", "developer documentation", "official docs", "API reference"],
+  "homepage": "https://docsearch.algolia.com/docs/mcp/overview/",
+  "repository": "https://github.com/algolia/docsearch",
+  "license": "MIT"
+}
