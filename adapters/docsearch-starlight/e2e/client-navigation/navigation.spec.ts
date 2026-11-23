@@ -1,16 +1,14 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
 import { mockInstallationSearch } from '../fixtures';
 
-test('cleans up an open search and remounts after client navigation', async ({
-  page,
-}) => {
+test.beforeEach(async ({ page }) => {
   await mockInstallationSearch(page);
-  await page.goto('/');
-  await page.getByRole('button', { name: /^Search\b/ }).click();
-  await expect(page.locator('.DocSearch-Input')).toBeFocused();
-  await expect(page.locator('body')).toHaveCSS('overflow', 'hidden');
+  // Keep Agent Studio out of the tests; only the adapter wiring is under test.
+  await page.route('**/agents/**', (route) => route.abort());
+});
 
+async function navigateToGettingStarted(page: Page) {
   await page.evaluate(() => {
     document.addEventListener(
       'astro:page-load',
@@ -30,6 +28,17 @@ test('cleans up an open search and remounts after client navigation', async ({
     'data-client-navigation',
     'complete'
   );
+}
+
+test('cleans up an open search and remounts after client navigation', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: /^Search\b/ }).click();
+  await expect(page.locator('.DocSearch-Input')).toBeFocused();
+  await expect(page.locator('body')).toHaveCSS('overflow', 'hidden');
+
+  await navigateToGettingStarted(page);
   await expect(page.locator('.DocSearch-Modal')).toHaveCount(0);
   await expect(page.locator('body')).not.toHaveClass(/DocSearch--active/);
   await expect(page.locator('body')).not.toHaveCSS('overflow', 'hidden');
@@ -43,4 +52,22 @@ test('cleans up an open search and remounts after client navigation', async ({
   await page.keyboard.press('Escape');
   await expect(page.locator('.DocSearch-Modal')).toHaveCount(0);
   await expect(searchButton).toBeFocused();
+});
+
+test('remounts a single side panel after client navigation', async ({
+  page,
+}) => {
+  await page.goto('/');
+  const panelButton = page.locator('.DocSearch-SidepanelButton');
+  await expect(panelButton).toHaveCount(1);
+  await expect(page.locator('link[href*="sidepanel" i]')).toHaveCount(1);
+
+  await navigateToGettingStarted(page);
+
+  await expect(panelButton).toHaveCount(1);
+  await expect(page.locator('link[href*="sidepanel" i]')).toHaveCount(1);
+  await panelButton.click();
+  await expect(page.locator('.DocSearch-Sidepanel-Container')).toHaveClass(
+    /is-open/
+  );
 });

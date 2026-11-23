@@ -2,16 +2,36 @@ import type { StarlightPlugin } from '@astrojs/starlight/types';
 import type { DocSearchProps } from '@docsearch/js/docsearch';
 import type { ViteUserConfig } from 'astro';
 
-import { validateOptions } from './config.js';
+import {
+  type AskAiOptions,
+  type SidePanelOptions,
+  validateOptions,
+} from './config.js';
 
 const CONFIG_MODULE_ID = 'virtual:docsearch-starlight-config';
 const RESOLVED_CONFIG_MODULE_ID = `\0${CONFIG_MODULE_ID}`;
 
 export type StarlightDocSearchOptions = Pick<
   DocSearchProps,
-  'appId' | 'apiKey' | 'placeholder' | 'translations'
+  | 'appId'
+  | 'apiKey'
+  | 'facets'
+  | 'placeholder'
+  | 'maxResultsPerGroup'
+  | 'disableUserPersonalization'
+  | 'initialQuery'
+  | 'translations'
+  | 'insights'
+  | 'recentSearchesLimit'
+  | 'recentSearchesWithFavoritesLimit'
+  | 'keyboardShortcuts'
+  | 'resultBadgeKey'
 > & {
   indices: NonNullable<DocSearchProps['indices']>;
+  /** Agent ID, or a JSON-safe Ask AI configuration. */
+  askAi?: string | AskAiOptions;
+  /** Ask AI side panel; requires `askAi`. */
+  sidePanel?: boolean | SidePanelOptions;
 };
 
 export default function docsearch(
@@ -61,14 +81,7 @@ export default function docsearch(
 function vitePluginDocSearch(
   options: StarlightDocSearchOptions
 ): NonNullable<ViteUserConfig['plugins']>[number] {
-  const { appId, apiKey, indices, placeholder, translations } = options;
-  const moduleSource = `export default ${JSON.stringify({
-    appId,
-    apiKey,
-    indices,
-    placeholder,
-    translations,
-  })};`;
+  const moduleSource = `export default ${JSON.stringify(options)};`;
 
   return {
     name: 'vite-plugin-docsearch-starlight-config',

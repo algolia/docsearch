@@ -38,9 +38,142 @@ describe('validateOptions', () => {
   });
 
   it('rejects unsupported root options', () => {
-    const options = { ...createOptions(), askAi: 'agent-id' };
+    const options = { ...createOptions(), hitComponent: 'x' };
 
-    expect(() => validateOptions(options)).toThrow('askAi');
+    expect(() => validateOptions(options)).toThrow('hitComponent');
+  });
+
+  it('accepts a side panel alongside Ask AI', () => {
+    const withSidePanel = (sidePanel: unknown) => ({
+      ...createOptions(),
+      askAi: 'agent-id',
+      sidePanel,
+    });
+
+    expect(() => validateOptions(withSidePanel(true))).not.toThrow();
+    expect(() =>
+      validateOptions(
+        withSidePanel({
+          buttonVariant: 'inline',
+          variant: 'floating',
+          side: 'left',
+          width: 400,
+          expandedWidth: '60vw',
+          suggestedQuestions: true,
+          indices: ['docs'],
+          keyboardShortcuts: { 'Ctrl/Cmd+I': false },
+        })
+      )
+    ).not.toThrow();
+  });
+
+  it('rejects a side panel without Ask AI', () => {
+    expect(() =>
+      validateOptions({ ...createOptions(), sidePanel: true })
+    ).toThrow('`sidePanel` requires `askAi`');
+  });
+
+  it('rejects invalid side panel options', () => {
+    const withSidePanel = (sidePanel: unknown) => ({
+      ...createOptions(),
+      askAi: 'agent-id',
+      sidePanel,
+    });
+
+    expect(() => validateOptions(withSidePanel({ variant: 'docked' }))).toThrow(
+      'sidePanel'
+    );
+    expect(() => validateOptions(withSidePanel({ tools: {} }))).toThrow(
+      'sidePanel'
+    );
+    expect(() =>
+      validateOptions(withSidePanel({ memory: { userToken: 'jwt' } }))
+    ).toThrow('sidePanel');
+  });
+
+  it('accepts an Ask AI agent id or configuration', () => {
+    expect(() =>
+      validateOptions({ ...createOptions(), askAi: 'agent-id' })
+    ).not.toThrow();
+    expect(() =>
+      validateOptions({
+        ...createOptions(),
+        askAi: {
+          agentId: 'agent-id',
+          suggestedQuestions: true,
+          indices: ['docs'],
+          searchParameters: {
+            docs: { facetFilters: ['lang:en'], distinct: false },
+          },
+          promptSuggestions: { indexName: 'prompts', hitsPerPage: 3 },
+        },
+      })
+    ).not.toThrow();
+  });
+
+  it('rejects invalid Ask AI options', () => {
+    const withAskAi = (askAi: unknown) => ({ ...createOptions(), askAi });
+
+    expect(() => validateOptions(withAskAi('  '))).toThrow('askAi');
+    expect(() => validateOptions(withAskAi({}))).toThrow('askAi');
+    expect(() =>
+      validateOptions(withAskAi({ agentId: 'a', tools: {} }))
+    ).toThrow('askAi');
+    expect(() =>
+      validateOptions(withAskAi({ agentId: 'a', memory: { userToken: 'jwt' } }))
+    ).toThrow('askAi');
+  });
+
+  it('accepts JSON-safe DocSearch props', () => {
+    const options = {
+      ...createOptions(),
+      facets: [{ key: 'lang', label: 'Language' }],
+      maxResultsPerGroup: 5,
+      disableUserPersonalization: true,
+      initialQuery: 'hello',
+      insights: true,
+      recentSearchesLimit: 3,
+      recentSearchesWithFavoritesLimit: 2,
+      keyboardShortcuts: { 'Ctrl/Cmd+K': false, '/': true },
+      resultBadgeKey: 'version',
+    };
+
+    expect(() => validateOptions(options)).not.toThrow();
+  });
+
+  it('rejects invalid values for DocSearch props', () => {
+    expect(() =>
+      validateOptions({ ...createOptions(), theme: 'dark' })
+    ).toThrow('theme');
+    expect(() =>
+      validateOptions({ ...createOptions(), insights: { insightsClient: 'x' } })
+    ).toThrow('insights');
+    expect(() =>
+      validateOptions({ ...createOptions(), maxResultsPerGroup: 0 })
+    ).toThrow('maxResultsPerGroup');
+    expect(() =>
+      validateOptions({
+        ...createOptions(),
+        keyboardShortcuts: { 'Ctrl/Cmd+I': true },
+      })
+    ).toThrow('keyboardShortcuts');
+  });
+
+  it('rejects unknown or mistyped search parameters', () => {
+    const withParams = (searchParameters: unknown) => ({
+      ...createOptions(),
+      indices: [{ name: 'docs', searchParameters }],
+    });
+
+    expect(() => validateOptions(withParams({ hitsPerPag: 8 }))).toThrow(
+      'indices'
+    );
+    expect(() => validateOptions(withParams({ hitsPerPage: 'eight' }))).toThrow(
+      'indices'
+    );
+    expect(() =>
+      validateOptions(withParams({ queryType: 'prefixSome' }))
+    ).toThrow('indices');
   });
 
   it('rejects unsupported index options', () => {
