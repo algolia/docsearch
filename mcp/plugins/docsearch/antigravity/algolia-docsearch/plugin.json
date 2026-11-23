@@ -1,0 +1,20 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "algolia-docsearch",
+  "displayName": "Algolia DocSearch",
+  "version": "1.0.0",
+  "description": "Search current public developer documentation for libraries, frameworks, SDKs, and APIs, and get relevant excerpts with source links.",
+  "logo": "assets/docsearch-mark.svg",
+  "suggestedPrompts": [
+    "Use Algolia DocSearch to find how Vite exposes VITE_ environment variables through import.meta.env.",
+    "Use Algolia DocSearch to find how to verify a Stripe webhook signature in Node.js."
+  ],
+  "author": {
+    "name": "Algolia",
+    "url": "https://www.algolia.com/"
+  },
+  "homepage": "https://docsearch.algolia.com/docs/mcp/overview/",
+  "repository": "https://github.com/algolia/docsearch",
+  "license": "MIT",
+  "keywords": ["documentation", "mcp", "algolia", "docsearch", "developer-docs"]
+}
