@@ -16,6 +16,7 @@ import { type AIMessage, type ToolCalls } from './types/AskiAi';
 import type { OnAskAiFeedback } from './types/Feedback';
 import {
   EMPTY_TOOLS,
+  resolveGuardrailFallback,
   sanitizeMessagesForRequest,
   shouldSendAutomatically,
 } from './utils/ai';
@@ -199,10 +200,18 @@ export const useAskAi: UseAskAi = ({
   const chatInstanceRef = useRef<Chat<AIMessage>>(chatInstance);
   chatInstanceRef.current = chatInstance;
 
-  const { messages, status, setMessages, error, stop, addToolOutput } = useChat(
-    {
-      chat: chatInstance,
-    }
+  const {
+    messages: rawMessages,
+    status,
+    setMessages,
+    error,
+    stop,
+    addToolOutput,
+  } = useChat({ chat: chatInstance });
+
+  const messages = useMemo(
+    () => rawMessages.map(resolveGuardrailFallback),
+    [rawMessages]
   );
 
   useEffect(() => {
