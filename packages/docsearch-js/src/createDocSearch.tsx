@@ -31,8 +31,15 @@ export interface DocSearchCallbacks {
 
 export type TemplateHelpers = { html: typeof html };
 
+// Matches a preact VNode. Not `JSX.Element`: the bundled d.ts loses the `JSXInternal` import behind it, which made every template type untyped.
+type TemplateElement = { type: unknown; props: unknown; key: unknown };
+
 // Defines the public facing interface for each "template" function
-type TemplateFnReturnType = JSX.Element | string | (() => JSX.Element) | null;
+type TemplateFnReturnType =
+  | TemplateElement
+  | string
+  | (() => TemplateElement)
+  | null;
 
 export type HitComponentFn = (
   props: HitComponentProps,
@@ -107,7 +114,7 @@ function getHTMLElement(
 const html = htm.bind(createElement) as unknown as (
   strings: TemplateStringsArray,
   ...values: unknown[]
-) => JSX.Element;
+) => TemplateElement;
 
 function createTemplateFunction<
   P = Record<string, unknown>,
