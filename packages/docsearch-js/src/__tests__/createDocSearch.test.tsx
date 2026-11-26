@@ -107,6 +107,11 @@ describe('createDocSearch', () => {
     // @ts-expect-error a template can't return a number
     const hitComponent: PublishedHitComponentFn = () => 12345;
 
+    // a template annotated with preact's own element type still compiles
+    const withHtml: PublishedHitComponentFn = (_props, { html }): JSX.Element =>
+      html`<a>Result</a>`;
+
     expect(hitComponent).toBeTypeOf('function');
+    expect(withHtml).toBeTypeOf('function');
   });
 });
