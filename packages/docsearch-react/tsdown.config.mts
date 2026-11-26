@@ -39,6 +39,13 @@ export default defineConfig([
       utils: 'src/docsearchUtils.ts',
     },
     ...sharedConfig,
+    deps: {
+      // autocomplete-core only ships ESM through `module` and its `main` is UMD, so Node can't named-import it.
+      alwaysBundle: [/^@algolia\/autocomplete-core/],
+      dts: { alwaysBundle: [] },
+      neverBundle: externals,
+      onlyBundle: false,
+    },
     dts: true,
     format: 'esm',
     minify: false,
