@@ -1,3 +1,5 @@
+// Resolves to the bundled dist/esm/index.d.ts that consumers get.
+import type { HitComponentFn as PublishedHitComponentFn } from '@docsearch/js';
 import { createElement, type JSX } from 'preact';
 import { afterEach, describe, expect, it } from 'vitest';
 
@@ -99,5 +101,17 @@ describe('createDocSearch', () => {
     instance = docsearch({ container, footerAction: () => null });
 
     expect(container.textContent).toBe('');
+  });
+
+  it('rejects invalid template returns in the published types', () => {
+    // @ts-expect-error a template can't return a number
+    const hitComponent: PublishedHitComponentFn = () => 12345;
+
+    // a template annotated with preact's own element type still compiles
+    const withHtml: PublishedHitComponentFn = (_props, { html }): JSX.Element =>
+      html`<a>Result</a>`;
+
+    expect(hitComponent).toBeTypeOf('function');
+    expect(withHtml).toBeTypeOf('function');
   });
 });
